@@ -68,7 +68,11 @@ export function validateDeployedTusResumeConfig(input = {}) {
     'A unique 8-40 character lowercase namespace is required.',
   );
   const baseURL = new URL(input.baseURL);
-  required(baseURL.protocol === 'https:', 'Deployed community service URL must use HTTPS.');
+  const loopback = ['127.0.0.1', 'localhost', '[::1]'].includes(baseURL.hostname);
+  required(
+    baseURL.protocol === 'https:' || (baseURL.protocol === 'http:' && loopback),
+    'Deployed community service URL must use HTTPS outside loopback.',
+  );
   required(
     !baseURL.username && !baseURL.password && !baseURL.search && !baseURL.hash,
     'Community service URL must not contain credentials, a query, or a fragment.',

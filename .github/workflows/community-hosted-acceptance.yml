@@ -1,0 +1,117 @@
+name: Community hosted acceptance
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/community-hosted-acceptance.yml'
+      - 'game/community/**'
+      - 'game/creator/**'
+      - 'game/journey/**'
+      - 'game/media-storage-record.mjs'
+      - 'services/community/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: community-hosted-acceptance-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  hosted-acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      COMMUNITY_POSTGRES_PASSWORD: hosted-acceptance-postgres-password
+      COMMUNITY_DATABASE_URL: postgres://revealline:hosted-acceptance-postgres-password@postgres:5432/revealline
+      COMMUNITY_RELEASE_VERSION: v0.0.0-hosted
+      COMMUNITY_SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+      COMMUNITY_TRUST_PROXY_HOPS: 1
+      COMMUNITY_WORKER_POLL_MS: 200
+      BETTER_AUTH_SECRET: hosted-acceptance-better-auth-secret-000000000000
+      BETTER_AUTH_URL: https://community.invalid
+      COMMUNITY_ACCOUNT_MAIL_WEBHOOK_URL: https://mail.invalid/revealline/account
+      COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN: hosted-acceptance-mail-token-000000000000000000
+      COMMUNITY_ADMIN_SUBJECTS: hosted-admin
+      COMMUNITY_TUS_ACCEPTANCE_BASE_URL: http://127.0.0.1:8787/
+      COMMUNITY_TUS_ACCEPTANCE_NAMESPACE: hosted-tus-journey
+      COMMUNITY_TUS_ACCEPTANCE_ALLOW_DESTRUCTIVE: I_UNDERSTAND_THIS_PUBLISHES_AND_UNLISTS_TEST_CONTENT
+      COMMUNITY_TUS_ACCEPTANCE_EXPECTED_VERSION: v0.0.0-hosted
+      COMMUNITY_TUS_ACCEPTANCE_EXPECTED_SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+      COMMUNITY_TUS_ACCEPTANCE_EXPECTED_VALIDATOR_VERSION: creator-bundle-v1
+      COMMUNITY_TUS_ACCEPTANCE_CREATOR_AUTHORIZATION: Bearer hosted-creator-a-token
+      COMMUNITY_TUS_ACCEPTANCE_ADMIN_AUTHORIZATION: Bearer hosted-admin-token
+      COMMUNITY_TUS_ACCEPTANCE_RECEIPT: hosted-acceptance-evidence/hosted-tus.json
+      COMMUNITY_TUS_ACCEPTANCE_POLL_INTERVAL_MS: 200
+      COMMUNITY_ACCEPTANCE_BASE_URL: http://127.0.0.1:8787/
+      COMMUNITY_ACCEPTANCE_NAMESPACE: hosted-two-user-journey
+      COMMUNITY_ACCEPTANCE_ALLOW_DESTRUCTIVE: I_UNDERSTAND_THIS_PUBLISHES_AND_UNLISTS_TEST_CONTENT
+      COMMUNITY_ACCEPTANCE_EXPECTED_VERSION: v0.0.0-hosted
+      COMMUNITY_ACCEPTANCE_EXPECTED_SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+      COMMUNITY_ACCEPTANCE_CREATOR_A_AUTHORIZATION: Bearer hosted-creator-a-token
+      COMMUNITY_ACCEPTANCE_CREATOR_B_AUTHORIZATION: Bearer hosted-creator-b-token
+      COMMUNITY_ACCEPTANCE_ADMIN_AUTHORIZATION: Bearer hosted-admin-token
+      COMMUNITY_ACCEPTANCE_RECEIPT: hosted-acceptance-evidence/hosted-two-user.json
+      COMMUNITY_ACCEPTANCE_POLL_INTERVAL_MS: 200
+    steps:
+      - name: Check out exact source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: services/community/package-lock.json
+
+      - name: Install acceptance runner dependencies
+        working-directory: services/community
+        run: npm ci
+
+      - name: Start production-shaped services
+        working-directory: services/community
+        run: >-
+          docker compose -f compose.yaml -f compose.production.yaml
+          -f compose.hosted-acceptance.yaml up --build --detach --wait --wait-timeout 180
+          api worker
+
+      - name: Verify interrupted tus resume
+        working-directory: services/community
+        run: npm run acceptance:tus-deployed
+
+      - name: Recreate services while preserving state
+        working-directory: services/community
+        run: |
+          docker compose -f compose.yaml -f compose.production.yaml \
+            -f compose.hosted-acceptance.yaml down --remove-orphans
+          docker compose -f compose.yaml -f compose.production.yaml \
+            -f compose.hosted-acceptance.yaml up --detach --wait --wait-timeout 180 api worker
+
+      - name: Verify two-user publish, install, play, moderation, and offline journey
+        working-directory: services/community
+        run: npm run acceptance:deployed
+
+      - name: Upload redacted acceptance receipts
+        if: success()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: community-hosted-acceptance-receipts
+          path: services/community/hosted-acceptance-evidence/*.json
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Show bounded service logs on failure
+        if: failure()
+        working-directory: services/community
+        run: >-
+          docker compose -f compose.yaml -f compose.production.yaml
+          -f compose.hosted-acceptance.yaml logs --no-color --tail 300
+          auth-migrate preflight api worker
+
+      - name: Remove acceptance containers and volumes
+        if: always()
+        working-directory: services/community
+        run: >-
+          docker compose -f compose.yaml -f compose.production.yaml
+          -f compose.hosted-acceptance.yaml down --volumes --remove-orphans
