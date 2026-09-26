@@ -8,12 +8,12 @@ release claims.
 ## Candidate identity
 
 - Merged framework source: PR #465, merged 25 September 2026.
-- Rebased hardening base: `e11bf150fa7b6201a17ca6e4e51a0623b4eb88b4` (`main`, source version
-  `0.131.0`).
+- Rebased hardening base: `e3ed95c73dc08a31360addb28866420c365e8647` (`main`, source version
+  `0.132.0`).
 - Hardening checkpoint before this acceptance refresh:
-  `93c82eff2e2367803b943c9256f0477de21f1c97`.
-- Release version: unassigned. The follow-up preserves `0.131.0` while under review and must not
-  create or downgrade a release identity.
+  `96d4157e4e61158b90a1754208b6ab0317b41d4a`.
+- Assigned release target: `v0.141.0` in PR #564. The working source remains `0.132.0` until the
+  repository release coordinator freezes the reviewed candidate.
 
 The candidate contains no uploaded creator image or video fixtures and no generated distribution
 output. Its largest new source asset is the pinned, licensed Mediabunny browser module.
@@ -41,7 +41,11 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   support direct verified Couch file launch, immutable SHA-256 installation, fresh-session library
   discovery, replay-verified launch, exact unfinished-attempt recovery, stale-tab rejection and
   edition-scoped legal-clear progress. The bounded binary Team media format binds one exact picture
-  per level and an optional inspected victory video to the complete installed edition identity.
+  per level and an optional inspected victory video to the complete installed edition identity. A
+  browser creator generates and verifies the cooperative pack, normalizes exact reward derivatives,
+  shows each media binding/range and shared-storage requirement, invalidates stale approvals, and
+  installs or exports the reviewed `.rlteammedia` bytes. Team payloads participate in the shared
+  256 MiB managed-media ledger through recoverable pending/committed claims.
 - Playback ranges and decoded-frame stepping stay separate from physical editing. Physical
   trim/conversion is enabled only for one silent browser-decodable MP4 or WebM video track, exports
   AVC/H.264 MP4, and re-verifies changed bytes, duration, reviewed dimensions, MIME, hash,
@@ -51,23 +55,29 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 
 ## Integrated evidence
 
-- `npm run test:creator-feature`: **516/516** creator/runtime checks and **43/43** community-service
-  checks passed from the current combined source.
+- `npm run test:creator-feature`: **520/520** creator/runtime checks and **43/43** community-service
+  checks passed from the current rebased source. The full runtime run first exposed five sparse
+  checkout omissions and three injected-host database-model conflicts; the exact owning cohorts
+  passed after restoring the release inputs and limiting automatic cross-database accounting to a
+  standard browser IndexedDB factory. Explicit managed-store injection remains covered.
 - Community Fastify, Better Auth, tus, validation-worker, storage, admission, moderation, recovery,
   account mail, report-race, exact-blob, and store-client coverage is included in that **43/43**
   service result. The decoder-failure regression also proves its opened package stream is closed.
-- Installed Team/media/import/library focused integration cohort: **23/23 passed**; the strict Team
-  media contract passes its own **7/7** package, install, intake and picture-lease cases.
+- The current focused Team/shared-ledger/UI cohort passes **43/43**, including exact picture
+  normalization, package/install/intake, aggregate quota pressure, abandoned-claim reconciliation,
+  storage review and immutable edition accounting. The complete exact-head creator cohort passes
+  **520/520** from one run after the final rebase and UI cancellation fix.
 - Rotated-orientation and physical-transform focused cohort: **50/50 passed**, with **114/114**
   across the expanded video/editor/intake/bundle group.
-- `npm run validate`: passed for 1,229 files; exact whole-spatial snapshot SHA-256
+- `npm run validate`: passed for 1,242 files; exact whole-spatial snapshot SHA-256
   `e62ef45089df1bbaea04cceb932949fbe8d29377a4eeefcac8280125006495b3`.
 - Root and community-service ESLint and Prettier checks: passed.
 - Native formatting, Motion Lab syntax, Field Kit producer check, and Field Kit readiness: passed.
 - Root and community dependency audits: zero reported vulnerabilities.
-- `npm run build`: passed for **1,277 files** at source version `0.131.0`; distribution SHA-256
-  `e8b7eee0805d85c4f2198fa29d5f44f7ab42dcaa84a09a78b9f59e43ffb3e608`.
-  Publication still requires an assigned release identity and a fresh immutable freeze.
+- The previous pre-rebase `npm run build` passed for **1,277 files** at source version `0.131.0`
+  with distribution SHA-256
+  `e8b7eee0805d85c4f2198fa29d5f44f7ab42dcaa84a09a78b9f59e43ffb3e608`. It is historical
+  evidence only. The exact v0.141.0 candidate build and immutable freeze remain PR/release gates.
 - Built-in-browser evidence in the phase records covers single-image completion, 12- and 50-image
   batches, cancel/resume and splitting, video-only victory playback, and verified silent-AVC trim.
   On the current combined source, a fresh picture generated a visible moving enemy and two collision
@@ -80,6 +90,13 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   edition `1ba2f4b1430e3a1f27118ccf71c4ad3d1433a7cdaee9d56e1e98b0fb9c948a52`, ordinary Custom play
   started successfully, wrote an unfinished-attempt checkpoint, and emitted no browser warnings or
   errors.
+- In the built-in browser on the rebased candidate, Team generation produced two purposeful levels
+  and 12 verified configurations. Two actual PNG files became exact 1152 × 576 review rewards; the
+  0.04 MiB picture-only package approved and installed as edition `7a8acc000fd1…`. Adding the real
+  six-second repository MP4 invalidated that approval, re-inspected the complete video, defaulted
+  the explicit 0–6 second range, and produced a 0.11 MiB review with three exact assets. A fresh
+  cache-busted visit repeated generation and picture review after the ledger integration and showed
+  0.05 MiB of shared managed storage in use with the package ready to install.
 
 ## Publication boundary
 
@@ -96,18 +113,17 @@ Fresh Team library visits discover each immutable edition, replay its qualificat
 restore exact unfinished attempts, reject stale writers, and retain exact picture identities in
 legal-clear receipts. Media editions revalidate every dependency before launch and offer optional
 Play, Skip and Replay after a win without blocking Next. The strict package API and playable intake
-are included; an end-user Team media assembly UI and aggregate accounting with the separate shared
-media database remain follow-ups.
+are included together with end-user assembly and aggregate managed-media accounting. Interrupted
+cross-database writes retain a bounded pending claim and reconcile it against the verified Team
+inventory on the next review, install or inventory read.
 
 Bounded silent MP4/WebM input can now be physically trimmed or converted to AVC MP4, with optional
 Balanced or Compact resize/compression profiles and exact output verification. Audio trimming,
 codecs outside each browser's successful decode probe, and broader conversion remain unsupported.
 Firefox, Safari, Balanced portrait and physical mobile media qualification remain unclaimed.
 
-PR #465 is merged. Ten later hardening commits plus this exact-head compatibility update are rebased onto current
-protected `main` in draft PR #564. Hosted preflight passed, while the release-ready gate correctly
-placed the PR on `release-train-hold`: v0.132.0–v0.138.0 are already reserved and this product change
-has no immutable slot. The branch preserves the current `0.131.0` source identity; the release owner
-assigns the next version only after queue and dependency review. Publication still requires
-an immutable freeze, artifact hashes, public online/offline verification, and a separately reviewed
+PR #465 is merged. The hardening branch is rebased onto current protected `main` in draft PR #564,
+which now has the repository-assigned target `v0.141.0`. The branch preserves the current `0.132.0`
+source identity until review. Publication still requires the full exact-head gates, review, an
+immutable freeze, artifact hashes, public online/offline verification, and a separately reviewed
 Pages selector update where applicable.

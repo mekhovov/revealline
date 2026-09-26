@@ -282,6 +282,66 @@ test('installed Team media editions retain the hash of the complete portable pay
   store.close();
 });
 
+test('Team installation reviews, claims and commits bytes in the shared managed-media ledger', async () => {
+  const f = await fixture(),
+    prepared = await prepareCreatorTeamMediaCampaign(f.gameplay, f.bindings, f.assets, f.options),
+    memory = managedIndexedDB(),
+    claims = [],
+    finalized = [],
+    reconciliations = [];
+  let items = [];
+  const managedStore = {
+      async reconcileExternalUsage(owner, next) {
+        reconciliations.push({ owner, next: structuredClone(next) });
+        items = next.map((item) => ({ ...item, state: 'committed' }));
+        return {
+          bytes: items.reduce((sum, item) => sum + item.bytes, 0),
+          usedBytes: items.reduce((sum, item) => sum + item.bytes, 4096),
+          limitBytes: 256 * 1024 * 1024,
+          overBudget: false,
+        };
+      },
+      async usage() {
+        const externalBytes = items.reduce((sum, item) => sum + item.bytes, 0);
+        return {
+          usedBytes: externalBytes + 4096,
+          externalBytes,
+          reservedBytes: 0,
+          limitBytes: 256 * 1024 * 1024,
+        };
+      },
+      async claimExternalUsage(claim) {
+        claims.push({ ...claim, signal: undefined });
+        items.push({ id: claim.id, bytes: claim.bytes, state: 'pending' });
+      },
+      async finalizeExternalUsage(claim) {
+        finalized.push({ ...claim, signal: undefined });
+        items = items.map((item) =>
+          item.id === claim.id ? { ...item, state: 'committed' } : item,
+        );
+      },
+      close() {},
+    },
+    store = createInstalledTeamCampaignStore({
+      indexedDB: memory.indexedDB,
+      now: () => 92,
+      managedStore,
+      ...f.options,
+    }),
+    review = await store.reviewInstall(prepared);
+  assert.equal(review.enoughManagedSpace, true);
+  assert.equal(review.stagingBytes, prepared.bytes);
+  const installed = await store.install(prepared);
+  assert.equal(claims.length, 1);
+  assert.equal(claims[0].owner, 'creator-team');
+  assert.equal(claims[0].id, installed.editionId);
+  assert.equal(claims[0].bytes, prepared.bytes);
+  assert.equal(finalized.length, 1);
+  await store.inventory();
+  assert.equal(reconciliations.at(-1).next[0].id, installed.editionId);
+  assert.equal((await store.reviewInstall(prepared)).stagingBytes, 0);
+});
+
 test('production Team intake recognizes media magic even when the browser omits MIME', async () => {
   const f = await fixture(),
     prepared = await prepareCreatorTeamMediaCampaign(f.gameplay, f.bindings, f.assets, f.options),
