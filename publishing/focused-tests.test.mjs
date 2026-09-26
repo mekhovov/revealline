@@ -48,15 +48,14 @@ test("Team picture authority changes avoid the broad navigation matrix", () => {
     manifest,
   );
   assert.deepEqual(plan.categories, ["team-picture-bindings"]);
-  assert.deepEqual(plan.unknownRuntime.sort(), [
-    "game/build-config.json",
-    "package-lock.json",
-    "package.json",
-  ]);
+  assert.deepEqual(plan.unknownRuntime, []);
   assert.deepEqual(
     plan.commands.map(({ id }) => id),
-    ["team-picture-bindings", "unknown-runtime-validate"],
+    ["team-picture-bindings"],
   );
+  assert.deepEqual(plan.deferredTests, [
+    "game/test/coop-reviewed-successor-picture.test.mjs",
+  ]);
 });
 
 test("other Team runtime paths retain the navigation gate", () => {
@@ -67,7 +66,12 @@ test("other Team runtime paths retain the navigation gate", () => {
 
 test("documentation-only changes have a zero-command bounded plan", () => {
   const plan = focusedTestPlan(["docs/fast-release-mode.md"], manifest);
-  assert.deepEqual(plan, { categories: [], unknownRuntime: [], commands: [] });
+  assert.deepEqual(plan, {
+    categories: [],
+    unknownRuntime: [],
+    deferredTests: [],
+    commands: [],
+  });
 });
 
 test("changed test files are executed directly without shell evaluation", () => {
@@ -85,6 +89,21 @@ test("manifest-declared changed tests are not executed twice", () => {
     ["game/test/coop-picture-bindings.test.mjs"],
     manifest,
   );
+  assert.deepEqual(
+    plan.commands.map(({ id }) => id),
+    ["team-picture-bindings"],
+  );
+});
+
+test("explicit long historical matrices stay deferred and are reported truthfully", () => {
+  const plan = focusedTestPlan(
+    ["game/test/coop-reviewed-successor-picture.test.mjs"],
+    manifest,
+  );
+  assert.deepEqual(plan.categories, ["team-picture-bindings"]);
+  assert.deepEqual(plan.deferredTests, [
+    "game/test/coop-reviewed-successor-picture.test.mjs",
+  ]);
   assert.deepEqual(
     plan.commands.map(({ id }) => id),
     ["team-picture-bindings"],
