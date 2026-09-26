@@ -46,6 +46,14 @@ code. A conflict-free behind branch is updated using its expected head SHA, then
 clean exact head is armed for merge-commit auto-merge. A changed head, milestone, hold label,
 unmerged `Depends on #…` predecessor, or changes-requested review disarms an existing request.
 
+Ordinary pull requests always use protected exact-head auto-merge. A real GitHub pull-request stack
+uses the asynchronous merge API only when its reviewed top pull request also has the
+`fastline-stack-merge` label. The request supplies the exact head SHA and merge-commit method, then
+polls the bounded result. If GitHub's preview stack endpoint rejects the request, the controller
+fails closed because GitHub does not support auto-merge for stacked pull requests. A `409` carrying
+an existing request UUID is resumed and polled; no duplicate stack request is created. Logical
+`Depends on #…` ordering alone does not opt a pull request into the stack API.
+
 Every pull request targeting `main` reports the aggregate `release-ready` context, including
 documentation-only changes. Do not restore pull-request path filters on that workflow while the
 context is required: GitHub leaves a filtered required check pending instead of treating it as a
