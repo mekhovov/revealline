@@ -1121,65 +1121,109 @@ test('programmatic Collection after a real win does not refocus a hidden opener'
 });
 
 for (const origin of ['title', 'paused flight'])
-  for (const [opener, dialogId] of [
-    ['shell-library', 'library-dialog'],
-    ['shell-help', 'help-dialog'],
-  ])
-    test(`${origin} Workshop ${opener} returns through actual openers for button, Escape and controller Back`, async (t) => {
-      nativeDialogs(t);
-      const h = await soloPage(t, { titleScreen: origin === 'title' }),
-        pad = controllerPad(h, t);
-      if (origin === 'paused flight') {
-        h.$('start-button').click();
-        await settle(() => h.doc.body.dataset.flightState === 'running');
-        h.key('ArrowDown');
-        for (let i = 0; i < 24; i++) h.frame();
-        h.key('ArrowDown', false);
-        h.$('overlay-menu').click();
-        assert.equal(h.rendered.run.player.cutting, true);
-      }
-      for (const exit of ['button', 'escape', 'controller']) {
-        h.$('shell-workshop').focus();
-        h.$('shell-workshop').click();
-        h.$(opener).focus();
-        h.$(opener).click();
-        pad.frame();
-        pad.frame();
-        const checkpoint = authoritativeCheckpoint(h.rendered.run),
-          stored = [...h.storage.map];
-        assert.equal(h.$('shell-home').open, true);
-        assert.equal(h.$('shell-workshop-dialog').open, true);
-        assert.equal(h.$(dialogId).open, true);
-        if (exit === 'controller') pad.pulse(1);
-        else if (exit === 'escape') nativeEscape(h.$(dialogId));
-        else h.$(dialogId).querySelector('[data-close]').click();
-        await Promise.resolve();
-        pad.frame();
-        assert.equal(h.$(dialogId).open, false);
-        assert.equal(h.$('shell-workshop-dialog').open, true);
-        assert.equal(h.doc.activeElement.id, opener);
-        assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
-        assert.deepEqual([...h.storage.map], stored);
-        pad.pulse(1);
-        await Promise.resolve();
-        assert.equal(h.$('shell-workshop-dialog').open, false);
-        assert.equal(h.$('shell-home').open, true);
-        assert.equal(h.doc.activeElement.id, 'shell-workshop');
-        assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
-        assert.deepEqual([...h.storage.map], stored);
-        pad.frame();
-      }
-      if (origin === 'paused flight') {
-        const checkpoint = authoritativeCheckpoint(h.rendered.run);
-        pad.pulse(1);
-        await Promise.resolve();
-        assert.equal(h.$('shell-home').open, false);
-        assert.equal(h.doc.activeElement.id, 'start-button');
-        assert.equal(h.rendered.paused, true);
-        assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
-      } else assert.equal(h.rendered.run.tick, 0);
-      assert.deepEqual(h.errors, []);
-    });
+  test(`${origin} Workshop Library returns through actual openers for button, Escape and controller Back`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: origin === 'title' }),
+      pad = controllerPad(h, t);
+    if (origin === 'paused flight') {
+      h.$('start-button').click();
+      await settle(() => h.doc.body.dataset.flightState === 'running');
+      h.key('ArrowDown');
+      for (let i = 0; i < 24; i++) h.frame();
+      h.key('ArrowDown', false);
+      h.$('overlay-menu').click();
+      assert.equal(h.rendered.run.player.cutting, true);
+    }
+    for (const exit of ['button', 'escape', 'controller']) {
+      h.$('shell-workshop').focus();
+      h.$('shell-workshop').click();
+      h.$('shell-library').focus();
+      h.$('shell-library').click();
+      pad.frame();
+      pad.frame();
+      const checkpoint = authoritativeCheckpoint(h.rendered.run),
+        stored = [...h.storage.map];
+      assert.equal(h.$('shell-home').open, true);
+      assert.equal(h.$('shell-workshop-dialog').open, true);
+      assert.equal(h.$('library-dialog').open, true);
+      if (exit === 'controller') pad.pulse(1);
+      else if (exit === 'escape') nativeEscape(h.$('library-dialog'));
+      else h.$('library-dialog').querySelector('[data-close]').click();
+      await Promise.resolve();
+      pad.frame();
+      assert.equal(h.$('library-dialog').open, false);
+      assert.equal(h.$('shell-workshop-dialog').open, true);
+      assert.equal(h.doc.activeElement.id, 'shell-library');
+      assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+      assert.deepEqual([...h.storage.map], stored);
+      pad.pulse(1);
+      await Promise.resolve();
+      assert.equal(h.$('shell-workshop-dialog').open, false);
+      assert.equal(h.$('shell-home').open, true);
+      assert.equal(h.doc.activeElement.id, 'shell-workshop');
+      assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+      assert.deepEqual([...h.storage.map], stored);
+      pad.frame();
+    }
+    if (origin === 'paused flight') {
+      const checkpoint = authoritativeCheckpoint(h.rendered.run);
+      pad.pulse(1);
+      await Promise.resolve();
+      assert.equal(h.$('shell-home').open, false);
+      assert.equal(h.doc.activeElement.id, 'start-button');
+      assert.equal(h.rendered.paused, true);
+      assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    } else assert.equal(h.rendered.run.tick, 0);
+    assert.deepEqual(h.errors, []);
+  });
+
+for (const origin of ['title', 'paused flight'])
+  test(`${origin} top-level How to play returns to its exact main-menu opener`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: origin === 'title' }),
+      pad = controllerPad(h, t);
+    if (origin === 'paused flight') {
+      h.$('start-button').click();
+      await settle(() => h.doc.body.dataset.flightState === 'running');
+      h.key('ArrowDown');
+      for (let i = 0; i < 24; i++) h.frame();
+      h.key('ArrowDown', false);
+      h.$('overlay-menu').click();
+      assert.equal(h.rendered.run.player.cutting, true);
+    }
+    for (const exit of ['button', 'escape', 'controller']) {
+      h.$('shell-help').focus();
+      h.$('shell-help').click();
+      pad.frame();
+      pad.frame();
+      const checkpoint = authoritativeCheckpoint(h.rendered.run),
+        stored = [...h.storage.map];
+      assert.equal(h.$('shell-home').open, true);
+      assert.equal(h.$('shell-workshop-dialog').open, false);
+      assert.equal(h.$('help-dialog').open, true);
+      if (exit === 'controller') pad.pulse(1);
+      else if (exit === 'escape') nativeEscape(h.$('help-dialog'));
+      else h.$('help-dialog').querySelector('[data-close]').click();
+      await Promise.resolve();
+      pad.frame();
+      assert.equal(h.$('help-dialog').open, false);
+      assert.equal(h.$('shell-home').open, true);
+      assert.equal(h.doc.activeElement.id, 'shell-help');
+      assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+      assert.deepEqual([...h.storage.map], stored);
+      pad.frame();
+    }
+    if (origin === 'paused flight') {
+      const checkpoint = authoritativeCheckpoint(h.rendered.run);
+      pad.pulse(1);
+      await Promise.resolve();
+      assert.equal(h.$('shell-home').open, false);
+      assert.equal(h.doc.activeElement.id, 'start-button');
+      assert.equal(h.rendered.paused, true);
+      assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    } else assert.equal(h.rendered.run.tick, 0);
+    assert.deepEqual(h.errors, []);
+  });
 
 for (const origin of ['title', 'paused flight'])
   test(`Workshop Library explicit challenge selection leaves retained parents from ${origin}`, async (t) => {
