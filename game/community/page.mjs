@@ -134,6 +134,8 @@ function render() {
     const flags = document.createElement('p');
     if (edition.installed)
       flags.append(text('span', localizedMessage('common:status.installed'), 'badge'));
+    if (edition.offloaded)
+      flags.append(text('span', localizedMessage('interface:community.mediaOffloaded'), 'badge'));
     if (edition.packageRetained)
       flags.append(text('span', localizedMessage('interface:community.offlineCopy'), 'badge'));
     if (edition.updateAvailable)
@@ -186,6 +188,16 @@ function render() {
       if (edition.packageRetained)
         actions.append(
           action(
+            localizedMessage('interface:community.offloadInstalledMedia'),
+            async () => {
+              const review = await library.reviewInstalledOffload(edition);
+              await library.offloadInstalled(edition, review);
+              status(localizedMessage('interface:community.installedMediaOffloaded'));
+              await refresh({ reset: true });
+            },
+            'secondary',
+          ),
+          action(
             localizedMessage('interface:community.removeRecoveryDownload'),
             async () => {
               const review = await library.reviewDownloadRemoval(edition);
@@ -212,13 +224,15 @@ function render() {
       actions.append(
         action(
           localizedMessage(
-            edition.updateAvailable
-              ? 'interface:community.downloadUpdate'
-              : 'interface:community.downloadAndInstall',
+            edition.offloaded
+              ? 'interface:community.reinstallExactEdition'
+              : edition.updateAvailable
+                ? 'interface:community.downloadUpdate'
+                : 'interface:community.downloadAndInstall',
           ),
           async () => {
             status(localizedMessage('interface:community.downloading', { title: edition.title }));
-            await library.install(edition, { offline: false });
+            await library.install(edition, { offline: edition.offloaded });
             status(
               localizedMessage('interface:community.installedOffline', { title: edition.title }),
             );

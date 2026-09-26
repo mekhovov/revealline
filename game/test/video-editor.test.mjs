@@ -34,6 +34,52 @@ const exactAudioInspection =
     videoTrackCount: 1,
     videoCodecs: [videoCodec || (blob.type === 'video/webm' ? 'vp9' : 'avc')],
   });
+const exactAacInspection =
+  ({ outputBytes, outputDuration = 4, outputEndOffset = 0, outputRms = 0.2 } = {}) =>
+  async (blob, { range } = {}) => {
+    const bytes = Buffer.from(await blob.arrayBuffer()),
+      output = outputBytes ? bytes.equals(outputBytes) : false,
+      duration = output ? outputDuration : info.durationSeconds,
+      selected = range ?? { startSeconds: 0, endSeconds: duration },
+      windowDuration = Math.min(
+        0.12,
+        Math.max(0.04, (selected.endSeconds - selected.startSeconds) * 0.04),
+      );
+    return {
+      format: AUDIO_TRACK_INSPECTION_FORMAT,
+      bytes: blob.size,
+      sha256: digest(bytes),
+      audioTrackCount: 1,
+      codecs: ['aac'],
+      videoTrackCount: 1,
+      videoCodecs: ['avc'],
+      audioTimelines: [
+        {
+          codec: 'aac',
+          sampleRate: 48_000,
+          numberOfChannels: 1,
+          canDecode: true,
+          trackStartSeconds: 0,
+          trackEndSeconds: duration + (output ? outputEndOffset : 0),
+          inspectedRange: { ...selected },
+          windows: [0.2, 0.5, 0.8].map((fraction) => {
+            const center =
+                selected.startSeconds + (selected.endSeconds - selected.startSeconds) * fraction,
+              startSeconds = center - windowDuration / 2,
+              endSeconds = center + windowDuration / 2;
+            return {
+              startSeconds,
+              endSeconds,
+              decodedStartSeconds: startSeconds,
+              decodedEndSeconds: endSeconds,
+              frameCount: Math.round(windowDuration * 48_000),
+              channels: [{ rms: output ? outputRms : 0.2, meanAbsolute: 0.18, peak: 0.3 }],
+            };
+          }),
+        },
+      ],
+    };
+  };
 const exactVisualInspection = async ({ sourceInfo, outputInfo, range }) => ({
   format: VISUAL_TRIM_INSPECTION_FORMAT,
   sourceSha256: sourceInfo.sha256,
@@ -704,7 +750,7 @@ test('physical trim fails closed without exact-byte audio-track inspection', asy
   assert.equal(adapterSupport, 0);
 });
 
-test('audio-bearing source is rejected before adapter capability or conversion', async () => {
+test('audio-bearing source without decoded timeline evidence is rejected before conversion', async () => {
   let adapterSupport = 0;
   const boundary = createOptionalPhysicalTrimBoundary({
     loadAdapter: async () => ({
@@ -721,7 +767,7 @@ test('audio-bearing source is rejected before adapter capability or conversion',
     range: { startSeconds: 1, endSeconds: 5 },
   });
   assert.equal(capability.supported, false);
-  assert.match(capability.reason, /contains audio.*timing and synchronization/i);
+  assert.match(capability.reason, /decoded AAC audio track/i);
   assert.equal(adapterSupport, 0);
 });
 
@@ -760,8 +806,88 @@ test('audio-bearing output is withheld even when the adapter claims verified syn
       startSeconds: 1,
       endSeconds: 5,
     }),
-    /output contains audio without decoded timing and synchronization evidence/,
+    /added an unexpected audio track/,
   );
+});
+
+test('AVC plus AAC trim publishes only after decoded PCM windows and A/V endpoints match', async () => {
+  const outputBytes = Buffer.from('verified avc plus aac output'),
+    inspectAudio = exactAacInspection({ outputBytes });
+  const boundary = createOptionalPhysicalTrimBoundary({
+    loadAdapter: async () => ({
+      support: async () => ({ supported: true, formats: ['video/mp4'] }),
+      trim: async () => ({ blob: new Blob([outputBytes], { type: 'video/mp4' }) }),
+    }),
+    inspectVideo: async (blob) => {
+      const bytes = Buffer.from(await blob.arrayBuffer()),
+        output = bytes.equals(outputBytes);
+      return {
+        info: {
+          mime: 'video/mp4',
+          width: 640,
+          height: 360,
+          durationSeconds: output ? 4 : 6,
+          bytes: bytes.length,
+          sha256: digest(bytes),
+        },
+        dispose() {},
+      };
+    },
+    inspectAudio,
+    inspectVisual: exactVisualInspection,
+  });
+  const result = await boundary.trim(
+    new Blob([sourceBytes], { type: 'video/mp4' }),
+    info,
+    { startSeconds: 1, endSeconds: 5 },
+    { transform: 'compact' },
+  );
+  assert.equal(result.evidence.audioSync.status, 'verified');
+  assert.equal(
+    result.evidence.audioSync.verification,
+    'exact-byte-container-and-decoded-pcm-windows.v1',
+  );
+  assert.equal(result.evidence.audioSync.source.windows.length, 3);
+  assert.equal(result.evidence.audioSync.output.trackEndSeconds, 4);
+});
+
+test('AAC output is withheld on endpoint or decoded PCM fingerprint drift', async () => {
+  for (const [inspectionOptions, message] of [
+    [{ outputEndOffset: 0.5 }, /endpoints do not align/],
+    [{ outputRms: 0.5 }, /fingerprint differs/],
+  ]) {
+    const outputBytes = Buffer.from(`bad audio ${JSON.stringify(inspectionOptions)}`),
+      boundary = createOptionalPhysicalTrimBoundary({
+        loadAdapter: async () => ({
+          support: async () => ({ supported: true, formats: ['video/mp4'] }),
+          trim: async () => ({ blob: new Blob([outputBytes], { type: 'video/mp4' }) }),
+        }),
+        inspectVideo: async (blob) => {
+          const bytes = Buffer.from(await blob.arrayBuffer()),
+            output = bytes.equals(outputBytes);
+          return {
+            info: {
+              mime: 'video/mp4',
+              width: 640,
+              height: 360,
+              durationSeconds: output ? 4 : 6,
+              bytes: bytes.length,
+              sha256: digest(bytes),
+            },
+            dispose() {},
+          };
+        },
+        inspectAudio: exactAacInspection({ outputBytes, ...inspectionOptions }),
+        inspectVisual: exactVisualInspection,
+      });
+    await assert.rejects(
+      boundary.trim(new Blob([sourceBytes], { type: 'video/mp4' }), info, {
+        startSeconds: 1,
+        endSeconds: 5,
+      }),
+      message,
+    );
+  }
 });
 
 test('non-AVC output is withheld even when the adapter claims AVC conversion', async () => {

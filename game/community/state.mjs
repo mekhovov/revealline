@@ -36,7 +36,7 @@ const validate = (source) => {
         item.slug.length <= 64 &&
         typeof item.version === 'string' &&
         item.version.length <= 64 &&
-        ['staged', 'installed'].includes(item.installation) &&
+        ['staged', 'installed', 'offloading', 'offloaded'].includes(item.installation) &&
         (item.installedAt === null ||
           (typeof item.installedAt === 'string' &&
             Number.isFinite(Date.parse(item.installedAt)))) &&

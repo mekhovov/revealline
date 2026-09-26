@@ -235,7 +235,7 @@
   "videoPoster.bitrateTarget": "{{bitrate}} Mbit/s target",
   "videoPoster.optionalPhysicalTrim": "Optional physical trim, resize and compression",
   "videoPoster.physicalTrimHelp": "Choose a bounded output plan. RevealLine checks the exported hash, decoded duration, exact output dimensions and codec, audio tracks, and fresh start/end frame comparisons before offering a download.",
-  "videoPoster.trimSupportUnchecked": "Converter support has not been checked. The pinned converter loads only after you ask; the supported slice is one silent browser-decodable MP4 or WebM video track, exported as AVC/H.264 MP4.",
+  "videoPoster.trimSupportUnchecked": "Converter support has not been checked. The pinned converter loads only after you ask; the supported slice is one silent browser-decodable MP4/WebM video track or one AVC+AAC MP4, exported as AVC/H.264 MP4 with verified AAC when present.",
   "videoPoster.checkTrimSupport": "Check trim/conversion support",
   "videoPoster.trimVideo": "Transform video",
   "videoPoster.noPhysicalTrim": "No transformed video has been produced. Playback range keeps the complete original video.",
