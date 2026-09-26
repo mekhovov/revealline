@@ -6,10 +6,10 @@ Status date: 2026-09-26
 
 - Public release baseline: **v0.132.3**; v0.132.4 is in immutable-package qualification.
 - Exact terminal v0.132.4 source base: `origin/main` at
-  `9289184d8c36c85261493b8a31ba36e8ffb931ee`.
+  `fad132a054a10f27198751bfeb7c02ba340cfbfb`.
 - Cultural redesign stack: rebased onto that exact base and force-updated with guarded leases.
 - Latest reviewed predecessor: draft PR #621, Sentinel v24, clean and mergeable at
-  `cfabe802facf46993bd03efffa20c43607074fb0`.
+  `49be614ed0c718fc30cc32a813c7a68f86fa2ddd`.
 - Active successor: draft PR #625, Apex v25 / source version **0.140.0**. The PR's GitHub head is
   authoritative after guarded restacks.
 - None of v12-v25 is a public delivery until its own PR, immutable release and Pages build complete.
