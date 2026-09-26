@@ -1132,6 +1132,15 @@ try {
           }),
         );
         await batch.resume(reopened.resumeItemIds);
+        const restoredReview = batch.snapshot();
+        status(
+          localizedMessage(
+            restoredReview.ready
+              ? 'interface:creator.levelsReady'
+              : 'interface:creator.batchSelected',
+            { count: restoredReview.included },
+          ),
+        );
       }
     }
   }
@@ -1150,6 +1159,7 @@ $('image').multiple = batchEnabled;
 if (batchEnabled) {
   localizedText($('choose-title'), () => t('interface:creator.chooseMediaHeading'));
   localizedText($('intake-help'), () => t('interface:creator.dropMediaHelp'));
-  status(localizedMessage('interface:creator.chooseMediaToBegin'));
+  if (!content && !batchMode && !mediaMode)
+    status(localizedMessage('interface:creator.chooseMediaToBegin'));
 }
 controls();
