@@ -23,6 +23,11 @@ on:
         required: false
         default: false
         type: boolean
+      force_snapshot:
+        description: Build a run-owned frozen artifact even when an exact manual snapshot already exists
+        required: false
+        default: false
+        type: boolean
     outputs:
       version:
         description: Exact frozen version with the v prefix
@@ -84,6 +89,7 @@ jobs:
         env:
           EVENT_NAME: ${{ github.event_name }}
           OPERATION: ${{ inputs.operation || 'qualify' }}
+          FORCE_SNAPSHOT: ${{ inputs.force_snapshot && 'true' || 'false' }}
           SOURCE_REF: ${{ github.ref }}
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -93,6 +99,15 @@ jobs:
             exit 1
           fi
           if [ "$EVENT_NAME" != workflow_dispatch ] || [ "$OPERATION" != qualify ]; then
+            echo 'should_qualify=true' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # A guarded publisher must own the frozen artifact it later binds,
+          # inspects and resumes. An earlier manual snapshot remains valid
+          # evidence, but cannot satisfy that run-ownership boundary.
+          if [ "$FORCE_SNAPSHOT" = true ]; then
+            echo 'The caller requires a run-owned frozen snapshot; bypassing manual deduplication.'
             echo 'should_qualify=true' >> "$GITHUB_OUTPUT"
             exit 0
           fi
