@@ -183,6 +183,51 @@ test('two connections cannot reserve the same free capacity; reservation account
   assert.match(results.find((r) => r.status === 'rejected').reason.message, /256 MiB/);
   assert.equal((await b.usage()).reservations, 1);
 });
+test('external Team editions share reservation capacity and recover abandoned claims', async () => {
+  const { manager } = setup(),
+    initial = await manager.usage();
+  await manager.claimExternalUsage({
+    owner: 'creator-team',
+    id: 'a'.repeat(64),
+    bytes: 150 * 1024 * 1024,
+  });
+  let summary = await manager.externalUsageSummary('creator-team');
+  assert.equal(summary.items[0].state, 'pending');
+  assert.equal(summary.bytes, 150 * 1024 * 1024);
+  assert.equal((await manager.usage()).externalBytes, summary.bytes);
+  await assert.rejects(
+    manager.reserve({
+      domain: 'media',
+      expectedGeneration: 0,
+      maxNewBytes: 110 * 1024 * 1024,
+    }),
+    /256 MiB/,
+  );
+  await manager.finalizeExternalUsage({
+    owner: 'creator-team',
+    id: 'a'.repeat(64),
+    bytes: 150 * 1024 * 1024,
+  });
+  summary = await manager.externalUsageSummary('creator-team');
+  assert.equal(summary.items[0].state, 'committed');
+  const reconciled = await manager.reconcileExternalUsage('creator-team', [
+    { id: 'b'.repeat(64), bytes: 1024 },
+  ]);
+  assert.equal(reconciled.bytes, 1024);
+  assert.equal(reconciled.overBudget, false);
+  assert.ok((await manager.usage()).usedBytes < initial.usedBytes + 2048);
+  await manager.claimExternalUsage({
+    owner: 'creator-team',
+    id: 'c'.repeat(64),
+    bytes: 2048,
+  });
+  await manager.reconcileExternalUsage('creator-team', [{ id: 'b'.repeat(64), bytes: 1024 }]);
+  summary = await manager.externalUsageSummary('creator-team');
+  assert.deepEqual(
+    summary.items.map(({ id, state }) => ({ id, state })),
+    [{ id: 'b'.repeat(64), state: 'committed' }],
+  );
+});
 test('active media reservation constrains P3 audio even with otherManagedBytes zero', async () => {
   const { memory, manager } = setup(),
     store = createSoundtrackStore({ managedStore: manager });
