@@ -100,9 +100,10 @@ test("source qualification retains mandatory guards and restorable suites while 
     legacy.indexOf("  workflow_dispatch:"),
   );
   assert.match(pullRequestTrigger, /branches: \[main\]/);
-  for (const event of ["opened", "synchronize", "reopened", "edited"])
+  for (const event of ["opened", "synchronize", "reopened"])
     assert.match(pullRequestTrigger, new RegExp(`\\b${event}\\b`, "u"));
   assert.doesNotMatch(pullRequestTrigger, /\\bready_for_review\\b/u);
+  assert.doesNotMatch(pullRequestTrigger, /\\bedited\\b/u);
   for (const metadataEvent of [
     "labeled",
     "unlabeled",
