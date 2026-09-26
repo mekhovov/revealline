@@ -274,8 +274,8 @@ test('registered v14 successor preserves v13 order and uses isolated progress ow
   assert(authoredJourneyUsesActorMaterials(current.id));
   assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v22',
-    versus: 'whole-spatial-v22',
+    solo: 'whole-spatial-v23',
+    versus: 'whole-spatial-v23',
     team: 'team-trail-impact-originals-1',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v14');
@@ -314,7 +314,7 @@ test('Studio retains v13 and v14 after the selector advances to v20', async () =
     options
       .filter((node) => attribute(node, 'selected') !== undefined)
       .map((node) => attribute(node, 'value')),
-    ['phaseworks-cultural-routes-1'],
+    ['crosswind-cultural-routes-1'],
   );
   assert.match(html, /journey=whole-spatial-v14/);
   assert.match(script, /'early-cultural-routes-1': createEarlyCulturalRoutesCandidates/);
