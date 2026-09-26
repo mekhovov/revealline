@@ -1,6 +1,10 @@
-# Phase 3 acceptance — candidate, not released
+# Phase 3 acceptance — integrated source record
 
-Status: the mixed-media creator, portable video dependencies and installed runtime are implemented on `codex/creator-phase3-integration`. A release version has not been allocated. Phase 3 remains dependent on the separate Phase 1 and Phase 2 releases.
+Status: the mixed-media creator, portable video dependencies and installed runtime are implemented
+and merged through PR [#465](https://github.com/mekhovov/revealline/pull/465). The combined creator
+feature is assigned to `v0.141.0` in PR
+[#564](https://github.com/mekhovov/revealline/pull/564). This record preserves the Phase 3 evidence;
+the browser cases below and the combined immutable release remain open.
 
 ## Completed evidence
 
@@ -23,7 +27,8 @@ Status: the mixed-media creator, portable video dependencies and installed runti
 ## Remaining acceptance gates
 
 - Verify audible output on physical target browsers, reload during/after story playback, exact package download/import on a fresh origin, full-video byte/hash retention, nondefault playback-range behavior, missing-original recovery and an explicitly unsupported codec.
-- Run hosted full-checkout preflight/build/release-ready checks on the final stacked branch, then rebase and release only after the dependent phases publish.
+- Complete hosted full-checkout preflight/build/release-ready checks on the combined PR, then freeze,
+  publish and publicly verify the assigned `v0.141.0` release.
 - Firefox, Safari, a genuinely clean browser profile and physical mobile remain untested. The user directed use of the built-in browser when Safari computer control was unavailable.
 
 Physical trimming and conversion are not claimed by this phase. Playback range retains the complete original video.
