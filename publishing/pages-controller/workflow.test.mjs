@@ -2,6 +2,49 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 
+test("active workflows pin reviewed Node 24 action runtimes without implicit npm caching", async () => {
+  const directory = new URL("../../.github/workflows/", import.meta.url);
+  const files = (await fs.readdir(directory)).filter((name) =>
+    /\.ya?ml$/u.test(name),
+  );
+  const pins = new Map([
+    ["checkout", "fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09"],
+    ["setup-node", "a0853c24544627f65ddf259abe73b1d18a591444"],
+    ["upload-artifact", "b7c566a772e6b6bfb58ed0dc250532a479d7789f"],
+    ["download-artifact", "37930b1c2abaa49bbe596cd826c3c89aef350131"],
+    ["deploy-pages", "368f82528645a54fb793d4d04e342629a3f51346"],
+    ["github-script", "ed597411d8f924073f98dfc5c65a23a2325f34cd"],
+  ]);
+  const seen = new Map([...pins.keys()].map((name) => [name, 0]));
+
+  for (const file of files) {
+    const workflow = await fs.readFile(new URL(file, directory), "utf8");
+    for (const match of workflow.matchAll(
+      /uses:\s+actions\/(checkout|setup-node|upload-artifact|download-artifact|deploy-pages|github-script)@([^\s#]+)/gu,
+    )) {
+      const [, action, revision] = match;
+      assert.equal(revision, pins.get(action), `${file}: actions/${action}`);
+      seen.set(action, seen.get(action) + 1);
+    }
+    const setupCount = (
+      workflow.match(/uses:\s+actions\/setup-node@/gu) || []
+    ).length;
+    const explicitCachePolicyCount = (
+      workflow.match(
+        /uses:\s+actions\/setup-node@[^\n]+\n\s+with:\n\s+package-manager-cache:\s+false/gu,
+      ) || []
+    ).length;
+    assert.equal(
+      explicitCachePolicyCount,
+      setupCount,
+      `${file}: every setup-node step must refuse newly implicit caching`,
+    );
+  }
+
+  for (const [action, count] of seen)
+    assert.ok(count > 0, `No active actions/${action} use found`);
+});
+
 test("source qualification retains mandatory guards and restorable suites while controller owns publication", async () => {
   const legacy = await fs.readFile(
     new URL("../../.github/workflows/deploy-pages.yml", import.meta.url),

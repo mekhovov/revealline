@@ -60,8 +60,12 @@ engines, devices, or controllable failure injection. They do not change the acce
 - The v0.141.5 source receipt is `qualified-with-test-waiver`: five non-test release gates passed and
   the scoped community suite passed 103/103 locally; repository-wide suites were waived by the
   committed fast-release policy and are not represented as executed.
-- GitHub Actions reports Node 20 runtime deprecation warnings for some third-party actions. They are
-  nonblocking maintenance work.
+- Active GitHub workflows pin `actions/checkout` v5, `actions/setup-node` v5,
+  `actions/upload-artifact` v6, `actions/download-artifact` v7, `actions/deploy-pages` v5, and
+  `actions/github-script` v8 to exact reviewed commits. These releases use the Node 24 action
+  runtime. Setup steps disable the new implicit package-manager cache while retaining every
+  explicitly configured cache, so the maintenance does not broaden credential or dependency reuse.
+  Historical evidence snapshots remain unchanged.
 - The upstream MinIO repository is archived. The deterministic acceptance harness builds a pinned
   official source commit, which requires deliberate maintenance if the S3 test environment changes.
 - Broad media inputs continue to fail closed outside the released and verified codec boundary.
