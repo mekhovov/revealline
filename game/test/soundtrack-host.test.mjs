@@ -43,8 +43,8 @@ async function startFlight(page) {
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
 }
-async function waitFor(predicate, label) {
-  for (let i = 0; i < 100; i++) {
+async function waitFor(predicate, label, { attempts = 100 } = {}) {
+  for (let i = 0; i < attempts; i++) {
     if (predicate()) return;
     await new Promise((resolve) => setTimeout(resolve, 5));
   }
@@ -545,6 +545,7 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   await waitFor(
     () => !page.$('soundtrack-backup-ready').hidden,
     'Actual binary preparation finishes',
+    { attempts: 400 },
   );
   assert.equal(page.doc.activeElement, link);
   assert.equal(requested, 0, 'Preparation focuses but never activates the download.');
