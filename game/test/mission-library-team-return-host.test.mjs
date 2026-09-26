@@ -215,14 +215,14 @@ for (const route of [
     }
     assert.equal(pending.length, 1, 'Mode selection owns one remote metadata operation.');
     await pending[0];
-    assert.equal(f.$('journey-cards').children.length, 201);
+    assert.equal(f.$('journey-cards').children.length, 327);
     const selected = f.$('journey-cards').children[8];
     selected.focus();
     f.tap('Enter');
     await waitFor(() => f.visits.length === 1);
     const destination = new URL(f.visits[0]);
     assert.equal(destination.pathname, '/releases/v-test/game/');
-    assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v6');
+    assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v25');
     assert.equal(destination.searchParams.get('library-mission'), selected.dataset.missionId);
     assert.equal(destination.searchParams.get('return'), 'team');
     assert.equal(destination.searchParams.get('journey-return'), route);
