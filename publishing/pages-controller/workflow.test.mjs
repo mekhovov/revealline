@@ -100,14 +100,9 @@ test("source qualification retains mandatory guards and restorable suites while 
     legacy.indexOf("  workflow_dispatch:"),
   );
   assert.match(pullRequestTrigger, /branches: \[main\]/);
-  for (const event of [
-    "opened",
-    "synchronize",
-    "reopened",
-    "edited",
-    "ready_for_review",
-  ])
+  for (const event of ["opened", "synchronize", "reopened", "edited"])
     assert.match(pullRequestTrigger, new RegExp(`\\b${event}\\b`, "u"));
+  assert.doesNotMatch(pullRequestTrigger, /\\bready_for_review\\b/u);
   for (const metadataEvent of [
     "labeled",
     "unlabeled",
@@ -179,6 +174,13 @@ test("source qualification retains mandatory guards and restorable suites while 
     workflow,
     /pull_request_target|environment:.*preview|npm test/,
   );
+});
+
+test("public selector retains only the ten newest playable releases", async () => {
+  const publication = JSON.parse(
+    await fs.readFile(new URL("./publication.json", import.meta.url), "utf8"),
+  );
+  assert.equal(publication.retainedReleasesPerMajor, 10);
 });
 
 test("fast mode waives long suites while release source and publication guards stay mandatory", async () => {
