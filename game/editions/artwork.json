@@ -115,5 +115,44 @@
     "height": 887,
     "alt": "A fictional Dutch canal-side community workshop with violet benches and yellow lamps.",
     "review": "candidate"
+  },
+  {
+    "format": "AssetRevisionV1",
+    "id": "coupa-source-to-pay-02-picture",
+    "revision": "1",
+    "kind": "reveal-background",
+    "path": "editions/assets/coupa/choose-together-v1.png",
+    "sha256": "9fc3d2f24f59dc49d7ea72f5ae7e201b511da5a0ab9607f094f782919ebbe7b6",
+    "bytes": 3209122,
+    "width": 1774,
+    "height": 887,
+    "alt": "A fictional blue-and-white supplier market with three welcoming pavilions, parcels, canal bridges and two quiet central plazas.",
+    "review": "candidate"
+  },
+  {
+    "format": "AssetRevisionV1",
+    "id": "coupa-product-operations-02-picture",
+    "revision": "1",
+    "kind": "reveal-background",
+    "path": "editions/assets/coupa/repair-the-draft-v1.png",
+    "sha256": "a1edf3bae43ddeb0c1694dea868a0327ccfed038f64162d08839e84585e1e5e0",
+    "bytes": 2698028,
+    "width": 1774,
+    "height": 887,
+    "alt": "A fictional sunlit request workshop with a round review desk, blank cards, a blue folder, side workstations and a resting alcove.",
+    "review": "candidate"
+  },
+  {
+    "format": "AssetRevisionV1",
+    "id": "coupa-developer-integration-02-picture",
+    "revision": "1",
+    "kind": "reveal-background",
+    "path": "editions/assets/coupa/scoped-access-v1.png",
+    "sha256": "05865bd2f0a028ab582889736574e776876d0735a91c377dff3c89f04ff9b2a0",
+    "bytes": 3180834,
+    "width": 1774,
+    "height": 887,
+    "alt": "A fictional blue archive garden with two circular reading plazas, book-lined groves, glass drawers and white ribbon canopies.",
+    "review": "candidate"
   }
 ]

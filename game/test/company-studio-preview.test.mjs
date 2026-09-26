@@ -4,10 +4,20 @@ import {
   createCompanyWorkspaceFiles,
   compileCompanyWorkspace,
   companyStudioReport,
+  companySourceDraft,
+  companyDraftFiles,
 } from '../../scripts/company-studio.mjs';
 import { compileEdition } from '../../scripts/compile-edition.mjs';
 import { verifyStudioPreview } from '../../authoring/company-studio/preview.mjs';
-import { validateStudioReport, declaredJSONPaths } from '../../authoring/company-studio/model.mjs';
+import {
+  validateStudioReport,
+  declaredJSONPaths,
+  validateStudioDraft,
+  validateStudioHistory,
+} from '../../authoring/company-studio/model.mjs';
+import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
+import { canonicalJSON } from '../data-json.mjs';
+import { createHash } from 'node:crypto';
 import { loadRuntimeContentProvider } from '../runtime-content-provider.mjs';
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
 import { projectEditionGuideScenario } from '../editions/selected-presentation.mjs';
@@ -143,18 +153,26 @@ test('preview verification stops before activation on cancellation and oversized
 });
 
 test('focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits', async () => {
-  for (const editionId of ['coupa-adventure', 'droneaid-nl-workshop-lights']) {
+  for (const editionId of ['coupa-adventure', 'droneaid-nl-workshop-lights', 'coupa-foundations']) {
     const { catalog, result } = await compileCompanyWorkspace({ editionId });
     const files = new Map();
     const edition = catalog.editions.find((row) => row.id === editionId);
     const paths = [
       ...Object.values(edition.boot),
+      ...(edition.presentationHistory ?? []).map((record) => record.path),
       ...catalog.campaigns
         .filter((row) => edition.campaignIds.includes(row.id))
         .flatMap((row) => [row.sourcePath, ...(row.lessonPath ? [row.lessonPath] : [])]),
     ];
-    for (const path of paths)
-      files.set(path, JSON.parse(await readFile(new URL(`../../${path}`, import.meta.url))));
+    for (const path of paths) {
+      const text = await readFile(new URL(`../../${path}`, import.meta.url), 'utf8');
+      files.set(
+        path,
+        edition.presentationHistory?.some((record) => record.path === path)
+          ? text
+          : JSON.parse(text),
+      );
+    }
     const report = companyStudioReport(catalog, result, { previewURL: previewPath });
     const input = {
       catalog,
@@ -250,4 +268,79 @@ test('Studio CLI creates missing workspace parents while preserving new-only des
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
+});
+
+async function studioHistoryFixture() {
+  const f = await retainedEditionFixture({ originalArtwork: true });
+  f.replacePicture();
+  const bytes = Buffer.from(`\n ${f.binary.get(f.descriptor.path).toString('utf8')} \n`);
+  f.descriptor.bytes = bytes.length;
+  f.descriptor.sha256 = createHash('sha256').update(bytes).digest('hex');
+  f.binary.set(f.descriptor.path, bytes);
+  const files = new Map(
+    [...f.files].map(([path, data]) => [path, Buffer.from(canonicalJSON(data) + '\n')]),
+  );
+  for (const [path, data] of f.binary) files.set(path, data);
+  return { ...f, files, bytes };
+}
+
+test('Studio import/export preserves original retained JSON text and rejects modified, parsed or missing snapshots', async () => {
+  const f = await studioHistoryFixture();
+  const packet = companySourceDraft(f),
+    checked = validateStudioDraft(packet);
+  assert.equal(checked.files.get(f.descriptor.path), f.bytes.toString('utf8'));
+  await validateStudioHistory(checked.catalog, checked.files);
+  assert.deepEqual(companyDraftFiles(packet).files.get(f.descriptor.path), f.bytes);
+  const changed = new Map(checked.files).set(
+    f.descriptor.path,
+    '  ' + f.bytes.toString('utf8').slice(2),
+  );
+  await assert.rejects(validateStudioHistory(checked.catalog, changed), /hash differs/);
+  const parsed = structuredClone(packet);
+  parsed.files.find((file) => file.path === f.descriptor.path).data = JSON.parse(f.bytes);
+  assert.throws(() => validateStudioDraft(parsed), /original JSON text/);
+  const missing = structuredClone(packet);
+  missing.files = missing.files.filter((file) => file.path !== f.descriptor.path);
+  assert.throws(() => validateStudioDraft(missing), /every declared/);
+  const controller = new AbortController();
+  controller.abort();
+  await assert.rejects(
+    validateStudioHistory(checked.catalog, checked.files, { signal: controller.signal }),
+    { name: 'AbortError' },
+  );
+});
+
+test('Studio preview verifies historical-only media and immutable snapshots in its inventory and totals', async () => {
+  const f = await studioHistoryFixture();
+  for (const path of ['game/company.html', 'game/index.html'])
+    f.files.set(
+      path,
+      Buffer.from('<!doctype html><html><head><title>Fixture</title></head><body></body></html>'),
+    );
+  const result = await compileEdition({
+    catalog: f.catalog,
+    editionIds: ['sample-public'],
+    files: f.files,
+    enginePaths: ['game/company.html', 'game/index.html'],
+    validateCode: false,
+  });
+  const report = companyStudioReport(f.catalog, result, { previewURL: previewPath });
+  const draft = validateStudioDraft(companySourceDraft(f));
+  const input = {
+    catalog: f.catalog,
+    editionId: 'sample-public',
+    files: draft.files,
+    report,
+    baseURL,
+    fetcher: fetchFiles(result.files),
+  };
+  const verified = await verifyStudioPreview(input);
+  assert.equal(verified.summary.assets, result.runtimeCatalog.assets.length + 1);
+  assert.ok(!report.excluded.assetIds.includes('old-picture'));
+  const damaged = new Map(result.files);
+  damaged.set('game/editions/assets/old-picture.png', Buffer.from('wrong media'));
+  await assert.rejects(
+    verifyStudioPreview({ ...input, fetcher: fetchFiles(damaged) }),
+    /Artifact byte count differs/,
+  );
 });

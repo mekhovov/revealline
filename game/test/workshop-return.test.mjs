@@ -37,6 +37,39 @@ test('edition navigation retains the exact tool-return owner inside its installe
   assert.equal(target.hash, '#details');
 });
 
+test('retained presentation stays scoped across game and replay/controller tool returns', () => {
+  const doc = new Document(),
+    root = 'https://example.test/editions/sample/releases/v2/site/',
+    receipt = 'a'.repeat(64);
+  const links = [
+    '../index.html?presentation=foreign',
+    '../replay-theater/',
+    '../controller-lab/',
+  ].map((href) => {
+    const link = doc.createElement('a');
+    link.setAttribute('href', href);
+    doc.body.append(link);
+    return link;
+  });
+  mountEditionNavigation({
+    document: doc,
+    href: `${root}game/replay-theater/`,
+    provider: {
+      editionId: 'sample-public',
+      retainedPresentationId: receipt,
+      rootURL: root,
+      selection: { brand: { name: 'Sample' } },
+      href: () => `${root}game/index.html?edition=sample-public&presentation=${receipt}`,
+    },
+  });
+  for (const link of links) {
+    const url = new URL(link.href);
+    assert.equal(url.searchParams.get('presentation'), receipt);
+    assert.equal(url.searchParams.get('edition'), 'sample-public');
+    assert.ok(url.pathname.startsWith(new URL(root).pathname));
+  }
+});
+
 for (const prefix of [
   'http://localhost/',
   'https://example.test/releases/v0.69.3/site/',

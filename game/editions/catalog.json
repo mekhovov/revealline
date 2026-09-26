@@ -329,6 +329,33 @@
       "path": "game/editions/assets/coupa/wallpaper-center-2024.png",
       "publication": "public",
       "sha256": "f4e686a06ac0b4d36b6974797bab06fc5a80b3e69fbcc4ab99f98e3c37af4177"
+    },
+    {
+      "approved": true,
+      "bytes": 3209122,
+      "dependencies": [],
+      "id": "coupa-choose-together-v1",
+      "path": "game/editions/assets/coupa/choose-together-v1.png",
+      "publication": "public",
+      "sha256": "9fc3d2f24f59dc49d7ea72f5ae7e201b511da5a0ab9607f094f782919ebbe7b6"
+    },
+    {
+      "approved": true,
+      "bytes": 2698028,
+      "dependencies": [],
+      "id": "coupa-repair-the-draft-v1",
+      "path": "game/editions/assets/coupa/repair-the-draft-v1.png",
+      "publication": "public",
+      "sha256": "a1edf3bae43ddeb0c1694dea868a0327ccfed038f64162d08839e84585e1e5e0"
+    },
+    {
+      "approved": true,
+      "bytes": 3180834,
+      "dependencies": [],
+      "id": "coupa-scoped-access-v1",
+      "path": "game/editions/assets/coupa/scoped-access-v1.png",
+      "publication": "public",
+      "sha256": "05865bd2f0a028ab582889736574e776876d0735a91c377dff3c89f04ff9b2a0"
     }
   ],
   "brands": [
@@ -482,7 +509,7 @@
       "sourcePath": "game/content/company-campaigns/coupa-inside-village.json"
     },
     {
-      "assetIds": ["coupa-source-to-pay-key"],
+      "assetIds": ["coupa-source-to-pay-key", "coupa-choose-together-v1"],
       "brandId": "coupa",
       "id": "coupa-source-to-pay",
       "lessonPath": "game/content/company-campaigns/coupa-source-to-pay.lessons.json",
@@ -493,7 +520,7 @@
       "sourcePath": "game/content/company-campaigns/coupa-source-to-pay.json"
     },
     {
-      "assetIds": ["coupa-product-operations-key"],
+      "assetIds": ["coupa-product-operations-key", "coupa-repair-the-draft-v1"],
       "brandId": "coupa",
       "id": "coupa-product-operations",
       "lessonPath": "game/content/company-campaigns/coupa-product-operations.lessons.json",
@@ -504,7 +531,7 @@
       "sourcePath": "game/content/company-campaigns/coupa-product-operations.json"
     },
     {
-      "assetIds": ["coupa-network-atlas-v2"],
+      "assetIds": ["coupa-network-atlas-v2", "coupa-scoped-access-v1"],
       "brandId": "coupa",
       "id": "coupa-developer-integration",
       "lessonPath": "game/content/company-campaigns/coupa-developer-integration.lessons.json",
@@ -614,8 +641,16 @@
       "id": "coupa-all",
       "modes": ["solo"],
       "name": "Coupa Village",
+      "presentationHistory": [
+        {
+          "bytes": 146284,
+          "id": "ecb87b6208f6f55322188ab34d8d9aa63b94064dd346f400bbe2bbbcc9d7870b",
+          "path": "game/editions/retained/coupa-all.json",
+          "sha256": "a48dc47e3e788046de0094c7d34bd74eda0c8776f271131254e26f5ec12e5706"
+        }
+      ],
       "publication": "public",
-      "revision": 4
+      "revision": 5
     },
     {
       "audience": "public",
@@ -674,8 +709,16 @@
       "id": "coupa-foundations",
       "modes": ["solo"],
       "name": "From Need to Value",
+      "presentationHistory": [
+        {
+          "bytes": 46542,
+          "id": "57dd4d5b7e0f8c27662349a8af870862657d700682ac758ad51721a61fdd59aa",
+          "path": "game/editions/retained/coupa-foundations.json",
+          "sha256": "98d2a026fc89b48cbd76c2d2c2d74d491f666583ae819324f855ebd7f309dd90"
+        }
+      ],
       "publication": "public",
-      "revision": 4
+      "revision": 5
     },
     {
       "audience": "operators",
@@ -694,8 +737,16 @@
       "id": "coupa-operations",
       "modes": ["solo"],
       "name": "A Day in Coupa",
+      "presentationHistory": [
+        {
+          "bytes": 47693,
+          "id": "99254aaf116f5b68881ef51f36c7b5b9ebfbcf6cce371de90c8234c07862a43d",
+          "path": "game/editions/retained/coupa-operations.json",
+          "sha256": "716bcbd296e6053ca6628b8b55dada9c0489a8893c1044cbc24854899caf6e20"
+        }
+      ],
       "publication": "public",
-      "revision": 4
+      "revision": 5
     },
     {
       "audience": "developers",
@@ -714,8 +765,16 @@
       "id": "coupa-developers",
       "modes": ["solo"],
       "name": "Connect the Network",
+      "presentationHistory": [
+        {
+          "bytes": 50046,
+          "id": "72ede618c25678c324d39389b9789130c66bb05f461e900d367e9c3f2a878224",
+          "path": "game/editions/retained/coupa-developers.json",
+          "sha256": "ee4d10212133066658ae5543883a5e1def3602a5bc840874223b90bdccac9c06"
+        }
+      ],
       "publication": "public",
-      "revision": 4
+      "revision": 5
     },
     {
       "audience": "public",

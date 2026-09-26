@@ -12,6 +12,7 @@ import {
 } from '../replay-presentation.mjs';
 import { prepareReplayActorContext } from '../replay-actor-context.mjs';
 import { prepareRetainedActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
+import { acquireCandidatePicture, claimCandidatePicture } from '../content-design/picture.mjs';
 import { BoardPainter, boardPaintSizeForRun } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { attachReplayNavigation } from './navigation.mjs';
@@ -133,7 +134,7 @@ try {
       localizedText(
         explanation,
         () =>
-          'Company recordings require their exact actor and palette receipt. Raw recordings use the selected preview theme. Gameplay and results stay as recorded. Original pictures, music and interface are not restored; this theater is silent.',
+          'Company recordings require their exact original actors, palette and mission picture. Raw recordings use the selected preview theme. Gameplay and results stay as recorded. Music and the original interface are not restored; this theater is silent.',
       );
   }
   if (theaterDisposed) throw new DOMException(t('interface:theTheaterIsClosed'), 'AbortError');
@@ -149,6 +150,7 @@ try {
     painter = null,
     releasePresentationPainter = null,
     actorLease = null,
+    pictureLease = null,
     pending = false,
     epoch = 0,
     controller = null,
@@ -159,6 +161,7 @@ try {
     frameId = null,
     nativeUnsubscribe = null;
   const importStatus = createOperationStatus($('import-status'), { isCurrent: () => !disposed });
+  let retainedRecovery = null;
   disposeRecording = () => {
     if (disposed) return;
     disposed = true;
@@ -168,6 +171,9 @@ try {
     releasePresentationPainter?.();
     actorLease?.release();
     actorLease = null;
+    pictureLease?.release();
+    pictureLease = null;
+    retainedRecovery?.remove();
     globalThis.cancelAnimationFrame?.(frameId);
     nativeUnsubscribe?.();
   };
@@ -316,6 +322,8 @@ try {
   }
   async function load(getSource, label) {
     if (disposed) return;
+    retainedRecovery?.remove();
+    retainedRecovery = null;
     controller?.abort();
     const ticket = ++epoch;
     const nextController = new AbortController();
@@ -331,18 +339,25 @@ try {
     });
     importDisplay = display;
     let stagedActors = null,
-      stagedPainterRelease = null;
+      stagedPicture = null,
+      stagedPainterRelease = null,
+      retainedRequest = null;
     const releaseStaged = () => {
       stagedPainterRelease?.();
       stagedPainterRelease = null;
       stagedActors?.release();
       stagedActors = null;
+      stagedPicture?.release();
+      stagedPicture = null;
     };
     nextController.signal.addEventListener('abort', releaseStaged, { once: true });
     try {
       const source = await getSource(nextController.signal);
       if (!current()) return;
       const { envelope, replay } = readRecording(source);
+      const receipt = envelope?.actorAppearancePin.authoredPresentationSha256;
+      if (runtimeContent && receipt !== runtimeContent.authoredPresentationSha256)
+        retainedRequest = runtimeContent.presentationHistory.find((item) => item.id === receipt);
       display.update({
         message: t('interface:verifyingTheRecordingSExactInputTicks'),
         stage: 'verifying',
@@ -379,6 +394,22 @@ try {
           },
         );
         if (!current()) return;
+        if (actual.authoredBackground) {
+          display.update({
+            message: 'Verifying the recorded mission’s original picture…',
+            stage: 'decoding',
+            progress: null,
+          });
+          const picture = await acquireCandidatePicture(actual.authoredBackground, {
+            signal: nextController.signal,
+          });
+          if (!current()) {
+            picture.release();
+            return;
+          }
+          stagedPicture = picture;
+          claimCandidatePicture(actual.authoredBackground, picture);
+        }
       }
       let assetMessage = '';
       const nextPainter = new BoardPainter(presets, {
@@ -409,11 +440,14 @@ try {
       player = nextPlayer;
       releasePresentationPainter?.();
       actorLease?.release();
+      pictureLease?.release();
       painter = nextPainter;
       releasePresentationPainter = stagedPainterRelease;
       stagedPainterRelease = null;
       actorLease = stagedActors;
       stagedActors = null;
+      pictureLease = stagedPicture;
+      stagedPicture = null;
       if (actorLease?.pin().authoredPresentationSha256) $('theme').value = theme.id;
       lastClass = player.state.activeClassId;
       lastFrame = 0;
@@ -424,7 +458,9 @@ try {
       localizedText($('recorded-appearance'), () =>
         actorLease
           ? actorLease.pin().authoredPresentationSha256
-            ? 'Recorded company actors and palette match their exact artwork receipt. Original pictures, music and interface are not restored.'
+            ? pictureLease
+              ? 'Recorded company actors, palette and original mission picture match their exact artwork receipt. Music and the original interface are not restored.'
+              : 'Recorded company actors and procedural palette match their exact artwork receipt. This mission has no authored picture. Music and the original interface are not restored.'
             : t('interface:recordedFpvActorsExactActorReleaseRestoredPictureMusicAnd')
           : t('interface:rawReplayPreviewActorsAndSceneNoRecordedAppearanceIs'),
       );
@@ -436,11 +472,24 @@ try {
       );
       readouts();
     } catch (error) {
-      if (current())
+      if (current()) {
         display.finish({
           state: 'error',
           message: `Could not load recording: ${clipped(error.message, 300)} The previous recording is unchanged.`,
         });
+        if (retainedRequest) {
+          const link = document.createElement('a'),
+            target = new URL(location.href);
+          target.searchParams.set('edition', runtimeContent.editionId);
+          target.searchParams.set('presentation', retainedRequest.id);
+          link.href = target.href;
+          link.id = 'retained-recording-artwork';
+          link.textContent = 'Open the exact retained artwork, then import this recording again';
+          retainedRecovery = document.createElement('p');
+          retainedRecovery.append(link);
+          $('import-status').parentElement.append(retainedRecovery);
+        }
+      }
     } finally {
       nextController.signal.removeEventListener('abort', releaseStaged);
       releaseStaged();
@@ -591,6 +640,7 @@ try {
           showGrid: $('grid').checked,
           fullReveal: player.phase === 'complete' && player.state.status === 'won',
           celebrationPaused: document.hidden,
+          backdrop: pictureLease,
           actorAppearance: actorLease
             ? { style: actorLease.pin().style, snapshot: actorLease.snapshot }
             : null,

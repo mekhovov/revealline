@@ -160,7 +160,12 @@ async function journeyContext(envelope, options) {
     });
     return {
       scope: 'journey',
-      ...(authored ? { authoredPresentationSha256: authored.authoredPresentationSha256 } : {}),
+      ...(authored
+        ? {
+            authoredPresentationSha256: authored.authoredPresentationSha256,
+            authoredBackground: manifest.background,
+          }
+        : {}),
       content: await adapter.prepareHostSelection(
         {
           host,

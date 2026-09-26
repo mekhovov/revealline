@@ -12,10 +12,12 @@ export async function validateEditionProviderParity({ sourceFiles, catalog, comp
   const editionId = compiled.runtimeCatalog.editions[0].id;
   const source = new Map(sourceFiles);
   source.set('game/editions/catalog.json', Buffer.from(JSON.stringify(catalog)));
-  const load = async (files, selected) => {
+  const load = async (files, selected, presentation) => {
     const prefix = selected ? '/compiled/' : '/source/';
     return loadRuntimeContentProvider({
-      locationRef: { href: `https://edition.invalid${prefix}game/index.html?edition=${editionId}` },
+      locationRef: {
+        href: `https://edition.invalid${prefix}game/index.html?edition=${editionId}${presentation ? `&presentation=${presentation}` : ''}`,
+      },
       documentRef: { documentElement: { dataset: selected ? { editionId } : {} } },
       fetcher: async (request) => {
         const url = new URL(request);
@@ -37,5 +39,20 @@ export async function validateEditionProviderParity({ sourceFiles, catalog, comp
     player = await load(compiled.files, true);
   if (original.authoredPresentationSha256 !== player.authoredPresentationSha256)
     throw new Error('Source and compiled edition presentation receipts differ.');
-  return { editionId, authoredPresentationSha256: player.authoredPresentationSha256 };
+  const retained = [];
+  for (const descriptor of compiled.runtimeCatalog.editions[0].presentationHistory ?? []) {
+    const oldSource = await load(source, false, descriptor.id),
+      oldPlayer = await load(compiled.files, true, descriptor.id);
+    if (
+      oldSource.authoredPresentationSha256 !== descriptor.id ||
+      oldPlayer.authoredPresentationSha256 !== descriptor.id
+    )
+      throw new Error('Retained source and compiled edition presentation receipts differ.');
+    retained.push({ authoredPresentationSha256: descriptor.id });
+  }
+  return {
+    editionId,
+    authoredPresentationSha256: player.authoredPresentationSha256,
+    ...(retained.length ? { retained } : {}),
+  };
 }

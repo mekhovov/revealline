@@ -13,6 +13,19 @@
       "revision": "2",
       "sha256": "aa6a581b04384b06e730e36399c0c75a03145b501c96dcb1247ec29f24b3d518",
       "width": 1774
+    },
+    {
+      "alt": "A fictional blue archive garden with two circular reading plazas, book-lined groves, glass drawers and white ribbon canopies.",
+      "bytes": 3180834,
+      "format": "AssetRevisionV1",
+      "height": 887,
+      "id": "coupa-developer-integration-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/scoped-access-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "05865bd2f0a028ab582889736574e776876d0735a91c377dff3c89f04ff9b2a0",
+      "width": 1774
     }
   ],
   "campaigns": [
@@ -300,7 +313,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-developer-integration-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-developer-integration-02-picture",
+        "themeId": "coupa-developer-integration-theme"
+      },
       "relayLinks": [],
       "revision": "3",
       "spawnId": "home",

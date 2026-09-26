@@ -132,15 +132,15 @@ live at `editions/<id>/app/`; immutable sites live at
 separate service-worker scope and owned cache prefix. Storage is still origin-wide, so all
 storage keys must remain scoped explicitly.
 
-| Phase                   | Implemented                                                                                     | Remaining acceptance                                                                         |
-| ----------------------- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| 1. Foundation           | Registries, player-only catalogues, exclusion reports and fixture editions                      | Preserve compatibility as new packs enter                                                    |
-| 2. Coupa slice          | Official flower, branded host, First Connection, pinned Continue/Retry and reduced motion       | Human visual/gameplay review                                                                 |
-| 3. Independent editions | 14 editions compiled twice; downloaded artifacts independently checked                          | Two actual OS-installed PWAs, update/rollback and device storage recovery                    |
-| 4. Release admission    | Reproducible archives, whole-source eligibility, original ZIP-member admission and candidate CI | A new freeze for every changed source revision                                               |
-| 5. Learning/reuse       | 24 Coupa bonus activities, four transfer fixtures, six Netherlands chapters                     | Human comprehension and transfer observations                                                |
-| 6. Expansion            | 66 current maps plus three historical maps; 414 verified replay routes                          | Human formative decision; 60 current raster-art slots pending; batches of at most three      |
-| 7. Promotion            | Evidence-bound delivery/selector tooling and rollback path                                      | Approved evidence, release allocation, downloaded/deployed-byte verification and publication |
+| Phase                   | Implemented                                                                                                    | Remaining acceptance                                                                         |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| 1. Foundation           | Registries, player-only catalogues, exclusion reports and fixture editions                                     | Preserve compatibility as new packs enter                                                    |
+| 2. Coupa slice          | Official flower, branded host, First Connection, pinned Continue/Retry and reduced motion                      | Final artifact visual review; formative playtest reported complete                           |
+| 3. Independent editions | 14 editions compiled twice; downloaded artifacts independently checked                                         | Two actual OS-installed PWAs, update/rollback and device storage recovery                    |
+| 4. Release admission    | Reproducible archives, whole-source eligibility, original ZIP-member admission and candidate CI                | A new freeze for every changed source revision                                               |
+| 5. Learning/reuse       | 24 Coupa bonus activities, four transfer fixtures, six Netherlands chapters; user reports formative completion | Preserve any supplied observations separately from automated proofs                          |
+| 6. Expansion            | 66 current maps plus three historical maps; 414 replay routes; first three-picture post-playtest batch         | 57 current raster-art slots remain; review batches of at most three                          |
+| 7. Promotion            | Evidence-bound delivery/selector tooling and rollback path                                                     | Approved evidence, release allocation, downloaded/deployed-byte verification and publication |
 
 Candidate builds are not qualified releases. Public promotion requires the human and deployed
 artifact gates below; private source must never enter a public source archive, evidence bundle
@@ -224,16 +224,32 @@ hidden campaign data and corrupt dependency hashes. Offline tests simulate faile
 and cache ownership. Report test failures or absent fixtures explicitly, without waiving them
 implicitly.
 
-Before expanding the final learning artwork, play First Connection and one lesson in each
-learning campaign. Ask the player to describe the objective, identify the threat, explain the
-consequence of a decision and transfer the idea to a second fictional fixture. Record these
-human observations separately from route proofs. Content accuracy, final asset approval,
-two real installed PWAs, storage-exhaustion recovery, rollback and same-device performance
-comparison remain promotion gates until their evidence is captured. Draft maps may use the
-procedural fallback until their individual picture is reviewed; do not advertise those as 66
-finished mission illustrations. There are six current candidate raster pictures (five Coupa,
-one Netherlands), plus three historical Portuguese pictures. The remaining 60 current slots
-use procedural fallback; neither the fallbacks nor the candidate pictures have final art approval.
+On 26 September 2026 the user reported human playtesting complete and requested the next
+plan items. The formative gate is complete on that reported basis; no participant counts,
+quotes or measured learning results were supplied or inferred. The recorded design decision
+is to proceed with the current design and three-picture batches. The first batch adds
+Choose Together, Repair the Draft and Scoped Access: nine current candidate raster pictures
+(eight Coupa, one Netherlands), plus three historical Portuguese pictures. The remaining
+57 current slots use procedural fallback. Content accuracy, final asset approval, two real
+installed PWAs, device storage recovery, a published-artifact rollback exercise and a final
+same-device performance comparison remain promotion checks tied to the final artifact.
+
+Art-only updates preserve stable mission IDs and gameplay manifests. Before changing art,
+capture the affected edition's exact selected presentation with
+`captureEditionPresentation` from `game/editions/retained-presentation.mjs`; keep the canonical
+snapshot bytes, receipt, hash and media unchanged. Register only explicitly supported
+snapshots in `EditionManifest.presentationHistory`, never a whole authoring registry. The
+home recovery controls open the retained presentation explicitly through the same Solo
+host; active-flight departure still verifies its save. Replay Theater acquires the exact
+manifest picture and releases it on cancellation/replacement. Compilation admits only the
+selected audience's history and its exact media dependencies. History counts against the
+existing offline budget. An art update changes strict execution/presentation references,
+while existing Journey completion remains under stable logical mission identities.
+
+When CacheStorage is unavailable or full, verified online bytes can still support play.
+Install, repair and offline verification remain strict: a failed cache operation cannot
+produce an offline-ready receipt. Automated fault injection verifies these paths without
+claiming real device storage or OS installation evidence.
 
 The [qualification record](company-editions-validation.md) separates successful candidate
 automation from unresolved historical tests and promotion gates. The [accessibility review](company-editions-accessibility.md)

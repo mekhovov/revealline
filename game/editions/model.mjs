@@ -195,7 +195,7 @@ export function validateEditionManifest(source) {
       'publication',
     ],
     'Edition manifest',
-    ['boot', 'assetIds'],
+    ['boot', 'assetIds', 'presentationHistory'],
   );
   identity(value, EDITION_FORMATS.edition);
   publication(value.publication);
@@ -210,6 +210,32 @@ export function validateEditionManifest(source) {
   );
   modeList(value.modes);
   if (value.assetIds !== undefined) list(value.assetIds, EDITION_LIMITS.assets, 'edition assets');
+  if (value.presentationHistory !== undefined) {
+    required(
+      Array.isArray(value.presentationHistory) && value.presentationHistory.length <= 16,
+      'Too many retained edition presentations.',
+    );
+    for (const record of value.presentationHistory) {
+      fields(record, ['id', 'path', 'sha256', 'bytes'], 'Retained presentation');
+      required(
+        /^[a-f0-9]{64}$/.test(record.id) &&
+          /^[a-f0-9]{64}$/.test(record.sha256) &&
+          editionRelativePath(record.path) &&
+          record.path.startsWith('game/editions/retained/') &&
+          record.path.endsWith('.json') &&
+          Number.isSafeInteger(record.bytes) &&
+          record.bytes > 0 &&
+          record.bytes <= 4 * 1024 * 1024,
+        'Retained presentations need exact local snapshot bytes.',
+      );
+    }
+    for (const key of ['id', 'path'])
+      required(
+        new Set(value.presentationHistory.map((record) => record[key])).size ===
+          value.presentationHistory.length,
+        'Retained presentation identities and paths must be unique.',
+      );
+  }
   if (value.boot !== undefined) {
     fields(value.boot, EDITION_BOOT_KEYS, 'Edition boot files');
     required(

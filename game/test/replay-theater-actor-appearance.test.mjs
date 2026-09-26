@@ -19,6 +19,10 @@ import { installActorAppearanceTransport } from './helpers/actor-appearance-tran
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
+import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
+import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
+import { createJourneyVisualThemeIdentityAdapter } from '../presentation/journey-visual-theme-identities.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 
 const html = await readFile(new URL('../replay-theater/index.html', import.meta.url), 'utf8');
 const readJSON = async (url) => JSON.parse(await readFile(url, 'utf8'));
@@ -73,7 +77,15 @@ async function until(predicate, label) {
   assert.fail(typeof label === 'function' ? label() : label);
 }
 
-async function page(t, { beforeActorRequest = async () => {}, source: suppliedSource } = {}) {
+async function page(
+  t,
+  {
+    beforeActorRequest = async () => {},
+    source: suppliedSource,
+    editionFixture = null,
+    presentationId = null,
+  } = {},
+) {
   const doc = new Document(),
     win = new Events(),
     main = new Element(doc, 'main'),
@@ -107,8 +119,16 @@ async function page(t, { beforeActorRequest = async () => {}, source: suppliedSo
     Object.defineProperty(globalThis, key, { configurable: true, ...descriptor });
   };
   const base = new URL('https://example.test/game/replay-theater/');
+  if (editionFixture) {
+    base.searchParams.set('edition', 'sample-public');
+    if (presentationId) base.searchParams.set('presentation', presentationId);
+  }
   const upstream = async (input) => {
     const url = new URL(input, base);
+    if (editionFixture) {
+      const response = await editionFixture.fetcher(url);
+      if (response) return response;
+    }
     if (url.pathname.endsWith('.replay.json')) return new Response(JSON.stringify(source.replay));
     try {
       return new Response(
@@ -154,6 +174,7 @@ async function page(t, { beforeActorRequest = async () => {}, source: suppliedSo
     upstream,
     beforeRequest: beforeActorRequest,
   });
+  if (editionFixture) install('Image', { value: PNGImage, writable: true });
   t.mock.method(BoardPainter.prototype, 'setLook', async () => {
     if (holdLook) await holdLook();
   });
@@ -163,6 +184,7 @@ async function page(t, { beforeActorRequest = async () => {}, source: suppliedSo
       tick: run.tick,
       classId: run.activeClassId,
       actorAppearance: options.actorAppearance,
+      backdrop: options.backdrop,
     }),
   );
   t.after(async () => {
@@ -173,10 +195,12 @@ async function page(t, { beforeActorRequest = async () => {}, source: suppliedSo
       else delete globalThis[key];
   });
   await import(`../replay-theater/app.mjs?recorded-actors=${++serial}`);
-  await until(
-    () => $('playback-phase').textContent === 'paused',
-    () => `${$('boot-status').textContent} ${$('import-status').textContent}`,
-  );
+  if (!editionFixture)
+    await until(
+      () => $('playback-phase').textContent === 'paused',
+      () => `${$('boot-status').textContent} ${$('import-status').textContent}`,
+    );
+  else assert.equal(main.inert, false, $('boot-status').textContent);
   return {
     $,
     win,
@@ -253,6 +277,124 @@ test('recorded FPV actors survive preview changes, class switches, playback and 
   await p.loaded();
   assert.equal(p.frame().actorAppearance, null);
   assert(actors.every((image) => image.closes === 1));
+});
+
+test('retained company recording stages its exact old picture and preserves it across playback, failed imports and cancellation', async (t) => {
+  const f = await retainedEditionFixture({ originalArtwork: true }),
+    provider = f.original;
+  const host = createCandidateSoloHost(provider.route.source, {
+    themes: provider.themes,
+    corePackIds: provider.route.corePackIds,
+  });
+  const entry = host.entries.find((item) => item.difficulty === 'standard');
+  const level = entry.campaign.levels[0];
+  const adapter = await createJourneyVisualThemeIdentityAdapter(provider.route.source, {
+    mode: 'solo',
+  });
+  const content = await adapter.prepareHostSelection({
+    host,
+    selection: entry,
+    level,
+    association: { editionId: provider.editionId, contentThemeId: provider.theme.id, mode: 'solo' },
+  });
+  const tuned = applyGameplayTuning(level, resolveGameplayTuning('standard'));
+  const options = {
+    seed: 1,
+    turnPolicy: 'immediate',
+    classId: 'scout',
+    classRecipes: entry.classRecipes,
+  };
+  const run = createRun(tuned, options),
+    recorder = createRecorder(tuned, options, 'retained-theater-test');
+  for (let i = 0; i < 12; i++) {
+    stepRun(run, {}, FIXED_DT);
+    recordInput(recorder, {});
+  }
+  const source = exportReplayPresentation({
+    execution: { campaignKey: entry.executionKey, sourcePackId: entry.sourcePackId },
+    actorAppearancePin: {
+      format: 'revealline-actor-appearance-pin.v2',
+      style: 'campaign',
+      rendererPolicy: 'actor-style.v1',
+      content,
+      presentation: null,
+      authoredPresentationSha256: provider.authoredPresentationSha256,
+    },
+    replay: exportReplay(recorder, run),
+  });
+  host.preparer.dispose();
+  f.replacePicture();
+  await t.test(
+    'a mismatched current edition offers only its registered recovery destination',
+    async (t) => {
+      const current = await page(t, { source, editionFixture: f });
+      current.load(source);
+      await current.failed();
+      const target = new URL(current.$('retained-recording-artwork').href);
+      assert.equal(target.origin, 'https://example.test');
+      assert.equal(target.pathname, '/game/replay-theater/');
+      assert.equal(target.searchParams.get('presentation'), f.descriptor.id);
+      assert.equal(target.searchParams.get('edition'), 'sample-public');
+      const unknown = structuredClone(source);
+      unknown.actorAppearancePin.authoredPresentationSha256 = 'f'.repeat(64);
+      current.load(unknown);
+      await current.failed();
+      assert.equal(current.$('retained-recording-artwork'), null);
+    },
+  );
+  const p = await page(t, { source, editionFixture: f, presentationId: f.descriptor.id });
+  p.load(source);
+  await p.loaded();
+  const before = p.frame(),
+    picture = before.backdrop;
+  assert.equal(picture.assetRevision.id, 'old-picture');
+  assert.ok(picture.image.src);
+  assert.match(p.$('recorded-appearance').textContent, /original mission picture match/);
+  p.$('play-pause').emit('click');
+  for (
+    let time = 1020;
+    time < 1600 && p.$('playback-phase').textContent !== 'complete';
+    time += 100
+  )
+    p.frame(time);
+  assert.deepEqual(p.frame().checkpoint, source.replay.checkpoint);
+  p.$('restart').emit('click');
+  assert.equal(p.frame().backdrop, picture);
+  const path = 'game/editions/assets/old-picture.png',
+    bytes = f.binary.get(path);
+  f.binary.set(path, Buffer.from(bytes).fill(0));
+  p.load(source);
+  await p.failed();
+  assert.equal(p.frame().backdrop, picture);
+  assert.ok(picture.image.src, 'Rejected replacement retains the live original.');
+  f.binary.set(path, bytes);
+  let finish;
+  p.holdLook(
+    () =>
+      new Promise((resolve) => {
+        finish = resolve;
+      }),
+  );
+  p.load(source);
+  await until(
+    () => !!finish,
+    () => p.$('import-status').textContent,
+  );
+  p.$('cancel-load').emit('click');
+  finish();
+  await delay(10);
+  assert.equal(p.frame().backdrop, picture);
+  assert.ok(picture.image.src);
+  p.holdLook(null);
+  p.load(source.replay);
+  await p.loaded();
+  assert.equal(p.frame().backdrop, null, 'Raw preview cannot claim the original picture.');
+  assert.equal(picture.image.src, '', 'Replacing the recording releases its old image.');
+  p.load(source);
+  await p.loaded();
+  const last = p.frame().backdrop;
+  p.win.emit('pagehide', { persisted: false });
+  assert.equal(last.image.src, '');
 });
 
 test('wrong owner, exact source, asset bytes and oversized inputs preserve accepted recording and live actors', async (t) => {

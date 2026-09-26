@@ -14,6 +14,9 @@ import {
 } from '../../scripts/edition-localization.mjs';
 import { validateEditionPresetMotion } from '../editions/presets.mjs';
 import { validateBrandPack } from '../editions/model.mjs';
+import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
+import { canonicalJSON } from '../data-json.mjs';
+import { createHash } from 'node:crypto';
 
 test('new companies use the same complete source workspace and player compiler', async () => {
   const source = createCompanyWorkspaceFiles({
@@ -60,6 +63,34 @@ test('a bounded studio draft roundtrips source JSON and refuses undeclared paylo
   for (const [name, bytes] of restored.files) assert.deepEqual(bytes, source.files.get(name));
   draft.files.push({ path: 'authoring/private.json', data: { secret: 'never publish' } });
   assert.throws(() => companyDraftFiles(draft), /unique declared runtime/);
+});
+
+test('studio draft roundtrips exact retained snapshot pins and refuses changed historical JSON', async () => {
+  const f = await retainedEditionFixture();
+  f.replacePicture();
+  // Formatting is part of the immutable descriptor, even when JSON semantics
+  // and the historical presentation receipt are unchanged.
+  const original = Buffer.concat([
+    Buffer.from('  \n'),
+    f.binary.get(f.descriptor.path),
+    Buffer.from('\n'),
+  ]);
+  f.binary.set(f.descriptor.path, original);
+  Object.assign(f.descriptor, {
+    bytes: original.length,
+    sha256: createHash('sha256').update(original).digest('hex'),
+  });
+  const files = new Map([
+    ...[...f.files].map(([name, value]) => [name, Buffer.from(canonicalJSON(value) + '\n')]),
+    ...f.binary,
+  ]);
+  const draft = companySourceDraft({ catalog: f.catalog, files }),
+    restored = companyDraftFiles(draft);
+  assert.deepEqual(restored.files.get(f.descriptor.path), f.binary.get(f.descriptor.path));
+  assert.deepEqual(restored.catalog.editions[0].presentationHistory, [f.descriptor]);
+  const row = draft.files.find((item) => item.path === f.descriptor.path);
+  row.data = row.data.replace('Sample company', 'Changed original');
+  assert.throws(() => companyDraftFiles(draft), /bytes differ/);
 });
 
 test('English edition projection removes other languages and legacy campaign translations', () => {

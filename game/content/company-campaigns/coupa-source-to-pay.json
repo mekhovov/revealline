@@ -13,6 +13,19 @@
       "revision": "1",
       "sha256": "bbfb32e28c42863a2c444de4c42d5843f107ae8573d8f773817abe9488801f3b",
       "width": 1280
+    },
+    {
+      "alt": "A fictional blue-and-white supplier market with three welcoming pavilions, parcels, canal bridges and two quiet central plazas.",
+      "bytes": 3209122,
+      "format": "AssetRevisionV1",
+      "height": 887,
+      "id": "coupa-source-to-pay-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/choose-together-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "9fc3d2f24f59dc49d7ea72f5ae7e201b511da5a0ab9607f094f782919ebbe7b6",
+      "width": 1774
     }
   ],
   "campaigns": [
@@ -280,7 +293,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-source-to-pay-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-source-to-pay-02-picture",
+        "themeId": "coupa-source-to-pay-theme"
+      },
       "revision": "3",
       "spawnId": "home",
       "timeLimitSeconds": 0

@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
 import {
   createEditionRuntimeCatalog,
   validateEditionRuntimeCatalog,
@@ -13,6 +15,7 @@ import {
   selectEditionClosure,
   validateEditionCodeClosure,
   editionCodeDependencies,
+  collectEditionSelectedFiles,
 } from '../../scripts/compile-edition.mjs';
 import { createStarterProject } from '../content-design/starter.mjs';
 import { companyPresentationIdentity } from '../company-session.mjs';
@@ -20,6 +23,14 @@ import { createCompanyTheme, createCompanyPresets } from '../company-campaigns/b
 import { inspectImageDataUrl } from '../content.mjs';
 import { loadRuntimeContentProvider } from '../runtime-content-provider.mjs';
 import { validateEditionProviderParity } from '../../scripts/edition-provider-parity.mjs';
+import { captureEditionPresentation } from '../editions/retained-presentation.mjs';
+import { createEditionCandidate } from '../../publishing/edition-candidate.mjs';
+import {
+  validateEditionAdmission,
+  editionPublicationAssets,
+} from '../../publishing/edition-admission.mjs';
+import { readEditionZip } from '../../publishing/edition-zip.mjs';
+import { checkEditionSourceEligibility } from '../../scripts/check-edition-source.mjs';
 
 const bytes = (value) => Buffer.from(JSON.stringify(value));
 const digest = (value) => createHash('sha256').update(value).digest('hex');
@@ -126,6 +137,242 @@ function fixture() {
     sources,
   };
 }
+
+async function retainedFixture() {
+  const f = fixture(),
+    catalog = structuredClone(f.catalog);
+  for (const edition of catalog.editions) {
+    const bootstrap = await loadEditionBootstrap({
+      editionId: edition.id,
+      catalogURL: 'https://fixture.test/catalog.json',
+      contentBaseURL: 'https://fixture.test/',
+      fetcher: async (request) =>
+        new Response(
+          new URL(request).pathname === '/catalog.json'
+            ? bytes(f.catalog)
+            : f.files.get(new URL(request).pathname.slice(1)),
+        ),
+    });
+    const snapshot = await captureEditionPresentation(bootstrap),
+      payload = bytes(snapshot);
+    const descriptor = {
+      id: snapshot.authoredPresentationSha256,
+      path: `game/editions/retained/${edition.id}.json`,
+      sha256: digest(payload),
+      bytes: payload.length,
+    };
+    edition.presentationHistory = [descriptor];
+    f.files.set(descriptor.path, payload);
+  }
+  const original = { ...catalog.assets[0] },
+    replacement = Buffer.from('new approved selected artwork');
+  Object.assign(catalog.assets[0], {
+    path: 'game/editions/assets/coupa-new.png',
+    bytes: replacement.length,
+    sha256: digest(replacement),
+  });
+  f.files.set(catalog.assets[0].path, replacement);
+  f.files.set(
+    'game/company.html',
+    Buffer.from('<!doctype html><html><head></head><body>Game</body></html>'),
+  );
+  return { ...f, catalog, original };
+}
+
+test('selected retained presentation media stays exact in runtime, source and offline archives', async () => {
+  const f = await retainedFixture(),
+    requested = [];
+  const selected = await collectEditionSelectedFiles({
+    catalog: f.catalog,
+    editionIds: ['coupa-public'],
+    read: async (name) => {
+      requested.push(name);
+      return f.files.get(name);
+    },
+  });
+  assert.ok(requested.every((name) => !name.includes('droneaid')));
+  assert.ok(selected.has(f.original.path));
+  const sourceFiles = new Map([
+    ...selected,
+    ['game/company.html', f.files.get('game/company.html')],
+  ]);
+  const options = {
+    catalog: f.catalog,
+    editionIds: ['coupa-public'],
+    files: sourceFiles,
+    enginePaths: ['game/company.html'],
+    version: '1.0.0',
+    sourceRevision: 'a'.repeat(40),
+    offline: { basePath: '/game/' },
+  };
+  const compiled = await compileEdition(options),
+    again = await compileEdition(options);
+  assert.deepEqual(compiled.files, again.files);
+  assert.equal(
+    compiled.runtimeCatalog.assets.length,
+    1,
+    'old logical asset IDs do not alter current presentation assets',
+  );
+  assert.equal(compiled.runtimeCatalog.assets[0].path, 'game/editions/assets/coupa-new.png');
+  const offline = JSON.parse(compiled.files.get('offline-cache.json'));
+  for (const name of [f.original.path, f.catalog.editions[0].presentationHistory[0].path])
+    assert.ok(offline.files.some((row) => row.path === name));
+  const parity = await validateEditionProviderParity({ sourceFiles, catalog: f.catalog, compiled });
+  assert.deepEqual(parity.retained, [
+    { authoredPresentationSha256: f.catalog.editions[0].presentationHistory[0].id },
+  ]);
+  assert.notEqual(parity.authoredPresentationSha256, parity.retained[0].authoredPresentationSha256);
+  const candidateOptions = {
+    compiled,
+    sourceFiles,
+    version: 'v1.0.0',
+    sourceRevision: options.sourceRevision,
+    sourceTree: 'b'.repeat(40),
+  };
+  const candidate = createEditionCandidate(candidateOptions),
+    foreign = f.catalog.editions[1].presentationHistory[0];
+  for (const location of ['runtime', 'source']) {
+    const extra = [foreign.path, f.files.get(foreign.path)];
+    assert.throws(
+      () =>
+        createEditionCandidate({
+          ...candidateOptions,
+          ...(location === 'runtime'
+            ? { compiled: { ...compiled, files: new Map([...compiled.files, extra]) } }
+            : { sourceFiles: new Map([...sourceFiles, extra]) }),
+        }),
+      /unselected retained/,
+    );
+  }
+  const envelope = {
+    format: 'revealline-editions.v1',
+    version: 'v1.0.0',
+    sourceRevision: options.sourceRevision,
+    sourceTree: 'b'.repeat(40),
+    editions: [candidate.edition],
+  };
+  assert.equal(
+    (
+      await validateEditionAdmission(envelope, {
+        read: async (row) => candidate.files.get(row.path),
+      })
+    ).zipMembersVerified,
+    true,
+  );
+  const source = JSON.parse(candidate.files.get(candidate.edition.sourceInventory.path));
+  assert.deepEqual(
+    new Set(source.assets.map((asset) => asset.path)),
+    new Set([f.original.path, 'game/editions/assets/coupa-new.png']),
+  );
+  for (const archive of [
+    candidate.edition.sourceArchive.path,
+    candidate.edition.distribution.path,
+  ]) {
+    const members = readEditionZip(candidate.files.get(archive));
+    assert.deepEqual(members.get(f.original.path), f.files.get(f.original.path));
+    assert.ok(
+      [...members].every(
+        ([name, value]) => !name.includes('droneaid') && !value.includes('droneaid-adventure'),
+      ),
+    );
+  }
+});
+
+test('retained packaging rejects altered originals, foreign audiences and unselected snapshots', async () => {
+  const f = await retainedFixture(),
+    options = { catalog: f.catalog, files: f.files, editionIds: ['coupa-public'] };
+  const saved = f.files.get(f.original.path);
+  f.files.set(f.original.path, Buffer.from('changed original'));
+  await assert.rejects(compileEdition(options), /bytes differ/);
+  f.files.set(f.original.path, saved);
+  const descriptor = f.catalog.editions[0].presentationHistory[0],
+    snapshot = JSON.parse(f.files.get(descriptor.path));
+  snapshot.catalog.editions[0].audience = 'other-audience';
+  const payload = bytes(snapshot);
+  f.files.set(descriptor.path, payload);
+  Object.assign(descriptor, { bytes: payload.length, sha256: digest(payload) });
+  await assert.rejects(compileEdition(options), /audience/);
+});
+
+test('whole-source eligibility includes registered historical-only originals before freezing candidates', async (t) => {
+  const f = await retainedFixture(),
+    root = await fs.mkdtemp(path.join(os.tmpdir(), 'edition-retained-source-'));
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  const write = async (name, value) => {
+    await fs.mkdir(path.dirname(path.join(root, name)), { recursive: true });
+    await fs.writeFile(path.join(root, name), value);
+  };
+  for (const [name, value] of f.files) await write(name, value);
+  await write('game/editions/catalog.json', bytes(f.catalog));
+  const qualified = await checkEditionSourceEligibility(root);
+  assert.equal(qualified.status, 'verified');
+  assert.equal(
+    qualified.assets,
+    3,
+    'two current pictures and the retained original are independently admitted',
+  );
+  await write(f.original.path, Buffer.from('changed original'));
+  await assert.rejects(checkEditionSourceEligibility(root), /byte envelope|bytes differ/);
+  await write(f.original.path, f.files.get(f.original.path));
+  const record = f.catalog.editions[0].presentationHistory[0],
+    original = f.files.get(record.path);
+  await write(record.path, Buffer.concat([original, Buffer.from(' ')]));
+  await assert.rejects(checkEditionSourceEligibility(root), /byte envelope/);
+  await write(record.path, original);
+  await write('game/editions/retained/unregistered.json', Buffer.from('{}'));
+  await assert.rejects(checkEditionSourceEligibility(root), /unselected retained/);
+  await fs.rm(path.join(root, 'game/editions/retained/unregistered.json'));
+  await write('game/editions/assets/unregistered.png', Buffer.from('unknown'));
+  await assert.rejects(checkEditionSourceEligibility(root), /no public eligibility/);
+});
+
+test('sparse publisher rejects retained foreign branding, private JSON, unselected art and path conflicts', async () => {
+  const f = await retainedFixture(),
+    base = JSON.parse(f.files.get(f.catalog.editions[0].presentationHistory[0].path));
+  for (const mutate of [
+    (value) => {
+      value.catalog.defaultEditionId = 'another-edition';
+    },
+    (value) => {
+      value.catalog.brands[0].id = 'another-brand';
+    },
+    (value) => {
+      value.catalog.brands[0].publication = 'restricted';
+    },
+    (value) => {
+      value.catalog.campaigns[0].brandId = 'another-brand';
+    },
+    (value) => {
+      value.catalog.campaigns[0].publication = 'restricted';
+    },
+    (value) => {
+      value.files[0].path = 'private/sentinel.json';
+    },
+    (value) => {
+      value.catalog.assets.push({
+        ...value.catalog.assets[0],
+        id: 'unselected',
+        path: 'game/editions/assets/foreign.png',
+      });
+    },
+    (value) => {
+      value.catalog.assets[0].path = 'game/editions/assets/coupa-new.png';
+    },
+  ]) {
+    const snapshot = structuredClone(base),
+      catalog = structuredClone(f.catalog);
+    mutate(snapshot);
+    const payload = bytes(snapshot),
+      record = catalog.editions[0].presentationHistory[0];
+    Object.assign(record, { bytes: payload.length, sha256: digest(payload) });
+    assert.throws(() =>
+      editionPublicationAssets(
+        selectEditionClosure(catalog, ['coupa-public']),
+        new Map([[record.path, payload]]),
+      ),
+    );
+  }
+});
 
 test('catalog validates generic brands, immutable selections and strict allowlist lookup', () => {
   const { catalog } = fixture();

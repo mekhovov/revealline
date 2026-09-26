@@ -215,7 +215,7 @@ function previewUI(overrides = {}) {
     revision: 0,
     previewController: null,
     report: {},
-    catalog: {},
+    catalog: { editions: [] },
     editionId: 'acme-public',
     registeredRuntimeAssets: [],
     files: new Map(),

@@ -21,9 +21,10 @@ import { compileContentProject, resolveMission } from '../game/content-design/pr
 import {
   collectEditionEngineFiles,
   compileEdition,
-  selectEditionClosure,
+  collectEditionSelectedFiles,
   writeEdition,
 } from './compile-edition.mjs';
+import { editionPublicationAssets } from '../publishing/edition-admission.mjs';
 
 const engineRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const json = (value) => Buffer.from(canonicalJSON(value) + '\n');
@@ -204,8 +205,17 @@ export function createCompanyWorkspaceFiles({
 }
 
 export function companySourceDraft({ catalog, files }) {
+  editionPublicationAssets(catalog, files);
+  const retainedPaths = new Set(
+    catalog.editions.flatMap((edition) =>
+      (edition.presentationHistory ?? []).map((record) => record.path),
+    ),
+  );
   const paths = new Set([
-    ...catalog.editions.flatMap((edition) => Object.values(edition.boot ?? {})),
+    ...catalog.editions.flatMap((edition) => [
+      ...Object.values(edition.boot ?? {}),
+      ...(edition.presentationHistory ?? []).map((record) => record.path),
+    ]),
     ...catalog.campaigns.flatMap((campaign) => [
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
@@ -216,7 +226,12 @@ export function companySourceDraft({ catalog, files }) {
     catalog,
     files: [...paths].map((name) => {
       required(files.has(name), `Missing draft source: ${name}`);
-      return { path: name, data: decode(files.get(name)) };
+      return {
+        path: name,
+        data: retainedPaths.has(name)
+          ? new TextDecoder('utf-8', { fatal: true }).decode(files.get(name))
+          : decode(files.get(name)),
+      };
     }),
   };
 }
@@ -224,6 +239,7 @@ export function companySourceDraft({ catalog, files }) {
 export function companyDraftFiles(source) {
   const draft = boundedJSON(source, {
     maxBytes: 16 * 1024 * 1024,
+    maxString: 4 * 1024 * 1024,
     maxNodes: 400000,
     maxArray: 8192,
   });
@@ -235,8 +251,16 @@ export function companyDraftFiles(source) {
     'Invalid company source draft.',
   );
   const catalog = validateEditionRuntimeCatalog(draft.catalog);
+  const retainedPaths = new Set(
+    catalog.editions.flatMap((edition) =>
+      (edition.presentationHistory ?? []).map((record) => record.path),
+    ),
+  );
   const allowed = new Set([
-    ...catalog.editions.flatMap((edition) => Object.values(edition.boot ?? {})),
+    ...catalog.editions.flatMap((edition) => [
+      ...Object.values(edition.boot ?? {}),
+      ...(edition.presentationHistory ?? []).map((record) => record.path),
+    ]),
     ...catalog.campaigns.flatMap((campaign) => [
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
@@ -249,14 +273,23 @@ export function companyDraftFiles(source) {
       allowed.has(entry.path) && editionRelativePath(entry.path) && !files.has(entry.path),
       'Draft JSON must have a unique declared runtime path.',
     );
-    files.set(entry.path, json(entry.data));
+    if (retainedPaths.has(entry.path)) {
+      required(
+        typeof entry.data === 'string',
+        'Retained draft snapshots need their exact original JSON text.',
+      );
+      files.set(entry.path, Buffer.from(entry.data, 'utf8'));
+    } else files.set(entry.path, json(entry.data));
   }
+  editionPublicationAssets(catalog, files);
   return { catalog, files };
 }
 
 async function copyApprovedMedia(catalog, files, mediaRoot) {
   const root = await fs.realpath(mediaRoot);
-  for (const asset of catalog.assets) {
+  for (const asset of catalog.editions
+    ? editionPublicationAssets(catalog, files)
+    : catalog.assets) {
     required(
       asset.publication === 'public' && asset.approved,
       'Draft media needs explicit publication approval.',
@@ -279,7 +312,8 @@ async function copyApprovedMedia(catalog, files, mediaRoot) {
 export function companyStudioReport(sourceCatalog, result, { previewURL = null } = {}) {
   if (previewURL?.split('/').some((segment) => segment.startsWith('.'))) previewURL = null;
   const source = validateEditionRuntimeCatalog(sourceCatalog),
-    selected = result.runtimeCatalog;
+    selected = result.runtimeCatalog,
+    assets = editionPublicationAssets(selected, result.files);
   const edition = selected.editions[0],
     campaignSources = selected.campaigns.map((campaign) =>
       decode(result.files.get(campaign.sourcePath)),
@@ -306,7 +340,7 @@ export function companyStudioReport(sourceCatalog, result, { previewURL = null }
           sum + (campaign.lessonPath ? decode(result.files.get(campaign.lessonPath)).length : 0),
         0,
       ),
-      assets: selected.assets.length,
+      assets: assets.length,
       runtimeFiles: result.files.size,
       runtimeBytes: [...result.files.values()].reduce((sum, bytes) => sum + bytes.length, 0),
     },
@@ -315,7 +349,14 @@ export function companyStudioReport(sourceCatalog, result, { previewURL = null }
       editionIds: exclusion('editions'),
       brandIds: exclusion('brands'),
       campaignIds: exclusion('campaigns'),
-      assetIds: exclusion('assets'),
+      assetIds: source.assets
+        .filter(
+          (asset) =>
+            !assets.some(
+              (selected) => selected.path === asset.path && selected.sha256 === asset.sha256,
+            ),
+        )
+        .map((asset) => asset.id),
     },
     checks: STUDIO_REPORT_CHECKS,
     previewURL,
@@ -330,26 +371,27 @@ export async function compileCompanyWorkspace({
 }) {
   const workspaceRoot = await fs.realpath(workspace),
     catalog = decode(await fs.readFile(path.join(workspaceRoot, 'game/editions/catalog.json')));
-  const selected = selectEditionClosure(catalog, [editionId]);
   const files = await collectEditionEngineFiles({ root: engineRoot }),
     enginePaths = [...files.keys()];
-  const paths = new Set([
-    ...selected.editions.flatMap((edition) => Object.values(edition.boot ?? {})),
-    ...selected.campaigns.flatMap((campaign) => [
-      campaign.sourcePath,
-      ...(campaign.lessonPath ? [campaign.lessonPath] : []),
-    ]),
-    ...selected.assets.map((asset) => asset.path),
-  ]);
-  for (const file of paths) {
-    required(editionRelativePath(file), 'Invalid workspace source path.');
-    const actual = await fs.realpath(path.join(workspaceRoot, file));
-    required(
-      actual.startsWith(`${workspaceRoot}${path.sep}`),
-      'Workspace source symlink escapes its directory.',
-    );
-    files.set(file, await fs.readFile(actual));
-  }
+  const selected = await collectEditionSelectedFiles({
+    catalog,
+    editionIds: [editionId],
+    read: async (file) => {
+      required(editionRelativePath(file), 'Invalid workspace source path.');
+      const actual = await fs.realpath(path.join(workspaceRoot, file));
+      required(
+        actual.startsWith(`${workspaceRoot}${path.sep}`),
+        'Workspace source symlink escapes its directory.',
+      );
+      const stat = await fs.stat(actual);
+      required(
+        stat.isFile() && stat.size <= 32 * 1024 * 1024,
+        'Workspace source exceeds its file budget.',
+      );
+      return fs.readFile(actual);
+    },
+  });
+  for (const [name, bytes] of selected) files.set(name, bytes);
   const result = await compileEdition({
     catalog,
     editionIds: [editionId],

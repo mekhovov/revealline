@@ -126,5 +126,5 @@ export async function loadEditionBootstrap({
     preserveOriginalThemes: true,
     source,
   });
-  return freezeEdition({ catalog, selection, source, boot, lessons, route });
+  return freezeEdition({ catalog, selection, sources, source, boot, lessons, route });
 }

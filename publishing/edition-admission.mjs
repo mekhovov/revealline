@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { isDeepStrictEqual } from 'node:util';
 import { inspectEditionZip } from './edition-zip.mjs';
 import { validateEditionId } from '../game/edition-context.mjs';
 
@@ -143,6 +144,139 @@ export function validatePublicSourceEligibility({ files, assets = [] } = {}) {
 }
 
 const json = (bytes) => JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
+/** Derive publication media from exact selected snapshots, without importing
+ * executable campaign/compiler code into the trusted sparse publisher. The
+ * compiler additionally validates each old campaign and presentation receipt. */
+export function editionPublicationAssets(catalog, files) {
+  if (
+    !Array.isArray(catalog?.assets) ||
+    !Array.isArray(catalog.editions) ||
+    !(files instanceof Map)
+  )
+    fail('Selected presentation media inventory is required.');
+  const assets = new Map(),
+    paths = new Set();
+  const add = (asset) => {
+    safePath(asset.path);
+    if (asset.publication !== 'public' || asset.approved !== true)
+      fail('Retained presentation media requires public approval.');
+    const previous = assets.get(asset.path);
+    if (previous && (previous.sha256 !== asset.sha256 || previous.bytes !== asset.bytes))
+      fail('Retained presentation media conflicts with an immutable path.');
+    if (!previous) assets.set(asset.path, asset);
+  };
+  catalog.assets.forEach(add);
+  if (assets.size !== catalog.assets.length) fail('Duplicate publication asset.');
+  for (const edition of catalog.editions) {
+    const history = edition.presentationHistory ?? [];
+    if (!Array.isArray(history) || history.length > 16)
+      fail('Invalid retained presentation inventory.');
+    const identities = new Set();
+    for (const descriptor of history) {
+      if (
+        !descriptor ||
+        Object.keys(descriptor).sort().join(',') !== 'bytes,id,path,sha256' ||
+        !SHA.test(descriptor.id) ||
+        identities.has(descriptor.id) ||
+        paths.has(descriptor.path) ||
+        !/^game\/editions\/retained\/(?:[A-Za-z0-9_.-]+\/)*[A-Za-z0-9_.-]+\.json$/.test(
+          descriptor.path,
+        ) ||
+        !Number.isSafeInteger(descriptor.bytes) ||
+        descriptor.bytes < 1 ||
+        descriptor.bytes > 4 * 1024 * 1024
+      )
+        fail('Invalid retained presentation descriptor.');
+      identities.add(descriptor.id);
+      paths.add(descriptor.path);
+      const bytes = files.get(descriptor.path);
+      verifyDescriptor(descriptor, bytes);
+      const snapshot = json(bytes),
+        old = snapshot.catalog,
+        retained = old?.editions?.[0];
+      const sameList = (left, right) =>
+        Array.isArray(left) &&
+        Array.isArray(right) &&
+        JSON.stringify([...left].sort()) === JSON.stringify([...right].sort());
+      if (
+        Object.keys(snapshot).sort().join(',') !==
+          'authoredPresentationSha256,catalog,editionId,files,format' ||
+        snapshot.format !== 'revealline-edition-presentation.v1' ||
+        snapshot.editionId !== edition.id ||
+        snapshot.authoredPresentationSha256 !== descriptor.id ||
+        old?.format !== 'revealline-edition-catalog.v1' ||
+        old.publication !== 'public' ||
+        old.defaultEditionId !== edition.id ||
+        old.editions?.length !== 1 ||
+        old.brands?.length !== 1 ||
+        old.brands[0].id !== edition.brandId ||
+        old.brands[0].publication !== 'public' ||
+        retained?.id !== edition.id ||
+        retained.presentationHistory?.length ||
+        !['brandId', 'audience', 'publication'].every((key) => retained[key] === edition[key]) ||
+        !sameList(retained.campaignIds, edition.campaignIds) ||
+        !sameList(retained.modes, edition.modes) ||
+        !sameList(
+          old.campaigns?.map((item) => item.id),
+          edition.campaignIds,
+        ) ||
+        old.campaigns.some(
+          (item) => item.brandId !== edition.brandId || item.publication !== 'public',
+        ) ||
+        !Array.isArray(old.assets) ||
+        old.assets.length > 2000
+      )
+        fail('Retained presentation differs from the selected audience.');
+      const expected = new Set([
+          ...Object.values(retained.boot ?? {}),
+          ...old.campaigns.flatMap((item) => [
+            item.sourcePath,
+            ...(item.lessonPath ? [item.lessonPath] : []),
+          ]),
+        ]),
+        inline = new Map();
+      if (!Array.isArray(snapshot.files) || snapshot.files.length !== expected.size)
+        fail('Retained presentation JSON closure differs.');
+      for (const item of snapshot.files) {
+        if (
+          !item ||
+          Object.keys(item).sort().join(',') !== 'data,path' ||
+          !expected.has(item.path) ||
+          inline.has(item.path)
+        )
+          fail('Retained presentation JSON closure differs.');
+        inline.set(item.path, new Uint8Array());
+      }
+      validateEditionSourceInventory({ files: inline });
+      const records = new Map(old.assets.map((asset) => [asset.id, asset]));
+      if (records.size !== old.assets.length) fail('Duplicate retained asset identity.');
+      const selected = new Set(),
+        active = new Set();
+      const include = (id) => {
+        if (active.has(id)) fail('Cyclic retained asset dependency.');
+        if (selected.has(id)) return;
+        const asset = records.get(id);
+        if (!asset || !Array.isArray(asset.dependencies))
+          fail('Missing retained asset dependency.');
+        active.add(id);
+        asset.dependencies.forEach(include);
+        active.delete(id);
+        selected.add(id);
+      };
+      [retained, ...old.brands, ...old.campaigns]
+        .flatMap((item) => item.assetIds ?? [])
+        .forEach(include);
+      if (selected.size !== old.assets.length)
+        fail('Retained presentation includes unselected media.');
+      old.assets.forEach(add);
+    }
+  }
+  for (const name of files.keys())
+    if (name.startsWith('game/editions/retained/') && !paths.has(name))
+      fail('Edition contains an unselected retained presentation.');
+  return [...assets.values()];
+}
+
 const embedded = (path, bytes) => ({ path, bytes: bytes.length, sha256: digest(bytes) });
 function inventory(body, limit = 800_000_000) {
   if (!Array.isArray(body.files) || !body.files.length || body.files.length > 19999)
@@ -337,12 +471,13 @@ export async function validateEditionAdmission(envelope, { read } = {}) {
       )
         fail('Campaign revision bytes differ.');
     }
-    validateEditionSourceInventory({ files: runtime, assets: catalog.assets });
-    validatePublicSourceEligibility({ files: runtime, assets: catalog.assets });
+    const publicationAssets = editionPublicationAssets(catalog, runtime);
+    editionPublicationAssets(catalog, sourceFiles);
+    validateEditionSourceInventory({ files: runtime, assets: publicationAssets });
+    validatePublicSourceEligibility({ files: runtime, assets: publicationAssets });
     validateEditionSourceInventory({ files: sourceFiles, assets: source.assets });
     validatePublicSourceEligibility({ files: sourceFiles, assets: source.assets });
-    if (JSON.stringify(source.assets) !== JSON.stringify(catalog.assets))
-      fail('Source asset closure differs.');
+    if (!isDeepStrictEqual(source.assets, publicationAssets)) fail('Source asset closure differs.');
     rows.push(
       Object.freeze({
         id: edition.id,

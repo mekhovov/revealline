@@ -49,10 +49,16 @@ export function mountEditionNavigation({ provider, document: doc, href }) {
       const destination = new URL(game.href);
       destination.search = target.search;
       destination.searchParams.set('edition', provider.editionId);
+      if (provider.retainedPresentationId)
+        destination.searchParams.set('presentation', provider.retainedPresentationId);
+      else destination.searchParams.delete('presentation');
       destination.hash = target.hash;
       link.href = destination.href;
     } else if (/^game\/(?:controller-lab|replay-theater)(?:\/|$)/.test(relative)) {
       target.searchParams.set('edition', provider.editionId);
+      if (provider.retainedPresentationId)
+        target.searchParams.set('presentation', provider.retainedPresentationId);
+      else target.searchParams.delete('presentation');
       link.href = target.href;
     }
   }

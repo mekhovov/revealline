@@ -156,11 +156,47 @@ const choices = [
     [c.id],
   ]),
 ];
+// Exact pre-art snapshots; their bytes must never be reformatted or overwritten.
+const retainedPresentations = Object.freeze({
+  'coupa-all': {
+    id: 'ecb87b6208f6f55322188ab34d8d9aa63b94064dd346f400bbe2bbbcc9d7870b',
+    path: 'game/editions/retained/coupa-all.json',
+    sha256: 'a48dc47e3e788046de0094c7d34bd74eda0c8776f271131254e26f5ec12e5706',
+    bytes: 146284,
+  },
+  'coupa-foundations': {
+    id: '57dd4d5b7e0f8c27662349a8af870862657d700682ac758ad51721a61fdd59aa',
+    path: 'game/editions/retained/coupa-foundations.json',
+    sha256: '98d2a026fc89b48cbd76c2d2c2d74d491f666583ae819324f855ebd7f309dd90',
+    bytes: 46542,
+  },
+  'coupa-operations': {
+    id: '99254aaf116f5b68881ef51f36c7b5b9ebfbcf6cce371de90c8234c07862a43d',
+    path: 'game/editions/retained/coupa-operations.json',
+    sha256: '716bcbd296e6053ca6628b8b55dada9c0489a8893c1044cbc24854899caf6e20',
+    bytes: 47693,
+  },
+  'coupa-developers': {
+    id: '72ede618c25678c324d39389b9789130c66bb05f461e900d367e9c3f2a878224',
+    path: 'game/editions/retained/coupa-developers.json',
+    sha256: 'ee4d10212133066658ae5543883a5e1def3602a5bc840874223b90bdccac9c06',
+    bytes: 50046,
+  },
+});
+
 export const COMPANY_EDITIONS = Object.freeze(
   choices.map(([id, brandId, name, audience, campaignIds]) => ({
     format: 'revealline-edition.v1',
     id,
-    revision: brandId === 'coupa' ? 4 : brandId === 'droneaid-nl' ? 2 : 1,
+    revision: ['coupa-all', 'coupa-foundations', 'coupa-operations', 'coupa-developers'].includes(
+      id,
+    )
+      ? 5
+      : brandId === 'coupa'
+        ? 4
+        : brandId === 'droneaid-nl'
+          ? 2
+          : 1,
     name,
     brandId,
     audience,
@@ -168,6 +204,7 @@ export const COMPANY_EDITIONS = Object.freeze(
     entryCampaignId: campaignIds[0],
     modes: ['solo'],
     publication: 'public',
+    ...(retainedPresentations[id] ? { presentationHistory: [retainedPresentations[id]] } : {}),
     boot: Object.fromEntries(
       ['campaign', 'themes', 'presets', 'classes', 'packs', 'archives'].map((key) => [
         key,

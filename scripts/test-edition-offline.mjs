@@ -21,14 +21,26 @@ async function build(editionId = 'coupa', options = {}) {
     ...options,
   });
 }
-function worker(files, { corrupt = false, respond, stores = new Map(), clientURL } = {}) {
-  const inventory = JSON.parse(files.get('offline-cache.json'));
-  const scope = `https://game.test/revealline/editions/${inventory.editionId}/releases/v${inventory.version.replace(/^v/, '')}/site/`;
+function worker(
+  files,
+  { corrupt = false, respond, stores = new Map(), clientURL, cacheFault, launcher = false } = {},
+) {
+  const script = files.get(launcher ? 'app/service-worker.js' : 'service-worker.js').toString();
+  const inventory = JSON.parse(script.match(/^const INVENTORY = (.+);\n/)[1]);
+  const root = `https://game.test/revealline/editions/${inventory.editionId}/`;
+  const scope = launcher
+    ? `${root}app/`
+    : `${root}releases/v${inventory.version.replace(/^v/, '')}/site/`;
   const cacheName = `revealline-company-${encodeURIComponent(scope)}-${inventory.buildId}`;
   if (!stores.has(cacheName)) stores.set(cacheName, new Map());
   const cache = stores.get(cacheName),
     handlers = new Map(),
-    requests = [];
+    requests = [],
+    cacheOperations = [];
+  const storageOperation = (operation, name, key) => {
+    cacheOperations.push({ operation, name, key });
+    cacheFault?.(operation, { name, key });
+  };
   const self = {
     registration: { scope },
     clients: { get: async () => ({ url: clientURL ?? `${scope}game/company.html` }) },
@@ -36,17 +48,24 @@ function worker(files, { corrupt = false, respond, stores = new Map(), clientURL
   };
   const caches = {
     open: async (name) => {
+      storageOperation('open', name);
       if (!stores.has(name)) stores.set(name, new Map());
       const target = stores.get(name);
       return {
-        match: async (key) => target.get(key)?.clone(),
-        put: async (key, response) => target.set(key, response.clone()),
+        match: async (key) => {
+          storageOperation('match', name, key);
+          return target.get(key)?.clone();
+        },
+        put: async (key, response) => {
+          storageOperation('put', name, key);
+          target.set(key, response.clone());
+        },
       };
     },
   };
   const fetch = async (url) => {
     requests.push(url);
-    const path = url.slice(scope.length);
+    const path = `${launcher ? 'app/' : ''}${url.slice(scope.length)}`;
     const value = files.get(path);
     const custom = respond?.(path, value);
     if (custom) return custom;
@@ -54,7 +73,7 @@ function worker(files, { corrupt = false, respond, stores = new Map(), clientURL
       status: value ? 200 : 404,
     });
   };
-  vm.runInNewContext(files.get('service-worker.js').toString(), {
+  vm.runInNewContext(script, {
     self,
     caches,
     fetch,
@@ -79,8 +98,23 @@ function worker(files, { corrupt = false, respond, stores = new Map(), clientURL
     });
     return work;
   };
-  return { scope, cache, requests, dispatch };
+  return { scope, cache, requests, dispatch, cacheName, cacheOperations, inventory };
 }
+
+async function workerReceipt(runtime, type = 'verify-company-edition') {
+  let receipt;
+  await runtime.dispatch('message', {
+    data: { type },
+    source: { id: 'page' },
+    ports: [{ postMessage: (value) => (receipt = value) }],
+  });
+  return receipt;
+}
+
+const storedBytes = (cache) =>
+  Promise.all(
+    [...cache].map(async ([url, response]) => [url, await response.clone().arrayBuffer()]),
+  );
 
 test('offline artifacts are reproducible with distinct stable app IDs and scoped workers', async () => {
   const a = await build(),
@@ -287,6 +321,103 @@ test('an active unchanged worker repairs only evicted or corrupt files after an 
     new Set(runtime.requests),
     new Set([`${runtime.scope}game/logo.svg`, `${runtime.scope}game/company.html`]),
   );
+});
+
+test('cache storage failures never certify a partial game or launcher and repair preserves retained editions', async () => {
+  const files = await build(),
+    stores = new Map(),
+    old = worker(await build('coupa', { version: '0.139.0' }), { stores }),
+    other = worker(await build('droneaid'), { stores });
+  await old.dispatch('install');
+  await other.dispatch('install');
+  const retained = await storedBytes(old.cache),
+    unrelated = await storedBytes(other.cache);
+  for (const launcher of [false, true]) {
+    for (const operation of ['open', 'match', 'put']) {
+      let blocked = true;
+      const runtime = worker(files, {
+        stores,
+        launcher,
+        cacheFault(action, { key }) {
+          if (
+            blocked &&
+            action === operation &&
+            (operation === 'open' || key.endsWith(launcher ? '/index.html' : '/game/logo.svg'))
+          )
+            throw new DOMException('Storage is full or unavailable.', 'QuotaExceededError');
+        },
+      });
+      runtime.cache.clear();
+      await assert.rejects(runtime.dispatch('install'), { name: 'QuotaExceededError' });
+      const partial = new Set(runtime.cache.keys());
+      if (operation !== 'open') assert.ok(partial.size > 0);
+      assert.equal((await workerReceipt(runtime, 'repair-company-edition')).status, 'error');
+      const requests = runtime.requests.length;
+      assert.equal((await workerReceipt(runtime)).status, 'error');
+      assert.equal(runtime.requests.length, requests, 'verification never downloads files');
+      assert.deepEqual(await storedBytes(old.cache), retained);
+      assert.deepEqual(await storedBytes(other.cache), unrelated);
+      assert.ok(runtime.cacheOperations.every(({ name }) => name === runtime.cacheName));
+
+      blocked = false;
+      runtime.requests.length = 0;
+      const repaired = await workerReceipt(runtime, 'repair-company-edition');
+      assert.equal(repaired.status, 'ready');
+      assert.equal(repaired.buildId, runtime.inventory.buildId);
+      assert.equal(repaired.count, runtime.inventory.files.length);
+      assert.equal(repaired.bytes, runtime.inventory.totalBytes);
+      assert.ok(runtime.requests.every((url) => !partial.has(url)));
+      assert.equal((await workerReceipt(runtime)).status, 'ready');
+      assert.deepEqual(await storedBytes(old.cache), retained);
+      assert.deepEqual(await storedBytes(other.cache), unrelated);
+    }
+  }
+});
+
+test('game and launcher online fetches remain byte-verified when caching is unavailable', async () => {
+  const files = await build();
+  for (const launcher of [false, true]) {
+    for (const operation of ['open', 'match', 'put']) {
+      let failedDownload = false,
+        corruptDownload = false;
+      const runtime = worker(files, {
+        launcher,
+        cacheFault(action) {
+          if (action === operation)
+            throw new DOMException('Storage unavailable.', 'QuotaExceededError');
+        },
+        respond(path, value) {
+          if (failedDownload) throw new Error('Network unavailable.');
+          return new Response(corruptDownload ? 'changed' : value, {
+            headers: { 'content-type': 'text/html; charset=utf-8' },
+          });
+        },
+      });
+      const path = launcher ? 'app/index.html' : 'game/company.html';
+      const request = {
+        method: 'GET',
+        url: launcher ? runtime.scope : `${runtime.scope}${path}`,
+      };
+      const response = await runtime.dispatch('fetch', { request });
+      assert.equal(response.status, 200);
+      assert.equal(response.headers.get('content-type'), 'text/html; charset=utf-8');
+      assert.equal(await response.text(), files.get(path).toString());
+      assert.equal(runtime.cache.size, operation === 'match' ? 1 : 0);
+      const cached = await storedBytes(runtime.cache);
+      assert.equal(
+        (await workerReceipt(runtime)).status,
+        'error',
+        'online fallback is not offline readiness',
+      );
+
+      corruptDownload = true;
+      assert.equal((await runtime.dispatch('fetch', { request })).status, 503);
+      corruptDownload = false;
+      failedDownload = true;
+      assert.equal((await runtime.dispatch('fetch', { request })).status, 503);
+      assert.deepEqual(await storedBytes(runtime.cache), cached);
+    }
+  }
 });
 
 test('failed update and foreign-client repair cannot change a retained release or another edition cache', async () => {

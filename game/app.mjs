@@ -3140,15 +3140,19 @@ try {
         : t('interface:separateTeamArenas2Players'),
     );
   }
-  const modeLabel = (kind, destinationLabel = null) =>
-    destinationLabel ??
-    (kind === 'library'
-      ? t('interface:selectedMission')
-      : kind === 'catalogue'
-        ? catalogueLabel()
-        : kind === 'versus'
-          ? t('interface:versus2')
-          : t('interface:team'));
+  const modeLabel = (kind, destinationLabel = null, presentationId = undefined) =>
+    presentationId !== undefined
+      ? presentationId === null
+        ? t('interface:soloDeparture.currentArtwork')
+        : t('interface:soloDeparture.retainedArtwork')
+      : (destinationLabel ??
+        (kind === 'library'
+          ? t('interface:selectedMission')
+          : kind === 'catalogue'
+            ? catalogueLabel()
+            : kind === 'versus'
+              ? t('interface:versus2')
+              : t('interface:team')));
   const currentAuthoredModeRoute = () =>
     candidateHost?.owns(activeEntry) ? authoredRoute.id : null;
   const modeDestination = (ticket) =>
@@ -3267,7 +3271,7 @@ try {
     )
       throw new Error(
         t('interface:soloDeparture.changed', {
-          destination: modeLabel(ticket.kind, ticket.destinationLabel),
+          destination: modeLabel(ticket.kind, ticket.destinationLabel, ticket.presentationId),
         }),
       );
   }
@@ -3287,9 +3291,17 @@ try {
                 : '',
             })
           : ticket.kind === 'catalogue'
-            ? t('interface:soloDeparture.catalogue', {
-                destination: ticket.destinationLabel ?? catalogueLabel(),
-              })
+            ? ticket.presentationId !== undefined
+              ? t('interface:soloDeparture.artwork', {
+                  destination: modeLabel(
+                    ticket.kind,
+                    ticket.destinationLabel,
+                    ticket.presentationId,
+                  ),
+                })
+              : t('interface:soloDeparture.catalogue', {
+                  destination: ticket.destinationLabel ?? catalogueLabel(),
+                })
             : ticket.journeyRouteId
               ? t('interface:soloDeparture.journey', {
                   destination:
@@ -3372,6 +3384,7 @@ try {
       libraryTarget = null,
       libraryMode = 'solo',
       editionId = null,
+      presentationId = undefined,
     } = {},
   ) {
     if (
@@ -3388,13 +3401,30 @@ try {
     const destinationEdition =
       editionId === null
         ? null
-        : runtimeContent?.catalog.editions.find((edition) => edition.id === editionId);
+        : (runtimeContent?.currentCatalog ?? runtimeContent?.catalog).editions.find(
+            (edition) => edition.id === editionId,
+          );
+    const presentationChange = presentationId !== undefined;
+    if (
+      presentationChange &&
+      (kind !== 'catalogue' ||
+        !runtimeContent ||
+        editionId !== null ||
+        presentationId === runtimeContent.retainedPresentationId ||
+        (presentationId !== null &&
+          !runtimeContent.presentationHistory.some((item) => item.id === presentationId)))
+    )
+      return false;
     if (
       editionId !== null &&
       (kind !== 'catalogue' || !destinationEdition || editionId === runtimeContent.editionId)
     )
       return false;
-    const destinationHref = destinationEdition ? runtimeContent.href({ edition: editionId }) : null;
+    const destinationHref = destinationEdition
+      ? runtimeContent.href({ edition: editionId, presentation: null })
+      : presentationChange
+        ? runtimeContent.href({ presentation: presentationId })
+        : null;
     const destinationLabel = destinationEdition?.name ?? null;
     if (
       kind === 'library' &&
@@ -3423,7 +3453,7 @@ try {
     ) {
       warning(
         localizedMessage('interface:soloDeparture.finishCurrentOperation', {
-          destination: modeLabel(kind, destinationLabel),
+          destination: modeLabel(kind, destinationLabel, presentationId),
         }),
       );
       return false;
@@ -3432,6 +3462,7 @@ try {
       kind,
       destinationHref,
       destinationLabel,
+      presentationId,
       origin,
       isCurrent,
       opener,
@@ -3471,7 +3502,7 @@ try {
         cancelModeDeparture({ restore: true });
         warning(
           localizedMessage('interface:soloDeparture.openFailed', {
-            destination: modeLabel(kind, destinationLabel),
+            destination: modeLabel(kind, destinationLabel, presentationId),
             error: error.message,
           }),
         );
@@ -3502,10 +3533,14 @@ try {
         : t('interface:checkingTheReturnToMissions'),
     );
     localizedText($('mode-leave-title'), () =>
-      t('interface:soloDeparture.openTitle', { destination: modeLabel(kind, destinationLabel) }),
+      t('interface:soloDeparture.openTitle', {
+        destination: modeLabel(kind, destinationLabel, presentationId),
+      }),
     );
     localizedText($('mode-leave-confirm'), () =>
-      t('interface:soloDeparture.leaveFor', { destination: modeLabel(kind, destinationLabel) }),
+      t('interface:soloDeparture.leaveFor', {
+        destination: modeLabel(kind, destinationLabel, presentationId),
+      }),
     );
     ticket.dialogShown = true;
     try {
@@ -11087,6 +11122,13 @@ try {
           requestModeDeparture('catalogue', { preventDefault() {} }, opener, {
             origin: 'solo-title',
             editionId,
+            isCurrent: () => $('shell-home').open && $('shell-home').contains(opener),
+          }),
+        getSavedPresentation: () => savedAttempt()?.actorAppearancePin?.authoredPresentationSha256,
+        onPresentationChange: (presentationId, opener) =>
+          requestModeDeparture('catalogue', { preventDefault() {} }, opener, {
+            origin: 'solo-title',
+            presentationId,
             isCurrent: () => $('shell-home').open && $('shell-home').contains(opener),
           }),
       })

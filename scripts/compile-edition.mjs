@@ -16,7 +16,10 @@ import {
   validateEditionAsset,
 } from '../game/editions/model.mjs';
 import { validateEditionId, resolveEditionContext } from '../game/edition-context.mjs';
-import { validateEditionSourceInventory } from '../publishing/edition-admission.mjs';
+import {
+  validateEditionSourceInventory,
+  editionPublicationAssets,
+} from '../publishing/edition-admission.mjs';
 import { buildEditionOfflineFiles } from './edition-offline.mjs';
 import { projectEditionLocalization } from './edition-localization.mjs';
 import {
@@ -33,6 +36,7 @@ import {
   projectEditionThemeSelection,
   projectEditionGuideScenario,
 } from '../game/editions/selected-presentation.mjs';
+import { validateRetainedPresentation } from '../game/editions/retained-presentation.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const jsonBytes = (value) => Buffer.from(canonicalJSON(value) + '\n');
@@ -110,6 +114,28 @@ export function selectEditionClosure(source, editionIds) {
     campaigns,
     assets: catalog.assets.filter((asset) => selectedIds.has(asset.id)),
   });
+}
+
+/** Read selected current inputs first, then only explicitly pinned historical
+ * media. The reader supplies filesystem/commit boundaries and byte budgets. */
+export async function collectEditionSelectedFiles({ catalog, editionIds, read }) {
+  const selected = selectEditionClosure(catalog, editionIds),
+    files = new Map();
+  const paths = new Set([
+    ...selected.assets.map((asset) => asset.path),
+    ...selected.campaigns.flatMap((campaign) => [
+      campaign.sourcePath,
+      ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+    ]),
+    ...selected.editions.flatMap((edition) => [
+      ...Object.values(edition.boot ?? {}),
+      ...(edition.presentationHistory ?? []).map((record) => record.path),
+    ]),
+  ]);
+  for (const name of ordered(paths)) files.set(name, await read(name));
+  for (const asset of editionPublicationAssets(selected, files))
+    if (!files.has(asset.path)) files.set(asset.path, await read(asset.path));
+  return files;
 }
 
 /** A brand registry can describe every campaign, but an audience artifact must
@@ -385,8 +411,29 @@ export async function compileEdition({
   for (const edition of runtimeCatalog.editions) {
     required(edition.boot, 'Standalone editions need an explicit boot inventory.');
     Object.values(edition.boot).forEach((file) => selectedData.add(file));
+    for (const descriptor of edition.presentationHistory ?? []) {
+      selectedData.add(descriptor.path);
+      const bytes = sourceFiles.get(descriptor.path);
+      required(
+        bytes instanceof Uint8Array &&
+          bytes.length === descriptor.bytes &&
+          hash(bytes) === descriptor.sha256,
+        'Retained presentation source bytes differ from their registration.',
+      );
+      const retained = await validateRetainedPresentation(readJSON(bytes), { edition });
+      required(
+        retained.snapshot.authoredPresentationSha256 === descriptor.id,
+        'Retained presentation identity differs from its registration.',
+      );
+    }
   }
-  const selectedMedia = new Set(runtimeCatalog.assets.map((asset) => asset.path));
+  // Keep historical asset IDs inside their snapshot. A newer presentation can
+  // reuse a logical ID while its original immutable media path remains pinned.
+  const publicationAssets = editionPublicationAssets(
+    runtimeCatalog,
+    new Map([...selectedData].map((name) => [name, sourceFiles.get(name)])),
+  );
+  const selectedMedia = new Set(publicationAssets.map((asset) => asset.path));
   const excluded = new Set([
     ...catalog.campaigns
       .flatMap((campaign) => [
@@ -396,7 +443,10 @@ export async function compileEdition({
       .filter((file) => !selectedData.has(file)),
     ...catalog.assets.map((asset) => asset.path).filter((file) => !selectedMedia.has(file)),
     ...catalog.editions
-      .flatMap((edition) => Object.values(edition.boot ?? {}))
+      .flatMap((edition) => [
+        ...Object.values(edition.boot ?? {}),
+        ...(edition.presentationHistory ?? []).map((record) => record.path),
+      ])
       .filter((file) => !selectedData.has(file)),
   ]);
   for (const file of enginePaths) {
@@ -669,7 +719,7 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
       palette: { ink: theme.palette.ink, paper: theme.palette.paper, accent: theme.palette.accent },
     });
   }
-  const assetPaths = new Map(runtimeCatalog.assets.map((asset) => [asset.path, asset]));
+  const assetPaths = new Map(publicationAssets.map((asset) => [asset.path, asset]));
   const eligibility = validateEditionSourceInventory({
     files,
     assets: [...assetPaths.values()],
@@ -732,20 +782,9 @@ async function main(args) {
   const engine = options['engine-manifest']
     ? readJSON(await fs.readFile(path.resolve(root, options['engine-manifest'])))
     : { paths: [...engineFiles.keys()] };
-  const editionIds = options.edition.split(','),
-    selected = selectEditionClosure(catalog, editionIds);
-  const paths = new Set([
-    ...engine.paths,
-    ...selected.campaigns.flatMap((campaign) => [
-      campaign.sourcePath,
-      ...(campaign.lessonPath ? [campaign.lessonPath] : []),
-    ]),
-    ...selected.editions.flatMap((edition) => Object.values(edition.boot ?? {})),
-    ...selected.assets.map((asset) => asset.path),
-  ]);
+  const editionIds = options.edition.split(',');
   const files = new Map(engineFiles);
-  for (const file of paths) {
-    if (files.has(file)) continue;
+  const read = async (file) => {
     required(editionRelativePath(file), 'Unsafe source path.');
     const absolute = path.resolve(root, file),
       real = await fs.realpath(absolute);
@@ -753,8 +792,16 @@ async function main(args) {
       real.startsWith(`${await fs.realpath(root)}${path.sep}`),
       'Edition source symlink escapes its root.',
     );
-    files.set(file, await fs.readFile(absolute));
-  }
+    const stat = await fs.stat(real);
+    required(
+      stat.isFile() && stat.size <= 32 * 1024 * 1024,
+      'Selected source exceeds its file budget.',
+    );
+    return fs.readFile(absolute);
+  };
+  for (const file of engine.paths) if (!files.has(file)) files.set(file, await read(file));
+  for (const [name, bytes] of await collectEditionSelectedFiles({ catalog, editionIds, read }))
+    files.set(name, bytes);
   const result = await compileEdition({
     catalog,
     editionIds,
