@@ -167,6 +167,34 @@ class BindingTests(unittest.TestCase):
         broken = copy.deepcopy(jobs); broken['jobs'][-1]['conclusion'] = 'skipped'
         with self.assertRaises(ValueError): utility.artifact_authority(API([artifact, run, broken]), value)
 
+    def test_artifact_authority_allows_only_the_current_in_progress_fastline_run(self):
+        value = binding()
+        artifact = {'id': 17, 'name': 'qualified-release-v1.2.3-' + 'a' * 40, 'expired': False,
+                    'size_in_bytes': 100, 'digest': 'sha256:' + 'c' * 64,
+                    'workflow_run': {'id': 18, 'head_sha': 'a' * 40}}
+        run = {'id': 18, 'event': 'workflow_dispatch', 'path': utility.FASTLINE_WORKFLOW,
+               'head_sha': 'a' * 40, 'status': 'in_progress', 'conclusion': None}
+        jobs = {'jobs': [
+            {'name': 'qualify / ' + name, 'head_sha': 'a' * 40,
+             'status': 'completed', 'conclusion': 'success'}
+            for name in ['qualify', 'test (1)', 'test (2)', 'test (3)', 'test (4)', 'freeze']
+        ]}
+
+        class API:
+            def __init__(self, rows): self.rows = iter(rows)
+            def get(self, _path): return next(self.rows)
+
+        with patch.dict(utility.os.environ, {'GITHUB_RUN_ID': '18'}):
+            self.assertEqual(utility.artifact_authority(API([artifact, run, jobs]), value), artifact)
+        for run_id, candidate in [
+                ('19', run),
+                ('18', {**run, 'path': utility.WORKFLOW}),
+                ('18', {**run, 'status': 'queued'}),
+                ('18', {**run, 'conclusion': 'failure'})]:
+            with self.subTest(run_id=run_id, candidate=candidate), \
+                    patch.dict(utility.os.environ, {'GITHUB_RUN_ID': run_id}), self.assertRaises(ValueError):
+                utility.artifact_authority(API([artifact, candidate, jobs]), value)
+
     def test_disk_refusal_happens_before_subprocess_or_output(self):
         with tempfile.TemporaryDirectory() as tmp, patch.object(utility.shutil, 'disk_usage') as disk, \
                 patch.object(utility.subprocess, 'Popen') as process:
