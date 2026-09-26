@@ -1,10 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import {
   EDITION_REVIEW_GATES,
   verifyEditionReview,
   validateEditionPublication,
   frozenEditionOverlay,
+  selectRetainedEditionRelease,
 } from './edition-promotion.mjs';
 import { editionAdmissionFixture } from './edition-fixture.mjs';
 import { editionHash, inspectEditionZip } from './edition-zip.mjs';
@@ -229,6 +234,198 @@ test('inactive historical editions retain frozen files and only the chosen versi
         output.get(`editions/${id}/releases/${fixture.release.version}/site/${name}`),
         source,
       );
+});
+
+test('retained rollback changes only explicitly selected launcher ownership after full artifact verification', async () => {
+  const older = reviewedFixture({ version: 'v0.139.0' });
+  older.release.activeEditionIds = [];
+  const newer = reviewedFixture({ version: 'v0.140.0' });
+  const other = reviewedFixture({ version: 'v0.141.0', editionId: 'droneaid' });
+  const input = selector(older.release, newer.release, other.release),
+    before = structuredClone(input),
+    ports = {
+      readReleaseAsset: releaseReader(older, newer, other),
+      resolveReleaseIdentity: releaseIdentity(older, newer, other),
+      targetBasePath: '/revealline/',
+    };
+  const updated = await selectRetainedEditionRelease(
+    input,
+    { version: older.release.version, editionIds: ['coupa'] },
+    ports,
+  );
+  assert.deepEqual(input, before);
+  assert.deepEqual(updated.releases[0], { ...before.releases[0], activeEditionIds: ['coupa'] });
+  assert.deepEqual(updated.releases[1], { ...before.releases[1], activeEditionIds: [] });
+  assert.deepEqual(updated.releases[2], before.releases[2]);
+  const oldOutput = await frozenEditionOverlay(input, ports),
+    output = await frozenEditionOverlay(updated, ports);
+  for (const [name, bytes] of oldOutput)
+    if (!name.startsWith('editions/coupa/app/') && name !== 'editions/index.html')
+      assert.deepEqual(output.get(name), bytes, `Unchanged frozen or unrelated member: ${name}`);
+  assert.equal(json(output.get('editions/coupa/app/current.json')).version, 'v0.139.0');
+  assert.deepEqual(
+    await selectRetainedEditionRelease(
+      updated,
+      { version: 'v0.139.0', editionIds: ['coupa'] },
+      ports,
+    ),
+    updated,
+    'Repeating an already selected retained version is a verified no-op.',
+  );
+});
+
+test('invalid retained selections and changed review evidence never return a staged selector', async () => {
+  const fixture = reviewedFixture(),
+    input = selector(fixture.release),
+    before = structuredClone(input);
+  for (const request of [
+    { version: 'v99.0.0', editionIds: ['coupa'] },
+    { version: fixture.release.version, editionIds: ['droneaid'] },
+    { version: fixture.release.version, editionIds: [] },
+    { version: fixture.release.version, editionIds: ['coupa', 'coupa'] },
+    { version: '../escape', editionIds: ['coupa'] },
+  ])
+    await assert.rejects(
+      selectRetainedEditionRelease(input, request, {
+        readReleaseAsset: () => assert.fail('Invalid selections must fail before downloading.'),
+      }),
+      /retained|selection/i,
+    );
+  fixture.files.set('edition-review.json', Buffer.concat([fixture.reviewBytes, bytes('changed')]));
+  await assert.rejects(
+    selectRetainedEditionRelease(
+      input,
+      { version: fixture.release.version, editionIds: ['coupa'] },
+      {
+        readReleaseAsset: releaseReader(fixture),
+        resolveReleaseIdentity: releaseIdentity(fixture),
+      },
+    ),
+    /metadata differs/,
+  );
+  assert.deepEqual(input, before);
+});
+
+test('select-retained CLI uses read-only exact downloads and leaves the selector intact on corruption', async (t) => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'edition-rollback-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const older = reviewedFixture({ version: 'v0.139.0' });
+  older.release.activeEditionIds = [];
+  const newer = reviewedFixture({ version: 'v0.140.0' });
+  const other = reviewedFixture({ version: 'v0.141.0', editionId: 'droneaid' });
+  const input = selector(older.release, newer.release, other.release),
+    selectorPath = path.join(directory, 'selector.json'),
+    responsePath = path.join(directory, 'responses.json'),
+    callsPath = path.join(directory, 'calls.jsonl');
+  await fs.writeFile(selectorPath, JSON.stringify(input));
+  const responses = {},
+    root = 'repos/mekhovov/revealline';
+  let nextId = 1,
+    corruptedId;
+  const add = (route, content) => {
+    responses[`${root}/${route}`] = content.toString('base64');
+  };
+  for (const fixture of [older, newer, other]) {
+    const assets = [];
+    for (const [name, contents] of fixture.files) {
+      const id = nextId++;
+      assets.push({ id, name, state: 'uploaded', size: contents.length });
+      add(`releases/assets/${id}`, contents);
+      if (fixture === older && name === fixture.envelope.editions[0].distribution.path)
+        corruptedId = id;
+    }
+    add(
+      `releases/tags/${fixture.envelope.version}`,
+      bytes({ tag_name: fixture.envelope.version, draft: false, prerelease: false, assets }),
+    );
+    add(
+      `commits/${fixture.envelope.version}`,
+      bytes({
+        sha: fixture.envelope.sourceRevision,
+        commit: { tree: { sha: fixture.envelope.sourceTree } },
+      }),
+    );
+  }
+  await fs.writeFile(responsePath, JSON.stringify(responses));
+  await fs.writeFile(
+    path.join(directory, 'gh'),
+    `#!/usr/bin/env node
+const fs = require('node:fs');
+const args = process.argv.slice(2);
+fs.appendFileSync(process.env.EDITION_TEST_CALLS, JSON.stringify(args) + '\\n');
+if (args[0] !== 'api' || args.includes('--method') || args.includes('-X')) process.exit(90);
+const route = args.find(value => value.startsWith('repos/'));
+const data = JSON.parse(fs.readFileSync(process.env.EDITION_TEST_RESPONSES));
+if (!data[route]) process.exit(91);
+process.stdout.write(Buffer.from(data[route], 'base64'));
+`,
+    { mode: 0o755 },
+  );
+  const run = () =>
+    spawnSync(
+      process.execPath,
+      [
+        new URL('../scripts/publish-editions.mjs', import.meta.url).pathname,
+        'select-retained',
+        '--selector',
+        selectorPath,
+        '--version',
+        'v0.139.0',
+        '--editions',
+        'coupa',
+        '--repository',
+        'mekhovov/revealline',
+        '--base-path',
+        '/revealline/',
+      ],
+      {
+        encoding: 'utf8',
+        env: {
+          ...process.env,
+          PATH: `${directory}${path.delimiter}${process.env.PATH}`,
+          EDITION_TEST_CALLS: callsPath,
+          EDITION_TEST_RESPONSES: responsePath,
+        },
+      },
+    );
+  const success = run();
+  assert.equal(success.status, 0, success.stderr);
+  const selectedBytes = await fs.readFile(selectorPath),
+    selected = JSON.parse(selectedBytes);
+  assert.deepEqual(
+    selected.releases.map((row) => row.activeEditionIds),
+    [['coupa'], [], ['droneaid']],
+  );
+  assert.deepEqual(selected.releases[2], input.releases[2]);
+  assert.ok(
+    (await fs.readFile(callsPath, 'utf8'))
+      .split('\n')
+      .filter(Boolean)
+      .every((line) => JSON.parse(line)[0] === 'api'),
+  );
+  const releaseRoute = `${root}/releases/tags/${older.envelope.version}`,
+    originalRelease = responses[releaseRoute];
+  for (const change of [{ draft: true }, { prerelease: true }, { tag_name: 'v99.0.0' }]) {
+    responses[releaseRoute] = bytes({
+      ...JSON.parse(Buffer.from(originalRelease, 'base64')),
+      ...change,
+    }).toString('base64');
+    await fs.writeFile(responsePath, JSON.stringify(responses));
+    const rejected = run();
+    assert.notEqual(rejected.status, 0);
+    assert.match(rejected.stderr, /original published stable release/);
+    assert.deepEqual(await fs.readFile(selectorPath), selectedBytes);
+  }
+  responses[releaseRoute] = originalRelease;
+  const corrupt = Buffer.from(responses[`${root}/releases/assets/${corruptedId}`], 'base64');
+  corrupt[0] ^= 1;
+  responses[`${root}/releases/assets/${corruptedId}`] = corrupt.toString('base64');
+  await fs.writeFile(responsePath, JSON.stringify(responses));
+  const rejected = run();
+  assert.notEqual(rejected.status, 0);
+  assert.match(rejected.stderr, /artifact bytes differ/);
+  assert.deepEqual(await fs.readFile(selectorPath), selectedBytes);
+  await assert.rejects(fs.access(`${selectorPath}.next`), { code: 'ENOENT' });
 });
 
 test('duplicate active launchers and duplicate selected identities fail before release reads', async () => {

@@ -5,8 +5,8 @@ for the canonical host, selected tool pages and evidence required before qualifi
 
 Company editions reuse Reveal / Line's deterministic simulation, renderer, replay verifier,
 campaign compiler and Journey store. `game/company.html` is the edition entry point; the current
-implementation connects company content to the canonical Solo host. Main-host technical
-validation is ongoing. Historical default content and the original Portuguese DroneAid pilot
+implementation connects company content to the canonical Solo host. All 14 editions have passed
+shared-host startup and reproducible candidate compilation. Historical default content and the original Portuguese DroneAid pilot
 keep separate content identities.
 
 ## Try a draft
@@ -53,8 +53,8 @@ The Solo-first delivery contract offers the 24 fictional Coupa activities as opt
 **after winning and viewing the revealed picture**. They do not block arcade progression.
 Six are unscored culture reflections; 18 practice tasks use Inspect / Configure / Commit.
 These are illustrative local records, not live Coupa operations. Historical replay/evidence
-validation remains separate from the current bonus flow. Main-host integration and browser
-checks are still in progress; the older qualification results below do not qualify this revision.
+validation remains separate from the current bonus flow. Current shared-host tests and bounded
+browser checks are recorded separately from human content and release qualification.
 
 ## Author and compile
 
@@ -67,15 +67,15 @@ node scripts/produce-company-content.mjs
 node scripts/produce-company-content.mjs --check
 node scripts/compile-edition.mjs --catalog game/editions/catalog.json \
   --edition coupa-adventure --out .cache/coupa-candidate \
-  --version 0.132.4 --offline-base-path /revealline/
+  --version 0.132.5 --offline-base-path /revealline/
 ```
 
 The destination must not already exist. `game/company-campaigns/brands.mjs` and the authored
 campaign/lesson modules are build inputs. Their generated JSON is checked in so a static
 server can run the hub. The standalone player exports only the selected brand, campaigns,
 lessons, approved assets and explicit runtime module dependencies. Source registries,
-authoring history, other audiences, unused locales and internal art provenance are excluded.
-English runtime catalogues preserve generic engine messages; unrelated translation namespaces
+authoring history, other audiences and internal art provenance are excluded.
+Supported runtime locales preserve generic engine messages; unrelated translation namespaces
 and the legacy authored-content lookup are pruned. No runtime SVG importer was added.
 
 `BrandPack` defines identity, allowed `themeIds` and asset/source references. The primary and
@@ -98,10 +98,13 @@ views of that edition share them. Different audiences do not silently import one
 records. Explicit backup/import transfers the same logical edition across origins.
 Backups for other audiences are rejected; cross-audience migration is not implemented.
 
-Suspended games include the full core replay, edition, exact presentation identity, run ID
-and learning transcript. Restoration verifies the replay and current lesson/simulation/seed
-pins before retiring the active picture. A missing older presentation fails visibly; it does
-not substitute new art. Keep the matching frozen release available for restoration.
+Current Solo attempts use `xonix-session.v6`, with the core replay, exact content reference and
+pinned actor/picture presentation. Optional learning records have separate persistence and
+backup; they do not change the attempt format or arcade progression. Restoration verifies
+the replay and exact presentation before adopting the run. A missing older presentation
+fails visibly rather than substituting new art. Keep its matching frozen release available.
+Switching editions uses the shared departure flow: verify retention, then offer Stay/Leave.
+A storage failure or occupied writer never silently discards the in-memory flight.
 
 Only one tab writes an edition's progress. Other tabs can play without becoming a second
 writer. Reduced-motion and other existing shared presentation preferences retain their
@@ -116,8 +119,10 @@ Verified learning mastery stores its exact lesson/fixture revision, ordered acti
 matching core replay. Hydration and import replay the simulation, evidence availability and
 safe-checkpoint anchors. A saved `complete` flag has no authority. Rejected older records remain
 in a bounded recovery journal for transfer to their matching release; they do not unlock new
-lessons. Backup v2 carries both proof and recovery records. The outer import budget is 96 MiB;
-inner replay, transcript, proof and recovery budgets remain independently enforced.
+lessons. Current optional learning export uses `revealline-edition-learning-backup.v1`,
+carrying proof and recovery records for one exact logical edition with a 48 MiB import
+budget. Inner replay, transcript, proof and recovery budgets remain independently enforced.
+The historical company-player backup v2 is retained separately; it is not the Solo save format.
 
 ## Release sequence and gates
 
@@ -131,7 +136,7 @@ storage keys must remain scoped explicitly.
 | ----------------------- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | 1. Foundation           | Registries, player-only catalogues, exclusion reports and fixture editions                      | Preserve compatibility as new packs enter                                                    |
 | 2. Coupa slice          | Official flower, branded host, First Connection, pinned Continue/Retry and reduced motion       | Human visual/gameplay review                                                                 |
-| 3. Independent editions | 14 declared editions; earlier seven-edition build evidence retained separately                  | Two actual OS-installed PWAs, update/rollback and device storage recovery                    |
+| 3. Independent editions | 14 editions compiled twice; downloaded artifacts independently checked                          | Two actual OS-installed PWAs, update/rollback and device storage recovery                    |
 | 4. Release admission    | Reproducible archives, whole-source eligibility, original ZIP-member admission and candidate CI | A new freeze for every changed source revision                                               |
 | 5. Learning/reuse       | 24 Coupa bonus activities, four transfer fixtures, six Netherlands chapters                     | Human comprehension and transfer observations                                                |
 | 6. Expansion            | 66 current maps plus three historical maps; 414 verified replay routes                          | Human formative decision; 60 current raster-art slots pending; batches of at most three      |
@@ -158,8 +163,8 @@ node scripts/publish-editions.mjs review-template \
 ```
 
 `Company edition candidates` runs on relevant pull requests and main changes, storing
-the explicitly selected candidates as Actions artifacts for 14 days. The earlier successful
-seven-edition run does not establish that all 14 current declarations have passed candidate CI. The workflow now defaults to all 14 edition IDs; the command above builds only the two combined examples. It cannot publish releases. Each bundle
+the explicitly selected candidates as Actions artifacts for 14 days. The successful
+14-edition runs and exact downloaded-byte receipts are recorded in the qualification log. The workflow defaults to all 14 edition IDs; the command above builds only the two combined examples. It cannot publish releases. Each bundle
 includes `editions.json`, standalone ZIPs, selected-source ZIPs, manifests, checksums and a
 candidate verification receipt. The source ZIP is a selected input packet, not a full repository
 checkout. The legacy full-source archive separately runs the public-source eligibility gate.
@@ -184,7 +189,17 @@ per edition. The existing sole Pages publisher composes these verified edition f
 the default artifact and rechecks the combined 950 MB operational budget. Empty selection
 preserves default publication. `editions/index.html` links the same standalone artifacts.
 Rollback changes the active edition selection to a retained version; it never rewrites frozen
-release bytes or changes another edition's launcher. Additional distribution targets require
+release bytes or changes another edition's launcher. Use the verified local-selector command:
+
+```sh
+node scripts/publish-editions.mjs select-retained --version vX.Y.Z \
+  --editions coupa-all --selector publishing/pages-controller/editions.json \
+  --repository mekhovov/revealline --base-path /revealline/
+```
+
+It downloads and checks the retained published artifacts before writing the selected edition's
+launcher choice. A failed check leaves the selector untouched. Review and deploy that selector
+through the ordinary pipeline; this command does not publish or deploy. Additional distribution targets require
 their own reviewed configuration. Restricted editions have no public promotion path.
 
 ## Evidence and outstanding human gates
@@ -224,7 +239,11 @@ The [qualification record](company-editions-validation.md) separates successful 
 automation from unresolved historical tests and promotion gates. The [accessibility review](company-editions-accessibility.md)
 records implemented mobile, focus and status fixes plus outstanding assistive-technology checks.
 The [same-device review tool](verification/company-review.html) observes real player pages with
-bounded, exportable measurements. It reports buffered resource entries, animation callback
+bounded, exportable measurements. It supports the current Solo host and historical company
+player, with independent viewport width/height. Arm a measurement, then start/resume the
+game normally; the observer never resumes it. The two hosts expose different preparation
+endpoints, recorded in each observation, so do not compare them as identical timings.
+It reports buffered resource entries, animation callback
 intervals and approximate shared heap, not complete network traffic, renderer timings or a
 memory-leak verdict. Every observation remains unqualified until reviewed.
 

@@ -1,8 +1,31 @@
 # Company player accessibility review
 
-This is an engineering review of the company player and workbench, not an accessibility
-certification or a human comprehension result. Scope: `game/company.html`,
-`game/company.css`, `game/company-player.mjs`, and the existing learning workbench.
+This is an engineering review, not an accessibility certification or a human comprehension
+result. The current company editions run `game/index.html` and the shared Solo controls.
+`game/company.html` is a redirect; the earlier dedicated player review below is historical.
+
+## Current shared Solo checks
+
+Actual-focus automated checks verify arrow/letter steering after launch, Settings return,
+explicit Resume and lost-focus recovery. A visibility-only interruption clears missed key
+releases without accepting held repeats. Edition changes reuse the shared Stay/Leave dialog;
+failed retention remains visible and cancellation restores the invoking selector.
+
+Bounded browser checks confirmed keyboard steering and Escape pause/resume. Native Tab
+navigation scrolled the pause menu's last Watch first cut action into view at 1280 × 720.
+The pause menu deliberately scrolls; offscreen actions in that scrollport are not evidence
+that they are unreachable. The review helper distinguishes this from viewport overflow
+without a scrollable ancestor. The canonical host has separate 390 × 844 and 844 × 390
+viewport observations recorded in the shared Solo integration log.
+
+These checks do not establish screen-reader support, physical-controller accessibility,
+contrast over every artwork crop, zoom behavior or accessibility on every device. Those
+remain pending human/device checks. The original token contrast results below belong to
+the earlier brand palettes and must not qualify the newer Netherlands palette implicitly.
+
+## Historical dedicated-player review
+
+Historical scope: `game/company.css`, `game/company-player.mjs`, and the learning workbench.
 
 | File                      | Component                   | Issue                                                                                                                    | WCAG Guideline                           | Severity | Recommendation                                                                                                        |
 | ------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------- |

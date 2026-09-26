@@ -85,14 +85,21 @@
         telemetry. The game uses its normal saves.
       </p>
       <label>Sample label<input id="label" value="Candidate" /></label>
+      <label>Player URL<input id="target" value="../../game/index.html?edition=coupa-all" /></label>
       <label
-        >Company player URL<input id="target" value="../../game/company.html?edition=coupa-all"
-      /></label>
-      <label
-        >Game viewport<select id="width">
+        >Viewport width<select id="width">
           <option value="1280">1280 px</option>
+          <option value="844">844 px</option>
           <option value="390">390 px</option>
           <option value="320">320 px</option>
+        </select></label
+      >
+      <label
+        >Viewport height<select id="height">
+          <option value="720">720 px</option>
+          <option value="844">844 px</option>
+          <option value="800">800 px</option>
+          <option value="390">390 px</option>
         </select></label
       >
       <div>
@@ -108,7 +115,9 @@
         transfer may reflect caching or unavailable timing details. Hidden, paused or interrupted
         samples are discarded. Heap size is reported only where the browser exposes its approximate,
         process-shared metric; it is not proof of a memory leak or its absence. No result
-        automatically approves a release.
+        automatically approves a release. Current Solo builds measure activation until a running
+        flight is observed; historical company builds measure until their explicit start is ready.
+        Those two preparation endpoints must not be compared as the same metric.
       </p>
     </header>
     <div id="viewport">

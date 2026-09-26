@@ -15,6 +15,7 @@ import {
   validateEditionCampaignProject,
   validateEditionLessonBundle,
 } from '../../game/editions/project.mjs';
+import { projectEditionThemeSelection } from '../../game/editions/selected-presentation.mjs';
 import { validateCompanyLessons } from '../../game/company-campaigns/learning.mjs';
 import { validateTheme } from '../../game/content.mjs';
 import { validateAnimationRecipes } from '../motion-lab/animation.mjs';
@@ -24,7 +25,38 @@ import {
 } from '../../game/editions/presets.mjs';
 
 export const DRAFT_FORMAT = 'revealline-company-source-draft.v1';
-export const REPORT_FORMAT = 'revealline-company-studio-report.v1';
+export const REPORT_FORMAT = 'revealline-company-studio-report.v2';
+export const STUDIO_REPORT_CHECKS = Object.freeze(
+  [
+    {
+      id: 'schemas',
+      status: 'passed',
+      detail: 'Brand, edition, campaign and learning ownership boundaries validated.',
+    },
+    {
+      id: 'assets',
+      status: 'passed',
+      detail: 'Selected media bytes match their declared approval, SHA-256 and byte count.',
+    },
+    {
+      id: 'exclusion',
+      status: 'passed',
+      detail:
+        'Other editions and authoring registries are absent from the admitted player inventory.',
+    },
+    {
+      id: 'dependencies',
+      status: 'passed',
+      detail: 'Local imports and declared assets resolve within the standalone artifact.',
+    },
+    {
+      id: 'playability',
+      status: 'review-required',
+      detail:
+        'Compilation does not approve route playability, artwork, accessibility or human learning. Record these reviews separately.',
+    },
+  ].map(Object.freeze),
+);
 export function declaredJSONPaths(catalog) {
   return [
     ...new Set([
@@ -136,7 +168,7 @@ export function validateStudioReport(input) {
       stableId(report.brandId) &&
       typeof report.name === 'string' &&
       report.name.length <= 160,
-    'Invalid compiler report identity.',
+    'Import a current v2 compiler report with a valid edition identity.',
   );
   required(
     report.summary &&
@@ -146,7 +178,9 @@ export function validateStudioReport(input) {
     'Invalid compiler summary.',
   );
   required(
-    Array.isArray(report.admittedPaths) && report.admittedPaths.every(editionRelativePath),
+    Array.isArray(report.admittedPaths) &&
+      report.admittedPaths.every(editionRelativePath) &&
+      new Set(report.admittedPaths).size === report.admittedPaths.length,
     'Invalid admitted path list.',
   );
   required(
@@ -157,17 +191,18 @@ export function validateStudioReport(input) {
     'Invalid exclusion report.',
   );
   required(
-    Array.isArray(report.checks) &&
-      report.checks.length <= 32 &&
-      report.checks.every(
-        (check) =>
-          stableId(check.id) &&
-          ['passed', 'failed', 'review-required'].includes(check.status) &&
-          typeof check.detail === 'string' &&
-          check.detail.length <= 2048,
-      ),
-    'Invalid compiler check list.',
+    canonicalJSON(report.checks) === canonicalJSON(STUDIO_REPORT_CHECKS),
+    'Compiler checks are missing or changed. Compile a fresh report; it cannot approve human review.',
   );
+  required(
+    report.artifact?.path === 'edition-build.json' &&
+      Number.isSafeInteger(report.artifact.bytes) &&
+      report.artifact.bytes > 0 &&
+      report.artifact.bytes <= 4 * 1024 * 1024 &&
+      /^[a-f0-9]{64}$/.test(report.artifact.sha256),
+    'The compiler report must pin its actual build manifest.',
+  );
+  exactKeys(report.artifact, ['path', 'bytes', 'sha256'], 'compiler artifact');
   required(
     report.previewURL === null || typeof report.previewURL === 'string',
     'Invalid preview path.',
@@ -211,8 +246,29 @@ export function studioSelection(catalog, editionId) {
     .forEach(add);
   return { ...selection, assets: catalog.assets.filter((asset) => ids.has(asset.id)) };
 }
-export function assertMatchingStudioSelection(draft, built, editionId) {
-  const a = studioSelection(draft, editionId),
+/** Match the compiler's existing, data-only projection. Unselected themes are
+ * removed in both views; selected theme edits and other brand pins stay exact. */
+export function projectStudioSelection(catalog, editionId, files = new Map()) {
+  const selection = studioSelection(catalog, editionId);
+  const projectedFiles = new Map(files);
+  if (!selection.brand.themeIds) return { ...selection, files: projectedFiles };
+  const projects = selection.campaigns.map((campaign) => {
+    const source = files.get(campaign.sourcePath);
+    required(source, 'Load every selected campaign before verifying the preview.');
+    return validateEditionCampaignProject(source, campaign).source;
+  });
+  const themePath = selection.edition.boot?.themes;
+  required(files.has(themePath), 'Load selected theme source before verifying the preview.');
+  const projected = projectEditionThemeSelection({
+    brand: selection.brand,
+    projects,
+    themes: files.get(themePath),
+  });
+  projectedFiles.set(themePath, projected.themes);
+  return { ...selection, brand: projected.brand, files: projectedFiles };
+}
+export function assertMatchingStudioSelection(draft, built, editionId, files = new Map()) {
+  const a = projectStudioSelection(draft, editionId, files),
     b = studioSelection(built, editionId);
   for (const key of ['edition', 'brand', 'campaigns', 'assets'])
     required(

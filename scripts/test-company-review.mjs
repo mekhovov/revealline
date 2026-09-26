@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   reviewTarget,
+  reviewViewport,
   frameSummary,
   resourceSummary,
 } from '../docs/verification/company-review-model.mjs';
@@ -16,13 +17,28 @@ test('review targets stay on the same server and never navigate outside a compan
     reviewTarget('/baseline/game/company.html', base),
     'http://localhost:8775/baseline/game/company.html',
   );
+  assert.equal(
+    reviewTarget('/candidate/game/index.html?edition=droneaid-nl-community', base),
+    'http://localhost:8775/candidate/game/index.html?edition=droneaid-nl-community',
+  );
   for (const url of [
     'https://example.com/game/company.html',
-    '/game/index.html',
+    '/game/playground.html',
     'javascript:alert(1)',
     'http://name@localhost:8775/game/company.html',
   ])
     assert.throws(() => reviewTarget(url, base));
+});
+test('review viewport has independent bounded width and height', () => {
+  assert.deepEqual(reviewViewport('844', '390'), { width: 844, height: 390 });
+  for (const pair of [
+    [0, 800],
+    [1280, 0],
+    [2561, 720],
+    [390, NaN],
+    [390, 844.5],
+  ])
+    assert.throws(() => reviewViewport(...pair));
 });
 test('frame summaries retain slow frames, reject invalid samples and do not fabricate empty measurements', () => {
   assert.equal(frameSummary([]), null);
@@ -75,6 +91,7 @@ class Element extends Events {
     this.disabled = false;
     this.hidden = false;
     this.parentElement = null;
+    this.style = {};
   }
   closest(selector) {
     if (selector === 'button') return this;
@@ -103,6 +120,7 @@ function reviewHarness() {
     'label',
     'target',
     'width',
+    'height',
     'load',
     'frames',
     'layout',
@@ -115,6 +133,7 @@ function reviewHarness() {
   ui.get('label').value = 'Frozen baseline';
   ui.get('target').value = '../../game/company.html?edition=coupa-all';
   ui.get('width').value = '1280';
+  ui.get('height').value = '800';
   ui.get('frames').disabled = ui.get('layout').disabled = true;
   parent.hidden = false;
   parent.getElementById = (id) => ui.get(id);
@@ -132,10 +151,12 @@ function reviewHarness() {
   });
   const dispose = mountCompanyReview({ document: parent, window });
   function page(href = 'http://localhost:8775/game/company.html?edition=coupa-all') {
+    const solo = new URL(href).pathname.endsWith('/index.html');
     const doc = Object.assign(new Events(), {
       hidden: false,
       title: 'Company game',
       documentElement: { dataset: { companyState: 'loading' }, scrollWidth: 1280 },
+      body: { dataset: { flightState: 'briefing', pictureState: 'pending' } },
     });
     const nodes = new Map();
     for (const id of [
@@ -147,6 +168,16 @@ function reviewHarness() {
       'start-campaign',
       'resume-button',
       'mission-title',
+      ...(solo
+        ? [
+            'game-canvas',
+            'shell-home',
+            'shell-continue',
+            'game-overlay',
+            'level-select',
+            'start-button',
+          ]
+        : []),
     ])
       nodes.set(id, new Element(id));
     nodes.get('play-screen').hidden = true;
@@ -155,6 +186,11 @@ function reviewHarness() {
     nodes.get('notice').textContent = 'Preparing';
     nodes.get('mission-title').textContent = 'First Connection';
     nodes.get('pause-button').textContent = 'Pause';
+    if (solo) {
+      doc.documentElement.dataset.bootState = 'loading';
+      nodes.get('shell-continue').disabled = true;
+      nodes.get('level-select').selectedOptions = [{ textContent: 'First Connection' }];
+    }
     const resources = [],
       frames = new Map();
     let nextFrame = 0;
@@ -164,6 +200,7 @@ function reviewHarness() {
       innerWidth: 1280,
       innerHeight: 800,
       devicePixelRatio: 1,
+      getComputedStyle: (node) => node.style,
       requestAnimationFrame(callback) {
         const id = ++nextFrame;
         frames.set(id, callback);
@@ -174,7 +211,12 @@ function reviewHarness() {
       },
     });
     doc.getElementById = (id) => nodes.get(id);
-    doc.querySelectorAll = () => [...nodes.values()];
+    doc.querySelectorAll = (selector) =>
+      selector === 'dialog[open]'
+        ? solo && nodes.get('shell-home').open
+          ? [nodes.get('shell-home')]
+          : []
+        : [...nodes.values()];
     const result = {
       doc,
       win,
@@ -182,12 +224,23 @@ function reviewHarness() {
       resources,
       frames,
       ready() {
+        if (solo) {
+          doc.documentElement.dataset.bootState = 'ready';
+          nodes.get('shell-continue').disabled = false;
+          nodes.get('shell-home').open = true;
+        }
         doc.documentElement.dataset.companyState = 'ready';
         nodes.get('campaigns').childElementCount = 5;
         nodes.get('notice').textContent = 'Choose your journey';
         nodes.get('start-campaign').disabled = false;
       },
       play() {
+        if (solo) {
+          doc.body.dataset.flightState = 'running';
+          doc.body.dataset.pictureState = 'ready';
+          nodes.get('game-overlay').hidden = true;
+          nodes.get('shell-home').open = false;
+        }
         nodes.get('play-screen').hidden = false;
         nodes.get('play-overlay').hidden = true;
         nodes.get('pause-button').textContent = 'Pause';
@@ -298,6 +351,241 @@ test('20-second observations retain the original label and identify animation ca
   assert.match(result.metric, /not render duration/);
   assert.equal(result.qualified, false);
   assert.equal(h.ui.get('frames').disabled, false);
+  h.dispose();
+});
+
+test('shared Solo redirect observes real boot, pictures, activation and flight state without legacy nodes', () => {
+  const h = reviewHarness(),
+    p = h.load(h.page('http://localhost:8775/game/index.html?edition=coupa-all'));
+  // The former company entry point redirects here. No old shell may qualify it.
+  for (const id of [
+    'campaigns',
+    'play-screen',
+    'play-overlay',
+    'notice',
+    'start-campaign',
+    'resume-button',
+    'mission-title',
+  ])
+    p.nodes.delete(id);
+  p.nodes.get('shell-continue').disabled = false;
+  p.doc.documentElement.dataset.bootState = 'failed';
+  h.tick();
+  h.tick();
+  assert.equal(h.ui.get('frames').disabled, true);
+  p.doc.documentElement.dataset.bootState = 'ready';
+  p.nodes.get('shell-home').open = true;
+  h.tick();
+  h.tick();
+  assert.equal(h.records().at(-1).host, 'solo');
+  assert.match(h.records().at(-1).target, /index\.html/);
+  assert.equal(h.ui.get('frames').disabled, false);
+  const start = p.nodes.get('shell-continue');
+  start.textContent = 'Continue';
+  p.doc.emit('click', { target: start, isTrusted: true });
+  p.doc.body.dataset.flightState = 'running';
+  p.nodes.get('game-overlay').hidden = true;
+  p.doc.body.dataset.pictureState = 'pending';
+  h.tick();
+  assert.equal(h.records().length, 1, 'Pending pictures cannot qualify a flight.');
+  p.doc.body.dataset.pictureState = 'ready';
+  h.tick();
+  assert.equal(h.records().length, 1, 'An open menu cannot qualify a running flight.');
+  p.nodes.get('shell-home').open = false;
+  h.tick();
+  assert.equal(h.records().at(-1).outcome, 'Running flight observed after activation');
+  assert.equal(h.records().at(-1).mission, 'First Connection');
+  assert.equal(h.records().at(-1).trustedActivation, true);
+  h.ui.get('frames').onclick();
+  for (let i = 0; i < 1250; i++) h.tick(16);
+  assert.equal(h.records().at(-1).frames, 1249);
+  assert.equal(h.records().at(-1).host, 'solo');
+  assert.equal(h.records().at(-1).qualified, false);
+  h.dispose();
+});
+
+test('measurement can be armed while Solo is paused and never starts or resumes the game itself', () => {
+  const h = reviewHarness(),
+    p = h.load(h.page('http://localhost:8775/game/index.html?edition=coupa-all'));
+  h.ready(p);
+  p.doc.body.dataset.flightState = 'paused';
+  h.ui.get('frames').onclick();
+  assert.match(h.records().at(-1).outcome, /Armed/);
+  p.win.emit('blur');
+  assert.match(
+    h.records().at(-1).outcome,
+    /Armed/,
+    'Arming never counts parent focus as gameplay.',
+  );
+  h.tick(4000);
+  assert.equal(p.doc.body.dataset.flightState, 'paused');
+  assert.equal(
+    h.records().some((r) => r.frames !== undefined),
+    false,
+  );
+  p.play();
+  h.tick();
+  assert.match(h.records().at(-1).outcome, /observation started/);
+  for (let i = 0; i < 1250; i++) h.tick(16);
+  assert.equal(h.records().at(-1).elapsedMs, 20000, 'The wait for Resume is excluded.');
+  p.doc.body.dataset.flightState = 'paused';
+  h.ui.get('frames').onclick();
+  h.tick(30001);
+  assert.match(h.records().at(-1).outcome, /No running flight.*discarded/);
+  assert.equal(h.ui.get('frames').disabled, false);
+  h.ui.get('frames').onclick();
+  p.doc.hidden = true;
+  p.doc.emit('visibilitychange');
+  assert.match(h.records().at(-1).outcome, /Hidden sample discarded/);
+  h.dispose();
+});
+
+test('focus interruption discards an active sample even when the game resumes before the next RAF', () => {
+  const h = reviewHarness(),
+    p = h.load(h.page('http://localhost:8775/game/index.html?edition=coupa-all'));
+  h.ready(p);
+  p.play();
+  h.ui.get('frames').onclick();
+  h.tick(16);
+  p.doc.body.dataset.flightState = 'paused';
+  p.win.emit('blur');
+  assert.match(h.records().at(-1).outcome, /Focus interrupted sample discarded/);
+  p.play();
+  for (let i = 0; i < 1250; i++) h.tick(16);
+  assert.equal(
+    h.records().some((record) => record.frames !== undefined),
+    false,
+    'A frame gap cannot conceal a pause and become a continuous-play report.',
+  );
+  assert.equal(h.ui.get('frames').disabled, false);
+  h.dispose();
+  assert.equal(p.win.listeners.get('blur').size, 0);
+});
+
+test('arming excludes an activation RAF timestamp from before preparation but retains later long frames', () => {
+  const h = reviewHarness(),
+    p = h.load(h.page('http://localhost:8775/game/index.html?edition=coupa-all'));
+  h.ready(p);
+  p.doc.body.dataset.flightState = 'paused';
+  h.ui.get('frames').onclick();
+  const beforePreparation = h.window.performance.now();
+  p.play();
+  // Earlier callbacks in this same animation frame finished expensive mission
+  // preparation. RAF's shared timestamp predates the observer's sample start.
+  h.tick(2000, beforePreparation);
+  h.tick(16);
+  h.tick(16);
+  h.tick(250);
+  for (let i = 0; i < 1233; i++) h.tick(16);
+  const result = h.records().at(-1);
+  assert.equal(result.outcome, '20 seconds observed; not device qualification');
+  assert.equal(result.elapsedMs, 20010);
+  assert.equal(result.p95Ms, 16);
+  assert.equal(
+    result.maxMs,
+    250,
+    'Preparation before the sample is excluded; an actual later stall is retained.',
+  );
+  assert.equal(result.over33ms, 1);
+  assert.equal(result.qualified, false);
+  h.dispose();
+});
+
+test('review layout reports vertical overflow and applies the selected landscape height', () => {
+  const h = reviewHarness();
+  h.ui.get('width').value = '844';
+  h.ui.get('height').value = '390';
+  const p = h.load();
+  assert.equal(h.ui.get('game').width, 844);
+  assert.equal(h.ui.get('game').style.height, '390px');
+  h.ready(p);
+  const control = p.nodes.get('start-campaign');
+  control.getBoundingClientRect = () => ({
+    left: 0,
+    right: 100,
+    top: 780,
+    bottom: 824,
+    width: 100,
+    height: 44,
+  });
+  h.ui.get('layout').onclick();
+  assert.equal(h.records().at(-1).clippedTotal, 1);
+  assert.equal(h.records().at(-1).clipped[0].outsideViewport, true);
+  h.dispose();
+});
+
+test('review layout distinguishes native scroll access from unreachable overflow and fixed descendants', () => {
+  const h = reviewHarness(),
+    p = h.load();
+  h.ready(p);
+  const arena = new Element('arena-shell'),
+    overlay = new Element('game-overlay'),
+    control = p.nodes.get('start-campaign');
+  arena.getBoundingClientRect = () => ({
+    left: 200,
+    right: 1080,
+    top: 200,
+    bottom: 600,
+    width: 880,
+    height: 400,
+  });
+  overlay.parentElement = arena;
+  overlay.style = { position: 'fixed', overflowX: 'hidden', overflowY: 'auto' };
+  overlay.scrollTop = 0;
+  overlay.scrollHeight = 1200;
+  overlay.clientHeight = 800;
+  overlay.getBoundingClientRect = () => ({
+    left: 0,
+    right: 1280,
+    top: 0,
+    bottom: 800,
+    width: 1280,
+    height: 800,
+  });
+  control.parentElement = overlay;
+  control.getBoundingClientRect = () => ({
+    left: 0,
+    right: 100,
+    top: 900,
+    bottom: 944,
+    width: 100,
+    height: 44,
+  });
+  h.ui.get('layout').onclick();
+  assert.equal(h.records().at(-1).clippedTotal, 0);
+  assert.equal(h.records().at(-1).scrollableOffscreen, 1);
+  assert.match(h.records().at(-1).limitation, /overlap or occlusion/);
+  overlay.scrollHeight = 820;
+  h.ui.get('layout').onclick();
+  assert.equal(
+    h.records().at(-1).clippedTotal,
+    1,
+    'Insufficient scroll range is not reachability.',
+  );
+  overlay.scrollHeight = 1200;
+  control.style.position = 'fixed';
+  h.ui.get('layout').onclick();
+  assert.equal(
+    h.records().at(-1).clippedTotal,
+    1,
+    'Fixed controls do not move with an ancestor scroll port.',
+  );
+  control.style.position = 'static';
+  control.getBoundingClientRect = () => ({
+    left: 0,
+    right: 100,
+    top: 700,
+    bottom: 744,
+    width: 100,
+    height: 44,
+  });
+  h.ui.get('layout').onclick();
+  assert.equal(
+    h.records().at(-1).clippedTotal,
+    0,
+    'A fixed pause panel is not bounded by the arena DOM ancestor.',
+  );
+  assert.equal(h.records().at(-1).scrollableOffscreen, 0);
   h.dispose();
 });
 

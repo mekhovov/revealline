@@ -4,6 +4,59 @@ This record distinguishes candidate automation from release qualification. No co
 edition has been promoted or published by this work. Human observations, physical-device
 installation and downloaded/deployed release evidence cannot be inferred from unit tests.
 
+## Latest verified candidate and follow-up review
+
+The 14-edition candidate at `e92987f98116562f0a34b817df6bd4a703c5b5bc`
+(tree `88056b0a4bfd7127c49a714073962462453ddb02`) passed
+[CI run 36258848978](https://github.com/mekhovov/revealline/actions/runs/36258848978).
+All selected editions compiled twice and their original archive members were inspected.
+The downloaded Actions artifact `10911612435` contains 423,106,869 bytes, SHA-256
+`81d7e9aa36818f69eac411a5deb4ad1d7a3aa948681b422c685c08a14b434c74`.
+All **57 artifact hashes** matched the independently generated local report, all **58
+downloaded checksum entries** verified, and all **14 presentation receipts** matched.
+The source eligibility receipt covers 19,139 paths and 39 approved media assets.
+This supersedes the pending Linux retry for that commit; it remains candidate evidence,
+not approval of the content or a public release. Local receipts are in
+`.cache/company-validation/{frozen-e92987f98-artifacts,downloaded-e92987f98}.json`.
+
+The follow-up review found and repairs three remaining tool/runtime gaps: the edition
+picker bypassed canonical departure recovery; Company Studio rejected valid pruned-theme
+previews; and the performance observer rejected the new Solo entry point. Retained-release
+selection now has a verified local command instead of requiring a manual selector edit.
+These follow-up source changes require their own immutable freeze; exact follow-up CI
+and downloaded-byte receipts are recorded on PR #615. The candidate above does not attest
+to bytes changed afterward. The combined local cohort passed 208 tests before the final
+Studio lifecycle regressions; the final Studio cohort passed 19 and observer cohort 16.
+Changed-file lint and formatting passed.
+
+A bounded live test of the repaired observer recognized the canonical Coupa menu and
+recorded activation into Build Tomorrow at 1280 × 720, DPR 2. Its initial 20-second sample
+contained 2,385 callback intervals, p95 8.9 ms and one 1,484 ms gap. A second sample
+reported a 1,942 ms maximum. A regression then reproduced a measurement-boundary defect:
+the first callback timestamp could precede asset preparation even though the sampling
+clock started afterward. The observer now excludes that activation callback timestamp,
+while preserving genuine later long intervals. Both earlier samples are contaminated
+and are **not gameplay performance evidence**. An additional review found that
+brief iframe focus loss between sampled frames also needs explicit invalidation; the
+observer now discards active samples synchronously on blur. Retain this earlier sample
+as diagnostic data, not as evidence of uninterrupted play or a performance win.
+The review tool observes public DOM and browser metrics, never starts/resumes the game,
+and keeps every exported observation `qualified: false`.
+
+After the boundary fix, a fresh 20-second Build Tomorrow sample at 1280 × 720, DPR 2
+recorded 2,377 intervals, p50 8.3 ms, p95 8.9 ms, maximum 32.9 ms and none over 33 ms.
+This is a bounded observer smoke check, not a baseline comparison or device qualification.
+The browser also confirmed the canonical edition-departure dialog verified the paused
+flight and retained Coupa when Stay was selected. Company Studio imported an actual
+neutral starter draft and v2 compiler report, verified all 466 admitted files, and opened
+the compiled game with its ordinary Start, Missions, Collection and Settings controls.
+The neutral fixture demonstrates data-only authoring; it is not another approved brand.
+
+The human formative session remains **not started**. Final artwork expansion (60 current
+slots), physical installed-PWA coexistence, device storage/backup recovery, final performance
+comparison and public promotion are still pending. The keyboard “works now” confirmation
+is useful input validation, not a substitute for those gates.
+
 ## Current Netherlands and canonical Solo expansion — unqualified
 
 The current working source declares **66 current missions** (30 Coupa and 36 DroneAid
@@ -37,8 +90,8 @@ also proves that a matching portable witness cannot authorize altered continuous
 state. No engine math, replay parser or simulation version changes are involved.
 The full six-check suite passes locally on Node 20.19.5 arm64 and Node 22.13.1
 x64 under Rosetta. All 414 discrete witnesses match across those runtimes despite
-142 differing raw checkpoint hashes. The Linux candidate retry remains separate
-evidence. Strict saved-replay/attempt import can still reject incompatible math
+142 differing raw checkpoint hashes. The successful Linux candidate is recorded above
+as separate evidence. Strict saved-replay/attempt import can still reject incompatible math
 runtimes; these checks do not promise cross-browser raw-checkpoint portability.
 
 Seven presentation checks cover registered campaign themes, every emitted actor
@@ -52,8 +105,8 @@ playground storage. These are machine-feasibility and technical checks, not huma
 pacing or release qualification.
 
 See the [shared Solo integration record](company-editions-shared-solo.md) for the
-current main-host acceptance boundary and bounded browser/package checks. A new
-committed candidate run, content/art approval and human observations remain
+current main-host acceptance boundary and bounded browser/package checks. Each changed source needs a new
+committed candidate run; content/art approval and human observations remain
 pending. Earlier browser observations and frozen CI results below apply only to
 their recorded revisions. The current raster inventory covers six of the 66
 current missions; 60 use interim procedural fallback. Three additional rasters

@@ -3140,17 +3140,19 @@ try {
         : t('interface:separateTeamArenas2Players'),
     );
   }
-  const modeLabel = (kind) =>
-    kind === 'library'
+  const modeLabel = (kind, destinationLabel = null) =>
+    destinationLabel ??
+    (kind === 'library'
       ? t('interface:selectedMission')
       : kind === 'catalogue'
         ? catalogueLabel()
         : kind === 'versus'
           ? t('interface:versus2')
-          : t('interface:team');
+          : t('interface:team'));
   const currentAuthoredModeRoute = () =>
     candidateHost?.owns(activeEntry) ? authoredRoute.id : null;
   const modeDestination = (ticket) =>
+    ticket.destinationHref ||
     ticket.libraryHref ||
     (librarySourceReturn?.mode === ticket.kind && librarySourceDestination) ||
     authoredJourneyModeHref(ticket.journeyRouteId, ticket.kind) ||
@@ -3193,7 +3195,7 @@ try {
     if (librarySourceReturn?.mode === ticket.kind)
       return { token: null, href: new URL(modeDestination(ticket), location.href).href };
     if (ticket.kind === 'catalogue')
-      return { token: null, href: new URL(catalogueHref, location.href).href };
+      return { token: null, href: new URL(modeDestination(ticket), location.href).href };
     // Authored progress and suspended attempts already have their own route.
     // Do not write a Legacy selection bookmark for a candidate execution.
     if (ticket.journeyRouteId)
@@ -3264,7 +3266,9 @@ try {
       canonicalJSON(modeSelection()) !== canonicalJSON(ticket.selection)
     )
       throw new Error(
-        t('interface:soloDeparture.changed', { destination: modeLabel(ticket.kind) }),
+        t('interface:soloDeparture.changed', {
+          destination: modeLabel(ticket.kind, ticket.destinationLabel),
+        }),
       );
   }
   function modeDepartureMessage(ticket) {
@@ -3283,7 +3287,9 @@ try {
                 : '',
             })
           : ticket.kind === 'catalogue'
-            ? t('interface:soloDeparture.catalogue', { destination: catalogueLabel() })
+            ? t('interface:soloDeparture.catalogue', {
+                destination: ticket.destinationLabel ?? catalogueLabel(),
+              })
             : ticket.journeyRouteId
               ? t('interface:soloDeparture.journey', {
                   destination:
@@ -3293,14 +3299,14 @@ try {
                 })
               : ticket.origin === 'solo-title'
                 ? t('interface:soloDeparture.titleReturn', {
-                    destination: modeLabel(ticket.kind),
+                    destination: modeLabel(ticket.kind, ticket.destinationLabel),
                   })
                 : ticket.fallback
                   ? t('interface:soloDeparture.fallbackReturn', {
-                      destination: modeLabel(ticket.kind),
+                      destination: modeLabel(ticket.kind, ticket.destinationLabel),
                     })
                   : t('interface:soloDeparture.missionsReturn', {
-                      destination: modeLabel(ticket.kind),
+                      destination: modeLabel(ticket.kind, ticket.destinationLabel),
                     });
       const failure = ticket.failure
         ? ' ' + t('interface:soloDeparture.saveUnverified', { error: ticket.failure })
@@ -3360,7 +3366,13 @@ try {
     kind,
     event,
     opener,
-    { origin = 'solo-missions', isCurrent = null, libraryTarget = null, libraryMode = 'solo' } = {},
+    {
+      origin = 'solo-missions',
+      isCurrent = null,
+      libraryTarget = null,
+      libraryMode = 'solo',
+      editionId = null,
+    } = {},
   ) {
     if (
       event.defaultPrevented ||
@@ -3373,6 +3385,17 @@ try {
       return;
     event.preventDefault();
     if (!Object.hasOwn(modeDestinations, kind)) return;
+    const destinationEdition =
+      editionId === null
+        ? null
+        : runtimeContent?.catalog.editions.find((edition) => edition.id === editionId);
+    if (
+      editionId !== null &&
+      (kind !== 'catalogue' || !destinationEdition || editionId === runtimeContent.editionId)
+    )
+      return false;
+    const destinationHref = destinationEdition ? runtimeContent.href({ edition: editionId }) : null;
+    const destinationLabel = destinationEdition?.name ?? null;
     if (
       kind === 'library' &&
       (unifiedLibrary?.library.find(libraryTarget?.id) !== libraryTarget ||
@@ -3400,13 +3423,15 @@ try {
     ) {
       warning(
         localizedMessage('interface:soloDeparture.finishCurrentOperation', {
-          destination: modeLabel(kind),
+          destination: modeLabel(kind, destinationLabel),
         }),
       );
       return false;
     }
     const ticket = {
       kind,
+      destinationHref,
+      destinationLabel,
       origin,
       isCurrent,
       opener,
@@ -3446,7 +3471,7 @@ try {
         cancelModeDeparture({ restore: true });
         warning(
           localizedMessage('interface:soloDeparture.openFailed', {
-            destination: modeLabel(kind),
+            destination: modeLabel(kind, destinationLabel),
             error: error.message,
           }),
         );
@@ -3477,10 +3502,10 @@ try {
         : t('interface:checkingTheReturnToMissions'),
     );
     localizedText($('mode-leave-title'), () =>
-      t('interface:soloDeparture.openTitle', { destination: modeLabel(kind) }),
+      t('interface:soloDeparture.openTitle', { destination: modeLabel(kind, destinationLabel) }),
     );
     localizedText($('mode-leave-confirm'), () =>
-      t('interface:soloDeparture.leaveFor', { destination: modeLabel(kind) }),
+      t('interface:soloDeparture.leaveFor', { destination: modeLabel(kind, destinationLabel) }),
     );
     ticket.dialogShown = true;
     try {
@@ -11058,6 +11083,12 @@ try {
           run?.status === 'won' && $('game-overlay').hidden && !$('show-result').hidden,
         report: (message) => warning(message),
         onMissions: (opener) => openUnifiedMissions(opener),
+        onEditionChange: (editionId, opener) =>
+          requestModeDeparture('catalogue', { preventDefault() {} }, opener, {
+            origin: 'solo-title',
+            editionId,
+            isCurrent: () => $('shell-home').open && $('shell-home').contains(opener),
+          }),
       })
     : null;
   attachFullscreen($('shell-fullscreen'));
