@@ -503,7 +503,7 @@ function catalogEntries(packs) {
   );
 }
 async function decodeCheckedPack({ pack, images, warnings }, decodeImage) {
-  required(typeof decodeImage === 'function', 'A complete image decoder is required.');
+  required(typeof decodeImage === 'function', packError('completeImageDecoder'));
   for (const image of images) {
     const decoded = await decodeImage(image.descriptor.dataUrl, {
       role: image.role,
@@ -511,7 +511,7 @@ async function decodeCheckedPack({ pack, images, warnings }, decodeImage) {
     });
     required(
       decoded?.naturalWidth === image.width && decoded?.naturalHeight === image.height,
-      `${image.scope}/${image.role}: decoded dimensions do not match the image header.`,
+      packError('decodedDimensions', { scope: image.scope, role: image.role }),
     );
   }
   freeze(pack);
@@ -522,25 +522,29 @@ async function decodeCheckedPack({ pack, images, warnings }, decodeImage) {
 export async function preparePack(candidate, { decodeImage = browserDecodeImage, library } = {}) {
   const checked = packChecks(candidate);
   if (library !== undefined) {
-    required(preparedLibraries.has(library), 'Prepare an installation against a prepared library.');
+    required(preparedLibraries.has(library), packError('prepareAgainstLibrary'));
     libraryChecks([...library.packs.filter((pack) => pack.id !== checked.pack.id), checked.pack]);
   }
   return decodeCheckedPack(checked, decodeImage);
 }
 function dependenciesValid(packs) {
   const byId = new Map(packs.map((p) => [p.id, p]));
-  required(byId.size === packs.length, 'Installed pack IDs must be unique.');
+  required(byId.size === packs.length, packError('installedUnique'));
   for (const pack of packs)
     for (const dependency of pack.dependencies)
       required(
         byId.get(dependency.id)?.version === dependency.version,
-        `${pack.name} requires ${dependency.id} version ${dependency.version}.`,
+        packError('dependencyRequired', {
+          name: pack.name,
+          id: dependency.id,
+          version: dependency.version,
+        }),
       );
   const visiting = new Set(),
     done = new Set();
   function visit(id) {
     if (done.has(id)) return;
-    required(!visiting.has(id), 'Pack dependency cycle is not supported.');
+    required(!visiting.has(id), packError('dependencyCycle'));
     visiting.add(id);
     for (const d of byId.get(id).dependencies) visit(d.id);
     visiting.delete(id);
@@ -550,17 +554,14 @@ function dependenciesValid(packs) {
 }
 function libraryChecks(packs) {
   const imported = packs.filter((pack) => !isOfficialPack(pack));
-  required(
-    imported.length <= PACK_LIMITS.installed,
-    'At most 12 expansion packs can be installed.',
-  );
+  required(imported.length <= PACK_LIMITS.installed, packError('installationLimit'));
   required(
     packs.length - imported.length <= 66 &&
       packs
         .filter(isOfficialPack)
         .reduce((sum, pack) => sum + officialReferences.get(pack).bytes, 0) <=
         52 * 1024 * 1024,
-    'Mounted official chapters exceed their memory budget.',
+    packError('officialMemoryBudget'),
   );
   dependenciesValid(packs);
   const library = { format: PACK_LIBRARY_VERSION, packs };
@@ -579,10 +580,7 @@ export function emptyPackLibrary() {
   return registeredLibrary([]);
 }
 export function installPack(library, pack) {
-  required(
-    preparedLibraries.has(library) && preparedPacks.has(pack),
-    'Install only a prepared pack into a prepared library.',
-  );
+  required(preparedLibraries.has(library) && preparedPacks.has(pack), packError('installPrepared'));
   let kept = library.packs.filter((p) => p.id !== pack.id);
   if (isOfficialPack(pack)) {
     const mounted = kept.filter(
@@ -599,12 +597,12 @@ export function installPack(library, pack) {
   return registeredLibrary([...kept, pack]);
 }
 export function removePack(library, id) {
-  required(preparedLibraries.has(library), 'Remove from a prepared pack library.');
-  required(stableId(id), 'Pack identity is invalid.');
+  required(preparedLibraries.has(library), packError('removePrepared'));
+  required(stableId(id), packError('identityInvalid'));
   return registeredLibrary(library.packs.filter((pack) => pack.id !== id));
 }
 export function exportPackLibrary(library) {
-  required(preparedLibraries.has(library), 'Export a prepared pack library.');
+  required(preparedLibraries.has(library), packError('exportPrepared'));
   return JSON.stringify(packLibrarySnapshot(library));
 }
 /** Small official references are independent of the imported-pack byte/slot budget. */
@@ -628,17 +626,14 @@ async function checkedOfficial(
       Number.isSafeInteger(reference.bytes) &&
       reference.bytes > 0 &&
       reference.bytes <= PACK_LIMITS.maxBytes,
-    'Invalid official chapter reference.',
+    packError('officialReferenceInvalid'),
   );
   const blob = await readOfficial(reference.sha256);
-  required(
-    blob && blob.size === reference.bytes,
-    'This saved chapter needs its verified official game download. Prepare the matching chapter before restoring this save; existing data is kept.',
-  );
+  required(blob && blob.size === reference.bytes, packError('officialDownloadRequired'));
   const checked = packChecks(JSON.parse(await blob.text()));
   required(
     checked.pack.id === reference.id && checked.pack.version === reference.version,
-    'Official chapter identity differs.',
+    packError('officialIdentityDiffers'),
   );
   await pinOfficialFile(reference.sha256, `chapter:${reference.sha256}`);
   officialReferences.set(checked.pack, freeze({ ...reference }));
@@ -662,7 +657,7 @@ function checkedStoredLibrary(candidate) {
         0,
       ) <=
         52 * 1024 * 1024,
-    'Invalid mounted chapter count or byte budget.',
+    packError('mountedBudgetInvalid'),
   );
   const checked = checkedLibrary({ format: PACK_LIBRARY_VERSION, packs: value.packs });
   return (async () => {
@@ -678,7 +673,7 @@ function checkedLibrary(candidate) {
     value.format === PACK_LIBRARY_VERSION &&
       Array.isArray(value.packs) &&
       value.packs.length <= PACK_LIMITS.installed,
-    'Invalid expansion library.',
+    packError('libraryInvalid'),
   );
   // Validate every pack/dependency before allocating any browser decode surface.
   const checked = value.packs.map((pack) => packChecks(pack));
@@ -752,9 +747,9 @@ function campaignMetadata(pack, source) {
   };
 }
 export function resolvePackCampaign(pack, campaignId) {
-  required(preparedPacks.has(pack), 'Resolve a prepared pack.');
+  required(preparedPacks.has(pack), packError('resolvePrepared'));
   const source = pack.campaigns.find((c) => c.id === campaignId);
-  required(source, 'Unknown pack campaign.');
+  required(source, packError('unknownCampaign'));
   return {
     ...campaignMetadata(pack, source),
     visualOverrides: structuredClone(pack.visualOverrides),
@@ -769,7 +764,7 @@ export function scenarioFromPack(
 ) {
   const resolved = resolvePackCampaign(pack, campaignId),
     level = resolved.campaign.levels.find((l) => l.id === levelId);
-  required(level, 'Unknown pack map.');
+  required(level, packError('unknownMap'));
   const theme =
     resolved.themes.find((t) => t.id === (level.themeId ?? resolved.campaign.themeId)) ??
     resolved.themes[0];

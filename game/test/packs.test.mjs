@@ -227,7 +227,7 @@ test('music descriptors accept the five procedural styles, reject payloads, inva
     assert.equal(validateMusicDescriptor({ ...base, ...patch }).valid, false);
 });
 
-test('pack header, dependency, metadata and music validation follows the active locale', (context) => {
+test('pack and library validation follows the active locale', async (context) => {
   const locale = getLocale();
   context.after(() => setLocale(locale, { persist: false }));
   const music = readPack().music[0];
@@ -261,6 +261,18 @@ test('pack header, dependency, metadata and music validation follows the active 
     validatePack(unknownArtworkLevel).errors.join(' '),
     /невідомий або повторюваний рівень/,
   );
+  assert.throws(() => installPack(emptyPackLibrary(), readPack()), /підготовлений пакет/);
+  assert.throws(() => removePack(emptyPackLibrary(), 'bad id'), /Ідентифікатор пакета недійсний/);
+  const prepared = await ready();
+  assert.throws(() => resolvePackCampaign(prepared, 'missing'), /Невідома кампанія пакета/);
+  const pictured = readPack();
+  pictured.visualOverrides.player = { dataUrl: png };
+  await assert.rejects(
+    preparePack(pictured, {
+      decodeImage: async () => ({ naturalWidth: 2, naturalHeight: 1 }),
+    }),
+    /декодовані розміри не відповідають заголовку/,
+  );
 
   setLocale('en', { persist: false });
   assert.match(
@@ -273,4 +285,13 @@ test('pack header, dependency, metadata and music validation follows the active 
   assert.match(validatePack(unknownCampaignTheme).errors.join(' '), /unknown theme/);
   assert.match(validatePack(duplicateLevel).errors.join(' '), /Level IDs must be unique/);
   assert.match(validatePack(unknownArtworkLevel).errors.join(' '), /unknown or repeated level/);
+  assert.throws(() => installPack(emptyPackLibrary(), readPack()), /prepared pack/);
+  assert.throws(() => removePack(emptyPackLibrary(), 'bad id'), /Pack identity is invalid/);
+  assert.throws(() => resolvePackCampaign(prepared, 'missing'), /Unknown pack campaign/);
+  await assert.rejects(
+    preparePack(pictured, {
+      decodeImage: async () => ({ naturalWidth: 2, naturalHeight: 1 }),
+    }),
+    /decoded dimensions do not match the image header/,
+  );
 });
