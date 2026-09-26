@@ -106,12 +106,18 @@ test("source qualification retains mandatory guards and restorable suites while 
     "reopened",
     "edited",
     "ready_for_review",
+  ])
+    assert.match(pullRequestTrigger, new RegExp(`\\b${event}\\b`, "u"));
+  for (const metadataEvent of [
     "labeled",
     "unlabeled",
     "milestoned",
     "demilestoned",
   ])
-    assert.match(pullRequestTrigger, new RegExp(`\\b${event}\\b`, "u"));
+    assert.doesNotMatch(
+      pullRequestTrigger,
+      new RegExp(`\\b${metadataEvent}\\b`, "u"),
+    );
   assert.doesNotMatch(pullRequestTrigger, /paths-ignore:/);
   const sourceConcurrency = legacy.slice(
     legacy.indexOf("concurrency:"),
