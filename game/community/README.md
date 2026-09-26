@@ -40,6 +40,7 @@ The client exposes explicit adapters for:
 - cursor pagination and bounded `q` search;
 - bounded PNG/JPEG catalog previews loaded only after the player asks;
 - report submission;
+- administrator-only report pagination, resolution and exact-edition unlisting;
 - immutable download/install and server-declared update metadata;
 - reference-aware exact-edition offload and offline reinstall;
 - owner-only publication status and unlisting; and
@@ -64,3 +65,10 @@ An embedding host can still override this same-origin behavior by exposing
 Remote titles and descriptions are rendered through `textContent`. Preview responses must be PNG
 or JPEG under 4 MiB. Reports accept a bounded reason and optional text. Public catalog reads and
 reports do not need the publishing account adapter.
+
+`moderation.html` is the same-origin administrator console. It reuses the account session, while
+the service remains the authority for the `admin` role. The queue never receives reporter identity,
+renders all remote fields with `textContent`, and fetches reported artwork only after an explicit
+**Load preview** action. **Unlist and resolve** removes the immutable edition from discovery before
+recording the report resolution. If the second request fails, the page states that the edition is
+already unlisted and leaves the report open for a safe retry. Installed copies remain playable.

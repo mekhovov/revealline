@@ -14,9 +14,18 @@ The service requires Node 20.19 or newer. Install and run its credential-free te
 cd services/community
 npm ci
 npm test
+npm run acceptance:tus-resume
 npm run lint
 npm run format:check
 ```
+
+`acceptance:tus-resume` starts an in-memory community service and a bounded loopback fault proxy.
+The proxy accepts the first browser `PATCH`, commits 17 bytes to the real tus server, then closes the
+browser-facing TCP connection before returning a response. Retrying the same production browser
+client must read the authoritative offset with `HEAD`, send the exact remaining bytes, reuse the one
+community submission and tus resource, and finish with a byte-for-byte package match. The command
+uses no PostgreSQL, object storage, account service, or external network, and exits nonzero on a
+timeout or contract mismatch.
 
 For the container development stack:
 
@@ -46,6 +55,57 @@ docker compose up -d api worker
 
 This is still a single-host development fixture. It does not provide TLS or a mail gateway.
 
+## Production Compose preflight
+
+`compose.production.yaml` is a fail-closed overlay for a reviewed single-host deployment. It forces
+development authentication off, requires the database, Better Auth, account-mail, administrator,
+and exact trusted-proxy values, and forwards every documented PostgreSQL-backed admission limit.
+The validation worker still receives no account or mail credential.
+
+Copy `production.env.example` to an untracked operator-owned file, replace every placeholder, and
+start both Compose files together:
+
+```sh
+cd services/community
+cp production.env.example /secure/path/revealline-community.env
+docker compose \
+  --env-file /secure/path/revealline-community.env \
+  -f compose.yaml -f compose.production.yaml \
+  up --build -d
+```
+
+After the numbered application migrations, the production dependency chain runs the Better Auth
+migration and then `npm run deployment:preflight`. API and worker processes start only after that
+preflight succeeds. It verifies the current application and Better Auth tables, the latest
+application migration columns, durable write/read/remove access in both the package and tus roots,
+and a bounded `ffprobe -version` invocation. Its JSON result contains check names and counts only;
+configuration values, database URLs, storage paths, process output, and nested error messages are
+not emitted.
+
+The API exposes separate liveness and readiness routes:
+
+- `GET /health` verifies the PostgreSQL connection.
+- `GET /ready` repeats PostgreSQL schema, package/tus storage, and `ffprobe` readiness. Concurrent
+  calls share one probe and settled results are cached for 30 seconds to bound filesystem and
+  process work. The production container health check uses this route and fails closed with the
+  API's generic error response. Keep the route behind the operator network rather than forwarding
+  it through the public proxy.
+
+Inspect one-shot service exit status and API readiness without printing the rendered Compose
+configuration, which can contain secrets:
+
+```sh
+docker compose \
+  --env-file /secure/path/revealline-community.env \
+  -f compose.yaml -f compose.production.yaml \
+  ps
+curl --fail --silent http://127.0.0.1:8787/ready
+```
+
+This overlay remains a single-host deployment contract. Put a reviewed HTTPS reverse proxy in
+front of it, set `COMMUNITY_TRUST_PROXY_HOPS` to that exact topology, and keep its environment file
+outside the repository with owner-only permissions.
+
 When running outside Compose, apply the checked-in migration to a disposable local database before
 starting the API:
 
@@ -62,6 +122,7 @@ npm run worker
 Public routes return JSON metadata or exact immutable package bytes:
 
 - `GET /health`
+- `GET /ready`
 - `GET /v1/catalog?limit=20&cursor=...`
 - `GET /v1/catalog/:editionId`
 - `GET /v1/catalog/:editionId/download`
@@ -169,7 +230,10 @@ update discovery; display titles and shared slugs across different owners never 
 official `@tus/server` and `@tus/file-store` implementation checks the authenticated owner on create,
 HEAD, PATCH, and completion. Completion rechecks size, SHA-256, edition, and submission identity
 before copying bytes to the content-addressed package store. The test suite interrupts a PATCH,
-reads the retained offset, resumes it, and proves another owner cannot inspect the upload.
+reads the retained offset, resumes it, and proves another owner cannot inspect the upload. The
+separate `acceptance:tus-resume` fault rehearsal drops the live HTTP connection after the server has
+committed only a prefix, proving that the production browser client trusts the later `HEAD` offset
+without creating another submission or tus resource.
 
 Every executable API replica uses PostgreSQL advisory locks for tus resources. A dedicated bounded
 connection pool keeps upload lock waits from consuming the repository pool. A contender sends a
@@ -286,12 +350,98 @@ and replaces `backup` with `restore`. The source tests rehearse exact backup, ve
 successful restore, changed-byte rejection, occupied-target refusal, database-command failure, and
 journal-backed retry.
 
+### Source-to-target restore rehearsal
+
+`npm run recovery:rehearse` turns the manual restore check into one bounded acceptance command. It
+backs up the configured source, restores into a separate disposable PostgreSQL database and empty
+blob root, then compares deterministic community-table row fingerprints and counts, submission
+status totals, and exact database package references. The restored references must resolve to the
+same package hashes and sizes in the verified snapshot. This proves the recovery artifact restores
+the community data and its content-addressed packages together; it does not test the surrounding
+proxy, mail gateway, Better Auth-owned tables, or production traffic cutover.
+
+The runner refuses an identical source and target database or blob root. It also requires the
+operator to confirm an opaque target identity before `pg_dump` or `pg_restore` can run. First stop
+the source API and worker, provision a disposable target database, and set separate target values:
+
+```sh
+export COMMUNITY_DATABASE_URL=postgres://revealline:secret@database/revealline
+export COMMUNITY_BLOB_ROOT=/srv/revealline/blobs
+export COMMUNITY_RECOVERY_REHEARSAL_TARGET_DATABASE_URL=postgres://revealline:secret@restore-db/revealline-rehearsal
+export COMMUNITY_RECOVERY_REHEARSAL_TARGET_BLOB_ROOT=/srv/revealline/rehearsal-blobs
+
+npm run recovery:rehearse -- plan
+```
+
+`plan` prints only hashed source and target identities. Copy its `targetDatabase` value into the
+explicit confirmation, then run the rehearsal with new work and receipt paths:
+
+```sh
+npm run recovery:rehearse -- run \
+  --work-directory /srv/revealline/rehearsals/2026-09-26 \
+  --receipt /srv/revealline/rehearsal-receipts/2026-09-26.json \
+  --confirm-target database_<64-hex-characters>
+```
+
+The versioned receipt is written atomically with mode `0600`. It records the snapshot identity,
+opaque database/blob-root identities, aggregate counts, semantic fingerprint, stored byte totals,
+and completed checks. It never records connection URLs, credentials, filesystem paths, account
+identities, titles, report text, or package contents. Existing work directories, receipt files, and
+non-empty target blob roots are rejected. Keep failed rehearsal work for diagnosis, discard the
+target after review, restart the source writers, and retain the successful receipt with the
+off-host snapshot record.
+
+## Deployed two-user acceptance
+
+`npm run acceptance:deployed` exercises a running service over HTTP. Creator A publishes a small
+valid `.rlpack`; Creator B proves owner isolation, discovers the published edition, and downloads
+the exact bytes. The runner installs those downloaded bytes into isolated in-memory storage adapters,
+executes the package's verified legal route, persists and reloads its exact completion, verifies the
+installed picture asset binding, then starts an offline replay after removal. The public report path opens a report; an administrator
+finds the report, unlists the disposable edition, resolves the report, and verifies that public
+retrieval is gone. The validation worker must be running before this command starts.
+
+This test writes to the deployment. It refuses to run without an explicit opt-in and a unique
+lowercase namespace. Supply three short-lived actor authorization values through
+the environment. In development-token mode these are `Bearer ...` values. A production operator
+may instead set the corresponding `COMMUNITY_ACCEPTANCE_CREATOR_A_COOKIE`,
+`COMMUNITY_ACCEPTANCE_CREATOR_B_COOKIE`, and `COMMUNITY_ACCEPTANCE_ADMIN_COOKIE` values from three
+short-lived same-origin test sessions. Set exactly one authorization or cookie variable per actor,
+and do not put credentials in the URL.
+
+```sh
+cd services/community
+export COMMUNITY_ACCEPTANCE_BASE_URL='https://community.example.test/'
+export COMMUNITY_ACCEPTANCE_NAMESPACE='staging-20260926-a'
+export COMMUNITY_ACCEPTANCE_ALLOW_DESTRUCTIVE='I_UNDERSTAND_THIS_PUBLISHES_AND_UNLISTS_TEST_CONTENT'
+export COMMUNITY_ACCEPTANCE_CREATOR_A_AUTHORIZATION='Bearer short-lived-creator-a-token'
+export COMMUNITY_ACCEPTANCE_CREATOR_B_AUTHORIZATION='Bearer short-lived-creator-b-token'
+export COMMUNITY_ACCEPTANCE_ADMIN_AUTHORIZATION='Bearer short-lived-admin-token'
+export COMMUNITY_ACCEPTANCE_RECEIPT='/secure/acceptance/community-staging-20260926-a.json'
+npm run acceptance:deployed
+```
+
+The runner bounds every HTTP request to 15 seconds, polls validation for at most two minutes, and
+uses at most ten administrator report pages. Override those time limits only with bounded numeric
+values in `COMMUNITY_ACCEPTANCE_REQUEST_TIMEOUT_MS`, `COMMUNITY_ACCEPTANCE_POLL_INTERVAL_MS`, and
+`COMMUNITY_ACCEPTANCE_VALIDATION_TIMEOUT_MS`. The runner uses the service's direct upload when
+offered and its bounded tus 1.0 client when the deployment requires resumable upload.
+
+The receipt format is `revealline-community-deployed-acceptance.v1`. It records only the service
+origin, public test namespace/run identities, immutable package and edition identities, validation
+poll count, exact-download result, installed completion and picture-asset identities, offline replay result,
+moderation result, and timing. Authentication headers, account subjects, response bodies, and
+package content are excluded. The CLI prints only the receipt path and a pass/fail stage; it never
+prints the supplied authorization values. After an edition identity is received, a failed run makes one best-effort administrator
+unlisting attempt and records only whether cleanup succeeded. Inspect a `cleanup: failed` receipt
+and remove the uniquely named edition before reusing that deployment.
+
 ## Limits and operational work still required
 
 The default package ceiling is 256 MiB and catalog pages are capped at 50 entries. A reverse proxy
-still needs request timeouts, connection limits, and HTTPS. Public deployment also requires a
-report triage UI over the bounded admin API, stronger process/container isolation for media
-validation, malware policy, metrics, an off-host backup schedule, a real
+still needs request timeouts, connection limits, and HTTPS. Public deployment also requires a live
+administrator-session rehearsal of the shipped report triage UI, stronger process/container
+isolation for media validation, malware policy, metrics, an off-host backup schedule, a real
 PostgreSQL/blob restore rehearsal, and an explicit infrastructure decision. The S3 adapter is tested
 at its byte boundary but is not wired into the executable deployment. No AWS, mail provider,
 domain, or production restore claim is made here. Email verification and password recovery are
