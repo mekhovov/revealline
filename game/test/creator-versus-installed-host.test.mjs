@@ -14,6 +14,8 @@ import {
   installPreparedCreatorBundle,
   reviewCreatorInstallation,
 } from '../creator/installed.mjs';
+import { creatorProfileKey } from '../creator/runtime.mjs';
+import { createJourneyBackend } from '../journey/profile.mjs';
 
 const themes = JSON.parse(
   await readFile(new URL('../content-design/themes.json', import.meta.url)),
@@ -112,7 +114,7 @@ async function openCreatorHost(t, indexedDB, storage) {
   });
 }
 
-async function fixture(t) {
+async function fixture() {
   const indexedDB = indexedDatabases(),
     local = new Map(),
     storage = {
@@ -131,8 +133,7 @@ async function fixture(t) {
     { decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }) },
   );
   store.close();
-  const page = await openCreatorHost(t, indexedDB, storage);
-  return { page, pack, route, indexedDB, storage };
+  return { pack, route, indexedDB, storage };
 }
 
 function replayPlayerOne(page, replay) {
@@ -179,75 +180,96 @@ async function openMissionLibrary(page) {
   assert.equal(page.$('journey-chooser').open, true);
 }
 
-test('installed creator campaigns launch, award and continue in the real two-board Versus host', async (t) => {
-  const { page, pack, route } = await fixture(t);
-  await openMissionLibrary(page);
-  const cards = [...page.$('journey-cards').children].filter((card) => {
-    const [owner, edition] = JSON.parse(card.dataset.missionId);
-    return owner === `creator:${pack.editionId}` && edition === pack.editionId;
+test('installed creator campaigns continue and restore their earned state in a fresh Versus host', async (t) => {
+  const { pack, route, indexedDB, storage } = await fixture();
+  let firstMissionId;
+
+  await t.test('a pointer-style Next click advances to the second mission', async (t) => {
+    const page = await openCreatorHost(t, indexedDB, storage);
+    await openMissionLibrary(page);
+    const cards = [...page.$('journey-cards').children].filter((card) => {
+      const [owner, edition] = JSON.parse(card.dataset.missionId);
+      return owner === `creator:${pack.editionId}` && edition === pack.editionId;
+    });
+    assert.equal(cards.length, 2);
+    assert.match(cards[0].textContent, /Custom/);
+    firstMissionId = cards[0].dataset.missionId;
+    await activateMissionCard(cards[0]);
+    page.frame(0);
+    assert.equal(
+      page.renders[0].level.id,
+      'picture-1',
+      `${page.$('race-message').textContent} ${page.$('journey-chooser-status').textContent}`,
+    );
+    assert.equal(page.renders[1].level.id, 'picture-1');
+    assert.notEqual(page.renders[0].cells, page.renders[1].cells);
+    assert.match(page.$('race-clock').textContent, /No countdown/);
+    const exactRevision = page.renders[0].level.revision;
+    assert.equal(page.$('race-journey-difficulty').disabled, true);
+    page.$('race-journey-difficulty').value = 'expert';
+    page.$('race-journey-difficulty').onchange();
+    assert.equal(page.$('race-journey-difficulty').value, 'standard');
+    assert.equal(page.renders[0].level.revision, exactRevision);
+
+    // The host consumes one neutral resume tick before accepting player input.
+    page.frame();
+    replayPlayerOne(page, route.replay);
+    assert.equal(
+      page.renders[0].status,
+      'won',
+      JSON.stringify({
+        tick: page.renders[0].tick,
+        position: [page.renders[0].player.x, page.renders[0].player.y],
+        status: page.renders[0].status,
+      }),
+    );
+    assert.equal(page.renders[1].status, 'running');
+    assert.equal(page.$('race-journey-next').hidden, false);
+
+    const next = page.$('race-journey-next'),
+      nextHandler = next.onclick;
+    let continuation;
+    // Element.click() intentionally does not focus in this DOM fixture. This is
+    // the pointer path that regressed when the action lease was acquired first.
+    page.$('race-canvas-0').focus();
+    assert.notEqual(page.doc.activeElement, next);
+    next.onclick = (...args) => (continuation = nextHandler.apply(next, args));
+    try {
+      next.click();
+    } finally {
+      next.onclick = nextHandler;
+    }
+    assert(continuation instanceof Promise);
+    assert.equal(
+      await continuation,
+      undefined,
+      `${page.$('race-message').textContent} ${page.$('journey-chooser-status').textContent}`,
+    );
+    page.frame(0);
+    assert.equal(
+      page.renders[0].level.id,
+      'picture-2',
+      `${page.$('race-message').textContent} ${page.$('journey-chooser-status').textContent}`,
+    );
+    assert.equal(page.renders[1].level.id, 'picture-2');
+    assert.equal(page.state(), 'running');
+
+    const profile = await createJourneyBackend({
+      indexedDB,
+      profileKey: creatorProfileKey(pack.editionId),
+    }).readState();
+    assert(profile.profile.clears.versus['picture-1']);
+    assert.equal(profile.pictures.records.length, 1);
   });
-  assert.equal(cards.length, 2);
-  assert.match(cards[0].textContent, /Custom/);
-  await activateMissionCard(cards[0]);
-  page.frame(0);
-  assert.equal(
-    page.renders[0].level.id,
-    'picture-1',
-    `${page.$('race-message').textContent} ${page.$('journey-chooser-status').textContent}`,
-  );
-  assert.equal(page.renders[1].level.id, 'picture-1');
-  assert.notEqual(page.renders[0].cells, page.renders[1].cells);
-  assert.match(page.$('race-clock').textContent, /No countdown/);
-  const exactRevision = page.renders[0].level.revision;
-  assert.equal(page.$('race-journey-difficulty').disabled, true);
-  page.$('race-journey-difficulty').value = 'expert';
-  page.$('race-journey-difficulty').onchange();
-  assert.equal(page.$('race-journey-difficulty').value, 'standard');
-  assert.equal(page.renders[0].level.revision, exactRevision);
 
-  // The host consumes one neutral resume tick before accepting player input.
-  page.frame();
-  replayPlayerOne(page, route.replay);
-  assert.equal(
-    page.renders[0].status,
-    'won',
-    JSON.stringify({
-      tick: page.renders[0].tick,
-      position: [page.renders[0].player.x, page.renders[0].player.y],
-      status: page.renders[0].status,
-    }),
-  );
-  assert.equal(page.renders[1].status, 'running');
-  assert.equal(page.$('race-journey-next').hidden, false);
-
-  const next = page.$('race-journey-next'),
-    nextHandler = next.onclick;
-  let continuation;
-  next.onclick = (...args) => (continuation = nextHandler.apply(next, args));
-  try {
-    next.click();
-  } finally {
-    next.onclick = nextHandler;
-  }
-  assert(continuation instanceof Promise);
-  assert.equal(
-    await continuation,
-    undefined,
-    `${page.$('race-message').textContent} ${page.$('journey-chooser-status').textContent}`,
-  );
-  page.frame(0);
-  assert.equal(
-    page.renders[0].level.id,
-    'picture-2',
-    `${page.$('race-message').textContent} ${page.$('journey-chooser-status').textContent}`,
-  );
-  assert.equal(page.renders[1].level.id, 'picture-2');
-  assert.equal(page.state(), 'running');
-
-  await openMissionLibrary(page);
-  const cleared = [...page.$('journey-cards').children].find(
-    (card) => card.dataset.missionId === cards[0].dataset.missionId,
-  );
-  assert.equal(cleared.dataset.pictureState, 'earned');
-  assert.match(cleared.textContent, /Cleared/);
+  await t.test('a fresh host reloads the installed clear and earned picture', async (t) => {
+    const page = await openCreatorHost(t, indexedDB, storage);
+    await openMissionLibrary(page);
+    const cleared = [...page.$('journey-cards').children].find(
+      (card) => card.dataset.missionId === firstMissionId,
+    );
+    assert(cleared, 'the exact installed Creator mission remains available after reload');
+    assert.equal(cleared.dataset.pictureState, 'earned');
+    assert.match(cleared.textContent, /Cleared/);
+  });
 });
