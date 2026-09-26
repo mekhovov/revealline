@@ -10,16 +10,18 @@ versions or acceptance gates are still current.
 - v0.132.4 Team picture-preparation repair has an exact immutable production receipt and its Pages
   selector is merged. The streaming public-byte audit is still underway, so v0.132.4 is not yet
   counted as accepted public delivery here.
-- PR #652 has merged to `main` at `ee015163de1131313436b0550892f3739e3c7a1a` after its focused
-  and release-ready gates passed. The v0.132.5 immutable release and public acceptance are still
-  owned by the publisher; a source merge is not public delivery.
-- Current `main` is `bc5378cf186681aa311fccbf180d295cc3bc0a6c` after PR #656's fastline
-  throughput-contract repair merged. All nineteen cultural branch tips were guarded-pushed
-  atomically onto that commit with an equal 65-commit count and one-to-one range diff. The
+- PR #654 has merged the v0.132.5 source to `main` at
+  `72cfc74552669699266d5d8ad92c56a69da885b2` after PR #656's fastline throughput-contract repair.
+  No v0.132.5 GitHub Release exists yet; immutable assets, Pages and public acceptance remain owned
+  by the publisher. A source merge is not public delivery.
+- Current `main` is `72cfc74552669699266d5d8ad92c56a69da885b2`. All nineteen cultural branch
+  tips were guarded-pushed atomically onto that commit with an equal 67-commit count. Sixty-six
+  commits range-diff one-to-one; the only expected delta changes the first candidate version's
+  predecessor from 0.132.4 to 0.132.5 while preserving its 0.138.0 target. The
   v0.149.0 successor is draft PR #650 at
-  `271c8561aad80af85d8a6b4527f84a7cad8b0066`; the test/documentation reconciliation is draft PR
+  `7b7f23a00efd4d4e68fdc624ac5aa820ffda9cdc`; the test/documentation reconciliation is draft PR
   #651. Independent ready PR #657 is rebased directly on current `main` at
-  `d24f7da4a93f6437bf3f189b0ef9a31d9bce71b3`. The dirty root checkout was not changed.
+  `6459e8fbc2e11f0c3bd6d735885c674c9e7295b8`. The dirty root checkout was not changed.
 
 ## Completed source work
 
@@ -30,9 +32,9 @@ versions or acceptance gates are still current.
 | Complete Team adoption / PR #630                 | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.                                                                                                                                                                                     |
 | First Team Ukrainian slice / PR #636             | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                                                                                                                                                              |
 | Second Team Ukrainian slice / PR #642            | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                                                                                                                                                               |
-| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; earlier focused cohort 83/83 and localization validation pass; latest-main exact-head runtime cohort passes 54/54 with zero skips at `271c8561aad80af85d8a6b4527f84a7cad8b0066`; not public.        |
+| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; earlier focused cohort 83/83 and localization validation pass; latest-main exact-head runtime cohort passes 54/54 with zero skips at `7b7f23a00efd4d4e68fdc624ac5aa820ffda9cdc`; not public.        |
 | Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.                                                                                                                                   |
-| Team opaque-owner continuation / PR #657         | Ready isolated hotfix         | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Exact current-main continuation/localization/impact cohort passes 27/27 at `d24f7da4a93f6437bf3f189b0ef9a31d9bce71b3`; not merged or public. |
+| Team opaque-owner continuation / PR #657         | Ready isolated hotfix         | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Exact current-main continuation/localization/impact cohort passes 27/27 at `6459e8fbc2e11f0c3bd6d735885c674c9e7295b8`; not merged or public. |
 
 After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
@@ -58,14 +60,14 @@ feasibility and rules out a mandatory late-cleanup tail in those fixtures; it do
 Effort starts when the item has an uncontested release or implementation slot. GitHub runner,
 large-asset and archive delays are outside these estimates.
 
-| Priority | Remaining item                                | Exit condition                                                                                                                                          |                                                                           Indicative effort |
-| -------: | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------: |
-|        0 | Finish the v0.132.4/v0.132.5 publication lane | Confirm v0.132.4 public-byte acceptance, then immutable v0.132.5 release, Pages and bounded public proof without mixing in release-optimization changes | **2–8 hours after the publisher resumes**; currently paused on a release-packaging decision |
-|        1 | Promote the cultural Journey chain            | Review/merge in dependency order, exact-head qualification, immutable release and public play for each accepted batch                                   |                                                      **1–2 working days per release batch** |
-|        2 | Complete second Team slice and fixtures       | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete               |                                                            **3–6 hours** plus release queue |
-|        3 | Team continuation and qualification           | Review/publish PR #657; paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof      |                                             **8–16 hours** plus release queue/device access |
-|        4 | Whole-Journey pacing and accessibility        | Campaign-to-campaign pressure audit, reduced-effects/contrast/small-screen/performance and deterministic compatibility                                  |                                                                        **2–4 working days** |
-|        5 | Human balance and cultural review             | Understandable failures, distinct missions, enjoyable retries and cultural review by people                                                             |                                          **1–2 days synthesis** after testers are available |
+| Priority | Remaining item                                | Exit condition                                                                                                                                          |                                                                       Indicative effort |
+| -------: | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------: |
+|        0 | Finish the v0.132.4/v0.132.5 publication lane | Confirm v0.132.4 public-byte acceptance, then immutable v0.132.5 release, Pages and bounded public proof without mixing in release-optimization changes | Source is merged; **2–8 hours** for immutable packaging, Pages and bounded public proof |
+|        1 | Promote the cultural Journey chain            | Review/merge in dependency order, exact-head qualification, immutable release and public play for each accepted batch                                   |                                                  **1–2 working days per release batch** |
+|        2 | Complete second Team slice and fixtures       | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete               |                                                        **3–6 hours** plus release queue |
+|        3 | Team continuation and qualification           | Review/publish PR #657; paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof      |                                         **8–16 hours** plus release queue/device access |
+|        4 | Whole-Journey pacing and accessibility        | Campaign-to-campaign pressure audit, reduced-effects/contrast/small-screen/performance and deterministic compatibility                                  |                                                                    **2–4 working days** |
+|        5 | Human balance and cultural review             | Understandable failures, distinct missions, enjoyable retries and cultural review by people                                                             |                                      **1–2 days synthesis** after testers are available |
 
 Existing v0.133-v0.137 player-UX drafts occupy the nominal release sequence. Cultural PR titles
 currently target v0.138 onward, but version numbers must be assigned by the sole publisher from the
@@ -99,16 +101,16 @@ accepted predecessor; draft labels do not reserve a release.
    seven of eight controller-host scenarios. The Solo compact-filter scenario failed one focus-state
    assertion while paired Versus and Team scenarios passed; that exact case then passed locally in
    8.7 seconds. A subsequent hosted rerun was cancelled when `main` advanced, not completed. A fresh
-   run for exact rebased head `4afdf01c3abc293363a4a7a8bd82c1c56d713fbf` is active; no cancelled
+   run for exact rebased head `726b90d675eb8f733ccb66620d0e2f3eb4a96e70` is queued; no cancelled
    run is represented as a pass.
 
 ## Immediate execution order
 
-1. Let the sole publisher resolve the release-packaging choice and finish v0.132.4 acceptance plus
-   the v0.132.5 lane; keep release-throughput experiments out of that publication path.
+1. Let the sole publisher finish immutable v0.132.5 assets, Pages and bounded public acceptance;
+   keep any further release-throughput experiments out of that publication path.
 2. Qualify and publish isolated PR #657 after the active release lane; do not wait for the full
    cultural stack to restore Team Classic → Custom Next.
-3. Finish PR #530's exact-head hosted focused rerun at `4afdf01c3abc293363a4a7a8bd82c1c56d713fbf`.
+3. Finish PR #530's exact-head hosted focused rerun at `726b90d675eb8f733ccb66620d0e2f3eb4a96e70`.
    Its previously failing Solo compact-controller case passes locally, while the earlier hosted
    failure and rebase-cancelled rerun remain recorded.
 4. Keep the rebased cultural PR chain clean and reviewable while the public release lane completes.
