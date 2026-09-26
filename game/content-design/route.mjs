@@ -27,6 +27,7 @@ import { createLivewireCulturalRoutesCandidates } from './livewire-cultural-rout
 import { createRelayCulturalRoutesCandidates } from './relay-cultural-routes-candidates.mjs';
 import { createCrosswindCulturalRoutesCandidates } from './crosswind-cultural-routes-candidates.mjs';
 import { createSentinelCulturalRoutesCandidates } from './sentinel-cultural-routes-candidates.mjs';
+import { createApexCulturalRoutesCandidates } from './apex-cultural-routes-candidates.mjs';
 import { createUkrainianOrnamentJourney } from './ukrainian-ornament-candidates.mjs';
 import { createUkrainianOrnamentAtlasJourney } from './ukrainian-ornament-atlas.mjs';
 
@@ -64,6 +65,7 @@ export function createAuthoredJourneyRoute(id) {
     createRelayCulturalRoutesCandidates,
     createCrosswindCulturalRoutesCandidates,
     createSentinelCulturalRoutesCandidates,
+    createApexCulturalRoutesCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   });
