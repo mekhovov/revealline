@@ -234,6 +234,31 @@ test('Asset Studio dynamic labels and diagnostics are bilingual', () => {
   }
 });
 
+test('Playground encounter and control measurements cover every Ukrainian plural category', () => {
+  const { api } = runtime({ saved: 'uk' });
+  for (const [count, relay, box] of [
+    [0, 'ретрансляторами', 'областей'],
+    [1, 'ретранслятором', 'область'],
+    [2, 'ретрансляторами', 'області'],
+    [5, 'ретрансляторами', 'областей'],
+    [11, 'ретрансляторами', 'областей'],
+    [21, 'ретранслятором', 'область'],
+    [22, 'ретрансляторами', 'області'],
+    [1.5, 'ретрансляторами', 'області'],
+  ]) {
+    const encounter = api.t('tools:playground.sentinelEncounter', { count });
+    const controls = api.t('tools:playground.measuredControlBoxes', {
+      count,
+      width: 44,
+      height: 48,
+      reachability: 'у межах вікна',
+    });
+    assert.match(encounter, new RegExp(`Вартовий із .* ${relay} щита`));
+    assert.match(controls, new RegExp(`виміряно .* ${box} ·`));
+    assert.doesNotMatch(`${encounter} ${controls}`, /\{\{|Sentinel|Controls/);
+  }
+});
+
 test('Couch continuation cancellation interpolates its localized action', () => {
   for (const [saved, action, expected] of [
     [
