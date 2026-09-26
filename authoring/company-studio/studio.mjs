@@ -5,6 +5,7 @@ import {
   declaredJSONPaths,
   validateStudioData,
   validateStudioDraft,
+  validateStudioHistory,
   validateStudioReport,
   studioPreviewURL,
   studioSelection,
@@ -51,14 +52,16 @@ const download = (filename, value) => {
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
-const readJSON = async (url, { signal } = {}) => {
+const readJSON = async (url, { signal, originalText = false } = {}) => {
   signal?.throwIfAborted();
   const response = await fetch(url, { signal });
   if (!response.ok)
     throw new Error(
       'Source file is unavailable. Import a complete draft or save the file in its declared workspace path.',
     );
-  return boundedJSON(await response.text());
+  const text = await response.text();
+  const data = boundedJSON(text);
+  return originalText ? text : data;
 };
 let catalog,
   registeredCatalog,
@@ -100,7 +103,10 @@ async function readSource(path, { signal } = {}) {
   if (files.has(path)) return files.get(path);
   const owner = files,
     ticket = revision;
-  const data = await readJSON(new URL(path, rootURL), { signal });
+  const originalText = catalog.editions.some((edition) =>
+    (edition.presentationHistory ?? []).some((record) => record.path === path),
+  );
+  const data = await readJSON(new URL(path, rootURL), { signal, originalText });
   signal?.throwIfAborted();
   if (files === owner && revision === ticket && !files.has(path)) files.set(path, data);
   return data;
@@ -355,6 +361,7 @@ async function exportDraft() {
     files: paths.map((path) => ({ path, data: files.get(path) })),
   };
   const checked = validateStudioDraft(packet);
+  await validateStudioHistory(checked.catalog, checked.files);
   files = checked.files;
   download(`${editionId}-draft.json`, {
     ...packet,
@@ -381,6 +388,7 @@ async function openPreview() {
   const paths = [
     ...new Set([
       ...Object.values(selection.edition.boot ?? {}),
+      ...(selection.edition.presentationHistory ?? []).map((record) => record.path),
       ...selection.campaigns.flatMap((campaign) => [
         campaign.sourcePath,
         ...(campaign.lessonPath ? [campaign.lessonPath] : []),
@@ -526,9 +534,11 @@ async function main() {
       maxBytes: 16 * 1024 * 1024,
       maxNodes: 400000,
       maxArray: 8192,
+      maxString: 4 * 1024 * 1024,
     });
     if (input.format === DRAFT_FORMAT) {
       const draft = validateStudioDraft(input);
+      await validateStudioHistory(draft.catalog, draft.files);
       editorBuffers.clear();
       files = draft.files;
       await applyCatalog(draft.catalog, 'Complete source draft imported.');

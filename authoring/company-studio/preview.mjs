@@ -7,6 +7,7 @@ import {
 import { hashPresentationBytes } from '../../game/presentation/bundle.mjs';
 import {
   validateStudioReport,
+  validateStudioHistory,
   studioPreviewURL,
   projectStudioSelection,
   assertMatchingStudioSelection,
@@ -37,6 +38,7 @@ export async function verifyStudioPreview({
   const preview = studioPreviewURL(report, baseURL),
     root = new URL('../', preview);
   const expected = projectStudioSelection(catalog, editionId, files);
+  const retained = await validateStudioHistory(catalog, files, { editionId, signal });
   required(
     report.brandId === expected.brand.id && report.name === expected.edition.name,
     'The compiler report identity differs from this applied draft.',
@@ -160,7 +162,28 @@ export async function verifyStudioPreview({
     [...selection.assets, ...sharedAssets],
     'The compiled catalog contains unselected media.',
   );
+  const publicationAssets = new Map();
+  for (const asset of [
+    ...built.assets,
+    ...retained.flatMap((snapshot) => snapshot.catalog.assets),
+  ]) {
+    const previous = publicationAssets.get(asset.path);
+    required(
+      !previous || (previous.sha256 === asset.sha256 && previous.bytes === asset.bytes),
+      'Retained media conflicts with an immutable asset path.',
+    );
+    publicationAssets.set(asset.path, asset);
+    const fact = inventory.get(asset.path);
+    required(
+      fact?.sha256 === asset.sha256 && fact.bytes === asset.bytes,
+      `Artifact media differs from its selected original: ${asset.path}`,
+    );
+  }
+  const retainedPaths = new Set(
+    (selection.edition.presentationHistory ?? []).map((record) => record.path),
+  );
   const selectedPaths = new Set([
+    ...retainedPaths,
     ...Object.values(selection.edition.boot),
     ...selection.campaigns.flatMap((campaign) => [
       campaign.sourcePath,
@@ -181,7 +204,8 @@ export async function verifyStudioPreview({
           const [path, fact] = pending[next++];
           const bytes = await read(path, fact);
           if (selectedPaths.has(path)) {
-            const data = boundedJSON(new TextDecoder().decode(bytes));
+            const original = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+            const data = retainedPaths.has(path) ? original : boundedJSON(original);
             same(
               data,
               expected.files.get(path),
@@ -209,7 +233,7 @@ export async function verifyStudioPreview({
         sum + (campaign.lessonPath ? selectedData.get(campaign.lessonPath).length : 0),
       0,
     ),
-    assets: built.assets.length,
+    assets: publicationAssets.size,
     runtimeFiles: admitted.length,
     runtimeBytes: totalBytes,
   };
@@ -219,11 +243,16 @@ export async function verifyStudioPreview({
     ['editionIds', 'editions'],
     ['brandIds', 'brands'],
     ['campaignIds', 'campaigns'],
-    ['assetIds', 'assets'],
   ])
     excluded[key] = catalog[field]
       .filter((item) => !built[field].some((record) => record.id === item.id))
       .map((item) => item.id);
+  excluded.assetIds = catalog.assets
+    .filter((asset) => {
+      const admitted = publicationAssets.get(asset.path);
+      return !admitted || admitted.sha256 !== asset.sha256;
+    })
+    .map((asset) => asset.id);
   same(
     report.excluded,
     excluded,

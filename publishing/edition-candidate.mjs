@@ -3,6 +3,7 @@ import { createEditionZip, editionHash } from './edition-zip.mjs';
 import {
   validateEditionSourceInventory,
   validatePublicSourceEligibility,
+  editionPublicationAssets,
 } from './edition-admission.mjs';
 
 export const editionJSON = (value) => Buffer.from(canonicalJSON(value) + '\n');
@@ -29,9 +30,11 @@ export function createEditionCandidate({
   const { files: runtime, runtimeCatalog: catalog } = compiled;
   if (!(runtime instanceof Map) || !(sourceFiles instanceof Map) || catalog.editions.length !== 1)
     throw new Error('One isolated compiled edition and its original source inputs are required.');
-  validateEditionSourceInventory({ files: runtime, assets: catalog.assets });
-  validateEditionSourceInventory({ files: sourceFiles, assets: catalog.assets });
-  validatePublicSourceEligibility({ files: sourceFiles, assets: catalog.assets });
+  const assets = editionPublicationAssets(catalog, runtime);
+  editionPublicationAssets(catalog, sourceFiles);
+  validateEditionSourceInventory({ files: runtime, assets });
+  validateEditionSourceInventory({ files: sourceFiles, assets });
+  validatePublicSourceEligibility({ files: sourceFiles, assets });
   const selectedSource = new Map(sourceFiles),
     projections = [];
   for (const [name, original] of sourceFiles) {
@@ -88,7 +91,7 @@ export function createEditionCandidate({
     description:
       'Selected engine, campaign, lesson, boot and approved media inputs. Aggregate locale, theme, guide-presentation, entry and runtime-import inputs use exact compiler projections where listed; each projection records its original committed-input hash and output hash. Build tooling and unrelated repository sources are not included.',
     ...(projections.length ? { projections } : {}),
-    assets: catalog.assets,
+    assets,
     files: sourceRows,
     totalBytes: sourceRows.reduce((sum, row) => sum + row.bytes, 0),
   });

@@ -1,5 +1,3 @@
-> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
-
 # Company edition qualification record
 
 > Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
@@ -7,6 +5,49 @@
 This record distinguishes candidate automation from release qualification. No company
 edition has been promoted or published by this work. Human observations, physical-device
 installation and downloaded/deployed release evidence cannot be inferred from unit tests.
+
+## First post-playtest artwork batch
+
+The user reported human playtesting complete on 26 September 2026 and authorized the next
+plan items. That completes the formative gate on the user's report; detailed participant
+observations were not supplied and have not been fabricated. The decision is to proceed
+with the current design and review artwork in batches of at most three.
+
+Choose Together, Repair the Draft and Scoped Access now have distinct opaque 1774 × 887
+illustrations generated with `image_gen.imagegen`. Their original PNG bytes total
+9,087,984 bytes, with exact prompts and provenance recorded in the edition asset inventory.
+Current coverage is nine raster pictures out of 66 missions, leaving 57 procedural slots;
+the three historical Portuguese pictures remain unchanged. Four affected audiences retain
+exact pre-art presentation snapshots. All 54 affected compiled gameplay manifests remain
+unchanged; stable Journey completion survives while strict execution keys correctly differ.
+
+The preceding frozen candidate `f6c9548327ae94ec3c4881ef20391177e5ddc0d2`, tree
+`c96c0b8ea58cf1b2c7dee66cc5680a6c353e5a4f`, passed
+[CI run 36260177527](https://github.com/mekhovov/revealline/actions/runs/36260177527).
+Downloaded artifact 10912645618 (423,115,356 bytes) matched all 57 independently built
+artifact hashes, 58 downloaded checksums and 14 presentation receipts. Its SHA-256 is
+`03214e03edca8f28cac6d0af7ed5d8e00b21c349fb742ba8b5bbbab5e94c66d6`.
+Those receipts apply to that exact pre-art commit. New artwork/history/offline changes need
+a new immutable candidate; its exact CI/download receipt is recorded on PR #615.
+
+
+The integrated local cohorts passed 217 company checks, 81 replay/actor/navigation checks,
+and 41 persistence/default-offline checks. All 101 generated outputs verified. Sparse-checkout
+source eligibility admitted 3,485 paths and 42 approved media assets; the full-checkout CI
+inventory is larger. A final localized departure-copy correction passed 16 focused host
+and default-mode checks. Same-edition historical artwork explicitly shares mission progress;
+a different edition retains its separate-progress explanation.
+
+Native in-app browser review inspected all three new scenes in the canonical Solo host at
+1280 × 720 and 390 × 844. This was an engineering review of the initial visible borders,
+return islands, objective overlays and threat contrast, not a winning playthrough or a new
+human comprehension result. The phone board occupied 382 of 390 CSS pixels while preserving
+its 2:1 simulation geometry. A separate tab correctly opened Operations read-only while the
+existing user tab held its writer lock. Selecting the saved flight's verified historical
+presentation restored Find Your Work at 25.8% revealed with three lives, without replacing
+the user's save. The historical/current-artwork switch preserves the normal unsaved-flight
+departure guard. Final physical-device, performance and installation qualification remains
+pending.
 
 ## Latest verified candidate and follow-up review
 
@@ -33,31 +74,11 @@ to bytes changed afterward. The combined local cohort passed 208 tests before th
 Studio lifecycle regressions; the final Studio cohort passed 19 and observer cohort 16.
 Changed-file lint and formatting passed.
 
-recorded activation into Build Tomorrow at 1280 × 720, DPR 2. Its initial 20-second sample
-contained 2,385 callback intervals, p95 8.9 ms and one 1,484 ms gap. A second sample
-reported a 1,942 ms maximum. A regression then reproduced a measurement-boundary defect:
-the first callback timestamp could precede asset preparation even though the sampling
-clock started afterward. The observer now excludes that activation callback timestamp,
-while preserving genuine later long intervals. Both earlier samples are contaminated
-and are **not gameplay performance evidence**. An additional review found that
-brief iframe focus loss between sampled frames also needs explicit invalidation; the
-observer now discards active samples synchronously on blur. Retain this earlier sample
-as diagnostic data, not as evidence of uninterrupted play or a performance win.
-The review tool observes public DOM and browser metrics, never starts/resumes the game,
-and keeps every exported observation `qualified: false`.
 
-After the boundary fix, a fresh 20-second Build Tomorrow sample at 1280 × 720, DPR 2
-recorded 2,377 intervals, p50 8.3 ms, p95 8.9 ms, maximum 32.9 ms and none over 33 ms.
-This is a bounded observer smoke check, not a baseline comparison or device qualification.
-The browser also confirmed the canonical edition-departure dialog verified the paused
-neutral starter draft and v2 compiler report, verified all 466 admitted files, and opened
-the compiled game with its ordinary Start, Missions, Collection and Settings controls.
-The neutral fixture demonstrates data-only authoring; it is not another approved brand.
-
-The human formative session remains **not started**. Final artwork expansion (60 current
-slots), physical installed-PWA coexistence, device storage/backup recovery, final performance
-comparison and public promotion are still pending. The keyboard “works now” confirmation
-is useful input validation, not a substitute for those gates.
+At this earlier checkpoint human playtesting had not started and 60 current art slots remained.
+The later user-reported formative completion and first artwork batch are recorded above.
+Physical installed-PWA coexistence, device storage/backup recovery, final performance
+comparison and public promotion remain separate gates.
 
 ## Current Netherlands and canonical Solo expansion — unqualified
 
@@ -94,10 +115,11 @@ See the [shared Solo integration record](company-editions-shared-solo.md) for th
 current main-host acceptance boundary and bounded browser/package checks. Each changed source needs a new
 committed candidate run; content/art approval and human observations remain
 pending. Earlier browser observations and frozen CI results below apply only to
-their recorded revisions. The current raster inventory covers six of the 66
-current missions; 60 use interim procedural fallback. Three additional rasters
-belong only to the historical Portuguese pilot. No final bulk-art production or
-human playtest is claimed.
+their recorded revisions. The pre-art raster inventory covered six of the 66
+current missions; 60 then used interim procedural fallback. The first post-playtest batch
+above advances this to nine raster pictures and 57 remaining slots. Three additional rasters
+belong only to the historical Portuguese pilot. This earlier checkpoint did not claim bulk-art production or a human playtest;
+the subsequent reported formative completion is recorded above.
 
 ## Frozen candidate automation
 

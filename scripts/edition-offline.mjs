@@ -63,9 +63,15 @@ self.addEventListener('fetch', event => {
   if (url.pathname.endsWith('/')) url.pathname += 'index.html';
   const row = rows.get(url.href); if (!row) return;
   event.respondWith((async () => {
-    const cache = await caches.open(CACHE), saved = await cache.match(url.href);
-    if (saved) return saved;
-    try { const response = await checked(await fetch(url.href, { redirect: 'error' }), row); await cache.put(url.href, response.clone()); return response; }
+    let cache;
+    try { cache = await caches.open(CACHE); const saved = await cache.match(url.href); if (saved) return saved; } catch {}
+    try {
+      const response = await checked(await fetch(url.href, { redirect: 'error' }), row);
+      // Storage failure must not discard verified online bytes. Preparation and
+      // verification still require every cache member before reporting ready.
+      try { if (cache) await cache.put(url.href, response.clone()); } catch {}
+      return response;
+    }
     catch { return new Response('Reconnect and repair this edition.', { status: 503 }); }
   })());
 });

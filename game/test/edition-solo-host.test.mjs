@@ -10,6 +10,149 @@ import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.m
 import { createRun } from '../core/index.mjs';
 import { companySimulationIdentity } from '../company-session.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
+
+test('artwork update offers explicit exact-snapshot recovery and Continue retains the original save', async (t) => {
+  const f = await retainedEditionFixture(),
+    storage = memoryStorage(),
+    key = 'revealline.suspended.journey-sample-public.v1.solo-v2';
+  let original;
+  await t.test('save the earlier presentation', async (t) => {
+    const page = await soloPage(t, {
+      search: '?edition=sample-public',
+      titleScreen: true,
+      storage,
+      journeyIndexedDB: managedIndexedDB().indexedDB,
+      fetchResponse: f.fetcher,
+    });
+    page.$('shell-featured').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
+    page.key('ArrowDown');
+    for (let i = 0; i < 12; i++) page.frame();
+    page.key('ArrowDown', false);
+    page.$('pause-button').click();
+    page.$('save-attempt-button').click();
+    await settle(() => storage.getItem(key) !== null);
+    original = storage.getItem(key);
+    assert.equal(
+      JSON.parse(original).actorAppearancePin.authoredPresentationSha256,
+      f.descriptor.id,
+    );
+  });
+  // Pagehide may refresh the save timestamp while retaining this exact attempt.
+  original = storage.getItem(key);
+  f.replacePicture();
+  await t.test('new source never silently rewrites the previous flight', async (t) => {
+    const page = await soloPage(t, {
+      search: '?edition=sample-public',
+      titleScreen: true,
+      storage,
+      journeyIndexedDB: managedIndexedDB().indexedDB,
+      pictures: { Image: PNGImage },
+      fetchResponse: f.fetcher,
+    });
+    const recover = page.$('edition-recover-presentation');
+    assert.ok(recover, 'The exact registered receipt offers an explicit recovery action.');
+    const before = page.win.location.href;
+    assert.equal(storage.getItem(key), original);
+    await recover.onclick();
+    assert.notEqual(page.win.location.href, before);
+    assert.equal(new URL(page.win.location.href).searchParams.get('presentation'), f.descriptor.id);
+    assert.equal(storage.getItem(key), original, 'Navigation does not rewrite the suspended run.');
+    assert.deepEqual(page.errors, []);
+  });
+  await t.test(
+    'read-only artwork departure explains shared progress in either language without hiding save risk',
+    async (t) => {
+      const page = await soloPage(t, {
+        search: '?edition=sample-public',
+        titleScreen: true,
+        storage: memoryStorage(),
+        journeyIndexedDB: managedIndexedDB().indexedDB,
+        pictures: { Image: PNGImage },
+        fetchResponse: f.fetcher,
+        lockManager: {
+          request(key, options, task) {
+            return Promise.resolve(
+              (task ?? options)(key === 'revealline.company.sample-public.writer' ? null : {}),
+            );
+          },
+        },
+      });
+      const locale = getLocale();
+      t.after(() => setLocale(locale, { persist: false }));
+      setLocale('en', { persist: false });
+      page.$('shell-featured').click();
+      await settle(() => page.doc.body.dataset.flightState === 'running');
+      page.$('shell-menu').click();
+      const href = page.win.location.href;
+      const choice = page.$('edition-presentation-select');
+      choice.value = f.descriptor.id;
+      await choice.onchange();
+      assert.equal(page.$('mode-leave-dialog').open, true);
+      assert.match(page.$('mode-leave-title').textContent, /Retained original artwork/);
+      assert.match(page.$('mode-leave-status').textContent, /session-only.*Leaving may lose/);
+      assert.match(page.$('mode-leave-status').textContent, /same edition.*progress stays shared/);
+      assert.doesNotMatch(page.$('mode-leave-status').textContent, /progress stay separate/);
+      setLocale('uk', { persist: false });
+      assert.match(page.$('mode-leave-title').textContent, /Збережене оригінальне оформлення/);
+      assert.match(page.$('mode-leave-confirm').textContent, /Збережене оригінальне оформлення/);
+      assert.match(page.$('mode-leave-status').textContent, /прогрес залишається спільним/);
+      assert.doesNotMatch(page.$('mode-leave-status').textContent, /прогрес залишаються окремими/);
+      assert.equal(page.win.location.href, href);
+      assert.equal(page.storage.getItem(key), null, 'The read-only flight remains session-only.');
+      page.$('mode-leave-stay').click();
+      assert.equal(page.$('mode-leave-dialog').open, false);
+      assert.equal(page.win.location.href, href);
+      assert.deepEqual(page.errors, []);
+    },
+  );
+  await t.test('the same host reconstructs and resumes the exact earlier source', async (t) => {
+    const page = await soloPage(t, {
+      search: `?edition=sample-public&presentation=${f.descriptor.id}`,
+      titleScreen: true,
+      storage,
+      journeyIndexedDB: managedIndexedDB().indexedDB,
+      fetchResponse: f.fetcher,
+    });
+    assert.equal(page.$('edition-presentation-select').value, f.descriptor.id);
+    page.$('shell-continue').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
+    page.$('pause-button').click();
+    page.$('save-attempt-button').click();
+    const resumed = JSON.parse(storage.getItem(key)),
+      saved = JSON.parse(original);
+    assert.equal(resumed.campaignKey, saved.campaignKey);
+    assert.equal(resumed.runId, saved.runId);
+    assert.deepEqual(resumed.actorAppearancePin, saved.actorAppearancePin);
+    assert.deepEqual(resumed.replay, saved.replay);
+    page.$('shell-menu').click();
+    const choice = page.$('edition-presentation-select'),
+      href = page.win.location.href;
+    choice.value = '';
+    await choice.onchange();
+    assert.equal(choice.value, f.descriptor.id, 'The selector retains the still-active snapshot.');
+    assert.equal(
+      page.win.location.href,
+      href,
+      'An unfinished flight cannot navigate before confirmation.',
+    );
+    assert.equal(page.$('mode-leave-dialog').open, true);
+    assert.match(page.$('mode-leave-title').textContent, /Current artwork/);
+    assert.match(page.$('mode-leave-status').textContent, /same edition.*progress stays shared/);
+    assert.doesNotMatch(page.$('mode-leave-status').textContent, /progress stay separate/);
+    const locale = getLocale();
+    t.after(() => setLocale(locale, { persist: false }));
+    setLocale('uk', { persist: false });
+    assert.match(page.$('mode-leave-title').textContent, /Поточне оформлення/);
+    assert.match(page.$('mode-leave-status').textContent, /прогрес залишається спільним/);
+    page.$('mode-leave-stay').click();
+    assert.equal(page.win.location.href, href);
+    assert.equal(page.$('mode-leave-dialog').open, false);
+    assert.deepEqual(page.errors, []);
+  });
+});
 
 async function editionSwitchHost(t, { occupied = false, start = true } = {}) {
   const f = await editionProviderFixture();
@@ -72,6 +215,10 @@ for (const saving of ['verified', 'quota', 'occupied'])
     assert.equal(picker.value, 'sample-public', 'The picker describes the still-active edition.');
     assert.equal(page.$('mode-leave-dialog').open, true);
     assert.match(page.$('mode-leave-title').textContent, /Other audience/);
+    assert.match(
+      page.$('mode-leave-status').textContent,
+      /Its missions and progress stay separate/,
+    );
     assert.match(
       page.$('mode-leave-status').textContent,
       saving === 'verified' ? /saved and verified/ : /session-only.*Leaving may lose/,

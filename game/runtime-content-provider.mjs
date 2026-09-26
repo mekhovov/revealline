@@ -1,10 +1,12 @@
 import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
 import { resolveEditionContext } from './edition-context.mjs';
-import { required, canonicalJSON } from './data-json.mjs';
-import { hashPresentationBytes } from './presentation/bundle.mjs';
-import { resolveEditionAssets } from './editions/model.mjs';
+import { required } from './data-json.mjs';
 import { projectEditionThemeSelection } from './editions/selected-presentation.mjs';
+import {
+  editionPresentationSha256,
+  loadRetainedPresentation,
+} from './editions/retained-presentation.mjs';
 
 /** Content and presentation are inputs to the ordinary Solo host. An edition
  * never owns an update loop, difficulty implementation or input controller. */
@@ -21,7 +23,7 @@ export async function loadRuntimeContentProvider({
   if (compiled)
     required(requested === compiled, 'This installed edition cannot load another audience.');
   const rootURL = new URL('../', url);
-  const bootstrap = await loadEditionBootstrap({
+  const currentBootstrap = await loadEditionBootstrap({
     fetcher,
     catalogURL: new URL(compiled ? '../edition-catalog.json' : 'editions/catalog.json', url).href,
     contentBaseURL: rootURL.href,
@@ -29,6 +31,24 @@ export async function loadRuntimeContentProvider({
     campaignId: url.searchParams.get('campaign') ?? undefined,
     allowMissing: false,
   });
+  const retainedPresentationId = url.searchParams.get('presentation');
+  const history = currentBootstrap.selection.edition.presentationHistory ?? [];
+  const retained = retainedPresentationId
+    ? history.find((record) => record.id === retainedPresentationId)
+    : null;
+  required(
+    !retainedPresentationId || retained,
+    'This exact presentation is not registered for the selected edition. Your original save is preserved.',
+  );
+  const bootstrap = retained
+    ? (
+        await loadRetainedPresentation(retained, {
+          edition: currentBootstrap.selection.edition,
+          baseURL: rootURL,
+          fetcher,
+        })
+      ).bootstrap
+    : currentBootstrap;
   required(bootstrap.boot, 'This edition is missing its Solo startup catalogs.');
   await verifyAssets(bootstrap, { baseURL: rootURL, fetcher });
   const { route } = bootstrap;
@@ -46,18 +66,7 @@ export async function loadRuntimeContentProvider({
   };
   const theme = projected.themes.themes.find((item) => item.id === selection.brand.themeId);
   required(theme, 'This edition is missing its selected presentation.');
-  const authoredPresentationSha256 = await hashPresentationBytes(
-    new TextEncoder().encode(
-      canonicalJSON({
-        editionId: selection.edition.id,
-        themes: projected.themes,
-        presets: bootstrap.boot.presets,
-        assets: resolveEditionAssets(catalog, { editionId: selection.edition.id })
-          .map(({ id, path, sha256, bytes }) => ({ id, path, sha256, bytes }))
-          .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0)),
-      }),
-    ),
-  );
+  const authoredPresentationSha256 = await editionPresentationSha256(bootstrap);
   const assetURL = (id) => {
     const asset = catalog.assets.find((item) => item.id === id);
     required(asset, 'This edition does not contain the requested artwork.');
@@ -67,6 +76,9 @@ export async function loadRuntimeContentProvider({
     kind: 'edition',
     editionId: selection.edition.id,
     authoredPresentationSha256,
+    retainedPresentationId,
+    presentationHistory: history,
+    currentCatalog: currentBootstrap.catalog,
     selection,
     catalog,
     // Keep the preview host's incompatible envelope untouched. Canonical Solo
@@ -96,8 +108,14 @@ export async function loadRuntimeContentProvider({
       const target = new URL('index.html', url);
       target.search = '';
       target.searchParams.set('edition', selection.edition.id);
+      if (
+        retainedPresentationId &&
+        (!parameters.edition || parameters.edition === selection.edition.id)
+      )
+        target.searchParams.set('presentation', retainedPresentationId);
       for (const [key, value] of Object.entries(parameters))
         if (value != null) target.searchParams.set(key, value);
+        else target.searchParams.delete(key);
       return target.href;
     },
   });

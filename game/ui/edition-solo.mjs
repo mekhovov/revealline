@@ -23,6 +23,8 @@ export async function mountEditionSoloUI({
   report,
   onMissions,
   onEditionChange,
+  getSavedPresentation = () => null,
+  onPresentationChange,
 }) {
   const { selection, theme } = provider;
   mountEditionNavigation({ provider, document: doc, href: win.location.href });
@@ -82,13 +84,14 @@ export async function mountEditionSoloUI({
     select = node('select');
   picker.className = 'field edition-switcher';
   select.id = 'edition-select';
-  for (const edition of provider.catalog.editions) {
+  const availableEditions = (provider.currentCatalog ?? provider.catalog).editions;
+  for (const edition of availableEditions) {
     const option = node('option', edition.name);
     option.value = edition.id;
     select.append(option);
   }
   select.value = provider.editionId;
-  select.disabled = provider.catalog.editions.length === 1;
+  select.disabled = availableEditions.length === 1;
   picker.append(select);
   (home.querySelector('.home-content') ?? home).append(picker);
   select.onchange = () => {
@@ -99,6 +102,58 @@ export async function mountEditionSoloUI({
     if (requested === provider.editionId) return false;
     return onEditionChange(requested, select);
   };
+  if (provider.presentationHistory?.length) {
+    const retained = node('details'),
+      title = node('summary', 'Original artwork & saved-flight recovery'),
+      choice = node('select'),
+      label = node('label', 'Artwork snapshot');
+    retained.className = 'edition-about';
+    choice.id = 'edition-presentation-select';
+    const current = node('option', 'Current artwork');
+    current.value = '';
+    choice.append(current);
+    for (const record of provider.presentationHistory) {
+      const option = node('option', `Retained original · ${record.id.slice(0, 12)}`);
+      option.value = record.id;
+      choice.append(option);
+    }
+    choice.value = provider.retainedPresentationId ?? '';
+    choice.onchange = () => {
+      const requested = choice.value || null;
+      choice.value = provider.retainedPresentationId ?? '';
+      return onPresentationChange(requested, choice);
+    };
+    label.append(choice);
+    retained.append(
+      title,
+      node(
+        'p',
+        'Older flights and imports need their exact original campaign and artwork. Opening a retained snapshot keeps the same game and progress; it does not rewrite a save or substitute newer images.',
+      ),
+      label,
+    );
+    const saved = getSavedPresentation();
+    if (
+      saved !== provider.authoredPresentationSha256 &&
+      provider.presentationHistory.some((item) => item.id === saved)
+    ) {
+      const recover = node('button', 'Open artwork matching saved flight');
+      recover.type = 'button';
+      recover.id = 'edition-recover-presentation';
+      recover.className = 'button secondary';
+      recover.onclick = () => onPresentationChange(saved, recover);
+      retained.append(recover);
+      retained.open = true;
+    }
+    if (provider.retainedPresentationId)
+      retained.append(
+        node(
+          'p',
+          `This page uses retained original ${provider.retainedPresentationId.slice(0, 12)}. New flights here also use that snapshot. Choose Current artwork to return to the latest campaign presentation.`,
+        ),
+      );
+    (home.querySelector('.home-content') ?? home).append(retained);
+  }
   const about = node('details'),
     aboutTitle = node('summary', 'About this edition & artwork');
   about.className = 'edition-about';

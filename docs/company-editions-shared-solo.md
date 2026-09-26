@@ -32,7 +32,7 @@ beside the board. The layout never stretches the world or changes input coordina
 
 compositions provide a city, a network atlas and a Dutch workshop; prompts and provenance
 are recorded in `game/editions/art-prompts-2026-09-26.json`. These are fictional illustrations.
-The wider raster-art catalogue remains pending human review; procedural interim pictures
+The formative playtest is now user-reported complete. Three further pictures are in the first post-playtest review batch; procedural interim pictures
 are not described as finished artwork.
 
 ## Learning and tools

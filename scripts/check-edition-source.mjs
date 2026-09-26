@@ -1,7 +1,10 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { validatePublicSourceEligibility } from '../publishing/edition-admission.mjs';
+import {
+  validatePublicSourceEligibility,
+  editionPublicationAssets,
+} from '../publishing/edition-admission.mjs';
 
 /** Path inventory is cheap; only declared brand originals are loaded into memory. */
 export async function checkEditionSourceEligibility(root) {
@@ -24,7 +27,6 @@ export async function checkEditionSourceEligibility(root) {
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
-  const assets = [...catalog.assets, ...shared];
   const files = new Map(),
     ignored = new Set(['.git', '.cache', 'node_modules', 'dist', 'releases']);
   async function walk(directory, prefix = '') {
@@ -43,6 +45,25 @@ export async function checkEditionSourceEligibility(root) {
     }
   }
   await walk(root);
+  for (const record of (catalog.editions ?? []).flatMap(
+    (edition) => edition.presentationHistory ?? [],
+  )) {
+    if (typeof record.path !== 'string' || !files.has(record.path))
+      throw new Error('Registered retained presentation is missing from source.');
+    const stat = await fs.stat(path.join(root, record.path));
+    if (
+      !Number.isSafeInteger(record.bytes) ||
+      record.bytes < 1 ||
+      record.bytes > 4 * 1024 * 1024 ||
+      stat.size !== record.bytes
+    )
+      throw new Error('Retained presentation exceeds its declared byte envelope.');
+    files.set(record.path, await fs.readFile(path.join(root, record.path)));
+  }
+  const assets = editionPublicationAssets(
+    { ...catalog, assets: [...catalog.assets, ...shared] },
+    files,
+  );
   for (const asset of assets) {
     if (typeof asset.path !== 'string' || !files.has(asset.path))
       throw new Error('Declared edition original is missing from source.');

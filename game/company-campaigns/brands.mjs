@@ -91,11 +91,20 @@ const choices = [['droneaid-community', 'droneaid', 'Community Relay', 'public',
     'public',
     [c.id],
   ])];
+// Exact pre-art snapshots; their bytes must never be reformatted or overwritten.
+const retainedPresentations = Object.freeze({});
+
 export const COMPANY_EDITIONS = Object.freeze(
   choices.map(([id, brandId, name, audience, campaignIds]) => ({
     format: 'revealline-edition.v1',
     id,
-    revision: brandId === 'droneaid-nl' ? 2 : 1,
+    revision: [].includes(
+      id,
+    )
+      ? 5
+      : brandId === 'droneaid-nl'
+          ? 2
+          : 1,
     name,
     brandId,
     audience,
@@ -103,6 +112,7 @@ export const COMPANY_EDITIONS = Object.freeze(
     entryCampaignId: campaignIds[0],
     modes: ['solo'],
     publication: 'public',
+    ...(retainedPresentations[id] ? { presentationHistory: [retainedPresentations[id]] } : {}),
     boot: Object.fromEntries(
       ['campaign', 'themes', 'presets', 'classes', 'packs', 'archives'].map((key) => [
         key,

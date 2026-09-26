@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 import {
   collectEditionEngineFiles,
   compileEdition,
-  selectEditionClosure,
+  collectEditionSelectedFiles,
 } from './compile-edition.mjs';
 import { checkEditionSourceEligibility } from './check-edition-source.mjs';
 import { validateEditionProviderParity } from './edition-provider-parity.mjs';
@@ -109,25 +109,21 @@ export async function bundleEditions({ root = process.cwd(), editionIds, out, ba
     editions = [],
     presentationReceipts = [];
   for (const id of [...editionIds].sort()) {
-    const closure = selectEditionClosure(catalog, [id]);
     const sourceFiles = new Map(engine);
-    const selectedPaths = new Set([
-      ...closure.assets.map((asset) => asset.path),
-      ...closure.campaigns.flatMap((campaign) => [
-        campaign.sourcePath,
-        ...(campaign.lessonPath ? [campaign.lessonPath] : []),
-      ]),
-      ...closure.editions.flatMap((edition) => Object.values(edition.boot)),
-    ]);
-    for (const name of selectedPaths) {
-      const real = await fs.realpath(path.join(root, name));
-      if (!real.startsWith(`${root}${path.sep}`))
-        throw new Error('Source input escapes its checkout.');
-      const stat = await fs.stat(real);
-      if (!stat.isFile() || stat.size > 32 * 1024 * 1024)
-        throw new Error('Selected source input exceeds its file budget.');
-      sourceFiles.set(name, await fs.readFile(real));
-    }
+    const selected = await collectEditionSelectedFiles({
+      catalog,
+      editionIds: [id],
+      read: async (name) => {
+        const real = await fs.realpath(path.join(root, name));
+        if (!real.startsWith(`${root}${path.sep}`))
+          throw new Error('Source input escapes its checkout.');
+        const stat = await fs.stat(real);
+        if (!stat.isFile() || stat.size > 32 * 1024 * 1024)
+          throw new Error('Selected source input exceeds its file budget.');
+        return fs.readFile(real);
+      },
+    });
+    for (const [name, bytes] of selected) sourceFiles.set(name, bytes);
     verifyCommittedInputs(sourceFiles, tree);
     const compile = () =>
       compileEdition({

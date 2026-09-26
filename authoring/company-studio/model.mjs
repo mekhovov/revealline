@@ -15,6 +15,8 @@ import {
   validateEditionCampaignProject,
   validateEditionLessonBundle,
 } from '../../game/editions/project.mjs';
+import { hashPresentationBytes } from '../../game/presentation/bundle.mjs';
+import { validateRetainedPresentation } from '../../game/editions/retained-presentation.mjs';
 import { projectEditionThemeSelection } from '../../game/editions/selected-presentation.mjs';
 import { validateCompanyLessons } from '../../game/company-campaigns/learning.mjs';
 import { validateTheme } from '../../game/content.mjs';
@@ -64,7 +66,10 @@ export function declaredJSONPaths(catalog) {
         campaign.sourcePath,
         ...(campaign.lessonPath ? [campaign.lessonPath] : []),
       ]),
-      ...catalog.editions.flatMap((edition) => Object.values(edition.boot ?? {})),
+      ...catalog.editions.flatMap((edition) => [
+        ...Object.values(edition.boot ?? {}),
+        ...(edition.presentationHistory ?? []).map((record) => record.path),
+      ]),
     ]),
   ];
 }
@@ -73,6 +78,25 @@ export function validateStudioData(path, input, catalog, files = new Map()) {
     declaredJSONPaths(catalog).includes(path),
     'This JSON path is not declared by the catalog.',
   );
+  const retained = catalog.editions
+    .flatMap((edition) => edition.presentationHistory ?? [])
+    .find((record) => record.path === path);
+  if (retained) {
+    required(
+      typeof input === 'string',
+      'Retained presentation must preserve its original JSON text.',
+    );
+    required(
+      new TextEncoder().encode(input).byteLength === retained.bytes,
+      'Retained presentation byte count differs.',
+    );
+    const snapshot = boundedJSON(input);
+    required(
+      snapshot.authoredPresentationSha256 === retained.id,
+      'Retained presentation identity differs.',
+    );
+    return input;
+  }
   const data = boundedJSON(input);
   const campaign = catalog.campaigns.find((entry) => entry.sourcePath === path);
   if (campaign) return validateEditionCampaignProject(data, campaign).source;
@@ -124,6 +148,7 @@ export function validateStudioDraft(input) {
     maxBytes: 16 * 1024 * 1024,
     maxNodes: 400000,
     maxArray: 8192,
+    maxString: 4 * 1024 * 1024,
   });
   exactKeys(draft, ['format', 'catalog', 'files'], 'company source draft');
   required(
@@ -160,6 +185,26 @@ export function validateStudioDraft(input) {
   }
   return { catalog, files };
 }
+/** Immutable retained JSON travels as exact text, separate from editable source. */
+export async function validateStudioHistory(catalog, files, { editionId = null, signal } = {}) {
+  const retained = [];
+  for (const edition of catalog.editions.filter((item) => !editionId || item.id === editionId)) {
+    for (const descriptor of edition.presentationHistory ?? []) {
+      signal?.throwIfAborted();
+      const text = validateStudioData(descriptor.path, files.get(descriptor.path), catalog, files);
+      required(
+        (await hashPresentationBytes(new TextEncoder().encode(text))) === descriptor.sha256,
+        'Retained presentation hash differs from its immutable registration.',
+      );
+      signal?.throwIfAborted();
+      const checked = await validateRetainedPresentation(text, { edition });
+      signal?.throwIfAborted();
+      retained.push(checked.snapshot);
+    }
+  }
+  return retained;
+}
+
 export function validateStudioReport(input) {
   const report = boundedJSON(input, { maxBytes: 4 * 1024 * 1024, maxArray: 8192, maxNodes: 60000 });
   required(
