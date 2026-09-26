@@ -1,4 +1,5 @@
 import { execFile } from 'node:child_process';
+import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync, renameSync } from 'node:fs';
 import { promisify } from 'node:util';
 import { COMPANY_MISSIONS } from '../game/company-campaigns/catalog.mjs';
@@ -14,6 +15,13 @@ import {
   exportReplay,
   verifyReplay,
 } from '../game/replay.mjs';
+
+import {
+  COMPANY_ROUTE_EVIDENCE_FORMAT,
+  COMPANY_ROUTE_EVENT_TYPES,
+  companyCheckpointRuntime,
+  companyRouteWitness,
+} from './lib/company-route-evidence.mjs';
 
 const execute = promisify(execFile);
 const path = 'game/test/fixtures/company-campaign-routes.json';
@@ -36,16 +44,6 @@ const jobs = Math.max(
 if (!Number.isInteger(jobs)) throw new Error('Route worker count must be 1..4.');
 let cursor = 0;
 const key = (id, difficulty, turnPolicy) => `${id}/${difficulty}/${turnPolicy}`;
-const keepEvents = new Set([
-  'boss.warning',
-  'player.failed',
-  'cut.closed',
-  'lineImpact.created',
-  'relay.opened',
-  'objective.captured',
-  'encounter.stageChanged',
-  'encounter.defeated',
-]);
 
 // Trying an existing input sequence is cheap, but never accepts its claimed
 // outcome. Execute the selected new manifest and prove its public replay again.
@@ -68,7 +66,8 @@ function replayInputs(candidate, mission, difficulty, turnPolicy) {
       recordInput(recorder, input);
       stepRun(run, input, FIXED_DT);
       for (const event of run.events)
-        if (keepEvents.has(event.type)) events.push([run.tick, event.type, event.id ?? null]);
+        if (COMPANY_ROUTE_EVENT_TYPES.has(event.type))
+          events.push([run.tick, event.type, event.id ?? null]);
       if (run.events.some((event) => event.type === 'cut.closed'))
         closures.push([run.tick, run.coverage]);
     }
@@ -93,6 +92,7 @@ function replayInputs(candidate, mission, difficulty, turnPolicy) {
     cuts: closures.length,
     proofMethod: 're-executed-input-sequence',
     checkpoint: authoritativeCheckpoint(run).hash,
+    witness: companyRouteWitness(run),
     events,
     closures,
     segments,
@@ -108,7 +108,7 @@ function persist() {
   );
   writeFileSync(
     `${path}.tmp`,
-    `${JSON.stringify({ format: 'revealline-company-route-evidence.v1', evidence: 'Offline omniscient feasibility search and re-executed input sequences. Not human pacing, accessibility, or enjoyment evidence.', seed: 1, rows: ordered }, null, 2)}\n`,
+    `${JSON.stringify({ format: COMPANY_ROUTE_EVIDENCE_FORMAT, checkpointRuntime: companyCheckpointRuntime(), evidence: 'Offline omniscient feasibility search and re-executed input sequences. Not human pacing, accessibility, or enjoyment evidence.', seed: 1, rows: ordered }, null, 2)}\n`,
   );
   renameSync(`${path}.tmp`, path);
 }
@@ -146,7 +146,7 @@ async function worker() {
             );
             const candidate = JSON.parse(stdout);
             if (candidate.status === 'won') {
-              row = candidate;
+              row = replayInputs(candidate, mission, difficulty, turnPolicy);
               break;
             }
           }
@@ -165,5 +165,36 @@ async function worker() {
       }
   }
 }
-await Promise.all(Array.from({ length: jobs }, worker));
-if (failures.length) throw new Error(`Unproven routes: ${failures.join(', ')}`);
+if (process.argv.includes('--witness-only')) {
+  // A bounded evidence migration, never a route search or outcome rewrite.
+  // Run on the original reference runtime: every raw hash must still match.
+  for (const candidate of previous) {
+    const mission = COMPANY_MISSIONS.find((entry) => entry.id === candidate.id);
+    assert(mission, `Unknown existing route: ${candidate.id}`);
+    const proven = replayInputs(candidate, mission, candidate.difficulty, candidate.turnPolicy);
+    assert(proven, `Existing route no longer wins: ${candidate.id}`);
+    for (const field of [
+      'simulationIdentity',
+      'gameplayTuning',
+      'ticks',
+      'lives',
+      'coverage',
+      'cuts',
+      'checkpoint',
+      'events',
+      'closures',
+      'segments',
+    ])
+      assert.deepEqual(proven[field], candidate[field], `${candidate.id}: unchanged ${field}`);
+    rows.set(key(candidate.id, candidate.difficulty, candidate.turnPolicy), {
+      ...candidate,
+      witness: proven.witness,
+    });
+  }
+  assert.equal(rows.size, COMPANY_MISSIONS.length * difficulties.length * policies.length);
+  persist();
+  console.log(`Added portable witnesses to ${rows.size} unchanged route references.`);
+} else {
+  await Promise.all(Array.from({ length: jobs }, worker));
+  if (failures.length) throw new Error(`Unproven routes: ${failures.join(', ')}`);
+}

@@ -78,6 +78,16 @@ Local browser checks exercise source and compiled entry points and responsive la
 Those observations do not establish human pacing, comprehension, physical controller
 support, OS installation or same-device performance qualification.
 
+The unchanged shared engine hashes exact floating-point replay state. A reproduced
+arm64/x64 difference in collision steering changed an enemy velocity by about
+`2 × 10^-15` while leaving every discrete outcome unchanged. Fixed route witnesses therefore
+pin exact outcomes, event timing and board cells; full checkpoint equality is checked
+between independent runs on each runtime. Historical raw checksums retain their reference
+runtime metadata. Exported replay or learning-proof transfer across different runtimes can
+still be rejected by the shared engine's strict checkpoint check. A portable-math engine
+would need a separate gameplay revision with retained readers; company editions neither
+round that authority nor introduce their own physics to conceal the limitation.
+
 The 2026-09-26 local browser review exercised Coupa and Dutch home menus, mission selection,
 the Band 12 Run Ledger encounter, settings and Controller Practice in both source and
 compiled editions. At 1280×720 the arena measured 1243×621; at 390×844 it measured 382×191

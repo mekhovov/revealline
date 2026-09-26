@@ -191,11 +191,15 @@ their own reviewed configuration. Restricted editions have no public promotion p
 
 `game/test/fixtures/company-campaign-routes.json` contains 414 verified legal replay
 proofs: 66 current and three historical missions, three difficulties, two steering policies, seed 1.
-The independent five-check route suite replays the advanced content successor and
+The independent six-check route suite replays the advanced content successor and
 verifies actual connector openings and core releases, not only the earlier introductory maps.
 Current runs include the exact default Journey tuning recipe; historical runs retain their
 original recipe. All routes won with their required objectives and no life loss. Tests execute those routes and
-verify their checkpoints. This proves those routes are legal; it does not establish enjoyable
+pin exact discrete outcomes, complete board cells, objective flags and event/capture histories.
+Raw checkpoint references retain their generating runtime metadata; a fresh independent
+replay must match the full unrounded state and summary on the executing runtime.
+Continuous terminal sub-tick time and enemy floating tails are not portable fixed goldens.
+Strict saved-replay imports can reject incompatible math runtimes. This proves those routes are legal; it does not establish enjoyable
 pacing, comprehension, learning transfer or coverage of every seed and input sequence.
 
 Session tests cover active-cut continuation, release-input boundaries, mismatched edition/art,

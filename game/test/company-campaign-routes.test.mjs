@@ -18,6 +18,13 @@ import {
   verifyReplay,
 } from '../replay.mjs';
 
+import {
+  COMPANY_ROUTE_EVIDENCE_FORMAT,
+  COMPANY_ROUTE_EVENT_TYPES,
+  companyCheckpointRuntime,
+  companyRouteWitness,
+} from '../../scripts/lib/company-route-evidence.mjs';
+
 const projects = new Map(
   ['coupa', 'droneaid', 'droneaid-nl'].map((brandId) => [
     brandId,
@@ -64,7 +71,16 @@ test('66 current company missions and the historical three-mission pilot have di
 });
 
 test('414 pinned routes win with actual default Journey tuning, objectives and no life loss across both steering policies', () => {
+  assert.equal(evidence.format, COMPANY_ROUTE_EVIDENCE_FORMAT);
   assert.equal(evidence.rows.length, 414);
+  assert.deepEqual(Object.keys(evidence.checkpointRuntime).sort(), [
+    'arch',
+    'node',
+    'platform',
+    'v8',
+  ]);
+  for (const value of Object.values(evidence.checkpointRuntime))
+    assert.equal(typeof value === 'string' && value.length > 0, true);
   const combinations = new Set();
   for (const row of evidence.rows) {
     const mission = COMPANY_MISSIONS.find((entry) => entry.id === row.id);
@@ -81,6 +97,7 @@ test('414 pinned routes win with actual default Journey tuning, objectives and n
     const run = createRun(level, options);
     const recorder = createRecorder(level, options);
     const observedEvents = [];
+    const closures = [];
     for (const segment of row.segments)
       for (let tick = 0; tick < segment.ticks; tick++) {
         assert.equal(run.status, 'running', `${row.id}: input after finish`);
@@ -88,19 +105,21 @@ test('414 pinned routes win with actual default Journey tuning, objectives and n
         recordInput(recorder, input);
         stepRun(run, input, FIXED_DT);
         for (const event of run.events)
-          if (event.type === 'relay.opened' || event.type === 'encounter.defeated')
-            observedEvents.push({ type: event.type, id: event.id });
+          if (COMPANY_ROUTE_EVENT_TYPES.has(event.type))
+            observedEvents.push([run.tick, event.type, event.id ?? null]);
+        if (run.events.some((event) => event.type === 'cut.closed'))
+          closures.push([run.tick, run.coverage]);
       }
     assert.equal(run.status, 'won', `${row.id}/${row.difficulty}/${row.turnPolicy}`);
     assert.equal(run.classic.livesLost, 0, row.id);
     for (const link of manifest.level.relayGates?.gates ?? [])
       assert(
-        observedEvents.some((event) => event.type === 'relay.opened' && event.id === link.id),
+        observedEvents.some((event) => event[1] === 'relay.opened' && event[2] === link.id),
         `${row.id}: required connector actually opened`,
       );
     if (manifest.level.encounter)
       assert(
-        observedEvents.some((event) => event.type === 'encounter.defeated'),
+        observedEvents.some((event) => event[1] === 'encounter.defeated'),
         `${row.id}: shield-core encounter actually released`,
       );
     assert(
@@ -108,8 +127,21 @@ test('414 pinned routes win with actual default Journey tuning, objectives and n
         .filter((objective) => objective.required)
         .every((objective) => objective.captured),
     );
-    assert.equal(authoritativeCheckpoint(run).hash, row.checkpoint, row.id);
-    assert.equal(verifyReplay(exportReplay(recorder, run)).match, true, row.id);
+    const label = `${row.id}/${row.difficulty}/${row.turnPolicy}`;
+    assert.match(row.checkpoint, /^[a-f0-9]{16}$/, `${label}: diagnostic raw reference`);
+    assert.equal(run.tick, row.ticks, label);
+    assert.equal(run.lives, row.lives, label);
+    assert.equal(run.coverage, row.coverage, label);
+    assert.equal(closures.length, row.cuts, label);
+    assert.deepEqual(observedEvents, row.events, `${label}: exact discrete event history`);
+    assert.deepEqual(closures, row.closures, `${label}: exact capture history`);
+    assert.deepEqual(companyRouteWitness(run), row.witness, `${label}: portable outcome and grid`);
+    const checkpoint = authoritativeCheckpoint(run);
+    if (canonicalJSON(evidence.checkpointRuntime) === canonicalJSON(companyCheckpointRuntime()))
+      assert.equal(checkpoint.hash, row.checkpoint, `${label}: recorded runtime reference`);
+    const replay = verifyReplay(exportReplay(recorder, run));
+    assert.equal(replay.match, true, label);
+    assert.deepEqual(replay.actual.checkpoint, checkpoint, `${label}: exact independent replay`);
   }
   assert.equal(combinations.size, 414);
 });
@@ -205,4 +237,42 @@ test('the historical Portuguese pilot remains byte-identical in canonical source
     createHash('sha256').update(canonicalJSON(historical)).digest('hex'),
     'ca06064820c5c7392238f4f6d5c7f8360799938e283fd552adb3c2aab89e0c4c',
   );
+});
+
+test('portable company witnesses preserve discrete changes while exact replays retain continuous state', () => {
+  const manifest = resolveMission(projects.get('coupa'), COMPANY_MISSIONS[0].id);
+  const run = createRun(manifest.level, { seed: 1, classId: 'scout', turnPolicy: 'immediate' });
+  const original = companyRouteWitness(run);
+  const checkpoint = authoritativeCheckpoint(run);
+  const moved = structuredClone(run);
+  moved.enemies[0].vx += 1e-12;
+  assert.deepEqual(companyRouteWitness(moved), original);
+  assert.notDeepEqual(authoritativeCheckpoint(moved), checkpoint);
+  const recorder = createRecorder(manifest.level, {
+    seed: 1,
+    classId: 'scout',
+    turnPolicy: 'immediate',
+  });
+  assert.equal(
+    verifyReplay(exportReplay(recorder, moved)).match,
+    false,
+    'A portable witness cannot authorize changed continuous replay state',
+  );
+  const changedClock = structuredClone(run);
+  changedClock.time += 1e-12;
+  assert.deepEqual(companyRouteWitness(changedClock), original);
+  assert.notDeepEqual(authoritativeCheckpoint(changedClock), checkpoint);
+  assert.equal(verifyReplay(exportReplay(recorder, changedClock)).match, false);
+  const changedBoard = structuredClone(run);
+  changedBoard.cells[0] = changedBoard.cells[0] === 0 ? 1 : 0;
+  assert.notDeepEqual(companyRouteWitness(changedBoard), original);
+  const changedObjective = structuredClone(run);
+  changedObjective.objectives[0].captured = !changedObjective.objectives[0].captured;
+  assert.notDeepEqual(companyRouteWitness(changedObjective), original);
+  const changedTick = structuredClone(run);
+  changedTick.tick += 1;
+  assert.notDeepEqual(companyRouteWitness(changedTick), original);
+  const changedResult = structuredClone(run);
+  changedResult.score += 1;
+  assert.notDeepEqual(companyRouteWitness(changedResult), original);
 });

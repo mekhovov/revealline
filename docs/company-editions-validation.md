@@ -16,11 +16,30 @@ The advanced encounter successor advances Coupa campaigns/editions to revision 4
 and Netherlands campaigns/editions to revision 2. All current missions compile at
 all three presets, with campaign bands through 12 and real canonical actor,
 relay-gate, directional-field and shield/core data. The independent current route
-suite passes all five checks, replaying **414 winning traces**: 396 current
+suite passes all six checks, replaying **414 winning traces**: 396 current
 mission/difficulty/steering combinations plus 18 historical combinations. It
-verifies required objectives, no life loss, exact checkpoints, public replay
-consistency, actual connector/core events, distinct original topologies, shared
+verifies required objectives, no life loss, exact discrete outcomes and board
+cells, same-runtime authoritative checkpoints, public replay consistency, actual
+connector/core events, distinct original topologies, shared
 execution catalog compatibility and the unchanged historical source hash.
+
+Candidate run [36242842814](https://github.com/mekhovov/revealline/actions/runs/36242842814)
+exposed an incorrect cross-runtime raw-checkpoint assumption. Its first failure
+was reproduced exactly on Node 22.13.1 x64: `Math.sin(0.752335062026564)` differs by
+one representable step from the arm64 result during a keeper collision departure.
+The corrected v2 fixture retains all original input sequences and raw hashes,
+labels their Node/V8/platform/architecture provenance, and additionally pins exact
+summary outcomes (excluding continuous sub-tick `time`), every board cell, every
+objective flag, event history and capture history. Integer ticks, score and medals
+remain exact. A fresh independent replay must still reproduce every unrounded
+checkpoint section and the complete summary on its executing runtime. The test
+also proves that a matching portable witness cannot authorize altered continuous
+state. No engine math, replay parser or simulation version changes are involved.
+The full six-check suite passes locally on Node 20.19.5 arm64 and Node 22.13.1
+x64 under Rosetta. All 414 discrete witnesses match across those runtimes despite
+142 differing raw checkpoint hashes. The Linux candidate retry remains separate
+evidence. Strict saved-replay/attempt import can still reject incompatible math
+runtimes; these checks do not promise cross-browser raw-checkpoint portability.
 
 Seven presentation checks cover registered campaign themes, every emitted actor
 role, exact avatar spin rates, reduced motion and the official Dutch propeller
