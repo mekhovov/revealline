@@ -22,6 +22,12 @@ The released source contains no uploaded creator image or video fixtures. Its la
 asset is the pinned, licensed Mediabunny browser module; generated distribution bytes remain release
 artifacts rather than source inputs.
 
+## Post-release continuation
+
+The next community hardening candidate adds a same-origin administrator report-triage page over the
+already released moderation API. It is intentionally outside the immutable `v0.141.0` acceptance
+claim until its own PR and release gate complete.
+
 ## Included behavior
 
 - One or many images generate deterministic missions and campaigns from six layout families and
