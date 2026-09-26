@@ -30,6 +30,7 @@ const revisedRoverCultural = ['wake-the-yard', 'between-the-rows', 'rover-remix'
 const revisedFractureCultural = ['first-fracture', 'two-districts', 'fracture-remix'];
 const revisedPhaseworksCultural = ['return-in-reserve', 'two-ways-home', 'dogleg-transfer'];
 const revisedLivewireCultural = ['read-the-lock', 'switchyard', 'split-junction'];
+const revisedRelayCultural = ['first-link', 'second-approach', 'three-compounds'];
 const sourceId = (row) => row.runtimeId.split('/').at(-1);
 
 test('prior-edition qualification is bounded to the three preserved mission owners', async () => {
@@ -1245,6 +1246,101 @@ test('v21 active cards and exact v20 cards remain distinct and stop cross-editio
     );
     const prior = editions.find((row) => row.editionId === 'whole-spatial-v20');
     const active = editions.find((row) => row.editionId === 'whole-spatial-v21');
+    assert(active.tags.includes('Ukrainian'));
+    assert(!prior.tags.includes('Ukrainian'));
+    assert.equal(await library.launch(prior, { mode: 'versus' }), true);
+    assert.equal(selected.libraryMissionId, prior.id);
+    assert.equal(selected.mode, 'versus');
+    assert.equal(priorHost.catalog.find(prior.runtimeId)?.levelId, id);
+    assert.equal(librarySuccessor(library, prior, 'versus'), null);
+  }
+});
+
+test('v22 selector exposes three exact v21 Relay cards and retains earlier history', async (t) => {
+  const launches = [];
+  const owner = await createSpatialNextEditionSources({
+    activeRouteId: 'whole-spatial-v22',
+    originalThemes,
+    launch: (context) => {
+      launches.push(context);
+      return true;
+    },
+  });
+  t.after(owner.dispose);
+  const library = createMissionLibrary(owner.sources);
+  assert.equal(library.missions.length, 39);
+  assert.equal(library.forMode('solo').length, 39);
+  assert.equal(library.forMode('versus').length, 39);
+  assert.equal(library.forMode('team').length, 0);
+  assert.deepEqual(
+    library.missions
+      .filter((row) => row.editionId === 'whole-spatial-v21')
+      .map(sourceId)
+      .toSorted(),
+    revisedRelayCultural.toSorted(),
+  );
+  for (const row of library.missions) {
+    assert.equal(row.automaticContinuation, false);
+    assert.match(row.edition, /^Previous Journey · v(?:9|10|11|12|13|14|15|16|17|18|19|20|21)$/);
+    assert.equal(await library.launch(row, { mode: 'solo' }), true);
+    assert.equal(launches.at(-1).libraryMissionId, row.id);
+    assert.equal(launches.at(-1).mode, 'solo');
+  }
+});
+
+test('v22 active cards and exact v21 cards remain distinct and stop cross-edition Next', async (t) => {
+  const activeRoute = await loadAuthoredJourneyRoute('whole-spatial-v22');
+  const priorRoute = await loadAuthoredJourneyRoute('whole-spatial-v21');
+  const themes = journeyActorThemeCandidates(originalThemes, { includeOriginals: true });
+  const activeHost = createCandidateVersusHost(activeRoute.source, {
+    themes,
+    corePackIds: activeRoute.corePackIds,
+    optionalCampaignIds: activeRoute.optionalCampaignIds,
+  });
+  const priorHost = createCandidateVersusHost(priorRoute.source, {
+    themes,
+    corePackIds: priorRoute.corePackIds,
+    optionalCampaignIds: priorRoute.optionalCampaignIds,
+  });
+  let selected;
+  const owner = await createSpatialNextEditionSources({
+    activeRouteId: activeRoute.id,
+    originalThemes,
+    launch: (context) => {
+      selected = context;
+      return true;
+    },
+  });
+  t.after(owner.dispose);
+  const library = createMissionLibrary([
+    journeyLibrarySource({
+      editionId: activeRoute.id,
+      edition: 'New Journey',
+      catalog: activeHost.catalog,
+      tags: (mission) => authoredJourneyMissionTags(mission, activeHost.manifest(mission)),
+      launch: () => true,
+    }),
+    ...owner.sources,
+  ]);
+  assert.equal(library.missions.length, activeHost.catalog.missions.length + 39);
+  const activeRows = library
+    .forMode('versus')
+    .filter((row) => row.editionId === 'whole-spatial-v22');
+  const boundary = activeRows.findIndex(
+    (row, index) => activeRows[index + 1] && row.campaignKey !== activeRows[index + 1].campaignKey,
+  );
+  assert(boundary >= 0);
+  assert.equal(librarySuccessor(library, activeRows[boundary], 'versus'), activeRows[boundary + 1]);
+  for (const id of revisedRelayCultural) {
+    const runtimeId = activeHost.catalog.missions.find((mission) => mission.levelId === id).id;
+    const editions = library.missions.filter((row) => row.runtimeId === runtimeId);
+    assert.equal(editions.length, 2);
+    assert.deepEqual(
+      new Set(editions.map((row) => row.editionId)),
+      new Set(['whole-spatial-v21', 'whole-spatial-v22']),
+    );
+    const prior = editions.find((row) => row.editionId === 'whole-spatial-v21');
+    const active = editions.find((row) => row.editionId === 'whole-spatial-v22');
     assert(active.tags.includes('Ukrainian'));
     assert(!prior.tags.includes('Ukrainian'));
     assert.equal(await library.launch(prior, { mode: 'versus' }), true);
