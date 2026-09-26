@@ -4,6 +4,27 @@ The local collection contains **80 supplied filenames and 77 distinct MP3 record
 
 These are personal local imports, not publicly downloadable licensed albums. The source inventory has no verified recording-specific website links or redistribution permissions. Pack metadata therefore leaves artist, license, and source URL blank and keeps rights as **personal**. Original embedded MP3 tags and artwork remain byte-for-byte intact. The builder does not admit music to the public catalogue or approve its use in recorded gameplay. It does not generate music.
 
+Do not pass this folder to `intake/add-music.mjs` using only a YouTube URL. That
+public-archive launcher requires recording-specific public MP3 redistribution
+and web-game playback permission, accepts no more than 20 MP3s per batch, and
+does not treat a video page as licence evidence. Use the private pack command
+below until each recording has suitable permission.
+
+The game-root launcher accepts `--license unknown` as an explicit private mode:
+
+```sh
+node intake/add-music.mjs "/absolute/path/to/docs/research/dah-soundtracks" \
+  --license unknown \
+  --private-output "/absolute/path/to/new-empty-private-directory"
+```
+
+This runs the same private builder documented below. It cannot open a public PR
+or confirm public rights, and it does not publish the source MP3s. Public
+catalogue fields such as `--source`, `--artist`, `--description` and `--styles`
+are intentionally rejected in unknown-rights mode because private packs preserve
+the original filenames and embedded tags without making public metadata or
+rights claims.
+
 ## Compatibility: packs need the new soundtrack framework
 
 These four files use **RLSTB3 / soundtrack library v3** and work with **v0.78.0 and later**, which contain the framework introduced in PR #209. The older **v0.77.0** source (`432110b51c570b838cdae390790b67dfa76f0785`), like the earlier v0.76.1 base, accepts **RLSTB1 only**. It cannot import these four packs, and renaming the files or changing their header will not convert them. In the current Music Studio, expand **Backups & album files** to find **Add album file to draft**, and **Filters & custom mix** to find **Music selection → My Mix**. The older studio has **Complete soundtrack backup (.rlsound)** and only replacement-backup import.
