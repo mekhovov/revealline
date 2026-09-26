@@ -59,7 +59,7 @@ async function fingerprintValue(value, digest) {
  * deliberately excluded. A saved flight can exist before the first profile
  * write, so discover both exact namespaces. No value reads or writes.
  */
-export function discoverProfileTransfers({ storage, currentVersion } = {}) {
+export function discoverProfileTransfers({ storage, currentVersion, editionId } = {}) {
   const current = targetVersion(currentVersion);
   required(storage && typeof storage.key === 'function', 'Storage key discovery is unavailable.');
   const length = storage.length;
@@ -73,7 +73,7 @@ export function discoverProfileTransfers({ storage, currentVersion } = {}) {
     required(key === null || typeof key === 'string', 'Storage key discovery failed.');
     const namespace = discoveryPrefixes.find((value) => key?.startsWith(value));
     if (!namespace || !key.endsWith(suffix)) continue;
-    const source = sourceFor(key.slice(namespace.length, -suffix.length), current);
+    const source = sourceFor(key.slice(namespace.length, -suffix.length), current, { editionId });
     if (!source) continue;
     sources.set(source.id, source);
     if (sources.size > TRANSFER_LIMITS.candidates) {
@@ -158,6 +158,7 @@ export async function prepareProfileTransfer(
     readAsset,
     lockManager,
     currentVersion,
+    editionId,
     campaigns = [],
     resolveCampaign,
     expandCampaigns,
@@ -171,7 +172,7 @@ export async function prepareProfileTransfer(
     timeoutMs = TRANSFER_LIMITS.timeoutMs,
   } = {},
 ) {
-  const source = sourceFor(sourceId, targetVersion(currentVersion));
+  const source = sourceFor(sourceId, targetVersion(currentVersion), { editionId });
   required(source, 'Choose a recognized earlier release collection.');
   required(
     storage && typeof storage.getItem === 'function' && typeof readAsset === 'function',

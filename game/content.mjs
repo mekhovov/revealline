@@ -1,5 +1,6 @@
 import { exportJSONFile } from './platform.mjs';
 import { validateTrack } from './ui/music.mjs';
+import { ACTOR_RECIPE_IDS } from './ui/actor-recipes.mjs';
 import { validateLevel, validateClassRecipes, CLASSES, TURN_POLICIES } from './core/index.mjs';
 import { resolveMasteryContext } from './mastery-catalog.mjs';
 
@@ -211,6 +212,9 @@ function themeChecks(theme, errors) {
       'family',
       'player',
       'classBodies',
+      'actorRecipes',
+      'soundtrack',
+      'coverColor',
       'scene',
       'enemyShape',
       'patrolShape',
@@ -244,6 +248,31 @@ function themeChecks(theme, errors) {
   for (const key of ['name', 'subtitle'])
     if (!text(theme[key], 120))
       errors.push(`theme.${key} must be nonempty text of at most 120 characters`);
+  if (own(theme, 'soundtrack')) {
+    const checked = validateTrack(theme.soundtrack);
+    if (!checked.valid) errors.push(...checked.errors.map((error) => `theme.soundtrack: ${error}`));
+  }
+  if (own(theme, 'coverColor') && !/^#[0-9a-f]{6}$/i.test(theme.coverColor))
+    errors.push('theme.coverColor must be #rrggbb');
+  if (own(theme, 'actorRecipes')) {
+    const roles = [
+      'bouncer',
+      'border-patrol',
+      'contour-patrol',
+      'claimed-rover',
+      'eroder',
+      'lane-boss',
+      'relay-sentinel',
+    ];
+    if (!plain(theme.actorRecipes))
+      errors.push('theme.actorRecipes must be a registered role mapping');
+    else {
+      keys(theme.actorRecipes, roles, 'theme.actorRecipes', errors);
+      for (const recipe of Object.values(theme.actorRecipes))
+        if (!ACTOR_RECIPE_IDS.includes(recipe))
+          errors.push('theme.actorRecipes contains an unregistered recipe');
+    }
+  }
   if (!['dawn', 'heritage', 'arcade', 'network'].includes(theme.scene))
     errors.push('theme.scene is not registered');
   for (const role of ['enemyShape', 'patrolShape', 'bossShape'])

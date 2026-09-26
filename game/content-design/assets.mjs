@@ -33,7 +33,7 @@ export function compileAssetRevision(source) {
   );
   required(
     typeof asset.path === 'string' &&
-      /^content-design\/assets\/[a-z0-9/_-]+\.png$/.test(asset.path) &&
+      /^(?:content-design\/assets|editions\/assets)\/[a-z0-9/_-]+\.png$/.test(asset.path) &&
       !asset.path.includes('//'),
     'Asset must be a local versioned PNG path.',
   );
