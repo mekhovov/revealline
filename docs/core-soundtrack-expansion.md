@@ -68,16 +68,17 @@ the primary Pages selector serves it. Maintenance
 [PR #634](https://github.com/mekhovov/revealline/pull/634) and read-only shadow run
 36228680013 verified that its public tag, release object, merged release root and
 predecessor bind to exact source `366ed9202efd77d82be124669680d3351bf5074f`.
-Authoritative game `main` is now `d878a879848cea271f1098774ef897dfbf6d806f`
-after the narrow v0.132.4 Team repair merged. Archive-directory client
-PR #604 was rebased cleanly onto that exact accepted main at
-`06ff06366f1ed83f2073ca0523e990f61cffc6e2`. Its combined catalogue, panel and
-player cohort passes 177/177 locally; its latest hosted focused gate failed and is
-being diagnosed from preserved exact-head evidence. Opening-theme fallback PR #617
-is rebased onto the same main at `54cf82676c812a8a95e8d0d1dbb57692923520b6`;
-its hosted focused and release-ready gates passed. Both remain draft and
-unallocated. The fast-release policy skips their full test/build jobs, so those
-skips remain exclusions rather than passes.
+Authoritative game `main` is now `8c2b5ddbf1e145437fc3cddf6a7a9f225502f830`:
+the narrow v0.132.4 Team repair merged as
+`d878a879848cea271f1098774ef897dfbf6d806f`, followed only by the soundtrack
+ledger correction in PR #640. Archive-directory client PR #604 was rebased cleanly
+onto that cumulative source at `3f41dcae819b87a98e48ed4adc1ce55280e4610f`.
+Its combined catalogue, panel and player cohort passes 177/177 locally; the latest
+hosted run retained one asynchronous binary-preparation wait for an exact-head
+successor. Opening-theme fallback PR #617 is rebased onto the same cumulative
+source at `377637fc3ddad56b07977bcb48904ff3eabbf547`; its focused regression passes
+7/7 locally. Both remain draft and unallocated. The fast-release policy skips
+their full test/build jobs, so those skips remain exclusions rather than passes.
 
 Archive PR #41 publishes three more CC0 racing-synth auditions by MintoDog: Pure
 Raceway, Pure Raceway (Climax) and Darkness Road (Remake). Exact-head verification
@@ -234,11 +235,13 @@ explicit fast-release policy remain exclusions, never passes.
 
 - Release publication is temporarily serialized behind v0.132.4. Its narrow Team
   picture-preparation repair [PR #638](https://github.com/mekhovov/revealline/pull/638)
-  merged as `d878a879848cea271f1098774ef897dfbf6d806f`; immutable qualification,
-  publication, selector deployment and direct public Team verification remain with
-  the sole publisher. Guard [PR #632](https://github.com/mekhovov/revealline/pull/632)
-  remains merged and refuses mismatched release objects. Resume soundtrack allocation
-  after the publisher accepts the public repair.
+  merged as `d878a879848cea271f1098774ef897dfbf6d806f`, and the subsequent PR #640
+  changed documentation only. The cumulative terminal source still requires fresh
+  immutable qualification, publication, selector deployment and direct public Team
+  verification by the sole publisher. Guard
+  [PR #632](https://github.com/mekhovov/revealline/pull/632) remains merged and
+  refuses mismatched release objects. Resume soundtrack allocation only after the
+  publisher accepts the public repair.
 - Physical-device/controller and cold-offline qualification remain open after
   scoped desktop acceptance. The initial selector's failed reread is retained as
   failure evidence; the successful successor closes that publication blocker.
