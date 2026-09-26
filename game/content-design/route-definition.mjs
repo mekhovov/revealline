@@ -33,11 +33,23 @@ export function createAuthoredJourneyRouteDefinition(
     createPhaseworksCulturalRoutesCandidates,
     createLivewireCulturalRoutesCandidates,
     createRelayCulturalRoutesCandidates,
+    createCrosswindCulturalRoutesCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v23')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Crosswind Ukrainian cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v23',
+      profileKey: 'journey-whole-spatial-v23',
+      source: createCrosswindCulturalRoutesCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v22')
     return freezeDesign({
       id,
