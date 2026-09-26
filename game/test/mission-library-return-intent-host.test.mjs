@@ -281,7 +281,7 @@ for (const source of ['legacy', 'whole-spatial-v5', 'opening'])
     assert.equal(target.searchParams.get('library-mission'), selected);
     assert.equal(
       target.searchParams.get('journey'),
-      source === 'legacy' ? 'team-trail-impact-originals-1' : 'legacy',
+      source === 'legacy' ? 'team-complete-specialist-originals-1' : 'legacy',
     );
     assert.deepEqual(readMissionLibraryReturn(target.searchParams, { mode: 'team' }), {
       mode: 'solo',
