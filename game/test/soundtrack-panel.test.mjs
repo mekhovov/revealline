@@ -757,6 +757,51 @@ test('real MP3 batch import is a draft; one atomic save stores originals and met
   );
 });
 
+test('private folder quick add reviews, saves, plays and exports one exact-byte playlist', async (t) => {
+  const app = await setup(t, { callbacks: { catalogue: SOUNDTRACK_CATALOGUE } });
+  const first = file('First.mp3');
+  Object.defineProperty(first, 'webkitRelativePath', { value: 'Night flights/First.mp3' });
+  app.node('collection-folder').files = [first, file('Alias.mp3')];
+  app.node('collection-genre').value = 'electronic';
+
+  assert.equal(app.node('collection-folder').getAttribute('webkitdirectory'), '');
+  assert.equal(app.node('collection-folder').getAttribute('multiple'), '');
+  await app.click('review-collection');
+  assert.match(app.node('collection-summary').textContent, /Night flights/);
+  assert.match(app.node('collection-summary').textContent, /2 tracks, 1 unique recordings/);
+  assert.equal((await app.store.read()).generation, 0, 'review remains an unsaved draft');
+
+  await app.click('save-play-collection');
+  const saved = await app.store.read();
+  assert.equal(saved.generation, 1);
+  assert.equal(saved.library.playlists.length, 1);
+  assert.equal(saved.library.playlists[0].title, 'Night flights');
+  assert.equal(saved.library.playlists[0].order, 'shuffle');
+  assert.equal(saved.library.playlists[0].repeat, 'all');
+  assert.equal(saved.assets.length, 1, 'duplicate aliases keep one stored recording');
+  assert.deepEqual(app.calls.slice(-2), [['select', saved.library.playlists[0].id], ['play']]);
+
+  await app.click('export-bundle');
+  await app.click('download-prepared');
+  assert.equal(app.downloads.at(-1).filename, 'RevealLine-soundtrack.rlsound');
+  const portable = await importSoundtrackBundle(app.downloads.at(-1).blob, {
+    probeMedia: structuralProbe,
+    catalogue: SOUNDTRACK_CATALOGUE,
+  });
+  assert.equal(portable.library.playlists[0].title, 'Night flights');
+  assert.equal(portable.assets.length, 1);
+});
+
+test('private collection requires one picker and preserves the saved library on review failure', async (t) => {
+  const app = await setup(t, { callbacks: { catalogue: SOUNDTRACK_CATALOGUE } });
+  app.node('collection-files').files = [file('Loose.mp3')];
+  app.node('collection-folder').files = [file('Folder.mp3')];
+  await app.click('review-collection');
+  assert.match(app.node('status').textContent, /files or a folder, not both/i);
+  assert.equal((await app.store.read()).generation, 0);
+  assert.equal((await app.store.read()).library.playlists.length, 0);
+});
+
 test('a failing second file discards the whole batch while preserving an earlier unsaved draft', async (t) => {
   const app = await setup(t);
   app.node('mp3-files').files = [file('First.mp3')];
