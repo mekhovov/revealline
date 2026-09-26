@@ -78,6 +78,14 @@ Each installed edition is immutable and identified by the complete package SHA-2
 update beside an older edition does not reinterpret the older edition's saved attempt, completion
 or earned picture. A matching official name never turns Custom content into Journey content.
 
+In Community campaigns, keep the exact offline copy before choosing **Offload installed media**.
+The game verifies that recovery copy and the installed edition, preserves the edition manifest,
+saves, completions and earned pictures, and removes only runtime media that no other installed
+edition uses. The campaign stops appearing as playable until you choose **Reinstall exact
+edition**. Reinstall uses the retained copy without a network request and restores the same edition
+identity. If the recovery copy or media library changes after review, repeat the review instead of
+deleting anything.
+
 ## Back up or edit the source
 
 - Creator drafts autosave as immutable checkpoints. Reload the same draft URL to restore its latest

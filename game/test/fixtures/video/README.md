@@ -16,3 +16,20 @@ These bytes are used for real local container/hash checks with explicitly modele
 native video events in Node. Passing tests do not establish a codec, audio,
 physical-device, story-browser or offline-storage result. No runtime/build catalog
 includes test fixtures. Preserve the original MP4; do not regenerate it in tests.
+
+`owned-avc-aac-fixture.mp4` adds an original mono 48 kHz AAC chirp to those exact
+AVC frames. The frequency rises over the six-second timeline, so decoded windows
+from different times are distinguishable during physical trim acceptance.
+
+- Bytes: 173,394
+- SHA-256: `d592415621ae68175f7b1c182e3024ae09f21e2a4b71fc5e92b08ccaa9c8dcc5`
+- Tracks: one 640×360 AVC/H.264 video track and one mono 48 kHz AAC audio track,
+  both six seconds.
+- Audio expression: `0.18*sin(2*PI*(220+35*t)*t)`, generated locally with
+  `aevalsrc`; the silent owned video was stream-copied and the new audio was
+  encoded at 128 kbit/s AAC with `+faststart`.
+
+Use this second fixture only for the bounded AVC+AAC browser conversion path.
+Passing Node tests authenticates its owned bytes and modeled contracts; a fresh
+browser conversion is still required to qualify actual WebCodecs decode/encode,
+audible playback, decoded PCM fingerprints and A/V endpoint alignment.

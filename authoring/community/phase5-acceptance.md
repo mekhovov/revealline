@@ -80,9 +80,15 @@ creation/offset/chunk contract and treats only server responses as upload progre
   already installed its exact bytes.
 - Run hosted preflight/build/release-ready checks and publish only through the release coordinator.
 
-Physical removal of installed managed-media bytes is outside this candidate. The current media store
-preserves historical references monotonically; the UI calls the implemented operation **Remove
-recovery download** and does not describe it as uninstall or runtime offloading.
+Reference-aware installed-media offload is implemented locally. **Offload installed media** first
+requires and revalidates the exact retained `.rlpack`, reconstructs the installed edition, and
+records an `offloading` journal before the managed-media commit. The commit keeps the immutable
+manifest and ownership keys, hides the edition from playable discovery, detaches only creator asset
+references unused by another active edition, and deletes a blob only when no managed domain retains
+its hash. **Reinstall exact edition** restores those bytes from the retained package without a
+network request. Focused tests cover unshared deletion, shared-asset retention, stale concurrent
+generation refusal, interrupted-journal recovery and exact offline reinstall. A physical browser
+offload/reinstall run remains an acceptance gate before this behavior is claimed as deployed.
 
 The cross-layer journey uses the in-memory repository and blob store with injected account tokens;
 it composes production client, runtime, storage and Fastify boundaries without claiming a physical

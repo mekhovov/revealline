@@ -16,7 +16,7 @@ import {
   isStoredStillMedia,
   validateStoredStillMedia,
   storedStillHashes,
-  assertStoredStillTransition,
+  assertPreparedStoredStillTransition,
   isPreparedStoredStillMedia,
 } from './media-storage-record.mjs';
 
@@ -1059,7 +1059,7 @@ export function createManagedMediaStore({
         'Rich still history cannot be downgraded to generic byte storage.',
       );
       if (isStoredStillMedia(prepared.library))
-        assertStoredStillTransition(before.current.library, prepared.library);
+        assertPreparedStoredStillTransition(before.current.library, prepared);
     }
     if (domain === 'story')
       storyRecords.assertStoredStoryTransition(
@@ -1157,7 +1157,7 @@ export function createManagedMediaStore({
               'Rich still history cannot be downgraded to generic byte storage.',
             );
             if (isStoredStillMedia(prepared.library))
-              assertStoredStillTransition(current.library, prepared.library);
+              assertPreparedStoredStillTransition(current.library, prepared);
           }
           if (domain === 'story')
             storyRecords.assertStoredStoryTransition(
