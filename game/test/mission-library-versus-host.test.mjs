@@ -292,6 +292,7 @@ test('incoming selection retires on newer focus while its unused opener picture 
 test('unfinished Journey selection requires Stay or Replace and preserves both boards on Stay', async (t) => {
   const p = await fixture(t, { href: 'http://localhost/game/couch/' });
   p.$('race-start').click();
+  await p.settleStartCue();
   await running(p, 'first-return');
   p.key('ArrowDown');
   p.frames(6);
@@ -534,6 +535,7 @@ for (const chapterSource of ['optional'])
         },
       });
       p.$('race-start').click();
+      await p.settleStartCue();
       await running(p, 'signal-01');
       await open(p);
       p.$('journey-search').value = target.name;

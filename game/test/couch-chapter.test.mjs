@@ -76,6 +76,7 @@ test('fresh couch uses exact wide Pressure Lines originals, authored Arcade cont
   assert.notEqual(f.renders[0], f.renders[1]);
   assert.notEqual(f.renders[0].cells, f.renders[1].cells);
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.key('KeyD');
   f.key('ArrowLeft');
@@ -93,6 +94,7 @@ test('fresh couch uses exact wide Pressure Lines originals, authored Arcade cont
   assert.deepEqual(f.checkpoint(), held);
   assert.equal(f.drawOptions[0].backdrop, backdrop);
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   const x = f.renders.map((run) => run.player.x);
   f.frames(4);
@@ -127,6 +129,7 @@ test('an offline optional featured download leaves base Couch maps playable and 
   assert.equal(f.drawOptions[0].backdrop.image, null);
   assert.equal(f.drawOptions[0].backdrop.choice.kind, 'authored');
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.key('KeyD');
   f.frames(8);

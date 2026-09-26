@@ -53,6 +53,7 @@ test('Versus lobby difficulty uses one fresh pressure recipe for both boards and
   assert.strictEqual(p.renders[0], preview, 'The existing ready board is not mutated.');
   p.$('race-start').focus();
   p.$('race-start').click();
+  await p.settleStartCue();
   await settle(() => {
     p.frame(0);
     return p.state() === 'running';
@@ -76,6 +77,7 @@ test('Versus lobby difficulty uses one fresh pressure recipe for both boards and
   assert.equal(recoverGameplayTuning(active.level).adminOverride, false);
   p.$('race-start').focus();
   p.$('race-start').click();
+  await p.settleStartCue();
   p.frame(0);
   assert.strictEqual(p.renders[0], active, 'Resume retains the exact already-started attempt.');
   assert.equal(p.state(), 'running');

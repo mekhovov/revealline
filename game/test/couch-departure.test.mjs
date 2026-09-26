@@ -32,6 +32,7 @@ for (const [id, href] of routes) {
   test(`paused ${id} requires a fresh fixed decision and Stay retains both flights`, async (t) => {
     const f = await couchPage(t, { turnPolicy: 'grid-center' });
     f.$('race-start').click();
+    await f.settleStartCue();
     f.frame();
     f.key('KeyD');
     f.key('ArrowLeft');
@@ -77,6 +78,7 @@ for (const [id, href] of routes) {
     );
     f.$('race-leave-back').click();
     f.$('race-start').click();
+    await f.settleStartCue();
     f.frame();
     assert.equal(f.state(), 'running', 'only a separate Resume resumes');
   });
@@ -85,6 +87,7 @@ for (const [id, href] of routes) {
 test('controller Team departure has its own neutral boundary and East returns to the in-panel opener', async (t) => {
   const f = await couchPage(t, { pads: [pad()] });
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.frames(3);
   f.$('race-pause').click();
@@ -118,6 +121,7 @@ for (const reason of ['blur', 'hidden', 'pagehide', 'controller-loss']) {
   test(`${reason} invalidates pending Versus departure without resuming or choosing a destination`, async (t) => {
     const f = await couchPage(t, { pads: [pad()] });
     f.$('race-start').click();
+    await f.settleStartCue();
     f.frame();
     f.frames(4);
     f.$('race-pause').click();
@@ -147,6 +151,7 @@ test('a real terminal draw keeps both destination links direct and does not star
   campaign.briefs = [];
   const f = await couchPage(t, { campaign });
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.key('KeyD');
   f.key('ArrowRight');

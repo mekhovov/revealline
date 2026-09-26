@@ -9,6 +9,7 @@ const visible = (element) => !element.hidden && !element.closest('[hidden],[iner
 test('Versus Pause exposes the shared player actions and retries with one deliberate action', async (t) => {
   const page = await couchPage(t, { nativeKeyboard: true });
   page.$('race-start').click();
+  await page.settleStartCue();
   page.frame();
   page.$('race-pause').click();
   page.frame();

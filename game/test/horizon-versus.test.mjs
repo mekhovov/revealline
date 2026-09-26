@@ -107,6 +107,7 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     assert(page.renders.every((run) => run.claimedCount === 0 && run.coverage === 0));
     const permanent = page.renders.map((run) => [...run.foundation.permanent]);
     page.$('race-start').click();
+    await page.settleStartCue();
     page.key('KeyA');
     page.key('ArrowLeft');
     for (let frame = 0; frame < 900 && page.renders.some((run) => !run.claimedCount); frame++)

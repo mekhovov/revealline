@@ -310,6 +310,7 @@ test('incoming exact late Custom identity materializes under its original owners
 test('replacing installed Custom storage while Stay/Replace is open prevents stale cross-mode departure', async (t) => {
   const p = await fixture(t);
   p.$('race-start').click();
+  await p.settleStartCue();
   await settle(() => {
     p.frame(0);
     return p.state() === 'running';
@@ -361,6 +362,7 @@ test('paired originals download inline, never autostart, and exact late Play pre
     },
   });
   p.$('race-start').click();
+  await p.settleStartCue();
   await settle(() => {
     p.frame(0);
     return p.state() === 'running';

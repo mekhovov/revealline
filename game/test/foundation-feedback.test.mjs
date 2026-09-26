@@ -139,6 +139,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
           : undefined,
     });
     p.$('race-start').click();
+    await p.settleStartCue();
     await settle(() => {
       p.frame(0);
       return !p.$('race-pause').disabled;
@@ -167,6 +168,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     p.frame(0);
     assert.equal(p.$('racer-capture-0').textContent, expected);
     p.$('race-start').click();
+    await p.settleStartCue();
     await settle(() => {
       p.frame(0);
       return !p.$('race-pause').disabled;

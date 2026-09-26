@@ -86,6 +86,7 @@ test('material successor Versus keeps equal authored boards, direct Next and its
     fetchResponse,
   });
   p.$('race-start').click();
+  await p.settleStartCue();
   await settle(() => {
     p.frame(0);
     return !p.$('race-pause').disabled;

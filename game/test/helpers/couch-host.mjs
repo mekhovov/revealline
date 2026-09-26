@@ -200,12 +200,36 @@ export async function couchPage(
       }
     }
   }
-  function frame(ms = 1000 / 120) {
+  function runFrame(ms) {
     now += ms;
     const first = rafs.entries().next().value;
     if (!first) return;
     rafs.delete(first[0]);
     first[1](now);
+  }
+  function frame(ms = 1000 / 120) {
+    runFrame(ms);
+  }
+  async function settleStartCue() {
+    const cue = $('race-start-cue');
+    if (!cue) return false;
+    // A click can finish an asynchronous picture confirmation before it owns
+    // the cue. Tests ask for this boundary explicitly instead of making every
+    // ordinary frame silently skip presentation time.
+    for (let attempt = 0; attempt < 2; attempt++) {
+      for (let guard = 0; guard < 500 && cue.hidden; guard++)
+        await new Promise((resolve) => setImmediate(resolve));
+      if (cue.hidden) return false;
+      // Retire a prior Go frame before waiting for an asynchronously prepared
+      // replacement cue owned by the new match.
+      runFrame(0);
+      if (cue.hidden) continue;
+      const goPhase = cue.dataset.kind === 'retry' ? '1' : '3';
+      for (let guard = 0; guard < 25 && cue.dataset.phase !== goPhase; guard++) runFrame(100);
+      assert.equal(cue.dataset.phase, goPhase, 'start cue did not reach Go');
+      return true;
+    }
+    return false;
   }
   function button(index, button, pressed) {
     pads[index].buttons[button] = { pressed, value: pressed ? 1 : 0 };
@@ -260,6 +284,7 @@ export async function couchPage(
     actorTransport,
     observedEvents,
     frame,
+    settleStartCue,
     button,
     pulse,
     join,
@@ -274,6 +299,7 @@ export async function couchPage(
       readError = next;
     },
     tick: () => renders[0].tick,
+    ticks: () => renders.map((run) => run.tick),
     state: () => $('racer-state-0').textContent,
     checkpoint: () => renders.map((run) => authoritativeCheckpoint(run)),
     focus: (id) => $(id).focus(),

@@ -144,6 +144,7 @@ test(
     );
     p.$('journey-back').click();
     p.$('race-start').click();
+    await p.settleStartCue();
     await settle(() => {
       p.frame(0);
       return !p.$('race-pause').disabled;
@@ -196,6 +197,7 @@ test('Playground installed-map preview keeps the Legacy catalogue and chapter ac
   assert.equal(p.$('race-journey-note').hidden, true);
   assert.equal(p.$('race-solo-return').getAttribute('href'), '../?journey=legacy');
   p.$('race-start').click();
+  await p.settleStartCue();
   await settle(() => {
     p.frame(0);
     return !p.$('race-pause').disabled;

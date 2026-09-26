@@ -280,6 +280,7 @@ async function qualifyVersus(t, routeId) {
   });
   await warmCatalogue(p, route, 'race-journey-find');
   p.$('race-start').click();
+  await p.settleStartCue();
   await waitFor(() => {
     p.frame(0);
     return !p.$('race-pause').disabled;

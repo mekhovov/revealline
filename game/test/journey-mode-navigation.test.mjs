@@ -112,6 +112,7 @@ test('actual authored Versus advertises its Solo edition and preserves explicit 
     'relay-rescue.html?return=versus&journey-return=opening',
   );
   p.$('race-start').click();
+  await p.settleStartCue();
   await settle(() => {
     p.frame(0);
     return !p.$('race-pause').disabled;

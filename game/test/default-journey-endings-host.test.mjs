@@ -187,6 +187,7 @@ for (const mode of ['solo', 'versus'])
       assert.equal(p.doc.activeElement, p.$(endingAction));
       if (mode === 'versus') {
         p.$('race-start').click();
+        await p.settleStartCue();
         await settle(() => {
           p.frame(0);
           return p.renders[0] !== previous[0] && !p.$('race-pause').disabled;
@@ -275,6 +276,7 @@ test('the final Journey mission distinguishes a first-to-two round from its comp
   p.$('journey-back').click();
   assert.equal(p.doc.activeElement, p.$('race-journey-next'));
   p.$('race-start').click();
+  await p.settleStartCue();
   await settle(() => {
     p.frame(0);
     return p.renders[0] !== first[0] && !p.$('race-pause').disabled;
