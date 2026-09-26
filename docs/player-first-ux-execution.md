@@ -39,6 +39,14 @@ cohort passes 41/41. Repository validation, localization, lint, game/site and
 native formatting, syntax and four-way v0.141.4 version parity pass. Hosted PR,
 release, selector and public player-flow acceptance remain open.
 
+**Prepared successor:** v0.141.5 contextual Team teaching is reconciled locally
+onto exact v0.141.4 candidate `73695a11cddc8c04365d38cbc912fd52526798ea`.
+It preserves Couch secondary navigation, Team quick-start and opaque-owner Team
+Next behavior. Its nonmodal first-cut, relevant Support and authoritative Rescue
+lessons remain presentation-only. This dependency candidate is local and
+unpushed; it cannot enter release qualification before v0.141.4 is publicly
+accepted.
+
 **Ordered continuation:** v0.141.3 is the latest stable release; later rows remain working
 allocations rather than accepted releases. Reconcile each item onto the accepted predecessor, rerun its
 exact-head gates and publish it before accepting the next row. Older target

@@ -30,7 +30,10 @@
   pass 27/27 and 37/37, while the combined changed runtime/test cohort passes
   41/41 on the exact rebased source; validation, localization,
   lint, formatting, syntax and version parity also pass. Hosted PR/release and
-  public qualification remain open. It is followed by v0.141.5 Team teaching; v0.141.6
+  public qualification remain open. A local, unpushed v0.141.5 Team teaching
+  candidate is reconciled onto exact v0.141.4 head
+  `73695a11cddc8c04365d38cbc912fd52526798ea`; it remains dependency evidence
+  until v0.141.4 is publicly accepted. It is followed by v0.141.6
   deliberate Team terminal Retry; v0.141.7 Versus countdown; v0.141.8 named
   result destinations; and v0.141.9 Collection fixture reconciliation plus
   paused Settings/Help return
