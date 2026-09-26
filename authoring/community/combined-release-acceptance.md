@@ -8,11 +8,11 @@ release claims.
 ## Candidate identity
 
 - Merged framework source: PR #465, merged 25 September 2026.
-- Rebased hardening base: `e3ed95c73dc08a31360addb28866420c365e8647` (`main`, source version
-  `0.132.0`).
+- Rebased hardening base: `c45cd78bdc522bf95c267615fe3ad93dd77dff98` (`main`, source version
+  `0.132.1`).
 - Hardening checkpoint before this acceptance refresh:
-  `96d4157e4e61158b90a1754208b6ab0317b41d4a`.
-- Assigned release target: `v0.141.0` in PR #564. The working source remains `0.132.0` until the
+  `e1c83e48b233d6f801066bead8c906258da05403`.
+- Assigned release target: `v0.141.0` in PR #564. The working source remains `0.132.1` until the
   repository release coordinator freezes the reviewed candidate.
 
 The candidate contains no uploaded creator image or video fixtures and no generated distribution
@@ -67,10 +67,21 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   normalization, package/install/intake, aggregate quota pressure, abandoned-claim reconciliation,
   storage review and immutable edition accounting. The complete exact-head creator cohort passes
   **520/520** from one run after the final rebase and UI cancellation fix.
+- The exact navigation cohort that failed on the rebased PR now passes **194/194**. The repair keeps
+  the controller Confirm release guard current after a controller starts a race, so a later direct
+  touch is accepted after the finite Steam Input echo window. Navigation fixtures now exercise
+  controller-authorized menu activation and strict Team file intake with real `Blob` values.
+- The focused controller/router overlap with the new `main` short-tap lifecycle passes **84/84**,
+  including the actual Steam Deck short-tap host case and native-input echo ordering.
+- The subsequent `fpv88` presentation-provenance rebase retains the exact reviewed Team picture
+  bytes for current play and preserves immutable `fpv58`–`fpv87` attempts. Its bounded 31-policy
+  authority and composite Team navigation cohort pass **97/97**; unknown `fpv89` still fails closed.
 - Rotated-orientation and physical-transform focused cohort: **50/50 passed**, with **114/114**
   across the expanded video/editor/intake/bundle group.
-- `npm run validate`: passed for 1,242 files; exact whole-spatial snapshot SHA-256
+- `npm run validate`: passed for 1,243 files; exact whole-spatial snapshot SHA-256
   `e62ef45089df1bbaea04cceb932949fbe8d29377a4eeefcac8280125006495b3`.
+- Exact presentation SHA-256 after the `fpv88` provenance rebase:
+  `d3029b2da13dc6cbd6f34dd4aabf4c8988c7b77272f2d9386a773295326e8233`.
 - Root and community-service ESLint and Prettier checks: passed.
 - Native formatting, Motion Lab syntax, Field Kit producer check, and Field Kit readiness: passed.
 - Root and community dependency audits: zero reported vulnerabilities.
@@ -123,7 +134,8 @@ codecs outside each browser's successful decode probe, and broader conversion re
 Firefox, Safari, Balanced portrait and physical mobile media qualification remain unclaimed.
 
 PR #465 is merged. The hardening branch is rebased onto current protected `main` in draft PR #564,
-which now has the repository-assigned target `v0.141.0`. The branch preserves the current `0.132.0`
-source identity until review. Publication still requires the full exact-head gates, review, an
-immutable freeze, artifact hashes, public online/offline verification, and a separately reviewed
-Pages selector update where applicable.
+which now has the repository-assigned target `v0.141.0`. The branch preserves the current `0.132.1`
+source identity until review. Local exact-head creator, service, navigation, validation, lint and
+format gates pass. Publication still requires hosted PR checks, review, an immutable freeze,
+artifact hashes, public online/offline verification, and a separately reviewed Pages selector
+update where applicable.
