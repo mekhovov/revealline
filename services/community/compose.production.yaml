@@ -1,3 +1,10 @@
+x-community-production-build: &community-production-build
+  context: ../..
+  dockerfile: services/community/Dockerfile
+  args:
+    COMMUNITY_RELEASE_VERSION: ${COMMUNITY_RELEASE_VERSION:?set exact deployed release version}
+    COMMUNITY_SOURCE_REVISION: ${COMMUNITY_SOURCE_REVISION:?set exact deployed source revision}
+
 x-community-production-environment: &community-production-environment
   COMMUNITY_DATABASE_URL: ${COMMUNITY_DATABASE_URL:?set COMMUNITY_DATABASE_URL}
   COMMUNITY_BLOB_ROOT: /data/blobs
@@ -10,6 +17,8 @@ x-community-production-environment: &community-production-environment
   COMMUNITY_TUS_LOCK_POOL_SIZE: ${COMMUNITY_TUS_LOCK_POOL_SIZE:-20}
   COMMUNITY_MAX_PACKAGE_BYTES: ${COMMUNITY_MAX_PACKAGE_BYTES:-268435456}
   COMMUNITY_VALIDATOR_VERSION: ${COMMUNITY_VALIDATOR_VERSION:-creator-bundle-v1}
+  COMMUNITY_RELEASE_VERSION: ${COMMUNITY_RELEASE_VERSION:?set exact deployed release version}
+  COMMUNITY_SOURCE_REVISION: ${COMMUNITY_SOURCE_REVISION:?set exact deployed source revision}
   COMMUNITY_AUTH_ATTEMPTS_PER_WINDOW: ${COMMUNITY_AUTH_ATTEMPTS_PER_WINDOW:-30}
   COMMUNITY_AUTH_WINDOW_SECONDS: ${COMMUNITY_AUTH_WINDOW_SECONDS:-300}
   COMMUNITY_REPORTS_PER_WINDOW: ${COMMUNITY_REPORTS_PER_WINDOW:-6}
@@ -43,9 +52,7 @@ services:
       PGPASSWORD: ${COMMUNITY_POSTGRES_PASSWORD:?set COMMUNITY_POSTGRES_PASSWORD}
 
   auth-migrate:
-    build:
-      context: ../..
-      dockerfile: services/community/Dockerfile
+    build: *community-production-build
     command: ['npm', 'run', 'auth:migrate']
     depends_on:
       migrate:
@@ -54,9 +61,7 @@ services:
     restart: 'no'
 
   preflight:
-    build:
-      context: ../..
-      dockerfile: services/community/Dockerfile
+    build: *community-production-build
     command: ['npm', 'run', 'deployment:preflight']
     depends_on:
       auth-migrate:
@@ -68,6 +73,7 @@ services:
     restart: 'no'
 
   api:
+    build: *community-production-build
     depends_on:
       preflight:
         condition: service_completed_successfully
@@ -86,6 +92,7 @@ services:
       start_period: 10s
 
   worker:
+    build: *community-production-build
     depends_on:
       preflight:
         condition: service_completed_successfully

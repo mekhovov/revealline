@@ -11,17 +11,18 @@ import {
 } from '../../../game/creator/bundle.mjs';
 import { generateCreatorProject } from '../../../game/creator/templates.mjs';
 import { startTusFaultProxy } from '../scripts/tus-fault-proxy.mjs';
+import {
+  ACCEPTANCE_PNG_HEIGHT,
+  ACCEPTANCE_PNG_WIDTH,
+  createAcceptancePng,
+  inspectAcceptanceImage,
+} from './acceptance-fixture.mjs';
 
 export const DEPLOYED_TUS_ACCEPTANCE_FORMAT = 'revealline-community-deployed-tus-acceptance.v1';
 export const DEPLOYED_TUS_DESTRUCTIVE_OPT_IN =
   'I_UNDERSTAND_THIS_PUBLISHES_AND_UNLISTS_TEST_CONTENT';
 
-const PNG_FIXTURE = Buffer.from(
-  'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIUlEQVR42mNgGHKg4s6L/zA8EgzApng4G0Cs4uFswIABALbL6JnK2NeAAAAAAElFTkSuQmCC',
-  'base64',
-);
 const NAMESPACE = /^[a-z0-9](?:[a-z0-9-]{6,38}[a-z0-9])$/u;
-const inspectAcceptanceImage = async () => ({ naturalWidth: 16, naturalHeight: 16 });
 const themesPromise = readFile(
   new URL('../../../game/content-design/themes.json', import.meta.url),
   'utf8',
@@ -157,7 +158,7 @@ async function acceptancePackage({ namespace, runId }) {
     seed: Number.parseInt(runId.slice(0, 6), 36),
   });
   const project = structuredClone(generated.project);
-  const picture = new Blob([PNG_FIXTURE], { type: 'image/png' });
+  const picture = new Blob([createAcceptancePng()], { type: 'image/png' });
   const sha256 = await creatorSHA256(await picture.arrayBuffer());
   project.assets = [
     {
@@ -168,8 +169,8 @@ async function acceptancePackage({ namespace, runId }) {
       path: `content-design/assets/creator/${sha256}.png`,
       sha256,
       bytes: picture.size,
-      width: 16,
-      height: 16,
+      width: ACCEPTANCE_PNG_WIDTH,
+      height: ACCEPTANCE_PNG_HEIGHT,
       alt: 'Deployed tus acceptance fixture',
       review: 'candidate',
     },

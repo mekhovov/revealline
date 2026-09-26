@@ -21,25 +21,21 @@ import {
   createJourneyProfileStore,
   emptyJourneyProfile,
 } from '../../../game/journey/profile.mjs';
+import {
+  ACCEPTANCE_PNG_HEIGHT,
+  ACCEPTANCE_PNG_WIDTH,
+  createAcceptancePng,
+  decodeAcceptanceImage,
+  inspectAcceptanceImage,
+} from './acceptance-fixture.mjs';
 
 export const DEPLOYED_ACCEPTANCE_FORMAT = 'revealline-community-deployed-acceptance.v1';
 export const DESTRUCTIVE_OPT_IN = 'I_UNDERSTAND_THIS_PUBLISHES_AND_UNLISTS_TEST_CONTENT';
 
-const PNG_1X1 = Buffer.from(
-  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/l9sAAAAASUVORK5CYII=',
-  'base64',
-);
 const NAMESPACE = /^[a-z0-9](?:[a-z0-9-]{6,38}[a-z0-9])$/u;
 const REPORT_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u;
-const inspectAcceptanceImage = async () => ({ naturalWidth: 1, naturalHeight: 1 });
-const decodeAcceptanceImage = async () => ({
-  width: 1,
-  height: 1,
-  naturalWidth: 1,
-  naturalHeight: 1,
-  close() {},
-});
-
+const RELEASE_VERSION = /^v\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/u;
+const SOURCE_REVISION = /^[a-f0-9]{40}$/u;
 const themesPromise = readFile(
   new URL('../../../game/content-design/themes.json', import.meta.url),
   'utf8',
@@ -82,7 +78,11 @@ export function validateDeployedJourneyConfig(input = {}) {
     'A unique 8-40 character lowercase namespace is required.',
   );
   const baseURL = new URL(input.baseURL);
-  required(['http:', 'https:'].includes(baseURL.protocol), 'Community service URL is invalid.');
+  const loopback = ['127.0.0.1', 'localhost', '[::1]'].includes(baseURL.hostname);
+  required(
+    baseURL.protocol === 'https:' || (baseURL.protocol === 'http:' && loopback),
+    'Community service URL must use HTTPS outside loopback.',
+  );
   required(
     !baseURL.username && !baseURL.password,
     'Community service URL must not contain credentials.',
@@ -90,9 +90,18 @@ export function validateDeployedJourneyConfig(input = {}) {
   baseURL.pathname = baseURL.pathname.endsWith('/') ? baseURL.pathname : `${baseURL.pathname}/`;
   baseURL.search = '';
   baseURL.hash = '';
+  required(
+    RELEASE_VERSION.test(input.expectedRelease?.version ?? '') &&
+      SOURCE_REVISION.test(input.expectedRelease?.sourceRevision ?? ''),
+    'Exact expected release version and source revision are required.',
+  );
   return Object.freeze({
     baseURL: baseURL.href,
     namespace: input.namespace,
+    expectedRelease: Object.freeze({
+      version: input.expectedRelease.version,
+      sourceRevision: input.expectedRelease.sourceRevision,
+    }),
     auth: Object.freeze({
       creatorA: exactAuth(input.auth?.creatorA, 'Creator A authentication'),
       creatorB: exactAuth(input.auth?.creatorB, 'Creator B authentication'),
@@ -253,7 +262,7 @@ async function acceptancePackage({ namespace, runId }) {
     seed: Number.parseInt(runId.slice(0, 6), 36),
   });
   const project = structuredClone(generated.project);
-  const picture = new Blob([PNG_1X1], { type: 'image/png' });
+  const picture = new Blob([createAcceptancePng()], { type: 'image/png' });
   const sha256 = await creatorSHA256(await picture.arrayBuffer());
   project.assets = [
     {
@@ -264,8 +273,8 @@ async function acceptancePackage({ namespace, runId }) {
       path: `content-design/assets/creator/${sha256}.png`,
       sha256,
       bytes: picture.size,
-      width: 1,
-      height: 1,
+      width: ACCEPTANCE_PNG_WIDTH,
+      height: ACCEPTANCE_PNG_HEIGHT,
       alt: 'Deployment acceptance fixture',
       review: 'candidate',
     },
@@ -349,7 +358,7 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
     serviceOrigin: new URL(config.baseURL).origin,
     startedAt: new Date(startedAtMs).toISOString(),
   };
-  let stage = 'health';
+  let stage = 'identity';
   let editionId = null;
   const creatorStore = adapters.creatorStore ?? createMemoryCreatorAcceptanceStore();
   const stateStore = adapters.stateStore ?? createMemoryCommunityStateStore();
@@ -372,11 +381,35 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
   };
 
   try {
+    const identity = await json(
+      await fetchImpl(new URL('version', config.baseURL), { cache: 'no-store' }),
+      'Release identity',
+    );
+    required(
+      identity?.format === 'revealline-community-release.v1' &&
+        identity.version === config.expectedRelease.version &&
+        identity.sourceRevision === config.expectedRelease.sourceRevision,
+      'Deployed release identity differs from the expected immutable source.',
+    );
+    receipt.release = {
+      version: identity.version,
+      sourceRevision: identity.sourceRevision,
+    };
+
+    stage = 'health';
     const health = await json(
       await fetchImpl(new URL('health', config.baseURL), { cache: 'no-store' }),
       'Health check',
     );
     required(health?.status === 'ok', 'Health check is not ready.');
+
+    stage = 'readiness';
+    const readiness = await json(
+      await fetchImpl(new URL('ready', config.baseURL), { cache: 'no-store' }),
+      'Readiness check',
+    );
+    required(readiness?.status === 'ready', 'Deployment readiness check did not pass.');
+    receipt.readiness = { status: 'ready' };
 
     stage = 'package';
     const blob = await acceptancePackage({ namespace: config.namespace, runId });

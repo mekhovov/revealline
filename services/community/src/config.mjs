@@ -18,6 +18,31 @@ const boundedInteger = (value, fallback, name, { minimum, maximum }) => {
   return result;
 };
 
+const RELEASE_VERSION = /^v\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/u;
+const SOURCE_REVISION = /^[a-f0-9]{40}$/u;
+
+const releaseIdentity = (environment, { required }) => {
+  const version = environment.COMMUNITY_RELEASE_VERSION;
+  const sourceRevision = environment.COMMUNITY_SOURCE_REVISION;
+  if (version === undefined && sourceRevision === undefined && !required) return null;
+  if (!RELEASE_VERSION.test(version ?? ''))
+    throw new Error('COMMUNITY_RELEASE_VERSION must be an exact v-prefixed release version.');
+  if (!SOURCE_REVISION.test(sourceRevision ?? ''))
+    throw new Error('COMMUNITY_SOURCE_REVISION must be an exact lowercase 40-character revision.');
+  if (required) {
+    if (!RELEASE_VERSION.test(environment.COMMUNITY_IMAGE_RELEASE_VERSION ?? ''))
+      throw new Error('The production image has no exact embedded release version.');
+    if (!SOURCE_REVISION.test(environment.COMMUNITY_IMAGE_SOURCE_REVISION ?? ''))
+      throw new Error('The production image has no exact embedded source revision.');
+    if (
+      environment.COMMUNITY_IMAGE_RELEASE_VERSION !== version ||
+      environment.COMMUNITY_IMAGE_SOURCE_REVISION !== sourceRevision
+    )
+      throw new Error('Runtime release identity differs from the immutable image identity.');
+  }
+  return Object.freeze({ version, sourceRevision });
+};
+
 const httpsOrigin = (value, name) => {
   if (typeof value !== 'string' || value.length > 2_048)
     throw new Error(`${name} must be an HTTPS origin.`);
@@ -127,6 +152,7 @@ export function readConfig(environment = process.env, { requireAuth = true } = {
     ),
     maxPackageBytes,
     validatorVersion: environment.COMMUNITY_VALIDATOR_VERSION ?? 'creator-bundle-v1',
+    releaseIdentity: releaseIdentity(environment, { required: requireAuth && !allowDevAuth }),
     workerPollMs: integer(environment.COMMUNITY_WORKER_POLL_MS, 1_000, 'COMMUNITY_WORKER_POLL_MS'),
     trustProxyHops:
       environment.COMMUNITY_TRUST_PROXY_HOPS === undefined
