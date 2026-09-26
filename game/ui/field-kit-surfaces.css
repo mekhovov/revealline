@@ -429,6 +429,9 @@ body.field-kit-support:is([data-menu-palette='neon'], [data-menu-palette='field-
     scroll-behavior: auto;
   }
 }
+.field-kit[data-effects='reduced'] .field-kit-settings-panel {
+  scroll-behavior: auto;
+}
 /* Earned status is conveyed by wording and marks, never by unreadable dim text. */
 .field-kit.game-shell .achievement:not(.earned) {
   opacity: 1;
