@@ -7,23 +7,22 @@ versions or acceptance gates are still current.
 ## Public and release state
 
 - Latest accepted public release: **v0.132.3**.
-- v0.132.4 Team picture-preparation repair passed replacement qualification and entered the sole
-  publisher's immutable-package step. Its terminal source is
-  `d3df9d47f578d48383ff589914a188ada2ef8b31`, including the narrowly scoped same-run inspector,
-  evidence-authority corrections and full-evidence consumer fix. No v0.132.4 GitHub release existed
-  at the last check, so it is not counted as delivered here.
-- The cultural stack is rebased on that exact terminal source. All seventeen dependent branches
-  were updated with explicit force-with-lease checks; the dirty root checkout was not changed.
+- v0.132.4 Team picture-preparation repair has an exact immutable production receipt and its Pages
+  selector is merged. The streaming public-byte audit is still underway, so v0.132.4 is not yet
+  counted as accepted public delivery here.
+- The cultural stack is rebased on selector merge source
+  `d308610271ad01fbabb2847ee046325001ec63e5`. The dirty root checkout was not changed.
 
 ## Completed source work
 
-| Scope                                   | State                         | Evidence boundary                                                                                                     |
-| --------------------------------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| Journey Ukrainian spatial stack v12-v24 | Rebased and pushed            | Candidate source only; each draft PR still needs its own promotion and public verification.                           |
-| Apex v25 / PR #625                      | Clean draft, source `0.140.0` | Earlier focused and production-build evidence exists; the exact terminal-base head still needs release CI.            |
-| Complete Team adoption / PR #630        | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.       |
-| First Team Ukrainian slice / PR #636    | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                |
-| Second Team Ukrainian slice / PR #642   | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet. |
+| Scope                                   | State                         | Evidence boundary                                                                                                                                                  |
+| --------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Journey Ukrainian spatial stack v12-v24 | Rebased and pushed            | Candidate source only; each draft PR still needs its own promotion and public verification.                                                                        |
+| Apex v25 / PR #625                      | Clean draft, source `0.140.0` | Earlier focused and production-build evidence exists; the exact terminal-base head still needs release CI.                                                         |
+| Complete Team adoption / PR #630        | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.                                                    |
+| First Team Ukrainian slice / PR #636    | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                             |
+| Second Team Ukrainian slice / PR #642   | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                              |
+| Second Team current edition successor   | Local source `0.149.0`        | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; focused cohort 83/83 and localization validation pass; not public. |
 
 The second Team slice now has **13/13** focused checks. Every changed mission keeps one connected
 field, idle-safe starts on all presets, two distinct no-down approaches, and a two-closure exchange
@@ -41,7 +40,7 @@ large-asset and archive delays are outside these estimates.
 | -------: | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -----------------------------------------------------------------------: |
 |        0 | Finish v0.132.4 publication            | Immutable release, Pages, public byte check and bounded Team artwork launch/retry proof                                    | Publisher in progress; **2–8 hours** if the current controller fix holds |
 |        1 | Promote the cultural Journey chain     | Review/merge in dependency order, exact-head qualification, immutable release and public play for each accepted batch      |                                   **1–2 working days per release batch** |
-|        2 | Complete second Team slice             | Separate/current edition, library/Studio/Next, EN/UK and version wiring; full-clear evidence is complete                   |                                               **8–16 hours** source work |
+|        2 | Complete second Team slice             | Open/review the current-edition PR, exact-head qualification and immutable public delivery; source wiring is complete      |                                         **4–8 hours** plus release queue |
 |        3 | Team release qualification             | Paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof |                                        **8–16 hours** plus device access |
 |        4 | Whole-Journey pacing and accessibility | Campaign-to-campaign pressure audit, reduced-effects/contrast/small-screen/performance and deterministic compatibility     |                                                     **2–4 working days** |
 |        5 | Human balance and cultural review      | Understandable failures, distinct missions, enjoyable retries and cultural review by people                                |                       **1–2 days synthesis** after testers are available |
@@ -59,9 +58,13 @@ accepted predecessor; draft labels do not reserve a release.
    remain mandatory.
 3. **Second Team human balance:** bounded no-Support full clears now exist on every preset and the
    Standard routes are pinned. These do not establish human cooperation quality or enjoyment.
-4. **Human/device evidence:** deterministic routes cannot establish enjoyment, cultural approval or
+4. **Inherited host fixtures:** the wider host cohort still expects 201/279 entries and
+   `whole-spatial-v5`, while the stacked Journey exposes 327 entries and defaults to
+   `whole-spatial-v25`. These are outside the second Team edition behavior and need a dedicated
+   expectation/duplicate audit before a full-suite claim.
+5. **Human/device evidence:** deterministic routes cannot establish enjoyment, cultural approval or
    physical controller/touch behavior.
-5. **Disk pressure:** about 940 MiB of verified, recoverable release/cache replicas was removed
+6. **Disk pressure:** about 940 MiB of verified, recoverable release/cache replicas was removed
    earlier. Avoid duplicate local builds and never remove unpushed source, user media or another
    task's active workspace.
 
@@ -69,8 +72,8 @@ accepted predecessor; draft labels do not reserve a release.
 
 1. Let the sole publisher finish v0.132.4; do not duplicate its release mutations.
 2. Keep the rebased cultural PR chain clean and reviewable while v0.132.4 completes.
-3. Wire the v2 Team edition through entry, library, Studio, localization and exact Next ownership.
-4. Run focused selector/Studio/Next/version/locale checks and prepare the bounded release PR.
+3. Finish focused selector/Studio/Next/version/locale checks and open the bounded v0.149.0 PR.
+4. Audit the inherited 327-vs-201/279 library fixture delta before making a full-suite claim.
 5. Promote cultural releases in dependency order, reporting actual public delivery rather than a
    merge or workflow start.
 
