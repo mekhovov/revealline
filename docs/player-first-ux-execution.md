@@ -26,6 +26,12 @@ lint and formatting. It still requires a fresh pushed exact-head PR gate, merge,
 immutable release, archive admission, Pages deployment and public player-flow
 verification.
 
+**Prepared successor:** v0.141.2 Team quick-start is reconciled locally onto
+exact v0.141.1 candidate `a5c60f2bcdf041610564098a869458f1bbe947ef`.
+It remains unpushed and cannot enter its release cycle until v0.141.1 is publicly
+accepted. This preparation is dependency evidence only and does not claim that
+PR #590 or v0.141.1 is merged, released, deployed or publicly accepted.
+
 **Active and ordered:** each row is a working allocation, not an accepted
 release. Reconcile each item onto the publicly accepted predecessor, rerun its
 exact-head gates and publish it before accepting the next row. Older target
