@@ -1,5 +1,5 @@
 {
-  "version": "0.132.1",
+  "version": "0.132.2",
   "entry": "game/index.html",
   "include": [
     "game",
