@@ -1,4 +1,10 @@
-import { t, localizedText, localizedAttribute, localizedOption } from '../i18n/index.mjs';
+import {
+  t,
+  localizedMessage,
+  localizedText,
+  localizedAttribute,
+  localizedOption,
+} from '../i18n/index.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { geometryForLevel } from '../core/geometry.mjs';
@@ -214,7 +220,7 @@ let previewLease = null,
   previewDocumentLoaded = false;
 function beginPreview() {
   previewDocumentLoaded = false;
-  clearLiveMeasurements(t('tools:waitingForTheCurrentPreviewDocument'));
+  clearLiveMeasurements('tools:waitingForTheCurrentPreviewDocument');
   geometryStale(t('tools:aNewPreviewIsLoadingCaptureAgainAfterItIs'));
   previewLease = previewPresenter.begin({ message: t('tools:loadingTheChildGameForThisPreview') });
   showFeedback('preview');
@@ -331,7 +337,10 @@ function sync() {
                   ? t('tools:stagedEncounterThisRulesetHasNoOptionalEquipmentGoalsIts')
                   : current.format === 'xonix-playground.v2'
                     ? definition
-                      ? `${definition.name} · ${definition.description} References validate against this map and roster; play the route to test completion.`
+                      ? t('tools:referencesValidateAgainstThisMapAndRosterPlayTheRoute', {
+                          value1: definition.name,
+                          value2: definition.description,
+                        })
                       : t('tools:noOptionalGoalThisExplicitChoiceIsRetainedInPractice')
                     : t('tools:legacyScenarioOnlyExactShippedContentCanUseItsBuilt'),
   );
@@ -342,9 +351,14 @@ function sync() {
   $('encounter-fields').disabled = !encounter || encounter.version === 'xonix-encounter.v2';
   localizedText($('encounter-readout'), () =>
     encounter?.version === 'xonix-encounter.v2'
-      ? `Sentinel with ${encounter.shieldObjectiveIds.length} shield relays. Use Content Studio for shared recipe and relay authoring. Map JSON remains explicitly versioned; this one-relay form is read-only for the new edition.`
+      ? t('tools:playground.sentinelEncounter', {
+          count: encounter.shieldObjectiveIds.length,
+        })
       : encounter
-        ? `Two-stage relay. Close ${encounter.minReleaseCutCells} new trail cells during an opening, or isolate the core to at most ${encounter.minReleaseCutCells} field cells. The sentinel must remain the only field seed. Test every class and steering mode after changing this recipe.`
+        ? t('tools:twoStageRelayCloseNewTrailCellsDuringAnOpening', {
+            value1: encounter.minReleaseCutCells,
+            value2: encounter.minReleaseCutCells,
+          })
         : t('tools:loadSentinelRelayFromTheExpansionExamplesToEditIts2'),
   );
   if (encounter?.version === 'xonix-encounter.v1')
@@ -517,7 +531,7 @@ function drawAssets() {
     img.src = item.dataUrl;
     localizedAttribute(img, 'alt', () => t('tools:replacementFor', { value1: role }));
     const name = document.createElement('span');
-    localizedText(name, () => `${role} / ${item.name || 'image'}`);
+    localizedText(name, () => `${role} / ${item.name || t('tools:image')}`);
     card.append(img, name);
     $('asset-list').append(card);
   }
@@ -578,9 +592,9 @@ function preview() {
     beginPreview();
     $('preview-frame').src = `../?practice=1&revision=${++revision}`;
     $('open-preview').href = `../?practice=1&revision=${revision}`;
-    status(
+    status(() =>
       [
-        'Valid configuration prepared for the real engine. The child game reports when play is ready; practice awards are disabled.',
+        t('tools:playground.validConfigurationPrepared'),
         ...validateScenario(current).warnings,
       ].join(' '),
     );
@@ -625,19 +639,28 @@ function resizePreview(nextWidth, nextHeight) {
   );
   fit();
 }
-function clearLiveMeasurements(reason) {
-  localizedText(
-    $('viewport-readout'),
-    () => `${width} × ${height} CSS pixels requested · ${reason}`,
+function clearLiveMeasurements(reasonKey) {
+  localizedText($('viewport-readout'), () =>
+    t('tools:playground.viewportMeasurementUnavailable', {
+      width,
+      height,
+      reason: t(reasonKey),
+    }),
   );
-  localizedText($('layout-readout'), () => `Arena measurement unavailable. ${reason}`);
-  localizedText($('control-readout'), () => `Control measurements unavailable. ${reason}`);
-  localizedText($('launch-readout'), () => `Launch measurements unavailable. ${reason}`);
+  localizedText($('layout-readout'), () =>
+    t('tools:playground.arenaMeasurementUnavailable', { reason: t(reasonKey) }),
+  );
+  localizedText($('control-readout'), () =>
+    t('tools:playground.controlMeasurementsUnavailable', { reason: t(reasonKey) }),
+  );
+  localizedText($('launch-readout'), () =>
+    t('tools:playground.launchMeasurementsUnavailable', { reason: t(reasonKey) }),
+  );
 }
 function measure() {
   checkPreviewReady();
   if (!previewDocumentLoaded) {
-    clearLiveMeasurements(t('tools:waitingForTheCurrentPreviewDocument'));
+    clearLiveMeasurements('tools:waitingForTheCurrentPreviewDocument');
     return;
   }
   try {
@@ -656,28 +679,45 @@ function measure() {
       !view ||
       ![view.innerWidth, view.innerHeight].every((size) => Number.isFinite(size) && size > 0)
     ) {
-      clearLiveMeasurements(t('tools:theCurrentFrameAndArenaAreNotAvailable'));
+      clearLiveMeasurements('tools:theCurrentFrameAndArenaAreNotAvailable');
       return;
     }
     const r = arena.getBoundingClientRect();
     if (!measurable(r)) {
-      clearLiveMeasurements(t('tools:theCurrentArenaHasNoMeasurableBounds'));
+      clearLiveMeasurements('tools:theCurrentArenaHasNoMeasurableBounds');
       return;
     }
-    localizedText(
-      $('viewport-readout'),
-      () =>
-        `${width} × ${height} CSS pixels requested · frame reports ${view.innerWidth} × ${view.innerHeight} · shown at ${Math.round(Math.min(1, $('preview-stage').parentElement.clientWidth / width) * 100)}%`,
+    localizedText($('viewport-readout'), () =>
+      t('tools:cssPixelsRequestedFrameReportsShownAt', {
+        value1: width,
+        value2: height,
+        value3: view.innerWidth,
+        value4: view.innerHeight,
+        value5: Math.round(Math.min(1, $('preview-stage').parentElement.clientWidth / width) * 100),
+      }),
     );
     const visible =
       r.left >= 0 &&
       r.top >= 0 &&
       r.right <= view.innerWidth + 1 &&
       r.bottom <= view.innerHeight + 1;
-    localizedText(
-      $('layout-readout'),
-      () =>
-        `Arena ${r.width.toFixed(1)} × ${r.height.toFixed(1)} · top ${r.top.toFixed(0)}, bottom ${r.bottom.toFixed(0)} · ${visible ? 'whole arena visible' : 'scroll needed for whole arena'} · ${doc.documentElement.scrollWidth > view.innerWidth ? 'horizontal overflow' : 'no horizontal overflow'}`,
+    localizedText($('layout-readout'), () =>
+      t('tools:arenaTopBottom', {
+        value1: r.width.toFixed(1),
+        value2: r.height.toFixed(1),
+        value3: r.top.toFixed(0),
+        value4: r.bottom.toFixed(0),
+        value5: t(
+          visible
+            ? 'tools:playground.wholeArenaVisible'
+            : 'tools:playground.scrollNeededForWholeArena',
+        ),
+        value6: t(
+          doc.documentElement.scrollWidth > view.innerWidth
+            ? 'tools:playground.horizontalOverflow'
+            : 'tools:playground.noHorizontalOverflow',
+        ),
+      }),
     );
     const controls = [
       ...doc.querySelectorAll(
@@ -695,7 +735,16 @@ function measure() {
     );
     localizedText($('control-readout'), () =>
       controls.length
-        ? `Controls: ${controls.length} measured ${controls.length === 1 ? 'box' : 'boxes'} · minimum ${Math.min(...controls.map((r) => r.width)).toFixed(0)} × ${Math.min(...controls.map((r) => r.height)).toFixed(0)} · ${reachable ? 'all measured boxes inside viewport' : 'some measured boxes outside viewport'}`
+        ? t('tools:playground.measuredControlBoxes', {
+            count: controls.length,
+            width: Math.min(...controls.map((r) => r.width)).toFixed(0),
+            height: Math.min(...controls.map((r) => r.height)).toFixed(0),
+            reachability: t(
+              reachable
+                ? 'tools:playground.allMeasuredBoxesInsideViewport'
+                : 'tools:playground.someMeasuredBoxesOutsideViewport',
+            ),
+          })
         : t('tools:controlsNoMeasurableActionBoxesInThisPreview'),
     );
     const launchVisible = (button, b) => {
@@ -718,11 +767,26 @@ function measure() {
       .filter(({ rect }) => measurable(rect));
     localizedText($('launch-readout'), () =>
       launch.length
-        ? `Launch actions: ${launch.map(({ button, label, rect: b }) => `${label} ${b.width.toFixed(0)} × ${b.height.toFixed(0)} · ${launchVisible(button, b) ? 'visible in viewport' : 'scroll needed or covered'}`).join('; ')}`
+        ? t('tools:launchActions', {
+            value1: launch
+              .map(({ button, label, rect: b }) =>
+                t('tools:playground.launchActionMeasurement', {
+                  label,
+                  width: b.width.toFixed(0),
+                  height: b.height.toFixed(0),
+                  visibility: t(
+                    launchVisible(button, b)
+                      ? 'tools:playground.visibleInViewport'
+                      : 'tools:playground.scrollNeededOrCovered',
+                  ),
+                }),
+              )
+              .join('; '),
+          })
         : t('tools:noMeasurableLaunchActionsInThisPreview'),
     );
   } catch {
-    clearLiveMeasurements(t('tools:theCurrentPreviewCannotBeMeasuredFromThePlayground'));
+    clearLiveMeasurements('tools:theCurrentPreviewCannotBeMeasuredFromThePlayground');
   }
 }
 let geometryCaptured = false;
@@ -770,7 +834,7 @@ function captureGeometry() {
     localizedText($('geometry-status'), () =>
       t('tools:capturedSnapshotOnlyConfigurationAndRunAreNotEdited', {
         value1: report.capturedAt,
-        value2: $('preview-mode').value === 'course' ? ' · First Flight course' : '',
+        value2: $('preview-mode').value === 'course' ? ` · ${t('tools:firstFlightCourse')}` : '',
       }),
     );
   } catch (error) {
@@ -935,7 +999,9 @@ try {
     })
     .catch((error) =>
       examples.finish({
-        message: `${error.message} Reload to retry the examples.`,
+        message: localizedMessage('tools:playground.examplesLoadFailed', {
+          message: error.message,
+        }),
         state: 'error',
       }),
     );
@@ -1360,12 +1426,17 @@ try {
       $('pack-json').value = JSON.stringify(pack, null, 2);
       $('pack-json').closest('details').open = true;
       const goal = current.masteryDefinition
-        ? ` Its goal now belongs to the new campaign ${current.level.id}; the new definition identity is separate from the source goal.`
+        ? localizedMessage('tools:itsGoalNowBelongsToTheNewCampaignTheNew', {
+            value1: current.level.id,
+          })
         : '';
       lease = status(t('tools:preparingTheExpansionDownload'), false, true);
       const exported = await downloadJSON(pack, `${pack.id}.expansion.json`);
       lease.finish({
-        message: `Edited map prepared as a complete playable expansion.${goal} ${exported.message} Import it into the main game to keep campaign progress.`,
+        message: localizedMessage('tools:editedMapPreparedAsACompletePlayableExpansionImportIt', {
+          value1: goal,
+          value2: exported.message,
+        }),
       });
     } catch (error) {
       if (lease) lease.finish({ message: error.message, state: 'error' });
@@ -1383,7 +1454,10 @@ try {
         'workshop-expansions.json',
       );
       lease.finish({
-        message: `Original loaded expansion library prepared. ${exported.message} Current map edits are exported separately with Export map as expansion.`,
+        message: localizedMessage(
+          'tools:originalLoadedExpansionLibraryPreparedCurrentMapEditsAreExported',
+          { value1: exported.message },
+        ),
       });
     } catch (error) {
       if (lease) lease.finish({ message: error.message, state: 'error' });
@@ -1430,7 +1504,10 @@ try {
         state: result.match ? 'ready' : 'error',
       });
     } catch (error) {
-      lease.finish({ message: `Replay rejected: ${error.message}`, state: 'error' });
+      lease.finish({
+        message: localizedMessage('tools:replayRejected', { value1: error.message }),
+        state: 'error',
+      });
     } finally {
       if (epoch === replayEpoch) {
         $('cancel-replay').hidden = true;
@@ -1482,7 +1559,7 @@ try {
   fit();
   preview();
 } catch (error) {
-  status(`Playground could not load: ${error.message}. Reload this page to retry.`, true);
+  status(localizedMessage('tools:playgroundCouldNotLoad', { value1: error.message }), true);
 } finally {
   document.querySelectorAll('[data-boot-inert]').forEach((element) => {
     element.inert = false;
