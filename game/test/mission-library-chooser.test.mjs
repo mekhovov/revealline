@@ -746,6 +746,82 @@ test('download label switches locale without preparing content', (context) => {
   assert.equal(preparations, 0);
 });
 
+test('compact campaign title switches locale through its visible data attribute', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const { $, chooser } = setup([
+    owner({
+      presentation: (entry) => ({
+        ...entry,
+        edition: 'Earlier edition',
+        campaignTitle: getLocale() === 'uk' ? 'Українська кампанія' : 'English campaign',
+      }),
+    }),
+  ]);
+  const card = $('journey-cards').children[0];
+  assert.equal(card.dataset.campaignTitle, 'English campaign');
+
+  setLocale('uk', { persist: false });
+  assert.equal(card.dataset.campaignTitle, 'Українська кампанія');
+  chooser.destroy();
+});
+
+test('later focus away retires Download & play while same-card focus keeps it owned', async () => {
+  let downloadSignal,
+    finishDownload,
+    launches = 0,
+    ready = false;
+  const readySource = () =>
+    owner({
+      id: 'ready',
+      entries: [{ ...row('ready'), name: 'Ready mission' }],
+    });
+  const { doc, $, library, chooser } = setup([
+    readySource(),
+    owner({
+      id: 'download',
+      entries: [{ ...row('download'), name: 'Pending mission' }],
+      availability: () => (ready ? { state: 'ready' } : { state: 'download', bytes: 123 }),
+      prepare: (_entry, { signal }) => {
+        downloadSignal = signal;
+        return new Promise((resolve) => {
+          finishDownload = () => {
+            ready = true;
+            resolve();
+          };
+        });
+      },
+      launch: () => ++launches,
+    }),
+  ]);
+  let cards = [...$('journey-cards').children],
+    pending = cards.find((card) => card.textContent.includes('Pending mission')),
+    readyCard = cards.find((card) => card.textContent.includes('Ready mission'));
+  pending.click();
+  await tick();
+  library.register(readySource());
+  cards = [...$('journey-cards').children];
+  pending = cards.find((card) => card.textContent.includes('Pending mission'));
+  readyCard = cards.find((card) => card.textContent.includes('Ready mission'));
+  assert.equal(
+    downloadSignal.aborted,
+    false,
+    'Restoring the same logical focus after a source refresh is not a later player action.',
+  );
+  pending.focus();
+  assert.equal(downloadSignal.aborted, false, 'Same-card focus retains the one-action launch.');
+
+  readyCard.focus();
+  assert.equal(downloadSignal.aborted, true, 'Later focus away retires the stale preparation.');
+  finishDownload();
+  await tick();
+  assert.equal(launches, 0);
+  assert.equal($('journey-chooser').open, true);
+  assert.equal(doc.activeElement, readyCard);
+  chooser.destroy();
+});
+
 test('failed Download & play retries inline and launches once without losing the selected collection', async () => {
   let attempt = 0,
     ready = false,
