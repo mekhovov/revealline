@@ -133,17 +133,24 @@ export function validateMetadata({ recordBytes, manifestBytes, checksumBytes, pi
       'formatVersion',
       'version',
       'sourceRevision',
-      'sourceArchiveSha256',
+      ...(record.formatVersion === 2
+        ? ['sourceTree', 'sourceUrl', 'sourceManifestSha256']
+        : ['sourceArchiveSha256']),
       'distributionSha256',
       'manifestSha256',
       'play',
       'download',
     ]) ||
-    record.formatVersion !== 1 ||
+    ![1, 2].includes(record.formatVersion) ||
     record.version !== pin.version ||
     record.sourceRevision !== pin.sourceRevision ||
     record.manifestSha256 !== pin.manifestSha256 ||
-    !SHA.test(record.sourceArchiveSha256) ||
+    (record.formatVersion === 2
+      ? !COMMIT.test(record.sourceTree) ||
+        !SHA.test(record.sourceManifestSha256) ||
+        record.sourceUrl !==
+          `https://github.com/mekhovov/revealline/archive/${record.sourceRevision}.tar.gz`
+      : !SHA.test(record.sourceArchiveSha256)) ||
     !SHA.test(record.distributionSha256) ||
     record.play !== `${pin.version}/site/game/` ||
     record.download !== `${pin.version}/site/distribution.zip`

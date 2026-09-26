@@ -139,6 +139,30 @@ class AdapterTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Fresh ordinary output'):
             adapter.assemble(self.config, output)
 
+    def test_manifest_contract_runs_fresh_consumer_without_legacy_tar(self):
+        name = 'qualified-artifact-verified/inspection.json'
+        inspection = json.loads(self.originals[name])
+        source = inspection.pop('sourceTar')
+        source.pop('paxCommitPresent')
+        source.update(outerMember='v1.2.3/source-manifest.json', allGitBlobContentsAndModesVerified=True)
+        inspection['sourceManifest'] = source
+        self.originals[name] = adapter.encoded(inspection)
+        review_name = 'frozen-offline-review/review.json'
+        review = json.loads(self.originals[review_name])
+        review['inspectionPin'] = adapter.pin('inspection.json', self.originals[name])
+        self.originals[review_name] = adapter.encoded(review)
+        self.write_inspection()
+        output = self.root / 'manifest-out'
+        result = adapter.assemble(self.config, output)
+        self.assertEqual(len(result['artifacts']), 9)
+        self.assertEqual(len(list(output.iterdir())), 7)
+        self.assertTrue(result['consumer']['allQualificationPinsResolved'])
+        q = json.loads((output / 'source-qualification.json').read_bytes())
+        frozen = q['frozenArtifactCorroboration']
+        self.assertEqual(frozen['sourceContract'], 'manifest-v1')
+        self.assertTrue(frozen['sourceManifestGitContentsAndModesVerified'])
+        self.assertNotIn('sourceTarGitContentsVerified', frozen)
+
     def test_fastline_manual_jobs_are_canonicalized(self):
         run = copy.deepcopy(self.manual)
         run['path'] = adapter.FASTLINE_WORKFLOW
