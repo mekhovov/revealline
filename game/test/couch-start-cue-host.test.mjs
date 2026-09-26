@@ -212,6 +212,37 @@ for (const interruption of ['Pause', 'blur', 'hidden', 'persisted pagehide'])
     assert.deepEqual(page.ticks(), [0, 0]);
   });
 
+test('Pause during visible Go restarts the full reduced-effects recipe before play', async (t) => {
+  const page = await couchPage(t);
+  page.$('race-reduced').checked = true;
+  page.$('race-reduced').emit('change');
+  await startCue(page);
+  page.frame(2100);
+  assert.equal(page.$('race-start-cue-label').textContent, 'GO');
+  assert.deepEqual(page.ticks(), [0, 0]);
+  assert.equal(page.$('race-clock').textContent, '0:30');
+
+  page.$('race-pause').click();
+  assert.equal(page.$('race-start-cue').hidden, true);
+  page.frame(0);
+  assert.equal(page.state(), 'paused');
+  page.$('race-start').click();
+  await waitFor(() => !page.$('race-start-cue').hidden);
+  assert.equal(page.$('race-start-cue-label').textContent, '3');
+
+  page.frame(0);
+  page.frame(2099);
+  assert.equal(page.$('race-start-cue-label').textContent, '1');
+  assert.deepEqual(page.ticks(), [0, 0]);
+  assert.equal(page.$('race-clock').textContent, '0:30');
+  page.frame(1);
+  assert.equal(page.$('race-start-cue-label').textContent, 'GO');
+  assert.deepEqual(page.ticks(), [0, 0]);
+  assert.equal(page.$('race-clock').textContent, '0:30');
+  page.frame(1000 / 120);
+  assert.deepEqual(page.ticks(), [1, 1]);
+});
+
 test('assigned controller disconnect pauses and retires an active cue', async (t) => {
   const device = pad();
   const page = await couchPage(t, { pads: [device] });

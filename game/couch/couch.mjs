@@ -1549,7 +1549,7 @@ try {
     // may finish, but an interrupted gesture no longer authorizes a start.
     startIntentEpoch++;
     if (startCue) {
-      if (!startCue.released) pendingStartCueKind = startCue.cue.kind;
+      pendingStartCueKind = startCue.cue.kind;
       hideStartCue();
     }
     sound.pause();
@@ -1596,11 +1596,10 @@ try {
       requestedRetry =
         focusOrigin === $('race-retry') ||
         (acceptedStatus === 'finished' && destination && destination.key === acceptedEntry?.key),
-      requestedCue =
-        pendingStartCueKind ||
-        (requestedRetry
-          ? 'retry'
-          : acceptedStatus === 'ready' || acceptedStatus === 'finished' || destination
+      requestedCue = requestedRetry
+        ? 'retry'
+        : pendingStartCueKind ||
+          (acceptedStatus === 'ready' || acceptedStatus === 'finished' || destination
             ? 'mission'
             : null),
       intent = ++startIntentEpoch,
