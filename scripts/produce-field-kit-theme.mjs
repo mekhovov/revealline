@@ -126,11 +126,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541',
+    sha256: '417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a',
     evidence: [
-      'Scoped offline ownership continuation: docs/offline-pwa/audio-source-review.json sha256:63acdbe155cecf03a9c7bd95c06fefa473c8f0947b53f40dbaec24791f7e40f2; twenty-five ordered audio inputs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541 bind installed playback to imported or verified official bytes and keep every recorded soundtrack outside the required gameplay cache.',
-      'The v0.131 English/Ukrainian continuation remains incorporated. All 8 selected roles retain the same procedural recipes; local-only selection, explicit resumable download, shared-byte removal, rights, cancellation and imported-media preservation are covered without changing soundtrack bytes.',
-      'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, current frozen-build or public game approval. Historical reviews and original payloads remain immutable.',
+      'Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.',
+      'The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.',
+      'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group.',
     ],
   },
   motion: {
