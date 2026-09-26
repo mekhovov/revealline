@@ -1,5 +1,6 @@
 import { boundedJSON, canonicalJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
 import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
+import { createManagedMediaStore, MANAGED_MEDIA_LIMITS } from '../managed-media-store.mjs';
 import { creatorAbort, creatorSHA256 } from './bytes.mjs';
 import {
   createCreatorTeamAttempt,
@@ -39,6 +40,7 @@ const presets = new Set(['full', 'joint']);
 const editionPattern = /^[a-f0-9]{64}$/;
 const MAX_ATTEMPT_TICKS = 240000;
 const MAX_ATTEMPT_SEGMENTS = 8192;
+const MANAGED_USAGE_OWNER = 'creator-team';
 const text = (value, maximum = 160) =>
   typeof value === 'string' && value.length > 0 && value.length <= maximum;
 
@@ -415,14 +417,24 @@ async function inspectEdition(source, expectedId) {
   });
 }
 
-/** Exact portable bytes and completion receipts share one IndexedDB authority.
- * Installation and progress each commit in one transaction. Launch still runs
- * the full portable importer and replay verifier before the pack reaches play. */
+/** Exact portable bytes and completion receipts share the Team IndexedDB
+ * authority. A standard browser also journals those physical bytes in the
+ * shared managed-media ledger; injected hosts can provide that manager.
+ * Launch still runs the full importer and replay verifier before play. */
 export function createInstalledTeamCampaignStore({
   indexedDB = globalThis.indexedDB,
   now = Date.now,
   decodeImage,
   inspectVideo,
+  managedStore = typeof indexedDB?.deleteDatabase === 'function'
+    ? createManagedMediaStore({
+        indexedDB,
+        now,
+        richStillMedia: true,
+        storyMedia: true,
+        soundtrackCatalogue: true,
+      })
+    : null,
 } = {}) {
   let opening = null,
     closed = false;
@@ -575,6 +587,76 @@ export function createInstalledTeamCampaignStore({
       };
     });
   }
+  async function installedUsage({ signal } = {}) {
+    const snapshot = await transaction(
+      ['editions'],
+      'readonly',
+      async (tx) => {
+        const store = tx.objectStore('editions'),
+          [keys, rows] = await Promise.all([
+            requestResult(store.getAllKeys()),
+            requestResult(store.getAll()),
+          ]);
+        return { keys, rows };
+      },
+      signal,
+    );
+    required(
+      snapshot.keys.length === snapshot.rows.length && snapshot.rows.length <= MAX_EDITIONS,
+      t('errors:creator.teamInventoryDamaged'),
+    );
+    const editions = [];
+    for (let index = 0; index < snapshot.rows.length; index++) {
+      const edition = await inspectEdition(snapshot.rows[index], snapshot.keys[index]);
+      editions.push({ id: edition.editionId, bytes: edition.bytes });
+      creatorAbort(signal);
+    }
+    const localBytes = editions.reduce((sum, edition) => sum + edition.bytes, 0);
+    if (!managedStore)
+      return Object.freeze({
+        editions: Object.freeze(editions),
+        bytes: localBytes,
+        usedBytes: localBytes,
+        reservedBytes: 0,
+        limitBytes: CREATOR_TEAM_MEDIA_LIMITS.bytes,
+        overBudget: localBytes > CREATOR_TEAM_MEDIA_LIMITS.bytes,
+      });
+    const reconciled = await managedStore.reconcileExternalUsage(MANAGED_USAGE_OWNER, editions, {
+      signal,
+    });
+    const usage = await managedStore.usage({ signal });
+    return Object.freeze({
+      editions: Object.freeze(editions),
+      bytes: reconciled.bytes,
+      usedBytes: usage.usedBytes,
+      reservedBytes: usage.reservedBytes,
+      limitBytes: usage.limitBytes,
+      overBudget: reconciled.overBudget,
+    });
+  }
+  async function reviewInstall(prepared, { signal } = {}) {
+    creatorAbort(signal);
+    const portable = isPreparedCreatorTeamMediaCampaign(prepared)
+        ? exportCreatorTeamMediaCampaign(prepared)
+        : exportCreatorTeamCampaign(prepared),
+      bytes = new Uint8Array(await portable.arrayBuffer()),
+      editionId = await creatorSHA256(bytes),
+      usage = await installedUsage({ signal }),
+      alreadyInstalled = usage.editions.some((edition) => edition.id === editionId),
+      stagingBytes = alreadyInstalled ? 0 : bytes.byteLength;
+    return Object.freeze({
+      editionId,
+      packageBytes: bytes.byteLength,
+      stagingBytes,
+      usedBytes: usage.usedBytes,
+      reservedBytes: usage.reservedBytes,
+      limitBytes: usage.limitBytes,
+      alreadyInstalled,
+      enoughManagedSpace:
+        !usage.overBudget &&
+        usage.usedBytes + usage.reservedBytes + stagingBytes <= usage.limitBytes,
+    });
+  }
   async function install(prepared, { signal } = {}) {
     creatorAbort(signal);
     const media = isPreparedCreatorTeamMediaCampaign(prepared),
@@ -600,73 +682,104 @@ export function createInstalledTeamCampaignStore({
       bytes: bytes.byteLength,
       ...(media ? { gameplay: portableText, payload: exactPayload } : { portable: portableText }),
     };
-    const db = await open(signal);
-    creatorAbort(signal);
-    const result = await new Promise((resolve, reject) => {
-      const tx = db.transaction(STORES, 'readwrite'),
-        editions = tx.objectStore('editions'),
-        metadata = tx.objectStore('metadata'),
-        existingRequest = editions.get(editionId),
-        keysRequest = editions.getAllKeys(),
-        rowsRequest = editions.getAll(),
-        stateRequest = metadata.get(STATE_KEY);
-      let failure,
-        ready = 0,
-        outcome;
-      const abort = () => {
-        failure = cancelled();
-        try {
-          tx.abort();
-        } catch {}
-      };
-      const stage = () => {
-        if (++ready !== 4) return;
-        try {
-          const existing = existingRequest.result;
-          if (existing !== undefined) {
-            outcome = { existing };
-            return;
-          }
-          const keys = keysRequest.result;
-          required(keys.length < MAX_EDITIONS, t('errors:creator.removeTeamCampaignFirst'));
-          required(
-            rowsRequest.result.reduce((sum, item) => sum + item.bytes, row.bytes) <=
-              CREATOR_TEAM_MEDIA_LIMITS.bytes,
-            t('errors:creator.teamMediaBudgetExceeded'),
-          );
-          const state = validateState(stateRequest.result);
-          state.generation++;
-          editions.put(row, editionId);
-          metadata.put(state, STATE_KEY);
-          outcome = { existing: null };
-        } catch (error) {
-          failure = error;
+    const usage = await installedUsage({ signal });
+    const known = usage.editions.find((edition) => edition.id === editionId);
+    if (known) required(known.bytes === row.bytes, t('errors:creator.teamEditionIdentityConflict'));
+    else if (managedStore)
+      await managedStore.claimExternalUsage({
+        owner: MANAGED_USAGE_OWNER,
+        id: editionId,
+        bytes: row.bytes,
+        signal,
+      });
+    else
+      required(
+        usage.bytes + row.bytes <= MANAGED_MEDIA_LIMITS.bytes,
+        t('errors:creator.teamMediaBudgetExceeded'),
+      );
+    try {
+      const db = await open(signal);
+      creatorAbort(signal);
+      const result = await new Promise((resolve, reject) => {
+        const tx = db.transaction(STORES, 'readwrite'),
+          editions = tx.objectStore('editions'),
+          metadata = tx.objectStore('metadata'),
+          existingRequest = editions.get(editionId),
+          keysRequest = editions.getAllKeys(),
+          rowsRequest = editions.getAll(),
+          stateRequest = metadata.get(STATE_KEY);
+        let failure,
+          ready = 0,
+          outcome;
+        const abort = () => {
+          failure = cancelled();
           try {
             tx.abort();
           } catch {}
+        };
+        const stage = () => {
+          if (++ready !== 4) return;
+          try {
+            const existing = existingRequest.result;
+            if (existing !== undefined) {
+              outcome = { existing };
+              return;
+            }
+            const keys = keysRequest.result;
+            required(keys.length < MAX_EDITIONS, t('errors:creator.removeTeamCampaignFirst'));
+            required(
+              rowsRequest.result.reduce((sum, item) => sum + item.bytes, row.bytes) <=
+                CREATOR_TEAM_MEDIA_LIMITS.bytes,
+              t('errors:creator.teamMediaBudgetExceeded'),
+            );
+            const state = validateState(stateRequest.result);
+            state.generation++;
+            editions.put(row, editionId);
+            metadata.put(state, STATE_KEY);
+            outcome = { existing: null };
+          } catch (error) {
+            failure = error;
+            try {
+              tx.abort();
+            } catch {}
+          }
+        };
+        signal?.addEventListener('abort', abort, { once: true });
+        existingRequest.onsuccess = stage;
+        keysRequest.onsuccess = stage;
+        rowsRequest.onsuccess = stage;
+        stateRequest.onsuccess = stage;
+        tx.oncomplete = () => {
+          signal?.removeEventListener('abort', abort);
+          resolve(outcome);
+        };
+        tx.onabort = tx.onerror = () => {
+          signal?.removeEventListener('abort', abort);
+          reject(failure || tx.error || new Error(t('errors:creator.teamInstallFailed')));
+        };
+      });
+      creatorAbort(signal);
+      if (result.existing) {
+        const inspected = await inspectEdition(result.existing, editionId);
+        required(inspected.bytes === row.bytes, t('errors:creator.teamEditionIdentityConflict'));
+      }
+      if (managedStore)
+        await managedStore.finalizeExternalUsage({
+          owner: MANAGED_USAGE_OWNER,
+          id: editionId,
+          bytes: row.bytes,
+          signal,
+        });
+      return Object.freeze({ editionId, alreadyInstalled: Boolean(result.existing) });
+    } catch (error) {
+      if (managedStore)
+        try {
+          await installedUsage();
+        } catch {
+          /* The pending claim remains bounded and is reconciled on the next inventory/install. */
         }
-      };
-      signal?.addEventListener('abort', abort, { once: true });
-      existingRequest.onsuccess = stage;
-      keysRequest.onsuccess = stage;
-      rowsRequest.onsuccess = stage;
-      stateRequest.onsuccess = stage;
-      tx.oncomplete = () => {
-        signal?.removeEventListener('abort', abort);
-        resolve(outcome);
-      };
-      tx.onabort = tx.onerror = () => {
-        signal?.removeEventListener('abort', abort);
-        reject(failure || tx.error || new Error(t('errors:creator.teamInstallFailed')));
-      };
-    });
-    creatorAbort(signal);
-    if (result.existing) {
-      const inspected = await inspectEdition(result.existing, editionId);
-      required(inspected.bytes === row.bytes, t('errors:creator.teamEditionIdentityConflict'));
-      return Object.freeze({ editionId, alreadyInstalled: true });
+      throw error;
     }
-    return Object.freeze({ editionId, alreadyInstalled: false });
   }
   async function inventory({ signal } = {}) {
     const snapshot = await transaction(
@@ -714,10 +827,17 @@ export function createInstalledTeamCampaignStore({
     editions.sort(
       (a, b) => b.installedAt - a.installedAt || a.editionId.localeCompare(b.editionId),
     );
-    return Object.freeze({
+    const result = Object.freeze({
       generation: validateState(snapshot.state).generation,
       editions: Object.freeze(editions),
     });
+    if (managedStore)
+      await managedStore.reconcileExternalUsage(
+        MANAGED_USAGE_OWNER,
+        editions.map((edition) => ({ id: edition.editionId, bytes: edition.bytes })),
+        { signal },
+      );
+    return result;
   }
   async function load(
     editionId,
@@ -1004,6 +1124,7 @@ export function createInstalledTeamCampaignStore({
     });
   }
   return Object.freeze({
+    reviewInstall,
     install,
     inventory,
     load,
@@ -1013,6 +1134,7 @@ export function createInstalledTeamCampaignStore({
     recordCompletion,
     close() {
       closed = true;
+      managedStore?.close?.();
       void opening?.then(
         (db) => db.close(),
         () => {},
