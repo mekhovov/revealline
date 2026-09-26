@@ -3,12 +3,15 @@ import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { fileURLToPath } from 'node:url';
 import {
   findArchiveRoot,
   launchMusicIntake,
   resolveForwardedInput,
   splitLauncherArguments,
 } from '../intake/add-music.mjs';
+
+const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 async function temporary(t) {
   const root = await mkdtemp(path.join(os.tmpdir(), 'soundtrack-launcher-test-'));
@@ -48,7 +51,7 @@ test('unknown licence routes the source folder to private UA-FPV pack creation',
   );
   assert.equal(code, 0);
   assert.equal(invocation.command, process.execPath);
-  assert.equal(invocation.options.cwd.endsWith('/go_test'), true);
+  assert.equal(invocation.options.cwd, repositoryRoot);
   assert.equal(invocation.args[0].endsWith('/scripts/ua-fpv-local-pack.mjs'), true);
   assert.deepEqual(invocation.args.slice(1), [
     '--source-dir',
