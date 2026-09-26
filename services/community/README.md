@@ -94,8 +94,11 @@ docker compose \
 After the numbered application migrations, the production dependency chain runs the Better Auth
 migration and then `npm run deployment:preflight`. API and worker processes start only after that
 preflight succeeds. It verifies the current application and Better Auth tables, the latest
-application migration columns, durable write/read/remove access in both the package and tus roots,
-and a bounded `ffprobe -version` invocation. Its JSON result contains check names and counts only;
+application migration columns, durable write/read/remove access in both disk roots, and a bounded
+`ffprobe -version` invocation. When S3 is selected, the same check instead performs a unique
+Put/Get/DeleteObjects round trip, completes and reads one 32-byte multipart upload, then creates and
+aborts a separate multipart upload. Missing object, part, completion, abort, read, or removal
+permissions fail closed before API or worker startup. Its JSON result contains check names and counts only;
 configuration values, database URLs, storage paths, process output, and nested error messages are
 not emitted.
 
@@ -251,8 +254,9 @@ identity and version for that owner-and-slug collection. Clients use those immut
 update discovery; display titles and shared slugs across different owners never merge collections.
 
 `POST /v1/submissions` returns a tus creation endpoint and immutable upload metadata. The mounted
-official `@tus/server` and `@tus/file-store` implementation checks the authenticated owner on create,
-HEAD, PATCH, and completion. Completion rechecks size, SHA-256, edition, and submission identity
+official `@tus/server` uses `@tus/file-store` for the default disk deployment and the maintained,
+pinned `@tus/s3-store` when `COMMUNITY_BLOB_STORAGE=s3`. Both paths check the authenticated owner on
+create, HEAD, PATCH, and completion. Completion rechecks size, SHA-256, edition, and submission identity
 before copying bytes to the content-addressed package store. The test suite interrupts a PATCH,
 reads the retained offset, resumes it, and proves another owner cannot inspect the upload. The
 separate `acceptance:tus-resume` fault rehearsal drops the live HTTP connection after the server has
@@ -271,8 +275,21 @@ hours by default). Each API periodically claims at most `COMMUNITY_TUS_CLEANUP_B
 registry rows with `FOR UPDATE SKIP LOCKED`, records a cleanup lease, acquires the upload's shared
 lock, and removes it through the configured tus datastore. Failed removals are released for a later
 bounded retry; a crashed cleaner's lease can be reclaimed. The registry and lock layer are store
-independent, so an injected S3 tus datastore uses the same coordination boundary. Compose still
+independent. The S3 adapter fixes parts at 8 MiB and permits at most four concurrent part uploads per
+API process. Completed bytes are copied into the separately verified content-addressed package key,
+then the tus object and metadata object are removed explicitly; interrupted and expired sessions use
+the maintained adapter's multipart abort path. Configure a provider lifecycle rule as a final guard
+for multipart uploads abandoned before their PostgreSQL registry row can be committed. Compose still
 mounts the filesystem datastore and requires shared storage if the API is scaled on one host.
+
+To run the executable S3 path outside the checked-in disk Compose profile, set
+`COMMUNITY_BLOB_STORAGE=s3`, remove both `COMMUNITY_BLOB_ROOT` and `COMMUNITY_TUS_ROOT`, and set
+`COMMUNITY_S3_BUCKET`, `COMMUNITY_S3_REGION`, `COMMUNITY_S3_FORCE_PATH_STYLE`, and
+`COMMUNITY_BLOB_STAGING_ROOT`. `COMMUNITY_S3_ENDPOINT` is optional. Package keys and tus working
+objects share the configured private bucket; credentials come from the standard AWS SDK chain. The
+local staging root holds one bounded package while its size and SHA-256 are verified before immutable
+publication. Passing source tests or the S3 preflight does not establish AWS deployment acceptance;
+the recovery/MinIO rehearsal and credentialed AWS smoke run remain separate gates.
 
 Titles and descriptions are length-bounded Unicode text. The API never interprets or emits them as
 HTML. Catalog clients must render these fields with text nodes (`textContent`), not HTML insertion.
