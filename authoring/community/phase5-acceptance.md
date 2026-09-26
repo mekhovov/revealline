@@ -74,6 +74,11 @@ creation/offset/chunk contract and treats only server responses as upload progre
 
 ## Remaining acceptance gates
 
+The `v0.141.2` hardening candidate adds the fail-closed production Compose and readiness contract
+recorded in [deployment-acceptance.md](deployment-acceptance.md). This removes manual ordering and
+configuration ambiguity from the source deployment path, but it does not replace the live gates
+below.
+
 - Repeat Creator A publish → automatic validation → listing → Player B preview/install →
   legal win → reload/offline play through the deployed same-origin service in a clean physical
   browser profile. The modeled in-process integration now covers this behavioral chain but is not
