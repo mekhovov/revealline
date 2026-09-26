@@ -580,5 +580,12 @@
   "content.image.malformedBase64": "Дані base64 зображення мають неправильний формат.",
   "content.image.originalByteBudget": "Зображення перевищує обмеження оригінальних даних у 4 МіБ.",
   "content.image.dimensionBudget": "Зображення перевищує 8192 пікселі з одного боку або обмеження у 16 мегапікселів.",
-  "content.image.headerUnreadable": "Не вдалося прочитати заголовок зображення."
+  "content.image.headerUnreadable": "Не вдалося прочитати заголовок зображення.",
+  "content.stableIdentifier": "{{path}} має бути стабільним незарезервованим ідентифікатором.",
+  "content.classBodiesMapping": "theme.classBodies має зіставляти ідентифікатори класів з ідентифікаторами шаблонів корпусу.",
+  "content.classBodiesBudget": "theme.classBodies може містити не більше {{max}} записів.",
+  "content.stableClassIds": "Ключі theme.classBodies мають бути стабільними незарезервованими ідентифікаторами класів.",
+  "content.stableBodyPresetId": "{{path}} має бути стабільним незарезервованим ідентифікатором шаблону корпусу.",
+  "content.registeredValue": "{{path}} не зареєстровано.",
+  "content.hexColor": "{{path}} має використовувати формат #rrggbb."
 }

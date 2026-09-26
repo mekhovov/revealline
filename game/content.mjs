@@ -201,7 +201,7 @@ function metadata(value, path, errors) {
 }
 function themeChecks(theme, errors) {
   if (!plain(theme)) {
-    errors.push('theme must be an object');
+    errors.push(contentError('objectRequired', { path: 'theme' }));
     return;
   }
   keys(
@@ -226,35 +226,32 @@ function themeChecks(theme, errors) {
   );
   for (const key of ['id', 'family', 'player'])
     if (!stableId(theme[key]) || forbidden.has(theme[key]))
-      errors.push(`theme.${key} must be a non-reserved stable identifier`);
+      errors.push(contentError('stableIdentifier', { path: `theme.${key}` }));
   if (own(theme, 'classBodies')) {
-    if (!plain(theme.classBodies))
-      errors.push('theme.classBodies must be a mapping of class IDs to body preset IDs');
+    if (!plain(theme.classBodies)) errors.push(contentError('classBodiesMapping'));
     else {
       if (Object.keys(theme.classBodies).length > CONTENT_LIMITS.maxClassBodies)
-        errors.push(
-          `theme.classBodies may contain at most ${CONTENT_LIMITS.maxClassBodies} entries`,
-        );
+        errors.push(contentError('classBodiesBudget', { max: CONTENT_LIMITS.maxClassBodies }));
       for (const [classId, bodyId] of Object.entries(theme.classBodies)) {
         if (!stableId(classId) || forbidden.has(classId))
-          errors.push('theme.classBodies keys must be non-reserved stable class IDs');
+          errors.push(contentError('stableClassIds'));
         if (!stableId(bodyId) || forbidden.has(bodyId))
-          errors.push(`theme.classBodies.${classId} must be a non-reserved stable body preset ID`);
+          errors.push(contentError('stableBodyPresetId', { path: `theme.classBodies.${classId}` }));
       }
     }
   }
   for (const key of ['name', 'subtitle'])
     if (!text(theme[key], 120))
-      errors.push(`theme.${key} must be nonempty text of at most 120 characters`);
+      errors.push(contentError('boundedText', { path: `theme.${key}`, max: 120 }));
   if (!['dawn', 'heritage', 'arcade', 'network'].includes(theme.scene))
-    errors.push('theme.scene is not registered');
+    errors.push(contentError('registeredValue', { path: 'theme.scene' }));
   for (const role of ['enemyShape', 'patrolShape', 'bossShape'])
     if (
       !['tank', 'drone', 'radar', 'moth', 'spark', 'orb', 'cube', 'flower', 'core'].includes(
         theme[role],
       )
     )
-      errors.push(`theme.${role} is not registered`);
+      errors.push(contentError('registeredValue', { path: `theme.${role}` }));
   const paletteKeys = [
     'ink',
     'paper',
@@ -267,20 +264,20 @@ function themeChecks(theme, errors) {
     'sky',
     'land',
   ];
-  if (!plain(theme.palette)) errors.push('theme.palette must be an object');
+  if (!plain(theme.palette)) errors.push(contentError('objectRequired', { path: 'theme.palette' }));
   else {
     keys(theme.palette, paletteKeys, 'theme.palette', errors);
     for (const key of paletteKeys)
       if (typeof theme.palette[key] !== 'string' || !/^#[0-9a-f]{6}$/i.test(theme.palette[key]))
-        errors.push(`theme.palette.${key} must be #rrggbb`);
+        errors.push(contentError('hexColor', { path: `theme.palette.${key}` }));
   }
   const labelKeys = ['objective', 'supply', 'enemy', 'boss', 'currency', 'ability'];
-  if (!plain(theme.labels)) errors.push('theme.labels must be an object');
+  if (!plain(theme.labels)) errors.push(contentError('objectRequired', { path: 'theme.labels' }));
   else {
     keys(theme.labels, labelKeys, 'theme.labels', errors);
     for (const key of labelKeys)
       if (!text(theme.labels[key], 60))
-        errors.push(`theme.labels.${key} must be nonempty text of at most 60 characters`);
+        errors.push(contentError('boundedText', { path: `theme.labels.${key}`, max: 60 }));
   }
   if (own(theme, 'metadata')) metadata(theme.metadata, 'theme.metadata', errors);
 }
