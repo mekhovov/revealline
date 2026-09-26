@@ -114,7 +114,7 @@ test('v5 remains historical while v6 keeps isolated persistence after the normal
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
     solo: 'whole-spatial-v25',
     versus: 'whole-spatial-v25',
-    team: 'team-complete-specialist-originals-1',
+    team: 'team-cultural-specialist-originals-1',
   });
 });
 
