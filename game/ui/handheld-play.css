@@ -325,7 +325,6 @@
     }
     body.field-kit.game-shell[data-flight-state='running'] .telemetry :is(span, em, .meter),
     body.field-kit.game-shell[data-flight-state='running'] .telemetry > div:last-child,
-    body.field-kit.game-shell[data-flight-state='running'] #shell-fullscreen,
     body.field-kit.game-shell[data-flight-state='running'] .flight-status {
       display: none;
     }
@@ -1659,17 +1658,11 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
   body.field-kit.game-shell[data-flight-state='running'] .telemetry {
     right: calc(var(--safe-right) + 152px);
   }
-  body.field-kit.game-shell[data-flight-state='running'] #shell-fullscreen {
-    right: max(108px, calc(var(--safe-right) + 96px));
-  }
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud {
     margin-inline-end: 96px;
   }
 }
 @media (max-width: 680px) and (orientation: portrait) {
-  body.field-kit.game-shell[data-flight-state='running'] #shell-fullscreen.shell-fullscreen {
-    display: none;
-  }
   body.field-kit.game-shell[data-flight-state='running'] .telemetry {
     right: calc(var(--safe-right) + 96px);
   }
