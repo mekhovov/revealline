@@ -532,6 +532,7 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   sample([0]);
   sample([]);
   assert.equal(page.$('soundtrack-advanced-backup-body').hidden, false);
+  sample([], 120);
   for (let i = 0; page.doc.activeElement !== page.$('soundtrack-export-bundle') && i < 100; i++) {
     sample([13]);
     sample([]);
