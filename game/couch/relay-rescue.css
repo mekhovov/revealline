@@ -717,6 +717,7 @@ canvas {
   flex: 1 0 100%;
 }
 .team-coach {
+  box-sizing: border-box;
   width: 100%;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
