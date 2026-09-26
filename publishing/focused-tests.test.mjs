@@ -33,6 +33,38 @@ test("unknown runtime paths fail closed through validate", () => {
   );
 });
 
+test("Team picture authority changes avoid the broad navigation matrix", () => {
+  const plan = focusedTestPlan(
+    [
+      "game/couch/coop-picture-bindings.mjs",
+      "game/couch/coop-presentation.mjs",
+      "game/test/coop-historical-import-picture.test.mjs",
+      "game/test/coop-picture-bindings.test.mjs",
+      "game/test/coop-reviewed-successor-picture.test.mjs",
+      "package.json",
+      "package-lock.json",
+      "game/build-config.json",
+    ],
+    manifest,
+  );
+  assert.deepEqual(plan.categories, ["team-picture-bindings"]);
+  assert.deepEqual(plan.unknownRuntime.sort(), [
+    "game/build-config.json",
+    "package-lock.json",
+    "package.json",
+  ]);
+  assert.deepEqual(
+    plan.commands.map(({ id }) => id),
+    ["team-picture-bindings", "unknown-runtime-validate"],
+  );
+});
+
+test("other Team runtime paths retain the navigation gate", () => {
+  const plan = focusedTestPlan(["game/couch/relay-rescue.mjs"], manifest);
+  assert.deepEqual(plan.categories, ["localization", "player-navigation-team"]);
+  assert.deepEqual(plan.unknownRuntime, []);
+});
+
 test("documentation-only changes have a zero-command bounded plan", () => {
   const plan = focusedTestPlan(["docs/fast-release-mode.md"], manifest);
   assert.deepEqual(plan, { categories: [], unknownRuntime: [], commands: [] });
@@ -45,6 +77,17 @@ test("changed test files are executed directly without shell evaluation", () => 
     plan.commands.some(
       ({ id }) => id === "changed-test:game/test/offline-new.test.mjs",
     ),
+  );
+});
+
+test("manifest-declared changed tests are not executed twice", () => {
+  const plan = focusedTestPlan(
+    ["game/test/coop-picture-bindings.test.mjs"],
+    manifest,
+  );
+  assert.deepEqual(
+    plan.commands.map(({ id }) => id),
+    ["team-picture-bindings"],
   );
 });
 

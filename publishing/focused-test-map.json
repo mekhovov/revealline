@@ -2,10 +2,30 @@
   "format": "revealline-focused-test-map.v1",
   "categories": [
     {
+      "id": "team-picture-bindings",
+      "pathPatterns": [
+        "^game/couch/coop-(picture-bindings|presentation)\\.mjs$",
+        "^game/test/coop-(historical-import-picture|picture-bindings|reviewed-successor-picture)\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "team-picture-bindings",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/coop-historical-import-picture.test.mjs",
+            "game/test/coop-picture-bindings.test.mjs",
+            "game/test/coop-reviewed-successor-picture.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
       "id": "localization",
       "pathPatterns": [
         "(^|/)(locales?|localization|i18n)(/|[-.])",
-        "^game/(about|couch)/",
+        "^game/about/",
+        "^game/couch/(?!coop-(?:picture-bindings|presentation)\\.mjs$)",
         "^scripts/localization(-main)?\\.mjs$"
       ],
       "commands": [
@@ -49,7 +69,8 @@
     {
       "id": "player-navigation-team",
       "pathPatterns": [
-        "^game/(couch|team|navigation)/",
+        "^game/(?:team|navigation)/",
+        "^game/couch/(?!coop-(?:picture-bindings|presentation)\\.mjs$)",
         "^game/test/.*(couch|team|navigation|pause|result).*\\.test\\.mjs$"
       ],
       "commands": [
