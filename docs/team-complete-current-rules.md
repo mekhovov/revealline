@@ -6,7 +6,7 @@ Status date: 2026-09-26
 
 - Public release baseline: **v0.132.3**; v0.132.4 is in immutable-package qualification.
 - Exact terminal v0.132.4 stack base: `origin/main` at
-  `fad132a054a10f27198751bfeb7c02ba340cfbfb`.
+  `80911bf5ec0f6df711d7e70b36a11005d2be4c3a`.
 - Apex v25 source candidate: draft PR #625. Its GitHub head is authoritative after guarded
   restacks.
 - Active successor: draft PR #630, Team current-rules adoption / source version **0.141.0**. The
