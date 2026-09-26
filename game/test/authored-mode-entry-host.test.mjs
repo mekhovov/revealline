@@ -23,6 +23,7 @@ const teamOriginals = new Map(
 
 function teamPictures({ install }) {
   const BaseImage = globalThis.Image;
+  const hostFetch = globalThis.fetch;
   install('Image', {
     value: class extends BaseImage {
       async decode() {
@@ -40,7 +41,7 @@ function teamPictures({ install }) {
       const asset = defaultTeam.assets.find((row) =>
         new URL(url).pathname.endsWith('/' + row.path),
       );
-      assert(asset, 'Team fetch uses a registered original');
+      if (!asset) return hostFetch(url);
       return new Response(teamOriginals.get(asset.path));
     },
   });
