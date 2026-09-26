@@ -21,15 +21,15 @@ artwork. The complete acceptance record is in
 
 **Completed release infrastructure:** PR #692 merged exact draft recovery, PR #658 merged source/metadata-bound admission, and PR #659 merged the five-release global selector. Pages run `36261378630` passed assembly, deployment and public-byte audit. The public explorer now presents exactly five playable releases while preserving every historical tag, release, asset and archive. These infrastructure changes do not alter frozen game bytes.
 
-**Active candidate:** v0.141.6 introduces dual readers and freezes its new
-fastline release with the deterministic commit-plus-manifest source-preservation
-path. Direct qualification retains the accepted tar default unless a reviewed
-caller explicitly selects the manifest writer. PR #689 is the prerequisite test-fixture
-correction and is retained as a separate commit in PR #662 after repeated
-mainline movement made another standalone gate stale. The cumulative source must
-pass one fresh exact-head focused gate and complete the immutable
-release/publication cycle. The manifest writer remains opt-in until the reviewed
-canary step described in `publishing/SOURCE-MANIFEST-CONTRACT.md`.
+**Published successor:** v0.141.6 introduces dual readers and completed the first
+reviewed deterministic commit-plus-manifest source-preservation canary. PR #662
+contains the required fixture correction that superseded closed PR #689. Its
+exact-head focused gate, qualification, format-v2 manifest freeze, independent
+inspection, evidence assembly and guarded publication all passed for source
+`d3b48436318c9d056678089b219e47534b554897`. The immutable release has nine
+hashed assets and no `source.tar`. Public selection remains fail-closed on
+v0.141.5 until Archive99 preserves that predecessor and the v0.141.6 selector,
+Pages byte audit and built-in-browser acceptance pass.
 
 **Ordered continuation:** Player-first work resumes at v0.141.7 in the approved
 compatible batches below. Reconcile every batch onto the accepted predecessor
@@ -42,8 +42,8 @@ from modeled or built-in-browser evidence.
 | ----- | --------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------- |
 | 1     | v0.141.4        | Couch secondary navigation and Team continuation           | publicly accepted exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c` |
 | 2     | v0.141.5        | Bounded community S3 package and resumable-upload storage  | publicly accepted exact source `edd5fa39ae3f0bdf7bc6fa156c461925df794577` |
-| 3     | v0.141.6        | Dual-reader source-manifest release and opt-in canary path | PR #662 includes the separately committed PR #689 fixture correction      |
-| 4     | v0.141.7        | Teaching, reward and navigation batch                      | PR #543 → #580 → #553; rerun cumulative exact-source gates                |
+| 3     | v0.141.6        | Dual-reader source-manifest release and opt-in canary path | immutable release published; Archive99 and public selector acceptance next |
+| 4     | v0.141.7        | Teaching, reward and navigation batch                      | integrate #543 → #580; repair semantic bilingual teaching; refresh status |
 | 5     | v0.141.8        | Failure and continuation batch                             | PR #545 → #552 → #557; rerun cumulative exact-source gates                |
 | 6     | v0.141.9        | Pause, Settings/Help and Collection return batch           | PR #542 → #548; rerun cumulative exact-source gates                       |
 | 7     | v0.142.0        | Existing offline delivery batch                            | preserve PR #605 → #609 → #619 → #588 ownership and allocation            |
@@ -87,6 +87,14 @@ record was captured against an earlier implementation and leaves complete Team
 play and installed-device coverage open. Physical devices, human balance,
 cross-runtime replay portability and comprehensive offline acceptance therefore
 remain separately reported gates.
+
+The v0.141.7 reconciliation audit found that PR #543's original teaching helper
+derived behavior from localized display labels and hard-coded English ground
+text. The repaired batch must consume semantic `groundContext` and
+`supportActions`, add English and Ukrainian catalog keys, update an active cue
+when the language changes, and cover the real host path. PR #580's gallery
+commits carry cleanly after that runtime layer. PR #553 is historical status text
+and must be represented by this live checkpoint instead of cherry-picked.
 
 ## Current delivery status
 
