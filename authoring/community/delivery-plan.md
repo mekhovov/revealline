@@ -2,21 +2,90 @@
 
 Approved 24 September 2026. Browser-first, local and account-free creation; images are reveal rewards; Solo first; portable files before a free self-hosted community store. This register implements the approved sequence and does not supersede another task's release ownership.
 
-| Phase | Deliverable                                                                                   | Acceptance gate                                                                                                 | Status                                                                    |
-| ----- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| 0     | Beginner guide, framework reference, maintainer handoff, owned examples                       | Reproduce current preview/install/share distinction                                                             | v0.105.0 released and accepted                                            |
-| 1     | Single image, six verified layout families, review/approval, `.rlpack`, installed Custom play | Actual download installs in clean profile; ordinary legal win, earned picture after reload, unfinished recovery | Included in combined creator release candidate                            |
-| 2     | Batch images, ordering/pacing, groups, checkpoints and bulk approval                          | 1/12/50 items, duplicates, portraits, per-item failure, cancellation, bounded memory and capacity splitting     | Included in combined creator release candidate                            |
-| 3     | Mixed media, pairing, three posters, frame capture, playback range and victory story          | Paired and video-only wins, audio, Skip/Replay, unsupported codecs, exact poster and portable recovery          | Included in combined creator release candidate                            |
-| 4     | Self-hosted accounts, resumable uploads, validation jobs, automatic publication and catalog   | Ownership, corrupt upload rejection, restarts, listing and database/blob restore                                | Included in combined candidate; hosted restore rehearsal pending          |
-| 5     | Integrated store, discovery, publish/install/update/offline and removal                       | Two-user full journey, exact immutable saves/rewards across updates and offloading                              | Included in combined candidate; deployed service journey pending          |
-| 6     | Versus qualification                                                                          | Both boards, equal conditions, results, Retry/Next and transfer                                                 | Included in combined creator release candidate                            |
-| 7     | Purposeful Team templates                                                                     | Both players contribute; failure/retry and every advertised preset/path                                         | Installed editions and clears included; unfinished attempts/media pending |
-| 8     | Optional physical trimming, resizing, compression and conversion                              | Inspect actual exported/decoded bytes, timing, orientation, sound sync and playback                             | Silent AVC trim verified; audio and broader conversion remain pending     |
+| Phase | Deliverable                                                                                   | Acceptance gate                                                                                                 | Status                                                                                                                                                                                                    |
+| ----- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0     | Beginner guide, framework reference, maintainer handoff, owned examples                       | Reproduce current preview/install/share distinction                                                             | Released and accepted                                                                                                                                                                                     |
+| 1     | Single image, six verified layout families, review/approval, `.rlpack`, installed Custom play | Actual download installs in clean profile; ordinary legal win, earned picture after reload, unfinished recovery | Released in `v0.141.0`; ordinary installed play and recovery accepted in the built-in browser                                                                                                             |
+| 2     | Batch images, ordering/pacing, groups, checkpoints and bulk approval                          | 1/12/50 items, duplicates, portraits, per-item failure, cancellation, bounded memory and capacity splitting     | Released in `v0.141.0`; the bounded batch, recovery, ordering and split cases are accepted                                                                                                                |
+| 3     | Mixed media, pairing, three posters, frame capture, playback range and victory story          | Paired and video-only wins, audio, Skip/Replay, unsupported codecs, exact poster and portable recovery          | Released in `v0.141.0`; image, video and exact portable-recovery paths are accepted in the built-in browser                                                                                               |
+| 4     | Self-hosted accounts, resumable uploads, validation jobs, automatic publication and catalog   | Ownership, corrupt upload rejection, restarts, listing and database/blob restore                                | Service source released in `v0.141.0`; deployment preflight, exact tus fault recovery and source-to-target restore rehearsal tooling released in `v0.141.2`; live execution remains environment-dependent |
+| 5     | Integrated store, discovery, publish/install/update/offline and removal                       | Two-user full journey, exact immutable saves/rewards across updates and offloading                              | Static client and exact-edition offload/reinstall released; the bounded two-user deployment runner and moderation console released in `v0.141.2`; their live run awaits the community environment         |
+| 6     | Versus qualification                                                                          | Both boards, equal conditions, results, Retry/Next and transfer                                                 | Released and accepted in the built-in browser with exact installed editions, progress, pictures, reload and results-screen Next                                                                           |
+| 7     | Purposeful Team templates                                                                     | Both players contribute; failure/retry and every advertised preset/path                                         | Released; exact attempts/rewards, picture/video packages, browser assembly/review/install and shared managed-media accounting are accepted                                                                |
+| 8     | Optional physical trimming, resizing, compression and conversion                              | Inspect actual exported/decoded bytes, timing, orientation, sound sync and playback                             | Released for the bounded formats; Firefox, Safari, broader codecs, physical speakers and physical mobile remain environment-dependent acceptance follow-ups                                               |
 
-The implementation phases retain separate documentation and acceptance records, while the completed stack is reconciled and released as one creator feature. Dependent behavior remains unaccepted until its recorded prerequisites pass.
+The implementation phases retain separate documentation and acceptance records. The complete local creator stack is published as one feature in `v0.141.0`; only the environment-dependent acceptance listed below remains open.
 
-See the [Phase 1 walkthrough](image-campaign-guide.md), [batch campaign walkthrough](batch-image-campaign-guide.md), [video campaign walkthrough](video-campaign-guide.md), [portable/source format reference](creator-bundle-reference.md), [Phase 1 acceptance record](phase1-acceptance.md), [Phase 2 candidate acceptance record](phase2-acceptance.md), [Phase 3 candidate acceptance record](phase3-acceptance.md), [Phase 4 service acceptance record](phase4-acceptance.md), and [Phase 5 client acceptance record](phase5-acceptance.md). The Phase 1 candidate supports one image and one mission selected from twelve verified variants across six families. Later phase behavior is not advertised as released until its separate release passes every recorded gate.
+## Current status and remaining effort — 26 September 2026
+
+PR #564 merged the complete creator hardening at source
+`5d6c97c850a648c5ebe93d3cf57731aeb67d0bbb`. Release `v0.141.0` is published from that exact
+source. The community hardening then merged through PR #675 as exact source
+`12978e5fd3fe0ce70bbee96aa543f569f64622d4`. The latest accepted release is
+[`v0.141.4`](https://github.com/mekhovov/revealline/releases/tag/v0.141.4), published from exact
+source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c`. Selector PR #690 merged as
+`74cb25e3`; the public exact audit matched all 1,897 files and 630,507,368 bytes, and built-in-browser
+acceptance passed Home, Team quick start and an actual shared arena without console warnings or
+errors. `v0.141.5` is the cumulative community S3 storage and recovery release in progress: PRs
+#693 and #694 are merged, PR #696 prepared the version and release record, and rebased PR #695 is
+the terminal source root pending its hosted MinIO recovery receipt. Estimates below are focused
+engineering time after each required environment becomes available, not calendar release dates.
+PR #680 merged as `218e76281e3bfa26f57b7aa0f7b98058f4bd05ad`. It confines the validation
+worker to read-only package and image filesystems, bounded temporary storage and process resources,
+an internal database network, and local-only bounded ffprobe inspection. Source assertions cover
+that contract; enforcement by a Linux container runtime and the live validation journey remain
+deployment gates.
+
+| Workstream           | Completed/current result                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Remaining work                                                                                                                                     | Focused ETA                                                   |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Phases 0–3           | The guide, single-image and batch generation, mixed video campaigns, `.rlpack`, installed Solo Custom progression, exact source recovery and batch controls are published in `v0.141.0` and retained by `v0.141.2`. Built-in-browser image/video, victory-story, package, install, legal-win, saved-attempt, reload and exact-reward evidence passed.                                                                                                                             | Physical-speaker confirmation is grouped with the device matrix below. Missing-original recovery is accepted at deterministic byte-store scope.    | Local implementation and built-in-browser acceptance complete |
+| Phases 4–5           | Community account, upload, validation, publication, catalog and immutable install/update/offline source paths are released and covered by the combined runtime/service suites. Exact-edition offload/reinstall passed in the built-in browser. `v0.141.2` includes the administrator report-triage page, deployment runner, recovery rehearsal and interrupted-tus fault proxy. The executable production target is the documented single-host filesystem deployment.             | Deploy that target; pass live PostgreSQL/proxy/mail/filesystem restore, administrator moderation and the two-user publish/install/offline journey. | 0.5–1 day after infrastructure is available                   |
+| Phase 6 Versus       | All twelve generated variants have equal-board replay evidence. Exact installed editions, progress, pictures, reload and visible results-screen Next passed in the real two-board host and built-in browser.                                                                                                                                                                                                                                                                      | None in the released local/browser scope.                                                                                                          | Complete                                                      |
+| Community hardening  | PostgreSQL-backed admission, tus locks and leases, isolated validation, exact blob checks, account mail flows, moderation APIs, backup and restore are released. `v0.141.2` adds a bounded administrator queue, explicit preview, resolve and unlist workflow, fail-closed deployment preflight, source-to-target restore rehearsal, and deployed two-user runner.                                                                                                                | Run live PostgreSQL, proxy interruption, filesystem backup/restore, mail delivery, moderation and the two-user journey on one host.                | 0.5–1 day after infrastructure is available                   |
+| S3/AWS expansion     | The executable storage selector now provides stream-verified immutable S3 package publication, the pinned maintained tus S3 datastore, bounded multipart work, deterministic completed-upload cleanup, fail-closed object/multipart readiness, portable package backup/restore, explicit disaster tus expiry, and a path-filtered MinIO recovery acceptance workflow. PostgreSQL continues to coordinate tus locks, expiry leases and publication state independently of storage. | Pass the hosted MinIO recovery workflow, then run the credentialed AWS smoke gate with a private bucket and scoped IAM actors.                     | Hosted CI in this release; 0.5–1 focused day after AWS access |
+| Phase 7 Team         | Purpose-built templates, replay-qualified launch, immutable editions, recovery, rewards, picture/video packages, browser assembly/review/install and shared managed-media accounting are published. The public Team route loads cleanly in the built-in browser.                                                                                                                                                                                                                  | None in the released local/browser scope.                                                                                                          | Complete                                                      |
+| Phase 8 media editor | Bounded silent MP4/WebM and AVC+AAC MP4 trim/conversion, resize/compression, orientation, timing and decoded-audio verification are published.                                                                                                                                                                                                                                                                                                                                    | Qualify Firefox, Safari, broader codecs, physical mobile playback and physical speakers.                                                           | 1–2 days when the environments are available                  |
+| Publication          | Stable `v0.141.4` is published from exact source `cc0309ffaaea…`; selector PR #690 at `74cb25e3…` passed the 1,897-file/630,507,368-byte public exact audit and the built-in-browser player-flow checks. PRs #693, #694 and #696 establish the `v0.141.5` S3 release inputs.                                                                                                                                                                                                      | Pass PR #695's hosted MinIO gate, merge its rebased exact source, publish `v0.141.5`, then select and audit that cumulative release.               | In progress                                                   |
+
+The published `v0.141.2` community hardening release includes a production-safe Compose overlay,
+executable deployment preflight, administrator moderation console, exact interrupted-tus fault
+proxy, source-to-target database/blob recovery rehearsal, and a bounded deployed two-user journey.
+The source suite passes 63/63 checks. The deployment runner proves exact publication/download, owner
+isolation, install, legal completion persistence, installed picture-asset binding, report/unlist,
+and offline replay without exposing credentials. These commands are ready; their live execution is
+tracked in [deployment-acceptance.md](deployment-acceptance.md).
+
+## Remaining environment-dependent acceptance and concerns
+
+- The released local creator, package, installed gameplay, Team, Versus and bounded media paths have
+  no remaining PR, release or Pages gate.
+- The community API still needs a selected deployment environment. The source now supplies bounded
+  commands for preflight, interrupted tus recovery, database/blob restore rehearsal, and the full
+  two-user journey. The supported initial Phase 4/5 target is one host with PostgreSQL and the
+  filesystem-backed package and tus volumes in the production Compose configuration. Proxy/TLS,
+  mail delivery, real filesystem restore, administrator-session moderation and the two-user run
+  require 0.5–1 day once that infrastructure and three short-lived actor credential sets are
+  available.
+- S3 is a separate post-deployment workstream for multi-host or AWS operation; it does not block the
+  initial single-host launch. The runtime/configuration slice is implemented: package bytes are
+  staged and verified before immutable publication, the maintained tus S3 datastore has bounded
+  multipart work and deterministic completed-upload cleanup, readiness proves object plus
+  multipart operations, and disaster recovery streams and re-verifies exact completed packages.
+  Normal restarts preserve resumable uploads; portable disaster restore explicitly expires
+  provider-bound multipart sessions and records their count. The path-filtered hosted MinIO job
+  supplies the remaining local-compatible runtime receipt. The real AWS smoke run remains 0.5–1
+  day after a private bucket and scoped IAM credentials are available.
+- Firefox, Safari, physical mobile playback, physical-speaker confirmation and broader-codec
+  qualification require 1–2 days once those environments and devices are available. Current broad
+  media inputs continue to fail closed outside the released, verified format boundary.
+- Deterministic tests cover quota rollback, missing originals, exact-package recovery and removal of
+  phantom reservations. Genuine browser-wide quota exhaustion, deliberate IndexedDB corruption and
+  measured peak-memory acceptance remain unclaimed because supported browser controls cannot force
+  those conditions reliably.
+- `v0.141.4` is the highest published stable version and the current accepted Pages release.
+  `v0.141.5` remains unpublished until PR #695's hosted MinIO receipt passes. Earlier global working allocations are
+  stale. Future work must be reallocated after checking the open `v0.142.0` through `v0.149.x`
+  ranges rather than advancing an old queue mechanically.
 
 ## Contracts to preserve
 
@@ -27,7 +96,11 @@ See the [Phase 1 walkthrough](image-campaign-guide.md), [batch campaign walkthro
 - Real installed Custom progression and immutable editions. Journal cross-domain installation; stage before indexing; preserve old attempts and earned art. Retain current budgets, show staging requirements and offer explicit split/remove choices.
 - Native intake, sequential full-size image preparation, orientation and bounded decoding. Reuse IndexedDB and managed-media accounting. Video-only candidates at 10/50/90%, midpoint default, with requested and observed times distinct.
 - Playback range retains complete video. Physical trim creates different bytes and requires verification. Win awards the poster first; optional Play/Skip/Replay never blocks Next or awards progress.
-- Self-hosted Node ES modules, Fastify, Better Auth, PostgreSQL jobs, isolated validation worker, disk/S3 blobs and tus. Docker Compose release before a separately chosen production host. Same-origin deployment; explicit auth for static clients without third-party-cookie dependence.
+- Self-hosted Node ES modules, Fastify, Better Auth, PostgreSQL jobs, isolated validation worker,
+  and filesystem-backed blobs and tus for the supported initial single-host deployment. S3 remains
+  a separately gated multi-host/AWS expansion. Docker Compose release before a separately chosen
+  production host. Same-origin deployment; explicit auth for static clients without
+  third-party-cookie dependence.
 - Creator-approved upload stays private until validation; idempotent hash-bound jobs; immutable public editions; quotas, report/unlist/audit. Automated feasibility is distinct from creator playtesting and official content.
 
 ## Research basis
@@ -38,7 +111,7 @@ These decisions reuse the existing framework and the approved review:
 - [MDN image decoding](https://developer.mozilla.org/en-US/docs/Web/API/Window/createImageBitmap): orientation-aware native decode with visual verification.
 - [MDN playback capability](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/canPlayType): likelihood hints are not actual decode evidence.
 - [MDN storage estimates](https://developer.mozilla.org/en-US/docs/Web/API/StorageManager/estimate): estimates are advisory; writes still need recovery.
-- [Mediabunny conversion](https://mediabunny.dev/guide/converting-media-files#trimming): nondefault start trimming requires transcoding; optional lazy conversion comes later.
+- [Mediabunny conversion](https://mediabunny.dev/guide/converting-media-files#trimming): nondefault start trimming requires transcoding; the converter loads lazily and the bounded AVC+AAC path verifies decoded audio windows and A/V endpoints after conversion.
 - [tus Node server](https://github.com/tus/tus-node-server): resumable transport with filesystem and S3 adapters.
 - [OWASP upload guidance](https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html): bounded supported content, isolated processing and public-upload controls.
 

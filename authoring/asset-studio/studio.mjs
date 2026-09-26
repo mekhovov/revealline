@@ -1,4 +1,10 @@
-import { t, localizedText, localizedMessage } from '../../game/i18n/index.mjs';
+import {
+  t,
+  localizedText,
+  localizedAttribute,
+  localizedMessage,
+  formatNumber,
+} from '../../game/i18n/index.mjs';
 import { createStudioDownload } from './download.mjs';
 import { isTeamPreviewScenarioAvailable } from './team-preview-fixture.mjs';
 import {
@@ -47,7 +53,7 @@ import { createStudioViewMemory, resolveStudioView } from './view-memory.mjs';
 const $ = (id) => document.getElementById(id);
 const node = (tag, value = '', className = '', hostRole = null) => {
   const el = document.createElement(tag);
-  localizedText(el, () => value);
+  localizedText(el, typeof value === 'function' ? value : () => value);
   el.className = className;
   if (hostRole) el.dataset.studioHost = hostRole;
   return el;
@@ -222,11 +228,7 @@ function refreshInventory() {
     rows = matchingSlots(working.document.slots, view, filters());
   localizedText($('slot-count'), () => `${rows.length} / ${working.document.slots.length}`);
   const coverage = presentationCoverage(working.document);
-  localizedText(
-    $('coverage-summary'),
-    () =>
-      `${coverage.counts.missing} missing · ${coverage.counts.source} source · ${coverage.counts.produced} produced · ${coverage.counts.reviewed} reviewed. Readiness is evidence based.`,
-  );
+  localizedText($('coverage-summary'), () => t('tools:studio.inventory.coverage', coverage.counts));
   const list = document.createDocumentFragment();
   for (const slot of rows) {
     const asset = view.assets[slot.id],
@@ -237,7 +239,9 @@ function refreshInventory() {
     check.dataset.studioHost = 'control';
     check.type = 'checkbox';
     check.checked = collectionSlots.has(slot.id);
-    check.setAttribute('aria-label', `Include ${slot.label} in collection`);
+    localizedAttribute(check, 'aria-label', () =>
+      t('tools:studio.inventory.includeInCollection', { label: slot.label }),
+    );
     check.onchange = () => {
       check.checked ? collectionSlots.add(slot.id) : collectionSlots.delete(slot.id);
       updateCollectionCount();
@@ -248,7 +252,16 @@ function refreshInventory() {
     button.setAttribute('aria-pressed', String(slot.id === selected));
     button.append(
       node('strong', slot.label, '', 'control'),
-      node('small', `${slot.id} · ${stage}`, `stage-${stage}`, 'secondary'),
+      node(
+        'small',
+        () =>
+          t('tools:studio.inventory.slotStage', {
+            slotId: slot.id,
+            stage: t(`tools:studio.inventory.stage.${stage}`),
+          }),
+        `stage-${stage}`,
+        'secondary',
+      ),
     );
     button.onclick = () => {
       const restoreFocus = document.hasFocus() && document.activeElement === button;
@@ -270,7 +283,9 @@ function refreshInventory() {
   $('empty-inventory').hidden = rows.length !== 0;
 }
 function updateCollectionCount() {
-  localizedText($('collection-count'), () => `${collectionSlots.size} slots selected`);
+  localizedText($('collection-count'), () =>
+    t('tools:studio.inventory.selectedSlots', { count: collectionSlots.size }),
+  );
 }
 function refresh() {
   if (!working.document.slots.some((slot) => slot.id === selected))
@@ -286,10 +301,14 @@ function refresh() {
     }),
   );
   $('filter-theme').value = view.theme.id;
-  localizedText(
-    $('workspace-summary'),
-    () =>
-      `Theme ${view.theme.name} · document r${working.document.revision} · local save ${generation || 'none'}${working !== saved ? ' · unsaved changes' : ''}${view.collection ? ` · ${view.collection.id}` : ''}`,
+  localizedText($('workspace-summary'), () =>
+    t('tools:studio.workspace.summary', {
+      theme: view.theme.name,
+      revision: working.document.revision,
+      generation: generation || t('tools:studio.crossMode.none'),
+      changes: working !== saved ? t('tools:studio.workspace.unsavedChanges') : '',
+      collection: view.collection ? ` · ${view.collection.id}` : '',
+    }),
   );
   $('undo-draft').disabled = !undo.length;
   $('redo-draft').disabled = !redo.length;
@@ -305,7 +324,9 @@ function refreshInspector() {
     asset = view.assets[slot.id];
   localizedText($('slot-id'), () => slot.id);
   localizedText($('slot-title'), () => slot.label);
-  localizedText($('slot-quality'), () => asset?.quality.stage || 'missing');
+  localizedText($('slot-quality'), () =>
+    t(`tools:studio.inventory.stage.${asset?.quality.stage || 'missing'}`),
+  );
   const priorState = $('preview-state').value;
   $('preview-state').replaceChildren(
     ...slot.states.map((state) => {
@@ -425,7 +446,7 @@ async function refreshPreviews() {
         ...options,
         statusTarget: $(`${id}-preview-status`),
         cancelButton: $(`${id}-preview-cancel`),
-        label: id === 'current' ? t('tools:savedPreview') : t('tools:draftPreview'),
+        label: () => (id === 'current' ? t('tools:savedPreview') : t('tools:draftPreview')),
         isCurrent: () => requestedPreview === previewGeneration,
       }),
     ),
@@ -636,7 +657,10 @@ async function decodeImage(blob, task) {
     info.width * info.height > LIMITS.imagePixels
   )
     throw new Error(
-      `Studio images must fit ${LIMITS.imageSide} px per side and ${LIMITS.imagePixels.toLocaleString()} total pixels. Resize externally, retaining your original.`,
+      t('tools:studio.upload.imageLimits', {
+        side: formatNumber(LIMITS.imageSide),
+        pixels: formatNumber(LIMITS.imagePixels),
+      }),
     );
   task.update(t('tools:decodingTheOriginalImage'), 'decoding');
   const bitmap = await createImageBitmap(blob);
@@ -675,7 +699,7 @@ async function startUpload(file, fromSprite = false, task) {
     mime = fileMime(file),
     kind = mime.split('/')[0];
   if (!slot.kinds.includes(kind))
-    throw new Error(`This slot accepts ${slot.kinds.join(', ')}. Choose an appropriate file.`);
+    throw new Error(t('tools:studio.upload.acceptedKinds', { kinds: slot.kinds.join(', ') }));
   if (file.size > LIMITS.assetBytes)
     throw new Error(t('tools:theOriginalExceedsThe4MibAssetBudget'));
   const blob = new Blob([file], { type: mime });
@@ -729,10 +753,17 @@ async function startUpload(file, fromSprite = false, task) {
     $('discard-asset').disabled = false;
     $('asset-source').value = file.name || t('tools:localPixelEditor');
     $('asset-description').value = slot.label;
-    localizedText(
-      $('upload-summary'),
-      () =>
-        `${file.name || t('tools:localSprite')} · ${Math.ceil(blob.size / 1024)} KiB${bitmap ? ` · ${bitmap.width} × ${bitmap.height} px original` : ''}`,
+    localizedText($('upload-summary'), () =>
+      t('tools:studio.upload.summary', {
+        name: file.name || t('tools:localSprite'),
+        kibibytes: formatNumber(Math.ceil(blob.size / 1024)),
+        dimensions: bitmap
+          ? t('tools:studio.upload.originalDimensions', {
+              width: formatNumber(bitmap.width),
+              height: formatNumber(bitmap.height),
+            })
+          : '',
+      }),
     );
     $('image-preparation').hidden = !bitmap;
     if (crop) setCrop(crop);
@@ -1116,7 +1147,8 @@ $('stage-collection').onclick = () =>
       requiredSlots = [...collectionSlots];
     const bindings = Object.fromEntries(
       requiredSlots.map((id) => {
-        if (!view.bindings[id]) throw new Error(`Collection has no binding for ${id}.`);
+        if (!view.bindings[id])
+          throw new Error(t('tools:studio.collection.missingBinding', { slotId: id }));
         return [id, view.bindings[id]];
       }),
     );

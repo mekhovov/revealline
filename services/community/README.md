@@ -14,9 +14,26 @@ The service requires Node 20.19 or newer. Install and run its credential-free te
 cd services/community
 npm ci
 npm test
+npm run acceptance:tus-resume
 npm run lint
 npm run format:check
 ```
+
+`acceptance:tus-resume` starts an in-memory community service and a bounded loopback fault proxy.
+The proxy accepts the first browser `PATCH`, commits 17 bytes to the real tus server, then closes the
+browser-facing TCP connection before returning a response. Retrying the same production browser
+client must read the authoritative offset with `HEAD`, send the exact remaining bytes, reuse the one
+community submission and tus resource, and finish with a byte-for-byte package match. The command
+uses no PostgreSQL, object storage, account service, or external network, and exits nonzero on a
+timeout or contract mismatch.
+
+After a production-like HTTPS deployment exists, `npm run acceptance:tus-deployed` performs that
+same interruption against the deployed tus endpoint, resumes the same remote upload, waits for the
+real validator, verifies the exact downloaded package, and administrator-unlists the disposable
+edition. Before mutation it verifies the exact release, source and validator identity plus liveness
+and dependency readiness. Follow [the deployed tus acceptance procedure](deployed-tus-acceptance.md);
+the command is destructive and requires explicit opt-in plus short-lived creator and administrator
+sessions.
 
 For the container development stack:
 
@@ -32,6 +49,88 @@ volumes, and installs `ffprobe` for video validation. Its bearer token is explic
 development-only. Copy
 `.env.example` when running `npm start` directly. The server refuses to start the development token
 adapter unless `COMMUNITY_ALLOW_DEV_AUTH=true`.
+
+The Compose environment also forwards the documented production account variables. To exercise
+production authentication, set `COMMUNITY_ALLOW_DEV_AUTH=false` and every uncommented Better Auth
+and mail value in a private `.env`, start PostgreSQL and the numbered migration, then run the Better
+Auth migration before the API:
+
+```sh
+docker compose up -d postgres migrate
+docker compose run --rm api npm run auth:migrate
+docker compose up -d api worker
+```
+
+This is still a single-host development fixture. It does not provide TLS or a mail gateway.
+
+## Production Compose preflight
+
+`compose.production.yaml` is a fail-closed overlay for a reviewed single-host deployment. It forces
+development authentication off, requires the database, Better Auth, account-mail, administrator,
+exact trusted-proxy values, and immutable release version/source revision, and forwards every
+documented PostgreSQL-backed admission limit.
+The validation worker still receives no account or mail credential.
+The production build embeds the supplied release and source identities into the image. API,
+account migration, and preflight startup fail if the runtime identity differs, preventing an
+operator-only environment edit from relabeling an already built image.
+The worker runs on an internal database network with no external route. Its image filesystem and
+package volume are read-only; only a 128 MiB, non-executable `/tmp` is writable for bounded local
+video inspection. Compose also drops every Linux capability, forbids privilege elevation, and caps
+the worker at one CPU, 1 GiB of memory, and 64 processes. The API retains a separate edge network
+so host loopback proxying and outbound account mail remain available.
+
+Copy `production.env.example` to an untracked operator-owned file, replace every placeholder, and
+start both Compose files together:
+
+```sh
+cd services/community
+cp production.env.example /secure/path/revealline-community.env
+docker compose \
+  --env-file /secure/path/revealline-community.env \
+  -f compose.yaml -f compose.production.yaml \
+  up --build -d
+```
+
+After the numbered application migrations, the production dependency chain runs the Better Auth
+migration and then `npm run deployment:preflight`. API and worker processes start only after that
+preflight succeeds. It verifies the current application and Better Auth tables, the latest
+application migration columns, durable write/read/remove access in both disk roots, and a bounded
+`ffprobe -version` invocation. When S3 is selected, the same check instead performs a unique
+Put/Get/DeleteObjects round trip, completes and reads one 32-byte multipart upload, then creates and
+aborts a separate multipart upload. Missing object, part, completion, abort, read, or removal
+permissions fail closed before API or worker startup. Its JSON result contains check names and counts only;
+configuration values, database URLs, storage paths, process output, and nested error messages are
+not emitted.
+
+The API exposes separate liveness and readiness routes:
+
+- `GET /health` verifies the PostgreSQL connection.
+- `GET /ready` repeats PostgreSQL schema, package/tus storage, and `ffprobe` readiness. Concurrent
+  calls share one probe and settled results are cached for 30 seconds to bound filesystem and
+  process work. The production container health check uses this route and fails closed with the
+  API's generic error response. Keep the route behind the operator network rather than forwarding
+  it through the public proxy.
+- `GET /version` returns the configured public release version, exact source revision, and
+  validator version. Production configuration requires both immutable identity values.
+
+Inspect one-shot service exit status and API readiness without printing the rendered Compose
+configuration, which can contain secrets:
+
+```sh
+docker compose \
+  --env-file /secure/path/revealline-community.env \
+  -f compose.yaml -f compose.production.yaml \
+  ps
+curl --fail --silent http://127.0.0.1:8787/ready
+```
+
+This overlay remains a single-host deployment contract. Put a reviewed HTTPS reverse proxy in
+front of it, set `COMMUNITY_TRUST_PROXY_HOPS` to that exact topology, and keep its environment file
+outside the repository with owner-only permissions.
+Before claiming deployment acceptance, inspect the running worker to confirm its read-only mounts,
+empty capability set, no-new-privileges flag, resource ceilings, restart behavior, and lack of
+external network access. Source tests verify the Compose contract but cannot prove that a selected
+container runtime enforces it.
 
 When running outside Compose, apply the checked-in migration to a disposable local database before
 starting the API:
@@ -49,6 +148,8 @@ npm run worker
 Public routes return JSON metadata or exact immutable package bytes:
 
 - `GET /health`
+- `GET /ready`
+- `GET /version`
 - `GET /v1/catalog?limit=20&cursor=...`
 - `GET /v1/catalog/:editionId`
 - `GET /v1/catalog/:editionId/download`
@@ -68,6 +169,57 @@ when the explicitly enabled development-token adapter is running:
   submission, hash, and validator version.
 - `POST /v1/publications/:editionId/unlist` lets its owner or an administrator remove a published
   edition from discovery and downloads without deleting its immutable record.
+
+Better Auth owns the same-origin account endpoints under `/api/auth/*`. Production mode requires
+email verification before sign-in and exposes its supported `send-verification-email`,
+`request-password-reset`, reset callback, and `reset-password` routes. Successful password reset
+revokes the account's other sessions. The game account panel supplies bounded same-origin callback
+URLs, handles verification and reset returns, and never stores an account token in browser storage.
+
+## Account verification and recovery mail
+
+Production startup requires an HTTPS account-mail webhook and a separate 32–4096 character bearer
+credential. Better Auth creates the verification or reset token; the service validates that its
+action URL is HTTPS, at most 4096 characters, belongs to `BETTER_AUTH_URL`, and contains the exact
+bounded token before delivery. Verification tokens default to one hour. Reset tokens default to 30
+minutes, are capped at one hour by configuration, and revoke other sessions after use.
+
+The webhook receives `POST` JSON with an `Authorization: Bearer ...` header:
+
+```json
+{
+  "id": "sha256-idempotency-key",
+  "kind": "verify-email",
+  "to": "creator@example.test",
+  "actionURL": "https://community.example.test/api/auth/verify-email?...",
+  "expiresAt": "2026-09-25T01:00:00.000Z"
+}
+```
+
+`kind` is `verify-email` or `reset-password`. The operator-selected gateway must render and send the
+message, treat `id` as its idempotency key, accept only this authenticated HTTPS request, return a
+2xx response after accepting responsibility for delivery, and avoid logging the action URL because
+it contains a credential. The service uses a bounded timeout and returns a generic delivery error;
+it does not expose the webhook credential or provider response to clients. Configure:
+
+```sh
+BETTER_AUTH_SECRET='at-least-32-random-characters'
+BETTER_AUTH_URL='https://community.example.test'
+BETTER_AUTH_TRUSTED_ORIGINS='https://game.example.test'
+COMMUNITY_ACCOUNT_MAIL_WEBHOOK_URL='https://mail-gateway.example.test/revealline/account'
+COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN='a-separate-at-least-32-character-secret'
+COMMUNITY_EMAIL_VERIFICATION_EXPIRES_SECONDS=3600
+COMMUNITY_PASSWORD_RESET_EXPIRES_SECONDS=1800
+COMMUNITY_ACCOUNT_MAIL_TIMEOUT_MS=5000
+```
+
+`BETTER_AUTH_URL` and every trusted origin must be an HTTPS origin without credentials, path,
+query, or fragment. At most 16 trusted origins are accepted. Keep the game and API on one origin
+for the built-in account client; the trusted-origin list supports an explicitly reviewed external
+frontend. Run `npm run auth:migrate` with the same production configuration before starting the
+API. The validation worker does not receive or parse Better Auth or mail credentials.
+`MemoryAccountMailDelivery` is test-only and makes exact action messages observable without network
+or a real mailbox.
 
 Administrator sessions can operate the report queue without receiving the reporter's network
 fingerprint:
@@ -102,10 +254,42 @@ identity and version for that owner-and-slug collection. Clients use those immut
 update discovery; display titles and shared slugs across different owners never merge collections.
 
 `POST /v1/submissions` returns a tus creation endpoint and immutable upload metadata. The mounted
-official `@tus/server` and `@tus/file-store` implementation checks the authenticated owner on create,
-HEAD, PATCH, and completion. Completion rechecks size, SHA-256, edition, and submission identity
+official `@tus/server` uses `@tus/file-store` for the default disk deployment and the maintained,
+pinned `@tus/s3-store` when `COMMUNITY_BLOB_STORAGE=s3`. Both paths check the authenticated owner on
+create, HEAD, PATCH, and completion. Completion rechecks size, SHA-256, edition, and submission identity
 before copying bytes to the content-addressed package store. The test suite interrupts a PATCH,
-reads the retained offset, resumes it, and proves another owner cannot inspect the upload.
+reads the retained offset, resumes it, and proves another owner cannot inspect the upload. The
+separate `acceptance:tus-resume` fault rehearsal drops the live HTTP connection after the server has
+committed only a prefix, proving that the production browser client trusts the later `HEAD` offset
+without creating another submission or tus resource.
+
+Every executable API replica uses PostgreSQL advisory locks for tus resources. A dedicated bounded
+connection pool keeps upload lock waits from consuming the repository pool. A contender sends a
+PostgreSQL notification asking the current request to drain, then waits for the same shared lock;
+acquisition is bounded by `COMMUNITY_TUS_LOCK_TIMEOUT_SECONDS`. All replicas therefore serialize
+HEAD, PATCH, DELETE, completion, and expiry removal for the same upload even when requests land on
+different API processes.
+
+Incomplete uploads expire from their creation time after `COMMUNITY_TUS_EXPIRATION_SECONDS` (24
+hours by default). Each API periodically claims at most `COMMUNITY_TUS_CLEANUP_BATCH_SIZE` expired
+registry rows with `FOR UPDATE SKIP LOCKED`, records a cleanup lease, acquires the upload's shared
+lock, and removes it through the configured tus datastore. Failed removals are released for a later
+bounded retry; a crashed cleaner's lease can be reclaimed. The registry and lock layer are store
+independent. The S3 adapter fixes parts at 8 MiB and permits at most four concurrent part uploads per
+API process. Completed bytes are copied into the separately verified content-addressed package key,
+then the tus object and metadata object are removed explicitly; interrupted and expired sessions use
+the maintained adapter's multipart abort path. Configure a provider lifecycle rule as a final guard
+for multipart uploads abandoned before their PostgreSQL registry row can be committed. Compose still
+mounts the filesystem datastore and requires shared storage if the API is scaled on one host.
+
+To run the executable S3 path outside the checked-in disk Compose profile, set
+`COMMUNITY_BLOB_STORAGE=s3`, remove both `COMMUNITY_BLOB_ROOT` and `COMMUNITY_TUS_ROOT`, and set
+`COMMUNITY_S3_BUCKET`, `COMMUNITY_S3_REGION`, `COMMUNITY_S3_FORCE_PATH_STYLE`, and
+`COMMUNITY_BLOB_STAGING_ROOT`. `COMMUNITY_S3_ENDPOINT` is optional. Package keys and tus working
+objects share the configured private bucket; credentials come from the standard AWS SDK chain. The
+local staging root holds one bounded package while its size and SHA-256 are verified before immutable
+publication. Passing source tests or the S3 preflight does not establish AWS deployment acceptance;
+the recovery/MinIO rehearsal and credentialed AWS smoke run remain separate gates.
 
 Titles and descriptions are length-bounded Unicode text. The API never interprets or emits them as
 HTML. Catalog clients must render these fields with text nodes (`textContent`), not HTML insertion.
@@ -139,19 +323,70 @@ the worker never trusts an uploaded approval flag.
 
 ## Adapter boundaries
 
+### Supported storage target and S3 workstream
+
+The checked-in production Compose target remains one filesystem-backed host with durable package
+and tus volumes. The executable API and worker can also select S3-compatible storage for both
+packages and resumable uploads. That path now includes dependency readiness, deterministic
+completion cleanup, offline package backup and restore, and a source-to-target recovery rehearsal.
+S3 is not a prerequisite for deploying or accepting the single-host target.
+
+The first S3 workstream slice is executable in the API and validation worker. Both entry points use
+one package-store factory. `COMMUNITY_BLOB_STORAGE=disk` selects the existing filesystem store;
+`COMMUNITY_BLOB_STORAGE=s3` lazy-loads the pinned AWS SDK client and requires an explicit bucket,
+region and local staging root. S3 input is streamed to a private staging file while its size and
+SHA-256 are checked. Only exact bytes are then streamed to a conditional `PutObject` request, so a
+package is never published before verification and the process does not retain the whole package
+in memory. As documented by
+[AWS PutObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html), `409
+ConditionalRequestConflict` responses receive a bounded retry with a fresh stream from the retained
+verified staging file. A pre-existing object is accepted after `412 PreconditionFailed` only when
+its exact size and stored SHA-256 metadata match.
+
+Configuration fails closed: unknown drivers, partial S3 settings, S3 settings while disk is
+selected, and a simultaneous disk root and S3 selection stop startup. Credentials remain in the
+standard AWS SDK credential chain and are not added to RevealLine configuration. For an AWS S3
+endpoint, the endpoint can be omitted. S3-compatible services may set an absolute HTTP(S) endpoint
+and path-style addressing explicitly.
+
+```sh
+COMMUNITY_BLOB_STORAGE=s3
+COMMUNITY_S3_BUCKET=revealline-community-packages
+COMMUNITY_S3_REGION=eu-central-1
+COMMUNITY_S3_FORCE_PATH_STYLE=false
+COMMUNITY_BLOB_STAGING_ROOT=/tmp/revealline-package-stage
+```
+
+This does not yet make S3 a production-qualified target. The checked-in production Compose remains
+filesystem-specific, and a real AWS smoke run with private buckets and scoped IAM access is still
+required. The package recovery path can now enumerate bounded S3 pages, stream exact package bytes
+into a portable snapshot, restore them through conditional publication, and verify the complete
+target prefix. A separate MinIO Compose acceptance exercises that path against two buckets and two
+PostgreSQL databases without changing the production topology.
+
+The remaining environment-dependent work is the hosted MinIO workflow run and a real AWS smoke run
+with private buckets and scoped IAM access. The AWS evidence is estimated at 0.5–1 focused day after
+the buckets and short-lived actor credentials are available.
+
 - **Authentication:** production configuration creates a real Better Auth PostgreSQL instance,
-  mounts `/api/auth/*`, and resolves ownership from `auth.api.getSession`. Run
-  `npm run auth:migrate` before starting production mode. The test suite creates a real Better Auth
-  account/session using its official memory adapter and proves that session owns the submission.
-  The constant-token adapter remains available only behind `COMMUNITY_ALLOW_DEV_AUTH=true`.
-- **Blobs:** `DiskBlobStore` is runnable locally. `S3CompatibleBlobStore` accepts an injected S3
-  client plus `put`, `head`, and `get` command factories, avoiding a second SDK choice in this
-  scaffold. Production S3 wiring must stage and verify bytes before immutable upload, set private
-  bucket policy, and rehearse database/blob restore.
-- **Uploads:** the executable server mounts the maintained tus Node server with its disk store.
-  `completeTusUpload` is the verified completion boundary that can also admit an S3-backed tus
-  stream. A multi-API deployment still needs a shared tus locker and an incomplete-upload expiry
-  policy; the current in-memory lock is correct for the single API container in Compose.
+  mounts `/api/auth/*`, requires verified email, supports password recovery, and resolves ownership
+  from `auth.api.getSession`. An injected HTTPS webhook is the mail-delivery boundary; the provider
+  remains an operator choice. Run `npm run auth:migrate` before starting production mode. The test
+  suite creates a real Better Auth account using its official memory adapter, completes verification
+  and password reset through the local mail adapter, and proves that the resulting session owns the
+  submission. The constant-token adapter remains available only behind
+  `COMMUNITY_ALLOW_DEV_AUTH=true`.
+- **Blobs:** `DiskBlobStore` remains the supported production implementation. The API, worker and
+  recovery commands can select the same SDK-backed `S3CompatibleBlobStore`; its verified local
+  staging keeps publication stream-safe and bounded by `COMMUNITY_MAX_PACKAGE_BYTES`. Recovery
+  accepts only content-addressed package keys, follows opaque S3 continuation tokens, rejects a
+  contaminated target prefix, and hashes the bytes again after restore.
+- **Uploads:** the executable server mounts the maintained tus Node server with its disk store or
+  the pinned maintained S3 store selected by the same storage configuration. `completeTusUpload`
+  is the verified completion boundary for both. PostgreSQL advisory locks coordinate API replicas,
+  and the PostgreSQL upload registry leases bounded expiry work across them. S3 completion removes
+  the provider upload object and metadata without treating an already-completed multipart abort as
+  a failed client upload.
 - **Repository:** both PostgreSQL and in-memory test implementations use the same submission/job
   and admission methods. Production admission uses PostgreSQL database time, atomic conditional
   upserts, and transaction advisory locks for idempotent reservations. The memory implementation
@@ -203,18 +438,153 @@ and replaces `backup` with `restore`. The source tests rehearse exact backup, ve
 successful restore, changed-byte rejection, occupied-target refusal, database-command failure, and
 journal-backed retry.
 
+For S3 package storage, set the same `COMMUNITY_BLOB_STORAGE=s3` values used by the stopped API and
+worker. `backup` streams the `packages/sha256/` prefix into the snapshot and checks every key, size,
+and digest. `restore` requires a fresh, dedicated target bucket whose package prefix is empty,
+restores the database, conditionally publishes each verified package, and checks the complete target
+package inventory and bytes before removing its journal. Recovery does not enumerate or delete
+unrelated root objects, tus metadata objects, or provider-side multipart uploads in a reused bucket.
+The journal defaults beside the snapshot; `--journal` selects a separate durable path. Its database
+and storage target identities are hashes and do not expose credentials, endpoints, or bucket names.
+
+Normal service restart and disaster recovery have different tus guarantees. Restarting over the
+same tus datastore preserves resumable uploads. A disaster restore deliberately excludes
+`community_tus_uploads` table data because S3 multipart upload IDs and uploaded parts belong to the
+source provider and bucket and cannot be copied as portable objects. Draft submissions remain, so
+their owners can start a new upload; completed packages and publications remain exact. Recovery
+rehearsal requires zero tus rows in the target and records how many source sessions were discarded.
+
+### Source-to-target restore rehearsal
+
+`npm run recovery:rehearse` turns the manual restore check into one bounded acceptance command. It
+backs up the configured source, restores into a separate disposable PostgreSQL database and empty
+blob root, then compares deterministic community-table row fingerprints and counts, submission
+status totals, and exact database package references. The restored references must resolve to the
+same package hashes and sizes in the verified snapshot. This proves the recovery artifact restores
+the community data and its content-addressed packages together; it does not test the surrounding
+proxy, mail gateway, Better Auth-owned tables, or production traffic cutover.
+
+The runner refuses an identical source and target database or blob root. It also requires the
+operator to confirm an opaque target identity before `pg_dump` or `pg_restore` can run. First stop
+the source API and worker, provision a disposable target database, and set separate target values:
+
+```sh
+export COMMUNITY_DATABASE_URL=postgres://revealline:secret@database/revealline
+export COMMUNITY_BLOB_ROOT=/srv/revealline/blobs
+export COMMUNITY_RECOVERY_REHEARSAL_TARGET_DATABASE_URL=postgres://revealline:secret@restore-db/revealline-rehearsal
+export COMMUNITY_RECOVERY_REHEARSAL_TARGET_BLOB_ROOT=/srv/revealline/rehearsal-blobs
+
+npm run recovery:rehearse -- plan
+```
+
+`plan` prints only hashed source and target identities. Copy its `targetDatabase` value into the
+explicit confirmation, then run the rehearsal with new work and receipt paths:
+
+```sh
+npm run recovery:rehearse -- run \
+  --work-directory /srv/revealline/rehearsals/2026-09-26 \
+  --receipt /srv/revealline/rehearsal-receipts/2026-09-26.json \
+  --confirm-target database_<64-hex-characters>
+```
+
+For an S3 target, set `COMMUNITY_RECOVERY_TARGET_BLOB_STORAGE=s3` and the documented
+`COMMUNITY_RECOVERY_TARGET_S3_*` variables instead of a target blob root. Credentials continue to
+come from the AWS SDK credential chain.
+
+### MinIO recovery acceptance
+
+The separate acceptance stack uses disposable source/target databases and MinIO buckets. It seeds
+one exact package plus one interrupted tus registry row, performs backup and restore, proves the
+package bytes and durable database fingerprints, proves the target has no dangling tus row, and
+writes a redacted receipt. Because MinIO removed its public community container repositories in
+2026, the acceptance image builds the last signed archived release from exact official commit
+`07c3a429bfed433e49018cb0f78a52145d4bedeb`; it does not use an unaffiliated binary mirror. The
+fixture is destructive only within its dedicated Compose project:
+
+```sh
+cd services/community
+docker compose -f compose.minio-acceptance.yaml up --build \
+  --abort-on-container-exit --exit-code-from minio-recovery-acceptance
+docker compose -f compose.minio-acceptance.yaml down --volumes
+```
+
+The current development host has neither Docker nor Podman, so source tests validate the contract
+but a successful container run is still required before recording MinIO runtime evidence. The
+path-filtered `Community MinIO recovery` GitHub Actions workflow runs the same stack for relevant
+pull requests and uploads only the top-level redacted JSON receipt; the database dump and package
+snapshot remain inside the disposable workflow volume.
+
+The versioned receipt is written atomically with mode `0600`. It records the snapshot identity,
+opaque database/blob-root identities, aggregate counts, semantic fingerprint, stored byte totals,
+and completed checks. It never records connection URLs, credentials, filesystem paths, account
+identities, titles, report text, or package contents. Existing work directories, receipt files, and
+non-empty target blob roots are rejected. Keep failed rehearsal work for diagnosis, discard the
+target after review, restart the source writers, and retain the successful receipt with the
+off-host snapshot record.
+
+## Deployed two-user acceptance
+
+`npm run acceptance:deployed` exercises a running service over HTTP. Creator A publishes a small
+valid `.rlpack`; Creator B proves owner isolation, discovers the published edition, and downloads
+the exact bytes. The runner installs those downloaded bytes into isolated in-memory storage adapters,
+executes the package's verified legal route, persists and reloads its exact completion, verifies the
+installed picture asset binding, then starts an offline replay after removal. The public report path opens a report; an administrator
+finds the report, unlists the disposable edition, resolves the report, and verifies that public
+retrieval is gone. The validation worker must be running before this command starts.
+
+This test writes to the deployment. It refuses to run without an explicit opt-in and a unique
+lowercase namespace. Supply three short-lived actor authorization values through
+the environment. In development-token mode these are `Bearer ...` values. A production operator
+may instead set the corresponding `COMMUNITY_ACCEPTANCE_CREATOR_A_COOKIE`,
+`COMMUNITY_ACCEPTANCE_CREATOR_B_COOKIE`, and `COMMUNITY_ACCEPTANCE_ADMIN_COOKIE` values from three
+short-lived same-origin test sessions. Set exactly one authorization or cookie variable per actor,
+and do not put credentials in the URL.
+
+```sh
+cd services/community
+export COMMUNITY_ACCEPTANCE_BASE_URL='https://community.example.test/'
+export COMMUNITY_ACCEPTANCE_NAMESPACE='staging-20260926-a'
+export COMMUNITY_ACCEPTANCE_ALLOW_DESTRUCTIVE='I_UNDERSTAND_THIS_PUBLISHES_AND_UNLISTS_TEST_CONTENT'
+export COMMUNITY_ACCEPTANCE_EXPECTED_VERSION='v0.141.2'
+export COMMUNITY_ACCEPTANCE_EXPECTED_SOURCE_REVISION='12978e5fd3fe0ce70bbee96aa543f569f64622d4'
+export COMMUNITY_ACCEPTANCE_CREATOR_A_AUTHORIZATION='Bearer short-lived-creator-a-token'
+export COMMUNITY_ACCEPTANCE_CREATOR_B_AUTHORIZATION='Bearer short-lived-creator-b-token'
+export COMMUNITY_ACCEPTANCE_ADMIN_AUTHORIZATION='Bearer short-lived-admin-token'
+export COMMUNITY_ACCEPTANCE_RECEIPT='/secure/acceptance/community-staging-20260926-a.json'
+npm run acceptance:deployed
+```
+
+Before it creates any content, the runner requires `/version` to match those exact expected values,
+then requires both `/health` and the full `/ready` dependency probe to pass. A stale service or a
+deployment with unavailable schema, storage, tus storage, or `ffprobe` therefore cannot produce a
+successful journey receipt.
+
+The runner bounds every HTTP request to 15 seconds, polls validation for at most two minutes, and
+uses at most ten administrator report pages. Override those time limits only with bounded numeric
+values in `COMMUNITY_ACCEPTANCE_REQUEST_TIMEOUT_MS`, `COMMUNITY_ACCEPTANCE_POLL_INTERVAL_MS`, and
+`COMMUNITY_ACCEPTANCE_VALIDATION_TIMEOUT_MS`. The runner uses the service's direct upload when
+offered and its bounded tus 1.0 client when the deployment requires resumable upload.
+
+The receipt format is `revealline-community-deployed-acceptance.v1`. It records only the service
+origin, exact release identity, readiness result, public test namespace/run identities, immutable
+package and edition identities, validation
+poll count, exact-download result, installed completion and picture-asset identities, offline replay result,
+moderation result, and timing. Authentication headers, account subjects, response bodies, and
+package content are excluded. The CLI prints only the receipt path and a pass/fail stage; it never
+prints the supplied authorization values. After an edition identity is received, a failed run makes one best-effort administrator
+unlisting attempt and records only whether cleanup succeeded. Inspect a `cleanup: failed` receipt
+and remove the uniquely named edition before reusing that deployment.
+
 ## Limits and operational work still required
 
 The default package ceiling is 256 MiB and catalog pages are capped at 50 entries. A reverse proxy
-still needs request timeouts, connection limits, and HTTPS. Public deployment also requires
-production Better Auth secrets, mail/account recovery choices, a report triage UI over the bounded
-admin API, a shared tus locker for multiple API replicas, incomplete-upload cleanup, stronger process/container
-isolation for media validation, malware policy, metrics, an off-host backup schedule, a real
-PostgreSQL/blob restore rehearsal, and an explicit infrastructure decision. The S3 adapter is tested
-at its byte boundary but is not wired into the executable deployment. No AWS, mail, domain, or
-production restore claim is made here.
-
-Email/password registration currently confirms an address syntactically and creates the session;
-mail delivery, email verification, password reset, account recovery, and account administration
-need production policy and infrastructure before public launch. The browser account form
-intentionally does not promise those capabilities.
+still needs request timeouts, connection limits, and HTTPS. Public deployment also requires a live
+administrator-session rehearsal of the shipped report triage UI, stronger process/container
+isolation for media validation, malware policy, metrics, an off-host backup schedule, and a real
+PostgreSQL/filesystem restore rehearsal. The supported initial deployment remains the single-host
+filesystem target described above. S3, multi-host scaling and AWS qualification follow through the
+separately estimated workstream and acceptance gates; no AWS claim is made here. No mail provider,
+domain, or production restore claim is made here. Email verification and password recovery are
+integrated at the application boundary, but public launch still requires an operator-selected mail
+gateway, sender-domain authentication, templates, deliverability monitoring, abuse handling, and a
+live mailbox acceptance rehearsal. Broader account administration remains future operational work.

@@ -32,6 +32,7 @@ const exactRootTests = new Set([
   'story-media-store.test.mjs',
   'team-installed-campaigns.test.mjs',
   'team-installed-host.test.mjs',
+  'team-media-campaign.test.mjs',
 ]);
 const rootTestPrefixes = [
   'community-',

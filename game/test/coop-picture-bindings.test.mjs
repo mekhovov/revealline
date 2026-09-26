@@ -83,7 +83,7 @@ test('the closed two-row authority is immutable and matches the complete authore
   assert.equal(COOP_PICTURE_BINDINGS.length, 2);
   assert.equal(
     compiled.resolved.theme.revision,
-    90,
+    91,
     'Exact reviewed production metadata, never an unqualified latest alias',
   );
   assert.deepEqual(
@@ -145,16 +145,16 @@ test('the closed two-row authority is immutable and matches the complete authore
   assert.throws(() => COOP_PICTURE_BINDINGS.push(COOP_PICTURE_BINDINGS[0]), TypeError);
 });
 
-test('current90 picture association preserves the exact58–89 closed bindings and policies', () => {
+test('current91 picture association preserves the exact58–90 closed bindings and policies', () => {
   const retained = [
     58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
-    82, 83, 84, 85, 86, 87, 88, 89,
+    82, 83, 84, 85, 86, 87, 88, 89, 90,
   ];
   assert.deepEqual(
     [...new Set(COOP_SUPPORTED_PICTURE_BINDINGS.map((row) => row.themeRevision))].sort(),
-    [...retained, 90],
+    [...retained, 91],
   );
-  assert.equal(COOP_SUPPORTED_PICTURE_BINDINGS.length, 66);
+  assert.equal(COOP_SUPPORTED_PICTURE_BINDINGS.length, 68);
   for (const revision of retained) {
     const previous = COOP_SUPPORTED_PICTURE_BINDINGS.filter(
       (row) => row.themeRevision === revision,
@@ -167,9 +167,9 @@ test('current90 picture association preserves the exact58–89 closed bindings a
   }
   assert.deepEqual(COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.map((row) => row.themeRevision).sort(), [
     ...retained,
-    90,
+    91,
   ]);
-  const current = COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.find((row) => row.themeRevision === 90);
+  const current = COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.find((row) => row.themeRevision === 91);
   for (const previous of COOP_HISTORICAL_IMPORT_PICTURE_POLICIES)
     assert.deepEqual(previous, {
       ...current,
@@ -215,14 +215,14 @@ test('the complete real finite-policy host configuration prepares both current s
     );
     t.after(() => f.presentation.dispose());
     const binding = await f.presentation.select(f.request);
-    assert.equal(binding.choice.themeRevision, 90);
+    assert.equal(binding.choice.themeRevision, 91);
     assert.equal(binding.choice.picture.sha256, COOP_PICTURE_BINDINGS[index].picture.sha256);
     assert.equal(f.presentation.confirm(f.request), binding);
     assert.deepEqual(f.calls, { reads: 1, decodes: 1, releases: 0 });
   }
 });
 
-test('historical policy capacity remains exactly thirty-three and duplicate identities still fail', () => {
+test('historical policy capacity remains exactly thirty-four and duplicate identities still fail', () => {
   const create = (historicalImportPolicy) =>
     createCoopPresentation({
       bindings: COOP_SUPPORTED_PICTURE_BINDINGS,

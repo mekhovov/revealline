@@ -3,8 +3,11 @@ import { creatorSHA256 } from '../creator/bytes.mjs';
 import { approveCreatorBundle, importCreatorBundle } from '../creator/bundle.mjs';
 import {
   exportInstalledCreatorBundle,
+  creatorEditionStorageStatus,
   installedCreatorManifests,
   installPreparedCreatorBundle,
+  offloadInstalledCreatorBundle,
+  reviewCreatorEditionOffload,
   reviewCreatorInstallation,
 } from '../creator/installed.mjs';
 import { creatorAttemptKey, creatorProfileKey } from '../creator/runtime.mjs';
@@ -13,6 +16,7 @@ import { validateCommunityEdition } from './client.mjs';
 const packageHash = async (blob) => creatorSHA256(await blob.arrayBuffer());
 const association = (state, id) => state.editions.find((item) => item.editionId === id);
 const removalReviews = new WeakMap();
+const offloadReviews = new WeakMap();
 
 /** Coordinates immutable catalog metadata with the existing exact creator
  * validator and atomic creator store. It never interprets server approval as
@@ -23,6 +27,7 @@ export function createCommunityLibrary({
   stateStore,
   downloadStore,
   decodeImage,
+  lockManager = globalThis.navigator?.locks,
 }) {
   required(
     client && creatorStore && stateStore && downloadStore,
@@ -37,16 +42,25 @@ export function createCommunityLibrary({
     );
     return importCreatorBundle(blob, { decodeImage });
   };
+  const withEditionLock = (editionId, operation) =>
+    lockManager?.request
+      ? lockManager.request(`revealline-community-edition-${editionId}`, operation)
+      : operation();
   const installedSet = async () =>
     new Set((await installedCreatorManifests(creatorStore)).map((item) => item.editionId));
   async function status(editionId) {
     const state = stateStore.read();
     const linked = association(state, editionId);
-    const installed = linked ? (await installedSet()).has(linked.creatorEditionId) : false;
+    const storage = linked
+      ? await creatorEditionStorageStatus(creatorStore, linked.creatorEditionId)
+      : null;
+    const installed = storage?.installed ?? false;
     const packageRetained = !!(await downloadStore.get(editionId));
     return Object.freeze({
       editionId,
       installed,
+      offloaded: storage?.offloaded ?? false,
+      manifestRetained: storage?.manifestRetained ?? false,
       offlinePlayable: installed,
       creatorEditionId: linked?.creatorEditionId ?? null,
       attemptKey: linked ? creatorAttemptKey(linked.creatorEditionId) : null,
@@ -118,6 +132,9 @@ export function createCommunityLibrary({
       for (const edition of page.editions) {
         const linked = association(state, edition.editionId);
         const isInstalled = !!linked && local.has(linked.creatorEditionId);
+        const storage = linked
+          ? await creatorEditionStorageStatus(creatorStore, linked.creatorEditionId)
+          : null;
         const installedCollection = edition.collectionId
           ? state.editions.filter(
               (item) =>
@@ -147,6 +164,8 @@ export function createCommunityLibrary({
           Object.freeze({
             ...edition,
             installed: isInstalled,
+            offloaded: storage?.offloaded ?? false,
+            manifestRetained: storage?.manifestRetained ?? false,
             creatorEditionId: linked?.creatorEditionId ?? null,
             attemptKey: linked ? creatorAttemptKey(linked.creatorEditionId) : null,
             profileKey: linked ? creatorProfileKey(linked.creatorEditionId) : null,
@@ -179,13 +198,15 @@ export function createCommunityLibrary({
     },
     async install(edition, { offline = true } = {}) {
       const safe = validateCommunityEdition(edition);
-      const retained = await downloadStore.get(safe.editionId);
-      if (retained) return installBytes(safe, retained);
-      required(
-        !offline,
-        'This package is not retained for offline installation. Connect and download it again.',
-      );
-      return installBytes(safe, await client.download(safe));
+      return withEditionLock(safe.editionId, async () => {
+        const retained = await downloadStore.get(safe.editionId);
+        if (retained) return installBytes(safe, retained);
+        required(
+          !offline,
+          'This package is not retained for offline installation. Connect and download it again.',
+        );
+        return installBytes(safe, await client.download(safe));
+      });
     },
     /** Proves that the installed runtime can reproduce the exact published
      * bytes before allowing its separate recovery download to be removed. */
@@ -228,30 +249,121 @@ export function createCommunityLibrary({
         'Review exact recovery before removing this download.',
       );
       removalReviews.delete(review);
-      const retained = await downloadStore.get(safe.editionId);
-      required(
-        retained && (await packageHash(retained)) === safe.packageSha256,
-        'The retained package changed. Review removal again.',
-      );
-      const current = await status(safe.editionId);
-      required(
-        current.installed && current.creatorEditionId === review.creatorEditionId,
-        'The installed edition changed. Review removal again.',
-      );
-      await downloadStore.remove(safe.editionId);
-      return status(safe.editionId);
+      return withEditionLock(safe.editionId, async () => {
+        const retained = await downloadStore.get(safe.editionId);
+        required(
+          retained && (await packageHash(retained)) === safe.packageSha256,
+          'The retained package changed. Review removal again.',
+        );
+        const current = await status(safe.editionId);
+        required(
+          current.installed && current.creatorEditionId === review.creatorEditionId,
+          'The installed edition changed. Review removal again.',
+        );
+        await downloadStore.remove(safe.editionId);
+        return status(safe.editionId);
+      });
     },
     async retainFromInstalled(edition) {
       const safe = validateCommunityEdition(edition);
-      const state = stateStore.read();
-      const linked = association(state, safe.editionId);
-      required(linked, 'This community edition has not been installed on this device.');
-      const blob = await exportInstalledCreatorBundle(creatorStore, linked.creatorEditionId, {
-        decodeImage,
+      return withEditionLock(safe.editionId, async () => {
+        const state = stateStore.read();
+        const linked = association(state, safe.editionId);
+        required(linked, 'This community edition has not been installed on this device.');
+        const blob = await exportInstalledCreatorBundle(creatorStore, linked.creatorEditionId, {
+          decodeImage,
+        });
+        await verifyPackage(safe, blob);
+        await downloadStore.put(safe.editionId, blob);
+        return status(safe.editionId);
       });
-      await verifyPackage(safe, blob);
-      await downloadStore.put(safe.editionId, blob);
-      return status(safe.editionId);
+    },
+    /** Offloading requires an independently retained, byte-exact package. The
+     * installed runtime is reconstructed and compared before any references
+     * are detached. Saves and earned ownership use separate exact-edition keys. */
+    async reviewInstalledOffload(edition) {
+      const safe = validateCommunityEdition(edition);
+      const retained = await downloadStore.get(safe.editionId);
+      required(retained, 'Keep an exact recovery package before offloading installed media.');
+      await verifyPackage(safe, retained);
+      const current = await status(safe.editionId);
+      required(
+        current.installed && current.creatorEditionId,
+        'This exact edition is not installed or is already offloaded.',
+      );
+      const reconstructed = await exportInstalledCreatorBundle(
+        creatorStore,
+        current.creatorEditionId,
+        { decodeImage },
+      );
+      await verifyPackage(safe, reconstructed);
+      const creatorReview = await reviewCreatorEditionOffload(
+        creatorStore,
+        current.creatorEditionId,
+        { decodeImage },
+      );
+      const review = Object.freeze({
+        editionId: safe.editionId,
+        creatorEditionId: current.creatorEditionId,
+        packageSha256: safe.packageSha256,
+        generation: creatorReview.generation,
+        detachableBytes: creatorReview.detachableBytes,
+        detachedAssets: creatorReview.detachedAssets,
+        manifestRetained: true,
+      });
+      offloadReviews.set(review, { safe, creatorReview });
+      return review;
+    },
+    async offloadInstalled(edition, review) {
+      const safe = validateCommunityEdition(edition);
+      const approved = offloadReviews.get(review);
+      required(
+        approved &&
+          approved.safe.editionId === safe.editionId &&
+          review.editionId === safe.editionId &&
+          review.packageSha256 === safe.packageSha256,
+        'Review this exact installed edition again before offloading.',
+      );
+      offloadReviews.delete(review);
+      return withEditionLock(safe.editionId, async () => {
+        const retained = await downloadStore.get(safe.editionId);
+        required(
+          retained && (await packageHash(retained)) === safe.packageSha256,
+          'The exact recovery package changed. Review offloading again.',
+        );
+        const current = await status(safe.editionId);
+        required(
+          current.installed && current.creatorEditionId === review.creatorEditionId,
+          'The installed edition changed. Review offloading again.',
+        );
+        const pending = stateStore.read();
+        pending.editions = pending.editions.map((item) =>
+          item.editionId === safe.editionId ? { ...item, installation: 'offloading' } : item,
+        );
+        stateStore.write(pending);
+        try {
+          await offloadInstalledCreatorBundle(creatorStore, approved.creatorReview);
+        } catch (error) {
+          try {
+            pending.editions = pending.editions.map((item) =>
+              item.editionId === safe.editionId ? { ...item, installation: 'installed' } : item,
+            );
+            stateStore.write(pending);
+          } catch {}
+          throw error;
+        }
+        const state = stateStore.read();
+        state.editions = state.editions.map((item) =>
+          item.editionId === safe.editionId ? { ...item, installation: 'offloaded' } : item,
+        );
+        let journalComplete = true;
+        try {
+          stateStore.write(state);
+        } catch {
+          journalComplete = false;
+        }
+        return Object.freeze({ ...(await status(safe.editionId)), journalComplete });
+      });
     },
     status,
   });

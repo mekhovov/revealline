@@ -39,14 +39,19 @@
         <a href="#recover" data-i18n="tools:recoverYourWork">Recover your work</a>
       </nav>
       <section aria-labelledby="automatic">
-        <h2 id="automatic">Create a campaign from one picture</h2>
+        <h2 id="automatic">Create a campaign from pictures or videos</h2>
         <ol>
           <li>
-            Open <a href="../../game/creator/">Picture campaign creator</a> and select one image.
+            Open <a href="../../game/creator/">Picture campaign creator</a> and select one or many
+            pictures, videos, or both.
           </li>
-          <li>Name your collection, choose picture fitting and review the credits.</li>
           <li>
-            Choose <strong>Generate and review</strong>, then check the picture and generated map.
+            Name your collection. For video, review filename pairing suggestions, poster frames and
+            the optional playback range.
+          </li>
+          <li>
+            Choose <strong>Generate and review</strong>, then check every picture, generated map,
+            enemy, obstacle and route result.
           </li>
           <li>
             Approve the exact result, then <strong>Install campaign</strong> or
@@ -268,10 +273,10 @@
           <strong data-i18n="tools:currentBoundary" data-i18n-slot="slot0"
             >Current boundary:</strong
           >
-          Studio exports editable project source. It does not yet install that project as an
-          ordinary modern Custom campaign. Use Playground's map expansion for today's manual install
-          path. Automatic image/video campaigns and
-          <code data-i18n-slot="slot1">.rlpack</code> installation are the next development phases.
+          Studio exports editable project source; its JSON is not directly installable as a modern
+          Custom campaign. Use the picture campaign creator to generate, review, install or download
+          supported image/video <code data-i18n-slot="slot1">.rlpack</code> campaigns. Playground
+          remains the legacy expansion path.
         </aside>
         <p data-i18n="tools:aReferencePictureInTheStudioMapEditorIsAn">
           A reference picture in the Studio map editor is an overlay, not an automatically bound
@@ -299,9 +304,9 @@
           </li>
         </ul>
         <p data-i18n="tools:installationIsLocalSharingAFileDoesNotPublishIt">
-          Installation is local. Sharing a file does not publish it on the game's website. Public
-          release integration currently uses the maintainer workflow; the community upload and
-          catalog service is planned.
+          Installation is local. Sharing a file does not publish it on the game's website. The
+          repository includes the community upload and catalog service, but public listing requires
+          an operator to deploy and configure it; the static site alone is not a live backend.
         </p>
       </section>
       <section aria-labelledby="more">

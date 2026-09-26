@@ -1,6 +1,7 @@
 # Phase 4 community submission acceptance
 
-Status: **reviewable service delivery; production deployment remains open**.
+Status: **service source published in `v0.141.0` and hardened in `v0.141.2`; production deployment
+remains open**.
 
 This phase adds the separately deployed service in `services/community`. It uses Fastify,
 PostgreSQL, Better Auth, the maintained tus Node server and disk-backed resumable uploads. The
@@ -43,7 +44,10 @@ npm run lint
 npm run format:check
 ```
 
-The current combined source passes all **33/33** community-service checks.
+The `v0.141.0` baseline passed **43/43** community-service checks. The published `v0.141.2`
+exact-head local aggregate passes **556/556**, including the direct **63/63** community-service
+suite. Qualification run `36250777506` used the explicit automated-suite waiver, so it has no
+hosted test total; skipped checks are not counted as passes.
 
 The maintained tus package is used as documented in its
 [Fastify integration](https://github.com/tus/tus-node-server/blob/main/packages/server/README.md),
@@ -60,6 +64,11 @@ base URL, trusted origins, its migration command, and deliberate mail/recovery c
 Source now includes `npm run recovery -- backup|verify|restore --directory <path>` and focused
 failure rehearsal. This is executable recovery tooling, not evidence that a production database or
 remote blob store has been restored.
+
+The production Compose/preflight contract, exact interrupted-tus fault proxy, source-to-target
+recovery rehearsal and bounded deployed two-user runner shipped in `v0.141.2`. Publication evidence
+is recorded in [v0.141.2-publication-evidence.md](v0.141.2-publication-evidence.md); publication does
+not replace the live infrastructure gates below.
 
 The phase is not accepted as a production launch until an operator selects infrastructure and
 passes a two-user browser run, interrupted upload through the deployed proxy, corrupt-package

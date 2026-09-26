@@ -761,6 +761,25 @@ canvas {
   gap: 10px;
   margin-top: 22px;
 }
+#coop-victory-story {
+  margin-block: 14px;
+  padding: 12px;
+  border: 1px solid var(--fk-line);
+}
+#coop-victory-story-video {
+  display: block;
+  width: min(100%, 560px);
+  max-height: min(42dvh, 315px);
+  margin: 10px auto 0;
+  background: #02050a;
+  object-fit: contain;
+}
+#coop-victory-story-video[hidden] {
+  display: none;
+}
+#coop-victory-story .overlay-actions {
+  margin-top: 10px;
+}
 /* The return action has its own row: nothing covers the earned original.
    The canvas remains a complete 2:1 frame, including in short landscape. */
 .field-kit #coop-earned-picture {

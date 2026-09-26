@@ -5,10 +5,19 @@ import { compileContentProject, resolveMission } from '../content-design/project
 import { creatorSHA256 } from '../creator/bytes.mjs';
 import {
   creatorMediaCampaignInput,
+  creatorMediaSourceEditing,
   prepareCreatorMediaCampaign,
 } from '../creator/media-campaign.mjs';
+import {
+  createCreatorDraftBackend,
+  exportCreatorSource,
+  importCreatorSource,
+  prepareCreatorSource,
+} from '../creator/drafts.mjs';
+import { createCreatorStore } from '../creator/installed.mjs';
 import { generateCreatorProject } from '../creator/templates.mjs';
 import { pngBytes } from './helpers/media-fixtures.mjs';
+import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 
 const themes = JSON.parse(
   await readFile(new URL('../content-design/themes.json', import.meta.url)),
@@ -66,6 +75,7 @@ async function fixture({ standalone = 0, paired = 0, videoOnly = 0 } = {}) {
         video: null,
         errors: [],
       };
+    assets.push({ sha256: assetSha256, role: 'source-image-original', blob: original });
     items.push(item);
     return pairedImage ? item : null;
   };
@@ -283,4 +293,84 @@ test('the production adapter prepares a playable video-only bundle through share
   assert.equal(result.prepared.review.stories, 1);
   assert.match(result.prepared.review.validation, /Automated route verified/);
   assertSharedGameplay(result);
+});
+
+test('private media source v2 roundtrips originals and exact choices through conflict-safe checkpoints', async () => {
+  const intake = await fixture({ standalone: 1, paired: 1, videoOnly: 1 }),
+    campaign = creatorMediaCampaignInput(intake, settings),
+    sourceEditing = creatorMediaSourceEditing(intake),
+    sourceHashes = new Set([
+      ...campaign.assets.map((asset) => asset.sha256),
+      ...sourceEditing.items.map((item) => item.source.sha256),
+    ]),
+    sourceAssets = intake.assets.filter((asset) => sourceHashes.has(asset.sha256)),
+    source = await prepareCreatorSource(
+      {
+        draftId: settings.draftId,
+        content: campaign.content,
+        editing: { fit: 'contain', media: sourceEditing },
+      },
+      sourceAssets,
+    );
+  assert.equal(source.document.format, 'revealline-creator-source.v2');
+  assert.equal(source.document.editing.media.items.length, 4);
+  assert.equal(
+    source.document.editing.media.items.find((item) => item.name === 'paired-1.mp4')
+      .pairedImageSha256,
+    intake.items.find((item) => item.name === 'paired-1.png').assetSha256,
+  );
+  assert.equal(
+    source.document.editing.media.items.find((item) => item.name === 'video-1.mp4')
+      .posterRequestedTime,
+    5,
+  );
+  assert.deepEqual(
+    source.document.editing.media.items.find((item) => item.name === 'video-1.mp4').playbackRange,
+    { startSeconds: 0, endSeconds: 10, retainsCompleteOriginal: true },
+  );
+  const restored = await importCreatorSource(exportCreatorSource(source));
+  assert.deepEqual(restored.document, source.document);
+  for (const item of source.document.editing.media.items.filter((entry) => entry.source)) {
+    assert.deepEqual(
+      await restored.assets.find((asset) => asset.sha256 === item.source.sha256).blob.arrayBuffer(),
+      await source.assets.find((asset) => asset.sha256 === item.source.sha256).blob.arrayBuffer(),
+    );
+  }
+
+  const portableOnly = await prepareCreatorSource(
+    { draftId: 'portable-media-draft', content: campaign.content, editing: { fit: 'contain' } },
+    campaign.assets,
+  );
+  assert.equal(portableOnly.document.format, 'revealline-creator-source.v2');
+  assert.equal(
+    portableOnly.document.editing.media.items.find((item) => item.kind === 'image').source,
+    null,
+  );
+  assert.ok(
+    portableOnly.document.editing.media.items
+      .filter((item) => item.kind === 'video')
+      .every((item) => item.source && item.playbackRange.retainsCompleteOriginal),
+  );
+
+  const memory = memoryIndexedDB(),
+    store = createCreatorStore({ indexedDB: memory.indexedDB }),
+    backend = createCreatorDraftBackend(store);
+  await backend.save(restored, null);
+  const checkpoint = await backend.read(settings.draftId);
+  assert.equal(checkpoint.revision, 1);
+  assert.deepEqual(checkpoint.source.document, source.document);
+  await assert.rejects(backend.save(source, null), /newer draft/);
+  store.close();
+
+  await assert.rejects(
+    prepareCreatorSource(
+      {
+        draftId: settings.draftId,
+        content: campaign.content,
+        editing: { fit: 'contain', media: sourceEditing },
+      },
+      sourceAssets.slice(1),
+    ),
+    /source assets|closure|missing/i,
+  );
 });

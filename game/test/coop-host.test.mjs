@@ -229,14 +229,20 @@ test('lobby keyboard navigation reaches Race and accessibility controls while ex
     assert.equal(f.doc.activeElement.closest('.race-pad'), null);
     seen.add(f.doc.activeElement.id);
   }
-  for (const id of ['coop-level', 'coop-optional-setup-toggle', 'coop-start'])
+  for (const id of ['coop-optional-setup-toggle', 'coop-start'])
     assert.ok(seen.has(id), `Lobby Tab must reach ${id}.`);
+  assert.equal(
+    seen.has('coop-level'),
+    false,
+    'Arena selection stays out of quick-start Tab order.',
+  );
   assert.equal(seen.has('coop-experiment'), false, 'Optional Team tuning stays collapsed.');
   f.disclose('coop-optional-setup');
   for (let index = 0; index < 20; index++) {
     f.press('Tab');
     seen.add(f.doc.activeElement.id);
   }
+  assert.ok(seen.has('coop-level'), 'Opening Team options exposes legacy arena selection.');
   assert.ok(seen.has('coop-experiment'), 'Opening Team options exposes play-style tuning.');
   let left = 0;
   f.$('coop-race').onclick = () => left++;
@@ -547,8 +553,8 @@ test('Team pack reads show immediate status, Stop waiting rejects late adoption,
   f.$('coop-pack-file').focus();
   const pending = f.selectFile(candidate, () => read.promise);
   assert.equal(f.$('coop-pack-status').dataset.state, 'busy');
-  assert.equal(f.$('coop-pack-status').dataset.stage, 'reading');
-  assert.match(f.$('coop-pack-status').textContent, /Reading the selected Team pack/);
+  assert.equal(f.$('coop-pack-status').dataset.stage, 'verifying');
+  assert.match(f.$('coop-pack-status').textContent, /Checking Team arenas and rules/);
   assert.equal(f.$('coop-pack-cancel').hidden, false);
   assert.equal(f.$('coop-start').disabled, true, 'Cancel restores the existing arena before Start');
   f.$('coop-pack-cancel').click();
@@ -1471,12 +1477,28 @@ for (const interruption of ['blur', 'hidden', 'persisted pagehide'])
     pad.buttons[0] = { pressed: false, value: 0 };
     f.tick(2);
     assert.equal(f.$('coop-overlay').hidden, false, 'Joining a pad is not Resume.');
+    // Let the finite controller-to-native echo window expire before modeling a
+    // distinct pointer activation. This test owns lifecycle retirement, not the
+    // guard that deliberately rejects an immediate synthetic click after A.
+    f.tick(151);
     f.disclose('coop-help');
     const region = f.$('coop-help-reading'),
       done = f.$('coop-help-reading-done');
     region.clientHeight = 100;
     region.scrollHeight = 800;
-    f.$('coop-help-read').click();
+    pad.buttons[13] = { pressed: true, value: 1 };
+    f.tick();
+    pad.buttons[13] = { pressed: false, value: 0 };
+    f.tick(2);
+    assert.equal(
+      f.doc.activeElement,
+      f.$('coop-help-read'),
+      'The joined controller reaches Read controls.',
+    );
+    pad.buttons[0] = { pressed: true, value: 1 };
+    f.tick();
+    pad.buttons[0] = { pressed: false, value: 0 };
+    f.tick(2);
     assert.equal(f.doc.activeElement, region);
     pad.buttons[13] = { pressed: true, value: 1 };
     f.tick();

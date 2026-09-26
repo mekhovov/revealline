@@ -42,6 +42,9 @@ import {
   resolveStoryReceipts,
   mergeStoryReceipts,
 } from './story-receipts.mjs';
+import { t } from './i18n/index.mjs';
+
+const libraryError = (key, values) => t(`errors:library.${key}`, values);
 
 export const LIBRARY_VERSION = 'xonix-library.v2';
 export const PRESENTATION_LIBRARY_VERSION = 'xonix-library.v3';
@@ -58,7 +61,9 @@ export const LIBRARY_LIMITS = Object.freeze({
 export class LibraryCapacityError extends RangeError {
   constructor(resource, used, limit) {
     super(
-      `Library ${resource} budget exceeded${used === null ? '' : ` (${used}/${limit})`}. Existing records are preserved; export a backup and archive a library before adding more.`,
+      used === null
+        ? libraryError('capacityUnknown', { resource })
+        : libraryError('capacity', { resource, used, limit }),
     );
     this.name = 'LibraryCapacityError';
     this.code = 'library-capacity';
@@ -113,14 +118,14 @@ const sortScores = (a, b) =>
   a.completedAt.localeCompare(b.completedAt) ||
   a.runId.localeCompare(b.runId);
 export function campaignKey(campaign) {
-  required(stableId(campaign?.id) && text(campaign?.revision, 60), 'Campaign identity is invalid.');
+  required(
+    stableId(campaign?.id) && text(campaign?.revision, 60),
+    libraryError('campaignIdentity'),
+  );
   return `${campaign.id}/${encodeURIComponent(campaign.revision)}/${dataIdentity({ ruleset: versionsForCampaign(campaign).ruleset, levels: campaign.levels.map(normalizedLevel), classRecipes: campaign.classRecipes ?? CLASSES })}`;
 }
 export function boardIdentity({ campaign, level, recipe, turnPolicy, seed, classRoute = [] }) {
-  required(
-    TURN_POLICIES.includes(turnPolicy) && uint32(seed),
-    'Board steering or seed is invalid.',
-  );
+  required(TURN_POLICIES.includes(turnPolicy) && uint32(seed), libraryError('boardIdentity'));
   return `board-v1-${dataIdentity({ campaignKey: campaignKey(campaign), level: normalizedLevel(level), recipe, turnPolicy, seed, classRoute })}`;
 }
 export function emptyLibrary() {
@@ -134,13 +139,13 @@ export function emptyLibrary() {
   };
 }
 function preferencesValid(preferences) {
-  exactKeys(preferences, Object.keys(DEFAULT_PREFERENCES), 'preferences');
+  exactKeys(preferences, Object.keys(DEFAULT_PREFERENCES), libraryError('labels.preferences'));
   for (const key of ['themeId', 'bodyId', 'classId'])
-    required(stableId(preferences[key]), `preferences.${key} is invalid.`);
-  required(TURN_POLICIES.includes(preferences.turnPolicy), 'preferences.turnPolicy is invalid.');
+    required(stableId(preferences[key]), libraryError('preferenceField', { field: key }));
+  required(TURN_POLICIES.includes(preferences.turnPolicy), libraryError('preferenceTurnPolicy'));
   required(
     preferences.tapSteering === null || typeof preferences.tapSteering === 'boolean',
-    'preferences.tapSteering must be null (device default), true or false.',
+    libraryError('preferenceTapSteering'),
   );
   if (preferences.keyboardBindings !== null)
     preferences.keyboardBindings = resolveKeyBindings(preferences.keyboardBindings);
@@ -156,22 +161,25 @@ function preferencesValid(preferences) {
   preferences.screenSteeringHand = resolveScreenSteeringHand(preferences.screenSteeringHand);
   required(
     ['hybrid', 'microtile', 'props'].includes(preferences.style),
-    'preferences.style is invalid.',
+    libraryError('preferenceStyle'),
   );
   for (const key of ['showGrid', 'reducedEffects', 'musicEnabled', 'matchClassAppearance'])
-    required(typeof preferences[key] === 'boolean', `preferences.${key} must be boolean.`);
+    required(
+      typeof preferences[key] === 'boolean',
+      libraryError('preferenceBoolean', { field: key }),
+    );
   required(
     ['synthwave', 'chiptune', 'rock', 'metal', 'ambient'].includes(preferences.musicGenre),
-    'preferences.musicGenre is invalid.',
+    libraryError('preferenceMusicGenre'),
   );
   for (const key of ['masterVolume', 'musicVolume', 'sfxVolume'])
-    required(finite(preferences[key], 0, 1), `preferences.${key} must be 0..1.`);
+    required(finite(preferences[key], 0, 1), libraryError('preferenceVolume', { field: key }));
 }
 function stats(value, withVariants = false) {
   exactKeys(
     value,
     ['score', 'time', 'medals', 'clean', ...(withVariants ? ['variants'] : [])],
-    'progress record',
+    libraryError('labels.progressRecord'),
   );
   required(
     finite(value.score, 0, 1e9) &&
@@ -179,14 +187,14 @@ function stats(value, withVariants = false) {
       Number.isInteger(value.medals) &&
       finite(value.medals, 1, 3) &&
       typeof value.clean === 'boolean',
-    'Progress statistics are invalid.',
+    libraryError('progressStatistics'),
   );
   if (withVariants) {
     required(
       plainObject(value.variants) &&
         Object.keys(value.variants).length > 0 &&
         Object.keys(value.variants).length <= 256,
-      'Progress variants are invalid.',
+      libraryError('progressVariants'),
     );
     for (const [key, v] of Object.entries(value.variants)) {
       const parts = key.split('/');
@@ -201,34 +209,38 @@ function stats(value, withVariants = false) {
           /^loadout-v1-[0-9a-f]{8}$/.test(parts[3]) &&
           /^(0|[1-9]\d*)$/.test(parts[4]) &&
           uint32(Number(parts[4])),
-        'Progress variant identity is invalid.',
+        libraryError('progressVariantIdentity'),
       );
       try {
         required(
           encodeURIComponent(decodeURIComponent(parts[2])) === parts[2],
-          'Progress revision encoding is invalid.',
+          libraryError('progressRevisionEncoding'),
         );
       } catch {
-        throw new TypeError('Progress revision encoding is invalid.');
+        throw new TypeError(libraryError('progressRevisionEncoding'));
       }
       stats(v);
     }
   }
 }
 function genericProgress(progress) {
-  exactKeys(progress, ['version', 'campaignId', 'revision', 'clears', 'seen'], 'progress');
+  exactKeys(
+    progress,
+    ['version', 'campaignId', 'revision', 'clears', 'seen'],
+    libraryError('labels.progress'),
+  );
   required(
     progress.version === PROGRESS_VERSION &&
       stableId(progress.campaignId) &&
       text(progress.revision, 60),
-    'Progress identity is invalid.',
+    libraryError('progressIdentity'),
   );
   required(
     plainObject(progress.clears) && Object.keys(progress.clears).length <= 128,
-    'Progress clears are invalid.',
+    libraryError('progressClears'),
   );
   for (const [key, value] of Object.entries(progress.clears)) {
-    required(stableId(key), 'Level identity is invalid.');
+    required(stableId(key), libraryError('levelIdentity'));
     stats(value, true);
   }
   required(
@@ -236,7 +248,7 @@ function genericProgress(progress) {
       progress.seen.length <= 256 &&
       progress.seen.every((v) => text(v, 159)) &&
       new Set(progress.seen).size === progress.seen.length,
-    'Progress run identities are invalid.',
+    libraryError('progressRunIdentities'),
   );
 }
 function checkLibrary(candidate, { campaigns = [] } = {}) {
@@ -267,11 +279,11 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
       ...(pictures ? ['pictureReceipts'] : []),
       ...(stories ? ['storyReceipts', 'cinematicVolume'] : []),
     ],
-    'library',
+    libraryError('labels.library'),
   );
   required(
     legacy || pictures || value.format === LIBRARY_VERSION,
-    'Unsupported player library version.',
+    libraryError('unsupportedVersion'),
   );
   // Preserve the omitted-only preference migrations of already-saved profiles.
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'matchClassAppearance'))
@@ -308,23 +320,20 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
     value.preferences.screenSteeringHand =
       value.preferences.touchControls?.side ?? DEFAULT_PREFERENCES.screenSteeringHand;
   preferencesValid(value.preferences);
-  required(plainObject(value.campaigns), 'Library campaigns must be an object.');
+  required(plainObject(value.campaigns), libraryError('campaignsObject'));
   capacity('campaigns', Object.keys(value.campaigns).length, LIBRARY_LIMITS.campaigns);
   const known = new Map(campaigns.map((c) => [campaignKey(c), c]));
   for (const [key, progress] of Object.entries(value.campaigns)) {
-    required(campaignKeyValid(key), 'Library campaign key is invalid.');
+    required(campaignKeyValid(key), libraryError('campaignKey'));
     genericProgress(progress);
     required(
       key.startsWith(`${progress.campaignId}/${encodeURIComponent(progress.revision)}/`),
-      'Progress does not match its campaign identity.',
+      libraryError('progressCampaignIdentity'),
     );
     if (known.has(key))
-      required(
-        validateProgress(progress, known.get(key)),
-        'Saved progress does not match this campaign.',
-      );
+      required(validateProgress(progress, known.get(key)), libraryError('savedProgressCampaign'));
   }
-  required(Array.isArray(value.gallery), 'Gallery must be an array.');
+  required(Array.isArray(value.gallery), libraryError('galleryArray'));
   capacity('gallery', value.gallery.length, LIBRARY_LIMITS.gallery);
   const galleryKeys = new Set();
   for (const item of value.gallery) {
@@ -347,24 +356,24 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
         'completedAt',
         'runId',
       ],
-      'gallery entry',
+      libraryError('labels.galleryEntry'),
     );
     required(
       /^gallery-v1-[0-9a-f]{16}$/.test(item.key) && !galleryKeys.has(item.key),
-      'Gallery identity is invalid or duplicated.',
+      libraryError('galleryIdentity'),
     );
     galleryKeys.add(item.key);
     required(
       campaignKeyValid(item.campaignKey) &&
         Object.hasOwn(value.campaigns, item.campaignKey) &&
         Object.hasOwn(value.campaigns[item.campaignKey].clears, item.levelId),
-      'Gallery entry needs a completed level.',
+      libraryError('galleryCompletedLevel'),
     );
     for (const key of ['levelId', 'themeId', 'bodyId'])
-      required(stableId(item[key]), `Gallery ${key} is invalid.`);
+      required(stableId(item[key]), libraryError('galleryField', { field: key }));
     required(
       item.sourcePackId === null || stableId(item.sourcePackId),
-      'Gallery pack identity is invalid.',
+      libraryError('galleryPackIdentity'),
     );
     required(
       uint32(item.seed) &&
@@ -375,16 +384,16 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
         finite(item.time, 0, 7200) &&
         medalValid(item.medal) &&
         stamp(item.completedAt),
-      'Gallery metadata is invalid.',
+      libraryError('galleryMetadata'),
     );
     required(
       item.key === `gallery-v1-${dataIdentity([item.campaignKey, item.levelId, item.themeId])}`,
-      'Gallery key does not match its content.',
+      libraryError('galleryContentKey'),
     );
   }
   required(
     Array.isArray(value.scores) && value.scores.length <= LIBRARY_LIMITS.scores,
-    'Local scoreboard budget exceeded.',
+    libraryError('scoreboardBudget'),
   );
   const scoreIds = new Set(),
     counts = new Map();
@@ -408,24 +417,24 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
         'switches',
         'classRoute',
       ],
-      'local score',
+      libraryError('labels.localScore'),
     );
     const key = `${item.boardId}/${item.runId}`;
     required(
       /^board-v1-[0-9a-f]{16}$/.test(item.boardId) && !scoreIds.has(key),
-      'Score identity is invalid or duplicated.',
+      libraryError('scoreIdentity'),
     );
     scoreIds.add(key);
     counts.set(item.boardId, (counts.get(item.boardId) ?? 0) + 1);
     required(
       counts.get(item.boardId) <= LIBRARY_LIMITS.perBoard,
-      'Scoreboard has too many entries for this board.',
+      libraryError('scoreboardBoardBudget'),
     );
     required(
       campaignKeyValid(item.campaignKey) &&
         Object.hasOwn(value.campaigns, item.campaignKey) &&
         Object.hasOwn(value.campaigns[item.campaignKey].clears, item.levelId),
-      'Scores need a completed campaign level.',
+      libraryError('scoreCompletedLevel'),
     );
     required(
       stableId(item.levelId) &&
@@ -434,7 +443,7 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
         text(item.classRevision, 80) &&
         TURN_POLICIES.includes(item.turnPolicy) &&
         uint32(item.seed),
-      'Score configuration is invalid.',
+      libraryError('scoreConfiguration'),
     );
     required(
       finite(item.score, 0, 1e9) &&
@@ -442,7 +451,7 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
         medalValid(item.medal) &&
         stamp(item.completedAt) &&
         text(item.runId, 159),
-      'Score statistics are invalid.',
+      libraryError('scoreStatistics'),
     );
     required(
       Number.isInteger(item.switches) &&
@@ -452,7 +461,7 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
         item.classRoute.length <= 128 &&
         item.classRoute.every(stableId) &&
         item.classRoute[0] === item.classId,
-      'Score class route is invalid.',
+      libraryError('scoreClassRoute'),
     );
   }
   // Validate the complete legacy shape before adding the new metadata field.
@@ -461,7 +470,7 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
   if (pictures)
     value.pictureReceipts = resolvePictureReceipts(value.pictureReceipts, value.gallery);
   if (stories) {
-    required(finite(value.cinematicVolume, 0, 1), 'Cinematic volume must be between zero and one.');
+    required(finite(value.cinematicVolume, 0, 1), libraryError('cinematicVolume'));
     value.storyReceipts = resolveStoryReceipts(
       value.storyReceipts,
       value.pictureReceipts,
@@ -489,7 +498,7 @@ export function validateLibrary(value, options) {
   }
 }
 export function importLibrary(candidate, options) {
-  required(candidate !== null && candidate !== undefined, 'Choose a player library to import.');
+  required(candidate !== null && candidate !== undefined, libraryError('chooseImport'));
   // A recovered local storage envelope is also usable as an explicit import;
   // its old storage generation is deliberately not adopted by the caller.
   return storedLibrary(candidate, options).library;
@@ -505,7 +514,7 @@ export function progressFor(library, campaign) {
 }
 export function setCampaignProgress(library, campaign, progress) {
   const next = checkLibrary(library);
-  required(validateProgress(progress, campaign), 'Cannot import incompatible campaign progress.');
+  required(validateProgress(progress, campaign), libraryError('incompatibleProgress'));
   genericProgress(progress);
   next.campaigns[campaignKey(campaign)] = structuredClone(progress);
   return checkLibrary(next, { campaigns: [campaign] });
@@ -513,7 +522,7 @@ export function setCampaignProgress(library, campaign, progress) {
 export function updatePreferences(library, patch) {
   const next = checkLibrary(library),
     safe = boundedJSON(patch);
-  exactKeys(safe, Object.keys(DEFAULT_PREFERENCES), 'preferences');
+  exactKeys(safe, Object.keys(DEFAULT_PREFERENCES), libraryError('labels.preferences'));
   next.preferences = { ...next.preferences, ...safe };
   preferencesValid(next.preferences);
   return next;
@@ -521,7 +530,7 @@ export function updatePreferences(library, patch) {
 /** Explicit new-version preference; older library shapes remain byte compatible. */
 export function withCinematicVolume(library, volume) {
   const next = checkLibrary(library);
-  required(finite(volume, 0, 1), 'Cinematic volume must be between zero and one.');
+  required(finite(volume, 0, 1), libraryError('cinematicVolume'));
   next.format = STORY_LIBRARY_VERSION;
   next.pictureReceipts ??= [];
   next.storyReceipts ??= [];
@@ -630,7 +639,7 @@ export function recordLibraryCompletion(
   ];
   required(
     Array.isArray(history) && history.length > 0 && history.length <= 4096,
-    'Class history is invalid.',
+    libraryError('classHistory'),
   );
   const classRoute = [];
   for (const entry of history) {
@@ -641,7 +650,7 @@ export function recordLibraryCompletion(
         entry.loadoutHash === loadoutHash(c) &&
         Number.isInteger(entry.tick) &&
         entry.tick >= 0,
-      'Class history does not match the registered roster.',
+      libraryError('classHistoryRoster'),
     );
     if (classRoute.at(-1) !== entry.classId) classRoute.push(entry.classId);
   }
@@ -819,10 +828,10 @@ function storedLibrary(raw, options) {
   }
   if (value.format !== LIBRARY_STORAGE_VERSION)
     return { library: checkLibrary(value, options), generation: 'legacy' };
-  exactKeys(value, ['format', 'generation', 'library'], 'stored library');
+  exactKeys(value, ['format', 'generation', 'library'], libraryError('labels.storedLibrary'));
   required(
     value.generation === 'legacy' || /^generation-[a-zA-Z0-9-]{1,100}$/.test(value.generation),
-    'Stored library generation is invalid.',
+    libraryError('storedGeneration'),
   );
   return { library: checkLibrary(value.library, options), generation: value.generation };
 }
@@ -835,8 +844,7 @@ export function loadLibrary(storage, key, options) {
     return {
       library: emptyLibrary(),
       generation: 'legacy',
-      warning:
-        'The player library could not be read. Existing bytes will be preserved before replacement; export your session if storage is unavailable.',
+      warning: libraryError('readFailure'),
       recovery: raw,
     };
   }
@@ -864,13 +872,13 @@ function saveLibraryAttempt(
 ) {
   let candidate = library;
   try {
-    required(['merge', 'replace'].includes(mode), 'Unsupported library save mode.');
+    required(['merge', 'replace'].includes(mode), libraryError('saveMode'));
     candidate = checkLibrary(library);
     required(
       plainObject(writeLock) &&
         typeof writeLock.key === 'string' &&
         (writeLock.token === null || typeof writeLock.token === 'string'),
-      'Library write lock is invalid.',
+      libraryError('writeLock'),
     );
     const locked = () => {
       const token = storage.getItem(writeLock.key);
@@ -882,8 +890,7 @@ function saveLibraryAttempt(
         conflict: true,
         library: candidate,
         generation,
-        warning:
-          'A backup import or recovery is updating this library. Local progress is kept in this tab; wait for it to finish before saving or export your session.',
+        warning: libraryError('backupUpdating'),
       };
     const raw = storage.getItem(key);
     let current;
@@ -898,8 +905,7 @@ function saveLibraryAttempt(
           conflict: true,
           library: candidate,
           generation,
-          warning:
-            'The stored library changed or could not be read. Your local progress is kept in this tab; export it before reloading or replacing the saved profile.',
+          warning: libraryError('storedChanged'),
         };
     }
     if (mode === 'merge' && current.generation !== generation)
@@ -908,8 +914,7 @@ function saveLibraryAttempt(
         conflict: true,
         library: candidate,
         generation,
-        warning:
-          'Another tab imported or replaced this player library. Your local progress is kept in this tab; export it, then reload before choosing which library to keep.',
+        warning: libraryError('anotherTabReplaced'),
       };
     const merged =
       mode === 'replace' ? candidate : mergeLibraries(candidate, current.library, { baseline });
@@ -927,15 +932,12 @@ function saveLibraryAttempt(
       let backup = prefix,
         suffix = 0;
       while (storage.getItem(backup) !== null) {
-        required(++suffix <= 1000, 'Too many recovery files.');
+        required(++suffix <= 1000, libraryError('recoveryFiles'));
         backup = `${prefix}.${suffix}`;
       }
       storage.setItem(backup, recovery);
     }
-    required(
-      !locked(),
-      'A backup import acquired the library lock. Local progress is kept in this tab.',
-    );
+    required(!locked(), libraryError('backupLock'));
     // A merge may be expensive for a large library. Re-read before committing
     // rather than overwriting a value another tab wrote during that work.
     if (storage.getItem(key) !== raw) {
@@ -953,8 +955,7 @@ function saveLibraryAttempt(
         conflict: true,
         library: candidate,
         generation,
-        warning:
-          'The library changed again while saving. Your local progress is kept in this tab; retry saving or export it before reloading.',
+        warning: libraryError('changedWhileSaving'),
       };
     }
     storage.setItem(key, encoded);
@@ -974,7 +975,7 @@ function saveLibraryAttempt(
         error instanceof LibraryCapacityError || error instanceof MasteryCapacityError
           ? { code: error.code, resource: error.resource, used: error.used, limit: error.limit }
           : null,
-      warning: `Library remains available in this session; export a backup. ${error.message.slice(0, 240)}`,
+      warning: libraryError('saveFailure', { message: error.message.slice(0, 240) }),
     };
   }
 }

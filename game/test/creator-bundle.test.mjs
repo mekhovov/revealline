@@ -21,7 +21,9 @@ import { pngBytes } from './helpers/media-fixtures.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 import { prepareManagedMediaBytes } from '../managed-media-store.mjs';
 import { verifiedPreviewBackground } from '../content-design/assets.mjs';
-import { createCreatorRuntime } from '../creator/runtime.mjs';
+import { createCreatorRuntime, creatorProfileKey } from '../creator/runtime.mjs';
+import { createJourneyBackend, createJourneyProfileStore } from '../journey/profile.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import {
   prepareCreatorSource,
@@ -277,6 +279,52 @@ test('installed Custom attempts restore through the shared verifier and award on
   player3.dispose();
 });
 
+test('Custom picture progress exports, inspects and restores within its exact edition', async () => {
+  const pack = await prepared();
+  const profileKey = creatorProfileKey(pack.editionId);
+  const profile = createJourneyProfileStore({
+    backend: createJourneyBackend({ ...managedIndexedDB(), profileKey }),
+  });
+  await profile.load();
+  const missionId = 'picture-1';
+  const picture = {
+    mode: 'versus',
+    editionId: pack.editionId,
+    missionId,
+    campaignKey: 'pictures@1',
+    levelId: missionId,
+    levelRevision: '1',
+    runId: 'creator-versus-run',
+    gameplayId: `${pack.editionId}:verified-gameplay`,
+    difficulty: 'standard',
+    name: 'My picture',
+    campaignTitle: 'My picture',
+    themeId: 'verdant-volt',
+    asset: pack.manifest.content.project.assets[0],
+  };
+  profile.record({
+    type: 'complete',
+    mode: picture.mode,
+    missionId,
+    runId: picture.runId,
+    gameplayId: picture.gameplayId,
+    difficulty: picture.difficulty,
+    picture,
+  });
+  assert.equal(await profile.flush(), true);
+  const backup = profile.export();
+  assert.equal(profile.inspectBackup(backup).pictures.records[0].editionId, pack.editionId);
+
+  const restored = createJourneyProfileStore({
+    backend: createJourneyBackend({ ...managedIndexedDB(), profileKey }),
+  });
+  await restored.load();
+  restored.restore(backup);
+  assert.equal(await restored.flush(), true);
+  assert.deepEqual(restored.pictures(), profile.pictures());
+  assert.deepEqual(restored.snapshot().clears.versus, profile.snapshot().clears.versus);
+});
+
 test('source checkpoints retain private originals separately, roundtrip actual files and reject concurrent head overwrites', async () => {
   const f = await fixture();
   const original = new Blob(['private original bytes and source metadata']);
@@ -338,11 +386,35 @@ test('installed project sources remain Custom and do not require decoding media 
     await reviewCreatorInstallation(store, pack, approval),
     { decodeImage },
   );
-  const sources = await installedCreatorLibrarySources({ store, launch: () => {} });
+  let versusLaunch = null;
+  const profile = {
+    snapshot: () => ({
+      clears: { solo: {}, versus: {}, team: {} },
+      skipped: { solo: [], versus: [], team: [] },
+      cursors: {},
+    }),
+    pictures: () => ({ format: 'revealline-journey-pictures.v1', records: [] }),
+  };
+  const sources = await installedCreatorLibrarySources({
+    store,
+    loadOptions: { decodeImage },
+    profileForEdition: async () => profile,
+    launch: () => {},
+    launchVersus: (prepared, mission, context) => {
+      versusLaunch = { prepared, mission, context };
+      return true;
+    },
+  });
   const library = createMissionLibrary(sources);
   const rows = library.search('', { collection: 'Custom', mode: 'solo' });
   assert.equal(rows.length, 1);
   assert.equal(rows[0].editionId, pack.editionId);
+  const versus = library.search('', { collection: 'Custom', mode: 'versus' });
+  assert.equal(versus.length, 1);
+  assert.equal(await library.launch(versus[0], { mode: 'versus', isCurrent: () => true }), true);
+  assert.equal(versusLaunch.prepared.editionId, pack.editionId);
+  assert.equal(versusLaunch.mission.levelId, 'picture-1');
+  assert.equal(versusLaunch.context.libraryMissionId, versus[0].id);
   assert.equal(library.search('', { collection: 'Journey', mode: 'solo' }).length, 0);
   store.close();
 });

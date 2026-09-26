@@ -1,4 +1,10 @@
-import { t, localizedText, localizedMessage, formatNumber } from '../../game/i18n/index.mjs';
+import {
+  t,
+  localizedText,
+  localizedAttribute,
+  localizedMessage,
+  formatNumber,
+} from '../../game/i18n/index.mjs';
 import { TEAM_OUTCOME_SLOTS } from '../../game/couch/coop-outcome-presentation.mjs';
 import { TEAM_ENEMY_SLOTS } from '../../game/couch/coop-enemy-slots.mjs';
 import { TEAM_PILOT_SLOTS } from '../../game/couch/coop-pilot-slots.mjs';
@@ -28,7 +34,7 @@ const yardRoles = ['enemy.relay-sentinel', 'terrain.wall'];
 const objectiveSlots = [...TEAM_ANCHOR_SLOTS, ...TEAM_CORE_SLOTS];
 const element = (tag, value = '', className = '') => {
   const node = document.createElement(tag);
-  localizedText(node, () =>value);
+  localizedText(node, typeof value === 'function' ? value : () => value);
   node.className = className;
   return node;
 };
@@ -45,7 +51,7 @@ const requireImage = (assets, id) => {
 export function teamObjectivePreviewNote(slotId, run) {
   if (!objectiveSlots.includes(slotId)) return null;
   if (run.status === 'won')
-    return t("tools:completedArenaShowsTheRevealedPictureObjectiveArtworkIsHidden");
+    return t('tools:completedArenaShowsTheRevealedPictureObjectiveArtworkIsHidden');
   const state = slotId.split('.').at(-1);
   const count = TEAM_ANCHOR_SLOTS.includes(slotId)
     ? (run.strongholds || [])
@@ -59,12 +65,12 @@ export function teamObjectivePreviewNote(slotId, run) {
           : 'tools:studio.crossMode.objectiveCoresShown',
         { count, state: t(`tools:studio.crossMode.state.${state}`) },
       )
-    : t("tools:theSelectedObjectiveStateIsInactiveInThisSceneChoose");
+    : t('tools:theSelectedObjectiveStateIsInactiveInThisSceneChoose');
 }
 export function teamEnemyPreviewNote(slotId, painter, run) {
   if (!TEAM_ENEMY_SLOTS.includes(slotId)) return null;
   if (run.status === 'won')
-    return t("tools:completedTeamArtworkHidesEnemyBodiesChooseAnActiveTeam");
+    return t('tools:completedTeamArtworkHidesEnemyBodiesChooseAnActiveTeam');
   const frames = run.enemies
       .filter((e) => e.active !== false)
       .map((e) => painter.actorFrame('enemy', e.id))
@@ -87,7 +93,7 @@ export function teamEnemyPreviewNote(slotId, painter, run) {
 export function teamPilotPreviewNote(slotId, painter, run) {
   if (!TEAM_PILOT_SLOTS.includes(slotId)) return null;
   if (run.status === 'won')
-    return t("tools:completedArenaHidesPlayerBodiesBehindTheRevealedPictureInspect");
+    return t('tools:completedArenaHidesPlayerBodiesBehindTheRevealedPictureInspect');
   const seat = Number(slotId.split('.')[2].slice(1)) - 1,
     frame = painter.actorFrame('pilot', seat);
   if (frame?.sourceSlot === slotId)
@@ -107,7 +113,7 @@ export function teamPilotPreviewNote(slotId, painter, run) {
 }
 export function teamRescuePreviewNote(run) {
   if (run.status === 'won')
-    return t("tools:completedArenaHidesRescueAndRecoveryDecorationBehindTheRevealed");
+    return t('tools:completedArenaHidesRescueAndRecoveryDecorationBehindTheRevealed');
   const rescues = run.players
     .map((player) => ({ player, rescue: teamRescueProgress(run, player) }))
     .filter((row) => row.rescue);
@@ -116,16 +122,15 @@ export function teamRescuePreviewNote(run) {
     .map((player) => player.id + 1);
   const progress = rescues.length
     ? rescues
-        .map(
-          ({ player, rescue }) =>
-            t('tools:studio.crossMode.rescueProgress', {
-              player: player.id + 1,
-              target: rescue.target + 1,
-              progress: formatNumber(Math.floor(rescue.progress * 100)),
-            }),
+        .map(({ player, rescue }) =>
+          t('tools:studio.crossMode.rescueProgress', {
+            player: player.id + 1,
+            target: rescue.target + 1,
+            progress: formatNumber(Math.floor(rescue.progress * 100)),
+          }),
         )
         .join(' · ')
-    : t("tools:noActiveContactRescue");
+    : t('tools:noActiveContactRescue');
   const grace = recovering.length
     ? t('tools:studio.crossMode.recoveryGrace', { players: recovering.join(', ') })
     : t('tools:noRecoveryGrace');
@@ -133,7 +138,7 @@ export function teamRescuePreviewNote(run) {
 }
 export function teamEmitterPreviewNote(run) {
   if (run.status === 'won')
-    return t("tools:completedArenaHidesEmitterEffectsBehindTheRevealedPicture");
+    return t('tools:completedArenaHidesEmitterEffectsBehindTheRevealedPicture');
   const warnings = (run.strongholds || []).filter(
     (hold) => hold.emitter?.phase === 'warning' && Number.isInteger(hold.emitter.cellIndex),
   ).length;
@@ -145,7 +150,7 @@ export function teamEmitterPreviewNote(run) {
 }
 export function teamSupportPreviewNote(run) {
   if (run.status === 'won')
-    return t("tools:completedArenaHidesSupportEffectsBehindTheRevealedPicture");
+    return t('tools:completedArenaHidesSupportEffectsBehindTheRevealedPicture');
   const pulses = (run.supportEffects || []).filter((effect) => effect.until > run.time).length;
   const slowed = run.enemies.filter(
     (enemy) => enemy.active !== false && enemy.speedScale < 1 && enemy.slowUntil > run.time,
@@ -199,9 +204,9 @@ function watchWidths(canvases, redraw, own) {
 /** Inspection compatibility is deliberately narrower than a theme publication claim. */
 export function teamPreviewBinding(slotId, resolved, arena) {
   const binding = COOP_PICTURE_BINDINGS.find((row) => row.levelId === arena);
-  if (!binding) throw new Error(t("tools:chooseARegisteredTeamPreviewArena"));
+  if (!binding) throw new Error(t('tools:chooseARegisteredTeamPreviewArena'));
   if (resolved.theme.id !== binding.themeId)
-    throw new Error(t("tools:thisEditionHasNoReviewedTeamArenaBindingYetChoose"));
+    throw new Error(t('tools:thisEditionHasNoReviewedTeamArenaBindingYetChoose'));
   const roles = [
     ...teamRoles,
     ...(arena === 'relay-yard' ? yardRoles : []),
@@ -226,9 +231,7 @@ export function teamPreviewBinding(slotId, resolved, arena) {
     binding.picture.slot,
   ];
   if (!applicable.includes(slotId))
-    throw new Error(
-      `${slotId} is not bound in ${arena}. Choose its compatible arena or inspect Native size. Relay objective slots need Relay Yard. Support slots apply to both arenas; emitter slots apply to Relay Yard; rescue/recovery slots apply to both arenas, with command-earned inspection scenes in Relay Yard.`,
-    );
+    throw new Error(t('tools:studio.crossMode.slotNotBound', { slotId, arena }));
   roles.forEach((id) => requireImage(resolved.assets, id));
   const picture = requireImage(resolved.assets, binding.picture.slot);
   const frame = picture.geometry?.frame;
@@ -241,19 +244,17 @@ export function teamPreviewBinding(slotId, resolved, arena) {
     picture.file.width !== 1152 ||
     picture.file.height !== 576
   )
-    throw new Error(
-      t("tools:teamArtworkNeedsItsComplete1152576FrameCroppedOr"),
-    );
+    throw new Error(t('tools:teamArtworkNeedsItsComplete1152576FrameCroppedOr'));
   return { binding, roles, picture };
 }
 
 /** A familiar ID is insufficient: the inspected arena must match the approved authored bytes. */
 export async function validateTeamPreviewIdentity(binding, level) {
   if (binding.levelId !== level.id || binding.levelRevision !== level.revision)
-    throw new Error(t("tools:teamPreviewArenaIdentityOrRevisionDoesNotMatchIts"));
+    throw new Error(t('tools:teamPreviewArenaIdentityOrRevisionDoesNotMatchIts'));
   const hash = await hashPresentationBytes(new TextEncoder().encode(canonicalJSON(level)));
   if (hash !== binding.levelSha256)
-    throw new Error(t("tools:teamPreviewArenaContentDoesNotMatchItsApprovedArtwork"));
+    throw new Error(t('tools:teamPreviewArenaContentDoesNotMatchItsApprovedArtwork'));
 }
 
 export function createStudioVersusMatch(level, seed = 42) {
@@ -294,7 +295,10 @@ export async function crossModeContextPreview(
     const decoded = new Map();
     localOwn(() => decoded.clear());
     const decode = async (id) => {
-      options.onStatus?.(`decoding ${id} for ${options.fieldMode}…`, 'decoding');
+      options.onStatus?.(
+        () => t('tools:studio.crossMode.decodingAsset', { id, mode: options.fieldMode }),
+        'decoding',
+      );
       const image = await services.decode(assets[id], blobs, { ...options, isCurrent: current });
       if (!image || !current()) {
         if (image) image.src = '';
@@ -318,10 +322,8 @@ export async function crossModeContextPreview(
         scenario: options.teamScenario || 'initial',
       });
       if (fixture.neutralBackdrop && slot.id === binding.picture.slot)
-        throw new Error(
-          t("tools:theTwoRelaySpecimenUsesANeutralBackdropChooseA"),
-        );
-      options.onStatus?.('checking Team arena identity…', 'preparing');
+        throw new Error(t('tools:theTwoRelaySpecimenUsesANeutralBackdropChooseA'));
+      options.onStatus?.(() => t('tools:studio.crossMode.checkingTeamIdentity'), 'preparing');
       // The authored two-relay specimen has no registered picture identity. Its
       // valid level is created by the fixture; never lend it the starter binding.
       if (!fixture.neutralBackdrop) await validateTeamPreviewIdentity(binding, fixture.level);
@@ -334,7 +336,12 @@ export async function crossModeContextPreview(
       const canvas = element('canvas');
       canvas.width = 1152;
       canvas.height = 576;
-      canvas.setAttribute('aria-label', `Team arena ${fixture.level.name}: ${fixture.label}`);
+      localizedAttribute(canvas, 'aria-label', () =>
+        t('tools:studio.crossMode.teamArenaLabel', {
+          arena: fixture.level.name,
+          scene: fixture.label,
+        }),
+      );
       const painter = createCoopPainter(canvas);
       painter.setPresentation(snapshot);
       localOwn(() => painter.setPresentation(null));
@@ -376,16 +383,21 @@ export async function crossModeContextPreview(
         support,
         emitter,
         rescue,
-        note(
-          `Actual Team painter · ${fixture.level.name} · ${fixture.label} · 72 × 36 cells. ${fixture.neutralBackdrop ? t("tools:noArenaPictureAuthoredRoleStateSpecimen") : `Picture ${pictureAsset.id}@${pictureAsset.revision}`}; inspected collection, not publication approval. Anchor and core artwork use registered slots when present; functional status cues and labels stay game-owned. Support uses registered slots when present; emitter slots apply to Relay Yard; rescue/recovery slots apply to both arenas, with command-earned inspection scenes in Relay Yard.`,
+        note(() =>
+          t('tools:studio.crossMode.teamInspection', {
+            level: fixture.level.name,
+            scene: fixture.label,
+            picture: fixture.neutralBackdrop
+              ? t('tools:noArenaPictureAuthoredRoleStateSpecimen')
+              : t('tools:studio.crossMode.pictureRevision', {
+                  id: pictureAsset.id,
+                  revision: pictureAsset.revision,
+                }),
+          }),
         ),
       );
       if (fixture.neutralBackdrop)
-        surface.append(
-          note(
-            t("tools:authoredTwoRelaySpecimenNeutralBackdropOneCoreIsCommand"),
-          ),
-        );
+        surface.append(note(t('tools:authoredTwoRelaySpecimenNeutralBackdropOneCoreIsCommand')));
       let lastReduced = true;
       const render = (dt, reduced) => {
         if (!current()) return;
@@ -397,28 +409,40 @@ export async function crossModeContextPreview(
           sampledRun = run;
         }
         painter.paint(run, { reduced, picture, previousRun, feedback: fixture.feedback });
-        if (!rescue.hidden) localizedText(rescue, () =>teamRescuePreviewNote(run));
-        if (!emitter.hidden) localizedText(emitter, () =>teamEmitterPreviewNote(run));
-        if (!support.hidden) localizedText(support, () =>teamSupportPreviewNote(run));
+        if (!rescue.hidden) localizedText(rescue, () => teamRescuePreviewNote(run));
+        if (!emitter.hidden) localizedText(emitter, () => teamEmitterPreviewNote(run));
+        if (!support.hidden) localizedText(support, () => teamSupportPreviewNote(run));
         const objectiveNote = teamObjectivePreviewNote(slot.id, run);
-        if (objectiveNote !== null) localizedText(treatment, () =>objectiveNote);
+        if (objectiveNote !== null) localizedText(treatment, () => objectiveNote);
         const players = run.players.map((player, index) => {
           const progress = teamRescueProgress(run, player);
-          const rescue = progress
-            ? `rescuing ${Math.floor(progress.progress * 100)}%`
-            : player.status;
-          return `P${index + 1} ${rescue}`;
+          const state = progress
+            ? t('tools:studio.crossMode.playerRescuing', {
+                progress: formatNumber(Math.floor(progress.progress * 100)),
+              })
+            : t(`tools:studio.crossMode.playerState.${player.status}`);
+          return t('tools:studio.crossMode.playerStatus', { player: index + 1, state });
         });
-        localizedText(hud, () =>`${players.join(' · ')} · ${Math.round(run.coverage * 100)}% · reserves ${run.team.reserves}`);
+        localizedText(hud, () =>
+          t('tools:studio.crossMode.teamHud', {
+            players: players.join(' · '),
+            coverage: formatNumber(Math.round(run.coverage * 100)),
+            reserves: formatNumber(run.team.reserves),
+          }),
+        );
         if (objectiveNote === null)
-          localizedText(treatment, () =>(TEAM_OUTCOME_SLOTS.includes(slot.id)
-              ? fixture.feedback.some((record) => record.slot === slot.id)
-                ? t("tools:actualTeamOutcomeActiveBadgeAndPlayerNumbersUseThe")
-                : t("tools:selectedTeamOutcomeIsInactiveChooseJointCaptureOrTeam")
-              : null) ??
-            teamEnemyPreviewNote(slot.id, painter, run) ??
-            teamPilotPreviewNote(slot.id, painter, run) ??
-            playerTreatmentNote(slot.id, canvas.clientWidth || 1152));
+          localizedText(
+            treatment,
+            () =>
+              (TEAM_OUTCOME_SLOTS.includes(slot.id)
+                ? fixture.feedback.some((record) => record.slot === slot.id)
+                  ? t('tools:actualTeamOutcomeActiveBadgeAndPlayerNumbersUseThe')
+                  : t('tools:selectedTeamOutcomeIsInactiveChooseJointCaptureOrTeam')
+                : null) ??
+              teamEnemyPreviewNote(slot.id, painter, run) ??
+              teamPilotPreviewNote(slot.id, painter, run) ??
+              playerTreatmentNote(slot.id, canvas.clientWidth || 1152),
+          );
         treatment.hidden = !treatment.textContent;
       };
       watchWidths([canvas], () => render(0, lastReduced), localOwn);
@@ -426,8 +450,8 @@ export async function crossModeContextPreview(
       return;
     }
 
-    if (options.fieldMode !== 'versus') throw new Error(t("tools:unknownFieldPreviewMode"));
-    options.onStatus?.('loading both Versus board fixtures…', 'downloading');
+    if (options.fieldMode !== 'versus') throw new Error(t('tools:unknownFieldPreviewMode'));
+    options.onStatus?.(() => t('tools:studio.crossMode.loadingVersusFixtures'), 'downloading');
     const owner = options.pictureOwner || options.sourcePicture;
     const context = await services.context(slot.id, owner);
     if (!current()) return;
@@ -470,9 +494,11 @@ export async function crossModeContextPreview(
       const size = boardPaintSizeForRun(match.runs[index]);
       canvas.width = size.width;
       canvas.height = size.height;
-      canvas.setAttribute(
-        'aria-label',
-        `Versus Player ${index + 1}: independent ${context.level.name} board`,
+      localizedAttribute(canvas, 'aria-label', () =>
+        t('tools:studio.crossMode.versusBoardLabel', {
+          player: index + 1,
+          level: context.level.name,
+        }),
       );
       const frame = element('div', '', 'board-context-frame');
       const hud = element(
@@ -490,8 +516,10 @@ export async function crossModeContextPreview(
     }
     surface.append(
       grid,
-      note(
-        `Two independent Versus BoardPainters · ${context.level.name}. Shared inspected artwork and responsive actor roles; isolated held runs, not live controls, results or progression.`,
+      note(() =>
+        t('tools:studio.crossMode.versusInspection', {
+          level: context.level.name,
+        }),
       ),
     );
     let gallery = false;
@@ -500,7 +528,9 @@ export async function crossModeContextPreview(
       if (!current()) return;
       lastReduced = reduced;
       for (const { painter, canvas, treatment, run } of boards) {
-        localizedText(treatment, () =>playerTreatmentNote(slot.id, Math.max(1, canvas.clientWidth)));
+        localizedText(treatment, () =>
+          playerTreatmentNote(slot.id, Math.max(1, canvas.clientWidth)),
+        );
         treatment.hidden = !treatment.textContent;
         if (gallery)
           painter.drawGallery(canvas.getContext('2d'), {
@@ -528,12 +558,14 @@ export async function crossModeContextPreview(
       }
     };
     if (slot.group === 'pictures') {
-      const button = element('button', localizedMessage("tools:showBothPictureViewers"));
+      const button = element('button', localizedMessage('tools:showBothPictureViewers'));
       button.type = 'button';
       button.dataset.studioHost = 'control';
       button.onclick = () => {
         gallery = !gallery;
-        localizedText(button, () =>gallery ? t("tools:showConcealedBoards") : t("tools:showBothPictureViewers"));
+        localizedText(button, () =>
+          gallery ? t('tools:showConcealedBoards') : t('tools:showBothPictureViewers'),
+        );
         render(0, true);
       };
       surface.append(button);

@@ -42,7 +42,7 @@ test('Versus and Team keep tuning and imports in closed optional setup surfaces'
   );
   assert.match(
     team,
-    /<details id="coop-optional-setup"[^>]*>[\s\S]*id="coop-experiment"[\s\S]*id="coop-difficulty"[\s\S]*id="coop-actor-style"[\s\S]*id="coop-pack-file"/,
+    /<details id="coop-optional-setup"[^>]*>[\s\S]*id="coop-level"[\s\S]*id="coop-experiment"[\s\S]*id="coop-difficulty"[\s\S]*id="coop-actor-style"[\s\S]*id="coop-pack-file"/,
   );
   assert.match(versus, /id="race-start"[^>]*>\s*Start race/);
   assert.match(team, /id="coop-start"[^>]*>[\s\S]*Preparing arena/);
@@ -97,6 +97,7 @@ test('prepared Team defaults need one assigned-controller Confirm and optional s
   const f = await teamPage(t, { nativeFocus: true });
   assert.equal(f.doc.activeElement.id, 'coop-start');
   assert.equal(f.$('coop-optional-setup').open, false);
+  assert.equal(f.$('coop-level').closest('details'), f.$('coop-optional-setup'));
   assert.equal(f.$('coop-difficulty').closest('details'), f.$('coop-optional-setup'));
   f.disclose('coop-optional-setup');
   f.$('coop-difficulty').focus();
@@ -110,6 +111,24 @@ test('prepared Team defaults need one assigned-controller Confirm and optional s
   pulseTeam(f);
   assert.equal(f.$('coop-play').hidden, false);
   assert.equal(f.doc.activeElement.id, 'coop-canvas');
+});
+
+test('Team pointer quick start keeps arena selection behind one optional disclosure', async (t) => {
+  const f = await teamPage(t, { nativeFocus: true });
+  const options = f.$('coop-optional-setup');
+  assert.equal(options.open, false);
+  assert.equal(f.$('coop-level').closest('details'), options);
+  f.$('coop-optional-setup-toggle').emit('pointerdown', {
+    pointerType: 'touch',
+    button: 0,
+    isPrimary: true,
+  });
+  f.disclose('coop-optional-setup');
+  await f.choose('coop-level', 'relay-yard');
+  assert.equal(options.open, true);
+  assert.equal(f.$('coop-level').value, 'relay-yard');
+  assert.equal(f.$('coop-menu').hidden, false);
+  assert.equal(f.$('coop-start').disabled, false);
 });
 
 test('prepared Team Start remains visible after short-landscape layout settles', async (t) => {
@@ -190,7 +209,8 @@ test('Steam Deck Confirm echo cannot activate Cancel during initial Team picture
   f.pads.push(pad());
   f.tick(1);
   pulseTeam(f);
-  assert.equal(f.doc.activeElement.id, 'coop-level');
+  assert.equal(f.doc.activeElement.id, 'coop-optional-setup-toggle');
+  assert.equal(f.$('coop-optional-setup').open, false);
   time += 120;
   assert.equal(nativeConfirm(f.doc.activeElement).defaultPrevented, true);
   assert.equal(f.$('coop-picture-status').dataset.state, 'preparing');

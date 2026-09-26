@@ -43,7 +43,7 @@ export function decideReleaseAssets({ expected, actual, published = false }) {
   const expectedByName = new Map(expected.map((asset) => [asset.name, asset]));
   const actualByName = new Map(actual.map((asset) => [asset.name, asset]));
   if (actualByName.size !== actual.length)
-    throw new Error("duplicate release asset name");
+    throw new Error("duplicate release asset names");
   if (expectedByName.size !== RELEASE_ASSET_NAMES.length)
     throw new Error(
       "expected release asset set must contain exactly nine names",
@@ -104,28 +104,141 @@ export async function inspectLocalAssets(directory) {
   return assets;
 }
 
-async function github(pathname, options = {}) {
-  const response = await fetch(`https://api.github.com${pathname}`, {
-    ...options,
-    headers: {
-      accept: "application/vnd.github+json",
-      authorization: `Bearer ${process.env.GH_TOKEN}`,
-      "content-type": "application/json",
-      "x-github-api-version": "2022-11-28",
-      "user-agent": "revealline-fastline-release-publisher",
-      ...options.headers,
-    },
-  });
-  if (options.allowMissing && response.status === 404) return null;
-  const text = await response.text();
-  if (!response.ok) {
-    const error = new Error(
-      `GitHub ${response.status} ${pathname}: ${text.slice(0, 1000)}`,
-    );
-    error.status = response.status;
-    throw error;
-  }
-  return text ? JSON.parse(text) : null;
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export function createGitHubRequest({
+  fetchImpl = fetch,
+  token = process.env.GH_TOKEN,
+  wait = sleep,
+  now = Date.now,
+} = {}) {
+  return async function githubRequest(pathname, options = {}) {
+    const method = options.method || "GET";
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      let response;
+      try {
+        response = await fetchImpl(`https://api.github.com${pathname}`, {
+          ...options,
+          headers: {
+            accept: "application/vnd.github+json",
+            authorization: `Bearer ${token}`,
+            "content-type": "application/json",
+            "x-github-api-version": "2022-11-28",
+            "user-agent": "revealline-fastline-release-publisher",
+            ...options.headers,
+          },
+        });
+      } catch {
+        if (method === "GET" && attempt < 2) {
+          await wait(1000 * 2 ** attempt);
+          continue;
+        }
+        const error = new Error(
+          `GitHub transport outcome unknown: ${method} ${pathname}`,
+        );
+        error.ambiguousWrite = method !== "GET";
+        throw error;
+      }
+      if (options.allowMissing && response.status === 404) return null;
+      let text;
+      try {
+        text = await response.text();
+      } catch {
+        const error = new Error(
+          `GitHub response body unavailable: ${method} ${pathname}`,
+        );
+        error.ambiguousWrite = method !== "GET";
+        throw error;
+      }
+      if (!response.ok) {
+        let body;
+        try {
+          body = JSON.parse(text);
+        } catch {
+          body = {};
+        }
+        const codes = Array.isArray(body.errors)
+          ? body.errors
+              .map((entry) => entry?.code)
+              .filter(
+                (code) =>
+                  typeof code === "string" && /^[a-z_]{1,64}$/u.test(code),
+              )
+          : [];
+        const retryAfter = response.headers.get("retry-after");
+        const reset = response.headers.get("x-ratelimit-reset");
+        const rateLimited =
+          response.status === 429 ||
+          (response.status === 403 &&
+            (retryAfter !== null ||
+              response.headers.get("x-ratelimit-remaining") === "0" ||
+              /rate limit/iu.test(body.message || "")));
+        let delay = 1000 * 2 ** attempt;
+        if (rateLimited) {
+          delay = 60000;
+          if (retryAfter !== null) {
+            const seconds = Number(retryAfter);
+            delay = Number.isFinite(seconds)
+              ? seconds * 1000
+              : Date.parse(retryAfter) - now();
+          } else if (
+            reset !== null &&
+            response.headers.get("x-ratelimit-remaining") === "0"
+          ) {
+            delay = Number(reset) * 1000 - now();
+          }
+          if (!Number.isFinite(delay)) delay = 60000;
+          delay = Math.max(0, delay);
+        }
+        if (
+          method === "GET" &&
+          attempt < 2 &&
+          delay <= 60000 &&
+          (rateLimited || response.status >= 500)
+        ) {
+          await wait(delay);
+          continue;
+        }
+        let message =
+          typeof body.message === "string"
+            ? body.message
+            : "non-JSON error response";
+        if (token) message = message.split(token).join("[REDACTED]");
+        message = message
+          .replace(/Bearer\s+\S+/giu, "Bearer [REDACTED]")
+          .replace(/[\r\n\x00-\x1f]/gu, " ")
+          .slice(0, 300);
+        const error = new Error(
+          `GitHub ${response.status} ${method} ${pathname}: ${message}; codes=${codes.join(",") || "none"}${rateLimited ? `; retryAfterMs=${delay}` : ""}`,
+        );
+        error.status = response.status;
+        error.codes = codes;
+        error.rateLimited = rateLimited;
+        error.retryAfterMs = rateLimited ? delay : undefined;
+        throw error;
+      }
+      try {
+        return text ? JSON.parse(text) : null;
+      } catch {
+        const error = new Error(
+          `GitHub response JSON invalid: ${method} ${pathname}`,
+        );
+        error.ambiguousWrite = method !== "GET";
+        throw error;
+      }
+    }
+    throw new Error("GitHub read retry budget exhausted");
+  };
+}
+
+const github = (...args) => createGitHubRequest()(...args);
+
+function recoverableWrite(error) {
+  return (
+    error?.ambiguousWrite ||
+    error?.status >= 500 ||
+    (error?.status === 422 && error.codes?.includes("already_exists"))
+  );
 }
 
 async function listReleaseAssets(repository, releaseId, request = github) {
@@ -268,15 +381,36 @@ export async function ensureDraftRelease({
   sourceSha,
   request = github,
   inspect = inspectReleaseObjects,
+  wait = sleep,
 }) {
   assertRequest({ repository, version, sourceSha });
+  const discover = async (predicate, { releaseId, cause } = {}) => {
+    for (const delay of [0, 1000, 2000, 4000]) {
+      if (delay) await wait(delay);
+      const found = await inspect({
+        repository,
+        version,
+        sourceSha,
+        releaseId,
+        get: request,
+      });
+      decideReleaseObjects({ version, sourceSha, ...found });
+      if (predicate(found)) return found;
+    }
+    throw new Error(
+      `exact release object not confirmed; no write was retried${cause ? `: ${cause.message}` : ""}`,
+      { cause },
+    );
+  };
   let state = await inspect({ repository, version, sourceSha, get: request });
   if (state.decision.state === "published" || state.release?.draft)
     return state.release;
 
   if (state.decision.action === "create") {
+    let writeError;
+    let tag;
     try {
-      const tag = await request(`/repos/${repository}/git/tags`, {
+      tag = await request(`/repos/${repository}/git/tags`, {
         method: "POST",
         body: JSON.stringify({
           tag: version,
@@ -285,19 +419,36 @@ export async function ensureDraftRelease({
           type: "commit",
         }),
       });
-      await request(`/repos/${repository}/git/refs`, {
-        method: "POST",
-        body: JSON.stringify({ ref: `refs/tags/${version}`, sha: tag.sha }),
-      });
+      if (!SHA.test(tag?.sha || ""))
+        throw new Error("invalid annotated tag creation response");
     } catch (error) {
-      if (error?.status !== 422) throw error;
+      if (!recoverableWrite(error)) throw error;
+      writeError = error;
     }
-    state = await inspect({ repository, version, sourceSha, get: request });
+    if (!writeError) {
+      try {
+        await request(`/repos/${repository}/git/refs`, {
+          method: "POST",
+          body: JSON.stringify({ ref: `refs/tags/${version}`, sha: tag.sha }),
+        });
+      } catch (error) {
+        // Ref conflicts need not include structured errors[].code. Only this
+        // endpoint permits read-only discovery for an otherwise generic 422.
+        if (!recoverableWrite(error) && ![409, 422].includes(error?.status))
+          throw error;
+        writeError = error;
+      }
+    }
+    state = await discover((found) => found.tagCommit === sourceSha, {
+      cause: writeError,
+    });
   }
 
   if (state.decision.action === "create-release") {
+    let releaseId;
+    let writeError;
     try {
-      await request(`/repos/${repository}/releases`, {
+      const created = await request(`/repos/${repository}/releases`, {
         method: "POST",
         body: JSON.stringify({
           tag_name: version,
@@ -308,12 +459,30 @@ export async function ensureDraftRelease({
           generate_release_notes: false,
         }),
       });
+      if (!Number.isSafeInteger(created?.id) || created.id <= 0)
+        throw new Error("invalid draft creation receipt: missing release ID");
+      decideReleaseObjects({
+        version,
+        sourceSha,
+        tagCommit: state.tagCommit,
+        tagType: state.tagType,
+        release: created,
+      });
+      if (!created.draft)
+        throw new Error("draft creation returned a published release");
+      releaseId = created.id;
     } catch (error) {
-      if (error?.status !== 422) throw error;
+      if (!recoverableWrite(error)) throw error;
+      writeError = error;
     }
+    state = await discover(
+      (found) =>
+        found.release !== null &&
+        (releaseId === undefined || found.release.id === releaseId),
+      { releaseId, cause: writeError },
+    );
   }
 
-  state = await inspect({ repository, version, sourceSha, get: request });
   decideReleaseObjects({
     version,
     sourceSha,
@@ -379,7 +548,10 @@ export async function publishExactRelease({
   if (!state.release.draft) return state.release;
   const published = await request(
     `/repos/${repository}/releases/${state.release.id}`,
-    { method: "PATCH", body: JSON.stringify({ draft: false }) },
+    {
+      method: "PATCH",
+      body: JSON.stringify({ draft: false }),
+    },
   );
   if (published.draft || !published.published_at)
     throw new Error("GitHub did not publish the exact draft release");

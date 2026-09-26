@@ -45,9 +45,9 @@ test("source qualification retains mandatory guards and restorable suites while 
     legacy,
     /Require the previous stable release on public Pages\n\s+if: steps\.admission\.outputs\.mode == 'release'/,
   );
-  assert.match(legacy, /Release\\ evidence\\ v/);
-  assert.match(legacy, /restricted to a non-empty docs-only diff/);
-  assert.match(legacy, /echo 'mode=release-evidence'/);
+  assert.match(legacy, /admission-preflight\.mjs/);
+  assert.match(legacy, /Preserve exact source and admission metadata/);
+  assert.match(legacy, /needs\.preflight\.outputs\.focusedRequired == 'true'/);
   assert.match(
     legacy,
     /needs\.preflight\.outputs\.admission == 'release-evidence'/,
@@ -102,17 +102,15 @@ test("source qualification retains mandatory guards and restorable suites while 
   assert.match(pullRequestTrigger, /branches: \[main\]/);
   for (const event of ["opened", "synchronize", "reopened", "edited"])
     assert.match(pullRequestTrigger, new RegExp(`\\b${event}\\b`, "u"));
-  assert.doesNotMatch(pullRequestTrigger, /\\bready_for_review\\b/u);
+  const triggerTypes = pullRequestTrigger.match(/types: \[([^\]]+)\]/u)[1];
+  assert.doesNotMatch(triggerTypes, /\bready_for_review\b/u);
   for (const metadataEvent of [
     "labeled",
     "unlabeled",
     "milestoned",
     "demilestoned",
   ])
-    assert.doesNotMatch(
-      pullRequestTrigger,
-      new RegExp(`\\b${metadataEvent}\\b`, "u"),
-    );
+    assert.match(pullRequestTrigger, new RegExp(`\\b${metadataEvent}\\b`, "u"));
   assert.doesNotMatch(pullRequestTrigger, /paths-ignore:/);
   const sourceConcurrency = legacy.slice(
     legacy.indexOf("concurrency:"),
@@ -176,11 +174,12 @@ test("source qualification retains mandatory guards and restorable suites while 
   );
 });
 
-test("public selector retains ten playable releases per semantic major", async () => {
+test("public selector retains five playable releases globally", async () => {
   const publication = JSON.parse(
     await fs.readFile(new URL("./publication.json", import.meta.url), "utf8"),
   );
-  assert.equal(publication.retainedReleasesPerMajor, 10);
+  assert.equal(publication.retainedReleaseCount, 5);
+  assert.equal(Object.hasOwn(publication, "retainedReleasesPerMajor"), false);
 });
 
 test("fast mode waives long suites while release source and publication guards stay mandatory", async () => {

@@ -11,6 +11,7 @@ import {
   createOptionalPhysicalTrimBoundary,
   isCompletePlaybackRange,
   preparePlaybackRange,
+  prepareVideoTransform,
   seekDistinctPresentedFrame,
 } from '../video-editor.mjs';
 import { attachControllerNavigation } from './controller-navigation.mjs';
@@ -75,12 +76,13 @@ export function attachVideoPosterWorkshop({
     $('step-back').disabled = $('step-forward').disabled = !source || !frameStep || Boolean(task);
     $('playback-start').disabled = $('playback-end').disabled = !source || Boolean(task);
     $('apply-range').disabled = !source || Boolean(task);
+    $('transform').disabled = !source || Boolean(task);
     $('check-trim').disabled = !source || Boolean(task);
     $('trim').disabled =
       !source ||
       !trimCapability?.supported ||
       !playbackRange ||
-      isCompletePlaybackRange(source.info, playbackRange) ||
+      (isCompletePlaybackRange(source.info, playbackRange) && $('transform').value === 'source') ||
       Boolean(task);
     $('cancel').disabled = !task;
     $('clear').disabled = !source && !task && !previewURL && !trimURL;
@@ -102,6 +104,26 @@ export function attachVideoPosterWorkshop({
     if (trimURL) URLImpl.revokeObjectURL(trimURL);
     trimURL = null;
     localizedText($('trim-evidence'), () => t('tools:videoPoster.noPhysicalTrim'));
+  }
+  function updateTransformPlan() {
+    if (!source) {
+      localizedText($('transform-plan'), () => t('tools:videoPoster.chooseVideoFirst'));
+      return null;
+    }
+    const planned = prepareVideoTransform(source.info, $('transform').value);
+    localizedText($('transform-plan'), () =>
+      planned.targetVideoBitrate === null
+        ? t('tools:videoPoster.transformPlanSource', {
+            width: formatNumber(planned.width),
+            height: formatNumber(planned.height),
+          })
+        : t('tools:videoPoster.transformPlanBounded', {
+            width: formatNumber(planned.width),
+            height: formatNumber(planned.height),
+            bitrate: formatNumber(planned.targetVideoBitrate / 1_000_000),
+          }),
+    );
+    return planned;
   }
   function stopTask() {
     feedback.clear();
@@ -137,6 +159,8 @@ export function attachVideoPosterWorkshop({
     $('time').value = $('range').value = '0';
     $('playback-start').value = '0';
     $('playback-end').value = '0';
+    $('transform').value = 'source';
+    updateTransformPlan();
     setStatus(localizedMessage('interface:sourceAndPreviewClearedNoGameDataOrMediaStorage'));
     controls();
     if (focus && !disposed) $('file').focus();
@@ -202,6 +226,7 @@ export function attachVideoPosterWorkshop({
         endSeconds: info.durationSeconds,
       });
       trimCapability = null;
+      updateTransformPlan();
       localizedText($('playback-evidence'), () =>
         t('tools:videoPoster.completePlaybackRangeEvidence', {
           duration: formatNumber(info.durationSeconds),
@@ -412,6 +437,7 @@ export function attachVideoPosterWorkshop({
       const capability = await physicalTrim.support(selectedSource.info, {
         original: selectedSource.original,
         range: playbackRange,
+        transform: $('transform').value,
         signal: current.controller.signal,
       });
       if (!current.current() || source !== selectedSource) return false;
@@ -462,7 +488,7 @@ export function attachVideoPosterWorkshop({
         selectedSource.original,
         selectedSource.info,
         playbackRange,
-        { signal: current.controller.signal },
+        { transform: $('transform').value, signal: current.controller.signal },
       );
       if (!current.current() || source !== selectedSource) return false;
       const url = URLImpl.createObjectURL(transformed.blob);
@@ -471,8 +497,8 @@ export function attachVideoPosterWorkshop({
       $('trim-download').href = trimURL;
       $('trim-download').download =
         transformed.info.mime === 'video/webm'
-          ? 'RevealLine-trimmed.webm'
-          : 'RevealLine-trimmed.mp4';
+          ? 'RevealLine-transformed.webm'
+          : 'RevealLine-transformed.mp4';
       $('trim-download').hidden = false;
       localizedText($('trim-evidence'), () =>
         [
@@ -484,6 +510,17 @@ export function attachVideoPosterWorkshop({
             height: formatNumber(transformed.info.height),
             duration: formatNumber(transformed.info.durationSeconds),
             bytes: formatNumber(transformed.info.bytes),
+          }),
+          t('tools:videoPoster.transformEvidence', {
+            target:
+              transformed.evidence.transform.targetVideoBitrate === null
+                ? t('tools:videoPoster.encoderDefault')
+                : t('tools:videoPoster.bitrateTarget', {
+                    bitrate: formatNumber(
+                      transformed.evidence.transform.targetVideoBitrate / 1_000_000,
+                    ),
+                  }),
+            observed: formatNumber(transformed.evidence.transform.observedContainerBitsPerSecond),
           }),
           t('tools:videoPoster.visualBoundariesEvidence', {
             startError: formatNumber(transformed.evidence.visual.start.meanAbsoluteRgbError),
@@ -520,6 +557,13 @@ export function attachVideoPosterWorkshop({
   $('step-back').onclick = () => stepFrame(-1);
   $('step-forward').onclick = () => stepFrame(1);
   $('apply-range').onclick = applyPlaybackRange;
+  $('transform').onchange = () => {
+    discardTrim();
+    trimCapability = null;
+    updateTransformPlan();
+    localizedText($('trim-support'), () => t('tools:videoPoster.transformPlanChanged'));
+    controls();
+  };
   $('check-trim').onclick = checkPhysicalTrim;
   $('trim').onclick = trimVideo;
   $('cancel').onclick = cancel;
@@ -588,6 +632,7 @@ export function attachVideoPosterWorkshop({
       'playback-start',
       'playback-end',
       'apply-range',
+      'transform',
       'check-trim',
       'trim',
       'download',

@@ -501,6 +501,31 @@
       "id": "archive-92",
       "repository": "mekhovov/revealline-archive-92",
       "versions": ["v0.132.3"]
+    },
+    {
+      "id": "archive-93",
+      "repository": "mekhovov/revealline-archive-93",
+      "versions": ["v0.132.4"]
+    },
+    {
+      "id": "archive-94",
+      "repository": "mekhovov/revealline-archive-94",
+      "versions": ["v0.132.5"]
+    },
+    {
+      "id": "archive-95",
+      "repository": "mekhovov/revealline-archive-95",
+      "versions": ["v0.141.0"]
+    },
+    {
+      "id": "archive-96",
+      "repository": "mekhovov/revealline-archive-96",
+      "versions": ["v0.141.2"]
+    },
+    {
+      "id": "archive-97",
+      "repository": "mekhovov/revealline-archive-97",
+      "versions": ["v0.141.3"]
     }
   ]
 }

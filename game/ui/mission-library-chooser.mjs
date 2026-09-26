@@ -143,7 +143,7 @@ export function attachMissionLibraryChooser({
   );
   filterOptions.append(detailLabel);
   const view = doc.defaultView ?? globalThis;
-  const media = view.matchMedia?.('(max-width: 600px), (max-height: 480px)');
+  const media = view.matchMedia?.('(max-width: 600px), (max-height: 720px)');
   let compact = media?.matches === true;
   filterDetails.open = !compact;
   const option = (title, value) => {
@@ -160,6 +160,9 @@ export function attachMissionLibraryChooser({
   modeFilter.value = mode;
   const status = node('p', 'journey-chooser-status');
   status.setAttribute('role', 'status');
+  const campaignRail = node('nav', 'journey-campaign-rail');
+  campaignRail.className = 'journey-campaign-rail';
+  localizedAttribute(campaignRail, 'aria-label', () => t('interface:campaign'));
   const list = node('div', 'journey-cards');
   list.className = 'journey-cards';
   const footer = node('div');
@@ -168,10 +171,10 @@ export function attachMissionLibraryChooser({
   back.type = 'button';
   back.className = 'button secondary';
   footer.append(back);
-  dialog.append(heading, copy, filters, status, list, footer);
+  dialog.append(heading, copy, filters, status, campaignRail, list, footer);
   doc.body.append(dialog);
   const cards = new Map(),
-    downloads = new Set();
+    preparations = new Map();
   let opener = null,
     nativeReturnFocus = null,
     selectedId = '',
@@ -180,6 +183,7 @@ export function attachMissionLibraryChooser({
     pendingSelection = null,
     visit = 0,
     destroyed = false,
+    restoringCardFocus = false,
     resizeFrame = null,
     message = '';
   let saved = null;
@@ -219,6 +223,13 @@ export function attachMissionLibraryChooser({
     } catch {
       /* Do not block play on browser storage. */
     }
+  }
+  function retirePreparations({ except = null } = {}) {
+    for (const [id, preparation] of preparations)
+      if (id !== except) {
+        preparation.controller.abort();
+        preparations.delete(id);
+      }
   }
   function rebuildCampaigns(requested = campaign.value || pendingCampaign) {
     if (!modes.includes(modeFilter.value)) modeFilter.value = mode;
@@ -262,6 +273,11 @@ export function attachMissionLibraryChooser({
       ? card.button
       : null;
   }
+  function updateCampaignRailSelection(id = selectedId || getCurrentId()) {
+    const key = library.find(id)?.campaignKey ?? '';
+    for (const shortcut of campaignRail.children)
+      shortcut.setAttribute('aria-pressed', String(shortcut.dataset.campaignKey === key));
+  }
   function primary() {
     const selected = currentSelectionButton(selectedId);
     if (selected) return selected;
@@ -284,7 +300,12 @@ export function attachMissionLibraryChooser({
           if (pendingSelection?.opening === opening) pendingSelection = null;
         },
       });
-      pendingSelection = { opening, visit, id: selectedId, scroll: savedScroll };
+      pendingSelection = {
+        opening,
+        visit,
+        id: selectedId,
+        scroll: savedScroll,
+      };
     }
   }
   function restorePendingSelection() {
@@ -333,8 +354,11 @@ export function attachMissionLibraryChooser({
       !row.modes.includes(modeFilter.value)
     )
       return;
+    if (preparations.has(row.id)) return;
     retirePendingSelection();
+    retirePreparations({ except: row.id });
     selectedId = row.id;
+    updateCampaignRailSelection(row.id);
     // Touch activation need not move keyboard focus off a different card.
     remember({ captureFocus: false });
     const activeMode = modeFilter.value;
@@ -346,24 +370,43 @@ export function attachMissionLibraryChooser({
       render();
       return;
     }
-    if (availability.state === 'preparing') {
-      library.cancel(row, { mode: activeMode });
-      return;
-    }
+    if (availability.state === 'preparing') return;
     if (availability.state === 'download' || availability.retry) {
       const ticket = visit;
       const controller = new AbortController();
-      downloads.add(controller);
+      const preparation = { controller, mode: activeMode, row, ticket };
+      preparations.set(row.id, preparation);
       message = '';
       try {
-        const result = await library.prepare(row, { mode: activeMode, signal: controller.signal });
-        if (ticket === visit)
+        const result = await library.prepare(row, {
+          mode: activeMode,
+          signal: controller.signal,
+        });
+        const current =
+          preparations.get(row.id) === preparation &&
+          ticket === visit &&
+          dialog.open &&
+          !destroyed &&
+          !doc.hidden &&
+          doc.hasFocus?.() !== false &&
+          modeFilter.value === activeMode &&
+          cards.get(row.id)?.button === button &&
+          list.contains(button) &&
+          library.find(row.id)?.id === row.id;
+        if (current)
           message =
             result.state === 'cancelled'
               ? localizedMessage('interface:downloadCancelledYourCurrentGameIsKept')
               : result.state === 'ready'
                 ? () => t('interface:missionLibrary.prepared', { name: displayName(row) })
                 : '';
+        if (current && result.state === 'ready') {
+          preparations.delete(row.id);
+          render();
+          const readyRow = library.find(row.id),
+            readyButton = cards.get(row.id)?.button;
+          if (readyRow && readyButton) return activate(readyRow, readyButton);
+        }
       } catch (error) {
         if (ticket === visit)
           message = () =>
@@ -372,7 +415,7 @@ export function attachMissionLibraryChooser({
               error: error.message,
             });
       } finally {
-        downloads.delete(controller);
+        if (preparations.get(row.id) === preparation) preparations.delete(row.id);
         if (dialog.open && ticket === visit) render();
       }
       return;
@@ -433,7 +476,10 @@ export function attachMissionLibraryChooser({
         doc.removeEventListener('focusin', closingFocusChanged, true);
         for (const type of closingInputs) doc.removeEventListener(type, retireClose, true);
       }
-      const accepted = await library.launch(row, { ...context, mode: activeMode });
+      const accepted = await library.launch(row, {
+        ...context,
+        mode: activeMode,
+      });
       if (accepted === false && mayRestore()) {
         message = localizedMessage('interface:missionNotOpenedYourCurrentGameIsKept');
         open(opener, { returnLabel: back.textContent });
@@ -452,13 +498,15 @@ export function attachMissionLibraryChooser({
   function makeCard(row) {
     const button = node('button');
     button.type = 'button';
-    button.className = 'journey-card';
+    button.className = 'journey-card journey-card-illustrated';
     button.dataset.missionId = row.id;
     const number = node('span', null, String(row.levelIndex + 1).padStart(2, '0'));
     number.className = 'journey-card-number';
     const display = () => library.presentation?.(row) ?? row;
     const name = node('strong', null, () => display().name);
     const campaignName = node('span', null, () => display().campaignTitle);
+    campaignName.className = 'journey-card-campaign';
+    localizedAttribute(button, 'data-campaign-title', () => display().campaignTitle);
     const edition = node('span', null, () => display().edition);
     edition.className = 'journey-card-edition';
     const tags = node('span', null, () =>
@@ -491,6 +539,7 @@ export function attachMissionLibraryChooser({
     button.onclick = () => activate(row, button);
     button.addEventListener('focusin', () => {
       selectedId = row.id;
+      updateCampaignRailSelection(row.id);
     });
     return {
       row,
@@ -510,12 +559,16 @@ export function attachMissionLibraryChooser({
     clearSearch.hidden = !search.value;
     const focused = doc.activeElement;
     const focusedId = list.contains(focused) ? focused?.dataset.missionId : null;
+    const focusedCampaignKey = campaignRail.contains(focused) ? focused?.dataset.campaignKey : null;
     const scroll = list.scrollTop || 0;
-    const matches = library.search(search.value || '', {
+    const campaignScroll = campaignRail.scrollLeft || 0;
+    const railRows = library.search(search.value || '', {
       mode: modeFilter.value,
       collection: collection.value,
-      campaign: campaign.value,
     });
+    const matches = campaign.value
+      ? railRows.filter((row) => row.campaignKey === campaign.value)
+      : railRows;
     localizedText(
       status,
       () =>
@@ -525,6 +578,50 @@ export function attachMissionLibraryChooser({
     localizedText(filterSummary, () =>
       filtersActive ? t('interface:filtersActive') : t('interface:filters'),
     );
+    const campaignChoices = new Map();
+    for (const row of railRows)
+      if (!campaignChoices.has(row.campaignKey))
+        campaignChoices.set(row.campaignKey, {
+          row,
+          count: 0,
+        });
+    for (const row of railRows) campaignChoices.get(row.campaignKey).count++;
+    const shortcuts = [...campaignChoices].map(([key, info]) => {
+      const shortcut = node('button');
+      localizedText(shortcut, () => {
+        const display = library.presentation?.(info.row) ?? info.row;
+        return `${display.campaignTitle} · ${t('common:counts.missions', { count: info.count })}`;
+      });
+      shortcut.type = 'button';
+      shortcut.className = 'journey-campaign-shortcut';
+      shortcut.dataset.campaignKey = key;
+      shortcut.setAttribute('aria-pressed', 'false');
+      localizedAttribute(shortcut, 'title', () => {
+        const display = library.presentation?.(info.row) ?? info.row;
+        return display.edition;
+      });
+      shortcut.onclick = () => {
+        if (destroyed || !dialog.open || doc.hidden || doc.hasFocus?.() === false) return;
+        retirePendingSelection();
+        retirePreparations();
+        if (campaign.value) {
+          campaign.value = '';
+          pendingCampaign = '';
+          ++visit;
+          render();
+        }
+        const target = [...list.children].find((card) => card.dataset.campaignKey === key);
+        if (!target || target.disabled) return;
+        selectedId = target.dataset.missionId;
+        target.focus({ preventScroll: true });
+        target.scrollIntoView?.({ block: 'start', inline: 'nearest' });
+        remember({ captureFocus: false });
+      };
+      return shortcut;
+    });
+    campaignRail.replaceChildren(...shortcuts);
+    campaignRail.hidden = shortcuts.length < 2;
+    let previousCampaign = null;
     const buttons = matches.map((row) => {
       let card = cards.get(row.id);
       if (card?.row !== row) {
@@ -545,7 +642,13 @@ export function attachMissionLibraryChooser({
       });
       card.mastery.hidden = !details.mastery;
       card.completion = library.completion(row, modeFilter.value);
+      card.button.dataset.campaignKey = row.campaignKey;
+      card.button.dataset.campaignStart = String(previousCampaign !== row.campaignKey);
+      card.button.dataset.availabilityState = availability.state;
+      card.button.dataset.completionState = card.completion?.state ?? 'unfinished';
       card.button.dataset.pictureState = card.completion?.state ?? 'unfinished';
+      card.button.dataset.current = String(row.id === getCurrentId());
+      previousCampaign = row.campaignKey;
       localizedText(card.progress, () =>
         card.completion?.state === 'unavailable'
           ? card.completion.reason
@@ -556,9 +659,9 @@ export function attachMissionLibraryChooser({
         availability.state === 'ready'
           ? t('common:actions.play')
           : availability.state === 'download'
-            ? t('interface:missionLibrary.downloadSize', { size: sizeLabel(availability.bytes) })
+            ? `${t('interface:downloadPlay')} · ${sizeLabel(availability.bytes)}`
             : availability.state === 'preparing'
-              ? t('interface:preparingCancel')
+              ? `${t('interface:preparing')}…`
               : t(
                   availability.retry
                     ? 'interface:missionLibrary.unavailableRetry'
@@ -576,11 +679,27 @@ export function attachMissionLibraryChooser({
       buttons.some((button, index) => list.children[index] !== button)
     )
       list.replaceChildren(...buttons);
+    if (focusedCampaignKey && !doc.hidden && doc.hasFocus?.() !== false) {
+      const replacement = shortcuts.find(
+        (shortcut) => shortcut.dataset.campaignKey === focusedCampaignKey,
+      );
+      if (replacement?.isConnected && !campaignRail.hidden) {
+        if (doc.activeElement !== replacement) replacement.focus({ preventScroll: true });
+      } else primary().focus({ preventScroll: true });
+    }
+    campaignRail.scrollLeft = campaignScroll;
     if (focusedId && !doc.hidden && doc.hasFocus?.() !== false) {
       const replacement = cards.get(focusedId)?.button;
-      if (replacement?.isConnected && list.contains(replacement) && !replacement.disabled)
-        replacement.focus({ preventScroll: true });
-      else primary().focus({ preventScroll: true });
+      if (replacement?.isConnected && list.contains(replacement) && !replacement.disabled) {
+        if (doc.activeElement !== replacement) {
+          restoringCardFocus = true;
+          try {
+            replacement.focus({ preventScroll: true });
+          } finally {
+            restoringCardFocus = false;
+          }
+        }
+      } else primary().focus({ preventScroll: true });
     }
     list.scrollTop = scroll;
     for (const [id, card] of cards)
@@ -589,6 +708,7 @@ export function attachMissionLibraryChooser({
         cards.delete(id);
       }
     restorePendingSelection();
+    updateCampaignRailSelection();
     observeDiagrams();
   }
   // Decode only near the viewport. An earned picture owns the same exact
@@ -602,7 +722,6 @@ export function attachMissionLibraryChooser({
   }
   function showPreview(card) {
     if (card.diagram || !dialog.open || !list.contains(card.button)) return;
-    if (compact && !detailedCards.checked) return;
     card.diagram = true;
     try {
       const canvas = node('canvas');
@@ -613,7 +732,10 @@ export function attachMissionLibraryChooser({
         const pictureStatus = node('span');
         pictureStatus.className = 'journey-card-picture-status';
         card.button.append(canvas, pictureStatus);
-        card.artwork = createJourneyArtworkView({ canvas, status: pictureStatus });
+        card.artwork = createJourneyArtworkView({
+          canvas,
+          status: pictureStatus,
+        });
         void card.artwork.show(card.completion.record);
       } else {
         const diagram = library.card(card.row, modeFilter.value);
@@ -650,7 +772,7 @@ export function attachMissionLibraryChooser({
         rect = button.getBoundingClientRect();
       const near = rect.bottom >= bounds.top - 120 && rect.top <= bounds.bottom + 120;
       // A bounded fallback also works in hosts without layout observation.
-      if (near && card.completion?.state === 'earned' && shown < 12) {
+      if (near && shown < 12) {
         showPreview(card);
         shown++;
       } else hidePreview(card);
@@ -659,11 +781,10 @@ export function attachMissionLibraryChooser({
   function observeDiagrams() {
     for (const card of cards.values())
       if (!list.contains(card.button)) {
-        observer?.unobserve(card.button);
+        observer?.unobserve?.(card.button);
         hidePreview(card);
       }
-    if (compact && !detailedCards.checked) return;
-    for (const button of list.children) observer?.observe(button);
+    for (const button of list.children) observer?.observe?.(button);
     fallbackPreviews();
   }
   list.addEventListener('scroll', fallbackPreviews);
@@ -713,17 +834,24 @@ export function attachMissionLibraryChooser({
       else if (!compact && (focused === filterSummary || detailLabel.contains(focused)))
         collection.focus({ preventScroll: true });
     }
-    if (compact && !detailedCards.checked) invalidateDiagrams();
-    else if (dialog.open) observeDiagrams();
+    if (dialog.open) observeDiagrams();
     keepFocusedCardVisible();
   }
   media?.addEventListener?.('change', resizeFilters);
   detailedCards.addEventListener('change', () => {
     dialog.classList.toggle('mission-library-detailed', detailedCards.checked);
-    if (compact && !detailedCards.checked) invalidateDiagrams();
-    else if (dialog.open) observeDiagrams();
+    if (dialog.open) observeDiagrams();
   });
   dialog.addEventListener('focusin', (event) => {
+    // A touch activation can deliberately leave keyboard focus on a different
+    // control. Retire its preparation only after a later focus transition;
+    // refocusing the preparing card keeps the owned one-action launch alive.
+    if (!restoringCardFocus) {
+      const focusedCard = event.target.closest?.('.journey-card');
+      retirePreparations({
+        except: focusedCard && list.contains(focusedCard) ? focusedCard.dataset.missionId : null,
+      });
+    }
     // The compact filters float above cards. Once keyboard/controller focus
     // reaches an action below them, remove that cover without moving focus or
     // changing a filter. Focus and select previews inside the popover stay put.
@@ -743,7 +871,7 @@ export function attachMissionLibraryChooser({
     // layout reports zero; later disposal must not overwrite that position or
     // return focus away from the action that now owns this page.
     if (wasOpen) remember();
-    for (const controller of downloads) controller.abort();
+    retirePreparations();
     if (!wasOpen) return;
     dialog.close();
     if (onReturn) onReturn(opener);
@@ -770,6 +898,7 @@ export function attachMissionLibraryChooser({
   }
   search.addEventListener('input', () => {
     retirePendingSelection();
+    retirePreparations();
     pendingCampaign = '';
     ++visit; // Late preparation feedback belongs to the view that requested it.
     message = '';
@@ -800,12 +929,15 @@ export function attachMissionLibraryChooser({
     )
       return;
     const first = [...list.children].find((button) => !button.disabled);
-    (first ?? (compact ? filterSummary : collection)).focus({ preventScroll: true });
+    (first ?? (compact ? filterSummary : collection)).focus({
+      preventScroll: true,
+    });
     remember();
   };
   for (const control of [collection, campaign, modeFilter])
     control.addEventListener('change', () => {
       retirePendingSelection();
+      retirePreparations();
       ++visit;
       message = '';
       selectedId = '';

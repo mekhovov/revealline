@@ -3,6 +3,11 @@
 > **Current status:** use the
 > [completed and remaining delivery plan](plan-status-2026-09-23.md) for released
 > features, active promotion, prioritized remaining work and evidence limits.
+> Stable v0.141.2 is the current Pages release from exact source
+> `12978e5fd3fe0ce70bbee96aa543f569f64622d4`; PR #677 selected it and Pages run
+> `36252239829` audited 1,888 files / 630,471,797 bytes with zero retries or
+> failures. v0.141.1 is an intermediate GitHub-only release, and Archive95 preserves
+> v0.141.0. Earlier version queues require fresh allocation before reuse.
 > Dated “current” versions and “next” queues below are historical. Default
 > Journey and unified-library delivery are complete; whole-game qualification
 > is not. Update the linked status register after each public acceptance.
