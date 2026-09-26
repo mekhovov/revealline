@@ -290,8 +290,8 @@ journal-backed retry.
 
 The default package ceiling is 256 MiB and catalog pages are capped at 50 entries. A reverse proxy
 still needs request timeouts, connection limits, and HTTPS. Public deployment also requires a
-report triage UI over the bounded admin API, stronger process/container isolation for media
-validation, malware policy, metrics, an off-host backup schedule, a real
+live administrator-session rehearsal of the shipped report triage UI, stronger process/container
+isolation for media validation, malware policy, metrics, an off-host backup schedule, a real
 PostgreSQL/blob restore rehearsal, and an explicit infrastructure decision. The S3 adapter is tested
 at its byte boundary but is not wired into the executable deployment. No AWS, mail provider,
 domain, or production restore claim is made here. Email verification and password recovery are
