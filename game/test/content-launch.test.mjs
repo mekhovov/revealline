@@ -11,6 +11,7 @@ import {
   resolvePackLaunch,
   packLaunchHref,
 } from '../content-launch.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const json = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const source = await json('../content/packs/catalog.json');
@@ -72,6 +73,21 @@ test('pack launch rejects unknown, ambiguous and partial routes without acceptin
     'level=night-shift-01',
   ])
     assert.throws(() => resolvePackLaunch(new URLSearchParams(query), catalog));
+});
+
+test('pack launch validation follows the active locale', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('uk', { persist: false });
+  assert.throws(
+    () => resolvePackLaunch(new URLSearchParams('pack=unknown'), catalog),
+    /Цей вбудований пакет недоступний/,
+  );
+  setLocale('en', { persist: false });
+  assert.throws(
+    () => resolvePackLaunch(new URLSearchParams('pack=unknown'), catalog),
+    /This bundled pack is not available/,
+  );
 });
 
 test('pack launch href encodes selector choices and autoplay explicitly', () => {
