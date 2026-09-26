@@ -454,8 +454,6 @@ export function attachGameShell({
   if (overlayBrief) overlayBrief.onclick = () => openBrief();
   const overlayMissions = $('overlay-missions');
   if (overlayMissions) overlayMissions.onclick = () => openMissions({ opener: overlayMissions });
-  const overlayHelp = $('overlay-help');
-  if (overlayHelp) overlayHelp.onclick = () => $('help-button').click();
   const overlaySettings = $('overlay-settings');
   if (overlaySettings) overlaySettings.onclick = () => $('settings-button').click();
   const pauseMissionInfo = $('pause-mission-info');
