@@ -145,9 +145,12 @@ class BindingTests(unittest.TestCase):
 
 class InspectionCommandTests(unittest.TestCase):
     def test_utility_sparse_checkouts_include_policy_module_and_data(self):
-        workflow = (Path(__file__).parents[2] / '.github/workflows/qualify-release-source.yml').read_text()
+        root = Path(__file__).parents[2] / '.github/workflows'
+        qualification = (root / 'qualify-release-source.yml').read_text()
+        upload = (root / 'upload-release-originals.yml').read_text()
         policy_pair = '            publishing/test-policy.mjs\n            publishing/test-policy.json\n'
-        self.assertEqual(workflow.count(policy_pair), 2)
+        self.assertEqual(qualification.count(policy_pair), 1)
+        self.assertEqual(upload.count(policy_pair), 1)
 
     def test_release_utility_passes_exact_distribution_cap(self):
         text = Path(utility.__file__).read_text()
@@ -269,13 +272,14 @@ class WorkflowTests(unittest.TestCase):
     def test_only_explicit_upload_job_has_write_permission_and_default_keeps_gates(self):
         root = Path(__file__).resolve().parents[2]
         text = (root / utility.WORKFLOW).read_text()
-        inspect_job = text.split('\n  inspect-artifact:\n')[1].split('\n  upload-originals:\n')[0]
-        upload_job = text.split('\n  upload-originals:\n')[1]
+        upload_text = (root / '.github/workflows/upload-release-originals.yml').read_text()
+        inspect_job = text.split('\n  inspect-artifact:\n')[1]
+        upload_job = upload_text.split('\n  upload-originals:\n')[1]
         regular = text.split('\n  inspect-artifact:\n')[0]
-        self.assertEqual(text.count('contents: write'), 1)
+        self.assertEqual(text.count('contents: write'), 0)
+        self.assertEqual(upload_text.count('contents: write'), 1)
         self.assertIn("inputs.operation == 'inspect-artifact'", inspect_job)
         self.assertIn('contents: read', inspect_job)
-        self.assertIn("inputs.operation == 'upload-originals'", upload_job)
         self.assertIn('contents: write', upload_job)
         for section in [inspect_job, upload_job]:
             self.assertIn('ref: ${{ github.workflow_sha }}', section)
@@ -289,8 +293,9 @@ class WorkflowTests(unittest.TestCase):
         self.assertIn('workflow_call:', regular)
         self.assertIn('artifact_id:', regular)
         self.assertIn('artifact_digest:', regular)
-        self.assertIn('cancel-in-progress: false', upload_job)
-        self.assertNotIn('queue:', upload_job)
+        self.assertIn('cancel-in-progress: false', upload_text)
+        self.assertNotIn('queue:', upload_text)
+        self.assertNotIn('upload-originals', text)
         for command in utility.COMMANDS:
             self.assertIn('run: ' + command, regular)
         self.assertIn('node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4', regular)
