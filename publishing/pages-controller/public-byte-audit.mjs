@@ -57,25 +57,47 @@ async function sleep(milliseconds) {
   await new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-async function readResponse(response) {
+async function readResponse(response, expectedBytes) {
+  if (!response.body || typeof response.body.getReader !== "function")
+    throw new PermanentAuditError("Public response has no readable body.");
   const hash = createHash("sha256");
+  const reader = response.body.getReader();
   let bytes = 0;
-  for await (const chunk of response.body) {
-    bytes += chunk.byteLength;
-    hash.update(chunk);
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      bytes += value.byteLength;
+      if (bytes > expectedBytes) {
+        await reader.cancel("Public response exceeds the reviewed byte count.");
+        throw new PermanentAuditError(
+          `public body exceeds ${expectedBytes} reviewed bytes`,
+        );
+      }
+      hash.update(value);
+    }
+  } finally {
+    reader.releaseLock();
   }
   return { bytes, sha256: hash.digest("hex") };
 }
 
-async function fetchExact(file, { baseUrl, fetchImpl, signal, metrics }) {
+async function fetchExact(
+  file,
+  { baseUrl, fetchImpl, signal, metrics, requestTimeoutMs },
+) {
   const url = publicUrl(baseUrl, file.path);
   let lastError = null;
   for (let attempt = 0; attempt < 4; attempt++) {
     metrics.requests++;
+    const requestSignal = AbortSignal.any([
+      signal,
+      AbortSignal.timeout(requestTimeoutMs),
+    ]);
     try {
       const response = await fetchImpl(url, {
         redirect: "error",
-        signal,
+        signal: requestSignal,
         headers: {
           accept: "*/*",
           "cache-control": "no-cache",
@@ -93,7 +115,7 @@ async function fetchExact(file, { baseUrl, fetchImpl, signal, metrics }) {
         throw new PermanentAuditError(
           `${file.path}: public HTTP ${response.status}`,
         );
-      const actual = await readResponse(response);
+      const actual = await readResponse(response, file.bytes);
       if (actual.bytes !== file.bytes || actual.sha256 !== file.sha256)
         throw new PermanentAuditError(
           `${file.path}: public bytes changed (${actual.bytes}/${actual.sha256}).`,
@@ -118,12 +140,19 @@ export async function auditPublicBytes({
   manifest,
   baseUrl,
   concurrency = 8,
+  requestTimeoutMs = 30_000,
   fetchImpl = fetch,
   onProgress = () => {},
 }) {
   assertManifest(manifest);
   if (!Number.isSafeInteger(concurrency) || concurrency < 1 || concurrency > 32)
     throw new Error("Public audit concurrency must be between 1 and 32.");
+  if (
+    !Number.isSafeInteger(requestTimeoutMs) ||
+    requestTimeoutMs < 10 ||
+    requestTimeoutMs > 120_000
+  )
+    throw new Error("Public request timeout must be between 10 and 120000 ms.");
   const controller = new AbortController(),
     observations = new Array(manifest.files.length),
     metrics = { requests: 0, retries: 0, maxConcurrency: concurrency };
@@ -140,6 +169,7 @@ export async function auditPublicBytes({
           fetchImpl,
           signal: controller.signal,
           metrics,
+          requestTimeoutMs,
         });
         completed++;
         onProgress({ completed, total: manifest.files.length });
@@ -185,6 +215,9 @@ async function main() {
     manifest,
     baseUrl,
     concurrency: Number(concurrencyValue),
+    requestTimeoutMs: Number(
+      process.env.PUBLIC_AUDIT_REQUEST_TIMEOUT_MS || "30000",
+    ),
     onProgress({ completed, total }) {
       if (completed === total || completed - lastReported >= 100) {
         process.stderr.write(`Public audit ${completed}/${total}\n`);

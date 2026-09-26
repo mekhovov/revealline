@@ -164,6 +164,10 @@ test("source qualification retains mandatory guards and restorable suites while 
   );
   assert.match(workflow, /audit-public-bytes:\n/);
   assert.match(workflow, /needs: \[assemble, deploy\]/);
+  assert.match(
+    workflow,
+    /audit-public-bytes:\n[\s\S]*?timeout-minutes: 45[\s\S]*?public-byte-audit\.mjs/,
+  );
   assert.match(workflow, /public-byte-audit\.mjs/);
   assert.match(workflow, /name: frozen-pages-receipts/);
   assert.match(workflow, /name: public-byte-audit-\$\{\{ github\.sha \}\}/);
