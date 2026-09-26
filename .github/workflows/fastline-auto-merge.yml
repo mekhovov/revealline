@@ -8,6 +8,8 @@ on:
     branches: [main]
     types:
       [
+        opened,
+        reopened,
         synchronize,
         edited,
         labeled,
@@ -44,6 +46,7 @@ jobs:
         with:
           ref: main
           fetch-depth: 1
+          filter: blob:none
           persist-credentials: false
           sparse-checkout: publishing/fastline-merge-controller.mjs
           sparse-checkout-cone-mode: false
