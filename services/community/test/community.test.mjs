@@ -1345,6 +1345,7 @@ test('S3 boundary stages a verified stream and delegates exact immutable metadat
       put: (input) => ({ operation: 'put', input }),
       head: (input) => ({ operation: 'head', input }),
       get: (input) => ({ operation: 'get', input }),
+      list: (input) => ({ operation: 'list', input }),
     },
   });
   const key = packageBlobKey(sha256);
