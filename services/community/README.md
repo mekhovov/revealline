@@ -338,6 +338,47 @@ and replaces `backup` with `restore`. The source tests rehearse exact backup, ve
 successful restore, changed-byte rejection, occupied-target refusal, database-command failure, and
 journal-backed retry.
 
+### Source-to-target restore rehearsal
+
+`npm run recovery:rehearse` turns the manual restore check into one bounded acceptance command. It
+backs up the configured source, restores into a separate disposable PostgreSQL database and empty
+blob root, then compares deterministic community-table row fingerprints and counts, submission
+status totals, and exact database package references. The restored references must resolve to the
+same package hashes and sizes in the verified snapshot. This proves the recovery artifact restores
+the community data and its content-addressed packages together; it does not test the surrounding
+proxy, mail gateway, Better Auth-owned tables, or production traffic cutover.
+
+The runner refuses an identical source and target database or blob root. It also requires the
+operator to confirm an opaque target identity before `pg_dump` or `pg_restore` can run. First stop
+the source API and worker, provision a disposable target database, and set separate target values:
+
+```sh
+export COMMUNITY_DATABASE_URL=postgres://revealline:secret@database/revealline
+export COMMUNITY_BLOB_ROOT=/srv/revealline/blobs
+export COMMUNITY_RECOVERY_REHEARSAL_TARGET_DATABASE_URL=postgres://revealline:secret@restore-db/revealline-rehearsal
+export COMMUNITY_RECOVERY_REHEARSAL_TARGET_BLOB_ROOT=/srv/revealline/rehearsal-blobs
+
+npm run recovery:rehearse -- plan
+```
+
+`plan` prints only hashed source and target identities. Copy its `targetDatabase` value into the
+explicit confirmation, then run the rehearsal with new work and receipt paths:
+
+```sh
+npm run recovery:rehearse -- run \
+  --work-directory /srv/revealline/rehearsals/2026-09-26 \
+  --receipt /srv/revealline/rehearsal-receipts/2026-09-26.json \
+  --confirm-target database_<64-hex-characters>
+```
+
+The versioned receipt is written atomically with mode `0600`. It records the snapshot identity,
+opaque database/blob-root identities, aggregate counts, semantic fingerprint, stored byte totals,
+and completed checks. It never records connection URLs, credentials, filesystem paths, account
+identities, titles, report text, or package contents. Existing work directories, receipt files, and
+non-empty target blob roots are rejected. Keep failed rehearsal work for diagnosis, discard the
+target after review, restart the source writers, and retain the successful receipt with the
+off-host snapshot record.
+
 ## Limits and operational work still required
 
 The default package ceiling is 256 MiB and catalog pages are capped at 50 entries. A reverse proxy
