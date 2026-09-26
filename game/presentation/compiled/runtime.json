@@ -12,21 +12,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.cancel.field-kit", "revision": 35 },
+          "parent": { "id": "audio.cancel.field-kit", "revision": 37 },
           "prompt": "Create one original FPV Field Kit cancel audio cue for slot audio.cancel. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831"
+          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541"
         },
         "quality": {
           "evidence": [
-            "v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact audio fingerprint sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831. Locale-bound controls, credits, diagnostics and live flight announcements preserve playback state, volume values, rights metadata, soundtrack bytes and procedural recipes.",
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:1c4cd15dfa9638b62726881cd765b247966595063a2d7f20a076d8c6ab851f30 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The post-review changes outside the reviewed soundtrack implementation are the repository-standard Prettier rewrite of game/soundtrack.mjs and the controller-only Steam Deck Confirm transaction repair documented at docs/v0.130.0-steamdeck-confirm-transaction.md sha256:19fb9af5b7715c1e7187294413df8dc65026e25be4237bd6dfbe86875cc3e89d; soundtrack behavior and exports are unchanged.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+            "Scoped offline ownership continuation: docs/offline-pwa/audio-source-review.json sha256:63acdbe155cecf03a9c7bd95c06fefa473c8f0947b53f40dbaec24791f7e40f2; twenty-five ordered audio inputs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541 bind installed playback to imported or verified official bytes and keep every recorded soundtrack outside the required gameplay cache.",
+            "The v0.131 English/Ukrainian continuation remains incorporated. All 8 selected roles retain the same procedural recipes; local-only selection, explicit resumable download, shared-byte removal, rights, cancellation and imported-media preservation are covered without changing soundtrack bytes.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, current frozen-build or public game approval. Historical reviews and original payloads remain immutable."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 36
+        "revision": 38
       },
       "audio.capture": {
         "description": "capture audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -38,21 +37,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.capture.field-kit", "revision": 35 },
+          "parent": { "id": "audio.capture.field-kit", "revision": 37 },
           "prompt": "Create one original FPV Field Kit capture audio cue for slot audio.capture. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831"
+          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541"
         },
         "quality": {
           "evidence": [
-            "v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact audio fingerprint sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831. Locale-bound controls, credits, diagnostics and live flight announcements preserve playback state, volume values, rights metadata, soundtrack bytes and procedural recipes.",
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:1c4cd15dfa9638b62726881cd765b247966595063a2d7f20a076d8c6ab851f30 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The post-review changes outside the reviewed soundtrack implementation are the repository-standard Prettier rewrite of game/soundtrack.mjs and the controller-only Steam Deck Confirm transaction repair documented at docs/v0.130.0-steamdeck-confirm-transaction.md sha256:19fb9af5b7715c1e7187294413df8dc65026e25be4237bd6dfbe86875cc3e89d; soundtrack behavior and exports are unchanged.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+            "Scoped offline ownership continuation: docs/offline-pwa/audio-source-review.json sha256:63acdbe155cecf03a9c7bd95c06fefa473c8f0947b53f40dbaec24791f7e40f2; twenty-five ordered audio inputs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541 bind installed playback to imported or verified official bytes and keep every recorded soundtrack outside the required gameplay cache.",
+            "The v0.131 English/Ukrainian continuation remains incorporated. All 8 selected roles retain the same procedural recipes; local-only selection, explicit resumable download, shared-byte removal, rights, cancellation and imported-media preservation are covered without changing soundtrack bytes.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, current frozen-build or public game approval. Historical reviews and original payloads remain immutable."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 36
+        "revision": 38
       },
       "audio.confirm": {
         "description": "confirm audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -64,21 +62,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.confirm.field-kit", "revision": 35 },
+          "parent": { "id": "audio.confirm.field-kit", "revision": 37 },
           "prompt": "Create one original FPV Field Kit confirm audio cue for slot audio.confirm. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831"
+          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541"
         },
         "quality": {
           "evidence": [
-            "v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact audio fingerprint sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831. Locale-bound controls, credits, diagnostics and live flight announcements preserve playback state, volume values, rights metadata, soundtrack bytes and procedural recipes.",
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:1c4cd15dfa9638b62726881cd765b247966595063a2d7f20a076d8c6ab851f30 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The post-review changes outside the reviewed soundtrack implementation are the repository-standard Prettier rewrite of game/soundtrack.mjs and the controller-only Steam Deck Confirm transaction repair documented at docs/v0.130.0-steamdeck-confirm-transaction.md sha256:19fb9af5b7715c1e7187294413df8dc65026e25be4237bd6dfbe86875cc3e89d; soundtrack behavior and exports are unchanged.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+            "Scoped offline ownership continuation: docs/offline-pwa/audio-source-review.json sha256:63acdbe155cecf03a9c7bd95c06fefa473c8f0947b53f40dbaec24791f7e40f2; twenty-five ordered audio inputs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541 bind installed playback to imported or verified official bytes and keep every recorded soundtrack outside the required gameplay cache.",
+            "The v0.131 English/Ukrainian continuation remains incorporated. All 8 selected roles retain the same procedural recipes; local-only selection, explicit resumable download, shared-byte removal, rights, cancellation and imported-media preservation are covered without changing soundtrack bytes.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, current frozen-build or public game approval. Historical reviews and original payloads remain immutable."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 36
+        "revision": 38
       },
       "audio.failure": {
         "description": "failure audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -90,21 +87,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.failure.field-kit", "revision": 35 },
+          "parent": { "id": "audio.failure.field-kit", "revision": 37 },
           "prompt": "Create one original FPV Field Kit failure audio cue for slot audio.failure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831"
+          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541"
         },
         "quality": {
           "evidence": [
-            "v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact audio fingerprint sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831. Locale-bound controls, credits, diagnostics and live flight announcements preserve playback state, volume values, rights metadata, soundtrack bytes and procedural recipes.",
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:1c4cd15dfa9638b62726881cd765b247966595063a2d7f20a076d8c6ab851f30 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The post-review changes outside the reviewed soundtrack implementation are the repository-standard Prettier rewrite of game/soundtrack.mjs and the controller-only Steam Deck Confirm transaction repair documented at docs/v0.130.0-steamdeck-confirm-transaction.md sha256:19fb9af5b7715c1e7187294413df8dc65026e25be4237bd6dfbe86875cc3e89d; soundtrack behavior and exports are unchanged.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+            "Scoped offline ownership continuation: docs/offline-pwa/audio-source-review.json sha256:63acdbe155cecf03a9c7bd95c06fefa473c8f0947b53f40dbaec24791f7e40f2; twenty-five ordered audio inputs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541 bind installed playback to imported or verified official bytes and keep every recorded soundtrack outside the required gameplay cache.",
+            "The v0.131 English/Ukrainian continuation remains incorporated. All 8 selected roles retain the same procedural recipes; local-only selection, explicit resumable download, shared-byte removal, rights, cancellation and imported-media preservation are covered without changing soundtrack bytes.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, current frozen-build or public game approval. Historical reviews and original payloads remain immutable."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 36
+        "revision": 38
       },
       "audio.focus": {
         "description": "focus audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -116,21 +112,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.focus.field-kit", "revision": 35 },
+          "parent": { "id": "audio.focus.field-kit", "revision": 37 },
           "prompt": "Create one original FPV Field Kit focus audio cue for slot audio.focus. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831"
+          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541"
         },
         "quality": {
           "evidence": [
-            "v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact audio fingerprint sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831. Locale-bound controls, credits, diagnostics and live flight announcements preserve playback state, volume values, rights metadata, soundtrack bytes and procedural recipes.",
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:1c4cd15dfa9638b62726881cd765b247966595063a2d7f20a076d8c6ab851f30 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The post-review changes outside the reviewed soundtrack implementation are the repository-standard Prettier rewrite of game/soundtrack.mjs and the controller-only Steam Deck Confirm transaction repair documented at docs/v0.130.0-steamdeck-confirm-transaction.md sha256:19fb9af5b7715c1e7187294413df8dc65026e25be4237bd6dfbe86875cc3e89d; soundtrack behavior and exports are unchanged.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+            "Scoped offline ownership continuation: docs/offline-pwa/audio-source-review.json sha256:63acdbe155cecf03a9c7bd95c06fefa473c8f0947b53f40dbaec24791f7e40f2; twenty-five ordered audio inputs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541 bind installed playback to imported or verified official bytes and keep every recorded soundtrack outside the required gameplay cache.",
+            "The v0.131 English/Ukrainian continuation remains incorporated. All 8 selected roles retain the same procedural recipes; local-only selection, explicit resumable download, shared-byte removal, rights, cancellation and imported-media preservation are covered without changing soundtrack bytes.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, current frozen-build or public game approval. Historical reviews and original payloads remain immutable."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 36
+        "revision": 38
       },
       "audio.music": {
         "description": "Theme music: existing bounded component with Field Kit tokens and state styling.",
@@ -142,21 +137,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.music.field-kit", "revision": 35 },
+          "parent": { "id": "audio.music.field-kit", "revision": 37 },
           "prompt": "Create one original FPV Field Kit theme music for slot audio.music. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831"
+          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541"
         },
         "quality": {
           "evidence": [
-            "v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact audio fingerprint sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831. Locale-bound controls, credits, diagnostics and live flight announcements preserve playback state, volume values, rights metadata, soundtrack bytes and procedural recipes.",
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:1c4cd15dfa9638b62726881cd765b247966595063a2d7f20a076d8c6ab851f30 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The post-review changes outside the reviewed soundtrack implementation are the repository-standard Prettier rewrite of game/soundtrack.mjs and the controller-only Steam Deck Confirm transaction repair documented at docs/v0.130.0-steamdeck-confirm-transaction.md sha256:19fb9af5b7715c1e7187294413df8dc65026e25be4237bd6dfbe86875cc3e89d; soundtrack behavior and exports are unchanged.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+            "Scoped offline ownership continuation: docs/offline-pwa/audio-source-review.json sha256:63acdbe155cecf03a9c7bd95c06fefa473c8f0947b53f40dbaec24791f7e40f2; twenty-five ordered audio inputs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541 bind installed playback to imported or verified official bytes and keep every recorded soundtrack outside the required gameplay cache.",
+            "The v0.131 English/Ukrainian continuation remains incorporated. All 8 selected roles retain the same procedural recipes; local-only selection, explicit resumable download, shared-byte removal, rights, cancellation and imported-media preservation are covered without changing soundtrack bytes.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, current frozen-build or public game approval. Historical reviews and original payloads remain immutable."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.music.v1" },
-        "revision": 36
+        "revision": 38
       },
       "audio.pickup": {
         "description": "pickup audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -168,21 +162,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.pickup.field-kit", "revision": 35 },
+          "parent": { "id": "audio.pickup.field-kit", "revision": 37 },
           "prompt": "Create one original FPV Field Kit pickup audio cue for slot audio.pickup. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831"
+          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541"
         },
         "quality": {
           "evidence": [
-            "v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact audio fingerprint sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831. Locale-bound controls, credits, diagnostics and live flight announcements preserve playback state, volume values, rights metadata, soundtrack bytes and procedural recipes.",
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:1c4cd15dfa9638b62726881cd765b247966595063a2d7f20a076d8c6ab851f30 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The post-review changes outside the reviewed soundtrack implementation are the repository-standard Prettier rewrite of game/soundtrack.mjs and the controller-only Steam Deck Confirm transaction repair documented at docs/v0.130.0-steamdeck-confirm-transaction.md sha256:19fb9af5b7715c1e7187294413df8dc65026e25be4237bd6dfbe86875cc3e89d; soundtrack behavior and exports are unchanged.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+            "Scoped offline ownership continuation: docs/offline-pwa/audio-source-review.json sha256:63acdbe155cecf03a9c7bd95c06fefa473c8f0947b53f40dbaec24791f7e40f2; twenty-five ordered audio inputs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541 bind installed playback to imported or verified official bytes and keep every recorded soundtrack outside the required gameplay cache.",
+            "The v0.131 English/Ukrainian continuation remains incorporated. All 8 selected roles retain the same procedural recipes; local-only selection, explicit resumable download, shared-byte removal, rights, cancellation and imported-media preservation are covered without changing soundtrack bytes.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, current frozen-build or public game approval. Historical reviews and original payloads remain immutable."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 36
+        "revision": 38
       },
       "audio.victory": {
         "description": "victory audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -194,21 +187,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.victory.field-kit", "revision": 35 },
+          "parent": { "id": "audio.victory.field-kit", "revision": 37 },
           "prompt": "Create one original FPV Field Kit victory audio cue for slot audio.victory. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831"
+          "source": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541"
         },
         "quality": {
           "evidence": [
-            "v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact audio fingerprint sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831. Locale-bound controls, credits, diagnostics and live flight announcements preserve playback state, volume values, rights metadata, soundtrack bytes and procedural recipes.",
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:1c4cd15dfa9638b62726881cd765b247966595063a2d7f20a076d8c6ab851f30 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The post-review changes outside the reviewed soundtrack implementation are the repository-standard Prettier rewrite of game/soundtrack.mjs and the controller-only Steam Deck Confirm transaction repair documented at docs/v0.130.0-steamdeck-confirm-transaction.md sha256:19fb9af5b7715c1e7187294413df8dc65026e25be4237bd6dfbe86875cc3e89d; soundtrack behavior and exports are unchanged.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+            "Scoped offline ownership continuation: docs/offline-pwa/audio-source-review.json sha256:63acdbe155cecf03a9c7bd95c06fefa473c8f0947b53f40dbaec24791f7e40f2; twenty-five ordered audio inputs sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541 bind installed playback to imported or verified official bytes and keep every recorded soundtrack outside the required gameplay cache.",
+            "The v0.131 English/Ukrainian continuation remains incorporated. All 8 selected roles retain the same procedural recipes; local-only selection, explicit resumable download, shared-byte removal, rights, cancellation and imported-media preservation are covered without changing soundtrack bytes.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, current frozen-build or public game approval. Historical reviews and original payloads remain immutable."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 36
+        "revision": 38
       },
       "control.ability": {
         "description": "Brackets around an active diamond: class ability binding.",
@@ -10232,14 +10224,14 @@
       }
     },
     "bindings": {
-      "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 36 },
-      "audio.capture": { "id": "audio.capture.field-kit", "revision": 36 },
-      "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 36 },
-      "audio.failure": { "id": "audio.failure.field-kit", "revision": 36 },
-      "audio.focus": { "id": "audio.focus.field-kit", "revision": 36 },
-      "audio.music": { "id": "audio.music.field-kit", "revision": 36 },
-      "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 36 },
-      "audio.victory": { "id": "audio.victory.field-kit", "revision": 36 },
+      "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 38 },
+      "audio.capture": { "id": "audio.capture.field-kit", "revision": 38 },
+      "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 38 },
+      "audio.failure": { "id": "audio.failure.field-kit", "revision": 38 },
+      "audio.focus": { "id": "audio.focus.field-kit", "revision": 38 },
+      "audio.music": { "id": "audio.music.field-kit", "revision": 38 },
+      "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 38 },
+      "audio.victory": { "id": "audio.victory.field-kit", "revision": 38 },
       "control.ability": { "id": "control.ability.field-kit", "revision": 2 },
       "control.boost": { "id": "control.boost.field-kit", "revision": 2 },
       "control.cancel": { "id": "control.cancel.field-kit", "revision": 2 },
@@ -11121,7 +11113,7 @@
       "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 21 }
     },
     "collection": null,
-    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 84 },
+    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 86 },
     "tokens": {
       "amber": "#f4bf62",
       "borderWidth": 2,
@@ -11149,7 +11141,7 @@
       "textSize": 18
     }
   },
-  "source": { "id": "field-kit", "revision": 84 },
+  "source": { "id": "field-kit", "revision": 86 },
   "urls": {
     "009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a": "./assets/009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a.png",
     "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f": "./assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",

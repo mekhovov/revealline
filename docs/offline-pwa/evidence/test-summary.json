@@ -2,19 +2,19 @@
   "baselineRevision": "5d6c0ec3e6995cd0485fe5065ff5ea2bf82e0cdc",
   "nodeVersion": "20.19.5",
   "rebasedVerification": {
-    "baselineRevision": "0e678f42579c957eb66de0d4bb842e56e324842e",
+    "baselineRevision": "23e6129782e08ed826686f137a0989e5f154732a",
     "targetRelease": "v0.132.0",
     "focused": {
-      "tests": 271,
-      "pass": 271,
+      "tests": 276,
+      "pass": 276,
       "fail": 0,
-      "concurrency": 1
+      "concurrency": 4
     },
     "gates": {
       "validate": "passed",
       "lint": "passed",
       "formatCheck": "passed",
-      "productionReproduction": "passed at revision 83",
+      "productionReproduction": "passed at revision 86",
       "ordinaryBuild": "passed"
     },
     "baselineFailuresConfirmed": [

@@ -1,7 +1,7 @@
 {
   "format": "revealline-scoped-audio-recipe-review-successor.v1",
   "status": "bounded offline selection and file-ownership source review; physical-device and public acceptance pending",
-  "candidateBase": "0e678f42579c957eb66de0d4bb842e56e324842e",
+  "candidateBase": "a63ad4cc32fb14c53fa126d69df42e2e53d1477d",
   "priorReview": {
     "path": "docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json",
     "sha256": "55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42",
@@ -10,7 +10,7 @@
   "fingerprint": {
     "group": "audio",
     "paths": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs",
-    "sha256": "a78ed382b88ab15068943f1774f782a47f2f6360c4d9059351a90437d939fbee",
+    "sha256": "37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541",
     "algorithm": "SHA256 of ordered raw source bytes concatenated, matching fieldKitRecipeSources"
   },
   "changedInput": {
