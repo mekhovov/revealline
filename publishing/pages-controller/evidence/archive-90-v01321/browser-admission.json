@@ -1,0 +1,40 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-90",
+  "infrastructureCommit": "b9cac71452b1ea2c66d3f18b8ca4e0a2c6ead971",
+  "deploymentId": 6675372283,
+  "deploymentStatusId": 18867399967,
+  "versions": [
+    "v0.132.1"
+  ],
+  "surface": "Codex in-app Chromium automation",
+  "sequence": [
+    "Opened the Archive90 index and observed the original v0.132.1 preservation label and Play v0.132.1 route.",
+    "Opened the preserved route and observed the REVEAL / LINE title/home with Solo selected and Continue, Missions, Collection, Settings, More, and Sound controls.",
+    "Used browser Back and returned directly to the same Archive90 index."
+  ],
+  "observed": {
+    "archiveDocumentTitle": "RevealLine archive 90",
+    "archiveHeading": "RevealLine archive 90",
+    "archiveReleaseLabel": "The original v0.132.1 build, preserved for comparison and historical play.",
+    "gameDocumentTitle": "Reveal / Line",
+    "titleHeading": "REVEAL / LINE",
+    "selectedMode": "Solo One player",
+    "reloads": 0,
+    "retries": 0
+  },
+  "scope": "Historical online preservation: complete exact-byte public audit plus fresh bounded archive index, title/home, and Back navigation. This does not claim console inspection, physical-device/controller, comprehensive offline, every gameplay mode, or balance acceptance.",
+  "evidence": [
+    {
+      "path": "evidence/archive-90-v01321/public-acceptance.json",
+      "sha256": "c676299a0c7dfbe41931adc06f24dc894c58867e628552e336b4d99bb72f8e09"
+    }
+  ],
+  "limitations": [
+    "Long source suites remained waived under the temporary fast-release policy and are not reported as passed.",
+    "The browser console was not independently inspected during this bounded archive journey.",
+    "No renewed physical touch/controller or comprehensive offline acceptance is claimed.",
+    "This admission preserves v0.132.1; v0.132.2 is the separate immutable release selected by this controller change."
+  ]
+}
