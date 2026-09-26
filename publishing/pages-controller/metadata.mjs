@@ -17,6 +17,44 @@ export function validReleaseRetention(value) {
   return value === 'all' || (Number.isSafeInteger(value) && value >= 1 && value <= 100);
 }
 
+export function validRetentionConfiguration(configuration) {
+  const global = Object.hasOwn(configuration, 'retainedReleaseCount');
+  const perMajor = Object.hasOwn(configuration, 'retainedReleasesPerMajor');
+  if (global === perMajor) return false;
+  return global
+    ? Number.isSafeInteger(configuration.retainedReleaseCount) &&
+        configuration.retainedReleaseCount >= 1 &&
+        configuration.retainedReleaseCount <= 100
+    : validReleaseRetention(configuration.retainedReleasesPerMajor);
+}
+
+/** Global stable selection includes an explicitly selected rollback release. */
+export function selectReleaseMetadata(metadata, configuration) {
+  if (!(metadata instanceof Map) || !validRetentionConfiguration(configuration))
+    throw new Error('Invalid release retention policy.');
+  if (!Object.hasOwn(configuration, 'retainedReleaseCount'))
+    return retainRecentMetadata(metadata, configuration.retainedReleasesPerMajor);
+  if (!metadata.has(configuration.currentVersion))
+    throw new Error('Current release is not in the stable catalog.');
+  const versions = [...metadata.keys()];
+  for (const version of versions) versionParts(version);
+  versions.sort((a, b) => {
+    const left = a.slice(1).split('.').map(BigInt),
+      right = b.slice(1).split('.').map(BigInt);
+    for (let index = 0; index < 3; index++) {
+      if (left[index] !== right[index]) return left[index] > right[index] ? -1 : 1;
+    }
+    return a.localeCompare(b);
+  });
+  const retained = new Set([
+    configuration.currentVersion,
+    ...versions
+      .filter((v) => v !== configuration.currentVersion)
+      .slice(0, configuration.retainedReleaseCount - 1),
+  ]);
+  return new Map([...metadata].filter(([version]) => retained.has(version)));
+}
+
 /** Keep all validated history, or a bounded recent set for every semantic major. */
 export function retainRecentMetadata(metadata, retainedReleasesPerMajor) {
   if (!(metadata instanceof Map) || !validReleaseRetention(retainedReleasesPerMajor))
