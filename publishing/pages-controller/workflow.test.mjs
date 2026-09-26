@@ -174,11 +174,12 @@ test("source qualification retains mandatory guards and restorable suites while 
   );
 });
 
-test("public selector retains ten playable releases per semantic major", async () => {
+test("public selector retains five playable releases globally", async () => {
   const publication = JSON.parse(
     await fs.readFile(new URL("./publication.json", import.meta.url), "utf8"),
   );
-  assert.equal(publication.retainedReleasesPerMajor, 10);
+  assert.equal(publication.retainedReleaseCount, 5);
+  assert.equal(Object.hasOwn(publication, "retainedReleasesPerMajor"), false);
 });
 
 test("fast mode waives long suites while release source and publication guards stay mandatory", async () => {

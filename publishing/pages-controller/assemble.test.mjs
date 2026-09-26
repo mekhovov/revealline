@@ -310,8 +310,18 @@ function focusedAdmission(sourceTree) {
     sourceRevision: 'c'.repeat(40),
     sourceTree,
     classificationSteps: [
-      { name: 'Capture the reviewed changed-path set', number: 5, status: 'completed', conclusion: 'success' },
-      { name: 'Select the fail-closed focused gate', number: 6, status: 'completed', conclusion: 'success' },
+      {
+        name: 'Capture the reviewed changed-path set',
+        number: 5,
+        status: 'completed',
+        conclusion: 'success',
+      },
+      {
+        name: 'Select the fail-closed focused gate',
+        number: 6,
+        status: 'completed',
+        conclusion: 'success',
+      },
     ],
     genericBuild: { jobId: 96, status: 'skipped-by-fast-release-policy' },
     fullTests: { status: 'waived-and-skipped' },
@@ -483,7 +493,52 @@ test('retention keeps only the latest releases in each semantic major line', asy
   assert.deepEqual([...retainRecentMetadata(metadata, 1).keys()], ['v0.44.0']);
 });
 
-test('a comparison-only tag is listed with its dedicated playable archive route', async (t) => {
+test('global selection excludes comparison routes from the public index but preserves explicit routes', async (t) => {
+  const f = await fixture(t);
+  delete f.configuration.retainedReleasesPerMajor;
+  f.configuration.retainedReleaseCount = 5;
+  f.configuration.testingRoutes = {
+    'v0.1.0': 'https://mekhovov.github.io/revealline-archive-01/releases/v0.1.0/site/',
+  };
+  await f.write(path.join(f.directory, 'publication.json'), jsonBytes(f.configuration));
+  await assemble(f);
+  const index = JSON.parse(await fs.readFile(path.join(f.outputDirectory, 'releases/index.json')));
+  assert.deepEqual(
+    index.releases.map((r) => r.version),
+    ['v0.44.0'],
+  );
+  await fs.access(path.join(f.outputDirectory, 'releases/v0.1.0/site/game/index.html'));
+});
+
+test('retired local archive evidence still blocks when tampered, without remote verification', async (t) => {
+  const f = await fixture(t);
+  delete f.configuration.retainedReleasesPerMajor;
+  f.configuration.retainedReleaseCount = 1;
+  await f.write(path.join(f.directory, 'publication.json'), jsonBytes(f.configuration));
+  const { metadata } = await loadCatalog(f.directory);
+  const selected = new Map([
+    [f.configuration.currentVersion, metadata.get(f.configuration.currentVersion)],
+  ]);
+  const result = await validateAdmissions({
+    directory: f.directory,
+    configuration: f.configuration,
+    metadata: selected,
+    catalogMetadata: metadata,
+  });
+  assert.equal(result.admissions.length, 0);
+  await f.write(path.join(f.directory, 'native.txt'), Buffer.from('tampered'));
+  await assert.rejects(
+    validateAdmissions({
+      directory: f.directory,
+      configuration: f.configuration,
+      metadata: selected,
+      catalogMetadata: metadata,
+    }),
+    /byte pin mismatch/,
+  );
+});
+
+test('a comparison-only tag is listed with its dedicated playable archive route under legacy policy', async (t) => {
   const f = await fixture(t);
   f.configuration.retainedReleasesPerMajor = 1;
   f.configuration.testingRoutes = {
@@ -524,10 +579,7 @@ test('extraction receipt identity and inventory mutations fail closed', async (t
     const f = await fixture(t),
       changed = structuredClone(f.extractionReceipt);
     mutate(changed);
-    await assert.rejects(
-      assemble({ ...f, extractionReceipt: changed }),
-      /extraction|inventory/i,
-    );
+    await assert.rejects(assemble({ ...f, extractionReceipt: changed }), /extraction|inventory/i);
     await assert.rejects(fs.access(f.outputDirectory));
   }
 });
