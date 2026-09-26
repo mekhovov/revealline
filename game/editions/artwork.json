@@ -1,0 +1,41 @@
+[
+  {
+    "format": "AssetRevisionV1",
+    "id": "droneaid-community-relay-01-picture",
+    "revision": "1",
+    "kind": "reveal-background",
+    "path": "editions/assets/droneaid/droneaid-community-relay-01.png",
+    "sha256": "6f3f7e96f4d8f0ea78f1026026a2dc5f85981adee599a44ccfa173204c055bbe",
+    "bytes": 1794830,
+    "width": 1280,
+    "height": 853,
+    "alt": "A fictional illustrated community support scene for droneaid-community-relay-01.",
+    "review": "candidate"
+  },
+  {
+    "format": "AssetRevisionV1",
+    "id": "droneaid-community-relay-02-picture",
+    "revision": "1",
+    "kind": "reveal-background",
+    "path": "editions/assets/droneaid/droneaid-community-relay-02.png",
+    "sha256": "5ed9b536b8b11d4af1d6decda4cd8ee26346afcd326efa46de83f017efb4ab8a",
+    "bytes": 2262270,
+    "width": 1280,
+    "height": 853,
+    "alt": "A fictional illustrated community support scene for droneaid-community-relay-02.",
+    "review": "candidate"
+  },
+  {
+    "format": "AssetRevisionV1",
+    "id": "droneaid-community-relay-03-picture",
+    "revision": "1",
+    "kind": "reveal-background",
+    "path": "editions/assets/droneaid/droneaid-community-relay-03.png",
+    "sha256": "855c22a0a4703cfe9810cc36399c92dd0295d0b7f9c5125eda39c9dc8247af4c",
+    "bytes": 2205966,
+    "width": 1280,
+    "height": 853,
+    "alt": "A fictional illustrated community support scene for droneaid-community-relay-03.",
+    "review": "candidate"
+  }
+]

@@ -1,0 +1,1254 @@
+{
+  "format": "revealline-company-route-evidence.v1",
+  "evidence": "Offline omniscient feasibility search. Not human pacing, accessibility, or enjoyment evidence.",
+  "seed": 1,
+  "rows": [
+    {
+      "id": "droneaid-community-relay-01",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "eb3585d59f52a573",
+      "ticks": 810,
+      "lives": 5,
+      "coverage": 0.6835106382978723,
+      "cuts": 1,
+      "searchSteps": 1,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "0ebca1700fb94c34",
+      "events": [
+        [
+          810,
+          "cut.closed",
+          null
+        ],
+        [
+          810,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          810,
+          0.6835106382978723
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 396
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-01",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "eb3585d59f52a573",
+      "ticks": 810,
+      "lives": 5,
+      "coverage": 0.6835106382978723,
+      "cuts": 1,
+      "searchSteps": 1,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "abee2f1900a9dc7d",
+      "events": [
+        [
+          810,
+          "cut.closed",
+          null
+        ],
+        [
+          810,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          810,
+          0.6835106382978723
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 396
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-01",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "3b805d5a697491bf",
+      "ticks": 762,
+      "lives": 3,
+      "coverage": 0.62322695035461,
+      "cuts": 1,
+      "searchSteps": 1,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "ea1544f5bfad66c0",
+      "events": [
+        [
+          762,
+          "cut.closed",
+          null
+        ],
+        [
+          762,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          762,
+          0.62322695035461
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 348
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-01",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "3b805d5a697491bf",
+      "ticks": 762,
+      "lives": 3,
+      "coverage": 0.62322695035461,
+      "cuts": 1,
+      "searchSteps": 1,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "fb1251ba3cba3151",
+      "events": [
+        [
+          762,
+          "cut.closed",
+          null
+        ],
+        [
+          762,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          762,
+          0.62322695035461
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 348
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-01",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "5b02960f2163570d",
+      "ticks": 762,
+      "lives": 2,
+      "coverage": 0.62322695035461,
+      "cuts": 1,
+      "searchSteps": 1,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "92e4fe3456114772",
+      "events": [
+        [
+          762,
+          "cut.closed",
+          null
+        ],
+        [
+          762,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          762,
+          0.62322695035461
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 348
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-01",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "5b02960f2163570d",
+      "ticks": 762,
+      "lives": 2,
+      "coverage": 0.62322695035461,
+      "cuts": 1,
+      "searchSteps": 1,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "3a48e56ec2401035",
+      "events": [
+        [
+          762,
+          "cut.closed",
+          null
+        ],
+        [
+          762,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          762,
+          0.62322695035461
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 348
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-02",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "99d64922a33432fc",
+      "ticks": 738,
+      "lives": 5,
+      "coverage": 0.8766999093381687,
+      "cuts": 1,
+      "searchSteps": 1,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "1b26d8b500edb0f1",
+      "events": [
+        [
+          738,
+          "cut.closed",
+          null
+        ],
+        [
+          738,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          738,
+          0.8766999093381687
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 324
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-02",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "99d64922a33432fc",
+      "ticks": 738,
+      "lives": 5,
+      "coverage": 0.8766999093381687,
+      "cuts": 1,
+      "searchSteps": 1,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "997cf74a11389d53",
+      "events": [
+        [
+          738,
+          "cut.closed",
+          null
+        ],
+        [
+          738,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          738,
+          0.8766999093381687
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 324
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-02",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "9e32a4182d68df78",
+      "ticks": 738,
+      "lives": 3,
+      "coverage": 0.8766999093381687,
+      "cuts": 1,
+      "searchSteps": 1,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "8e692e4a6295872f",
+      "events": [
+        [
+          738,
+          "cut.closed",
+          null
+        ],
+        [
+          738,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          738,
+          0.8766999093381687
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 324
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-02",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "9e32a4182d68df78",
+      "ticks": 738,
+      "lives": 3,
+      "coverage": 0.8766999093381687,
+      "cuts": 1,
+      "searchSteps": 1,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "d0c1074a024e080d",
+      "events": [
+        [
+          738,
+          "cut.closed",
+          null
+        ],
+        [
+          738,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          738,
+          0.8766999093381687
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 324
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-02",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "137157c0fccc6ccc",
+      "ticks": 738,
+      "lives": 2,
+      "coverage": 0.8766999093381687,
+      "cuts": 1,
+      "searchSteps": 1,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "3e90f2b87feffa94",
+      "events": [
+        [
+          738,
+          "cut.closed",
+          null
+        ],
+        [
+          738,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          738,
+          0.8766999093381687
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 324
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-02",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "137157c0fccc6ccc",
+      "ticks": 738,
+      "lives": 2,
+      "coverage": 0.8766999093381687,
+      "cuts": 1,
+      "searchSteps": 1,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "ab32dd673e7e6fcc",
+      "events": [
+        [
+          738,
+          "cut.closed",
+          null
+        ],
+        [
+          738,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          738,
+          0.8766999093381687
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 324
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-03",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "bf651e635f38199d",
+      "ticks": 2274,
+      "lives": 5,
+      "coverage": 0.6087735004476276,
+      "cuts": 3,
+      "searchSteps": 3,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "7822b0beaa98a4a0",
+      "events": [
+        [
+          642,
+          "cut.closed",
+          null
+        ],
+        [
+          1470,
+          "cut.closed",
+          null
+        ],
+        [
+          2274,
+          "cut.closed",
+          null
+        ],
+        [
+          2274,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          642,
+          0.24350940017905104
+        ],
+        [
+          1470,
+          0.5783348254252462
+        ],
+        [
+          2274,
+          0.6087735004476276
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 228
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 396
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 372
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-03",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "bf651e635f38199d",
+      "ticks": 2298,
+      "lives": 5,
+      "coverage": 0.6087735004476276,
+      "cuts": 3,
+      "searchSteps": 3,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "6e63bf3b87e084a3",
+      "events": [
+        [
+          642,
+          "cut.closed",
+          null
+        ],
+        [
+          1482,
+          "cut.closed",
+          null
+        ],
+        [
+          2298,
+          "cut.closed",
+          null
+        ],
+        [
+          2298,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          642,
+          0.24350940017905104
+        ],
+        [
+          1482,
+          0.5783348254252462
+        ],
+        [
+          2298,
+          0.6087735004476276
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 228
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 396
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 372
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-03",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "8efdef01570ec48f",
+      "ticks": 3210,
+      "lives": 3,
+      "coverage": 0.8357206803939122,
+      "cuts": 5,
+      "searchSteps": 5,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "8b3581856e2aec91",
+      "events": [
+        [
+          642,
+          "cut.closed",
+          null
+        ],
+        [
+          1410,
+          "cut.closed",
+          null
+        ],
+        [
+          2058,
+          "cut.closed",
+          null
+        ],
+        [
+          2658,
+          "cut.closed",
+          null
+        ],
+        [
+          3210,
+          "cut.closed",
+          null
+        ],
+        [
+          3210,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          642,
+          0.24350940017905104
+        ],
+        [
+          1410,
+          0.6396598030438675
+        ],
+        [
+          2058,
+          0.7363473589973142
+        ],
+        [
+          2658,
+          0.8088630259623992
+        ],
+        [
+          3210,
+          0.8357206803939122
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 228
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 336
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 318
+        },
+        {
+          "direction": "left",
+          "ticks": 330
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 252
+        },
+        {
+          "direction": "right",
+          "ticks": 336
+        },
+        {
+          "direction": "left",
+          "ticks": 300
+        },
+        {
+          "direction": "down",
+          "ticks": 246
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-03",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "8efdef01570ec48f",
+      "ticks": 3246,
+      "lives": 3,
+      "coverage": 0.8357206803939122,
+      "cuts": 5,
+      "searchSteps": 5,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "d05f1a56b3753c6e",
+      "events": [
+        [
+          642,
+          "cut.closed",
+          null
+        ],
+        [
+          1422,
+          "cut.closed",
+          null
+        ],
+        [
+          2082,
+          "cut.closed",
+          null
+        ],
+        [
+          2694,
+          "cut.closed",
+          null
+        ],
+        [
+          3246,
+          "cut.closed",
+          null
+        ],
+        [
+          3246,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          642,
+          0.24350940017905104
+        ],
+        [
+          1422,
+          0.6396598030438675
+        ],
+        [
+          2082,
+          0.7363473589973142
+        ],
+        [
+          2694,
+          0.8088630259623992
+        ],
+        [
+          3246,
+          0.8357206803939122
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 228
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 336
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 330
+        },
+        {
+          "direction": "left",
+          "ticks": 330
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 252
+        },
+        {
+          "direction": "right",
+          "ticks": 336
+        },
+        {
+          "direction": "left",
+          "ticks": 300
+        },
+        {
+          "direction": "down",
+          "ticks": 246
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-03",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "8025166b8a4b882b",
+      "ticks": 3030,
+      "lives": 2,
+      "coverage": 0.779319606087735,
+      "cuts": 5,
+      "searchSteps": 5,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "af2a7a6501213204",
+      "events": [
+        [
+          642,
+          "cut.closed",
+          null
+        ],
+        [
+          1410,
+          "cut.closed",
+          null
+        ],
+        [
+          2058,
+          "cut.closed",
+          null
+        ],
+        [
+          2286,
+          "cut.closed",
+          null
+        ],
+        [
+          3030,
+          "cut.closed",
+          null
+        ],
+        [
+          3030,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          642,
+          0.24350940017905104
+        ],
+        [
+          1410,
+          0.6396598030438675
+        ],
+        [
+          2058,
+          0.7363473589973142
+        ],
+        [
+          2286,
+          0.7596239928379588
+        ],
+        [
+          3030,
+          0.779319606087735
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 228
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 336
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 318
+        },
+        {
+          "direction": "left",
+          "ticks": 330
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 168
+        },
+        {
+          "direction": "up",
+          "ticks": 276
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 270
+        }
+      ]
+    },
+    {
+      "id": "droneaid-community-relay-03",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "8025166b8a4b882b",
+      "ticks": 2430,
+      "lives": 2,
+      "coverage": 0.7596239928379588,
+      "cuts": 4,
+      "searchSteps": 4,
+      "searchWaitTicks": [
+        0
+      ],
+      "checkpoint": "8c8ebeca6bb2febc",
+      "events": [
+        [
+          642,
+          "cut.closed",
+          null
+        ],
+        [
+          1422,
+          "cut.closed",
+          null
+        ],
+        [
+          2082,
+          "cut.closed",
+          null
+        ],
+        [
+          2430,
+          "cut.closed",
+          null
+        ],
+        [
+          2430,
+          "objective.captured",
+          "connection"
+        ]
+      ],
+      "closures": [
+        [
+          642,
+          0.24350940017905104
+        ],
+        [
+          1422,
+          0.6396598030438675
+        ],
+        [
+          2082,
+          0.7363473589973142
+        ],
+        [
+          2430,
+          0.7596239928379588
+        ]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 228
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 336
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 330
+        },
+        {
+          "direction": "left",
+          "ticks": 330
+        },
+        {
+          "direction": "right",
+          "ticks": 30
+        },
+        {
+          "direction": "up",
+          "ticks": 318
+        }
+      ]
+    }
+  ]
+}
