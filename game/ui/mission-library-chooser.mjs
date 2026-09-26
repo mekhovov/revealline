@@ -362,6 +362,32 @@ export function attachMissionLibraryChooser({
     list.scrollTop = pending.scroll;
     if (target !== search) target.scrollIntoView?.({ block: 'nearest' });
   }
+  function selectExact(id, { focus = false } = {}) {
+    const row = library.find(id);
+    if (!row || !row.modes.includes(mode)) return false;
+    retirePendingSelection();
+    // Exact incoming selections belong to this host, even when its last
+    // browsing session was looking at a different mode.
+    const modeChanged = modeFilter.value !== mode;
+    modeFilter.value = mode;
+    lifecycle.value = row.lifecycle;
+    pendingCampaign = '';
+    if (modeChanged || !list.contains(cards.get(id)?.button)) {
+      search.value = '';
+      collection.value = '';
+      campaign.value = '';
+      rebuildCampaigns();
+      if (modeChanged) invalidateDiagrams();
+      render();
+    }
+    selectedId = id;
+    if (focus) {
+      cards.get(id)?.button.focus({ preventScroll: true });
+      cards.get(id)?.button.scrollIntoView?.({ block: 'nearest' });
+    }
+    remember();
+    return true;
+  }
   function selectionVisibilityChanged() {
     if (doc.hidden) {
       retirePendingSelection();
@@ -1095,29 +1121,11 @@ export function attachMissionLibraryChooser({
     },
     close,
     state,
+    select(id) {
+      return selectExact(id);
+    },
     reveal(id) {
-      const row = library.find(id);
-      if (!row || !row.modes.includes(mode)) return false;
-      retirePendingSelection();
-      // Exact incoming selections belong to this host, even when its last
-      // browsing session was looking at a different mode.
-      const modeChanged = modeFilter.value !== mode;
-      modeFilter.value = mode;
-      lifecycle.value = row.lifecycle;
-      pendingCampaign = '';
-      if (modeChanged || !list.contains(cards.get(id)?.button)) {
-        search.value = '';
-        collection.value = '';
-        campaign.value = '';
-        rebuildCampaigns();
-        if (modeChanged) invalidateDiagrams();
-        render();
-      }
-      selectedId = id;
-      cards.get(id)?.button.focus({ preventScroll: true });
-      cards.get(id)?.button.scrollIntoView?.({ block: 'nearest' });
-      remember();
-      return true;
+      return selectExact(id, { focus: true });
     },
     refresh() {
       if (dialog.open) {
