@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reveal Line neutral pilot playtest</title>
+<style>
+body{font:16px/1.5 system-ui;background:#111722;color:#e8eef8;max-width:1200px;margin:auto;padding:1rem}button,select,textarea{font:inherit;color:inherit;background:#263347;border:1px solid #89a0ba;border-radius:5px;padding:.6rem}button{cursor:pointer;touch-action:none}button:focus-visible,select:focus-visible{outline:3px solid #9de8ff}a{color:#9de8ff}.bar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}.boards{display:flex;gap:1rem}.boards canvas{width:100%;height:auto;min-width:0;border:1px solid #65768b}.pads{display:flex;gap:2rem;margin:1rem 0;flex-wrap:wrap}.pad{display:grid;grid-template-columns:repeat(3,3.5rem);gap:.3rem}.pad strong{grid-column:1/4}textarea{display:block;width:min(95%,45rem);height:6rem}#status{font-variant-numeric:tabular-nums}canvas{image-rendering:pixelated}@media(max-width:650px){.boards{flex-direction:column}}
+</style>
+<h1>Neutral mission playtest</h1>
+<p>Review-only greyboxes using the real game engines. No replacement artwork or approval is implied. This tool does not write game progress or save slots. <a href="pilot.html">Design briefs and evidence</a></p>
+<div class="bar"><label for="mission">Mission</label><select id="mission"></select><label for="difficulty">Difficulty</label><select id="difficulty"><option value="gentle">Gentle</option><option value="standard" selected>Standard</option><option value="expert">Expert</option></select><button id="play">Play</button><button id="reset">Reset</button><button id="export">Export observations</button></div>
+<p id="brief"></p><p>Player 1: arrow keys. Player 2: WASD. Escape pauses. Use direction buttons on touch screens. Release and press again after banking. Cyan/magenta mark players; red marks threats; yellow marks objectives; green marks optional pickups. Original pressure warnings and travelling-impact cues remain visible.</p>
+<p id="status" role="status" aria-live="polite">Loading pilot…</p>
+<div id="boards" class="boards"></div><div id="pads" class="pads"></div>
+<label for="notes">Playtest observations: route choice, confusing moment, failure cause, difficulty</label><textarea id="notes" maxlength="8000"></textarea>
+<script type="module" src="../../game/content-design/uniqueness-pilot-player.mjs"></script>
+</html>

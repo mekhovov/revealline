@@ -98,7 +98,22 @@ test(
     assert.equal(p.$('race-leave-panel').hidden, true);
     assert.equal(p.$('journey-mode').value, 'versus');
     assert.equal(p.$('journey-collection').value, '');
+    assert.equal(p.$('journey-lifecycle').value, 'current');
+    assert.equal(p.$('journey-cards').children.length, 252);
+    p.$('journey-lifecycle').value = 'archive';
+    p.$('journey-lifecycle').emit('change');
+    const archived = [...p.$('journey-cards').children].map((card) => card.dataset.missionId);
+    assert.equal(archived.length, 33);
+    assert.equal(archived.filter((id) => JSON.parse(id)[1] === 'whole-spatial-v10').length, 3);
+    assert.equal(archived.filter((id) => JSON.parse(id)[1] === 'whole-spatial-v9').length, 3);
+    p.$('journey-lifecycle').value = '';
+    p.$('journey-lifecycle').emit('change');
     assert.equal(p.$('journey-cards').children.length, 285);
+    assert.ok(
+      archived.every((id) =>
+        [...p.$('journey-cards').children].some((card) => card.dataset.missionId === id),
+      ),
+    );
     const identities = [...p.$('journey-cards').children].map((card) =>
       JSON.parse(card.dataset.missionId),
     );

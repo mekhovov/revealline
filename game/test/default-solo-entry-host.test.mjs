@@ -87,8 +87,13 @@ function collection(p, value) {
   p.$('journey-collection').emit('change');
   return [...p.$('journey-cards').children];
 }
+function lifecycle(p, value) {
+  p.$('journey-lifecycle').value = value;
+  p.$('journey-lifecycle').emit('change');
+  return collection(p, '');
+}
 
-test('ordinary Solo entry offers current and prior Journey editions plus 188 Classic missions and direct Start, Retry and Next', async (t) => {
+test('ordinary Solo entry separates 252 current and 33 archived missions without changing exact owners or Start, Retry and Next', async (t) => {
   const p = await page(t);
   assert.equal(p.$('shell-featured').hidden, false);
   assert.equal(p.$('shell-continue').hidden, true);
@@ -111,8 +116,20 @@ test('ordinary Solo entry offers current and prior Journey editions plus 188 Cla
   );
   await missions(p);
   assert.equal(p.$('journey-collection').value, '');
-  assert.equal(p.$('journey-cards').children.length, 285);
+  assert.equal(p.$('journey-lifecycle').value, 'current');
+  assert.equal(p.$('journey-cards').children.length, 252);
   assert.equal(p.$('journey-chooser').contains(p.$('missions-catalogue')), false);
+  assert.equal(collection(p, 'Classic').length, 161);
+  assert.equal(collection(p, 'Journey').length, 91);
+  const archived = lifecycle(p, 'archive');
+  assert.equal(archived.length, 33);
+  assert.equal(collection(p, 'Classic').length, 27);
+  assert.equal(collection(p, 'Journey').length, 6);
+  const all = lifecycle(p, '');
+  assert.equal(all.length, 285);
+  assert.ok(
+    archived.every((old) => all.some((card) => card.dataset.missionId === old.dataset.missionId)),
+  );
   assert.equal(collection(p, 'Classic').length, 188);
   const journeyCards = collection(p, 'Journey');
   assert.equal(journeyCards.length, 97);
@@ -137,6 +154,7 @@ test('ordinary Solo entry offers current and prior Journey editions plus 188 Cla
       ids.some((candidate) => candidate.endsWith(`/${id}`)),
       id,
     );
+  lifecycle(p, 'current');
   p.$('journey-back').click();
   p.$('shell-featured').click();
   await running(p, 'first-return');
@@ -194,7 +212,10 @@ test('Legacy is explicitly accessible and its unified selector opens an exact Ne
     assert.match(p.$(id).getAttribute('href'), /journey=legacy/);
   await missions(p, 'shell-catalogue');
   assert.equal(p.$('journey-collection').value, '');
-  assert.equal(p.$('journey-cards').children.length, 285);
+  assert.equal(p.$('journey-cards').children.length, 252);
+  assert.equal(lifecycle(p, 'archive').length, 33);
+  assert.equal(lifecycle(p, '').length, 285);
+  lifecycle(p, 'current');
   const card = collection(p, 'Journey').find((candidate) =>
     JSON.parse(candidate.dataset.missionId)[3].endsWith('/choose-your-share'),
   );
@@ -256,7 +277,9 @@ for (const search of ['?journey=', '?journey=unknown', '?mode-return=unknown'])
     assert.equal(p.doc.body.classList.contains('journey-preview'), false);
     assert.equal(p.$('shell-catalogue').textContent, 'All missions');
     await missions(p);
-    assert.equal(p.$('journey-cards').children.length, 285);
+    assert.equal(p.$('journey-cards').children.length, 252);
+    assert.equal(lifecycle(p, 'archive').length, 33);
+    assert.equal(lifecycle(p, '').length, 285);
     assert.deepEqual(p.errors, []);
   });
 
