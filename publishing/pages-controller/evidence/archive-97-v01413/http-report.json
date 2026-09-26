@@ -1,0 +1,12 @@
+{
+  "archiveId": "archive-97",
+  "base": "https://mekhovov.github.io/revealline-archive-97/",
+  "startedUnix": 1790442734.1398242,
+  "completedUnix": 1790442824.392193,
+  "expectedFiles": 1316,
+  "expectedBytes": 612079732,
+  "ok": true,
+  "failures": [],
+  "attempts": 1316,
+  "retried": 0
+}

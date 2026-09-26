@@ -343,18 +343,18 @@ test('a reserved current-entry source path fails atomically without altering pri
   assert.equal(f.git('show-ref', '--tags'), tags);
 });
 
-test('archive routing accepts 64, 65 and 96 distinct shards but refuses a 97th', () => {
-  assert.equal(MAX_ARCHIVE_SHARDS, 96);
-  const records = Array.from({ length: 98 }, (_, i) => ({ version: `v0.${i + 1}.0` }));
-  const shards = records.slice(0, 97).map(({ version }, i) => ({
+test('archive routing accepts 96, 97 and 128 distinct shards but refuses a 129th', () => {
+  assert.equal(MAX_ARCHIVE_SHARDS, 128);
+  const records = Array.from({ length: 130 }, (_, i) => ({ version: `v0.${i + 1}.0` }));
+  const shards = records.slice(0, 129).map(({ version }, i) => ({
     id: `archive-${i + 1}`,
     repository: `owner/game-archive-${i + 1}`,
     versions: [version],
   }));
-  for (const count of [64, 65, 96]) {
+  for (const count of [96, 97, 128]) {
     const input = { formatVersion: 1, shards: shards.slice(0, count) };
     const original = structuredClone(input);
-    const accepted = validateArchivePlan(input, records, repository, 'v0.98.0');
+    const accepted = validateArchivePlan(input, records, repository, 'v0.130.0');
     assert.equal(accepted.length, count);
     assert.deepEqual(
       accepted.map((shard) => shard.versions[0]),
@@ -364,19 +364,19 @@ test('archive routing accepts 64, 65 and 96 distinct shards but refuses a 97th',
     assert.deepEqual(input, original);
   }
   assert.throws(
-    () => validateArchivePlan({ formatVersion: 1, shards }, records, repository, 'v0.98.0'),
+    () => validateArchivePlan({ formatVersion: 1, shards }, records, repository, 'v0.130.0'),
     /Invalid Pages archive plan/,
   );
   for (const [mutate, message] of [
     [(last) => (last.id = shards[0].id), /duplicate archive ID/],
-    [(last) => (last.repository = 'another/game-archive-96'), /same GitHub account/],
+    [(last) => (last.repository = 'another/game-archive-128'), /same GitHub account/],
     [(last) => (last.repository = shards[0].repository), /distinct repository/],
     [(last) => (last.versions = shards[0].versions), /duplicate or current archive version/],
-    [(last) => (last.versions = ['v0.98.0']), /duplicate or current archive version/],
+    [(last) => (last.versions = ['v0.130.0']), /duplicate or current archive version/],
     [(last) => (last.versions = ['v0.999.0']), /Unknown/],
   ]) {
-    const input = { formatVersion: 1, shards: structuredClone(shards.slice(0, 96)) };
+    const input = { formatVersion: 1, shards: structuredClone(shards.slice(0, 128)) };
     mutate(input.shards.at(-1));
-    assert.throws(() => validateArchivePlan(input, records, repository, 'v0.98.0'), message);
+    assert.throws(() => validateArchivePlan(input, records, repository, 'v0.130.0'), message);
   }
 });
