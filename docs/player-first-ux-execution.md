@@ -10,25 +10,45 @@ This checkpoint supersedes older paragraphs below that describe themselves as
 current. Those paragraphs remain unchanged as dated implementation and release
 evidence.
 
-**Accepted public baseline:** v0.141.4 is immutable and selected on Pages from exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c`. Its release, Archive97 admission and Pages publication are complete. Run `36260302658` verified 1,897 deployed files / 630,507,368 bytes with zero final failures or retries. Browser review confirmed ordinary Solo Continue/resume, Versus ready entry with 91 missions, and Team ready entry with 12 missions.
+**Accepted public baseline:** v0.141.5 is immutable and selected on Pages from
+exact source `edd5fa39ae3f0bdf7bc6fa156c461925df794577`. Its release,
+Archive98 handoff and Pages publication are complete. Run `36266806914` passed
+assembly, deployment and the public-byte audit. Browser review confirmed the
+five-release selector, ordinary Solo with 91 Journey missions, Versus with the
+same 91-mission entry, and Team with 12 missions plus the prepared Twin Landings
+artwork. The complete acceptance record is in
+`docs/community-v01415-public-acceptance.md`.
 
 **Completed release infrastructure:** PR #692 merged exact draft recovery, PR #658 merged source/metadata-bound admission, and PR #659 merged the five-release global selector. Pages run `36261378630` passed assembly, deployment and public-byte audit. The public explorer now presents exactly five playable releases while preserving every historical tag, release, asset and archive. These infrastructure changes do not alter frozen game bytes.
 
-**Active candidate:** v0.141.5 publishes the cumulative community S3 package-store and resumable-upload slices already merged by PR #693 and PR #694. It keeps disk as the production default and validates bounded staged bytes before immutable conditional S3 publication. The version-only release PR must pass exact-head source checks, immutable freeze, archive admission, Pages publication and public player-flow verification. Broader S3 production readiness remains separate.
+**Active candidate:** v0.141.6 introduces dual readers and freezes its new
+fastline release with the deterministic commit-plus-manifest source-preservation
+path. Direct qualification retains the accepted tar default unless a reviewed
+caller explicitly selects the manifest writer. PR #689 is the prerequisite test-fixture
+correction and is retained as a separate commit in PR #662 after repeated
+mainline movement made another standalone gate stale. The cumulative source must
+pass one fresh exact-head focused gate and complete the immutable
+release/publication cycle. The manifest writer remains opt-in until the reviewed
+canary step described in `publishing/SOURCE-MANIFEST-CONTRACT.md`.
 
-**Ordered continuation:** v0.141.6 is the isolated source-manifest canary. Player-first work resumes at v0.141.7 in the approved compatible batches below. Reconcile every batch onto the accepted predecessor and rerun its cumulative exact-source gates before release. Older target versions in draft titles are stale where they disagree with this order. PR #695 remains a separate follow-up and is not appended after the v0.141.5 boundary was closed.
+**Ordered continuation:** Player-first work resumes at v0.141.7 in the approved
+compatible batches below. Reconcile every batch onto the accepted predecessor
+and rerun its cumulative exact-source gates before release. Older target versions
+in draft titles are stale where they disagree with this order. Physical
+controller/touch, comprehensive offline and human balance checks remain separate
+from modeled or built-in-browser evidence.
 
-| Order | Working release | Scope                                                                | Current source input                                                   |
-| ----- | --------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| 1     | v0.141.4        | Couch secondary navigation and Team continuation                     | publicly accepted exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c` |
-| 2     | v0.141.5        | Bounded community S3 package and resumable-upload storage            | merged PR #693 and PR #694 plus synchronized release identity          |
-| 3     | v0.141.6        | Source-manifest publisher canary                                     | PR #662, reconciled after v0.141.5 public acceptance                   |
-| 4     | v0.141.7        | Teaching, reward and navigation batch                                | PR #543 → #580 → #553; rerun cumulative exact-source gates             |
-| 5     | v0.141.8        | Failure and continuation batch                                       | PR #545 → #552 → #557; rerun cumulative exact-source gates             |
-| 6     | v0.141.9        | Pause, Settings/Help and Collection return batch                     | PR #542 → #548; rerun cumulative exact-source gates                    |
-| 7     | v0.142.0        | Existing offline delivery batch                                      | preserve PR #605 → #609 → #619 → #588 ownership and allocation        |
-| 8     | v0.143.0        | Existing soundtrack batch                                            | preserve its current owner and release allocation                      |
-| 9     | after v0.143.0  | UX6 cumulative qualification                                        | exact accepted predecessor; no aggregation of stale component evidence |
+| Order | Working release | Scope                                                      | Current source input                                                      |
+| ----- | --------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------- |
+| 1     | v0.141.4        | Couch secondary navigation and Team continuation           | publicly accepted exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c` |
+| 2     | v0.141.5        | Bounded community S3 package and resumable-upload storage  | publicly accepted exact source `edd5fa39ae3f0bdf7bc6fa156c461925df794577` |
+| 3     | v0.141.6        | Dual-reader source-manifest release and opt-in canary path | PR #662 includes the separately committed PR #689 fixture correction      |
+| 4     | v0.141.7        | Teaching, reward and navigation batch                      | PR #543 → #580 → #553; rerun cumulative exact-source gates                |
+| 5     | v0.141.8        | Failure and continuation batch                             | PR #545 → #552 → #557; rerun cumulative exact-source gates                |
+| 6     | v0.141.9        | Pause, Settings/Help and Collection return batch           | PR #542 → #548; rerun cumulative exact-source gates                       |
+| 7     | v0.142.0        | Existing offline delivery batch                            | preserve PR #605 → #609 → #619 → #588 ownership and allocation            |
+| 8     | v0.143.0        | Existing soundtrack batch                                  | preserve its current owner and release allocation                         |
+| 9     | after v0.143.0  | UX6 cumulative qualification                               | exact accepted predecessor; no aggregation of stale component evidence    |
 
 Known corrections remain part of these working allocations:
 
