@@ -24,6 +24,7 @@ import {
   exportSoundtrackBundle,
 } from '../soundtrack-bundle.mjs';
 import { soundtrackPlaylistShare } from '../soundtrack-share.mjs';
+import { setLocale } from '../i18n/index.mjs';
 import {
   fixture,
   memoryIndexedDB,
@@ -791,6 +792,15 @@ test('private folder quick add reviews, saves, plays and exports one exact-byte 
   });
   assert.equal(portable.library.playlists[0].title, 'Night flights');
   assert.equal(portable.assets.length, 1);
+
+  await app.click('reload');
+  assert.equal(app.node('collection-summary').textContent, '');
+  try {
+    setLocale('uk', { persist: false });
+    assert.equal(app.node('collection-summary').textContent, '');
+  } finally {
+    setLocale('en', { persist: false });
+  }
 });
 
 test('private collection requires one picker and preserves the saved library on review failure', async (t) => {
@@ -801,6 +811,30 @@ test('private collection requires one picker and preserves the saved library on 
   assert.match(app.node('status').textContent, /files or a folder, not both/i);
   assert.equal((await app.store.read()).generation, 0);
   assert.equal((await app.store.read()).library.playlists.length, 0);
+});
+
+test('private collection save does not claim playback when post-commit adoption fails', async (t) => {
+  let fail = false;
+  const app = await setup(t, {
+    callbacks: {
+      catalogue: SOUNDTRACK_CATALOGUE,
+      adoptLibrary() {
+        if (fail) throw new Error('Cannot adopt private collection');
+      },
+    },
+  });
+  app.node('collection-files').files = [file('Private.mp3')];
+  await app.click('review-collection');
+  fail = true;
+  const before = app.calls.length;
+  await app.click('save-play-collection');
+  assert.equal((await app.store.read()).generation, 1, 'the atomic save is durable');
+  assert.match(app.node('status').textContent, /Library is saved, but the game refresh failed/);
+  assert.doesNotMatch(app.node('collection-summary').textContent, /saved and playing/i);
+  assert.equal(
+    app.calls.slice(before).some(([kind]) => ['select', 'play'].includes(kind)),
+    false,
+  );
 });
 
 test('a failing second file discards the whole batch while preserving an earlier unsaved draft', async (t) => {
