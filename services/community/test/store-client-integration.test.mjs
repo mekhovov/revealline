@@ -17,15 +17,35 @@ import {
   exportCreatorBundle,
   prepareCreatorBundle,
 } from '../../../game/creator/bundle.mjs';
-import { createCreatorStore, installedCreatorManifests } from '../../../game/creator/installed.mjs';
+import {
+  createCreatorStore,
+  installedCreatorManifests,
+  loadInstalledCreatorBundle,
+} from '../../../game/creator/installed.mjs';
+import { createCreatorRuntime, creatorProfileKey } from '../../../game/creator/runtime.mjs';
 import { generateCreatorProject } from '../../../game/creator/templates.mjs';
+import { createJourneyBackend, createJourneyProfileStore } from '../../../game/journey/profile.mjs';
+import { managedIndexedDB } from '../../../game/test/helpers/managed-idb.mjs';
 import { pngBytes } from '../../../game/test/helpers/media-fixtures.mjs';
+import { PNGImage } from '../../../game/test/helpers/png-image.mjs';
 import { memoryIndexedDB } from '../../../game/test/helpers/soundtrack-fixtures.mjs';
 
 const themes = JSON.parse(
   await readFile(new URL('../../../game/content-design/themes.json', import.meta.url)),
 ).themes;
 const decodeImage = async () => ({ naturalWidth: 1, naturalHeight: 1 });
+const decodeArtwork = async (dataURL) => {
+  const image = new PNGImage();
+  image.src = dataURL;
+  await image.decode();
+  return image;
+};
+
+function replayCommands(replay) {
+  return replay.segments.flatMap((segment) =>
+    Array.from({ length: segment.ticks }, () => segment.input),
+  );
+}
 
 async function creatorPackage({ id, name, seed }) {
   const generated = generateCreatorProject({ id, name, seed });
@@ -88,7 +108,7 @@ const fetchThroughFastify =
     return new Response(injected.rawPayload, { status: injected.statusCode, headers });
   };
 
-test('real service and store client publish, page, search, report, install and owner-unlist exact bytes', async (t) => {
+test('creator A publishes and player B discovers, installs, reloads, completes and replays offline', async (t) => {
   let now = new Date('2026-09-25T10:00:00.000Z');
   const repository = new MemoryCommunityRepository({ clock: () => now });
   const blobStore = new MemoryBlobStore();
@@ -102,7 +122,10 @@ test('real service and store client publish, page, search, report, install and o
     maxPackageBytes: 16 * 1024 * 1024,
   });
   await app.ready();
-  t.after(() => app.close());
+  let appClosed = false;
+  t.after(async () => {
+    if (!appClosed) await app.close();
+  });
 
   const fetchImpl = fetchThroughFastify(app);
   const alice = createCommunityClient({
@@ -152,35 +175,35 @@ test('real service and store client publish, page, search, report, install and o
     version: '1.1.0',
   });
 
-  const firstPage = await alice.catalog({ limit: 1 });
+  const firstPage = await bob.catalog({ limit: 1 });
   assert.equal(firstPage.editions.length, 1);
   assert.ok(firstPage.nextCursor);
-  const secondPage = await alice.catalog({ cursor: firstPage.nextCursor, limit: 1 });
+  const secondPage = await bob.catalog({ cursor: firstPage.nextCursor, limit: 1 });
   assert.equal(secondPage.editions.length, 1);
   assert.notEqual(firstPage.editions[0].editionId, secondPage.editions[0].editionId);
 
-  const search = await alice.catalog({ query: 'revised' });
+  const search = await bob.catalog({ query: 'revised' });
   assert.equal(search.editions.length, 1);
   const latest = search.editions[0];
   assert.equal(latest.editionId, second.editionId);
   assert.equal(latest.latestEditionId, second.editionId);
   assert.equal(latest.latestVersion, '1.1.0');
   assert.equal(
-    (await alice.edition(first.editionId)).collectionId,
+    (await bob.edition(first.editionId)).collectionId,
     latest.collectionId,
     'versions from one creator slug share an authoritative collection identity',
   );
 
-  const report = await alice.reportEdition(latest.editionId, {
+  const report = await bob.reportEdition(latest.editionId, {
     reason: 'broken',
     details: 'Integration report fixture.',
   });
   assert.equal(report.report.status, 'open');
 
-  const creatorStore = createCreatorStore({ indexedDB: memoryIndexedDB().indexedDB });
-  t.after(() => creatorStore.close());
+  const creatorDisk = memoryIndexedDB();
+  const creatorStore = createCreatorStore({ indexedDB: creatorDisk.indexedDB });
   const library = createCommunityLibrary({
-    client: alice,
+    client: bob,
     creatorStore,
     stateStore: createMemoryCommunityStateStore(),
     downloadStore: createMemoryCommunityDownloadStore(),
@@ -189,10 +212,95 @@ test('real service and store client publish, page, search, report, install and o
   const installed = await library.install(latest, { offline: false });
   assert.equal(installed.editionId, latest.editionId);
   assert.equal((await installedCreatorManifests(creatorStore)).length, 1);
-  assert.equal((await library.status(latest.editionId)).offlinePlayable, true);
+  const installedStatus = await library.status(latest.editionId);
+  assert.equal(installedStatus.offlinePlayable, true);
+  assert.equal(installedStatus.creatorEditionId, installed.creatorEditionId);
+  assert.equal(installedStatus.profileKey, creatorProfileKey(installed.creatorEditionId));
+
+  const firstLoad = await loadInstalledCreatorBundle(creatorStore, installed.creatorEditionId, {
+    decodeImage,
+  });
+  const firstRuntime = createCreatorRuntime(firstLoad, { decodeImage: decodeArtwork });
+  const route = firstLoad.manifest.evidence.find(
+    (entry) => entry.difficulty === 'standard' && entry.turnPolicy === 'immediate',
+  );
+  assert(route, 'published package retains its verified standard/immediate route');
+  const commands = replayCommands(route.replay);
+  const split = Math.floor(commands.length / 2);
+  const firstAttempt = await firstRuntime.start({
+    missionId: route.missionId,
+    difficulty: route.difficulty,
+    turnPolicy: route.turnPolicy,
+  });
+  for (const command of commands.slice(0, split)) firstRuntime.step(command);
+  assert.equal(firstAttempt.run.status, 'running');
+  const unfinished = firstRuntime.suspend();
+  assert.equal(unfinished.editionId, installed.creatorEditionId);
+  assert.equal(unfinished.session.replay.ticks, split);
+  firstRuntime.dispose();
 
   await assert.rejects(bob.unlistEdition(latest.editionId), /not found/u);
   assert.equal((await alice.unlistEdition(latest.editionId)).status, 'unlisted');
-  assert.equal((await alice.catalog({ query: 'revised' })).editions.length, 0);
+  assert.equal((await bob.catalog({ query: 'revised' })).editions.length, 0);
   assert.equal((await library.status(latest.editionId)).offlinePlayable, true);
+
+  await app.close();
+  appClosed = true;
+  creatorStore.close();
+
+  const offlineStore = createCreatorStore({ indexedDB: creatorDisk.indexedDB });
+  t.after(() => offlineStore.close());
+  const offlinePack = await loadInstalledCreatorBundle(offlineStore, installed.creatorEditionId, {
+    decodeImage,
+  });
+  const offlineRuntime = createCreatorRuntime(offlinePack, { decodeImage: decodeArtwork });
+  const restored = await offlineRuntime.restore(unfinished);
+  assert.equal(restored.run.tick, split);
+  for (const command of commands.slice(split)) offlineRuntime.step(command);
+  assert.equal(restored.run.status, 'won');
+  const receipt = await offlineRuntime.completion();
+  assert.equal(receipt.missionId, route.missionId);
+  assert.ok(receipt.gameplayId.startsWith(`${installed.creatorEditionId}:`));
+
+  const progressDisk = managedIndexedDB();
+  const profileKey = creatorProfileKey(installed.creatorEditionId);
+  const profile = createJourneyProfileStore({
+    backend: createJourneyBackend({ indexedDB: progressDisk.indexedDB, profileKey }),
+  });
+  await profile.load();
+  profile.record(receipt);
+  assert.equal(await profile.flush(), true);
+
+  const reloadedProfile = createJourneyProfileStore({
+    backend: createJourneyBackend({ indexedDB: progressDisk.indexedDB, profileKey }),
+  });
+  await reloadedProfile.load();
+  assert.deepEqual(reloadedProfile.snapshot().clears.solo[receipt.missionId], {
+    runId: receipt.runId,
+    gameplayId: receipt.gameplayId,
+    difficulty: receipt.difficulty,
+  });
+  const mission = offlinePack.manifest.content.project.missions.find(
+    (entry) => entry.id === receipt.missionId,
+  );
+  assert(mission, 'the exact completed mission remains installed after reload');
+  const earnedPicture = offlinePack.manifest.content.project.assets.find(
+    (asset) => asset.id === mission.presentation.backgroundAssetId,
+  );
+  assert(earnedPicture, 'the exact completed mission retains its picture binding');
+  assert(
+    offlinePack.assets.some((asset) => asset.sha256 === earnedPicture.sha256),
+    'the completed mission can resolve its exact earned picture entirely offline',
+  );
+
+  const offlineReplay = createCreatorRuntime(offlinePack, { decodeImage: decodeArtwork });
+  const replayed = await offlineReplay.start({
+    missionId: receipt.missionId,
+    difficulty: receipt.difficulty,
+    turnPolicy: route.turnPolicy,
+  });
+  offlineReplay.step(commands[0]);
+  assert.equal(replayed.run.tick, 1);
+  offlineReplay.dispose();
+  offlineRuntime.dispose();
 });
