@@ -106,6 +106,29 @@ function setup(sources, options = {}) {
   return { doc, library, chooser, opener, $: (id) => doc.getElementById(id) };
 }
 
+test('a Solo-only content provider excludes unsupported filters and stale saved modes', () => {
+  const { $, chooser } = setup([owner({ collection: 'Journey' })], {
+    supportedModes: ['solo'],
+    availableCollectionsOnly: true,
+    description: 'Selected company',
+    readState: () => ({ mode: 'versus', collection: 'Custom' }),
+  });
+  assert.deepEqual(
+    [...$('journey-mode').children].map((option) => option.value),
+    ['solo'],
+  );
+  assert.deepEqual(
+    [...$('journey-collection').children].map((option) => option.value),
+    ['', 'Journey'],
+  );
+  assert.equal(chooser.state().mode, 'solo');
+  assert.equal(chooser.state().collection, '');
+  $('journey-mode').value = 'team';
+  $('journey-mode').emit('change');
+  assert.equal(chooser.state().mode, 'solo');
+  chooser.destroy();
+});
+
 test('opening and controller fallback focus the first enabled mission without a search step', () => {
   const { doc, $, chooser } = setup([
     owner({

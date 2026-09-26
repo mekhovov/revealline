@@ -1,0 +1,101 @@
+[
+  {
+    "id": "runtime-tiny5-license",
+    "path": "game/ui/fonts/OFL.txt",
+    "sha256": "6fe7d64407c69d187748206265977654747d3e2fe9e38e45a62cd03ec4770df6",
+    "bytes": 4389,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-tiny5",
+    "path": "game/ui/fonts/Tiny5-Regular.ttf",
+    "sha256": "cb8168f80cfee2f47f6db59f2a7afbde31cdcdcdcf262e7a993e4d468a5bf4b0",
+    "bytes": 132124,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-tiny5-license"]
+  },
+  {
+    "id": "runtime-handjet-license",
+    "path": "game/ui/fonts/field-kit/Handjet-OFL.txt",
+    "sha256": "934a45d3b43276e1f857301e9cb07e00b829cca3d0c13e8e6f8c6790dd6c8a2c",
+    "bytes": 4389,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-handjet",
+    "path": "game/ui/fonts/field-kit/handjet-display-600.woff2",
+    "sha256": "4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145",
+    "bytes": 38120,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-handjet-license"]
+  },
+  {
+    "id": "runtime-exo2-license",
+    "path": "game/ui/fonts/field-kit/Exo2-OFL.txt",
+    "sha256": "7f95a8eeecc6904ffc81cd10cc8ebc7fcee72a67922924bf45f02dff03b88127",
+    "bytes": 4386,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-exo2",
+    "path": "game/ui/fonts/field-kit/exo2-ui-400-600.woff2",
+    "sha256": "fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef",
+    "bytes": 76652,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-exo2-license"]
+  },
+  {
+    "id": "runtime-plex-license",
+    "path": "game/ui/fonts/field-kit/IBMPlexMono-OFL.txt",
+    "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+    "bytes": 4456,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-plex",
+    "path": "game/ui/fonts/field-kit/ibm-plex-mono-500.woff2",
+    "sha256": "0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8",
+    "bytes": 40080,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-plex-license"]
+  },
+  {
+    "id": "runtime-shell-background",
+    "path": "game/presentation/compiled/assets/72b6c93f47090f3a3724223477e22cbc461132329768e70b82cdb87d85a72052.png",
+    "sha256": "72b6c93f47090f3a3724223477e22cbc461132329768e70b82cdb87d85a72052",
+    "bytes": 25969,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-shell-surface",
+    "path": "game/presentation/compiled/assets/8fe3df81db48bf682862a06c8f7434365ff49151a2a72a94c0a85ea85a3adf27.png",
+    "sha256": "8fe3df81db48bf682862a06c8f7434365ff49151a2a72a94c0a85ea85a3adf27",
+    "bytes": 23827,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-opening-recording",
+    "path": "game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3",
+    "sha256": "d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58",
+    "bytes": 8641768,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  }
+]

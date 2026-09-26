@@ -20,6 +20,7 @@ import {
 import { publishedReleasePages, releaseDecision } from "./release-policy.mjs";
 import { downloadReleaseAsset } from "./release-asset.mjs";
 import { verifyArchiveAuthorities } from "./archive-authority.mjs";
+import { frozenEditionOverlay, validateEditionPublication } from "../edition-promotion.mjs";
 
 const root = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -44,6 +45,8 @@ async function workflowSummary(lines) {
     );
 }
 async function verify({ preview = false, remote = false } = {}) {
+  const editionSelectorBytes = await readOrdinary(directory, "editions.json");
+  validateEditionPublication(parseJSON(editionSelectorBytes));
   const {
       lock,
       metadata: catalogMetadata,
@@ -185,6 +188,7 @@ async function verify({ preview = false, remote = false } = {}) {
     controllerTree,
     catalogSha256,
     qualifiedSourceTree,
+    editionSelectorSha256: digest(editionSelectorBytes),
     admittedArchives: admissions.length,
     observations,
     authorityMetrics,
@@ -229,6 +233,7 @@ async function main() {
       authority.controllerTree !== identity.controllerTree ||
       authority.catalogSha256 !== identity.catalogSha256 ||
       authority.qualifiedSourceTree !== identity.qualifiedSourceTree ||
+      authority.editionSelectorSha256 !== identity.editionSelectorSha256 ||
       authority.currentVersion !== identity.configuration.currentVersion ||
       authority.configurationSha256 !==
         digest(await readOrdinary(directory, "publication.json")) ||
@@ -272,6 +277,7 @@ async function main() {
       receipt.controllerCommit !== identity.controllerCommit ||
       receipt.controllerTree !== identity.controllerTree ||
       receipt.qualifiedSourceTree !== identity.qualifiedSourceTree ||
+      receipt.editionSelectorSha256 !== identity.editionSelectorSha256 ||
       receipt.currentVersion !== identity.configuration.currentVersion ||
       receipt.catalogSha256 !== identity.catalogSha256 ||
       receipt.configurationSha256 !==
@@ -327,6 +333,29 @@ async function main() {
       16_000_000,
     ),
   });
+  const editionFiles = await frozenEditionOverlay(
+    parseJSON(await readOrdinary(directory, "editions.json")),
+    { targetBasePath: "/revealline/", resolveReleaseIdentity: (version) => ({
+      sourceRevision: run("git", ["rev-parse", `${version}^{commit}`]),
+      sourceTree: run("git", ["rev-parse", `${version}^{tree}`]),
+    }), readReleaseAsset: (version, name, maxBytes) => downloadReleaseAsset({
+      repository: "mekhovov/revealline", version, name, maxBytes,
+    }) },
+  );
+  if (receipt.totalBytes + [...editionFiles.values()].reduce((sum, bytes) => sum + bytes.length, 0) > 950_000_000)
+    throw new Error("Combined default and edition site exceeds the existing Pages budget.");
+  for (const [relative, bytes] of editionFiles) {
+    const target = path.join(output, "artifact", relative);
+    await fs.mkdir(path.dirname(target), { recursive: true });
+    await fs.writeFile(target, bytes, { flag: "wx" });
+  }
+  if (editionFiles.size) {
+    receipt.files = await directoryInventory(path.join(output, "artifact"));
+    receipt.totalBytes = receipt.files.reduce((sum, row) => sum + row.bytes, 0);
+    if (receipt.totalBytes > 950_000_000)
+      throw new Error("Combined default and edition site exceeds the existing Pages budget.");
+    receipt.editionFiles = editionFiles.size;
+  }
   const { configuration: _configuration, ...binding } = identity;
   await fs.writeFile(
     path.join(output, "artifact-receipt.json"),

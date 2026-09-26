@@ -1191,6 +1191,9 @@ export async function releaseSnapshot({
     const frozenCli = path.join(source, 'scripts/game-cli.mjs');
     if (!(await exists(frozenCli)))
       fail('Selected ref predates the playable build CLI; keep it as a source reference instead');
+    const sourceEligibility = path.join(source, 'scripts/check-edition-source.mjs');
+    if (await exists(sourceEligibility))
+      command(process.execPath, [sourceEligibility, source], { cwd: source });
     command(
       process.execPath,
       [

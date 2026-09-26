@@ -1,3 +1,5 @@
+import { REPLAY_EXAMPLES as examples } from './examples.mjs';
+import { loadEditionToolProvider, editionToolPresentation } from '../ui/edition-tool-provider.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
@@ -10,6 +12,7 @@ import {
 } from '../replay-presentation.mjs';
 import { prepareReplayActorContext } from '../replay-actor-context.mjs';
 import { prepareRetainedActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
+import { acquireCandidatePicture, claimCandidatePicture } from '../content-design/picture.mjs';
 import { BoardPainter, boardPaintSizeForRun } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { attachReplayNavigation } from './navigation.mjs';
@@ -28,23 +31,8 @@ const bootDisplay = bootStatus.begin({
 });
 const presentationFeedback = createOperationStatus($('presentation-status'));
 let presentationOperation = null;
-const presentationPage = mountPresentationPage({
-  onStatus(status) {
-    if (status.status === 'preparing') {
-      if (!presentationOperation) presentationOperation = presentationFeedback.begin(status);
-      else presentationOperation.update(status);
-    } else {
-      presentationOperation?.finish({
-        state: status.status === 'error' ? 'error' : 'ready',
-        message:
-          status.status === 'error'
-            ? t('interface:releaseArtworkIsUnavailableTheCurrentLookIsKept')
-            : '',
-      });
-      presentationOperation = null;
-    }
-  },
-});
+let runtimeContent = null,
+  presentationPage = null;
 const closeTheater = (event = {}) => {
   if (event.persisted || theaterDisposed) return;
   theaterDisposed = true;
@@ -52,36 +40,11 @@ const closeTheater = (event = {}) => {
   replayDisplay.dispose();
   bootStatus.dispose();
   presentationFeedback.dispose();
-  presentationPage.close();
+  presentationPage?.close();
   window.removeEventListener('pagehide', closeTheater);
 };
 window.addEventListener('pagehide', closeTheater);
-const examples = {
-  'fieldcraft-01': {
-    file: './data/fieldcraft-01.replay.json',
-    get brief() {
-      return t('interface:immediateTurnsAFiberCraftCrossesTheInterferenceBandAt');
-    },
-  },
-  'fieldcraft-02': {
-    file: './data/fieldcraft-02.replay.json',
-    get brief() {
-      return t('interface:gridCenterTurnsCollectSuppliesPlaceTwoSupportFieldsAnd');
-    },
-  },
-  'fieldcraft-03': {
-    file: './data/fieldcraft-03.replay.json',
-    get brief() {
-      return t('interface:immediateTurnsAPulseAbandonsAThreatenedLiveCutThe');
-    },
-  },
-  'fieldcraft-04': {
-    file: './data/fieldcraft-04.replay.json',
-    get brief() {
-      return t('interface:gridCenterTurnsPickUpANetAndSlowThe');
-    },
-  },
-};
+
 const clipped = (value, length = 160) => String(value).slice(0, length);
 const encoder = new TextEncoder();
 
@@ -104,14 +67,76 @@ function readRecording(source) {
 }
 
 try {
-  const [themeResponse, presetResponse] = await Promise.all([
-    fetch('../content/themes.json'),
-    fetch('../../authoring/motion-lab/presets.json'),
-  ]);
+  runtimeContent = await loadEditionToolProvider();
   if (theaterDisposed) throw new DOMException(t('interface:theTheaterIsClosed'), 'AbortError');
-  if (!themeResponse.ok || !presetResponse.ok)
-    throw new Error(t('interface:presentationAssetsCouldNotLoad'));
-  const [{ themes }, presets] = await Promise.all([themeResponse.json(), presetResponse.json()]);
+  presentationPage = runtimeContent
+    ? editionToolPresentation()
+    : mountPresentationPage({
+        onStatus(status) {
+          if (status.status === 'preparing') {
+            if (!presentationOperation) presentationOperation = presentationFeedback.begin(status);
+            else presentationOperation.update(status);
+          } else {
+            presentationOperation?.finish({
+              state: status.status === 'error' ? 'error' : 'ready',
+              message:
+                status.status === 'error'
+                  ? t('interface:releaseArtworkIsUnavailableTheCurrentLookIsKept')
+                  : '',
+            });
+            presentationOperation = null;
+          }
+        },
+      });
+  const [{ themes }, presets] = runtimeContent
+    ? [runtimeContent.boot[1], runtimeContent.boot[2]]
+    : await Promise.all([
+        fetch('../content/themes.json').then((response) => {
+          if (!response.ok) throw new Error(t('interface:presentationAssetsCouldNotLoad'));
+          return response.json();
+        }),
+        fetch('../../authoring/motion-lab/presets.json').then((response) => {
+          if (!response.ok) throw new Error(t('interface:presentationAssetsCouldNotLoad'));
+          return response.json();
+        }),
+      ]);
+  if (!runtimeContent) {
+    const selected = $('example').value;
+    $('example').replaceChildren(
+      ...Object.entries(examples).map(([id, source]) => {
+        const option = document.createElement('option');
+        option.value = id;
+        localizedText(option, () => t(source.labelKey));
+        return option;
+      }),
+    );
+    $('example').value = examples[selected] ? selected : Object.keys(examples)[0];
+  }
+  if (runtimeContent) {
+    for (const id of ['example', 'example-brief', 'load-example']) $(id).hidden = true;
+    const exampleLabel = document.querySelector('label[for="example"]');
+    if (exampleLabel) exampleLabel.hidden = true;
+    localizedText($('load-heading'), () => 'Import a recording');
+    const section = $('example').closest('section');
+    const importPanel = section?.querySelector('.import-panel');
+    if (importPanel) importPanel.open = true;
+    const label = section?.querySelector('.eyebrow');
+    if (label) localizedText(label, () => runtimeContent.selection.edition.name);
+    const examplesFootnote = document.querySelector(
+      '[data-i18n="interface:theExamplesUseNormalMovementEquipmentAndClassChangeInputs"]',
+    );
+    if (examplesFootnote) examplesFootnote.hidden = true;
+    $('load-example').disabled = true;
+    const explanation = document.querySelector(
+      '[data-i18n="interface:themesChangeThePreviewSceneAndRawReplayActorsRecorded"]',
+    );
+    if (explanation)
+      localizedText(
+        explanation,
+        () =>
+          'Company recordings require their exact original actors, palette and mission picture. Raw recordings use the selected preview theme. Gameplay and results stay as recorded. Music and the original interface are not restored; this theater is silent.',
+      );
+  }
   if (theaterDisposed) throw new DOMException(t('interface:theTheaterIsClosed'), 'AbortError');
   const context = $('board').getContext('2d');
   if (!context) throw new Error(t('interface:thisBrowserCouldNotCreateA2dCanvas'));
@@ -125,6 +150,7 @@ try {
     painter = null,
     releasePresentationPainter = null,
     actorLease = null,
+    pictureLease = null,
     pending = false,
     epoch = 0,
     controller = null,
@@ -135,6 +161,7 @@ try {
     frameId = null,
     nativeUnsubscribe = null;
   const importStatus = createOperationStatus($('import-status'), { isCurrent: () => !disposed });
+  let retainedRecovery = null;
   disposeRecording = () => {
     if (disposed) return;
     disposed = true;
@@ -143,11 +170,22 @@ try {
     importStatus.dispose();
     releasePresentationPainter?.();
     actorLease?.release();
+    actorLease = null;
+    pictureLease?.release();
+    pictureLease = null;
+    retainedRecovery?.remove();
     globalThis.cancelAnimationFrame?.(frameId);
     nativeUnsubscribe?.();
   };
   let importDisplay = null;
-  const chosenTheme = () => themes.find((theme) => theme.id === $('theme').value) || themes[0];
+  const chosenTheme = () =>
+    themes.find(
+      (theme) =>
+        theme.id ===
+        (actorLease?.pin().authoredPresentationSha256
+          ? actorLease.pin().content.contentThemeId
+          : $('theme').value),
+    ) || themes[0];
   const bodyFor = (theme, state) => theme.classBodies?.[state.activeClassId] || theme.player;
   function updateControls() {
     const previousFocus = document.activeElement;
@@ -166,7 +204,7 @@ try {
     $('restart').disabled = disabled;
     $('step').disabled = disabled || ['complete', 'error'].includes(player?.phase);
     $('speed').disabled = disabled;
-    $('theme').disabled = pending;
+    $('theme').disabled = pending || !!actorLease?.pin().authoredPresentationSha256;
     $('cancel-load').hidden = !pending;
     localizedText($('playback-phase'), () =>
       pending ? t('interface:verifying') : player?.phase || t('interface:empty'),
@@ -284,6 +322,8 @@ try {
   }
   async function load(getSource, label) {
     if (disposed) return;
+    retainedRecovery?.remove();
+    retainedRecovery = null;
     controller?.abort();
     const ticket = ++epoch;
     const nextController = new AbortController();
@@ -299,18 +339,25 @@ try {
     });
     importDisplay = display;
     let stagedActors = null,
-      stagedPainterRelease = null;
+      stagedPicture = null,
+      stagedPainterRelease = null,
+      retainedRequest = null;
     const releaseStaged = () => {
       stagedPainterRelease?.();
       stagedPainterRelease = null;
       stagedActors?.release();
       stagedActors = null;
+      stagedPicture?.release();
+      stagedPicture = null;
     };
     nextController.signal.addEventListener('abort', releaseStaged, { once: true });
     try {
       const source = await getSource(nextController.signal);
       if (!current()) return;
       const { envelope, replay } = readRecording(source);
+      const receipt = envelope?.actorAppearancePin.authoredPresentationSha256;
+      if (runtimeContent && receipt !== runtimeContent.authoredPresentationSha256)
+        retainedRequest = runtimeContent.presentationHistory.find((item) => item.id === receipt);
       display.update({
         message: t('interface:verifyingTheRecordingSExactInputTicks'),
         stage: 'verifying',
@@ -325,6 +372,8 @@ try {
       });
       if (!current()) return;
       if (envelope) {
+        if (runtimeContent && envelope.actorAppearancePin.style !== 'campaign')
+          throw new Error('This edition does not include that recorded actor style.');
         display.update({
           message: t('interface:checkingTheRecordedMissionOwnerAndExactFpvActors'),
           stage: 'verifying',
@@ -332,6 +381,7 @@ try {
         });
         const actual = await prepareReplayActorContext(envelope, {
           signal: nextController.signal,
+          ...(runtimeContent ? { authored: runtimeContent } : {}),
         });
         if (!current()) return;
         stagedActors = await prepareRetainedActorAppearanceLease(
@@ -344,6 +394,22 @@ try {
           },
         );
         if (!current()) return;
+        if (actual.authoredBackground) {
+          display.update({
+            message: 'Verifying the recorded mission’s original picture…',
+            stage: 'decoding',
+            progress: null,
+          });
+          const picture = await acquireCandidatePicture(actual.authoredBackground, {
+            signal: nextController.signal,
+          });
+          if (!current()) {
+            picture.release();
+            return;
+          }
+          stagedPicture = picture;
+          claimCandidatePicture(actual.authoredBackground, picture);
+        }
       }
       let assetMessage = '';
       const nextPainter = new BoardPainter(presets, {
@@ -353,7 +419,9 @@ try {
         },
       });
       nextPainter.setLevel(nextPlayer.state.level, { seed: nextPlayer.info.seed });
-      const theme = chosenTheme();
+      const theme = envelope?.actorAppearancePin.authoredPresentationSha256
+        ? themes.find((item) => item.id === envelope.actorAppearancePin.content.contentThemeId)
+        : chosenTheme();
       display.update({
         message: t('interface:preparingTheRecordingSArtwork'),
         stage: 'decoding',
@@ -372,11 +440,15 @@ try {
       player = nextPlayer;
       releasePresentationPainter?.();
       actorLease?.release();
+      pictureLease?.release();
       painter = nextPainter;
       releasePresentationPainter = stagedPainterRelease;
       stagedPainterRelease = null;
       actorLease = stagedActors;
       stagedActors = null;
+      pictureLease = stagedPicture;
+      stagedPicture = null;
+      if (actorLease?.pin().authoredPresentationSha256) $('theme').value = theme.id;
       lastClass = player.state.activeClassId;
       lastFrame = 0;
       eventLines = [];
@@ -385,7 +457,11 @@ try {
       localizedText($('asset-status'), () => assetMessage);
       localizedText($('recorded-appearance'), () =>
         actorLease
-          ? t('interface:recordedFpvActorsExactActorReleaseRestoredPictureMusicAnd')
+          ? actorLease.pin().authoredPresentationSha256
+            ? pictureLease
+              ? 'Recorded company actors, palette and original mission picture match their exact artwork receipt. Music and the original interface are not restored.'
+              : 'Recorded company actors and procedural palette match their exact artwork receipt. This mission has no authored picture. Music and the original interface are not restored.'
+            : t('interface:recordedFpvActorsExactActorReleaseRestoredPictureMusicAnd')
           : t('interface:rawReplayPreviewActorsAndSceneNoRecordedAppearanceIs'),
       );
       display.finish({ message: `${clipped(label)} verified and loaded. Ready to watch.` });
@@ -396,11 +472,24 @@ try {
       );
       readouts();
     } catch (error) {
-      if (current())
+      if (current()) {
         display.finish({
           state: 'error',
           message: `Could not load recording: ${clipped(error.message, 300)} The previous recording is unchanged.`,
         });
+        if (retainedRequest) {
+          const link = document.createElement('a'),
+            target = new URL(location.href);
+          target.searchParams.set('edition', runtimeContent.editionId);
+          target.searchParams.set('presentation', retainedRequest.id);
+          link.href = target.href;
+          link.id = 'retained-recording-artwork';
+          link.textContent = 'Open the exact retained artwork, then import this recording again';
+          retainedRecovery = document.createElement('p');
+          retainedRecovery.append(link);
+          $('import-status').parentElement.append(retainedRecovery);
+        }
+      }
     } finally {
       nextController.signal.removeEventListener('abort', releaseStaged);
       releaseStaged();
@@ -412,6 +501,7 @@ try {
     }
   }
   async function fetchExample(signal) {
+    if (runtimeContent) throw new Error('Import a recording from this edition.');
     const example = examples[$('example').value];
     const response = await fetch(example.file, { signal });
     if (!response.ok) throw new Error(t('interface:theExampleFileCouldNotLoad'));
@@ -494,7 +584,7 @@ try {
   );
   $('theme').addEventListener('change', () =>
     safely(() => {
-      if (!player || pending) return;
+      if (!player || pending || actorLease?.pin().authoredPresentationSha256) return;
       consume(player.pause());
       const theme = chosenTheme();
       void painter.setLook(theme, bodyFor(theme, player.state));
@@ -550,18 +640,21 @@ try {
           showGrid: $('grid').checked,
           fullReveal: player.phase === 'complete' && player.state.status === 'won',
           celebrationPaused: document.hidden,
-          actorAppearance: actorLease ? { style: 'fpv', snapshot: actorLease.snapshot } : null,
+          backdrop: pictureLease,
+          actorAppearance: actorLease
+            ? { style: actorLease.pin().style, snapshot: actorLease.snapshot }
+            : null,
         });
       }
     });
     frameId = requestAnimationFrame(frame);
   }
-  exampleBrief();
+  if (!runtimeContent) exampleBrief();
   document.querySelector('main').inert = false;
   document.querySelector('main').removeAttribute('aria-busy');
   bootDisplay.clear();
   frameId = requestAnimationFrame(frame);
-  void load(fetchExample, t('interface:copperCrossingExample'));
+  if (!runtimeContent) void load(fetchExample, t('interface:copperCrossingExample'));
 } catch (error) {
   if (!theaterDisposed)
     bootDisplay.finish({

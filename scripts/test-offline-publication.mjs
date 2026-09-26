@@ -10,6 +10,7 @@ import { soundtrackDownloadVolumes } from '../game/soundtrack-download-volumes.m
 import { SOUNDTRACK_CATALOGUE } from '../game/content/soundtrack-catalogue.mjs';
 import { addOfflineLauncher } from './offline-launcher.mjs';
 import { publishOfflineLauncher } from '../publishing/pages-controller/launcher.mjs';
+import { validateEditionCodeClosure } from './compile-edition.mjs';
 
 test('all official missions have gameplay-only closure and soundtrack groups exactly match Audio settings', async () => {
   const pack = Buffer.from('{"id":"chapter"}'),
@@ -65,6 +66,16 @@ test('publisher copies only the frozen lightweight launcher and points at the im
   for (const size of [180, 192, 512])
     entries.push({ name: `icons/icon-${size}.png`, bytes: Buffer.from('fixture icon') });
   await addOfflineLauncher(root, entries, '1.0.0');
+  const launcher = new Map(
+    entries
+      .filter((entry) => entry.name.startsWith('app/'))
+      .map((entry) => [entry.name, entry.bytes]),
+  );
+  validateEditionCodeClosure(launcher);
+  for (const name of ['edition-context.mjs', 'profile-writer.mjs']) {
+    assert.ok(launcher.has(`app/${name}`));
+    assert.ok(launcher.get('app/service-worker.js').toString().includes(`"path":"${name}"`));
+  }
   const temp = await fs.mkdtemp(path.join(os.tmpdir(), 'revealline-launcher-test-'));
   t.after(() => fs.rm(temp, { recursive: true, force: true }));
   const source = path.join(temp, 'frozen'),
@@ -86,5 +97,19 @@ test('publisher copies only the frozen lightweight launcher and points at the im
     await fs.readFile(path.join(source, 'app/service-worker.js'), 'utf8'),
   );
   assert.deepEqual(await fs.readdir(output), ['app']);
-  assert.equal((await fs.readdir(path.join(output, 'app'))).length, 10);
+  assert.equal((await fs.readdir(path.join(output, 'app'))).length, 12);
+  const published = new Map();
+  for (const name of await fs.readdir(path.join(output, 'app')))
+    published.set(`app/${name}`, await fs.readFile(path.join(output, 'app', name)));
+  validateEditionCodeClosure(published);
+  await fs.rm(path.join(source, 'app/profile-writer.mjs'));
+  await assert.rejects(
+    publishOfflineLauncher(source, path.join(temp, 'broken'), 'v1.0.0'),
+    /missing an imported dependency/,
+  );
+  // Historical frozen launchers with no such imports remain byte-preserving.
+  await fs.writeFile(path.join(source, 'app/installed-app.mjs'), 'export const historical = true;');
+  await fs.rm(path.join(source, 'app/edition-context.mjs'));
+  assert.equal(await publishOfflineLauncher(source, path.join(temp, 'historical'), 'v1.0.0'), true);
+  assert.equal((await fs.readdir(path.join(temp, 'historical/app'))).length, 10);
 });

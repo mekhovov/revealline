@@ -1,0 +1,46 @@
+{
+  "format": "revealline-shared-runtime-asset-sources.v1",
+  "description": "Existing public main-game runtime resources reused unchanged by selected editions. Exact bytes are admitted by runtime-assets.json; no broad directory or media exemption is granted.",
+  "groups": [
+    {
+      "assetIds": ["runtime-tiny5-license", "runtime-tiny5"],
+      "kind": "licensed-font",
+      "license": "SIL Open Font License 1.1",
+      "source": "game/ui/fonts/provenance.json",
+      "licensePath": "game/ui/fonts/OFL.txt"
+    },
+    {
+      "assetIds": [
+        "runtime-handjet-license",
+        "runtime-handjet",
+        "runtime-exo2-license",
+        "runtime-exo2",
+        "runtime-plex-license",
+        "runtime-plex"
+      ],
+      "kind": "licensed-font",
+      "license": "SIL Open Font License 1.1",
+      "source": "game/ui/fonts/field-kit/provenance.json",
+      "sourceCommit": "809e4d8b8d7e9364a914909bb777679606c178b8",
+      "description": "Retain the exact main-game font derivatives and the individual bundled OFL notices."
+    },
+    {
+      "assetIds": ["runtime-shell-background", "runtime-shell-surface"],
+      "kind": "existing-generated-project-artwork",
+      "source": "game/presentation/compiled/manifest.json",
+      "description": "Unchanged main-game title background derivatives referenced by shared styles. Their full original prompt, creator, derivative recipe and original digest remain in the committed presentation source ledger. This reuse does not declare new brand-art review or approve other presentation assets."
+    },
+    {
+      "assetIds": ["runtime-opening-recording"],
+      "kind": "licensed-recording",
+      "title": "Carol of the Bells (Metal Version)",
+      "creator": "Alexander Nakarada (CreatorChords)",
+      "license": "Creative Commons Attribution 4.0 International",
+      "source": "https://creatorchords.com/music/carol-of-the-bells-metal-version/",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "credit": "Music: Carol of the Bells (Metal Version) by Alexander Nakarada (CreatorChords). Licensed under Creative Commons Attribution 4.0 International.",
+      "runtimeRightsSource": "game/content/soundtrack-catalogue.mjs",
+      "description": "Exact main-game bundled recording. Existing rights, credits, sharing policy and optional download catalog remain unchanged."
+    }
+  ]
+}

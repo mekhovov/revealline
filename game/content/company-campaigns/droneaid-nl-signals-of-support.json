@@ -1,0 +1,708 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [
+    {
+      "alt": "A carbon-frame FPV quad and goggles sit in a practical workshop storytelling corner with Ukraine-colour fabric.",
+      "bytes": 337124,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-signals-of-support-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-signals-of-support-01.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "6148e9df9b1c981031de819fd236c67b95929b3b97284baf3114ccdc0c38d78e",
+      "width": 640
+    },
+    {
+      "alt": "Poster Workshop — recognizable FPV quads and goggles in a fictional DroneAid Netherlands workshop.",
+      "bytes": 330127,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-signals-of-support-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-signals-of-support-02.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "6d8b2bcbaa9380d827d7c40454264df0a5d404dae88c0d0bf43d05fd87703729",
+      "width": 640
+    },
+    {
+      "alt": "Invitation Square — recognizable FPV quads and goggles in a fictional DroneAid Netherlands workshop.",
+      "bytes": 356054,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-signals-of-support-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-signals-of-support-03.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "e93eb9773a9d2c3117bfbca585f51f59344c7478da06f72069d2fd423759709f",
+      "width": 640
+    },
+    {
+      "alt": "The Community Event — recognizable FPV quads and goggles in a fictional DroneAid Netherlands workshop.",
+      "bytes": 326762,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-signals-of-support-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-signals-of-support-04.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "c01f9fe04574494dd0813d61d7e3c8140ac3b2a52448260fc0461d0ef2cdab0f",
+      "width": 640
+    },
+    {
+      "alt": "A carbon FPV quad in an open foam case beside goggles and blank accounting materials.",
+      "bytes": 372369,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-signals-of-support-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-signals-of-support-05.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "a744d075d059de5c3d4a8c2100d078cb8422fd58bfa0849231a7d7d2463f7c76",
+      "width": 640
+    },
+    {
+      "alt": "A completed fictional workshop batch with one visible carbon quad, goggles and closed cases.",
+      "bytes": 362436,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-signals-of-support-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-signals-of-support-06.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "4a405fa47d3b68080612d09a321ec3a36ed6650bd70adf4398121e91f7b24983",
+      "width": 640
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 9,
+      "format": "CampaignDesignV1",
+      "id": "droneaid-nl-signals-of-support",
+      "missionIds": [
+        "droneaid-nl-signals-of-support-01",
+        "droneaid-nl-signals-of-support-02",
+        "droneaid-nl-signals-of-support-03",
+        "droneaid-nl-signals-of-support-04",
+        "droneaid-nl-signals-of-support-05",
+        "droneaid-nl-signals-of-support-06"
+      ],
+      "name": "Signals of Support",
+      "revision": "2"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "droneaid-nl-signals-of-support",
+  "maps": [
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 4, "w": 12, "x": 29, "y": 11 },
+        { "h": 4, "w": 11, "x": 29, "y": 23 },
+        { "h": 3, "w": 6, "x": 9, "y": 24 }
+      ],
+      "gates": [{ "h": 1, "id": "return-1", "w": 8, "x": 1, "y": 25 }],
+      "height": 36,
+      "id": "droneaid-nl-signals-of-support-01-map",
+      "name": "A Story Worth Sharing",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 33.5, "y": 0.5 }],
+      "speedZones": [],
+      "terrain": [],
+      "walls": [
+        { "h": 9, "w": 2, "x": 16, "y": 7 },
+        { "h": 8, "w": 2, "x": 51, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 4, "w": 12, "x": 29, "y": 12 },
+        { "h": 4, "w": 11, "x": 30, "y": 23 },
+        { "h": 3, "w": 6, "x": 9, "y": 23 }
+      ],
+      "gates": [{ "h": 7, "id": "return-1", "w": 1, "x": 35, "y": 16 }],
+      "height": 36,
+      "id": "droneaid-nl-signals-of-support-02-map",
+      "name": "Poster Workshop",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 34.5, "y": 0.5 }],
+      "speedZones": [],
+      "terrain": [],
+      "walls": [
+        { "h": 9, "w": 2, "x": 17, "y": 7 },
+        { "h": 8, "w": 2, "x": 50, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 4, "w": 12, "x": 29, "y": 11 },
+        { "h": 4, "w": 11, "x": 29, "y": 23 },
+        { "h": 3, "w": 6, "x": 9, "y": 22 }
+      ],
+      "gates": [{ "h": 1, "id": "return-1", "w": 8, "x": 1, "y": 23 }],
+      "height": 36,
+      "id": "droneaid-nl-signals-of-support-03-map",
+      "name": "Invitation Square",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "speedZones": [],
+      "terrain": [],
+      "walls": [
+        { "h": 9, "w": 2, "x": 18, "y": 7 },
+        { "h": 8, "w": 2, "x": 49, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 4, "w": 12, "x": 29, "y": 12 },
+        { "h": 4, "w": 11, "x": 30, "y": 23 },
+        { "h": 3, "w": 6, "x": 9, "y": 24 }
+      ],
+      "gates": [
+        { "h": 7, "id": "return-1", "w": 1, "x": 35, "y": 16 },
+        { "h": 1, "id": "return-2", "w": 8, "x": 1, "y": 25 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-signals-of-support-04-map",
+      "name": "The Community Event",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 36.5, "y": 0.5 }],
+      "speedZones": [],
+      "terrain": [],
+      "walls": [
+        { "h": 9, "w": 2, "x": 19, "y": 7 },
+        { "h": 8, "w": 2, "x": 48, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 4, "w": 12, "x": 29, "y": 11 },
+        { "h": 4, "w": 11, "x": 29, "y": 23 },
+        { "h": 3, "w": 6, "x": 9, "y": 23 }
+      ],
+      "gates": [
+        { "h": 1, "id": "return-1", "w": 8, "x": 1, "y": 24 },
+        { "h": 8, "id": "return-2", "w": 1, "x": 34, "y": 15 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-signals-of-support-05-map",
+      "name": "Open Ledger",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 37.5, "y": 0.5 }],
+      "speedZones": [],
+      "terrain": [],
+      "walls": [
+        { "h": 9, "w": 2, "x": 20, "y": 7 },
+        { "h": 8, "w": 2, "x": 47, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 4, "w": 12, "x": 29, "y": 12 },
+        { "h": 4, "w": 11, "x": 30, "y": 23 },
+        { "h": 3, "w": 6, "x": 9, "y": 22 }
+      ],
+      "gates": [
+        { "h": 7, "id": "return-1", "w": 1, "x": 35, "y": 16 },
+        { "h": 1, "id": "return-2", "w": 8, "x": 1, "y": 23 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-signals-of-support-06-map",
+      "name": "Thank You, Together",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 38.5, "y": 0.5 }],
+      "speedZones": [
+        { "direction": "down", "h": 7, "id": "outbound-flow", "w": 3, "x": 24, "y": 8 },
+        { "direction": "right", "h": 3, "id": "return-flow", "w": 7, "x": 41, "y": 19 }
+      ],
+      "terrain": [],
+      "walls": [
+        { "h": 9, "w": 2, "x": 21, "y": 7 },
+        { "h": 8, "w": 2, "x": 46, "y": 22 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 28, "y": 11 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.5900000000000001,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 9,
+          "coordination": 0,
+          "execution": 8,
+          "mechanicLoad": 9,
+          "planning": 9,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": ["relay-gates"],
+        "lesson": "Connect the story board and the listening corner. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "An FPV demonstration bench and donation cases introduce the purpose of learning and supporting Ukraine together.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol",
+          "relay-gates"
+        ],
+        "routeDecision": "Reach the noticeboard island before taking the longer outer route. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV3",
+      "id": "droneaid-nl-signals-of-support-01",
+      "map": { "id": "droneaid-nl-signals-of-support-01-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A Story Worth Sharing",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-signals-of-support-01-picture",
+        "themeId": "droneaid-nl-signals-of-support-theme"
+      },
+      "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 28, "y": 12 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6400000000000001,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 9,
+          "coordination": 0,
+          "execution": 8,
+          "mechanicLoad": 9,
+          "planning": 9,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Link the design tables around the central display. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "A finished FPV quad, goggles and violet-and-yellow workshop materials anchor an open-day display.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol",
+          "relay-gates"
+        ],
+        "routeDecision": "Use the smaller poster table as a short return. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV3",
+      "id": "droneaid-nl-signals-of-support-02",
+      "map": { "id": "droneaid-nl-signals-of-support-02-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Poster Workshop",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-signals-of-support-02-picture",
+        "themeId": "droneaid-nl-signals-of-support-theme"
+      },
+      "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 28, "y": 11 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6700000000000002,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 9,
+          "coordination": 0,
+          "execution": 8,
+          "mechanicLoad": 9,
+          "planning": 9,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Bring the invitation stands into the community network. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "FPV quads and shared tool stations welcome neighbours to a fictional drone-building open day.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol",
+          "relay-gates"
+        ],
+        "routeDecision": "Connect the two small stands before crossing the gathering space. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV3",
+      "id": "droneaid-nl-signals-of-support-03",
+      "map": { "id": "droneaid-nl-signals-of-support-03-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Invitation Square",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-signals-of-support-03-picture",
+        "themeId": "droneaid-nl-signals-of-support-theme"
+      },
+      "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 12.5 }],
+      "coverage": 0.69,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["lane-emitter", "relay-gates"],
+        "counterplay": "Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 10,
+          "coordination": 0,
+          "execution": 8,
+          "mechanicLoad": 10,
+          "planning": 10,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Reveal the different corners of a shared celebration. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Practical FPV demonstration tables and donation cases fill a welcoming workshop event.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "lane-emitter",
+          "relay-gates"
+        ],
+        "routeDecision": "Use the inner stands while the outer patrol passes. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV3",
+      "id": "droneaid-nl-signals-of-support-04",
+      "map": { "id": "droneaid-nl-signals-of-support-04-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "The Community Event",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-signals-of-support-04-picture",
+        "themeId": "droneaid-nl-signals-of-support-theme"
+      },
+      "relayLinks": [
+        { "gateId": "return-1", "objectiveId": "connection" },
+        { "gateId": "return-2", "objectiveId": "handoff" }
+      ],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 11.5 }],
+      "coverage": 0.71,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["lane-emitter", "relay-gates"],
+        "counterplay": "Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 10,
+          "coordination": 0,
+          "execution": 8,
+          "mechanicLoad": 10,
+          "planning": 10,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Connect the fictional activity and reporting displays. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Plain records beside FPV cases make fictional donation accountability visible without invented figures.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "lane-emitter",
+          "relay-gates"
+        ],
+        "routeDecision": "Join the record tables before the final long display aisle. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV3",
+      "id": "droneaid-nl-signals-of-support-05",
+      "map": { "id": "droneaid-nl-signals-of-support-05-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Open Ledger",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-signals-of-support-05-picture",
+        "themeId": "droneaid-nl-signals-of-support-theme"
+      },
+      "relayLinks": [
+        { "gateId": "return-1", "objectiveId": "connection" },
+        { "gateId": "return-2", "objectiveId": "handoff" }
+      ],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 12.5 }],
+      "coverage": 0.75,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["lane-emitter", "relay-gates", "directional-fields"],
+        "counterplay": "Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill. Arrows speed travel with the flow and slow opposite travel in unclaimed field. Capture neutralizes them.",
+        "difficulty": {
+          "band": 10,
+          "coordination": 0,
+          "execution": 8,
+          "mechanicLoad": 10,
+          "planning": 10,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": ["directional-fields"],
+        "lesson": "Complete the community thank-you mosaic. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Finished FPV quads, packed cases and blue-and-yellow fabric celebrate shared workshop effort.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "lane-emitter",
+          "relay-gates",
+          "directional-fields"
+        ],
+        "routeDecision": "Connect all inner stands before closing the broad celebration loop. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV3",
+      "id": "droneaid-nl-signals-of-support-06",
+      "map": { "id": "droneaid-nl-signals-of-support-06-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Thank You, Together",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-signals-of-support-06-picture",
+        "themeId": "droneaid-nl-signals-of-support-theme"
+      },
+      "relayLinks": [
+        { "gateId": "return-1", "objectiveId": "connection" },
+        { "gateId": "return-2", "objectiveId": "handoff" }
+      ],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Signals of Support",
+  "packs": [
+    {
+      "campaignIds": ["droneaid-nl-signals-of-support"],
+      "format": "PackDesignV1",
+      "id": "droneaid-nl-signals-of-support-pack",
+      "name": "Signals of Support",
+      "revision": "2"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "2"
+}

@@ -1,0 +1,396 @@
+{
+  "id": "droneaid-nl-workshop-lights",
+  "levels": [
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 10, "x": 29, "y": 13 },
+        { "h": 3, "w": 7, "x": 10, "y": 23 }
+      ],
+      "goal": { "coverage": 0.48 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 31.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-workshop-lights-01",
+      "name": "Open the Doors",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
+      ],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 31.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [{ "h": 8, "w": 2, "x": 22, "y": 10 }],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 10, "x": 30, "y": 14 },
+        { "h": 3, "w": 7, "x": 11, "y": 23 }
+      ],
+      "goal": { "coverage": 0.53 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 32.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-workshop-lights-02",
+      "name": "Find Your Bench",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 15.5, "y": 8.5 }
+      ],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 32.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 8, "w": 2, "x": 18, "y": 8 },
+        { "h": 7, "w": 2, "x": 48, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 12.5,
+          "y": 27.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 10, "x": 29, "y": 15 },
+        { "h": 3, "w": 7, "x": 12, "y": 23 }
+      ],
+      "goal": { "coverage": 0.56 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 33.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-workshop-lights-03",
+      "name": "Tool Library",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 18.5, "y": 8.5 }
+      ],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 33.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 9, "w": 2, "x": 19, "y": 8 },
+        { "h": 7, "w": 2, "x": 47, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 30.5, "y": 13.5 }],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-backlog",
+          "speed": 2.52,
+          "type": "border-patrol",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 10, "x": 30, "y": 13 },
+        { "h": 3, "w": 7, "x": 13, "y": 23 },
+        { "h": 4, "w": 7, "x": 53, "y": 8 }
+      ],
+      "goal": { "coverage": 0.58 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 34.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-workshop-lights-04",
+      "name": "First Connections",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
+      ],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 34.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 7, "w": 2, "x": 20, "y": 8 },
+        { "h": 7, "w": 2, "x": 46, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 14.5 }],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-backlog",
+          "speed": 2.52,
+          "type": "border-patrol",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 10, "x": 29, "y": 14 },
+        { "h": 3, "w": 7, "x": 14, "y": 23 },
+        { "h": 4, "w": 7, "x": 53, "y": 7 }
+      ],
+      "goal": { "coverage": 0.6 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 35.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-workshop-lights-05",
+      "name": "Shared Worktable",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 15.5, "y": 8.5 }
+      ],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 35.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 8, "w": 2, "x": 21, "y": 8 },
+        { "h": 7, "w": 2, "x": 45, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 30.5, "y": 15.5 }],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 12.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-backlog",
+          "speed": 2.52,
+          "type": "border-patrol",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 10, "x": 30, "y": 15 },
+        { "h": 3, "w": 7, "x": 15, "y": 23 },
+        { "h": 4, "w": 7, "x": 53, "y": 8 }
+      ],
+      "goal": { "coverage": 0.64 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 36.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-workshop-lights-06",
+      "name": "Lights Across the Room",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 18.5, "y": 8.5 }
+      ],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 36.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 9, "w": 2, "x": 22, "y": 8 },
+        { "h": 7, "w": 2, "x": 44, "y": 22 }
+      ],
+      "width": 72
+    }
+  ],
+  "revision": "2",
+  "title": "Workshop Lights",
+  "version": "xonix-campaign.v1"
+}

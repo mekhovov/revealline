@@ -1,14 +1,17 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { editionAppIdentity } from '../game/edition-context.mjs';
 
-export async function addOfflineLauncher(root, entries, version) {
+export async function addOfflineLauncher(root, entries, version, options = {}) {
   if (!entries.some((entry) => entry.name === 'game/installed-app.mjs')) return;
   const files = [
     ['index.html', 'game/offline/app.html'],
     ['app.mjs', 'game/offline/app.mjs'],
     ['app.css', 'game/downloads.css'],
     ['installed-app.mjs', 'game/installed-app.mjs'],
+    ['edition-context.mjs', 'game/edition-context.mjs'],
+    ['profile-writer.mjs', 'game/profile-writer.mjs'],
   ];
   const launcher = [];
   for (const [target, source] of files)
@@ -33,6 +36,13 @@ export async function addOfflineLauncher(root, entries, version) {
         background_color: '#091324',
         theme_color: '#091324',
         lang: 'en',
+        ...(options.editionId === undefined
+          ? {}
+          : {
+              ...editionAppIdentity(options),
+              name: options.name || options.editionId,
+              short_name: options.name || options.editionId,
+            }),
         icons: [192, 512].map((size) => ({
           src: `icon-${size}.png`,
           sizes: `${size}x${size}`,
@@ -68,7 +78,13 @@ export async function addOfflineLauncher(root, entries, version) {
   });
   launcher.push({
     name: 'app/current.json',
-    bytes: Buffer.from(JSON.stringify({ version, scope: '../' })),
+    bytes: Buffer.from(
+      JSON.stringify({
+        version,
+        scope: '../',
+        ...(options.editionId === undefined ? {} : { editionId: options.editionId }),
+      }),
+    ),
   });
   entries.push(...launcher);
 }

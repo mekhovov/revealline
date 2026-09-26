@@ -1,3 +1,4 @@
+import { hasEditionToolRequest, editionToolPresentation } from '../ui/edition-tool-provider.mjs';
 import { mountPresentationPage } from './page.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 
@@ -26,6 +27,8 @@ export function mountAuxiliaryPresentationPage({
   window: win = doc?.defaultView ?? globalThis.window,
   createHost,
 } = {}) {
+  if (hasEditionToolRequest({ document: doc, window: win }))
+    return { ...editionToolPresentation(), ready: Promise.resolve(null) };
   const existing = entries.get(doc);
   if (existing) return existing;
   let closed = false;
