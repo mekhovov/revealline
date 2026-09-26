@@ -13,10 +13,11 @@ versions or acceptance gates are still current.
 - PR #652 has merged to `main` at `ee015163de1131313436b0550892f3739e3c7a1a` after its focused
   and release-ready gates passed. The v0.132.5 immutable release and public acceptance are still
   owned by the publisher; a source merge is not public delivery.
-- The cultural stack is rebased on current `main`
-  `ee015163de1131313436b0550892f3739e3c7a1a`. All nineteen branch tips were guarded-pushed
-  atomically; the v0.149.0 successor is draft PR #650 and the test-only reconciliation is draft PR
-  #651. The dirty root checkout was not changed.
+- Current `main` is `55f83c2221c382ac5626e37a079e488eed79b920` after the v0.132.5 throughput
+  controller merged. The nineteen-branch cultural stack and its Team continuation successor were
+  guarded-pushed atomically onto that commit; the v0.149.0 successor is draft PR #650, the
+  test/documentation reconciliation is draft PR #651 and the continuation repair is draft PR #655.
+  The dirty root checkout was not changed.
 
 ## Completed source work
 
@@ -27,9 +28,9 @@ versions or acceptance gates are still current.
 | Complete Team adoption / PR #630                 | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.                                                                                                                                                         |
 | First Team Ukrainian slice / PR #636             | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                                                                                                                                  |
 | Second Team Ukrainian slice / PR #642            | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                                                                                                                                   |
-| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; earlier focused cohort 83/83, localization validation and post-rebase lightweight cohort 41/41 pass; exact head `da1604a3b2821bff106711129a7d32f7bf78bd8d`; not public. |
+| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; earlier focused cohort 83/83, localization validation and post-rebase lightweight cohort 41/41 pass; exact head `c4cfe7092e8b7dd25b3803e4cb0531dc8007a04d`; not public. |
 | Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.                                                                                                       |
-| Team opaque-owner continuation successor         | Implemented locally           | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Latest-main route/impact/localization cohort passes 42/42; PR and public delivery remain.                        |
+| Team opaque-owner continuation / PR #655         | Clean draft successor         | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Latest-main route/impact/localization cohort passes 42/42; not public.                                           |
 
 After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
