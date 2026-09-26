@@ -22,10 +22,16 @@ import { processNextValidationJob } from '../src/worker.mjs';
 import { startTusFaultProxy } from '../scripts/tus-fault-proxy.mjs';
 
 const bearer = (token) => ({ authorization: `Bearer ${token}` });
+const expectedRelease = Object.freeze({
+  version: 'v0.141.4',
+  sourceRevision: '218e76281e3bfa26f57b7aa0f7b98058f4bd05ad',
+  validatorVersion: 'creator-bundle-v1',
+});
 const config = (overrides = {}) => ({
   baseURL: 'https://community.example.test/',
   namespace: 'tus-deploy-20260926',
   optIn: DEPLOYED_TUS_DESTRUCTIVE_OPT_IN,
+  expectedRelease,
   auth: {
     creator: bearer('creator-secret'),
     admin: bearer('admin-secret'),
@@ -61,8 +67,35 @@ test('deployed tus config requires HTTPS, explicit opt-in, namespace and bounded
     () => validateDeployedTusResumeConfig(config({ auth: { ...config().auth, admin: {} } })),
     /Administrator authentication/u,
   );
+  assert.throws(
+    () => validateDeployedTusResumeConfig(config({ expectedRelease: null })),
+    /expected release, source and validator versions/u,
+  );
   assert.equal(validateDeployedTusResumeConfig(config()).baseURL, config().baseURL);
 });
+
+const fetchThroughFastify =
+  (app) =>
+  async (input, init = {}) => {
+    const url = new URL(input);
+    if (url.hostname !== 'community.example.test') return fetch(input, init);
+    const body =
+      init.body instanceof Blob
+        ? Buffer.from(await init.body.arrayBuffer())
+        : (init.body ?? undefined);
+    const injected = await app.inject({
+      method: init.method ?? 'GET',
+      url: `${url.pathname}${url.search}`,
+      headers: init.headers,
+      payload: body,
+    });
+    const headers = new Headers();
+    for (const [name, value] of Object.entries(injected.headers)) {
+      if (value !== undefined)
+        headers.set(name, Array.isArray(value) ? value.join(', ') : String(value));
+    }
+    return new Response(injected.rawPayload, { status: injected.statusCode, headers });
+  };
 
 test('remote fault proxy requires deliberate HTTPS remote mode', async () => {
   await assert.rejects(
@@ -108,6 +141,8 @@ test('deployed mode resumes one remote tus resource and unlists exact published 
     blobStore,
     authenticator,
     maxPackageBytes: 16 * 1024 * 1024,
+    validatorVersion: expectedRelease.validatorVersion,
+    releaseIdentity: expectedRelease,
     uploadTransport: new TusUploadTransportBoundary({ endpoint: '/v1/uploads' }),
     tus,
   });
@@ -139,6 +174,7 @@ test('deployed mode resumes one remote tus resource and unlists exact published 
 
   const receipt = await runDeployedTusResumeAcceptance(config(), {
     startProxy,
+    fetchImpl: fetchThroughFastify(app),
     now: () => wallTime,
     sleep,
     randomUUID: () => '12345678-1234-4abc-8def-123456789abc',
@@ -146,6 +182,8 @@ test('deployed mode resumes one remote tus resource and unlists exact published 
 
   assert.equal(receipt.format, DEPLOYED_TUS_ACCEPTANCE_FORMAT);
   assert.equal(receipt.status, 'passed');
+  assert.deepEqual(receipt.release, expectedRelease);
+  assert.deepEqual(receipt.readiness, { status: 'ready' });
   assert.equal(receipt.resume.interruptedAtBytes, 17);
   assert.equal(receipt.resume.authoritativeHeadOffset, 17);
   assert.equal(receipt.resume.submissionCreates, 1);
@@ -161,6 +199,71 @@ test('deployed mode resumes one remote tus resource and unlists exact published 
   assert.equal(serialized.includes('admin-secret'), false);
 });
 
+test('release mismatch and failed readiness stop before proxy or content mutation', async () => {
+  let proxyStarts = 0;
+  let packageCreates = 0;
+  const startProxy = async () => {
+    proxyStarts += 1;
+    assert.fail('identity and readiness gates must run before the fault proxy');
+  };
+  const createPackage = async () => {
+    packageCreates += 1;
+    assert.fail('identity and readiness gates must run before package creation');
+  };
+
+  let calls = [];
+  await assert.rejects(
+    runDeployedTusResumeAcceptance(config(), {
+      fetchImpl: async (input) => {
+        calls.push(new URL(input).pathname);
+        return Response.json({
+          format: 'revealline-community-release.v1',
+          ...expectedRelease,
+          sourceRevision: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
+        });
+      },
+      startProxy,
+      createPackage,
+      randomUUID: () => 'abcdef12-1234-4abc-8def-123456789abc',
+    }),
+    (error) => {
+      assert.equal(error.stage, 'identity');
+      assert.equal(error.receipt.cleanup, 'not-required');
+      return true;
+    },
+  );
+  assert.deepEqual(calls, ['/version']);
+
+  calls = [];
+  await assert.rejects(
+    runDeployedTusResumeAcceptance(config(), {
+      fetchImpl: async (input) => {
+        const pathname = new URL(input).pathname;
+        calls.push(pathname);
+        if (pathname === '/version')
+          return Response.json({ format: 'revealline-community-release.v1', ...expectedRelease });
+        if (pathname === '/health') return Response.json({ status: 'ok' });
+        return Response.json(
+          { error: { code: 'internal_error', message: 'not ready' } },
+          { status: 503 },
+        );
+      },
+      startProxy,
+      createPackage,
+      randomUUID: () => 'abcdef12-1234-4abc-8def-123456789abc',
+    }),
+    (error) => {
+      assert.equal(error.stage, 'readiness');
+      assert.deepEqual(error.receipt.release, expectedRelease);
+      assert.equal(error.receipt.cleanup, 'not-required');
+      return true;
+    },
+  );
+  assert.deepEqual(calls, ['/version', '/health', '/ready']);
+  assert.equal(proxyStarts, 0);
+  assert.equal(packageCreates, 0);
+});
+
 test('CLI reserves an owner-only redacted failure receipt', async (t) => {
   const directory = await mkdtemp(path.join(os.tmpdir(), 'revealline-deployed-tus-cli-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
@@ -173,6 +276,9 @@ test('CLI reserves an owner-only redacted failure receipt', async (t) => {
       COMMUNITY_TUS_ACCEPTANCE_BASE_URL: 'https://community.example.test/',
       COMMUNITY_TUS_ACCEPTANCE_NAMESPACE: 'cli-tus-20260926',
       COMMUNITY_TUS_ACCEPTANCE_ALLOW_DESTRUCTIVE: 'not-approved',
+      COMMUNITY_TUS_ACCEPTANCE_EXPECTED_VERSION: expectedRelease.version,
+      COMMUNITY_TUS_ACCEPTANCE_EXPECTED_SOURCE_REVISION: expectedRelease.sourceRevision,
+      COMMUNITY_TUS_ACCEPTANCE_EXPECTED_VALIDATOR_VERSION: expectedRelease.validatorVersion,
       COMMUNITY_TUS_ACCEPTANCE_CREATOR_AUTHORIZATION: 'Bearer creator-secret',
       COMMUNITY_TUS_ACCEPTANCE_ADMIN_AUTHORIZATION: 'Bearer admin-secret',
       COMMUNITY_TUS_ACCEPTANCE_RECEIPT: receiptPath,
