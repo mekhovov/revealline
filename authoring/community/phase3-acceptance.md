@@ -16,6 +16,24 @@ the browser cases below and the combined immutable release remain open.
 - Fresh-origin video-only review decoded that MP4 and captured visible poster candidates at requested 0.80, 4.00 and 7.20 seconds. The midpoint was selected. Generation produced a Twin corridors mission with one moving enemy and two walls; review reported a 1.22 MiB portable package with one PNG derivative and one complete victory video.
 - The exact video-only review installed as edition `3d7080219aabbc2a32f86b5df428163196829bdcc1fddeb8512cf232d624acf9`. Ordinary Custom play visibly showed the moving enemy and both corridor walls. One legal Down route completed at 80%, three lives and 17,280 points and awarded the captured midpoint poster.
 - After player integration, a fresh-origin video-only review installed as edition `628b3b3a2870af81ae457cef5b8fe1c10dbe9c29b70898f84aab73e9ae114895`. It generated a First crossing mission with one moving enemy and two walls. The legal Down route completed at 75%, three lives and 17,640 points. The earned midpoint poster stayed visible, **Play** entered native story playback, **Skip** restored the same poster, **Replay** restarted playback and **Back to my creations** remained visible and enabled throughout.
+- The owned 173,394-byte AVC plus mono 48 kHz AAC fixture, SHA-256
+  `d592415621ae68175f7b1c182e3024ae09f21e2a4b71fc5e92b08ccaa9c8dcc5`, uploaded in the
+  built-in browser and produced visible 10/50/90 percent poster candidates, one enemy, collision
+  walls and a verified route. A legal win mounted the story; **Play**, **Replay** and **Skip** all
+  completed without blocking continuation, and reload retained the exact earned poster. Browser
+  playback passed, while sound reaching physical speakers remains unclaimed.
+- A second review applied the nondefault 1–5 second playback range and downloaded an actual
+  237,678-byte `.rlpack`, SHA-256
+  `9e7dacb3813351b2eb95747d11d817dbc1bf89c661c52e3d0932ac0a5a4a157c`. Independent parsing
+  found no trailing bytes, authenticated every payload, retained the complete six-second video at
+  its original byte count and hash, and recorded
+  `{startSeconds: 1, endSeconds: 5, retainsCompleteOriginal: true}`. Import on the separate
+  `localhost` origin verified, installed and opened exact edition
+  `58b94e7c4c632f1a9fd4f6eb2ff4fa752e2549962246c06392c20c4fa4a17aeb` in ordinary Custom play.
+- An authenticated 234,895-byte MPEG-2 MP4, SHA-256
+  `2de2287fd018d6291403a018649c4b2a40df2bf74e5f6e2232a62705ad017cbe`, was rejected per item
+  with “Browser could not decode this video container or codec.” No poster, story, generation,
+  approval or installation path was exposed for it.
 - Scoped ESLint, Prettier and diff checks pass for the integrated Phase 3 files, including both browser-discovered fixes.
 
 ## Corrections made during browser acceptance
@@ -26,7 +44,10 @@ the browser cases below and the combined immutable release remain open.
 
 ## Remaining acceptance gates
 
-- Verify audible output on physical target browsers, reload during/after story playback, exact package download/import on a fresh origin, full-video byte/hash retention, nondefault playback-range behavior, missing-original recovery and an explicitly unsupported codec.
+- Verify audible output on physical target browsers, reload during active story playback and
+  missing-original recovery. Reload after completed/skipped playback, exact separate-origin package
+  import, complete-video byte/hash retention, a nondefault playback range and an authenticated
+  unsupported codec now pass in the built-in browser.
 - Complete hosted full-checkout preflight/build/release-ready checks on the combined PR, then freeze,
   publish and publicly verify the assigned `v0.141.0` release.
 - Firefox, Safari, a genuinely clean browser profile and physical mobile remain untested. The user directed use of the built-in browser when Safari computer control was unavailable.
