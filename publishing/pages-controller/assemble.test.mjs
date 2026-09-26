@@ -280,6 +280,23 @@ function waivedQualification(version, policyBytes) {
   };
 }
 
+function focusedAdmission(sourceTree) {
+  return {
+    runId: 41,
+    jobId: 98,
+    aggregateJobId: 97,
+    sourceRevision: 'c'.repeat(40),
+    sourceTree,
+    classificationSteps: [
+      { name: 'Capture the reviewed changed-path set', number: 5, status: 'completed', conclusion: 'success' },
+      { name: 'Select the fail-closed focused gate', number: 6, status: 'completed', conclusion: 'success' },
+    ],
+    genericBuild: { jobId: 96, status: 'skipped-by-fast-release-policy' },
+    fullTests: { status: 'waived-and-skipped' },
+    scope: 'Exact PR head focused admission; generic build and full suites were skipped.',
+  };
+}
+
 test('complete artifact retains original graph and creates only authenticated historical bridges', async (t) => {
   const f = await fixture(t),
     receipt = await assemble(f);
@@ -606,6 +623,29 @@ test('v2 admits an explicit waiver with empty and 5 MiB generic evidence without
     result.qualification.evidencePins.slice(-2).map((pin) => pin.bytes),
     [0, 5 * 1024 * 1024],
   );
+
+  const focusedQualification = structuredClone(qualification);
+  delete focusedQualification.preMergeValidationCorroboration;
+  focusedQualification.focusedAdmissionCorroboration = focusedAdmission(
+    focusedQualification.sourceTree,
+  );
+  const focusedBytes = jsonBytes(focusedQualification);
+  await fs.writeFile(path.join(f.directory, 'qualification.json'), focusedBytes);
+  configuration.currentSourceQualification.sha256 = digest(focusedBytes);
+  const focusedResult = await validateAdmissions({
+    directory: f.directory,
+    metadata,
+    configuration,
+    readSourceFile: async () => policyBytes,
+  });
+  assert.equal(
+    focusedResult.qualification.focusedAdmissionCorroboration.fullTests.status,
+    'waived-and-skipped',
+  );
+  assert.equal(
+    focusedResult.qualification.focusedAdmissionCorroboration.genericBuild.status,
+    'skipped-by-fast-release-policy',
+  );
 });
 
 test('v2 refuses forged pass claims, failed mandatory gates, and missing or invalid policy', async (t) => {
@@ -665,6 +705,25 @@ test('v2 refuses forged pass claims, failed mandatory gates, and missing or inva
           command: 'npm run build',
           step: { status: 'completed', conclusion: 'success' },
         }),
+    ],
+    [
+      'ambiguous focused and deferred PR proof',
+      (q) => (q.focusedAdmissionCorroboration = focusedAdmission(q.sourceTree)),
+    ],
+    [
+      'failed focused classification proof',
+      (q) => {
+        delete q.preMergeValidationCorroboration;
+        q.focusedAdmissionCorroboration = focusedAdmission(q.sourceTree);
+        q.focusedAdmissionCorroboration.classificationSteps[1].conclusion = 'failure';
+      },
+    ],
+    [
+      'focused proof for another source tree',
+      (q) => {
+        delete q.preMergeValidationCorroboration;
+        q.focusedAdmissionCorroboration = focusedAdmission('d'.repeat(40));
+      },
     ],
     [
       'incomplete frozen proof',
