@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { boundedJSON } from '../data-json.mjs';
+import { boundedJSON, exactKeys } from '../data-json.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const bytes = (value) => Buffer.byteLength(JSON.stringify(value));
 
@@ -91,4 +92,28 @@ test('exact byte accounting retains structural and shape protections', () => {
   assert.throws(() => boundedJSON([1, 2], { maxArray: 1 }), /item budget/);
   assert.throws(() => boundedJSON({ nested: {} }, { maxDepth: 0 }), /structural budget/);
   assert.throws(() => boundedJSON([1, 2], { maxNodes: 2 }), /structural budget/);
+});
+
+test('shared JSON boundary reports owned validation errors in the active locale', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('uk', { persist: false });
+
+  assert.throws(() => boundedJSON('{'), /Файл має містити дійсний JSON/);
+  assert.throws(() => boundedJSON(NaN), /Числа в JSON мають бути скінченними/);
+  assert.throws(() => boundedJSON(new Date()), /лише звичайні дані JSON/);
+  const cycle = {};
+  cycle.self = cycle;
+  assert.throws(() => boundedJSON(cycle), /Циклічні посилання/);
+  const forbidden = Object.defineProperty({}, '__proto__', { value: {}, enumerable: true });
+  assert.throws(() => boundedJSON(forbidden), /Заборонений ключ JSON: __proto__/);
+  assert.throws(() => exactKeys(null, [], 'profile'), /profile має бути об’єктом/);
+  assert.throws(
+    () => exactKeys({ revision: 1 }, [], 'profile'),
+    /profile\.revision не підтримується/,
+  );
+
+  setLocale('en', { persist: false });
+  assert.throws(() => boundedJSON('{'), /The file must contain valid JSON/);
+  assert.throws(() => exactKeys(null, [], 'profile'), /profile must be an object/);
 });
