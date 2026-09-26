@@ -107,6 +107,12 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   storage recovery cohort passes **126/126**. This covers active-page disposal, missing-original
   diagnostics and refusal, exact retained-package recovery, transactional storage rollback and
   quota-failure reservation cleanup.
+- A focused two-picture recovery regression suspends the second mission during its verified route,
+  restores and legally completes that exact mission, and binds the completion to its distinct
+  picture bytes. Reordering the campaign produces a different immutable edition and attempt key;
+  the changed edition refuses the old attempt and loads an empty scoped profile while the original
+  profile retains the second-mission clear. The corresponding built-in-browser middle-mission UI
+  repetition remains an open acceptance item in the Phase 2 record.
 - The built-in browser loaded an exact 810,180-byte local `.rlpack` through a one-edition catalog,
   installed creator edition `6033108fe9e7acc279cb888b19cfccb7033aa9ce20999dc5213b58e282873467`,
   showed its installed and offline-copy state, offloaded its runtime media, replaced Play with

@@ -12,6 +12,7 @@ remain open.
 - Batch-core tests cover 1-, 12- and 50-picture preparation, natural order, duplicate names and bytes, deterministic regeneration, explicit failed-item exclusion, reorder, campaign grouping, checkpoints, cancellation and explicit capacity splits. Full-size hashing and image preparation report at most one active item.
 - Batch-review tests cover multi-file selection, editable titles, reorder, exclusion, regeneration, removal, cancellation, 24 MiB package-capacity choices, focus retention and object-URL cleanup. Production intake uses an exact-byte adapter that revalidates the displayed one-mission preparations as one ordered campaign.
 - Bundle integration tests cover 1-, 12- and 50-mission round trips, authored continuation order, exact media closure, forged per-mission evidence, stale approval, immutable installed editions, complete source-backup recovery and split-package closure.
+- A focused exact-edition regression suspends the second mission of a two-picture campaign during its verified route, restores and completes that same mission, and resolves its distinct picture bytes. Reordering the missions produces a different edition and attempt key; that edition refuses the saved attempt and loads an empty scoped profile while the original edition retains the second-mission clear.
 - The final combined creator regression on the current `creator-layouts.v3` revision passed **36/36 tests in about 50 seconds**. The run covered batch bundle, batch UI, portable bundle, single-image generation, the template registry and scoped tools-host integration together, so this count describes one exact revision rather than adding results from different commits.
 
 ## Built-in browser evidence completed
@@ -40,7 +41,7 @@ remain open.
 ## Browser and release gates still required
 
 - Capture browser-process memory measurements during another large preparation run. The UI and automated probes establish serial full-size work, but this record does not yet claim a measured peak-memory bound.
-- Reload an unfinished middle mission and verify every earned picture remains bound after another reload. Install a changed edition alongside it and confirm attempts and rewards do not migrate.
+- Repeat the unfinished middle-mission and changed-edition isolation path through the built-in browser UI. The exact runtime, reward dependency, attempt-key and persisted-profile boundary is accepted by the focused automated regression; a physical browser run remains open so this record does not infer the visible reload experience from storage-level evidence.
 - Inspect a duplicate-byte split export to confirm payload deduplication in the actual file. The existing two- and 12-picture inspections confirm exact derivative closure, source-original separation and zero trailing bytes; automated tests cover unrelated-media and player-progress exclusion.
 - Exercise failed installation recovery and concurrent-tab stale-state refusal. Browser quota estimates remain advisory.
 - Complete the combined PR's hosted gates, freeze and inspect the assigned `v0.141.0` artifact,
