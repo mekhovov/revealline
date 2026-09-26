@@ -116,7 +116,13 @@ async function setup(t, modes = ['standard', 'gentle'], { installed = true } = {
   });
   t.mock.method(SoloElement.prototype, 'getContext', () => ({ drawImage() {} }));
   t.mock.method(BoardPainter.prototype, 'drawGallery', () => {});
-  const page = await soloPage(t, { storage, assetIndexedDB: assets.indexedDB });
+  const page = await soloPage(t, {
+    storage,
+    assetIndexedDB: assets.indexedDB,
+    // The focused CI gate validates the full repository immediately before
+    // this real host boots, so artwork selection can exceed the 5 s default.
+    initialReadyTimeoutMs: 15_000,
+  });
   return {
     ...page,
     get rendered() {
