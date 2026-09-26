@@ -100,6 +100,15 @@ shared-contract/upstream-presentation cohort passed 230. The final control reloc
 its own actual-host regression. Full release qualification remains separate from these
 focused checks.
 
+A keyboard follow-up reproduced a missed-release edge case when an embedded view becomes
+hidden without a window blur. The shared Solo input adapter now clears its physical key
+ledger on either departure event, retaining the normal explicit-resume and held-repeat
+guards. Three actual-focus host regressions cover launch, Settings return, letter-key
+fallback, blur and visibility-only recovery. Together with the continuous input, UI input
+and controller boost recovery suites, all 138 checks pass. Browser checks also confirmed
+arrow and WASD steering and Escape pause/resume in Coupa; the user confirmed keyboard
+controls were working before this additional lifecycle fix.
+
 The delivery sequence remains: shared-host candidate → advanced encounter proofs →
 14-edition reproducible freeze → human review of the representative artwork and gameplay →
 final art in small batches → installation/performance/rollback qualification → exact-byte
