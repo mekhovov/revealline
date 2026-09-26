@@ -13,24 +13,26 @@ versions or acceptance gates are still current.
 - PR #652 has merged to `main` at `ee015163de1131313436b0550892f3739e3c7a1a` after its focused
   and release-ready gates passed. The v0.132.5 immutable release and public acceptance are still
   owned by the publisher; a source merge is not public delivery.
-- Current `main` is `55f83c2221c382ac5626e37a079e488eed79b920` after the v0.132.5 throughput
-  controller merged. All nineteen cultural branch tips were guarded-pushed atomically onto that
-  commit; the v0.149.0 successor is draft PR #650 and the test/documentation reconciliation is
-  draft PR #651. Independent ready PR #657 carries the Team continuation hotfix directly on `main`.
-  The dirty root checkout was not changed.
+- Current `main` is `bc5378cf186681aa311fccbf180d295cc3bc0a6c` after PR #656's fastline
+  throughput-contract repair merged. All nineteen cultural branch tips were guarded-pushed
+  atomically onto that commit with an equal 65-commit count and one-to-one range diff. The
+  v0.149.0 successor is draft PR #650 at
+  `271c8561aad80af85d8a6b4527f84a7cad8b0066`; the test/documentation reconciliation is draft PR
+  #651. Independent ready PR #657 is rebased directly on current `main` at
+  `d24f7da4a93f6437bf3f189b0ef9a31d9bce71b3`. The dirty root checkout was not changed.
 
 ## Completed source work
 
-| Scope                                            | State                         | Evidence boundary                                                                                                                                                                                                                                                       |
-| ------------------------------------------------ | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Journey Ukrainian spatial stack v12-v24          | Rebased and pushed            | Candidate source only; each draft PR still needs its own promotion and public verification.                                                                                                                                                                             |
-| Apex v25 / PR #625                               | Clean draft, source `0.140.0` | Earlier focused and production-build evidence exists; the exact terminal-base head still needs release CI.                                                                                                                                                              |
-| Complete Team adoption / PR #630                 | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.                                                                                                                                                         |
-| First Team Ukrainian slice / PR #636             | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                                                                                                                                  |
-| Second Team Ukrainian slice / PR #642            | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                                                                                                                                   |
-| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; earlier focused cohort 83/83, localization validation and post-rebase lightweight cohort 41/41 pass; exact head `c4cfe7092e8b7dd25b3803e4cb0531dc8007a04d`; not public. |
-| Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.                                                                                                       |
-| Team opaque-owner continuation / PR #657         | Ready isolated hotfix         | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Main-based continuation/localization/impact cohort passes 27/27; not merged or public.                           |
+| Scope                                            | State                         | Evidence boundary                                                                                                                                                                                                                                                                                   |
+| ------------------------------------------------ | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Journey Ukrainian spatial stack v12-v24          | Rebased and pushed            | Candidate source only; each draft PR still needs its own promotion and public verification.                                                                                                                                                                                                         |
+| Apex v25 / PR #625                               | Clean draft, source `0.140.0` | Earlier focused and production-build evidence exists; the exact terminal-base head still needs release CI.                                                                                                                                                                                          |
+| Complete Team adoption / PR #630                 | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.                                                                                                                                                                                     |
+| First Team Ukrainian slice / PR #636             | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                                                                                                                                                              |
+| Second Team Ukrainian slice / PR #642            | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                                                                                                                                                               |
+| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; earlier focused cohort 83/83, localization validation and post-rebase lightweight cohort 41/41 pass; exact head `271c8561aad80af85d8a6b4527f84a7cad8b0066`; not public.                             |
+| Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.                                                                                                                                   |
+| Team opaque-owner continuation / PR #657         | Ready isolated hotfix         | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Exact current-main continuation/localization/impact cohort passes 27/27 at `d24f7da4a93f6437bf3f189b0ef9a31d9bce71b3`; not merged or public. |
 
 After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
@@ -55,14 +57,14 @@ feasibility and rules out a mandatory late-cleanup tail in those fixtures; it do
 Effort starts when the item has an uncontested release or implementation slot. GitHub runner,
 large-asset and archive delays are outside these estimates.
 
-| Priority | Remaining item                          | Exit condition                                                                                                                                     |                                                        Indicative effort |
-| -------: | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | -----------------------------------------------------------------------: |
-|        0 | Finish v0.132.4 publication             | Immutable release, Pages, public byte check and bounded Team artwork launch/retry proof                                                            | Publisher in progress; **2–8 hours** if the current controller fix holds |
-|        1 | Promote the cultural Journey chain      | Review/merge in dependency order, exact-head qualification, immutable release and public play for each accepted batch                              |                                   **1–2 working days per release batch** |
-|        2 | Complete second Team slice and fixtures | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete          |                                         **3–6 hours** plus release queue |
-|        3 | Team continuation and qualification     | Review/publish PR #657; paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof |                          **8–16 hours** plus release queue/device access |
-|        4 | Whole-Journey pacing and accessibility  | Campaign-to-campaign pressure audit, reduced-effects/contrast/small-screen/performance and deterministic compatibility                             |                                                     **2–4 working days** |
-|        5 | Human balance and cultural review       | Understandable failures, distinct missions, enjoyable retries and cultural review by people                                                        |                       **1–2 days synthesis** after testers are available |
+| Priority | Remaining item                                | Exit condition                                                                                                                                          |                                                                           Indicative effort |
+| -------: | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------: |
+|        0 | Finish the v0.132.4/v0.132.5 publication lane | Confirm v0.132.4 public-byte acceptance, then immutable v0.132.5 release, Pages and bounded public proof without mixing in release-optimization changes | **2–8 hours after the publisher resumes**; currently paused on a release-packaging decision |
+|        1 | Promote the cultural Journey chain            | Review/merge in dependency order, exact-head qualification, immutable release and public play for each accepted batch                                   |                                                      **1–2 working days per release batch** |
+|        2 | Complete second Team slice and fixtures       | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete               |                                                            **3–6 hours** plus release queue |
+|        3 | Team continuation and qualification           | Review/publish PR #657; paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof      |                                             **8–16 hours** plus release queue/device access |
+|        4 | Whole-Journey pacing and accessibility        | Campaign-to-campaign pressure audit, reduced-effects/contrast/small-screen/performance and deterministic compatibility                                  |                                                                        **2–4 working days** |
+|        5 | Human balance and cultural review             | Understandable failures, distinct missions, enjoyable retries and cultural review by people                                                             |                                          **1–2 days synthesis** after testers are available |
 
 Existing v0.133-v0.137 player-UX drafts occupy the nominal release sequence. Cultural PR titles
 currently target v0.138 onward, but version numbers must be assigned by the sole publisher from the
@@ -88,25 +90,26 @@ accepted predecessor; draft labels do not reserve a release.
    dependencies, logs and test artifacts was removed after checking for Git repositories, patches,
    published release assets and active processes. Roughly 1.4 GiB remained after each reclamation.
    Avoid duplicate local builds and never remove unpushed source, user media or another task's active
-   workspace.
+   workspace. Free space is now about 1.1 GiB, so duplicate production builds remain unsafe.
 7. **Host performance:** the uncontended PR #651 scenarios pass, but individual chooser paths took
    about 5.5–30.6 seconds in the fixture harness. This closes the corrected-assertion gap, not the
    broader startup/performance qualification.
-8. **First cultural gate:** PR #530's latest exact-head focused run passed all forty selected route
-   checks and seven of eight controller-host scenarios. The Solo compact-filter scenario failed one
-   focus-state assertion while the paired Versus and Team scenarios passed. The exact failed case
-   then passed locally on the newly rebased head in 8.7 seconds. A fresh hosted focused run is active;
-   the earlier failure is not represented as passed until that exact-head rerun completes.
+8. **First cultural gate:** PR #530's earlier focused run passed all forty selected route checks and
+   seven of eight controller-host scenarios. The Solo compact-filter scenario failed one focus-state
+   assertion while paired Versus and Team scenarios passed; that exact case then passed locally in
+   8.7 seconds. A subsequent hosted rerun was cancelled when `main` advanced, not completed. A fresh
+   run for exact rebased head `4afdf01c3abc293363a4a7a8bd82c1c56d713fbf` is active; no cancelled
+   run is represented as a pass.
 
 ## Immediate execution order
 
-1. Let the sole publisher finish v0.132.4 acceptance and the active v0.132.5 lane; do not duplicate
-   its release mutations.
+1. Let the sole publisher resolve the release-packaging choice and finish v0.132.4 acceptance plus
+   the v0.132.5 lane; keep release-throughput experiments out of that publication path.
 2. Qualify and publish isolated PR #657 after the active release lane; do not wait for the full
    cultural stack to restore Team Classic → Custom Next.
-3. Finish PR #530's new exact-head hosted focused rerun. Its previously failing Solo
-   compact-controller case passes locally after the rebase, while the earlier hosted failure remains
-   recorded.
+3. Finish PR #530's exact-head hosted focused rerun at `4afdf01c3abc293363a4a7a8bd82c1c56d713fbf`.
+   Its previously failing Solo compact-controller case passes locally, while the earlier hosted
+   failure and rebase-cancelled rerun remain recorded.
 4. Keep the rebased cultural PR chain clean and reviewable while the public release lane completes.
 5. Review and qualify the bounded v0.149.0 PR #650 at its exact head.
 6. Review draft PR #651 and publish the isolated library-fixture reconciliation after its focused
