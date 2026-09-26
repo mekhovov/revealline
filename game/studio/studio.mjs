@@ -69,6 +69,7 @@ import { createTeamJourneyCandidates } from '../content-design/team-journey-cand
 import { createTeamPressureOriginalCandidates } from '../content-design/team-pressure-originals.mjs';
 import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
 import { createTeamCompleteSpecialistOriginalCandidates } from '../content-design/team-complete-specialist-originals.mjs';
+import { createTeamCulturalSpecialistOriginalCandidates } from '../content-design/team-cultural-specialist-originals.mjs';
 import { createTeamTimedCandidates } from '../content-design/team-timed-candidates.mjs';
 import { createTeamTimedOriginalCandidates } from '../content-design/team-timed-originals.mjs';
 import { createTeamWindowSpatialCandidates } from '../content-design/team-window-spatial-candidates.mjs';
@@ -873,13 +874,15 @@ $('team-signal').onclick = guarded(() => {
 $('team-journey').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(
-    $('team-journey-edition').value === 'complete-specialist-originals-1'
-      ? createTeamCompleteSpecialistOriginalCandidates()
-      : $('team-journey-edition').value === 'spatial-originals-1'
-        ? createTeamSpatialOriginalCandidates()
-        : $('team-journey-edition').value === 'pressure-originals-1'
-          ? createTeamPressureOriginalCandidates()
-          : createTeamJourneyCandidates({ artwork: true }),
+    $('team-journey-edition').value === 'cultural-specialist-originals-1'
+      ? createTeamCulturalSpecialistOriginalCandidates()
+      : $('team-journey-edition').value === 'complete-specialist-originals-1'
+        ? createTeamCompleteSpecialistOriginalCandidates()
+        : $('team-journey-edition').value === 'spatial-originals-1'
+          ? createTeamSpatialOriginalCandidates()
+          : $('team-journey-edition').value === 'pressure-originals-1'
+            ? createTeamPressureOriginalCandidates()
+            : createTeamJourneyCandidates({ artwork: true }),
     null,
     2,
   );
