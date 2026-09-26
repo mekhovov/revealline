@@ -12,9 +12,18 @@ import {
   activateInstalledEdition,
   updateInstalledSelection,
 } from './installed-app.mjs';
+import { formatNumber, localizedText, t } from './i18n/index.mjs';
 
 const $ = (id) => document.getElementById(id);
-const size = (bytes) => `${(bytes / 1048576).toFixed(1)} MiB`;
+const size = (bytes) =>
+  t('interface:downloads.sizeMiB', {
+    size: formatNumber(bytes / 1048576, { minimumFractionDigits: 1, maximumFractionDigits: 1 }),
+  });
+const groupTitle = (group) => (group.titleKey ? t(group.titleKey) : group.title);
+const localError = (key, values) =>
+  Object.assign(new Error(t(key, values)), { localization: { key, values } });
+const errorText = (error) =>
+  error?.localization ? t(error.localization.key, error.localization.values) : error.message;
 const available = offlineAvailability();
 const store = createOfficialDownloads();
 let controller,
@@ -47,7 +56,7 @@ const source = createSoundtrackSource({
   archives: SOUNDTRACK_ARCHIVES,
 });
 const operation = (message) => {
-  $(musicJob ? 'music-operation-status' : 'operation-status').textContent = message;
+  localizedText($(musicJob ? 'music-operation-status' : 'operation-status'), message);
 };
 const gameIDs = () =>
   catalogue.groups
@@ -87,34 +96,69 @@ async function estimates() {
           .filter((file) => coreMissing.has(file.path))
           .reduce((sum, file) => sum + file.bytes, 0)
       : coreBytes;
-  $('game-size').textContent =
-    `${size(totalDownloadBytes)} download, including the shared runtime and original artwork; up to ${size(report.totalBytes + coreBytes)} stored on this device. Up to ${size(report.remainingBytes + coreRemaining)} remain. Allow ${size(report.requiredBytes + coreRemaining)} additional storage while keeping an existing edition.${report.availableBytes === null ? ' Free space estimate unavailable.' : ` Estimated free: ${size(report.availableBytes)}.`}`;
+  localizedText($('game-size'), () =>
+    t('interface:downloads.gameSize', {
+      download: size(totalDownloadBytes),
+      stored: size(report.totalBytes + coreBytes),
+      remaining: size(report.remainingBytes + coreRemaining),
+      required: size(report.requiredBytes + coreRemaining),
+      free:
+        report.availableBytes === null
+          ? t('interface:downloads.freeUnavailable')
+          : t('interface:downloads.freeEstimate', { size: size(report.availableBytes) }),
+    }),
+  );
 }
 async function health({ verify = true } = {}) {
   const gameplay = await store.inspect(gameFiles(), { verify });
   const runtime = await checkOffline();
   runtimeHealth = runtime;
   ready = gameplay.ready && runtime.status === 'ready';
-  $('game-status').textContent = ready
-    ? $('all-game').checked
-      ? 'Game ready offline'
-      : 'Selected chapters ready offline'
-    : 'Game download is incomplete. Resume downloads or verify to repair missing files.';
+  localizedText($('game-status'), () =>
+    ready
+      ? t(
+          $('all-game').checked
+            ? 'interface:downloads.gameReady'
+            : 'interface:downloads.chaptersReady',
+        )
+      : t('interface:downloads.gameIncomplete'),
+  );
   $('activate').hidden = !ready;
   $('details').textContent = JSON.stringify({ runtime, gameplay }, null, 2);
   const musicEstimate = await store.estimate(
     catalogue.files.filter((file) => file.kind === 'soundtrack'),
   );
-  $('music-size').textContent =
-    `${size(musicEstimate.totalBytes)} for all soundtracks · ${size(musicEstimate.remainingBytes)} remaining · allow ${size(musicEstimate.requiredBytes)} additional space.${musicEstimate.availableBytes === null ? '' : ` Estimated free: ${size(musicEstimate.availableBytes)}.`}`;
+  localizedText($('music-size'), () =>
+    t('interface:downloads.musicSize', {
+      total: size(musicEstimate.totalBytes),
+      remaining: size(musicEstimate.remainingBytes),
+      required: size(musicEstimate.requiredBytes),
+      free:
+        musicEstimate.availableBytes === null
+          ? ''
+          : t('interface:downloads.freeEstimate', { size: size(musicEstimate.availableBytes) }),
+    }),
+  );
   let count = 0;
   for (const file of catalogue.files.filter((file) => file.kind === 'soundtrack'))
     if ((await store.inspect([file], { verify })).ready) count++;
-  $('music-status').textContent =
-    `Soundtracks: ${count} downloaded of ${catalogue.files.filter((file) => file.kind === 'soundtrack').length}.`;
+  localizedText($('music-status'), () =>
+    t('interface:downloads.soundtracksDownloaded', {
+      count,
+      total: catalogue.files.filter((file) => file.kind === 'soundtrack').length,
+    }),
+  );
   for (const [id, element] of albums) {
     const report = await store.estimate(downloadFiles(catalogue, [id]));
-    element.textContent = `${size(report.totalBytes)} · ${report.ready ? 'Ready offline' : `${size(report.remainingBytes)} remaining`} · allow ${size(report.requiredBytes)} free space`;
+    localizedText(element, () =>
+      t('interface:downloads.albumSize', {
+        total: size(report.totalBytes),
+        state: report.ready
+          ? t('interface:downloads.readyOffline')
+          : t('interface:downloads.remaining', { size: size(report.remainingBytes) }),
+        required: size(report.requiredBytes),
+      }),
+    );
   }
   await estimates();
 }
@@ -125,32 +169,31 @@ async function run(task, { music = false } = {}) {
   busy(true);
   try {
     const message = await task(controller.signal);
-    operation(
-      typeof message === 'string'
-        ? message
-        : 'Download complete. Verified files are saved on this device.',
-    );
+    operation(message ?? (() => t('interface:downloads.complete')));
   } catch (error) {
     operation(
       error.name === 'AbortError'
-        ? 'Download paused. Resume reuses verified files; only the interrupted file restarts.'
+        ? () => t('interface:downloads.pausedMessage')
         : error.name === 'QuotaExceededError'
-          ? 'Device storage is full. Completed files, saves and your working edition are kept. Free space, then resume.'
-          : error.message,
+          ? () => t('interface:downloads.storageFull')
+          : () => errorText(error),
     );
   } finally {
     controller = null;
     musicJob = false;
     busy(false);
-    await health().catch((error) => operation(error.message));
+    await health().catch((error) => operation(() => errorText(error)));
   }
 }
 function progress(report) {
   const bar = $(musicJob ? 'music-progress' : 'progress');
   bar.max = report.totalBytes || 1;
   bar.value = report.readyBytes + (report.currentBytes || 0);
-  operation(
-    `${size(report.remainingBytes)} remaining · ${size(report.readyBytes)} verified and saved`,
+  operation(() =>
+    t('interface:downloads.progress', {
+      remaining: size(report.remainingBytes),
+      ready: size(report.readyBytes),
+    }),
   );
 }
 async function downloadAlbum(group, signal) {
@@ -159,10 +202,7 @@ async function downloadAlbum(group, signal) {
   activity?.postMessage({ probe: true });
   if (activity) await new Promise((resolve) => setTimeout(resolve, 100));
   signal.throwIfAborted();
-  if (playing.size)
-    throw new Error(
-      'Soundtrack download paused while a game is active. Return after play to resume.',
-    );
+  if (playing.size) throw localError('interface:downloads.musicPausedForGame');
   const imported = createManagedMediaStore({ soundtrackCatalogue: true });
   try {
     await store.download({
@@ -196,16 +236,17 @@ $('all-game').onchange = () => {
 $('download-game').onclick = () =>
   run(async (signal) => {
     activity?.postMessage({ gameplayDownload: true });
-    operation('Preparing the shared runtime…');
+    operation(() => t('interface:downloads.preparingRuntime'));
     const report = await prepareOffline({
       signal,
       cancelPreparation: true,
-      onStatus: (state) => operation(state.message || 'Verifying the shared runtime…'),
+      onStatus: (state) =>
+        operation(state.message || (() => t('interface:downloads.verifyingRuntime'))),
     });
     if (report.status !== 'ready')
-      throw new Error(
-        report.message || 'Close other game windows, reopen, and resume runtime preparation.',
-      );
+      throw report.message
+        ? new Error(report.message)
+        : localError('interface:downloads.closeOtherWindows');
     await store.download({
       edition,
       group: 'gameplay',
@@ -219,8 +260,7 @@ $('download-game').onclick = () =>
 $('verify-game').onclick = () =>
   run(async () => {
     await health({ verify: true });
-    if (!ready)
-      throw new Error('Missing or damaged game files. Resume the game download to repair them.');
+    if (!ready) throw localError('interface:downloads.missingFiles');
   });
 $('all-music').onclick = () =>
   run(
@@ -233,13 +273,11 @@ $('all-music').onclick = () =>
 $('remove-chapters').onclick = () =>
   run(async () => {
     if ($('all-game').checked || !selected.size)
-      throw new Error(
-        'Uncheck All shipped gameplay and choose the chapters to remove. Shared game files stay available.',
-      );
+      throw localError('interface:downloads.chooseRemoval');
     const saved = (await store.states()).find(
       (state) => state.edition === edition && state.group === 'gameplay',
     );
-    if (!saved) return 'There is no chapter download to remove.';
+    if (!saved) return () => t('interface:downloads.nothingToRemove');
     const selection = (saved.selection || []).filter(
       (id) => id === 'base' || id === 'shared' || !selected.has(id),
     );
@@ -254,21 +292,26 @@ $('remove-chapters').onclick = () =>
     selection.forEach((id) => selected.add(id));
     for (const input of document.querySelectorAll('#chapters input'))
       input.checked = selected.has(input.dataset.group);
-    return 'Chapter download selection updated. Saves, imported files, shared artwork and bytes referenced by prepared chapters are kept.';
+    return () => t('interface:downloads.removalUpdated');
   });
 $('retain').onclick = async () => {
   try {
-    $('retention-status').textContent = (await navigator.storage?.persist?.())
-      ? 'Persistent storage granted. Keep backups of your progress.'
-      : 'Persistence was not granted. Downloads still work; keep a backup and verify before travelling.';
+    const granted = await navigator.storage?.persist?.();
+    localizedText($('retention-status'), () =>
+      t(
+        granted
+          ? 'interface:downloads.persistenceGranted'
+          : 'interface:downloads.persistenceDenied',
+      ),
+    );
   } catch (error) {
-    $('retention-status').textContent = error.message;
+    localizedText($('retention-status'), () => error.message);
   }
 };
 $('activate').onclick = () =>
   run(async () => {
     await health({ verify: true });
-    if (!ready) throw new Error('Verify and repair gameplay before selecting this edition.');
+    if (!ready) throw localError('interface:downloads.verifyBeforeSelecting');
     const candidate = {
       version: catalogue.version,
       scope: baseURL,
@@ -280,12 +323,12 @@ $('activate').onclick = () =>
       { scope: appURL, updateViaCache: 'none' },
     );
     const worker = registration.installing || registration.waiting || registration.active;
-    if (!worker) throw new Error('Launcher installation has not started. Retry preparation.');
+    if (!worker) throw localError('interface:downloads.launcherNotStarted');
     if (worker?.state !== 'activated')
       await new Promise((resolve, reject) => {
         const timer = setTimeout(() => {
           worker?.removeEventListener('statechange', changed);
-          reject(new Error('Close the launcher window and retry after its update activates.'));
+          reject(localError('interface:downloads.closeLauncher'));
         }, 30000);
         const changed = () => {
           if (worker.state === 'activated' || worker.state === 'redundant') {
@@ -293,7 +336,7 @@ $('activate').onclick = () =>
             worker.removeEventListener('statechange', changed);
             worker.state === 'activated'
               ? resolve()
-              : reject(new Error('Launcher installation failed.'));
+              : reject(localError('interface:downloads.launcherFailed'));
           }
         };
         worker?.addEventListener('statechange', changed);
@@ -304,20 +347,19 @@ $('activate').onclick = () =>
       readAsset: readAssetStore,
       restorePrevious: new URL(location.href).searchParams.has('rollback'),
     });
-    $('activation-status').textContent = result.activated
-      ? result.message
-      : 'Edition downloaded. Open Classic using the link below, then More → Scores & saves → Saves & loads → Bring progress from an earlier release. Review and copy, then return here to switch. An incompatible saved flight or a busy profile keeps your working edition selected.';
+    localizedText($('activation-status'), () =>
+      result.activated ? result.message : t('interface:downloads.transferInstructions'),
+    );
     $('transfer-progress').hidden = result.activated;
   });
 async function initialize() {
   if (!available.available) throw new Error(available.reason);
   if (new URL(location.href).searchParams.has('rollback'))
-    $('activate').textContent = 'Restore previous edition and its earlier progress';
+    localizedText($('activate'), () => t('interface:downloads.restorePrevious'));
   [catalogue, core] = await Promise.all(
     ['offline-content.json', 'offline-cache.json'].map(async (path) => {
       const response = await fetch(new URL(path, baseURL));
-      if (!response.ok)
-        throw new Error('This edition does not include an offline download catalogue.');
+      if (!response.ok) throw localError('interface:downloads.catalogueMissing');
       return response.json();
     }),
   );
@@ -348,7 +390,9 @@ async function initialize() {
         $('activate').hidden = true;
         void estimates();
       };
-      label.append(input, document.createTextNode(group.title));
+      const caption = document.createElement('span');
+      localizedText(caption, () => groupTitle(group));
+      label.append(input, caption);
       $('chapters').append(label);
     } else if (group.kind === 'soundtrack') {
       const row = document.createElement('div'),
@@ -357,17 +401,17 @@ async function initialize() {
         actions = document.createElement('div');
       row.className = 'album';
       actions.className = 'actions';
-      title.textContent = group.title;
+      localizedText(title, () => groupTitle(group));
       const download = document.createElement('button'),
         remove = document.createElement('button');
-      download.textContent = 'Download / resume';
-      remove.textContent = 'Remove download';
+      localizedText(download, () => t('interface:downloads.downloadResume'));
+      localizedText(remove, () => t('interface:downloads.removeDownload'));
       download.onclick = () => run((signal) => downloadAlbum(group, signal), { music: true });
       remove.onclick = () =>
         run(
           async () => {
             await store.remove('soundtracks', group.id);
-            return 'Soundtrack download removed. Playlists, imported copies and gameplay are kept.';
+            return () => t('interface:downloads.soundtrackRemoved');
           },
           { music: true },
         );
@@ -381,5 +425,5 @@ async function initialize() {
   await health();
 }
 void initialize().catch((error) => {
-  $('game-status').textContent = error.message;
+  localizedText($('game-status'), () => errorText(error));
 });
