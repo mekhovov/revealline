@@ -134,6 +134,22 @@ class AdapterTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Fresh ordinary output'):
             adapter.assemble(self.config, output)
 
+    def test_fastline_manual_jobs_are_canonicalized(self):
+        run = copy.deepcopy(self.manual)
+        run['path'] = adapter.FASTLINE_WORKFLOW
+        jobs = copy.deepcopy(self.jobs)
+        for job in jobs['jobs']:
+            job['name'] = 'qualify / ' + job['name']
+        rows = adapter.family(
+            run,
+            jobs,
+            adapter.QUALIFICATION_WORKFLOWS,
+            'workflow_dispatch',
+            self.source['commit'],
+        )
+        self.assertIn('qualify', {job['name'] for job in rows})
+        self.assertIn('freeze', {job['name'] for job in rows})
+
     def test_previous_successful_pr_build_generation_is_retained_truthfully(self):
         jobs = copy.deepcopy(self.pr_jobs)
         jobs['jobs'][0]['steps'] = [self.step(n, i + 1) for i, n in enumerate([
