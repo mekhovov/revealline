@@ -71,3 +71,50 @@ test('cancellation and oversized streams reject before presentation adoption', a
     /pinned size/,
   );
 });
+
+test('asset verification releases stream locks and cancels a blocked tee without awaiting its other consumer', async () => {
+  const asset = catalog.assets.find((entry) => entry.id === 'coupa-flower');
+  for (const cancelled of [false, true]) {
+    const controller = new AbortController();
+    let pulled;
+    const started = new Promise((resolve) => {
+      pulled = resolve;
+    });
+    const [body, other] = new ReadableStream(
+      {
+        pull(stream) {
+          pulled();
+          if (!cancelled) stream.enqueue(new Uint8Array(asset.bytes + 1));
+        },
+      },
+      { highWaterMark: 0 },
+    ).tee();
+    const pending = verifyEditionAssets(bootstrap, {
+      baseURL: 'https://example.test/',
+      ids: [asset.id],
+      signal: controller.signal,
+      fetcher: async () => new Response(body),
+    });
+    const check = assert.rejects(pending, cancelled ? { name: 'AbortError' } : /pinned size/);
+    await started;
+    if (cancelled) controller.abort();
+    await check;
+    assert.equal(body.locked, false);
+    await other.cancel();
+  }
+});
+
+test('a globally registered foreign asset cannot be requested through a selected edition', async () => {
+  let requested = false;
+  await assert.rejects(
+    verifyEditionAssets(bootstrap, {
+      baseURL: 'https://example.test/',
+      ids: ['droneaid-logo'],
+      fetcher: () => {
+        requested = true;
+      },
+    }),
+    /unavailable in this edition/,
+  );
+  assert.equal(requested, false);
+});

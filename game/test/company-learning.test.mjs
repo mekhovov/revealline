@@ -95,7 +95,9 @@ test('commit needs inspected evidence and correct role-specific configuration; e
   });
   attempt = reduceLearningAttempt(lesson, attempt, { type: 'commit' });
   assert.equal(attempt.status, 'working');
-  assert.deepEqual(attempt.feedback, ['Record only the quantity that arrived.']);
+  assert.deepEqual(attempt.feedback, [
+    'Recording 12 would claim the four undelivered kits arrived and hide the remaining delivery. Record the eight physically received today.',
+  ]);
   attempt = reduceLearningAttempt(lesson, attempt, {
     type: 'configure',
     fieldId: 'received',

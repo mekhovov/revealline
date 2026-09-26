@@ -5,7 +5,7 @@
     "fields": [
       {
         "expected": "Electronics kit",
-        "explanation": "Use what learners need, not the unsolicited offer.",
+        "explanation": "Camera cases cannot replace the electronics kits learners will use; copying the offer would leave the workshop without its required equipment.",
         "id": "item",
         "label": "Required item",
         "options": [
@@ -15,7 +15,7 @@
       },
       {
         "expected": "12",
-        "explanation": "There is one kit for each of twelve learners.",
+        "explanation": "Ten kits would leave two of the twelve learners without equipment. Keep one kit per learner.",
         "id": "quantity",
         "label": "Required quantity",
         "options": [
@@ -25,7 +25,7 @@
       },
       {
         "expected": "12 October",
-        "explanation": "The requirement must support the workshop date.",
+        "explanation": "An arrival on 16 October misses the 14 October workshop. The brief needs kits by 12 October for preparation.",
         "id": "needBy",
         "label": "Required arrival",
         "options": [
@@ -58,7 +58,7 @@
         "title": "Unsolicited offer"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Requester",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
@@ -76,7 +76,7 @@
     "fields": [
       {
         "expected": "Birch",
-        "explanation": "Compare completeness, delivery and budget together.",
+        "explanation": "Cedar omits the required cases; Maple arrives after the deadline. Birch supplies the complete scope on time within 600 credits.",
         "id": "supplier",
         "label": "Selected offer",
         "options": [
@@ -87,7 +87,7 @@
       },
       {
         "expected": "Meets scope, date and budget",
-        "explanation": "Lowest price alone does not meet the declared requirement.",
+        "explanation": "Choosing the lowest displayed price would omit required cases. Record scope, date and budget so the next owner can understand the award.",
         "id": "basis",
         "label": "Recorded decision basis",
         "options": [
@@ -121,7 +121,7 @@
         "title": "Comparable offers"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Buyer",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
@@ -139,7 +139,7 @@
     "fields": [
       {
         "expected": "12 kits with cases",
-        "explanation": "Keep the complete awarded scope.",
+        "explanation": "Cases alone would remove the electronics kits from the handoff. Retain both kits and cases from the chosen offer.",
         "id": "scope",
         "label": "Contract scope",
         "options": [
@@ -149,7 +149,7 @@
       },
       {
         "expected": "30 days after invoice date",
-        "explanation": "Record the agreed terms rather than inventing a faster payment.",
+        "explanation": "Immediate payment on order changes the agreed obligation. Carry forward the parties’ 30-days-after-invoice term without inventing a new one.",
         "id": "paymentTerm",
         "label": "Payment term",
         "options": [
@@ -182,7 +182,7 @@
         "title": "Agreed scenario terms"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Sourcing coordinator",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
@@ -200,7 +200,7 @@
     "fields": [
       {
         "expected": "Department approver",
-        "explanation": "The draft needs the required internal review.",
+        "explanation": "570 credits exceeds this case’s 500-credit threshold. Sending the draft to the supplier would skip the required department review.",
         "id": "nextOwner",
         "label": "Next owner",
         "options": [
@@ -210,7 +210,7 @@
       },
       {
         "expected": "Pending approval",
-        "explanation": "Submitting a request does not itself issue a purchase order.",
+        "explanation": "Pending approval preserves the required review step. Calling the draft an issued order would claim an authorization that has not happened.",
         "id": "nextState",
         "label": "Requested next state",
         "options": [
@@ -243,7 +243,7 @@
         "title": "Scenario policy"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Requester",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
@@ -265,7 +265,7 @@
     "fields": [
       {
         "expected": "PO-204 / line 1",
-        "explanation": "Link the receipt to the actual order line.",
+        "explanation": "PO-204 is the order on the delivery evidence. Posting to PO-999 would leave the real order outstanding and corrupt an unrelated record.",
         "id": "line",
         "label": "Order line",
         "options": [
@@ -275,7 +275,7 @@
       },
       {
         "expected": "8",
-        "explanation": "Record only the quantity that arrived.",
+        "explanation": "Recording 12 would claim the four undelivered kits arrived and hide the remaining delivery. Record the eight physically received today.",
         "id": "received",
         "label": "Quantity received today",
         "options": [
@@ -302,7 +302,7 @@
         "title": "Delivery note D-204A"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Receiver",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
@@ -320,7 +320,7 @@
     "fields": [
       {
         "expected": "Documents match",
-        "explanation": "All three quantities and the agreed total now match.",
+        "explanation": "The order, receipts and invoice each show 12 kits, and the invoice matches 570 credits. Flagging a quantity mismatch would delay this ready handoff.",
         "id": "match",
         "label": "Reconciliation result",
         "options": [
@@ -330,7 +330,7 @@
       },
       {
         "expected": "Approved for payment",
-        "explanation": "Approval is not evidence that a payment occurred.",
+        "explanation": "This case permits approval after the matching check, but no payment record exists. Marking it paid would conceal the outstanding payment step.",
         "id": "state",
         "label": "After the review",
         "options": [
@@ -339,7 +339,7 @@
         ]
       }
     ],
-    "fixtureRevision": "1",
+    "fixtureRevision": "2",
     "format": "revealline-learning-lesson.v1",
     "id": "coupa-source-to-pay-06-lesson",
     "kind": "practice",
@@ -358,12 +358,13 @@
         "id": "status",
         "lines": [
           "Status: Pending approval. No payment record exists.",
-          "The scenario requires an AP review before payment scheduling."
+          "The scenario requires an AP review before payment scheduling.",
+          "For this simplified case, matching quantities and the agreed total satisfy that review; there are no other holds. Real review rules vary by organization."
         ],
         "title": "Current invoice"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Accounts payable",
     "sourceReviewedAt": "2026-09-26",
     "sources": [

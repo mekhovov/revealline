@@ -5,7 +5,7 @@
     "fields": [
       {
         "expected": "R-301",
-        "explanation": "Select the task assigned to you.",
+        "explanation": "R-301 is assigned to the requester. Acting on R-405 would take another role’s review while leaving your delivery address unresolved.",
         "id": "record",
         "label": "Open record",
         "options": [
@@ -16,7 +16,7 @@
       },
       {
         "expected": "Complete delivery address",
-        "explanation": "A notification does not necessarily require an action.",
+        "explanation": "The invoice notification reports an outcome; it does not assign you approval work. Complete the address so the requester’s task can move forward.",
         "id": "action",
         "label": "Work to perform",
         "options": [
@@ -50,7 +50,7 @@
         "title": "Task board"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Requester",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
@@ -72,7 +72,7 @@
     "fields": [
       {
         "expected": "4",
-        "explanation": "The request note specifies four lamps.",
+        "explanation": "One lamp would leave three of the four requested lamps unfulfilled. Use the request note’s quantity of four.",
         "id": "quantity",
         "label": "Quantity",
         "options": [
@@ -82,7 +82,7 @@
       },
       {
         "expected": "Save draft",
-        "explanation": "The requester has asked to save first.",
+        "explanation": "Submitting now would start a review before the requester’s intended draft check. Save the complete draft and keep submission separate.",
         "id": "operation",
         "label": "Draft action",
         "options": [
@@ -115,7 +115,7 @@
         "title": "Request note"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Requester",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
@@ -133,7 +133,7 @@
     "fields": [
       {
         "expected": "Return for clarification",
-        "explanation": "The required quote is missing.",
+        "explanation": "780 credits exceeds this case’s threshold and the required quote is absent. Approval would bypass the stated evidence check.",
         "id": "decision",
         "label": "Review action",
         "options": [
@@ -143,7 +143,7 @@
       },
       {
         "expected": "Attach supporting quote",
-        "explanation": "Identify the specific missing evidence.",
+        "explanation": "A request to attach the quote tells the requester how to repair the handoff. An age complaint does not identify the missing evidence.",
         "id": "reason",
         "label": "Handoff reason",
         "options": [
@@ -176,7 +176,7 @@
         "title": "Review policy for this case"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Department approver",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
@@ -194,7 +194,7 @@
     "fields": [
       {
         "expected": "Buyer",
-        "explanation": "Use the owner specified by the scenario.",
+        "explanation": "This case assigns delivery-change review to the buyer. Sending it elsewhere would leave the pending change without its designated decision maker.",
         "id": "owner",
         "label": "Review owner",
         "options": [
@@ -204,7 +204,7 @@
       },
       {
         "expected": "18 October",
-        "explanation": "A pending proposal has not replaced the accepted order.",
+        "explanation": "Using 21 October now would treat an unapproved proposal as accepted. Retain 18 October until this change is approved.",
         "id": "acceptedDate",
         "label": "Current accepted delivery date",
         "options": [
@@ -234,13 +234,13 @@
         "title": "Supplier change request C-303"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Buyer",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
       {
-        "title": "Coupa Supplier Portal — View and manage purchase orders",
-        "url": "https://docs.coupa.com/en/supplier-documentation/coupa-for-suppliers/the-coupa-supplier-portal-or-csp/features-and-processes-in-the-coupa-supplier-portal/purchase-orders/view-and-manage-pos"
+        "title": "Coupa Supplier Portal — Edit a purchase order",
+        "url": "https://docs.coupa.com/en/supplier-documentation/coupa-for-suppliers/the-coupa-supplier-portal-or-csp/features-and-processes-in-the-coupa-supplier-portal/purchase-orders/view-and-manage-pos/edit-a-po-in-the-csp"
       }
     ],
     "success": "Change C-303 routed to the buyer. The accepted date remains 18 October.",
@@ -252,7 +252,7 @@
     "fields": [
       {
         "expected": "Line 1: monitors",
-        "explanation": "The packing slip names monitors.",
+        "explanation": "Receiving keyboards would record goods that did not arrive while leaving the monitor delivery unrecorded. Use the monitor line.",
         "id": "line",
         "label": "Receiving line",
         "options": [
@@ -262,7 +262,7 @@
       },
       {
         "expected": "4",
-        "explanation": "Do not receive the remaining two monitors early.",
+        "explanation": "Six would hide the two undelivered monitors; ten would also confuse the keyboard quantity. Record the four monitors on the packing slip.",
         "id": "quantity",
         "label": "Quantity received",
         "options": [
@@ -296,7 +296,7 @@
         "title": "Packing slip"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Receiver",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
@@ -314,7 +314,7 @@
     "fields": [
       {
         "expected": "Invoice quantity",
-        "explanation": "Order and actual receipt agree; the invoice differs.",
+        "explanation": "The order and actual receipt both show eight lamps; only the invoice shows ten. Changing the receipt would erase accurate delivery evidence.",
         "id": "issue",
         "label": "Discrepancy",
         "options": [
@@ -324,7 +324,7 @@
       },
       {
         "expected": "AP requests supplier clarification",
-        "explanation": "Preserve correct records while resolving the discrepancy.",
+        "explanation": "AP can ask the supplier to clarify the extra two invoiced lamps. Increasing a correct receipt would disguise the discrepancy without delivering goods.",
         "id": "handoff",
         "label": "Next action",
         "options": [
@@ -360,7 +360,7 @@
         "title": "Exception handling for this case"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Accounts payable",
     "sourceReviewedAt": "2026-09-26",
     "sources": [

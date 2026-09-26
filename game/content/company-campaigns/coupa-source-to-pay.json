@@ -29,7 +29,7 @@
         "coupa-source-to-pay-06"
       ],
       "name": "From Need to Value",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "difficultyCatalogId": "journey-difficulty-v1",
@@ -475,9 +475,9 @@
       "format": "PackDesignV1",
       "id": "coupa-source-to-pay-pack",
       "name": "From Need to Value",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-arcade-v2",
-  "revision": "1"
+  "revision": "2"
 }
