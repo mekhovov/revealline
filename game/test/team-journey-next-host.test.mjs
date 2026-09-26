@@ -458,6 +458,9 @@ for (const interruption of ['focus', 'foreground'])
     else {
       f.win.emit('blur');
       f.win.emit('focus');
+      // Foreground return deliberately keeps controller Confirm neutralized
+      // until the next input sample proves that it has been released.
+      f.tick();
     }
     assert.equal(f.$('coop-journey-skip-confirm').textContent, 'Skip mission');
     armSkip(f, 'coop-journey-skip-confirm');
