@@ -16,9 +16,9 @@ versions or acceptance gates are still current.
   entered the Team review closure; the accepted correction preserves that fail-closed gate.
   Immutable assets, Pages and public acceptance remain publisher-owned. A source merge is not
   public delivery.
-- The 21-branch cultural/pacing successor chain has been rebased locally onto current `main`.
-  All 71 rewritten commits range-diff one-to-one with their prior versions; guarded remote updates
-  remain the next step. The v0.149.0 successor maps to draft PR #650 at
+- The 21-branch cultural/pacing successor chain has been rebased onto current `main` and all remote
+  tips were force-updated atomically with exact old-head leases. All 71 rewritten commits range-diff
+  one-to-one with their prior versions. The v0.149.0 successor is draft PR #650 at
   `730ada618`; fixture reconciliation maps to PR #651 at `ef3de99e5`, and the pacing inventory maps
   to PR #661 at `bed3e9cdb`. Independent PR #657 remains at `6459e8fbc2e11f0c3bd6d735885c674c9e7295b8`
   and now needs its own current-main rebase before promotion. The dirty root checkout was not changed.
