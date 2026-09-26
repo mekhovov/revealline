@@ -12,8 +12,8 @@ the public site.
 | ----------------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Public player release   | **v0.131.0** — [playable release](https://mekhovov.github.io/revealline/releases/v0.131.0/site/game/) | Current Pages selector. Archive87 admission, deployed bytes and ordinary Solo, Versus and Team entry were independently verified in English and Ukrainian, including Legacy Team entry.                        |
 | Public product source   | `a63ad4cc32fb14c53fa126d69df42e2e53d1477d`                                                            | Immutable v0.131.0 product tree. The selector/archive merge is `23e6129782e08ed826686f137a0989e5f154732a`; Pages run [36207322888](https://github.com/mekhovov/revealline/actions/runs/36207322888) succeeded. |
-| Accepted `main`         | `23e6129782e08ed826686f137a0989e5f154732a`                                                            | Publication-only selector merge over the v0.131.0 product source. Successors must preserve the product/source boundary rather than treating the selector commit as a new gameplay root.                        |
-| Next release allocation | **v0.132.0 cumulative root:** PR #573 → corrected PR #576 → PR #536                                   | Land the two player-facing localization corrections first, then reconcile offline installed gameplay and regenerate shared catalogs/presentation once. Compact gallery follows as v0.133.0.                    |
+| Accepted `main`         | `e05720c1c6c48f8923854f78fbf7c82656e8a314`                                                            | Includes merged PR #573 selector localization over the v0.131 publication boundary. It is not public yet; v0.132 successors must preserve the immutable v0.131 product/source boundary.                        |
+| Next release allocation | **v0.132.0 cumulative root:** merged PR #573 → rebased PR #576 → final PR #536                        | Admit the remaining player-facing localization correction, then reconcile offline installed gameplay and regenerate shared catalogs/presentation once. Compact gallery follows as v0.133.0.                    |
 | Test policy             | Long automated suites are temporarily **waived** by committed policy                                  | They were skipped, not passed. Focused regression, source, lint/format, build, provenance, frozen-asset, archive and public checks remain blocking.                                                            |
 
 ## Completed and public
@@ -65,8 +65,8 @@ That result is **evidence only**:
 | Planned release / phase                           | Current work                                                                                                            | Status and dependency                                                                                                                                                                                                                                                                                                                            |
 | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **v0.132.0 — offline installed gameplay**         | PR [#536](https://github.com/mekhovov/revealline/pull/536), exact head `90f477bf`                                       | Clean on accepted `main` and owns v0.132.0 metadata with presentation revision 86. Its earlier 11 conflicts and 98+ strings are reconciled, but it must rebase once more after PRs #573/#576, regenerate cumulative catalogs/presentation, and repeat integrity/storage/build plus cold-install/update/recovery evidence.                        |
-| **v0.132.0 — website selector localization**      | PR [#573](https://github.com/mekhovov/revealline/pull/573), exact head `b884a582`                                       | Rebased onto `23e61297` with an unchanged patch ID. The real-catalog About-host EN↔UA↔EN test preserves focus, release/pack/campaign/level identity and Play href; focused host checks pass 6/6. Exact-head hosted preflight/release-ready remains the admission gate.                                                                         |
-| **v0.132.0 — pack/Journey error localization**    | PR [#576](https://github.com/mekhovov/revealline/pull/576), exact head `0d909100`                                       | Structural Journey profile/backup errors now follow the active EN/UA locale, including deferred validation after a live switch. Focused checks pass 48/48 and exact-head hosted preflight/release-ready pass. Rebase after PR #573 and regenerate the shared catalog once.                                                                       |
+| **v0.132.0 — website selector localization**      | merged PR [#573](https://github.com/mekhovov/revealline/pull/573), merge `e05720c1`                                     | Complete. The real-catalog About-host EN↔UA↔EN test preserves focus, release/pack/campaign/level identity and Play href; focused host checks pass 6/6 and exact-head hosted admission passed.                                                                                                                                                  |
+| **v0.132.0 — pack/Journey error localization**    | PR [#576](https://github.com/mekhovov/revealline/pull/576), exact head `e716846e`                                       | Rebased onto merged PR #573 with the cumulative catalogue regenerated from source. Structural errors follow the active locale; cumulative focused checks pass 49/49 with localization parity. Exact-head hosted admission is pending.                                                                                                            |
 | **Compact mission gallery — version unallocated** | preserved PR [#535](https://github.com/mekhovov/revealline/pull/535) commits                                            | Temporarily reverted. Reapply after the accepted offline/selector-localization predecessor sequence, resolve cumulative conflicts, repeat focused inventory/input/browser checks, then run a fresh exact-source release cycle.                                                                                                                   |
 | **UX2 — Team quick start**                        | draft PR [#549](https://github.com/mekhovov/revealline/pull/549), exact head `59d40ae82b38d124830ba6119a036423483930a4` | Rebased onto accepted selector merge `23e61297`; stable patch ID matches the previously tested head exactly. Quick-start parity passes 9/9 and keyboard navigation 1/1; hosted preflight/release-ready pass while long jobs remain skipped. Rebase onto the accepted cumulative predecessor again before promotion.                              |
 | **UX2 — Couch secondary navigation**              | draft PR [#539](https://github.com/mekhovov/revealline/pull/539); stacked safety commit `f5c7be05`                      | Reconcile after the cumulative gallery and PR #549 quick-start owner, remove duplicate overlap, and close the remaining controller lifecycle case. The stacked safety correction is preserved, but its full focused checks did not complete before disk exhaustion interrupted the run; it is implementation evidence, not qualified acceptance. |
@@ -88,7 +88,7 @@ can extend them. Hardware-dependent acceptance is called out separately.
 
 | Order | Item                                   | Blocking acceptance                                                                                                                                                                  |                                                                          Working elapsed ETA |
 | ----: | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------: |
-|     1 | **v0.132 localization + offline root** | Admit corrected PR #573, rebase corrected PR #576 on it, then perform the final PR #536 rebase/regeneration and prove install/update/remove/recovery plus public offline launch      | **1–3 days**, plus **1–3 days** for Android/iPhone/iPad/Safari/desktop cold-install coverage |
+|     1 | **v0.132 localization + offline root** | Admit rebased PR #576, then perform the final PR #536 rebase/regeneration and prove install/update/remove/recovery plus public offline launch                                        | **1–3 days**, plus **1–3 days** for Android/iPhone/iPad/Safari/desktop cold-install coverage |
 |     2 | **Compact mission gallery**            | Reapply onto the accepted cumulative predecessor; preserve full inventories, one-action activation, bounded previews and guarded Confirm; repeat exact qualification and public play |                                     **8–16 hours**, plus physical controller/touch follow-up |
 |     3 | **UX2 Team quick start**               | Reconcile PR #549 first; valid defaults start directly, optional tuning remains available, and preparation/cancel has one input owner                                                |                                                                               **6–12 hours** |
 |     4 | **UX2 Couch secondary navigation**     | Reconcile PR #539 after quick-start ownership, preserve its safety fix, collapse overlap and rerun the interrupted focused checks                                                    |                                                                               **6–12 hours** |
@@ -111,8 +111,8 @@ serialized under one publisher.
 
 1. v0.131 is public and accepted. Use product source `a63ad4cc` and publication boundary
    `23e61297` when reconciling its successor.
-2. Build one **v0.132 cumulative root**: rebase/correct PR #573 first, correct PR #576 structural
-   localization and regenerate catalogs second, then reconcile PR #536 last as the version owner.
+2. PR #573 is merged. Admit rebased PR #576 with its regenerated cumulative catalog, then
+   reconcile PR #536 last as the v0.132 version owner.
 3. PR #536 is clean on the current predecessor at `90f477bf` with revision 86. After PRs #573/#576
    land, rebase it once more, regenerate the cumulative catalog/presentation, and repeat its focused
    offline/build evidence before publicly accepting v0.132.0 and reapplying the compact gallery.
@@ -130,8 +130,8 @@ serialized under one publisher.
 
 ## Blockers and concerns
 
-1. **Critical disk pressure:** the shared data volume fell to **116 MiB free** during this refresh
-   before recovering above the 1 GiB safety floor. PR #539 checks and the first PR #573 test attempt
+1. **Critical disk pressure:** the shared data volume fell to **116 MiB free** and later fell again
+   below 0.4 GiB after the cumulative PR #576 check. PR #539 checks and the first PR #573 test attempt
    stopped safely. Avoid duplicate builds/artifacts, use exact-path sparse or plumbing operations,
    and retire only proven disposable caches.
 2. **Temporary long-suite waiver:** full automated matrices are skipped by policy, not green. This
@@ -157,10 +157,10 @@ serialized under one publisher.
    catalogues can change file counts and byte totals. Re-measure emitted artifacts for every root.
 9. **Evidence boundary:** the compact-gallery `54fbbe52` qualification is valid historical evidence, not a
    substitute for qualifying the future cumulative gallery source.
-10. **v0.132 localization gate:** PR #573 now includes the composed About-host focus/identity/href
-    proof and is rebased on accepted main; PR #576 now localizes Journey structural errors and passes
-    focused/hosted gates. Land them in order, then rebase PR #536 and regenerate the final cumulative
-    catalogs and presentation before qualification.
+10. **v0.132 localization gate:** PR #573 is merged with the composed About-host proof. PR #576 is
+    rebased on it, localizes Journey structural errors and passes 49/49 cumulative focused checks;
+    exact-head hosted admission remains. Merge it next, then rebase PR #536 and regenerate the final
+    cumulative catalogs and presentation before qualification.
 11. **v0.131 closure is complete:** the corrected `a63ad4cc` product source passed exact-source
     qualification, freeze, artifact inspection and evidence assembly; Archive87 admission, selector
     merge `23e61297`, Pages run 36207322888 and independent public EN/UA cross-mode entry checks passed.
