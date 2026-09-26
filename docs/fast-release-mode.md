@@ -28,7 +28,10 @@ several-hundred-megabyte distribution in fast mode. Superseded runs for the same
 the workflow concurrency group. Pages previews use a partial sparse checkout of
 the controller, workflow contracts, test policy, and two archive helpers while retaining all tags
 and on-demand Git objects needed to verify frozen source identities. Production publications remain
-serialized with `queue: max` and are never cancelled or replaced by a newer pending run. Pull-request
+serialized with one concurrency group and `cancel-in-progress: false`. GitHub Actions currently
+accepts only `group` and `cancel-in-progress` in a concurrency block; the unsupported `queue: max`
+key causes a startup failure before any job runs. The sole publisher therefore dispatches only one
+successor while another release is active. Pull-request
 previews keep per-PR cancellation. Authority checks use bounded GraphQL batches; only fields
 unavailable or missing from GraphQL fall back to serial conditional REST with finite retry/backoff.
 Preview runs remotely revalidate only new or changed admission pins, while production checks all
