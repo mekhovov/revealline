@@ -72,7 +72,11 @@ export function validateFocusedTestMap(manifest) {
   };
 }
 
-export function focusedTestPlan(paths, manifest) {
+export function focusedTestPlan(
+  paths,
+  manifest,
+  { fallbackHandled = false } = {},
+) {
   if (
     !Array.isArray(paths) ||
     !paths.length ||
@@ -101,7 +105,8 @@ export function focusedTestPlan(paths, manifest) {
       map.runtimePatterns.some((pattern) => pattern.test(changed)),
   );
   const commands = [...categories.flatMap((category) => category.commands)];
-  if (unknownRuntime.length) commands.push(...map.fallbackCommands);
+  if (unknownRuntime.length && !fallbackHandled)
+    commands.push(...map.fallbackCommands);
 
   for (const changed of paths) {
     if (!changed.endsWith(".test.mjs")) continue;
@@ -160,7 +165,8 @@ async function main() {
     .split(/\r?\n/u)
     .map((item) => item.trim())
     .filter(Boolean);
-  const plan = focusedTestPlan(paths, manifest);
+  const fallbackHandled = process.argv.includes("--fallback-handled");
+  const plan = focusedTestPlan(paths, manifest, { fallbackHandled });
   const summary = [
     "### Focused release gate",
     "",
@@ -168,7 +174,11 @@ async function main() {
     `Commands: ${plan.commands.length}`,
   ];
   if (plan.unknownRuntime.length)
-    summary.push(`Fallback validation: ${plan.unknownRuntime.join(", ")}`);
+    summary.push(
+      fallbackHandled
+        ? `Fallback validation delegated to the required exact-head release build: ${plan.unknownRuntime.join(", ")}`
+        : `Fallback validation: ${plan.unknownRuntime.join(", ")}`,
+    );
   if (process.env.GITHUB_STEP_SUMMARY)
     await fs.appendFile(
       process.env.GITHUB_STEP_SUMMARY,
