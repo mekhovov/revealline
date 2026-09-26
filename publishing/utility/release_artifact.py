@@ -466,9 +466,10 @@ def verify_evidence(body, qualification, source, policy_body=None):
                 require(policy_original == policy_body, 'Waiver policy differs from the exact committed source')
             run = parse(archive.read(waiver['runEvidence']['path']))
             jobs = parse(archive.read(waiver['jobsEvidence']['path']))
+            qualification_workflow = qualification.get('workflowPath', WORKFLOW)
             require(run.get('id') == waiver['runId'] and run.get('event') == 'workflow_dispatch' and
                     run.get('path') in QUALIFICATION_WORKFLOWS and
-                    qualification.get('workflowPath') == run.get('path') and
+                    qualification_workflow == run.get('path') and
                     run.get('head_sha') == source['commit'] and successful(run),
                     'Waiver original run identity/result differs')
             job_rows = jobs.get('jobs')
