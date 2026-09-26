@@ -501,6 +501,8 @@
   "journey.differentEdition": "This backup belongs to a different Journey edition. Progress is unchanged.",
   "journey.damagedProfile": "Unsupported or damaged Journey profile. Export before recovery.",
   "journey.invalidModeState": "Invalid Journey mode state.",
+  "journey.objectRequired": "Journey data must be an object.",
+  "journey.unsupportedField": "Journey data contains an unsupported field: {{key}}.",
   "journey.invalidCompletionReceipt": "Invalid Journey completion receipt.",
   "journey.unsupportedBackup": "Unsupported Journey backup.",
   "journey.invalidProgressEvent": "Invalid Journey progress event.",

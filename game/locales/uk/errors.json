@@ -501,6 +501,8 @@
   "journey.differentEdition": "Ця резервна копія належить іншому виданню Подорожі. Прогрес не змінено.",
   "journey.damagedProfile": "Профіль Подорожі пошкоджений або не підтримується. Експортуйте дані перед відновленням.",
   "journey.invalidModeState": "Стан режиму Подорожі некоректний.",
+  "journey.objectRequired": "Дані Подорожі мають бути об’єктом.",
+  "journey.unsupportedField": "Дані Подорожі містять непідтримуване поле: {{key}}.",
   "journey.invalidCompletionReceipt": "Квитанція про завершення Подорожі некоректна.",
   "journey.unsupportedBackup": "Резервна копія Подорожі не підтримується.",
   "journey.invalidProgressEvent": "Подія прогресу Подорожі некоректна.",
