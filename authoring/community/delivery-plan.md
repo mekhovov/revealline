@@ -26,9 +26,13 @@ release is [`v0.141.5`](https://github.com/mekhovov/revealline/releases/tag/v0.1
 exact source `edd5fa39ae3f0bdf7bc6fa156c461925df794577`. PRs #693, #694, #695, #696 and #697 are merged.
 The hosted MinIO recovery run passed against the exact PR #695 head; release qualification, freeze,
 asset inspection and publication then passed against the final source after the publisher snapshot
-ownership correction in PR #697. Public Pages continues to serve accepted `v0.141.4` until the
-reviewed v0.141.5 selector and exact public audit finish. Estimates below are focused engineering
-time after each required environment becomes available, not calendar release dates.
+ownership correction in PR #697. Public Pages now serves accepted `v0.141.5`. The successor
+[`v0.141.6`](https://github.com/mekhovov/revealline/releases/tag/v0.141.6) is published from exact
+source `d3b48436318c9d056678089b219e47534b554897`; its format-v2 source-manifest canary replaced the
+large source tar while preserving nine independently hashed release assets. Archive99 preservation
+of v0.141.5, the reviewed v0.141.6 selector, and exact public acceptance remain in progress.
+Estimates below are focused engineering time after each required environment becomes available,
+not calendar release dates.
 PR #680 merged as `218e76281e3bfa26f57b7aa0f7b98058f4bd05ad`. It confines the validation
 worker to read-only package and image filesystems, bounded temporary storage and process resources,
 an internal database network, and local-only bounded ffprobe inspection. Source assertions cover
@@ -44,7 +48,7 @@ deployment gates.
 | S3/AWS expansion     | The executable storage selector provides stream-verified immutable S3 package publication, the pinned maintained tus S3 datastore, bounded multipart work, deterministic completed-upload cleanup, fail-closed object/multipart readiness, portable package backup/restore and explicit disaster tus expiry. Hosted MinIO publication/recovery passed against exact PR #695 source. PostgreSQL coordinates tus locks, expiry leases and publication state independently of storage. | Run the credentialed AWS smoke gate with a private bucket and scoped IAM actors.                                                                      | 0.5–1 focused day after AWS access                            |
 | Phase 7 Team         | Purpose-built templates, replay-qualified launch, immutable editions, recovery, rewards, picture/video packages, browser assembly/review/install and shared managed-media accounting are published. The public Team route loads cleanly in the built-in browser.                                                                                                                                                                                                                    | None in the released local/browser scope.                                                                                                             | Complete                                                      |
 | Phase 8 media editor | Bounded silent MP4/WebM and AVC+AAC MP4 trim/conversion, resize/compression, orientation, timing and decoded-audio verification are published.                                                                                                                                                                                                                                                                                                                                      | Qualify Firefox, Safari, broader codecs, physical mobile playback and physical speakers.                                                              | 1–2 days when the environments are available                  |
-| Publication          | Stable `v0.141.5` is published from exact source `edd5fa39ae3f…`; its annotated tag peels to that source and all nine release assets carry SHA-256 digests. The hosted MinIO, release qualification, freeze and artifact gates passed. Accepted public Pages remains byte-exact `v0.141.4` during the fail-closed handoff.                                                                                                                                                          | Preserve v0.141.4 in the next immutable archive, merge the reviewed v0.141.5 selector, then pass the production byte audit and built-in-browser flow. | Selector acceptance in progress                               |
+| Publication          | Stable `v0.141.6` is published from exact source `d3b48436318c…`; its annotated tag peels to that source and all nine release assets carry SHA-256 digests. The format-v2 source-manifest canary, release qualification, freeze, inspection and guarded publication gates passed. Accepted public Pages remains byte-exact `v0.141.5` during the fail-closed handoff.                                                                                                                        | Preserve v0.141.5 in Archive99, merge the reviewed v0.141.6 selector, then pass the production byte audit and built-in-browser flow.                   | 2–6 focused hours, subject to hosted queue and Pages rollout  |
 
 The published `v0.141.2` community hardening release includes a production-safe Compose overlay,
 executable deployment preflight, administrator moderation console, exact interrupted-tus fault
@@ -84,12 +88,12 @@ tracked in [deployment-acceptance.md](deployment-acceptance.md).
   phantom reservations. Genuine browser-wide quota exhaustion, deliberate IndexedDB corruption and
   measured peak-memory acceptance remain unclaimed because supported browser controls cannot force
   those conditions reliably.
-- `v0.141.5` is the highest published stable version. Public Pages remains on accepted `v0.141.4`
+- `v0.141.6` is the highest published stable version. Public Pages remains on accepted `v0.141.5`
   until the immutable predecessor archive, selector merge and public exact-byte audit pass. Earlier
   global working allocations are stale. Future work must be reallocated after checking the open
   `v0.142.0` through `v0.149.x` ranges rather than advancing an old queue mechanically.
-- GitHub Actions currently reports Node 20 runtime deprecation notices for some third-party action
-  steps. They do not fail the current gates, but the workflows need a future action-runtime refresh.
+- PR #700 moved the active workflow action runtime to Node 24. Historical runs retain their earlier
+  Node 20 notices; no active release gate is blocked by them.
 - The v0.141.5 source receipt records `qualified-with-test-waiver`: all five non-test release gates
   passed and the scoped community suite passed 103/103 locally, while the repository-wide suites
   remain explicitly waived by the committed fast-release policy rather than being claimed as run.
