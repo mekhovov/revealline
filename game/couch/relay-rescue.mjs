@@ -3420,11 +3420,11 @@ export function bootCoop({
     if (candidateJourney || libraryRemoteJourney) return;
     libraryRemotePending ??= Promise.all([
       import('../content-design/team-host.mjs'),
-      import('../content-design/team-complete-specialist-originals.mjs'),
+      import('../content-design/team-cultural-specialist-originals.mjs'),
     ])
-      .then(([{ createCandidateTeamHost }, { createTeamCompleteSpecialistOriginalCandidates }]) => {
+      .then(([{ createCandidateTeamHost }, { createTeamCulturalSpecialistOriginalCandidates }]) => {
         if (disposed) return;
-        const source = createTeamCompleteSpecialistOriginalCandidates();
+        const source = createTeamCulturalSpecialistOriginalCandidates();
         libraryRemoteJourney = createCandidateTeamHost(source, {
           corePackIds: source.packs.map((item) => item.id),
         });
@@ -5499,6 +5499,7 @@ try {
       'team-trail-impact-originals-1',
       'team-specialist-originals-1',
       'team-complete-specialist-originals-1',
+      'team-cultural-specialist-originals-1',
     ].includes(journeyRequest)
   ) {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
@@ -5509,6 +5510,7 @@ try {
       impact: journeyRequest === 'team-trail-impact-originals-1',
       specialist: journeyRequest === 'team-specialist-originals-1',
       reviewedSpecialists: journeyRequest === 'team-complete-specialist-originals-1',
+      culturalSpecialists: journeyRequest === 'team-cultural-specialist-originals-1',
       reviewCopy: new URL(location.href).searchParams.has('journey'),
     });
   } else if (
