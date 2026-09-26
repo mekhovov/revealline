@@ -4,8 +4,8 @@ Status date: 2026-09-26
 
 ## Delivery state
 
-- Public baseline: **v0.132.3**; v0.132.4 Team artwork preparation is in frozen-package
-  qualification and is not yet a public delivery.
+- Public baseline: **v0.132.3**; v0.132.4 Team artwork preparation passed replacement
+  qualification and entered immutable-package creation, but is not yet a public delivery.
 - Parent candidate: draft PR #636 / `team-cultural-specialist-originals-1`. Its GitHub head is
   authoritative after guarded restacks.
 - This successor is draft PR #642 and remains a non-default balance candidate. It does not change
@@ -54,19 +54,25 @@ approval or gameplay balance.
 - After both rehearsed closures, the second pilot can traverse the first pilot's newly reclaimed
   route without cutting, taking a down or using Support. This passes on Gentle, Standard and Expert
   at seeds 1 and 7.
-- Focused structural/idle/route/exchange tests: **10/10 passed**.
+- Fresh input-only searches found no-Support full clears for all three missions on Gentle,
+  Standard and Expert at seed 17. The search drives only public Team commands and replays every
+  accepted command log from a fresh runtime before reporting it; it never edits simulation state.
+- Standard full-clear routes are pinned as regressions. They finish in 33.8-52.2 seconds, reach
+  72.2-98.9% coverage, include a closure from both pilots, and record no downs or Support use.
+- Focused structural/idle/route/exchange/full-clear tests: **13/13 passed**.
 - Candidate files pass Prettier, targeted ESLint and `git diff --check`.
 
 ## Remaining before PR/release
 
-1. Confirm that later captures do not leave prolonged low-risk cleanup; the bounded exchange proof
-   does not establish a full clear or human two-player balance.
-2. Wire the successor as a separately selectable/current edition.
-3. Run focused library/Next/Studio checks, version/locale validation and the normal release gates.
+1. Wire the successor as a separately selectable/current edition.
+2. Run focused library/Next/Studio checks, version/locale validation and the normal release gates.
+3. Retain Gentle and Expert search evidence as reproducible feasibility evidence; pin those routes
+   only if they add useful regression coverage rather than duplicating the Standard fixtures.
 
 The entire cultural stack is rebased onto terminal release source
-`80911bf5ec0f6df711d7e70b36a11005d2be4c3a`. That source is the v0.132.4 publication candidate,
+`d3df9d47f578d48383ff589914a188ada2ef8b31`. That source is the v0.132.4 publication candidate,
 not evidence that v0.132.4 is already public.
 
-Automated idle and topology checks establish legality, not fun, final two-player balance, cultural
-approval, physical-device behavior or public delivery.
+Automated idle, topology and input-only route checks establish legality and bounded feasibility,
+not fun, final human two-player balance, cultural approval, physical-device behavior or public
+delivery.
