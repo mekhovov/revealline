@@ -8,8 +8,8 @@ Status date: 2026-09-26
   selector, but its public-byte audit is still underway and it is not yet accepted delivery.
 - Parent candidate: draft PR #636 / `team-cultural-specialist-originals-1`. Its GitHub head is
   authoritative after guarded restacks.
-- Draft PR #642 remains the non-default balance candidate. Its v0.149.0 successor is now wired
-  locally as `team-cultural-specialist-originals-2`: it becomes the candidate default Team route,
+- Draft PR #642 remains the non-default balance candidate. Draft PR #650 wires its v0.149.0
+  successor as `team-cultural-specialist-originals-2`: it becomes the candidate default Team route,
   while the first cultural and all earlier editions remain directly selectable. Neither change is
   published yet.
 
@@ -71,8 +71,8 @@ approval or gameplay balance.
 
 ## Remaining before PR/release
 
-1. Finish the focused host/library qualification and open the separately reviewable v0.149.0 PR.
-2. Run the normal exact-head build/release gates, immutable release and public verification.
+1. Review and qualify draft PR #650 at its exact head.
+2. Run the normal build/release gates, immutable release and public verification.
 3. Retain Gentle and Expert search evidence as reproducible feasibility evidence; pin those routes
    only if they add useful regression coverage rather than duplicating the Standard fixtures.
 
