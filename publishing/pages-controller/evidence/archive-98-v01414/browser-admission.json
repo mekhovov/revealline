@@ -1,0 +1,19 @@
+{
+  "format": "revealline-archive98-browser-admission-observation.v1",
+  "observer": "root release coordinator",
+  "observedAt": "2026-09-26T19:32:10.881Z",
+  "base": "https://mekhovov.github.io/revealline-archive-98/",
+  "version": "v0.141.4",
+  "status": "PASS",
+  "observations": [
+    "Archive index exposed its title and Play action.",
+    "The v0.141.4 Home screen showed NEW JOURNEY / 91 MISSIONS and Solo, Versus, and Team.",
+    "Missions showed 285 missions · Solo with the first card focused and playable/downloadable entries.",
+    "Console warnings and errors were empty."
+  ],
+  "limitations": [
+    "Observation was supplied by the root release coordinator; this subtask did not export a screenshot.",
+    "No physical touch or controller input was exercised.",
+    "No full mission playthrough was performed."
+  ]
+}

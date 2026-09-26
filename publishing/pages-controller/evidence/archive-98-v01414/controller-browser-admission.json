@@ -1,0 +1,43 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-98",
+  "infrastructureCommit": "91f3f76fe347fde44dd0ec6c854c272182423219",
+  "deploymentId": 6683228670,
+  "deploymentStatusId": 18884841484,
+  "versions": [
+    "v0.141.4"
+  ],
+  "surface": "bounded browser interaction",
+  "sequence": [
+    "Archive index exposed its title and Play action.",
+    "The v0.141.4 Home screen showed NEW JOURNEY / 91 MISSIONS and Solo, Versus, and Team.",
+    "Missions showed 285 missions \u00b7 Solo with the first card focused and playable/downloadable entries.",
+    "Console warnings and errors were empty."
+  ],
+  "observed": {
+    "sourceObservations": [
+      "Archive index exposed its title and Play action.",
+      "The v0.141.4 Home screen showed NEW JOURNEY / 91 MISSIONS and Solo, Versus, and Team.",
+      "Missions showed 285 missions \u00b7 Solo with the first card focused and playable/downloadable entries.",
+      "Console warnings and errors were empty."
+    ],
+    "observedAt": "2026-09-26T19:32:10.881Z"
+  },
+  "scope": "Archive98 index, archived v0.141.4 Home, complete Solo mission library, and console acceptance for the preserved route.",
+  "limitations": [
+    "Observation was supplied by the root release coordinator; this subtask did not export a screenshot.",
+    "No physical touch or controller input was exercised.",
+    "No full mission playthrough was performed."
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-98-v01414/browser-admission.json",
+      "sha256": "c46d669bc1407290a27ce09291e2b51b25f896da61c6a30f56f974e327c4bfd9"
+    },
+    {
+      "path": "evidence/archive-98-v01414/public-acceptance.json",
+      "sha256": "3159b2af17e4d42ac53164b58a2e5a3a480585d8f6da29ce1304816fafc4a9be"
+    }
+  ]
+}

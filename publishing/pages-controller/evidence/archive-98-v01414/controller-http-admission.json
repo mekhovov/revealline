@@ -1,0 +1,27 @@
+{
+  "format": "revealline-archive-public-http-audit.v1",
+  "status": "PASS",
+  "archiveId": "archive-98",
+  "base": "https://mekhovov.github.io/revealline-archive-98/",
+  "files": 1317,
+  "expectedBytes": 612091970,
+  "verifiedBytes": 612091970,
+  "failedFiles": 0,
+  "failures": [],
+  "skipped": [],
+  "expectedInventorySha256": "1a61a082505eea0836b71ab7446aa41cd89cea1cb0445183aed2c8f107bee67a",
+  "allFinalURLsExact": true,
+  "identityEncoding": true,
+  "archiveCommit": "91f3f76fe347fde44dd0ec6c854c272182423219",
+  "archiveTree": "ce1c310c3bc4f3fad08ca95bfb7f49c19e0f29a9",
+  "sourceAuthority": {
+    "path": "evidence/archive-98-v01414/attempt-reconciliation.json",
+    "sha256": "dc3b30d70fe07489ecbac03436bffa1f04e502dddc58f40a8adaa20320ecc61e"
+  },
+  "completeLedger": {
+    "path": "evidence/archive-98-v01414/http-attempts.jsonl",
+    "sha256": "f4db543c79b46140c6ec3a431441b565b2992b10b56dba5476afb878c9758a59",
+    "rows": 1317
+  },
+  "scope": "Controller normalization of Archive98 complete request-row reconciliation. The original auditor reached ENOSPC only while aggregating the final report after all public rows were durably written; no payload was re-requested. Original and partial evidence remain pinned separately."
+}
