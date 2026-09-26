@@ -8,10 +8,10 @@ release claims.
 ## Candidate identity
 
 - Merged framework source: PR #465, merged 25 September 2026.
-- Rebased hardening base: `0cb51db92295a62fea99ee2ab215a79c6df06520` (`main`, after the accepted
-  `v0.132.4` selector, Fastline recovery hardening and public-byte verification).
+- Rebased hardening base: `ee015163de1131313436b0550892f3739e3c7a1a` (`main`, after the accepted
+  `v0.132.4` selector, Fastline recovery hardening, public-byte verification and live locale refresh repair).
 - Hardening checkpoint before this acceptance refresh:
-  `f027e532e115cef132f68c7a46d9616373356c97`.
+  `3f2c83cf193117f9884796f8bf1b16f1c6c21044`.
 - Assigned release target and working source: `v0.141.0` in PR #564. The repository release
   coordinator still has to freeze the reviewed candidate.
 
