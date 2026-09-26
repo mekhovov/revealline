@@ -59,6 +59,7 @@ import { createPhaseworksCulturalRoutesCandidates } from '../content-design/phas
 import { createLivewireCulturalRoutesCandidates } from '../content-design/livewire-cultural-routes-candidates.mjs';
 import { createRelayCulturalRoutesCandidates } from '../content-design/relay-cultural-routes-candidates.mjs';
 import { createCrosswindCulturalRoutesCandidates } from '../content-design/crosswind-cultural-routes-candidates.mjs';
+import { createSentinelCulturalRoutesCandidates } from '../content-design/sentinel-cultural-routes-candidates.mjs';
 import { createUkrainianOrnamentJourney } from '../content-design/ukrainian-ornament-candidates.mjs';
 import { createUkrainianOrnamentAtlasJourney } from '../content-design/ukrainian-ornament-atlas.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
@@ -1026,6 +1027,7 @@ $('whole-variety').onclick = guarded(() => {
       'livewire-cultural-routes-1': createLivewireCulturalRoutesCandidates,
       'relay-cultural-routes-1': createRelayCulturalRoutesCandidates,
       'crosswind-cultural-routes-1': createCrosswindCulturalRoutesCandidates,
+      'sentinel-cultural-routes-1': createSentinelCulturalRoutesCandidates,
       'ukrainian-ornament-study-1': createUkrainianOrnamentJourney,
       'ukrainian-ornament-atlas-1': createUkrainianOrnamentAtlasJourney,
     }[$('whole-variety-edition').value] ?? createWholeVarietyCandidates;
