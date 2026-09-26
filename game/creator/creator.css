@@ -214,6 +214,39 @@ img {
   gap: 0.9rem;
   margin: 1rem 0;
 }
+.team-levels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 25rem), 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.team-level-card,
+.team-review-card {
+  min-width: 0;
+  border: 1px solid #46605f;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #101923;
+}
+.team-level-card h3,
+.team-review-card h3 {
+  margin-top: 0;
+}
+.team-review-card img {
+  width: 100%;
+  aspect-ratio: 2;
+  object-fit: contain;
+  background: #0a1118;
+}
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  background: #243b42;
+  color: #edf5f2;
+  font-weight: 700;
+}
 .batch-card {
   display: grid;
   grid-template-columns: minmax(9rem, 14rem) 1fr;
