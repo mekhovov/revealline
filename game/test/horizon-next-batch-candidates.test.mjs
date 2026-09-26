@@ -323,8 +323,8 @@ test('registered v11 successor preserves v10 and authored order with isolated pr
   assert(authoredJourneyUsesActorMaterials(current.id));
   assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v22',
-    versus: 'whole-spatial-v22',
+    solo: 'whole-spatial-v23',
+    versus: 'whole-spatial-v23',
     team: 'team-trail-impact-originals-1',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v11');
@@ -363,7 +363,7 @@ test('Studio retains v10 and v11 after the selector advances to v20', async () =
     options
       .filter((node) => attribute(node, 'selected') !== undefined)
       .map((node) => attribute(node, 'value')),
-    ['phaseworks-cultural-routes-1'],
+    ['crosswind-cultural-routes-1'],
   );
   assert.equal(
     options.filter((node) => attribute(node, 'value') === 'border-cultural-routes-1').length,
