@@ -32,11 +32,11 @@ versions or acceptance gates are still current.
 | Complete Team adoption / PR #630                 | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.                                                                                                                                                                                     |
 | First Team Ukrainian slice / PR #636             | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                                                                                                                                                              |
 | Second Team Ukrainian slice / PR #642            | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                                                                                                                                                               |
-| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; earlier focused cohort 83/83 and localization validation pass; latest-main exact-head runtime cohort passes 54/54 with zero skips at `7b7f23a00efd4d4e68fdc624ac5aa820ffda9cdc`; not public.        |
+| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; earlier focused cohort 83/83 and localization validation pass. The 54/54 zero-skip runtime cohort passed on the prior exact head; the rebased `730ada618` still needs exact-head rerun before promotion. |
 | Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.                                                                                                                                   |
 | Team opaque-owner continuation / PR #657         | Ready isolated hotfix         | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Exact current-main continuation/localization/impact cohort passes 27/27 at `6459e8fbc2e11f0c3bd6d735885c674c9e7295b8`; not merged or public. |
 | Current Journey pacing inventory / PR #661        | Clean stacked draft           | Adds a reusable runtime-prepared spatial-variety inspector and pins exact v25 facts: 91 source missions, 71 core missions, bands 1–12, consistent Standard craft speed and 21 post-opening open/plain review candidates. Focused checks pass 4/4; this is not human balance evidence. |
-| Relay cultural completion / PR #664                | Clean explicit v26 draft      | Redesigns Spiral stores, Nested relays and Watchpost exchange from bounded official-museum vocabulary; preserves v25/default ownership and reduces post-opening open/plain candidates from 21 to 18. Route, bootstrap, snapshot, replay, paired-board and pacing cohort passes 140/140 with zero skips before the latest exact rebase; current-head rerun is pending. |
+| Relay cultural completion / PR #664                | Clean explicit v26 draft      | Redesigns Spiral stores, Nested relays and Watchpost exchange from bounded official-museum vocabulary; preserves v25/default ownership and reduces post-opening open/plain candidates from 21 to 18. Rebased runtime commit `3db60f629` passes the route, bootstrap, snapshot, replay, paired-board and pacing cohort 140/140 with zero skips, plus targeted lint/format/diff checks. |
 
 After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
@@ -44,11 +44,11 @@ Solo → Versus → Solo restoration. The test runner recorded 14 passing test/s
 failures. The earlier two chooser-opening timeouts occurred while another worktree continuously used
 a CPU core; they were not changed-expectation failures. The full long host suite remains unrun.
 
-The latest-main exact-head lightweight runtime cohort passes **54/54 with zero skips** at PR #650.
+The lightweight runtime cohort passed **54/54 with zero skips** on PR #650's prior exact head.
 It covers default Team entry, handoff/return validation, both cultural topology/route editions,
 isolated progress, preserved impact/complete-specialist editions and cross-campaign Next. It does
 not replace the heavier chooser-host rerun, physical devices, public frozen-build checks or human
-balance review.
+balance review. The current rebased head still needs an exact-head rerun.
 
 The second Team slice now has **13/13** focused checks. Every changed mission keeps one connected
 field, idle-safe starts on all presets, two distinct no-down approaches, and a two-closure exchange
