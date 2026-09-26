@@ -179,6 +179,9 @@ function fakeDocument() {
     setAttribute(key, value) {
       this.attributes[key] = value;
     }
+    getAttribute(key) {
+      return this.attributes[key];
+    }
     getContext() {
       if (this.context) return this.context;
       this.context = new Proxy(
