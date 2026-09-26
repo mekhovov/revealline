@@ -374,7 +374,7 @@ test('registered successor preserves v9, authored Next order and same-edition na
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
     solo: 'whole-spatial-v25',
     versus: 'whole-spatial-v25',
-    team: 'team-complete-specialist-originals-1',
+    team: 'team-cultural-specialist-originals-1',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v10');
   assert.equal(
