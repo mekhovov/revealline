@@ -38,6 +38,7 @@ import {
 } from './data-json.mjs';
 import { createMasteryCatalog } from './mastery-catalog.mjs';
 import { resolveMasteryDefinition } from './mastery.mjs';
+import { t } from './i18n/index.mjs';
 
 export const PACK_VERSION = 'xonix-pack.v1';
 export const MASTERY_PACK_VERSION = 'xonix-pack.v2';
@@ -68,6 +69,7 @@ const semver = (v) =>
   typeof v === 'string' && /^(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/.test(v);
 const text = (v, max) => typeof v === 'string' && v.trim().length > 0 && v.length <= max;
 const finite = (v, lo, hi) => Number.isFinite(v) && v >= lo && v <= hi;
+const packError = (key, values) => t(`errors:pack.${key}`, values);
 const preparedPacks = new WeakSet(),
   preparedLibraries = new WeakSet(),
   metadataLibraries = new WeakSet();
@@ -88,16 +90,16 @@ const boundedPack = (candidate, library = false) =>
   });
 function trackChecks(value) {
   exactKeys(value, ['id', 'name', 'genre', 'tempo', 'root', 'scale'], 'music');
-  required(stableId(value.id) && text(value.name, 120), 'Music identity is invalid.');
+  required(stableId(value.id) && text(value.name, 120), packError('musicIdentity'));
   required(
     ['synthwave', 'chiptune', 'rock', 'metal', 'ambient'].includes(value.genre),
-    'Music genre is not registered.',
+    packError('musicGenre'),
   );
   required(
     finite(value.tempo, 60, 180) && Number.isInteger(value.root) && finite(value.root, 36, 84),
-    'Music tempo/root is invalid.',
+    packError('musicTempoRoot'),
   );
-  required(['minor', 'major', 'dorian'].includes(value.scale), 'Music scale is not registered.');
+  required(['minor', 'major', 'dorian'].includes(value.scale), packError('musicScale'));
 }
 export function validateMusicDescriptor(value) {
   try {
@@ -187,28 +189,22 @@ function packChecks(candidate) {
     ].includes(pack.format) &&
       stableId(pack.id) &&
       semver(pack.version),
-    'Pack format/id/version is invalid.',
+    packError('formatIdentityVersion'),
   );
-  required(
-    pack.engine === versions.ruleset,
-    `Pack requires a different engine; expected ${versions.ruleset}.`,
-  );
+  required(pack.engine === versions.ruleset, packError('engine', { expected: versions.ruleset }));
   if (encounter || wide || classic)
     required(
       Array.isArray(pack.masteries) && pack.masteries.length === 0,
       classic
-        ? 'Classic pack v5 requires masteries: []; optional goals are not supported.'
+        ? packError('classicMasteries')
         : wide
-          ? 'Wide pack v4 requires masteries: []; optional goals are not supported.'
-          : 'Encounter pack v3 requires masteries: []; encounter goals are not supported.',
+          ? packError('wideMasteries')
+          : packError('encounterMasteries'),
     );
-  required(
-    text(pack.name, 120) && text(pack.description, 4096),
-    'Pack name/description is invalid.',
-  );
+  required(text(pack.name, 120) && text(pack.description, 4096), packError('nameDescription'));
   required(
     Array.isArray(pack.dependencies) && pack.dependencies.length <= 16,
-    'Pack dependencies must contain at most 16 entries.',
+    packError('dependenciesBudget'),
   );
   const dependencyIds = new Set();
   for (const dependency of pack.dependencies) {
@@ -218,14 +214,14 @@ function packChecks(candidate) {
         dependency.id !== pack.id &&
         !dependencyIds.has(dependency.id) &&
         semver(dependency.version),
-      'Dependency identity/version is invalid or repeated.',
+      packError('dependencyIdentity'),
     );
     dependencyIds.add(dependency.id);
   }
   if (pack.metadata !== undefined) {
     exactKeys(pack.metadata, ['author', 'license', 'rightsStatus', 'sourceUrl'], 'pack.metadata');
     for (const [key, val] of Object.entries(pack.metadata))
-      required(text(val, key === 'sourceUrl' ? 2048 : 512), `Pack metadata ${key} is invalid.`);
+      required(text(val, key === 'sourceUrl' ? 2048 : 512), packError('metadataInvalid', { key }));
     if (pack.metadata.sourceUrl !== undefined) {
       let url;
       try {
@@ -233,7 +229,7 @@ function packChecks(candidate) {
       } catch {}
       required(
         url && ['https:', 'http:'].includes(url.protocol),
-        'Pack source URL must be HTTP(S).',
+        t('errors:content.httpUrl', { path: 'pack.metadata.sourceUrl' }),
       );
     }
   }
@@ -241,35 +237,35 @@ function packChecks(candidate) {
     Array.isArray(pack.themes) &&
       pack.themes.length >= 1 &&
       pack.themes.length <= PACK_LIMITS.themes,
-    'Pack must contain 1..16 themes.',
+    packError('themesBudget'),
   );
   const themes = new Map();
   for (const theme of pack.themes) {
-    required(stableId(theme.id), 'Theme identity is reserved or invalid.');
+    required(stableId(theme.id), packError('themeIdentity'));
     const check = validateTheme(theme);
     required(check.valid, check.errors.join('; '));
-    required(!themes.has(theme.id), 'Theme IDs must be unique.');
+    required(!themes.has(theme.id), packError('themeUnique'));
     themes.set(theme.id, theme);
   }
   required(
     Array.isArray(pack.classRecipes) &&
       pack.classRecipes.length >= 1 &&
       pack.classRecipes.length <= 40,
-    'Pack must contain 1..40 class recipes.',
+    packError('classRecipesBudget'),
   );
   required(
     pack.classRecipes.every((recipe) => stableId(recipe?.id)),
-    'Class identity is reserved or invalid.',
+    packError('classIdentity'),
   );
-  required(Array.isArray(pack.music) && pack.music.length <= 32, 'Pack music budget exceeded.');
+  required(Array.isArray(pack.music) && pack.music.length <= 32, packError('musicBudget'));
   required(
     pack.classRecipes.every((recipe) => stableId(recipe?.id)),
-    'Class identity is reserved or invalid.',
+    packError('classIdentity'),
   );
   const musicIds = new Set();
   for (const descriptor of pack.music) {
     trackChecks(descriptor);
-    required(!musicIds.has(descriptor.id), 'Music IDs must be unique.');
+    required(!musicIds.has(descriptor.id), packError('musicUnique'));
     musicIds.add(descriptor.id);
   }
   required(
