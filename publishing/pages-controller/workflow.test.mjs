@@ -158,6 +158,19 @@ test("source qualification retains mandatory guards and restorable suites while 
     workflow.indexOf("publish.mjs verify-artifact") <
       workflow.indexOf("name: Upload verified Pages artifact"),
   );
+  assert.match(
+    workflow,
+    /outputs:\n\s+page_url: \$\{\{ steps\.deployment\.outputs\.page_url \}\}/,
+  );
+  assert.match(workflow, /audit-public-bytes:\n/);
+  assert.match(workflow, /needs: \[assemble, deploy\]/);
+  assert.match(workflow, /public-byte-audit\.mjs/);
+  assert.match(workflow, /name: frozen-pages-receipts/);
+  assert.match(workflow, /name: public-byte-audit-\$\{\{ github\.sha \}\}/);
+  assert.ok(
+    workflow.indexOf("name: Deploy verified frozen edition to GitHub Pages") <
+      workflow.indexOf("  audit-public-bytes:"),
+  );
   assert.doesNotMatch(
     workflow,
     /pull_request_target|environment:.*preview|npm test/,
