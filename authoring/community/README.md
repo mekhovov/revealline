@@ -22,10 +22,11 @@ removal, and the remaining hosted-production gates.
 
 The [optional media editor guide](media-editor-guide.md) documents the bounded Phase 8 slice:
 playback ranges, evidence-backed decoded-frame stepping, and verified physical trim/conversion for
-one silent browser-decodable MP4 or WebM video track. Output is AVC/H.264 MP4. [Its acceptance
-record](phase8-acceptance.md) preserves the explicit limits: audio-bearing and multi-track inputs
-are rejected, and Firefox, Safari, Balanced portrait, and physical-mobile qualification remain
-open.
+one silent browser-decodable MP4/WebM video track or one MP4 with exactly one AVC/H.264 video track
+and one AAC audio track. Output is AVC/H.264 MP4 and retains verified AAC only on that bounded audio
+path. [Its acceptance record](phase8-acceptance.md) preserves the explicit limits: additional
+tracks and other audio codec combinations are rejected, while Firefox, Safari, Balanced portrait
+and physical-mobile qualification remain open.
 
 This is a tested local authoring guide for Reveal Line. It covers the automatic creator, a small
 manual mission project, and a separate editable presentation collection. The repository includes a
@@ -186,10 +187,12 @@ Write a short edition brief before replacing assets: community name and rights h
 Resolve each slot from the selected theme and collection. Replace actors, HUD, terrain, effects, objectives, reveal pictures and audio through their respective contracts. Keep player number/shape cues and warning contrast across every palette. Translate UI through real text; do not bake labels into images. A logo, palette change or alternate picture alone is not a complete game theme.
 
 Begin with one reviewed Solo mission, separately qualify each advertised multiplayer path, and add
-one compatible Team arena. Generated Versus replay evidence does not yet establish installed
-Versus campaign behavior. Inspect actual previews and runtime renders before expanding. New reveal
-pictures receive new revisions; Retry, saved flights and earned originals keep their accepted pins.
-Never replace old records in place to make a new community look complete.
+one compatible Team arena. Generated v3 editions can use the installed two-board Versus host only
+after the exact package and equal-board evidence are revalidated. Installed Versus keeps the
+verified difficulty and runtime seed, records edition-scoped progress and pictures, and continues
+to the next exact mission; human fairness and balance review still remain campaign-specific. New
+reveal pictures receive new revisions; Retry, saved flights and earned originals keep their
+accepted pins. Never replace old records in place to make a new community look complete.
 
 ## 11. Prepare the release handoff
 
