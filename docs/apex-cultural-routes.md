@@ -4,12 +4,13 @@ Status date: 2026-09-26
 
 ## Delivery state
 
-- Public release baseline: **v0.132.2**.
-- Exact source base: `origin/main` at `c6efdbcc0a409bdce8cda85b980da0d136af2731`.
+- Public release baseline: **v0.132.3**.
+- Exact source base: `origin/main` at `878a3a14134a729e67fbbc28fafdaa5dc5f8dfe6`.
 - Cultural redesign stack: rebased onto that exact base and force-updated with guarded leases.
 - Latest reviewed predecessor: draft PR #621, Sentinel v24, clean and mergeable at
-  `6f1b8c81f129fc1d6edceff2fede249c47cb5255`.
-- Active successor: Apex v25 / source version **0.140.0**.
+  `a51798532c566e72c24f48b4d133f7f04eda7beb`.
+- Active successor: draft PR #625, Apex v25 / source version **0.140.0**. The PR's GitHub head is
+  authoritative after guarded restacks.
 - None of v12-v25 is a public delivery until its own PR, immutable release and Pages build complete.
 
 ## Completed source candidates
