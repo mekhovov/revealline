@@ -396,8 +396,20 @@ test('registered successor preserves v9, authored Next order and same-edition na
 test('Studio retains separate v9 and v10 editions after the default advances', async () => {
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
-  assert.match(html, /value="erosion-counterplay-1">Erosion counterplay · v9/);
-  assert.match(html, /value="cultural-spatial-triptych-1">[\s\S]*?spatial triptych · v10/i);
+  const erosionOption =
+    /<option\b(?=[^>]*\bvalue="erosion-counterplay-1")[^>]*>\s*Erosion counterplay · v9\s*<\/option>/;
+  const triptychOption =
+    /<option\b(?=[^>]*\bvalue="cultural-spatial-triptych-1")[^>]*>\s*Ukrainian cultural spatial triptych · v10\s*<\/option>/i;
+  assert.match(html, erosionOption);
+  assert.match(html, triptychOption);
+  assert.doesNotMatch(
+    '<option value="erosion-counterplay-1">Wrong label</option><option value="other">Erosion counterplay · v9</option>',
+    erosionOption,
+  );
+  assert.doesNotMatch(
+    '<option value="cultural-spatial-triptych-1">Wrong label</option><option value="other">Ukrainian cultural spatial triptych · v10</option>',
+    triptychOption,
+  );
   assert.match(html, /journey=whole-spatial-v10/);
   assert.match(script, /'cultural-spatial-triptych-1': createSpatialNextBatchCandidates/);
 });
