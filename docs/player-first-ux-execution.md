@@ -29,6 +29,19 @@ inspection, evidence assembly and guarded publication all passed for source
 hashed assets and no `source.tar`. Archive99, public selection, exact-byte audit, and
 built-in-browser acceptance have passed.
 
+**Active candidate — v0.141.7:** the Team teaching, reward and navigation batch
+is reconciled onto accepted public main
+`494bc6a5144b9a47c663806e033132791c9af613`. The repaired teaching helper
+consumes semantic ground context and explicit Support capabilities, uses live
+English and Ukrainian catalog keys, preserves each arena's authoritative opening
+rule, and suppresses already introduced cues on Retry. The Collection feedback
+and navigation fixtures carried from PR #580 resolve through the same live locale
+boundary. The focused contextual host, navigation, localization, Collection,
+gallery, and specialist set passes 124/124 sequentially. Repository validation,
+localization, scoped lint, formatting, and version parity pass. Hosted exact-head
+qualification and built-in-browser cut → Support → rescue review remain before
+freeze.
+
 **Ordered continuation:** Player-first work resumes at v0.141.7 in the approved
 compatible batches below. Reconcile every batch onto the accepted predecessor
 and rerun its cumulative exact-source gates before release. Older target versions
@@ -36,17 +49,17 @@ in draft titles are stale where they disagree with this order. Physical
 controller/touch, comprehensive offline and human balance checks remain separate
 from modeled or built-in-browser evidence.
 
-| Order | Working release | Scope                                                      | Current source input                                                      |
-| ----- | --------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------- |
-| 1     | v0.141.4        | Couch secondary navigation and Team continuation           | publicly accepted exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c` |
-| 2     | v0.141.5        | Bounded community S3 package and resumable-upload storage  | publicly accepted exact source `edd5fa39ae3f0bdf7bc6fa156c461925df794577` |
-| 3     | v0.141.6        | Dual-reader source-manifest release and opt-in canary path | immutable release and public acceptance complete                          |
-| 4     | v0.141.7        | Teaching, reward and navigation batch                      | integrate #543 → #580; repair semantic bilingual teaching; refresh status |
-| 5     | v0.141.8        | Failure and continuation batch                             | PR #545 → #552 → #557; rerun cumulative exact-source gates                |
-| 6     | v0.141.9        | Pause, Settings/Help and Collection return batch           | PR #542 → #548; rerun cumulative exact-source gates                       |
-| 7     | v0.142.0        | Existing offline delivery batch                            | preserve PR #605 → #609 → #619 → #588 ownership and allocation            |
-| 8     | v0.143.0        | Existing soundtrack batch                                  | preserve its current owner and release allocation                         |
-| 9     | after v0.143.0  | UX6 cumulative qualification                               | exact accepted predecessor; no aggregation of stale component evidence    |
+| Order | Working release | Scope                                                      | Current source input                                                                |
+| ----- | --------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| 1     | v0.141.4        | Couch secondary navigation and Team continuation           | publicly accepted exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c`           |
+| 2     | v0.141.5        | Bounded community S3 package and resumable-upload storage  | publicly accepted exact source `edd5fa39ae3f0bdf7bc6fa156c461925df794577`           |
+| 3     | v0.141.6        | Dual-reader source-manifest release and opt-in canary path | immutable release and public acceptance complete                                    |
+| 4     | v0.141.7        | Teaching, reward and navigation batch                      | semantic bilingual source prepared on accepted v0.141.6 main; PR/browser gates next |
+| 5     | v0.141.8        | Failure and continuation batch                             | PR #545 → #552 → #557; rerun cumulative exact-source gates                          |
+| 6     | v0.141.9        | Pause, Settings/Help and Collection return batch           | PR #542 → #548; rerun cumulative exact-source gates                                 |
+| 7     | v0.142.0        | Existing offline delivery batch                            | preserve PR #605 → #609 → #619 → #588 ownership and allocation                      |
+| 8     | v0.143.0        | Existing soundtrack batch                                  | preserve its current owner and release allocation                                   |
+| 9     | after v0.143.0  | UX6 cumulative qualification                               | exact accepted predecessor; no aggregation of stale component evidence              |
 
 Known corrections remain part of these working allocations:
 

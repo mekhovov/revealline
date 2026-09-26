@@ -2,7 +2,7 @@
 
 ## Scope
 
-This draft adds one bounded player-first teaching feature to the Team host. It does not change the
+This candidate adds one bounded player-first teaching feature to the Team host. It does not change the
 Team simulation, mission recipes, scoring, artwork, controller routing or release metadata.
 
 The shared arena now uses its existing live message row to introduce three skills in context:
@@ -45,7 +45,9 @@ styling before terminal results.
 
 ## Remaining qualification
 
-This source-level slice still needs integration after the compact gallery and Couch navigation
-releases settle. Public browser review must exercise a cut, a Support pulse, a downed player and a
-completed rescue at portrait and short-landscape sizes. Physical touch and controller hardware are
+The integrated v0.141.7 candidate is rebased onto accepted public main
+`494bc6a5144b9a47c663806e033132791c9af613`. Hosted exact-head qualification and immutable
+publication remain open. Browser review must exercise a cut, a Support pulse, a downed player and a
+completed rescue in English and Ukrainian, then verify Retry suppression and terminal styling at
+portrait and short-landscape sizes with reduced effects. Physical touch and controller hardware are
 separate evidence; modeled or browser input must not be reported as hardware certification.
