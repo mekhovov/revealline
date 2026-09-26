@@ -112,6 +112,42 @@ test('Team teaching skips an irrelevant Support prompt but still teaches rescue'
   });
 });
 
+test('specialist teaching follows actual threats and the authored seat order', () => {
+  const reversed = {
+    groundContext: 'safe',
+    supportCapabilities: {
+      intercept: true,
+      slow: true,
+      specialist: true,
+      interceptorSeat: 2,
+      disruptorSeat: 1,
+    },
+  };
+  const teacher = createTeamContextualTeaching({ getStorage: () => new Storage() });
+  assert.deepEqual(teacher.observe([{ type: 'cut.closed' }], reversed), {
+    kind: 'support',
+    key: 'interface:team.teaching.supportSpecialists',
+    values: { interceptor: 2, disruptor: 1 },
+  });
+  assert.match(
+    t('interface:team.teaching.supportSpecialists', { interceptor: 2, disruptor: 1 }),
+    /Player 2 intercepts.*Player 1 slows/,
+  );
+
+  const calm = createTeamContextualTeaching({ getStorage: () => new Storage() });
+  assert.equal(
+    calm.observe([{ type: 'cut.joint' }], {
+      ...reversed,
+      supportCapabilities: {
+        ...reversed.supportCapabilities,
+        intercept: false,
+        slow: false,
+      },
+    }),
+    null,
+  );
+});
+
 test('Team teaching tolerates unavailable, corrupt and failing storage with bounded state', () => {
   const warnings = [];
   const unavailable = createTeamContextualTeaching({

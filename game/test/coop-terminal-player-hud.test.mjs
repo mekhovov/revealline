@@ -143,6 +143,47 @@ test('legal shared loss ends both full and compact player instructions until an 
   assert.notEqual(f.$('coop-message').textContent, terminalMessage('lost'));
 });
 
+test('a Support pulse on the winning step is remembered while terminal copy stays final', async (t) => {
+  const values = new Map();
+  const storage = {
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => values.set(key, value),
+  };
+  const f = await page(t, {
+    ...options,
+    beforeImport({ install }) {
+      install('localStorage', { value: storage, writable: true });
+    },
+  });
+  const pack = JSON.parse(
+    await readFile(new URL('./fixtures/team-terminal-hud-qa.json', import.meta.url), 'utf8'),
+  );
+  pack.levels[1].enemies = [
+    { id: 'support-marker', type: 'drifter', x: 35.5, y: 1.5, vx: 0, vy: 0, radius: 0.35 },
+  ];
+  await f.selectFile(JSON.stringify(pack));
+  await f.choose('coop-level', 'qa-terminal-win');
+  await f.choose('coop-difficulty', 'expert');
+  f.$('coop-experiment').value = 'full';
+  f.$('coop-start').focus();
+  f.tap('Enter');
+  f.tick(3);
+  f.tap('KeyD');
+  f.tick(957);
+  assert.equal(f.$('coop-overlay').hidden, true, 'The pulse is reserved for the winning step.');
+  f.press('KeyQ');
+  f.tick();
+  f.doc.activeElement.emit('keyup', { key: 'KeyQ', code: 'KeyQ' });
+  assertFinishedPlayers(f, 'won');
+  const teaching = JSON.parse(storage.getItem('revealline.team-contextual-teaching.v1'));
+  assert.ok(teaching.completed.includes('support'));
+  assert.doesNotMatch(f.$('coop-message').textContent, /SUPPORT READY/);
+  f.$('coop-retry').focus();
+  f.tap('Enter');
+  assert.equal(f.$('coop-message').dataset.coach, undefined);
+  assert.doesNotMatch(f.$('coop-message').textContent, /SUPPORT READY/);
+});
+
 for (const downed of [0, 1])
   test(`P${downed + 1} alone with zero reserves retains rescue guidance and keyboard Help returns without resuming`, async (t) => {
     const f = await emptyArena(t);

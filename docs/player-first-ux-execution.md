@@ -30,17 +30,22 @@ hashed assets and no `source.tar`. Archive99, public selection, exact-byte audit
 built-in-browser acceptance have passed.
 
 **Active candidate — v0.141.7:** the Team teaching, reward and navigation batch
-is reconciled onto accepted public main
-`494bc6a5144b9a47c663806e033132791c9af613`. The repaired teaching helper
-consumes semantic ground context and explicit Support capabilities, uses live
-English and Ukrainian catalog keys, preserves each arena's authoritative opening
-rule, and suppresses already introduced cues on Retry. The Collection feedback
-and navigation fixtures carried from PR #580 resolve through the same live locale
-boundary. The focused contextual host, navigation, localization, Collection,
-gallery, and specialist set passes 124/124 sequentially. Repository validation,
-localization, scoped lint, formatting, and version parity pass. Hosted exact-head
-qualification and built-in-browser cut → Support → rescue review remain before
-freeze.
+is reconciled onto current integration main
+`b08aca5e192aef0482455c02b81ee86dd5bac909` while the accepted public baseline
+remains v0.141.6. The repaired teaching helper consumes semantic ground context
+and Support capabilities derived from actual arena threats, including travelling
+line impacts and relay sparks. It uses live English and Ukrainian catalog keys,
+preserves each arena's authoritative opening rule, and suppresses already
+introduced cues on Retry. Collection result, theme, difficulty, loading, progress
+and success copy resolve through the same live locale boundary without repainting
+the picture. The previously reported focused contextual host, navigation,
+localization, Collection, gallery, and specialist cohort is reconciled at 125/125
+sequentially. The review-correction Team/Library cohort passes 110/110
+sequentially. Repository validation, localization, full lint, game/native
+formatting, Motion Lab syntax, diff check, and version parity pass locally.
+Hosted exact-head qualification and built-in-browser cut → Support → rescue
+review remain before freeze; long suites are waived by the committed temporary
+policy and are not reported as passing.
 
 **Ordered continuation:** Player-first work resumes at v0.141.7 in the approved
 compatible batches below. Reconcile every batch onto the accepted predecessor

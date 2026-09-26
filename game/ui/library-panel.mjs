@@ -21,7 +21,7 @@ import { challengeCampaign } from '../challenges.mjs';
 import { attachProfileTransferPanel } from './profile-transfer-panel.mjs';
 import { masteryFor, pictureMasteries } from './mastery-view.mjs';
 import { expandDifficultyCampaigns } from '../campaign-contexts.mjs';
-import { createGalleryDifficultyResolver } from '../gallery-difficulty.mjs';
+import { createGalleryDifficultyResolver, galleryDifficultyLabel } from '../gallery-difficulty.mjs';
 import { collectionResultLabels } from '../collection-results.mjs';
 import { resolveEarnedPicture } from './earned-picture.mjs';
 import { resolveStoryReceipts } from '../story-receipts.mjs';
@@ -208,8 +208,10 @@ export function attachLibraryPanel(api) {
     }
     return difficultyResolver;
   }
+  const pictureDifficultyLabel = (picture) =>
+    picture?.labelKey ? galleryDifficultyLabel(picture) : contentText(picture, 'label');
   const pictureMeta = (picture) =>
-    `${picture.theme.name} · ${picture.label} · ${collectionResultLabels(picture.item, api.get().library).detail}`;
+    `${contentText(picture.theme, 'name')} · ${pictureDifficultyLabel(picture)} · ${collectionResultLabels(picture.item, api.get().library).detail}`;
   const storyButton = document.createElement('button');
   storyButton.id = 'gallery-story';
   storyButton.type = 'button';
@@ -1418,7 +1420,7 @@ export function attachLibraryPanel(api) {
       if (picture.receipt?.presentationPin.kind === 'still') {
         if (!picture.media)
           throw new Error(t('interface:restoreTheOriginalPictureMediaBeforeViewing'));
-        onPhase(t('interface:readingAndDecodingTheExactEarnedOriginal'));
+        onPhase(() => t('interface:readingAndDecodingTheExactEarnedOriginal'));
         backdrop = await (picture.media.acquire ?? acquirePresentationImage)({
           pin: picture.receipt.presentationPin,
           metadata: picture.media.metadata,
@@ -1427,7 +1429,7 @@ export function attachLibraryPanel(api) {
         args.image = backdrop.image;
         args.fit = backdrop.fit;
       } else if (picture.visualOverrides.background) {
-        onPhase(t('interface:decodingTheExactPictureArtwork'));
+        onPhase(() => t('interface:decodingTheExactPictureArtwork'));
         const image = new Image();
         image.src = picture.visualOverrides.background.dataUrl;
         await image.decode();
@@ -1654,7 +1656,7 @@ export function attachLibraryPanel(api) {
             .filter(Boolean),
         }))
         .filter((group) =>
-          `${group.item.levelName} ${group.item.themeId} ${group.variants.map((picture) => `${contentText(picture.theme, 'name')} ${contentText(resolver, 'label')(picture.item.campaignKey)}`).join(' ')} ${group.variants.length ? '' : t('interface:library.archivedDifficultyUnavailable')}`
+          `${group.item.levelName} ${group.item.themeId} ${group.variants.map((picture) => `${contentText(picture.theme, 'name')} ${pictureDifficultyLabel(picture)}`).join(' ')} ${group.variants.length ? '' : t('interface:library.archivedDifficultyUnavailable')}`
             .toLowerCase()
             .includes(query),
         );
@@ -1672,26 +1674,26 @@ export function attachLibraryPanel(api) {
       const title = document.createElement('strong');
       localizedText(title, () => item.levelName);
       const copy = document.createElement('span');
-      const otherDifficulties = [...new Set(group.variants.map((variant) => variant.label))].filter(
-        (label) => label !== picture?.label,
-      );
-      localizedText(copy, () =>
-        picture
+      localizedText(copy, () => {
+        const otherDifficulties = [...new Set(group.variants.map(pictureDifficultyLabel))].filter(
+          (label) => label !== (picture ? pictureDifficultyLabel(picture) : null),
+        );
+        return picture
           ? t(
               otherDifficulties.length
                 ? 'interface:library.galleryCardWithAlsoEarned'
                 : 'interface:library.galleryCard',
               {
                 theme: contentText(picture.theme, 'name'),
-                difficulty: picture.label,
+                difficulty: pictureDifficultyLabel(picture),
                 result: collectionResultLabels(item, api.get().library).card,
                 otherDifficulties: otherDifficulties.join(' + '),
               },
             )
           : receipts.get(item.key)?.presentationPin.kind === 'still'
             ? t('interface:originalPictureUnavailableRestoreItsRlmediaOriginals')
-            : t('interface:archivedPictureReinstallItsExactPackToView'),
-      );
+            : t('interface:archivedPictureReinstallItsExactPackToView');
+      });
       const seal = document.createElement('span');
       seal.className = 'mastery-note';
       seal.hidden = true;
@@ -1785,7 +1787,7 @@ export function attachLibraryPanel(api) {
         ...variants.map((variant) => {
           const option = document.createElement('option');
           option.value = variant.difficulty ?? '';
-          localizedText(option, () => contentText(variant, 'label'));
+          localizedText(option, () => pictureDifficultyLabel(variant));
           return option;
         }),
       );
@@ -1794,7 +1796,6 @@ export function attachLibraryPanel(api) {
     $('gallery-difficulty').disabled = viewVariants.length < 2;
     $('gallery-difficulty').value = picture.difficulty ?? '';
     pictureReady(false, true);
-    const meta = pictureMeta(picture);
     const current = () =>
       generation === viewGeneration && view === picture && $('gallery-view-dialog').open;
     localizedText($('gallery-view-title'), () => contentText(picture.level, 'name'));
@@ -1809,16 +1810,21 @@ export function attachLibraryPanel(api) {
     if (!switching) $('gallery-view-dialog').showModal();
     try {
       const drawn = await drawPicture($('gallery-canvas'), picture, current, (message) => {
+        const resolveMessage = typeof message === 'function' ? message : () => message;
         if (current())
           status(
             'gallery-view-meta',
-            () => t('interface:library.pictureProgress', { meta: pictureMeta(picture), message }),
+            () =>
+              t('interface:library.pictureProgress', {
+                meta: pictureMeta(picture),
+                message: resolveMessage(),
+              }),
             'busy',
           );
       });
       if (drawn && current()) {
         pictureReady(true);
-        status('gallery-view-meta', meta);
+        status('gallery-view-meta', () => pictureMeta(picture));
       }
     } catch (e) {
       if (current()) {
@@ -1918,7 +1924,7 @@ export function attachLibraryPanel(api) {
       return;
     }
     if (generation !== viewGeneration || view !== picture || !$('gallery-view-dialog').open) return;
-    status('gallery-view-meta', pictureMeta(picture));
+    status('gallery-view-meta', () => pictureMeta(picture));
     galleryPainter.setLevel?.(picture.level, { seed: picture.item.seed ?? 1 });
     galleryPainter.startCelebration?.({
       levelId: picture.level.id,

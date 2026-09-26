@@ -20,11 +20,29 @@ function readStored(storage, key) {
 
 function supportCue(guidance) {
   const capabilities = guidance?.supportCapabilities;
-  if (capabilities?.specialist) return 'interface:team.teaching.supportSpecialists';
+  if (capabilities?.specialist && capabilities.intercept && capabilities.slow)
+    return {
+      key: 'interface:team.teaching.supportSpecialists',
+      values: {
+        interceptor: capabilities.interceptorSeat,
+        disruptor: capabilities.disruptorSeat,
+      },
+    };
+  if (capabilities?.specialist && capabilities.intercept)
+    return {
+      key: 'interface:team.teaching.supportSpecialistIntercept',
+      values: { player: capabilities.interceptorSeat },
+    };
+  if (capabilities?.specialist && capabilities.slow)
+    return {
+      key: 'interface:team.teaching.supportSpecialistSlow',
+      values: { player: capabilities.disruptorSeat },
+    };
   if (capabilities?.intercept && capabilities?.slow)
-    return 'interface:team.teaching.supportSlowAndIntercept';
-  if (capabilities?.intercept) return 'interface:team.teaching.supportIntercept';
-  if (capabilities?.slow) return 'interface:team.teaching.supportSlow';
+    return { key: 'interface:team.teaching.supportSlowAndIntercept', values: {} };
+  if (capabilities?.intercept)
+    return { key: 'interface:team.teaching.supportIntercept', values: {} };
+  if (capabilities?.slow) return { key: 'interface:team.teaching.supportSlow', values: {} };
   return null;
 }
 
@@ -105,8 +123,8 @@ export function createTeamContextualTeaching({
           context: guidance?.groundContext,
         });
       if (events.some((event) => event?.type === 'cut.closed' || event?.type === 'cut.joint')) {
-        const key = supportCue(guidance);
-        if (key) return introduce('support', key);
+        const cue = supportCue(guidance);
+        if (cue) return introduce('support', cue.key, cue.values);
       }
       return null;
     },
