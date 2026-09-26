@@ -17,15 +17,21 @@ versions or acceptance gates are still current.
 
 ## Completed source work
 
-| Scope                                   | State                         | Evidence boundary                                                                                                                                                  |
-| --------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Journey Ukrainian spatial stack v12-v24 | Rebased and pushed            | Candidate source only; each draft PR still needs its own promotion and public verification.                                                                        |
-| Apex v25 / PR #625                      | Clean draft, source `0.140.0` | Earlier focused and production-build evidence exists; the exact terminal-base head still needs release CI.                                                         |
-| Complete Team adoption / PR #630        | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.                                                    |
-| First Team Ukrainian slice / PR #636    | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                             |
-| Second Team Ukrainian slice / PR #642   | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                              |
-| Second Team current edition / PR #650   | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; focused cohort 83/83 and localization validation pass; not public. |
-| Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership. |
+| Scope                                            | State                         | Evidence boundary                                                                                                                                                  |
+| ------------------------------------------------ | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Journey Ukrainian spatial stack v12-v24          | Rebased and pushed            | Candidate source only; each draft PR still needs its own promotion and public verification.                                                                        |
+| Apex v25 / PR #625                               | Clean draft, source `0.140.0` | Earlier focused and production-build evidence exists; the exact terminal-base head still needs release CI.                                                         |
+| Complete Team adoption / PR #630                 | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.                                                    |
+| First Team Ukrainian slice / PR #636             | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                             |
+| Second Team Ukrainian slice / PR #642            | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                              |
+| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; focused cohort 83/83 and localization validation pass; not public. |
+| Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.  |
+
+After the final main rebase, a bounded host rerun reached two 15-second chooser-opening timeouts
+before either changed assertion while another independent mission-library suite was continuously using
+a CPU core. It was stopped rather than misreported as a pass or “fixed” by widening timeouts. The
+earlier focused assertion pass and the content-equivalent 55-commit range-diff remain recorded, but
+an uncontended exact-head host rerun is still required.
 
 The second Team slice now has **13/13** focused checks. Every changed mission keeps one connected
 field, idle-safe starts on all presets, two distinct no-down approaches, and a two-closure exchange
@@ -70,6 +76,9 @@ accepted predecessor; draft labels do not reserve a release.
    dependencies, logs and test artifacts was removed after checking for Git repositories, patches
    and active processes. Roughly 1.4 GiB remained immediately afterward. Avoid duplicate local
    builds and never remove unpushed source, user media or another task's active workspace.
+7. **Shared-host contention:** the post-rebase PR #651 host rerun timed out during chooser startup
+   while another worktree's library test held a CPU core. Re-run the bounded cases uncontended; do
+   not call these startup timeouts changed-expectation failures or passes.
 
 ## Immediate execution order
 
