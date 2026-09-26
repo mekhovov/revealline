@@ -1,6 +1,6 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { createReadStream } from 'node:fs';
-import { mkdir, open, rename, rm, stat } from 'node:fs/promises';
+import { mkdir, open, opendir, rename, rm, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { Readable } from 'node:stream';
 import { finished } from 'node:stream/promises';
@@ -12,6 +12,32 @@ const validatedKey = (key) => {
   if (typeof key !== 'string' || !/^[a-z0-9][a-z0-9./_-]*$/u.test(key) || key.includes('..'))
     throw new Error('Blob key is invalid.');
   return key;
+};
+
+const validatedListInput = ({ prefix, cursor = null, limit = 1_000 }) => {
+  const checkedPrefix = validatedKey(prefix);
+  if (cursor !== null && (typeof cursor !== 'string' || cursor.length < 1 || cursor.length > 4_096))
+    throw new Error('Blob listing cursor is invalid.');
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 1_000)
+    throw new Error('Blob listing limit must be between 1 and 1000.');
+  return { prefix: checkedPrefix, cursor, limit };
+};
+
+const readBoundedDirectory = async (directory, maximum, label) => {
+  let handle;
+  try {
+    handle = await opendir(directory);
+  } catch (error) {
+    if (error?.code === 'ENOENT') return [];
+    throw error;
+  }
+  const entries = [];
+  for await (const entry of handle) {
+    entries.push(entry);
+    if (entries.length > maximum)
+      throw new Error(`${label} exceeds the bounded disk inventory limit of ${maximum}.`);
+  }
+  return entries.sort((left, right) => left.name.localeCompare(right.name));
 };
 
 const validateContentAddress = (key, expectedSha256) => {
@@ -228,6 +254,38 @@ export class DiskBlobStore {
       await handle.close();
     }
   }
+
+  async list(input) {
+    const { prefix, cursor, limit } = validatedListInput(input);
+    if (prefix !== 'packages/sha256/')
+      throw new Error('Disk blob listing supports only the content-addressed package prefix.');
+    if (cursor && (validatedKey(cursor), !cursor.startsWith(prefix)))
+      throw new Error('Blob listing cursor is outside the requested prefix.');
+    const root = path.join(this.root, prefix);
+    const shards = await readBoundedDirectory(root, 256, 'Package shard directory');
+    const items = [];
+    for (const shard of shards) {
+      const shardKey = path.posix.join(prefix, shard.name);
+      if (shard.isSymbolicLink()) throw new Error(`Symbolic links are not allowed: ${shardKey}`);
+      if (!shard.isDirectory()) throw new Error(`Unsupported blob storage entry: ${shardKey}`);
+      const entries = await readBoundedDirectory(
+        path.join(root, shard.name),
+        4_096,
+        `Package shard ${shard.name}`,
+      );
+      for (const entry of entries) {
+        const key = path.posix.join(shardKey, entry.name);
+        if (entry.isSymbolicLink()) throw new Error(`Symbolic links are not allowed: ${key}`);
+        if (!entry.isFile()) throw new Error(`Unsupported blob storage entry: ${key}`);
+        if (cursor && key <= cursor) continue;
+        const metadata = await stat(this.#path(key));
+        items.push({ key, size: metadata.size });
+        if (items.length > limit)
+          return { items: items.slice(0, limit), cursor: items[limit - 1].key };
+      }
+    }
+    return { items, cursor: null };
+  }
 }
 
 export class MemoryBlobStore {
@@ -288,14 +346,37 @@ export class MemoryBlobStore {
       return null;
     return bytes.subarray(start, end);
   }
+
+  async list(input) {
+    const { prefix, cursor, limit } = validatedListInput(input);
+    if (cursor && (validatedKey(cursor), !cursor.startsWith(prefix)))
+      throw new Error('Blob listing cursor is outside the requested prefix.');
+    const keys = [...this.#items.keys()]
+      .filter((key) => key.startsWith(prefix) && (!cursor || key > cursor))
+      .sort((left, right) => left.localeCompare(right));
+    const page = keys.slice(0, limit);
+    return {
+      items: page.map((key) => ({ key, size: this.#items.get(key).length })),
+      cursor: keys.length > limit ? page.at(-1) : null,
+    };
+  }
 }
 
 // The executable factory supplies AWS SDK command constructors. Keeping commands injectable makes
 // exact staging, conditional publication, and range behavior testable without a network service.
 export class S3CompatibleBlobStore {
   constructor({ client, bucket, stagingRoot, commands }) {
-    if (!client?.send || !bucket || !commands?.put || !commands?.head || !commands?.get)
-      throw new Error('S3 adapter requires a client, bucket, and put/head/get command factories.');
+    if (
+      !client?.send ||
+      !bucket ||
+      !commands?.put ||
+      !commands?.head ||
+      !commands?.get ||
+      !commands?.list
+    )
+      throw new Error(
+        'S3 adapter requires a client, bucket, and put/head/get/list command factories.',
+      );
     if (typeof stagingRoot !== 'string' || stagingRoot.length === 0)
       throw new Error('S3 adapter requires a local staging root.');
     this.client = client;
@@ -407,5 +488,25 @@ export class S3CompatibleBlobStore {
       if (error?.name === 'NoSuchKey' || error?.$metadata?.httpStatusCode === 404) return null;
       throw error;
     }
+  }
+
+  async list(input) {
+    const { prefix, cursor, limit } = validatedListInput(input);
+    const result = await this.client.send(
+      this.commands.list({
+        Bucket: this.bucket,
+        Prefix: prefix,
+        MaxKeys: limit,
+        ...(cursor ? { ContinuationToken: cursor } : {}),
+      }),
+    );
+    const items = (result.Contents ?? []).map(({ Key, Size }) => {
+      if (typeof Key !== 'string' || !Key.startsWith(prefix) || !Number.isSafeInteger(Number(Size)))
+        throw new Error('S3 listing returned an invalid blob entry.');
+      return { key: validatedKey(Key), size: Number(Size) };
+    });
+    if (result.IsTruncated && !result.NextContinuationToken)
+      throw new Error('S3 listing omitted its continuation token.');
+    return { items, cursor: result.IsTruncated ? result.NextContinuationToken : null };
   }
 }
