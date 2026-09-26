@@ -112,6 +112,37 @@ export async function resolveTagCommit(options) {
   return (await resolveTagAuthority(options)).commit;
 }
 
+export async function resolveReleaseAuthority({
+  repository,
+  version,
+  get = request,
+}) {
+  const published = await get(
+    `/repos/${repository}/releases/tags/${version}`,
+    { allowMissing: true },
+  );
+  if (published !== null) return published;
+
+  const matches = [];
+  let complete = false;
+  for (let page = 1; page <= 10; page += 1) {
+    const batch = await get(
+      `/repos/${repository}/releases?per_page=100&page=${page}`,
+    );
+    if (!Array.isArray(batch))
+      throw new Error("release listing differs from the GitHub API contract");
+    matches.push(...batch.filter((release) => release.tag_name === version));
+    if (batch.length < 100) {
+      complete = true;
+      break;
+    }
+  }
+  if (!complete) throw new Error("release listing exceeded its bounded scan");
+  if (matches.length > 1)
+    throw new Error("release listing contains duplicate tag authorities");
+  return matches[0] || null;
+}
+
 export async function inspectReleaseObjects({
   repository,
   version,
@@ -122,9 +153,7 @@ export async function inspectReleaseObjects({
     throw new Error("invalid repository identity");
   const [tag, release] = await Promise.all([
     resolveTagAuthority({ repository, version, get }),
-    get(`/repos/${repository}/releases/tags/${version}`, {
-      allowMissing: true,
-    }),
+    resolveReleaseAuthority({ repository, version, get }),
   ]);
   return {
     tagCommit: tag.commit,
