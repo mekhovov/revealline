@@ -136,7 +136,7 @@ test('inspection matches actual Solo attempt preparation with fresh admin settin
 });
 
 test('current Team impact and specialist diagnostics read their actual top-level runtime contracts', () => {
-  assert.equal(DEFAULT_JOURNEY_ROUTES.team, 'team-complete-specialist-originals-1');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.team, 'team-cultural-specialist-originals-1');
   for (const source of [
     createTeamImpactOriginalCandidates(),
     createTeamSpecialistOriginalCandidates(),
