@@ -21,7 +21,10 @@ test('hosted journey uses an isolated exact-source PostgreSQL and disk deploymen
   assert.match(compose, /CI-only overlay/u);
   assert.doesNotMatch(compose, /:latest/u);
   assert.doesNotMatch(compose, /AWS_|COMMUNITY_S3_/u);
-  assert.match(baseCompose, /--file="\$\$\{file\}"/u);
+  assert.match(
+    baseCompose,
+    /psql --host=postgres --username=revealline --dbname=revealline \\\n+\s+--set=ON_ERROR_STOP=1 --file="\$\$\{file\}"/u,
+  );
   assert.match(productionCompose, /COMMUNITY_ALLOW_DEV_AUTH: 'false'/u);
   assert.match(productionCompose, /COMMUNITY_DEV_TOKENS: '\{\}'/u);
 
