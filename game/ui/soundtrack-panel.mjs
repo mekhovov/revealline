@@ -333,7 +333,9 @@ export function attachSoundtrackPanel({
   masterVolume.element.oninput = masterVolume.element.onchange = () =>
     changeMaster('volume', Number(masterVolume.element.value));
   if (audioMaster) bindings.push(audioMaster.subscribe(updateMaster));
-  function usePlaylist(chosen, { start = false, onStarted = null } = {}) {
+  const savedPlaylistPlaybackHint = () =>
+    `${t('interface:savedOnThisDevice')} ${t('interface:playlistSelectedChoosePlayMusicIfItIsPaused')}`;
+  function usePlaylist(chosen, { start = false, onPlaybackResult = null } = {}) {
     return task(t('interface:savingYourPlaylistChoice'), async (signal) => {
       edit((value) => {
         value.selection.playlistId = chosen;
@@ -344,12 +346,19 @@ export function attachSoundtrackPanel({
       wakeAudio();
       await player.selectPlaylist(draft.selection.playlistId);
       if (start) await (musicSession ? musicSession.play() : player.play());
+      if (disposed) return;
       await notifyPlayback();
-      if (start) onStarted?.();
+      if (disposed) return;
+      // A durable save does not imply playback: browsers can require a fresh
+      // gesture, and session transports may settle without starting the player.
+      const playing = player.snapshot().playing;
+      if (start) onPlaybackResult?.(playing);
       setStatus(
         committed.warning ||
           (start
-            ? t('interface:playlistSelectedAndPlaying')
+            ? playing
+              ? t('interface:playlistSelectedAndPlaying')
+              : savedPlaylistPlaybackHint()
             : t('interface:playlistSelectedPlaybackIsUnchanged')),
       );
     });
@@ -706,9 +715,11 @@ export function attachSoundtrackPanel({
       if (!playlist) return;
       return usePlaylist(playlist.id, {
         start: true,
-        onStarted: () =>
+        onPlaybackResult: (playing) =>
           localizedText(collectionSummary, () =>
-            t('interface:soundtrack.privateCollectionSaved', { title: playlist.title }),
+            playing
+              ? t('interface:soundtrack.privateCollectionSaved', { title: playlist.title })
+              : savedPlaylistPlaybackHint(),
           ),
       });
     },

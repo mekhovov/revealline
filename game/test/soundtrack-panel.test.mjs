@@ -837,6 +837,49 @@ test('private collection save does not claim playback when post-commit adoption 
   );
 });
 
+for (const transport of ['player', 'session']) {
+  test(`private collection remains saved when ${transport} playback needs a fresh gesture`, async (t) => {
+    let app,
+      allowPlay = false;
+    const blockedPlay = async () => {
+      Object.assign(app.state, {
+        playing: allowPlay,
+        desired: true,
+        status: allowPlay ? 'playing' : 'blocked',
+      });
+      return allowPlay;
+    };
+    app = await setup(t, {
+      callbacks: {
+        catalogue: SOUNDTRACK_CATALOGUE,
+        ...(transport === 'session' ? { musicSession: { play: blockedPlay, pause() {} } } : {}),
+      },
+    });
+    if (transport === 'player') app.player.play = blockedPlay;
+    app.node('collection-files').files = [file('Private.mp3')];
+    await app.click('review-collection');
+    await app.click('save-play-collection');
+
+    const saved = await app.store.read();
+    assert.equal(saved.generation, 1, 'autoplay refusal does not undo the atomic save');
+    assert.equal(saved.library.playlists[0].title, 'Private');
+    assert.equal(saved.library.selection.playlistId, saved.library.playlists[0].id);
+    assert.deepEqual(Buffer.from(await saved.assets[0].blob.arrayBuffer()), silenceBytes);
+    assert.equal(app.state.playing, false);
+    assert.match(app.node('draft-state').textContent, /^Saved/);
+    assert.match(app.node('collection-summary').textContent, /Saved on this device/);
+    assert.match(app.node('collection-summary').textContent, /Choose Play music/);
+    assert.doesNotMatch(app.node('collection-summary').textContent, /saved and playing/i);
+    assert.match(app.node('status').textContent, /Choose Play music/);
+    assert.doesNotMatch(app.node('status').textContent, /selected and playing/i);
+    assert.equal(app.node('play').disabled, false, 'the fresh-gesture recovery remains available');
+    allowPlay = true;
+    await app.click('play');
+    assert.equal(app.state.playing, true);
+    assert.equal((await app.store.read()).generation, 1, 'recovery does not need another save');
+  });
+}
+
 test('a failing second file discards the whole batch while preserving an earlier unsaved draft', async (t) => {
   const app = await setup(t);
   app.node('mp3-files').files = [file('First.mp3')];
