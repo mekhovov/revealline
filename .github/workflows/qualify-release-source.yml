@@ -11,7 +11,7 @@ on:
       artifact_binding:
         description: Reviewed exact JSON binding for utility modes; empty when qualifying
         required: false
-        default: ""
+        default: ''
         type: string
       freeze_snapshot:
         description: Preserve a playable snapshot after every source gate passes
@@ -334,6 +334,7 @@ jobs:
           path: |
             releases/*/release.json
             releases/*/source.tar
+            releases/*/source-manifest.json
             releases/*/distribution.zip.sha256
             releases/*/site/manifest.json
             releases/*/site/distribution.zip
