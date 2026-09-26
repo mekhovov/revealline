@@ -66,7 +66,9 @@ accepted predecessor; draft labels do not reserve a release.
 ## Blockers and concerns
 
 1. **Serialized publication:** one publisher owns tags, frozen assets, archives and Pages. Feature
-   preparation can continue in parallel, but releases cannot safely publish in parallel.
+   preparation can continue in parallel, but releases cannot safely publish in parallel. The
+   publisher's latest queue audit reports that none of the 46 inspected PRs is merge-authorized yet;
+   a green or clean status alone is not release permission.
 2. **Long-suite waiver:** focused checks are real; skipped long suites are not passes. Exact source,
    validation, formatting, build/provenance, hashes, archive preservation and public availability
    remain mandatory.
