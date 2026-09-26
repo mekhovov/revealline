@@ -1,0 +1,78 @@
+{
+  "format": "revealline-v0.132.5-presentation-continuation.v1",
+  "status": "bounded exact-source and focused-test continuation; frozen, public, every-viewport and physical-device acceptance pending",
+  "reviewedAt": "2026-09-26T12:05:00Z",
+  "candidateSourceCommit": "72cfc74552669699266d5d8ad92c56a69da885b2",
+  "baselineTag": "v0.132.4",
+  "scope": "Continue the existing 37 Team functional recipe approvals, five Team equipment-image approvals and eight Field Kit audio recipe approvals across the exact v0.132.5 source. The Team closure now includes the prepared enemy-body asset resolver and incorporates already delivered actor sizing, clean silhouettes, bounded trail feedback and English/Ukrainian copy bindings. The audio closure changes only because the Solo host asks the shared shell to refresh its localized Home copy. Recipe payloads, original equipment bytes, collision geometry, simulation authority, audio routing and soundtrack bytes remain separately authenticated and unchanged.",
+  "priorReviews": {
+    "team": {
+      "path": "docs/verification/team37/review.json",
+      "sha256": "7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
+      "fingerprintSHA256": "ec823086350e8289217e5d987cb77c4172c00cf20b14afcd52bc07183bf8ab6a"
+    },
+    "teamSuccessor": {
+      "path": "docs/verification/team-specialist-cues-2026-09-24/review.json",
+      "sha256": "45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05",
+      "fingerprintSHA256": "557c00b3bc31e8efbc5fbb96dec3b5b7c87afa19bc7325025974be216972ff75"
+    },
+    "equipment": {
+      "path": "docs/verification/team-equipment-five-review/review.json",
+      "sha256": "a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3",
+      "originalFingerprintSHA256": "b9cbf2db6fe094564a15743c72c45049bf9ee776a22b2599469e0ee1bdc03037",
+      "priorSuccessorFingerprintSHA256": "162d4c737c11d34f8e7e3ed6e76ca5a34fcf06d5fb97303d53eba857feaaf530"
+    },
+    "audio": {
+      "path": "docs/verification/v0.132.1-steamdeck-audio-continuation/review.json",
+      "sha256": "b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70",
+      "fingerprintSHA256": "417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a"
+    }
+  },
+  "fingerprints": {
+    "team": {
+      "group": "team",
+      "paths": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs",
+      "priorSHA256": "557c00b3bc31e8efbc5fbb96dec3b5b7c87afa19bc7325025974be216972ff75",
+      "currentSHA256": "e3d97d991534a24d35772ccdfe6bd70c25961fd9e1a2a4753b1251326fbfc374"
+    },
+    "equipment": {
+      "priorSHA256": "162d4c737c11d34f8e7e3ed6e76ca5a34fcf06d5fb97303d53eba857feaaf530",
+      "currentSHA256": "a51330646f4fcf91439cb16f10a5fe8dd854381f320dd29bc46182c0f061c242"
+    },
+    "audio": {
+      "priorSHA256": "417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a",
+      "currentSHA256": "301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9"
+    },
+    "algorithm": "SHA256 of each group's ordered raw source bytes concatenated, matching fieldKitRecipeSources and fieldKitEquipmentSource"
+  },
+  "teamAssessment": [
+    "The closure adds game/ui/enemy-body-assets.mjs explicitly. It resolves prepared visual bodies and bounded catalog motion; it does not own simulation position, collision or mission state.",
+    "Team actor layout, actor/core painters and the shared actor painter adopt visible-bound sizing, prepared surface motion and the approved removal of detached white corner brackets. The exact 37 recipe payloads and default records remain byte-identical under the fail-closed recipe gate.",
+    "Team view, trail and classic painters add bounded active-line and travelling-impact cues while retaining authoritative coordinates, clocks, cut cells and reduced-effects semantics.",
+    "Candidate pictures, bonus rendering, terrain descriptions and actor markers route maintained copy through English/Ukrainian producers. Exact content identity, accepted artwork bindings and original image bytes remain unchanged.",
+    "The current equipment fingerprint advances only because the complete renderer closure advances. All five original PNG hashes, dimensions, occupied bounds and pivots remain authenticated by the existing equipment gate."
+  ],
+  "audioAssessment": [
+    "Only game/app.mjs changed among the 25 ordered audio inputs after the v0.132.1 review: sha256 1d76cb42973b2c45ff1abc8c4266471c8997193af4ef5d7f148a0f7a2ea7ca67 to 88e5e90d766459f07bfc63611250465cf30238bbc5e3c4bf877b10cfb78d2f25.",
+    "The one-line change calls gameShell.refreshLocale() during the existing locale refresh sequence. It does not call, configure or replace any audio API, soundtrack resolver, volume, rights record, media store or audio recipe.",
+    "The eight selected audio roles retain their existing procedural recipe IDs and no audio payload byte changes."
+  ],
+  "qualification": {
+    "automated": [
+      "The exact v0.132.5 source passed release preflight, focused, build and release-ready gates before Fastline run 36238464572 stopped at the intentionally fail-closed stale-ledger reproduction check.",
+      "PR652 focused localization checks passed Journey Continue and Team static-control refresh, and i18n validation reported 9,529 messages and 6,690 references.",
+      "The continuation candidate reruns Team recipe/default/image authentication, Team production history, generated metadata, retained runtime and exact audio provenance after binding this record."
+    ],
+    "priorVisualEvidence": [
+      "Prepared actor surface motion, visible-bound sizing, clean silhouettes and trail-impact cues were delivered through their focused actor/renderer tests and prior bounded browser reviews. This record continues those exact source outcomes; it does not broaden them into final subjective art approval.",
+      "The v0.131 localization continuation observed English/Ukrainian Home, Settings and active Solo flight switching without resetting state. The v0.132.5 patch repairs the remaining captured Home and Team setup copy."
+    ]
+  },
+  "excluded": [
+    "No complete full-suite result is claimed; long suites remain explicitly waived by the committed temporary policy.",
+    "No every-mission, every-viewport, forced-colour, screen-reader, offline-cold-start or performance acceptance is claimed.",
+    "No physical Steam Deck, controller or touchscreen qualification and no new human art, balance, audio listening or Ukrainian-language certification is claimed.",
+    "No frozen asset, immutable tag, release publication, Pages deployment or public-game acceptance is claimed by this source continuation."
+  ],
+  "decision": "Continue only the exact 37 Team functional recipes, five equipment originals and eight audio recipes for the three current fingerprints above when the immutable prior reviews, exact recipe/default/image records and these review bytes all match. Any dependency, recipe payload, original byte, fingerprint or review-byte change reopens the affected group."
+}

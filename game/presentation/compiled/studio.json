@@ -57598,6 +57598,1255 @@
         },
         "recipe": { "id": "audio.music.v1" },
         "revision": 41
+      },
+      {
+        "description": "Team drifter body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.enemy.drifter.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.enemy.drifter.field-kit", "revision": 11 },
+          "prompt": 367,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.enemy.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team hunter patrol body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.enemy.hunter.patrol.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.enemy.hunter.patrol.field-kit", "revision": 11 },
+          "prompt": 369,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.enemy.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team hunter warning body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.enemy.hunter.warning.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.enemy.hunter.warning.field-kit", "revision": 11 },
+          "prompt": 371,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.enemy.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team hunter charge body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.enemy.hunter.charge.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.enemy.hunter.charge.field-kit", "revision": 11 },
+          "prompt": 368,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.enemy.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team hunter recovery body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.enemy.hunter.recovery.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.enemy.hunter.recovery.field-kit", "revision": 11 },
+          "prompt": 370,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.enemy.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Deployable relay beacon: raised amber mast, receiver and three feet.",
+        "file": {
+          "bytes": 181,
+          "height": 24,
+          "mime": "image/png",
+          "sha256": "88e541375c56d4627b80cf6921ca64ed12d5b77d43dcae256177b8577250d9b3",
+          "width": 24
+        },
+        "format": "revealline-asset-revision.v1",
+        "geometry": {
+          "frame": { "height": 24, "width": 24, "x": 0, "y": 0 },
+          "nineSlice": null,
+          "occupiedBounds": {
+            "height": 0.8333333333333334,
+            "width": 0.6666666666666666,
+            "x": 0.16666666666666666,
+            "y": 0.08333333333333333
+          },
+          "pivot": { "x": 0.5, "y": 0.5 },
+          "rotorAnchors": []
+        },
+        "id": "team.anchor.available.field-kit",
+        "kind": "image",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Original project integer-pixel equipment artwork",
+          "parent": { "id": "team.anchor.available.field-kit", "revision": 3 },
+          "prompt": 21,
+          "source": 484
+        },
+        "quality": {
+          "evidence": [
+            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3",
+            "v0.132.5 unchanged equipment continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": null,
+        "revision": 4
+      },
+      {
+        "description": "Connected relay beacon: retracted mast, paired cyan ports and side couplers.",
+        "file": {
+          "bytes": 195,
+          "height": 24,
+          "mime": "image/png",
+          "sha256": "a66511c77322beea458be918f6eb35f1ca6acc9f980afa44bc4756162896f466",
+          "width": 24
+        },
+        "format": "revealline-asset-revision.v1",
+        "geometry": {
+          "frame": { "height": 24, "width": 24, "x": 0, "y": 0 },
+          "nineSlice": null,
+          "occupiedBounds": {
+            "height": 0.6666666666666666,
+            "width": 0.8333333333333334,
+            "x": 0.08333333333333333,
+            "y": 0.25
+          },
+          "pivot": { "x": 0.5, "y": 0.5 },
+          "rotorAnchors": []
+        },
+        "id": "team.anchor.captured.field-kit",
+        "kind": "image",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Original project integer-pixel equipment artwork",
+          "parent": { "id": "team.anchor.captured.field-kit", "revision": 3 },
+          "prompt": 38,
+          "source": 484
+        },
+        "quality": {
+          "evidence": [
+            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3",
+            "v0.132.5 unchanged equipment continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": null,
+        "revision": 4
+      },
+      {
+        "description": "Radio-yard relay cabinet: raised antenna and closed protective shutters.",
+        "file": {
+          "bytes": 389,
+          "height": 64,
+          "mime": "image/png",
+          "sha256": "009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a",
+          "width": 64
+        },
+        "format": "revealline-asset-revision.v1",
+        "geometry": {
+          "frame": { "height": 64, "width": 64, "x": 0, "y": 0 },
+          "nineSlice": null,
+          "occupiedBounds": { "height": 0.828125, "width": 0.625, "x": 0.1875, "y": 0.078125 },
+          "pivot": { "x": 0.5, "y": 0.5 },
+          "rotorAnchors": []
+        },
+        "id": "team.core.shielded.field-kit",
+        "kind": "image",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Original project integer-pixel equipment artwork",
+          "parent": { "id": "team.core.shielded.field-kit", "revision": 3 },
+          "prompt": 260,
+          "source": 484
+        },
+        "quality": {
+          "evidence": [
+            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3",
+            "v0.132.5 unchanged equipment continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": null,
+        "revision": 4
+      },
+      {
+        "description": "Radio-yard relay cabinet: separated shutters reveal the amber signal stack.",
+        "file": {
+          "bytes": 395,
+          "height": 64,
+          "mime": "image/png",
+          "sha256": "6abc4a68192b4d517b22690c43126de34a1c403caf4a24ec57aa8b2ff68f079a",
+          "width": 64
+        },
+        "format": "revealline-asset-revision.v1",
+        "geometry": {
+          "frame": { "height": 64, "width": 64, "x": 0, "y": 0 },
+          "nineSlice": null,
+          "occupiedBounds": { "height": 0.828125, "width": 0.71875, "x": 0.140625, "y": 0.078125 },
+          "pivot": { "x": 0.5, "y": 0.5 },
+          "rotorAnchors": []
+        },
+        "id": "team.core.exposed.field-kit",
+        "kind": "image",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Original project integer-pixel equipment artwork",
+          "parent": { "id": "team.core.exposed.field-kit", "revision": 3 },
+          "prompt": 77,
+          "source": 484
+        },
+        "quality": {
+          "evidence": [
+            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3",
+            "v0.132.5 unchanged equipment continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": null,
+        "revision": 4
+      },
+      {
+        "description": "Secured radio-yard relay: folded antenna and closed cyan service panel.",
+        "file": {
+          "bytes": 366,
+          "height": 64,
+          "mime": "image/png",
+          "sha256": "28e58f70c759b20798fac07e6f9d1b336e936ee23beea26bb4be30fd5528311d",
+          "width": 64
+        },
+        "format": "revealline-asset-revision.v1",
+        "geometry": {
+          "frame": { "height": 64, "width": 64, "x": 0, "y": 0 },
+          "nineSlice": null,
+          "occupiedBounds": { "height": 0.71875, "width": 0.625, "x": 0.1875, "y": 0.1875 },
+          "pivot": { "x": 0.5, "y": 0.5 },
+          "rotorAnchors": []
+        },
+        "id": "team.core.secured.field-kit",
+        "kind": "image",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Original project integer-pixel equipment artwork",
+          "parent": { "id": "team.core.secured.field-kit", "revision": 3 },
+          "prompt": 249,
+          "source": 484
+        },
+        "quality": {
+          "evidence": [
+            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3",
+            "v0.132.5 unchanged equipment continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": null,
+        "revision": 4
+      },
+      {
+        "description": "Team Support pulse: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.support.pulse.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.support.pulse.field-kit", "revision": 11 },
+          "prompt": 320,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.support.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team slowed enemy decoration: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.enemy.slowed.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.enemy.slowed.field-kit", "revision": 11 },
+          "prompt": 319,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.support.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team emitter warning target: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.emitter.warning.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.emitter.warning.field-kit", "revision": 11 },
+          "prompt": 291,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.emitter.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team travelling spark: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.emitter.spark.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.emitter.spark.field-kit", "revision": 11 },
+          "prompt": 321,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.emitter.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team contact rescue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.rescue.progress.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.rescue.progress.field-kit", "revision": 11 },
+          "prompt": 290,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.rescue.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player recovery: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.player.recovery.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.player.recovery.field-kit", "revision": 11 },
+          "prompt": 317,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.rescue.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team joint capture: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.capture.joint.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.capture.joint.field-kit", "revision": 11 },
+          "prompt": 292,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.outcome.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team reserve recovery: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.recovery.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.recovery.field-kit", "revision": 11 },
+          "prompt": 318,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.outcome.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 1 normal compact body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p1.normal.compact.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p1.normal.compact.field-kit", "revision": 11 },
+          "prompt": 299,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 1 normal detailed body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p1.normal.detailed.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p1.normal.detailed.field-kit", "revision": 11 },
+          "prompt": 300,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 1 cutting compact body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p1.cutting.compact.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p1.cutting.compact.field-kit", "revision": 11 },
+          "prompt": 295,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 1 cutting detailed body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p1.cutting.detailed.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p1.cutting.detailed.field-kit", "revision": 11 },
+          "prompt": 296,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 1 downed compact body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p1.downed.compact.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p1.downed.compact.field-kit", "revision": 11 },
+          "prompt": 297,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 1 downed detailed body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p1.downed.detailed.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p1.downed.detailed.field-kit", "revision": 11 },
+          "prompt": 298,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 1 crawling compact body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p1.crawling.compact.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p1.crawling.compact.field-kit", "revision": 11 },
+          "prompt": 293,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 1 crawling detailed body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p1.crawling.detailed.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p1.crawling.detailed.field-kit", "revision": 11 },
+          "prompt": 294,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 1 rescuing compact body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p1.rescuing.compact.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p1.rescuing.compact.field-kit", "revision": 11 },
+          "prompt": 303,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 1 rescuing detailed body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p1.rescuing.detailed.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p1.rescuing.detailed.field-kit", "revision": 11 },
+          "prompt": 304,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 1 recovery compact body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p1.recovery.compact.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p1.recovery.compact.field-kit", "revision": 11 },
+          "prompt": 301,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 1 recovery detailed body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p1.recovery.detailed.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p1.recovery.detailed.field-kit", "revision": 11 },
+          "prompt": 302,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 2 normal compact body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p2.normal.compact.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p2.normal.compact.field-kit", "revision": 11 },
+          "prompt": 311,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 2 normal detailed body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p2.normal.detailed.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p2.normal.detailed.field-kit", "revision": 11 },
+          "prompt": 312,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 2 cutting compact body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p2.cutting.compact.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p2.cutting.compact.field-kit", "revision": 11 },
+          "prompt": 307,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 2 cutting detailed body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p2.cutting.detailed.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p2.cutting.detailed.field-kit", "revision": 11 },
+          "prompt": 308,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 2 downed compact body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p2.downed.compact.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p2.downed.compact.field-kit", "revision": 11 },
+          "prompt": 309,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 2 downed detailed body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p2.downed.detailed.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p2.downed.detailed.field-kit", "revision": 11 },
+          "prompt": 310,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 2 crawling compact body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p2.crawling.compact.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p2.crawling.compact.field-kit", "revision": 11 },
+          "prompt": 305,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 2 crawling detailed body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p2.crawling.detailed.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p2.crawling.detailed.field-kit", "revision": 11 },
+          "prompt": 306,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 2 rescuing compact body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p2.rescuing.compact.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p2.rescuing.compact.field-kit", "revision": 11 },
+          "prompt": 315,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 2 rescuing detailed body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p2.rescuing.detailed.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p2.rescuing.detailed.field-kit", "revision": 11 },
+          "prompt": 316,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 2 recovery compact body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p2.recovery.compact.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p2.recovery.compact.field-kit", "revision": 11 },
+          "prompt": 313,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "Team player 2 recovery detailed body: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "team.pilot.p2.recovery.detailed.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "team.pilot.p2.recovery.detailed.field-kit", "revision": 11 },
+          "prompt": 314,
+          "source": 476
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 exact Team continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; prior docs/verification/team-specialist-cues-2026-09-24/review.json sha256:45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05; original docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b"
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "team.pilot.v1" },
+        "revision": 12
+      },
+      {
+        "description": "focus audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.focus.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.focus.field-kit", "revision": 41 },
+          "prompt": 137,
+          "source": 469
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; twenty-five ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 42
+      },
+      {
+        "description": "confirm audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.confirm.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.confirm.field-kit", "revision": 41 },
+          "prompt": 51,
+          "source": 469
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; twenty-five ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 42
+      },
+      {
+        "description": "cancel audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.cancel.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.cancel.field-kit", "revision": 41 },
+          "prompt": 34,
+          "source": 469
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; twenty-five ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 42
+      },
+      {
+        "description": "capture audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.capture.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.capture.field-kit", "revision": 41 },
+          "prompt": 36,
+          "source": 469
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; twenty-five ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 42
+      },
+      {
+        "description": "failure audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.failure.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.failure.field-kit", "revision": 41 },
+          "prompt": 78,
+          "source": 469
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; twenty-five ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 42
+      },
+      {
+        "description": "victory audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.victory.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.victory.field-kit", "revision": 41 },
+          "prompt": 355,
+          "source": 469
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; twenty-five ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 42
+      },
+      {
+        "description": "pickup audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.pickup.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.pickup.field-kit", "revision": 41 },
+          "prompt": 225,
+          "source": 469
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; twenty-five ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 42
+      },
+      {
+        "description": "Theme music: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.music.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.music.field-kit", "revision": 41 },
+          "prompt": 323,
+          "source": 469
+        },
+        "quality": {
+          "evidence": [
+            "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:16521accf8355c5060c54104c5a618a0565144470937efcbc862b0b30f561078; twenty-five ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.music.v1" },
+        "revision": 42
       }
     ],
     "collections": [
@@ -58576,11 +59825,11 @@
     ],
     "format": "revealline-theme-bundle.v1",
     "id": "field-kit",
-    "revision": 89,
+    "revision": 90,
     "selection": {
       "base": { "id": "base", "revision": 1 },
       "collection": null,
-      "theme": { "id": "fpv", "revision": 89 }
+      "theme": { "id": "fpv", "revision": 90 }
     },
     "slots": [
       {
@@ -80789,6 +82038,150 @@
         "name": "FPV Field Kit",
         "parent": { "id": "fpv", "revision": 88 },
         "revision": 89,
+        "tokens": {}
+      },
+      {
+        "bindings": {
+          "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 42 },
+          "audio.capture": { "id": "audio.capture.field-kit", "revision": 42 },
+          "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 42 },
+          "audio.failure": { "id": "audio.failure.field-kit", "revision": 42 },
+          "audio.focus": { "id": "audio.focus.field-kit", "revision": 42 },
+          "audio.music": { "id": "audio.music.field-kit", "revision": 42 },
+          "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 42 },
+          "audio.victory": { "id": "audio.victory.field-kit", "revision": 42 },
+          "team.anchor.available": { "id": "team.anchor.available.field-kit", "revision": 4 },
+          "team.anchor.captured": { "id": "team.anchor.captured.field-kit", "revision": 4 },
+          "team.capture.joint": { "id": "team.capture.joint.field-kit", "revision": 12 },
+          "team.core.exposed": { "id": "team.core.exposed.field-kit", "revision": 4 },
+          "team.core.secured": { "id": "team.core.secured.field-kit", "revision": 4 },
+          "team.core.shielded": { "id": "team.core.shielded.field-kit", "revision": 4 },
+          "team.emitter.spark": { "id": "team.emitter.spark.field-kit", "revision": 12 },
+          "team.emitter.warning": { "id": "team.emitter.warning.field-kit", "revision": 12 },
+          "team.enemy.drifter": { "id": "team.enemy.drifter.field-kit", "revision": 12 },
+          "team.enemy.hunter.charge": {
+            "id": "team.enemy.hunter.charge.field-kit",
+            "revision": 12
+          },
+          "team.enemy.hunter.patrol": {
+            "id": "team.enemy.hunter.patrol.field-kit",
+            "revision": 12
+          },
+          "team.enemy.hunter.recovery": {
+            "id": "team.enemy.hunter.recovery.field-kit",
+            "revision": 12
+          },
+          "team.enemy.hunter.warning": {
+            "id": "team.enemy.hunter.warning.field-kit",
+            "revision": 12
+          },
+          "team.enemy.slowed": { "id": "team.enemy.slowed.field-kit", "revision": 12 },
+          "team.pilot.p1.crawling.compact": {
+            "id": "team.pilot.p1.crawling.compact.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p1.crawling.detailed": {
+            "id": "team.pilot.p1.crawling.detailed.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p1.cutting.compact": {
+            "id": "team.pilot.p1.cutting.compact.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p1.cutting.detailed": {
+            "id": "team.pilot.p1.cutting.detailed.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p1.downed.compact": {
+            "id": "team.pilot.p1.downed.compact.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p1.downed.detailed": {
+            "id": "team.pilot.p1.downed.detailed.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p1.normal.compact": {
+            "id": "team.pilot.p1.normal.compact.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p1.normal.detailed": {
+            "id": "team.pilot.p1.normal.detailed.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p1.recovery.compact": {
+            "id": "team.pilot.p1.recovery.compact.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p1.recovery.detailed": {
+            "id": "team.pilot.p1.recovery.detailed.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p1.rescuing.compact": {
+            "id": "team.pilot.p1.rescuing.compact.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p1.rescuing.detailed": {
+            "id": "team.pilot.p1.rescuing.detailed.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p2.crawling.compact": {
+            "id": "team.pilot.p2.crawling.compact.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p2.crawling.detailed": {
+            "id": "team.pilot.p2.crawling.detailed.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p2.cutting.compact": {
+            "id": "team.pilot.p2.cutting.compact.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p2.cutting.detailed": {
+            "id": "team.pilot.p2.cutting.detailed.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p2.downed.compact": {
+            "id": "team.pilot.p2.downed.compact.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p2.downed.detailed": {
+            "id": "team.pilot.p2.downed.detailed.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p2.normal.compact": {
+            "id": "team.pilot.p2.normal.compact.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p2.normal.detailed": {
+            "id": "team.pilot.p2.normal.detailed.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p2.recovery.compact": {
+            "id": "team.pilot.p2.recovery.compact.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p2.recovery.detailed": {
+            "id": "team.pilot.p2.recovery.detailed.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p2.rescuing.compact": {
+            "id": "team.pilot.p2.rescuing.compact.field-kit",
+            "revision": 12
+          },
+          "team.pilot.p2.rescuing.detailed": {
+            "id": "team.pilot.p2.rescuing.detailed.field-kit",
+            "revision": 12
+          },
+          "team.player.recovery": { "id": "team.player.recovery.field-kit", "revision": 12 },
+          "team.recovery": { "id": "team.recovery.field-kit", "revision": 12 },
+          "team.rescue.progress": { "id": "team.rescue.progress.field-kit", "revision": 12 },
+          "team.support.pulse": { "id": "team.support.pulse.field-kit", "revision": 12 }
+        },
+        "format": "revealline-presentation-theme.v1",
+        "id": "fpv",
+        "name": "FPV Field Kit",
+        "parent": { "id": "fpv", "revision": 89 },
+        "revision": 90,
         "tokens": {}
       }
     ]
