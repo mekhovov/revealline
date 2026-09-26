@@ -159,6 +159,23 @@ This qualifies display-matrix input and physically portrait Compact output in th
 The exact source/output dimensions, authenticated AVC/zero-audio inventory and visual edges all
 passed independently; the native probe alone was not treated as browser evidence.
 
+The same exact 223,097-byte portrait source was regenerated from the guarded script and exercised
+through the **Balanced** profile in the built-in browser on 26 September 2026:
+
+- browser inspection again reported 360 × 640 portrait, 4 seconds, source SHA-256
+  `e6cee0779e441e6dd71b6b0c14eec2ba00eacebc0e915c6c3af4e6f53f865e08` and zero audio;
+- Balanced review preserved 360 × 640 without upscaling and selected the 2.5 Mbit/s AVC target;
+- output: 429,110-byte AVC MP4, SHA-256
+  `2aab56748041545c2f6789f8dc85d56f267fcb0e898e75a08fe9abf0937d2bf8`, freshly decoded as
+  360 × 640 and 4 seconds with zero audio;
+- observed whole-container average: 858,220 bit/s;
+- decoded visual boundary error: start `0.001`, end `0.001`, from fresh presented-frame evidence;
+- result: the verified transformed-video download appeared only after changed-byte, decoded-output,
+  exact-track and start/end visual verification passed.
+
+This adds built-in-browser Balanced portrait evidence while retaining the earlier Compact portrait
+evidence. Firefox, Safari and physical-device qualification remain separate.
+
 ## Audio-bearing browser inspection
 
 The repository-owned fixture `game/test/fixtures/video/owned-avc-aac-fixture.mp4` is 173,394 bytes
@@ -189,9 +206,9 @@ remains part of the combined release gate.
   built-in Chromium browser. Other codecs remain conditional on their actual per-browser decode
   probe and require their own recorded fixtures before any compatibility claim.
 - Repeat AVC+AAC trim and target-browser playback in Firefox and Safari.
-- Repeat the rotated portrait Compact fixture in Firefox and Safari, and qualify Balanced with
-  recorded landscape and portrait fixtures in every supported browser. The built-in browser now
-  has recorded landscape and portrait Compact evidence.
+- Repeat the rotated portrait Compact and Balanced fixtures in Firefox and Safari, and qualify
+  Balanced landscape in every supported browser. The built-in browser now has recorded portrait
+  evidence for both Compact and Balanced.
 
 The broader phase remains incomplete while cross-browser/orientation acceptance is open.
 Playback range and poster capture do not count as physical trimming, conversion, resize or
