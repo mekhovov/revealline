@@ -3683,6 +3683,8 @@ try {
       capturePads();
       input.poll();
       if (!wasRunning) sampleMenu(now);
+      if (wasRunning || match.status === 'running')
+        controllerConfirmGuard.observe(menuRouter.menuConfirmPressed(framePads));
       pendingPadLoss = false;
     }
     if (available && wasRunning && match.status === 'running') {

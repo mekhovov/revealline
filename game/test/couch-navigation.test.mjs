@@ -81,7 +81,8 @@ test('actual select previews cancel without replacing the duel and commit once t
     original = f.$('race-level').value;
   f.$('race-optional-setup').open = true;
   f.$('race-optional-setup').setAttribute('open', '');
-  f.$('race-focus').click();
+  f.focus('race-focus');
+  f.pulse(0, 0);
   f.frame();
   f.focus('race-level');
   f.pulse(0, 0);
@@ -122,8 +123,11 @@ test('actual select previews cancel without replacing the duel and commit once t
 test('Back and Menu cancel previews or focus the primary action without starting or resetting', async (t) => {
   const f = await page(t, { pads: [pad(0)] });
   f.join(0);
+  f.$('race-optional-setup').open = true;
+  f.$('race-optional-setup').setAttribute('open', '');
   for (const button of [1, 9]) {
-    f.$('race-focus').click();
+    f.focus('race-focus');
+    f.pulse(0, 0);
     f.frame();
     f.focus('race-turn');
     f.pulse(0, 0);
@@ -156,7 +160,10 @@ test('Back and Menu cancel previews or focus the primary action without starting
 test('native menu focus cancels a held D-pad repeat until neutral without clearing either flight keyboard', async (t) => {
   const f = await page(t, { pads: [pad(0), pad(1)] });
   f.join(0);
-  f.$('race-focus').click();
+  f.$('race-optional-setup').open = true;
+  f.$('race-optional-setup').setAttribute('open', '');
+  f.focus('race-focus');
+  f.pulse(0, 0);
   f.frame();
   f.button(0, 13, true);
   f.frame();
@@ -188,7 +195,7 @@ test('Ready slot loss consumes another pad Confirm; the surviving player keeps i
   assert.equal(f.tick(), 0);
   assert.match(
     f.$('race-pad-status').textContent,
-    /Player 1: keyboard\/touch · Player 2: pad slot 1/,
+    /Player 1: Keyboard \/ touch · Player 2: pad slot 1/,
   );
   f.frames(10);
   assert.equal(f.state(), 'ready');
@@ -231,14 +238,16 @@ for (const eventLoss of [false, true]) {
 test('explicit menu release permits the other player to join, never transfers a held edge', async (t) => {
   const f = await page(t, { pads: [pad(0), pad(1)] });
   f.join(0);
-  f.$('race-options').click();
-  f.$('race-settings-tab-controls').click();
+  f.focus('race-options');
+  f.pulse(0, 0);
+  f.focus('race-settings-tab-controls');
+  f.pulse(0, 0);
   f.frame();
   f.focus('race-menu-release');
   f.pulse(0, 0);
   assert.equal(f.$('race-menu-release').hidden, true);
   assert.equal(f.state(), 'ready');
-  f.$('race-options-back').click();
+  f.key('Escape');
   f.frame();
   f.join(1);
   assert.match(f.$('race-menu-status').textContent, /Player 2 controller has the menu/);
@@ -292,7 +301,10 @@ test('persisted return and Ready Escape preserve the true state and cancel a pen
   f.frame();
   assert.equal(f.state(), 'ready');
   assert.match(f.$('race-start').textContent, /Start race/);
-  f.$('race-focus').click();
+  f.$('race-optional-setup').open = true;
+  f.$('race-optional-setup').setAttribute('open', '');
+  f.focus('race-focus');
+  f.pulse(0, 0);
   f.frame();
   f.focus('race-level');
   f.pulse(0, 0);
@@ -335,8 +347,15 @@ for (const adapter of ['keyboard', 'controller']) {
       },
     });
     if (adapter === 'controller') f.join(0);
-    f.$('race-options').click();
-    f.$('race-settings-tab-display').click();
+    if (adapter === 'controller') {
+      f.focus('race-options');
+      f.pulse(0, 0);
+      f.focus('race-settings-tab-display');
+      f.pulse(0, 0);
+    } else {
+      f.$('race-options').click();
+      f.$('race-settings-tab-display').click();
+    }
     f.frame();
     const before = f.checkpoint();
     const next = () => {
@@ -513,6 +532,7 @@ test('one lost craft does not expose shared menu; both ended draws retain explic
 test('native checkboxes and both held touch pads stay independent after leaving controller navigation', async (t) => {
   const f = await page(t, { pads: [pad(0), pad(1)] });
   f.join(0);
+  f.frames(151);
   f.$('race-options').click();
   f.$('race-settings-tab-controls').click();
   f.frame();
@@ -529,6 +549,9 @@ test('native checkboxes and both held touch pads stay independent after leaving 
   f.focus('race-start');
   f.pulse(0, 0);
   f.frame();
+  // The controller owns its committed Confirm through the finite Steam Input
+  // echo window. A later direct touch is a new gesture, not the mirrored click.
+  f.frames(151);
   const pads = f.doc.querySelectorAll('.race-pad');
   const right = pads[0].querySelector('.touch-surface');
   const left = pads[1].querySelector('.touch-surface');

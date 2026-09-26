@@ -3,8 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { couchPage } from './helpers/couch-host.mjs';
 import { page as teamPage } from './helpers/coop-host.mjs';
-import { teamHud } from './helpers/coop-win.mjs';
-import { COOP_STARTER_PACK } from '../coop/library.mjs';
+import { teamHud, winTeam } from './helpers/coop-win.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 
 const base = JSON.parse(await readFile(new URL('../content/campaign.json', import.meta.url)));
@@ -18,23 +17,7 @@ const pad = () => ({
 });
 
 async function teamResult(t) {
-  const f = await teamPage(t, { nativeFocus: true, capturePaint: true }),
-    pack = structuredClone(COOP_STARTER_PACK);
-  // A navigation fixture owns its simple authored objective; ordinary host
-  // inputs must still earn the result, with no writes to live simulation state.
-  pack.id = 'menu-navigation';
-  pack.levels = [pack.levels[0]];
-  pack.levels[0].enemies = [];
-  pack.levels[0].goal.coverage = 0.05;
-  await f.selectFile(JSON.stringify(pack));
-  await f.choose('coop-experiment', 'independent');
-  f.$('coop-start').focus();
-  f.tap('Enter');
-  f.tick(2);
-  f.tap('KeyD');
-  f.tick(160);
-  f.tap('KeyW');
-  for (let n = 0; n < 350 && f.$('coop-overlay').hidden; n++) f.tick();
+  const { f } = await winTeam(t);
   assert.equal(f.$('coop-overlay').hidden, false);
   assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
   return f;
