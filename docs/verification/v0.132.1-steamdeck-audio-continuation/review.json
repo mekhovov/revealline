@@ -1,0 +1,31 @@
+{
+  "format": "revealline-v0.132.1-steamdeck-audio-continuation.v1",
+  "status": "bounded source and focused-test continuation; physical Steam Deck and public acceptance pending",
+  "reviewedAt": "2026-09-26T04:20:00Z",
+  "candidateSourceCommit": "2f2c90fba39c4d9a864071d61aecb662ecc540f0",
+  "baselineTag": "v0.132.0",
+  "scope": "Continue the existing Field Kit audio recipe approvals across the v0.132.1 Steam Deck Confirm lifecycle repair. Among the 25 ordered audio inputs, only game/app.mjs changed. The change filters duplicate controller Confirm pulses before menu dispatch and passes the resulting lifecycle ownership to the existing native-activation guard; audio routing, playback, volume, soundtrack selection, rights metadata, imported-media ownership, procedural recipes and audio bytes are unchanged.",
+  "fingerprint": {
+    "priorSHA256": "37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541",
+    "currentSHA256": "417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a",
+    "algorithm": "SHA256 of the audio group's ordered raw source bytes concatenated, matching fieldKitRecipeSources"
+  },
+  "sourceAssessment": [
+    "The v0.132.1 source diff adds controller-confirm-lifecycle.mjs, applies it to the sampled Solo controller result in game/app.mjs and supplies lifecycle ownership to the existing controller-confirm guard.",
+    "No soundtrack, audio engine, audio master, published-audio, soundtrack panel, rights, catalogue, media storage or recorded asset file changed from v0.132.0 to candidate commit 2f2c90fba39c4d9a864071d61aecb662ecc540f0.",
+    "The lifecycle filter changes whether a release-side duplicate Confirm reaches the selected menu action. It does not change the sound action itself, its state transition, its volume values or any audio recipe payload."
+  ],
+  "qualification": {
+    "automated": [
+      "The exact PR head 9ab20a966e1493143347601aff991f9fb821c3ac passed the release preflight, version identity, production source validation, exact tracked-source verification and focused gates in GitHub Actions run 36216983990.",
+      "Controller lifecycle unit coverage passed for a press-neutral-release pulse, stable-neutral rearming, long holds, disconnected controllers and neutral auto-join.",
+      "The real Solo host regression passed with Home Sound changing exactly once for the sampled South press, neutral gap and release-side West pulse, followed by a distinct later press."
+    ]
+  },
+  "excluded": [
+    "No recording, composition, musical suitability, Ukrainian authenticity or full-track listening review was repeated because no audio recipe or byte changed.",
+    "No physical Steam Deck acceptance is claimed; the public v0.132.1 build still requires a short tap and long-hold check in Game Mode Chrome.",
+    "No frozen-build, release asset, Pages deployment or public-game approval is claimed by this source continuation."
+  ],
+  "decision": "Continue only the existing eight Field Kit audio recipe approvals for exact fingerprint 417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a and this review's exact bytes. Any audio dependency, fingerprint or review-byte change reopens the group."
+}
