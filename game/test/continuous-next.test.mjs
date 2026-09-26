@@ -87,6 +87,20 @@ test('Classic Next retains Current or Original rules across owners before leavin
   assert.equal(librarySuccessor(library, currentB, 'solo'), custom);
   assert.equal(librarySuccessor(library, originalB, 'solo'), custom);
 });
+test('Classic Next accepts an opaque Team owner as original rules without parsing provenance', () => {
+  const library = createMissionLibrary([
+    source('team-classic:relay-rescue-starter', 'Classic', [
+      { id: 'team-a', campaignKey: 'team-classic', modes: ['team'] },
+    ]),
+    source('custom:team-visit', 'Custom', [
+      { id: 'custom-a', campaignKey: 'team-custom', modes: ['team'] },
+    ]),
+  ]);
+  assert.equal(
+    librarySuccessor(library, library.forMode('team')[0], 'team'),
+    library.forMode('team')[1],
+  );
+});
 test('stale, absent and ambiguous owners never silently launch a same-name replacement', () => {
   const owner = source('["classic","base",null]', 'Classic', [{ id: 'a', campaignKey: 'base@1' }]);
   const library = createMissionLibrary([owner]);
