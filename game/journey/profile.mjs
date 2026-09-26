@@ -16,6 +16,12 @@ export const JOURNEY_PICTURE_BACKUP_VERSION = 'revealline-journey-backup.v3';
 const emptyModes = (make) => Object.fromEntries(JOURNEY_MODES.map((mode) => [mode, make()]));
 const text = (value) => typeof value === 'string' && value.length > 0 && value.length <= 1024;
 const own = (object, key) => Object.hasOwn(object, key);
+const journeyStructuralMessages = {
+  object: () => t('errors:journey.objectRequired'),
+  unsupported: ({ key }) => t('errors:journey.unsupportedField', { key }),
+};
+const exactJourneyKeys = (value, allowed, label) =>
+  exactKeys(value, allowed, label, journeyStructuralMessages);
 function validateProfileKey(key) {
   if (typeof key !== 'string' || !/^[a-z][a-z0-9-]{0,79}$/.test(key))
     throw new TypeError(t('errors:journey.stableProfileKeyRequired'));
@@ -29,7 +35,11 @@ function pictureEditionId(profileKey) {
 function inspectProfileBackup(source, profileKey) {
   const candidate = boundedJSON(source, { maxBytes: 16 * 1024 * 1024, maxNodes: 200020 });
   if (candidate?.format === JOURNEY_PICTURE_BACKUP_VERSION) {
-    exactKeys(candidate, ['format', 'profileKey', 'profile', 'pictures'], 'Journey picture backup');
+    exactJourneyKeys(
+      candidate,
+      ['format', 'profileKey', 'profile', 'pictures'],
+      'Journey picture backup',
+    );
     if (candidate.profileKey !== profileKey)
       throw new TypeError(t('errors:journey.differentEdition'));
     const profile = validateJourneyProfile(candidate.profile),
@@ -56,7 +66,7 @@ function inspectProfileBackup(source, profileKey) {
   });
   if (backup?.format !== JOURNEY_SCOPED_BACKUP_VERSION || backup.profileKey !== profileKey)
     throw new TypeError(t('errors:journey.differentEdition'));
-  exactKeys(backup, ['format', 'profileKey', 'profile'], 'Scoped Journey backup');
+  exactJourneyKeys(backup, ['format', 'profileKey', 'profile'], 'Scoped Journey backup');
   const normalized = {
     format: JOURNEY_BACKUP_VERSION,
     profile: validateJourneyProfile(backup.profile),
@@ -85,7 +95,11 @@ export function validateJourneyProfile(source) {
     maxArray: 4096,
     maxString: 1024,
   });
-  exactKeys(profile, ['format', 'generation', 'cursors', 'skipped', 'clears'], 'Journey profile');
+  exactJourneyKeys(
+    profile,
+    ['format', 'generation', 'cursors', 'skipped', 'clears'],
+    'Journey profile',
+  );
   if (
     profile.format !== JOURNEY_PROFILE_VERSION ||
     !Number.isSafeInteger(profile.generation) ||
@@ -93,7 +107,7 @@ export function validateJourneyProfile(source) {
   )
     throw new TypeError(t('errors:journey.damagedProfile'));
   for (const field of ['cursors', 'skipped', 'clears'])
-    exactKeys(profile[field], JOURNEY_MODES, `Journey ${field}`);
+    exactJourneyKeys(profile[field], JOURNEY_MODES, `Journey ${field}`);
   for (const mode of JOURNEY_MODES) {
     if (
       !(profile.cursors[mode] === null || text(profile.cursors[mode])) ||
@@ -106,7 +120,11 @@ export function validateJourneyProfile(source) {
     )
       throw new TypeError(t('errors:journey.invalidModeState'));
     for (const [id, receipt] of Object.entries(profile.clears[mode])) {
-      exactKeys(receipt, ['runId', 'gameplayId', 'difficulty'], 'Journey completion receipt');
+      exactJourneyKeys(
+        receipt,
+        ['runId', 'gameplayId', 'difficulty'],
+        'Journey completion receipt',
+      );
       if (
         !text(id) ||
         !text(receipt.runId) ||
@@ -127,7 +145,7 @@ export function inspectJourneyBackup(source) {
     maxArray: 4096,
     maxString: 1024,
   });
-  exactKeys(backup, ['format', 'profile'], 'Journey backup');
+  exactJourneyKeys(backup, ['format', 'profile'], 'Journey backup');
   if (backup.format !== JOURNEY_BACKUP_VERSION)
     throw new TypeError(t('errors:journey.unsupportedBackup'));
   return { format: JOURNEY_BACKUP_VERSION, profile: validateJourneyProfile(backup.profile) };
@@ -156,7 +174,7 @@ export function mergeJourneyBackup(source, backupSource) {
 /** Events contain no score authority: the host supplies only verified legal clears. */
 export function applyJourneyEvent(source, event) {
   if (event?.type === 'restore') {
-    exactKeys(event, ['type', 'backup'], 'Journey restore event');
+    exactJourneyKeys(event, ['type', 'backup'], 'Journey restore event');
     return mergeJourneyBackup(source, event.backup);
   }
   const profile = validateJourneyProfile(source);
