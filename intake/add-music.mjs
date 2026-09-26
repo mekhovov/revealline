@@ -6,6 +6,19 @@ import { fileURLToPath } from 'node:url';
 
 const launcherFile = fileURLToPath(import.meta.url);
 const gameRoot = path.resolve(path.dirname(launcherFile), '..');
+const ARCHIVE_VALUE_OPTIONS = new Set([
+  '--source',
+  '--license',
+  '--artist',
+  '--styles',
+  '--batch-id',
+  '--batch-title',
+  '--description',
+  '--rights-evidence',
+  '--attribution',
+  '--title',
+  '--derivative-notice',
+]);
 
 export const LAUNCHER_USAGE = `Usage from the RevealLine game repository:
   node intake/add-music.mjs <mp3-or-folder> [archive intake options]
@@ -60,8 +73,13 @@ export async function findArchiveRoot({
   homeDirectory = os.homedir(),
   repositoryRoot = gameRoot,
 } = {}) {
+  if (explicitRoot) {
+    if (await isArchiveRoot(explicitRoot)) return path.resolve(explicitRoot);
+    throw new Error(
+      `The explicit --archive-root is not a RevealLine Soundtracks 02 checkout: ${explicitRoot}`,
+    );
+  }
   const candidates = [
-    explicitRoot,
     environment.REVEALLINE_SOUNDTRACK_ARCHIVE,
     path.resolve(repositoryRoot, '..', 'revealline-soundtracks-02'),
     path.join(homeDirectory, '.codex', 'worktrees', 'revealline-soundtracks-02'),
@@ -70,6 +88,22 @@ export async function findArchiveRoot({
     if (await isArchiveRoot(candidate)) return path.resolve(candidate);
   }
   return null;
+}
+
+export function resolveForwardedInput(argv, currentDirectory = process.cwd()) {
+  const resolved = [];
+  let foundInput = false;
+  for (let index = 0; index < argv.length; index += 1) {
+    const value = argv[index];
+    resolved.push(value);
+    if (ARCHIVE_VALUE_OPTIONS.has(value)) {
+      if (index + 1 < argv.length) resolved.push(argv[++index]);
+    } else if (!value.startsWith('-') && !foundInput) {
+      resolved[resolved.length - 1] = path.resolve(currentDirectory, value);
+      foundInput = true;
+    }
+  }
+  return resolved;
 }
 
 function run(command, args, options) {
@@ -84,7 +118,11 @@ function run(command, args, options) {
 }
 
 export async function launchMusicIntake(argv, dependencies = {}) {
-  const { archiveRoot: explicitRoot, forwarded } = splitLauncherArguments(argv);
+  const { archiveRoot: explicitRoot, forwarded: rawForwarded } = splitLauncherArguments(argv);
+  const forwarded = resolveForwardedInput(
+    rawForwarded,
+    dependencies.currentDirectory ?? process.cwd(),
+  );
   const archiveRoot = await findArchiveRoot({
     explicitRoot,
     environment: dependencies.environment,
