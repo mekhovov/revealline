@@ -120,6 +120,51 @@ export function validateEditionPublication(value) {
   return value;
 }
 
+/** Plan an explicit rollback/reselection of retained editions. The envelope,
+ * release identities and all frozen paths stay immutable; only the requested
+ * audiences' active launcher ownership can change. Return nothing until the
+ * complete resulting publication passes the ordinary downloaded-byte gate. */
+export async function selectRetainedEditionRelease(
+  selector,
+  { version: targetVersion, editionIds } = {},
+  publication = {},
+) {
+  validateEditionPublication(selector);
+  if (
+    !version.test(targetVersion) ||
+    !Array.isArray(editionIds) ||
+    editionIds.length === 0 ||
+    editionIds.length > 32 ||
+    new Set(editionIds).size !== editionIds.length
+  )
+    fail('Retained selection needs one version and unique explicit edition IDs.');
+  const target = selector.releases.find((release) => release.version === targetVersion);
+  if (!target) fail('The requested release is not retained by this selector.');
+  for (const id of editionIds) {
+    validateEditionId(id);
+    if (!target.editionIds.includes(id))
+      fail('The requested edition is not retained in that release.');
+  }
+  const requested = new Set(editionIds);
+  const updated = validateEditionPublication({
+    ...selector,
+    releases: selector.releases.map((release) => ({
+      ...release,
+      activeEditionIds:
+        release.version === targetVersion
+          ? [
+              ...release.activeEditionIds,
+              ...release.editionIds.filter(
+                (id) => requested.has(id) && !release.activeEditionIds.includes(id),
+              ),
+            ]
+          : release.activeEditionIds.filter((id) => !requested.has(id)),
+    })),
+  });
+  await frozenEditionOverlay(updated, publication);
+  return updated;
+}
+
 /** Read/download callbacks supply original bytes. No candidate can enter this map. */
 export async function frozenEditionOverlay(
   selector,

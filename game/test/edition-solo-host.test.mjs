@@ -9,6 +9,149 @@ import { compileContentProject, resolveMission } from '../content-design/project
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { createRun } from '../core/index.mjs';
 import { companySimulationIdentity } from '../company-session.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
+
+async function editionSwitchHost(t, { occupied = false, start = true } = {}) {
+  const f = await editionProviderFixture();
+  const catalog = structuredClone(f.catalog);
+  catalog.editions.push({ ...catalog.editions[0], id: 'sample-other', name: 'Other audience' });
+  for (const path of ['game/editions/catalog.json', 'edition-catalog.json'])
+    f.files.set(path, catalog);
+  const page = await soloPage(t, {
+    search: '?edition=sample-public',
+    titleScreen: true,
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+    fetchResponse: f.fetcher,
+    ...(occupied
+      ? {
+          lockManager: {
+            request(key, options, task) {
+              return Promise.resolve(
+                (task ?? options)(key === 'revealline.company.sample-public.writer' ? null : {}),
+              );
+            },
+          },
+        }
+      : {}),
+  });
+  page.win.location.assign = (href) => {
+    page.win.location.href = href;
+  };
+  if (!start) return page;
+  page.$('shell-featured').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('ArrowDown');
+  for (let i = 0; i < 14; i++) page.frame();
+  page.key('ArrowDown', false);
+  assert.equal(page.rendered.run.player.cutting, true);
+  return page;
+}
+
+for (const saving of ['verified', 'quota', 'occupied'])
+  test(`edition switch retains the paused attempt and offers Stay before ${saving} departure`, async (t) => {
+    const page = await editionSwitchHost(t, { occupied: saving === 'occupied' });
+    const key = 'revealline.suspended.journey-sample-public.v1.solo-v2';
+    if (saving === 'quota') {
+      const write = page.storage.setItem.bind(page.storage);
+      page.storage.setItem = (name, value) => {
+        if (name === key) throw new Error('quota exhausted');
+        write(name, value);
+      };
+    }
+    page.$('shell-menu').click();
+    const before = authoritativeCheckpoint(page.rendered.run),
+      origin = page.win.location.href,
+      picker = page.$('edition-select');
+    const request = () => {
+      picker.value = 'sample-other';
+      picker.focus();
+      return picker.onchange({ preventDefault() {} });
+    };
+    await request();
+    assert.equal(page.win.location.href, origin, 'Selection alone cannot discard the current run.');
+    assert.equal(picker.value, 'sample-public', 'The picker describes the still-active edition.');
+    assert.equal(page.$('mode-leave-dialog').open, true);
+    assert.match(page.$('mode-leave-title').textContent, /Other audience/);
+    assert.match(
+      page.$('mode-leave-status').textContent,
+      saving === 'verified' ? /saved and verified/ : /session-only.*Leaving may lose/,
+    );
+    const retained = page.storage.getItem(key);
+    if (saving === 'verified')
+      assert.equal(JSON.parse(retained).actorAppearancePin.content.editionId, 'sample-public');
+    else assert.equal(retained, null);
+    page.$('mode-leave-stay').click();
+    assert.equal(page.$('mode-leave-dialog').open, false);
+    assert.equal(page.doc.activeElement, picker);
+    assert.equal(picker.value, 'sample-public');
+    for (let i = 0; i < 5; i++) page.frame();
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+    assert.equal(page.win.location.href, origin);
+    assert.equal(page.storage.getItem(key), retained);
+    await request();
+    page.$('mode-leave-confirm').click();
+    assert.equal(
+      page.win.location.href,
+      'http://localhost/game/index.html?edition=sample-other',
+      'Only explicit Leave uses the allowlisted edition destination.',
+    );
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+    assert.deepEqual(page.errors, []);
+  });
+
+test('edition switch cancellation retires pending retention and cannot navigate after a late completion', async (t) => {
+  const page = await editionSwitchHost(t);
+  page.$('shell-menu').click();
+  const origin = page.win.location.href,
+    key = 'revealline.suspended.journey-sample-public.v1.solo-v2',
+    retained = page.storage.getItem(key),
+    before = authoritativeCheckpoint(page.rendered.run),
+    picker = page.$('edition-select');
+  let release;
+  const request = navigator.locks.request.bind(navigator.locks);
+  navigator.locks.request = async (name, options, task) => {
+    if (name.endsWith('.backup-lock'))
+      await new Promise((resolve) => {
+        release = resolve;
+      });
+    return request(name, options, task);
+  };
+  picker.value = 'sample-other';
+  picker.focus();
+  const pending = picker.onchange();
+  await settle(() => !!release);
+  assert.equal(page.$('mode-leave-confirm').disabled, true);
+  page.$('mode-leave-confirm').click();
+  assert.equal(page.win.location.href, origin);
+  page.$('mode-leave-stay').click();
+  assert.equal(picker.value, 'sample-public');
+  release();
+  await pending;
+  assert.equal(page.$('mode-leave-dialog').open, false);
+  assert.equal(page.win.location.href, origin);
+  assert.equal(page.storage.getItem(key), retained);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+  assert.equal(page.doc.activeElement, picker);
+  assert.deepEqual(page.errors, []);
+});
+
+test('edition switch permits only declared destinations and does not prompt when no flight exists', async (t) => {
+  const page = await editionSwitchHost(t, { start: false }),
+    origin = page.win.location.href,
+    picker = page.$('edition-select');
+  for (const id of ['sample-public', 'omitted-audience', 'https://foreign.test/']) {
+    picker.value = id;
+    await picker.onchange();
+    assert.equal(picker.value, 'sample-public');
+    assert.equal(page.win.location.href, origin);
+    assert.equal(page.$('mode-leave-dialog').open, false);
+  }
+  picker.value = 'sample-other';
+  await picker.onchange();
+  assert.equal(page.win.location.href, 'http://localhost/game/index.html?edition=sample-other');
+  assert.equal(page.$('mode-leave-dialog').open, false);
+  assert.deepEqual(page.errors, []);
+});
 
 test('edition runs the complete Solo host with canonical rules, settings and mission library', async (t) => {
   const f = await editionProviderFixture();

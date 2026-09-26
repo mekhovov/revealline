@@ -22,6 +22,7 @@ export async function mountEditionSoloUI({
   getPictureVisible,
   report,
   onMissions,
+  onEditionChange,
 }) {
   const { selection, theme } = provider;
   mountEditionNavigation({ provider, document: doc, href: win.location.href });
@@ -91,10 +92,12 @@ export async function mountEditionSoloUI({
   picker.append(select);
   (home.querySelector('.home-content') ?? home).append(picker);
   select.onchange = () => {
-    pause();
-    const target = new URL(provider.href());
-    target.searchParams.set('edition', select.value);
-    win.location.assign(target.href);
+    const requested = select.value;
+    // This remains the active edition until the shared host has retained the
+    // attempt and the player explicitly leaves. Stay/cancel needs no rollback.
+    select.value = provider.editionId;
+    if (requested === provider.editionId) return false;
+    return onEditionChange(requested, select);
   };
   const about = node('details'),
     aboutTitle = node('summary', 'About this edition & artwork');

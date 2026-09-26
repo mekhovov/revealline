@@ -9,24 +9,127 @@ import {
   EDITION_REVIEW_GATES,
   validateEditionPublication,
   frozenEditionOverlay,
+  selectRetainedEditionRelease,
 } from '../publishing/edition-promotion.mjs';
 import { editionHash } from '../publishing/edition-zip.mjs';
 
 const [command, ...args] = process.argv.slice(2),
   options = {};
-if (!['review-template', 'verify', 'upload-draft', 'sync-selector'].includes(command))
+if (
+  !['review-template', 'verify', 'upload-draft', 'sync-selector', 'select-retained'].includes(
+    command,
+  )
+)
   throw new Error(
-    'Usage: publish-editions.mjs review-template|verify|upload-draft|sync-selector --bundle DIR --review FILE [--repository OWNER/REPO --selector FILE --base-path /PATH/]',
+    'Usage: publish-editions.mjs review-template|verify|upload-draft|sync-selector --bundle DIR --review FILE [--repository OWNER/REPO --selector FILE --base-path /PATH/]; or select-retained --version vX.Y.Z --editions ID[,ID] --selector FILE --repository OWNER/REPO --base-path /PATH/',
   );
 for (let i = 0; i < args.length; i += 2) {
   if (
-    !['--bundle', '--review', '--repository', '--selector', '--base-path'].includes(args[i]) ||
+    ![
+      '--bundle',
+      '--review',
+      '--repository',
+      '--selector',
+      '--base-path',
+      '--version',
+      '--editions',
+    ].includes(args[i]) ||
     !args[i + 1] ||
     options[args[i]]
   )
     throw new Error('Invalid or duplicate promotion option.');
   options[args[i]] = args[i + 1];
 }
+if (command === 'select-retained') {
+  if (
+    options['--bundle'] ||
+    options['--review'] ||
+    !options['--selector'] ||
+    !options['--version'] ||
+    !options['--editions'] ||
+    options['--repository'] !== 'mekhovov/revealline' ||
+    options['--base-path'] !== '/revealline/'
+  )
+    throw new Error(
+      'Retained selection needs explicit version, editions, selector and the configured Pages target.',
+    );
+  const selectorPath = path.resolve(options['--selector']);
+  const originalSelector = await fs.readFile(selectorPath);
+  const releases = new Map();
+  const request = (args, maxBuffer, binary = false) => {
+    const result = spawnSync('gh', args, { encoding: binary ? undefined : 'utf8', maxBuffer });
+    if (result.status !== 0 || result.error)
+      throw new Error('Retained release download failed; the selector was not changed.');
+    return result.stdout;
+  };
+  const api = (route) =>
+    JSON.parse(request(['api', `repos/mekhovov/revealline/${route}`], 8_000_000));
+  const publishedRelease = (version) => {
+    if (!releases.has(version)) {
+      const release = api(`releases/tags/${version}`);
+      if (
+        release.draft ||
+        release.prerelease ||
+        release.tag_name !== version ||
+        !Array.isArray(release.assets)
+      )
+        throw new Error('Retained selection requires the original published stable release.');
+      releases.set(version, release);
+    }
+    return releases.get(version);
+  };
+  const updated = await selectRetainedEditionRelease(
+    JSON.parse(originalSelector),
+    { version: options['--version'], editionIds: options['--editions'].split(',') },
+    {
+      targetBasePath: options['--base-path'],
+      resolveReleaseIdentity: async (version) => {
+        publishedRelease(version);
+        const commit = api(`commits/${version}`);
+        return { sourceRevision: commit.sha, sourceTree: commit.commit?.tree?.sha };
+      },
+      readReleaseAsset: async (version, name, limit) => {
+        const rows = publishedRelease(version).assets.filter((asset) => asset.name === name);
+        if (
+          rows.length !== 1 ||
+          rows[0].state !== 'uploaded' ||
+          !Number.isSafeInteger(rows[0].size) ||
+          rows[0].size <= 0 ||
+          rows[0].size > limit ||
+          !Number.isSafeInteger(rows[0].id) ||
+          rows[0].id <= 0
+        )
+          throw new Error(
+            'Retained release asset is missing or exceeds its exact download budget.',
+          );
+        const bytes = request(
+          [
+            'api',
+            '-H',
+            'Accept: application/octet-stream',
+            `repos/mekhovov/revealline/releases/assets/${rows[0].id}`,
+          ],
+          limit,
+          true,
+        );
+        if (bytes.length !== rows[0].size)
+          throw new Error('Retained release download length differs.');
+        return bytes;
+      },
+    },
+  );
+  if (!(await fs.readFile(selectorPath)).equals(originalSelector))
+    throw new Error('The selector changed during verification; review and retry.');
+  const next = `${selectorPath}.next`;
+  await fs.writeFile(next, `${JSON.stringify(updated, null, 2)}\n`, { flag: 'wx' });
+  await fs.rename(next, selectorPath);
+  console.log(
+    'Retained edition selection verified and staged locally. Review it through the sole Pages publisher; no release was changed.',
+  );
+  process.exit(0);
+}
+if (options['--version'] || options['--editions'])
+  throw new Error('Explicit version and editions belong to select-retained only.');
 if (!options['--bundle'] || !options['--review'])
   throw new Error('Bundle and review paths are required.');
 const directory = path.resolve(options['--bundle']);

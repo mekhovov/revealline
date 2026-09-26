@@ -1,4 +1,4 @@
-import { boundedJSON, canonicalJSON } from '../../game/data-json.mjs';
+import { boundedJSON } from '../../game/data-json.mjs';
 import { validateEditionRuntimeCatalog } from '../../game/editions/model.mjs';
 import {
   DRAFT_FORMAT,
@@ -8,8 +8,8 @@ import {
   validateStudioReport,
   studioPreviewURL,
   studioSelection,
-  assertMatchingStudioSelection,
 } from './model.mjs';
+import { verifyStudioPreview } from './preview.mjs';
 
 const $ = (id) => document.getElementById(id);
 const labels = [
@@ -38,6 +38,7 @@ const guarded =
     try {
       await handler(...args);
     } catch (error) {
+      if (error.name === 'AbortError') return;
       status(error.message, true);
     }
   };
@@ -50,8 +51,9 @@ const download = (filename, value) => {
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
-const readJSON = async (url) => {
-  const response = await fetch(url);
+const readJSON = async (url, { signal } = {}) => {
+  signal?.throwIfAborted();
+  const response = await fetch(url, { signal });
   if (!response.ok)
     throw new Error(
       'Source file is unavailable. Import a complete draft or save the file in its declared workspace path.',
@@ -60,17 +62,21 @@ const readJSON = async (url) => {
 };
 let catalog,
   registeredCatalog,
+  registeredRuntimeAssets,
   editionId,
   campaignId,
   files = new Map(),
   step = 0,
   revision = 0,
   loadGeneration = 0,
-  report = null;
+  report = null,
+  previewController = null;
 const editorBuffers = new Map();
 const selected = () => studioSelection(catalog, editionId);
 const selectedCampaign = () => catalog.campaigns.find((campaign) => campaign.id === campaignId);
 function invalidatePreview() {
+  previewController?.abort();
+  previewController = null;
   report = null;
   $('open-preview').disabled = true;
   $('preview-frame').hidden = true;
@@ -89,11 +95,14 @@ function changed(message) {
   $('draft-state').textContent = editorBuffers.size ? 'Unapplied JSON edits' : 'Applied draft';
   status(message);
 }
-async function readSource(path) {
+async function readSource(path, { signal } = {}) {
+  signal?.throwIfAborted();
   if (files.has(path)) return files.get(path);
-  const owner = files;
-  const data = await readJSON(new URL(path, rootURL));
-  if (files === owner && !files.has(path)) files.set(path, data);
+  const owner = files,
+    ticket = revision;
+  const data = await readJSON(new URL(path, rootURL), { signal });
+  signal?.throwIfAborted();
+  if (files === owner && revision === ticket && !files.has(path)) files.set(path, data);
   return data;
 }
 function chooseOptions(select, items, value, none = false) {
@@ -122,6 +131,8 @@ function showStep(index) {
   $('next-step').textContent = `Next: ${labels[step + 1] ?? ''} →`;
   $('step-position').textContent = `Step ${step + 1} of 7`;
   if (step !== 5) {
+    previewController?.abort();
+    previewController = null;
     $('preview-frame').hidden = true;
     $('preview-frame').removeAttribute('src');
   }
@@ -138,6 +149,22 @@ function renderCatalog() {
   $('audience').value = edition.audience;
   $('revision').value = edition.revision;
   $('description').value = brand.description;
+  const references = $('brand-sources');
+  references.replaceChildren(node('h3', 'Brand references'));
+  if (!brand.sources?.length)
+    references.append(
+      node(
+        'p',
+        'No source references recorded yet. Add official or licensed sources in the catalog before review.',
+      ),
+    );
+  for (const source of brand.sources ?? []) {
+    const link = node('a', `${source.title} (${source.kind})`);
+    link.href = source.url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    references.append(link);
+  }
   $('identity-ids').textContent =
     `Brand: ${brand.id} · Edition: ${edition.id} · Theme: ${brand.themeId}`;
   $('catalog-json').value = editorBuffers.get('catalog') ?? format(catalog);
@@ -175,8 +202,21 @@ function renderCatalog() {
       node('p', asset.path),
       node('p', `${asset.bytes.toLocaleString()} bytes · ${asset.publication}`),
       node('code', asset.sha256),
-      node('span', asset.approved ? 'Publication approved' : 'Review pending', 'pill'),
+      node(
+        'span',
+        asset.approved ? 'Media admitted for compilation' : 'Media admission pending',
+        'pill',
+      ),
     );
+    if (asset.dependencies.length)
+      card.append(node('p', `Required assets: ${asset.dependencies.join(', ')}`));
+    if (asset.derivative)
+      card.append(
+        node(
+          'p',
+          `Derivative: ${asset.derivative.width} × ${asset.derivative.height} · source SHA-256 ${asset.derivative.sourceSha256}`,
+        ),
+      );
     $('asset-grid').append(card);
   }
   const choices = $('campaign-choices');
@@ -219,7 +259,7 @@ async function renderDocuments() {
     campaign.sourcePath,
     ...(campaign.lessonPath ? [campaign.lessonPath] : []),
   ].filter(Boolean);
-  await Promise.all(paths.map(readSource));
+  await Promise.all(paths.map((path) => readSource(path)));
   if (ticket !== loadGeneration) return;
   for (const [key, path] of [
     ['theme', edition.boot?.themes],
@@ -266,7 +306,7 @@ async function applyFile(key) {
 }
 function renderReport() {
   $('report-checks').hidden = false;
-  $('report-checks').replaceChildren(node('h3', 'Compiler report'));
+  $('report-checks').replaceChildren(node('h3', 'Imported compiler report — verification pending'));
   const checks = node('ul');
   for (const check of report.checks)
     checks.append(node('li', `${check.status.toUpperCase()}: ${check.detail}`));
@@ -301,14 +341,14 @@ function renderReport() {
   $('open-preview').disabled =
     !report.previewURL || report.checks.some((check) => check.status === 'failed');
   $('preview-note').textContent =
-    `Report received for ${report.name}. Opening the preview will compare its catalog and selected source files with this applied draft.`;
+    `Report received for ${report.name}. Opening the preview verifies its complete file inventory and selected source against this applied draft. This is a consistency check, not publication or human approval.`;
 }
 async function exportDraft() {
   if (editorBuffers.size)
     throw new Error('Apply your JSON editor changes before exporting the source draft.');
   status('Collecting every declared source file and validating the draft…');
   const paths = declaredJSONPaths(catalog);
-  await Promise.all(paths.map(readSource));
+  await Promise.all(paths.map((path) => readSource(path)));
   const packet = {
     format: DRAFT_FORMAT,
     catalog,
@@ -331,14 +371,13 @@ async function openPreview() {
       'Apply your JSON editor changes and compile the updated draft before opening a preview.',
     );
   if (!report) throw new Error('Import a compiler report first.');
-  const preview = studioPreviewURL(report, location.href),
-    buildRoot = new URL('../', preview),
+  if (step !== 5) throw new Error('Open the Whole-game preview step before verification.');
+  previewController?.abort();
+  const controller = new AbortController();
+  previewController = controller;
+  const activeReport = report,
     ticket = revision;
-  status('Comparing the compiled artifact with this applied draft…');
-  const built = validateEditionRuntimeCatalog(
-    await readJSON(new URL('edition-catalog.json', buildRoot)),
-  );
-  const selection = assertMatchingStudioSelection(catalog, built, editionId);
+  const selection = selected();
   const paths = [
     ...new Set([
       ...Object.values(selection.edition.boot ?? {}),
@@ -348,32 +387,60 @@ async function openPreview() {
       ]),
     ]),
   ];
-  await Promise.all(
-    paths.map(async (path) => {
-      const expected = await readSource(path),
-        actual = await readJSON(new URL(path, buildRoot));
-      if (canonicalJSON(expected) !== canonicalJSON(actual))
-        throw new Error(
-          `Compiled source differs at ${path}. Export and compile the applied draft again.`,
-        );
-    }),
-  );
-  if (ticket !== revision)
-    throw new Error(
-      'The draft changed while the preview was being verified. Open the current report again.',
+  status('Loading selected draft sources before artifact verification…');
+  const timeout = setTimeout(() => controller.abort(), 60000);
+  try {
+    await Promise.all(paths.map((path) => readSource(path, { signal: controller.signal })));
+    controller.signal.throwIfAborted();
+    const verified = await verifyStudioPreview({
+      catalog,
+      editionId,
+      files,
+      report: activeReport,
+      baseURL: location.href,
+      runtimeAssets: registeredRuntimeAssets,
+      signal: controller.signal,
+      onProgress: (completed, total) => {
+        if (!controller.signal.aborted && previewController === controller && step === 5)
+          status(`Verifying compiled files: ${completed} of ${total}…`);
+      },
+    });
+    controller.signal.throwIfAborted();
+    if (previewController !== controller || step !== 5)
+      throw new DOMException('Preview verification no longer owns this step.', 'AbortError');
+    if (ticket !== revision || report !== activeReport || editorBuffers.size)
+      throw new Error(
+        'The draft or report changed during verification. Open the current report again.',
+      );
+    $('preview-frame').src = verified.url.href;
+    $('preview-frame').hidden = false;
+    $('preview-new-tab').href = verified.url.href;
+    $('preview-new-tab').hidden = false;
+    $('report-checks').querySelector('h3').textContent =
+      'Compiler report — artifact consistency verified';
+    $('preview-note').textContent =
+      `${verified.verifiedFiles} artifact files verified against the report. Selected source matches the applied draft after normal theme selection. Human and publication reviews remain separate.`;
+    status(
+      'Verified the complete artifact inventory and applied source. The preview runs the whole company game; this does not approve artwork or human playtesting.',
     );
-  $('preview-frame').src = preview.href;
-  $('preview-frame').hidden = false;
-  $('preview-new-tab').href = preview.href;
-  $('preview-new-tab').hidden = false;
-  status(
-    'Compiled catalog and selected source files match the applied draft. The preview runs the whole company game.',
-  );
+  } catch (error) {
+    if (controller.signal.aborted && previewController === controller)
+      status(
+        'Preview verification was cancelled or exceeded one minute. Retry the current report.',
+        true,
+      );
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+    if (previewController === controller) previewController = null;
+  }
 }
+
 async function main() {
   registeredCatalog = validateEditionRuntimeCatalog(
     await readJSON(new URL('game/editions/catalog.json', rootURL)),
   );
+  registeredRuntimeAssets = await readJSON(new URL('game/editions/runtime-assets.json', rootURL));
   catalog = registeredCatalog;
   editionId = catalog.defaultEditionId;
   renderCatalog();
@@ -435,11 +502,13 @@ async function main() {
     return applyCatalog(checked, 'Catalog validated and applied.');
   });
   $('catalog-json').oninput = () => {
+    previewController?.abort();
     editorBuffers.set('catalog', $('catalog-json').value);
     $('draft-state').textContent = 'Unapplied JSON edits';
   };
   for (const key of ['theme', 'presets', 'campaign', 'learning'])
     $(`${key}-json`).oninput = () => {
+      previewController?.abort();
       const editor = $(`${key}-json`);
       if (editor.dataset.sourcePath) editorBuffers.set(editor.dataset.sourcePath, editor.value);
       $('draft-state').textContent = 'Unapplied JSON edits';
@@ -482,10 +551,13 @@ async function main() {
     if (checked.editionId !== editionId)
       throw new Error('Select the edition named by this report before importing it.');
     if (checked.previewURL) studioPreviewURL(checked, location.href);
+    invalidatePreview();
     report = checked;
     renderReport();
     $('import-report').value = '';
-    status('Compiler report imported. Review required checks before publishing.');
+    status(
+      'Compiler report imported but not yet verified. Verify the artifact in step 06; human review remains pending.',
+    );
   });
   showStep(0);
 }

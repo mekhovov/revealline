@@ -559,3 +559,9 @@ iframe {
     height: 680px;
   }
 }
+
+.source-links a {
+  display: block;
+  margin-top: 0.75rem;
+  overflow-wrap: anywhere;
+}

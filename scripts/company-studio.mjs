@@ -9,6 +9,13 @@ import {
   editionRelativePath,
   validateEditionRuntimeCatalog,
 } from '../game/editions/model.mjs';
+import {
+  TRAIL_IMPACT_JOURNEY_POLICY,
+  CURRENT_PRESSURE_ACTOR_CATALOG,
+  PRESSURE_DIFFICULTY_CATALOG,
+} from '../game/content-design/catalogs.mjs';
+import { CLASSES } from '../game/core/index.mjs';
+import { REPORT_FORMAT, STUDIO_REPORT_CHECKS } from '../authoring/company-studio/model.mjs';
 import { createStarterProject } from '../game/content-design/starter.mjs';
 import { compileContentProject, resolveMission } from '../game/content-design/project.mjs';
 import {
@@ -43,6 +50,9 @@ export function createCompanyWorkspaceFiles({
     mapId = `${editionId}-map`,
     themeId = `${brandId}-world`;
   const project = createStarterProject(`${editionId}-source`);
+  project.policyId = TRAIL_IMPACT_JOURNEY_POLICY.id;
+  project.actorCatalogId = CURRENT_PRESSURE_ACTOR_CATALOG.id;
+  project.difficultyCatalogId = PRESSURE_DIFFICULTY_CATALOG.id;
   project.name = `${name} journey`;
   project.revision = '1';
   project.maps[0].id = mapId;
@@ -160,7 +170,7 @@ export function createCompanyWorkspaceFiles({
       },
       animationRecipes: { still: { label: 'Rigid body', components: [] } },
     },
-    classes: [],
+    classes: structuredClone(CLASSES),
     packs: { format: 'xonix-pack-index.v1', packs: [] },
     archives: { format: 'xonix-pack-index.v1', packs: [] },
   };
@@ -279,7 +289,12 @@ export function companyStudioReport(sourceCatalog, result, { previewURL = null }
       .filter((record) => !selected[key].some((item) => item.id === record.id))
       .map((record) => record.id);
   return {
-    format: 'revealline-company-studio-report.v1',
+    format: REPORT_FORMAT,
+    artifact: {
+      path: 'edition-build.json',
+      bytes: result.files.get('edition-build.json').length,
+      sha256: createHash('sha256').update(result.files.get('edition-build.json')).digest('hex'),
+    },
     editionId: edition.id,
     brandId: edition.brandId,
     name: edition.name,
@@ -302,35 +317,7 @@ export function companyStudioReport(sourceCatalog, result, { previewURL = null }
       campaignIds: exclusion('campaigns'),
       assetIds: exclusion('assets'),
     },
-    checks: [
-      {
-        id: 'schemas',
-        status: 'passed',
-        detail: 'Brand, edition, campaign and learning ownership boundaries validated.',
-      },
-      {
-        id: 'assets',
-        status: 'passed',
-        detail:
-          'Every selected media dependency has exact public approval, SHA-256 and byte count.',
-      },
-      {
-        id: 'exclusion',
-        status: 'passed',
-        detail: 'Other editions and authoring registries are absent from the player tree.',
-      },
-      {
-        id: 'dependencies',
-        status: 'passed',
-        detail: 'Local imports and declared assets resolve within the standalone artifact.',
-      },
-      {
-        id: 'playability',
-        status: 'review-required',
-        detail:
-          'Content compiles with the existing engine. New designs still need route proofs and visual/accessibility review.',
-      },
-    ],
+    checks: STUDIO_REPORT_CHECKS,
     previewURL,
   };
 }
@@ -374,6 +361,13 @@ export async function compileCompanyWorkspace({
   return { result, report: companyStudioReport(catalog, result), catalog };
 }
 
+async function writeCompanyWorkspace(output, result) {
+  // The destination itself remains new-only. Documented nested output paths
+  // should work in a fresh checkout without a manual parent-directory step.
+  await fs.mkdir(path.dirname(output), { recursive: true });
+  await writeEdition(output, result);
+}
+
 async function main(args) {
   const command = args.shift(),
     options = {};
@@ -411,7 +405,7 @@ async function main(args) {
       draft.files,
       path.resolve(options['media-root'] ?? engineRoot),
     );
-    await writeEdition(path.resolve(options.workspace), draft);
+    await writeCompanyWorkspace(path.resolve(options.workspace), draft);
     process.stdout.write(
       `Imported ${draft.files.size} draft files. Run validate for the chosen edition before preview.\n`,
     );
@@ -442,7 +436,7 @@ async function main(args) {
       sharedFiles,
     });
     draft.files.set('source-draft.json', json(companySourceDraft(draft)));
-    await writeEdition(path.resolve(options.workspace), draft);
+    await writeCompanyWorkspace(path.resolve(options.workspace), draft);
     process.stdout.write(
       `Created ${draft.catalog.defaultEditionId} workspace (${draft.files.size} files).\n`,
     );
@@ -459,7 +453,7 @@ async function main(args) {
     required(options.out, 'Choose a new output directory.');
     const output = path.resolve(options.out),
       relative = path.relative(engineRoot, output);
-    await writeEdition(output, result);
+    await writeCompanyWorkspace(output, result);
     const previewURL =
       relative &&
       !relative.split(path.sep).some((segment) => segment.startsWith('.')) &&
