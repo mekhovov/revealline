@@ -14,6 +14,8 @@ import { createCoop, startCoop } from '../coop/core.mjs';
 import { COOP_PLAYTEST_CONFIGURATIONS } from '../coop/relay-yard.mjs';
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
+import { localizedText, t } from '../i18n/index.mjs';
+import { contentText } from '../i18n/content.mjs';
 
 // Execute the production navigation and adoption functions unchanged, with a
 // controlled completed-result/picture-lease boundary. This is transaction
@@ -138,6 +140,11 @@ function fixture({
     console: { error() {} },
     COOP_STARTER_PACK,
     COOP_PLAYTEST_CONFIGURATIONS,
+    localizedText,
+    t,
+    contentText,
+    picturePreparationText: () => null,
+    earnedTeamPicture: () => null,
     librarySuccessor,
     coopPackDestination,
     TEAM_LIBRARY_JOURNEY_EDITION,
@@ -277,7 +284,9 @@ test('Team preserves authored successors and crosses Journey → Classic by exac
 test('Classic → same-name Custom ignores search and final Custom never wraps', () => {
   const f = fixture();
   f.library.search('Relay Yard', { mode: 'team', collection: 'Classic' });
-  assert.equal(f.api.teamDestination().nextDiscoveryRow, f.customRows[0]);
+  const firstDestination = f.api.teamDestination();
+  assert.ifError(firstDestination.error);
+  assert.equal(firstDestination.nextDiscoveryRow, f.customRows[0]);
   const last = f.customRows.at(-1);
   f.ctx.acceptedPicture.sourcePack = last.pack;
   f.ctx.acceptedPicture.levelId = last.levelId;
