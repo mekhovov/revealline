@@ -51,7 +51,7 @@ jobs:
       artifact_digest: ${{ steps.resume.outputs.artifact_digest }}
     steps:
       - name: Check out trusted admission code
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ github.workflow_sha }}
           persist-credentials: false
@@ -62,8 +62,9 @@ jobs:
           sparse-checkout-cone-mode: false
 
       - name: Set up admission runtime
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
+          package-manager-cache: false
           node-version: 22.22.2
 
       - name: Validate immutable request inputs
@@ -77,7 +78,7 @@ jobs:
         run: node publishing/fastline-release-inputs.mjs
 
       - name: Check out exact merged source metadata
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ inputs.source_sha }}
           path: source
@@ -213,6 +214,9 @@ jobs:
       freeze_snapshot: true
       run_tests: false
       force_snapshot: true
+      # The first manifest writer is version-bound so later releases must make
+      # another reviewed choice instead of inheriting the canary implicitly.
+      source_format: ${{ inputs.version == 'v0.141.6' && 'manifest' || 'tar' }}
 
   inspect-artifact:
     if: inputs.mode == 'publish' && needs.admission.outputs.origin_run == ''
@@ -224,7 +228,7 @@ jobs:
       actions: read
     steps:
       - name: Check out independent inspection utility
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ github.workflow_sha }}
           path: automation
@@ -236,7 +240,7 @@ jobs:
           sparse-checkout-cone-mode: false
 
       - name: Check out exact qualified source
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ inputs.source_sha }}
           path: qualified
@@ -286,7 +290,7 @@ jobs:
             --repo qualified --out utility-output
 
       - name: Retain independent inspection evidence
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: inspect-artifact-evidence
           path: utility-output/evidence/
@@ -373,7 +377,7 @@ jobs:
       pr_run: ${{ needs.admission.outputs.pr_run }}
       inspection_run: ${{ needs.admission.outputs.origin_run }}
       inspection_artifact_name: inspect-artifact-evidence
-      approved_non_source_changes: "[]"
+      approved_non_source_changes: '[]'
 
   publish:
     if: inputs.mode == 'resume'
@@ -385,7 +389,7 @@ jobs:
       actions: read
     steps:
       - name: Check out trusted guarded publisher
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ github.workflow_sha }}
           persist-credentials: false
@@ -400,7 +404,7 @@ jobs:
           sparse-checkout-cone-mode: false
 
       - name: Download immutable frozen package by artifact ID
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           artifact-ids: ${{ needs.admission.outputs.artifact_id }}
           path: frozen
@@ -408,7 +412,7 @@ jobs:
           run-id: ${{ needs.admission.outputs.origin_run }}
 
       - name: Download immutable seven-asset evidence by artifact ID
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           artifact-ids: ${{ needs.evidence.outputs.artifact_id }}
           path: evidence
@@ -420,10 +424,19 @@ jobs:
         run: |
           set -euo pipefail
           mkdir release-assets
-          source_tar="$(find frozen -type f -path "*/$VERSION/source.tar" -print -quit)"
+          record="$(find frozen -type f -path "*/$VERSION/release.json" -print -quit)"
+          test -n "$record"
+          source_name="$(node --input-type=module - "$record" <<'NODE'
+          import fs from 'node:fs';
+          const record = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+          if (![1, 2].includes(record.formatVersion)) throw new Error('Unknown source contract');
+          process.stdout.write(record.formatVersion === 2 ? 'source-manifest.json' : 'source.tar');
+          NODE
+          )"
+          source_original="$(find frozen -type f -path "*/$VERSION/$source_name" -print -quit)"
           distribution="$(find frozen -type f -path "*/$VERSION/site/distribution.zip" -print -quit)"
-          test -n "$source_tar" && test -n "$distribution"
-          cp "$source_tar" release-assets/source.tar
+          test -n "$source_original" && test -n "$distribution"
+          cp "$source_original" "release-assets/$source_name"
           cp "$distribution" release-assets/distribution.zip
           for name in distribution.zip.sha256 manifest.json qualification-evidence-record.json \
             release.json source-qualification-evidence.zip source-qualification.json verification.json; do

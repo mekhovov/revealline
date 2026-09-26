@@ -45,6 +45,18 @@ input, not a physical phone or OS installation. Shared-renderer composition prev
 all six campaign families; full-art overlays are diagnostic views, not claimed winning runs.
 Existing user profiles were not modified by these isolated-origin checks.
 
+The final main integration includes `d3b484363` and the v0.141.6 source-manifest
+contract. Additive edition admission now classifies assets against the exact validated
+core manifest for either source format; it still rejects mixed source formats and
+unexpected assets before publication. The publisher, release-input, metadata and
+workflow cohort passed 79 tests. The company candidate workflow uses main's reviewed
+action pins and now also runs both source-format integration cohorts. Local Python
+execution reached the production disk-reserve guards (8 failures and 5 errors across
+63 tests, all reporting insufficient free disk); no reserve or packaging limit was
+relaxed. The exact clean-head CI result and independent downloaded-byte comparison
+will be recorded on PR #615 and supersede that local environment limitation only when
+the same tests pass on its runner.
+
 ## Bulk artwork completion in the existing PR
 
 The user requested the remaining work be combined in PR #615 while the release queue is

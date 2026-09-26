@@ -42,12 +42,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
+          package-manager-cache: false
           node-version: '22.13.1'
           cache: npm
       - run: npm ci
@@ -59,12 +60,17 @@ jobs:
           node --test scripts/test-company-review.mjs
           node --test game/test/actor-appearance-pin.test.mjs game/test/actor-appearance-lease.test.mjs game/test/replay-presentation.test.mjs game/test/replay-actor-context.test.mjs
           node --test game/test/installed-app.test.mjs game/test/profile-transfer.test.mjs game/test/profile-channel-reader.test.mjs scripts/test-offline-publication.mjs
+      - name: Verify both source release formats and edition admission
+        run: |
+          node --test publishing/fastline-release-publisher.test.mjs publishing/fastline-release-inputs.test.mjs publishing/pages-controller/metadata.test.mjs publishing/pages-controller/workflow.test.mjs scripts/source-manifest-snapshot.test.mjs
+          cd publishing/utility
+          python3 -m unittest test_source_manifest test_release_artifact test_upload_source test_assemble_waived_qualification
       - name: Compile twice and inspect original candidate ZIP members
         env:
           EDITION_IDS: ${{ inputs.editions || 'coupa-all,coupa-adventure,coupa-culture,coupa-foundations,coupa-operations,coupa-developers,droneaid-community,droneaid-nl-community,droneaid-nl-workshop-lights,droneaid-nl-parts-in-motion,droneaid-nl-signals-of-support,droneaid-nl-careful-handoff,droneaid-nl-makers-together,droneaid-nl-shared-horizon' }}
         run: node scripts/bundle-editions.mjs --editions "$EDITION_IDS" --out .cache/company-candidate --base-path /revealline/
       - name: Save immutable candidates for review
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: company-candidate-${{ github.event.pull_request.head.sha || github.sha }}
           path: .cache/company-candidate/
