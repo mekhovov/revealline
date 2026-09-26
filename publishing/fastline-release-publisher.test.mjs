@@ -1,25 +1,38 @@
-import assert from "node:assert/strict";
-import test from "node:test";
+import assert from 'node:assert/strict';
+import test from 'node:test';
 
 import {
   RELEASE_ASSET_NAMES,
+  releaseAssetNames,
   decideReleaseAssets,
   createGitHubRequest,
   ensureDraftRelease,
   normalizeAssetDigest,
   publishExactRelease,
-} from "./fastline-release-publisher.mjs";
+} from './fastline-release-publisher.mjs';
 
-const sourceSha = "a".repeat(40);
-const version = "v1.2.3";
-const repository = "example/revealline";
+const sourceSha = 'a'.repeat(40);
+const version = 'v1.2.3';
+const repository = 'example/revealline';
 const expected = RELEASE_ASSET_NAMES.map((name, index) => ({
   name,
   size: index + 1,
-  digest: `sha256:${String(index).padStart(64, "0")}`,
+  digest: `sha256:${String(index).padStart(64, '0')}`,
 }));
 
-test("reuses exact assets and creates only missing draft assets", () => {
+test('v2 preserves nine immutable assets and rejects mixed source contracts', () => {
+  const names = releaseAssetNames(2);
+  assert.equal(names.length, 9);
+  assert.ok(names.includes('source-manifest.json'));
+  assert.ok(!names.includes('source.tar'));
+  const v2 = expected.map((asset, index) => ({ ...asset, name: names[index] }));
+  assert.deepEqual(decideReleaseAssets({ expected: v2, actual: v2, published: true }).missing, []);
+  assert.throws(() => decideReleaseAssets({ expected: v2, actual: expected }), /unexpected/);
+  assert.throws(() => decideReleaseAssets({ expected: v2, actual: [...v2, v2[0]] }), /duplicate/);
+  assert.throws(() => releaseAssetNames(3), /unsupported/);
+});
+
+test('reuses exact assets and creates only missing draft assets', () => {
   const actual = expected.slice(0, 4);
   assert.deepEqual(decideReleaseAssets({ expected, actual }), {
     reused: RELEASE_ASSET_NAMES.slice(0, 4),
@@ -27,15 +40,12 @@ test("reuses exact assets and creates only missing draft assets", () => {
   });
 });
 
-test("fails closed on extra, changed, digestless, and published missing assets", () => {
+test('fails closed on extra, changed, digestless, and published missing assets', () => {
   assert.throws(
     () =>
       decideReleaseAssets({
         expected,
-        actual: [
-          ...expected,
-          { name: "extra", size: 1, digest: expected[0].digest },
-        ],
+        actual: [...expected, { name: 'extra', size: 1, digest: expected[0].digest }],
       }),
     /unexpected release asset/u,
   );
@@ -54,21 +64,21 @@ test("fails closed on extra, changed, digestless, and published missing assets",
   );
 });
 
-test("creates an annotated tag and exact draft once, then reuses it", async () => {
-  let state = "absent";
+test('creates an annotated tag and exact draft once, then reuses it', async () => {
+  let state = 'absent';
   const calls = [];
   const request = async (pathname, options = {}) => {
-    calls.push([pathname, options.method || "GET"]);
-    if (pathname.endsWith("/git/tags")) {
-      state = "tag-object";
-      return { sha: "b".repeat(40) };
+    calls.push([pathname, options.method || 'GET']);
+    if (pathname.endsWith('/git/tags')) {
+      state = 'tag-object';
+      return { sha: 'b'.repeat(40) };
     }
-    if (pathname.endsWith("/git/refs")) {
-      state = "tag";
+    if (pathname.endsWith('/git/refs')) {
+      state = 'tag';
       return {};
     }
-    if (pathname.endsWith("/releases")) {
-      state = "draft";
+    if (pathname.endsWith('/releases')) {
+      state = 'draft';
       return {
         id: 7,
         tag_name: version,
@@ -80,19 +90,19 @@ test("creates an annotated tag and exact draft once, then reuses it", async () =
     throw new Error(`unexpected ${pathname}`);
   };
   const inspect = async () => {
-    if (state === "absent" || state === "tag-object")
+    if (state === 'absent' || state === 'tag-object')
       return {
         tagCommit: null,
         tagType: null,
         release: null,
-        decision: { action: "create", state: "absent" },
+        decision: { action: 'create', state: 'absent' },
       };
-    if (state === "tag")
+    if (state === 'tag')
       return {
         tagCommit: sourceSha,
-        tagType: "tag",
+        tagType: 'tag',
         release: null,
-        decision: { action: "create-release", state: "tag-only" },
+        decision: { action: 'create-release', state: 'tag-only' },
       };
     const release = {
       id: 7,
@@ -103,9 +113,9 @@ test("creates an annotated tag and exact draft once, then reuses it", async () =
     };
     return {
       tagCommit: sourceSha,
-      tagType: "tag",
+      tagType: 'tag',
       release,
-      decision: { action: "reuse", state: "draft" },
+      decision: { action: 'reuse', state: 'draft' },
     };
   };
   const release = await ensureDraftRelease({
@@ -117,9 +127,9 @@ test("creates an annotated tag and exact draft once, then reuses it", async () =
   });
   assert.equal(release.id, 7);
   assert.deepEqual(calls, [
-    [`/repos/${repository}/git/tags`, "POST"],
-    [`/repos/${repository}/git/refs`, "POST"],
-    [`/repos/${repository}/releases`, "POST"],
+    [`/repos/${repository}/git/tags`, 'POST'],
+    [`/repos/${repository}/git/refs`, 'POST'],
+    [`/repos/${repository}/releases`, 'POST'],
   ]);
 });
 
@@ -132,17 +142,17 @@ const draft = {
 };
 const tagOnly = {
   tagCommit: sourceSha,
-  tagType: "tag",
+  tagType: 'tag',
   release: null,
-  decision: { action: "create-release", state: "tag-only" },
+  decision: { action: 'create-release', state: 'tag-only' },
 };
 const withRelease = (release = draft) => ({
   ...tagOnly,
   release,
-  decision: { action: "reuse", state: release.draft ? "draft" : "published" },
+  decision: { action: 'reuse', state: release.draft ? 'draft' : 'published' },
 });
 
-test("pins returned release ID despite delayed draft discovery without repeating POST", async () => {
+test('pins returned release ID despite delayed draft discovery without repeating POST', async () => {
   let reads = 0;
   let posts = 0;
   const delays = [];
@@ -167,10 +177,10 @@ test("pins returned release ID despite delayed draft discovery without repeating
   assert.deepEqual(delays, [1000, 2000]);
 });
 
-test("does not swallow genuine 422 validation errors", async () => {
-  const error = Object.assign(new Error("GitHub 422: invalid tag"), {
+test('does not swallow genuine 422 validation errors', async () => {
+  const error = Object.assign(new Error('GitHub 422: invalid tag'), {
     status: 422,
-    codes: ["invalid"],
+    codes: ['invalid'],
   });
   let reads = 0;
   await assert.rejects(
@@ -192,7 +202,7 @@ test("does not swallow genuine 422 validation errors", async () => {
 });
 
 for (const failure of [
-  { status: 422, codes: ["already_exists"] },
+  { status: 422, codes: ['already_exists'] },
   { ambiguousWrite: true },
   { status: 503 },
 ]) {
@@ -206,7 +216,7 @@ for (const failure of [
       inspect: async () => (++reads === 1 ? tagOnly : withRelease()),
       request: async () => {
         posts += 1;
-        throw Object.assign(new Error("uncertain outcome"), failure);
+        throw Object.assign(new Error('uncertain outcome'), failure);
       },
     });
     assert.equal(release.id, 7);
@@ -214,7 +224,7 @@ for (const failure of [
   });
 }
 
-test("absent object after ambiguous write stops with original diagnostic and no second write", async () => {
+test('absent object after ambiguous write stops with original diagnostic and no second write', async () => {
   let writes = 0;
   await assert.rejects(
     ensureDraftRelease({
@@ -224,7 +234,7 @@ test("absent object after ambiguous write stops with original diagnostic and no 
       inspect: async () => tagOnly,
       request: async () => {
         writes += 1;
-        throw Object.assign(new Error("request lost"), {
+        throw Object.assign(new Error('request lost'), {
           ambiguousWrite: true,
         });
       },
@@ -235,10 +245,10 @@ test("absent object after ambiguous write stops with original diagnostic and no 
   assert.equal(writes, 1);
 });
 
-test("creation receipt rejects missing ID and mismatched source without recovery writes", async () => {
+test('creation receipt rejects missing ID and mismatched source without recovery writes', async () => {
   for (const returned of [
     { ...draft, id: undefined },
-    { ...draft, target_commitish: "b".repeat(40) },
+    { ...draft, target_commitish: 'b'.repeat(40) },
   ]) {
     await assert.rejects(
       ensureDraftRelease({
@@ -253,7 +263,7 @@ test("creation receipt rejects missing ID and mismatched source without recovery
   }
 });
 
-test("discovered mismatched tag fails closed immediately", async () => {
+test('discovered mismatched tag fails closed immediately', async () => {
   let reads = 0;
   await assert.rejects(
     ensureDraftRelease({
@@ -261,27 +271,25 @@ test("discovered mismatched tag fails closed immediately", async () => {
       version,
       sourceSha,
       inspect: async () =>
-        ++reads === 1
-          ? tagOnly
-          : { ...withRelease(), tagCommit: "b".repeat(40) },
+        ++reads === 1 ? tagOnly : { ...withRelease(), tagCommit: 'b'.repeat(40) },
       request: async () => draft,
-      wait: async () => assert.fail("must not retry a mismatch"),
+      wait: async () => assert.fail('must not retry a mismatch'),
     }),
     /release tag/u,
   );
 });
 
-test("duplicate asset names are rejected rather than collapsed", () => {
+test('duplicate asset names are rejected rather than collapsed', () => {
   assert.throws(
     () => decideReleaseAssets({ expected, actual: [...expected, expected[0]] }),
     /duplicate/u,
   );
 });
 
-test("GET honors Retry-After for 429 and primary-limit reset for 403", async () => {
+test('GET honors Retry-After for 429 and primary-limit reset for 403', async () => {
   for (const [status, headers, delay] of [
-    [429, { "retry-after": "2" }, 2000],
-    [403, { "x-ratelimit-remaining": "0", "x-ratelimit-reset": "105" }, 5000],
+    [429, { 'retry-after': '2' }, 2000],
+    [403, { 'x-ratelimit-remaining': '0', 'x-ratelimit-reset': '105' }, 5000],
   ]) {
     let calls = 0;
     const waits = [];
@@ -293,15 +301,15 @@ test("GET honors Retry-After for 429 and primary-limit reset for 403", async () 
           ? new Response('{"message":"rate limit"}', { status, headers })
           : new Response('{"id":7}'),
     });
-    assert.deepEqual(await request("/read"), { id: 7 });
+    assert.deepEqual(await request('/read'), { id: 7 });
     assert.deepEqual(waits, [delay]);
   }
 });
 
-test("non-rate-limit 403 and excessive Retry-After stop without immediate retry", async () => {
+test('non-rate-limit 403 and excessive Retry-After stop without immediate retry', async () => {
   for (const [status, headers] of [
     [403, {}],
-    [429, { "retry-after": "120" }],
+    [429, { 'retry-after': '120' }],
   ]) {
     let calls = 0;
     const request = createGitHubRequest({
@@ -309,63 +317,62 @@ test("non-rate-limit 403 and excessive Retry-After stop without immediate retry"
         calls += 1;
         return new Response('{"message":"denied"}', { status, headers });
       },
-      wait: async () => assert.fail("must stop"),
+      wait: async () => assert.fail('must stop'),
     });
-    await assert.rejects(request("/read"), /GitHub/u);
+    await assert.rejects(request('/read'), /GitHub/u);
     assert.equal(calls, 1);
   }
 });
 
-test("writes are never retried by HTTP transport and diagnostics redact credentials", async () => {
+test('writes are never retried by HTTP transport and diagnostics redact credentials', async () => {
   let calls = 0;
   const request = createGitHubRequest({
-    token: "secret-token",
+    token: 'secret-token',
     fetchImpl: async () => {
       calls += 1;
       return new Response(
         JSON.stringify({
-          message: "failed secret-token",
-          errors: [{ code: "invalid" }],
+          message: 'failed secret-token',
+          errors: [{ code: 'invalid' }],
         }),
         { status: 422 },
       );
     },
   });
-  await assert.rejects(request("/write", { method: "POST" }), (error) => {
+  await assert.rejects(request('/write', { method: 'POST' }), (error) => {
     assert.equal(error.status, 422);
-    assert.deepEqual(error.codes, ["invalid"]);
+    assert.deepEqual(error.codes, ['invalid']);
     assert.doesNotMatch(error.message, /secret-token/u);
     return true;
   });
   assert.equal(calls, 1);
 });
 
-test("lost POST response is classified as ambiguous without automatic resubmission", async () => {
+test('lost POST response is classified as ambiguous without automatic resubmission', async () => {
   let calls = 0;
   const request = createGitHubRequest({
     fetchImpl: async () => {
       calls += 1;
-      throw new Error("network secret");
+      throw new Error('network secret');
     },
   });
   await assert.rejects(
-    request("/write", { method: "POST" }),
-    (error) =>
-      error.ambiguousWrite && !error.message.includes("network secret"),
+    request('/write', { method: 'POST' }),
+    (error) => error.ambiguousWrite && !error.message.includes('network secret'),
   );
   assert.equal(calls, 1);
 });
 
-test("successful HTTP write with unreadable body is ambiguous, not repeated", async () => {
+test('successful HTTP write with unreadable body is ambiguous, not repeated', async () => {
   for (const response of [
     {
       status: 201,
       ok: true,
       text: async () => {
-        throw new Error("stream interrupted");
+        throw new Error('stream interrupted');
       },
     },
-    new Response("broken JSON", { status: 201 }),
+    new Response('broken JSON', { status: 201 }),
   ]) {
     let calls = 0;
     const request = createGitHubRequest({
@@ -375,14 +382,14 @@ test("successful HTTP write with unreadable body is ambiguous, not repeated", as
       },
     });
     await assert.rejects(
-      request("/write", { method: "POST" }),
+      request('/write', { method: 'POST' }),
       (error) => error.ambiguousWrite === true,
     );
     assert.equal(calls, 1);
   }
 });
 
-test("tag ref conflict can only recover through matching annotated authority", async () => {
+test('tag ref conflict can only recover through matching annotated authority', async () => {
   let reads = 0;
   const calls = [];
   await ensureDraftRelease({
@@ -395,26 +402,23 @@ test("tag ref conflict can only recover through matching annotated authority", a
             tagCommit: null,
             tagType: null,
             release: null,
-            decision: { action: "create", state: "absent" },
+            decision: { action: 'create', state: 'absent' },
           }
         : withRelease(),
     request: async (pathname) => {
       calls.push(pathname);
-      if (pathname.endsWith("/git/tags")) return { sha: "b".repeat(40) };
-      throw Object.assign(new Error("reference exists"), {
+      if (pathname.endsWith('/git/tags')) return { sha: 'b'.repeat(40) };
+      throw Object.assign(new Error('reference exists'), {
         status: 422,
-        codes: ["already_exists"],
+        codes: ['already_exists'],
       });
     },
   });
-  assert.deepEqual(calls, [
-    `/repos/${repository}/git/tags`,
-    `/repos/${repository}/git/refs`,
-  ]);
+  assert.deepEqual(calls, [`/repos/${repository}/git/tags`, `/repos/${repository}/git/refs`]);
 });
 
 for (const status of [409, 422]) {
-  for (const authority of ["matching", "missing", "mismatched"]) {
+  for (const authority of ['matching', 'missing', 'mismatched']) {
     test(`message-only ref ${status} with ${authority} authority never retries the write`, async () => {
       let reads = 0;
       const writes = [];
@@ -422,21 +426,18 @@ for (const status of [409, 422]) {
         tagCommit: null,
         tagType: null,
         release: null,
-        decision: { action: "create", state: "absent" },
+        decision: { action: 'create', state: 'absent' },
       };
       const request = createGitHubRequest({
-        token: "test-token",
+        token: 'test-token',
         fetchImpl: async (url, options) => {
           writes.push([url, options.method]);
-          if (url.endsWith("/git/tags"))
-            return new Response(JSON.stringify({ sha: "b".repeat(40) }), {
+          if (url.endsWith('/git/tags'))
+            return new Response(JSON.stringify({ sha: 'b'.repeat(40) }), {
               status: 201,
             });
-          assert.ok(url.endsWith("/git/refs"));
-          return new Response(
-            JSON.stringify({ message: "Reference already exists" }),
-            { status },
-          );
+          assert.ok(url.endsWith('/git/refs'));
+          return new Response(JSON.stringify({ message: 'Reference already exists' }), { status });
         },
       });
       const result = ensureDraftRelease({
@@ -447,27 +448,24 @@ for (const status of [409, 422]) {
         wait: async () => {},
         inspect: async () => {
           reads += 1;
-          if (reads === 1 || authority === "missing") return absent;
-          if (authority === "mismatched")
-            return { ...withRelease(), tagCommit: "c".repeat(40) };
+          if (reads === 1 || authority === 'missing') return absent;
+          if (authority === 'mismatched') return { ...withRelease(), tagCommit: 'c'.repeat(40) };
           return withRelease();
         },
       });
-      if (authority === "matching") assert.equal((await result).id, draft.id);
+      if (authority === 'matching') assert.equal((await result).id, draft.id);
       else
         await assert.rejects(
           result,
-          authority === "missing"
-            ? /Reference already exists/u
-            : /resolves to/u,
+          authority === 'missing' ? /Reference already exists/u : /resolves to/u,
         );
       assert.equal(writes.length, 2);
-      assert.equal(reads, authority === "missing" ? 5 : 2);
+      assert.equal(reads, authority === 'missing' ? 5 : 2);
     });
   }
 }
 
-test("publishes only an exact complete draft and reuses an exact publication", async () => {
+test('publishes only an exact complete draft and reuses an exact publication', async () => {
   let draft = true;
   const release = () => ({
     id: 9,
@@ -475,17 +473,17 @@ test("publishes only an exact complete draft and reuses an exact publication", a
     target_commitish: sourceSha,
     draft,
     prerelease: false,
-    published_at: draft ? null : "2026-09-26T00:00:00Z",
+    published_at: draft ? null : '2026-09-26T00:00:00Z',
   });
   const inspect = async () => ({
     tagCommit: sourceSha,
-    tagType: "tag",
+    tagType: 'tag',
     release: release(),
-    decision: { action: "reuse", state: draft ? "draft" : "published" },
+    decision: { action: 'reuse', state: draft ? 'draft' : 'published' },
   });
   const request = async (pathname, options = {}) => {
-    if (pathname.includes("/assets")) return expected;
-    if (options.method === "PATCH") {
+    if (pathname.includes('/assets')) return expected;
+    if (options.method === 'PATCH') {
       draft = false;
       return release();
     }
@@ -508,5 +506,5 @@ test("publishes only an exact complete draft and reuses an exact publication", a
     request,
     inspect,
   });
-  assert.equal(second.published_at, "2026-09-26T00:00:00Z");
+  assert.equal(second.published_at, '2026-09-26T00:00:00Z');
 });

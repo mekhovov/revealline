@@ -25,6 +25,7 @@ import inspect_qualified_artifact as inspector
 import upload_source
 import upload_distribution
 from release_limits import MAX_DISTRIBUTION_BYTES
+from source_manifest import frozen_proof_key, inspection_source, MAX_MANIFEST
 
 MIB = 1024**2
 RESERVE = 512 * MIB
@@ -32,6 +33,20 @@ SMALL_NAMES = {'manifest.json', 'release.json', 'distribution.zip.sha256',
                'source-qualification.json', 'source-qualification-evidence.zip',
                'verification.json', 'qualification-evidence-record.json'}
 NAMES = SMALL_NAMES | {'source.tar', 'distribution.zip'}
+
+
+def binding_names(binding):
+    names = {row['name'] for row in binding['release']['assets']}
+    require(names in (NAMES, SMALL_NAMES | {'source-manifest.json', 'distribution.zip'}),
+            'Exactly one supported nine-asset contract required')
+    return names
+
+
+class PinnedManifest(upload_source.PinnedSource):
+    asset_name = 'source-manifest.json'
+    inspection_role = 'sourceManifest'
+    maximum_bytes = MAX_MANIFEST
+
 HEX = re.compile(r'[0-9a-f]{64}')
 COMMIT = re.compile(r'[0-9a-f]{40}')
 WORKFLOW = '.github/workflows/qualify-release-source.yml'
@@ -104,11 +119,12 @@ def validate_binding(body, mode, repository):
         require(isinstance(release, dict) and set(release) == {'id', 'tag', 'assets'} and
                 positive(release['id'], 10**14) and release['tag'] == source['version'], 'Exact draft id/tag required')
         rows = release['assets']
-        require(isinstance(rows, list) and len(rows) == 9 and {r['name'] for r in rows} == NAMES,
+        require(isinstance(rows, list) and len(rows) == 9 and len(binding_names(binding)) == 9,
                 'Exactly nine unique reviewed asset descriptors required')
         for row in rows:
             limit = 64 * MIB if row['name'] == 'source-qualification-evidence.zip' else (
                 2_000_000_000 if row['name'] == 'source.tar' else
+                MAX_MANIFEST if row['name'] == 'source-manifest.json' else
                 MAX_DISTRIBUTION_BYTES if row['name'] == 'distribution.zip' else 4 * MIB)
             require(set(row) == {'name', 'bytes', 'sha256'} and positive(row['bytes'], limit) and
                     HEX.fullmatch(row['sha256']), 'Invalid asset descriptor or bounded length')
@@ -124,7 +140,8 @@ class RecordedGitHub(upload_source.GitHub):
     def upload(self, path, stream, size, expected_hash):
         if path.endswith('/assets?name=distribution.zip'):
             return upload_distribution.GitHub.upload(self, path, stream, size, expected_hash)
-        require(path.endswith('/assets?name=source.tar'), 'Only the two original member POSTs are permitted')
+        require(any(path.endswith('/assets?name=' + name) for name in ('source.tar', 'source-manifest.json')),
+                'Only the two original member POSTs are permitted')
         return super().upload(path, stream, size, expected_hash)
 
     def get(self, path):
@@ -379,7 +396,7 @@ def qualification_check(q, binding):
     frozen = q['frozenArtifactCorroboration']
     require(frozen['artifactId'] == binding['artifact']['id'] and
             all(frozen.get(k) is True for k in ['wholeOriginalArtifactVerifiedBeforeQualification',
-                'sourceTarGitBlobTypeModeAndPaxCommitVerified', 'allInnerZipManifestBytesVerified',
+                frozen_proof_key(frozen), 'allInnerZipManifestBytesVerified',
                 'frozenOfflineInventoryAndBindingsVerified']), 'Qualification frozen original coverage missing')
 
 
@@ -449,7 +466,7 @@ def waiver_qualification_check(q, binding):
     frozen = q['frozenArtifactCorroboration']
     require(frozen['artifactId'] == binding['artifact']['id'] and
             all(frozen.get(k) is True for k in ['wholeOriginalArtifactVerifiedBeforeQualification',
-                'sourceTarGitBlobTypeModeAndPaxCommitVerified', 'allInnerZipManifestBytesVerified',
+                frozen_proof_key(frozen), 'allInnerZipManifestBytesVerified',
                 'frozenOfflineInventoryAndBindingsVerified']), 'Qualification frozen original coverage missing')
 
 
@@ -628,22 +645,29 @@ class DraftUploadAPI:
 
     def upload(self, path, stream, size, digest):
         binding = self.binding
+        names = binding_names(binding)
         prefix = f'/repos/{binding["repository"]}/releases/{binding["release"]["id"]}/assets?name='
-        name = next((name for name in NAMES - SMALL_NAMES if path == prefix + name), None)
+        name = next((name for name in names - SMALL_NAMES if path == prefix + name), None)
         require(name is not None, 'Only original payload uploads are permitted')
         expected = next(row for row in binding['release']['assets'] if row['name'] == name)
         require(size == expected['bytes'] and digest == expected['sha256'], 'POST descriptor differs')
-        assets = asset_set(self.api, binding, SMALL_NAMES, NAMES - SMALL_NAMES)
+        assets = asset_set(self.api, binding, SMALL_NAMES, names - SMALL_NAMES)
         require(not any(asset['name'] == name for asset in assets), 'Original appeared before POST; refusing overwrite')
         return self.api.upload(path, stream, size, digest)
 
 
 def small_assets_check(binding, bodies, inspection, policy_body=None, *, require_committed_policy=False):
     source = binding['source']
+    names = binding_names(binding)
+    source_name, source_role = inspection_source(inspection)
+    require(source_name in names, 'Inspection source contract differs from reviewed assets')
     for name, body in bodies.items():
         if name != 'source-qualification-evidence.zip':
             sensitive_check(body)
     q = parse(bodies['source-qualification.json'])
+    proof_key = frozen_proof_key(q.get('frozenArtifactCorroboration', {}))
+    require((source_name == 'source-manifest.json') == (proof_key == 'sourceManifestGitContentsAndModesVerified'),
+            'Qualification and inspection source contracts differ')
     if q.get('format') == WAIVER_FORMAT and require_committed_policy:
         require(policy_body is not None and test_policy(policy_body)['mode'] == 'waived',
                 'Waiver upload requires the exact committed policy')
@@ -651,7 +675,8 @@ def small_assets_check(binding, bodies, inspection, policy_body=None, *, require
     prior = parse(bodies['verification.json'])
     for key in ['format', 'status', 'gitHead', 'gitTree', 'version', 'manifestSha256', 'releaseHashChainVerified']:
         require(prior[key] == inspection[key], 'Reviewed inspection differs: ' + key)
-    for role in ['artifact', 'sourceTar', 'distribution']:
+    require(inspection_source(prior) == (source_name, source_role), 'Reviewed source contract differs')
+    for role in ['artifact', source_role, 'distribution']:
         require(all(prior[role][k] == inspection[role][k] for k in ['bytes', 'sha256']), 'Reviewed original payload differs')
     require(prior['distribution']['allManifestBytesVerified'] is True and
             prior['distribution']['innerManifestIdentical'] is True, 'Prior whole byte verification missing')
@@ -672,11 +697,11 @@ def small_assets_check(binding, bodies, inspection, policy_body=None, *, require
                 'Qualification frozen input differs from reviewed original: ' + role)
     descriptors = {r['name']: r for r in binding['release']['assets']}
     rows = record_value['attachments']
-    require(len(rows) == 8 and {r['name'] for r in rows} == NAMES - {'qualification-evidence-record.json'},
+    require(len(rows) == 8 and {r['name'] for r in rows} == names - {'qualification-evidence-record.json'},
             'Evidence record must bind the other eight attachments')
     for row in rows:
         require(all(row[k] == descriptors[row['name']][k] for k in ['bytes', 'sha256']), 'Attachment record differs')
-    for name, role, member in [('source.tar', 'sourceTar', 'source.tar'),
+    for name, role, member in [(source_name, source_role, source_name),
                                ('distribution.zip', 'distribution', 'site/distribution.zip')]:
         row = next(r for r in rows if r['name'] == name)
         require(row.get('originalMember') == inspection[role]['outerMember'] == source['version'] + '/' + member and
@@ -686,7 +711,10 @@ def small_assets_check(binding, bodies, inspection, policy_body=None, *, require
 
 
 def upload_originals(binding, out, inspection, api, policy_body=None):
-    assets = asset_set(api, binding, SMALL_NAMES, NAMES - SMALL_NAMES)
+    names = binding_names(binding)
+    source_name, _ = inspection_source(inspection)
+    require(source_name in names, 'Inspection source contract differs')
+    assets = asset_set(api, binding, SMALL_NAMES, names - SMALL_NAMES)
     bodies = {}
     small = out / 'evidence/reviewed-small-assets'
     small.mkdir()
@@ -710,9 +738,10 @@ def upload_originals(binding, out, inspection, api, policy_body=None):
     # Fully verify BOTH held payload descriptors before either single-attempt POST.
     with contextlib.ExitStack() as stack:
         holders = []
-        for module, name, cls in [(upload_source, 'source.tar', upload_source.PinnedSource),
+        source_cls = PinnedManifest if source_name == 'source-manifest.json' else upload_source.PinnedSource
+        for module, name, cls in [(upload_source, source_name, source_cls),
                                   (upload_distribution, 'distribution.zip', upload_distribution.PinnedDistribution)]:
-            prefix = 'source' if name == 'source.tar' else 'member'
+            prefix = 'source' if name == source_name else 'member'
             args = SimpleNamespace(**common, **{prefix + '_bytes': descriptors[name]['bytes'],
                                                prefix + '_sha256': descriptors[name]['sha256']})
             holder = cls(args)
@@ -720,7 +749,7 @@ def upload_originals(binding, out, inspection, api, policy_body=None):
             holders.append((module, name, holder))
         for module, name, holder in holders:
             # Recheck the complete draft before each decision, including a no-POST recovery.
-            current = asset_set(api, binding, SMALL_NAMES, NAMES - SMALL_NAMES)
+            current = asset_set(api, binding, SMALL_NAMES, names - SMALL_NAMES)
             existing = next((asset for asset in current if asset['name'] == name), None)
             if existing is not None:
                 holder.unchanged()
@@ -738,7 +767,7 @@ def upload_originals(binding, out, inspection, api, policy_body=None):
             result = module.perform(holder, DraftUploadAPI(api, binding), binding['repository'],
                                     binding['release']['id'], binding['release']['tag'])
             record(out / 'evidence' / (name + '.upload-result.json'), result)
-        final_assets = asset_set(api, binding, NAMES)
+        final_assets = asset_set(api, binding, names)
         record(out / 'evidence/all-nine-assets.json', {'status': 'VERIFIED_RELEASE_ASSETS', 'assets': final_assets,
                'releaseId': binding['release']['id'], 'sourceCommit': binding['source']['commit'], 'tag': binding['release']['tag']})
 
