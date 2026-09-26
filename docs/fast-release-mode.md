@@ -46,6 +46,12 @@ code. A conflict-free behind branch is updated using its expected head SHA, then
 clean exact head is armed for merge-commit auto-merge. A changed head, milestone, hold label,
 unmerged `Depends on #…` predecessor, or changes-requested review disarms an existing request.
 
+Team picture-binding changes run the two direct current-authority suites. The retained-revision
+successor matrix reboots Team across every historical revision and remains explicitly deferred with
+the other long matrices; the focused-gate summary names it as deferred and never reports it passed.
+Release-version identity files are already checked before installation and again by the release
+build job, so they do not start a duplicate `npm run validate` in the focused job.
+
 Ordinary pull requests always use protected exact-head auto-merge. A real GitHub pull-request stack
 uses the asynchronous merge API only when its reviewed top pull request also has the
 `fastline-stack-merge` label. The request supplies the exact head SHA and merge-commit method, then

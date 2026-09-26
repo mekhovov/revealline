@@ -7,6 +7,9 @@
         "^game/couch/coop-(picture-bindings|presentation)\\.mjs$",
         "^game/test/coop-(historical-import-picture|picture-bindings|reviewed-successor-picture)\\.test\\.mjs$"
       ],
+      "deferredChangedTestPatterns": [
+        "^game/test/coop-reviewed-successor-picture\\.test\\.mjs$"
+      ],
       "commands": [
         {
           "id": "team-picture-bindings",
@@ -14,8 +17,7 @@
           "args": [
             "--test",
             "game/test/coop-historical-import-picture.test.mjs",
-            "game/test/coop-picture-bindings.test.mjs",
-            "game/test/coop-reviewed-successor-picture.test.mjs"
+            "game/test/coop-picture-bindings.test.mjs"
           ]
         }
       ]
@@ -112,7 +114,8 @@
   ],
   "ignoredPathPatterns": [
     "^(docs/|.*\\.md$)",
-    "^publishing/pages-controller/(evidence|metadata)/"
+    "^publishing/pages-controller/(evidence|metadata)/",
+    "^(package(-lock)?\\.json|game/build-config\\.json)$"
   ],
   "runtimePathPatterns": [
     "^(game|scripts|site|platforms|publishing)/",
