@@ -172,6 +172,49 @@ test('bounded video transform profiles preserve display aspect/orientation witho
   assert.throws(() => prepareVideoTransform(info, 'unbounded'), /supported video size/);
 });
 
+test('Balanced and Compact derive an even bounded transform for every display orientation', () => {
+  const cases = [
+    {
+      dimensions: [1920, 1080],
+      orientation: 'landscape',
+      balanced: [1280, 720],
+      compact: [640, 360],
+    },
+    {
+      dimensions: [1080, 1920],
+      orientation: 'portrait',
+      balanced: [404, 718],
+      compact: [202, 358],
+    },
+    { dimensions: [1000, 1000], orientation: 'square', balanced: [720, 720], compact: [360, 360] },
+    { dimensions: [853, 480], orientation: 'landscape', balanced: [852, 478], compact: [638, 358] },
+  ];
+  for (const {
+    dimensions: [width, height],
+    orientation,
+    balanced,
+    compact,
+  } of cases) {
+    const source = { ...info, width, height };
+    for (const [profile, expected] of [
+      ['balanced', balanced],
+      ['compact', compact],
+    ]) {
+      const result = prepareVideoTransform(source, profile);
+      assert.deepEqual([result.width, result.height], expected);
+      assert.equal(result.sourceDisplayOrientation, orientation);
+      assert.equal(result.outputDisplayOrientation, orientation);
+      assert.equal(result.width % 2, 0);
+      assert.equal(result.height % 2, 0);
+      assert.ok(result.width <= width && result.height <= height, 'profiles never upscale');
+      assert.ok(
+        Math.abs(result.width / result.height / (width / height) - 1) <= 0.01,
+        'even encoder dimensions remain within the reviewed aspect tolerance',
+      );
+    }
+  }
+});
+
 test('decoded-frame step publishes only a distinct browser-presented timestamp', async () => {
   const requested = [];
   const source = {
