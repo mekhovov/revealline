@@ -6,21 +6,21 @@ versions or acceptance gates are still current.
 
 ## Public and release state
 
-- Latest GitHub release: **v0.141.3**, published from source
-  `7509d790dadb6194d70a5bc1efafee40fbb0b3b7` on 26 September 2026. Current `main` is
-  `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c` with package version `0.141.4`, the merged Couch
-  navigation/community-acceptance source from PR #683 and the terminal Team continuation correction
-  from merged PR #686. At the time of this update, GitHub still lists v0.141.3 as the latest
-  immutable release and Fastline release run `36257643117` is in progress. This lane does not claim
-  v0.141.4 as public delivery before that run, the immutable release and public checks complete.
+- Latest immutable GitHub release: **v0.141.4**, published from exact source
+  `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c` with nine original assets on 26 September 2026. The
+  first guarded publication continuation created the exact tag and empty draft but failed its
+  immediate draft-discovery check; recovery reused those exact objects and the already inspected
+  frozen package. The release is published, but the selector PR, Pages deployment and public
+  Solo/Versus/Team checks remain active, so this status does not call v0.141.4 publicly accepted yet.
 - The current v0.141.4 source is now the base for the cultural stack. Its creator, upload,
   localization, media, compact layout, Couch navigation, quick-start and publication files are
   preserved; no draft cultural version may downgrade them.
-- Test-only PR #669 is superseded by PR #590's broader accepted clock/rearm fixture. The earlier
-  v0.141.1-based cultural top passed the resulting compact/controller cohort 18/18 with zero skips;
-  that cohort was not relabelled after the v0.141.3 rebase. PR #669 does not need to merge; older PR
-  #530 still needs the accepted PR #590 changes incorporated before its red exact-head result can be
-  rerun.
+- Test-only PR #669 is superseded by PR #590's broader accepted clock/rearm fixture. PR #530's latest
+  corrected-main hosted run now passes the previously red controller-host cohort 8/8, but its Team
+  remote-host file exposed a stale blur fixture: twelve records passed and the sole failure invoked
+  an untrusted Back click before the accepted neutral poll. Test-only PR #689 isolates the one-frame
+  fixture correction on current `main`; its focused gate must pass and merge before PR #530 rebases
+  and reruns. No runtime or cultural behavior changes in that fix.
 - The cultural/pacing successor chain through draft PR #672/v32, performance successor PR #676 and
   accessibility/performance successors PRs #685/#687/#688 has been replayed onto current `main`.
   The source stack's **117** commits before this status-only update and all **31** stacked branch tips
@@ -47,6 +47,7 @@ versions or acceptance gates are still current.
 | Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring. Current v0.141.4-main tip `be43e3bce` maps from the prior exact 79/79 zero-skip Team cohort covering current/default entry, v1/v2 cultural routes, preset/seed feasibility, safe openings, no-Support exchanges, pinned full clears, handoffs, Studio, preserved impact editions and exact Next. Hosted exact-tip gates remain.                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership. Current v0.141.4-main tip `0a4134a90` maps from the prior exact 82/82 zero-skip run; accepted gallery integration passes at the stack top, but the full four-file per-tip cohort is not relabelled as rerun.                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | Team opaque-owner continuation / PR #657         | Superseded by PR #686         | The opaque Team Classic-owner correction is now on `main` through merged PR #686. PRs #657/#684 remain historical reviewed evidence and should not be merged separately into the release line.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Team blur fixture neutral poll / PR #689         | Focused gate in progress      | Test-only head `6f7313dd4` adds one neutral animation poll after blur/focus before the fixture's synthetic native Back click. Exact main and PR #530 reproduce the RED assertion; the corrected blur case passes 1/1 and blur plus Escape pass 2/2, with only name-filter skips. No runtime, mission, save, version or release asset changes.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | Current Journey pacing inventory / PR #661       | Clean stacked draft           | Adds a reusable runtime-prepared spatial-variety inspector and pins exact v25 facts: 91 source missions, 71 core missions, bands 1–12, consistent Standard craft speed and 21 post-opening open/plain review candidates. Current v0.141.4-main tip `35b9c2730` maps from the prior 4/4, ESLint and Prettier pass; this is not human balance evidence.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | Relay cultural completion / PR #664              | Clean explicit v26 draft      | Redesigns Spiral stores, Nested relays and Watchpost exchange from bounded official-museum vocabulary; preserves v25/default ownership and reduces post-opening open/plain candidates from 21 to 18. Current v0.141.4-main tip `125cb5389` maps from the corrected 156/156 zero-skip cohort and owns the accepted creator actor-material fixture pass-through. Hosted exact-tip gates remain.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | Crosswind cultural completion / PR #665          | Clean explicit v27 draft      | Redesigns Survey markers, Compass array and Outer loop with original wall fields informed by three official museum records. Preserves v25/default and v26 ownership, actors, foundations, arrows and objectives; reduces the post-opening open/plain queue from 18 to 15. Current v0.141.4-main tip `2a1af6ab1` maps from its 159/159 zero-skip candidate, route, bootstrap and host cohort; hosted exact-tip gates remain.                                                                                                                                                                                                                                                                                                                                                                                                                          |
@@ -108,14 +109,14 @@ large-asset and archive delays are outside these estimates.
 |        0 | Hosted exact-head qualification         | Run the focused hosted gates on the rebased tips and preserve truthful skipped-suite boundaries                                                                                                                                                                                                                                                                                                                                                            |                                                **2–6 hours per bounded batch** |
 |        1 | Promote the cultural Journey chain      | Review/merge in dependency order, immutable release and public play for each accepted batch                                                                                                                                                                                                                                                                                                                                                                |                                         **1–2 working days per release batch** |
 |        2 | Complete second Team slice and fixtures | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete                                                                                                                                                                                                                                                                                                                  |                                               **3–6 hours** plus release queue |
-|        3 | Team continuation and qualification     | Merged PR #686 places the opaque-owner correction on `main`; finish active Fastline release run `36257643117`, the v0.141.4 immutable release and public checks. PRs #657/#684 are superseded. Paired-board fairness, controller/touch/keyboard, Skip, reload/Continue and public frozen-build proof remain separate evidence                                                                                                                              |                                 **2–6 hours** plus release queue/device access |
+|        3 | Team continuation and qualification     | PR #686 is merged and immutable v0.141.4 is published. Finish the selector/Pages handoff and public Solo/Versus/Team checks. PRs #657/#684 are superseded. Paired-board fairness, physical controller/touch/keyboard, Skip, reload/Continue and broader frozen-build proof remain separate evidence                                                                                                                                                        |                                 **2–6 hours** plus release queue/device access |
 |        4 | Whole-Journey accessibility/performance | The spatial disposition queue is resolved with two intentional open lessons retained. PR #676 removes the selector's quadratic exact-ID path; PR #685 adds compact Large-text/forced-colour treatment; PR #687 adds explicit reduced-effects parity; PR #688 adds navigation/paint/optional-heap observation. Remaining work is collecting real frozen-build measurements, human contrast review, physical compact devices and deterministic qualification | **2–4 working days** for remaining accessibility and performance qualification |
 |        5 | Human balance and cultural review       | Understandable failures, distinct missions, enjoyable retries, Team cooperation quality and cultural review by people                                                                                                                                                                                                                                                                                                                                      |                             **1–2 days synthesis** after testers are available |
 
-Versions through v0.141.3 are occupied by published releases. Current `main` carries package version
-0.141.4, but this status does not call it published until the immutable GitHub release, Pages selector
-and public checks complete. Cultural draft labels do not reserve a release number; the sole publisher
-assigns versions from the accepted predecessor when a batch is actually promoted.
+Versions through v0.141.4 are occupied by published immutable releases. The v0.141.4 Pages selector
+and public acceptance checks remain open; publication alone is not public acceptance. Cultural draft
+labels do not reserve a release number; the sole publisher assigns versions from the accepted
+predecessor when a batch is actually promoted.
 
 ## Blockers and concerns
 
@@ -140,11 +141,12 @@ assigns versions from the accepted predecessor when a batch is actually promoted
 7. **Host performance:** the uncontended PR #651 scenarios pass, but individual chooser paths took
    about 5.5–30.6 seconds in the fixture harness. This closes the corrected-assertion gap, not the
    broader startup/performance qualification.
-8. **First cultural gate:** PR #530's exact-head rerun passed preflight and the wider selected gates,
-   but its controller-host file again failed only the Solo compact-filter focus assertion: 7/8 cases
-   passed. Merged PR #590 now provides a broader accepted clock/rearm model and the cultural top
-   passes its 18/18 compact/controller cohort. PR #669 is superseded; PR #530 cannot become green
-   until it incorporates PR #590 and reruns. The failed older-head run is not represented as a pass.
+8. **First cultural gate:** PR #530's corrected-main run `36257823669` now passes the previously red
+   controller-host file 8/8. Its only failure moved to the Team remote-host blur case: twelve records
+   passed, while a synthetic untrusted Back click was attempted before PR #590's accepted lifecycle
+   neutral gate had observed a neutral frame. PR #689 isolates the test-only correction and locally
+   passes the blur case 1/1 and blur plus Escape 2/2. Merge #689, rebase #530 and rerun; neither failed
+   hosted run is represented as a pass.
 9. **Inventory is not balance evidence:** PR #661 finds 21 post-opening missions with neither wall
    nor slow/lethal terrain and confirms consistent Standard speed and post-opening actor counts.
    Those are review candidates, not automatic defects; deterministic routes and human play still
@@ -189,25 +191,28 @@ assigns versions from the accepted predecessor when a batch is actually promoted
 
 ## Immediate execution order
 
-1. Complete hosted review for locally qualified PRs #650 and #651, then qualify PR #661's pacing
+1. Allow the sole publisher to complete the v0.141.4 selector/Pages handoff and public
+   Solo/Versus/Team checks. The immutable release is published; do not duplicate its release
+   mutations or merge superseded PRs #657/#684.
+2. Finish PR #689's focused gate, merge its test-only neutral-poll correction, then rebase PR #530
+   and the dependent cultural stack on the resulting `main`. Rerun #530's focused hosted gate.
+3. Complete hosted review for locally qualified PRs #650 and #651, then qualify PR #661's pacing
    inventory at its exact rebased head.
-2. Review PRs #664-#672 in dependency order. Do not redesign Behind the patrol or Side-door bays
+4. Review PRs #664-#672 in dependency order. Do not redesign Behind the patrol or Side-door bays
    merely to force a zero open/plain count; both are documented intentional lessons.
-3. Allow the sole publisher to finish active Fastline release run `36257643117` and v0.141.4. Do
-   not separately merge superseded PRs #657/#684 into the release line.
-4. Promote accepted cultural releases through the sole publisher, reporting immutable release and
+5. Promote accepted cultural releases through the sole publisher, reporting immutable release and
    actual public delivery rather than a merge or workflow start.
-5. Review PR #676 after its v32 predecessor. Measure the indexed selector in the real browser and
+6. Review PR #676 after its v32 predecessor. Measure the indexed selector in the real browser and
    retain the accepted lazy-preview, focus, download and owner-isolation contracts.
-6. Review PR #685, the v40 selector-accessibility/measurement successor, after PR #676. Collect
+7. Review PR #685, the v40 selector-accessibility/measurement successor, after PR #676. Collect
    frozen-build Solo and Versus library-open timing without relabelling its local 360×720 check as
    device or public evidence.
-7. Review PR #687 after PR #685. Run its OS-emulated, frozen-build and physical-device checks without
+8. Review PR #687 after PR #685. Run its OS-emulated, frozen-build and physical-device checks without
    relabelling the 24-case source cohort as human contrast evidence.
-8. Review PR #688 after PR #687, then collect its navigation, paint and optional heap snapshots from
+9. Review PR #688 after PR #687, then collect its navigation, paint and optional heap snapshots from
    actual frozen builds without comparing unsupported browser counters as if they were zero.
-9. Run the remaining gameplay-surface contrast, physical-device and human balance/cultural
-   qualification work after the source batches are frozen.
+10. Run the remaining gameplay-surface contrast, physical-device and human balance/cultural
+    qualification work after the source batches are frozen.
 
 The original P13-P15 whole-Journey pacing, Team cooperation, accessibility/performance and final
 human acceptance remain incomplete.
