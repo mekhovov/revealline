@@ -4,6 +4,7 @@ import { CLASSES } from '../core/index.mjs';
 import { campaignKey } from '../library.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { createGalleryDifficultyResolver } from '../gallery-difficulty.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const original = {
   campaign: {
@@ -64,6 +65,25 @@ test('both stored modes share one exact picture card with Standard default and u
   assert.ok(Object.isFrozen(groups));
   assert.ok(Object.isFrozen(groups[0].variants));
   assert.equal(JSON.stringify(input), before);
+});
+
+test('difficulty labels resolve from semantic contexts whenever the locale changes', (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  const resolver = createGalleryDifficultyResolver(entries);
+  setLocale('en', { persist: false });
+  assert.equal(resolver.label(rows[0].campaignKey), 'Standard');
+  assert.equal(resolver.label(rows[1].campaignKey), 'Gentle');
+  assert.equal(
+    resolver.resolve(rows[0].campaignKey).labelKey,
+    'interface:missionLibrary.difficulty.standard',
+  );
+  setLocale('uk', { persist: false });
+  assert.equal(resolver.label(rows[0].campaignKey), 'Стандартна');
+  assert.equal(resolver.label(rows[1].campaignKey), 'Полегшена');
+  assert.equal(resolver.label('missing'), 'Архів · складність недоступна');
+  setLocale('en', { persist: false });
+  assert.equal(resolver.label(rows[0].campaignKey), 'Standard');
 });
 
 test('Gentle-only pictures resolve their own context and never invent a Standard row', () => {

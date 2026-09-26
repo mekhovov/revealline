@@ -95,6 +95,11 @@ async function emptyArena(t) {
 }
 function assertFinishedPlayers(f, outcome) {
   assert.equal(f.$('coop-controls').hidden, true, 'Terminal results keep flight controls hidden.');
+  assert.equal(
+    f.$('coop-message').dataset.coach,
+    undefined,
+    'Terminal results revoke teaching decoration.',
+  );
   assert.ok(f.touchPads.every((pad) => pad.hidden));
   assert.equal(f.$('coop-message').textContent, terminalMessage(outcome));
   for (const player of players(f)) {
@@ -136,6 +141,47 @@ test('legal shared loss ends both full and compact player instructions until an 
   assert.equal(f.$('coop-level').value, 'terminal-player-hud-coverage');
   assert.equal(teamImage(f), image);
   assert.notEqual(f.$('coop-message').textContent, terminalMessage('lost'));
+});
+
+test('a Support pulse on the winning step is remembered while terminal copy stays final', async (t) => {
+  const values = new Map();
+  const storage = {
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => values.set(key, value),
+  };
+  const f = await page(t, {
+    ...options,
+    beforeImport({ install }) {
+      install('localStorage', { value: storage, writable: true });
+    },
+  });
+  const pack = JSON.parse(
+    await readFile(new URL('./fixtures/team-terminal-hud-qa.json', import.meta.url), 'utf8'),
+  );
+  pack.levels[1].enemies = [
+    { id: 'support-marker', type: 'drifter', x: 35.5, y: 1.5, vx: 0, vy: 0, radius: 0.35 },
+  ];
+  await f.selectFile(JSON.stringify(pack));
+  await f.choose('coop-level', 'qa-terminal-win');
+  await f.choose('coop-difficulty', 'expert');
+  f.$('coop-experiment').value = 'full';
+  f.$('coop-start').focus();
+  f.tap('Enter');
+  f.tick(3);
+  f.tap('KeyD');
+  f.tick(957);
+  assert.equal(f.$('coop-overlay').hidden, true, 'The pulse is reserved for the winning step.');
+  f.press('KeyQ');
+  f.tick();
+  f.doc.activeElement.emit('keyup', { key: 'KeyQ', code: 'KeyQ' });
+  assertFinishedPlayers(f, 'won');
+  const teaching = JSON.parse(storage.getItem('revealline.team-contextual-teaching.v1'));
+  assert.ok(teaching.completed.includes('support'));
+  assert.doesNotMatch(f.$('coop-message').textContent, /SUPPORT READY/);
+  f.$('coop-retry').focus();
+  f.tap('Enter');
+  assert.equal(f.$('coop-message').dataset.coach, undefined);
+  assert.doesNotMatch(f.$('coop-message').textContent, /SUPPORT READY/);
 });
 
 for (const downed of [0, 1])
@@ -190,6 +236,8 @@ for (const level of ['first-connection', 'relay-yard'])
       initialMessage = f.$('coop-message').textContent,
       image = teamImage(f),
       messages = recordMessages(t, f);
+    assert.match(initialMessage, /FIRST CUT/);
+    assert.equal(f.$('coop-message').dataset.coach, 'cut');
     earnTeamVictory(t, f, level);
     assert.equal(f.$('coop-resume').hidden, true);
     assertFinishedPlayers(f, 'won');
@@ -203,7 +251,13 @@ for (const level of ['first-connection', 'relay-yard'])
     assert.equal(f.$('coop-overlay').hidden, true);
     assert.deepEqual(players(f), initial);
     assert.equal(teamImage(f), image);
-    assert.equal(f.$('coop-message').textContent, initialMessage);
+    assert.doesNotMatch(f.$('coop-message').textContent, /FIRST CUT/);
+    assert.notEqual(f.$('coop-message').textContent, initialMessage);
+    assert.equal(
+      f.$('coop-message').dataset.coach,
+      undefined,
+      'Retry keeps the ordinary arena guidance without repeating the introduced cue.',
+    );
   });
 
 for (const outcome of ['loss', 'win'])
