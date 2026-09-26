@@ -252,7 +252,13 @@ const definitions = [
 export const COMPANY_CAMPAIGNS = freezeDesign(
   definitions.map(([id, brandId, name, audience, rows]) => ({
     id,
-    revision: '1',
+    revision: [
+      'coupa-source-to-pay',
+      'coupa-product-operations',
+      'coupa-developer-integration',
+    ].includes(id)
+      ? '2'
+      : '1',
     name,
     brandId,
     audience,

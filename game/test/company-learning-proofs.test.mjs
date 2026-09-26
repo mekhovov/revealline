@@ -81,6 +81,18 @@ test('historical mastery retains independently replayed proof across retries, re
   assert.throws(() => reopened.saveVerified(backup[0]), /replay-verified/);
   assert.equal(reopened.importVerified(await reopened.inspectProofs(backup)), true);
   assert.deepEqual(reopened.exportProofs(), store.exportProofs());
+  const importedValues = new Map();
+  const anotherOrigin = createCompanyLearningProofStore({
+    ...f.config,
+    storage: {
+      getItem: (key) => importedValues.get(key) ?? null,
+      setItem: (key, value) => importedValues.set(key, value),
+    },
+  });
+  assert.equal(anotherOrigin.load(lesson.missionId), null);
+  assert.equal(anotherOrigin.importVerified(await anotherOrigin.inspectProofs(backup)), true);
+  assert.equal(anotherOrigin.load(lesson.missionId).status, 'complete');
+  assert.equal(importedValues.has(store.key), true);
 });
 
 test('tampered, foreign, duplicate and unselected learning proofs cannot alter progress', async () => {
@@ -156,4 +168,45 @@ test('unrecognized historical proof bytes survive a later valid save in a recove
   assert.deepEqual(reopened.exportRecovery().sources, [historical]);
   const checked = reopened.inspectRecovery(store.exportRecovery());
   assert.equal(reopened.importRecovery(checked), true);
+});
+
+test('an unreadable proof store cannot authorize overwriting unseen history on a later valid save', async () => {
+  const f = fixture();
+  let writes = 0;
+  const store = createCompanyLearningProofStore({
+    ...f.config,
+    storage: {
+      getItem() {
+        throw new Error('storage access denied');
+      },
+      setItem() {
+        writes++;
+      },
+    },
+  });
+  assert.equal((await store.hydrate()).rejected, 1);
+  const proof = await store.prove(f);
+  assert.equal(store.saveVerified(proof), false);
+  assert.equal(writes, 0);
+  assert.equal(store.exportProofs()[0].proofId, proof.proofId);
+});
+
+test('recovery import validates the merged journal budget before changing retained records', () => {
+  const f = fixture(),
+    store = createCompanyLearningProofStore(f.config);
+  const first = {
+    format: 'revealline-learning-proof-recovery.v1',
+    editionId: f.config.editionId,
+    sources: ['a'.repeat(5 * 1024 * 1024)],
+  };
+  assert.equal(store.importRecovery(store.inspectRecovery(first)), true);
+  const before = store.exportRecovery();
+  const second = { ...first, sources: ['b'.repeat(4 * 1024 * 1024)] };
+  assert.throws(() => store.inspectRecovery(second), /large|budget|bytes|limit/i);
+  assert.deepEqual(store.exportRecovery(), before);
+  assert.equal(
+    store.importRecovery(store.inspectRecovery(first)),
+    true,
+    'duplicate recovery bytes need no additional budget',
+  );
 });

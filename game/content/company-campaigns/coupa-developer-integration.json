@@ -29,7 +29,7 @@
         "coupa-developer-integration-06"
       ],
       "name": "Connect the Network",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "difficultyCatalogId": "journey-difficulty-v1",
@@ -481,9 +481,9 @@
       "format": "PackDesignV1",
       "id": "coupa-developer-integration-pack",
       "name": "Connect the Network",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-arcade-v2",
-  "revision": "1"
+  "revision": "2"
 }

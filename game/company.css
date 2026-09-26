@@ -40,6 +40,7 @@ button {
   border-radius: 8px;
   padding: 0.7rem 1rem;
   cursor: pointer;
+  min-height: 44px;
 }
 button:hover {
   background: #ffffff13;
@@ -217,7 +218,7 @@ p {
 label {
   display: grid;
   gap: 10px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
   margin: 14px 0;
 }
@@ -262,7 +263,7 @@ option {
   line-height: 1.3;
 }
 .campaign-card p {
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.7;
   color: var(--muted);
 }
@@ -316,7 +317,7 @@ option {
   gap: 3px;
 }
 .hud small {
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 0.14em;
   color: var(--muted);
 }
@@ -374,7 +375,7 @@ canvas {
   font-size: 13px;
 }
 .mission-notes > p {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.8;
   color: var(--muted);
 }
@@ -403,7 +404,7 @@ canvas {
 }
 .controls-hint {
   text-align: center;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.06em;
   color: var(--muted);
   margin-top: 16px;
@@ -455,6 +456,7 @@ dialog::backdrop {
 .dialog-heading button {
   padding: 4px 12px;
   font-size: 23px;
+  min-width: 44px;
 }
 .check {
   display: flex;
@@ -468,7 +470,7 @@ dialog::backdrop {
 }
 dialog p,
 dialog li {
-  font-size: 13px;
+  font-size: 15px;
 }
 dialog li {
   margin-bottom: 15px;
@@ -505,6 +507,9 @@ dialog li {
 .company-workbench pre {
   white-space: pre-wrap;
   font-size: 12px;
+}
+.dialog-status[data-error='true'] {
+  color: var(--danger);
 }
 .company-workbench [role='status'] {
   background: var(--panel);
@@ -550,7 +555,7 @@ dialog li {
   }
   .brand-bar nav button {
     padding: 6px 0;
-    font-size: 10px;
+    font-size: 12px;
   }
   .hero {
     margin: 14px 3vw 0;
@@ -612,6 +617,17 @@ dialog li {
     padding: 15px 3vw 30px;
     gap: 20px;
   }
+  #play-overlay {
+    position: relative;
+    padding: 18px;
+    border-top: 1px solid #ffffff30;
+  }
+  #play-state {
+    font-size: 21px;
+  }
+  #play-detail {
+    font-size: 13px;
+  }
   .hud strong {
     font-size: 17px;
   }
@@ -623,19 +639,41 @@ dialog li {
     grid-column: 1/-1;
   }
   .mission-notes p {
-    font-size: 11px;
+    font-size: 14px;
   }
   dialog {
     padding: 23px;
   }
   .controls-hint {
-    font-size: 8px;
+    font-size: 11px;
   }
   footer {
     font-size: 9px;
   }
   .gallery-grid {
     grid-template-columns: 1fr;
+  }
+  .campaign-card {
+    grid-template-columns: minmax(70px, 26%) minmax(0, 1fr);
+  }
+  .campaign-card-content {
+    min-width: 0;
+  }
+  .campaign-footer {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 10vw, 42px);
+  }
+  .hero-copy {
+    min-width: 0;
+  }
+  .hero-actions button {
+    max-width: 100%;
+  }
+  .mission-notes {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 @media (prefers-reduced-motion: reduce) {

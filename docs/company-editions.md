@@ -11,6 +11,11 @@ Run `node scripts/game-cli.mjs serve --port 8768`, then open
 The source hub has seven editions: all five Coupa journeys together, five individual
 audience editions, and the three-mission DroneAid community pilot.
 
+For the next human review, use the [playtest packet](company-editions-playtest.md) and
+[transfer practice page](../authoring/company-studio/playtest.html). The four practice tasks
+change the fictional evidence and expected decisions without saving answers or earning
+campaign progress. Human testing was confirmed **not started** on 26 September 2026.
+
 The official Coupa flower is a rigid image. Only its cosmetic pose rotates; reduced motion
 stops rotation. Paper tangles, missing-information clouds, stale fragments and backlog knots
 use registered silhouette recipes over the existing enemy behaviours. These are fictional
@@ -35,7 +40,7 @@ node scripts/produce-company-content.mjs
 node scripts/produce-company-content.mjs --check
 node scripts/compile-edition.mjs --catalog game/editions/catalog.json \
   --edition coupa-adventure --out .cache/coupa-candidate \
-  --version 0.132.1 --offline-base-path /revealline/
+  --version 0.132.2 --offline-base-path /revealline/
 ```
 
 The destination must not already exist. `game/company-campaigns/brands.mjs` and the authored
@@ -62,7 +67,8 @@ The versioned context resolver keeps default installation keys compatible. New i
 channels, transfer journals and writer keys include edition plus engine release. Journey
 progress and lesson mastery use stable logical edition keys; same-origin hub and standalone
 views of that edition share them. Different audiences do not silently import one another's
-records. Backups are explicit across origins or editions.
+records. Explicit backup/import transfers the same logical edition across origins.
+Backups for other audiences are rejected; cross-audience migration is not implemented.
 
 Suspended games include the full core replay, edition, exact presentation identity, run ID
 and learning transcript. Restoration verifies the replay and current lesson/simulation/seed
@@ -72,6 +78,11 @@ not substitute new art. Keep the matching frozen release available for restorati
 Only one tab writes an edition's progress. Other tabs can play without becoming a second
 writer. Reduced-motion and other existing shared presentation preferences retain their
 separate authority. Browser storage errors remain visible and export remains available.
+An unreadable storage container disables durable writes rather than replacing unseen history.
+Writer authority is checked again around asynchronous profile writes and recovery import.
+Offline preparation has bounded timeouts, validates the exact edition/release receipt and can
+repair an incomplete owned cache. An update waiting behind an open game asks the player to
+close and reopen its tabs; it does not silently take control or erase another edition's cache.
 
 Verified learning mastery stores its exact lesson/fixture revision, ordered actions and the
 matching core replay. Hydration and import replay the simulation, evidence availability and
@@ -88,13 +99,15 @@ live at `editions/<id>/app/`; immutable sites live at
 separate service-worker scope and owned cache prefix. Storage is still origin-wide, so all
 storage keys must remain scoped explicitly.
 
-1. Foundation: schema/closure validation, default compatibility, two fixture editions.
-2. Vertical slice: official Coupa identity, First Connection, exact Continue/Retry and reduced motion.
-3. Installation: two standalone editions, shared logical progress, updates and rollback.
-4. Release admission: deterministic ZIPs, source eligibility, checksums and actual ZIP-member checks.
-5. Reuse and learning: one representative lesson in each learning campaign plus all three DroneAid maps.
-6. Expansion: review batches of at most three missions; create final mission art after formative playtesting.
-7. Promotion: review-qualified downloaded and deployed bytes match the frozen candidates.
+| Phase                   | Implemented                                                                                     | Remaining acceptance                                                                                    |
+| ----------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| 1. Foundation           | Registries, player-only catalogues, exclusion reports and fixture editions                      | Preserve compatibility as new packs enter                                                               |
+| 2. Coupa slice          | Official flower, branded host, First Connection, pinned Continue/Retry and reduced motion       | Human visual/gameplay review                                                                            |
+| 3. Independent editions | Seven standalone builds, stable logical progress, scoped workers/keys, recovery guards          | Two actual OS-installed PWAs, update/rollback and device storage recovery                               |
+| 4. Release admission    | Reproducible archives, whole-source eligibility, original ZIP-member admission and candidate CI | A new freeze for every changed source revision                                                          |
+| 5. Learning/reuse       | Four learning campaigns, alternate transfer fixtures, all three DroneAid missions               | Human comprehension and transfer observations                                                           |
+| 6. Expansion            | All 33 distinct draft maps, 24 lessons and 198 route proofs                                     | Formative decision, 25 dedicated Coupa pictures in batches of at most three, accuracy/pacing/art review |
+| 7. Promotion            | Evidence-bound delivery/selector tooling and rollback path                                      | Approved evidence, release allocation, downloaded/deployed-byte verification and publication            |
 
 Candidate builds are not qualified releases. Public promotion requires the human and deployed
 artifact gates below; private source must never enter a public source archive, evidence bundle
@@ -167,6 +180,14 @@ two real installed PWAs, storage-exhaustion recovery, rollback and same-device p
 comparison remain promotion gates until their evidence is captured. Draft maps may use the
 procedural fallback until their individual picture is reviewed; do not advertise that as 30
 finished mission illustrations.
+
+The [qualification record](company-editions-validation.md) separates successful candidate
+automation from unresolved historical tests and promotion gates. The [accessibility review](company-editions-accessibility.md)
+records implemented mobile, focus and status fixes plus outstanding assistive-technology checks.
+The [same-device review tool](verification/company-review.html) observes real player pages with
+bounded, exportable measurements. It reports buffered resource entries, animation callback
+intervals and approximate shared heap, not complete network traffic, renderer timings or a
+memory-leak verdict. Every observation remains unqualified until reviewed.
 
 ## Sources and asset boundaries
 

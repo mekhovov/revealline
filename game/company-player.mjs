@@ -1,6 +1,7 @@
 import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
 import { resolveEditionContext } from './edition-context.mjs';
+import { createCompanyStorage } from './company-storage.mjs';
 import { createCandidateSoloHost } from './content-design/solo-host.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
 import { claimProfileWriter } from './profile-writer.mjs';
@@ -51,6 +52,18 @@ const node = (tag, text, className) => {
 const report = (message, error = false) => {
   $('notice').textContent = message;
   $('notice').dataset.error = String(error);
+  const dialog = document.querySelector('dialog[open]');
+  if (dialog) {
+    let status = dialog.querySelector('.dialog-status');
+    if (!status) {
+      status = node('p', undefined, 'dialog-status');
+      status.setAttribute('role', 'status');
+      status.setAttribute('aria-live', 'polite');
+      dialog.append(status);
+    }
+    status.textContent = message;
+    status.dataset.error = String(error);
+  }
 };
 const guard =
   (fn) =>
@@ -61,18 +74,10 @@ const guard =
       report(error.message, true);
     }
   };
-const storage = {
-  getItem(key) {
-    try {
-      return localStorage.getItem(key);
-    } catch {
-      return null;
-    }
-  },
-  setItem(key, value) {
-    localStorage.setItem(key, value);
-  },
-};
+const storage = createCompanyStorage({
+  getStorage: () => localStorage,
+  onError: (error) => report(error.message, true),
+});
 const download = (filename, value) => {
   const url = URL.createObjectURL(
     new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' }),
@@ -83,6 +88,7 @@ const download = (filename, value) => {
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
+let startupWriter = null;
 
 async function main() {
   const standalone = document.documentElement.dataset.editionId;
@@ -118,8 +124,10 @@ async function main() {
     navigator.locks,
     `revealline.company.${context.editionId}.writer`,
   );
+  startupWriter = writer;
   const profile = createJourneyProfileStore({
     profileKey: route.profileKey,
+    canWrite: () => writer.writable && !storage.readError,
     onStatus: (status) => {
       if (status.error)
         report('Your progress is available in this tab. Export a backup before leaving.', true);
@@ -342,22 +350,23 @@ async function main() {
     if (!current || current.run.status !== 'won' || awarded) return;
     awarded = true;
     localClears.add(current.run.levelId);
-    if (writer.writable)
-      try {
-        profile.record({
-          type: 'complete',
-          mode: 'solo',
-          missionId: current.mission.id,
-          runId: current.runId,
-          gameplayId: companySimulationIdentity(current.run),
-          difficulty: current.selection.difficulty,
-        });
-      } catch (error) {
-        report(
-          `Your connection is complete in this tab. Export a backup before leaving: ${error.message}`,
-          true,
-        );
-      }
+    // Keep every clear exportable in this tab. The profile backend owns the
+    // saving lease check and cannot persist after this tab loses write access.
+    try {
+      profile.record({
+        type: 'complete',
+        mode: 'solo',
+        missionId: current.mission.id,
+        runId: current.runId,
+        gameplayId: companySimulationIdentity(current.run),
+        difficulty: current.selection.difficulty,
+      });
+    } catch (error) {
+      report(
+        `Your connection is complete in this tab. Export a backup before leaving: ${error.message}`,
+        true,
+      );
+    }
   }
   function save() {
     if (!current || !writer.writable) return false;
@@ -560,6 +569,7 @@ async function main() {
       select.value =
         campaign.missionIds.find((id) => !completed(id) && unlocked(id)) ?? campaign.missionIds[0];
       const button = node('button', 'Enter journey →', 'primary');
+      button.setAttribute('aria-label', `Enter journey: ${campaign.name}`);
       button.onclick = guard(() => start(select.value));
       const footer = node('div', undefined, 'campaign-footer');
       footer.append(
@@ -581,53 +591,79 @@ async function main() {
     if (!current) return;
     const run = current.run,
       ended = ['won', 'lost'].includes(run.status),
-      won = run.status === 'won';
-    $('coverage').textContent = `${(run.coverage * 100).toFixed(1)}%`;
-    $('lives').textContent = String(run.lives);
-    $('clock').textContent =
-      `${Math.floor(run.time / 60)}:${String(Math.floor(run.time % 60)).padStart(2, '0')}`;
-    $('goal').textContent = `${Math.round(run.level.goal.coverage * 100)}%`;
-    $('play-overlay').hidden = !paused && !ended;
-    $('completion-emblem').hidden = !won || !selection.brand.logoAssetId;
-    $('resume-button').hidden = ended;
-    $('retry-button').hidden = !ended;
-    $('next-button').hidden = !won || !learningComplete();
-    $('pause-button').textContent = paused ? 'Resume' : 'Pause';
-    $('pause-button').disabled = ended;
-    $('play-state').textContent = won
-      ? learningComplete()
-        ? 'Connection complete.'
-        : 'Picture connected. Assignment waiting.'
-      : run.status === 'lost'
-        ? 'Another route is waiting.'
-        : run.tick === 0
-          ? 'Ready to connect.'
-          : 'Take your time.';
-    $('play-detail').textContent = won
-      ? learningComplete()
-        ? 'Your progress is saved with this edition.'
-        : 'Open the workbench to complete this connection.'
-      : run.status === 'lost'
-        ? 'Watch the paper tangles and try a shorter return.'
-        : current.manifest.design.routeDecision;
-    $('resume-button').textContent = run.tick === 0 ? 'Start mission' : 'Return to play';
-    $('learning-status').textContent = currentLesson()
-      ? learningComplete()
-        ? 'Assignment complete.'
-        : 'Inspect → Configure → Commit. The game pauses while you work.'
-      : 'An adventure mission. Follow your own route.';
-    $('workbench-button').textContent =
+      won = run.status === 'won',
+      learned = learningComplete(),
+      safe = canOpenWorkbench();
+    // Preserve focused nodes and avoid rebuilding unchanged text every frame.
+    const put = (id, property, value) => {
+      const target = $(id);
+      if (target[property] !== value) target[property] = value;
+    };
+    put('coverage', 'textContent', `${(run.coverage * 100).toFixed(1)}%`);
+    put('lives', 'textContent', String(run.lives));
+    put(
+      'clock',
+      'textContent',
+      `${Math.floor(run.time / 60)}:${String(Math.floor(run.time % 60)).padStart(2, '0')}`,
+    );
+    put('goal', 'textContent', `${Math.round(run.level.goal.coverage * 100)}%`);
+    put('play-overlay', 'hidden', !paused && !ended);
+    put('completion-emblem', 'hidden', !won || !selection.brand.logoAssetId);
+    put('resume-button', 'hidden', ended);
+    put('retry-button', 'hidden', !ended);
+    put('next-button', 'hidden', !won || !learned);
+    put('pause-button', 'textContent', paused ? 'Resume' : 'Pause');
+    put('pause-button', 'disabled', ended);
+    put(
+      'play-state',
+      'textContent',
+      won
+        ? learned
+          ? 'Connection complete.'
+          : 'Picture connected. Assignment waiting.'
+        : run.status === 'lost'
+          ? 'Another route is waiting.'
+          : run.tick === 0
+            ? 'Ready to connect.'
+            : 'Take your time.',
+    );
+    put(
+      'play-detail',
+      'textContent',
+      won
+        ? learned
+          ? 'This connection is complete.'
+          : 'Open the workbench to complete this connection.'
+        : run.status === 'lost'
+          ? 'Watch the paper tangles and try a shorter return.'
+          : current.manifest.design.routeDecision,
+    );
+    put('resume-button', 'textContent', run.tick === 0 ? 'Start mission' : 'Return to play');
+    put(
+      'learning-status',
+      'textContent',
+      currentLesson()
+        ? !safe
+          ? 'Return to safe ground before opening the workbench.'
+          : learned
+            ? 'Assignment complete.'
+            : 'Inspect → Configure → Commit. The game pauses while you work.'
+        : 'An adventure mission. Follow your own route.',
+    );
+    put(
+      'workbench-button',
+      'textContent',
       current.learning?.status === 'complete'
         ? 'Review workbench'
-        : learningComplete()
+        : learned
           ? 'Practice again'
-          : 'Open workbench';
-    $('workbench-button').disabled = !canOpenWorkbench();
-    if (currentLesson() && !canOpenWorkbench())
-      $('learning-status').textContent = 'Return to safe ground before opening the workbench.';
+          : 'Open workbench',
+    );
+    put('workbench-button', 'disabled', !safe);
   }
   function openDialog(id) {
     pause();
+    $(id).querySelector('.dialog-status')?.remove();
     $(id).showModal();
   }
   $('brand-home').onclick = showHome;
@@ -865,8 +901,16 @@ async function main() {
       });
       if (host.preparer.current(prepared.prepared)) host.preparer.cancel();
     }
+    if (!writer.writable) throw new Error(writer.reason);
     profile.restore(backup.profile);
     let durable = await profile.flush();
+    if (!writer.writable) {
+      report(
+        'The saving lease changed during import. Progress is kept in this tab; keep the original backup and reload before saving.',
+        true,
+      );
+      return;
+    }
     if (!learningProofs.importRecovery(recovery)) durable = false;
     if (!learningProofs.importVerified(proofs)) durable = false;
     for (const attempt of backup.learning) {
@@ -904,7 +948,9 @@ async function main() {
       $('prepare-offline').disabled = true;
       install.disabled = true;
       try {
-        await prepareEditionOffline({
+        const prepared = await prepareEditionOffline({
+          editionId: context.editionId,
+          version,
           onStatus: (value) => {
             $('offline-status').textContent =
               value.status === 'downloading'
@@ -912,7 +958,12 @@ async function main() {
                 : 'Verifying the saved files…';
           },
         });
-        await verifyEditionOffline();
+        if (prepared.status === 'waiting') {
+          $('offline-status').textContent =
+            'The checked update is waiting. Close this edition’s open tabs and reopen it before selecting the installed version.';
+          return;
+        }
+        await verifyEditionOffline({ editionId: context.editionId, version });
         $('offline-status').textContent = 'This edition is verified for offline play.';
         install.disabled = false;
       } catch (error) {
@@ -924,7 +975,7 @@ async function main() {
     });
     install.onclick = guard(async () => {
       try {
-        await selectPreparedEdition();
+        await selectPreparedEdition({ editionId: context.editionId, version });
         $('offline-status').textContent =
           'Your installed launcher will open this edition. The previous release is kept.';
       } catch (error) {
@@ -998,21 +1049,26 @@ async function main() {
     host.preparer.dispose();
     sound.dispose?.();
     displayPreferences.dispose();
-    touchPreferences.dispose();
+    touchPreferences.destroy();
     audioPreferences.dispose();
     audioMaster.dispose();
   });
   renderCampaigns();
+  document.documentElement.dataset.companyState = 'ready';
+  $('start-campaign').disabled = false;
   report(
-    proofHydration.rejected
-      ? 'Some earlier learning records need their matching lesson revision. Their original data is retained for backup.'
-      : writer.writable
-        ? `${source.missions.length} connections to discover. Choose your journey.`
-        : writer.reason,
-    !writer.writable,
+    storage.readError
+      ? 'Saved progress could not be read. Play is session-only; export a backup before leaving.'
+      : proofHydration.rejected
+        ? 'Some earlier learning records need their matching lesson revision. Their original data is retained for backup.'
+        : writer.writable
+          ? `${source.missions.length} connections to discover. Choose your journey.`
+          : writer.reason,
+    !writer.writable || !!storage.readError,
   );
   last = performance.now();
   frame = requestAnimationFrame(update);
+  startupWriter = null;
   // Expose no mutable game state. Read-only diagnostics support browser checks.
   globalThis.CompanyJourney = Object.freeze({
     snapshot: () => ({
@@ -1028,6 +1084,9 @@ async function main() {
 }
 
 main().catch((error) => {
+  startupWriter?.release();
+  startupWriter = null;
+  document.documentElement.dataset.companyState = 'failed';
   report(`Could not open this edition: ${error.message}`, true);
   $('start-campaign').disabled = true;
 });

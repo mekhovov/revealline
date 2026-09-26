@@ -29,7 +29,7 @@
         "coupa-product-operations-06"
       ],
       "name": "A Day in Coupa",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "difficultyCatalogId": "journey-difficulty-v1",
@@ -479,9 +479,9 @@
       "format": "PackDesignV1",
       "id": "coupa-product-operations-pack",
       "name": "A Day in Coupa",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-arcade-v2",
-  "revision": "1"
+  "revision": "2"
 }
