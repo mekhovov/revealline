@@ -1,7 +1,8 @@
 # Couch controller-to-touch handoff
 
-Status: v0.132.3 release candidate, rebased onto the accepted v0.132.2
-source.
+Status: v0.132.3 release candidate, rebased onto exact main source
+`a08386476245bc79249d7cb444acf1403eb76c6e`, including the accepted v0.132.2
+release and the current split fastline upload workflow.
 
 ## Player problem
 
@@ -29,6 +30,12 @@ focused gate aligned with current input ownership and authored Team rules.
 Focused verification covers controller menu ownership, setup select previews,
 Back/Menu behavior, pad loss and reassignment, Settings controls, touch-pad
 handoff, Team terminal navigation, and keyboard/controller cut behavior.
+The current exact-head focused gate passes all 194 tests selected for
+localization and player navigation. Repository lint, formatting, native
+formatting, localization/content/presentation validation, motion-lab syntax,
+and whitespace validation also pass. Presentation revision 88 and the existing
+simulation rules remain unchanged.
 
 Physical Steam Deck and touchscreen checks remain separate from the modeled DOM
-and controller evidence.
+and controller evidence. The committed temporary release policy waives the long
+automated suite; it is not reported as passed.
