@@ -24,6 +24,16 @@ const toolResources = Object.fromEntries(
     ]),
   ),
 );
+const interfaceResources = Object.fromEntries(
+  await Promise.all(
+    ['en', 'uk'].map(async (locale) => [
+      locale,
+      JSON.parse(
+        await fs.readFile(new URL(`../game/locales/${locale}/interface.json`, import.meta.url)),
+      ),
+    ]),
+  ),
+);
 const assets = [
   'game/vendor/i18next-26.4.2.min.js',
   'game/i18n/catalogs.mjs',
@@ -168,4 +178,40 @@ test('maintained sprite review pages localize static and generated presentation 
   const inlineScripts = [...generated.matchAll(/<script>([\s\S]*?)<\/script>/g)];
   assert.ok(inlineScripts.length);
   assert.doesNotThrow(() => new Function(inlineScripts.at(-1)[1]));
+});
+
+test('offline download and launcher routes provide live language controls and bilingual fallbacks', async () => {
+  for (const { file, prefix } of [
+    { file: '../game/downloads.html', prefix: '' },
+    { file: '../game/offline/app.html', prefix: '../' },
+  ]) {
+    const source = await fs.readFile(new URL(file, import.meta.url), 'utf8');
+    const nodes = descendants(parse(source));
+    assert.ok(
+      nodes.some((node) => attribute(node, 'data-language-control') !== undefined),
+      file,
+    );
+    for (const asset of [
+      'vendor/i18next-26.4.2.min.js',
+      'i18n/catalogs.mjs',
+      'i18n/bootstrap.mjs',
+      'i18n/style.css',
+    ])
+      assert.ok(source.includes(`"${prefix}${asset}"`), `${file}: ${asset}`);
+    const keys = nodes.map((node) => attribute(node, 'data-i18n')).filter(Boolean);
+    assert.ok(keys.length >= 8, `${file}: static catalog coverage`);
+    for (const key of keys) {
+      assert.match(key, /^interface:/, `${file}: ${key}`);
+      for (const locale of ['en', 'uk'])
+        assert.equal(
+          typeof interfaceResources[locale][key.slice('interface:'.length)],
+          'string',
+          `${file}: ${locale}: ${key}`,
+        );
+    }
+    const noScript = nodes.find((node) => node.tagName === 'noscript');
+    assert.ok(noScript, `${file}: noscript fallback`);
+    assert.match(noScript.childNodes[0].value, /JavaScript/);
+    assert.match(noScript.childNodes[0].value, /потрібен JavaScript/);
+  }
 });
