@@ -17,11 +17,11 @@ The remaining-nine review found concrete cooperation already present in all nine
 weakest spatial differentiation was limited to three maps with zero to two wall structures and
 mostly rectangular material beds. The next slice therefore changes only these identities:
 
-| Mission          | Distinct route decision                                                | Partner benefit                                                                    |
-| ---------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| Crossed gardens  | Neutralize an outer garden or establish the nested central bank first. | The central bank gives both specialists a short launch into the opposite garden.   |
-| Split orchards   | Take an offset plain band or neutralize one orchard first.             | A secured band becomes a full-speed route around the still-dangerous other side.   |
-| Weaver crossing  | Link a thin separator or neutralize a broad material lane first.       | The middle opening lets the partner exchange lanes without repeating the same cut. |
+| Mission         | Distinct route decision                                                | Partner benefit                                                                    |
+| --------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Crossed gardens | Neutralize an outer garden or establish the nested central bank first. | The central bank gives both specialists a short launch into the opposite garden.   |
+| Split orchards  | Take an offset plain band or neutralize one orchard first.             | A secured band becomes a full-speed route around the still-dangerous other side.   |
+| Weaver crossing | Link a thin separator or neutralize a broad material lane first.       | The middle opening lets the partner exchange lanes without repeating the same cut. |
 
 The source factory is copy-on-write from v27. It preserves actors, support roles, impact policy,
 objectives, quotas, pictures, order and every historical Team edition.
@@ -48,20 +48,25 @@ approval or gameplay balance.
 - Only the three selected maps, their guidance and owning campaign/pack revisions change.
 - Each map retains one connected playable field and explicit disconnected return components.
 - Actors, rules, goals, travelling impacts and specialist ownership match v27 on all presets.
-- Both spawns remain idle-safe for five seconds on Gentle, Standard and Expert at seeds 1, 7 and
-  19.
+- Both spawns remain idle-safe for five seconds on Gentle, Standard and Expert at seeds 1, 7 and 19.
 - Two executable approaches per mission pass on Gentle, Standard and Expert at seeds 1 and 7,
   with no downs and continued coverage work after the closure.
-- Focused structural/idle/route tests: **7/7 passed**.
+- After both rehearsed closures, the second pilot can traverse the first pilot's newly reclaimed
+  route without cutting, taking a down or using Support. This passes on Gentle, Standard and Expert
+  at seeds 1 and 7.
+- Focused structural/idle/route/exchange tests: **10/10 passed**.
 - Candidate files pass Prettier, targeted ESLint and `git diff --check`.
 
 ## Remaining before PR/release
 
-1. Confirm no mandatory Support, no prolonged cleanup and useful partner banks beyond the first
-   verified closures.
-2. Rebase the full cultural stack onto the accepted v0.132.4 terminal main.
-3. Wire the successor as a separately selectable/current edition.
-4. Run focused library/Next/Studio checks, version/locale validation and the normal release gates.
+1. Confirm that later captures do not leave prolonged low-risk cleanup; the bounded exchange proof
+   does not establish a full clear or human two-player balance.
+2. Wire the successor as a separately selectable/current edition.
+3. Run focused library/Next/Studio checks, version/locale validation and the normal release gates.
+
+The entire cultural stack is rebased onto terminal release source
+`9289184d8c36c85261493b8a31ba36e8ffb931ee`. That source is the v0.132.4 publication candidate,
+not evidence that v0.132.4 is already public.
 
 Automated idle and topology checks establish legality, not fun, final two-player balance, cultural
 approval, physical-device behavior or public delivery.
