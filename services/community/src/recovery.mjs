@@ -6,6 +6,7 @@ import {
   copyFile,
   lstat,
   mkdir,
+  open,
   readFile,
   readdir,
   rename,
@@ -13,6 +14,8 @@ import {
   writeFile,
 } from 'node:fs/promises';
 import path from 'node:path';
+import { finished } from 'node:stream/promises';
+import { postgresDatabaseName } from './postgres-command-environment.mjs';
 
 export const RECOVERY_FORMAT = 'revealline-community-recovery.v1';
 
@@ -20,6 +23,7 @@ const DATABASE_FILE = 'database.dump';
 const MANIFEST_FILE = 'manifest.json';
 const BLOB_DIRECTORY = 'blobs';
 const RESTORE_JOURNAL_FORMAT = 'revealline-community-restore-journal.v1';
+const CLEAR_TRANSIENT_UPLOADS_SQL = 'DELETE FROM public.community_tus_uploads;';
 const PACKAGE_KEY = /^packages\/sha256\/([a-f0-9]{2})\/([a-f0-9]{64})\.rlpack$/u;
 
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -160,6 +164,112 @@ const copyBlobInventory = async ({ blobs, sourceRoot, targetRoot }) => {
   }
 };
 
+const inventoryBlobStore = async (blobStore) => {
+  if (!blobStore?.list || !blobStore?.open)
+    throw new Error('Recovery blob store must support list and open.');
+  const blobs = [];
+  const seenCursors = new Set();
+  let cursor = null;
+  let previous = '';
+  do {
+    const page = await blobStore.list({ prefix: 'packages/sha256/', cursor, limit: 1_000 });
+    if (!Array.isArray(page?.items)) throw new Error('Blob store listing is invalid.');
+    for (const item of page.items) {
+      const expectedSha256 = validateBlobKey(item?.key);
+      if (item.key <= previous) throw new Error('Blob store listing is unsorted or duplicated.');
+      if (!Number.isSafeInteger(item.size) || item.size < 1)
+        throw new Error(`Blob store listing size is invalid: ${item.key}`);
+      blobs.push({ key: item.key, size: item.size, sha256: expectedSha256 });
+      previous = item.key;
+    }
+    cursor = page.cursor ?? null;
+    if (cursor && seenCursors.has(cursor)) throw new Error('Blob store listing cursor repeated.');
+    if (cursor) seenCursors.add(cursor);
+  } while (cursor);
+  return blobs;
+};
+
+const closeBlobBody = async (body) => {
+  if (typeof body?.destroy !== 'function') return;
+  if (!body.destroyed) body.destroy();
+  if (typeof body.once === 'function') await finished(body).catch(() => {});
+};
+
+const copyBlobStoreInventory = async ({ blobStore, blobs, targetRoot, openTarget = open }) => {
+  for (const blob of blobs) {
+    const opened = await blobStore.open(blob.key);
+    const target = path.join(targetRoot, blob.key);
+    let handle;
+    let failure = null;
+    const digest = createHash('sha256');
+    let size = 0;
+    try {
+      if (!opened || opened.size !== blob.size)
+        throw new Error(`Blob disappeared or changed during recovery backup: ${blob.key}`);
+      await mkdir(path.dirname(target), { recursive: true });
+      handle = await openTarget(target, 'wx', 0o600);
+      for await (const chunk of opened.body) {
+        const bytes = Buffer.from(chunk);
+        size += bytes.length;
+        digest.update(bytes);
+        let offset = 0;
+        while (offset < bytes.length) {
+          const { bytesWritten } = await handle.write(bytes, offset, bytes.length - offset);
+          if (bytesWritten < 1) throw new Error('Recovery snapshot write made no progress.');
+          offset += bytesWritten;
+        }
+      }
+      await handle.sync();
+      if (size !== blob.size || digest.digest('hex') !== blob.sha256)
+        throw new Error(`Blob bytes changed during recovery backup: ${blob.key}`);
+    } catch (error) {
+      failure = error;
+    } finally {
+      try {
+        await handle?.close();
+      } catch (error) {
+        failure ??= error;
+      }
+      await closeBlobBody(opened?.body);
+    }
+    if (failure) {
+      await rm(target, { force: true });
+      throw failure;
+    }
+  }
+};
+
+const assertEmptyPackageStore = async (blobStore) => {
+  const page = await blobStore.list({ prefix: 'packages/sha256/', cursor: null, limit: 1 });
+  if (!Array.isArray(page?.items)) throw new Error('Blob store listing is invalid.');
+  if (page.items.length)
+    throw new Error('Restore package prefix must be empty in a fresh dedicated recovery store.');
+};
+
+const verifyPackageStore = async (blobStore, expected) => {
+  const actual = await inventoryBlobStore(blobStore);
+  if (JSON.stringify(actual) !== JSON.stringify(expected))
+    throw new Error('Restored package store inventory does not match the recovery manifest.');
+  for (const blob of expected) {
+    const opened = await blobStore.open(blob.key);
+    try {
+      if (!opened || opened.size !== blob.size)
+        throw new Error(`Restored package is missing: ${blob.key}`);
+      const digest = createHash('sha256');
+      let size = 0;
+      for await (const chunk of opened.body) {
+        const bytes = Buffer.from(chunk);
+        size += bytes.length;
+        digest.update(bytes);
+      }
+      if (size !== blob.size || digest.digest('hex') !== blob.sha256)
+        throw new Error(`Restored package failed identity verification: ${blob.key}`);
+    } finally {
+      await closeBlobBody(opened?.body);
+    }
+  }
+};
+
 const verifyStagedBlobs = async (root, expected) => {
   await mustBeDirectory(root, 'Staged blob root');
   const actual = await inventoryBlobs(root);
@@ -177,12 +287,41 @@ const prepareEmptyTarget = async (target) => {
   }
 };
 
-export async function createRecoverySnapshot({ databaseUrl, blobRoot, destination, runCommand }) {
-  if (!databaseUrl || !blobRoot || !destination || typeof runCommand !== 'function')
-    throw new Error('databaseUrl, blobRoot, destination, and runCommand are required.');
+const restoreRecoveryDatabase = async ({ databaseUrl, dump, runCommand }) => {
+  await runCommand(
+    'pg_restore',
+    [
+      '--clean',
+      '--if-exists',
+      '--no-owner',
+      '--no-acl',
+      '--exit-on-error',
+      '--dbname',
+      postgresDatabaseName(databaseUrl),
+      dump,
+    ],
+    { databaseUrl },
+  );
+  await runCommand(
+    'psql',
+    ['--no-psqlrc', '--set=ON_ERROR_STOP=1', '--command', CLEAR_TRANSIENT_UPLOADS_SQL],
+    { databaseUrl },
+  );
+};
+
+export async function createRecoverySnapshot({
+  databaseUrl,
+  blobRoot,
+  blobStore,
+  destination,
+  runCommand,
+  openBlobTarget = open,
+}) {
+  if (!databaseUrl || (!blobRoot && !blobStore) || !destination || typeof runCommand !== 'function')
+    throw new Error('databaseUrl, blob storage, destination, and runCommand are required.');
   const target = path.resolve(destination);
-  const sourceBlobs = path.resolve(blobRoot);
-  await mustBeDirectory(sourceBlobs, 'Blob root');
+  const sourceBlobs = blobRoot ? path.resolve(blobRoot) : null;
+  if (sourceBlobs) await mustBeDirectory(sourceBlobs, 'Blob root');
   await assertAbsent(target, 'Recovery destination');
   await mkdir(path.dirname(target), { recursive: true });
   const temporary = `${target}.partial-${randomUUID()}`;
@@ -194,12 +333,22 @@ export async function createRecoverySnapshot({ databaseUrl, blobRoot, destinatio
     });
     const database = { file: DATABASE_FILE, ...(await digestFile(dump)) };
     if (database.size < 1) throw new Error('pg_dump produced an empty recovery database file.');
-    const blobs = await inventoryBlobs(sourceBlobs);
-    await copyBlobInventory({
-      blobs,
-      sourceRoot: sourceBlobs,
-      targetRoot: path.join(temporary, BLOB_DIRECTORY),
-    });
+    const blobs = blobStore
+      ? await inventoryBlobStore(blobStore)
+      : await inventoryBlobs(sourceBlobs);
+    if (blobStore)
+      await copyBlobStoreInventory({
+        blobStore,
+        blobs,
+        targetRoot: path.join(temporary, BLOB_DIRECTORY),
+        openTarget: openBlobTarget,
+      });
+    else
+      await copyBlobInventory({
+        blobs,
+        sourceRoot: sourceBlobs,
+        targetRoot: path.join(temporary, BLOB_DIRECTORY),
+      });
     const core = canonicalManifestCore({ database, blobs });
     const manifest = { ...core, snapshotId: snapshotIdFor(core) };
     await writeFile(path.join(temporary, MANIFEST_FILE), `${JSON.stringify(manifest, null, 2)}\n`, {
@@ -293,22 +442,107 @@ export async function restoreRecoverySnapshot({ databaseUrl, blobRoot, source, r
     journal = { ...journal, state: 'blobs-staged' };
     await writeJournal(journalFile, journal);
   }
-  await runCommand(
-    'pg_restore',
-    [
-      '--clean',
-      '--if-exists',
-      '--no-owner',
-      '--no-acl',
-      '--exit-on-error',
-      path.join(path.resolve(source), DATABASE_FILE),
-    ],
-    { databaseUrl },
-  );
+  await restoreRecoveryDatabase({
+    databaseUrl,
+    dump: path.join(path.resolve(source), DATABASE_FILE),
+    runCommand,
+  });
   journal = { ...journal, state: 'database-restored' };
   await writeJournal(journalFile, journal);
   await prepareEmptyTarget(target);
   await rename(journal.stagedRoot, target);
   await rm(journalFile, { force: true });
+  return manifest;
+}
+
+export const recoveryStorageIdentity = (storage) => {
+  if (storage?.driver === 'disk' && typeof storage.root === 'string')
+    return `disk_${sha256(Buffer.from(path.resolve(storage.root), 'utf8'))}`;
+  if (storage?.driver === 's3' && storage.bucket && storage.region)
+    return `s3_${sha256(
+      Buffer.from(
+        JSON.stringify({
+          bucket: storage.bucket,
+          region: storage.region,
+          endpoint: storage.endpoint ?? null,
+          forcePathStyle: Boolean(storage.forcePathStyle),
+        }),
+        'utf8',
+      ),
+    )}`;
+  throw new Error('Recovery storage configuration is invalid.');
+};
+
+export async function restoreRecoverySnapshotToStore({
+  databaseUrl,
+  blobStore,
+  storageIdentity,
+  journalFile,
+  source,
+  runCommand,
+}) {
+  if (
+    !databaseUrl ||
+    !blobStore?.putVerified ||
+    !blobStore?.list ||
+    !blobStore?.open ||
+    !storageIdentity ||
+    !journalFile ||
+    !source ||
+    typeof runCommand !== 'function'
+  )
+    throw new Error(
+      'databaseUrl, blobStore, storageIdentity, journalFile, source, and runCommand are required.',
+    );
+  const manifest = await verifyRecoverySnapshot({ source });
+  const databaseTargetHash = sha256(Buffer.from(databaseUrl, 'utf8'));
+  const storageTargetHash = sha256(Buffer.from(storageIdentity, 'utf8'));
+  const targetJournal = path.resolve(journalFile);
+  let journal = await readOptionalJson(targetJournal);
+  if (journal) {
+    if (
+      journal.format !== RESTORE_JOURNAL_FORMAT ||
+      journal.snapshotId !== manifest.snapshotId ||
+      journal.databaseTargetHash !== databaseTargetHash ||
+      journal.storageTargetHash !== storageTargetHash ||
+      !['prepared', 'database-restored', 'packages-restored'].includes(journal.state)
+    )
+      throw new Error(`Restore journal does not match this snapshot and target: ${targetJournal}`);
+  } else {
+    await assertEmptyPackageStore(blobStore);
+    await mkdir(path.dirname(targetJournal), { recursive: true });
+    journal = {
+      format: RESTORE_JOURNAL_FORMAT,
+      snapshotId: manifest.snapshotId,
+      databaseTargetHash,
+      storageTargetHash,
+      state: 'prepared',
+    };
+    await writeJournal(targetJournal, journal);
+  }
+  if (journal.state === 'prepared') {
+    await assertEmptyPackageStore(blobStore);
+    await restoreRecoveryDatabase({
+      databaseUrl,
+      dump: path.join(path.resolve(source), DATABASE_FILE),
+      runCommand,
+    });
+    journal = { ...journal, state: 'database-restored' };
+    await writeJournal(targetJournal, journal);
+  }
+  if (journal.state === 'database-restored') {
+    for (const blob of manifest.blobs)
+      await blobStore.putVerified({
+        key: blob.key,
+        body: createReadStream(path.join(path.resolve(source), BLOB_DIRECTORY, blob.key)),
+        expectedSha256: blob.sha256,
+        expectedSize: blob.size,
+        maxBytes: blob.size,
+      });
+    journal = { ...journal, state: 'packages-restored' };
+    await writeJournal(targetJournal, journal);
+  }
+  await verifyPackageStore(blobStore, manifest.blobs);
+  await rm(targetJournal, { force: true });
   return manifest;
 }
