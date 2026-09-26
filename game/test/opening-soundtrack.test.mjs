@@ -89,7 +89,11 @@ test('only the new Ukrainian default prepares the opening theme; explicit choice
     'an already persisted Ukrainian choice is not treated as a fresh profile',
   );
   const calls = [];
+  const state = { status: 'paused' };
   const player = {
+    snapshot() {
+      return state;
+    },
     async selectPlaylist(id) {
       calls.push(['select', id]);
       return false;
@@ -117,6 +121,43 @@ test('only the new Ukrainian default prepares the opening theme; explicit choice
     listening: { ...fresh.listening, mode: 'metal' },
   });
   assert.deepEqual(calls, [['prepare', { allowNetwork: false }]]);
+});
+
+test('an unavailable opening recording recovers to built-in music without changing the saved library', async () => {
+  const fresh = setCatalogueTracks(emptySoundtrackLibrary(), SOUNDTRACK_CATALOGUE.tracks);
+  const calls = [];
+  const state = { status: 'paused' };
+  let preparations = 0;
+  const player = {
+    snapshot() {
+      return state;
+    },
+    async selectPlaylist(id) {
+      calls.push(['select', id]);
+      state.status = 'paused';
+      return false;
+    },
+    async prepare(options) {
+      calls.push(['prepare', options]);
+      preparations++;
+      if (preparations === 1) {
+        state.status = 'error';
+        return false;
+      }
+      state.status = 'paused';
+      return true;
+    },
+  };
+
+  assert.equal(await prepareOpeningTheme(player, fresh, { fresh: true }), true);
+  assert.deepEqual(calls, [
+    ['select', OPENING_THEME_PLAYLIST_ID],
+    ['prepare', { allowNetwork: true }],
+    ['select', 'builtin.all'],
+    ['prepare', { allowNetwork: false }],
+  ]);
+  assert.equal(fresh.selection.playlistId, null);
+  assert.equal(fresh.listening.mode, 'ukrainian');
 });
 
 test('Recording mode excludes the registered core theme and exposes its eligibility notice', () => {
