@@ -335,10 +335,18 @@ test('content structure and metadata errors follow the active locale', (context)
   const unsupported = scenario();
   unsupported.extra = true;
   assert.match(validateScenario(unsupported).errors.join(' '), /scenario\.extra не підтримується/);
+  assert.match(inspectImageDataUrl('not-an-image').errors.join(' '), /data-URL-адреса/);
+  assert.match(inspectImageDataUrl('data:image/png;base64,AAAA').errors.join(' '), /Підпис PNG/);
+  assert.match(
+    inspectImageDataUrl('data:image/png;base64,A===').errors.join(' '),
+    /неправильний формат/,
+  );
 
   setLocale('en', { persist: false });
   assert.match(validateScenario(cyclic).errors.join(' '), /must not contain a cycle/);
   assert.match(validateScenario(unsafeUrl).errors.join(' '), /must be an HTTP\(S\) URL/);
+  assert.match(inspectImageDataUrl('not-an-image').errors.join(' '), /embedded PNG/);
+  assert.match(inspectImageDataUrl('data:image/png;base64,AAAA').errors.join(' '), /PNG signature/);
 });
 test('real PNG plus JPEG/WebP header fixtures expose dimensions before browser allocation', () => {
   for (const [dataUrl, width, height] of [
