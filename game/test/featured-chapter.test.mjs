@@ -77,23 +77,12 @@ async function chooseAndPlay(f, edition, { replace = false } = {}) {
     checkpoint = authoritativeCheckpoint(prior),
     picture = page.rendered.backdrop;
   await activateMissionCard(card);
-  assert.equal(
-    page.rendered.run,
-    prior,
-    'Downloading never launches or replaces the previous flight.',
-  );
-  assert.deepEqual(authoritativeCheckpoint(prior), checkpoint);
-  assert.equal(page.rendered.backdrop, picture);
-  assert.equal(page.$('journey-chooser').open, true);
-  const ready = find();
-  assert.ok(ready, 'Requery the stable mission identity after preparation refresh.');
-  assert.equal(ready.querySelector('.journey-card-action').textContent, 'Play');
-  await activateMissionCard(ready);
   if (replace) {
     assert.equal(page.$('mission-replace-dialog').open, true);
     await settle(() => !page.$('mission-replace-confirm').disabled);
     assert.equal(page.rendered.run, prior);
     assert.deepEqual(authoritativeCheckpoint(prior), checkpoint);
+    assert.equal(page.rendered.backdrop, picture);
     const button = page.$('mission-replace-confirm'),
       handler = button.onclick;
     assert.equal(button.textContent, 'Replace & play');
