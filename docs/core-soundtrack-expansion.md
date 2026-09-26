@@ -141,7 +141,7 @@ Archive 02 [PR #6](https://github.com/mekhovov/revealline-soundtracks-02/pull/6)
 
 Archive 02 [PR #7](https://github.com/mekhovov/revealline-soundtracks-02/pull/7) merged as `958dee3ae30984f55c8797ac694ff2e820ef4833` and publishes **Lost in the Snow Wave** by hatmix under CC0. The exact 3,478,125-byte native OGG has SHA-256 `f15f646b30db4dfb6ca69bb73b1ea4e3825c3e2cd8ce73576e49a877dd7a3fab`; the normalized 5,521,964-byte MP3 has SHA-256 `91b75697c450b9d107ea0b66781bb9c3f736104476437c27e6295afbd409dc1f`, -16.0 LUFS integrated and -1.0 dBTP. Exact verification and Pages run 36231418029 passed. Direct public checks found eight catalogue rows, exact byte length, CORS and HTTP 206; browser playback started the new recording and switched to Ripped Apart in place. It remains listening-pending and outside game defaults. Archive 02 now holds eight recordings / eight collections / 44,293,910 audio bytes; aggregate public archives hold **171 recordings / 32 collections**.
 
-Local free space is about **1.0 GiB** after removing only regenerable package cache. This is at the required floor and remains too tight for large local media/build work. Use hosted CI and small source/audio batches; preserve user changes, frozen releases and evidence.
+Local free space fell to about **0.4 GiB** while other work continued, below the required 1 GiB floor even after removing only regenerable package cache. New local media writes and builds are blocked until coordinated cleanup restores the reserve. Hosted CI and read-only research may continue; preserve user changes, frozen releases and evidence.
 
 1. **v0.132 Pages completion:** complete. Selector
    [PR #592](https://github.com/mekhovov/revealline/pull/592) merged as
