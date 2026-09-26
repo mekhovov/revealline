@@ -4,12 +4,14 @@ Status date: 2026-09-26
 
 ## Delivery state
 
-- Public baseline: **v0.132.3**; v0.132.4 Team artwork preparation passed replacement
-  qualification and entered immutable-package creation, but is not yet a public delivery.
+- Public baseline: **v0.132.3**; v0.132.4 has an exact immutable production receipt and merged Pages
+  selector, but its public-byte audit is still underway and it is not yet accepted delivery.
 - Parent candidate: draft PR #636 / `team-cultural-specialist-originals-1`. Its GitHub head is
   authoritative after guarded restacks.
-- This successor is draft PR #642 and remains a non-default balance candidate. It does not change
-  the current Team route, version, selector, progress or published content yet.
+- Draft PR #642 remains the non-default balance candidate. Its v0.149.0 successor is now wired
+  locally as `team-cultural-specialist-originals-2`: it becomes the candidate default Team route,
+  while the first cultural and all earlier editions remain directly selectable. Neither change is
+  published yet.
 
 ## Completed candidate work
 
@@ -60,18 +62,23 @@ approval or gameplay balance.
 - Standard full-clear routes are pinned as regressions. They finish in 33.8-52.2 seconds, reach
   72.2-98.9% coverage, include a closure from both pilots, and record no downs or Support use.
 - Focused structural/idle/route/exchange/full-clear tests: **13/13 passed**.
+- Current-edition integration adds an isolated v2 progress owner, exact cross-campaign Next,
+  unified Team library handoffs, Studio current/previous choices and EN/UK copy. The extended v2
+  factory/entry cohort passes **15/15**.
+- The bounded factory, entry, Team host, handoff, Studio and preserved-edition cohort passes
+  **83/83**. Localization validation passes with 9,735 messages and 7,782 references.
 - Candidate files pass Prettier, targeted ESLint and `git diff --check`.
 
 ## Remaining before PR/release
 
-1. Wire the successor as a separately selectable/current edition.
-2. Run focused library/Next/Studio checks, version/locale validation and the normal release gates.
+1. Finish the focused host/library qualification and open the separately reviewable v0.149.0 PR.
+2. Run the normal exact-head build/release gates, immutable release and public verification.
 3. Retain Gentle and Expert search evidence as reproducible feasibility evidence; pin those routes
    only if they add useful regression coverage rather than duplicating the Standard fixtures.
 
 The entire cultural stack is rebased onto terminal release source
-`d3df9d47f578d48383ff589914a188ada2ef8b31`. That source is the v0.132.4 publication candidate,
-not evidence that v0.132.4 is already public.
+`d308610271ad01fbabb2847ee046325001ec63e5`. That source includes the v0.132.4 Pages selector; it is
+not evidence that v0.132.4 is already publicly accepted.
 
 Automated idle, topology and input-only route checks establish legality and bounded feasibility,
 not fun, final human two-player balance, cultural approval, physical-device behavior or public
