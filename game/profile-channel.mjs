@@ -1,3 +1,4 @@
+import { parseEditionChannel, validateEditionId } from './edition-context.mjs';
 /** Exact profile-channel names shared by transfer and read-only recovery. */
 const versionPattern = /^(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/;
 const prefix = 'revealline.library.';
@@ -17,15 +18,20 @@ function targetVersion(version) {
     throw new TypeError('A stable current release version is required for collection transfer.');
   return parsed;
 }
-function sourceFor(channel, current) {
+function sourceFor(channel, current, { editionId } = {}) {
+  if (editionId !== undefined) validateEditionId(editionId);
   if (typeof channel !== 'string') return null;
+  const edition = parseEditionChannel(channel);
+  if (edition?.editionId !== editionId) return null;
   const legacy = channel === 'release';
-  const buildLabel = legacy ? 'v0.2.0' : /^release-(v?\d+\.\d+\.\d+)$/.exec(channel)?.[1];
+  const buildLabel =
+    edition?.version ?? (legacy ? 'v0.2.0' : /^release-(v?\d+\.\d+\.\d+)$/.exec(channel)?.[1]);
   const parsed = versionParts(buildLabel);
   if (!parsed || (!legacy && compare(parsed, [0, 2, 1]) < 0) || compare(parsed, current) >= 0)
     return null;
   const profileKey = `${prefix}${channel}${suffix}`;
   return Object.freeze({
+    ...(edition ? { editionId: edition.editionId } : {}),
     id: channel,
     channel,
     version: `v${parsed.join('.')}`,
@@ -43,16 +49,20 @@ function sourceFor(channel, current) {
 export { versionParts, compare, targetVersion, sourceFor };
 
 const channels = new WeakSet();
-export function recoveryChannel(id, currentVersion) {
+export function recoveryChannel(id, currentVersion, { editionId } = {}) {
+  if (editionId !== undefined) validateEditionId(editionId);
   const current = targetVersion(currentVersion);
   if (typeof id !== 'string') return null;
-  const earlier = sourceFor(id, current);
-  const label = id === 'release' ? 'v0.2.0' : /^release-(v?\d+\.\d+\.\d+)$/.exec(id)?.[1];
+  const edition = parseEditionChannel(id);
+  const earlier = sourceFor(id, current, { editionId });
+  const label =
+    edition?.version ?? (id === 'release' ? 'v0.2.0' : /^release-(v?\d+\.\d+\.\d+)$/.exec(id)?.[1]);
   const parsed = versionParts(label);
-  if (!earlier && id !== 'dev' && !parsed) return null;
+  if (!earlier && id !== 'dev' && !parsed && edition?.version !== 'DEV') return null;
   const profileKey = `${prefix}${id}${suffix}`;
   const source = Object.freeze({
     ...(earlier ?? {
+      ...(edition ? { editionId: edition.editionId } : {}),
       id,
       channel: id,
       version: parsed ? `v${parsed.join('.')}` : null,
@@ -69,7 +79,7 @@ export function recoveryChannel(id, currentVersion) {
     externalJournalKey: `${profileKey}.external-chapter-journal.v1`,
     support: earlier
       ? 'historical'
-      : parsed && compare(parsed, current) === 0
+      : edition?.editionId === editionId && parsed && compare(parsed, current) === 0
         ? 'current'
         : 'protected-unknown',
   });
@@ -77,11 +87,11 @@ export function recoveryChannel(id, currentVersion) {
   return source;
 }
 export const isRecoveryChannel = (source) => channels.has(source);
-export function channelFromStorageKey(key, currentVersion) {
+export function channelFromStorageKey(key, currentVersion, options) {
   if (typeof key !== 'string') return null;
   const match =
     /^revealline\.(?:library|packs|suspended)\.(.+?)\.v1(?:\.(?:backup-lock|backup-journal|external-chapter-index\.v1|external-chapter-journal\.v1))?$/.exec(
       key,
     );
-  return match ? recoveryChannel(match[1], currentVersion) : null;
+  return match ? recoveryChannel(match[1], currentVersion, options) : null;
 }

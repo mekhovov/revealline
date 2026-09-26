@@ -1,0 +1,72 @@
+name: Company edition candidates
+
+on:
+  pull_request:
+    paths:
+      - 'game/**'
+      - 'authoring/motion-lab/**'
+      - 'authoring/company-studio/**'
+      - 'scripts/**'
+      - 'publishing/**'
+      - 'package*.json'
+      - '.github/workflows/company-edition-candidate.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'game/**'
+      - 'authoring/motion-lab/**'
+      - 'authoring/company-studio/**'
+      - 'scripts/**'
+      - 'publishing/**'
+      - 'package*.json'
+      - '.github/workflows/company-edition-candidate.yml'
+  workflow_dispatch:
+    inputs:
+      editions:
+        description: Comma-separated public edition IDs
+        required: true
+        default: coupa-all,coupa-adventure,coupa-culture,coupa-foundations,coupa-operations,coupa-developers,droneaid-community
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: company-candidate-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.13.1'
+          cache: npm
+      - run: npm ci
+      - name: Verify generated source and public media eligibility
+        run: npm run company:check
+      - name: Run focused company, persistence, offline and artifact tests
+        run: |
+          npm run company:test
+          node --test game/test/installed-app.test.mjs game/test/profile-transfer.test.mjs game/test/profile-channel-reader.test.mjs
+      - name: Compile twice and inspect original candidate ZIP members
+        env:
+          EDITION_IDS: ${{ inputs.editions || 'coupa-all,coupa-adventure,coupa-culture,coupa-foundations,coupa-operations,coupa-developers,droneaid-community' }}
+        run: node scripts/bundle-editions.mjs --editions "$EDITION_IDS" --out .cache/company-candidate --base-path /revealline/
+      - name: Save immutable candidates for review
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: company-candidate-${{ github.event.pull_request.head.sha || github.sha }}
+          path: .cache/company-candidate/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Report qualification boundary
+        run: |
+          echo 'Company candidate compilation and original member checks passed.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'These artifacts are not promoted or published. Artwork, pacing, installation, offline recovery, accessibility, performance and downloaded-byte receipts remain separate release gates. Existing full-suite policy is unchanged.' >> "$GITHUB_STEP_SUMMARY"
