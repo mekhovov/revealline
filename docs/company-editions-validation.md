@@ -4,6 +4,54 @@ This record distinguishes candidate automation from release qualification. No co
 edition has been promoted or published by this work. Human observations, physical-device
 installation and downloaded/deployed release evidence cannot be inferred from unit tests.
 
+## Qualification tooling and accessibility follow-up
+
+The next batch remains in draft PR #615 and incorporates main through `b7857fff8`.
+Company menus now inherit the shared text-size tokens. Native browser checks reproduced
+the old fixed 16/14-pixel controls, then verified 20-pixel controls with Large enabled on
+an isolated origin. At 320 × 800, the page has no horizontal overflow and keyboard focus
+reaches the lower recovery controls. These are desktop viewport/input observations, not
+physical-device or assistive-technology certification.
+
+Learning and backup feedback now use persistent dialog-local live status. A superseded or
+disposed import cannot overwrite another dialog's feedback. A failed proof save after closing
+its lesson still reaches the host with the originating lesson title. Focused regressions cover
+these asynchronous cases without changing simulation rules or optional-bonus progression.
+
+Company Studio step 06 records bounded manual observations only after the entire compiled
+preview is verified. Records bind the artifact, edition, mission and exact selected picture
+hash/revision; they record actual viewport, motion, scene state and six explicit checks.
+Unknown, duplicate, mismatched, stale or approval-shaped imported records are rejected.
+Prior observations and unsaved text remain exportable under their old binding when the source
+changes. Generation receipt notes are matched to selected image hashes and never fetch masters.
+Source reads are bounded before decoding/parsing. Rejection and abort release reader locks
+even when an underlying stream's cancellation never settles.
+
+A browser check verified all 484 files of a Workshop Lights preview, loaded the standard game,
+started and paused Open the Doors, imported its exact generation receipt and exported one
+manual observation. Only the initial scene/home identity was observed; all unexamined checks
+remain not observed. The packet grants no artwork or release approval. Its artifact SHA-256 is
+`ea7ffc04e2dda0d4191e8a7b277b210bbb75b424a92c2543819ef7b446b2d9c9`;
+it belongs to that intermediate preview, not a later frozen candidate.
+
+Release-selector synchronization now verifies every retained and newly selected published
+artifact, exact tag/engine identity, and the combined edition overlay budget before writing.
+It checks for concurrent selector edits before staging and before rename, preserving another
+writer's changes. Default-plus-edition hosted size remains independently checked by the final
+Pages assembler. No selector, release or deployed bytes were changed by this batch.
+
+Before freezing, the final Studio cohort passes 33 checks, the focused art/learning/layout/shared-host
+cohort passes 60, and the adjacent release cohort passes 83. All 101 generated files match and
+source eligibility admits 135 media assets. These cohorts overlap and are not a unique-test total.
+An earlier broad run had two module-load failures caused by a missing sparse-checkout helper;
+restoring its exact tracked bytes resolved both in the final focused run.
+
+The final clean-head candidate, CI results, independent freeze and downloaded-byte
+receipts are recorded on PR #615. Previous receipts below remain historical. User-reported
+formative completion is preserved; final artwork/content approval, physical installation and
+device/accessibility checks, same-device performance, published rollback and public deployed-byte
+verification remain promotion gates.
+
 ## DroneAid FPV revision 2
 
 The follow-up uses the current official Netherlands workshop/Ukraine-support mission and

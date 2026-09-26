@@ -11,6 +11,9 @@ import {
   studioSelection,
 } from './model.mjs';
 import { verifyStudioPreview } from './preview.mjs';
+import { readStudioJSON } from './source-reader.mjs';
+import { createStudioReviewContext } from './review-model.mjs';
+import { createStudioReviewPane } from './review-pane.mjs';
 
 const $ = (id) => document.getElementById(id);
 const labels = [
@@ -53,15 +56,7 @@ const download = (filename, value) => {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
 const readJSON = async (url, { signal, originalText = false } = {}) => {
-  signal?.throwIfAborted();
-  const response = await fetch(url, { signal });
-  if (!response.ok)
-    throw new Error(
-      'Source file is unavailable. Import a complete draft or save the file in its declared workspace path.',
-    );
-  const text = await response.text();
-  const data = boundedJSON(text);
-  return originalText ? text : data;
+  return readStudioJSON(url, { signal, originalText });
 };
 let catalog,
   registeredCatalog,
@@ -73,11 +68,13 @@ let catalog,
   revision = 0,
   loadGeneration = 0,
   report = null,
-  previewController = null;
+  previewController = null,
+  missionReview = null;
 const editorBuffers = new Map();
 const selected = () => studioSelection(catalog, editionId);
 const selectedCampaign = () => catalog.campaigns.find((campaign) => campaign.id === campaignId);
 function invalidatePreview() {
+  missionReview?.invalidate();
   previewController?.abort();
   previewController = null;
   report = null;
@@ -420,6 +417,9 @@ async function openPreview() {
       throw new Error(
         'The draft or report changed during verification. Open the current report again.',
       );
+    missionReview?.adopt(
+      createStudioReviewContext({ catalog, editionId, files, report: activeReport }),
+    );
     $('preview-frame').src = verified.url.href;
     $('preview-frame').hidden = false;
     $('preview-new-tab').href = verified.url.href;
@@ -445,6 +445,7 @@ async function openPreview() {
 }
 
 async function main() {
+  missionReview = createStudioReviewPane({ documentRef: document, download, status });
   registeredCatalog = validateEditionRuntimeCatalog(
     await readJSON(new URL('game/editions/catalog.json', rootURL)),
   );
@@ -510,12 +511,14 @@ async function main() {
     return applyCatalog(checked, 'Catalog validated and applied.');
   });
   $('catalog-json').oninput = () => {
+    missionReview?.invalidate();
     previewController?.abort();
     editorBuffers.set('catalog', $('catalog-json').value);
     $('draft-state').textContent = 'Unapplied JSON edits';
   };
   for (const key of ['theme', 'presets', 'campaign', 'learning'])
     $(`${key}-json`).oninput = () => {
+      missionReview?.invalidate();
       previewController?.abort();
       const editor = $(`${key}-json`);
       if (editor.dataset.sourcePath) editorBuffers.set(editor.dataset.sourcePath, editor.value);

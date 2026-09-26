@@ -60,6 +60,15 @@ The guided authoring page is `authoring/company-studio/index.html`. It edits a b
 packet and links the existing Asset Studio. Preview/export uses the Node compiler rather
 than executing arbitrary uploaded code in the browser.
 
+After verifying a compiled preview, step 06 records per-mission artwork observations against
+that exact artifact and picture revision. Record the observer, actual viewport, motion and
+scene state, then mark each check observed, issue or not observed. Export the observation
+packet before closing the tab. Optional generation receipts expose matched inspection notes
+and warnings without fetching original masters. Changing the source or verified artifact
+preserves prior notes for export under their original binding; explicitly discard them before
+starting a new artifact's record. These packets support final review but never grant approval.
+Source and observation imports enforce byte limits while reading, before JSON parsing.
+
 ```sh
 node scripts/produce-company-content.mjs
 node scripts/produce-company-content.mjs --check
@@ -183,9 +192,12 @@ tags or publish the draft. Allocate a new release version before promotion; a de
 candidate using the current package version does not reserve or replace that release slot.
 
 After the reviewed release is published, `sync-selector` downloads and verifies all artifacts
+for the complete retained-plus-new selector, including the combined edition overlay budget,
 and updates `publishing/pages-controller/editions.json` using `--selector` and
 `--base-path /revealline/`. It preserves historical releases and selects one active launcher
-per edition. The existing sole Pages publisher composes these verified edition files with
+per edition. Published-release checks resolve the explicit tag reference, and concurrent
+selector edits abort the write without replacing another writer's changes. The existing sole
+Pages publisher composes these verified edition files with
 the default artifact and rechecks the combined 950 MB operational budget. Empty selection
 preserves default publication. `editions/index.html` links the same standalone artifacts.
 Rollback changes the active edition selection to a retained version; it never rewrites frozen

@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import { parse } from 'acorn';
 import { createCompanyWorkspaceFiles, companyDraftFiles } from '../../scripts/company-studio.mjs';
 import { validateEditionRuntimeCatalog } from '../editions/model.mjs';
+import { readStudioJSON } from '../../authoring/company-studio/source-reader.mjs';
 import {
   DRAFT_FORMAT,
   REPORT_FORMAT,
@@ -214,6 +215,7 @@ function previewUI(overrides = {}) {
     step: 5,
     revision: 0,
     previewController: null,
+    missionReview: null,
     report: {},
     catalog: { editions: [] },
     editionId: 'acme-public',
@@ -222,6 +224,7 @@ function previewUI(overrides = {}) {
     editorBuffers: new Map(),
     selected: () => ({ edition: { boot: {} }, campaigns: [] }),
     boundedJSON: JSON.parse,
+    readStudioJSON: (url, options) => readStudioJSON(url, { ...options, fetcher: context.fetch }),
     $: (id) => {
       if (!elements.has(id))
         elements.set(id, {
@@ -330,7 +333,7 @@ test('late source responses cannot populate an edited or cancelled draft cache',
     const operation = context.readSource('classes.json', { signal: controller.signal });
     if (change === 'revision') context.revision++;
     else controller.abort();
-    finish({ ok: true, text: async () => '{"classes":[]}' });
+    finish(new Response('{"classes":[]}'));
     if (change === 'cancel')
       await assert.rejects(operation, (error) => error.name === 'AbortError');
     else await operation;

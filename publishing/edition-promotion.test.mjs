@@ -89,6 +89,114 @@ function runtimeMembers(fixture) {
   ]);
 }
 
+async function syncSelectorFixture(t) {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'edition-sync-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const older = reviewedFixture({ version: 'v0.139.0' }),
+    newer = reviewedFixture({ version: 'v0.140.0' }),
+    other = reviewedFixture({ version: 'v0.141.0', editionId: 'droneaid' });
+  const selectorPath = path.join(directory, 'selector.json'),
+    responsePath = path.join(directory, 'responses.json'),
+    callsPath = path.join(directory, 'calls.jsonl'),
+    root = 'repos/mekhovov/revealline',
+    responses = {},
+    assetRoutes = new Map();
+  let nextId = 1;
+  for (const fixture of [older, newer, other]) {
+    const assets = [];
+    for (const [name, content] of fixture.files) {
+      const id = nextId++,
+        route = `${root}/releases/assets/${id}`;
+      assets.push({ id, name, state: 'uploaded', size: content.length });
+      responses[route] = content.toString('base64');
+      assetRoutes.set(`${fixture.envelope.version}/${name}`, route);
+    }
+    responses[`${root}/releases/tags/${fixture.envelope.version}`] = bytes({
+      tag_name: fixture.envelope.version,
+      draft: false,
+      prerelease: false,
+      assets,
+    }).toString('base64');
+    responses[`${root}/commits/tags/${fixture.envelope.version}`] = bytes({
+      sha: fixture.envelope.sourceRevision,
+      commit: { tree: { sha: fixture.envelope.sourceTree } },
+    }).toString('base64');
+    // A same-named branch must never become the release authority.
+    responses[`${root}/commits/${fixture.envelope.version}`] = bytes({
+      sha: 'e'.repeat(40),
+      commit: { tree: { sha: 'd'.repeat(40) } },
+    }).toString('base64');
+  }
+  const bundle = path.join(directory, 'bundle');
+  await fs.mkdir(bundle);
+  for (const [name, content] of newer.files) await fs.writeFile(path.join(bundle, name), content);
+  await fs.writeFile(
+    path.join(directory, 'gh'),
+    `#!/usr/bin/env node
+const fs = require('node:fs');
+const args = process.argv.slice(2);
+fs.appendFileSync(process.env.EDITION_TEST_CALLS, JSON.stringify(args) + '\\n');
+if (args[0] !== 'api' || args.includes('--method') || args.includes('-X')) process.exit(90);
+const route = args.find(value => value.startsWith('repos/'));
+if (process.env.EDITION_TEST_EDIT_ROUTE === route) fs.writeFileSync(process.env.EDITION_TEST_SELECTOR, process.env.EDITION_TEST_EDIT_BYTES);
+const data = JSON.parse(fs.readFileSync(process.env.EDITION_TEST_RESPONSES));
+if (!data[route]) process.exit(91);
+process.stdout.write(Buffer.from(data[route], 'base64'));
+`,
+    { mode: 0o755 },
+  );
+  return {
+    older,
+    newer,
+    other,
+    root,
+    selectorPath,
+    responses,
+    assetRoutes,
+    callsPath,
+    async run(
+      input = selector(older.release, other.release),
+      environment = {},
+      command = 'sync-selector',
+    ) {
+      const original = bytes(input);
+      await fs.writeFile(selectorPath, original);
+      await fs.writeFile(responsePath, JSON.stringify(responses));
+      await fs.writeFile(callsPath, '');
+      const result = spawnSync(
+        process.execPath,
+        [
+          new URL('../scripts/publish-editions.mjs', import.meta.url).pathname,
+          command,
+          '--bundle',
+          bundle,
+          '--review',
+          path.join(bundle, 'edition-review.json'),
+          '--selector',
+          selectorPath,
+          '--repository',
+          'mekhovov/revealline',
+          '--base-path',
+          '/revealline/',
+        ],
+        {
+          encoding: 'utf8',
+          timeout: 30000,
+          env: {
+            ...process.env,
+            PATH: `${directory}${path.delimiter}${process.env.PATH}`,
+            EDITION_TEST_CALLS: callsPath,
+            EDITION_TEST_RESPONSES: responsePath,
+            EDITION_TEST_SELECTOR: selectorPath,
+            ...environment,
+          },
+        },
+      );
+      return { ...result, original, selected: await fs.readFile(selectorPath) };
+    },
+  };
+}
+
 test('an empty edition selector neither downloads nor changes any default publication files', async () => {
   const defaults = new Map([
     ['index.html', bytes('published default home')],
@@ -339,7 +447,7 @@ test('select-retained CLI uses read-only exact downloads and leaves the selector
       bytes({ tag_name: fixture.envelope.version, draft: false, prerelease: false, assets }),
     );
     add(
-      `commits/${fixture.envelope.version}`,
+      `commits/tags/${fixture.envelope.version}`,
       bytes({
         sha: fixture.envelope.sourceRevision,
         commit: { tree: { sha: fixture.envelope.sourceTree } },
@@ -426,6 +534,117 @@ process.stdout.write(Buffer.from(data[route], 'base64'));
   assert.match(rejected.stderr, /artifact bytes differ/);
   assert.deepEqual(await fs.readFile(selectorPath), selectedBytes);
   await assert.rejects(fs.access(`${selectorPath}.next`), { code: 'ENOENT' });
+});
+
+test('sync-selector verifies the complete retained publication before selecting a new release', async (t) => {
+  const f = await syncSelectorFixture(t),
+    result = await f.run();
+  assert.equal(result.status, 0, result.stderr);
+  const selected = json(result.selected);
+  assert.deepEqual(
+    selected.releases.map((row) => row.version),
+    ['v0.139.0', 'v0.141.0', 'v0.140.0'],
+  );
+  assert.deepEqual(
+    selected.releases.map((row) => row.activeEditionIds),
+    [[], ['droneaid'], ['coupa']],
+  );
+  assert.deepEqual(selected.releases[0], { ...f.older.release, activeEditionIds: [] });
+  assert.deepEqual(selected.releases[1], f.other.release);
+  assert.deepEqual(selected.releases[2], f.newer.release);
+  const calls = (await fs.readFile(f.callsPath, 'utf8')).trim().split('\n').map(JSON.parse);
+  assert.ok(
+    calls.every((args) => args[0] === 'api' && !args.includes('--method') && !args.includes('-X')),
+  );
+  const routes = calls.map((args) => args.find((arg) => arg.startsWith('repos/')));
+  for (const fixture of [f.older, f.newer, f.other]) {
+    assert.ok(routes.includes(`${f.root}/commits/tags/${fixture.envelope.version}`));
+    assert.ok(!routes.includes(`${f.root}/commits/${fixture.envelope.version}`));
+    for (const name of fixture.files.keys())
+      assert.equal(
+        routes.filter((route) => route === f.assetRoutes.get(`${fixture.envelope.version}/${name}`))
+          .length,
+        1,
+      );
+  }
+  await assert.rejects(fs.access(`${f.selectorPath}.next`), { code: 'ENOENT' });
+  const empty = await f.run(selector());
+  assert.equal(empty.status, 0, empty.stderr);
+  assert.deepEqual(json(empty.selected), selector(f.newer.release));
+});
+
+test('upload tag binding uses the qualified tag before any release mutation', async (t) => {
+  const f = await syncSelectorFixture(t);
+  const rejected = await f.run(undefined, {}, 'upload-draft');
+  assert.notEqual(rejected.status, 0);
+  assert.match(rejected.stderr, /Published releases are immutable/);
+  const calls = (await fs.readFile(f.callsPath, 'utf8')).trim().split('\n').map(JSON.parse);
+  assert.ok(calls.every((args) => args[0] === 'api'));
+  const routes = calls.map((args) => args.find((arg) => arg.startsWith('repos/')));
+  assert.ok(routes.includes(`${f.root}/commits/tags/${f.newer.envelope.version}`));
+  assert.ok(!routes.includes(`${f.root}/commits/${f.newer.envelope.version}`));
+});
+
+test('sync-selector refuses changed retained ZIPs, source identities, evidence and missing assets without staging', async (t) => {
+  const f = await syncSelectorFixture(t),
+    edition = f.older.envelope.editions[0],
+    version = f.older.envelope.version;
+  const assetRoute = (name) => f.assetRoutes.get(`${version}/${name}`);
+  const tagRoute = `${f.root}/commits/tags/${version}`;
+  const failures = [
+    [assetRoute(edition.distribution.path), 'corrupt', /artifact bytes differ/],
+    [assetRoute(edition.sourceArchive.path), 'corrupt', /artifact bytes differ/],
+    [
+      assetRoute(f.older.review.editions[0].gates[0].evidence.path),
+      'corrupt',
+      /artifact bytes differ/,
+    ],
+    [tagRoute, { sha: 'e'.repeat(40) }, /immutable release tag/],
+    [tagRoute, { commit: { tree: { sha: 'd'.repeat(40) } } }, /immutable release tag/],
+    [assetRoute(edition.manifest.path), 'missing', /download failed/],
+  ];
+  for (const [route, change, message] of failures) {
+    const original = f.responses[route];
+    if (change === 'missing') delete f.responses[route];
+    else if (change === 'corrupt') {
+      const changed = Buffer.from(original, 'base64');
+      changed[0] ^= 1;
+      f.responses[route] = changed.toString('base64');
+    } else
+      f.responses[route] = bytes({ ...json(Buffer.from(original, 'base64')), ...change }).toString(
+        'base64',
+      );
+    const rejected = await f.run();
+    assert.notEqual(rejected.status, 0, route);
+    assert.match(rejected.stderr, message);
+    assert.deepEqual(rejected.selected, rejected.original);
+    await assert.rejects(fs.access(`${f.selectorPath}.next`), { code: 'ENOENT' });
+    f.responses[route] = original;
+  }
+});
+
+test('sync-selector rejects invalid retained selections before downloads and preserves concurrent local edits', async (t) => {
+  const f = await syncSelectorFixture(t);
+  for (const input of [
+    { format: 'unknown', releases: [] },
+    selector(f.older.release, f.older.release),
+    selector({ ...f.older.release, basePath: '/other/' }),
+  ]) {
+    const rejected = await f.run(input);
+    assert.notEqual(rejected.status, 0);
+    assert.deepEqual(rejected.selected, rejected.original);
+    assert.equal(await fs.readFile(f.callsPath, 'utf8'), '');
+    await assert.rejects(fs.access(`${f.selectorPath}.next`), { code: 'ENOENT' });
+  }
+  const edited = JSON.stringify(selector(f.older.release)) + '\n';
+  const rejected = await f.run(undefined, {
+    EDITION_TEST_EDIT_ROUTE: `${f.root}/commits/tags/${f.newer.envelope.version}`,
+    EDITION_TEST_EDIT_BYTES: edited,
+  });
+  assert.notEqual(rejected.status, 0);
+  assert.match(rejected.stderr, /selector changed during verification/);
+  assert.equal(rejected.selected.toString(), edited);
+  await assert.rejects(fs.access(`${f.selectorPath}.next`), { code: 'ENOENT' });
 });
 
 test('duplicate active launchers and duplicate selected identities fail before release reads', async () => {

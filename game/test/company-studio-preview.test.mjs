@@ -152,6 +152,71 @@ test('preview verification stops before activation on cancellation and oversized
   assert.equal(cancelled, true);
 });
 
+test('overlong artifact and pending-read abort reject despite nonsettling transport cancellation', async () => {
+  const f = await neutral();
+  for (const mode of ['overlong', 'abort']) {
+    let cancelled = false,
+      entered,
+      timer;
+    const started = new Promise((resolve) => {
+      entered = resolve;
+    });
+    const response = new Response(
+      new ReadableStream({
+        start(stream) {
+          if (mode === 'overlong') stream.enqueue(new Uint8Array(f.report.artifact.bytes + 1));
+        },
+        pull() {},
+        cancel() {
+          cancelled = true;
+          return new Promise(() => {});
+        },
+      }),
+    );
+    const getReader = response.body.getReader.bind(response.body);
+    response.body.getReader = () => {
+      const reader = getReader(),
+        read = reader.read.bind(reader);
+      reader.read = () => {
+        const pending = read();
+        entered();
+        return pending;
+      };
+      return reader;
+    };
+    const controller = new AbortController();
+    const operation = verifyStudioPreview({
+      ...f.input,
+      fetcher: async () => response,
+      signal: controller.signal,
+    });
+    if (mode === 'abort') {
+      await started;
+      controller.abort();
+    }
+    try {
+      await assert.rejects(
+        Promise.race([
+          operation,
+          new Promise((_resolve, reject) => {
+            timer = setTimeout(
+              () => reject(new Error('Artifact failure did not settle promptly.')),
+              1000,
+            );
+          }),
+        ]),
+        mode === 'abort'
+          ? (error) => error.name === 'AbortError'
+          : /Artifact byte count differs: edition-build\.json/,
+      );
+    } finally {
+      clearTimeout(timer);
+    }
+    assert.equal(cancelled, true);
+    assert.equal(response.body.locked, false);
+  }
+});
+
 test('focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits', async () => {
   for (const editionId of ['coupa-adventure', 'droneaid-nl-workshop-lights', 'coupa-foundations']) {
     const { catalog, result } = await compileCompanyWorkspace({ editionId });

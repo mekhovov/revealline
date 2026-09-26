@@ -12,6 +12,7 @@ import { companySimulationIdentity } from '../company-session.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
+import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 
 test('artwork update offers explicit exact-snapshot recovery and Continue retains the original save', async (t) => {
   const f = await retainedEditionFixture(),
@@ -370,6 +371,40 @@ test('edition runs the complete Solo host with canonical rules, settings and mis
   downloads.click();
   assert.equal(page.$('settings-dialog').open, true);
   assert.equal(page.$('settings-panel-data').hidden, false);
+  assert.deepEqual(page.errors, []);
+});
+
+test('edition display controls retain the shared preferences without changing a paused flight or its exact receipt', async (t) => {
+  const f = await editionProviderFixture(),
+    page = await soloPage(t, {
+      search: '?edition=sample-public',
+      titleScreen: true,
+      journeyIndexedDB: managedIndexedDB().indexedDB,
+      fetchResponse: f.fetcher,
+    });
+  page.$('shell-featured').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('ArrowDown');
+  for (let tick = 0; tick < 12; tick++) page.frame();
+  page.key('ArrowDown', false);
+  page.$('settings-button').click();
+  page.$('settings-tab-display').click();
+  const key = 'revealline.suspended.journey-sample-public.v1.solo-v2',
+    before = authoritativeCheckpoint(page.rendered.run),
+    saved = page.storage.getItem(key);
+  assert.ok(saved);
+  for (const value of ['large', 'standard', 'large']) {
+    page.change('text-size', value);
+    page.change('text-face', 'plain');
+    page.frame(0);
+    assert.equal(page.doc.body.dataset.textSize, value);
+    assert.equal(page.doc.body.dataset.textFace, 'plain');
+    assert.equal(JSON.parse(page.storage.getItem(DISPLAY_PREFERENCES_KEY)).textSize, value);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+    assert.equal(page.storage.getItem(key), saved);
+    assert.equal(page.rendered.paused, true);
+    assert.equal(page.$('settings-dialog').open, true);
+  }
   assert.deepEqual(page.errors, []);
 });
 

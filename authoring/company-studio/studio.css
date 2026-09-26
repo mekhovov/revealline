@@ -565,3 +565,35 @@ iframe {
   margin-top: 0.75rem;
   overflow-wrap: anywhere;
 }
+
+.review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.review-picture {
+  white-space: pre-wrap;
+}
+.review-check {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.review-check label {
+  margin-top: 10px;
+}
+#mission-review details {
+  margin: 18px 0;
+}
+#mission-review p {
+  line-height: 1.6;
+}
+#review-fields {
+  margin-top: 24px;
+}
+#review-fields:disabled {
+  opacity: 0.7;
+}
+#review-observation-list button {
+  margin: 8px;
+}
