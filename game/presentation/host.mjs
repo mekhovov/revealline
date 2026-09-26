@@ -180,7 +180,7 @@ const controlIcons = {
   settings: '#shell-settings, #settings-button, #shell-options',
   play: '#shell-featured, #shell-continue, #shell-deploy, #start-button, #soundtrack-play, #race-start',
   retry: '#retry-button, #overlay-restart',
-  fullscreen: '#shell-fullscreen',
+  fullscreen: '#shell-fullscreen, #overlay-fullscreen',
   menu: '#shell-menu, #overlay-menu',
   back: 'button[id$="-back"], [data-shell-back]',
   close: '.dialog-close, button[id$="-close"]',

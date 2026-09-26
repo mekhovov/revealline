@@ -3,6 +3,13 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const css = readFileSync(new URL('../ui/pixel-theme.css', import.meta.url), 'utf8');
+const headerCss = [
+  '../ui/device-controls.css',
+  '../ui/field-kit-compiled.css',
+  '../ui/handheld-play.css',
+]
+  .map((path) => readFileSync(new URL(path, import.meta.url), 'utf8'))
+  .join('\n');
 const declarations = (selector) => {
   const start = css.indexOf(`${selector} {`);
   assert.notEqual(start, -1, `Missing pause-specific rule: ${selector}`);
@@ -14,13 +21,42 @@ const declarations = (selector) => {
 test('pause commands own their intrinsic height instead of inheriting the short-screen reader height', () => {
   const card = declarations(".game-shell .game-overlay[data-kind='pause'] .overlay-card");
   assert.match(card, /\bheight:\s*auto\s*;/);
-  assert.match(card, /\bmax-height:\s*none\s*;/);
+  assert.match(card, /\bmax-height:\s*100%\s*;/);
   assert.match(card, /\bflex-shrink:\s*0\s*;/);
   const buttons = declarations(
-    ".game-shell .game-overlay[data-kind='pause'] .overlay-actions .button",
+    ".game-shell .game-overlay[data-kind='pause'] .overlay-actions :is(.button, summary)",
   );
-  assert.match(buttons, /\bmin-height:\s*50px\s*;/);
+  assert.match(buttons, /\bmin-height:\s*44px\s*;/);
   assert.match(css, /\[data-text-size='large'\][\s\S]*font-size:\s*22px\s*;/);
+});
+
+test('pause action groups become compact horizontal rows with narrow and large-text fallbacks', () => {
+  const grid = declarations(".game-shell .game-overlay[data-kind='pause'] .pause-action-grid");
+  assert.match(grid, /grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)\s*;/);
+  assert.match(
+    headerCss,
+    /min-width:\s*520px[\s\S]*pause-missions-section[\s\S]*repeat\(4,\s*minmax\(0,\s*1fr\)\)/,
+  );
+  assert.match(
+    headerCss,
+    /pause-secondary-groups[\s\S]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/,
+  );
+  assert.match(
+    headerCss,
+    /max-width:\s*280px[\s\S]*pause-action-grid[\s\S]*grid-template-columns:\s*1fr/,
+  );
+  assert.match(css, /\[data-text-size='large'\][\s\S]*grid-template-columns:\s*1fr\s*;/);
+});
+
+test('short landscape keeps every command in one compact viewport row set', () => {
+  assert.match(
+    headerCss,
+    /orientation:\s*landscape[\s\S]*max-height:\s*540px[\s\S]*pause-label[\s\S]*display:\s*none/,
+  );
+  assert.match(
+    headerCss,
+    /orientation:\s*landscape[\s\S]*max-height:\s*540px[\s\S]*min-height:\s*44px/,
+  );
 });
 
 test('oversized pause commands have a top-reachable scrollport and focus clearance', () => {
@@ -28,4 +64,8 @@ test('oversized pause commands have a top-reachable scrollport and focus clearan
   assert.match(overlay, /\balign-items:\s*safe center\s*;/);
   assert.match(overlay, /\boverflow-y:\s*auto\s*;/);
   assert.match(overlay, /\bscroll-padding-block:\s*12px\s*;/);
+});
+
+test('gameplay header CSS no longer reserves or hides space for fullscreen', () => {
+  assert.doesNotMatch(headerCss, /shell-fullscreen/);
 });

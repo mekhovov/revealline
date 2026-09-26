@@ -1,4 +1,4 @@
-import { t } from '../i18n/index.mjs';
+import { t, onLocaleChange } from '../i18n/index.mjs';
 function iosBrowser(navigator) {
   if (!navigator) return false;
   const platform = navigator.platform ?? '';
@@ -10,7 +10,11 @@ function iosBrowser(navigator) {
 
 /** Fullscreen remains an explicit browser gesture. iPhone Safari cannot enter
  * document fullscreen, so its visible control explains the Home Screen route. */
-export function attachFullscreen(button, doc = globalThis.document) {
+export function attachFullscreen(
+  button,
+  doc = globalThis.document,
+  { allowInstallHelp = true } = {},
+) {
   if (!button) return () => {};
   let active = true,
     pending = false;
@@ -25,7 +29,7 @@ export function attachFullscreen(button, doc = globalThis.document) {
   const supported = !!doc.fullscreenEnabled && !!doc.documentElement?.requestFullscreen;
   const installDialog = doc.getElementById?.('ios-home-screen-dialog');
   const offersInstallHelp =
-    !supported && !iosStandalone && iosBrowser(navigator) && !!installDialog;
+    allowInstallHelp && !supported && !iosStandalone && iosBrowser(navigator) && !!installDialog;
   button.hidden = !supported && !offersInstallHelp;
   const sync = () => {
     if (!active) return;
@@ -40,9 +44,16 @@ export function attachFullscreen(button, doc = globalThis.document) {
           ? t('interface:exitFullscreen')
           : t('interface:enterFullscreen'),
     );
+    if (button.hasAttribute?.('data-fullscreen-label'))
+      button.textContent = offersInstallHelp
+        ? t('interface:fullScreenHelp')
+        : doc.fullscreenElement
+          ? t('interface:exitFullScreen')
+          : t('interface:fullScreen');
     if (offersInstallHelp) button.removeAttribute('aria-pressed');
     else button.setAttribute('aria-pressed', String(!!doc.fullscreenElement));
   };
+  const unsubscribeLocale = onLocaleChange(sync);
   const addDisplayListener = () => {
     if (displayMode?.addEventListener) displayMode.addEventListener('change', sync);
     else displayMode?.addListener?.(sync);
@@ -56,6 +67,7 @@ export function attachFullscreen(button, doc = globalThis.document) {
   if (!supported && !offersInstallHelp) {
     return () => {
       active = false;
+      unsubscribeLocale();
       removeDisplayListener();
     };
   }
@@ -85,6 +97,7 @@ export function attachFullscreen(button, doc = globalThis.document) {
     active = false;
     button.removeEventListener('click', click);
     doc.removeEventListener('fullscreenchange', sync);
+    unsubscribeLocale();
     removeDisplayListener();
   };
 }
