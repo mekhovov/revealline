@@ -91,7 +91,6 @@ function imageBoundary(t) {
 
 async function choosePressureChapter(page) {
   // Choose the exact authored edition through the visible unified gallery.
-  // This source still requires Download followed by a deliberate Play action.
   await openMissionLibrary(page, 'shell-play');
   const card = [...page.$('journey-cards').children].find(
     (element) => element.dataset.missionId === pressureMission.id,
@@ -104,13 +103,6 @@ async function choosePressureChapter(page) {
   // retain their shared deadline and no application timeout is changed.
   try {
     await preparing;
-    const readyCard = [...page.$('journey-cards').children].find(
-      (element) => element.dataset.missionId === pressureMission.id,
-    );
-    assert.ok(readyCard);
-    assert.equal(readyCard.querySelector('.journey-card-action').textContent, 'Play');
-    assert.equal(page.$('journey-chooser').open, true);
-    await activateMissionCard(readyCard);
     await waitFor(
       () => {
         page.frame(0);

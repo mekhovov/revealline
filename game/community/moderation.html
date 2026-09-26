@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" data-community-api="/">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../i18n/style.css" />
+    <script src="../vendor/i18next-26.4.2.min.js"></script>
+    <script src="../i18n/catalogs.mjs"></script>
+    <script src="../i18n/bootstrap.mjs"></script>
+    <title data-i18n="interface:community.moderationPageTitle">
+      Community moderation · RevealLine
+    </title>
+    <link rel="stylesheet" href="./community.css" />
+    <script type="module" src="./moderation-page.mjs"></script>
+  </head>
+  <body>
+    <div data-language-control></div>
+    <header>
+      <a href="./" data-i18n="interface:community.backToCommunity">← Community campaigns</a>
+      <a href="../" data-i18n="interface:community.backToRevealLine">← RevealLine</a>
+      <span data-i18n="interface:community.administratorOnly">Administrator access only</span>
+    </header>
+    <main>
+      <p class="eyebrow" data-i18n="interface:community.moderationEyebrow">
+        REVIEW / DECIDE / AUDIT
+      </p>
+      <h1 data-i18n="interface:community.moderationHeading">Community report moderation</h1>
+      <p data-i18n="interface:community.moderationIntro">
+        Review reports without automatically loading reported media. The service verifies your
+        administrator session and records every resolution and removal decision.
+      </p>
+      <p id="account-status" class="muted" role="status" aria-live="polite">
+        <span data-i18n="interface:community.checkingAdminSession">
+          Checking administrator session…
+        </span>
+      </p>
+      <p id="status" role="status" aria-live="polite" tabindex="-1">
+        <span data-i18n="interface:community.loadingReports">Loading moderation reports…</span>
+      </p>
+      <section
+        class="panel controls"
+        aria-label="Moderation filters"
+        data-i18n-aria-label="interface:community.moderationFilters"
+      >
+        <label
+          ><span data-i18n="interface:community.reportStatus">Report status</span>
+          <select id="report-status">
+            <option value="open" data-i18n="interface:community.openReports">Open reports</option>
+            <option value="resolved" data-i18n="interface:community.resolvedReports">
+              Resolved reports
+            </option>
+          </select></label
+        >
+        <button id="refresh" type="button" data-i18n="interface:community.refresh">Refresh</button>
+      </section>
+      <section
+        id="reports"
+        class="moderation-list"
+        aria-label="Moderation reports"
+        data-i18n-aria-label="interface:community.moderationReports"
+      ></section>
+      <p class="pager">
+        <button id="more" type="button" hidden data-i18n="interface:community.loadMoreReports">
+          Load more reports
+        </button>
+      </p>
+      <section class="panel" aria-labelledby="moderation-boundary-heading">
+        <h2 id="moderation-boundary-heading" data-i18n="interface:community.moderationBoundary">
+          Decision boundary
+        </h2>
+        <p data-i18n="interface:community.moderationBoundaryHelp">
+          Resolve keeps the edition listed. Unlist and resolve first removes the exact edition from
+          public discovery, then records the report decision. Installed copies remain playable.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

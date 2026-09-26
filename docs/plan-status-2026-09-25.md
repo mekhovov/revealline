@@ -1,6 +1,16 @@
 # Reveal Line delivery status — 25 September 2026
 
-This register is the current source of truth for the player-first delivery programme. It separates
+> **Historical register.** Current status as of 26 September 2026: stable
+> [v0.141.2](https://github.com/mekhovov/revealline/releases/tag/v0.141.2) is selected on Pages from
+> exact source `12978e5fd3fe0ce70bbee96aa543f569f64622d4`. Selector PR #677 merged as
+> `34f45503c32479591dcdc36e7236aaa2eb348a2f`; run `36252239829` / deployment `6680716352`
+> audited 1,888 files and 630,471,797 bytes in 1,888 attempts with zero retries or failures.
+> Immutable v0.141.1 is an intermediate GitHub-only release, and Archive95 preserves v0.141.0.
+> The boundaries, queue and version allocations below describe the 25 September cutoff and are no
+> longer live. Future work requires fresh allocation after checking open v0.142.0 through v0.149.x
+> ranges.
+
+At its 25 September cutoff, this register was the source of truth for the player-first delivery programme. It separates
 publicly verified releases, accepted source prerequisites, qualification evidence that cannot be
 published as-is, and draft work. A merge or successful workflow is not a delivered feature until
 its exact cumulative source is frozen, published, admitted to the Pages selector and exercised on

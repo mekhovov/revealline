@@ -45,6 +45,8 @@ let nextCursor = null;
 let submissionId = null;
 let submissionTimer = null;
 let accountSession = injectedAuth ? { user: {}, configured: true } : null;
+const accountParameters = new URL(globalThis.location.href).searchParams;
+const passwordResetToken = accountParameters.get('token');
 const previewURLs = new Set();
 const canPublish = () => Boolean(accountSession && auth?.headers);
 const renderAccount = () => {
@@ -63,6 +65,31 @@ const renderAccount = () => {
 const setAccountStatus = (message, error = false) => {
   localizedText($('account-status'), message);
   $('account-status').classList.toggle('error', error);
+};
+const clearAccountAction = () => {
+  const url = new URL(globalThis.location.href);
+  url.searchParams.delete('account');
+  url.searchParams.delete('token');
+  url.searchParams.delete('error');
+  globalThis.history.replaceState(null, '', url);
+};
+const renderAccountAction = () => {
+  if (accountParameters.get('account') === 'reset' && passwordResetToken) {
+    $('account-reset').hidden = false;
+    setAccountStatus(localizedMessage('interface:community.enterNewPassword'));
+    return true;
+  }
+  if (accountParameters.get('account') === 'verified') {
+    setAccountStatus(localizedMessage('interface:community.emailVerified'));
+    clearAccountAction();
+    return true;
+  }
+  if (accountParameters.get('error')) {
+    setAccountStatus(localizedMessage('interface:community.accountLinkInvalid'), true);
+    clearAccountAction();
+    return true;
+  }
+  return false;
 };
 
 const text = (tag, value, className) => {
@@ -107,6 +134,8 @@ function render() {
     const flags = document.createElement('p');
     if (edition.installed)
       flags.append(text('span', localizedMessage('common:status.installed'), 'badge'));
+    if (edition.offloaded)
+      flags.append(text('span', localizedMessage('interface:community.mediaOffloaded'), 'badge'));
     if (edition.packageRetained)
       flags.append(text('span', localizedMessage('interface:community.offlineCopy'), 'badge'));
     if (edition.updateAvailable)
@@ -159,6 +188,16 @@ function render() {
       if (edition.packageRetained)
         actions.append(
           action(
+            localizedMessage('interface:community.offloadInstalledMedia'),
+            async () => {
+              const review = await library.reviewInstalledOffload(edition);
+              await library.offloadInstalled(edition, review);
+              status(localizedMessage('interface:community.installedMediaOffloaded'));
+              await refresh({ reset: true });
+            },
+            'secondary',
+          ),
+          action(
             localizedMessage('interface:community.removeRecoveryDownload'),
             async () => {
               const review = await library.reviewDownloadRemoval(edition);
@@ -185,13 +224,15 @@ function render() {
       actions.append(
         action(
           localizedMessage(
-            edition.updateAvailable
-              ? 'interface:community.downloadUpdate'
-              : 'interface:community.downloadAndInstall',
+            edition.offloaded
+              ? 'interface:community.reinstallExactEdition'
+              : edition.updateAvailable
+                ? 'interface:community.downloadUpdate'
+                : 'interface:community.downloadAndInstall',
           ),
           async () => {
             status(localizedMessage('interface:community.downloading', { title: edition.title }));
-            await library.install(edition, { offline: false });
+            await library.install(edition, { offline: edition.offloaded });
             status(
               localizedMessage('interface:community.installedOffline', { title: edition.title }),
             );
@@ -370,12 +411,54 @@ $('account-sign-up').onclick = async () => {
       password: $('account-password').value,
     });
     $('account-password').value = '';
-    setAccountStatus(localizedMessage('interface:community.accountCreated'));
+    setAccountStatus(localizedMessage('interface:community.accountCreatedVerify'));
     renderAccount();
   } catch (error) {
     setAccountStatus(error.message, true);
   } finally {
     $('account-sign-up').disabled = false;
+  }
+};
+$('account-verify').onclick = async () => {
+  if (!account) return;
+  $('account-verify').disabled = true;
+  try {
+    await account.requestEmailVerification({ email: $('account-email').value });
+    setAccountStatus(localizedMessage('interface:community.verificationSent'));
+  } catch (error) {
+    setAccountStatus(error.message, true);
+  } finally {
+    $('account-verify').disabled = false;
+  }
+};
+$('account-forgot').onclick = async () => {
+  if (!account) return;
+  $('account-forgot').disabled = true;
+  try {
+    await account.requestPasswordReset({ email: $('account-email').value });
+    setAccountStatus(localizedMessage('interface:community.passwordResetSent'));
+  } catch (error) {
+    setAccountStatus(error.message, true);
+  } finally {
+    $('account-forgot').disabled = false;
+  }
+};
+$('account-reset').onclick = async () => {
+  if (!account || !passwordResetToken) return;
+  $('account-reset').disabled = true;
+  try {
+    await account.resetPassword({
+      token: passwordResetToken,
+      newPassword: $('account-password').value,
+    });
+    $('account-password').value = '';
+    clearAccountAction();
+    $('account-reset').hidden = true;
+    setAccountStatus(localizedMessage('interface:community.passwordChanged'));
+  } catch (error) {
+    setAccountStatus(error.message, true);
+  } finally {
+    $('account-reset').disabled = false;
   }
 };
 $('account-sign-in').onclick = async () => {
@@ -422,13 +505,9 @@ if (account)
     .session()
     .then((session) => {
       accountSession = session;
-      setAccountStatus(
-        localizedMessage(
-          session
-            ? 'interface:community.sessionRestored'
-            : 'interface:community.signInOnlyToPublish',
-        ),
-      );
+      if (session) setAccountStatus(localizedMessage('interface:community.sessionRestored'));
+      else if (!renderAccountAction())
+        setAccountStatus(localizedMessage('interface:community.signInOnlyToPublish'));
       renderAccount();
     })
     .catch((error) =>

@@ -85,7 +85,12 @@ async function edition(blob, overrides = {}) {
     ...overrides,
   };
 }
-const fixture = async ({ editions, downloads, stateStore = createMemoryCommunityStateStore() }) => {
+const fixture = async ({
+  editions,
+  downloads,
+  stateStore = createMemoryCommunityStateStore(),
+  lockManager,
+}) => {
   const memory = memoryIndexedDB();
   const creatorStore = createCreatorStore({ indexedDB: memory.indexedDB });
   const downloadStore = createMemoryCommunityDownloadStore();
@@ -103,6 +108,7 @@ const fixture = async ({ editions, downloads, stateStore = createMemoryCommunity
       stateStore,
       downloadStore,
       decodeImage,
+      lockManager,
     }),
   };
 };
@@ -317,6 +323,162 @@ test('download removal rejects a stale review and keeps the changed recovery byt
   await assert.rejects(library.removeDownload(item, review), /changed/u);
   assert.equal((await downloadStore.get(item.editionId)).size, 7);
   assert.equal((await library.status(item.editionId)).installed, true);
+  creatorStore.close();
+});
+
+test('exact-edition offload keeps its manifest and ownership keys, then reinstalls offline', async () => {
+  const source = await packageFixture('Offload crossing');
+  const item = await edition(source.blob, {
+    editionId: `ed_${'4'.repeat(64)}`,
+  });
+  const lockNames = [];
+  const { library, creatorStore } = await fixture({
+    editions: [item],
+    downloads: new Map([[item.editionId, source.blob]]),
+    lockManager: {
+      request(name, operation) {
+        lockNames.push(name);
+        return operation();
+      },
+    },
+  });
+  const installed = await library.install(item, { offline: false });
+  const before = await library.status(item.editionId);
+  const pictureHash = source.prepared.manifest.assets[0].sha256;
+  assert.ok(await creatorStore.readBlob(pictureHash));
+
+  const review = await library.reviewInstalledOffload(item);
+  assert.equal(review.manifestRetained, true);
+  assert.equal(review.detachedAssets, 1);
+  assert.ok(review.detachableBytes > 0);
+  const offloaded = await library.offloadInstalled(item, review);
+  assert.equal(offloaded.installed, false);
+  assert.equal(offloaded.offloaded, true);
+  assert.equal(offloaded.manifestRetained, true);
+  assert.equal(offloaded.packageRetained, true);
+  assert.equal(offloaded.creatorEditionId, installed.creatorEditionId);
+  assert.equal(offloaded.profileKey, before.profileKey);
+  assert.equal(offloaded.attemptKey, before.attemptKey);
+  assert.equal(await creatorStore.readBlob(pictureHash), null);
+  assert.deepEqual(await installedCreatorManifests(creatorStore), []);
+
+  await library.install(item);
+  const restored = await library.status(item.editionId);
+  assert.equal(restored.installed, true);
+  assert.equal(restored.offloaded, false);
+  assert.equal(restored.creatorEditionId, installed.creatorEditionId);
+  assert.equal(restored.profileKey, before.profileKey);
+  assert.equal(restored.attemptKey, before.attemptKey);
+  assert.ok(await creatorStore.readBlob(pictureHash));
+  assert.equal((await installedCreatorManifests(creatorStore)).length, 1);
+  assert.deepEqual(lockNames, [
+    `revealline-community-edition-${item.editionId}`,
+    `revealline-community-edition-${item.editionId}`,
+    `revealline-community-edition-${item.editionId}`,
+  ]);
+  creatorStore.close();
+});
+
+test('offload keeps a shared asset until every active edition relinquishes it', async () => {
+  const first = await packageFixture('Shared picture one');
+  const second = await packageFixture('Shared picture two');
+  const firstEdition = await edition(first.blob, {
+    editionId: `ed_${'5'.repeat(64)}`,
+  });
+  const secondEdition = await edition(second.blob, {
+    editionId: `ed_${'6'.repeat(64)}`,
+    slug: 'shared-picture-two',
+  });
+  const { library, creatorStore } = await fixture({
+    editions: [firstEdition, secondEdition],
+    downloads: new Map([
+      [firstEdition.editionId, first.blob],
+      [secondEdition.editionId, second.blob],
+    ]),
+  });
+  await library.install(firstEdition, { offline: false });
+  await library.install(secondEdition, { offline: false });
+  const sharedHash = first.prepared.manifest.assets[0].sha256;
+  assert.equal(sharedHash, second.prepared.manifest.assets[0].sha256);
+
+  const firstReview = await library.reviewInstalledOffload(firstEdition);
+  assert.equal(firstReview.detachedAssets, 0);
+  assert.equal(firstReview.detachableBytes, 0);
+  await library.offloadInstalled(firstEdition, firstReview);
+  assert.ok(await creatorStore.readBlob(sharedHash));
+  assert.equal((await installedCreatorManifests(creatorStore)).length, 1);
+
+  const secondReview = await library.reviewInstalledOffload(secondEdition);
+  assert.equal(secondReview.detachedAssets, 1);
+  await library.offloadInstalled(secondEdition, secondReview);
+  assert.equal(await creatorStore.readBlob(sharedHash), null);
+  assert.deepEqual(await installedCreatorManifests(creatorStore), []);
+  creatorStore.close();
+});
+
+test('offload requires unchanged exact recovery and rejects a concurrent media generation', async () => {
+  const first = await packageFixture('Reviewed offload');
+  const second = await packageFixture('Concurrent install');
+  const firstEdition = await edition(first.blob, {
+    editionId: `ed_${'7'.repeat(64)}`,
+  });
+  const secondEdition = await edition(second.blob, {
+    editionId: `ed_${'8'.repeat(64)}`,
+    slug: 'concurrent-install',
+  });
+  const { library, creatorStore, downloadStore } = await fixture({
+    editions: [firstEdition, secondEdition],
+    downloads: new Map([
+      [firstEdition.editionId, first.blob],
+      [secondEdition.editionId, second.blob],
+    ]),
+  });
+  await library.install(firstEdition, { offline: false });
+  const noRecoveryReview = await library.reviewDownloadRemoval(firstEdition);
+  await library.removeDownload(firstEdition, noRecoveryReview);
+  await assert.rejects(library.reviewInstalledOffload(firstEdition), /exact recovery package/u);
+  await library.retainFromInstalled(firstEdition);
+
+  const stale = await library.reviewInstalledOffload(firstEdition);
+  await library.install(secondEdition, { offline: false });
+  await assert.rejects(library.offloadInstalled(firstEdition, stale), /changed/u);
+  const current = await library.status(firstEdition.editionId);
+  assert.equal(current.installed, true);
+  assert.equal(current.offloaded, false);
+  assert.ok(await downloadStore.get(firstEdition.editionId));
+  creatorStore.close();
+});
+
+test('an interrupted offload journal remains recoverable from its exact retained package', async () => {
+  const source = await packageFixture('Offload journal');
+  const item = await edition(source.blob, {
+    editionId: `ed_${'3'.repeat(64)}`,
+  });
+  const memoryState = createMemoryCommunityStateStore();
+  let writes = 0;
+  const stateStore = {
+    read: memoryState.read,
+    write(value) {
+      if (++writes === 4) throw new Error('storage unavailable');
+      return memoryState.write(value);
+    },
+  };
+  const { library, creatorStore } = await fixture({
+    editions: [item],
+    downloads: new Map([[item.editionId, source.blob]]),
+    stateStore,
+  });
+  await library.install(item, { offline: false });
+  const review = await library.reviewInstalledOffload(item);
+  const result = await library.offloadInstalled(item, review);
+  assert.equal(result.journalComplete, false);
+  assert.equal(result.offloaded, true);
+  assert.equal(result.packageRetained, true);
+  assert.equal(memoryState.read().editions[0].installation, 'offloading');
+
+  await library.install(item);
+  assert.equal((await library.status(item.editionId)).installed, true);
+  assert.equal(memoryState.read().editions[0].installation, 'installed');
   creatorStore.close();
 });
 

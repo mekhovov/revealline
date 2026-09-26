@@ -9,7 +9,7 @@ on:
     # ran on open/synchronize. Draft promotion does not change source or
     # admission metadata, so ready_for_review would duplicate the exact-head
     # gate. Keep edited because release admission is intentionally title-based.
-    types: [opened, synchronize, reopened, edited]
+    types: [opened, synchronize, reopened, edited, labeled, unlabeled, milestoned, demilestoned]
   workflow_dispatch:
     inputs:
       release_tag:
@@ -69,6 +69,7 @@ jobs:
       runTests: ${{ steps.test_policy.outputs.runTests }}
       testMode: ${{ steps.test_policy.outputs.mode }}
       admission: ${{ steps.admission.outputs.mode }}
+      focusedRequired: ${{ steps.admission.outputs.focusedRequired }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out the workflow's test policy
@@ -79,6 +80,9 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
           sparse-checkout: |
+            .github/workflows/deploy-pages.yml
+            publishing/admission-binding.mjs
+            publishing/admission-preflight.mjs
             publishing/pages-controller/metadata.mjs
             publishing/pages-controller/publication.json
             publishing/pages-controller/release-policy.mjs
@@ -103,49 +107,16 @@ jobs:
         id: admission
         env:
           GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          PR_TITLE: ${{ github.event.pull_request.title }}
-        run: |
-          set -euo pipefail
-          # A product change consumes an immutable version slot only when an
-          # owner explicitly promotes it with a stable release title. A
-          # milestone is an explicit source-only schedule: it may merge into
-          # the accumulating train, while the one promoted release remains the
-          # only PR that builds and publishes a versioned artifact.
-          if [[ "$PR_TITLE" =~ ^Release\ evidence\ v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
-            mapfile -t paths < <(gh api --paginate \
-              "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files?per_page=100" \
-              --jq '.[].filename')
-            if [ "${#paths[@]}" -eq 0 ] || printf '%s\n' "${paths[@]}" | grep -Ev '^docs/' >/dev/null; then
-              echo '::error::Release evidence recovery is restricted to a non-empty docs-only diff.'
-              exit 1
-            fi
-            echo 'mode=release-evidence' >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          if [[ "$PR_TITLE" =~ ^Release\ v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
-            echo 'mode=release' >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          milestone="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '.milestone.title // ""')"
-          if [[ "$milestone" =~ ^v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
-            echo 'mode=scheduled' >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
+          WORKFLOW_REVISION: ${{ github.workflow_sha }}
+        run: node .source-gate-automation/publishing/admission-preflight.mjs
 
-          mapfile -t paths < <(gh api --paginate \
-            "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files?per_page=100" \
-            --jq '.[].filename')
-          if [ "${#paths[@]}" -gt 0 ] && printf '%s\n' "${paths[@]}" | \
-            grep -Ev '^(docs/|publishing/|\.github/workflows/|game/test/)' >/dev/null; then
-            echo 'mode=hold' >> "$GITHUB_OUTPUT"
-          else
-            # Documentation, test-only evidence, and release-controller
-            # maintenance are bounded non-product work; they do not allocate a
-            # product release slot. Any accompanying runtime path still holds
-            # the whole PR in the product lane.
-            echo 'mode=maintenance' >> "$GITHUB_OUTPUT"
-          fi
+      - name: Preserve exact source and admission metadata
+        uses: actions/upload-artifact@v4
+        with:
+          name: admission-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/admission.json
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Require the previous stable release on public Pages
         if: steps.admission.outputs.mode == 'release'
@@ -179,7 +150,8 @@ jobs:
     if: >-
       github.event_name == 'pull_request' &&
       needs.preflight.result == 'success' &&
-      needs.preflight.outputs.admission != 'hold'
+      needs.preflight.outputs.admission != 'hold' &&
+      needs.preflight.outputs.focusedRequired == 'true'
     needs: preflight
     runs-on: ubuntu-latest
     permissions:
@@ -217,14 +189,21 @@ jobs:
           cache: npm
           cache-dependency-path: source/package-lock.json
 
+      - name: Download the immutable preflight path inventory
+        uses: actions/download-artifact@v4
+        with:
+          name: admission-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/preflight-admission
+
       - name: Capture the reviewed changed-path set
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           set -euo pipefail
-          gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files?per_page=100" \
-            --jq '.[].filename' > "$RUNNER_TEMP/focused-paths.txt"
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const receipt = JSON.parse(fs.readFileSync(`${process.env.RUNNER_TEMP}/preflight-admission/admission.json`, 'utf8'));
+          if (receipt.headSha !== process.env.EXPECTED_SOURCE || receipt.paths.some(p => /[\r\n]/.test(p))) throw new Error('Invalid exact-head path inventory');
+          fs.writeFileSync(`${process.env.RUNNER_TEMP}/focused-paths.txt`, receipt.paths.join('\n') + '\n');
+          NODE
           test -s "$RUNNER_TEMP/focused-paths.txt"
 
       - name: Select the fail-closed focused gate
@@ -444,13 +423,19 @@ jobs:
           ADMISSION: ${{ needs.preflight.outputs.admission }}
           BUILD_RESULT: ${{ needs.build.result }}
           FOCUSED_RESULT: ${{ needs.focused.result }}
+          FOCUSED_REQUIRED: ${{ needs.preflight.outputs.focusedRequired }}
           FULL_CI: ${{ vars.REVEALLINE_FULL_CI || 'false' }}
           PREFLIGHT_RESULT: ${{ needs.preflight.result }}
           TEST_RESULT: ${{ needs.test.result }}
         run: |
           test "$PREFLIGHT_RESULT" = success
           if [ "$ADMISSION" != hold ]; then
-            test "$FOCUSED_RESULT" = success
+            if [ "$FOCUSED_REQUIRED" = true ]; then
+              test "$FOCUSED_RESULT" = success
+            else
+              test "$FOCUSED_REQUIRED" = false
+              test "$FOCUSED_RESULT" = skipped
+            fi
           fi
           if [ "$ADMISSION" = maintenance ]; then
             echo 'Bounded documentation/controller maintenance: selected focused gates passed; product build not required.'

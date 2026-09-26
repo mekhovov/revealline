@@ -20,6 +20,8 @@
         >My installed creations</a
       ><a href="../community/" data-i18n="interface:creator.communityCampaigns"
         >Community campaigns</a
+      ><a href="./team.html" data-i18n="interface:creator.teamStudio.openCreator"
+        >Create a Team campaign</a
       >
     </header>
     <main>
@@ -132,6 +134,8 @@
         </h2>
         <p id="media-status" role="status" aria-live="polite"></p>
         <div id="media-list"></div>
+        <p id="media-capacity" class="muted"></p>
+        <div id="media-split-results" class="batch-split-results" hidden></div>
         <div class="actions">
           <button id="media-apply" data-i18n="interface:creator.inspectMedia">Inspect media</button>
           <button
@@ -141,6 +145,22 @@
             data-i18n="interface:creator.cancelMediaInspection"
           >
             Cancel media inspection
+          </button>
+          <button
+            id="media-remove-excluded"
+            class="secondary"
+            hidden
+            data-i18n="interface:creator.removeExcludedMedia"
+          >
+            Remove excluded media
+          </button>
+          <button
+            id="media-split"
+            class="secondary"
+            hidden
+            data-i18n="interface:creator.splitSmallerPacks"
+          >
+            Split into smaller packs
           </button>
         </div>
       </section>
@@ -195,7 +215,7 @@
         <h2 id="review-title" data-i18n="interface:creator.reviewPictureHeading">
           2. Review your picture and level
         </h2>
-        <div class="review-grid">
+        <div id="legacy-review-grid" class="review-grid">
           <div>
             <img id="picture" alt="" />
             <p id="picture-caption"></p>
@@ -211,6 +231,7 @@
             <p id="map-caption"></p>
           </div>
         </div>
+        <div id="mission-review-list" class="mission-review-list"></div>
         <p id="validation"></p>
         <p id="package-size" class="muted"></p>
         <button id="approve" disabled data-i18n="interface:creator.approvePictureLevel">
@@ -263,9 +284,10 @@
           <input id="import" type="file" accept=".rlpack,.rlsource"
         /></label>
         <p data-i18n="interface:creator.backupExplanation">
-          A .rlpack includes reviewed runtime posters and its selected complete victory videos. An
-          image-only private .rlsource backup also includes retained originals, if available, and
-          editing information. Neither includes player progress or unrelated library items.
+          A .rlpack includes reviewed runtime posters and its selected complete victory videos. A
+          private .rlsource backup also keeps the exact retained source originals, media pairing,
+          poster and playback-range choices, and editing information. Neither includes player
+          progress or unrelated library items.
         </p>
         <button id="backup" disabled data-i18n="interface:creator.backupSourceProject">
           Back up source project</button

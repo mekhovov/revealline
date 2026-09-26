@@ -1,12 +1,15 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
+import { Readable } from 'node:stream';
 import test from 'node:test';
 import pngjs from 'pngjs';
 import { memoryAdapter } from '@better-auth/memory-adapter';
+import { MemoryLocker } from '@tus/server';
 import { buildCommunityApp } from '../src/app.mjs';
+import { MemoryAccountMailDelivery } from '../src/account-mail.mjs';
 import { createSessionAuthenticator, createTokenAuthenticator } from '../src/auth.mjs';
 import { DiskBlobStore, MemoryBlobStore, S3CompatibleBlobStore } from '../src/blob-store.mjs';
 import { readConfig } from '../src/config.mjs';
@@ -27,10 +30,11 @@ import {
 import { processNextValidationJob } from '../src/worker.mjs';
 import {
   createCreatorPackageValidator,
+  createFfprobeVideoInspector,
   decodeCreatorPng,
   readCreatorPreview,
 } from '../src/validator.mjs';
-import { createCommunityTusServer } from '../src/tus-server.mjs';
+import { createCommunityTusServer, removeCompletedTusUpload } from '../src/tus-server.mjs';
 import { createCommunityAccountClient } from '../../../game/community/account.mjs';
 import { createCommunityClient } from '../../../game/community/client.mjs';
 import { createTusBrowserUpload } from '../../../game/community/tus-upload.mjs';
@@ -154,8 +158,62 @@ test('submission validation bounds plain text, semantic versions, hashes, and pa
     );
 });
 
+test('ffprobe validation permits only bounded local-file inspection', async () => {
+  const source = Buffer.from('bounded-video-fixture');
+  let invocation;
+  let stagedFile;
+  const inspect = createFfprobeVideoInspector({
+    ffprobePath: '/usr/local/bin/ffprobe',
+    timeoutMs: 12_345,
+    runCommand: async (command, args, options) => {
+      invocation = { command, args, options };
+      stagedFile = args.at(-1);
+      assert.deepEqual(await readFile(stagedFile), source);
+      return {
+        stdout: JSON.stringify({
+          streams: [{ codec_type: 'video', width: 640, height: 360 }],
+          format: { duration: '6.0' },
+        }),
+      };
+    },
+  });
+
+  const inspected = await inspect(new Blob([source], { type: 'video/mp4' }));
+  assert.deepEqual(invocation, {
+    command: '/usr/local/bin/ffprobe',
+    args: [
+      '-v',
+      'error',
+      '-protocol_whitelist',
+      'file',
+      '-threads',
+      '1',
+      '-probesize',
+      '5000000',
+      '-analyzeduration',
+      '5000000',
+      '-show_entries',
+      'format=duration:stream=codec_type,width,height',
+      '-of',
+      'json',
+      stagedFile,
+    ],
+    options: { timeout: 12_345, maxBuffer: 1024 * 1024 },
+  });
+  assert.deepEqual(inspected.info, {
+    sha256: createHash('sha256').update(source).digest('hex'),
+    bytes: source.length,
+    mime: 'video/mp4',
+    width: 640,
+    height: 360,
+    durationSeconds: 6,
+  });
+  await assert.rejects(readFile(stagedFile), { code: 'ENOENT' });
+});
+
 test('executable configuration refuses implicit development authentication', () => {
   assert.throws(() => readConfig({}), /BETTER_AUTH_SECRET/u);
+  assert.equal(readConfig({}, { requireAuth: false }).betterAuth, null);
   const config = readConfig({
     COMMUNITY_ALLOW_DEV_AUTH: 'true',
     COMMUNITY_DEV_TOKENS: '{"token":"creator"}',
@@ -164,6 +222,92 @@ test('executable configuration refuses implicit development authentication', () 
   assert.equal(config.maxPackageBytes, 256 * 1024 * 1024);
   assert.deepEqual(config.admissionPolicies.auth, { limit: 30, windowMs: 300_000 });
   assert.equal(config.admissionPolicies.uploadBytes.limit, 2 * 1024 * 1024 * 1024);
+  assert.equal(config.tusExpirationMs, 86_400_000);
+  assert.equal(config.tusCleanupIntervalMs, 300_000);
+  assert.equal(config.tusCleanupBatchSize, 32);
+  assert.equal(config.tusCleanupLeaseMs, 120_000);
+  assert.equal(config.tusLockTimeoutMs, 30_000);
+  assert.equal(config.tusLockPoolSize, 20);
+  assert.deepEqual(config.blobStorage, { driver: 'disk', root: './var/blobs' });
+  assert.equal(config.releaseIdentity, null);
+  assert.throws(
+    () =>
+      readConfig(
+        {
+          COMMUNITY_BLOB_STORAGE: 'disk',
+          COMMUNITY_S3_BUCKET: 'unexpected',
+        },
+        { requireAuth: false },
+      ),
+    /require COMMUNITY_BLOB_STORAGE=s3/u,
+  );
+  assert.throws(
+    () => readConfig({ COMMUNITY_BLOB_STORAGE: 's3' }, { requireAuth: false }),
+    /COMMUNITY_S3_BUCKET/u,
+  );
+  assert.throws(
+    () =>
+      readConfig(
+        {
+          COMMUNITY_BLOB_STORAGE: 's3',
+          COMMUNITY_S3_BUCKET: 'creator-packages',
+          COMMUNITY_S3_REGION: 'eu-central-1',
+          COMMUNITY_S3_FORCE_PATH_STYLE: 'yes',
+          COMMUNITY_BLOB_STAGING_ROOT: '/tmp/stage',
+        },
+        { requireAuth: false },
+      ),
+    /must be true or false/u,
+  );
+  assert.throws(
+    () =>
+      readConfig(
+        {
+          COMMUNITY_BLOB_STORAGE: 's3',
+          COMMUNITY_BLOB_ROOT: '/data/blobs',
+          COMMUNITY_S3_BUCKET: 'creator-packages',
+          COMMUNITY_S3_REGION: 'eu-central-1',
+          COMMUNITY_BLOB_STAGING_ROOT: '/tmp/stage',
+        },
+        { requireAuth: false },
+      ),
+    /cannot be combined/u,
+  );
+  const s3Config = readConfig(
+    {
+      COMMUNITY_BLOB_STORAGE: 's3',
+      COMMUNITY_S3_BUCKET: 'creator-packages',
+      COMMUNITY_S3_REGION: 'eu-central-1',
+      COMMUNITY_S3_ENDPOINT: 'http://minio:9000',
+      COMMUNITY_S3_FORCE_PATH_STYLE: 'true',
+      COMMUNITY_BLOB_STAGING_ROOT: '/tmp/revealline-package-stage',
+    },
+    { requireAuth: false },
+  );
+  assert.equal(s3Config.blobRoot, null);
+  assert.equal(s3Config.tusRoot, null);
+  assert.deepEqual(s3Config.blobStorage, {
+    driver: 's3',
+    bucket: 'creator-packages',
+    region: 'eu-central-1',
+    endpoint: 'http://minio:9000/',
+    forcePathStyle: true,
+    stagingRoot: '/tmp/revealline-package-stage',
+  });
+  assert.throws(
+    () =>
+      readConfig(
+        {
+          COMMUNITY_BLOB_STORAGE: 's3',
+          COMMUNITY_S3_BUCKET: 'creator-packages',
+          COMMUNITY_S3_REGION: 'eu-central-1',
+          COMMUNITY_BLOB_STAGING_ROOT: '/tmp/stage',
+          COMMUNITY_TUS_ROOT: '/data/tus',
+        },
+        { requireAuth: false },
+      ),
+    /COMMUNITY_TUS_ROOT cannot be combined/u,
+  );
   assert.throws(
     () =>
       readConfig({
@@ -173,6 +317,71 @@ test('executable configuration refuses implicit development authentication', () 
       }),
     /allow at least one maximum package/u,
   );
+  assert.throws(
+    () =>
+      readConfig({
+        COMMUNITY_ALLOW_DEV_AUTH: 'true',
+        COMMUNITY_TUS_CLEANUP_BATCH_SIZE: '257',
+      }),
+    /must not exceed 256/u,
+  );
+  assert.throws(
+    () =>
+      readConfig({
+        BETTER_AUTH_SECRET: 'authentication-secret-that-is-long-enough',
+        BETTER_AUTH_URL: 'https://community.example.test',
+        COMMUNITY_ACCOUNT_MAIL_WEBHOOK_URL: 'https://mail.example.test/delivery',
+        COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN: 'mail-secret-that-is-long-enough-for-tests',
+      }),
+    /COMMUNITY_RELEASE_VERSION/u,
+  );
+  const productionIdentity = {
+    BETTER_AUTH_SECRET: 'authentication-secret-that-is-long-enough',
+    BETTER_AUTH_URL: 'https://community.example.test',
+    COMMUNITY_ACCOUNT_MAIL_WEBHOOK_URL: 'https://mail.example.test/delivery',
+    COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN: 'mail-secret-that-is-long-enough-for-tests',
+    COMMUNITY_RELEASE_VERSION: 'v0.141.2',
+    COMMUNITY_SOURCE_REVISION: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
+  };
+  assert.throws(() => readConfig(productionIdentity), /production image has no exact/u);
+  assert.throws(
+    () =>
+      readConfig({
+        ...productionIdentity,
+        COMMUNITY_IMAGE_RELEASE_VERSION: 'v0.141.1',
+        COMMUNITY_IMAGE_SOURCE_REVISION: productionIdentity.COMMUNITY_SOURCE_REVISION,
+      }),
+    /differs from the immutable image identity/u,
+  );
+});
+
+test('public release identity is exact and unavailable when the deployment did not bind one', async (t) => {
+  const repository = new MemoryCommunityRepository();
+  const withoutIdentity = buildCommunityApp({
+    repository,
+    blobStore: new MemoryBlobStore(),
+    authenticator: createTokenAuthenticator({ token: 'creator' }),
+  });
+  const withIdentity = buildCommunityApp({
+    repository,
+    blobStore: new MemoryBlobStore(),
+    authenticator: createTokenAuthenticator({ token: 'creator' }),
+    validatorVersion: 'creator-bundle-v1',
+    releaseIdentity: {
+      version: 'v0.141.2',
+      sourceRevision: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
+    },
+  });
+  t.after(() => Promise.all([withoutIdentity.close(), withIdentity.close()]));
+  assert.equal((await withoutIdentity.inject({ method: 'GET', url: '/version' })).statusCode, 503);
+  const response = await withIdentity.inject({ method: 'GET', url: '/version' });
+  assert.equal(response.headers['cache-control'], 'no-store');
+  assert.deepEqual(response.json(), {
+    format: 'revealline-community-release.v1',
+    version: 'v0.141.2',
+    sourceRevision: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
+    validatorVersion: 'creator-bundle-v1',
+  });
 });
 
 test('public health and empty catalog do not require creator authentication', async (t) => {
@@ -216,10 +425,12 @@ test('session authentication accepts Better Auth-shaped sessions without trustin
 });
 
 test('browser account session owns, publishes, observes and unlists its community submission', async (t) => {
+  const accountMail = new MemoryAccountMailDelivery();
   const auth = createCommunityBetterAuth({
     database: memoryAdapter({ user: [], session: [], account: [], verification: [] }),
-    baseURL: 'http://community.test',
+    baseURL: 'https://community.test',
     secret: 'test-secret-that-is-longer-than-thirty-two-characters',
+    mailDelivery: accountMail,
   });
   const authenticator = createSessionAuthenticator({ getSession: auth.api.getSession });
   const repository = new MemoryCommunityRepository();
@@ -263,19 +474,32 @@ test('browser account session owns, publishes, observes and unlists its communit
     });
   };
   const account = createCommunityAccountClient({
-    baseURL: 'http://community.test/',
-    origin: 'http://community.test',
+    baseURL: 'https://community.test/',
+    origin: 'https://community.test',
     fetchImpl: browserFetch,
   });
-  const signedUp = await account.signUp({
-    name: 'Creator One',
+  assert.equal(
+    await account.signUp({
+      name: 'Creator One',
+      email: 'creator@example.test',
+      password: 'correct horse battery staple',
+    }),
+    null,
+  );
+  const verification = new URL(accountMail.messages()[0].actionURL);
+  const verified = await app.inject({
+    method: 'GET',
+    url: `${verification.pathname}${verification.search}`,
+  });
+  assert.equal(verified.statusCode, 302, verified.body);
+  const signedUp = await account.signIn({
     email: 'creator@example.test',
     password: 'correct horse battery staple',
   });
   assert.ok(signedUp?.user.id);
   assert.match(cookie, /better-auth/u);
   const client = createCommunityClient({
-    baseURL: 'http://community.test/',
+    baseURL: 'https://community.test/',
     fetchImpl: browserFetch,
     authHeaders: account.headers,
   });
@@ -682,6 +906,15 @@ test('worker infrastructure errors requeue the job instead of publishing or reje
   let time = new Date('2026-09-24T12:00:00.000Z');
   const repository = new MemoryCommunityRepository({ clock: () => time });
   const blobStore = new MemoryBlobStore();
+  const openBlob = blobStore.open.bind(blobStore);
+  let closed = false;
+  blobStore.open = async (...args) => {
+    const opened = await openBlob(...args);
+    opened.body.once('close', () => {
+      closed = true;
+    });
+    return opened;
+  };
   const { app } = await fixture({ repository, blobStore });
   const { created } = await createAndUpload(app);
   await app.inject({
@@ -702,10 +935,51 @@ test('worker infrastructure errors requeue the job instead of publishing or reje
     /temporary decoder outage/u,
   );
   const status = await repository.getOwnerSubmission(created.submission.id, 'creator/alice');
+  assert.equal(closed, true);
   assert.equal(status.status, 'queued');
   assert.equal(await repository.claimValidationJob({ workerId: 'too-early' }), null);
   time = new Date('2026-09-24T12:00:31.000Z');
   assert.equal((await repository.claimValidationJob({ workerId: 'retry' })).job.attempts, 2);
+  await app.close();
+});
+
+test('worker authenticates staged package bytes and closes a rejected body before validation', async () => {
+  const repository = new MemoryCommunityRepository();
+  const { app } = await fixture({ repository });
+  const { created } = await createAndUpload(app);
+  await app.inject({
+    method: 'POST',
+    url: `/v1/submissions/${created.submission.id}/submit`,
+    headers: bearer(),
+  });
+  let closed = false,
+    validated = false;
+  const body = Readable.from(bytes);
+  body.once('close', () => {
+    closed = true;
+  });
+  await assert.rejects(
+    processNextValidationJob({
+      repository,
+      blobStore: {
+        async open() {
+          return { body, size: bytes.length, sha256: '0'.repeat(64) };
+        },
+      },
+      workerId: 'identity-worker',
+      validatePackage: async () => {
+        validated = true;
+        return { accepted: true };
+      },
+    }),
+    /different exact identity/u,
+  );
+  assert.equal(closed, true);
+  assert.equal(validated, false);
+  assert.equal(
+    (await repository.getOwnerSubmission(created.submission.id, 'creator/alice')).status,
+    'queued',
+  );
   await app.close();
 });
 
@@ -878,12 +1152,31 @@ test('mounted tus server preserves interrupted offsets, owner isolation, and com
     'alice-token': 'creator/alice',
     'bob-token': 'creator/bob',
   });
+  const registeredUploads = [];
+  const forgottenUploads = [];
+  const uploadRegistry = {
+    async register(input) {
+      registeredUploads.push(input);
+    },
+    async forget(uploadId) {
+      forgottenUploads.push(uploadId);
+    },
+    async claimExpired() {
+      return [];
+    },
+    async completeCleanup() {},
+    async retryCleanup() {},
+  };
   const tus = createCommunityTusServer({
     directory: tusRoot,
     authenticator,
     repository,
     blobStore,
     maxPackageBytes: 1024,
+    locker: new MemoryLocker(),
+    uploadRegistry,
+    expirationMs: 60_000,
+    cleanupIntervalMs: 60_000,
   });
   const app = buildCommunityApp({
     repository,
@@ -923,7 +1216,14 @@ test('mounted tus server preserves interrupted offsets, owner isolation, and com
     },
   });
   assert.equal(started.status, 201, await started.text());
+  assert.ok(started.headers.get('upload-expires'));
   const location = new URL(started.headers.get('location'), origin);
+  assert.deepEqual(registeredUploads[0], {
+    uploadId: path.basename(location.pathname),
+    submissionId: submission.id,
+    ownerSubject: 'creator/alice',
+    expirationMs: 60_000,
+  });
   const split = Math.floor(bytes.length / 2);
   const first = await fetch(location, {
     method: 'PATCH',
@@ -962,6 +1262,7 @@ test('mounted tus server preserves interrupted offsets, owner isolation, and com
   const admitted = await repository.getOwnerSubmission(submission.id, 'creator/alice');
   assert.equal(admitted.status, 'uploaded');
   assert.equal(admitted.actualSize, bytes.length);
+  assert.deepEqual(forgottenUploads, [path.basename(location.pathname)]);
 
   const browserCreated = await create(
     app,
@@ -996,20 +1297,55 @@ test('mounted tus server preserves interrupted offsets, owner isolation, and com
   assert.equal(browserAdmitted.status, 'uploaded');
 });
 
-test('S3 boundary requires verified bytes and delegates exact immutable metadata', async () => {
+test('completed tus cleanup uses the S3-safe operation when the datastore provides it', async () => {
   const calls = [];
+  await removeCompletedTusUpload(
+    {
+      async removeCompleted(id) {
+        calls.push(['completed', id]);
+      },
+      async remove(id) {
+        calls.push(['ordinary', id]);
+      },
+    },
+    '0123456789abcdef0123456789abcdef',
+  );
+  assert.deepEqual(calls, [['completed', '0123456789abcdef0123456789abcdef']]);
+
+  await removeCompletedTusUpload(
+    {
+      async remove(id) {
+        calls.push(['ordinary', id]);
+      },
+    },
+    'disk-upload',
+  );
+  assert.deepEqual(calls.at(-1), ['ordinary', 'disk-upload']);
+});
+
+test('S3 boundary stages a verified stream and delegates exact immutable metadata', async (t) => {
+  const calls = [];
+  const stagingRoot = await mkdtemp(path.join(os.tmpdir(), 'revealline-community-s3-stage-'));
+  t.after(() => rm(stagingRoot, { recursive: true, force: true }));
   const store = new S3CompatibleBlobStore({
     client: {
       async send(command) {
         calls.push(command);
+        if (command.operation === 'put') {
+          const uploaded = [];
+          for await (const chunk of command.input.Body) uploaded.push(Buffer.from(chunk));
+          command.uploaded = Buffer.concat(uploaded);
+        }
         return {};
       },
     },
     bucket: 'community-test',
+    stagingRoot,
     commands: {
       put: (input) => ({ operation: 'put', input }),
       head: (input) => ({ operation: 'head', input }),
       get: (input) => ({ operation: 'get', input }),
+      list: (input) => ({ operation: 'list', input }),
     },
   });
   const key = packageBlobKey(sha256);
@@ -1023,6 +1359,10 @@ test('S3 boundary requires verified bytes and delegates exact immutable metadata
   assert.equal(calls[0].input.Key, key);
   assert.equal(calls[0].input.Metadata.sha256, sha256);
   assert.equal(calls[0].input.ContentType, PACKAGE_MEDIA_TYPE);
+  assert.equal(calls[0].input.IfNoneMatch, '*');
+  assert.equal(Buffer.isBuffer(calls[0].input.Body), false);
+  assert.deepEqual(calls[0].uploaded, bytes);
+  assert.deepEqual(await readdir(stagingRoot), []);
   await assert.rejects(
     store.putVerified({
       key,
@@ -1041,6 +1381,10 @@ test('migration defines immutable editions, bounded states, idempotent jobs, and
     new URL('../migrations/002_abuse_controls.sql', import.meta.url),
     'utf8',
   );
+  const tusSql = await readFile(
+    new URL('../migrations/003_tus_coordination.sql', import.meta.url),
+    'utf8',
+  );
   assert.match(sql, /UNIQUE \(owner_subject, slug, edition_version\)/u);
   assert.match(sql, /collection_id text NOT NULL/u);
   assert.match(sql, /community_catalog_collection_idx/u);
@@ -1057,4 +1401,7 @@ test('migration defines immutable editions, bounded states, idempotent jobs, and
   assert.match(abuseSql, /CREATE TABLE IF NOT EXISTS community_admission_windows/u);
   assert.match(abuseSql, /PRIMARY KEY \(action, subject_hash, idempotency_hash\)/u);
   assert.match(abuseSql, /community_report_triage_idx/u);
+  assert.match(tusSql, /CREATE TABLE IF NOT EXISTS community_tus_uploads/u);
+  assert.match(tusSql, /cleanup_lease_expires_at timestamptz/u);
+  assert.match(tusSql, /community_tus_expiry_idx/u);
 });

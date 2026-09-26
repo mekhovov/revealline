@@ -310,8 +310,18 @@ function focusedAdmission(sourceTree) {
     sourceRevision: 'c'.repeat(40),
     sourceTree,
     classificationSteps: [
-      { name: 'Capture the reviewed changed-path set', number: 5, status: 'completed', conclusion: 'success' },
-      { name: 'Select the fail-closed focused gate', number: 6, status: 'completed', conclusion: 'success' },
+      {
+        name: 'Capture the reviewed changed-path set',
+        number: 5,
+        status: 'completed',
+        conclusion: 'success',
+      },
+      {
+        name: 'Select the fail-closed focused gate',
+        number: 6,
+        status: 'completed',
+        conclusion: 'success',
+      },
     ],
     genericBuild: { jobId: 96, status: 'skipped-by-fast-release-policy' },
     fullTests: { status: 'waived-and-skipped' },
@@ -483,7 +493,52 @@ test('retention keeps only the latest releases in each semantic major line', asy
   assert.deepEqual([...retainRecentMetadata(metadata, 1).keys()], ['v0.44.0']);
 });
 
-test('a comparison-only tag is listed with its dedicated playable archive route', async (t) => {
+test('global selection excludes comparison routes from the public index but preserves explicit routes', async (t) => {
+  const f = await fixture(t);
+  delete f.configuration.retainedReleasesPerMajor;
+  f.configuration.retainedReleaseCount = 5;
+  f.configuration.testingRoutes = {
+    'v0.1.0': 'https://mekhovov.github.io/revealline-archive-01/releases/v0.1.0/site/',
+  };
+  await f.write(path.join(f.directory, 'publication.json'), jsonBytes(f.configuration));
+  await assemble(f);
+  const index = JSON.parse(await fs.readFile(path.join(f.outputDirectory, 'releases/index.json')));
+  assert.deepEqual(
+    index.releases.map((r) => r.version),
+    ['v0.44.0'],
+  );
+  await fs.access(path.join(f.outputDirectory, 'releases/v0.1.0/site/game/index.html'));
+});
+
+test('retired local archive evidence still blocks when tampered, without remote verification', async (t) => {
+  const f = await fixture(t);
+  delete f.configuration.retainedReleasesPerMajor;
+  f.configuration.retainedReleaseCount = 1;
+  await f.write(path.join(f.directory, 'publication.json'), jsonBytes(f.configuration));
+  const { metadata } = await loadCatalog(f.directory);
+  const selected = new Map([
+    [f.configuration.currentVersion, metadata.get(f.configuration.currentVersion)],
+  ]);
+  const result = await validateAdmissions({
+    directory: f.directory,
+    configuration: f.configuration,
+    metadata: selected,
+    catalogMetadata: metadata,
+  });
+  assert.equal(result.admissions.length, 0);
+  await f.write(path.join(f.directory, 'native.txt'), Buffer.from('tampered'));
+  await assert.rejects(
+    validateAdmissions({
+      directory: f.directory,
+      configuration: f.configuration,
+      metadata: selected,
+      catalogMetadata: metadata,
+    }),
+    /byte pin mismatch/,
+  );
+});
+
+test('a comparison-only tag is listed with its dedicated playable archive route under legacy policy', async (t) => {
   const f = await fixture(t);
   f.configuration.retainedReleasesPerMajor = 1;
   f.configuration.testingRoutes = {
@@ -524,10 +579,7 @@ test('extraction receipt identity and inventory mutations fail closed', async (t
     const f = await fixture(t),
       changed = structuredClone(f.extractionReceipt);
     mutate(changed);
-    await assert.rejects(
-      assemble({ ...f, extractionReceipt: changed }),
-      /extraction|inventory/i,
-    );
+    await assert.rejects(assemble({ ...f, extractionReceipt: changed }), /extraction|inventory/i);
     await assert.rejects(fs.access(f.outputDirectory));
   }
 });
@@ -917,9 +969,9 @@ test('all leaves the 1024-catalog entry bound intact', async (t) => {
   await assert.rejects(loadCatalog(f.directory), /Invalid frozen catalog/);
 });
 
-test('96 independently pinned archives retain admission bounds and original-byte guards', async (t) => {
-  assert.equal(MAX_ARCHIVE_SHARDS, 96);
-  const versions = Array.from({ length: 96 }, (_, i) => `v0.${i + 1}.0`),
+test('128 independently pinned archives retain admission bounds and original-byte guards', async (t) => {
+  assert.equal(MAX_ARCHIVE_SHARDS, 128);
+  const versions = Array.from({ length: 128 }, (_, i) => `v0.${i + 1}.0`),
     f = await fixture(t, [...versions, 'v1.0.0']),
     { metadata } = await loadCatalog(f.directory),
     originalInventory = JSON.parse(await fs.readFile(path.join(f.directory, 'inventory.json'))),
@@ -981,7 +1033,7 @@ test('96 independently pinned archives retain admission bounds and original-byte
   await f.write(path.join(f.directory, 'allocations.json'), allocationBytes);
   configuration.allocationSha256 = digest(allocationBytes);
   const original = structuredClone(configuration);
-  for (const count of [64, 65, 96]) {
+  for (const count of [64, 65, 96, 97, 128]) {
     const scopedMetadata = new Map(
       [...metadata].filter(
         ([version]) => version === 'v1.0.0' || versions.slice(0, count).includes(version),
@@ -1006,7 +1058,7 @@ test('96 independently pinned archives retain admission bounds and original-byte
   const validate = (config) =>
     validateAdmissions({ directory: f.directory, configuration: config, metadata });
   const overflow = structuredClone(configuration);
-  overflow.admissions.push({ ...overflow.admissions.at(-1), id: 'archive-97' });
+  overflow.admissions.push({ ...overflow.admissions.at(-1), id: 'archive-129' });
   await assert.rejects(validate(overflow), /Invalid Pages controller configuration/);
   for (const [mutate, expected] of [
     [(last) => (last.id = configuration.admissions[0].id), /Invalid archive admission/],
@@ -1027,8 +1079,8 @@ test('96 independently pinned archives retain admission bounds and original-byte
   }
   // Re-pinning a false HTTP report or inventory must not bypass the unchanged
   // 800 MB archive limit or the independently pinned original release bytes.
-  const httpPath = 'archive-96/http.json',
-    inventoryPath = 'archive-96/inventory.json',
+  const httpPath = 'archive-128/http.json',
+    inventoryPath = 'archive-128/inventory.json',
     originalHTTP = JSON.parse(await fs.readFile(path.join(f.directory, httpPath))),
     originalLastInventory = JSON.parse(await fs.readFile(path.join(f.directory, inventoryPath)));
   const repin = async (config, relative, value) => {

@@ -13,6 +13,56 @@ import { preparePinnedVictoryStory, VICTORY_STORY_FORMAT } from '../victory-stor
 export const creatorProfileKey = (editionId) => `custom-${editionId}`;
 export const creatorAttemptKey = (editionId) => `revealline.creator.attempt.v1.${editionId}`;
 
+function creatorMissionOrder(missionOrder) {
+  required(
+    Array.isArray(missionOrder) &&
+      missionOrder.length > 0 &&
+      missionOrder.every((missionId) => typeof missionId === 'string' && missionId.length > 0) &&
+      new Set(missionOrder).size === missionOrder.length,
+    'Custom campaign needs an ordered mission list.',
+  );
+  return missionOrder;
+}
+
+/** Resolve the primary Custom-player destination without granting progress.
+ * An explicit library choice wins. Otherwise an unfinished cursor is retained,
+ * then the first uncleared authored mission continues the campaign. A completed
+ * campaign keeps its final mission available for an explicit replay action. */
+export function creatorCampaignDestination(missionOrder, progress, { missionId = null } = {}) {
+  creatorMissionOrder(missionOrder);
+  const clears = progress?.clears?.solo;
+  required(
+    clears && typeof clears === 'object' && !Array.isArray(clears),
+    'Custom campaign progress is unreadable.',
+  );
+  if (missionId !== null) {
+    required(missionOrder.includes(missionId), 'Choose a mission from this installed edition.');
+    return Object.freeze({ missionId, complete: false, explicit: true });
+  }
+  const cursor = progress?.cursors?.solo;
+  if (missionOrder.includes(cursor) && !Object.hasOwn(clears, cursor))
+    return Object.freeze({ missionId: cursor, complete: false, explicit: false });
+  const unfinished = missionOrder.find((id) => !Object.hasOwn(clears, id));
+  return Object.freeze({
+    missionId: unfinished ?? missionOrder.at(-1),
+    complete: unfinished === undefined,
+    explicit: false,
+  });
+}
+
+/** Choose the most relevant retained reward for the Custom-player lobby. */
+export function creatorEarnedMissionId(missionOrder, progress) {
+  creatorMissionOrder(missionOrder);
+  const clears = progress?.clears?.solo;
+  required(
+    clears && typeof clears === 'object' && !Array.isArray(clears),
+    'Custom campaign progress is unreadable.',
+  );
+  const cursor = progress?.cursors?.solo;
+  if (missionOrder.includes(cursor) && Object.hasOwn(clears, cursor)) return cursor;
+  return [...missionOrder].reverse().find((missionId) => Object.hasOwn(clears, missionId)) ?? null;
+}
+
 /** Ordinary installed Custom gameplay. It shares the compiler, attempt/picture
  * preparer, legal inputs and session verifier. This host never adopts Journey
  * eligibility, global tuning or a different edition's progression. */

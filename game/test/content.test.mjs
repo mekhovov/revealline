@@ -10,6 +10,7 @@ import {
 } from '../content.mjs';
 import { unlockedBodies } from '../progress.mjs';
 import { preparePack, scenarioFromPack } from '../packs.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 const themes = JSON.parse(
   readFileSync(new URL('../content/themes.json', import.meta.url), 'utf8'),
 ).themes;
@@ -279,7 +280,7 @@ test('class recipe fallback uses an explicitly supplied default registry; malfor
   const custom = [{ ...classes[0], id: 'local-scout' }];
   s.settings.classId = 'local-scout';
   assert.equal(validateScenario(s, { classRecipes: custom }).valid, true);
-  rejected(s, /Unknown class/);
+  rejected(s, /settings\.classId is not registered/);
   for (const classRecipes of [null, false, [], [null], [{}]]) {
     const bad = scenario();
     bad.classRecipes = classRecipes;
@@ -319,6 +320,74 @@ test('supported provenance metadata is text only and source URL never accepts ex
   rejected(s, /HTTP/);
   s.metadata = { description: 'x'.repeat(4097) };
   rejected(s, /budget/);
+});
+test('content structure and metadata errors follow the active locale', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  const cyclic = scenario();
+  cyclic.level.extra = cyclic;
+
+  setLocale('uk', { persist: false });
+  assert.match(validateScenario(cyclic).errors.join(' '), /циклічних посилань/);
+  const unsafeUrl = scenario();
+  unsafeUrl.metadata = { sourceUrl: 'javascript:alert(1)' };
+  assert.match(validateScenario(unsafeUrl).errors.join(' '), /URL-адресою HTTP\(S\)/);
+  const unsupported = scenario();
+  unsupported.extra = true;
+  assert.match(validateScenario(unsupported).errors.join(' '), /scenario\.extra не підтримується/);
+  const invalidTheme = structuredClone(themes[0]);
+  invalidTheme.id = 'not stable';
+  invalidTheme.scene = 'missing-scene';
+  invalidTheme.palette.ink = 'black';
+  const ukrainianThemeErrors = validateTheme(invalidTheme).errors.join(' ');
+  assert.match(ukrainianThemeErrors, /стабільним незарезервованим ідентифікатором/);
+  assert.match(ukrainianThemeErrors, /theme\.scene не зареєстровано/);
+  assert.match(ukrainianThemeErrors, /theme\.palette\.ink має використовувати формат #rrggbb/);
+  assert.match(
+    validateScenario({ format: 'unsupported' }).errors.join(' '),
+    /Очікується підтримуваний формат xonix-playground\.v1\.\.v9/,
+  );
+  const invalidScenario = scenario();
+  invalidScenario.settings = { classId: 'missing', turnPolicy: 'missing', seed: -1 };
+  invalidScenario.presentation = { style: 'missing', showGrid: 'yes' };
+  invalidScenario.visualOverrides.unknown = {};
+  const ukrainianScenarioErrors = validateScenario(invalidScenario).errors.join(' ');
+  assert.match(ukrainianScenarioErrors, /settings\.classId не зареєстровано/);
+  assert.match(ukrainianScenarioErrors, /settings\.seed має бути цілим 32-бітним/);
+  assert.match(ukrainianScenarioErrors, /presentation\.showGrid має бути булевим/);
+  assert.match(ukrainianScenarioErrors, /visualOverrides\.unknown не зареєстровано/);
+  const warningScenario = scenario();
+  warningScenario.visualOverrides.player = { dataUrl: png };
+  assert.match(validateScenario(warningScenario).warnings.join(' '), /точки кріплення ротора/);
+  assert.match(inspectImageDataUrl('not-an-image').errors.join(' '), /data-URL-адреса/);
+  assert.match(inspectImageDataUrl('data:image/png;base64,AAAA').errors.join(' '), /Підпис PNG/);
+  assert.match(
+    inspectImageDataUrl('data:image/png;base64,A===').errors.join(' '),
+    /неправильний формат/,
+  );
+
+  setLocale('en', { persist: false });
+  assert.match(validateScenario(cyclic).errors.join(' '), /must not contain a cycle/);
+  assert.match(validateScenario(unsafeUrl).errors.join(' '), /must be an HTTP\(S\) URL/);
+  const englishThemeErrors = validateTheme(invalidTheme).errors.join(' ');
+  assert.match(englishThemeErrors, /non-reserved stable identifier/);
+  assert.match(englishThemeErrors, /theme\.scene is not registered/);
+  assert.match(englishThemeErrors, /theme\.palette\.ink must use #rrggbb/);
+  assert.match(
+    validateScenario({ format: 'unsupported' }).errors.join(' '),
+    /supported xonix-playground\.v1\.\.v9 format/,
+  );
+  const englishScenarioErrors = validateScenario(invalidScenario).errors.join(' ');
+  assert.match(englishScenarioErrors, /settings\.classId is not registered/);
+  assert.match(englishScenarioErrors, /settings\.seed must be an unsigned 32-bit integer/);
+  assert.match(englishScenarioErrors, /presentation\.showGrid must be a boolean/);
+  assert.match(englishScenarioErrors, /visualOverrides\.unknown is not registered/);
+  assert.match(
+    validateScenario(warningScenario).warnings.join(' '),
+    /rotor and attachment anchors/,
+  );
+  assert.match(inspectImageDataUrl('not-an-image').errors.join(' '), /embedded PNG/);
+  assert.match(inspectImageDataUrl('data:image/png;base64,AAAA').errors.join(' '), /PNG signature/);
 });
 test('real PNG plus JPEG/WebP header fixtures expose dimensions before browser allocation', () => {
   for (const [dataUrl, width, height] of [

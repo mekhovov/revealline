@@ -41,6 +41,12 @@ const fieldKitFiles = [
   'game/ui/fonts/METADATA.pb',
   'game/ui/fonts/provenance.json',
 ];
+const localizationFiles = [
+  'game/i18n/style.css',
+  'game/i18n/catalogs.mjs',
+  'game/i18n/bootstrap.mjs',
+  'game/vendor/i18next-26.4.2.min.js',
+];
 const workshopEntries = [
   'authoring/still-media/index.html',
   'authoring/still-media/launch.js',
@@ -83,6 +89,7 @@ const storyRuntime = [
 ];
 const requiredRuntime = [
   ...fieldKitFiles,
+  ...localizationFiles,
   'game/ui/still-media-host.mjs',
   'game/ui/still-media-panel.mjs',
   'game/ui/still-media-panel.css',
@@ -192,6 +199,7 @@ async function fixture(t) {
     ...publicationEntries,
     ...storyRuntime,
     ...fieldKitFiles,
+    ...localizationFiles,
     'game/mediabunny-trim-adapter.mjs',
     'game/vendor/mediabunny-1.59.1.min.mjs',
     'game/vendor/mediabunny-1.59.1.json',
@@ -375,14 +383,16 @@ test('built poster/still links and teaching requests retain their edition and wo
   );
   const worker = await fs.readFile(path.join(out, 'service-worker.js'), 'utf8');
   const gameHTML = await fs.readFile(path.join(sourceRoot, 'game/index.html'), 'utf8');
-  const creatorLink = gameHTML.match(/href="([^"]+)"[^>]*>\s*Video poster workshop\s*<\/a>/)?.[1];
+  const creatorLink = gameHTML.match(
+    /href="([^"]*authoring\/video-poster\/)"[^>]*data-i18n="interface:videoPosterWorkshop"/,
+  )?.[1];
   assert.ok(creatorLink, 'A native Creator tools link opens the poster workshop.');
   const posterHTML = bodies.get('authoring/video-poster/index.html').toString();
-  const stillLink = posterHTML.match(/id="video-poster-still" href="([^"]+)"/)?.[1];
+  const stillLink = posterHTML.match(/id="video-poster-still"[^>]*href="([^"]+)"/)?.[1];
   assert.ok(stillLink);
   const stillHTML = bodies.get('authoring/still-media/index.html').toString();
   const dawnLinks = [
-    ...stillHTML.matchAll(/href="(\.\/examples\/dawn-signal\/[^\"]+)" download/g),
+    ...stillHTML.matchAll(/href="(\.\/examples\/dawn-signal\/[^\"]+)"[^>]*\bdownload\b/g),
   ].map((match) => match[1]);
   assert.equal(
     dawnLinks.length,

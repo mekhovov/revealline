@@ -1,0 +1,48 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-95",
+  "infrastructureCommit": "f4aa06bd3986f5dac30e63b97b64123c6e6ecefa",
+  "deploymentId": 6680536506,
+  "deploymentStatusId": 18878964112,
+  "versions": ["v0.141.0"],
+  "surface": "Codex built-in browser",
+  "sequence": [
+    "Opened the Archive95 index and observed the original v0.141.0 preservation label and Play v0.141.0 route.",
+    "Opened the preserved route and observed the RevealLine shell for archived v0.141.0.",
+    "Observed mission 01 First return with one enemy and its Start mission action.",
+    "Activated Continue and Start mission; active gameplay exposed Pause, advanced the timer to 0:05, and reported Reclaimed ground.",
+    "Inspected page errors and warnings; none were reported."
+  ],
+  "observed": {
+    "archiveDocumentTitle": "RevealLine archive 95",
+    "archiveHeading": "RevealLine archive 95",
+    "archiveReleaseLabel": "The original v0.141.0 build, preserved for comparison and historical play.",
+    "gameDocumentTitle": "Reveal / Line",
+    "gameShellLoaded": true,
+    "gameShellControls": ["Missions", "Collection", "Settings"],
+    "missionEntryLoaded": true,
+    "missionHeading": "First return",
+    "enemyCount": 1,
+    "activeGameplay": true,
+    "activeControl": "Pause",
+    "observedTimer": "0:05",
+    "observedStatus": "Reclaimed ground",
+    "pageErrors": 0,
+    "pageWarnings": 0,
+    "reloads": 0,
+    "retries": 0
+  },
+  "scope": "Historical online preservation: complete exact-byte public audit plus a fresh bounded archive index, archived game-shell, mission-entry, and active-gameplay check.",
+  "limitations": [
+    "Long source suites remained waived under the temporary fast-release policy and are not reported as passed.",
+    "No renewed physical touch/controller, comprehensive offline, soundtrack-listening, or extended gameplay acceptance is claimed.",
+    "This admission preserves v0.141.0; v0.141.2 is a separate candidate and is not certified by these archive observations."
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-95-v01410/public-acceptance.json",
+      "sha256": "4aa0654b735ad3697e923e8008e73f3aa19f935bf82f39e2166002ebf4a2e3fb"
+    }
+  ]
+}

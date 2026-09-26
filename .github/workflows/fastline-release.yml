@@ -212,6 +212,7 @@ jobs:
       operation: qualify
       freeze_snapshot: true
       run_tests: false
+      force_snapshot: true
 
   inspect-artifact:
     if: inputs.mode == 'publish' && needs.admission.outputs.origin_run == ''

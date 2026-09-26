@@ -70,23 +70,6 @@
             ><span data-i18n="interface:loadingRelayRescue">Loading Relay Rescue.</span>
           </p>
           <script src="team-entry.js"></script>
-          <div class="setup coop-arena-choice">
-            <label
-              ><span data-i18n="interface:arena">Arena</span
-              ><select id="coop-level">
-                <option
-                  value="first-connection"
-                  selected
-                  data-i18n="interface:firstConnectionTerritoryChallenge"
-                >
-                  First Connection · territory challenge
-                </option>
-                <option value="relay-yard" data-i18n="interface:relayYardStrongholdChallenge">
-                  Relay Yard · stronghold challenge
-                </option>
-              </select></label
-            >
-          </div>
           <p id="coop-selection-status" class="setup-note" role="status" hidden></p>
           <div class="coop-launch-grid">
             <figure id="coop-picture-preview" class="coop-picture-preview" data-state="preparing">
@@ -142,8 +125,25 @@
           <div id="coop-language" data-language-control></div>
           <details id="coop-optional-setup" class="optional-setup">
             <summary id="coop-optional-setup-toggle" data-i18n="interface:couch.teamOptions">
-              Team options
+              Arena &amp; team options
             </summary>
+            <div class="setup coop-arena-choice">
+              <label
+                ><span data-i18n="interface:arena">Arena</span
+                ><select id="coop-level">
+                  <option
+                    value="first-connection"
+                    selected
+                    data-i18n="interface:firstConnectionTerritoryChallenge"
+                  >
+                    First Connection · territory challenge
+                  </option>
+                  <option value="relay-yard" data-i18n="interface:relayYardStrongholdChallenge">
+                    Relay Yard · stronghold challenge
+                  </option>
+                </select></label
+              >
+            </div>
             <p id="coop-advanced-note" class="setup-note"></p>
             <div class="setup">
               <label
@@ -299,6 +299,37 @@
                 </section>
                 <p id="coop-journey-reactions" class="micro-note" hidden></p>
                 <p id="coop-next-status" role="status" aria-live="polite" hidden></p>
+                <section
+                  id="coop-victory-story"
+                  aria-label="Optional Team victory story"
+                  data-i18n-aria-label="interface:team.optionalVictoryStory"
+                  hidden
+                >
+                  <p id="coop-victory-story-description"></p>
+                  <video
+                    id="coop-victory-story-video"
+                    playsinline
+                    preload="metadata"
+                    hidden
+                  ></video>
+                  <p id="coop-victory-story-status" role="status" aria-live="polite"></p>
+                  <div class="overlay-actions">
+                    <button
+                      id="coop-victory-story-play"
+                      type="button"
+                      data-i18n="interface:team.playVictoryStory"
+                    >
+                      Play victory story
+                    </button>
+                    <button
+                      id="coop-victory-story-skip"
+                      type="button"
+                      data-i18n="interface:team.skipVictoryStory"
+                    >
+                      Skip story
+                    </button>
+                  </div>
+                </section>
                 <div class="overlay-actions">
                   <button
                     id="coop-next"

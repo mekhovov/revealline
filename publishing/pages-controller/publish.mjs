@@ -15,7 +15,7 @@ import {
   digest,
   jsonBytes,
   parseJSON,
-  retainRecentMetadata,
+  selectReleaseMetadata,
 } from "./metadata.mjs";
 import { publishedReleasePages, releaseDecision } from "./release-policy.mjs";
 import { downloadReleaseAsset } from "./release-asset.mjs";
@@ -63,13 +63,13 @@ async function verify({ preview = false, remote = false } = {}) {
     testingMetadata = new Map(
       [...catalogMetadata].filter(([version]) => testingVersions.has(version)),
     ),
-    metadata = retainRecentMetadata(
+    metadata = selectReleaseMetadata(
       new Map(
         [...catalogMetadata].filter(
           ([version]) => !testingVersions.has(version),
         ),
       ),
-      configuration.retainedReleasesPerMajor,
+      configuration,
     ),
     _testingRoutesExist =
       testingMetadata.size === testingVersions.size ||
@@ -79,7 +79,8 @@ async function verify({ preview = false, remote = false } = {}) {
     { qualification, admissions } = await validateAdmissions({
       directory,
       configuration,
-      metadata,
+      metadata: new Map([...metadata, ...testingMetadata]),
+      catalogMetadata,
       requireBrowser: !preview,
     });
   const actualTags = new Set(
