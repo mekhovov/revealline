@@ -1,5 +1,5 @@
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
-import { createTeamCulturalSpecialistOriginalCandidates } from '../content-design/team-cultural-specialist-originals.mjs';
+import { createTeamCulturalSpecialistV2OriginalCandidates } from '../content-design/team-cultural-specialist-v2-originals.mjs';
 import { COOP_STARTER_PACK, coopGoalText } from '../coop/library.mjs';
 import { validateCoopPack } from '../coop/recipes.mjs';
 import { teamJourneyLibrarySource, teamArenaLibrarySource } from './team-source.mjs';
@@ -10,7 +10,7 @@ import { teamJourneyLibrarySource, teamArenaLibrarySource } from './team-source.
  */
 export function createRemoteTeamLibrarySources({ launch, difficulty = () => 'standard' }) {
   if (typeof launch !== 'function') throw new TypeError('Team browsing needs an exact handoff.');
-  const source = createTeamCulturalSpecialistOriginalCandidates();
+  const source = createTeamCulturalSpecialistV2OriginalCandidates();
   const journey = createCandidateTeamHost(source, {
     corePackIds: source.packs.map((pack) => pack.id),
   });

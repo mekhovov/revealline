@@ -3582,21 +3582,26 @@ export function bootCoop({
     if (candidateJourney || libraryRemoteJourney) return;
     libraryRemotePending ??= Promise.all([
       import('../content-design/team-host.mjs'),
-      import('../content-design/team-cultural-specialist-originals.mjs'),
+      import('../content-design/team-cultural-specialist-v2-originals.mjs'),
     ])
-      .then(([{ createCandidateTeamHost }, { createTeamCulturalSpecialistOriginalCandidates }]) => {
-        if (disposed) return;
-        const source = createTeamCulturalSpecialistOriginalCandidates();
-        libraryRemoteJourney = createCandidateTeamHost(source, {
-          corePackIds: source.packs.map((item) => item.id),
-        });
-        // This browsing-only owner has no profile writer and cannot create a run
-        // in the Legacy host. The receiving Journey resolves the exact opaque ID.
-        registerTeamSource(
-          teamJourneyLibrarySource({ journey: libraryRemoteJourney, launch: launchRemoteTeamRow }),
-          () => null,
-        );
-      })
+      .then(
+        ([{ createCandidateTeamHost }, { createTeamCulturalSpecialistV2OriginalCandidates }]) => {
+          if (disposed) return;
+          const source = createTeamCulturalSpecialistV2OriginalCandidates();
+          libraryRemoteJourney = createCandidateTeamHost(source, {
+            corePackIds: source.packs.map((item) => item.id),
+          });
+          // This browsing-only owner has no profile writer and cannot create a run
+          // in the Legacy host. The receiving Journey resolves the exact opaque ID.
+          registerTeamSource(
+            teamJourneyLibrarySource({
+              journey: libraryRemoteJourney,
+              launch: launchRemoteTeamRow,
+            }),
+            () => null,
+          );
+        },
+      )
       .catch((error) => {
         libraryRemotePending = null;
         throw error;
@@ -5827,6 +5832,7 @@ try {
       'team-specialist-originals-1',
       'team-complete-specialist-originals-1',
       'team-cultural-specialist-originals-1',
+      'team-cultural-specialist-originals-2',
     ].includes(journeyRequest)
   ) {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
@@ -5838,6 +5844,7 @@ try {
       specialist: journeyRequest === 'team-specialist-originals-1',
       reviewedSpecialists: journeyRequest === 'team-complete-specialist-originals-1',
       culturalSpecialists: journeyRequest === 'team-cultural-specialist-originals-1',
+      culturalSpecialistsV2: journeyRequest === 'team-cultural-specialist-originals-2',
       reviewCopy: new URL(location.href).searchParams.has('journey'),
     });
   } else if (
