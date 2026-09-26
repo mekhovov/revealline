@@ -6,62 +6,11 @@
 
 ## Current checkpoint — 26 September 2026
 
-- **Completed Pages baseline and latest stable release:** [PR #679](https://github.com/mekhovov/revealline/pull/679)
-  merged v0.141.3 Team quick-start as
-  `7509d790dadb6194d70a5bc1efafee40fbb0b3b7`. Coordinator run `36254346397`
-  published its immutable nine-asset
-  [v0.141.3 release](https://github.com/mekhovov/revealline/releases/tag/v0.141.3).
-  Pages selector [PR #682](https://github.com/mekhovov/revealline/pull/682)
-  merged as `01de92e9693d640e08ff21ba95ce12a978cb486f`. Publication run
-  `36255919482` passed assembly, deployment and the complete public-byte audit;
-  built-in-browser acceptance confirmed v0.141.3 as Current with exact source
-  `7509d790dadb6194d70a5bc1efafee40fbb0b3b7`. Archive96 preserves v0.141.2.
-- **Active candidate:** v0.141.4 combines the merged community acceptance and
-  validation-worker isolation from PR #680 with Couch secondary navigation.
-  [PR #683](https://github.com/mekhovov/revealline/pull/683) passed hosted
-  exact-head qualification and merged as
-  `65bdcd9825e9e6129bb8e039c3c8922615642689`.
-  Its feature-owned shell/Pause and departure/markup/quick-start boundaries
-  pass 27/27 and 37/37 on the exact rebased source; validation, localization,
-  lint, formatting, syntax and version parity also pass. The terminal candidate
-  additionally makes Classic Team continuation tolerate its opaque owner ID;
-  the focused continuation slice passes 14/14. Terminal hosted qualification,
-  immutable release, selector and public acceptance remain open. It is followed
-  by v0.141.5 Team teaching; v0.141.6
-  deliberate Team terminal Retry; v0.141.7 Versus countdown; v0.141.8 named
-  result destinations; and v0.141.9 Collection fixture reconciliation plus
-  paused Settings/Help return
-  ([PR #548](https://github.com/mekhovov/revealline/pull/548), then
-  [PR #542](https://github.com/mekhovov/revealline/pull/542)). These are working
-  allocations, not merged or public releases. The v0.142.0 through v0.149.x
-  ranges may have separate open owners. Each item must be reconciled and
-  qualified on its accepted predecessor; stale target versions in draft titles
-  and evidence do not override this order.
-- **Remaining:** UX6 cumulative Solo/Versus/Team journeys, real-browser viewport,
-  zoom, accessibility and performance regression, current-build offline
-  install/update/recovery, and public-byte verification follow v0.141.9. Focused
-  branch tests are component evidence, not a cumulative qualification. Waived or
-  skipped long suites are not passes; modeled pads and DOM clicks are not physical
-  controller, Steam Deck or touch-device evidence. Human balance, cross-runtime
-  replay portability and physical installed-device acceptance remain separate
-  gates. The cumulative v0.141.4 candidate does not yet claim an immutable
-  release, Pages deployment or public player-flow acceptance. Five broader Solo
-  touchscreen-host failures reproduced unchanged on the earlier v0.141.3 parent
-  and remain an explicit qualification concern until the rebased comparison is
-  rerun.
-- **Community S3 workstream, first bounded slice:** the v0.141.5 candidate now has
-  one fail-closed package-storage factory shared by the executable API and
-  validation worker. Disk remains the production default. The S3 path verifies
-  streamed size and SHA-256 into bounded local staging before conditional,
-  immutable object publication; mismatched input never reaches S3. Focused unit
-  evidence covers factory selection, configuration rejection, multi-megabyte
-  streaming and staging cleanup. Remaining before S3 production acceptance:
-  tus datastore integration and expiry cleanup, S3 readiness probes,
-  backup/restore and recovery rehearsal, MinIO integration, and a real AWS smoke
-  run. The remaining estimate is 3–5 focused engineering days, plus access to
-  the selected AWS bucket and scoped IAM identity for the final smoke evidence.
-  This candidate is not merged, released, or production-qualified yet.
-
+- **Publicly accepted baseline:** v0.141.4 is immutable and selected on Pages from exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c`. Release publication and Archive97 preservation completed before selector admission. Pages run `36260302658` passed assembly, deployment and a complete **1,897-file / 630,507,368-byte** audit with zero final failures or retries. Browser review confirmed ordinary Solo Continue/resume, Versus ready entry with 91 missions, and Team ready entry with 12 missions. Physical controller, Steam Deck, touch-device and comprehensive offline acceptance remain separate.
+- **Completed delivery infrastructure:** PR #692 hardened exact release-draft recovery and merged as `52ab61bd231ff26c5d18f86189fa23722b677105`. PR #658 bound merge admission to exact source, metadata, policy and dependencies and merged as `93f80196361a90011ffbc14874700b6f3979a47e`. PR #659 selected five playable releases globally without deleting history and merged as `77ec1c7b0f4febb149926b421bbb13f463c44994`; Pages run `36261378630` passed assembly, deployment and public-byte audit. Public browser review shows exactly v0.141.4, v0.141.3, v0.141.2, v0.141.0 and v0.132.5, with earlier immutable releases still preserved in their archives and GitHub releases. Long suites were explicitly waived by the committed temporary policy and are not claimed as passed.
+- **Active release candidate — v0.141.5:** PR #693 merged the bounded community S3 package-store slice as `9a69e5603f8a94550e4e362d157867c678c7cb0a`; PR #694 added S3-backed resumable uploads and startup readiness as `33d31750aea2bf2e34ffd9c8286c9f866ec48b79`. This release synchronizes the game package, lockfile and build identity around that accepted source. Disk remains the production default. S3 verifies staged size and SHA-256 before conditional immutable publication. Production acceptance still requires recovery rehearsal, hosted MinIO integration and a real scoped AWS smoke run. PR #695 is a follow-up candidate and is not appended late to this already closed v0.141.5 release boundary.
+- **Next ordered work:** v0.141.6 is the isolated source-manifest publisher canary. Player work resumes with the approved speed-first batches: v0.141.7 combines compatible teaching/reward/navigation inputs from PR #543 → #580 → #553; v0.141.8 combines terminal Retry, Versus cue and named-result inputs from PR #545 → #552 → #557; v0.141.9 combines Settings/Help and Collection return inputs from PR #542 → #548. The existing v0.142.0 offline chain (#605 → #609 → #619 → #588) and v0.143.0 soundtrack allocation remain reserved. UX6 follows those batches on the exact accepted source. Each batch keeps one PR, immutable release, selector update and public verification; focused evidence from its inputs is rerun cumulatively rather than added together.
+- **Evidence limits:** focused component checks and modeled input do not certify physical devices or human balance. Waived, skipped or cancelled jobs are not passes. Preserve all unrelated branches, immutable releases, player saves, installed packs, uploads and Studio projects.
 The 23 September register and later dated sections are preserved below as
 historical scope, evidence and design contracts. Their old version, PR-count and
 queue statements are not live status.

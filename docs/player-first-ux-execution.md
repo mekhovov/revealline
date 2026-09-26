@@ -10,48 +10,25 @@ This checkpoint supersedes older paragraphs below that describe themselves as
 current. Those paragraphs remain unchanged as dated implementation and release
 evidence.
 
-**Completed Pages baseline and latest stable release:** [PR #679](https://github.com/mekhovov/revealline/pull/679)
-merged v0.141.3 Team quick-start as
-`7509d790dadb6194d70a5bc1efafee40fbb0b3b7`. Coordinator run `36254346397`
-published its immutable nine-asset
-[v0.141.3 release](https://github.com/mekhovov/revealline/releases/tag/v0.141.3).
-Pages selector [PR #682](https://github.com/mekhovov/revealline/pull/682)
-merged as `01de92e9693d640e08ff21ba95ce12a978cb486f`. Publication run
-`36255919482` passed assembly, deployment and the complete public-byte audit;
-built-in-browser acceptance confirmed v0.141.3 as Current with exact source
-`7509d790dadb6194d70a5bc1efafee40fbb0b3b7`. Archive96 preserves v0.141.2.
-The separately deployed community API remains unavailable until infrastructure
-is selected.
+**Accepted public baseline:** v0.141.4 is immutable and selected on Pages from exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c`. Its release, Archive97 admission and Pages publication are complete. Run `36260302658` verified 1,897 deployed files / 630,507,368 bytes with zero final failures or retries. Browser review confirmed ordinary Solo Continue/resume, Versus ready entry with 91 missions, and Team ready entry with 12 missions.
 
-**Active candidate:** v0.141.4 combines the merged community acceptance and
-validation-worker isolation from PR #680 with Couch secondary navigation.
-[PR #683](https://github.com/mekhovov/revealline/pull/683) passed hosted
-exact-head qualification and merged as
-`65bdcd9825e9e6129bb8e039c3c8922615642689`. It preserves Team quick-start
-focus and Cancel behavior. Its prepared donor passed the
-feature-owned shell/Pause and departure/markup/quick-start boundaries at 27/27
-and 37/37; both pass again on this exact rebased source. Repository validation,
-localization, lint, game/site and native formatting, changed-file syntax and
-four-way v0.141.4 version parity also pass. The terminal candidate additionally
-makes Classic Team continuation tolerate its opaque owner ID; the focused
-continuation slice passes 14/14. Terminal hosted qualification, immutable
-release, selector and public player-flow acceptance remain open.
+**Completed release infrastructure:** PR #692 merged exact draft recovery, PR #658 merged source/metadata-bound admission, and PR #659 merged the five-release global selector. Pages run `36261378630` passed assembly, deployment and public-byte audit. The public explorer now presents exactly five playable releases while preserving every historical tag, release, asset and archive. These infrastructure changes do not alter frozen game bytes.
 
-**Ordered continuation:** v0.141.3 is the latest stable release; later rows remain working
-allocations rather than accepted releases. Reconcile each item onto the accepted predecessor, rerun its
-exact-head gates and publish it before accepting the next row. Older target
-versions in draft PR titles and evidence files are stale where they disagree
-with this order.
+**Active candidate:** v0.141.5 publishes the cumulative community S3 package-store and resumable-upload slices already merged by PR #693 and PR #694. It keeps disk as the production default and validates bounded staged bytes before immutable conditional S3 publication. The version-only release PR must pass exact-head source checks, immutable freeze, archive admission, Pages publication and public player-flow verification. Broader S3 production readiness remains separate.
 
-| Order | Working release | Scope                                                                | Current source input                                                                                                        |
-| ----- | --------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| 1     | v0.141.3        | Team quick-start                                                     | reconciled local donor from PR #549                                                                                         |
-| 2     | v0.141.4        | Couch secondary navigation                                           | prepared donor from PR #539                                                                                                 |
-| 3     | v0.141.5        | Contextual Team teaching                                             | prepared donor from PR #543                                                                                                 |
-| 4     | v0.141.6        | Deliberate Team terminal Retry                                       | [PR #545](https://github.com/mekhovov/revealline/pull/545)                                                                  |
-| 5     | v0.141.7        | Readable Versus countdown and Retry cue                              | [PR #552](https://github.com/mekhovov/revealline/pull/552)                                                                  |
-| 6     | v0.141.8        | Named result destinations                                            | [PR #557](https://github.com/mekhovov/revealline/pull/557)                                                                  |
-| 7     | v0.141.9        | Collection fixture reconciliation plus Settings/Help return to Pause | [PR #548](https://github.com/mekhovov/revealline/pull/548), then [PR #542](https://github.com/mekhovov/revealline/pull/542) |
+**Ordered continuation:** v0.141.6 is the isolated source-manifest canary. Player-first work resumes at v0.141.7 in the approved compatible batches below. Reconcile every batch onto the accepted predecessor and rerun its cumulative exact-source gates before release. Older target versions in draft titles are stale where they disagree with this order. PR #695 remains a separate follow-up and is not appended after the v0.141.5 boundary was closed.
+
+| Order | Working release | Scope                                                                | Current source input                                                   |
+| ----- | --------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| 1     | v0.141.4        | Couch secondary navigation and Team continuation                     | publicly accepted exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c` |
+| 2     | v0.141.5        | Bounded community S3 package and resumable-upload storage            | merged PR #693 and PR #694 plus synchronized release identity          |
+| 3     | v0.141.6        | Source-manifest publisher canary                                     | PR #662, reconciled after v0.141.5 public acceptance                   |
+| 4     | v0.141.7        | Teaching, reward and navigation batch                                | PR #543 → #580 → #553; rerun cumulative exact-source gates             |
+| 5     | v0.141.8        | Failure and continuation batch                                       | PR #545 → #552 → #557; rerun cumulative exact-source gates             |
+| 6     | v0.141.9        | Pause, Settings/Help and Collection return batch                     | PR #542 → #548; rerun cumulative exact-source gates                    |
+| 7     | v0.142.0        | Existing offline delivery batch                                      | preserve PR #605 → #609 → #619 → #588 ownership and allocation        |
+| 8     | v0.143.0        | Existing soundtrack batch                                            | preserve its current owner and release allocation                      |
+| 9     | after v0.143.0  | UX6 cumulative qualification                                        | exact accepted predecessor; no aggregation of stale component evidence |
 
 Known corrections remain part of these working allocations:
 
@@ -61,7 +38,7 @@ Known corrections remain part of these working allocations:
   contract and selected Team fixtures; its sequential recovery, bootstrap,
   quick-start and complete Team host evidence passes 109/109. Restoring passive
   Cancel focus would reintroduce the reported controller/Steam Deck failure.
-- v0.141.7 local correction `9360ef07279400c59bb7c7111e7015738b84df02`
+- The v0.141.8 Versus-cue input retains local correction `9360ef07279400c59bb7c7111e7015738b84df02`
   restarts the full cue after an interruption during visible **Go**, while
   keeping explicit Retry on its shorter recipe. Complete cue, candidate Versus
   and continuation evidence passes 17/17, 13/13 and 10/10 sequentially.
@@ -76,7 +53,7 @@ Known corrections remain part of these working allocations:
   from physical touch and controller evidence.
 
 **Remaining:** UX6 still owns one cumulative whole-player qualification after
-v0.141.9. It must exercise complete Solo, Versus and Team journeys; real browser
+the v0.143.0 batch. It must exercise complete Solo, Versus and Team journeys; real browser
 layout and focus at desktop, 1280×800, portrait, short landscape and 200% zoom;
 keyboard, touch, reduced-effects and accessibility behavior; gallery memory and
 frame-time comparison; offline install/update/recovery; and deployed public-byte
