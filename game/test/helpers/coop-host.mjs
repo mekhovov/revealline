@@ -196,7 +196,8 @@ export async function page(
   $('coop-canvas').getContext = () => context;
   const frames = new Map(),
     originals = new Map();
-  let nextFrame = 0;
+  let nextFrame = 0,
+    now = 0;
   const pads = [];
   const touchListeners = new Set();
   const touchQuery = {
@@ -212,6 +213,7 @@ export async function page(
     document: doc,
     window: win,
     navigator: { getGamepads: () => pads },
+    performance: { now: () => now },
     location: { href, assign: (url) => visits.push(url) },
     matchMedia: (query) => (query === '(any-pointer: coarse)' ? touchQuery : { matches: false }),
     requestAnimationFrame(callback) {
@@ -293,22 +295,29 @@ export async function page(
     assert.ok(frames.size);
   }
   if (!retainInitialDifficulty) $('coop-difficulty').value = 'standard';
-  const queuedFileReads = [];
-  let blobTextMocked = false;
+  const fileReads = new WeakMap();
+  let blobReadersMocked = false;
   const selectFile = (text, read = null) => {
     $('coop-pack-file').closest('details').open = true;
+    const file = new Blob([text], { type: 'application/json' });
     if (read) {
-      queuedFileReads.push(read);
-      if (!blobTextMocked) {
-        blobTextMocked = true;
+      fileReads.set(file, read);
+      if (!blobReadersMocked) {
+        blobReadersMocked = true;
+        const nativeSlice = Blob.prototype.slice;
         const nativeText = Blob.prototype.text;
+        t.mock.method(Blob.prototype, 'slice', function (...args) {
+          const owned = Reflect.apply(nativeSlice, this, args),
+            reader = fileReads.get(this);
+          if (reader) fileReads.set(owned, reader);
+          return owned;
+        });
         t.mock.method(Blob.prototype, 'text', function () {
-          const next = queuedFileReads.shift();
-          return next ? next() : Reflect.apply(nativeText, this, []);
+          const reader = fileReads.get(this);
+          return reader ? reader() : Reflect.apply(nativeText, this, []);
         });
       }
     }
-    const file = new Blob([text], { type: 'application/json' });
     $('coop-pack-file').files = [file];
     return $('coop-pack-file').onchange();
   };
@@ -355,7 +364,6 @@ export async function page(
     press(key);
     doc.activeElement.emit('keyup', { key, code: key });
   };
-  let now = 0;
   const tick = (count = 1) => {
     for (let index = 0; index < count; index++) {
       const [id, callback] = frames.entries().next().value;

@@ -37,11 +37,15 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   concurrent duplicate reports resolve idempotently; report triage is paged and audited. Exact
   blob hashes are authenticated again at download, and database/blob snapshots support verify and
   journal-backed restore.
-- All current generated layouts are qualified for equal-board Versus. Purpose-built Team layouts
-  support direct verified Couch file launch, immutable SHA-256 installation, fresh-session library
-  discovery, replay-verified launch, exact unfinished-attempt recovery, stale-tab rejection and
-  edition-scoped legal-clear progress. The bounded binary Team media format binds one exact picture
-  per level and an optional inspected victory video to the complete installed edition identity. A
+- All current generated layouts have exact equal-board Versus replay qualification, and portable
+  package validation repeats that proof. The installed project-backed Versus campaign route,
+  including mode selection, Retry/Next, progression and recovery, remains in progress and is not
+  accepted by that generation evidence alone.
+- Purpose-built Team layouts support direct verified Couch file launch, immutable SHA-256
+  installation, fresh-session library discovery, replay-verified launch, exact unfinished-attempt
+  recovery, stale-tab rejection and edition-scoped legal-clear progress. The bounded binary Team
+  media format binds one exact picture per level and an optional inspected victory video to the
+  complete installed edition identity. A
   browser creator generates and verifies the cooperative pack, normalizes exact reward derivatives,
   shows each media binding/range and shared-storage requirement, invalidates stale approvals, and
   installs or exports the reviewed `.rlteammedia` bytes. Team payloads participate in the shared
@@ -118,6 +122,11 @@ community service and completing its PostgreSQL/container restart, real database
 two-account browser, proxy interruption, TLS/domain/secrets, exact trusted-proxy configuration,
 Better Auth mail and account recovery, shared tus locking/cleanup, and isolated media-worker
 acceptance.
+
+Installed creator play is currently accepted for Solo. Generated v3 packages retain Versus
+qualification evidence, but the combined feature cannot claim installed Versus completion until
+the project-backed Versus selector, Retry/Next, edition-scoped progression, transfer and reload
+journey lands and passes its browser acceptance gate.
 
 Verified Team gameplay or media bytes install under the SHA-256 of the complete portable payload.
 Fresh Team library visits discover each immutable edition, replay its qualification before launch,

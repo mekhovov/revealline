@@ -29,7 +29,9 @@ function validateProfileKey(key) {
 
 function pictureEditionId(profileKey) {
   if (profileKey === 'journey') return null;
-  return profileKey.startsWith('journey-') ? profileKey.slice('journey-'.length) : profileKey;
+  for (const prefix of ['journey-', 'custom-'])
+    if (profileKey.startsWith(prefix)) return profileKey.slice(prefix.length);
+  return profileKey;
 }
 
 function inspectProfileBackup(source, profileKey) {
