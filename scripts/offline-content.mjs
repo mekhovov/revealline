@@ -2,6 +2,17 @@ import { soundtrackDownloadVolumes } from '../game/soundtrack-download-volumes.m
 import { createHash } from 'node:crypto';
 import { SOUNDTRACK_CATALOGUE } from '../game/content/soundtrack-catalogue.mjs';
 import { soundtrackRights } from '../game/soundtrack.mjs';
+import { readFileSync } from 'node:fs';
+
+const contentMessages = JSON.parse(
+  readFileSync(new URL('../game/locales/en/content.json', import.meta.url), 'utf8'),
+);
+const contentKeysByEnglish = new Map();
+for (const [key, value] of Object.entries(contentMessages)) {
+  if (contentKeysByEnglish.has(value)) contentKeysByEnglish.set(value, null);
+  else contentKeysByEnglish.set(value, `content:${key}`);
+}
+const contentTitleKey = (title) => contentKeysByEnglish.get(title) || undefined;
 
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 /** Built from the exact frozen bytes, never a second, independently maintained asset list. */
@@ -41,6 +52,7 @@ export async function buildOfflineContent(entries, excluded, version) {
     {
       id: 'shared',
       title: 'Shared game, modes and original reward artwork',
+      titleKey: 'interface:downloads.sharedGameGroup',
       kind: 'gameplay',
       requires: [],
       files: files.filter((file) => !chapterPaths.has(file.path)).map((file) => file.path),
@@ -62,6 +74,9 @@ export async function buildOfflineContent(entries, excluded, version) {
       chapterGroups.set(id, {
         id,
         title: mission.edition === 'Base game' ? 'Base game' : mission.campaignTitle,
+        titleKey: contentTitleKey(
+          mission.edition === 'Base game' ? 'Base game' : mission.campaignTitle,
+        ),
         kind: 'gameplay',
         requires: ['shared'],
         files: [path, ...(companion ? [companion.media.path] : [])].filter((name) =>
