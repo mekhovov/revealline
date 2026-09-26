@@ -1,6 +1,6 @@
 # UX1-B compact mission gallery — v0.133.0
 
-This v0.133.0 candidate is reconciled onto the accepted v0.132.0 product source and keeps the complete mode-compatible mission catalogue visible while reducing the work needed to find and start a mission. It advances the candidate identity to v0.133.0 without changing publishing, release history, progression identity, simulation rules, or the underlying pack formats.
+This v0.133.0 candidate is reconciled onto the accepted v0.132.1 product source and keeps the complete mode-compatible mission catalogue visible while reducing the work needed to find and start a mission. It advances the candidate identity to v0.133.0 without changing publishing, release history, progression identity, simulation rules, or the underlying pack formats.
 
 ## Player contract
 
