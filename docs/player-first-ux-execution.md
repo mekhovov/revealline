@@ -10,15 +10,19 @@ This checkpoint supersedes older paragraphs below that describe themselves as
 current. Those paragraphs remain unchanged as dated implementation and release
 evidence.
 
-**Completed:** immutable
-[v0.132.5](https://github.com/mekhovov/revealline/releases/tag/v0.132.5) is the
-current published release. Its product source is
-`a8881ac17e44f38fb1e9dc15428899992727cc78`; Pages selector
-[PR #668](https://github.com/mekhovov/revealline/pull/668) merged as
-`8f7ea5540d6851fb2d6d77a42c899e071e65e52a`. It contains the locale repair
-from PR #652, version source `c1fec0d8ef8a8bff29acd5619f3bdcc748205e9f`
-from PR #654 and the FPV revision-90 presentation continuation from PR #663.
-Immutable v0.132.4 is preserved in Archive93.
+**Completed public baseline:** immutable
+[v0.132.5](https://github.com/mekhovov/revealline/releases/tag/v0.132.5) remains
+the current published release while the merged v0.141.0 source completes its
+serialized publication. v0.132.5 uses product source
+`a8881ac17e44f38fb1e9dc15428899992727cc78`; Pages selector PR #668 merged as
+`8f7ea5540d6851fb2d6d77a42c899e071e65e52a`. Immutable v0.132.4 remains in
+Archive93.
+
+**Merged predecessor awaiting public acceptance:** PR #564 merged exact
+v0.141.0 source `5d6c97c850a648c5ebe93d3cf57731aeb67d0bbb`. Its guarded publisher owns the
+single release lane. UX1-B has been rebased onto that exact source but cannot
+merge or publish until v0.141.0 is immutable, selected on Pages and publicly
+verified.
 
 **Active and ordered:** each row is a working allocation, not an accepted
 release. Reconcile each item onto the publicly accepted predecessor, rerun its
@@ -28,31 +32,31 @@ with this order.
 
 | Order | Working release | Scope                                                                | Current source input                                                                                                        |
 | ----- | --------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| 1     | v0.133.0        | Compact complete mission gallery                                     | [PR #590](https://github.com/mekhovov/revealline/pull/590)                                                                  |
-| 2     | v0.134.0        | Team quick-start                                                     | [PR #549](https://github.com/mekhovov/revealline/pull/549)                                                                  |
-| 3     | v0.135.0        | Couch secondary navigation                                           | [PR #539](https://github.com/mekhovov/revealline/pull/539)                                                                  |
-| 4     | v0.136.0        | Contextual Team teaching                                             | [PR #543](https://github.com/mekhovov/revealline/pull/543)                                                                  |
-| 5     | v0.137.0        | Deliberate Team terminal Retry                                       | [PR #545](https://github.com/mekhovov/revealline/pull/545)                                                                  |
-| 6     | v0.138.0        | Readable Versus countdown and Retry cue                              | [PR #552](https://github.com/mekhovov/revealline/pull/552)                                                                  |
-| 7     | v0.139.0        | Named result destinations                                            | [PR #557](https://github.com/mekhovov/revealline/pull/557)                                                                  |
-| 8     | v0.140.0        | Collection fixture reconciliation plus Settings/Help return to Pause | [PR #548](https://github.com/mekhovov/revealline/pull/548), then [PR #542](https://github.com/mekhovov/revealline/pull/542) |
+| 1     | v0.141.1        | Compact complete mission gallery                                     | [PR #590](https://github.com/mekhovov/revealline/pull/590)                                                                  |
+| 2     | v0.141.2        | Team quick-start                                                     | prepared donor from PR #549                                                                                                 |
+| 3     | v0.141.3        | Couch secondary navigation                                           | prepared donor from PR #539                                                                                                 |
+| 4     | v0.141.4        | Contextual Team teaching                                             | prepared donor from PR #543                                                                                                 |
+| 5     | v0.141.5        | Deliberate Team terminal Retry                                       | [PR #545](https://github.com/mekhovov/revealline/pull/545)                                                                  |
+| 6     | v0.141.6        | Readable Versus countdown and Retry cue                              | [PR #552](https://github.com/mekhovov/revealline/pull/552)                                                                  |
+| 7     | v0.141.7        | Named result destinations                                            | [PR #557](https://github.com/mekhovov/revealline/pull/557)                                                                  |
+| 8     | v0.141.8        | Collection fixture reconciliation plus Settings/Help return to Pause | [PR #548](https://github.com/mekhovov/revealline/pull/548), then [PR #542](https://github.com/mekhovov/revealline/pull/542) |
 
 Known corrections remain part of these working allocations:
 
-- v0.134 keeps **Cancel preparation** as an explicit recovery action for a
+- v0.141.2 keeps **Cancel preparation** as an explicit recovery action for a
   stalled artwork request, but passive loading leaves focus unclaimed. Local
   correction `651b78756039f48d332a97528503193d9111c382` updates the stale focus
   contract and selected Team fixtures; its sequential recovery, bootstrap,
   quick-start and complete Team host evidence passes 109/109. Restoring passive
   Cancel focus would reintroduce the reported controller/Steam Deck failure.
-- v0.138 local correction `9360ef07279400c59bb7c7111e7015738b84df02`
+- v0.141.6 local correction `9360ef07279400c59bb7c7111e7015738b84df02`
   restarts the full cue after an interruption during visible **Go**, while
   keeping explicit Retry on its shorter recipe. Complete cue, candidate Versus
   and continuation evidence passes 17/17, 13/13 and 10/10 sequentially.
-- v0.139 requires an isolated complete Solo host rerun. Its new named-destination
+- v0.141.7 requires an isolated complete Solo host rerun. Its new named-destination
   cases pass when selected alone, while a broader run under concurrent host load
   hit bounded settling timeouts.
-- v0.140 must take only the prepared five-path donor delta after v0.139 plus
+- v0.141.8 must take only the prepared five-path donor delta after v0.141.7 plus
   local correction `b272bec9d30155a3fa51857c01a2810e4b55ccd0`. The correction
   repairs deterministic Soundtrack fixture setup without weakening controller
   Back/Escape semantics and adds live-flight Help return coverage. All three
@@ -60,7 +64,7 @@ Known corrections remain part of these working allocations:
   from physical touch and controller evidence.
 
 **Remaining:** UX6 still owns one cumulative whole-player qualification after
-v0.140.0. It must exercise complete Solo, Versus and Team journeys; real browser
+v0.141.8. It must exercise complete Solo, Versus and Team journeys; real browser
 layout and focus at desktop, 1280×800, portrait, short landscape and 200% zoom;
 keyboard, touch, reduced-effects and accessibility behavior; gallery memory and
 frame-time comparison; offline install/update/recovery; and deployed public-byte
@@ -85,9 +89,9 @@ language-switch audit found that Solo's primary Continue label and destination
 can remain English after changing the surrounding UI to Ukrainian; that defect
 belongs to the next corrective release and does not alter the immutable tag.
 
-The active order is v0.133 compact gallery, v0.134 Team quick start, v0.135 Couch
-secondary navigation, v0.136 Team teaching, v0.137 deliberate Team terminal
-Retry, v0.138 Versus countdown, v0.139 named result destinations, v0.140
+The active order is v0.141.1 compact gallery, v0.141.2 Team quick start, v0.141.3 Couch
+secondary navigation, v0.141.4 Team teaching, v0.141.5 deliberate Team terminal
+Retry, v0.141.6 Versus countdown, v0.141.7 named result destinations, v0.141.8
 Settings/Help/Collection return closure, then UX6 qualification. Prepared
 branches must rebase onto each accepted predecessor; their focused evidence is
 not cumulative release acceptance.
