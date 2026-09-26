@@ -2,8 +2,8 @@
 
 ## Scope
 
-This candidate adds one bounded player-first teaching feature to the Team host. It does not change the
-Team simulation, mission recipes, scoring, artwork, controller routing or release metadata.
+This candidate adds one bounded player-first teaching feature to the Team host. The feature does not
+change the Team simulation, mission recipes, scoring, artwork, or controller routing.
 
 The shared arena now uses its existing live message row to introduce three skills in context:
 

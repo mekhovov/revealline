@@ -102,7 +102,7 @@ remain separately reported gates.
 The v0.141.7 reconciliation audit found that PR #543's original teaching helper
 derived behavior from localized display labels and hard-coded English ground
 text. The repaired batch must consume semantic `groundContext` and
-`supportActions`, add English and Ukrainian catalog keys, update an active cue
+`supportCapabilities`, add English and Ukrainian catalog keys, update an active cue
 when the language changes, and cover the real host path. PR #580's gallery
 commits carry cleanly after that runtime layer. PR #553 is historical status text
 and must be represented by this live checkpoint instead of cherry-picked.
