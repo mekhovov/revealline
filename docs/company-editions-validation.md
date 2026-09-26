@@ -6,7 +6,7 @@ installation and downloaded/deployed release evidence cannot be inferred from un
 
 ## Main integration and final review preparation
 
-Main through `8b1793dea` is integrated in merge `96a536efd`. The only merge conflict was
+Main through `5cdbe3ab7` is integrated in merge `6fb1bfdf6`. The only merge conflict was
 the generated localization catalogue. Regenerating it from the combined English/Ukrainian
 sources and running localization validation preserved both company and upstream strings.
 The incoming private soundtrack feature uses the existing static runtime dependency closure;
