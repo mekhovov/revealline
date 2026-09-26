@@ -8,10 +8,12 @@ server upload. It separates three operations that produce different evidence:
    the complete original video in the campaign.
 3. **Physical trim, resize and compression** lazy-loads pinned
    [Mediabunny 1.59.1](https://mediabunny.dev/) only after you check support. The bounded production
-   path accepts one silent MP4 or WebM video track that this browser can decode and exports a newly
-   encoded AVC MP4. A separate parser pass authenticates the source and output hashes and requires
-   both containers to have zero audio tracks. Fresh browser decodes also compare the selected
-   source start/end pictures with the exported start/end pictures before a download appears.
+   path accepts one silent MP4 or WebM video track, or one AVC video track plus one AAC audio track
+   in MP4, when this browser can decode and encode the required codecs. It exports a newly encoded
+   AVC MP4, retaining AAC only on the bounded audio path. Separate parser and decoder passes
+   authenticate the source/output hashes, track inventories, audio timelines and three PCM windows.
+   Fresh browser decodes also compare the selected source start/end pictures with the exported
+   start/end pictures before a download appears.
 
 Before checking support, choose one reviewed output profile:
 
@@ -55,14 +57,16 @@ The workshop then
 loads the self-hosted converter and inspects the exact owned source. Support is advertised only
 when all of these statements are true:
 
-- the file is an MP4 or WebM with exactly one video track and no audio track;
-- a separate exact-byte inspection authenticates the selected source and reports zero audio tracks;
+- the file has exactly one video track and at most one audio track;
+- audio is absent, or the file is MP4 with exactly one AVC/H.264 video track and one AAC track;
+- a separate exact-byte inspection authenticates the selected source; AAC must decode into three
+  bounded PCM fingerprint windows across the selected range;
 - the converter and browser agree with the already inspected display dimensions;
 - this browser can decode and encode AVC through WebCodecs; and
 - the range has a positive duration inside the inspected source.
 
-Additional tracks, every audio-bearing input, unavailable source decoders, and browsers without an
-AVC encoder stay unchanged and show the exact unsupported reason. The complete source remains
+Additional tracks, other audio/video codec combinations, unavailable source decoders, and browsers
+without the required AVC or AAC encoder stay unchanged and show the exact unsupported reason. The complete source remains
 available for playback-range packaging. This is capability detection for the selected bytes; it is
 not a promise that every codec permitted by MP4 or WebM will decode in that browser.
 
@@ -73,8 +77,10 @@ Before the adapter offers a transformed download, it requires all of the followi
 - a fresh browser decode whose hash and byte count match the output;
 - decoded duration within a bounded tolerance of the requested clip;
 - decoded width and height exactly equal to the reviewed output plan;
-- a second exact-byte audio-track inventory whose hash and byte count match the output and whose
-  audio-track count is zero.
+- a second exact-byte track inventory whose hash and byte count match the output; a silent source
+  must remain silent, while AVC+AAC must remain exactly one AVC and one AAC track;
+- for AAC, matching channel count and sample rate, audio coverage at the reviewed source boundaries,
+  output audio endpoints aligned with decoded video, and three bounded decoded PCM fingerprints.
 - fresh presented-frame captures from the exact source and output at both boundaries, with
   authenticated PNG hashes, aligned observed timestamps and bounded normalized RGB error.
 - for a bitrate profile, an exact output-byte/duration whole-container average no greater than two
@@ -129,27 +135,27 @@ Start/end RGB errors were `0.017472` and `0.019686`, the verified download appea
 reported no warning or error. This is one Chromium-platform qualification; it does not replace the
 per-browser repeat above.
 
-This proves changed bytes, clip duration, decoded display orientation and the absence of audio
-tracks in both authenticated containers. The audio inventory reopens the bytes through the same
+This proves changed bytes, clip duration, decoded display orientation and, for that portrait check,
+the absence of audio tracks in both authenticated containers. The track inventory reopens the bytes through the same
 pinned media parser; it is a separate inspection pass, not an independent decoder. Adapter-supplied
 audio labels are ignored. The conversion writes an empty metadata-tag set, but this does not prove
-that every container-level metadata field is absent. The supported path labels audio
-`not-present`; it never presents silence as proof of audio synchronization.
+that every container-level metadata field is absent. Silent output is labeled `not-present`; AAC is
+labeled `verified` only after exact-byte inventories, decoded PCM windows and A/V endpoints pass.
 
 [Mediabunny currently documents](https://mediabunny.dev/guide/converting-media-files#trimming) that
-any nondefault trim start forces both video and audio transcoding. Audio-bearing inputs remain
-unsupported until RevealLine can independently inspect the decoded output audio timestamps and
-synchronization instead of trusting successful encoding alone.
+any nondefault trim start forces both video and audio transcoding. The bounded AVC+AAC path therefore
+forces AAC transcoding and independently checks decoded output audio timestamps and signal windows
+instead of trusting successful encoding alone.
 
 ## Exact support and limits
 
-| Operation              | Accepted input                                                                        | Produced output                            | Limits and evidence                                                                                                                                                                                                      |
-| ---------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Inspect/capture        | Bounded MP4 (`isom`, `iso2`, `mp41`, `mp42`, `avc1`, `M4V ` brands) or WebM container | PNG poster                                 | Up to 64 MiB, 120 seconds and decoded 1920 × 1080. The browser must actually decode the contained codecs.                                                                                                                |
-| Playback range         | An inspected MP4 or WebM                                                              | No new media bytes                         | Full original is retained. Start/end are validated, not clamped.                                                                                                                                                         |
-| Adjacent decoded frame | An inspected source whose capture returned a presented-frame timestamp                | PNG poster                                 | Bounded seek attempts; unavailable when the browser exposes playhead estimates only.                                                                                                                                     |
-| Physical trim/convert  | One silent, browser-decodable MP4 or WebM video track                                 | Newly encoded AVC/H.264 MP4                | Mediabunny 1.59.1 loads on request; download remains blocked until changed-byte, fresh source/output boundary-frame decode and exact-byte zero-audio-track checks pass. Audio and multi-track inputs remain unsupported. |
-| Resize/compress        | The same bounded silent source using Balanced or Compact                              | Exact reviewed dimensions in AVC/H.264 MP4 | No upscaling; aspect/orientation preserved; target bitrate and observed whole-container average remain in evidence. Output is withheld on dimensions, codec, audio, bitrate allowance or visual-boundary drift.          |
+| Operation              | Accepted input                                                                        | Produced output                                                 | Limits and evidence                                                                                                                                                                                                       |
+| ---------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Inspect/capture        | Bounded MP4 (`isom`, `iso2`, `mp41`, `mp42`, `avc1`, `M4V ` brands) or WebM container | PNG poster                                                      | Up to 64 MiB, 120 seconds and decoded 1920 × 1080. The browser must actually decode the contained codecs.                                                                                                                 |
+| Playback range         | An inspected MP4 or WebM                                                              | No new media bytes                                              | Full original is retained. Start/end are validated, not clamped.                                                                                                                                                          |
+| Adjacent decoded frame | An inspected source whose capture returned a presented-frame timestamp                | PNG poster                                                      | Bounded seek attempts; unavailable when the browser exposes playhead estimates only.                                                                                                                                      |
+| Physical trim/convert  | One silent browser-decodable MP4/WebM video track, or one AVC+AAC MP4                 | Newly encoded AVC MP4, with AAC retained only for AVC+AAC input | Mediabunny 1.59.1 loads on request; download remains blocked until changed-byte, visual boundaries and exact-byte track checks pass. AAC additionally requires decoded PCM fingerprints and aligned A/V endpoints.        |
+| Resize/compress        | The same bounded silent or AVC+AAC source using Balanced or Compact                   | Exact reviewed dimensions in AVC MP4                            | No upscaling; aspect/orientation preserved; target bitrate and observed whole-container average remain in evidence. Output is withheld on dimensions, codecs, audio evidence, bitrate allowance or visual-boundary drift. |
 
 Codec support differs by browser and operating system. A recognized MP4 or WebM container is not a
 promise that its video or audio codec will decode. Visual review remains required for every poster
