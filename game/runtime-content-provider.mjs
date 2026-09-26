@@ -1,5 +1,6 @@
 import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
+import { resolveEditionAssets } from './editions/model.mjs';
 import { resolveEditionContext } from './edition-context.mjs';
 import { required } from './data-json.mjs';
 import { projectEditionThemeSelection } from './editions/selected-presentation.mjs';
@@ -7,6 +8,62 @@ import {
   editionPresentationSha256,
   loadRetainedPresentation,
 } from './editions/retained-presentation.mjs';
+
+/** Only reveal-only originals may wait for the existing per-attempt verifier.
+ * Keep the complete allowlist, budget and receipt authoritative even when these
+ * bytes are not needed to open the menu. Shared hero/body/dependency uses win. */
+export function editionStartupAssetIds(bootstrap) {
+  const { catalog, selection, source, boot } = bootstrap;
+  const assets = resolveEditionAssets(catalog, { editionId: selection.edition.id });
+  required(
+    assets.reduce((sum, asset) => sum + asset.bytes, 0) <= 64 * 1024 * 1024,
+    'Presentation exceeds its offline budget.',
+  );
+  for (const asset of assets) {
+    required(
+      asset.approved === true,
+      `Presentation asset is unavailable in this edition: ${asset.id}.`,
+    );
+    required(
+      selection.edition.publication !== 'public' || asset.publication === 'public',
+      `Presentation asset is not public: ${asset.id}.`,
+    );
+  }
+  const revealIds = new Set();
+  for (const mission of source.missions) {
+    const id = mission.presentation.backgroundAssetId;
+    if (id === null) continue;
+    const pin = source.assets.find((asset) => asset.id === id);
+    const declared = pin && assets.find((asset) => asset.path === `game/${pin.path}`);
+    required(
+      declared && declared.sha256 === pin.sha256 && declared.bytes === pin.bytes,
+      'Mission artwork differs from the selected edition asset closure.',
+    );
+    revealIds.add(declared.id);
+  }
+  const protectedIds = new Set([
+    ...selection.brand.assetIds,
+    ...(selection.edition.assetIds ?? []),
+  ]);
+  // validateEditionPresentation has already bounded and admitted every body
+  // path. Preserve its renderer-relative convention when protecting reuse.
+  const bodyPaths = new Set(
+    Object.values(boot.presets.characters)
+      .filter((body) => body.src !== null)
+      .map((body) => new URL(body.src, 'https://edition.invalid/authoring/motion-lab/').pathname),
+  );
+  const eager = new Set(
+    assets
+      .filter(
+        (asset) =>
+          !revealIds.has(asset.id) || protectedIds.has(asset.id) || bodyPaths.has(`/${asset.path}`),
+      )
+      .map((asset) => asset.id),
+  );
+  const byId = new Map(assets.map((asset) => [asset.id, asset]));
+  for (const id of eager) for (const dependency of byId.get(id).dependencies) eager.add(dependency);
+  return Object.freeze([...eager]);
+}
 
 /** Content and presentation are inputs to the ordinary Solo host. An edition
  * never owns an update loop, difficulty implementation or input controller. */
@@ -50,7 +107,11 @@ export async function loadRuntimeContentProvider({
       ).bootstrap
     : currentBootstrap;
   required(bootstrap.boot, 'This edition is missing its Solo startup catalogs.');
-  await verifyAssets(bootstrap, { baseURL: rootURL, fetcher });
+  await verifyAssets(bootstrap, {
+    baseURL: rootURL,
+    fetcher,
+    ids: editionStartupAssetIds(bootstrap),
+  });
   const { route } = bootstrap;
   const projected = projectEditionThemeSelection({
     brand: bootstrap.selection.brand,

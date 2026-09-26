@@ -6,6 +6,53 @@ This record distinguishes candidate automation from release qualification. No co
 edition has been promoted or published by this work. Human observations, physical-device
 installation and downloaded/deployed release evidence cannot be inferred from unit tests.
 
+## Bulk artwork completion in the existing PR
+
+
+Main through `411bb4a7b` was merged into the existing branch, preserving previous frozen
+commit receipts. Conflict resolution retained both main's localized content validation and
+company actor/presentation fields, regenerated the locale bundle from merged sources, and
+kept duplicate-release-asset rejection. Content/publisher checks passed 61 tests; the shared
+mission-selection, edition-profile and picture-receipt cohort passed 84; the picture-storage
+cohort passed 11. Core simulation files did not change during this main merge. No new PR,
+release tag, immutable release slot or public promotion was created.
+
+The updated main branch also changed the public community development environment template.
+Its additions contain commented example S3 settings, public SDK credential-chain guidance,
+local storage/cleanup defaults and placeholder mail configuration, not live credentials.
+The source eligibility pin was advanced after reviewing that diff; a regression requires
+the exact reviewed file and rejects subsequent changes. The local sparse-checkout inventory
+admits 99 media assets. Full-checkout CI has a separate larger path count.
+
+Before changing art, exact selected snapshots were captured from `fb207466c` for the 13
+affected editions. The four earlier snapshots remain byte-for-byte intact. Only affected
+edition revisions advance; authored pack/campaign/gameplay designs retain their identities.
+A new import validator checks complete receipts, PNG pins, dimensions, authored mission
+identities and safe paths and refuses replacement of an existing art revision. The live
+catalogue changes once the complete bulk set is ready, not after individual image groups.
+
+The complete batch regenerates 101 outputs. Nine focused art checks pass, including exact
+comparisons of all 66 current mission manifests at all three difficulties against retained
+pre-batch source. The new selected pictures total 51,131,195 bytes across both brands.
+The importer additionally uses the existing bounded RGB PNG decoder to verify complete
+chunks, CRCs, scanline data and opacity; truncated, RGBA and transparent-RGB fixtures fail.
+An initial generation attempt encountered local disk exhaustion; after removing only
+reproducible review-build caches, regeneration and the complete output check passed.
+
+
+The final integrated local run passed 231 company/runtime/artifact tests and a separate
+111-test actor/replay/persistence/default-offline/review-observer cohort, with no failures
+or skips. Generated outputs, the 3,618-path sparse source inventory, changed-file lint and
+formatting pass. These cohorts overlap earlier focused checks and are not added together
+as unique test coverage. Immutable CI and downloaded-byte comparison follow the commit.
+
+Final compile sizes, CI counts and downloaded-byte receipts for this changed source must
+be recorded on PR #615 after its freeze; earlier receipts below do not attest to later changes.
+Physical-device/PWA coexistence, recovery, final artwork/content approval, same-device
+performance comparison, rollback and public deployed-byte verification remain separate
+promotion gates. User-reported formative completion is preserved without inventing
+participant measurements.
+
 ## First post-playtest artwork batch
 
 The user reported human playtesting complete on 26 September 2026 and authorized the next
@@ -16,7 +63,7 @@ with the current design and review artwork in batches of at most three.
 Choose Together, Repair the Draft and Scoped Access now have distinct opaque 1774 × 887
 illustrations generated with `image_gen.imagegen`. Their original PNG bytes total
 9,087,984 bytes, with exact prompts and provenance recorded in the edition asset inventory.
-Current coverage is nine raster pictures out of 66 missions, leaving 57 procedural slots;
+Coverage at that first batch was nine raster pictures out of 66 missions, leaving 57 procedural slots;
 the three historical Portuguese pictures remain unchanged. Four affected audiences retain
 exact pre-art presentation snapshots. All 54 affected compiled gameplay manifests remain
 unchanged; stable Journey completion survives while strict execution keys correctly differ.

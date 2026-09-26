@@ -1,6 +1,85 @@
 {
   "actorCatalogId": "journey-actors-v9",
-  "assets": [],
+  "assets": [
+    {
+      "alt": "A Friendly Welcome — fictional violet and white community workshop miniature.",
+      "bytes": 890902,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-makers-together-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-01.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "4db5bb677e1b5a63ad1452525976d3b2d22c037d3abffa19ebed29aa38d8c579",
+      "width": 960
+    },
+    {
+      "alt": "Watch and Try — fictional violet and white community workshop miniature.",
+      "bytes": 852766,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-makers-together-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-02.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "35283125b812d4322e383affa5856748eacfd716ffca4b9fd29a3b5a23d9aa86",
+      "width": 960
+    },
+    {
+      "alt": "Pass It On — fictional violet and white community workshop miniature.",
+      "bytes": 812369,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-makers-together-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-03.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "629792d4bf4d964c546d70a283246646793186d4170bdc2944633099c412f6b8",
+      "width": 960
+    },
+    {
+      "alt": "Room for Every Maker — fictional violet and white community workshop miniature.",
+      "bytes": 881660,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-makers-together-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-04.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "780131b1914aa8b904e4818b56405e96aeab4877d914371ed24cb6d77f1f54a0",
+      "width": 960
+    },
+    {
+      "alt": "Many Hands — fictional violet and white community workshop miniature.",
+      "bytes": 913329,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-makers-together-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-05.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "d0265c0126171227ab226ad9b9d9df22ca70f3b2616b054cbb52ed127a6fc5e2",
+      "width": 960
+    },
+    {
+      "alt": "A New Instructor — fictional violet and white community workshop miniature.",
+      "bytes": 853971,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-makers-together-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-06.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "f037acab298db406f58539ce3b2de444716b0690e85f46647669ccae923c3a8d",
+      "width": 960
+    }
+  ],
   "campaigns": [
     {
       "band": 5,
@@ -203,7 +282,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-makers-together-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-makers-together-01-picture",
+        "themeId": "droneaid-nl-makers-together-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -273,7 +355,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-makers-together-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-makers-together-02-picture",
+        "themeId": "droneaid-nl-makers-together-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -343,7 +428,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-makers-together-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-makers-together-03-picture",
+        "themeId": "droneaid-nl-makers-together-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -421,7 +509,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-makers-together-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-makers-together-04-picture",
+        "themeId": "droneaid-nl-makers-together-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -499,7 +590,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-makers-together-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-makers-together-05-picture",
+        "themeId": "droneaid-nl-makers-together-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -577,7 +671,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-makers-together-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-makers-together-06-picture",
+        "themeId": "droneaid-nl-makers-together-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0

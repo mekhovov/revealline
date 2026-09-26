@@ -92,7 +92,62 @@ const choices = [['droneaid-community', 'droneaid', 'Community Relay', 'public',
     [c.id],
   ])];
 // Exact pre-art snapshots; their bytes must never be reformatted or overwritten.
-const retainedPresentations = Object.freeze({});
+const retainedPresentations = Object.freeze({'droneaid-nl-community': [
+    {
+      id: '13bf4f80b1b055d9fb5abdc137dfc93b94fe4ba55072104e697fb29615374679',
+      path: 'game/editions/retained/droneaid-nl-community-fb207466c.json',
+      sha256: 'b68b453158c820a542051999f242643250439a55e532653555940ffa31bbd055',
+      bytes: 118479,
+    },
+  ],
+'droneaid-nl-workshop-lights': [
+    {
+      id: '4e9e2e8ebc38f4bf6ae0b5a06144c103947cb90704b6646800bec534bcbf5c14',
+      path: 'game/editions/retained/droneaid-nl-workshop-lights-fb207466c.json',
+      sha256: 'ace1b2e55b06ba220e26d52dc2ca282b8100f1c5bddd40e1656363c20ba6ad45',
+      bytes: 29573,
+    },
+  ],
+'droneaid-nl-parts-in-motion': [
+    {
+      id: '0b402f348a0d84f534c5db803d731394f7120160d7fd9c538887a4361a20ae40',
+      path: 'game/editions/retained/droneaid-nl-parts-in-motion-fb207466c.json',
+      sha256: 'a565f9a298e5adac88570474e4a484458e8c216fc34b9269274a55738d08a36c',
+      bytes: 33974,
+    },
+  ],
+'droneaid-nl-makers-together': [
+    {
+      id: '609db6d6c7ea54120531b53b2b5c54b26d1484306195a426c39bd40d5236b478',
+      path: 'game/editions/retained/droneaid-nl-makers-together-fb207466c.json',
+      sha256: '21a7b3be9a7850d2f89b250903670b2fc6d98a7ffc32d8659ab1dd79d1e53937',
+      bytes: 34640,
+    },
+  ],
+'droneaid-nl-careful-handoff': [
+    {
+      id: 'fb9dafae437c37905dcdd07cec0f67b53ead801a8894c2bf2070309dfd16a913',
+      path: 'game/editions/retained/droneaid-nl-careful-handoff-fb207466c.json',
+      sha256: '20f0a33e045c38ba73b19e5cfc7823378a23a1d81129677aea15474be1dd640a',
+      bytes: 35799,
+    },
+  ],
+'droneaid-nl-signals-of-support': [
+    {
+      id: '013849c9507447451ca1f9a58d845da2d44436dbf776b231162ab8715cc61863',
+      path: 'game/editions/retained/droneaid-nl-signals-of-support-fb207466c.json',
+      sha256: '62e89a9c88e6812bc41bb36fab7c6af1ff7c818e8c91d7476ff488e891b20450',
+      bytes: 37264,
+    },
+  ],
+'droneaid-nl-shared-horizon': [
+    {
+      id: '1c5fc1701fb224c9a548d1540b19e2f8c893b43c6bc81d2b91a0bb65d3bcf0a6',
+      path: 'game/editions/retained/droneaid-nl-shared-horizon-fb207466c.json',
+      sha256: '51eb77a2b7499f7af923189e620315c05dc142f2766e7b605fc13522dbdafa1b',
+      bytes: 37998,
+    },
+  ]});
 
 export const COMPANY_EDITIONS = Object.freeze(
   choices.map(([id, brandId, name, audience, campaignIds]) => ({
@@ -101,9 +156,9 @@ export const COMPANY_EDITIONS = Object.freeze(
     revision: [].includes(
       id,
     )
-      ? 5
+      ? 6
       : brandId === 'droneaid-nl'
-          ? 2
+          ? 3
           : 1,
     name,
     brandId,
@@ -112,7 +167,7 @@ export const COMPANY_EDITIONS = Object.freeze(
     entryCampaignId: campaignIds[0],
     modes: ['solo'],
     publication: 'public',
-    ...(retainedPresentations[id] ? { presentationHistory: [retainedPresentations[id]] } : {}),
+    ...(retainedPresentations[id] ? { presentationHistory: retainedPresentations[id] } : {}),
     boot: Object.fromEntries(
       ['campaign', 'themes', 'presets', 'classes', 'packs', 'archives'].map((key) => [
         key,

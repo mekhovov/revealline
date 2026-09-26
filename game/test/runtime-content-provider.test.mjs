@@ -1,8 +1,142 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { loadRuntimeContentProvider } from '../runtime-content-provider.mjs';
+import {
+  loadRuntimeContentProvider,
+  editionStartupAssetIds,
+} from '../runtime-content-provider.mjs';
 import { companyEntryHref } from '../company-entry.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
+import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
+import { loadPreviewArtwork } from '../content-design/assets.mjs';
+import { acquireCandidatePicture } from '../content-design/picture.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
+
+test('menu defers reveal-only bytes but retains their full receipt and exact acquisition checks', async () => {
+  const f = await retainedEditionFixture({ originalArtwork: true });
+  const path = 'game/editions/assets/old-picture.png',
+    bytes = f.binary.get(path),
+    requests = [];
+  const fetcher = (url, options) => {
+    requests.push(new URL(url, 'http://localhost/game/').pathname);
+    return f.fetcher(url, options);
+  };
+  const load = (presentation = null) =>
+    loadRuntimeContentProvider({
+      locationRef: {
+        href: `http://localhost/game/index.html?edition=sample-public${presentation ? `&presentation=${presentation}` : ''}`,
+      },
+      documentRef: { documentElement: { dataset: {} } },
+      fetcher,
+    });
+  const current = await load();
+  assert.equal(
+    requests.includes(`/${path}`),
+    false,
+    'Opening the menu does not download the reveal.',
+  );
+  assert.equal(current.authoredPresentationSha256, f.original.authoredPresentationSha256);
+  assert.deepEqual(editionStartupAssetIds(current.bootstrap), []);
+  const asset = current.route.source.assets[0];
+  const acquire = (pin) =>
+    acquireCandidatePicture(pin, {
+      loadArtwork: (source, options) =>
+        loadPreviewArtwork(source, { ...options, fetchAsset: fetcher }),
+      ImageClass: PNGImage,
+    });
+  const picture = await acquire(asset);
+  assert.equal(requests.includes(`/${path}`), true);
+  assert.equal(picture.image.width, asset.width);
+  picture.release();
+  f.binary.set(path, Buffer.from(bytes).fill(0));
+  assert.equal((await load()).authoredPresentationSha256, current.authoredPresentationSha256);
+  await assert.rejects(acquire(asset), /digest differs/);
+  f.binary.delete(path);
+  await assert.rejects(acquire(asset), /failed to load/);
+  // Retained artwork can open recovery UI, but this policy never authorizes
+  // replacing a missing old picture with a later one.
+  f.replacePicture();
+  const retained = await load(f.descriptor.id);
+  assert.equal(retained.authoredPresentationSha256, current.authoredPresentationSha256);
+  assert.equal(retained.route.source.assets[0].id, 'old-picture');
+  await assert.rejects(acquire(retained.route.source.assets[0]), /failed to load/);
+});
+
+for (const use of ['brand hero', 'edition root', 'actor body', 'dependency'])
+  test(`mission picture reused as ${use} remains an eagerly verified dependency`, async () => {
+    const f = await retainedEditionFixture({ originalArtwork: true });
+    const picture = f.catalog.assets.find((asset) => asset.id === 'old-picture');
+    if (use === 'brand hero') {
+      f.catalog.brands[0].assetIds.push(picture.id);
+      f.catalog.brands[0].heroAssetId = picture.id;
+    } else if (use === 'edition root') f.catalog.editions[0].assetIds = [picture.id];
+    else if (use === 'actor body')
+      Object.values(f.data.presets.characters)[0].src = `../../${picture.path}`;
+    else {
+      f.catalog.assets.push({
+        ...picture,
+        id: 'identity-marker',
+        path: 'game/editions/assets/identity-marker.png',
+        dependencies: [picture.id],
+      });
+      f.catalog.brands[0].assetIds.push('identity-marker');
+      f.binary.set('game/editions/assets/identity-marker.png', f.binary.get(picture.path));
+    }
+    const provider = await f.load();
+    assert.ok(editionStartupAssetIds(provider.bootstrap).includes(picture.id));
+    f.binary.delete(picture.path);
+    await assert.rejects(f.load(), /could not be loaded/);
+  });
+
+test('deferred artwork still obeys the full budget, publication rules and exact catalog membership', async () => {
+  const f = await retainedEditionFixture({ originalArtwork: true });
+  const snapshot = f.original.bootstrap;
+  const changed = (mutate) => {
+    const next = structuredClone(snapshot);
+    mutate(next);
+    return () => editionStartupAssetIds(next);
+  };
+  assert.throws(
+    changed((b) => {
+      b.source.assets[0].sha256 = 'f'.repeat(64);
+    }),
+    /asset closure/,
+  );
+  assert.throws(
+    changed((b) => {
+      b.catalog.assets[0].approved = false;
+    }),
+    /unavailable|approval/,
+  );
+  assert.throws(
+    changed((b) => {
+      b.catalog.assets[0].publication = 'restricted';
+    }),
+    /public|Restricted/,
+  );
+  assert.throws(
+    changed((b) => {
+      b.catalog.assets[0].dependencies = ['missing'];
+    }),
+    /missing|dependency/i,
+  );
+  assert.throws(
+    changed((b) => {
+      // Eager bytes alone meet the limit. The deferred picture must still count
+      // against the unchanged complete-presentation budget.
+      for (const suffix of ['one', 'two']) {
+        const id = `large-identity-${suffix}`;
+        b.catalog.assets.push({
+          ...b.catalog.assets[0],
+          id,
+          path: `game/editions/assets/${id}.png`,
+          bytes: 32 * 1024 * 1024,
+        });
+        b.catalog.brands[0].assetIds.push(id);
+      }
+    }),
+    /offline budget/,
+  );
+});
 
 test('ordinary Solo uses its current startup path without any edition fetch', async () => {
   const provider = await loadRuntimeContentProvider({

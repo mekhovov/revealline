@@ -1,6 +1,85 @@
 {
   "actorCatalogId": "journey-actors-v9",
-  "assets": [],
+  "assets": [
+    {
+      "alt": "An open violet-and-white packing workshop crosses a sunlit canal to a sheltered receiving dock.",
+      "bytes": 931307,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-careful-handoff-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-01.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "0cce3319b93d80f9bb07d4cc2ead14c9a1c68c8b45f3efd3031246c97ff7b07a",
+      "width": 960
+    },
+    {
+      "alt": "Blank sculptural paper tags float over two packing stations divided by a curving violet-and-white wall.",
+      "bytes": 762583,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-careful-handoff-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-02.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "280d77672a14b883139fc0baa35d8ea17d2e571c9cabfa2d12c110d2283bf2e1",
+      "width": 960
+    },
+    {
+      "alt": "White canal-side collection courts and violet-roofed depots surround three calm landing plazas at sunset.",
+      "bytes": 977692,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-careful-handoff-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-03.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "8d256fe5bbdc062f7bf54bb5818fadb1e5f0e3aa3e25536f81eb59f5158a9bdd",
+      "width": 960
+    },
+    {
+      "alt": "Five violet packing alcoves with blank record books face a spacious pale inner dock.",
+      "bytes": 855378,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-careful-handoff-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-04.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "dc58407546a27c5c1e879ca207bdb3ae048f318347cdd643fbaa23cfd73955eb",
+      "width": 960
+    },
+    {
+      "alt": "Two violet waterfront pavilions connect through a planted central island at glowing dusk.",
+      "bytes": 883590,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-careful-handoff-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-05.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "d50bbe0cabd58a2566db7b788934b04dbd29306bb02f426a6cb589fb56cc4d09",
+      "width": 960
+    },
+    {
+      "alt": "Two orderly white receiving docks surround a narrow violet canal at lavender sunrise.",
+      "bytes": 939519,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-careful-handoff-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-06.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "2b51ae00e50b9290ee6dd5da09db0893346d33685f43f39a7a12b0f0a33e5b65",
+      "width": 960
+    }
+  ],
   "campaigns": [
     {
       "band": 7,
@@ -200,7 +279,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 26.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-careful-handoff-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-careful-handoff-01-picture",
+        "themeId": "droneaid-nl-careful-handoff-theme"
+      },
       "relayLinks": [],
       "revision": "2",
       "spawnId": "home",
@@ -262,7 +344,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 26.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-careful-handoff-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-careful-handoff-02-picture",
+        "themeId": "droneaid-nl-careful-handoff-theme"
+      },
       "relayLinks": [],
       "revision": "2",
       "spawnId": "home",
@@ -324,7 +409,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 56.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-careful-handoff-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-careful-handoff-03-picture",
+        "themeId": "droneaid-nl-careful-handoff-theme"
+      },
       "relayLinks": [],
       "revision": "2",
       "spawnId": "home",
@@ -395,7 +483,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-careful-handoff-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-careful-handoff-04-picture",
+        "themeId": "droneaid-nl-careful-handoff-theme"
+      },
       "relayLinks": [],
       "revision": "2",
       "spawnId": "home",
@@ -466,7 +557,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-careful-handoff-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-careful-handoff-05-picture",
+        "themeId": "droneaid-nl-careful-handoff-theme"
+      },
       "relayLinks": [],
       "revision": "2",
       "spawnId": "home",
@@ -538,7 +632,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-careful-handoff-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-careful-handoff-06-picture",
+        "themeId": "droneaid-nl-careful-handoff-theme"
+      },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
       "revision": "2",
       "spawnId": "home",

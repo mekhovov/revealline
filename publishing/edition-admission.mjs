@@ -13,7 +13,7 @@ const runtimeAuthoring = new Set([
 const publicSourceExamples = new Map([
   [
     'services/community/.env.example',
-    'f0a1bf0db9905c51c8eaa4054a8a98bc91ea648ceb6cf45ebebeb46eed3ba42f',
+    '2329fad72abbadedf99b67bd5a47cbf4dd1dc8d87cf865fa7c3353ca89bac9be',
   ],
 ]);
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');

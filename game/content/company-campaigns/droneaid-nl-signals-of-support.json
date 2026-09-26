@@ -1,6 +1,85 @@
 {
   "actorCatalogId": "journey-actors-v9",
-  "assets": [],
+  "assets": [
+    {
+      "alt": "A sculptural blank storyboard and circular listening pavilion surround a planted noticeboard island.",
+      "bytes": 911571,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-signals-of-support-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-01.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "5f47850ad578fb362d5659881cb54f4032b0132e19ff21d1eaca9420802b4b42",
+      "width": 960
+    },
+    {
+      "alt": "Oversized violet, white and yellow paper sculptures rise above three inviting craft tables.",
+      "bytes": 885255,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-signals-of-support-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-02.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "89eae69db2e827341add83a21e9253be077c7a66795ee5b8d7f8ce7953d7b5f0",
+      "width": 960
+    },
+    {
+      "alt": "Two small invitation stands welcome visitors into a spacious violet-and-white canal-side event square.",
+      "bytes": 930023,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-signals-of-support-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-03.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "62cdc648ac4f0a1bd8ca37eb27f3f61218f7068499638022a3f1293b359791d5",
+      "width": 960
+    },
+    {
+      "alt": "A crescent-shaped violet pavilion presents four quiet community celebration corners at dusk.",
+      "bytes": 894861,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-signals-of-support-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-04.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "d2ebf01be78b3c5c549b7f06280ce5b14324f67c372c696a0360fa6ed37f6898",
+      "width": 960
+    },
+    {
+      "alt": "A flowing violet, white and yellow paper mural overlooks blank record books and a calm gallery aisle.",
+      "bytes": 778171,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-signals-of-support-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-05.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "13543c2613a4dd00f4f67a0f0cdb01a0814a13716bb8ac303554904418dbfba8",
+      "width": 960
+    },
+    {
+      "alt": "A giant woven paper arch shelters a community craft mosaic garden beside a sunset canal.",
+      "bytes": 979535,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-signals-of-support-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-06.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "da9eb2085a868f8baa7b61415ff99418cd513ccac291c699a2ca1c63483afa90",
+      "width": 960
+    }
+  ],
   "campaigns": [
     {
       "band": 9,
@@ -227,7 +306,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": null,
+        "backgroundAssetId": "droneaid-nl-signals-of-support-01-picture",
         "themeId": "droneaid-nl-signals-of-support-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -300,7 +379,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": null,
+        "backgroundAssetId": "droneaid-nl-signals-of-support-02-picture",
         "themeId": "droneaid-nl-signals-of-support-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -373,7 +452,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": null,
+        "backgroundAssetId": "droneaid-nl-signals-of-support-03-picture",
         "themeId": "droneaid-nl-signals-of-support-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -447,7 +526,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": null,
+        "backgroundAssetId": "droneaid-nl-signals-of-support-04-picture",
         "themeId": "droneaid-nl-signals-of-support-theme"
       },
       "relayLinks": [
@@ -524,7 +603,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": null,
+        "backgroundAssetId": "droneaid-nl-signals-of-support-05-picture",
         "themeId": "droneaid-nl-signals-of-support-theme"
       },
       "relayLinks": [
@@ -602,7 +681,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": null,
+        "backgroundAssetId": "droneaid-nl-signals-of-support-06-picture",
         "themeId": "droneaid-nl-signals-of-support-theme"
       },
       "relayLinks": [
