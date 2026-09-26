@@ -17,6 +17,11 @@ omitted. Team's
 `relay-rescue.mjs` change only places the existing quick Sound control in the
 paused action group; it does not duplicate the controller activation hook.
 
+Before freeze, PR #684 adds a separate three-path compatibility correction for
+Team continuation. Valid Solo/Versus Classic owner metadata remains unchanged;
+an opaque Team owner uses Original rules rather than being parsed as JSON and
+failing before its exact Custom successor can be found.
+
 ## Player behavior
 
 Versus exposes **More** beside its primary lobby utilities. Home, About &
@@ -53,6 +58,10 @@ Repository validation passes across 1,249 files with 9,969 localized messages,
 7,962 references and field-kit presentation revision 91. Full lint, game/site
 formatting, native-platform formatting, changed-file formatting and syntax,
 four-way v0.141.4 version parity and diff checks pass.
+
+The Team continuation correction passes 14/14 focused cases, and the combined
+changed runtime/test cohort passes 41/41. It does not change simulation results,
+accepted artwork, or the Couch navigation ownership described above.
 
 ## Evidence limits
 

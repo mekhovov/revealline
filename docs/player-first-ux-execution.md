@@ -23,16 +23,17 @@ built-in-browser acceptance confirmed v0.141.3 as Current with exact source
 The separately deployed community API remains unavailable until infrastructure
 is selected.
 
-**Active candidate:** v0.141.4 combines the merged community acceptance and
-validation-worker isolation from PR #680 with Couch secondary navigation in
-[PR #683](https://github.com/mekhovov/revealline/pull/683), rebased onto exact
-main `01de92e9693d640e08ff21ba95ce12a978cb486f`. It preserves Team
-quick-start focus and Cancel behavior. Its prepared donor passed the
-feature-owned shell/Pause and departure/markup/quick-start boundaries at 27/27
-and 37/37; both pass again on this exact rebased source. Repository validation,
-localization, lint, game/site and native formatting, changed-file syntax and
-four-way v0.141.4 version parity also pass. Hosted exact-head qualification,
-merge, release, selector and public player-flow acceptance remain open.
+**Active candidate:** v0.141.4 combines community acceptance and Couch secondary
+navigation from merged [PR #683](https://github.com/mekhovov/revealline/pull/683)
+at exact main `65bdcd9825e9e6129bb8e039c3c8922615642689`. Follow-up
+[PR #684](https://github.com/mekhovov/revealline/pull/684) adds the non-overlapping
+opaque Team-owner continuation correction before the release is frozen. It
+preserves Team quick-start focus and Cancel behavior while preventing **Next**
+from failing before an exact Custom successor is found. Navigation boundaries
+pass 27/27 and 37/37; the correction's focused cohort passes 14/14 and its
+combined changed-runtime cohort passes 41/41. Validation, localization, lint,
+formatting, syntax and four-way v0.141.4 version parity pass. Exact correction
+qualification, immutable release, selector and public acceptance remain open.
 
 **Ordered continuation:** v0.141.3 is the latest stable release; later rows remain working
 allocations rather than accepted releases. Reconcile each item onto the accepted predecessor, rerun its
@@ -43,7 +44,7 @@ with this order.
 | Order | Working release | Scope                                                                | Current source input                                                                                                        |
 | ----- | --------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | 1     | v0.141.3        | Team quick-start                                                     | reconciled local donor from PR #549                                                                                         |
-| 2     | v0.141.4        | Couch secondary navigation                                           | prepared donor from PR #539                                                                                                 |
+| 2     | v0.141.4        | Couch secondary navigation and Team Next compatibility               | merged PR #683 plus correction PR #684                                                                                      |
 | 3     | v0.141.5        | Contextual Team teaching                                             | prepared donor from PR #543                                                                                                 |
 | 4     | v0.141.6        | Deliberate Team terminal Retry                                       | [PR #545](https://github.com/mekhovov/revealline/pull/545)                                                                  |
 | 5     | v0.141.7        | Readable Versus countdown and Retry cue                              | [PR #552](https://github.com/mekhovov/revealline/pull/552)                                                                  |
