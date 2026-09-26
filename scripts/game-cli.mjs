@@ -15,6 +15,7 @@ import {
   packNavigationSummary,
   validateNavigationCatalogs,
 } from './pack-indexes.mjs';
+import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MARKER = '.xonix-build.json';
@@ -216,8 +217,7 @@ export async function collectBuildFiles(root = PROJECT_ROOT, config) {
   const files = new Set();
   for (const included of config.include) {
     for (const file of await regularFiles(root, included)) {
-      if (file.startsWith('game/test/') || file === 'game/offline/service-worker.template.js')
-        continue;
+      if (file.startsWith('game/test/') || file.startsWith('game/offline/')) continue;
       if (file.split('/').some((p) => p.startsWith('.') || p === 'node_modules'))
         fail(`Private path in build: ${file}`);
       files.add(file);
@@ -617,6 +617,8 @@ async function addOfflineEntries(
   if (!template.includes('__XONIX_OFFLINE_CONFIG__'))
     fail('Offline worker template has no configuration marker');
   entries.push(...offlineIcons());
+  const { addOfflineLauncher } = await import('./offline-launcher.mjs');
+  await addOfflineLauncher(root, entries, info.version);
   const optional = new Set([...(buildConfig.optionalOffline ?? []), ...optionalDownloads]);
   const optionalPacks = entries
     .filter((entry) => optional.has(entry.name))
@@ -647,6 +649,26 @@ async function addOfflineEntries(
     ],
   };
   entries.push({ name: 'manifest.webmanifest', bytes: Buffer.from(json(manifest)) });
+  const excluded = new Set([
+    ...optional,
+    ...excludedBodyPaths,
+    ...(optionalArtwork?.files.map((file) => file.path) ?? []),
+    // Recorded music is an optional enhancement. Keep even locally shipped
+    // recordings out of the bounded gameplay cache so procedural music and
+    // essential sound effects remain the complete offline baseline.
+    ...SOUNDTRACK_BUNDLED_ASSETS.map((asset) => asset.path),
+  ]);
+  // Every official chapter uses the same durable store, even when its JSON is small.
+  // Otherwise opening a small chapter would consume a user-import slot.
+  const missionIndex = entries.find(
+    (entry) => entry.name === 'game/content/mission-library-index.json',
+  );
+  if (missionIndex)
+    for (const mission of JSON.parse(missionIndex.bytes).missions)
+      if (mission.packId) excluded.add(mission.sourceFile.path);
+  const { buildOfflineContent } = await import('./offline-content.mjs');
+  const contentCatalogue = await buildOfflineContent(entries, excluded, info.version);
+  entries.push({ name: 'offline-content.json', bytes: Buffer.from(json(contentCatalogue)) });
   const placeholder = '0'.repeat(64),
     injected = [];
   for (const entry of entries.filter(
@@ -655,6 +677,7 @@ async function addOfflineEntries(
     const relativeRoot = path.posix.relative(path.posix.dirname(entry.name), '.') || '.';
     const marker = {
       format: 'revealline-offline.v1',
+      downloadCatalogue: true,
       version: info.version,
       buildId: placeholder,
       scope: `${relativeRoot}/`,
@@ -666,7 +689,7 @@ async function addOfflineEntries(
     const appMode = source.includes('name="apple-mobile-web-app-capable"')
       ? ''
       : '<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">';
-    const head = `<link rel="manifest" href="${relativeRoot}/manifest.webmanifest"><link rel="apple-touch-icon" href="${relativeRoot}/icons/icon-180.png"><meta name="theme-color" content="#091324">${appMode}<meta name="revealline-offline" content='${html(JSON.stringify(marker))}'>`;
+    const head = `${entries.some((entry) => entry.name === 'game/ui/install-entry.mjs') ? `<script type="module" src="${relativeRoot}/game/ui/install-entry.mjs"></script>` : ''}<link rel="manifest" href="${relativeRoot}/manifest.webmanifest"><link rel="apple-touch-icon" href="${relativeRoot}/icons/icon-180.png"><meta name="theme-color" content="#091324">${appMode}<meta name="revealline-offline" content='${html(JSON.stringify(marker))}'>`;
     entry.bytes = Buffer.from(
       source.includes('</head>') ? source.replace('</head>', `${head}</head>`) : head + source,
     );
@@ -687,11 +710,6 @@ async function addOfflineEntries(
   );
   for (const entry of injected)
     entry.bytes = Buffer.from(entry.bytes.toString().replace(placeholder, buildId));
-  const excluded = new Set([
-    ...optional,
-    ...excludedBodyPaths,
-    ...(optionalArtwork?.files.map((file) => file.path) ?? []),
-  ]);
   const files = [...entries]
     // The complete generated catalog is cached. Canonical JSON sources are also
     // distributed for contributors, but duplicating them in the offline cache
@@ -714,6 +732,8 @@ async function addOfflineEntries(
     version: info.version,
     buildId,
     files,
+    downloadOriginals: contentCatalogue.originals,
+    downloadFiles: contentCatalogue.files.filter((file) => file.kind === 'gameplay'),
     ...(optionalPacks.length ? { optionalPacks } : {}),
     ...(optionalArtwork ? { optionalArtwork } : {}),
   };
@@ -722,6 +742,13 @@ async function addOfflineEntries(
     name: 'service-worker.js',
     bytes: Buffer.from(template.replace('__XONIX_OFFLINE_CONFIG__', JSON.stringify(config))),
   });
+  if (entries.some((entry) => entry.name === 'game/installed-app.mjs')) {
+    const { buildOfflineInventory } = await import('./offline-content.mjs');
+    entries.push({
+      name: 'offline-inventory.json',
+      bytes: Buffer.from(json(buildOfflineInventory(entries, contentCatalogue, files))),
+    });
+  }
 }
 
 export async function buildProject({
@@ -1110,8 +1137,12 @@ export async function releaseSnapshot({ root = PROJECT_ROOT, ref, version } = {}
     const checkedOutCommit = command('git', ['rev-parse', 'HEAD'], { cwd: root }).trim();
     let archivePath, sourceArchiveSha256;
     let source = root;
-    if (checkedOutCommit === commit) {
-      // Qualification already checks out this exact immutable commit. Build there
+    const cleanCheckout =
+      command('git', ['status', '--porcelain', '--untracked-files=normal'], {
+        cwd: root,
+      }).trim() === '';
+    if (checkedOutCommit === commit && cleanCheckout) {
+      // Qualification already checks out this exact immutable commit in a clean tree. Build there
       // and stream its source tar directly into the staged snapshot: unpacking a
       // multi-gigabyte archive solely to rebuild the same checkout exhausts the
       // hosted runner without adding provenance.

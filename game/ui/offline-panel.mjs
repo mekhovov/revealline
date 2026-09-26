@@ -27,7 +27,7 @@ export function attachOfflinePanel({
   feedback.begin({ message: '' }).finish({
     message: () =>
       available.available
-        ? t('interface:downloadThisReleaseForOfflinePlayOnThisDevice')
+        ? t('interface:prepareSharedRuntimeUseDownloadsForCompleteOfflineGameplay')
         : offlineStatusText(available),
   });
   function controls() {
@@ -38,7 +38,7 @@ export function attachOfflinePanel({
         ? t('interface:verifyOfflineFiles')
         : action === 'check'
           ? t('interface:checkProgress')
-          : t('interface:prepareOfflinePlay'),
+          : t('interface:prepareSharedRuntime'),
     );
   }
   function detach({ focus = false } = {}) {

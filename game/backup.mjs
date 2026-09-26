@@ -2,7 +2,12 @@ import { boundedJSON, exactKeys, plainObject, required } from './data-json.mjs';
 import { CONTENT_LIMITS } from './content.mjs';
 import { browserDecodeImage } from './imports.mjs';
 import { importLibrary, campaignKey, LIBRARY_LIMITS } from './library.mjs';
-import { importPackLibrary, resolvePackCampaign, PACK_LIMITS } from './packs.mjs';
+import {
+  packLibrarySnapshot,
+  importPackLibrary,
+  resolvePackCampaign,
+  PACK_LIMITS,
+} from './packs.mjs';
 import {
   restoreSession,
   snapshotSession,
@@ -56,8 +61,26 @@ function checkAbort(signal) {
     throw error;
   }
 }
+function packEnvelope(value) {
+  if (!plainObject(value)) return value;
+  const fields = Object.getOwnPropertyDescriptors(value);
+  if (
+    Reflect.ownKeys(fields).some(
+      (key) =>
+        typeof key !== 'string' || !fields[key].enumerable || !Object.hasOwn(fields[key], 'value'),
+    )
+  )
+    return value;
+  if (!fields.packs) return value;
+  return Object.fromEntries(
+    Object.entries(fields).map(([key, field]) => [
+      key,
+      key === 'packs' ? packLibrarySnapshot(field.value) : field.value,
+    ]),
+  );
+}
 function envelope(candidate) {
-  const value = boundedJSON(candidate, limits);
+  const value = boundedJSON(packEnvelope(candidate), limits);
   required(
     [BACKUP_FORMAT, EXTERNAL_BACKUP_FORMAT].includes(value.format),
     'Unsupported full-backup format.',
@@ -244,7 +267,7 @@ export const validateBackup = prepareBackup;
 
 /** Produce compact, validated JSON. Member exports keep their existing formats. */
 export async function exportBackup(contents, options = {}) {
-  const value = boundedJSON(contents, limits);
+  const value = boundedJSON(packEnvelope(contents), limits);
   const format = Object.hasOwn(value, 'externalChapters') ? EXTERNAL_BACKUP_FORMAT : BACKUP_FORMAT;
   exactKeys(
     value,
@@ -260,7 +283,7 @@ export async function exportBackup(contents, options = {}) {
     { format, ...value, session: value.session ?? null },
     options,
   );
-  const text = JSON.stringify({ format, ...prepared });
+  const text = JSON.stringify({ format, ...prepared, packs: packLibrarySnapshot(prepared.packs) });
   required(new TextEncoder().encode(text).byteLength <= MAX_BACKUP_BYTES, 'Backup is too large.');
   return text;
 }

@@ -1,0 +1,14 @@
+{
+  "baseline": "23e6129782e08ed826686f137a0989e5f154732a",
+  "sourceVersion": "0.131.0",
+  "targetRelease": "v0.132.0",
+  "sourceRevision": null,
+  "buildId": "44cd9a7b5a54b34452a810404b9cf5b68135361209df5c53c22ee69b81bd49fe",
+  "files": 1298,
+  "distributionBytes": 611173354,
+  "zipBytes": 611623876,
+  "zipSHA256": "9d3cfc44c1399b0d0db8488b8e82dc396451faedc0a65da18990d4c334715ba0",
+  "scope": "Final local v0.132.0 candidate build; not a frozen or published release",
+  "macOS": "26.7 (25G229)",
+  "node": "20.19.5"
+}

@@ -1,4 +1,5 @@
 import { t } from '../i18n/index.mjs';
+import { localOfficialChapter } from '../official-chapter-source.mjs';
 import { canonicalJSON, required } from '../data-json.mjs';
 import { claimProfileWriter } from '../profile-writer.mjs';
 import { createExternalChapterHost } from '../external-chapter-host.mjs';
@@ -226,7 +227,12 @@ export function createCouchChapterInstaller({
       if (existing) return existing;
       report(`Downloading and verifying ${name}…`, 'downloading');
       check();
-      const pack = await download({ library: before.packs, decodeImage, signal, check });
+      const pack =
+        (await localOfficialChapter(id, {
+          baseURL: distributionRoot,
+          decodeImage,
+          fetch: request,
+        })) || (await download({ library: before.packs, decodeImage, signal, check }));
       check();
       reader.close();
       report(t('interface:reservingSafeChapterInstallation'), 'verifying');

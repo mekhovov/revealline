@@ -1,0 +1,17 @@
+{
+  "version": "0.132.0",
+  "targetRelease": "v0.132.0",
+  "missions": 1697,
+  "gameplayGroups": 35,
+  "soundtrackGroups": 16,
+  "soundtrackFiles": 71,
+  "sizes": {
+    "gameplayBytes": 597252702,
+    "coreBytes": 46660811,
+    "gameplayStorageBytes": 599088653,
+    "soundtrackBytes": 363627890,
+    "largestFileBytes": 12358446,
+    "firstDownloadPeakBytes": 611447099,
+    "worstCaseTwoEditionPeakBytes": 1210535752
+  }
+}
