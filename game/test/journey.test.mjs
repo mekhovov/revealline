@@ -8,6 +8,7 @@ import {
   emptyJourneyProfile,
   validateJourneyProfile,
 } from '../journey/profile.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 
 const campaigns = [
@@ -82,6 +83,27 @@ test('skipping never grants a clear; exact legal completion removes skip and is 
     () => applyJourneyEvent(initial, { ...complete, difficulty: 'invented' }),
     /receipt/,
   );
+});
+
+test('Journey profile and storage errors follow the active locale', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  const invalid = { ...emptyJourneyProfile(), format: 'future' };
+  const unsupported = { ...emptyJourneyProfile(), future: true };
+  const malformed = null;
+  const validateUnsupportedLater = () => validateJourneyProfile(unsupported);
+  setLocale('uk', { persist: false });
+  assert.throws(() => validateJourneyProfile(invalid), /Профіль Подорожі пошкоджений/);
+  assert.throws(() => validateJourneyProfile(malformed), /Дані Подорожі мають бути об’єктом/);
+  assert.throws(validateUnsupportedLater, /непідтримуване поле: future/);
+  await assert.rejects(
+    createJourneyBackend({ indexedDB: null }).read(),
+    /Сховище Подорожі недоступне/,
+  );
+  setLocale('en', { persist: false });
+  assert.throws(() => validateJourneyProfile(invalid), /Unsupported or damaged Journey profile/);
+  assert.throws(() => validateJourneyProfile(malformed), /Journey data must be an object/);
+  assert.throws(validateUnsupportedLater, /unsupported field: future/);
 });
 
 test('IndexedDB progress survives store recreation and merges concurrent tab writes atomically', async () => {
