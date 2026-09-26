@@ -1,3 +1,4 @@
+import { editionIdFromLocation } from './edition-context.mjs';
 import { importLibrary, LIBRARY_LIMITS } from './library.mjs';
 import { PACK_LIMITS } from './packs.mjs';
 import { SESSION_STORAGE_BYTES } from './sessions.mjs';
@@ -66,6 +67,7 @@ export function createProfileChannelReader({
   indexedDB = globalThis.indexedDB,
   lockManager = globalThis.navigator?.locks,
   currentVersion,
+  editionId = editionIdFromLocation(),
   origin = globalThis.location?.origin ?? 'unknown origin',
   timeoutMs = PROFILE_READER_LIMITS.timeoutMs,
   recoveryCatalogs = [],
@@ -93,7 +95,7 @@ export function createProfileChannelReader({
   if (!Array.isArray(recoveryCatalogs) || recoveryCatalogs.length > PROFILE_READER_LIMITS.channels)
     throw new TypeError(t('errors:profileReader.trustedRegistry'));
   for (const entry of recoveryCatalogs) {
-    const channel = recoveryChannel(entry?.channelId, currentVersion);
+    const channel = recoveryChannel(entry?.channelId, currentVersion, { editionId });
     if (!channel || channel.support === 'protected-unknown' || catalogs.has(channel.id))
       throw new TypeError(t('errors:profileReader.unsupportedRegistryChannel'));
     if (!Array.isArray(entry.registeredEntries) || !Array.isArray(entry.knownDescriptors))
@@ -374,7 +376,7 @@ export function createProfileChannelReader({
             diagnostics.push(problem('discovery', t('errors:profileReader.unsupportedStorageKey')));
             return;
           }
-          const channel = channelFromStorageKey(key, currentVersion);
+          const channel = channelFromStorageKey(key, currentVersion, { editionId });
           if (channel) {
             byId.set(channel.id, channel);
             if (byId.size > PROFILE_READER_LIMITS.channels)
