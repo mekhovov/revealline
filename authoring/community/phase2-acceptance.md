@@ -1,10 +1,9 @@
 # Phase 2 acceptance — integrated source record
 
-Status: implemented and merged through PR
-[#465](https://github.com/mekhovov/revealline/pull/465). The combined creator feature is assigned
-to `v0.141.0` in PR [#564](https://github.com/mekhovov/revealline/pull/564). This record preserves
-the Phase 2 evidence; the remaining browser/device cases below and the combined immutable release
-remain open.
+Status: implemented through PR [#465](https://github.com/mekhovov/revealline/pull/465), merged in
+the combined creator PR [#564](https://github.com/mekhovov/revealline/pull/564), and published in
+`v0.141.0`. The current `v0.141.2` Pages release retains this behavior. This record preserves the
+Phase 2 evidence and the remaining browser/device limits below.
 
 ## Automated evidence completed
 
@@ -36,16 +35,21 @@ remain open.
 - The completed current-v3 selection estimated a 93.78 MiB pack and 187.56 MiB staging requirement, kept bulk approval disabled and required an explicit capacity decision. **Split into smaller packs** again produced five ordered parts of 12, 12, 12, 12 and 2 missions. Part 5 revalidated as a 3.75 MiB two-level campaign, installed as immutable edition `cd047ced051ec8fa0b2abfd036d4df4de1c20c5d7494b7441d698989801909e2`, and completed `picture49` through ordinary Custom play at 50% reveal, three lives and 11,250 points. The earned picture and **Next level** action appeared after the legal win.
 - A final local-origin `8786` edge run selected a real 540 × 960 portrait PNG, two landscape PNGs and a file named `.png` with an invalid signature. Natural order was edited manually, **Gentle start** pacing was selected, and every valid card visibly showed its exact enemy and obstacles. The invalid item retained its own actionable error and approval remained disabled until it was explicitly excluded.
 - Per-item regeneration changed `static-default` from `twin-corridors · west-lane` to `island-chain · middle-channel`, with one enemy, two walls and two safe islands. The page wrote immutable batch checkpoint 8, then the same `?draft` URL was reloaded. Exact source bytes, portrait, order, exclusion, pacing, generation counter and deterministic seed survived; regenerated cards retained the same template variants and obstacle counts. A second reload after the status repair reached checkpoint 16 and reported **3 levels passed preparation and are ready for one approval** instead of resetting the creator.
-- The combined candidate passes 545/545 creator/runtime tests and 43/43 community tests. Focused tests bind the pre/post-reopen project and provenance, reject a stale tab, reject altered retained source bytes and continue a cleared campaign at its first uncleared mission.
+- The `v0.141.0` combined candidate passed 545/545 creator/runtime tests and 43/43 community tests.
+  These are historical baseline counts; the later `v0.141.2` exact-head local aggregate passed
+  556/556, including the direct 63/63 community-service suite. Focused tests bind the
+  pre/post-reopen project and provenance, reject a stale tab, reject altered retained source bytes
+  and continue a cleared campaign at its first uncleared mission.
 - Two tabs opened the same exact draft at checkpoint 1. After tab A advanced the durable source to checkpoint 2, tab B retained its local edit but refused the overwrite with **A newer draft exists** and kept its source backup downloadable.
 - Thirteen identical 1,992,938-byte PNG inputs produced a visible 25.10 MiB estimate and an explicit 12-plus-1 split. The downloaded packs were 2,352,483 and 2,024,333 bytes; each contained exactly one asset with SHA-256 `a023375013a3f07b24618377e2885fa47f00c873780b34fa32b06fd8b27b6926`, proving actual-file payload deduplication.
 - The browser completed mission one, entered mission two, saved a mid-route attempt, reloaded, resumed that exact mission and legally completed it at 70% with three lives and 14,080 points. The exported edition-scoped profile retained both distinct clears. A subsequent reload exposed that the lobby still defaulted to mission one; the combined candidate now honors exact library handoffs, continues at the first uncleared mission and selects the latest earned reward. Its focused 12-mission regression passes. Repeating the reload on the corrected source visibly selected earned picture02 and Start launched picture03 at 0% with three lives.
 
-## Browser and release gates still required
+## Remaining browser gates after publication
 
 - Capture browser-process memory measurements during another large preparation run. The UI and automated probes establish serial full-size work, but this record does not yet claim a measured peak-memory bound.
 - Exercise failed installation recovery. Browser quota estimates remain advisory.
-- Complete the combined PR's hosted gates, freeze and inspect the assigned `v0.141.0` artifact,
-  publish its release and selector, then verify the public version and artifact hashes.
+- The combined hosted, freeze, immutable release, selector and public-byte gates completed for
+  `v0.141.0` and are retained by `v0.141.2`; see
+  [combined-release-acceptance.md](combined-release-acceptance.md).
 
 The user directed this delivery to use the Codex built-in browser. Firefox, Safari and physical mobile remain untested until separately qualified and must not be inferred from this record.

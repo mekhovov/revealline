@@ -1,6 +1,11 @@
-# UX1-B compact mission gallery — v0.141.1
+# UX1-B compact mission gallery — published v0.141.1
 
-This v0.141.1 candidate is prepared on exact current `main` parent
+Status update, 26 September 2026: PR #590 shipped as immutable `v0.141.1`. It is an intermediate
+GitHub release that was not selected directly on Pages; the cumulative `v0.141.2` Pages release
+retains this gallery. The candidate preparation and evidence below are preserved at their recorded
+cutoff.
+
+The v0.141.1 candidate was prepared on exact `main` parent
 `b4ef4b3024675bd8e12b13af28215553707d1bff`, which retains the accepted v0.141.0 publishing
 controller `44a6ce672632a2d30cbf94374b172e213b75063c` and exact product source
 `5d6c97c850a648c5ebe93d3cf57731aeb67d0bbb`. PR #673 selected the immutable
@@ -53,9 +58,18 @@ The candidate adds or updates focused coverage for:
 - Team picture-binding and imported-map compatibility coverage continues to require the exact current presentation while preserving retained-history recovery.
 - on the exact v0.132.5 product base `a8881ac17e44f38fb1e9dc15428899992727cc78`, the complete sequential focused audit passed 160/160. That run includes 4/4 Journey continuation-caption cases, 2/2 Team localization/controller cases, all compact-gallery unit and host coverage, and the revision-90 Team inventory continuation. The candidate then rebased cleanly over controller-only selector merge `8f7ea5540d6851fb2d6d77a42c899e071e65e52a` with no overlapping paths.
 - after the predecessor became public, the candidate rebased cleanly onto selector merge `44a6ce672632a2d30cbf94374b172e213b75063c`. The exact current-source gallery/input cohort passes 155/155; validation covers 1,244 files and presentation revision 91; localization verifies 9,932 messages and 7,926 references; scoped lint, formatting, and diff checks pass.
-- the pushed exact-head focused and release-ready gates must pass again for the v0.141.1 PR head before merge. The temporary fast-release policy waives automated test suites for this change; those skips are not passes. Build, source identity, validation, lint, formatting, provenance, immutable assets and publication guards remain mandatory.
+- at the candidate cutoff, the pushed exact-head focused and release-ready gates still had to pass
+  for the v0.141.1 PR head before merge. The temporary fast-release policy waived automated test
+  suites for this change; those skips were not passes. The immutable v0.141.1 release subsequently
+  completed, and v0.141.2 became the selected cumulative Pages release.
 - local browser review verified the compact four-column desktop gallery, image-led cards, campaign rail, horizontal and vertical keyboard movement, Escape return, and an in-place English-to-Ukrainian refresh with localized campaign titles and actions.
 
 ## Evidence limits
 
-This is a release candidate, not a public release. The browser check is desktop interaction evidence, not physical touch hardware or physical-controller qualification. The repository's committed temporary fast-release policy waives the long automated suites; it does not turn them into passing evidence. Focused current-source checks qualify the changed gallery and controller paths. The public v0.141.0 predecessor carries the accepted revision-90 Team binding and later creator/media work. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.
+The release is immutable, while the browser check remains desktop interaction evidence rather than
+physical touch hardware or physical-controller qualification. The repository's committed temporary
+fast-release policy waived the long automated suites; it did not turn them into passing evidence.
+Focused source checks qualify the changed gallery and controller paths. The cumulative public
+v0.141.2 release retains the gallery, the accepted Team binding and later community hardening. This
+feature does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay
+teaching; those remain in UX2-UX5.
