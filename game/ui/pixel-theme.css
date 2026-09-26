@@ -789,7 +789,8 @@ body.game-shell:not(.first-flight-session) {
   /* Keep oversized commands reachable from both ends of the scrollport. */
   align-items: safe center;
   justify-content: center;
-  padding: clamp(20px, 6vw, 72px);
+  padding: max(12px, var(--safe-top, 0px)) max(12px, var(--safe-right, 0px))
+    max(12px, var(--safe-bottom, 0px)) max(12px, var(--safe-left, 0px));
   overflow-y: auto;
   scroll-padding-block: 12px;
   background-color: #02040a;
@@ -807,16 +808,19 @@ body.game-shell:not(.first-flight-session) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
-  width: min(380px, 100%);
-  max-width: 380px;
+  gap: 10px;
+  width: min(700px, 100%);
+  max-width: 700px;
   /* Undo the generic short-screen reader's height: 100%. Pause actions must
      contribute their full intrinsic height, including wrapped Large labels. */
   height: auto;
-  max-height: none;
+  max-height: 100%;
   flex-shrink: 0;
-  padding: 32px clamp(16px, 4vw, 36px);
-  overflow: visible;
+  padding: clamp(12px, 2.4vw, 20px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-padding-block: 12px;
   background: #050a14f2;
   border-color: #263b5b;
   box-shadow:
@@ -826,27 +830,66 @@ body.game-shell:not(.first-flight-session) {
 .game-shell .game-overlay[data-kind='pause'] .pause-label {
   margin: 0;
   color: #f3c84b;
-  font-size: clamp(28px, 5vw, 44px);
-  line-height: 1.2;
+  font-size: clamp(26px, 4vw, 38px);
+  line-height: 1.1;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .game-shell .game-overlay[data-kind='pause'] .overlay-actions {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
   gap: 8px;
+  height: max-content;
   margin: 0;
   width: 100%;
 }
-.game-shell .game-overlay[data-kind='pause'] .overlay-actions .button {
+.game-shell .game-overlay[data-kind='pause'] .pause-menu-section {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  gap: 4px;
+  height: max-content;
+  min-width: 0;
+}
+.game-shell .game-overlay[data-kind='pause'] .pause-menu-section > h3 {
+  margin: 0;
+  color: #8ba9c8;
+  font: 700 12px/1.2 var(--font-interface, sans-serif);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.game-shell .game-overlay[data-kind='pause'] .pause-action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 6px;
+  min-width: 0;
+}
+.game-shell .game-overlay[data-kind='pause'] .pause-secondary-groups {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  min-width: 0;
+}
+.game-shell .game-overlay[data-kind='pause'] .overlay-actions :is(.button, summary) {
   position: relative;
   width: 100%;
-  min-height: 50px;
-  padding: 10px 16px;
-  font-size: 18px;
+  min-height: 44px;
+  padding: 6px 10px;
+  font-size: 16px;
   text-align: left;
 }
-.game-shell .game-overlay[data-kind='pause'] .overlay-actions .button::before {
+.game-shell .game-overlay[data-kind='pause'] .overlay-actions summary {
+  border: 2px solid var(--fk-accent, #65e6da);
+  color: inherit;
+  cursor: pointer;
+  list-style: none;
+}
+.game-shell .game-overlay[data-kind='pause'] .overlay-actions summary::-webkit-details-marker {
+  display: none;
+}
+.game-shell .game-overlay[data-kind='pause'] .overlay-actions :is(.button, summary)::before {
   content: '◆';
   display: inline-block;
   width: 1.4em;
@@ -855,9 +898,22 @@ body.game-shell:not(.first-flight-session) {
 .game-shell
   .game-overlay[data-kind='pause']
   .overlay-actions
-  .button:is(:hover, :focus-visible)::before,
+  :is(.button, summary):is(:hover, :focus-visible)::before,
 .game-shell .game-overlay[data-kind='pause'] .overlay-actions .button.primary::before {
   color: #f675bc;
+}
+.game-shell .game-overlay[data-kind='pause'] .overlay-actions summary:focus-visible {
+  outline: 3px solid #fff3b0;
+  outline-offset: 2px;
+}
+.game-shell .game-overlay[data-kind='pause'] :is(#start-button, #overlay-menu) {
+  width: 100%;
+}
+.game-shell .game-overlay[data-kind='pause'] #start-button {
+  text-align: center;
+}
+.game-shell .game-overlay[data-kind='pause'] .pause-mission-info > div .button {
+  background: #101a31;
 }
 /* Short confirmations opt in; full-screen game panels retain their own layout. */
 .game-shell dialog.restart-dialog {
@@ -902,6 +958,17 @@ body.game-shell:not(.first-flight-session) {
 .game-shell[data-text-size='large'] .mission .name,
 .game-shell[data-text-size='large'] .game-overlay .overlay-actions .button {
   font-size: 22px;
+}
+.game-shell[data-text-size='large'] .game-overlay[data-kind='pause'] .pause-action-grid,
+.game-shell[data-text-size='large'] .game-overlay[data-kind='pause'] .pause-mission-info > div {
+  grid-template-columns: 1fr;
+}
+.game-shell[data-text-size='large'] .game-overlay[data-kind='pause'] .pause-secondary-groups {
+  grid-template-columns: 1fr;
+}
+.game-shell[data-text-size='large'] .game-overlay[data-kind='pause'] .pause-mission-info > div {
+  inset-inline-start: 0;
+  width: 100%;
 }
 .game-shell[data-text-size='large']
   :is(

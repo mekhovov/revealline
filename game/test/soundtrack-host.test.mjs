@@ -770,32 +770,37 @@ test('Solo Audio exposes full current credits while compact Pause remains an ord
   assert.deepEqual(page.errors, []);
 });
 
-test('quick Solo controls play from the menu, pause independently and skip without resuming music', async (t) => {
+test('main-menu music Play/Pause stays out of Pause while its Next song uses the shared transport', async (t) => {
   const { page } = await setup(t);
   await waitFor(() => !!musicMedia(page).src, 'Original prepared for first menu gesture');
   const menu = page.$('solo-quick-music-0-toggle'),
-    pause = page.$('solo-quick-music-1-toggle'),
+    next = page.$('overlay-next-song'),
     master = page.storage.getItem(AUDIO_PREFERENCES_KEY);
-  assert(menu && pause, 'Main and pause surfaces share the transport');
+  assert(menu && next, 'Pause reuses the main transport through its compact action');
+  assert.equal(page.$('solo-quick-music-1-toggle'), null, 'Pause has no music Play/Pause action');
   menu.click();
   assert.equal(musicMedia(page).paused, false, 'Play begins in the click task');
-  await waitFor(() => pause.textContent === 'Pause music', 'Both controls show playing');
+  await waitFor(() => menu.textContent === 'Pause music', 'Menu control shows playing');
   await startFlight(page);
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   ticks(page, 2);
   const tick = page.rendered.run.tick;
-  pause.click();
+  page.$('pause-button').click();
+  page.frame(0);
+  assert.equal(page.rendered.paused, true);
+  assert.equal(next.disabled, false);
+  menu.click();
   assert.equal(musicMedia(page).paused, true);
-  ticks(page, 2);
-  assert.equal(page.rendered.paused, false, 'Music Pause leaves gameplay running');
-  assert(page.rendered.run.tick > tick);
-  page.doc.body.emit('keydown', { code: 'KeyN', key: 'n' });
+  next.click();
   await waitFor(
     () => page.$('solo-quick-music-0').textContent.includes(BUILTIN_SOUNDTRACK_TRACKS[0].title),
     'Paused Next selects the next recording',
   );
-  assert.equal(pause.textContent, 'Play music');
+  ticks(page, 2);
+  assert.equal(page.rendered.paused, true, 'Next song keeps the flight paused');
+  assert.equal(page.rendered.run.tick, tick);
+  assert.equal(menu.textContent, 'Play music');
   assert.equal(musicMedia(page).paused, true);
   assert.equal(page.storage.getItem(AUDIO_PREFERENCES_KEY), master);
   assert.deepEqual(page.errors, []);
