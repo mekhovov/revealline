@@ -566,7 +566,7 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   );
   sample([0], 1200);
   assert.equal(requested, 0, 'Held Confirm cannot activate the newly focused action.');
-  sample([]);
+  sample([], 120);
   sample([0]);
   assert.equal(requested, 1);
   sample([0], 1200);
