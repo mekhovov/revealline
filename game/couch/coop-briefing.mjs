@@ -24,14 +24,26 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
     threats.push(t('interface:driftersPatrolContinuouslyAndCanHitYourCraftOrUnfinished'));
   if (roamers) threats.push(t('interface:trackedRoamersDoNotRetainFieldReclaimTheirFullFootprint'));
   if (relays) threats.push(t('interface:relayCoresWarnBeforeSendingASparkAlongAnUnfinished'));
+  const supportRoles = level.supportRoles ?? ['hybrid', 'hybrid'];
   const specialist = level.supportRoles?.length === 2;
+  const intercept = relays || (Boolean(level.lineImpact) && level.enemies.length > 0);
+  const canSlow = hunters || drifters || roamers;
+  const interceptorSeat = supportRoles.indexOf('interceptor') + 1;
+  const disruptorSeat = supportRoles.indexOf('disruptor') + 1;
   const pulse = specialist
-    ? '' +
-      t('interface:interceptorSupportRemovesNearbyTravellingImpactsDisruptorSupportSlowsNearby') +
-      ' '
-    : hunters || drifters || roamers
-      ? t(relays ? 'gameplay:team.supportSlowAndIntercept' : 'gameplay:team.supportSlow') + ' '
-      : relays
+    ? intercept && canSlow
+      ? t('interface:team.specialistSupportSlowAndIntercept', {
+          interceptor: interceptorSeat,
+          disruptor: disruptorSeat,
+        }) + ' '
+      : intercept
+        ? t('interface:team.specialistSupportIntercept', { player: interceptorSeat }) + ' '
+        : canSlow
+          ? t('interface:team.specialistSupportSlow', { player: disruptorSeat }) + ' '
+          : ''
+    : canSlow
+      ? t(intercept ? 'gameplay:team.supportSlowAndIntercept' : 'gameplay:team.supportSlow') + ' '
+      : intercept
         ? '' + t('interface:tapSupportNearATravellingSparkToInterceptIt') + ' '
         : '';
   const rescue = t('gameplay:team.rescueAdvice', { context });
@@ -40,12 +52,20 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
     : t('gameplay:team.separateCuts', { context });
   return {
     groundName,
+    groundContext: context,
     threatTitle: threats.length
       ? t('interface:watchTheThreats')
       : t('interface:practiceYourRoutes'),
     threatText: threats.length ? threats.join(' ') : t('gameplay:team.noThreats', { context }),
     supportText: pulse + rescue,
-    supportBySeat: (level.supportRoles ?? ['hybrid', 'hybrid']).map((role) =>
+    supportCapabilities: Object.freeze({
+      intercept,
+      slow: canSlow,
+      specialist,
+      interceptorSeat: specialist ? interceptorSeat : null,
+      disruptorSeat: specialist ? disruptorSeat : null,
+    }),
+    supportBySeat: supportRoles.map((role) =>
       role === 'interceptor'
         ? t('interface:interceptorRemovesNearbyTravellingImpacts')
         : role === 'disruptor'

@@ -163,7 +163,7 @@ test('the direct content-design entry uses its isolated profile and is not publi
       entry.candidateProgress.backupFilename,
       `revealline-${TEAM_PARTNER_SPECIALIST_PROFILE_KEY}-progress.json`,
     );
-    assert.match(entry.candidateEditionLabel, /^partner-action specialist edition/);
+    assert.match(String(entry.candidateEditionLabel), /^partner-action specialist edition/);
     assert.equal(entry.candidateJourney.officialProgressEligible, false);
     for (const id of TEAM_PARTNER_SPECIALIST_SUCCESSOR_ROWS)
       assert.equal(missionRow(entry.candidateJourney, id).level.revision, source.revision);
