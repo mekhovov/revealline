@@ -5,7 +5,7 @@ import { buildCommunityApp } from './app.mjs';
 import { createTokenAuthenticator } from './auth.mjs';
 import { createSessionAuthenticator } from './auth.mjs';
 import { createCommunityBetterAuth, mountCommunityBetterAuth } from './better-auth-runtime.mjs';
-import { DiskBlobStore } from './blob-store.mjs';
+import { createBlobStore } from './blob-store-factory.mjs';
 import { readConfig } from './config.mjs';
 import {
   createCachedDeploymentReadiness,
@@ -31,7 +31,7 @@ const admission = createAdmissionController({
   repository,
   policies: config.admissionPolicies,
 });
-const blobStore = new DiskBlobStore({ root: config.blobRoot });
+const blobStore = await createBlobStore(config.blobStorage);
 const betterAuth = config.betterAuth
   ? createCommunityBetterAuth({
       database: pool,
