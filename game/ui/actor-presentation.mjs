@@ -1,5 +1,6 @@
 import { enemyCatalogRecord, resolveEnemySkin } from '../enemy-catalog.mjs';
 import { drawEnemyBodyMotion } from './enemy-body-motion.mjs';
+import { drawActorRecipe, resolveActorRecipe } from './actor-recipes.mjs';
 import {
   journeyActorThemeMaterial,
   drawJourneyActorMaterial,
@@ -185,6 +186,7 @@ export function createActorPresentation() {
         canvasCSSWidth = 1152,
         scale = 1,
         actorSkins = {},
+        bodyRecipes = {},
       } = {},
     ) {
       const next = new Map(),
@@ -258,6 +260,9 @@ export function createActorPresentation() {
             y: actor.y * CELL,
             role,
             type: actor.type,
+            ...(resolveActorRecipe(bodyRecipes[actor.type])
+              ? { bodyRecipe: bodyRecipes[actor.type] }
+              : {}),
             themeId:
               resolveEnemySkin(actor.type, actorSkins[actor.type]) ?? family(themeId, themeFamily),
             ...(journeyMaterial && !resolveEnemySkin(actor.type, actorSkins[actor.type])
@@ -638,6 +643,7 @@ function distinctBody(c, f, k) {
 
 /** Original body-only skin; caller owns placement/size and functional badges. */
 export function drawEnemySilhouette(ctx, frame, colors) {
+  if (drawActorRecipe(ctx, frame, colors)) return;
   if (drawJourneyActorMaterial(ctx, frame, colors)) return;
   if (!distinctBody(ctx, frame, colors))
     (({fpv,

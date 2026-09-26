@@ -1,0 +1,202 @@
+{
+  "assets": [
+    {
+      "approved": true,
+      "bytes": 4023,
+      "dependencies": [],
+      "id": "droneaid-logo",
+      "path": "game/editions/assets/droneaid/logo.png",
+      "publication": "public",
+      "sha256": "66dc87ce501a118189c768e81f665a0393e2452e000846374ba5c5e197cb7e1e"
+    },
+    {
+      "approved": true,
+      "bytes": 2002741,
+      "dependencies": [],
+      "id": "droneaid-home",
+      "path": "game/editions/assets/droneaid/home.png",
+      "publication": "public",
+      "sha256": "afbfc0063df32b8a7c91fb086310199d75632fa01fcd535f6de20bcfedfeb1fa"
+    },
+    {
+      "approved": true,
+      "bytes": 160316,
+      "dependencies": [],
+      "id": "poppins-regular",
+      "path": "game/editions/assets/shared/Poppins-Regular.ttf",
+      "publication": "public",
+      "sha256": "7e65201e9b79159e2300267cc885e16c8dcef2424cdfa09a29bfb0980a94a7ba"
+    },
+    {
+      "approved": true,
+      "bytes": 4384,
+      "dependencies": [],
+      "id": "poppins-license",
+      "path": "game/editions/assets/shared/Poppins-OFL.txt",
+      "publication": "public",
+      "sha256": "8503c30a4d7e09c4c09015fee42f829f18acbe6330755e9930ba50ea44eaa157"
+    },
+    {
+      "approved": true,
+      "bytes": 1794830,
+      "dependencies": [],
+      "id": "droneaid-community-relay-01",
+      "path": "game/editions/assets/droneaid/droneaid-community-relay-01.png",
+      "publication": "public",
+      "sha256": "6f3f7e96f4d8f0ea78f1026026a2dc5f85981adee599a44ccfa173204c055bbe"
+    },
+    {
+      "approved": true,
+      "bytes": 2262270,
+      "dependencies": [],
+      "id": "droneaid-community-relay-02",
+      "path": "game/editions/assets/droneaid/droneaid-community-relay-02.png",
+      "publication": "public",
+      "sha256": "5ed9b536b8b11d4af1d6decda4cd8ee26346afcd326efa46de83f017efb4ab8a"
+    },
+    {
+      "approved": true,
+      "bytes": 2205966,
+      "dependencies": [],
+      "id": "droneaid-community-relay-03",
+      "path": "game/editions/assets/droneaid/droneaid-community-relay-03.png",
+      "publication": "public",
+      "sha256": "855c22a0a4703cfe9810cc36399c92dd0295d0b7f9c5125eda39c9dc8247af4c"
+    },
+    {
+      "approved": true,
+      "bytes": 10429,
+      "dependencies": [
+        "droneaid-logo"
+      ],
+      "derivative": {
+        "background": "#FFFFFF",
+        "height": 192,
+        "implementation": "pillow-12.0.0",
+        "kind": "square-install-icon",
+        "paddingRatio": 0.12,
+        "resampling": "lanczos",
+        "sourceAssetId": "droneaid-logo",
+        "sourceHeight": 56,
+        "sourceSha256": "66dc87ce501a118189c768e81f665a0393e2452e000846374ba5c5e197cb7e1e",
+        "sourceWidth": 131,
+        "width": 192
+      },
+      "id": "droneaid-icon-192",
+      "path": "game/editions/assets/droneaid/icon-192.png",
+      "publication": "public",
+      "sha256": "0d7189e414cfe317ddf2cbdb05739fa937ae947c013a05adaf99018afca9ad5f"
+    },
+    {
+      "approved": true,
+      "bytes": 42167,
+      "dependencies": [
+        "droneaid-logo",
+        "droneaid-icon-192"
+      ],
+      "derivative": {
+        "background": "#FFFFFF",
+        "height": 512,
+        "implementation": "pillow-12.0.0",
+        "kind": "square-install-icon",
+        "paddingRatio": 0.12,
+        "resampling": "lanczos",
+        "sourceAssetId": "droneaid-logo",
+        "sourceHeight": 56,
+        "sourceSha256": "66dc87ce501a118189c768e81f665a0393e2452e000846374ba5c5e197cb7e1e",
+        "sourceWidth": 131,
+        "width": 512
+      },
+      "id": "droneaid-icon-512",
+      "path": "game/editions/assets/droneaid/icon-512.png",
+      "publication": "public",
+      "sha256": "9be375c2ca36bf65c73f4998c15311dd30a553166b0f2fc7afa6dc1651fa14dd"
+    }
+  ],
+  "brands": [
+    {
+      "actorSetId": "community-marker",
+      "assetIds": [
+        "droneaid-logo",
+        "droneaid-home",
+        "poppins-regular",
+        "poppins-license",
+        "droneaid-icon-512"
+      ],
+      "description": "Small connections. Shared possibilities. A community workshop adventure.",
+      "fontAssetId": "poppins-regular",
+      "format": "revealline-brand-pack.v1",
+      "heroAssetId": "droneaid-home",
+      "iconAssetId": "droneaid-icon-512",
+      "id": "droneaid",
+      "logoAssetId": "droneaid-logo",
+      "name": "DroneAid",
+      "publication": "public",
+      "revision": 1,
+      "sources": [
+        {
+          "kind": "official",
+          "title": "DroneAid Collective Portugal — regional identity",
+          "url": "https://drone-aid.pt/en"
+        },
+        {
+          "kind": "official",
+          "title": "DroneAid Germany — community workshops",
+          "url": "https://drone-aid.de/"
+        },
+        {
+          "kind": "license",
+          "title": "Poppins — SIL Open Font License",
+          "url": "https://github.com/google/fonts/tree/main/ofl/poppins"
+        }
+      ],
+      "themeId": "droneaid-community"
+    }
+  ],
+  "campaigns": [
+    {
+      "assetIds": [
+        "droneaid-community-relay-01",
+        "droneaid-community-relay-02",
+        "droneaid-community-relay-03"
+      ],
+      "brandId": "droneaid",
+      "id": "droneaid-community-relay",
+      "modes": [
+        "solo"
+      ],
+      "name": "Community Relay",
+      "publication": "public",
+      "revision": "1",
+      "sourcePath": "game/content/company-campaigns/droneaid-community-relay.json"
+    }
+  ],
+  "editions": [
+    {
+      "audience": "public",
+      "boot": {
+        "archives": "game/content/company-boot/droneaid-community/archives.json",
+        "campaign": "game/content/company-boot/droneaid-community/campaign.json",
+        "classes": "game/content/company-boot/droneaid-community/classes.json",
+        "packs": "game/content/company-boot/droneaid-community/packs.json",
+        "presets": "game/content/company-boot/droneaid-community/presets.json",
+        "themes": "game/content/company-boot/droneaid-community/themes.json"
+      },
+      "brandId": "droneaid",
+      "campaignIds": [
+        "droneaid-community-relay"
+      ],
+      "entryCampaignId": "droneaid-community-relay",
+      "format": "revealline-edition.v1",
+      "id": "droneaid-community",
+      "modes": [
+        "solo"
+      ],
+      "name": "Community Relay",
+      "publication": "public",
+      "revision": 1
+    }
+  ],
+  "format": "revealline-edition-catalog.v1",
+  "publication": "public"
+}

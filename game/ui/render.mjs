@@ -19,6 +19,7 @@ import { drawDirectionalFields, directionalView } from './directional-view.mjs';
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { fittedBodySize, paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
 import { playerBodyOffset } from './player-body-layout.mjs';
+import { bodyMotionPose } from './body-motion.mjs';
 import { createSceneArt } from './scene-art.mjs';
 import { createEnemyBodyAssets } from './enemy-body-assets.mjs';
 import {
@@ -446,6 +447,7 @@ export class BoardPainter {
       canvasCSSWidth,
       scale: actorScale,
       actorSkins,
+      bodyRecipes: this.theme.actorRecipes ?? {},
     });
     // A compiled default owns its bitmap; do not acquire the old full original too.
     // Keep every frame in the metadata request so the compiled bitmap can still
@@ -491,7 +493,7 @@ export class BoardPainter {
       );
     }
     if (!fullReveal || revealAlpha > 0) {
-      ctx.fillStyle = '#000000';
+      ctx.fillStyle = this.theme.coverColor ?? '#000000';
       ctx.globalAlpha = revealAlpha;
       // Horizontal runs keep the reveal mask cheap and deterministic.
       for (let y = 0; y < rows; y++) {
@@ -869,8 +871,13 @@ export class BoardPainter {
         recipe: playerRecipe,
         animation: this.animation,
         scale: playerSize.scale,
-        heading: this.heading,
-        bank: reduced ? 0 : this.bank || 0,
+        ...bodyMotionPose(playerBody, {
+          seconds: state.time,
+          heading: this.heading,
+          bank: this.bank || 0,
+          speedRatio: this.speedRatio || 0,
+          reduced,
+        }),
         speedRatio: this.speedRatio || 0,
         reducedMotion: reduced,
         pixel: 1 / CELL,
