@@ -11,7 +11,7 @@ versions or acceptance gates are still current.
   selector is merged. The streaming public-byte audit is still underway, so v0.132.4 is not yet
   counted as accepted public delivery here.
 - The cultural stack is rebased on current `main`
-  `00661a063b53e411a03365f9ba5a9cb675e86bc3`. All nineteen branch tips were guarded-pushed
+  `0cb51db92295a62fea99ee2ab215a79c6df06520`. All nineteen branch tips were guarded-pushed
   atomically; the v0.149.0 successor is draft PR #650 and the test-only reconciliation is draft PR
   #651. The dirty root checkout was not changed.
 
@@ -30,7 +30,7 @@ versions or acceptance gates are still current.
 After the final main rebase, a bounded host rerun reached two 15-second chooser-opening timeouts
 before either changed assertion while another independent mission-library suite was continuously using
 a CPU core. It was stopped rather than misreported as a pass or “fixed” by widening timeouts. The
-earlier focused assertion pass and the content-equivalent 55-commit range-diff remain recorded, but
+earlier focused assertion pass and the content-equivalent 58-commit range-diff remain recorded, but
 an uncontended exact-head host rerun is still required.
 
 The post-rebase lightweight runtime cohort passes **41/41** at the stacked exact source. It covers
@@ -77,10 +77,11 @@ accepted predecessor; draft labels do not reserve a release.
    is not represented as passing.
 5. **Human/device evidence:** deterministic routes cannot establish enjoyment, cultural approval or
    physical controller/touch behavior.
-6. **Disk pressure:** a further 563 MiB old cache containing only recoverable source archives,
-   dependencies, logs and test artifacts was removed after checking for Git repositories, patches
-   and active processes. Roughly 1.4 GiB remained immediately afterward. Avoid duplicate local
-   builds and never remove unpushed source, user media or another task's active workspace.
+6. **Disk pressure:** 793 MiB of additional old caches containing only recoverable source archives,
+   dependencies, logs and test artifacts was removed after checking for Git repositories, patches,
+   published release assets and active processes. Roughly 1.4 GiB remained after each reclamation.
+   Avoid duplicate local builds and never remove unpushed source, user media or another task's active
+   workspace.
 7. **Shared-host contention:** the post-rebase PR #651 host rerun timed out during chooser startup
    while another worktree's library test held a CPU core. Re-run the bounded cases uncontended; do
    not call these startup timeouts changed-expectation failures or passes.
