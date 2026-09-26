@@ -94,10 +94,14 @@ export function boundedJSON(
     throw new TypeError('Encoded JSON exceeds its byte budget.');
   return copied;
 }
-export function exactKeys(value, allowed, label) {
-  if (!plainObject(value)) throw new TypeError(`${label} must be an object.`);
+export function exactKeys(value, allowed, label, messages = {}) {
+  if (!plainObject(value))
+    throw new TypeError(messages.object?.({ label }) ?? `${label} must be an object.`);
   for (const key of Object.keys(value))
-    if (!allowed.includes(key)) throw new TypeError(`${label}.${key} is not supported.`);
+    if (!allowed.includes(key))
+      throw new TypeError(
+        messages.unsupported?.({ label, key }) ?? `${label}.${key} is not supported.`,
+      );
 }
 export function required(condition, message) {
   if (!condition) throw new TypeError(message);
