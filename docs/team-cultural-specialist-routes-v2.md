@@ -16,10 +16,13 @@ Status date: 2026-09-26
   while the first cultural and all earlier editions remain directly selectable. Neither change is
   published yet.
 - The complete nineteen-branch cultural stack is rebased onto current `main`
-  `ee015163de1131313436b0550892f3739e3c7a1a`. PR #650 is at
-  `da1604a3b2821bff106711129a7d32f7bf78bd8d`; its test/documentation successor PR #651 is a clean
+  `55f83c2221c382ac5626e37a079e488eed79b920`. PR #650 is at
+  `c4cfe7092e8b7dd25b3803e4cb0531dc8007a04d`; its test/documentation successor PR #651 is a clean
   draft whose exact head is recorded by GitHub. Avoid embedding PR #651's changing self-hash in
   this document.
+- Ready PR #657 isolates the opaque Team Classic-owner continuation hotfix directly on `main`; its
+  main-based continuation, localization and impact cohort passes **27/27**. It is not merged,
+  released or publicly verified.
 
 ## Completed candidate work
 
@@ -79,6 +82,10 @@ approval or gameplay balance.
   uncontended host rerun records 14 passing test/subtest records across Solo, Versus, representative
   Team source routes and Solo → Versus → Solo restoration. No failures occurred. The earlier two
   chooser-opening timeouts did not reproduce without concurrent CPU saturation.
+- Latest-main reconciliation found that shared cross-collection Next JSON-parsed opaque Team Classic
+  owner IDs. PR #657 treats opaque Classic provenance as the Original-rules lane while retaining
+  JSON Current/Original separation. This restores Classic → Custom continuation without using
+  chooser search order.
 - Candidate files pass Prettier, targeted ESLint and `git diff --check`.
 
 ## Remaining before PR/release
@@ -86,7 +93,8 @@ approval or gameplay balance.
 1. Review and qualify draft PR #650 at its exact head.
 2. Review draft PR #651 at its exact head and retain its inventory/ownership reconciliation without
    representing the unrun full long host suite as passing.
-3. Run the normal build/release gates, immutable release and public frozen-build verification.
+3. Review PR #657 and run its normal build/release gates, immutable release and public frozen-build
+   verification independently of the cultural stack.
 4. Retain Gentle and Expert search evidence as reproducible feasibility evidence; pin those routes
    only if they add useful regression coverage rather than duplicating the Standard fixtures.
 5. Complete physical controller/touch/keyboard, paired-board fairness, small-screen,
