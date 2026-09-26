@@ -43,7 +43,7 @@ test("merges an admitted clean exact head through branch protection", () => {
 test("nonblocking failed checks do not block an exact-head merge", () => {
   assert.equal(
     decideMergeAction(fixture({ mergeable_state: "unstable" })).action,
-    "arm",
+    "merge",
   );
 });
 

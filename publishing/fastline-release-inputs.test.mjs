@@ -96,6 +96,8 @@ test("publisher canary serializes requests and passes one immutable artifact to 
   assert.match(workflow, /expected="\$\{EXPECTED_DIGEST#sha256:\}"/u);
   assert.match(workflow, /test "\$actual" = "\$expected"/u);
   assert.match(workflow, /inspect_qualified_artifact\.py/u);
+  assert.match(workflow, /fastline-release-objects\.mjs/u);
+  assert.match(workflow, /Refuse mismatched tag or release objects/u);
   assert.doesNotMatch(workflow, /contents: write/u);
   assert.match(qualification, /workflow_call:/u);
   assert.match(qualification, /artifact_id:/u);
