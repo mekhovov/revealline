@@ -159,6 +159,10 @@ function padFor(page, t) {
     pad.buttons[index] = { pressed: false, value: 0 };
     frame();
   };
+  pulse.advance = (milliseconds) => {
+    now += milliseconds;
+    page.frame(milliseconds);
+  };
   frame();
   // A neutral sample connects automatically; Confirm is now a real menu action.
   return pulse;
@@ -340,23 +344,29 @@ test('existing controller select draft, cancel and confirm preserve context and 
   const select = page.$('collection-context');
   assert.ok(select);
   const initial = select.value,
-    title = page.$('achievement-campaign').textContent;
+    title = page.$('achievement-campaign').textContent,
+    move = select.selectedIndex > 0 ? 12 : 13;
   const before = [...page.storage.map],
     checkpoint = authoritativeCheckpoint(page.rendered.run);
   select.focus();
   page.frame(0);
   pulse(0);
-  pulse(12);
+  pulse(move);
   pulse(1);
   assert.equal(page.$('collection-dialog').open, true, 'Back cancels only the select draft.');
   assert.equal(select.value, initial);
   assert.equal(page.$('achievement-campaign').textContent, title);
   assert.equal(page.doc.activeElement?.id, select.id);
   pulse(0);
-  pulse(12);
+  pulse(move);
+  pulse.advance(200);
   pulse(0);
   assert.notEqual(select.value, initial);
   assert.notEqual(page.$('achievement-campaign').textContent, title);
+  // The next input is a native click. Let the controller-confirm echo guard
+  // expire so the fixture does not model the same physical press twice.
+  pulse.advance(130);
+  pulse.advance(1250);
   const selected = select.value,
     card = page.$('gallery-grid').querySelectorAll('button')[0];
   card.focus();
