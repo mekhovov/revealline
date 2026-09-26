@@ -1547,6 +1547,15 @@ acquisition can inspect its two complete djent songs without consuming the local
 disk reserve. D.E.M.O.N remains excluded from acquisition while its separate
 mandatory-rating condition conflicts with the otherwise stated CC BY 4.0 terms.
 
+Add David KBD's
+[Hair and Knuckles Techno/Metal pack](https://davidkbd.itch.io/hair-and-kuckles-technometal-music-pack)
+to the next source-page comparison. Its six free individual OGG files are CC BY
+4.0 and intentionally combine aggressive metal with techno for fighting-game
+use, making **Technopolis 2021**, **Urban Hairbanger** and **Agressive and
+Technologic** the first three listening candidates. The published files are small,
+but no acquisition starts below the 1 GiB disk floor. Treat short cues and alternate
+encodings separately from the full gameplay-track target.
+
 Next delivery is a small audition archive, not a game admission: acquire the two
 YannZ recordings plus the strongest two or three comparison candidates, preserve
 exact source/licence evidence, decode and measure them, publish immutable previews,
