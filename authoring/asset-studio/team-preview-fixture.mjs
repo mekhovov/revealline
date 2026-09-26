@@ -1,3 +1,4 @@
+import { t } from '../../game/i18n/index.mjs';
 import { createTeamOutcomeFeedback } from '../../game/couch/coop-outcome-presentation.mjs';
 import { createCoop, startCoop, stepCoop, FIXED_DT } from '../../game/coop/core.mjs';
 import { FIRST_CONNECTION } from '../../game/coop/first-connection.mjs';
@@ -6,29 +7,37 @@ import { buildCoopLevel, createCoopLevelRecipe } from '../../game/coop/recipes.m
 
 export const TEAM_PREVIEW_SCENARIOS = Object.freeze(
   [
-    ['initial', 'Ready to fly'],
-    ['cutting', 'Active cuts'],
-    ['warning', 'Hunter warning'],
-    ['charge', 'Hunter charge'],
-    ['hunter-recovery', 'Hunter recovery'],
-    ['capture', 'Joint capture'],
-    ['team-recovery', 'Team reserve recovery'],
-    ['support', 'Support pulse'],
-    ['emitter-warning', 'Emitter warning'],
-    ['emitter-spark', 'Travelling spark'],
-    ['anchors', 'Anchors captured'],
-    ['core', 'Exposed relay core'],
-    ['secured', 'Secured core · two-relay specimen'],
-    ['victory', 'Completed arena'],
-    ['downed-p1', 'Player 1 downed'],
-    ['crawling-p1', 'Player 1 crawling'],
-    ['rescue-p1', 'Rescuing player 1'],
-    ['recovered-p1', 'Player 1 recovered'],
-    ['downed-p2', 'Player 2 downed'],
-    ['crawling-p2', 'Player 2 crawling'],
-    ['rescue-p2', 'Rescuing player 2'],
-    ['recovered-p2', 'Player 2 recovered'],
-  ].map(([id, label]) => Object.freeze({ id, label })),
+    ['initial', 'tools:initialField'],
+    ['cutting', 'tools:activeCuts'],
+    ['warning', 'tools:hunterWarning'],
+    ['charge', 'tools:hunterCharge'],
+    ['hunter-recovery', 'tools:hunterRecovery'],
+    ['capture', 'tools:jointCapture'],
+    ['team-recovery', 'tools:teamReserveRecovery'],
+    ['support', 'tools:supportPulse'],
+    ['emitter-warning', 'tools:emitterWarning'],
+    ['emitter-spark', 'tools:travellingSpark'],
+    ['anchors', 'tools:anchorsCaptured'],
+    ['core', 'tools:relayCoreExposed'],
+    ['secured', 'tools:securedCoreTwoRelaySpecimen'],
+    ['victory', 'tools:completedField'],
+    ['downed-p1', 'tools:player1Downed'],
+    ['crawling-p1', 'tools:player1Crawling'],
+    ['rescue-p1', 'tools:rescuingPlayer1'],
+    ['recovered-p1', 'tools:player1Recovered'],
+    ['downed-p2', 'tools:player2Downed'],
+    ['crawling-p2', 'tools:player2Crawling'],
+    ['rescue-p2', 'tools:rescuingPlayer2'],
+    ['recovered-p2', 'tools:player2Recovered'],
+  ].map(([id, labelKey]) =>
+    Object.freeze({
+      id,
+      labelKey,
+      get label() {
+        return t(labelKey);
+      },
+    }),
+  ),
 );
 
 const command = (direction = null, boost = true, support = false) =>
@@ -330,11 +339,11 @@ function freezeLevel(value) {
  * dt is seconds. Long frames drop excess elapsed time rather than catching up. */
 export function createStudioTeamFixture({ arena = 'first-connection', scenario = 'initial' } = {}) {
   if (typeof arena !== 'string' || !Object.hasOwn(arenas, arena))
-    throw new Error('Unknown Team preview arena.');
+    throw new Error(t('tools:studio.teamPreview.unknownArena'));
   const descriptor = TEAM_PREVIEW_SCENARIOS.find((item) => item.id === scenario);
-  if (!descriptor) throw new Error('Unknown Team preview scenario.');
+  if (!descriptor) throw new Error(t('tools:studio.teamPreview.unknownScenario'));
   if (!Object.hasOwn(ticks[arena], scenario))
-    throw new Error(`Team preview scenario "${scenario}" is unavailable in ${arena}.`);
+    throw new Error(t('tools:studio.teamPreview.unavailableScenario', { scenario, arena }));
   const neutralBackdrop = scenario === 'secured';
   const level = freezeLevel(structuredClone(neutralBackdrop ? securedLevel : arenas[arena]));
   const isRescue = /^(downed|crawling|rescue|recovered)-p[12]$/.test(scenario);
@@ -421,6 +430,8 @@ export function createStudioTeamFixture({ arena = 'first-connection', scenario =
     advance,
     reset,
     scenario,
-    label: descriptor.label,
+    get label() {
+      return descriptor.label;
+    },
   });
 }
