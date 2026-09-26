@@ -25,6 +25,15 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
   if (roamers) threats.push(t('interface:trackedRoamersDoNotRetainFieldReclaimTheirFullFootprint'));
   if (relays) threats.push(t('interface:relayCoresWarnBeforeSendingASparkAlongAnUnfinished'));
   const specialist = level.supportRoles?.length === 2;
+  const supportRoles = [...(level.supportRoles ?? ['hybrid', 'hybrid'])];
+  const supportCapabilities = [];
+  if (
+    (hunters || drifters || roamers) &&
+    supportRoles.some((role) => role === 'hybrid' || role === 'disruptor')
+  )
+    supportCapabilities.push('slow');
+  if (relays && supportRoles.some((role) => role === 'hybrid' || role === 'interceptor'))
+    supportCapabilities.push('intercept');
   const pulse = specialist
     ? '' +
       t('interface:interceptorSupportRemovesNearbyTravellingImpactsDisruptorSupportSlowsNearby') +
@@ -39,13 +48,18 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
     ? t('interface:startWithASmallLoopThenMeetYourPartnerTo')
     : t('gameplay:team.separateCuts', { context });
   return {
+    teaching: Object.freeze({
+      ground: context === 'reclaimed' ? 'reclaimed' : 'safe',
+      supportCapabilities: Object.freeze(supportCapabilities),
+      supportRoles: Object.freeze(supportRoles),
+    }),
     groundName,
     threatTitle: threats.length
       ? t('interface:watchTheThreats')
       : t('interface:practiceYourRoutes'),
     threatText: threats.length ? threats.join(' ') : t('gameplay:team.noThreats', { context }),
     supportText: pulse + rescue,
-    supportBySeat: (level.supportRoles ?? ['hybrid', 'hybrid']).map((role) =>
+    supportBySeat: supportRoles.map((role) =>
       role === 'interceptor'
         ? t('interface:interceptorRemovesNearbyTravellingImpacts')
         : role === 'disruptor'
