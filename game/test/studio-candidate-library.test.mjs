@@ -257,6 +257,7 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
     'whole-spatial-v17',
     'whole-spatial-v18',
     'whole-spatial-v19',
+    'whole-spatial-v20',
     'whole-spatial-v10',
     'whole-spatial-v9',
     'whole-spatial-v8',

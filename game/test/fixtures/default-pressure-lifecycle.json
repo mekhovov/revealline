@@ -1,7 +1,7 @@
 {
   "format": "DefaultPressureLifecycleV1",
   "sourceCommit": "b13089b702391c275f2505d1a76c87eebb9dcce0",
-  "route": "whole-spatial-v19",
+  "route": "whole-spatial-v20",
   "tuning": "gameplay-pressure.v4",
   "seed": 1,
   "scope": "Public fixed-tick commands on the current tuned default. These are deterministic engine and shared navigation checks, not native host, device, human balance or release acceptance.",
@@ -10,14 +10,13 @@
       "id": "return-in-reserve",
       "turnPolicy": "immediate",
       "segments": [
-        [null, 240],
-        ["up", 100],
-        ["right", 20],
-        ["down", 80]
+        ["right", 100],
+        ["down", 100],
+        ["left", 67]
       ],
-      "warningTick": 265,
-      "commitTick": 355,
-      "captureTick": 440,
+      "warningTick": 121,
+      "commitTick": 211,
+      "captureTick": 267,
       "turnsAfterWarning": true,
       "idleFrontierLossTick": null
     },
@@ -26,12 +25,13 @@
       "turnPolicy": "grid-center",
       "segments": [
         ["right", 100],
-        ["up", 206]
+        ["down", 100],
+        ["left", 79]
       ],
-      "warningTick": 145,
-      "commitTick": 235,
-      "captureTick": 306,
-      "turnsAfterWarning": false,
+      "warningTick": 121,
+      "commitTick": 211,
+      "captureTick": 279,
+      "turnsAfterWarning": true,
       "idleFrontierLossTick": null
     },
     {
@@ -69,18 +69,31 @@
     {
       "id": "return-in-reserve",
       "next": "two-ways-home",
-      "simulationIdentity": "1ec7c8900652a220",
+      "simulationIdentity": "333026ffd20dc1eb",
       "turnPolicy": "immediate",
-      "ticks": 1716,
-      "captures": 2,
+      "ticks": 2929,
+      "captures": 6,
       "segments": [
-        ["up", 13],
-        ["left", 326],
-        ["up", 184],
-        [null, 120],
+        ["left", 380],
+        ["down", 326],
+        ["left", 102],
+        ["right", 102],
+        ["down", 150],
+        ["right", 285],
+        ["up", 469],
         ["down", 7],
-        ["right", 611],
-        ["down", 455]
+        ["right", 54],
+        ["down", 108],
+        ["left", 48],
+        ["right", 7],
+        ["left", 14],
+        ["down", 353],
+        ["right", 95],
+        ["up", 129],
+        ["down", 7],
+        ["right", 109],
+        ["up", 109],
+        ["left", 75]
       ]
     },
     {
