@@ -43,8 +43,8 @@ async function startFlight(page) {
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
 }
-async function waitFor(predicate, label, { attempts = 100 } = {}) {
-  for (let i = 0; i < attempts; i++) {
+async function waitFor(predicate, label) {
+  for (let i = 0; i < 100; i++) {
     if (predicate()) return;
     await new Promise((resolve) => setTimeout(resolve, 5));
   }
@@ -541,15 +541,17 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     page.$('soundtrack-export-bundle'),
     'Controller reaches Prepare through the actual dialog focus scope.',
   );
+  const prepare = page.$('soundtrack-export-bundle'),
+    actualPrepare = prepare.onclick;
+  let preparing;
+  prepare.onclick = (...args) => {
+    preparing = actualPrepare(...args);
+    return preparing;
+  };
   sample([0]);
-  await waitFor(
-    () => !page.$('soundtrack-backup-ready').hidden,
-    'Actual binary preparation finishes',
-    // Export re-inspects the exact MP3 and assembles a recovery-complete Blob.
-    // A single-core hosted worker can take several seconds for those byte-bound
-    // checks, so retain a finite budget without weakening the assertions below.
-    { attempts: 3000 },
-  );
+  assert.ok(preparing instanceof Promise, 'Controller invokes the real Prepare handler.');
+  assert.equal(await preparing, true, 'Actual binary preparation finishes.');
+  assert.equal(page.$('soundtrack-backup-ready').hidden, false);
   assert.equal(page.doc.activeElement, link);
   assert.equal(requested, 0, 'Preparation focuses but never activates the download.');
   const url = link.getAttribute('href');
