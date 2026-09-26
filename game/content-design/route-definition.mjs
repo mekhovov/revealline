@@ -29,11 +29,23 @@ export function createAuthoredJourneyRouteDefinition(
     createNeonCulturalRoutesCandidates,
     createNeonCulturalRoutesFinaleCandidates,
     createRoverCulturalRoutesCandidates,
+    createFractureCulturalRoutesCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v19')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Fractured Grid Ukrainian cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v19',
+      profileKey: 'journey-whole-spatial-v19',
+      source: createFractureCulturalRoutesCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v18')
     return freezeDesign({
       id,
