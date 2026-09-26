@@ -580,5 +580,12 @@
   "content.image.malformedBase64": "Image base64 is malformed.",
   "content.image.originalByteBudget": "Image exceeds the 4 MiB original-byte budget.",
   "content.image.dimensionBudget": "Image exceeds 8192 pixels per side or the 16 megapixel budget.",
-  "content.image.headerUnreadable": "Image header could not be read."
+  "content.image.headerUnreadable": "Image header could not be read.",
+  "content.stableIdentifier": "{{path}} must be a non-reserved stable identifier.",
+  "content.classBodiesMapping": "theme.classBodies must map class IDs to body preset IDs.",
+  "content.classBodiesBudget": "theme.classBodies may contain at most {{max}} entries.",
+  "content.stableClassIds": "theme.classBodies keys must be non-reserved stable class IDs.",
+  "content.stableBodyPresetId": "{{path}} must be a non-reserved stable body preset ID.",
+  "content.registeredValue": "{{path}} is not registered.",
+  "content.hexColor": "{{path}} must use #rrggbb."
 }
