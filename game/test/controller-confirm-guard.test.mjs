@@ -5,7 +5,7 @@ import { createControllerRouter } from '../ui/controller-router.mjs';
 import { resolveControllerBindings } from '../controller-bindings.mjs';
 
 function setup(t, options = {}) {
-  const { guardNow, ...routerOptions } = options;
+  const { guardNow, routerNow, ...routerOptions } = options;
   const pad = {
     index: 0,
     id: 'Steam Deck',
@@ -20,7 +20,9 @@ function setup(t, options = {}) {
   const router = createControllerRouter({
     autoJoin: true,
     navigationAliases: true,
+    confirmReleaseMs: 0,
     eventTarget: null,
+    ...(routerNow ? { now: routerNow } : {}),
     readPads: () => {
       if (unavailable) throw new Error('Unavailable');
       return pads;
@@ -45,7 +47,8 @@ function setup(t, options = {}) {
     'click',
   ])
     doc.addEventListener(type, () => nativeEvents++);
-  const sample = (scope = 'menu') => router.sample({ scope });
+  const sample = (scope = 'menu', timeMs) =>
+    router.sample({ scope, ...(timeMs === undefined ? {} : { timeMs }) });
   const emit = (type, properties = {}) => {
     const event = new Event(type, { cancelable: true });
     for (const [key, value] of Object.entries(properties))
@@ -278,6 +281,54 @@ test('a controller activation owns untrusted and direct-touch release clicks unt
   assert.equal(h.emit('pointerdown', directTouch), false, 'a later touchscreen gesture is usable');
   assert.equal(h.emit('pointerup', directTouch), false);
   assert.equal(h.emit('click', directTouch), false);
+});
+
+test('a short-tap Gamepad release pulse stays inside the owned Confirm transaction', (t) => {
+  let time = 0;
+  const h = setup(t, {
+    guardNow: () => time,
+    routerNow: () => time,
+    confirmReleaseMs: 120,
+  });
+
+  h.pad.buttons[0].pressed = true;
+  time = 10;
+  let frame = h.sample('menu', time);
+  h.guard.observe(frame.confirmHeld);
+  assert.equal(frame.ui.confirm, true);
+  assert.deepEqual(h.activate(), { accepted: true, prevented: false });
+
+  h.pad.buttons[0].pressed = false;
+  time = 30;
+  frame = h.sample('menu', time);
+  h.guard.observe(frame.confirmHeld);
+  assert.equal(frame.confirmHeld, true);
+
+  h.pad.buttons[2].pressed = true;
+  time = 46;
+  frame = h.sample('menu', time);
+  h.guard.observe(frame.confirmHeld);
+  assert.equal(frame.ui.confirm, false, 'the release-side Gamepad pulse cannot activate again');
+  assert.equal(
+    h.emit('click', { button: 0, detail: 0, isTrusted: true }),
+    true,
+    'the same short tap still owns its native release click',
+  );
+
+  h.pad.buttons[2].pressed = false;
+  time = 62;
+  h.guard.observe(h.sample('menu', time).confirmHeld);
+  time = 182;
+  frame = h.sample('menu', time);
+  h.guard.observe(frame.confirmHeld);
+  assert.equal(frame.confirmHeld, false);
+
+  h.pad.buttons[0].pressed = true;
+  time = 183;
+  frame = h.sample('menu', time);
+  h.guard.observe(frame.confirmHeld);
+  assert.equal(frame.ui.confirm, true);
+  assert.deepEqual(h.activate(), { accepted: true, prevented: false });
 });
 
 test('an incomplete primary-pointer echo expires without swallowing the next native click', (t) => {
