@@ -1,4 +1,4 @@
-import { boundedJSON, exactKeys, required } from './data-json.mjs';
+import { boundedJSON, exactKeys } from './data-json.mjs';
 import { throwIfSoundtrackAborted } from './mp3.mjs';
 
 export const ONLINE_SOUNDTRACK_CATALOGUE_URL =
@@ -40,6 +40,41 @@ const LICENSE_IDENTITIES = new Map([
 const AUDIO_PATH = /^(?:objects|batches\/[a-z0-9][a-z0-9-]{0,63}\/objects)\/[a-f0-9]{64}\.mp3$/;
 const RESOLVED_TRACKS = new WeakSet();
 
+function catalogueFailure(key, message, values = Object.create(null), cause = null) {
+  const error = cause instanceof Error ? cause : new TypeError(message);
+  error.localization = Object.freeze({
+    key: `errors:soundtrack.catalogue.${key}`,
+    values: Object.freeze({ ...values }),
+  });
+  return error;
+}
+
+function catalogueRequired(condition, key, message, values) {
+  if (!condition) throw catalogueFailure(key, message, values);
+}
+
+function catalogueExactKeys(value, allowed, label) {
+  try {
+    exactKeys(value, allowed, label);
+  } catch (error) {
+    throw catalogueFailure('invalidShape', error.message, undefined, error);
+  }
+}
+
+function catalogueJSON(source) {
+  try {
+    return boundedJSON(source, {
+      maxBytes: MAX_BYTES,
+      maxNodes: 20000,
+      maxDepth: 8,
+      maxArray: 512,
+      maxString: 4096,
+    });
+  } catch (error) {
+    throw catalogueFailure('invalidData', error.message, undefined, error);
+  }
+}
+
 export function isResolvedOnlineSoundtrackTrack(value) {
   return typeof value === 'object' && value !== null && RESOLVED_TRACKS.has(value);
 }
@@ -79,24 +114,36 @@ function secureURL(value) {
 }
 
 function text(value, label, maximum = 2048) {
-  required(
+  catalogueRequired(
     typeof value === 'string' &&
       value.trim() === value &&
       value.length >= 1 &&
       value.length <= maximum,
+    'invalidField',
     `Online soundtrack ${label} is invalid.`,
+    { field: label },
   );
   return value;
 }
 
 function structuredRights(value, legacy, id) {
   const identity = LICENSE_IDENTITIES.get(legacy.licenseURL);
-  required(identity, `Online soundtrack rights licence is unsupported: ${id}.`);
+  catalogueRequired(
+    identity,
+    'rightsLicenceUnsupported',
+    `Online soundtrack rights licence is unsupported: ${id}.`,
+    { id },
+  );
   if (value === undefined) {
-    required(!identity.shareAlike, `Online soundtrack ShareAlike rights are required: ${id}.`);
+    catalogueRequired(
+      !identity.shareAlike,
+      'shareAlikeRequired',
+      `Online soundtrack ShareAlike rights are required: ${id}.`,
+      { id },
+    );
     return null;
   }
-  exactKeys(
+  catalogueExactKeys(
     value,
     [
       'licenseId',
@@ -109,27 +156,29 @@ function structuredRights(value, legacy, id) {
     ],
     'online soundtrack rights',
   );
-  required(
+  catalogueRequired(
     value.licenseId === identity.id &&
       value.licenseVersion === identity.version &&
       value.licenseURL === legacy.licenseURL &&
       value.rightsEvidenceURL === legacy.source &&
       value.attribution === legacy.credit &&
       secureURL(value.rightsEvidenceURL),
+    'rightsMismatch',
     `Online soundtrack rights differ from the trusted recording metadata: ${id}.`,
+    { id },
   );
   const derivativeChangeNotice = text(
     value.derivativeChangeNotice,
     'derivative change notice',
     2048,
   );
-  exactKeys(
+  catalogueExactKeys(
     value.shareAlike,
     ['required', 'deliveryLicenseId', 'deliveryLicenseVersion', 'deliveryLicenseURL'],
     'online soundtrack share-alike rights',
   );
   const shareAlike = value.shareAlike;
-  required(
+  catalogueRequired(
     shareAlike.required === identity.shareAlike &&
       (identity.shareAlike
         ? shareAlike.deliveryLicenseId === identity.id &&
@@ -138,7 +187,9 @@ function structuredRights(value, legacy, id) {
         : shareAlike.deliveryLicenseId === null &&
           shareAlike.deliveryLicenseVersion === null &&
           shareAlike.deliveryLicenseURL === null),
+    'shareAlikeInvalid',
     `Online soundtrack share-alike rights are invalid: ${id}.`,
+    { id },
   );
   return Object.freeze({
     licenseId: identity.id,
@@ -152,7 +203,7 @@ function structuredRights(value, legacy, id) {
 }
 
 function track(value, ids, hashes) {
-  exactKeys(
+  catalogueExactKeys(
     value,
     [
       'id',
@@ -180,43 +231,72 @@ function track(value, ids, hashes) {
     'online soundtrack track',
   );
   const id = text(value.id, 'identity', 160);
-  required(!ids.has(id), 'Online soundtrack identities must be unique.');
+  catalogueRequired(
+    !ids.has(id),
+    'duplicateIdentity',
+    'Online soundtrack identities must be unique.',
+  );
   ids.add(id);
-  required(
+  catalogueRequired(
     value.durationSeconds === null ||
       (Number.isFinite(value.durationSeconds) &&
         value.durationSeconds > 0 &&
         value.durationSeconds <= 3600),
+    'durationInvalid',
     `Online soundtrack duration is invalid: ${id}.`,
+    { id },
   );
-  required(
+  catalogueRequired(
     Array.isArray(value.tags) &&
       value.tags.length <= 32 &&
       value.tags.every((tag) => typeof tag === 'string' && tag.trim() === tag && tag.length <= 100),
+    'tagsInvalid',
     `Online soundtrack tags are invalid: ${id}.`,
+    { id },
   );
-  required(secureURL(value.source), `Online soundtrack source is invalid: ${id}.`);
-  required(LICENSES.has(value.licenseURL), `Online soundtrack licence is unsupported: ${id}.`);
+  catalogueRequired(
+    secureURL(value.source),
+    'sourceInvalid',
+    `Online soundtrack source is invalid: ${id}.`,
+    { id },
+  );
+  catalogueRequired(
+    LICENSES.has(value.licenseURL),
+    'licenceUnsupported',
+    `Online soundtrack licence is unsupported: ${id}.`,
+    { id },
+  );
   const licenseIdentity = LICENSE_IDENTITIES.get(value.licenseURL);
-  required(value.license === licenseIdentity.label, `Online soundtrack licence is invalid: ${id}.`);
-  required(
+  catalogueRequired(
+    value.license === licenseIdentity.label,
+    'licenceInvalid',
+    `Online soundtrack licence is invalid: ${id}.`,
+    { id },
+  );
+  catalogueRequired(
     value.gameCatalogueAdmission === false &&
       typeof value.status === 'string' &&
       typeof value.listeningApproval === 'string',
+    'reviewInvalid',
     `Online soundtrack review status is invalid: ${id}.`,
+    { id },
   );
-  required(
+  catalogueRequired(
     [true, false, null, 'unknown'].includes(value.contentId) &&
       typeof value.recordingModeEligible === 'boolean' &&
       (!value.recordingModeEligible || value.contentId === false),
+    'recordingPolicyInvalid',
     `Online soundtrack recording policy is invalid: ${id}.`,
+    { id },
   );
-  required(
+  catalogueRequired(
     value.default === undefined || value.default === false,
+    'defaultPolicyInvalid',
     `Online soundtrack default policy is invalid: ${id}.`,
+    { id },
   );
-  exactKeys(value.audio, ['path', 'bytes', 'sha256'], 'online soundtrack audio');
-  required(
+  catalogueExactKeys(value.audio, ['path', 'bytes', 'sha256'], 'online soundtrack audio');
+  catalogueRequired(
     HASH.test(value.audio.sha256) &&
       AUDIO_PATH.test(value.audio.path) &&
       value.audio.path.endsWith(`/${value.audio.sha256}.mp3`) &&
@@ -224,12 +304,16 @@ function track(value, ids, hashes) {
       value.audio.bytes > 0 &&
       value.audio.bytes <= 100_000_000 &&
       !hashes.has(value.audio.sha256),
+    'audioIdentityInvalid',
     `Online soundtrack audio identity is invalid: ${id}.`,
+    { id },
   );
   hashes.add(value.audio.sha256);
-  required(
+  catalogueRequired(
     Array.isArray(value.aliases) && value.aliases.length <= 16,
+    'aliasesInvalid',
     `Online aliases are invalid: ${id}.`,
+    { id },
   );
   const credit = text(value.credit, 'credit');
   const rightsEvidence = structuredRights(
@@ -269,45 +353,47 @@ function track(value, ids, hashes) {
 }
 
 export function resolveOnlineSoundtrackCatalogue(source) {
-  const value = boundedJSON(source, {
-    maxBytes: MAX_BYTES,
-    maxNodes: 20000,
-    maxDepth: 8,
-    maxArray: 512,
-    maxString: 4096,
-  });
-  exactKeys(
+  const value = catalogueJSON(source);
+  catalogueExactKeys(
     value,
     ['format', 'archive', 'sources', 'counts', 'tracks'],
     'online soundtrack catalogue',
   );
-  required(value.format === FORMAT, 'Unsupported online soundtrack catalogue.');
-  exactKeys(value.archive, ['id', 'baseURL'], 'online soundtrack archive');
-  required(
+  catalogueRequired(
+    value.format === FORMAT,
+    'unsupported',
+    'Unsupported online soundtrack catalogue.',
+  );
+  catalogueExactKeys(value.archive, ['id', 'baseURL'], 'online soundtrack archive');
+  catalogueRequired(
     value.archive.id === 'revealline-soundtracks-01' && value.archive.baseURL === BASE_URL,
+    'archiveInvalid',
     'Online soundtrack catalogue must use the project archive.',
   );
-  required(
+  catalogueRequired(
     Array.isArray(value.sources) && value.sources.length <= 32,
+    'sourcesInvalid',
     'Online soundtrack sources are invalid.',
   );
-  exactKeys(
+  catalogueExactKeys(
     value.counts,
     ['declaredTracks', 'uniqueRecordings', 'duplicateAliases', 'audioBytes'],
     'online soundtrack counts',
   );
-  required(
+  catalogueRequired(
     Array.isArray(value.tracks) && value.tracks.length <= 256,
+    'listTooLarge',
     'Online soundtrack list is too large.',
   );
   const ids = new Set(),
     hashes = new Set(),
     tracks = value.tracks.map((entry) => track(entry, ids, hashes));
-  required(
+  catalogueRequired(
     value.counts.uniqueRecordings === tracks.length &&
       value.counts.declaredTracks >= tracks.length &&
       value.counts.duplicateAliases === value.counts.declaredTracks - tracks.length &&
       value.counts.audioBytes === tracks.reduce((sum, item) => sum + item.bytes, 0),
+    'countsMismatch',
     'Online soundtrack counts differ from the recording list.',
   );
   return Object.freeze({
@@ -322,8 +408,9 @@ export async function fetchOnlineSoundtrackCatalogue({
   signal,
   url = ONLINE_SOUNDTRACK_CATALOGUE_URL,
 } = {}) {
-  required(
+  catalogueRequired(
     url === ONLINE_SOUNDTRACK_CATALOGUE_URL,
+    'urlInvalid',
     'Online soundtracks require the project catalogue URL.',
   );
   throwIfSoundtrackAborted(signal);
@@ -334,17 +421,23 @@ export async function fetchOnlineSoundtrackCatalogue({
     mode: 'cors',
     cache: 'no-store',
   });
-  required(
+  catalogueRequired(
     response?.status === 200 && !response.redirected && response.url === url,
+    'directResponseRequired',
     'Online soundtrack catalogue needs a direct HTTP 200 response.',
   );
   const length = response.headers.get('content-length');
-  required(
+  catalogueRequired(
     length === null || (/^[0-9]+$/.test(length) && Number(length) <= MAX_BYTES),
+    'byteLimit',
     'Online soundtrack catalogue exceeds its byte limit.',
   );
   const reader = response.body?.getReader?.();
-  required(reader, 'Online soundtrack catalogue response cannot be read safely.');
+  catalogueRequired(
+    reader,
+    'responseUnreadable',
+    'Online soundtrack catalogue response cannot be read safely.',
+  );
   const chunks = [];
   let size = 0;
   try {
@@ -352,7 +445,11 @@ export async function fetchOnlineSoundtrackCatalogue({
       throwIfSoundtrackAborted(signal);
       const { done, value } = await reader.read();
       if (done) break;
-      required(value instanceof Uint8Array, 'Online soundtrack catalogue response is invalid.');
+      catalogueRequired(
+        value instanceof Uint8Array,
+        'responseInvalid',
+        'Online soundtrack catalogue response is invalid.',
+      );
       size += value.byteLength;
       if (size > MAX_BYTES) {
         try {
@@ -360,7 +457,7 @@ export async function fetchOnlineSoundtrackCatalogue({
         } catch {
           // The byte limit remains authoritative even if the network cannot be cancelled cleanly.
         }
-        throw new Error('Online soundtrack catalogue exceeds its byte limit.');
+        throw catalogueFailure('byteLimit', 'Online soundtrack catalogue exceeds its byte limit.');
       }
       chunks.push(value);
     }
@@ -374,5 +471,16 @@ export async function fetchOnlineSoundtrackCatalogue({
     bytes.set(chunk, offset);
     offset += chunk.byteLength;
   }
-  return resolveOnlineSoundtrackCatalogue(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
+  let source;
+  try {
+    source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+  } catch (error) {
+    throw catalogueFailure(
+      'responseInvalid',
+      'Online soundtrack catalogue response is invalid.',
+      undefined,
+      error,
+    );
+  }
+  return resolveOnlineSoundtrackCatalogue(source);
 }

@@ -636,13 +636,28 @@ test('a visible soundtrack storage error follows a live locale change', async (t
   t.after(() => setLocale('en', { persist: false }));
   setLocale('en', { persist: false });
   const app = await pendingFirstOpen(t);
-  app.reject(new Error('Close older game tabs to open soundtrack storage.'));
+  app.reject(new Error('Close older game tabs to upgrade media storage.'));
   await app.opening;
   assert.match(app.node('status').textContent, /Close older game tabs/);
 
   setLocale('uk', { persist: false });
   assert.match(app.node('status').textContent, /Закрийте старі вкладки з грою/);
   assert.equal(app.node('status').dataset.state, 'error');
+});
+
+test('player snapshot notices and errors follow a live locale change', async (t) => {
+  t.after(() => setLocale('en', { persist: false }));
+  setLocale('en', { persist: false });
+  const app = await setup(t);
+  app.state.notice = 'Media storage could not open.';
+  app.state.error = 'Close older game tabs to upgrade media storage.';
+  app.panel.update();
+  assert.match(app.node('now').textContent, /Soundtrack storage could not open/);
+  assert.match(app.node('now').textContent, /Close older game tabs/);
+
+  setLocale('uk', { persist: false });
+  assert.match(app.node('now').textContent, /Не вдалося відкрити сховище саундтреків/);
+  assert.match(app.node('now').textContent, /Закрийте старі вкладки з грою/);
 });
 
 test('first Studio read preserves a deliberate transport focus chosen while loading', async (t) => {
