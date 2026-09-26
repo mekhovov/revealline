@@ -413,6 +413,60 @@ test("tag ref conflict can only recover through matching annotated authority", a
   ]);
 });
 
+for (const status of [409, 422]) {
+  for (const authority of ["matching", "missing", "mismatched"]) {
+    test(`message-only ref ${status} with ${authority} authority never retries the write`, async () => {
+      let reads = 0;
+      const writes = [];
+      const absent = {
+        tagCommit: null,
+        tagType: null,
+        release: null,
+        decision: { action: "create", state: "absent" },
+      };
+      const request = createGitHubRequest({
+        token: "test-token",
+        fetchImpl: async (url, options) => {
+          writes.push([url, options.method]);
+          if (url.endsWith("/git/tags"))
+            return new Response(JSON.stringify({ sha: "b".repeat(40) }), {
+              status: 201,
+            });
+          assert.ok(url.endsWith("/git/refs"));
+          return new Response(
+            JSON.stringify({ message: "Reference already exists" }),
+            { status },
+          );
+        },
+      });
+      const result = ensureDraftRelease({
+        repository,
+        version,
+        sourceSha,
+        request,
+        wait: async () => {},
+        inspect: async () => {
+          reads += 1;
+          if (reads === 1 || authority === "missing") return absent;
+          if (authority === "mismatched")
+            return { ...withRelease(), tagCommit: "c".repeat(40) };
+          return withRelease();
+        },
+      });
+      if (authority === "matching") assert.equal((await result).id, draft.id);
+      else
+        await assert.rejects(
+          result,
+          authority === "missing"
+            ? /Reference already exists/u
+            : /resolves to/u,
+        );
+      assert.equal(writes.length, 2);
+      assert.equal(reads, authority === "missing" ? 5 : 2);
+    });
+  }
+}
+
 test("publishes only an exact complete draft and reuses an exact publication", async () => {
   let draft = true;
   const release = () => ({
