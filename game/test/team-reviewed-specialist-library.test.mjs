@@ -7,6 +7,7 @@ import {
   TEAM_COMPLETE_SPECIALIST_PROFILE_KEY,
 } from '../content-design/team-complete-specialist-originals.mjs';
 import { TEAM_CULTURAL_SPECIALIST_PROFILE_KEY } from '../content-design/team-cultural-specialist-originals.mjs';
+import { TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY } from '../content-design/team-cultural-specialist-v2-originals.mjs';
 import { createTeamImpactOriginalCandidates } from '../content-design/team-impact-originals.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { createTeamGreyboxEntry } from '../content-design/team-entry.mjs';
@@ -114,10 +115,14 @@ test('the complete specialist route remains separate while the cultural successo
       ordinary.candidateJourney.row(ordinary.candidateJourney.catalog.missions[0]).level.revision,
       'owned-trail-impact-1',
     );
-    assert.equal(DEFAULT_JOURNEY_ROUTES.team, TEAM_CULTURAL_SPECIALIST_PROFILE_KEY);
-    assert.equal(TEAM_LIBRARY_JOURNEY_EDITION, TEAM_CULTURAL_SPECIALIST_PROFILE_KEY);
+    assert.equal(DEFAULT_JOURNEY_ROUTES.team, TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY);
+    assert.equal(TEAM_LIBRARY_JOURNEY_EDITION, TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY);
     assert.equal(isMissionLibrarySourceJourney(TEAM_COMPLETE_SPECIALIST_PROFILE_KEY, 'team'), true);
     assert.equal(isMissionLibrarySourceJourney(TEAM_CULTURAL_SPECIALIST_PROFILE_KEY, 'team'), true);
+    assert.equal(
+      isMissionLibrarySourceJourney(TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY, 'team'),
+      true,
+    );
     assert.equal(
       isMissionLibrarySourceJourney(TEAM_COMPLETE_SPECIALIST_PROFILE_KEY, 'solo'),
       false,
