@@ -47,9 +47,10 @@ import {
   fetchOnlineSoundtrackCatalogue,
   onlineSoundtrackRecordingAllowed,
 } from '../online-soundtrack-catalogue.mjs';
+import { soundtrackErrorText } from './soundtrack-error-copy.mjs';
 
 const copy = (value) => structuredClone(value);
-const message = (error) => error?.message || String(error);
+const message = soundtrackErrorText;
 const seconds = (value = 0) =>
   `${Math.floor(value / 60)}:${String(Math.floor(value % 60)).padStart(2, '0')}`;
 const bytes = (value) => `${(value / 1024 / 1024).toFixed(1)} MiB`;
@@ -208,20 +209,20 @@ export function attachSoundtrackPanel({
     'aria-labelledby': 'soundtrack-title',
   });
   const heading = node('h2', 'title', localizedMessage('interface:musicPlayer'));
-  const status = node(
-    'p',
-    'status',
-    localizedMessage('interface:openTheStudioToLoadYourLocalMusic'),
-    {
-      role: 'status',
-      'aria-live': 'polite',
-    },
-  );
+  const initialStatus = localizedMessage('interface:openTheStudioToLoadYourLocalMusic');
+  // The operation presenter owns the changing caption. Seed plain text so an
+  // older binding on the replaced host cannot overwrite its live status node.
+  const status = node('p', 'status', null, {
+    role: 'status',
+    'aria-live': 'polite',
+  });
+  status.textContent = t('interface:openTheStudioToLoadYourLocalMusic');
 
-  const initialStatus = status.textContent;
   const feedback = createOperationStatus(status);
-  let activity = null;
+  let activity = null,
+    currentStatus = initialStatus;
   function setStatus(message, state = 'ready') {
+    currentStatus = message;
     if (activity) activity.update({ message, progress: null });
     else feedback.begin({ message }).finish({ message, state });
   }
@@ -938,7 +939,7 @@ export function attachSoundtrackPanel({
             await audition.play();
             lease.finish({ message: t('interface:auditionPlaying') });
           } catch (error) {
-            lease.finish({ message: message(error), state: 'error' });
+            lease.finish({ message: () => message(error), state: 'error' });
             if (token === auditionToken) throw error;
           }
         }
@@ -2076,7 +2077,7 @@ export function attachSoundtrackPanel({
     return soundtrackPlaylists(draft);
   }
   function report(error) {
-    setStatus(
+    setStatus(() =>
       error?.name === 'AbortError'
         ? t('interface:operationCancelledTheSavedLibraryWasNotChangedByThis')
         : message(error),
@@ -2473,6 +2474,7 @@ export function attachSoundtrackPanel({
     busy = true;
     controller = new AbortController();
     const signal = controller.signal;
+    currentStatus = label;
     const lease = feedback.begin({
       message: label,
       isCurrent: () => !disposed && controller?.signal === signal,
@@ -2489,13 +2491,13 @@ export function attachSoundtrackPanel({
       cancelButton.focus({ preventScroll: true });
     try {
       await work(signal, lease);
-      lease.finish({ message: status.textContent });
+      lease.finish({ message: currentStatus });
       return true;
     } catch (error) {
       if (!disposed) {
         report(error);
         lease.finish({
-          message: status.textContent,
+          message: currentStatus,
           state: error?.name === 'AbortError' ? 'cancelled' : 'error',
         });
       }
@@ -2529,7 +2531,7 @@ export function attachSoundtrackPanel({
     try {
       onError(error);
     } catch {}
-    return t('interface:soundtrack.refreshFailed', { error: message(error) });
+    return () => t('interface:soundtrack.refreshFailed', { error: message(error) });
   }
   async function reload() {
     return task(t('interface:loadingSavedMusicAndLocalAudio'), async (signal) => {
@@ -2914,8 +2916,8 @@ export function attachSoundtrackPanel({
         queued: snapshot.pendingPlaylistId
           ? ` · ${t('interface:soundtrack.playlistUpdateQueued')}`
           : '',
-        notice: snapshot.notice ? ` · ${snapshot.notice}` : '',
-        error: snapshot.error ? ` · ${snapshot.error}` : '',
+        notice: snapshot.notice ? ` · ${message(snapshot.notice)}` : '',
+        error: snapshot.error ? ` · ${message(snapshot.error)}` : '',
         file: snapshot.track?.fileName
           ? ` · ${t('interface:soundtrack.fileName', { file: snapshot.track.fileName })}`
           : '',
