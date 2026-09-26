@@ -17,7 +17,7 @@ export async function runDeploymentPreflightCommand({
     pool = createPool(config.databaseUrl);
     const result = await runPreflight({
       pool,
-      blobRoot: config.blobRoot,
+      blobStorage: config.blobStorage,
       tusRoot: config.tusRoot,
     });
     stdout.write(`${JSON.stringify(result)}\n`);

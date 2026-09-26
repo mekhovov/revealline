@@ -9,6 +9,7 @@ import { MemoryBlobStore } from '../src/blob-store.mjs';
 import {
   checkDeploymentSchema,
   checkFfprobe,
+  checkS3Storage,
   checkWritableDirectory,
   createCachedDeploymentReadiness,
   DeploymentPreflightError,
@@ -84,6 +85,226 @@ test('storage readiness verifies durable round-trip bytes and removes its probe'
   assert.deepEqual(await readdir(root), ['retained']);
 
   await assert.rejects(checkWritableDirectory(path.join(root, 'retained')), /EEXIST|ENOTDIR/u);
+});
+
+test('S3 readiness verifies object round-trip, multipart admission, and cleanup', async () => {
+  const calls = [];
+  let destroyed = 0;
+  class FakeCommand {
+    constructor(input) {
+      this.input = input;
+      this.operation = this.constructor.operation;
+    }
+  }
+  const command = (operation) => {
+    class Command extends FakeCommand {}
+    Command.operation = operation;
+    return Command;
+  };
+  class FakeS3Client {
+    constructor(configuration) {
+      assert.deepEqual(configuration, {
+        region: 'eu-central-1',
+        endpoint: 'http://minio:9000/',
+        forcePathStyle: true,
+      });
+    }
+
+    async send(value) {
+      calls.push(value);
+      if (value.operation === 'get') return { Body: [calls[0].input.Body] };
+      if (value.operation === 'create-multipart')
+        return {
+          UploadId: `upload-${calls.filter((call) => call.operation === value.operation).length}`,
+        };
+      if (value.operation === 'upload-part') return { ETag: '"probe-etag"' };
+      return {};
+    }
+
+    destroy() {
+      destroyed += 1;
+    }
+  }
+  const result = await checkS3Storage(
+    {
+      driver: 's3',
+      bucket: 'creator-packages',
+      region: 'eu-central-1',
+      endpoint: 'http://minio:9000/',
+      forcePathStyle: true,
+    },
+    {
+      loadS3: async () => ({
+        S3Client: FakeS3Client,
+        PutObjectCommand: command('put'),
+        GetObjectCommand: command('get'),
+        DeleteObjectsCommand: command('delete-objects'),
+        CreateMultipartUploadCommand: command('create-multipart'),
+        UploadPartCommand: command('upload-part'),
+        CompleteMultipartUploadCommand: command('complete-multipart'),
+        AbortMultipartUploadCommand: command('abort-multipart'),
+      }),
+    },
+  );
+  assert.deepEqual(result, {
+    status: 'ready',
+    driver: 's3',
+    objectRoundTrip: true,
+    multipartRoundTrip: true,
+    multipartAbort: true,
+  });
+  assert.deepEqual(
+    calls.map(({ operation }) => operation),
+    [
+      'put',
+      'get',
+      'create-multipart',
+      'upload-part',
+      'complete-multipart',
+      'get',
+      'create-multipart',
+      'abort-multipart',
+      'delete-objects',
+    ],
+  );
+  assert.equal(calls[0].input.IfNoneMatch, '*');
+  assert.equal(calls[3].input.UploadId, 'upload-1');
+  assert.equal(calls[4].input.MultipartUpload.Parts[0].ETag, '"probe-etag"');
+  assert.equal(calls[7].input.UploadId, 'upload-2');
+  assert.deepEqual(calls[8].input.Delete.Objects, [
+    { Key: calls[0].input.Key },
+    { Key: calls[2].input.Key },
+  ]);
+  assert.equal(destroyed, 1);
+});
+
+test('S3 readiness fails closed and attempts every available cleanup', async () => {
+  const calls = [];
+  class FakeCommand {
+    constructor(input) {
+      this.input = input;
+      this.operation = this.constructor.operation;
+    }
+  }
+  const command = (operation) => {
+    class Command extends FakeCommand {}
+    Command.operation = operation;
+    return Command;
+  };
+  await assert.rejects(
+    checkS3Storage(
+      {
+        driver: 's3',
+        bucket: 'creator-packages',
+        region: 'eu-central-1',
+        endpoint: null,
+        forcePathStyle: false,
+      },
+      {
+        loadS3: async () => ({
+          S3Client: class {
+            async send(value) {
+              calls.push(value.operation);
+              if (value.operation === 'get') throw new Error('read refused');
+              return {};
+            }
+          },
+          PutObjectCommand: command('put'),
+          GetObjectCommand: command('get'),
+          DeleteObjectsCommand: command('delete-objects'),
+          CreateMultipartUploadCommand: command('create-multipart'),
+          UploadPartCommand: command('upload-part'),
+          CompleteMultipartUploadCommand: command('complete-multipart'),
+          AbortMultipartUploadCommand: command('abort-multipart'),
+        }),
+      },
+    ),
+    /read refused/u,
+  );
+  assert.deepEqual(calls, ['put', 'get', 'delete-objects']);
+});
+
+for (const failureOperation of ['upload-part', 'complete-multipart']) {
+  test(`S3 readiness fails closed when ${failureOperation} permission is unavailable`, async () => {
+    const calls = [];
+    let probeBytes;
+    class FakeCommand {
+      constructor(input) {
+        this.input = input;
+        this.operation = this.constructor.operation;
+      }
+    }
+    const command = (operation) => {
+      class Command extends FakeCommand {}
+      Command.operation = operation;
+      return Command;
+    };
+    await assert.rejects(
+      checkS3Storage(
+        {
+          driver: 's3',
+          bucket: 'creator-packages',
+          region: 'eu-central-1',
+          endpoint: null,
+          forcePathStyle: false,
+        },
+        {
+          loadS3: async () => ({
+            S3Client: class {
+              async send(value) {
+                calls.push(value.operation);
+                if (value.operation === failureOperation)
+                  throw new Error(`${failureOperation} refused`);
+                if (value.operation === 'get') return { Body: [probeBytes] };
+                if (value.operation === 'create-multipart') return { UploadId: 'upload-1' };
+                if (value.operation === 'upload-part') return { ETag: '"probe-etag"' };
+                return {};
+              }
+            },
+            PutObjectCommand: class extends command('put') {
+              constructor(input) {
+                super(input);
+                probeBytes = input.Body;
+              }
+            },
+            GetObjectCommand: command('get'),
+            DeleteObjectsCommand: command('delete-objects'),
+            CreateMultipartUploadCommand: command('create-multipart'),
+            UploadPartCommand: command('upload-part'),
+            CompleteMultipartUploadCommand: command('complete-multipart'),
+            AbortMultipartUploadCommand: command('abort-multipart'),
+          }),
+        },
+      ),
+      new RegExp(`${failureOperation} refused`, 'u'),
+    );
+    assert.ok(calls.includes('abort-multipart'));
+    assert.equal(calls.at(-1), 'delete-objects');
+  });
+}
+
+test('deployment preflight uses one S3 readiness result for package and tus storage', async () => {
+  let queryCount = 0;
+  let storageChecks = 0;
+  const result = await runDeploymentPreflight({
+    pool: { query: async () => ({ rows: queryCount++ === 0 ? rows() : columnRows() }) },
+    blobStorage: {
+      driver: 's3',
+      bucket: 'creator-packages',
+      region: 'eu-central-1',
+      endpoint: null,
+      forcePathStyle: false,
+    },
+    tusRoot: null,
+    checkS3: async () => {
+      storageChecks += 1;
+      return { status: 'ready', driver: 's3' };
+    },
+    runCommand: async () => ({ stdout: 'ffprobe version 9.0\n' }),
+  });
+  assert.equal(storageChecks, 1);
+  assert.deepEqual(result.checks.blobStorage, { status: 'ready', driver: 's3' });
+  assert.equal(result.checks.tusStorage, result.checks.blobStorage);
 });
 
 test('ffprobe readiness invokes only the bounded version inspection', async () => {

@@ -34,7 +34,7 @@ import {
   decodeCreatorPng,
   readCreatorPreview,
 } from '../src/validator.mjs';
-import { createCommunityTusServer } from '../src/tus-server.mjs';
+import { createCommunityTusServer, removeCompletedTusUpload } from '../src/tus-server.mjs';
 import { createCommunityAccountClient } from '../../../game/community/account.mjs';
 import { createCommunityClient } from '../../../game/community/client.mjs';
 import { createTusBrowserUpload } from '../../../game/community/tus-upload.mjs';
@@ -285,6 +285,7 @@ test('executable configuration refuses implicit development authentication', () 
     { requireAuth: false },
   );
   assert.equal(s3Config.blobRoot, null);
+  assert.equal(s3Config.tusRoot, null);
   assert.deepEqual(s3Config.blobStorage, {
     driver: 's3',
     bucket: 'creator-packages',
@@ -293,6 +294,20 @@ test('executable configuration refuses implicit development authentication', () 
     forcePathStyle: true,
     stagingRoot: '/tmp/revealline-package-stage',
   });
+  assert.throws(
+    () =>
+      readConfig(
+        {
+          COMMUNITY_BLOB_STORAGE: 's3',
+          COMMUNITY_S3_BUCKET: 'creator-packages',
+          COMMUNITY_S3_REGION: 'eu-central-1',
+          COMMUNITY_BLOB_STAGING_ROOT: '/tmp/stage',
+          COMMUNITY_TUS_ROOT: '/data/tus',
+        },
+        { requireAuth: false },
+      ),
+    /COMMUNITY_TUS_ROOT cannot be combined/u,
+  );
   assert.throws(
     () =>
       readConfig({
@@ -1280,6 +1295,32 @@ test('mounted tus server preserves interrupted offsets, owner isolation, and com
     'creator/alice',
   );
   assert.equal(browserAdmitted.status, 'uploaded');
+});
+
+test('completed tus cleanup uses the S3-safe operation when the datastore provides it', async () => {
+  const calls = [];
+  await removeCompletedTusUpload(
+    {
+      async removeCompleted(id) {
+        calls.push(['completed', id]);
+      },
+      async remove(id) {
+        calls.push(['ordinary', id]);
+      },
+    },
+    '0123456789abcdef0123456789abcdef',
+  );
+  assert.deepEqual(calls, [['completed', '0123456789abcdef0123456789abcdef']]);
+
+  await removeCompletedTusUpload(
+    {
+      async remove(id) {
+        calls.push(['ordinary', id]);
+      },
+    },
+    'disk-upload',
+  );
+  assert.deepEqual(calls.at(-1), ['ordinary', 'disk-upload']);
 });
 
 test('S3 boundary stages a verified stream and delegates exact immutable metadata', async (t) => {
