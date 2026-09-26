@@ -6,8 +6,9 @@ Status date: 2026-09-26
 
 - Public baseline: **v0.132.3**; v0.132.4 has an exact immutable production receipt and merged Pages
   selector, but its public-byte audit is still underway and it is not yet accepted delivery.
-- PR #652 has been admitted to the sole publisher's active v0.132.5 lane. It remains open; this
-  admission is not a merge or a public delivery.
+- PR #652 has merged to `main` at `ee015163de1131313436b0550892f3739e3c7a1a`. The sole publisher
+  still owns the v0.132.5 immutable release, Pages deployment and public acceptance; the merge is
+  not public delivery.
 - Parent candidate: draft PR #636 / `team-cultural-specialist-originals-1`. Its GitHub head is
   authoritative after guarded restacks.
 - Draft PR #642 remains the non-default balance candidate. Draft PR #650 wires its v0.149.0
@@ -15,8 +16,8 @@ Status date: 2026-09-26
   while the first cultural and all earlier editions remain directly selectable. Neither change is
   published yet.
 - The complete nineteen-branch cultural stack is rebased onto current `main`
-  `0cb51db92295a62fea99ee2ab215a79c6df06520`. PR #650 is at
-  `d6395a574303db923808707cde69e65c3ccfed98`; its test/documentation successor PR #651 is a clean
+  `ee015163de1131313436b0550892f3739e3c7a1a`. PR #650 is at
+  `da1604a3b2821bff106711129a7d32f7bf78bd8d`; its test/documentation successor PR #651 is a clean
   draft whose exact head is recorded by GitHub. Avoid embedding PR #651's changing self-hash in
   this document.
 
