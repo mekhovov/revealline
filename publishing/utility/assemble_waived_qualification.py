@@ -166,7 +166,12 @@ def family(run, jobs, workflow, event, commit):
                  run.get('path') == FASTLINE_WORKFLOW and job.get('name') == 'inspect-artifact'),
                 'Job identity/result differs')
     if run.get('path') == FASTLINE_WORKFLOW:
-        return [{**job, 'name': str(job.get('name', '')).removeprefix('qualify / ')} for job in rows]
+        # The reusable workflow's alternate inspection branch is not the Fastline
+        # inspection authority. Keep its qualified name so a skipped alternate
+        # cannot collide with the successful top-level inspect-artifact job.
+        return [{**job, 'name': (str(job.get('name', '')) if job.get('name') == 'qualify / inspect-artifact'
+                                 else str(job.get('name', '')).removeprefix('qualify / '))}
+                for job in rows]
     return rows
 
 
