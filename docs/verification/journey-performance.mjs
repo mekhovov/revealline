@@ -73,6 +73,36 @@ document.querySelector('#load').addEventListener('click', () => {
       });
       return;
     }
+    const finite = (value) => (Number.isFinite(value) ? value : null);
+    const browserSnapshot = () => {
+      const nav = win.performance.getEntriesByType('navigation')[0];
+      const paints = Object.fromEntries(
+        win.performance.getEntriesByType('paint').map((entry) => [entry.name, entry.startTime]),
+      );
+      const memory = win.performance.memory;
+      return {
+        navigation: nav
+          ? {
+              responseStartMs: finite(nav.responseStart),
+              domInteractiveMs: finite(nav.domInteractive),
+              domContentLoadedMs: finite(nav.domContentLoadedEventEnd),
+              loadEventEndMs: finite(nav.loadEventEnd),
+            }
+          : null,
+        paint: {
+          firstPaintMs: finite(paints['first-paint']),
+          firstContentfulPaintMs: finite(paints['first-contentful-paint']),
+        },
+        jsHeap: memory
+          ? {
+              supported: true,
+              usedBytes: finite(memory.usedJSHeapSize),
+              totalBytes: finite(memory.totalJSHeapSize),
+              limitBytes: finite(memory.jsHeapSizeLimit),
+            }
+          : { supported: false },
+      };
+    };
     let pending = null,
       raf,
       attemptTimer,
@@ -233,6 +263,7 @@ document.querySelector('#load').addEventListener('click', () => {
                       height: win.innerHeight,
                       dpr: win.devicePixelRatio,
                     },
+                    browserAtReady: browserSnapshot(),
                   }
                 : {}),
             });
@@ -244,14 +275,11 @@ document.querySelector('#load').addEventListener('click', () => {
       raf = win.requestAnimationFrame(tick);
     };
     raf = win.requestAnimationFrame(tick);
-    const nav = win.performance.getEntriesByType('navigation')[0];
-    const paint = win.performance.getEntriesByName('first-contentful-paint')[0];
     report({
       action: 'Navigation timing',
       mode,
       outcome: 'browser entries; no device qualification',
-      domContentLoadedMs: nav?.domContentLoadedEventEnd ?? null,
-      firstContentfulPaintMs: paint?.startTime ?? null,
+      browserAtFrameLoad: browserSnapshot(),
       resourcesAtFrameLoad: win.performance.getEntriesByType('resource').length,
     });
     dispose = () => {
