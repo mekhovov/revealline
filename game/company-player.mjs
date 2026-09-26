@@ -898,18 +898,39 @@ async function main() {
   if (standalone) {
     $('prepare-offline').hidden = false;
     $('offline-status').textContent = 'Download and verify this edition for offline play.';
-    $('prepare-offline').onclick = guard(async () => {
-      const onStatus = (value) => {
-        $('offline-status').textContent = typeof value === 'string' ? value : JSON.stringify(value);
-      };
-      await prepareEditionOffline({ onStatus });
-      await verifyEditionOffline({ onStatus });
-      $('offline-status').textContent = 'This edition is verified for offline play.';
-    });
     const install = node('button', 'Use this edition in the installed app');
+    install.disabled = true;
+    $('prepare-offline').onclick = guard(async () => {
+      $('prepare-offline').disabled = true;
+      install.disabled = true;
+      try {
+        await prepareEditionOffline({
+          onStatus: (value) => {
+            $('offline-status').textContent =
+              value.status === 'downloading'
+                ? 'Downloading and checking this edition…'
+                : 'Verifying the saved files…';
+          },
+        });
+        await verifyEditionOffline();
+        $('offline-status').textContent = 'This edition is verified for offline play.';
+        install.disabled = false;
+      } catch (error) {
+        $('offline-status').textContent = error.message;
+        throw error;
+      } finally {
+        $('prepare-offline').disabled = false;
+      }
+    });
     install.onclick = guard(async () => {
-      await selectPreparedEdition();
-      report('Installed app now opens this verified edition. The previous release is kept.');
+      try {
+        await selectPreparedEdition();
+        $('offline-status').textContent =
+          'Your installed launcher will open this edition. The previous release is kept.';
+      } catch (error) {
+        $('offline-status').textContent = error.message;
+        throw error;
+      }
     });
     $('prepare-offline').after(install);
   }
