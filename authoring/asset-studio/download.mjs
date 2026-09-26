@@ -17,9 +17,12 @@ export function createStudioDownload({ document, target, urls = URL }) {
     link.className = 'file-button';
     link.dataset.studioHost = 'control';
     link.download = filename;
-    localizedText(link, () =>`Download ${filename}`);
+    localizedText(link, () => t('tools:studio.download.file', { filename }));
     const note = document.createElement('span');
-    localizedText(note, () =>("" + t("tools:preparedFileReadyIfTheAutomaticDownloadDidNotStart") + " "));
+    localizedText(
+      note,
+      () => '' + t('tools:preparedFileReadyIfTheAutomaticDownloadDidNotStart') + ' ',
+    );
     // Allocate before releasing the last usable file: failed preparation keeps it.
     const old = current;
     current = url;
