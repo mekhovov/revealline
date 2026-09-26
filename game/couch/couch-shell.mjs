@@ -78,6 +78,10 @@ export function createCouchShell({
     removers = [],
     settings = attachSettingsPanels({ root: $('race-options-panel'), document: doc });
   const authoredDestinations = authoredModeDestinations('versus', authoredRoute);
+  const secondaryDestinations = Object.freeze({
+    about: $('race-more-about').getAttribute('href'),
+    releases: $('race-release-explorer').href || $('race-release-explorer').getAttribute('href'),
+  });
   const isJourney = isAuthoredJourneyRouteId(authoredRoute);
   const libraryHref = isJourney ? '?journey=legacy' : `?journey=${DEFAULT_JOURNEY_ROUTES.versus}`;
   const libraryLabel = () => (isJourney ? t('interface:legacyLibrary') : t('interface:newJourney'));
@@ -278,6 +282,12 @@ export function createCouchShell({
   function back() {
     departure = null;
     if (screen === 'main') {
+      const more = $('race-more');
+      if (more.open) {
+        more.open = false;
+        $('race-more-toggle').focus({ preventScroll: true });
+        return;
+      }
       onTransition({ from: screen, to: screen, back: true });
       return focus();
     }
@@ -323,6 +333,7 @@ export function createCouchShell({
     (kind === 'solo' && routeId === 'legacy' && '../?journey=legacy') ||
     (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
     (kind === 'team' && teamRouteId && `relay-rescue.html?journey=${teamRouteId}&return=versus`) ||
+    secondaryDestinations[kind] ||
     (isJourney && authoredDestinations?.[kind]) ||
     authoredDestinations?.[kind] ||
     DESTINATIONS[kind];
@@ -402,21 +413,27 @@ export function createCouchShell({
         ? t('interface:couch.openLibrary', { library: libraryLabel() })
         : kind === 'team'
           ? t('interface:goToCouchTeam')
-          : t('interface:returnToSolo4'),
+          : kind === 'about'
+            ? t('common:navigation.aboutCredits')
+            : kind === 'releases'
+              ? t('common:navigation.releases')
+              : t('interface:returnToSolo4'),
     );
     setText('race-leave-copy', () =>
-      isJourney && kind !== 'library'
-        ? kind === 'team'
-          ? t('interface:couch.leaveAttemptForTeam')
-          : t('interface:couch.leaveAttemptForSolo')
-        : t('interface:couch.leaveAttempt'),
+      isJourney && kind === 'team'
+        ? t('interface:couch.leaveAttemptForTeam')
+        : isJourney && kind === 'solo'
+          ? t('interface:couch.leaveAttemptForSolo')
+          : t('interface:couch.leaveAttempt'),
     );
     setText('race-leave', () =>
       kind === 'library'
         ? t('interface:couch.discardOpenLibrary', { library: libraryLabel() })
         : kind === 'team'
           ? t('interface:discardAndGoToTeam')
-          : t('interface:discardAndReturnToSolo'),
+          : ['about', 'releases'].includes(kind)
+            ? t('interface:discardAndLeave')
+            : t('interface:discardAndReturnToSolo'),
     );
     $('race-leave').setAttribute(
       'href',
@@ -449,6 +466,9 @@ export function createCouchShell({
   for (const [id, kind] of [
     ['race-solo-return', 'solo'],
     ['race-home', 'solo'],
+    ['race-more-home', 'solo'],
+    ['race-more-about', 'about'],
+    ['race-release-explorer', 'releases'],
     ['race-coop', 'team'],
     ['race-library-switch', 'library'],
   ])

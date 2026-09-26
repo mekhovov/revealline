@@ -30,8 +30,10 @@ timeout or contract mismatch.
 After a production-like HTTPS deployment exists, `npm run acceptance:tus-deployed` performs that
 same interruption against the deployed tus endpoint, resumes the same remote upload, waits for the
 real validator, verifies the exact downloaded package, and administrator-unlists the disposable
-edition. Follow [the deployed tus acceptance procedure](deployed-tus-acceptance.md); the command is
-destructive and requires explicit opt-in plus short-lived creator and administrator sessions.
+edition. Before mutation it verifies the exact release, source and validator identity plus liveness
+and dependency readiness. Follow [the deployed tus acceptance procedure](deployed-tus-acceptance.md);
+the command is destructive and requires explicit opt-in plus short-lived creator and administrator
+sessions.
 
 For the container development stack:
 

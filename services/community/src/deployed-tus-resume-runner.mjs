@@ -61,6 +61,11 @@ try {
     baseURL: process.env.COMMUNITY_TUS_ACCEPTANCE_BASE_URL,
     namespace,
     optIn: process.env.COMMUNITY_TUS_ACCEPTANCE_ALLOW_DESTRUCTIVE,
+    expectedRelease: {
+      version: process.env.COMMUNITY_TUS_ACCEPTANCE_EXPECTED_VERSION,
+      sourceRevision: process.env.COMMUNITY_TUS_ACCEPTANCE_EXPECTED_SOURCE_REVISION,
+      validatorVersion: process.env.COMMUNITY_TUS_ACCEPTANCE_EXPECTED_VALIDATOR_VERSION,
+    },
     auth: {
       creator: accountHeaders('COMMUNITY_TUS_ACCEPTANCE_CREATOR'),
       admin: accountHeaders('COMMUNITY_TUS_ACCEPTANCE_ADMIN'),
