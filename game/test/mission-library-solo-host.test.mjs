@@ -555,7 +555,7 @@ for (const collection of ['Journey', 'Classic'])
     assert.equal(destination.pathname, '/game/couch/relay-rescue.html');
     assert.equal(
       destination.searchParams.get('journey'),
-      collection === 'Journey' ? 'team-complete-specialist-originals-1' : 'legacy',
+      collection === 'Journey' ? 'team-cultural-specialist-originals-1' : 'legacy',
     );
     assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
     assert.deepEqual(p.errors, []);

@@ -132,6 +132,10 @@ async function currentJourneySources(root) {
     PRESSURE_DIFFICULTY_CATALOG,
   ]);
   const teamFactories = {
+    'team-cultural-specialist-originals-1': [
+      'team-cultural-specialist-originals.mjs',
+      'createTeamCulturalSpecialistOriginalCandidates',
+    ],
     'team-complete-specialist-originals-1': [
       'team-complete-specialist-originals.mjs',
       'createTeamCompleteSpecialistOriginalCandidates',
