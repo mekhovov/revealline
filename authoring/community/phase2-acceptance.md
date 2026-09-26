@@ -1,6 +1,9 @@
-# Phase 2 acceptance — implementation candidate
+# Phase 2 acceptance — integrated source record
 
-Status: implementation is isolated on `codex/creator-phase2-integration`. It has no allocated release version and must not be advertised as released before Phase 1 publication, Phase 2 browser acceptance, PR review, immutable freeze, release and public Pages verification finish.
+Status: implemented and merged through PR
+[#465](https://github.com/mekhovov/revealline/pull/465). The combined creator feature is assigned
+to `v0.141.0` in PR [#564](https://github.com/mekhovov/revealline/pull/564). This record preserves
+the Phase 2 evidence; the browser cases below and the combined immutable release remain open.
 
 ## Automated evidence completed
 
@@ -37,6 +40,7 @@ Status: implementation is isolated on `codex/creator-phase2-integration`. It has
 - Reload an unfinished middle mission and verify every earned picture remains bound after another reload. Install a changed edition alongside it and confirm attempts and rewards do not migrate.
 - Inspect a duplicate-byte split export to confirm payload deduplication in the actual file. The existing two- and 12-picture inspections confirm exact derivative closure, source-original separation and zero trailing bytes; automated tests cover unrelated-media and player-progress exclusion.
 - Exercise failed installation recovery and concurrent-tab stale-state refusal. Browser quota estimates remain advisory.
-- Run the repository's current hosted gates, review and merge the Phase 2 PR, freeze the next unused version, inspect and upload the frozen artifact, publish its release and selector, then verify the public version and artifact hashes.
+- Complete the combined PR's hosted gates, freeze and inspect the assigned `v0.141.0` artifact,
+  publish its release and selector, then verify the public version and artifact hashes.
 
 The user directed this delivery to use the Codex built-in browser. Firefox, Safari and physical mobile remain untested until separately qualified and must not be inferred from this record.
