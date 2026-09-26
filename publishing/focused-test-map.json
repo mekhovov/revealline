@@ -2,6 +2,26 @@
   "format": "revealline-focused-test-map.v1",
   "categories": [
     {
+      "id": "content-artwork-preparation",
+      "pathPatterns": [
+        "^game/content-design/(assets|attempt|limits|picture)\\.mjs$",
+        "^game/test/(content-assets|content-attempt|content-picture|candidate-team-pictures)\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "content-artwork-preparation",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/content-assets.test.mjs",
+            "game/test/content-attempt.test.mjs",
+            "game/test/content-picture.test.mjs",
+            "game/test/candidate-team-pictures.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
       "id": "team-picture-bindings",
       "pathPatterns": [
         "^game/couch/coop-(picture-bindings|presentation)\\.mjs$",
