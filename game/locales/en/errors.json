@@ -587,5 +587,18 @@
   "content.stableClassIds": "theme.classBodies keys must be non-reserved stable class IDs.",
   "content.stableBodyPresetId": "{{path}} must be a non-reserved stable body preset ID.",
   "content.registeredValue": "{{path}} is not registered.",
-  "content.hexColor": "{{path}} must use #rrggbb."
+  "content.hexColor": "{{path}} must use #rrggbb.",
+  "content.uint32": "{{path}} must be an unsigned 32-bit integer.",
+  "content.oneOf": "{{path}} must be one of: {{values}}.",
+  "content.booleanRequired": "{{path}} must be a boolean.",
+  "content.sectionError": "{{section}}: {{error}}",
+  "content.imageDescriptor": "{{path}} must be an image descriptor.",
+  "content.scenario.supportedFormat": "Expected a supported xonix-playground.v1..v9 format.",
+  "content.scenario.simulationVersionMatch": "Scenario and level simulation versions must match.",
+  "content.scenario.masteryRequired": "scenario.masteryDefinition is required; use null for no optional goal.",
+  "content.scenario.classicMasteryUnsupported": "Classic scenarios require masteryDefinition:null; optional goals are not supported by this ruleset.",
+  "content.scenario.wideMasteryUnsupported": "Wide scenarios require masteryDefinition:null; optional goals are not supported by this ruleset.",
+  "content.scenario.encounterMasteryUnsupported": "Encounter scenarios require masteryDefinition:null; optional goals are not supported by this ruleset.",
+  "content.scenario.combinedDecodedArtworkBudget": "Combined decoded artwork exceeds the 32 megapixel budget.",
+  "content.scenario.playerArtworkAnchorsWarning": "Player artwork keeps the selected body’s existing rotor and attachment anchors. Check alignment; artwork does not change collision geometry or abilities."
 }
