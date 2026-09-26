@@ -1,8 +1,8 @@
 {
   "format": "revealline-pages-controller.v1",
-  "currentVersion": "v0.141.4",
-  "catalogSha256": "116f9f6262b9748c52bf3ca2e3b1c490bf5511c2a17b0f626eba43cbaccf83f1",
-  "allocationSha256": "7d36eae8210db0f80ff7e2bd4916ebc785153ad6554147429d9e5c7c42c4c13f",
+  "currentVersion": "v0.141.5",
+  "catalogSha256": "021f5a5b20fe8e4be4be77ced326aa11f310a5e2a75d5fd3d5fc6f0500735659",
+  "allocationSha256": "67cfa53022d99201c5b9173e74555e60ba1b6612303298f0737ed058e69e493d",
   "admissions": [
     {
       "id": "archive-01",
@@ -10252,12 +10252,59 @@
           "kind": "browser"
         }
       ]
+    },
+    {
+      "id": "archive-98",
+      "infrastructureCommit": "91f3f76fe347fde44dd0ec6c854c272182423219",
+      "deploymentId": 6683228670,
+      "evidence": [
+        {
+          "path": "evidence/archive-98-v01414/expected-inventory.json",
+          "sha256": "1a61a082505eea0836b71ab7446aa41cd89cea1cb0445183aed2c8f107bee67a",
+          "kind": "inventory"
+        },
+        {
+          "path": "evidence/archive-98-v01414/http-report.json",
+          "sha256": "fabd4402ac7781d0491248103b9d9def661aeae1c924a2e19d8203499ea6c0c9",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-98-v01414/browser-admission.json",
+          "sha256": "f33e528cf1a6d1e1c15e80d70f06d5de4ba87dcfe2c889ca7e084131acdce7f8",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-98-v01414/public-acceptance.json",
+          "sha256": "cecb83cf912f82ea7b9894fca6095c48b69b42ffbdc2b61ac943747bee59f5fc",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-98-v01414/archive-receipt.json",
+          "sha256": "d9747f0085e3e18db29ca6674c7c0f20c7f13cdd8756f35a4f7fbb62013d7334",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-98-v01414/zip-receipt-v0.141.4.json",
+          "sha256": "43ee27ce0074621cb256f00233f8a7ca30914f96cf4c44de1a562f0f1637353c",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-98-v01414/controller-http-admission.json",
+          "sha256": "761a156b25f9c2b98fcc2f672463a16443c54674b90065fd31419f82a58e8b6d",
+          "kind": "http"
+        },
+        {
+          "path": "evidence/archive-98-v01414/controller-browser-admission.json",
+          "sha256": "34e98fbe2a6bf7aa349a96af52f07dd856832a425da88e85e79c98da70541336",
+          "kind": "browser"
+        }
+      ]
     }
   ],
   "deploymentEnabled": true,
   "currentSourceQualification": {
-    "path": "evidence/current-v01414/source-qualification.json",
-    "sha256": "da60fdf9d5444ff6edc7861674dfac499ca07f9f247b06296b7f97ae86fa6bdf"
+    "path": "evidence/current-v01415/source-qualification.json",
+    "sha256": "4f30067731554a1ccecdc7c6c4c2175ec38e8eb9ee07a6ae3c3e406d6984dd0d"
   },
   "retainedReleaseCount": 5,
   "testingRoutes": {}
