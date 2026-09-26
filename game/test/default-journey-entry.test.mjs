@@ -24,6 +24,7 @@ for (const mode of ['solo', 'versus', 'team']) {
       'team-spatial-originals-1',
       'team-trail-impact-originals-1',
       'team-complete-specialist-originals-1',
+      'team-cultural-specialist-originals-1',
     ])
       assert.equal(resolve(`journey=${encodeURIComponent(route)}`), route);
     assert.equal(resolve('journey=opening&journey=authored'), mode === 'team' ? null : 'opening');
