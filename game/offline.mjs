@@ -100,6 +100,7 @@ export function offlineAvailability({
     version: config.version,
     buildId: config.buildId,
     scope: config.scope,
+    packageConsent: config.packageConsent === true,
     optionalPacks: config.optionalPacks ?? [],
     optionalArtwork: config.optionalArtwork ?? null,
     ...(optionalNote(config) ? { note: optionalNote(config).trim() } : {}),

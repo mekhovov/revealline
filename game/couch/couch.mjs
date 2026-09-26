@@ -96,6 +96,12 @@ import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 import { settingsTabOwnsKey } from '../ui/settings-panels.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
+import {
+  attachInstallOfflinePanel,
+  guardInstallOfflineBlur,
+  installOfflineOwnsElement,
+} from '../ui/install-offline-panel.mjs';
+import { createOfflineDownloadAccess } from '../offline-download-access.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { soloCompatibleMusicContext } from './couch-music-context.mjs';
 import { campaignKey } from '../library.mjs';
@@ -120,6 +126,7 @@ const initialFocusChoice = (event) => {
 const initialFocusLost = () => {
   initialFocusPending = false;
 };
+const initialWindowBlur = guardInstallOfflineBlur(initialFocusLost);
 const initialVisibility = () => {
   if (document.hidden) initialFocusLost();
 };
@@ -301,7 +308,7 @@ const json = async (url) => {
 try {
   document.addEventListener('focusin', initialFocusChoice, true);
   document.addEventListener('visibilitychange', initialVisibility);
-  window.addEventListener('blur', initialFocusLost);
+  window.addEventListener('blur', initialWindowBlur);
   window.addEventListener('pagehide', initialFocusLost);
   const [campaign, registry, themes, presets] = await Promise.all([
     json('../content/campaign.json'),
@@ -882,15 +889,16 @@ try {
       shifting = false,
       pendingTarget = null;
     const observe = (event) => {
+      if (installOfflineOwnsElement(event.target)) return;
       if (!shifting && ![origin, document.body, document.documentElement].includes(event.target))
         moved = true;
     };
     const hidden = () => {
       if (!foreground()) moved = true;
     };
-    const blurred = () => {
+    const blurred = guardInstallOfflineBlur(() => {
       moved = true;
-    };
+    });
     const owns = (current) =>
       current &&
       !disposed &&
@@ -1168,7 +1176,7 @@ try {
       p.skipCelebration?.();
     });
   }
-  function loadPreparedPicture(entry) {
+  function loadPreparedPicture(entry, { prompt = false } = {}) {
     contentReady = false;
     contentBusy = true;
     contentError = null;
@@ -1194,6 +1202,14 @@ try {
       let nextActors = null,
         adoptedActors = false;
       try {
+        if (candidateJourney?.owns(entry))
+          await gameplayDownloads.ensureMission(
+            { routeId: authoredRoute.id, missionId: entry.level.id, mode: 'versus' },
+            { signal: controller.signal, prompt },
+          );
+        else if (staticEntry)
+          await gameplayDownloads.ensureClassic(null, { signal: controller.signal, prompt });
+        if (!current()) return false;
         const image = await owner.select(entry, {
           themeId: theme.id,
           raceId: ticket,
@@ -1366,6 +1382,17 @@ try {
       ownsNextActors = false,
       prepared = null;
     try {
+      if (candidateJourney?.owns(entry))
+        await gameplayDownloads.ensureMission(
+          { routeId: authoredRoute.id, missionId: entry.level.id, mode: 'versus' },
+          { signal: controller.signal, prompt: !configured },
+        );
+      else if (isStatic)
+        await gameplayDownloads.ensureClassic(null, {
+          signal: controller.signal,
+          prompt: !configured,
+        });
+      if (!current()) return null;
       lease = await owner.stage(entry, {
         themeId: attempt.recipe.theme.id,
         raceId: attempt.raceId,
@@ -1735,7 +1762,7 @@ try {
     // Retry the same untouched attempt and picture choice; only setup changes
     // establish a new race identity and may resolve a new assignment.
     const controller = contentController,
-      ready = loadPreparedPicture(entry);
+      ready = loadPreparedPicture(entry, { prompt: true });
     restoreFocus.pending(
       $('race-picture-cancel'),
       controller === contentController && !controller.signal.aborted,
@@ -2803,6 +2830,7 @@ try {
             ? { state: 'ready' }
             : { state: 'unavailable', reason: libraryInventory.state().reason },
         prepareClassic: async (row, { signal }) => {
+          await gameplayDownloads.ensureClassic(row.packId, { signal });
           if (!libraryInventory.state().ready) throw new Error(libraryInventory.state().reason);
           const epoch = libraryOpenEpoch;
           let installed;
@@ -3182,6 +3210,25 @@ try {
     return openMissionLibrary($('race-chapters'));
   };
 
+  const installOfflinePanel = $('race-offline')
+    ? attachInstallOfflinePanel({
+        document,
+        window,
+        downloadsURL: new URL('../downloads.html', import.meta.url),
+        onOpen: () => {
+          if (match.status === 'running') pause();
+        },
+        canActivate: () => match.status === 'ready' && !contentBusy,
+        onStatus: (message) => {
+          if ($('race-offline-status')) $('race-offline-status').textContent = message;
+        },
+      })
+    : null;
+  const gameplayDownloads = createOfflineDownloadAccess({
+    requestPackage: (request) => installOfflinePanel.requestPackage(request),
+  });
+  if ($('race-offline')) $('race-offline').onclick = () => installOfflinePanel.open();
+
   function couchScope() {
     if (music?.root()) return 'couch-music-library';
     const modal = [...document.querySelectorAll('dialog[open]')].at(-1);
@@ -3364,6 +3411,10 @@ try {
     confirmPressed: () => menuRouter.menuConfirmPressed(),
   });
   const menuIds = new Set([
+    'race-offline',
+    'install-offline-close',
+    'install-offline-install',
+    'install-offline-downloads',
     'race-coop',
     'race-start',
     'race-retry',
@@ -3440,23 +3491,27 @@ try {
     onTabBoundary: () => playgroundTabBoundary({ window, suspend }),
     getScope: couchScope,
     getRoot: () =>
-      music?.root() ||
-      [...document.querySelectorAll('dialog[open]')].at(-1) ||
-      // Find/Next sit beside the main panel for Legacy and installed missions
-      // too. The existing allowlist excludes all live-board controls.
-      (shell.scope() === 'main' ? $('couch-app') : shell.root()),
+      installOfflinePanel?.frameFocused()
+        ? null
+        : music?.root() ||
+          [...document.querySelectorAll('dialog[open]')].at(-1) ||
+          // Find/Next sit beside the main panel for Legacy and installed missions
+          // too. The existing allowlist excludes all live-board controls.
+          (shell.scope() === 'main' ? $('couch-app') : shell.root()),
     getDefaultFocus: () =>
-      libraryDecision
-        ? $('race-library-stay')
-        : music?.root()
-          ? music.primary()
-          : journeyPictures?.root()
-            ? journeyPictures.primary()
-            : $('journey-backup')?.open
-              ? $('journey-backup-export')
-              : $('journey-chooser')?.open
-                ? journeyChooser?.primary() || $('journey-search')
-                : shell.primary(),
+      installOfflinePanel?.isOpen()
+        ? $('install-offline-downloads')
+        : libraryDecision
+          ? $('race-library-stay')
+          : music?.root()
+            ? music.primary()
+            : journeyPictures?.root()
+              ? journeyPictures.primary()
+              : $('journey-backup')?.open
+                ? $('journey-backup-export')
+                : $('journey-chooser')?.open
+                  ? journeyChooser?.primary() || $('journey-search')
+                  : shell.primary(),
     keyboard: true,
     nativeReadingScroll: true,
     ownsKeyboardEvent: (event) =>
@@ -3479,29 +3534,33 @@ try {
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     activateControl: (element) => controllerConfirmGuard.activate(element),
     onBack: () =>
-      libraryDecision
-        ? libraryDecision.finish(false)
-        : music?.root()
-          ? music.back()
-          : journeyPictures?.root()
-            ? journeyPictures.close()
-            : $('journey-backup')?.open
-              ? $('journey-backup-back').click()
-              : $('journey-chooser')?.open
-                ? journeyChooser.close()
-                : shell.back(),
+      installOfflinePanel?.isOpen()
+        ? installOfflinePanel.close()
+        : libraryDecision
+          ? libraryDecision.finish(false)
+          : music?.root()
+            ? music.back()
+            : journeyPictures?.root()
+              ? journeyPictures.close()
+              : $('journey-backup')?.open
+                ? $('journey-backup-back').click()
+                : $('journey-chooser')?.open
+                  ? journeyChooser.close()
+                  : shell.back(),
     onMenu: () =>
-      libraryDecision
-        ? libraryDecision.finish(false)
-        : music?.root()
-          ? music.back()
-          : journeyPictures?.root()
-            ? journeyPictures.close()
-            : $('journey-backup')?.open
-              ? $('journey-backup-back').click()
-              : $('journey-chooser')?.open
-                ? journeyChooser.close()
-                : shell.back(),
+      installOfflinePanel?.isOpen()
+        ? installOfflinePanel.close()
+        : libraryDecision
+          ? libraryDecision.finish(false)
+          : music?.root()
+            ? music.back()
+            : journeyPictures?.root()
+              ? journeyPictures.close()
+              : $('journey-backup')?.open
+                ? $('journey-backup-back').click()
+                : $('journey-chooser')?.open
+                  ? journeyChooser.close()
+                  : shell.back(),
     onHint: (message, context) => {
       if (
         context?.kind === 'reading' &&
@@ -3630,6 +3689,7 @@ try {
   const pagehide = (event) => {
     suspend();
     if (event.persisted) return;
+    installOfflinePanel?.dispose();
     contentController?.abort();
     disposed = true;
     actorLease?.release();
@@ -3653,14 +3713,15 @@ try {
     shell.destroy();
     stopNative();
     cancelAnimationFrame(frameId);
-    window.removeEventListener('blur', suspend);
+    window.removeEventListener('blur', windowBlur);
     window.removeEventListener('gamepaddisconnected', disconnected);
     window.removeEventListener('pagehide', pagehide);
     document.removeEventListener('visibilitychange', hidden);
     document.removeEventListener('pointerdown', nativeMenuInput, true);
     document.removeEventListener('keydown', nativeMenuInput, true);
   };
-  window.addEventListener('blur', suspend);
+  const windowBlur = guardInstallOfflineBlur(suspend);
+  window.addEventListener('blur', windowBlur);
   window.addEventListener('gamepaddisconnected', disconnected);
   window.addEventListener('pagehide', pagehide);
   document.addEventListener('visibilitychange', hidden);
@@ -4029,7 +4090,7 @@ try {
   initialFocusPending = false;
   document.removeEventListener('focusin', initialFocusChoice, true);
   document.removeEventListener('visibilitychange', initialVisibility);
-  window.removeEventListener('blur', initialFocusLost);
+  window.removeEventListener('blur', initialWindowBlur);
   window.removeEventListener('pagehide', initialFocusLost);
   finishBoot();
 }

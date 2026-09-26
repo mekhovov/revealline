@@ -7,6 +7,7 @@ import { prepareChapterFocus } from './chapter-focus-clearance.mjs';
 import { mountModeChoices } from './mode-choice.mjs';
 import { WORKSHOP_TOOLS } from './workshop-return.mjs';
 import { releaseExplorerHref } from '../release-explorer.mjs';
+import { guardInstallOfflineBlur } from './install-offline-panel.mjs';
 
 /** Game navigation owns presentation only; the host owns pause, save and start. */
 export function attachGameShell({
@@ -707,7 +708,8 @@ export function attachGameShell({
   };
   const titleWindow =
     typeof doc.defaultView?.addEventListener === 'function' ? doc.defaultView : globalThis.window;
-  titleWindow?.addEventListener('blur', suspendedTitle);
+  const titleWindowBlur = guardInstallOfflineBlur(suspendedTitle, doc);
+  titleWindow?.addEventListener('blur', titleWindowBlur);
   titleWindow?.addEventListener('pagehide', suspendedTitle);
   doc.addEventListener('visibilitychange', hiddenTitle);
   home.addEventListener('close', titleClosed);
@@ -757,7 +759,7 @@ export function attachGameShell({
         const opener = $(`shell-title-${kind}`);
         if (opener) opener.onclick = null;
       }
-      titleWindow?.removeEventListener('blur', suspendedTitle);
+      titleWindow?.removeEventListener('blur', titleWindowBlur);
       titleWindow?.removeEventListener('pagehide', suspendedTitle);
       doc.removeEventListener('visibilitychange', hiddenTitle);
       home.removeEventListener('close', titleClosed);

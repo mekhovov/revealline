@@ -133,6 +133,9 @@ export async function activateInstalledEdition(
     locks = globalThis.navigator?.locks,
     readAsset,
     restorePrevious = false,
+    // A trusted embedded host may already hold the exact branded profile lease.
+    // The host checks its safe menu boundary and lease; an iframe receives no lease.
+    ownsWriter = () => false,
   } = {},
 ) {
   const candidate = validateInstalledEdition(value, locationRef);
@@ -141,6 +144,14 @@ export async function activateInstalledEdition(
   return locks.request('revealline.installed-app.switch', async () => {
     const state = readInstalledState(storage),
       active = state.active;
+    const borrowed = new Set();
+    const assertOwnership = () => {
+      for (const key of borrowed)
+        if (!ownsWriter(key))
+          throw new Error(
+            'The game stopped owning its save profile. Your working edition is kept.',
+          );
+    };
     const switchEdition = async () => {
       for (const version of new Set([active?.version, candidate.version].filter(Boolean))) {
         const key = profile(version);
@@ -172,6 +183,7 @@ export async function activateInstalledEdition(
               'Edition downloaded. Open this edition’s Game data → Flight library → Bring progress from an earlier release. Review and copy the previous edition there, then return here to switch. An incompatible saved flight or a busy profile leaves your working edition selected.',
           };
       }
+      assertOwnership();
       storage.setItem(
         INSTALLED_STATE_KEY,
         JSON.stringify({
@@ -189,16 +201,21 @@ export async function activateInstalledEdition(
       };
     };
     const versions = [...new Set([active?.version, candidate.version].filter(Boolean))].sort();
-    const acquire = (index) =>
-      index === versions.length
-        ? switchEdition()
-        : locks.request(`${profile(versions[index])}.writer`, { ifAvailable: true }, (lock) => {
-            if (!lock)
-              throw new Error(
-                'Close the game window that owns this profile, then switch editions. No live game was reloaded.',
-              );
-            return acquire(index + 1);
-          });
+    const acquire = (index) => {
+      if (index === versions.length) return switchEdition();
+      const key = `${profile(versions[index])}.writer`;
+      if (ownsWriter(key)) {
+        borrowed.add(key);
+        return acquire(index + 1);
+      }
+      return locks.request(key, { ifAvailable: true }, (lock) => {
+        if (!lock)
+          throw new Error(
+            'Close the game window that owns this profile, then switch editions. No live game was reloaded.',
+          );
+        return acquire(index + 1);
+      });
+    };
     return acquire(0);
   });
 }
@@ -223,4 +240,126 @@ export function invalidateInstalledMigration(storage = globalThis.localStorage) 
   const state = readInstalledState(storage);
   if (state.migration)
     storage.setItem(INSTALLED_STATE_KEY, JSON.stringify({ ...state, migration: null }));
+}
+
+let launcherRequest = 0;
+function requestLauncher(
+  worker,
+  type,
+  { signal, timeout = 30000, MessageChannelImpl = globalThis.MessageChannel } = {},
+) {
+  return new Promise((resolve, reject) => {
+    signal?.throwIfAborted();
+    const channel = new MessageChannelImpl(),
+      requestId = `launcher-${++launcherRequest}`;
+    let settled = false;
+    const finish = (value, error) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      signal?.removeEventListener('abort', abort);
+      channel.port1.close();
+      channel.port2.close();
+      error ? reject(error) : resolve(value);
+    };
+    const abort = () =>
+      finish(null, new DOMException('Launcher preparation paused.', 'AbortError'));
+    const timer = setTimeout(
+      () =>
+        finish(
+          null,
+          new Error(
+            'The app launcher did not confirm its saved files. Close other launcher windows and resume.',
+          ),
+        ),
+      timeout,
+    );
+    signal?.addEventListener('abort', abort, { once: true });
+    channel.port1.onmessage = (event) => {
+      if (
+        event.data?.format !== 'revealline.launcher-health.v1' ||
+        event.data.requestId !== requestId
+      )
+        return;
+      if (event.data.status === 'ready') finish(event.data);
+      else
+        finish(
+          null,
+          new Error(
+            event.data.message || 'The app launcher is not ready offline. Resume to repair it.',
+          ),
+        );
+    };
+    worker.postMessage({ type, requestId }, [channel.port2]);
+  });
+}
+
+/** Verify the stable icon destination separately from edition content. No global ready promise. */
+export async function prepareInstalledLauncher({
+  navigatorRef = globalThis.navigator,
+  locationRef = globalThis.location,
+  signal,
+  timeout = 30000,
+  MessageChannelImpl = globalThis.MessageChannel,
+} = {}) {
+  signal?.throwIfAborted();
+  const appURL = installedAppURL(locationRef);
+  const registration = await navigatorRef.serviceWorker.register(
+    new URL('service-worker.js', appURL),
+    {
+      scope: appURL,
+      updateViaCache: 'none',
+    },
+  );
+  const worker = registration.installing || registration.waiting || registration.active;
+  if (!worker) throw new Error('Launcher installation has not started. Resume preparation.');
+  if (worker.state !== 'activated')
+    await new Promise((resolve, reject) => {
+      const finish = (error) => {
+        clearTimeout(timer);
+        worker.removeEventListener('statechange', changed);
+        signal?.removeEventListener('abort', abort);
+        error ? reject(error) : resolve();
+      };
+      const changed = () => {
+        if (worker.state === 'activated') finish();
+        else if (worker.state === 'redundant')
+          finish(new Error('Launcher installation failed. Resume preparation.'));
+      };
+      const abort = () => finish(new DOMException('Launcher preparation paused.', 'AbortError'));
+      const timer = setTimeout(
+        () =>
+          finish(
+            new Error('Close other launcher windows, then resume so its update can activate.'),
+          ),
+        timeout,
+      );
+      worker.addEventListener('statechange', changed);
+      signal?.addEventListener('abort', abort, { once: true });
+      if (signal?.aborted) abort();
+      else changed();
+    });
+  signal?.throwIfAborted();
+  return requestLauncher(worker, 'revealline.launcher-prepare', {
+    signal,
+    timeout,
+    MessageChannelImpl,
+  });
+}
+
+export async function checkInstalledLauncher({
+  navigatorRef = globalThis.navigator,
+  locationRef = globalThis.location,
+  ...options
+} = {}) {
+  const registration = await navigatorRef?.serviceWorker?.getRegistration(
+    installedAppURL(locationRef),
+  );
+  if (!registration?.active) return { status: 'missing' };
+  try {
+    return await requestLauncher(registration.active, 'revealline.launcher-check', options);
+  } catch (error) {
+    if (error.name === 'AbortError') throw error;
+    return { status: 'incomplete', message: error.message };
+  }
 }

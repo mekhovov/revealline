@@ -678,6 +678,9 @@ async function addOfflineEntries(
     const marker = {
       format: 'revealline-offline.v1',
       downloadCatalogue: true,
+      ...(contentCatalogue.format === 'revealline-offline-content.v2'
+        ? { packageConsent: true }
+        : {}),
       version: info.version,
       buildId: placeholder,
       scope: `${relativeRoot}/`,
@@ -733,6 +736,9 @@ async function addOfflineEntries(
     buildId,
     files,
     downloadOriginals: contentCatalogue.originals,
+    ...(contentCatalogue.format === 'revealline-offline-content.v2'
+      ? { packageConsent: true }
+      : {}),
     downloadFiles: contentCatalogue.files.filter((file) => file.kind === 'gameplay'),
     ...(optionalPacks.length ? { optionalPacks } : {}),
     ...(optionalArtwork ? { optionalArtwork } : {}),
