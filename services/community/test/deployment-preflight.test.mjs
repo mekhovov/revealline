@@ -272,8 +272,20 @@ test('production Compose profile fails closed and preserves every shared admissi
   assert.match(compose, /preflight:[\s\S]*auth-migrate:[\s\S]*service_completed_successfully/u);
   assert.match(compose, /api:[\s\S]*preflight:[\s\S]*service_completed_successfully/u);
   assert.match(compose, /worker:[\s\S]*preflight:[\s\S]*service_completed_successfully/u);
-  assert.doesNotMatch(
-    compose.slice(compose.indexOf('  worker:')),
-    /BETTER_AUTH_SECRET|COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN/u,
-  );
+  const worker = compose.slice(compose.indexOf('  worker:'), compose.indexOf('\nnetworks:'));
+  assert.match(worker, /read_only: true/u);
+  assert.match(worker, /cap_drop:\n\s+- ALL/u);
+  assert.match(worker, /security_opt:\n\s+- no-new-privileges:true/u);
+  assert.match(worker, /init: true/u);
+  assert.match(worker, /\/tmp:rw,noexec,nosuid,nodev,size=128m,mode=0700,uid=1000,gid=1000/u);
+  assert.match(worker, /pids_limit: 64/u);
+  assert.match(worker, /mem_limit: 1g/u);
+  assert.match(worker, /cpus: 1\.0/u);
+  assert.match(worker, /community-blobs:\/data\/blobs:ro/u);
+  assert.match(worker, /networks:\n\s+- community-backend/u);
+  assert.match(worker, /restart: unless-stopped/u);
+  assert.doesNotMatch(worker, /ports:/u);
+  assert.doesNotMatch(worker, /BETTER_AUTH_SECRET|COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN/u);
+  assert.match(compose, /community-backend:\n\s+internal: true/u);
+  assert.match(compose, /api:[\s\S]*networks:\n\s+- community-backend\n\s+- community-edge/u);
 });

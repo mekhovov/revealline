@@ -29,6 +29,10 @@ failures. `v0.141.1` is an intermediate immutable GitHub release and was never t
 Archive 95 preserves `v0.141.0`. See the bounded
 [v0.141.2 publication evidence](v0.141.2-publication-evidence.md). Estimates below are focused
 engineering time after each required environment becomes available, not calendar release dates.
+PR #680 remains candidate source. It now confines the validation worker to read-only package and
+image filesystems, bounded temporary storage and process resources, an internal database network,
+and local-only bounded ffprobe inspection. Source assertions cover that contract; enforcement by a
+Linux container runtime and the live validation journey remain deployment gates.
 
 | Workstream           | Completed/current result                                                                                                                                                                                                                                                                                                                                                                  | Remaining work                                                                                                                                    | Focused ETA                                                   |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |

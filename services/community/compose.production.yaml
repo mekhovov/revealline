@@ -46,10 +46,14 @@ services:
       POSTGRES_DB: revealline
       POSTGRES_USER: revealline
       POSTGRES_PASSWORD: ${COMMUNITY_POSTGRES_PASSWORD:?set COMMUNITY_POSTGRES_PASSWORD}
+    networks:
+      - community-backend
 
   migrate:
     environment:
       PGPASSWORD: ${COMMUNITY_POSTGRES_PASSWORD:?set COMMUNITY_POSTGRES_PASSWORD}
+    networks:
+      - community-backend
 
   auth-migrate:
     build: *community-production-build
@@ -58,6 +62,8 @@ services:
       migrate:
         condition: service_completed_successfully
     environment: *community-production-environment
+    networks:
+      - community-backend
     restart: 'no'
 
   preflight:
@@ -70,6 +76,8 @@ services:
     volumes:
       - community-blobs:/data/blobs
       - community-tus:/data/tus
+    networks:
+      - community-backend
     restart: 'no'
 
   api:
@@ -78,6 +86,9 @@ services:
       preflight:
         condition: service_completed_successfully
     environment: *community-production-environment
+    networks:
+      - community-backend
+      - community-edge
     healthcheck:
       test:
         [
@@ -93,6 +104,17 @@ services:
 
   worker:
     build: *community-production-build
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    init: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=128m,mode=0700,uid=1000,gid=1000
+    pids_limit: 64
+    mem_limit: 1g
+    cpus: 1.0
     depends_on:
       preflight:
         condition: service_completed_successfully
@@ -102,3 +124,13 @@ services:
       COMMUNITY_MAX_PACKAGE_BYTES: ${COMMUNITY_MAX_PACKAGE_BYTES:-268435456}
       COMMUNITY_VALIDATOR_VERSION: ${COMMUNITY_VALIDATOR_VERSION:-creator-bundle-v1}
       COMMUNITY_WORKER_POLL_MS: ${COMMUNITY_WORKER_POLL_MS:-1000}
+    volumes:
+      - community-blobs:/data/blobs:ro
+    networks:
+      - community-backend
+    restart: unless-stopped
+
+networks:
+  community-backend:
+    internal: true
+  community-edge:
