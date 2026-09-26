@@ -419,6 +419,69 @@ export function createJourneyProfileStore({
     void flush();
     return snapshot();
   };
+  async function recordWithReceiptFallback(event) {
+    if (event?.type !== 'complete') throw new TypeError(t('errors:journey.exactReceiptRequired'));
+    if (event.picture === undefined) {
+      recordEvents([event]);
+      const receiptDurable = await flush();
+      return {
+        durable: receiptDurable,
+        picture: false,
+        fallback: false,
+        error: receiptDurable ? null : (error?.message ?? null),
+      };
+    }
+    const { picture: _picture, ...receipt } = event,
+      before = pending.length;
+    recordEvents([event]);
+    const primary = pending[before];
+    if (await flush()) return { durable: true, picture: true, fallback: false, error: null };
+    const primaryError = error;
+    // A failed picture transaction keeps its event queued. Replace only this
+    // completion with its exact receipt, preserving later events and rebuilding
+    // from durable state before retrying. This makes the clear recoverable when
+    // picture storage alone exceeds quota without claiming that the picture was
+    // retained.
+    const index = pending.indexOf(primary);
+    if (index < 0) return { durable: true, picture: true, fallback: false, error: null };
+    let latest;
+    try {
+      latest = await bounded(readState);
+    } catch {
+      return {
+        durable: false,
+        picture: true,
+        fallback: false,
+        error: primaryError?.message ?? null,
+      };
+    }
+    const replacement = structuredClone(receipt),
+      nextPending = [...pending];
+    nextPending[index] = replacement;
+    const next = nextPending.reduce(applyEvent, latest);
+    pending = nextPending;
+    adopt(next);
+    durable = false;
+    error = primaryError;
+    status();
+    const receiptDurable = await flush();
+    if (!receiptDurable) {
+      const receiptIndex = pending.indexOf(replacement);
+      if (receiptIndex >= 0) {
+        const restoredPending = [...pending];
+        restoredPending[receiptIndex] = primary;
+        pending = restoredPending;
+        adopt(pending.reduce(applyEvent, latest));
+        status();
+      }
+    }
+    return {
+      durable: receiptDurable,
+      picture: !receiptDurable,
+      fallback: receiptDurable,
+      error: primaryError?.message ?? null,
+    };
+  }
   return {
     async load() {
       await flush();
@@ -454,6 +517,7 @@ export function createJourneyProfileStore({
     record(event) {
       return recordEvents([event]);
     },
+    recordWithReceiptFallback,
     recordMany: recordEvents,
     export() {
       return JSON.stringify(
