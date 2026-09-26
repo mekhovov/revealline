@@ -44,7 +44,13 @@ export const COMPANY_EDITIONS = Object.freeze(
   choices.map(([id, brandId, name, audience, campaignIds]) => ({
     format: 'revealline-edition.v1',
     id,
-    revision: 1,
+    revision: campaignIds.some((campaignId) =>
+      [].includes(
+        campaignId,
+      ),
+    )
+      ? 2
+      : 1,
     name,
     brandId,
     audience,

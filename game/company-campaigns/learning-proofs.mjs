@@ -39,13 +39,19 @@ export function createCompanyLearningProofStore({ editionId, storage, lessons, a
     editionId,
     sources: [...recoverySources],
   });
+  const recoveryLimits = {
+    maxBytes: 8 * 1024 * 1024,
+    maxString: 8 * 1024 * 1024,
+    maxNodes: 256,
+    maxArray: 32,
+  };
+  const mergeRecovery = (sources) => {
+    const merged = new Set([...recoverySources, ...sources]);
+    boundedJSON({ format: RECOVERY_FORMAT, editionId, sources: [...merged] }, recoveryLimits);
+    return merged;
+  };
   const inspectRecovery = (input) => {
-    const source = boundedJSON(input, {
-      maxBytes: 8 * 1024 * 1024,
-      maxString: 8 * 1024 * 1024,
-      maxNodes: 256,
-      maxArray: 32,
-    });
+    const source = boundedJSON(input, recoveryLimits);
     exactKeys(source, ['format', 'editionId', 'sources'], 'learning proof recovery');
     required(
       source.format === RECOVERY_FORMAT &&
@@ -55,6 +61,9 @@ export function createCompanyLearningProofStore({ editionId, storage, lessons, a
         source.sources.every((entry) => typeof entry === 'string'),
       'Invalid learning proof recovery.',
     );
+    // Backup admission must include the retained local journal, before the host
+    // adopts any profile changes. Never silently discard the last imported row.
+    mergeRecovery(source.sources);
     const checked = freezeDesign(source);
     trustedRecovery.add(checked);
     return checked;
@@ -164,13 +173,22 @@ export function createCompanyLearningProofStore({ editionId, storage, lessons, a
     inspectRecovery,
     importRecovery(source) {
       required(trustedRecovery.has(source), 'Recovery must be bounded before import.');
-      source.sources.forEach(preserve);
+      recoverySources = mergeRecovery(source.sources);
       return persist();
     },
     async hydrate({ signal } = {}) {
       let entries, raw;
+      const read = (name) => {
+        try {
+          return storage?.getItem(name);
+        } catch (error) {
+          // An unavailable read cannot authorize replacement of unseen history.
+          recoveryBlocked = true;
+          throw error;
+        }
+      };
       try {
-        const recovered = storage?.getItem(recoveryKey);
+        const recovered = read(recoveryKey);
         if (recovered) {
           try {
             recoverySources = new Set(inspectRecovery(recovered).sources);
@@ -178,7 +196,7 @@ export function createCompanyLearningProofStore({ editionId, storage, lessons, a
             preserve(recovered);
           }
         }
-        raw = storage?.getItem(key);
+        raw = read(key);
         if (!raw) return { verified: 0, rejected: 0 };
         const data = boundedJSON(raw, { ...limits, maxBytes: STORAGE_BYTES });
         exactKeys(data, ['format', 'editionId', 'proofs'], 'learning proof storage');

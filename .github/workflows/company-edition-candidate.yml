@@ -8,6 +8,7 @@ on:
       - 'authoring/company-studio/**'
       - 'scripts/**'
       - 'publishing/**'
+      - 'docs/verification/company-review*'
       - 'package*.json'
       - '.github/workflows/company-edition-candidate.yml'
   push:
@@ -18,6 +19,7 @@ on:
       - 'authoring/company-studio/**'
       - 'scripts/**'
       - 'publishing/**'
+      - 'docs/verification/company-review*'
       - 'package*.json'
       - '.github/workflows/company-edition-candidate.yml'
   workflow_dispatch:
@@ -54,6 +56,7 @@ jobs:
       - name: Run focused company, persistence, offline and artifact tests
         run: |
           npm run company:test
+          node --test scripts/test-company-review.mjs
           node --test game/test/installed-app.test.mjs game/test/profile-transfer.test.mjs game/test/profile-channel-reader.test.mjs
       - name: Compile twice and inspect original candidate ZIP members
         env:

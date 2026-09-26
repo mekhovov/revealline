@@ -30,7 +30,9 @@ const definitions = [[
 export const COMPANY_CAMPAIGNS = freezeDesign(
   definitions.map(([id, brandId, name, audience, rows]) => ({
     id,
-    revision: '1',
+    revision: [].includes(id)
+      ? '2'
+      : '1',
     name,
     brandId,
     audience,
