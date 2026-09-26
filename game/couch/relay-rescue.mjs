@@ -471,7 +471,6 @@ export function bootCoop({
     pictureSequence = 0,
     nextOperation = null,
     startPermitted = true;
-  let automaticRetry = null;
   let foundationMessage = null;
   let journeySkip = null;
   const journeyReactions = attachJourneyReactions({ prefix: 'coop-' });
@@ -4016,7 +4015,6 @@ export function bootCoop({
   }
   function start(recipe = currentRecipe(), prepared = null) {
     cancelJourneySkip();
-    cancelAutomaticRetry();
     cancelNext();
     nextStatus('');
     if (
@@ -4110,7 +4108,6 @@ export function bootCoop({
   }
   function pause({ focus = true } = {}) {
     discovery?.cancel();
-    cancelAutomaticRetry();
     cancelNext();
     cancelPicture({ restore: false });
     if (!running()) return;
@@ -4126,7 +4123,6 @@ export function bootCoop({
   }
   function stopArena(error, { focus = true } = {}) {
     discovery?.cancel();
-    cancelAutomaticRetry();
     cancelNext();
     // Never repaint while handling a painter failure. Any destructive decision
     // is cancelled before showing the stopped attempt's recovery actions.
@@ -4493,25 +4489,12 @@ export function bootCoop({
       event.preventDefault();
       requestDeparture(kind, $(id));
     });
-  function cancelAutomaticRetry() {
-    if (!automaticRetry) return;
-    automaticRetry = null;
-    if (run?.status === 'lost')
-      localizedText($('coop-overlay-copy'), () =>
-        coopRetryFeedback(run, knockdowns.filter(Boolean)),
-      );
-  }
-  const retryFocusChanged = () => {
-    if (document.activeElement !== $('coop-retry')) cancelAutomaticRetry();
-  };
-  document.addEventListener('focusin', retryFocusChanged);
   const suspend = () => {
     if (disposed) return;
     cancelJourneySkip();
     music?.suspend();
     discovery?.cancel();
     cancelDiscoveryPreparation();
-    cancelAutomaticRetry();
     if (settingsOwner) settingsOwner.restore = false;
     inactive = true;
     cancelImport();
@@ -4911,29 +4894,6 @@ export function bootCoop({
         if (routed.status.code === 'joined') navigation.engage();
         navigation.handle(routed.ui);
       }
-      if (automaticRetry) {
-        const ticket = automaticRetry;
-        if (
-          run !== ticket.run ||
-          generation !== ticket.generation ||
-          acceptedPicture !== ticket.picture ||
-          attemptPack !== ticket.pack ||
-          run.status !== 'lost' ||
-          loopStopped ||
-          settingsVisit !== ticket.settingsVisit ||
-          settingsDialog.open ||
-          earnedDialog.open ||
-          departure ||
-          document.activeElement !== $('coop-retry')
-        )
-          cancelAutomaticRetry();
-        else if (now >= ticket.at) {
-          cancelAutomaticRetry();
-          start(currentRecipe());
-          if (run !== ticket.run && running())
-            message(() => t('interface:team.newAttemptDirections', { cause: ticket.cause }));
-        }
-      }
       const elapsed = last === null ? 0 : (now - last) / 1000;
       last = now;
       if (running() && elapsed > 0.25) pause();
@@ -4956,22 +4916,6 @@ export function bootCoop({
             if (disposed || run !== finishedAttempt || generation !== epoch) break;
             clear();
             overlay();
-            if (run.status === 'lost' && run.level.journeyDifficulty && !loopStopped) {
-              const failure = knockdowns.find(Boolean);
-              automaticRetry = {
-                run,
-                generation,
-                picture: acceptedPicture,
-                pack: attemptPack,
-                settingsVisit,
-                at: now + 700,
-                cause: failure
-                  ? coopFailureFeedback(run, failure).cause
-                  : t('interface:theTeamRanOutOfReserves'),
-              };
-              $('coop-overlay-copy').textContent +=
-                ' ' + t('interface:aFreshAttemptStartsShortlyChooseAnotherActionToStay') + '';
-            }
           }
         }
       }
@@ -5602,8 +5546,6 @@ export function bootCoop({
     $('coop-discovery-open').onclick = null;
     $('coop-discovery-paused').onclick = null;
     $('coop-home-paused').onclick = null;
-    automaticRetry = null;
-    document.removeEventListener('focusin', retryFocusChanged);
     cancelNext({ announce: false });
     $('coop-next').onclick = null;
     $('coop-next-cancel').onclick = null;
