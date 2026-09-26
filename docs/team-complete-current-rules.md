@@ -4,11 +4,12 @@ Status date: 2026-09-26
 
 ## Delivery state
 
-- Public release baseline at implementation start: **v0.132.2**.
-- Exact stack base: `origin/main` at `c6efdbcc0a409bdce8cda85b980da0d136af2731`.
+- Public release baseline after the latest accepted fastline: **v0.132.3**.
+- Exact stack base: `origin/main` at `878a3a14134a729e67fbbc28fafdaa5dc5f8dfe6`.
 - Apex v25 source candidate: draft PR #625 at
-  `3cbe5f98e87ca39c24589d2f70f6030af9d0b745`.
-- Active successor: Team current-rules adoption / source version **0.141.0**.
+  `0a7daef96df3a7e8c351f99630874f5c60f03e23`.
+- Active successor: draft PR #630, Team current-rules adoption / source version **0.141.0**. The
+  PR's GitHub head is authoritative after guarded restacks.
 - This source is not a public delivery until its reviewed PR, immutable release and Pages build
   complete.
 
