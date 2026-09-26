@@ -163,6 +163,77 @@ test('website release and mission selectors use complete English and Ukrainian m
   );
 });
 
+test('Asset Studio dynamic labels and diagnostics are bilingual', () => {
+  for (const [saved, expected] of [
+    [
+      'en',
+      [
+        'Download field-kit.png',
+        'Crop dimensions must be positive whole pixels.',
+        'The crop must use whole pixels and fit completely inside the original image.',
+        'Studio Interface control is unavailable: preview-size',
+        'Team arena Relay Yard: Joint capture',
+        '32 × 24 · cursor 4, 7 · selection 3 × 2',
+        'Missing bytes for font.ui. Re-import the complete theme bundle.',
+        'Preview fixture unavailable (503).',
+        'Missing: 2 · source: 3 · produced: 4 · reviewed: 5. Readiness is evidence based.',
+        'This slot accepts image, audio. Choose an appropriate file.',
+        'Collection has no binding for player.scout.compact.',
+      ],
+    ],
+    [
+      'uk',
+      [
+        'Завантажити field-kit.png',
+        'Розміри обрізання мають бути додатними цілими пікселями.',
+        'Обрізання має використовувати цілі пікселі й повністю вміщуватися в оригінальне зображення.',
+        'Елемент керування інтерфейсом Студії недоступний: preview-size',
+        'Арена Team Relay Yard: Спільне захоплення',
+        '32 × 24 · курсор 4, 7 · виділення 3 × 2',
+        'Немає байтів для font.ui. Повторно імпортуйте повний пакет теми.',
+        'Зразок попереднього перегляду недоступний (503).',
+        'Відсутні: 2 · джерела: 3 · створені: 4 · перевірені: 5. Готовність визначається доказами.',
+        'Цей слот приймає: image, audio. Виберіть відповідний файл.',
+        'У колекції немає прив’язки для player.scout.compact.',
+      ],
+    ],
+  ]) {
+    const { api } = runtime({ saved });
+    assert.deepEqual(
+      [
+        api.t('tools:studio.download.file', { filename: 'field-kit.png' }),
+        api.t('tools:studio.crop.positiveWholePixels'),
+        api.t('tools:studio.crop.insideOriginal'),
+        api.t('tools:studio.interface.controlUnavailable', { control: 'preview-size' }),
+        api.t('tools:studio.crossMode.teamArenaLabel', {
+          arena: 'Relay Yard',
+          scene: api.t('tools:jointCapture'),
+        }),
+        api.t('tools:studio.sprite.cursor', {
+          width: 32,
+          height: 24,
+          cursor: '4, 7',
+          selection: api.t('tools:studio.sprite.selection', { width: 3, height: 2 }),
+          anchor: '',
+        }),
+        api.t('tools:studio.preview.missingBytes', { id: 'font.ui' }),
+        api.t('tools:studio.scenePreview.fixtureUnavailable', { status: 503 }),
+        api.t('tools:studio.inventory.coverage', {
+          missing: 2,
+          source: 3,
+          produced: 4,
+          reviewed: 5,
+        }),
+        api.t('tools:studio.upload.acceptedKinds', { kinds: 'image, audio' }),
+        api.t('tools:studio.collection.missingBinding', {
+          slotId: 'player.scout.compact',
+        }),
+      ],
+      expected,
+    );
+  }
+});
+
 test('Couch continuation cancellation interpolates its localized action', () => {
   for (const [saved, action, expected] of [
     [
