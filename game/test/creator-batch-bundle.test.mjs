@@ -156,6 +156,48 @@ test('1, 12 and 50 mission projects prepare with exact dependency closure and le
   }
 });
 
+test('duplicate names and bytes survive explicit split export without duplicate payloads', async () => {
+  const duplicate = new Blob([Uint8Array.of(7, 7, 7)]),
+    inputs = [
+      { name: 'same.png', blob: duplicate },
+      { name: 'same.png', blob: duplicate },
+      { name: 'same.png', blob: duplicate },
+      { name: 'same.png', blob: duplicate },
+    ],
+    batch = await prepareCreatorBatch(inputs, settings, { prepareImage }),
+    plan = planCreatorBatchPackages(batch, {
+      maxBytes: runtimeBlob.size * 2 + 21,
+      reserveBytes: 1,
+      perItemOverheadBytes: 10,
+    });
+  assert.equal(plan.decision, 'split-required');
+  assert.deepEqual(
+    batch.items.map((item) => item.fileName),
+    ['same.png', 'same.png', 'same.png', 'same.png'],
+  );
+  assert.equal(new Set(batch.items.map((item) => item.id)).size, 4);
+  assert.equal(new Set(batch.items.map((item) => item.sourceSha256)).size, 1);
+
+  const exportedItemIds = [];
+  for (const entry of plan.packages) {
+    const result = await prepareCreatorBatchBundle(
+        batch,
+        { themes, credits, plan, part: entry.part },
+        { decodeImage },
+      ),
+      file = exportCreatorBundle(result.prepared, approveCreatorBundle(result.prepared)),
+      reopened = await importCreatorBundle(file, { decodeImage });
+    assert.equal(reopened.editionId, result.prepared.editionId);
+    assert.equal(reopened.manifest.assets.length, 1, 'same runtime bytes occur once per pack');
+    assert.deepEqual(
+      reopened.manifest.content.project.missions.map((mission) => mission.id),
+      entry.itemIds,
+    );
+    exportedItemIds.push(...entry.itemIds);
+  }
+  assert.deepEqual(exportedItemIds, plan.eligibleItemIds);
+});
+
 test('campaign grouping and authored order survive transfer and drive runtime continuation order', async () => {
   let batch = await batchFixture(4);
   const order = batch.items.map((item) => item.id).reverse();
