@@ -118,6 +118,7 @@ test('creator A publishes and player B discovers, installs, reloads, completes a
     authenticator: createTokenAuthenticator({
       'alice-token': 'creator/alice',
       'bob-token': 'creator/bob',
+      'admin-token': { subject: 'operator/admin', roles: ['admin'] },
     }),
     maxPackageBytes: 16 * 1024 * 1024,
   });
@@ -137,6 +138,11 @@ test('creator A publishes and player B discovers, installs, reloads, completes a
     baseURL: 'http://community.test/',
     fetchImpl,
     authHeaders: async () => ({ authorization: 'Bearer bob-token' }),
+  });
+  const administrator = createCommunityClient({
+    baseURL: 'http://community.test/',
+    fetchImpl,
+    authHeaders: async () => ({ authorization: 'Bearer admin-token' }),
   });
   const publisher = createCommunityPublisher({ client: alice, decodeImage });
 
@@ -199,6 +205,10 @@ test('creator A publishes and player B discovers, installs, reloads, completes a
     details: 'Integration report fixture.',
   });
   assert.equal(report.report.status, 'open');
+  const moderationQueue = await administrator.listAdminReports({ status: 'open' });
+  assert.equal(moderationQueue.reports.length, 1);
+  assert.equal(moderationQueue.reports[0].id, report.report.id);
+  assert.equal(moderationQueue.reports[0].editionId, latest.editionId);
 
   const creatorDisk = memoryIndexedDB();
   const creatorStore = createCreatorStore({ indexedDB: creatorDisk.indexedDB });
@@ -241,6 +251,12 @@ test('creator A publishes and player B discovers, installs, reloads, completes a
 
   await assert.rejects(bob.unlistEdition(latest.editionId), /not found/u);
   assert.equal((await alice.unlistEdition(latest.editionId)).status, 'unlisted');
+  const resolution = await administrator.resolveAdminReport(
+    report.report.id,
+    'Confirmed creator removal; retain the report audit record.',
+  );
+  assert.equal(resolution.report.status, 'resolved');
+  assert.deepEqual((await administrator.listAdminReports({ status: 'open' })).reports, []);
   assert.equal((await bob.catalog({ query: 'revised' })).editions.length, 0);
   assert.equal((await library.status(latest.editionId)).offlinePlayable, true);
 
