@@ -29,8 +29,11 @@ asset inspection and publication then passed against the final source after the 
 ownership correction in PR #697. Public Pages now serves accepted `v0.141.5`. The successor
 [`v0.141.6`](https://github.com/mekhovov/revealline/releases/tag/v0.141.6) is published from exact
 source `d3b48436318c9d056678089b219e47534b554897`; its format-v2 source-manifest canary replaced the
-large source tar while preserving nine independently hashed release assets. Archive99 preservation
-of v0.141.5, the reviewed v0.141.6 selector, and exact public acceptance remain in progress.
+large source tar while preserving nine independently hashed release assets. Archive99 now preserves v0.141.5. Selector PR #703 merged as
+`b7857fff816434f950a9c895ef4de00bd7a9895e`, and production run `36272082479` accepted v0.141.6
+after matching all 1,730 public files and 629,207,913 bytes with zero retries or failures. The
+built-in-browser Home, mission library, Creator, and exact video inspect/poster-capture journey
+passed with empty browser warning/error logs.
 Estimates below are focused engineering time after each required environment becomes available,
 not calendar release dates.
 PR #680 merged as `218e76281e3bfa26f57b7aa0f7b98058f4bd05ad`. It confines the validation
@@ -48,7 +51,7 @@ deployment gates.
 | S3/AWS expansion     | The executable storage selector provides stream-verified immutable S3 package publication, the pinned maintained tus S3 datastore, bounded multipart work, deterministic completed-upload cleanup, fail-closed object/multipart readiness, portable package backup/restore and explicit disaster tus expiry. Hosted MinIO publication/recovery passed against exact PR #695 source. PostgreSQL coordinates tus locks, expiry leases and publication state independently of storage. | Run the credentialed AWS smoke gate with a private bucket and scoped IAM actors.                                                                 | 0.5–1 focused day after AWS access                            |
 | Phase 7 Team         | Purpose-built templates, replay-qualified launch, immutable editions, recovery, rewards, picture/video packages, browser assembly/review/install and shared managed-media accounting are published. The public Team route loads cleanly in the built-in browser.                                                                                                                                                                                                                    | None in the released local/browser scope.                                                                                                        | Complete                                                      |
 | Phase 8 media editor | Bounded silent MP4/WebM and AVC+AAC MP4 trim/conversion, resize/compression, orientation, timing and decoded-audio verification are published.                                                                                                                                                                                                                                                                                                                                      | Qualify Firefox, Safari, broader codecs, physical mobile playback and physical speakers.                                                         | 1–2 days when the environments are available                  |
-| Publication          | Stable `v0.141.6` is published from exact source `d3b48436318c…`; its annotated tag peels to that source and all nine release assets carry SHA-256 digests. The format-v2 source-manifest canary, release qualification, freeze, inspection and guarded publication gates passed. Accepted public Pages remains byte-exact `v0.141.5` during the fail-closed handoff.                                                                                                               | Preserve v0.141.5 in Archive99, merge the reviewed v0.141.6 selector, then pass the production byte audit and built-in-browser flow.             | 2–6 focused hours, subject to hosted queue and Pages rollout  |
+| Publication          | Stable `v0.141.6` is published from exact source `d3b48436318c…`; its annotated tag peels to that source and all nine release assets carry SHA-256 digests. Archive99 preservation, the reviewed selector, production deployment, exact 1,730-file / 629,207,913-byte public audit, and built-in-browser flow passed.                                                                                                                                                               | None for the v0.141.6 release and public Pages scope.                                                                                            | Complete                                                      |
 
 The published `v0.141.2` community hardening release includes a production-safe Compose overlay,
 executable deployment preflight, administrator moderation console, exact interrupted-tus fault
@@ -88,9 +91,9 @@ tracked in [deployment-acceptance.md](deployment-acceptance.md).
   phantom reservations. Genuine browser-wide quota exhaustion, deliberate IndexedDB corruption and
   measured peak-memory acceptance remain unclaimed because supported browser controls cannot force
   those conditions reliably.
-- `v0.141.6` is the highest published stable version. Public Pages remains on accepted `v0.141.5`
-  until the immutable predecessor archive, selector merge and public exact-byte audit pass. Earlier
-  global working allocations are stale. Future work must be reallocated after checking the open
+- `v0.141.6` is the highest published stable version and the accepted public Pages edition. Its
+  exact acceptance record is [`docs/community-v01416-public-acceptance.md`](../../docs/community-v01416-public-acceptance.md).
+  Earlier global working allocations are stale. Future work must be reallocated after checking the open
   `v0.142.0` through `v0.149.x` ranges rather than advancing an old queue mechanically.
 - PR #700 moved the active workflow action runtime to Node 24. Historical runs retain their earlier
   Node 20 notices; no active release gate is blocked by them.
