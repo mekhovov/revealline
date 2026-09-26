@@ -8,9 +8,9 @@ versions or acceptance gates are still current.
 
 - Latest accepted public release: **v0.132.3**.
 - v0.132.4 Team picture-preparation repair is still in the sole publisher's frozen-package lane.
-  Its terminal source is `fad132a054a10f27198751bfeb7c02ba340cfbfb`, including the narrowly
-  scoped same-run release-inspector correction. No v0.132.4 GitHub release existed at the last
-  check, so it is not counted as delivered here.
+  Its terminal source is `80911bf5ec0f6df711d7e70b36a11005d2be4c3a`, including the narrowly
+  scoped same-run inspector and evidence-authority corrections. No v0.132.4 GitHub release existed
+  at the last check, so it is not counted as delivered here.
 - The cultural stack is rebased on that exact terminal source. All seventeen dependent branches
   were updated with explicit force-with-lease checks; the dirty root checkout was not changed.
 
