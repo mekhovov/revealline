@@ -110,6 +110,7 @@ test("publisher serializes requests and passes immutable artifacts through each 
   );
   assert.match(workflow, /needs\.qualify\.outputs\.artifact_id/u);
   assert.match(workflow, /needs\.qualify\.outputs\.artifact_digest/u);
+  assert.match(workflow, /force_snapshot: true/u);
   assert.match(workflow, /digest="\$\{EXPECTED_DIGEST#sha256:\}"/u);
   assert.match(workflow, /test "\$\(jq -r \.digest/u);
   assert.match(workflow, /release_artifact\.py run/u);
@@ -125,6 +126,8 @@ test("publisher serializes requests and passes immutable artifacts through each 
   assert.match(qualification, /workflow_call:/u);
   assert.match(qualification, /artifact_id:/u);
   assert.match(qualification, /artifact_digest:/u);
+  assert.match(qualification, /force_snapshot:/u);
+  assert.match(qualification, /FORCE_SNAPSHOT:/u);
   assert.match(evidence, /workflow_call:/u);
   assert.match(evidence, /artifact_id:/u);
   assert.match(evidence, /artifact_digest:/u);
