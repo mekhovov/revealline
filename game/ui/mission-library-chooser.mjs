@@ -170,6 +170,7 @@ export function attachMissionLibraryChooser({
     pendingSelection = null,
     visit = 0,
     destroyed = false,
+    restoringCardFocus = false,
     resizeFrame = null,
     message = '';
   let saved = null;
@@ -482,6 +483,7 @@ export function attachMissionLibraryChooser({
     const name = node('strong', null, () => display().name);
     const campaignName = node('span', null, () => display().campaignTitle);
     campaignName.className = 'journey-card-campaign';
+    localizedAttribute(button, 'data-campaign-title', () => display().campaignTitle);
     const edition = node('span', null, () => display().edition);
     edition.className = 'journey-card-edition';
     const tags = node('span', null, () =>
@@ -616,7 +618,6 @@ export function attachMissionLibraryChooser({
       card.mastery.hidden = !details.mastery;
       card.completion = library.completion(row, modeFilter.value);
       card.button.dataset.campaignKey = row.campaignKey;
-      card.button.dataset.campaignTitle = row.campaignTitle;
       card.button.dataset.campaignStart = String(previousCampaign !== row.campaignKey);
       card.button.dataset.availabilityState = availability.state;
       card.button.dataset.completionState = card.completion?.state ?? 'unfinished';
@@ -655,9 +656,16 @@ export function attachMissionLibraryChooser({
       list.replaceChildren(...buttons);
     if (focusedId && !doc.hidden && doc.hasFocus?.() !== false) {
       const replacement = cards.get(focusedId)?.button;
-      if (replacement?.isConnected && list.contains(replacement) && !replacement.disabled)
-        replacement.focus({ preventScroll: true });
-      else primary().focus({ preventScroll: true });
+      if (replacement?.isConnected && list.contains(replacement) && !replacement.disabled) {
+        if (doc.activeElement !== replacement) {
+          restoringCardFocus = true;
+          try {
+            replacement.focus({ preventScroll: true });
+          } finally {
+            restoringCardFocus = false;
+          }
+        }
+      } else primary().focus({ preventScroll: true });
     }
     list.scrollTop = scroll;
     for (const [id, card] of cards)
@@ -801,6 +809,15 @@ export function attachMissionLibraryChooser({
     if (dialog.open) observeDiagrams();
   });
   dialog.addEventListener('focusin', (event) => {
+    // A touch activation can deliberately leave keyboard focus on a different
+    // control. Retire its preparation only after a later focus transition;
+    // refocusing the preparing card keeps the owned one-action launch alive.
+    if (!restoringCardFocus) {
+      const focusedCard = event.target.closest?.('.journey-card');
+      retirePreparations({
+        except: focusedCard && list.contains(focusedCard) ? focusedCard.dataset.missionId : null,
+      });
+    }
     // The compact filters float above cards. Once keyboard/controller focus
     // reaches an action below them, remove that cover without moving focus or
     // changing a filter. Focus and select previews inside the popover stay put.
