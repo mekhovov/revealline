@@ -6,7 +6,7 @@ Status date: 2026-09-26
 
 - Public baseline: **v0.132.3**; v0.132.4 Team artwork preparation is in frozen-package
   qualification and is not yet a public delivery.
-- Parent candidate: draft PR #636 at `bfc44e70e05dcc57450d5ea16f5bac7a0fdbb7c8` /
+- Parent candidate: draft PR #636 at `5bd35a5432b4aaaff9403b0b17d3516785c3539a` /
   `team-cultural-specialist-originals-1`.
 - This successor is draft PR #642 and remains a non-default balance candidate. It does not change
   the current Team route, version, selector, progress or published content yet.
@@ -65,7 +65,7 @@ approval or gameplay balance.
 3. Run focused library/Next/Studio checks, version/locale validation and the normal release gates.
 
 The entire cultural stack is rebased onto terminal release source
-`9289184d8c36c85261493b8a31ba36e8ffb931ee`. That source is the v0.132.4 publication candidate,
+`fad132a054a10f27198751bfeb7c02ba340cfbfb`. That source is the v0.132.4 publication candidate,
 not evidence that v0.132.4 is already public.
 
 Automated idle and topology checks establish legality, not fun, final two-player balance, cultural
