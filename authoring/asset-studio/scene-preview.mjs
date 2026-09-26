@@ -1,4 +1,5 @@
 import { t, localizedText, localizedAttribute } from '../../game/i18n/index.mjs';
+import { assetStudioErrorMessage } from './error-copy.mjs';
 import { startPreviewMotion } from './preview-motion.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { createRun } from '../../game/core/index.mjs';
@@ -463,7 +464,8 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
       playbackLease = lease;
       lease.finish({ message: playbackCaption() });
     } catch (error) {
-      if (alive && request === audition) lease.finish({ message: error.message, state: 'error' });
+      if (alive && request === audition)
+        lease.finish({ message: assetStudioErrorMessage(error), state: 'error' });
     }
   };
   stop.onclick = () => {
