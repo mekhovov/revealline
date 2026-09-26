@@ -1,5 +1,19 @@
 import { LIBRARY_MODES } from './library.mjs';
 
+// Classic Solo/Versus owners encode their current-rules lane in the fourth
+// component of a JSON identity. Team's retained arenas deliberately use an
+// opaque source ID, so they belong to the original-rules lane. Owner IDs are
+// registry provenance, not a format contract: malformed/opaque IDs must never
+// make Next throw after a completed mission.
+function classicRulesEdition(row) {
+  try {
+    const owner = JSON.parse(row.ownerId);
+    return Array.isArray(owner) && typeof owner[3] === 'string' && owner[3] ? owner[3] : 'original';
+  } catch {
+    return 'original';
+  }
+}
+
 /** Boundary continuation uses the complete registry, never the chooser's search
  * results. Original adapters still own preparation, launch and progress. */
 export function librarySuccessor(library, currentRow, mode) {
@@ -12,14 +26,11 @@ export function librarySuccessor(library, currentRow, mode) {
   if (currentRow.automaticContinuation === false) return null;
   if (currentRow.collection !== 'Classic')
     return rows.slice(index + 1).find((row) => row.automaticContinuation !== false) ?? null;
-  const edition = JSON.parse(currentRow.ownerId)[3] ?? 'original';
+  const edition = classicRulesEdition(currentRow);
   return (
     rows
       .slice(index + 1)
-      .find(
-        (row) =>
-          row.collection !== 'Classic' || (JSON.parse(row.ownerId)[3] ?? 'original') === edition,
-      ) ?? null
+      .find((row) => row.collection !== 'Classic' || classicRulesEdition(row) === edition) ?? null
   );
 }
 
