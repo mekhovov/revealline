@@ -101,6 +101,7 @@ import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 import { attachSettingsPanels, settingsTabOwnsKey } from '../ui/settings-panels.mjs';
+import { createTeamContextualTeaching } from './team-contextual-teaching.mjs';
 
 import { createTeamArenaPreference } from './team-arena-preference.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
@@ -469,6 +470,11 @@ export function bootCoop({
     startPermitted = true;
   let automaticRetry = null;
   let foundationMessage = null;
+  let teachingCue = null,
+    teachingSignature = '';
+  const contextualTeaching = createTeamContextualTeaching({
+    getStorage: () => localStorage,
+  });
   let journeySkip = null;
   const journeyReactions = attachJourneyReactions({ prefix: 'coop-' });
   let candidatePresetIntent = 0;
@@ -1330,6 +1336,32 @@ export function bootCoop({
       : null;
     localizedText($('coop-message'), typeof text === 'function' ? text : () => text);
   }
+  function renderTeaching(cue = contextualTeaching.active()) {
+    const signature = cue ? JSON.stringify([cue.kind, cue.key, cue.values]) : '';
+    if (signature === teachingSignature) return;
+    teachingSignature = signature;
+    teachingCue = cue;
+    $('coop-teaching').hidden = !cue;
+    if (!cue) {
+      $('coop-teaching').removeAttribute('data-kind');
+      localizedText($('coop-teaching-message'), () => '');
+      return;
+    }
+    $('coop-teaching').dataset.kind = cue.kind;
+    localizedText($('coop-teaching-message'), () => t(teachingCue.key, teachingCue.values));
+  }
+  function placeTeaching(paused) {
+    const destination = $(paused ? 'coop-pause-teaching' : 'coop-play-teaching');
+    if ($('coop-teaching').parentNode !== destination) destination.append($('coop-teaching'));
+  }
+  $('coop-teaching-dismiss').onclick = () => {
+    if (!teachingCue) return;
+    renderTeaching(contextualTeaching.acknowledge(teachingCue.kind));
+    if (!teachingCue && document.activeElement === $('coop-teaching-dismiss')) {
+      if (run?.status === 'paused') primary().focus({ preventScroll: true });
+      else if (running()) input.focus();
+    }
+  };
   function overlay({ focus = true } = {}) {
     const reactionRow = acceptedPicture?.journeyRow;
     journeyReactions.present({
@@ -1340,6 +1372,7 @@ export function bootCoop({
     });
     const show = run && !running();
     $('coop-overlay').hidden = !show;
+    placeTeaching(Boolean(show));
     placeTools(Boolean(show));
     $('coop-pause').disabled = !running();
     difficultyControls();
@@ -4070,6 +4103,8 @@ export function bootCoop({
     const guidance = () => coopArenaGuidance(next.level, next.config);
     supportGuidance(guidance, level);
     message(() => guidance().startMessage);
+    teachingSignature = '';
+    renderTeaching(contextualTeaching.opening(guidance().teaching));
     overlay();
     try {
       render();
@@ -4644,6 +4679,8 @@ export function bootCoop({
         announce(t('interface:rescueInterruptedChooseAFreshDirectionOrHoldSupportNearby'));
       }
     }
+    contextualTeaching.observe(run.events, coopArenaGuidance(run.level, run.config).teaching);
+    renderTeaching(terminalMessage ? null : contextualTeaching.active());
     if (terminalMessage) message(terminalMessage);
   }
   const installedPreset = (completedRun) =>
@@ -5553,6 +5590,7 @@ export function bootCoop({
     .catch((error) => console.error(t('interface:nativeLifecycleUnavailable'), error));
   const dispose = () => {
     if (disposed) return;
+    $('coop-teaching-dismiss').onclick = null;
     stopActorView();
     actorPreferences.dispose();
     $('coop-actor-style').onchange = null;
