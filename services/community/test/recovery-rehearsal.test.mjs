@@ -143,6 +143,15 @@ test('target confirmation and distinct-source guards run before destructive comm
     /databases must differ/u,
   );
   assert.throws(
+    () =>
+      planRecoveryRehearsal({
+        ...value,
+        targetDatabaseUrl:
+          'postgres://different-user:different-password@SOURCE.example/%72evealline',
+      }),
+    /databases must differ/u,
+  );
+  assert.throws(
     () => planRecoveryRehearsal({ ...value, targetBlobRoot: value.sourceBlobRoot }),
     /blob roots must differ/u,
   );
