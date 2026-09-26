@@ -33,6 +33,7 @@ export const AUTHORED_JOURNEY_ROUTE_IDS = Object.freeze([
   'whole-spatial-v25',
   'whole-spatial-v26',
   'whole-spatial-v27',
+  'whole-spatial-v28',
   'whole-ornament-v1',
   'whole-ornament-v2',
 ]);
@@ -67,6 +68,7 @@ export const authoredJourneyUsesActorMaterials = (id) =>
     'whole-spatial-v25',
     'whole-spatial-v26',
     'whole-spatial-v27',
+    'whole-spatial-v28',
     'whole-ornament-v1',
     'whole-ornament-v2',
   ].includes(id);
