@@ -1310,6 +1310,13 @@
   "team.completeSpecialists.materialRoutesCampaign": "Партнерські матеріальні маршрути",
   "team.completeSpecialists.returnCampaign": "Повернення, збудовані партнером",
   "team.completeSpecialists.complementaryCampaign": "Взаємодоповнювальні спеціалісти",
+  "team.culturalSpecialists.projectName": "Командна подорож · українські просторові спеціалісти · баланс очікує перевірки",
+  "team.culturalSpecialists.stepping.route": "Спершу закріпити ближню зміщену сходинку чи відкрити довшу лінію до центрального майданчика, щоб інший пілот отримав сильніший наступний старт?",
+  "team.culturalSpecialists.stepping.mastery": "Нехай кожен пілот замкнеться на поверненні, здобутому партнером, до фінального очищення.",
+  "team.culturalSpecialists.workshop.route": "Працювати в дзеркальних зовнішніх камерах окремо чи спершу вибороти відкриту центральну зону, щоб кожен спеціаліст міг перейти й підтримати партнера?",
+  "team.culturalSpecialists.workshop.mastery": "Створіть центральний майданчик, поміняйте спеціалістів сторонами, а потім очистьте обидві зовнішні камери без падіння.",
+  "team.culturalSpecialists.detour.route": "Нейтралізувати повільний західний прохід для контрольованого підходу до центру чи спершу замкнути смертельний східний прохід і відкрити партнеру швидший спільний маршрут?",
+  "team.culturalSpecialists.detour.mastery": "Нейтралізуйте обидва матеріальні проходи й дайте кожному пілоту скористатися центральним майданчиком до завершення.",
   "soundtrack.carolOfTheBellsMetalVersion": "Carol of the Bells (Metal Version)",
   "soundtrack.creatorSource": "Джерело автора",
   "soundtrack.shchedrykProvenance": "Походження «Щедрика»"
