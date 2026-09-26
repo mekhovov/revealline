@@ -104,7 +104,15 @@ const databaseEndpoint = (databaseUrl) => {
   for (const parameter of ['host', 'port', 'dbname', 'service'])
     if (parsed.searchParams.has(parameter))
       throw new Error(`Database URL target parameter is unsupported for rehearsal: ${parameter}`);
-  return `${parsed.hostname.toLowerCase()}:${parsed.port || '5432'}${parsed.pathname}`;
+  let databaseName;
+  try {
+    databaseName = decodeURIComponent(parsed.pathname.slice(1));
+  } catch {
+    throw new Error('Database URL contains an invalid encoded database name.');
+  }
+  if (!databaseName || /[\u0000-\u001f\u007f]/u.test(databaseName))
+    throw new Error('Database URL must identify a PostgreSQL host and database.');
+  return `${parsed.hostname.toLowerCase()}:${parsed.port || '5432'}/${encodeURIComponent(databaseName)}`;
 };
 
 const databaseIdentity = (databaseUrl) => `database_${sha256(databaseEndpoint(databaseUrl))}`;
