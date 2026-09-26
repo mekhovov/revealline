@@ -8,10 +8,10 @@ release claims.
 ## Candidate identity
 
 - Merged framework source: PR #465, merged 25 September 2026.
-- Rebased hardening base: `5bfd55238f19e0454de01b8dd9d1071134cae554` (`main`, source version
-  `0.132.3`).
+- Rebased hardening base: `260303221144aa0430fa78f5fdcda639d1251431` (`main`, after the accepted
+  `v0.132.3` selector).
 - Hardening checkpoint before this acceptance refresh:
-  `e2616fa43d82e73176ad02fd0b831c314bb54e86`.
+  `e62682f586ecae490bcf01caa0744d5af966cf88`.
 - Assigned release target and working source: `v0.141.0` in PR #564. The repository release
   coordinator still has to freeze the reviewed candidate.
 
@@ -28,7 +28,9 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 - Paired image/video and video-only missions retain exact poster and story dependencies. Victory
   keeps the earned poster and offers Play, Skip, and Replay without blocking Next.
 - `.rlpack` export, import, immutable installation, unfinished-attempt recovery, earned pictures,
-  exact updates, and recovery-package removal preserve edition identity.
+  exact updates, and reference-aware installed-media offload/reinstall preserve edition identity.
+  Offload keeps manifests, saves and rewards, detaches only assets unused by another active edition,
+  and requires an exact retained recovery package before deleting runtime bytes.
 - Account sessions, tus upload, isolated validation, catalog publication, browsing, reporting,
   unlisting, download, update, and offline recovery are implemented across the static client and
   self-hosted community service. PostgreSQL-backed admission limits work across API replicas;
@@ -52,11 +54,12 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   installs or exports the reviewed `.rlteammedia` bytes. Team payloads participate in the shared
   256 MiB managed-media ledger through recoverable pending/committed claims.
 - Playback ranges and decoded-frame stepping stay separate from physical editing. Physical
-  trim/conversion is enabled only for one silent browser-decodable MP4 or WebM video track, exports
-  AVC/H.264 MP4, and re-verifies changed bytes, duration, reviewed dimensions, MIME, hash,
-  zero-audio inventories, and aligned decoded start/end pictures. Bounded Balanced and Compact
-  profiles add no-upscale resizing, reviewed bitrate evidence and explicit display-orientation
-  checks. The built-in browser has exact landscape and rotated-portrait Compact evidence.
+  trim/conversion accepts one silent browser-decodable MP4/WebM video track or one AVC plus AAC MP4,
+  exports AVC/H.264 MP4, and re-verifies changed bytes, duration, reviewed dimensions, MIME, hash,
+  track inventories, decoded audio windows, A/V endpoints and aligned decoded start/end pictures.
+  Bounded Balanced and Compact profiles add no-upscale resizing, reviewed bitrate evidence and
+  explicit display-orientation checks. The built-in browser has exact landscape, rotated-portrait
+  Compact and audio-bearing trim evidence.
 
 ## Integrated evidence
 
@@ -92,6 +95,14 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   closed.
 - Rotated-orientation and physical-transform focused cohort: **50/50 passed**, with **114/114**
   across the expanded video/editor/intake/bundle group.
+- The final AAC slice passes **34/34** focused tests. Its owned six-second 640 × 360 AVC plus mono
+  48 kHz AAC fixture was physically converted in the built-in browser over 1–5 seconds. The
+  79,176-byte output passed exact-byte identity, aligned endpoints, three decoded PCM-window
+  comparisons and visual-boundary checks before the download became available.
+- Exact-edition installed-media offload passes **15/15** store tests and **61/61** related
+  creator/media checks. Coverage includes physical unshared deletion, shared-byte retention,
+  immutable profile/attempt keys, no-recovery refusal, stale-generation refusal, interrupted journal
+  recovery, Web Lock serialization and network-free exact reinstall.
 - `npm run validate`: passed for 1,243 files; exact whole-spatial snapshot SHA-256
   `e62ef45089df1bbaea04cceb932949fbe8d29377a4eeefcac8280125006495b3`.
 - Exact presentation SHA-256 after the `fpv88` provenance rebase:
@@ -164,13 +175,14 @@ are included together with end-user assembly and aggregate managed-media account
 cross-database writes retain a bounded pending claim and reconcile it against the verified Team
 inventory on the next review, install or inventory read.
 
-Bounded silent MP4/WebM input can now be physically trimmed or converted to AVC MP4, with optional
-Balanced or Compact resize/compression profiles and exact output verification. Audio trimming,
-codecs outside each browser's successful decode probe, and broader conversion remain unsupported.
-Firefox, Safari, Balanced portrait and physical mobile media qualification remain unclaimed.
+Bounded silent MP4/WebM input and single-track AVC+AAC MP4 can now be physically trimmed or converted
+to AVC MP4, with optional Balanced or Compact resize/compression profiles and exact output
+verification. Other audio layouts and codecs outside each browser's successful decode probe remain
+unsupported. Firefox, Safari, Balanced portrait and physical mobile media qualification remain
+unclaimed.
 
 PR #465 is merged. The hardening branch is rebased onto current protected `main` in PR #564,
-which has the repository-assigned target and source identity `v0.141.0`. The active v0.132.3 release
-must publish and merge its selector first; #564 then requires one final rebase and exact-head hosted
-checks. Publication still requires review, an immutable freeze, artifact hashes, public
+which has the repository-assigned target and source identity `v0.141.0`. The `v0.132.3` release and
+selector are accepted, and #564 is rebased onto subsequent protected `main`. Publication still
+requires exact-head hosted checks, review, an immutable freeze, artifact hashes, public
 online/offline verification, and a separately reviewed Pages selector update where applicable.

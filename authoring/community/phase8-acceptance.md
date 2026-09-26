@@ -1,7 +1,7 @@
 # Phase 8 acceptance record
 
-Status: **bounded silent MP4/WebM trim, conversion, resize and compression implemented with
-fail-closed audio inventory; audio conversion remains open**.
+Status: **bounded silent MP4/WebM and single-track AVC+AAC MP4 trim, conversion, resize and
+compression implemented with decoded audio and visual verification**.
 
 ## Automated evidence
 
@@ -18,17 +18,21 @@ portable video bundles and the focused release-build fixture.
 The orientation follow-up passed 50/50 focused cases and 114/114 across that expanded set. It adds
 an exact rotated-display policy check at the adapter and outer verification boundaries plus the
 guarded temporary-fixture generator route below.
+The AAC follow-up passed 34/34 focused cases. It adds an owned six-second AVC+AAC fixture, decoded
+PCM-window evidence, exact source-range coverage, A/V endpoint checks and fail-closed output
+verification.
 
 - Playback ranges validate positive in-bounds timing and retain the complete original.
 - Directional decoded-frame stepping requires browser presented-frame evidence and rejects an estimate-only
   capture before allocating another result.
 - Pinned Mediabunny 1.59.1 loads lazily only after a physical-trim support check.
-- The production adapter accepts exactly one silent MP4 or WebM video track when browser WebCodecs
-  can decode its actual codec and encode AVC. It always emits AVC MP4; audio, multi-video,
-  additional-track and unavailable-codec cases remain explicit.
-- A separate track-inventory pass authenticates the exact source and output SHA-256/byte count and
-  requires zero audio tracks. Audio-bearing sources stop before adapter capability checks;
-  audio-bearing outputs stay private even when an adapter claims verified synchronization.
+- The production adapter accepts exactly one silent MP4 or WebM video track, or one AVC plus one AAC
+  track in MP4, when browser WebCodecs can decode the actual codecs and encode AVC/AAC. It always
+  emits AVC MP4; multi-track, additional-track and unavailable-codec cases remain explicit.
+- A separate track-inventory pass authenticates exact source/output SHA-256 and byte counts. The AAC
+  path decodes three bounded PCM windows, requires source coverage of the selected range, preserves
+  sample rate/channel layout, compares fingerprints, and independently checks output audio/video
+  endpoints before exposing bytes.
 - Modeled transformed output is withheld unless its bytes differ and a fresh decoder confirms its
   hash, byte count, duration, MIME, width and height.
 - Exact source and output bytes are reopened for four fresh presented-frame captures. Authenticated
@@ -155,28 +159,40 @@ This qualifies display-matrix input and physically portrait Compact output in th
 The exact source/output dimensions, authenticated AVC/zero-audio inventory and visual edges all
 passed independently; the native probe alone was not treated as browser evidence.
 
+## Audio-bearing browser inspection
+
+The repository-owned fixture `game/test/fixtures/video/owned-avc-aac-fixture.mp4` is 173,394 bytes
+with SHA-256 `d592415621ae68175f7b1c182e3024ae09f21e2a4b71fc5e92b08ccaa9c8dcc5`.
+It contains six seconds of 640 × 360 AVC video and mono 48 kHz AAC audio. In the built-in browser:
+
+- requested physical range: 1–5 seconds;
+- actual conversion: AVC plus force-transcoded AAC in MP4;
+- output: 640 × 360, 4.075 seconds, 79,176 bytes, SHA-256
+  `8a4f177dba7d86fef9ba6cc5e54f91909bcbb5afbbd4ed64b85837ac7b5d5ae5`;
+- verification: one AAC track, mono 48 kHz, audio/video endpoints aligned, all three decoded PCM
+  windows matched, and visual start/end errors were `0` and `0.001`;
+- result: the download became available only after the exact-byte, decoded-audio and visual checks
+  passed.
+
 ## Build note
 
 The focused release-build fixture passed 5/5 cases and authenticated the exact vendored module,
 license and provenance bytes in the loose distribution, ZIP, offline inventory and generated
-credits. A full source-tree build was stopped after five minutes before it created output. Stage
-instrumentation excluded this adapter from the delay: config parsing took 91 ms, build collection
-took 493 ms, and reference validation took 1.697 seconds. The run remained CPU-bound for more than
-60 seconds in the repository's existing `generateWholeSpatial({ write: false })` content-snapshot
-gate. That full-tree snapshot gate remains open; it must not be reported as a successful build.
+credits. A later full source-tree build completed successfully for 1,303 files at source version
+`0.141.0`, with distribution SHA-256
+`1d39690b4bdec5110b837a36feddff201e649536c399cb7a6129dd7686588982`. The final audio-bearing
+head still requires the exact-head build in the combined release gate.
 
 ## Open release gates
 
 - Qualify silent AVC MP4 and VP9 WebM input plus AVC output in Firefox and Safari as well as the
   built-in Chromium browser. Other codecs remain conditional on their actual per-browser decode
   probe and require their own recorded fixtures before any compatibility claim.
-- Add an independent decoded-audio timestamp and synchronization verifier before enabling audio;
-  the current same-parser track inventory proves track absence only.
-- Verify audio synchronization and target-browser playback on transformed files.
+- Repeat AVC+AAC trim and target-browser playback in Firefox and Safari.
 - Repeat the rotated portrait Compact fixture in Firefox and Safari, and qualify Balanced with
   recorded landscape and portrait fixtures in every supported browser. The built-in browser now
   has recorded landscape and portrait Compact evidence.
 
-The broader phase remains incomplete while audio and cross-browser/orientation acceptance are open.
+The broader phase remains incomplete while cross-browser/orientation acceptance is open.
 Playback range and poster capture do not count as physical trimming, conversion, resize or
 compression.
