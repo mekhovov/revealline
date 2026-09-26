@@ -57230,6 +57230,206 @@
         },
         "recipe": { "id": "audio.music.v1" },
         "revision": 39
+      },
+      {
+        "description": "focus audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.focus.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.focus.field-kit", "revision": 39 },
+          "prompt": 137,
+          "source": 470
+        },
+        "quality": {
+          "evidence": [
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 40
+      },
+      {
+        "description": "confirm audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.confirm.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.confirm.field-kit", "revision": 39 },
+          "prompt": 51,
+          "source": 470
+        },
+        "quality": {
+          "evidence": [
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 40
+      },
+      {
+        "description": "cancel audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.cancel.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.cancel.field-kit", "revision": 39 },
+          "prompt": 34,
+          "source": 470
+        },
+        "quality": {
+          "evidence": [
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 40
+      },
+      {
+        "description": "capture audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.capture.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.capture.field-kit", "revision": 39 },
+          "prompt": 36,
+          "source": 470
+        },
+        "quality": {
+          "evidence": [
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 40
+      },
+      {
+        "description": "failure audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.failure.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.failure.field-kit", "revision": 39 },
+          "prompt": 78,
+          "source": 470
+        },
+        "quality": {
+          "evidence": [
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 40
+      },
+      {
+        "description": "victory audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.victory.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.victory.field-kit", "revision": 39 },
+          "prompt": 355,
+          "source": 470
+        },
+        "quality": {
+          "evidence": [
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 40
+      },
+      {
+        "description": "pickup audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.pickup.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.pickup.field-kit", "revision": 39 },
+          "prompt": 225,
+          "source": 470
+        },
+        "quality": {
+          "evidence": [
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 40
+      },
+      {
+        "description": "Theme music: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.music.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.music.field-kit", "revision": 39 },
+          "prompt": 323,
+          "source": 470
+        },
+        "quality": {
+          "evidence": [
+            "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.music.v1" },
+        "revision": 40
       }
     ],
     "collections": [
@@ -58208,11 +58408,11 @@
     ],
     "format": "revealline-theme-bundle.v1",
     "id": "field-kit",
-    "revision": 87,
+    "revision": 88,
     "selection": {
       "base": { "id": "base", "revision": 1 },
       "collection": null,
-      "theme": { "id": "fpv", "revision": 87 }
+      "theme": { "id": "fpv", "revision": 88 }
     },
     "slots": [
       {
@@ -80385,6 +80585,24 @@
         "name": "FPV Field Kit",
         "parent": { "id": "fpv", "revision": 86 },
         "revision": 87,
+        "tokens": {}
+      },
+      {
+        "bindings": {
+          "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 40 },
+          "audio.capture": { "id": "audio.capture.field-kit", "revision": 40 },
+          "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 40 },
+          "audio.failure": { "id": "audio.failure.field-kit", "revision": 40 },
+          "audio.focus": { "id": "audio.focus.field-kit", "revision": 40 },
+          "audio.music": { "id": "audio.music.field-kit", "revision": 40 },
+          "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 40 },
+          "audio.victory": { "id": "audio.victory.field-kit", "revision": 40 }
+        },
+        "format": "revealline-presentation-theme.v1",
+        "id": "fpv",
+        "name": "FPV Field Kit",
+        "parent": { "id": "fpv", "revision": 87 },
+        "revision": 88,
         "tokens": {}
       }
     ]
