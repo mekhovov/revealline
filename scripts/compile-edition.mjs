@@ -452,7 +452,7 @@ export async function compileEdition({
   for (const file of enginePaths) {
     required(!excluded.has(file), 'The engine inventory includes omitted edition content.');
     required(
-      !/^(?:game\/company-campaigns\/(?:content|catalog|brands|lessons)\.mjs|game\/editions\/(?:catalog|assets)\.json)$/.test(
+      !/^(?:game\/company-campaigns\/(?:content|catalog|brands|lessons|artwork)\.mjs|game\/editions\/(?:catalog|assets)\.json)$/.test(
         file,
       ),
       'Build-time company registries cannot enter a player edition.',

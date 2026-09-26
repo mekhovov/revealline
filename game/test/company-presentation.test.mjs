@@ -128,6 +128,24 @@ test('official gameplay symbols spin at fixed chosen rates without travel-depend
   }
 });
 
+test('each Dutch campaign dresses every supported enemy role in its own FPV family', () => {
+  const themes = createCompanyThemes('droneaid-nl').slice(1);
+  assert.equal(themes.length, 6);
+  const families = new Set();
+  for (const theme of themes) {
+    const recipes = Object.values(theme.actorRecipes);
+    assert.equal(recipes.length, 7);
+    assert.ok(recipes.every((recipe) => recipe.startsWith('fpv-')));
+    assert.equal(new Set(recipes).size, 1);
+    families.add(recipes[0]);
+    assert.equal(validateTheme(theme).valid, true);
+  }
+  assert.equal(families.size, 6);
+  for (const brandId of ['coupa', 'droneaid'])
+    for (const theme of createCompanyThemes(brandId))
+      assert.ok(Object.values(theme.actorRecipes).every((recipe) => !recipe.startsWith('fpv-')));
+});
+
 test('Dutch propeller retains the four original official paths and pinned source bytes', () => {
   const source = readFileSync(
     new URL('../editions/assets/droneaid-nl/logo-source.svg', import.meta.url),

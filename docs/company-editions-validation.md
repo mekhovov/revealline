@@ -4,6 +4,47 @@ This record distinguishes candidate automation from release qualification. No co
 edition has been promoted or published by this work. Human observations, physical-device
 installation and downloaded/deployed release evidence cannot be inferred from unit tests.
 
+## DroneAid FPV revision 2
+
+The follow-up uses the current official Netherlands workshop/Ukraine-support mission and
+verified violet/yellow site colours. All 36 current Netherlands mission pictures and the
+home hero now show recognizable carbon-frame FPV quads, goggles, component benches and
+donation cases. New exports are 640×320 opaque RGB PNGs, each below 384 KiB, totaling
+12,934,144 bytes. Three revision-2 receipts preserve exact generated masters, selected
+hashes, prompts, targeted imagegen corrections and native resize commands. Each original
+and export was inspected; human artwork approval remains pending.
+
+Six reusable Canvas quad families cover all seven host enemy roles across the six campaigns.
+Four motors, front cameras, bounded silhouettes, held pause/freeze phases and reduced-motion
+behaviour have focused checks. The canonical role badges, contact cues, simulation rules,
+mission geometry and actor behaviour are unchanged. No company identifier enters those
+rendering recipes. All 108 Netherlands mission/difficulty manifests match the exact pre-FPV
+source; the broader 198-current-manifest regression also passes. The existing 414 route
+witnesses pass again, without regenerating their inputs or expected outcomes.
+
+Seven exact snapshots captured from `475bccde4` preserve the pre-FPV presentation alongside
+all 17 existing snapshots. The immutable picture ledger retains revision 1 and appends
+revision 2; authoring selects the highest positive integer revision, while restoration reads
+its pinned snapshot. Import tests reject revision gaps, conflicting records, reused media
+paths, bad media and incomplete provenance; historical and current receipt reimports remain
+idempotent. The authoring selector is explicitly excluded from player builds.
+
+Before the final main integration, 232 company/runtime/artifact tests plus the separate
+six-test route suite passed with no failures or skips. The default actor renderer passed
+23 checks. All 101 generated files match, and local source eligibility admits 135 media
+assets. An independent working-source combined Netherlands compile measured 62,975,290
+bytes / 556 offline files, below the unchanged 64 MiB / 2,000-file limits. Its current and
+two historical source/player presentation receipts match; other-brand content, generation
+provenance and master references are absent. These measurements are preliminary until a
+new clean commit is independently frozen and checked against candidate CI.
+
+Native browser checks on an isolated origin exercised the FPV home, all 36 mission entries,
+keyboard movement and an actual foundation closure, pause, refresh/Continue and Restart.
+The phone-sized 390×844 viewport uses a 382×191 board. This is viewport testing with desktop
+input, not a physical phone or OS installation. Shared-renderer composition previews covered
+all six campaign families; full-art overlays are diagnostic views, not claimed winning runs.
+Existing user profiles were not modified by these isolated-origin checks.
+
 ## Bulk artwork completion in the existing PR
 
 The user requested the remaining work be combined in PR #615 while the release queue is

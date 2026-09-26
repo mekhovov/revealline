@@ -5,6 +5,7 @@ import { readFile } from 'node:fs/promises';
 import { deflateSync } from 'node:zlib';
 import { importCompanyArt } from '../../scripts/import-company-art.mjs';
 import { crc32 } from '../../scripts/game-cli.mjs';
+import { selectCurrentCompanyArtwork } from '../company-campaigns/artwork.mjs';
 
 const bytes = await readFile(
   new URL('../editions/assets/coupa/bulk-02/listen-then-link-v1.png', import.meta.url),
@@ -171,12 +172,49 @@ test('art import refuses replacement or duplicate mission registration without p
   const initial = input(),
     result = await importCompanyArt(initial);
   const occupied = structuredClone(result.artwork);
-  occupied[0].revision = '2';
+  occupied[0].alt = 'A conflicting replacement.';
   await assert.rejects(importCompanyArt({ ...initial, artwork: occupied }), /replace/);
   assert.equal(initial.assets.length, 0);
   const duplicated = fixture();
   duplicated.assets.push(structuredClone(duplicated.assets[0]));
   await assert.rejects(importCompanyArt(input(duplicated)), /repeated/);
+});
+
+test('new art appends immutable revisions while authoring selects the newest picture', async () => {
+  const first = await importCompanyArt(input());
+  const receipt = fixture(),
+    record = receipt.assets[0];
+  record.revision = 2;
+  record.selected.path = 'game/editions/assets/example/garden-v2.png';
+  record.derivation.command[6] = record.selected.path;
+  const second = await importCompanyArt({ ...input(receipt), ...first });
+  assert.equal(second.assets.length, 2);
+  assert.deepEqual(second.artwork[0], first.artwork[0]);
+  assert.equal(second.artwork[1].revision, '2');
+  assert.equal(second.sources.assets[1].revision, 2);
+  assert.equal(second.assets[1].id, 'example-opening-reveal-v2');
+  assert.deepEqual(selectCurrentCompanyArtwork(second.artwork), [second.artwork[1]]);
+  assert.deepEqual(selectCurrentCompanyArtwork([...second.artwork].reverse()), [second.artwork[1]]);
+  for (const replay of [fixture(), receipt]) {
+    const repeated = await importCompanyArt({ ...input(replay), ...second });
+    assert.deepEqual(repeated.artwork, second.artwork);
+    assert.deepEqual(repeated.sources, second.sources);
+  }
+  const reusedPath = fixture();
+  reusedPath.assets[0].revision = 2;
+  await assert.rejects(importCompanyArt({ ...input(reusedPath), ...first }), /path/);
+  for (const revision of [0, -1, 1.5, '2', 3, Number.MAX_SAFE_INTEGER + 1]) {
+    record.revision = revision;
+    await assert.rejects(importCompanyArt({ ...input(receipt), ...first }), /revision/);
+  }
+  assert.throws(
+    () => selectCurrentCompanyArtwork([...second.artwork, second.artwork[1]]),
+    /Repeated/,
+  );
+  assert.throws(
+    () => selectCurrentCompanyArtwork([{ ...second.artwork[1], revision: 'v2' }]),
+    /positive integers/,
+  );
 });
 
 test('self-consistent receipts cannot admit truncated or transparent PNGs', async () => {

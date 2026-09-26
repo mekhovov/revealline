@@ -30,11 +30,20 @@ viewport, reserving measured room for HUD, notices, safe areas and visible touch
 Portrait phones use the full available width. Short landscape screens put touch steering
 beside the board. The layout never stretches the world or changes input coordinates.
 
-Official 2024 Coupa wallpapers furnish the home menu. Three representative generated
-compositions provide a city, a network atlas and a Dutch workshop; prompts and provenance
-are recorded in `game/editions/art-prompts-2026-09-26.json`. These are fictional illustrations.
-The formative playtest is now user-reported complete. Three further pictures are in the first post-playtest review batch; procedural interim pictures
-are not described as finished artwork.
+Official 2024 Coupa wallpapers furnish the home menu. All 66 current missions have distinct
+pinned generated pictures. The Netherlands revision-2 set now depicts recognizable FPV
+quads, goggles, practical drone-building benches and donation cases, using the official
+violet/yellow palette and Ukraine-support details. Its first workshop picture also supplies
+the home hero. The six campaign enemy families are generic Canvas recipes: ducted, open-X,
+stretched, caged, antenna and wide-front quads. Each campaign maps all seven existing enemy
+roles to its family; shared badges and contact cues remain authoritative. Propellers consume
+the shared animation phase, hold during pause and stop with reduced motion.
+
+These are fictional environments; they do not document real employees, events or deliveries.
+The formative playtest is user-reported complete. New artwork retains candidate status until
+final artwork review, with exact prompts, master references, hashes and mechanical resize
+commands in the versioned generation receipts. Current pictures and historical presentations
+resolve separate immutable revisions, so Continue, Retry and replay do not substitute new art.
 
 ## Learning and tools
 

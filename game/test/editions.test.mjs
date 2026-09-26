@@ -455,14 +455,15 @@ test('unselected restricted sources stay out, selected restricted and engine byp
     compileEdition({ ...f, editionIds: ['coupa-public'], enginePaths: ['authoring/studio.json'] }),
     /Source-only/,
   );
-  await assert.rejects(
-    compileEdition({
-      ...f,
-      editionIds: ['coupa-public'],
-      enginePaths: ['game/company-campaigns/catalog.mjs'],
-    }),
-    /Build-time/,
-  );
+  for (const module of ['catalog', 'artwork'])
+    await assert.rejects(
+      compileEdition({
+        ...f,
+        editionIds: ['coupa-public'],
+        enginePaths: [`game/company-campaigns/${module}.mjs`],
+      }),
+      /Build-time/,
+    );
 });
 
 test('transitive assets are copied once and a boot file cannot sneak in omitted levels', async () => {

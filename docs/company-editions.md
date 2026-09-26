@@ -20,14 +20,12 @@ Portuguese DroneAid pilot, and seven Netherlands selections (the combined
 For the next human review, use the [playtest packet](company-editions-playtest.md) and
 [transfer practice page](../authoring/company-studio/playtest.html). The four practice tasks
 change the fictional evidence and expected decisions without saving answers or earning
-campaign progress. Human testing was confirmed **not started** on 26 September 2026.
+campaign progress. The user subsequently reported formative playtesting complete on 26 September 2026; final artwork and physical-device qualification remain separate.
 
 The official Coupa flower spins once every two seconds with its enclosed transparent interior
 filled by a render-time white backing. The Netherlands avatar uses the exact four propeller
 paths extracted from the official Dutch logo, spinning twice per second. Original source
-marks remain unchanged; reduced motion stops both rotations. Paper tangles, missing-information clouds, stale fragments and backlog knots
-use registered silhouette recipes over the existing enemy behaviours. These are fictional
-frictions, not portrayals of colleagues or suppliers.
+marks remain unchanged; reduced motion stops both rotations. Coupa uses paper tangles, missing-information clouds, stale fragments and backlog knots. DroneAid Netherlands uses six FPV quad families across all seven enemy roles, with four motors, a forward camera and animated propellers. Shared role badges, contact rings, warnings and enemy behaviour stay engine-owned. These are fictional game obstacles, not portrayals of workshop participants or recipients.
 
 Five Coupa campaigns contain 30 distinct maps. Six DroneAid Netherlands campaigns add 36;
 the three historical Portuguese maps remain available separately. All 66 current missions pin
@@ -85,7 +83,7 @@ existing campaign projects and their boot content. The runtime catalog is an all
 a menu filter. Deep links cannot select omitted content.
 
 `assets.json` is the public-byte inventory. `artwork.json` binds mission pictures to exact
-hashes, revisions and dimensions. Artwork-only updates advance affected edition revisions and
+hashes, revisions and dimensions in an immutable ledger. The authoring factory selects the highest positive integer revision for each picture ID and rejects duplicate revisions; retained presentations resolve their own exact embedded records. Artwork-only updates advance affected edition revisions and
 asset identities, recompute exact execution/presentation hashes, and retain the previous selected
 presentation. Unchanged gameplay, campaign and pack designs keep their revisions; logical Journey
 progress remains compatible. Changed gameplay requires new gameplay identities and deliberate
@@ -264,7 +262,7 @@ node scripts/produce-company-content.mjs
 
 The importer validates authored mission identities, exact PNG hashes/dimensions, portable
 master provenance, inspection records and the 1 MiB selection target. It refuses replacement
-of an existing revision, duplicate mission registration and unsafe paths. It does not certify
+of an existing revision, duplicate mission registration within a batch, revision gaps and reused media paths. Omitted receipt revisions mean revision 1 for existing tooling; replacements explicitly specify the next integer revision and use a fresh path. Reimporting an older exact receipt is idempotent and does not roll back current selection. It does not certify
 human artwork approval or change gameplay. Completed original/export inspections use explicit
 states; prose alone cannot authorize an inspected source claim. Recorded native `sips` resize
 commands must bind the exact master, selected output and dimensions. Register a complete batch in one catalogue update;
@@ -280,6 +278,19 @@ The completed bulk receipts link exact generated masters and selected files:
 Generation used the built-in image tool; exports preserve opaque RGB pixels with a
 mechanical resize. Full bounded PNG decoding rejects incomplete, corrupt or transparent
 selections before registration. Final artwork approval remains separate.
+
+The FPV follow-up replaces all 36 current Netherlands pictures with practical carbon-frame
+quad, goggle, component-bench and donation-case scenes. Its three revision-2 receipts are
+[Workshop and Parts](../game/editions/art-prompts-droneaid-fpv-workshop-v2.json),
+[Makers and Handoff](../game/editions/art-prompts-droneaid-fpv-makers-handoff-v2.json), and
+[Support and Horizon](../game/editions/art-prompts-droneaid-fpv-community-v2.json).
+The first workshop picture also supplies the current home hero. The new per-image target
+is 384 KiB, using opaque 2:1 native-resized derivatives; the seven exact pre-FPV presentation
+snapshots preserve the larger original pictures for saved runs. The offline cap remains
+64 MiB. Brand revision 2 and Netherlands edition revision 4 are presentation changes;
+campaign, mission, gameplay and logical progress identities stay unchanged. Coupa and the
+historical Portuguese pilot retain their existing content. Research, composition decisions
+and source boundaries are in [the FPV art direction](droneaid-fpv-art-direction.md).
 
 The player verifies identity and shared presentation assets at startup. Reveal-only mission
 pictures load through the exact per-attempt verifier when needed. Their complete catalogue,

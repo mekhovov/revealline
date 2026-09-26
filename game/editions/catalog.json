@@ -869,6 +869,330 @@
       "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-06.png",
       "publication": "public",
       "sha256": "512795cc0280d5c59c6d1eddc425deb96a199d3c8f2c45fef496daa144bbfd64"
+    },
+    {
+      "approved": true,
+      "bytes": 370758,
+      "dependencies": [],
+      "id": "droneaid-nl-workshop-lights-01-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-workshop-lights-01.png",
+      "publication": "public",
+      "sha256": "1505965b83050fc942d20e180a7752ee7435df4b8b468247d07979c20093404c"
+    },
+    {
+      "approved": true,
+      "bytes": 348333,
+      "dependencies": [],
+      "id": "droneaid-nl-parts-in-motion-03-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-parts-in-motion-03.png",
+      "publication": "public",
+      "sha256": "196aad09cc2e99b5bdd53f45fcd434f3bcab3352a31345de6bf73055f953f721"
+    },
+    {
+      "approved": true,
+      "bytes": 367175,
+      "dependencies": [],
+      "id": "droneaid-nl-workshop-lights-02-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-workshop-lights-02.png",
+      "publication": "public",
+      "sha256": "d2d1570cab85c70dbd3a23edcc0adece08eb6e3e4de3c7146248b85aedea4fc2"
+    },
+    {
+      "approved": true,
+      "bytes": 353642,
+      "dependencies": [],
+      "id": "droneaid-nl-workshop-lights-03-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-workshop-lights-03.png",
+      "publication": "public",
+      "sha256": "1e4ecc8b44c3fa471766d973f9fd2bfe7b403890ce043ee7782c2f8ae8b19e5a"
+    },
+    {
+      "approved": true,
+      "bytes": 375865,
+      "dependencies": [],
+      "id": "droneaid-nl-workshop-lights-04-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-workshop-lights-04.png",
+      "publication": "public",
+      "sha256": "1956d802ea3311befa7db59221c8b8aef4289f7428ea8629ae752ae130e65473"
+    },
+    {
+      "approved": true,
+      "bytes": 377024,
+      "dependencies": [],
+      "id": "droneaid-nl-workshop-lights-05-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-workshop-lights-05.png",
+      "publication": "public",
+      "sha256": "507e585fb610ea689d2ad0b4fd3c2557c1c7e7ba5720ced58d1c81c8cc13cfa5"
+    },
+    {
+      "approved": true,
+      "bytes": 370395,
+      "dependencies": [],
+      "id": "droneaid-nl-workshop-lights-06-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-workshop-lights-06.png",
+      "publication": "public",
+      "sha256": "eb0f09900436e3600cac7e4e6883d962f0ba228026ab5dbfa25361f974b4d95f"
+    },
+    {
+      "approved": true,
+      "bytes": 392691,
+      "dependencies": [],
+      "id": "droneaid-nl-parts-in-motion-01-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-parts-in-motion-01.png",
+      "publication": "public",
+      "sha256": "38d6e11fae2c97b1385acfe8d7170df1fe46c92070395c1a826fe2c9f176e2a9"
+    },
+    {
+      "approved": true,
+      "bytes": 378389,
+      "dependencies": [],
+      "id": "droneaid-nl-parts-in-motion-02-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-parts-in-motion-02.png",
+      "publication": "public",
+      "sha256": "7e25a9ed080a406215f9e0f4c6ff90327a377115fb10675b504bea1381ccad19"
+    },
+    {
+      "approved": true,
+      "bytes": 380974,
+      "dependencies": [],
+      "id": "droneaid-nl-parts-in-motion-04-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-parts-in-motion-04.png",
+      "publication": "public",
+      "sha256": "ae012480d7869d1741464d6d74011b68b1070f1d2ec28fe321477f76f40fa757"
+    },
+    {
+      "approved": true,
+      "bytes": 389862,
+      "dependencies": [],
+      "id": "droneaid-nl-parts-in-motion-05-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-parts-in-motion-05.png",
+      "publication": "public",
+      "sha256": "5deefaecfbb929c356e2abb86f0a93c5b50c1af2b6be071d4d73f0d301a7be21"
+    },
+    {
+      "approved": true,
+      "bytes": 365600,
+      "dependencies": [],
+      "id": "droneaid-nl-parts-in-motion-06-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-parts-in-motion-06.png",
+      "publication": "public",
+      "sha256": "2c442768b3680bc9722fbba343b2ab7f5df7401373a5f1d4658e33cb3489951b"
+    },
+    {
+      "approved": true,
+      "bytes": 373593,
+      "dependencies": [],
+      "id": "droneaid-nl-careful-handoff-01-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-01.png",
+      "publication": "public",
+      "sha256": "a18c0fd50924e46b4f7b277c4a1848cbde105012174df1ea87756bb81d5b08fe"
+    },
+    {
+      "approved": true,
+      "bytes": 340440,
+      "dependencies": [],
+      "id": "droneaid-nl-careful-handoff-02-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-02.png",
+      "publication": "public",
+      "sha256": "bd7d16c482fb993ff5af5282f935e9222d98425b6f18ec7e53a6a7cf38ee1111"
+    },
+    {
+      "approved": true,
+      "bytes": 361665,
+      "dependencies": [],
+      "id": "droneaid-nl-careful-handoff-03-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-03.png",
+      "publication": "public",
+      "sha256": "fe9059ea223db49a583c25946656b0eed1edcd23047479fa2c00e185b9cbd4d4"
+    },
+    {
+      "approved": true,
+      "bytes": 351275,
+      "dependencies": [],
+      "id": "droneaid-nl-careful-handoff-04-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-04.png",
+      "publication": "public",
+      "sha256": "39b8e2cd81130fbf146c52f55086f0f407993b46b3c34db12645e6fc58219b4f"
+    },
+    {
+      "approved": true,
+      "bytes": 355585,
+      "dependencies": [],
+      "id": "droneaid-nl-careful-handoff-05-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-05.png",
+      "publication": "public",
+      "sha256": "3eda2b221539263cff8f5730149d4ea0b9f8ef38d6c3fa926c6c7b9b63221caf"
+    },
+    {
+      "approved": true,
+      "bytes": 320718,
+      "dependencies": [],
+      "id": "droneaid-nl-careful-handoff-06-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-06.png",
+      "publication": "public",
+      "sha256": "d2adb95ca3ee0186e20f0491e3de41c51241cc50121cbcffdd48f9c3ae507fc2"
+    },
+    {
+      "approved": true,
+      "bytes": 382591,
+      "dependencies": [],
+      "id": "droneaid-nl-makers-together-01-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-01.png",
+      "publication": "public",
+      "sha256": "8398b41cecd82a5f81597443510a0512c096cdaad5be6d2eb37612845e4e38b5"
+    },
+    {
+      "approved": true,
+      "bytes": 351487,
+      "dependencies": [],
+      "id": "droneaid-nl-makers-together-02-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-02.png",
+      "publication": "public",
+      "sha256": "73279510c3855b8def6b33ac3ee4ab8da22b6dfdcd43e044dcdeb98cb44c0d10"
+    },
+    {
+      "approved": true,
+      "bytes": 357395,
+      "dependencies": [],
+      "id": "droneaid-nl-makers-together-03-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-03.png",
+      "publication": "public",
+      "sha256": "d1b2d70699a335446c5356611192174dfed4d636c3e07066b05020672b33df15"
+    },
+    {
+      "approved": true,
+      "bytes": 360092,
+      "dependencies": [],
+      "id": "droneaid-nl-makers-together-04-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-04.png",
+      "publication": "public",
+      "sha256": "621a4172432823b3757e285ae02ce77f16a0f8af0be349678a1d82d69bcc014a"
+    },
+    {
+      "approved": true,
+      "bytes": 346452,
+      "dependencies": [],
+      "id": "droneaid-nl-makers-together-05-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-05.png",
+      "publication": "public",
+      "sha256": "3e617f7b5aab93b6e9eec98ef0aafd18fd6f3653d3ba50ca2c3306d61873f766"
+    },
+    {
+      "approved": true,
+      "bytes": 322276,
+      "dependencies": [],
+      "id": "droneaid-nl-makers-together-06-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-06.png",
+      "publication": "public",
+      "sha256": "d7ff6f724b39663741a4774e16775ae6dcfbbc4c54c455c2ee119cfffb453fc2"
+    },
+    {
+      "approved": true,
+      "bytes": 356331,
+      "dependencies": [],
+      "id": "droneaid-nl-shared-horizon-01-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-shared-horizon-01.png",
+      "publication": "public",
+      "sha256": "f19b8c80f5675a501c3388a94eef5cae41422150c828eddf860354b958bd3476"
+    },
+    {
+      "approved": true,
+      "bytes": 374823,
+      "dependencies": [],
+      "id": "droneaid-nl-shared-horizon-02-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-shared-horizon-02.png",
+      "publication": "public",
+      "sha256": "816183b5818bdac0f2e1782e1ab7e21d5cb7331cb2d35d2f809462bd48aca36b"
+    },
+    {
+      "approved": true,
+      "bytes": 346604,
+      "dependencies": [],
+      "id": "droneaid-nl-shared-horizon-03-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-shared-horizon-03.png",
+      "publication": "public",
+      "sha256": "0da7beb1f8b10979eb12d1d4d5949749f1e66ffcb813cc670c1f782297799939"
+    },
+    {
+      "approved": true,
+      "bytes": 351779,
+      "dependencies": [],
+      "id": "droneaid-nl-shared-horizon-04-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-shared-horizon-04.png",
+      "publication": "public",
+      "sha256": "202d47f30f2ce1143203c7345b83b4ace5b0d87312e36446e1ecfc37be06ee08"
+    },
+    {
+      "approved": true,
+      "bytes": 353605,
+      "dependencies": [],
+      "id": "droneaid-nl-shared-horizon-05-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-shared-horizon-05.png",
+      "publication": "public",
+      "sha256": "1683839d3777a344b70e8898e86a0ab623fcacd5e92605d9c5b9ee2cffd67035"
+    },
+    {
+      "approved": true,
+      "bytes": 371853,
+      "dependencies": [],
+      "id": "droneaid-nl-shared-horizon-06-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-shared-horizon-06.png",
+      "publication": "public",
+      "sha256": "2afb526dcf3cd806459685a1f44fd7637228693deeb62f7d4425d4a50161010f"
+    },
+    {
+      "approved": true,
+      "bytes": 337124,
+      "dependencies": [],
+      "id": "droneaid-nl-signals-of-support-01-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-signals-of-support-01.png",
+      "publication": "public",
+      "sha256": "6148e9df9b1c981031de819fd236c67b95929b3b97284baf3114ccdc0c38d78e"
+    },
+    {
+      "approved": true,
+      "bytes": 330127,
+      "dependencies": [],
+      "id": "droneaid-nl-signals-of-support-02-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-signals-of-support-02.png",
+      "publication": "public",
+      "sha256": "6d8b2bcbaa9380d827d7c40454264df0a5d404dae88c0d0bf43d05fd87703729"
+    },
+    {
+      "approved": true,
+      "bytes": 356054,
+      "dependencies": [],
+      "id": "droneaid-nl-signals-of-support-03-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-signals-of-support-03.png",
+      "publication": "public",
+      "sha256": "e93eb9773a9d2c3117bfbca585f51f59344c7478da06f72069d2fd423759709f"
+    },
+    {
+      "approved": true,
+      "bytes": 326762,
+      "dependencies": [],
+      "id": "droneaid-nl-signals-of-support-04-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-signals-of-support-04.png",
+      "publication": "public",
+      "sha256": "c01f9fe04574494dd0813d61d7e3c8140ac3b2a52448260fc0461d0ef2cdab0f"
+    },
+    {
+      "approved": true,
+      "bytes": 372369,
+      "dependencies": [],
+      "id": "droneaid-nl-signals-of-support-05-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-signals-of-support-05.png",
+      "publication": "public",
+      "sha256": "a744d075d059de5c3d4a8c2100d078cb8422fd58bfa0849231a7d7d2463f7c76"
+    },
+    {
+      "approved": true,
+      "bytes": 362436,
+      "dependencies": [],
+      "id": "droneaid-nl-signals-of-support-06-reveal-v2",
+      "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-signals-of-support-06.png",
+      "publication": "public",
+      "sha256": "4a405fa47d3b68080612d09a321ec3a36ed6650bd70adf4398121e91f7b24983"
     }
   ],
   "brands": [
@@ -963,23 +1287,23 @@
         "droneaid-nl-logo",
         "droneaid-nl-propeller",
         "droneaid-nl-icon-512",
-        "nl-workshop-v1"
+        "droneaid-nl-workshop-lights-01-reveal-v2"
       ],
-      "description": "Build together. Share what is possible. Fictional workshop adventures inspired by DroneAid Netherlands.",
+      "description": "Build FPV drones together. Fictional workshop and donation adventures inspired by DroneAid Netherlands and its support for Ukraine.",
       "fontAssetId": null,
       "format": "revealline-brand-pack.v1",
-      "heroAssetId": "nl-workshop-v1",
+      "heroAssetId": "droneaid-nl-workshop-lights-01-reveal-v2",
       "iconAssetId": "droneaid-nl-icon-512",
       "id": "droneaid-nl",
       "logoAssetId": "droneaid-nl-logo",
       "name": "DroneAid Netherlands",
       "publication": "public",
-      "revision": 1,
+      "revision": 2,
       "sources": [
         {
           "kind": "official",
           "title": "DroneAid Netherlands — official identity and workshop activities",
-          "url": "https://drone-aid.nl/nl"
+          "url": "https://drone-aid.nl/en"
         },
         {
           "kind": "official",
@@ -1105,12 +1429,12 @@
     },
     {
       "assetIds": [
-        "nl-workshop-v1",
-        "droneaid-nl-workshop-lights-02-reveal-v1",
-        "droneaid-nl-workshop-lights-03-reveal-v1",
-        "droneaid-nl-workshop-lights-04-reveal-v1",
-        "droneaid-nl-workshop-lights-05-reveal-v1",
-        "droneaid-nl-workshop-lights-06-reveal-v1"
+        "droneaid-nl-workshop-lights-01-reveal-v2",
+        "droneaid-nl-workshop-lights-02-reveal-v2",
+        "droneaid-nl-workshop-lights-03-reveal-v2",
+        "droneaid-nl-workshop-lights-04-reveal-v2",
+        "droneaid-nl-workshop-lights-05-reveal-v2",
+        "droneaid-nl-workshop-lights-06-reveal-v2"
       ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-workshop-lights",
@@ -1122,12 +1446,12 @@
     },
     {
       "assetIds": [
-        "droneaid-nl-parts-in-motion-01-reveal-v1",
-        "droneaid-nl-parts-in-motion-02-reveal-v1",
-        "droneaid-nl-parts-in-motion-03-reveal-v1",
-        "droneaid-nl-parts-in-motion-04-reveal-v1",
-        "droneaid-nl-parts-in-motion-05-reveal-v1",
-        "droneaid-nl-parts-in-motion-06-reveal-v1"
+        "droneaid-nl-parts-in-motion-01-reveal-v2",
+        "droneaid-nl-parts-in-motion-02-reveal-v2",
+        "droneaid-nl-parts-in-motion-03-reveal-v2",
+        "droneaid-nl-parts-in-motion-04-reveal-v2",
+        "droneaid-nl-parts-in-motion-05-reveal-v2",
+        "droneaid-nl-parts-in-motion-06-reveal-v2"
       ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-parts-in-motion",
@@ -1139,12 +1463,12 @@
     },
     {
       "assetIds": [
-        "droneaid-nl-makers-together-01-reveal-v1",
-        "droneaid-nl-makers-together-02-reveal-v1",
-        "droneaid-nl-makers-together-03-reveal-v1",
-        "droneaid-nl-makers-together-04-reveal-v1",
-        "droneaid-nl-makers-together-05-reveal-v1",
-        "droneaid-nl-makers-together-06-reveal-v1"
+        "droneaid-nl-makers-together-01-reveal-v2",
+        "droneaid-nl-makers-together-02-reveal-v2",
+        "droneaid-nl-makers-together-03-reveal-v2",
+        "droneaid-nl-makers-together-04-reveal-v2",
+        "droneaid-nl-makers-together-05-reveal-v2",
+        "droneaid-nl-makers-together-06-reveal-v2"
       ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-makers-together",
@@ -1156,12 +1480,12 @@
     },
     {
       "assetIds": [
-        "droneaid-nl-careful-handoff-01-reveal-v1",
-        "droneaid-nl-careful-handoff-02-reveal-v1",
-        "droneaid-nl-careful-handoff-03-reveal-v1",
-        "droneaid-nl-careful-handoff-04-reveal-v1",
-        "droneaid-nl-careful-handoff-05-reveal-v1",
-        "droneaid-nl-careful-handoff-06-reveal-v1"
+        "droneaid-nl-careful-handoff-01-reveal-v2",
+        "droneaid-nl-careful-handoff-02-reveal-v2",
+        "droneaid-nl-careful-handoff-03-reveal-v2",
+        "droneaid-nl-careful-handoff-04-reveal-v2",
+        "droneaid-nl-careful-handoff-05-reveal-v2",
+        "droneaid-nl-careful-handoff-06-reveal-v2"
       ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-careful-handoff",
@@ -1173,12 +1497,12 @@
     },
     {
       "assetIds": [
-        "droneaid-nl-signals-of-support-01-reveal-v1",
-        "droneaid-nl-signals-of-support-02-reveal-v1",
-        "droneaid-nl-signals-of-support-03-reveal-v1",
-        "droneaid-nl-signals-of-support-04-reveal-v1",
-        "droneaid-nl-signals-of-support-05-reveal-v1",
-        "droneaid-nl-signals-of-support-06-reveal-v1"
+        "droneaid-nl-signals-of-support-01-reveal-v2",
+        "droneaid-nl-signals-of-support-02-reveal-v2",
+        "droneaid-nl-signals-of-support-03-reveal-v2",
+        "droneaid-nl-signals-of-support-04-reveal-v2",
+        "droneaid-nl-signals-of-support-05-reveal-v2",
+        "droneaid-nl-signals-of-support-06-reveal-v2"
       ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-signals-of-support",
@@ -1190,12 +1514,12 @@
     },
     {
       "assetIds": [
-        "droneaid-nl-shared-horizon-01-reveal-v1",
-        "droneaid-nl-shared-horizon-02-reveal-v1",
-        "droneaid-nl-shared-horizon-03-reveal-v1",
-        "droneaid-nl-shared-horizon-04-reveal-v1",
-        "droneaid-nl-shared-horizon-05-reveal-v1",
-        "droneaid-nl-shared-horizon-06-reveal-v1"
+        "droneaid-nl-shared-horizon-01-reveal-v2",
+        "droneaid-nl-shared-horizon-02-reveal-v2",
+        "droneaid-nl-shared-horizon-03-reveal-v2",
+        "droneaid-nl-shared-horizon-04-reveal-v2",
+        "droneaid-nl-shared-horizon-05-reveal-v2",
+        "droneaid-nl-shared-horizon-06-reveal-v2"
       ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-shared-horizon",
@@ -1456,10 +1780,16 @@
           "id": "13bf4f80b1b055d9fb5abdc137dfc93b94fe4ba55072104e697fb29615374679",
           "path": "game/editions/retained/droneaid-nl-community-fb207466c.json",
           "sha256": "b68b453158c820a542051999f242643250439a55e532653555940ffa31bbd055"
+        },
+        {
+          "bytes": 146882,
+          "id": "3445135910a80ceb5b5fdb862c431ead7db00a09631ede2ec28426119d907f67",
+          "path": "game/editions/retained/droneaid-nl-community-475bccde4.json",
+          "sha256": "27669f1fa5d8692e6314bfd5d600c5554dee6679c364f7109a5663e8653856bc"
         }
       ],
       "publication": "public",
-      "revision": 3
+      "revision": 4
     },
     {
       "audience": "public",
@@ -1484,10 +1814,16 @@
           "id": "4e9e2e8ebc38f4bf6ae0b5a06144c103947cb90704b6646800bec534bcbf5c14",
           "path": "game/editions/retained/droneaid-nl-workshop-lights-fb207466c.json",
           "sha256": "ace1b2e55b06ba220e26d52dc2ca282b8100f1c5bddd40e1656363c20ba6ad45"
+        },
+        {
+          "bytes": 33575,
+          "id": "115d034320ff3efb161abd00b5886485bd92c7a161d405e5f8cb384263480b70",
+          "path": "game/editions/retained/droneaid-nl-workshop-lights-475bccde4.json",
+          "sha256": "4099c606f57300678a6874695da6fc1c0af8b1ec2402e1cb1277cd339694f0ca"
         }
       ],
       "publication": "public",
-      "revision": 3
+      "revision": 4
     },
     {
       "audience": "public",
@@ -1512,10 +1848,16 @@
           "id": "0b402f348a0d84f534c5db803d731394f7120160d7fd9c538887a4361a20ae40",
           "path": "game/editions/retained/droneaid-nl-parts-in-motion-fb207466c.json",
           "sha256": "a565f9a298e5adac88570474e4a484458e8c216fc34b9269274a55738d08a36c"
+        },
+        {
+          "bytes": 38774,
+          "id": "e8c32e78d0ef5bf6f09a08cbe2ccaf244ec4917c877bce69c2fdf9cb3f38673b",
+          "path": "game/editions/retained/droneaid-nl-parts-in-motion-475bccde4.json",
+          "sha256": "62aa48212ba19ede5bbc12064fc0fda026c2703ca8fef777d1d6657ba0d802e2"
         }
       ],
       "publication": "public",
-      "revision": 3
+      "revision": 4
     },
     {
       "audience": "public",
@@ -1540,10 +1882,16 @@
           "id": "609db6d6c7ea54120531b53b2b5c54b26d1484306195a426c39bd40d5236b478",
           "path": "game/editions/retained/droneaid-nl-makers-together-fb207466c.json",
           "sha256": "21a7b3be9a7850d2f89b250903670b2fc6d98a7ffc32d8659ab1dd79d1e53937"
+        },
+        {
+          "bytes": 39429,
+          "id": "8c7d12be0f28ca874e88bbb453ab06fc947245681e8a4fc851b0c70a88314488",
+          "path": "game/editions/retained/droneaid-nl-makers-together-475bccde4.json",
+          "sha256": "4bdd87457f48ef2123d7d4dfe608c9161d8ba493dd2f4039be45dcf81595b437"
         }
       ],
       "publication": "public",
-      "revision": 3
+      "revision": 4
     },
     {
       "audience": "public",
@@ -1568,10 +1916,16 @@
           "id": "fb9dafae437c37905dcdd07cec0f67b53ead801a8894c2bf2070309dfd16a913",
           "path": "game/editions/retained/droneaid-nl-careful-handoff-fb207466c.json",
           "sha256": "20f0a33e045c38ba73b19e5cfc7823378a23a1d81129677aea15474be1dd640a"
+        },
+        {
+          "bytes": 40708,
+          "id": "2cb54a68ee115af048b210d130af7418d44307adbeb69ab54dbc4fc0418cacd7",
+          "path": "game/editions/retained/droneaid-nl-careful-handoff-475bccde4.json",
+          "sha256": "18d7a8f5324dc39a648eaeab9457e3d4c07814fd81f297e6c774bee6ae60e847"
         }
       ],
       "publication": "public",
-      "revision": 3
+      "revision": 4
     },
     {
       "audience": "public",
@@ -1596,10 +1950,16 @@
           "id": "013849c9507447451ca1f9a58d845da2d44436dbf776b231162ab8715cc61863",
           "path": "game/editions/retained/droneaid-nl-signals-of-support-fb207466c.json",
           "sha256": "62e89a9c88e6812bc41bb36fab7c6af1ff7c818e8c91d7476ff488e891b20450"
+        },
+        {
+          "bytes": 42294,
+          "id": "048f59ae3ab8452c1e2f387a15dc10baad8d88c921663e2c576e7ad2fffa2b44",
+          "path": "game/editions/retained/droneaid-nl-signals-of-support-475bccde4.json",
+          "sha256": "afcd187771ec49ac54194b970930d1df0ee382da18368594dcadf14604f07bf7"
         }
       ],
       "publication": "public",
-      "revision": 3
+      "revision": 4
     },
     {
       "audience": "public",
@@ -1624,10 +1984,16 @@
           "id": "1c5fc1701fb224c9a548d1540b19e2f8c893b43c6bc81d2b91a0bb65d3bcf0a6",
           "path": "game/editions/retained/droneaid-nl-shared-horizon-fb207466c.json",
           "sha256": "51eb77a2b7499f7af923189e620315c05dc142f2766e7b605fc13522dbdafa1b"
+        },
+        {
+          "bytes": 42871,
+          "id": "fb225362d153cdd9af4d0421e7e7905521bb0d926cab7557985d40982924e429",
+          "path": "game/editions/retained/droneaid-nl-shared-horizon-475bccde4.json",
+          "sha256": "e1e31c174b40a97cfe0d43998bd91a4dd3eb314183f7bd5c29de618a51859977"
         }
       ],
       "publication": "public",
-      "revision": 3
+      "revision": 4
     }
   ],
   "format": "revealline-edition-catalog.v1",

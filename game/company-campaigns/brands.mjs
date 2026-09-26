@@ -85,10 +85,10 @@ export const COMPANY_BRANDS = Object.freeze([
   {
     format: 'revealline-brand-pack.v1',
     id: 'droneaid-nl',
-    revision: 1,
+    revision: 2,
     name: 'DroneAid Netherlands',
     description:
-      'Build together. Share what is possible. Fictional workshop adventures inspired by DroneAid Netherlands.',
+      'Build FPV drones together. Fictional workshop and donation adventures inspired by DroneAid Netherlands and its support for Ukraine.',
     publication: 'public',
     themeId: 'droneaid-nl-community',
     themeIds: [
@@ -97,19 +97,19 @@ export const COMPANY_BRANDS = Object.freeze([
     ],
     actorSetId: 'droneaid-nl-propeller',
     logoAssetId: 'droneaid-nl-logo',
-    heroAssetId: 'nl-workshop-v1',
+    heroAssetId: 'droneaid-nl-workshop-lights-01-reveal-v2',
     iconAssetId: 'droneaid-nl-icon-512',
     fontAssetId: null,
     assetIds: [
       'droneaid-nl-logo',
       'droneaid-nl-propeller',
       'droneaid-nl-icon-512',
-      'nl-workshop-v1',
+      'droneaid-nl-workshop-lights-01-reveal-v2',
     ],
     sources: [
       {
         title: 'DroneAid Netherlands — official identity and workshop activities',
-        url: 'https://drone-aid.nl/nl',
+        url: 'https://drone-aid.nl/en',
         kind: 'official',
       },
       {
@@ -237,6 +237,12 @@ const retainedPresentations = Object.freeze({
       sha256: 'b68b453158c820a542051999f242643250439a55e532653555940ffa31bbd055',
       bytes: 118479,
     },
+    {
+      id: '3445135910a80ceb5b5fdb862c431ead7db00a09631ede2ec28426119d907f67',
+      path: 'game/editions/retained/droneaid-nl-community-475bccde4.json',
+      sha256: '27669f1fa5d8692e6314bfd5d600c5554dee6679c364f7109a5663e8653856bc',
+      bytes: 146882,
+    },
   ],
   'droneaid-nl-workshop-lights': [
     {
@@ -244,6 +250,12 @@ const retainedPresentations = Object.freeze({
       path: 'game/editions/retained/droneaid-nl-workshop-lights-fb207466c.json',
       sha256: 'ace1b2e55b06ba220e26d52dc2ca282b8100f1c5bddd40e1656363c20ba6ad45',
       bytes: 29573,
+    },
+    {
+      id: '115d034320ff3efb161abd00b5886485bd92c7a161d405e5f8cb384263480b70',
+      path: 'game/editions/retained/droneaid-nl-workshop-lights-475bccde4.json',
+      sha256: '4099c606f57300678a6874695da6fc1c0af8b1ec2402e1cb1277cd339694f0ca',
+      bytes: 33575,
     },
   ],
   'droneaid-nl-parts-in-motion': [
@@ -253,6 +265,12 @@ const retainedPresentations = Object.freeze({
       sha256: 'a565f9a298e5adac88570474e4a484458e8c216fc34b9269274a55738d08a36c',
       bytes: 33974,
     },
+    {
+      id: 'e8c32e78d0ef5bf6f09a08cbe2ccaf244ec4917c877bce69c2fdf9cb3f38673b',
+      path: 'game/editions/retained/droneaid-nl-parts-in-motion-475bccde4.json',
+      sha256: '62aa48212ba19ede5bbc12064fc0fda026c2703ca8fef777d1d6657ba0d802e2',
+      bytes: 38774,
+    },
   ],
   'droneaid-nl-makers-together': [
     {
@@ -260,6 +278,12 @@ const retainedPresentations = Object.freeze({
       path: 'game/editions/retained/droneaid-nl-makers-together-fb207466c.json',
       sha256: '21a7b3be9a7850d2f89b250903670b2fc6d98a7ffc32d8659ab1dd79d1e53937',
       bytes: 34640,
+    },
+    {
+      id: '8c7d12be0f28ca874e88bbb453ab06fc947245681e8a4fc851b0c70a88314488',
+      path: 'game/editions/retained/droneaid-nl-makers-together-475bccde4.json',
+      sha256: '4bdd87457f48ef2123d7d4dfe608c9161d8ba493dd2f4039be45dcf81595b437',
+      bytes: 39429,
     },
   ],
   'droneaid-nl-careful-handoff': [
@@ -269,6 +293,12 @@ const retainedPresentations = Object.freeze({
       sha256: '20f0a33e045c38ba73b19e5cfc7823378a23a1d81129677aea15474be1dd640a',
       bytes: 35799,
     },
+    {
+      id: '2cb54a68ee115af048b210d130af7418d44307adbeb69ab54dbc4fc0418cacd7',
+      path: 'game/editions/retained/droneaid-nl-careful-handoff-475bccde4.json',
+      sha256: '18d7a8f5324dc39a648eaeab9457e3d4c07814fd81f297e6c774bee6ae60e847',
+      bytes: 40708,
+    },
   ],
   'droneaid-nl-signals-of-support': [
     {
@@ -277,6 +307,12 @@ const retainedPresentations = Object.freeze({
       sha256: '62e89a9c88e6812bc41bb36fab7c6af1ff7c818e8c91d7476ff488e891b20450',
       bytes: 37264,
     },
+    {
+      id: '048f59ae3ab8452c1e2f387a15dc10baad8d88c921663e2c576e7ad2fffa2b44',
+      path: 'game/editions/retained/droneaid-nl-signals-of-support-475bccde4.json',
+      sha256: 'afcd187771ec49ac54194b970930d1df0ee382da18368594dcadf14604f07bf7',
+      bytes: 42294,
+    },
   ],
   'droneaid-nl-shared-horizon': [
     {
@@ -284,6 +320,12 @@ const retainedPresentations = Object.freeze({
       path: 'game/editions/retained/droneaid-nl-shared-horizon-fb207466c.json',
       sha256: '51eb77a2b7499f7af923189e620315c05dc142f2766e7b605fc13522dbdafa1b',
       bytes: 37998,
+    },
+    {
+      id: 'fb225362d153cdd9af4d0421e7e7905521bb0d926cab7557985d40982924e429',
+      path: 'game/editions/retained/droneaid-nl-shared-horizon-475bccde4.json',
+      sha256: 'e1e31c174b40a97cfe0d43998bd91a4dd3eb314183f7bd5c29de618a51859977',
+      bytes: 42871,
     },
   ],
 });
@@ -299,7 +341,7 @@ export const COMPANY_EDITIONS = Object.freeze(
       : brandId === 'coupa'
         ? 5
         : brandId === 'droneaid-nl'
-          ? 3
+          ? 4
           : 1,
     name,
     brandId,
@@ -373,15 +415,28 @@ export function createCompanyTheme(brandId) {
     enemyShape: 'cube',
     patrolShape: 'spark',
     bossShape: 'core',
-    actorRecipes: {
-      bouncer: 'paper-tangle',
-      'border-patrol': 'stale-fragments',
-      'contour-patrol': 'missing-cloud',
-      'claimed-rover': 'missing-cloud',
-      eroder: 'stale-fragments',
-      'lane-boss': 'backlog-knot',
-      'relay-sentinel': 'backlog-knot',
-    },
+    actorRecipes:
+      brandId === 'droneaid-nl'
+        ? Object.fromEntries(
+            [
+              'bouncer',
+              'border-patrol',
+              'contour-patrol',
+              'claimed-rover',
+              'eroder',
+              'lane-boss',
+              'relay-sentinel',
+            ].map((role) => [role, 'fpv-whoop']),
+          )
+        : {
+            bouncer: 'paper-tangle',
+            'border-patrol': 'stale-fragments',
+            'contour-patrol': 'missing-cloud',
+            'claimed-rover': 'missing-cloud',
+            eroder: 'stale-fragments',
+            'lane-boss': 'backlog-knot',
+            'relay-sentinel': 'backlog-knot',
+          },
     soundtrack:
       brandId === 'coupa'
         ? {
@@ -409,8 +464,8 @@ export function createCompanyTheme(brandId) {
     labels: {
       objective: 'Connection',
       supply: 'Support station',
-      enemy: 'Paper tangle',
-      boss: 'Backlog knot',
+      enemy: brandId === 'droneaid-nl' ? 'Practice quad' : 'Paper tangle',
+      boss: brandId === 'droneaid-nl' ? 'Practice lead' : 'Backlog knot',
       currency: 'Connections',
       ability: 'Support',
     },
@@ -522,67 +577,67 @@ const campaignLooks = {
     57,
   ],
   'droneaid-nl-workshop-lights': [
-    'Workshop Lights',
+    'FPV Workshop',
     '#0D0B2E',
     '#4238EB',
     '#FFD62C',
-    'paper-tangle',
-    'Loose labels',
+    'fpv-whoop',
+    'Practice quad',
     'chiptune',
     104,
     60,
   ],
   'droneaid-nl-parts-in-motion': [
-    'Component Depot',
+    'FPV Component Depot',
     '#111339',
     '#4D55DA',
     '#FFD62C',
-    'stale-fragments',
-    'Sorting fragments',
+    'fpv-open-x',
+    'Sorting quad',
     'chiptune',
     112,
     62,
   ],
   'droneaid-nl-makers-together': [
-    'Community Rooms',
+    'Drone Building Together',
     '#21163A',
     '#6550C9',
     '#F6D570',
-    'missing-cloud',
-    'Missed connection',
+    'fpv-stretched',
+    'Relay quad',
     'ambient',
     88,
     65,
   ],
   'droneaid-nl-careful-handoff': [
-    'Canal-side Depot',
+    'FPV Donation Depot',
     '#111A36',
     '#4552BC',
     '#FFD62C',
-    'paper-tangle',
-    'Loose labels',
+    'fpv-caged',
+    'Guarded quad',
     'chiptune',
     98,
     60,
   ],
   'droneaid-nl-signals-of-support': [
-    'Community Pavilion',
+    'Workshop Open Day',
     '#20133C',
     '#6042CD',
     '#FFD62C',
-    'stale-fragments',
-    'Scattered notices',
+    'fpv-antenna',
+    'Signal quad',
     'chiptune',
     116,
     67,
   ],
   'droneaid-nl-shared-horizon': [
-    'Shared Horizon',
+    'Ukraine Support Horizon',
     '#10112F',
     '#4740AD',
     '#FFE18B',
-    'missing-cloud',
-    'Passing cloud',
+    'fpv-survey',
+    'Horizon quad',
     'ambient',
     82,
     62,
@@ -603,7 +658,14 @@ export function createCompanyThemes(brandId) {
           subtitle: campaign.name,
           palette: { ...base.palette, field, land, accent },
           coverColor: field,
-          actorRecipes: { ...base.actorRecipes, bouncer: recipe },
+          actorRecipes: {
+            ...base.actorRecipes,
+            ...Object.fromEntries(
+              (brandId === 'droneaid-nl' ? Object.keys(base.actorRecipes) : ['bouncer']).map(
+                (role) => [role, recipe],
+              ),
+            ),
+          },
           labels: { ...base.labels, enemy },
           soundtrack: {
             id: `${campaign.id}-score`,
