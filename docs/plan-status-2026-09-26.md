@@ -24,6 +24,7 @@ versions or acceptance gates are still current.
 | First Team Ukrainian slice / PR #636    | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                             |
 | Second Team Ukrainian slice / PR #642   | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                              |
 | Second Team current edition / PR #650   | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; focused cohort 83/83 and localization validation pass; not public. |
+| Unified-library fixture reconciliation  | Local successor               | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.  |
 
 The second Team slice now has **13/13** focused checks. Every changed mission keeps one connected
 field, idle-safe starts on all presets, two distinct no-down approaches, and a two-closure exchange
@@ -59,10 +60,9 @@ accepted predecessor; draft labels do not reserve a release.
    remain mandatory.
 3. **Second Team human balance:** bounded no-Support full clears now exist on every preset and the
    Standard routes are pinned. These do not establish human cooperation quality or enjoyment.
-4. **Inherited host fixtures:** the wider host cohort still expects 201/279 entries and
-   `whole-spatial-v5`, while the stacked Journey exposes 327 entries and defaults to
-   `whole-spatial-v25`. These are outside the second Team edition behavior and need a dedicated
-   expectation/duplicate audit before a full-suite claim.
+4. **Full-suite boundary:** the duplicate audit confirms the 327-row inventory is intentional and
+   unique. The corrected focused cases pass, but the entire long host suite has not been rerun and
+   is not represented as passing.
 5. **Human/device evidence:** deterministic routes cannot establish enjoyment, cultural approval or
    physical controller/touch behavior.
 6. **Disk pressure:** about 940 MiB of verified, recoverable release/cache replicas was removed
@@ -74,7 +74,7 @@ accepted predecessor; draft labels do not reserve a release.
 1. Let the sole publisher finish v0.132.4; do not duplicate its release mutations.
 2. Keep the rebased cultural PR chain clean and reviewable while v0.132.4 completes.
 3. Review and qualify the bounded v0.149.0 PR #650 at its exact head.
-4. Audit the inherited 327-vs-201/279 library fixture delta before making a full-suite claim.
+4. Publish the isolated library-fixture reconciliation after its focused duplicate/ownership audit.
 5. Promote cultural releases in dependency order, reporting actual public delivery rather than a
    merge or workflow start.
 
