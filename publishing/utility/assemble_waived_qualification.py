@@ -23,6 +23,7 @@ WORKFLOW = '.github/workflows/qualify-release-source.yml'
 FASTLINE_WORKFLOW = '.github/workflows/fastline-release.yml'
 QUALIFICATION_WORKFLOWS = {WORKFLOW, FASTLINE_WORKFLOW}
 POLICY = 'publishing/test-policy.json'
+COMMIT = re.compile(r'[0-9a-f]{40}')
 GATES = [('validate', 'npm run validate', 'Validate source'),
          ('lint', 'npm run lint', 'Lint source'),
          ('format', 'npm run format:check', 'Check formatting'),
@@ -260,18 +261,24 @@ def inspect(config, evidence, repo, source, manual):
     return originals, verify, artifact, run
 
 
-def exact_consumer(repo, source, context, small, verify, policy, parent):
-    """Execute only the reviewed commit's consumer, never the mutable checkout copy."""
-    listing = git(repo, 'ls-tree', '-r', '--name-only', source['commit'], '--', 'publishing/utility').decode().splitlines()
+def consumer_helpers(repo, commit):
+    """Load the consumer from one reviewed Git commit, never mutable worktree bytes."""
+    require(COMMIT.fullmatch(commit), 'Consumer automation commit differs')
+    listing = git(repo, 'ls-tree', '-r', '--name-only', commit, '--', 'publishing/utility').decode().splitlines()
     helpers = {}
     for name in listing:
         if name.endswith('.py') and not Path(name).name.startswith('test_'):
-            body = blob(repo, source['commit'], name)
+            body = blob(repo, commit, name)
             require(len(helpers) < 2000 and sum(map(len, helpers.values())) + len(body) <= LIMIT,
-                    'Exact-source helper inventory bound')
+                    'Consumer helper inventory bound')
             helpers[name] = body
     require('publishing/utility/release_artifact.py' in helpers and sum(map(len, helpers.values())) <= LIMIT,
-            'Exact-source consumer unavailable/bounded')
+            'Reviewed consumer unavailable/bounded')
+    return helpers
+
+
+def exact_consumer(helpers, context, small, verify, policy, parent):
+    """Execute only the already loaded reviewed consumer helper closure."""
     with tempfile.TemporaryDirectory(prefix='waiver-consumer-', dir=parent) as temporary:
         root = Path(temporary)
         for name, body in helpers.items():
@@ -303,6 +310,8 @@ def assemble(config, output):
             not any(p.is_symlink() for p in [output, receipt, *output.parents]), 'Fresh ordinary output required')
     require(shutil.disk_usage(output.parent).free >= 1024**3 + 3 * LIMIT, 'One GiB reserve required')
     source, pr_source, repo = config['source'], config['prSource'], config['repositoryPath']
+    automation_repo = config.get('automationRepositoryPath', repo)
+    automation_commit = config.get('automationCommit', source['commit'])
     require(type(config.get('sourcePR')) is int and config['sourcePR'] > 0, 'Positive source PR required')
     for identity in (source, pr_source):
         require(all(re.fullmatch('[0-9a-f]{40}', identity[k]) for k in ('commit', 'tree')), 'Full immutable IDs required')
@@ -386,6 +395,9 @@ def assemble(config, output):
                 'sourceTree': pr_source['tree'],
                 'scope': 'Separately identified PR build; only proven unchanged build inputs.'}}
     originals, verify, artifact, inspection_run = inspect(config, evidence, repo, source, manual)
+    helpers = consumer_helpers(automation_repo, automation_commit)
+    for name, body in sorted(helpers.items()):
+        evidence['consumer-authorities/' + name] = body
     for row in config.get('extraEvidence', []):
         name = safe(row['name'])
         require(name not in evidence, 'Duplicate evidence')
@@ -440,7 +452,7 @@ def assemble(config, output):
     descriptors = large + [asset(n, b) for n, b in sorted(small.items())]
     require(len(small) == 7 and len(descriptors) == 9, 'Attachment inventory differs')
     context = {'source': source, 'artifact': artifact, 'release': {'assets': descriptors}}
-    checked = exact_consumer(repo, source, context, small, verify, policy_body, output.parent)
+    checked = exact_consumer(helpers, context, small, verify, policy_body, output.parent)
     require(shutil.disk_usage(output.parent).free >= 1024**3 + sum(map(len, small.values())), 'One GiB reserve required')
     output.mkdir()
     for name, body in sorted(small.items()):
@@ -448,6 +460,8 @@ def assemble(config, output):
             stream.write(body)
     report = {'status': 'OFFLINE_CONSUMER_VERIFIED_SMALL_PACKAGE', 'source': source, 'tests': qualification['tests'],
         'artifacts': descriptors, 'consumer': checked, 'releaseAuthority': None, 'remoteWrites': False,
+        'consumerAuthority': {'commit': automation_commit,
+            'helpers': [pin('consumer-authorities/' + n, b) for n, b in sorted(helpers.items())]},
         'scope': 'Offline metadata only; independent review and owner publication authority still required.'}
     with receipt.open('xb') as stream:
         stream.write(encoded(report))
