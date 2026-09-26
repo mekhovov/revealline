@@ -87,6 +87,31 @@ test('generated public pages use complete messages and retain original attributi
     assert.ok(resources.uk['page.fontNotices'].includes(author));
 });
 
+test('community guide rich messages match their direct DOM slots in every locale', async () => {
+  const source = await fs.readFile(
+    new URL('../authoring/community/index.html', import.meta.url),
+    'utf8',
+  );
+  const richNodes = descendants(parse(source)).filter((node) => attribute(node, 'data-i18n-rich'));
+  assert.ok(richNodes.length, 'authoring/community/index.html: rich messages');
+  for (const node of richNodes) {
+    const key = attribute(node, 'data-i18n-rich');
+    assert.match(key, /^tools:/, key);
+    const slots = (node.childNodes || [])
+      .map((child) => attribute(child, 'data-i18n-slot'))
+      .filter(Boolean)
+      .sort();
+    for (const locale of ['en', 'uk']) {
+      const message = toolResources[locale][key.slice('tools:'.length)];
+      assert.equal(typeof message, 'string', `${locale}: ${key}`);
+      const placeholders = [...message.matchAll(/\[\[([^\]]+)\]\]/g)]
+        .map((match) => match[1])
+        .sort();
+      assert.deepEqual(placeholders, slots, `${locale}: ${key}`);
+    }
+  }
+});
+
 test('root launch rewriting keeps every localization asset inside the distribution', async () => {
   const landing = await fs.readFile(new URL('../site/index.html', import.meta.url));
   const entries = [
