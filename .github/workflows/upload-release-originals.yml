@@ -29,7 +29,7 @@ jobs:
       actions: read
     steps:
       - name: Check out the actual utility workflow revision
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ github.workflow_sha }}
           path: automation
@@ -43,8 +43,9 @@ jobs:
           sparse-checkout-cone-mode: false
 
       - name: Set up explicit test policy runtime
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
+          package-manager-cache: false
           node-version: 22.22.2
 
       - name: Read explicit automated-suite policy
@@ -62,7 +63,7 @@ jobs:
           --mode upload-originals --repository "$GITHUB_REPOSITORY"
 
       - name: Check out the exact qualified source
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ steps.binding.outputs.source }}
           path: qualified
@@ -85,7 +86,7 @@ jobs:
 
       - name: Retain bounded original metadata and every attempt outcome
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: upload-originals-evidence
           path: utility-output/evidence/
