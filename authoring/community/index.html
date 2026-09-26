@@ -19,7 +19,9 @@
     <header>
       <a href="../../game/">Reveal / Line</a>
       <nav aria-label="Creator tools" data-i18n-aria-label="tools:creatorTools">
-        <a href="../../game/creator/">Picture campaign creator</a>
+        <a href="../../game/creator/" data-i18n="tools:creatorGuide.pictureCampaignCreator"
+          >Picture campaign creator</a
+        >
         <a href="../../game/playground/" data-i18n="tools:playground2">Playground</a>
         <a href="../../game/studio/" data-i18n="tools:contentStudio">Content Studio</a>
       </nav>
@@ -32,45 +34,74 @@
         no account is needed. Start with a small example, then make it yours.
       </p>
       <nav class="contents" aria-label="On this page" data-i18n-aria-label="tools:onThisPage">
-        <a href="#automatic">Picture to campaign</a>
+        <a href="#automatic" data-i18n="tools:creatorGuide.pictureToCampaign"
+          >Picture to campaign</a
+        >
         <a href="#try" data-i18n="tools:tryTheExample">Try the example</a>
         <a href="#picture" data-i18n="tools:makeAnImageLevel">Make an image level</a>
         <a href="#campaign" data-i18n="tools:buildACampaign">Build a campaign</a>
         <a href="#recover" data-i18n="tools:recoverYourWork">Recover your work</a>
       </nav>
       <section aria-labelledby="automatic">
-        <h2 id="automatic">Create a campaign from pictures or videos</h2>
+        <h2 id="automatic" data-i18n="tools:creatorGuide.automatic.title">
+          Create a campaign from pictures or videos
+        </h2>
         <ol>
-          <li>
-            Open <a href="../../game/creator/">Picture campaign creator</a> and select one or many
-            pictures, videos, or both.
+          <li data-i18n-rich="tools:creatorGuide.automatic.openCreator">
+            Open
+            <a
+              href="../../game/creator/"
+              data-i18n="tools:creatorGuide.pictureCampaignCreator"
+              data-i18n-slot="slot0"
+              >Picture campaign creator</a
+            >
+            and select one or many pictures, videos, or both.
           </li>
-          <li>
+          <li data-i18n="tools:creatorGuide.automatic.nameCollection">
             Name your collection. For video, review filename pairing suggestions, poster frames and
             the optional playback range.
           </li>
-          <li>
-            Choose <strong>Generate and review</strong>, then check every picture, generated map,
-            enemy, obstacle and route result.
+          <li data-i18n-rich="tools:creatorGuide.automatic.generateAndReview">
+            Choose
+            <strong data-i18n="interface:creator.generateAndReview" data-i18n-slot="slot0"
+              >Generate and review</strong
+            >, then check every picture, generated map, enemy, obstacle and route result.
           </li>
-          <li>
-            Approve the exact result, then <strong>Install campaign</strong> or
-            <strong>Download .rlpack</strong>.
+          <li data-i18n-rich="tools:creatorGuide.automatic.approveResult">
+            Approve the exact result, then
+            <strong data-i18n="interface:creator.installCampaign" data-i18n-slot="slot0"
+              >Install campaign</strong
+            >
+            or
+            <strong data-i18n="interface:creator.downloadPack" data-i18n-slot="slot1"
+              >Download .rlpack</strong
+            >.
           </li>
-          <li>
+          <li data-i18n="tools:creatorGuide.automatic.playInstalled">
             Play the installed Custom mission. A legal win earns its picture; unfinished attempts
             can resume after reload.
           </li>
         </ol>
         <p>
-          <a href="image-campaign-guide.md"
+          <a href="image-campaign-guide.md" data-i18n="tools:creatorGuide.docs.imageCampaign"
             >Complete walkthrough, source backups and troubleshooting</a
           >
-          · <a href="phase1-acceptance.md">Phase 1 implementation and release acceptance</a> ·
-          <a href="batch-image-campaign-guide.md">Batch campaign candidate walkthrough</a> ·
-          <a href="phase2-acceptance.md">Phase 2 open acceptance gates</a>
+          ·
+          <a href="phase1-acceptance.md" data-i18n="tools:creatorGuide.docs.phase1Acceptance"
+            >Phase 1 implementation and release acceptance</a
+          >
+          ·
+          <a href="batch-image-campaign-guide.md" data-i18n="tools:creatorGuide.docs.batchCampaign"
+            >Batch campaign candidate walkthrough</a
+          >
+          ·
+          <a href="phase2-acceptance.md" data-i18n="tools:creatorGuide.docs.phase2Acceptance"
+            >Phase 2 open acceptance gates</a
+          >
         </p>
-        <p>The manual tools and examples below remain available for existing expansion projects.</p>
+        <p data-i18n="tools:creatorGuide.automatic.manualToolsAvailable">
+          The manual tools and examples below remain available for existing expansion projects.
+        </p>
       </section>
       <section aria-labelledby="meaning">
         <h2 id="meaning" data-i18n="tools:fourPiecesOfACollection">Four pieces of a collection</h2>
@@ -323,7 +354,9 @@
             >
           </li>
           <li>
-            <a href="media-editor-guide.md">Optional video range and frame editor guide</a>
+            <a href="media-editor-guide.md" data-i18n="tools:creatorGuide.docs.mediaEditor"
+              >Optional video range and frame editor guide</a
+            >
           </li>
           <li>
             <a href="maintainer-guide.md" data-i18n="tools:maintainerPublishingGuide"
