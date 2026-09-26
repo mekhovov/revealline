@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import { settle, soloPage } from './helpers/solo-dom.mjs';
 import { openMissionLibrary } from './helpers/library-selection.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 function frames(page, count) {
   for (let i = 0; i < count; i++) page.frame();
@@ -86,7 +87,7 @@ test('Restart is limited to Pause and does not leak into briefings or result men
   assert.deepEqual(page.errors, []);
 });
 
-test('Pause owns Sound, Missions, Help and Settings and each child restores its exact opener', async (t) => {
+test('Pause owns the compact action set and each child restores its exact opener', async (t) => {
   const page = await soloPage(t);
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
@@ -96,15 +97,47 @@ test('Pause owns Sound, Missions, Help and Settings and each child restores its 
 
   const run = page.rendered.run,
     checkpoint = authoritativeCheckpoint(run);
+  assert.equal(page.$('overlay-help'), null, 'How to play is not duplicated in Pause');
+  assert.equal(page.$('shell-help').closest('.home-actions')?.tagName, 'NAV');
+  assert.equal(page.doc.querySelector('.shell-bar #shell-fullscreen'), null);
+  assert.deepEqual(
+    [...page.$('overlay-restart').parentElement.children].map((item) => item.id),
+    ['overlay-restart', 'journey-skip', 'overlay-missions', 'pause-mission-info'],
+    'mission commands keep row-major visual and focus order',
+  );
+  assert.deepEqual(
+    [...page.$('pause-sound-heading').parentElement.parentElement.children].map(
+      (item) => item.className,
+    ),
+    ['pause-menu-section pause-sound-section', 'pause-menu-section pause-options-section'],
+    'sound precedes config in the compact utility row',
+  );
+  assert.equal(page.$('pause-config-heading').textContent, 'Config');
+  for (const id of [
+    'start-button',
+    'overlay-restart',
+    'journey-skip',
+    'overlay-missions',
+    'pause-mission-info-toggle',
+    'overlay-sound',
+    'overlay-next-song',
+    'overlay-settings',
+    'overlay-menu',
+  ])
+    assert.equal(page.$(id).hidden, false, `${id} belongs to Pause`);
+  assert.equal(page.$('overlay-fullscreen').hidden, true, 'unsupported fullscreen stays hidden');
+  assert.equal(
+    page.$('game-overlay').querySelector('.quick-music-controls'),
+    null,
+    'Pause has no separate music Play/Pause transport',
+  );
+  assert.equal(page.doc.activeElement, page.$('start-button'));
   const initialSoundState = page.$('overlay-sound').getAttribute('aria-pressed');
   page.$('overlay-sound').click();
   assert.notEqual(page.$('overlay-sound').getAttribute('aria-pressed'), initialSoundState);
   assert.equal(page.rendered.paused, true);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
-  for (const [opener, dialog] of [
-    ['overlay-help', 'help-dialog'],
-    ['overlay-settings', 'settings-dialog'],
-  ]) {
+  for (const [opener, dialog] of [['overlay-settings', 'settings-dialog']]) {
     page.$(opener).focus();
     page.$(opener).click();
     assert.equal(page.$(dialog).open, true);
@@ -134,7 +167,7 @@ test('Solo shell tools opened during flight return focus inside the Pause menu',
 
   for (const [shellAction, dialog, pauseAction] of [
     ['shell-settings', 'settings-dialog', 'overlay-settings'],
-    ['help-button', 'help-dialog', 'overlay-help'],
+    ['help-button', 'help-dialog', 'start-button'],
   ]) {
     const run = page.rendered.run,
       checkpoint = authoritativeCheckpoint(run);
@@ -160,5 +193,74 @@ test('Solo shell tools opened during flight return focus inside the Pause menu',
     page.$('start-button').click();
     await settle(() => page.doc.body.dataset.flightState === 'running');
   }
+  assert.deepEqual(page.errors, []);
+});
+
+test('Classic Skip resolves universally, cancels on Back or Resume, and adopts without awarding a clear', async (t) => {
+  const page = await soloPage(t);
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('ArrowDown');
+  frames(page, 12);
+  page.key('ArrowDown', false);
+  page.$('pause-button').click();
+
+  const original = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(original);
+  page.$('journey-skip').click();
+  await waitFor(() => page.$('journey-skip').textContent === 'Confirm skip', {
+    timeoutMs: 30000,
+  });
+  assert.equal(page.rendered.run, original);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.match(
+    page.$('run-message').textContent,
+    /No clear, picture, medal, mastery, reward or unlock/,
+  );
+
+  page.key('Escape');
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.rendered.run, original);
+  assert.equal(page.$('journey-skip').textContent, 'Skip mission');
+
+  page.$('pause-button').click();
+  page.$('journey-skip').click();
+  await waitFor(() => page.$('journey-skip').textContent === 'Confirm skip', {
+    timeoutMs: 30000,
+  });
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.rendered.run, original);
+  assert.equal(page.$('journey-skip').textContent, 'Skip mission');
+
+  page.$('pause-button').click();
+  page.$('journey-skip').click();
+  await waitFor(() => page.$('journey-skip').textContent === 'Confirm skip', {
+    timeoutMs: 30000,
+  });
+  page.$('journey-skip').click();
+  await waitFor(
+    () => {
+      page.frame(0);
+      return (
+        (page.doc.body.dataset.flightState === 'running' && page.rendered.run !== original) ||
+        page.$('flight-preparation-status').dataset.state === 'error'
+      );
+    },
+    { timeoutMs: 30000 },
+  );
+  assert.notEqual(
+    page.$('flight-preparation-status').dataset.state,
+    'error',
+    page.$('flight-preparation-status').textContent,
+  );
+  const raw = page.storage.getItem('revealline.library.dev.v1'),
+    saved = raw ? JSON.parse(raw) : null,
+    clears = saved
+      ? Object.values(saved.campaigns).flatMap((entry) => Object.keys(entry.clears))
+      : [];
+  assert.deepEqual(clears, []);
+  assert.notEqual(page.rendered.run.levelId, original.levelId);
+  assert.deepEqual(authoritativeCheckpoint(original), checkpoint);
   assert.deepEqual(page.errors, []);
 });

@@ -8,7 +8,7 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { openMissionLibrary } from './helpers/library-selection.mjs';
 
-test('historical Journey restores Skip only for its owned saved flight and keeps Classic departure explicit', async (t) => {
+test('historical Journey and exact Classic flights both expose universal Skip while mission browsing stays explicit', async (t) => {
   const memory = managedIndexedDB();
   const p = await soloPage(t, {
     search: '?journey=1',
@@ -63,9 +63,8 @@ test('historical Journey restores Skip only for its owned saved flight and keeps
   assert.equal(p.rendered.run.player.cutting, true);
   const original = p.rendered.run;
   const before = authoritativeCheckpoint(original);
-  assert.equal(p.$('journey-skip').hidden, true);
-  p.$('journey-skip').onclick(); // A queued retired control may still deliver an event.
-  p.frame(0);
+  assert.equal(p.$('journey-skip').hidden, false);
+  assert.equal(p.$('journey-skip').closest('.game-overlay'), p.$('game-overlay'));
   assert.equal(p.$('journey-chooser').open, false);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
   const profile = await createJourneyBackend(memory).read();
@@ -94,7 +93,7 @@ test('historical Journey restores Skip only for its owned saved flight and keeps
   p.$('mode-leave-stay').click();
   await settle(() => p.$('journey-chooser').open);
   assert.equal(p.doc.activeElement, owned[0]);
-  assert.equal(p.$('journey-skip').hidden, true);
+  assert.equal(p.$('journey-skip').hidden, false);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
   const { savedAt: oldSavedAt, ...oldSaved } = JSON.parse(saved);
   const { savedAt: newSavedAt, ...newSaved } = JSON.parse(
@@ -117,8 +116,7 @@ test('historical Journey restores Skip only for its owned saved flight and keeps
   await settle(() => !p.$('library-dialog').open);
   p.frame(0);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
-  assert.equal(p.$('journey-skip').hidden, true);
-  p.$('journey-skip').onclick();
+  assert.equal(p.$('journey-skip').hidden, false);
   assert.equal(p.$('journey-chooser').open, false);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
   assert.deepEqual(p.errors, []);

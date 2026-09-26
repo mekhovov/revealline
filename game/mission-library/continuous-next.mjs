@@ -17,7 +17,7 @@ function classicRulesEdition(row) {
 
 /** Boundary continuation uses the complete registry, never the chooser's search
  * results. Original adapters still own preparation, launch and progress. */
-export function librarySuccessor(library, currentRow, mode) {
+export function librarySuccessor(library, currentRow, mode, { wrap = false } = {}) {
   if (!LIBRARY_MODES.includes(mode)) throw new TypeError('Unknown continuation mode.');
   if (!currentRow || library.find(currentRow.id) !== currentRow)
     throw new Error('The current mission edition changed. Your result is kept.');
@@ -25,14 +25,16 @@ export function librarySuccessor(library, currentRow, mode) {
   const index = rows.indexOf(currentRow);
   if (index < 0) throw new Error('The current mission does not belong to this mode.');
   if (currentRow.automaticContinuation === false) return null;
-  if (currentRow.collection !== 'Classic')
-    return rows.slice(index + 1).find((row) => row.automaticContinuation !== false) ?? null;
-  const edition = classicRulesEdition(currentRow);
-  return (
-    rows
-      .slice(index + 1)
-      .find((row) => row.collection !== 'Classic' || classicRulesEdition(row) === edition) ?? null
-  );
+  const edition = currentRow.collection === 'Classic' ? classicRulesEdition(currentRow) : null;
+  const eligible = (row) =>
+    row.automaticContinuation !== false &&
+    !row.tags.includes('Practice') &&
+    (edition === null || row.collection !== 'Classic' || classicRulesEdition(row) === edition);
+  const next = rows.slice(index + 1).find(eligible);
+  if (next || !wrap) return next ?? null;
+  // A wrapped continuation is always a distinct row. A one-mission library
+  // cannot turn Skip into an accidental restart of the same mission.
+  return rows.slice(0, index).find(eligible) ?? null;
 }
 
 /** Runtime hosts supply their original campaign/pack identity, not a display
