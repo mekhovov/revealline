@@ -10,8 +10,10 @@ Status date: 2026-09-26
 - Cultural redesign stack: rebased onto that exact base and force-updated with guarded leases.
 - Latest reviewed predecessor: draft PR #621, Sentinel v24. Its GitHub head is authoritative after
   guarded restacks.
-- Active successor: draft PR #625, Apex v25 / source version **0.140.0**. The PR's GitHub head is
-  authoritative after guarded restacks.
+- Apex v25 source was submitted as draft PR #625 / source version **0.140.0**. The PR's GitHub head
+  is authoritative after guarded restacks.
+- The active successor is the Team complete-specialist adoption described in
+  [team-complete-current-rules.md](team-complete-current-rules.md).
 - None of v12-v25 is a public delivery until its own PR, immutable release and Pages build complete.
 
 ## Completed source candidates
@@ -94,9 +96,9 @@ case passes. This is not caused by Apex geometry and is not represented as passe
 
 | Priority | Work                                                                                                  | State                      |                             Estimated effort |
 | -------- | ----------------------------------------------------------------------------------------------------- | -------------------------- | -------------------------------------------: |
-| 1        | Finish v25 lint/format, focused host checks, commit, review PR                                        | Active                     |                                    1-3 hours |
+| 1        | Review and publish v25 and the Team complete-specialist adoption                                      | Active                     |                        1-3 hours per release |
 | 2        | Merge and publish v12-v25 in dependency order, with immutable release and Pages verification for each | Queued with sole publisher | 1-3 hours per clean release, plus queue time |
-| 3        | Team complementary route progression and remaining Ukrainian/FPV studies                              | Not started in this slice  |                                  24-40 hours |
+| 3        | Targeted Team geometry/presentation improvements and remaining Ukrainian/FPV studies                  | Progression authored       |                                  16-28 hours |
 | 4        | Whole-Journey pacing, accessibility, performance and device qualification                             | Remaining                  |                             2-4 working days |
 | 5        | Human cultural and balance qualification                                                              | External evidence required |  Tester availability plus 1-2 days synthesis |
 
@@ -114,7 +116,6 @@ case passes. This is not caused by Apex geometry and is not represented as passe
 
 ## Next implementation step
 
-After v25 is submitted, continue with the Team slice: choose three missions whose cooperation is
-currently cosmetic, redesign them so one player opens a return, neutralizes pressure or establishes
-a connector useful to the other, and preserve their original editions through the same qualified
-successor pattern.
+Continue with the Team adoption, then use its completed disposition ledger to select only maps whose
+geometry still makes cooperation cosmetic. Any redesign remains a versioned successor and keeps the
+current complete-specialist edition selectable.
