@@ -70,8 +70,6 @@ export function decideMergeAction({
       action: "update",
       reason: "strict main requires an exact-SHA branch update",
     };
-  if (autoMergeEnabled)
-    return { action: "none", reason: "exact-head auto-merge is already armed" };
   if (
     labels.has(STACK_MERGE_LABEL) &&
     pullRequest.stack &&
@@ -81,6 +79,13 @@ export function decideMergeAction({
       action: "stack",
       reason: "declared stack top passed the exact-head gate",
     };
+  if (pullRequest.mergeable_state === "clean")
+    return {
+      action: "merge",
+      reason: "exact head is admitted and immediately mergeable",
+    };
+  if (autoMergeEnabled)
+    return { action: "none", reason: "exact-head auto-merge is already armed" };
   return {
     action: "arm",
     reason: "exact head is admitted; protected auto-merge may proceed",
@@ -266,6 +271,8 @@ async function upsertStatusComment(
       "The branch is being updated from strict main; checks must pass again on the new head.",
     stack:
       "The declared GitHub stack is being submitted through the asynchronous exact-head endpoint.",
+    merge:
+      "The clean exact head is being submitted through the protected merge endpoint.",
     none: "No action: exact-head auto-merge is already armed.",
     wait: "Resolve the blocker, then rerun `release-ready` on the resulting exact head.",
   }[decision.action];
@@ -394,6 +401,22 @@ async function main() {
     );
     if (!merged)
       throw new Error("GitHub did not accept the declared stack merge.");
+  } else if (decision.action === "merge") {
+    const result = await github(
+      `/repos/${owner}/${repository}/pulls/${number}/merge`,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          sha: observedHeadSha,
+          merge_method: "merge",
+        }),
+        headers: { "content-type": "application/json" },
+      },
+    );
+    if (!result?.merged)
+      throw new Error(
+        result?.message || "GitHub rejected the exact-head merge.",
+      );
   } else if (decision.action === "arm" || decision.action === "disarm")
     await setAutoMerge(pullRequest, decision.action, observedHeadSha);
 }
