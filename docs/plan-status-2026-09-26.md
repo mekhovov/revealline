@@ -6,61 +6,66 @@ versions or acceptance gates are still current.
 
 ## Public and release state
 
-- Latest GitHub release: **v0.132.5**, published from accepted source
-  `a8881ac17e44f38fb1e9dc15428899992727cc78`. PR #668 selected its immutable assets for Pages;
-  current `main` is `8f7ea5540d6851fb2d6d77a42c899e071e65e52a`. This lane has not repeated the
-  frozen public play journey, so the release and selector merge are not represented here as new
-  independent public acceptance.
-- PR #654 merged the v0.132.5 source, and PR #660 then repaired its stale Field Kit review ledger.
-  Qualification correctly rejected the earlier stale ledger after a renderer dependency entered the
-  Team review closure; the accepted correction preserves that fail-closed gate.
-- Corrective PR #663 merged the exact Team picture revision-90 binding after its focused gate passed.
-  Its predecessor run failed closed before release creation; the corrected source is the published
-  v0.132.5 target.
-- Test-only PR #669 isolates the remaining Solo compact-filter host failure on current `main`. Its
-  exact failing case now passes, as do all 8 controller-host cases and the 167-case compact/controller
-  cohort. Its current-main hosted focused gate is green and release-ready. Runtime behavior is
-  unchanged; review and merge remain pending. PR #530's independent exact-head rerun correctly
-  remains red because that older branch does not yet contain the isolated fixture correction.
-- The cultural/pacing successor chain through draft PR #670/v30 has been rebased onto current `main`. The 24
-  existing remote tips were force-updated atomically with exact old-head leases. All 85 rewritten
-  commits range-diff one-to-one with their prior versions. The v0.149.0 successor is draft PR #650
-  at `c1c39ced0`; fixture reconciliation maps to PR #651 at `4f4ae8301`, and the pacing inventory
-  maps to PR #661 at `5acdcaa50`.
-  Independent PR #657 remains at `6459e8fbc2e11f0c3bd6d735885c674c9e7295b8`
-  and now needs its own current-main rebase before promotion. The dirty root checkout was not changed.
+- Latest GitHub release: **v0.141.0**, published from accepted source
+  `5d6c97c850a648c5ebe93d3cf57731aeb67d0bbb` on 26 September 2026. PR #673 selected its
+  immutable assets for Pages. Current `main` is
+  `6d89f71bc1ebef43e8d51121f7625d572c338953`, the merged PR #590 compact-gallery source labelled
+  `0.141.1`; no v0.141.1 GitHub release is claimed here. This lane has not repeated either frozen
+  public play journey.
+- The accepted v0.141.0 creator/media and merged v0.141.1 compact-gallery sources are now the base
+  for the cultural stack. Their creator, upload, localization, media, compact layout and publication
+  files are preserved; no draft cultural version is allowed to downgrade them.
+- Test-only PR #669 is superseded by PR #590's broader accepted clock/rearm fixture. The new cultural
+  top passes the resulting compact/controller cohort 18/18 with zero skips. PR #669 does not need to
+  merge; older PR #530 still needs the accepted PR #590 changes incorporated before its red exact-head
+  result can be rerun.
+- The cultural/pacing successor chain through draft PR #672/v32 has been replayed onto current
+  `main`. All **101** stack commits and all **27** stacked branch tips retain the same order and
+  subjects. The only manual resolutions retain PR #590's generalized controller timing, advance the
+  first candidate from accepted source `0.141.1` to `0.142.0`, and retain the cultural library's
+  327-row/v25 expectations. The focused exact-head
+  route/bootstrap/navigation cohort passes **201/201 with zero skips**, and repository validation
+  passes for 10,138 localized messages, 7,993 references and 1,268 files; the accepted compact and
+  controller host cohort passes **18/18 with zero skips**. All 27 remote tips were
+  replaced atomically with exact old-head leases; PRs #650, #651, #661, #664-#667 and #670-#672
+  resolve cleanly against their intended rebased predecessors. Independent PR #657 is now rebased
+  separately onto current `main` at `c2fd67c3ccf66624284645f21e59a6a4b0843fe2`; its runtime
+  patch remains range-diff identical and its accepted-main fixture reconciliation is isolated from
+  the cultural chain, with a fresh 33/33 zero-skip rerun. The dirty root checkout was not changed.
 
 ## Completed source work
 
-| Scope                                            | State                         | Evidence boundary                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| ------------------------------------------------ | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Journey Ukrainian spatial stack v12-v24          | Rebased and pushed            | Candidate source only; each draft PR still needs its own promotion and public verification.                                                                                                                                                                                                                                                                                                                                                                           |
-| Apex v25 / PR #625                               | Clean draft, source `0.140.0` | Earlier focused and production-build evidence exists; the exact terminal-base head still needs release CI.                                                                                                                                                                                                                                                                                                                                                            |
-| Complete Team adoption / PR #630                 | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.                                                                                                                                                                                                                                                                                                                                                       |
-| First Team Ukrainian slice / PR #636             | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                                                                                                                                                                                                                                                                                                                                |
-| Second Team Ukrainian slice / PR #642            | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                                                                                                                                                                                                                                                                                                                                 |
-| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; earlier focused cohort 83/83 and localization validation pass. The 54/54 zero-skip runtime cohort passed on the prior exact head; the rebased `730ada618` still needs exact-head rerun before promotion.                                                                                                                                                              |
-| Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.                                                                                                                                                                                                                                                                                                     |
-| Team opaque-owner continuation / PR #657         | Ready isolated hotfix         | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Exact current-main continuation/localization/impact cohort passes 27/27 at `6459e8fbc2e11f0c3bd6d735885c674c9e7295b8`; not merged or public.                                                                                                                                                                   |
-| Current Journey pacing inventory / PR #661       | Clean stacked draft           | Adds a reusable runtime-prepared spatial-variety inspector and pins exact v25 facts: 91 source missions, 71 core missions, bands 1–12, consistent Standard craft speed and 21 post-opening open/plain review candidates. Focused checks pass 4/4; this is not human balance evidence.                                                                                                                                                                                 |
-| Relay cultural completion / PR #664              | Clean explicit v26 draft      | Redesigns Spiral stores, Nested relays and Watchpost exchange from bounded official-museum vocabulary; preserves v25/default ownership and reduces post-opening open/plain candidates from 21 to 18. Its exact current-main tip is `52f0c031b`; the earlier runtime cohort passed 140/140 with zero skips and the 85-commit range-diff is one-to-one. Hosted exact-head qualification remains.                                                                        |
-| Crosswind cultural completion / PR #665          | Clean explicit v27 draft      | Redesigns Survey markers, Compass array and Outer loop with original wall fields informed by three official museum records. Preserves v25/default and v26 ownership, actors, foundations, arrows and objectives; reduces the post-opening open/plain queue from 18 to 15. Its exact current-main tip is `f44bce786`; the earlier cohort passed 155/155 with zero skips and the 85-commit range-diff is one-to-one. Hosted exact-head qualification remains.           |
-| Fracture/Apex cultural completion / PR #666      | Clean explicit v28 draft      | Redesigns Bank the crossing, Five anchors and Final broadcast with original spatial fields informed by official Opishne museum, UNESCO Crimean Tatar Örnek and Museum Fund records. Preserves v25/default and v27 history, gameplay rules, objectives, relays, bonuses and actor roles; reduces the open/plain review queue from 15 to 12. Rebased evidence head `f77ca756a` maps one-to-one from the 158/158 checked patch. Hosted exact-head qualification remains. |
-| Neon cultural completion / PR #667               | Clean explicit v29 draft      | Adds original wall fields to Folded corner, Inside out and Four quarters using bounded Museum Fund, Ivan Honchar Museum and UNESCO vocabulary. Preserves v25/default and v28 history, foundations, spawns, actors and rules; retains Side-door bays as an intentional open contour puzzle and reduces the review queue from 12 to 9. Rebased evidence head `f616a0d04` maps one-to-one from the 161/161 checked patch. Hosted exact-head qualification remains.       |
-| Rover cultural completion / PR #670              | Clean explicit v30 draft      | Promotes the reviewed Split berths and Stepped return Ukrainian/FPV geometry into the current chain while preserving the newer pressure actors and rules. Exact rebased runtime/evidence head `cc43c2619` passes the 150/150 candidate/route/bootstrap cohort with zero skips; validation passed before the publication-only main rebase and lint/format/diff pass on the rebased head. The open/plain queue falls from 9 to 7. Hosted qualification remains.         |
-| Border cultural completion / PR #671             | Clean explicit v31 draft      | Adds original Reshetylivka aperture, Petrykivka branch and Kosiv bilateral wall fields to Second landing, Long rail and New frontier. Preserves current actors, objectives, bonuses, foundations, art and rules; the candidate/route/bootstrap cohort passes 164/164 with zero skips, repository validation and lint/format/diff pass, and the open/plain queue falls from 7 to 4. Hosted qualification remains.                                                      |
+| Scope                                            | State                         | Evidence boundary                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------------------------------------------ | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Journey Ukrainian spatial stack v12-v24          | Rebased and pushed            | Candidate source only; each draft PR still needs its own promotion and public verification.                                                                                                                                                                                                                                                                                                                                                                                             |
+| Apex v25 / PR #625                               | Clean draft, source `0.140.0` | Earlier focused and production-build evidence exists; the exact terminal-base head still needs release CI.                                                                                                                                                                                                                                                                                                                                                                              |
+| Complete Team adoption / PR #630                 | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.                                                                                                                                                                                                                                                                                                                                                                         |
+| First Team Ukrainian slice / PR #636             | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                                                                                                                                                                                                                                                                                                                                                  |
+| Second Team Ukrainian slice / PR #642            | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                                                                                                                                                                                                                                                                                                                                                   |
+| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring. Current v0.141.1-rebased tip `67b88a676` maps from the prior exact 79/79 zero-skip Team cohort covering current/default entry, v1/v2 cultural routes, preset/seed feasibility, safe openings, no-Support exchanges, pinned full clears, handoffs, Studio, preserved impact editions and exact Next. Hosted exact-tip gates remain.                                                      |
+| Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership. Current v0.141.1-rebased tip `76855313d` maps from the prior exact 82/82 zero-skip run; accepted gallery integration passes 18/18 at the stack top, but the full four-file per-tip cohort is not relabelled as rerun.                                                                                                 |
+| Team opaque-owner continuation / PR #657         | Rebased isolated hotfix       | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Exact v0.141.1-main head `c2fd67c3c` passes 33/33 continuation/localization/historical-impact/Team-impact checks with zero skips. The runtime patch and fixture reconciliation are range-diff identical; not merged or public.                                                                                                   |
+| Current Journey pacing inventory / PR #661       | Clean stacked draft           | Adds a reusable runtime-prepared spatial-variety inspector and pins exact v25 facts: 91 source missions, 71 core missions, bands 1–12, consistent Standard craft speed and 21 post-opening open/plain review candidates. Current v0.141.1-rebased tip `b50c0ca5f` maps from the prior 4/4, ESLint and Prettier pass; this is not human balance evidence.                                                                                                                                |
+| Relay cultural completion / PR #664              | Clean explicit v26 draft      | Redesigns Spiral stores, Nested relays and Watchpost exchange from bounded official-museum vocabulary; preserves v25/default ownership and reduces post-opening open/plain candidates from 21 to 18. Current v0.141.1-rebased tip `e01811b7e` maps from the corrected 156/156 zero-skip cohort and owns the accepted creator actor-material fixture pass-through. Hosted exact-tip gates remain.                                                                                        |
+| Crosswind cultural completion / PR #665          | Clean explicit v27 draft      | Redesigns Survey markers, Compass array and Outer loop with original wall fields informed by three official museum records. Preserves v25/default and v26 ownership, actors, foundations, arrows and objectives; reduces the post-opening open/plain queue from 18 to 15. Current v0.141.1-rebased tip `5e0c802b8` maps from its 159/159 zero-skip candidate, route, bootstrap and host cohort; hosted exact-tip gates remain.                                                          |
+| Fracture/Apex cultural completion / PR #666      | Clean explicit v28 draft      | Redesigns Bank the crossing, Five anchors and Final broadcast with original spatial fields informed by official Opishne museum, UNESCO Crimean Tatar Örnek and Museum Fund records. Preserves v25/default and v27 history, gameplay rules, objectives, relays, bonuses and actor roles; reduces the open/plain review queue from 15 to 12. Current v0.141.1-rebased tip `5662e6bff` maps from its 162/162 zero-skip cohort; hosted exact-tip gates remain.                              |
+| Neon cultural completion / PR #667               | Clean explicit v29 draft      | Adds original wall fields to Folded corner, Inside out and Four quarters using bounded Museum Fund, Ivan Honchar Museum and UNESCO vocabulary. Preserves v25/default and v28 history, foundations, spawns, actors and rules; retains Side-door bays as an intentional open contour puzzle and reduces the review queue from 12 to 9. Current v0.141.1-rebased tip `6fb3db11b` maps from its 165/165 zero-skip cohort; hosted exact-tip gates remain.                                    |
+| Rover cultural completion / PR #670              | Clean explicit v30 draft      | Promotes the reviewed Split berths and Stepped return Ukrainian/FPV geometry into the current chain while preserving the newer pressure actors and rules. Current v0.141.1-rebased tip `a85a4d838` maps from its expanded 156/156 zero-skip cohort. The open/plain queue falls from 9 to 7; hosted exact-tip qualification remains.                                                                                                                                                     |
+| Border cultural completion / PR #671             | Clean explicit v31 draft      | Adds original Reshetylivka aperture, Petrykivka branch and Kosiv bilateral wall fields to Second landing, Long rail and New frontier. Preserves current actors, objectives, bonuses, foundations, art and rules; current v0.141.1-rebased tip `b7afbb70b` maps from its 170/170 zero-skip cohort. The open/plain queue falls from 7 to 4; hosted exact-tip qualification remains.                                                                                                       |
+| Border frontier/pocket completion / PR #672      | Clean explicit v32 draft      | Adds original Bukovyna wave/dogleg and Podillia end-weighted wall fields to Turn the corner and Return pocket. Preserves current actors, objectives, bonuses, foundations, art and rules. Runtime source `62a360097` through exact tested top `30d673895` passes 201/201 route/bootstrap/navigation, 18/18 compact/controller integration and repository validation. The queue closes with Behind the patrol and Side-door bays retained as open lessons. Hosted qualification remains. |
 
-After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
+After the earlier v0.132.5 main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
 Solo → Versus → Solo restoration. The test runner recorded 14 passing test/subtest records and no
 failures. The earlier two chooser-opening timeouts occurred while another worktree continuously used
 a CPU core; they were not changed-expectation failures. The full long host suite remains unrun.
 
-The lightweight runtime cohort passed **54/54 with zero skips** on PR #650's prior exact head.
-It covers default Team entry, handoff/return validation, both cultural topology/route editions,
-isolated progress, preserved impact/complete-specialist editions and cross-campaign Next. It does
-not replace the heavier chooser-host rerun, physical devices, public frozen-build checks or human
-balance review. The current rebased head still needs an exact-head rerun.
+PR #650's exact rebased head passes **79/79 with zero skips** across current/default Team entry,
+handoff and library behavior, both cultural editions, isolated progress, safe openings, alternate
+routes across presets and seeds, no-Support partner exchanges, pinned full clears, preserved impact
+editions, Studio and cross-campaign Next. It does not replace physical devices, public frozen-build
+checks or human balance review. The current v0.141.1-based v32 head separately has fresh 201-test
+route/bootstrap/navigation and 18-test compact/controller reruns.
 
 The second Team slice now has **13/13** focused checks. Every changed mission keeps one connected
 field, idle-safe starts on all presets, two distinct no-down approaches, and a two-closure exchange
@@ -69,23 +74,38 @@ Fresh input-only searches also found full clears on every preset; Standard route
 33.8-52.2 seconds with both pilots contributing, no downs and no Support. This proves bounded route
 feasibility and rules out a mandatory late-cleanup tail in those fixtures; it does not prove fun.
 
+The three completion batches immediately after Relay also have fresh exact-current-head evidence:
+Crosswind passes **159/159**, Fracture/Apex passes **162/162**, and Neon passes **165/165**, all with
+zero skips. These cohorts cover both authored approaches across presets, control styles and seeds,
+safe openings, replay-stable Versus parity and the shared route/bootstrap/host integration. They do
+not replace hosted gates, long suites, production builds, public frozen-build checks, physical
+devices or human balance and cultural review.
+
+The remaining completion tips are likewise qualified locally on their exact current source: Rover
+passes **156/156** and Border passes **170/170**, both with zero skips. The final Border
+frontier/pocket top passes **201/201** through its plan-only descendant; its runtime source remains
+`62a360097`. Together these receipts close the local focused candidate/route/bootstrap/host queue
+for v26-v32 on the accepted compact-gallery base. Hosted gates and every wider evidence boundary
+above remain open.
+
 ## Remaining implementation and ETA
 
 Effort starts when the item has an uncontested release or implementation slot. GitHub runner,
 large-asset and archive delays are outside these estimates.
 
-| Priority | Remaining item                          | Exit condition                                                                                                                                                                                                                                                                             |                                                                 Indicative effort |
-| -------: | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------: |
-|        0 | Finish v0.132.5 public acceptance       | The immutable release exists and PR #668 selected it for Pages; complete bounded public proof without mixing in release-optimization changes                                                                                                                                               |                                            **1–4 hours** for bounded public proof |
-|        1 | Promote the cultural Journey chain      | Review/merge in dependency order, exact-head qualification, immutable release and public play for each accepted batch                                                                                                                                                                      |                                            **1–2 working days per release batch** |
-|        2 | Complete second Team slice and fixtures | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete                                                                                                                                                  |                                                  **3–6 hours** plus release queue |
-|        3 | Team continuation and qualification     | Review/publish PR #657; paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof                                                                                                                                         |                                   **8–16 hours** plus release queue/device access |
-|        4 | Whole-Journey pacing and accessibility  | PR #661 establishes the exact-current campaign/spatial inventory; PRs #664-#670 and local v31 address seven bounded repetition clusters. Review the remaining 4 candidates selectively, then qualify reduced effects, contrast, small screens, performance and deterministic compatibility | **2–4 working days** for further targeted batches and accessibility qualification |
-|        5 | Human balance and cultural review       | Understandable failures, distinct missions, enjoyable retries and cultural review by people                                                                                                                                                                                                |                                **1–2 days synthesis** after testers are available |
+| Priority | Remaining item                          | Exit condition                                                                                                                                                                                       |                                                    Indicative effort |
+| -------: | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------: |
+|        0 | Hosted exact-head qualification         | Run the focused hosted gates on the rebased tips and preserve truthful skipped-suite boundaries                                                                                                      |                                      **2–6 hours per bounded batch** |
+|        1 | Promote the cultural Journey chain      | Review/merge in dependency order, immutable release and public play for each accepted batch                                                                                                          |                               **1–2 working days per release batch** |
+|        2 | Complete second Team slice and fixtures | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete                                                            |                                     **3–6 hours** plus release queue |
+|        3 | Team continuation and qualification     | Review/publish rebased PR #657; paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof                                           |                      **8–16 hours** plus release queue/device access |
+|        4 | Whole-Journey accessibility/performance | The spatial disposition queue is resolved with two intentional open lessons retained. Remaining work is reduced effects, contrast, small-screen, startup/performance and deterministic qualification | **2–4 working days** for accessibility and performance qualification |
+|        5 | Human balance and cultural review       | Understandable failures, distinct missions, enjoyable retries, Team cooperation quality and cultural review by people                                                                                |                   **1–2 days synthesis** after testers are available |
 
-Existing v0.133-v0.137 player-UX drafts occupy the nominal release sequence. Cultural PR titles
-currently target v0.138 onward, but version numbers must be assigned by the sole publisher from the
-accepted predecessor; draft labels do not reserve a release.
+Versions through v0.141.0 are occupied by published releases; merged `main` currently labels its
+compact-gallery source `0.141.1` without a corresponding GitHub release claim here. Cultural draft
+labels do not reserve a release number; the sole publisher assigns versions from the accepted
+predecessor when a batch is actually promoted.
 
 ## Blockers and concerns
 
@@ -104,62 +124,59 @@ accepted predecessor; draft labels do not reserve a release.
 5. **Human/device evidence:** deterministic routes cannot establish enjoyment, cultural approval or
    physical controller/touch behavior.
 6. **Disk pressure:** only reviewed disposable build caches were removed; worktrees, releases, media,
-   patches and active task data were preserved. Free space is now about 6 GiB. Avoid duplicate
-   production archives and never remove unpushed source, user media or another task's workspace.
+   patches and active task data were preserved. A further 2.58 GiB of closed Git `tmp_pack_*` files
+   explicitly reported as garbage were removed after concurrent pack generation filled the volume;
+   free space recovered to about 3 GiB. Avoid duplicate production archives and never remove
+   unpushed source, user media or another task's workspace.
 7. **Host performance:** the uncontended PR #651 scenarios pass, but individual chooser paths took
    about 5.5–30.6 seconds in the fixture harness. This closes the corrected-assertion gap, not the
    broader startup/performance qualification.
 8. **First cultural gate:** PR #530's exact-head rerun passed preflight and the wider selected gates,
    but its controller-host file again failed only the Solo compact-filter focus assertion: 7/8 cases
-   passed. PR #669 corrects the fixture's clock/rearm model on exact `main`; its hosted focused gate
-   is green. PR #530 cannot become green until that isolated correction is merged and incorporated;
-   the failed rerun is not represented as a pass.
+   passed. Merged PR #590 now provides a broader accepted clock/rearm model and the cultural top
+   passes its 18/18 compact/controller cohort. PR #669 is superseded; PR #530 cannot become green
+   until it incorporates PR #590 and reruns. The failed older-head run is not represented as a pass.
 9. **Inventory is not balance evidence:** PR #661 finds 21 post-opening missions with neither wall
    nor slow/lethal terrain and confirms consistent Standard speed and post-opening actor counts.
    Those are review candidates, not automatic defects; deterministic routes and human play still
    decide whether an open layout is distinct, fair and enjoyable.
 10. **v26 remains opt-in:** PR #664 registers a preserved successor and repairs native bootstrap
     links for v12-v26, but deliberately leaves v25 as the default until review and release allocation.
-    Its deterministic 140-test cohort does not establish enjoyment or cultural approval.
+    Its exact-current-head 156/156 zero-skip cohort does not establish enjoyment or cultural
+    approval.
 11. **v27 remains opt-in:** PR #665 registers a separate v27 review identity while keeping v25 as
-    default. Its 155-test sequential cohort and repository validation pass, but it still needs hosted
-    exact-head qualification, review and promotion through the serialized release lane.
+    default. Its exact-current-head 159/159 zero-skip cohort passes, but it still needs hosted gates,
+    review and promotion through the serialized release lane.
 12. **v28 remains opt-in:** PR #666 preserves v25 as default and v27 as history. Its exact-head
-    candidate/route/bootstrap/host cohort passes 158/158, along with repository validation and
-    targeted lint/format/diff checks. Review, hosted qualification, promotion and public evidence
-    are still required.
+    candidate/route/bootstrap/host cohort passes 162/162 with zero skips. Review, hosted
+    qualification, promotion and public evidence are still required.
 13. **v29 remains opt-in:** PR #667 preserves v25 as default and v28 as history. Its exact-head
-    candidate/route/bootstrap/host cohort passes 161/161, along with repository validation and
-    targeted lint/format/diff checks. Review, hosted qualification, promotion and public evidence
-    are still required.
+    candidate/route/bootstrap/host cohort passes 165/165 with zero skips. Review, hosted
+    qualification, promotion and public evidence are still required.
 14. **v30 remains opt-in:** draft PR #670 preserves v25 as default and v29 as history. Its exact
-    rebased candidate/route/bootstrap cohort passes 150/150 with zero skips. Repository validation
-    passed before the publication-only main rebase, all 85 patches map one-to-one, and targeted
-    lint/format/diff checks pass on the rebased head. Hosted qualification, review, promotion and
-    public evidence are still required.
+    candidate/route/bootstrap/host cohort passes 156/156 with zero skips. Hosted qualification,
+    review, promotion and public evidence are still required.
 15. **v31 remains opt-in:** draft PR #671 preserves v25 as default and v30 as history. Its
-    candidate/route/bootstrap cohort passes 164/164 with zero skips, and repository validation plus
-    targeted lint/format/diff checks pass. Hosted qualification, review, promotion and public
-    evidence remain.
+    exact candidate/route/bootstrap/host cohort passes 170/170 with zero skips. Hosted
+    qualification, review, promotion and public evidence remain.
+16. **v32 remains opt-in:** draft PR #672 preserves v25 as default and v31 as history. Its exact
+    v0.141.1-based candidate/route/bootstrap/navigation cohort passes 201/201 with zero skips, its
+    compact/controller integration passes 18/18 and repository validation passes. The two remaining
+    open/plain boards are intentional accepted lessons, not unfinished count targets. Hosted
+    qualification, review, promotion and public evidence remain.
 
 ## Immediate execution order
 
-1. Let the sole publisher complete bounded public acceptance for the existing immutable v0.132.5
-   release and Pages selector; keep release-throughput experiments out of that path.
-2. Qualify and publish isolated PR #657 after the active release lane; do not wait for the full
-   cultural stack to restore Team Classic → Custom Next.
-3. Review and merge green test-only PR #669, incorporate that isolated fixture correction into PR
-   #530, then rerun its exact head. The latest pre-correction rerun failed the same one Solo case.
-4. Keep the rebased cultural PR chain clean and reviewable while the public release lane completes.
-5. Review and qualify the bounded v0.149.0 PR #650 at its exact head.
-6. Review draft PR #651 and publish the isolated library-fixture reconciliation after its focused
-   duplicate/ownership audit.
-7. Review draft PR #661 after #651, then PR #664. v26 preserves v25 and completes the Relay spatial
-   cluster without changing the default before promotion.
-8. Review and host-qualify PR #667, then draft PRs #670 and #671. Review the 4 remaining audit
-   candidates without redesigning intentionally open boards merely to satisfy a count.
-9. Promote cultural releases in dependency order, reporting actual public delivery rather than a
-   merge or workflow start.
+1. Complete hosted review for locally qualified PRs #650 and #651, then qualify PR #661's pacing
+   inventory at its exact rebased head.
+2. Review PRs #664-#672 in dependency order. Do not redesign Behind the patrol or Side-door bays
+   merely to force a zero open/plain count; both are documented intentional lessons.
+3. Review and publish the separately rebased PR #657 without entangling its Team Classic → Custom
+   Next repair with the cultural release chain.
+4. Promote accepted cultural releases through the sole publisher, reporting immutable release and
+   actual public delivery rather than a merge or workflow start.
+5. Run the remaining accessibility, compact-layout, startup/performance, physical-device and human
+   balance/cultural qualification work after the source batches are frozen.
 
 The original P13-P15 whole-Journey pacing, Team cooperation, accessibility/performance and final
 human acceptance remain incomplete.
