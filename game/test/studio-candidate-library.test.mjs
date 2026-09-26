@@ -199,9 +199,11 @@ test('closed library preserves every static Inspect action, paired edition contr
 test('Sorting successor search preserves the paired Rover edition selector and Inspect action', () => {
   const { search, visible, $ } = setup();
   search('rover sorting');
-  assert.equal(visible().length, 1);
-  assert.equal(visible()[0], $('rover').closest('[data-library-entry]'));
-  assert(visible()[0].querySelector('#rover-edition'));
+  assert.equal(visible().length, 2);
+  const sorting = $('rover').closest('[data-library-entry]');
+  assert(visible().includes(sorting));
+  assert(sorting.querySelector('#rover-edition'));
+  assert(visible().includes($('whole-variety-edition').closest('[data-library-entry]')));
 });
 
 test('inner receiver search keeps the original edition and explicit Inspect in the same entry', () => {
@@ -253,6 +255,7 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
     'whole-spatial-v15',
     'whole-spatial-v16',
     'whole-spatial-v17',
+    'whole-spatial-v18',
     'whole-spatial-v10',
     'whole-spatial-v9',
     'whole-spatial-v8',
