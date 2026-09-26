@@ -31,11 +31,25 @@ function fixture(overrides = {}) {
   };
 }
 
-test("arms exact-head auto-merge only for an admitted clean PR", () => {
+test("merges an admitted clean PR only through the exact-head endpoint", () => {
   assert.deepEqual(decideMergeAction(fixture()), {
-    action: "arm",
-    reason: "exact head is admitted and merge-ready",
+    action: "merge",
+    reason: "all blocking requirements passed on the exact head",
   });
+});
+
+test("nonblocking failed checks do not block an exact-head merge", () => {
+  assert.equal(
+    decideMergeAction(fixture({ mergeable_state: "unstable" })).action,
+    "merge",
+  );
+});
+
+test("pending protected hooks arm auto-merge for the exact head", () => {
+  assert.equal(
+    decideMergeAction(fixture({ mergeable_state: "has_hooks" })).action,
+    "arm",
+  );
 });
 
 test("updates a behind conflict-free branch before auto-merge", () => {
@@ -82,7 +96,7 @@ test("declared dependencies must already be merged", () => {
     "declared predecessor is not merged",
   );
   input.dependencies[0].merged_at = "2026-09-26T00:00:00Z";
-  assert.equal(decideMergeAction(input).action, "arm");
+  assert.equal(decideMergeAction(input).action, "merge");
 });
 
 test("dependency references are explicit and deduplicated by the caller", () => {
@@ -101,6 +115,7 @@ test("the privileged workflow is a safe no-op until the trusted controller reach
   assert.match(workflow, /opened,/);
   assert.match(workflow, /reopened,/);
   assert.match(workflow, /filter: blob:none/);
+  assert.match(workflow, /cancel-in-progress: false/);
   assert.match(
     workflow,
     /if: hashFiles\('publishing\/fastline-merge-controller\.mjs'\) == ''/,

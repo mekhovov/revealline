@@ -154,6 +154,13 @@ def named(rows, name):
     return selected[0]
 
 
+def named_result(rows, name, conclusion):
+    selected = [j for j in rows if j.get('name') == name]
+    require(len(selected) == 1 and selected[0]['conclusion'] == conclusion,
+            f'Job must be {conclusion}: ' + name)
+    return selected[0]
+
+
 def inspect(config, evidence, repo, source, manual):
     originals = below(config['inspectionDirectory'])
     get = lambda name: parse(originals[name])
@@ -306,38 +313,56 @@ def assemble(config, output):
     pr_jobs = family(pr_run, parse(evidence['runs/pr/jobs.json']), '.github/workflows/deploy-pages.yml',
                      'pull_request', pr_source['commit'])
     manual_jobs = family(manual, parse(evidence['runs/manual/jobs.json']), WORKFLOW, 'workflow_dispatch', source['commit'])
-    qualify, freeze, build = named(manual_jobs, 'qualify'), named(manual_jobs, 'freeze'), named(pr_jobs, 'build')
+    qualify, freeze = named(manual_jobs, 'qualify'), named(manual_jobs, 'freeze')
     named(pr_jobs, 'preflight')
     step(qualify, 'Record source identity')
     step(qualify, 'Require reviewed production slots in the committed ledger')
     step(qualify, 'Verify qualified tracked source is unchanged')
     step(freeze, 'Freeze the exact qualified commit')
     step(freeze, 'Retain original release assets')
-    step(build, 'Verify exact tracked source before commands')
-    validation = step(build, 'Validate release-critical source')
-    full_build = optional_step(build, 'Build pull-request artifact')
-    after_build = optional_step(build, 'Verify tracked source after build')
-    deferred_build = optional_step(build, 'Defer full artifact build to merged-source qualification')
-    after_fast_gate = optional_step(build, 'Verify tracked source after fast release gate')
-    legacy = (full_build, after_build)
-    fast = (deferred_build, after_fast_gate)
-    require(not any(legacy) or all(legacy), 'Incomplete historical PR build corroboration')
-    require(not any(fast) or all(fast), 'Incomplete fast PR validation corroboration')
-    require(all(legacy) != all(fast), 'Exactly one successful PR build corroboration mode required')
-    if all(fast):
-        pr_corroboration = {'preMergeValidationCorroboration': {
-            'runId': pr_run['id'], 'jobId': build['id'], 'command': 'npm run validate',
-            'step': validation,
+    build_rows = [job for job in pr_jobs if job.get('name') == 'build']
+    require(len(build_rows) == 1, 'Unique build job required')
+    build = build_rows[0]
+    if build['conclusion'] == 'skipped':
+        named_result(pr_jobs, 'test', 'skipped')
+        focused = named(pr_jobs, 'focused')
+        release_ready = named(pr_jobs, 'release-ready')
+        classification = [step(focused, name) for name in
+                          ('Capture the reviewed changed-path set', 'Select the fail-closed focused gate')]
+        pr_corroboration = {'focusedAdmissionCorroboration': {
+            'runId': pr_run['id'], 'jobId': focused['id'], 'aggregateJobId': release_ready['id'],
+            'classificationSteps': classification,
             'sourceRevision': pr_source['commit'], 'sourceTree': pr_source['tree'],
-            'artifactBuild': {'status': 'deferred-to-frozen-source',
-                'step': deferred_build},
-            'scope': 'Exact PR source validation only; the complete artifact is built once from frozen merged source.'}}
+            'genericBuild': {'status': 'skipped-by-fast-release-policy', 'jobId': build['id']},
+            'fullTests': {'status': 'waived-and-skipped'},
+            'scope': 'Exact PR head admission using the fail-closed focused manifest; no generic build or full-suite pass is claimed.'}}
     else:
-        pr_corroboration = {'ordinaryBuildCorroboration': {
-            'runId': pr_run['id'], 'jobId': build['id'], 'command': 'npm run build',
-            'step': full_build, 'sourceRevision': pr_source['commit'],
-            'sourceTree': pr_source['tree'],
-            'scope': 'Separately identified PR build; only proven unchanged build inputs.'}}
+        require(build['conclusion'] == 'success', 'Build job result differs')
+        step(build, 'Verify exact tracked source before commands')
+        validation = step(build, 'Validate release-critical source')
+        full_build = optional_step(build, 'Build pull-request artifact')
+        after_build = optional_step(build, 'Verify tracked source after build')
+        deferred_build = optional_step(build, 'Defer full artifact build to merged-source qualification')
+        after_fast_gate = optional_step(build, 'Verify tracked source after fast release gate')
+        legacy = (full_build, after_build)
+        fast = (deferred_build, after_fast_gate)
+        require(not any(legacy) or all(legacy), 'Incomplete historical PR build corroboration')
+        require(not any(fast) or all(fast), 'Incomplete fast PR validation corroboration')
+        require(all(legacy) != all(fast), 'Exactly one successful PR build corroboration mode required')
+        if all(fast):
+            pr_corroboration = {'preMergeValidationCorroboration': {
+                'runId': pr_run['id'], 'jobId': build['id'], 'command': 'npm run validate',
+                'step': validation,
+                'sourceRevision': pr_source['commit'], 'sourceTree': pr_source['tree'],
+                'artifactBuild': {'status': 'deferred-to-frozen-source',
+                    'step': deferred_build},
+                'scope': 'Exact PR source validation only; the complete artifact is built once from frozen merged source.'}}
+        else:
+            pr_corroboration = {'ordinaryBuildCorroboration': {
+                'runId': pr_run['id'], 'jobId': build['id'], 'command': 'npm run build',
+                'step': full_build, 'sourceRevision': pr_source['commit'],
+                'sourceTree': pr_source['tree'],
+                'scope': 'Separately identified PR build; only proven unchanged build inputs.'}}
     originals, verify, artifact, inspection_run = inspect(config, evidence, repo, source, manual)
     for row in config.get('extraEvidence', []):
         name = safe(row['name'])
