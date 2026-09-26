@@ -269,7 +269,7 @@ test('registered v15 successor preserves v14 order while v20 owns the current de
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
     solo: 'whole-spatial-v25',
     versus: 'whole-spatial-v25',
-    team: 'team-trail-impact-originals-1',
+    team: 'team-complete-specialist-originals-1',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v15');
   assert.equal(
