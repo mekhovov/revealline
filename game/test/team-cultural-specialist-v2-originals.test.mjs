@@ -25,10 +25,7 @@ const routes = Object.freeze({
       { b: 'left', ticks: 500 },
     ],
   ],
-  'split-orchards': [
-    [{ a: 'right', ticks: 500 }],
-    [{ b: 'left', ticks: 500 }],
-  ],
+  'split-orchards': [[{ a: 'right', ticks: 500 }], [{ b: 'left', ticks: 500 }]],
   'weaver-crossing': [
     [
       { a: 'down', ticks: 100 },
@@ -148,7 +145,7 @@ test('all presets preserve actors and keep both opening spawns safe while idle',
           positions,
         );
       }
-  }
+    }
 });
 
 for (const id of IDS)
