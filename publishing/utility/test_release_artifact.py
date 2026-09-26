@@ -127,6 +127,20 @@ class BindingTests(unittest.TestCase):
             utility.artifact_authority(API([current, fastline_run, fastline_jobs]), value),
             current,
         )
+        failed_fastline_run = {**fastline_run, 'conclusion': 'failure'}
+        recoverable_jobs = copy.deepcopy(fastline_jobs)
+        recoverable_jobs['jobs'].extend([
+            {'name': 'admission', 'head_sha': 'a' * 40, 'status': 'completed', 'conclusion': 'success'},
+            {'name': 'inspect-artifact', 'head_sha': 'a' * 40, 'status': 'completed', 'conclusion': 'failure'},
+        ])
+        self.assertEqual(
+            utility.artifact_authority(API([current, failed_fastline_run, recoverable_jobs]), value),
+            current,
+        )
+        unrelated_failure = copy.deepcopy(recoverable_jobs)
+        unrelated_failure['jobs'][-1]['name'] = 'publication'
+        with self.assertRaises(ValueError):
+            utility.artifact_authority(API([current, failed_fastline_run, unrelated_failure]), value)
         for position, key, replacement in [(0, 'expired', True), (1, 'head_sha', 'b' * 40),
                                             (1, 'conclusion', 'failure'), (1, 'event', 'push')]:
             rows = copy.deepcopy([artifact, run, jobs]); rows[position][key] = replacement
