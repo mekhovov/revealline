@@ -7,7 +7,9 @@ import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 export async function loadAuthoredJourneyRoute(id) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   let factories;
-  if (id === 'whole-spatial-v32') {
+  if (id === 'whole-spatial-v33') {
+    factories = await import('./cultural-timed-bonus-pressure-candidates.mjs');
+  } else if (id === 'whole-spatial-v32') {
     factories = await import('./border-frontier-pocket-candidates.mjs');
   } else if (id === 'whole-spatial-v31') {
     factories = await import('./border-cultural-completion-candidates.mjs');
