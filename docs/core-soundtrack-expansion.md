@@ -63,7 +63,7 @@ reviewer names, listening approval or device results.
 
 ### Active — release order and effort
 
-**Live reconciliation — 26 September 2026:** immutable [v0.132.4](https://github.com/mekhovov/revealline/releases/tag/v0.132.4) is published from exact source `d3df9d47f578d48383ff589914a188ada2ef8b31`, selector [PR #649](https://github.com/mekhovov/revealline/pull/649) merged as `d308610271ad01fbabb2847ee046325001ec63e5`, and Pages [run 36234443933](https://github.com/mekhovov/revealline/actions/runs/36234443933) passed. Public acceptance then found a real locale-switch defect in Solo: the primary Continue caption can retain the previous language. The sole publisher is preparing an immutable patch and explicitly asked soundtrack PRs to wait for its accepted-main SHA. Authoritative `main` advanced through release-tooling [PR #648](https://github.com/mekhovov/revealline/pull/648) and [PR #639](https://github.com/mekhovov/revealline/pull/639) to `0cb51db92295a62fea99ee2ab215a79c6df06520`. Independent read-only review of PR #639 exact head `91c730afc5048d1a9ff3a15b1b0923995c51d1b5` confirmed that the 45-minute job bound, per-request abort deadline, early oversized-stream cancellation and stalled/oversized tests resolve the public-byte-audit blocker. This is still not the soundtrack rebase boundary because active [PR #652](https://github.com/mekhovov/revealline/pull/652), the v0.132.5 Solo/Team live-locale repair, has not been published and accepted. Its exact-head run 36235959038 is the current focused source gate; full test/build jobs are skipped under the active release policy and are not counted as passes.
+**Live reconciliation — 26 September 2026:** immutable [v0.132.4](https://github.com/mekhovov/revealline/releases/tag/v0.132.4) is published from exact source `d3df9d47f578d48383ff589914a188ada2ef8b31`, selector [PR #649](https://github.com/mekhovov/revealline/pull/649) merged as `d308610271ad01fbabb2847ee046325001ec63e5`, and Pages [run 36234443933](https://github.com/mekhovov/revealline/actions/runs/36234443933) passed. Public acceptance then found a real locale-switch defect in Solo: the primary Continue caption can retain the previous language. Its terminal v0.132.5 source PR #654 has now merged as `72cfc74552669699266d5d8ad92c56a69da885b2`, but that commit is not an accepted soundtrack rebase boundary. Fastline [run 36238464572](https://github.com/mekhovov/revealline/actions/runs/36238464572) failed the **Reproduce production collection when available** step because `node scripts/produce-field-kit-theme.mjs --check` reported a stale production revision ledger. Test, freeze, inspection, evidence and publication stages were skipped. The sole publisher must repair the ledger through a scoped PR, rerun the actual merged source, publish and accept v0.132.5, then provide the exact accepted `main` SHA before soundtrack PRs move.
 
 Archive-directory client PR #604 remains at exact head `5d23a776d226d0ed3239f558318cd58be886b938` until that patch is public. Preserve failed hosted runs 36230776668, 36231230104, 36231736506, 36232156154 and 36232552706. The current test models all three production 120 ms lifecycle boundaries; exact-head run 36232882068 passed preflight, 9/9 archive tests, all 21 host tests and release-ready. Opening-theme fallback PR #617 remains at `2007352fc53274daad521d7ef47d9b26358b4bb5`; exact-head run 36232888054 passed preflight, focused and release-ready. Dry-run merges against the pre-auditor main showed no conflicts, but both PRs and this plan PR remain unre-based by explicit publisher instruction until the locale patch establishes the accepted main SHA. Their fast-release full test/build jobs were skipped, so those jobs remain exclusions rather than passes.
 Archive PR #41 publishes three more CC0 racing-synth auditions by MintoDog: Pure
@@ -215,7 +215,15 @@ Replacement exact-head run 36238193318 passed preflight, focused, build and
 release-ready; its policy-skipped full test remains an exclusion rather than a
 pass. The merge is not yet the soundtrack rebase boundary: the sole publisher
 must still qualify/freeze it, publish immutable v0.132.5, deploy Pages, complete
-public acceptance and identify the accepted main SHA.
+public acceptance and identify the accepted main SHA. Its first Fastline attempt,
+[run 36238464572](https://github.com/mekhovov/revealline/actions/runs/36238464572),
+failed at **Reproduce production collection when available**. The exact command
+`node scripts/produce-field-kit-theme.mjs --check` reported
+`Stale production revision ledger. Run --write to append compatible revisions.`
+Tests, freeze, inspection, evidence and publish were skipped after that failure.
+Preserve this evidence; repair and requalify rather than treating the merged source
+or its successful source gates as a released version. PRs #604, #617 and #643 stay
+unrebased until the publisher supplies the accepted boundary.
 
 Archive 02 now publishes twelve recordings, bringing the aggregate to
 **175 recordings / 36 collections**. Archive 02
@@ -293,10 +301,11 @@ state before the observation ended. Metallic Mistress remains listening-pending,
 game-unadmitted, outside defaults and Recording-mode-ineligible. The archives now
 expose **178 recording files / 39 collections / 177 distinct compositions**.
 
-Shared local free space fluctuated during concurrent release work and is now
-approximately **1.37 GiB**, above the 1 GiB floor with little margin. Continue only
-small one-file intakes and hosted checks; large packs and local builds remain
-stopped. Preserve user changes, frozen releases, worktrees and evidence.
+Shared local free space fluctuated during concurrent release work and measured
+**982 MiB** after the v0.132.5 qualification failure, below the 1 GiB floor.
+Stop audio intake, rebases and local builds until coordinated cleanup restores the
+reserve. Documentation-only corrections and read-only hosted checks may continue.
+Preserve user changes, frozen releases, worktrees and evidence.
 
 1. **v0.132 Pages completion:** complete. Selector
    [PR #592](https://github.com/mekhovov/revealline/pull/592) merged as
