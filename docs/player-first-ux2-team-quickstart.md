@@ -2,10 +2,11 @@
 
 ## Scope
 
-- Reconciled base: `a4df35e81d23a40e8122de9b25024807ab1bcb91`, the local
+- Reconciled base: `ecaadd8d4b01c81d72c93c9989ecf260807804bf`, the rebased local
   v0.133.0 compact-gallery candidate stacked on the v0.132.3 Couch input handoff
   and accepted v0.132.2 presentation revision 88.
-- Branch: `codex/team-quickstart-v134-local`.
+- Rebased candidate commit: `3c34b0122060c6850a811a933be41e588f31058f`,
+  now contained by `codex/couch-secondary-nav-v135-local`.
 - The package, root lock record, and build configuration identify this local
   candidate as v0.134.0.
 - This source does not claim a merge, tag, release, Pages deployment,
@@ -50,12 +51,12 @@ checks pass. Rebuilding localization preserves
 `game/i18n/content-registry.mjs` byte for byte at SHA-256
 `86db5778ee599f337be9cdb0d1e861ff51b738547eb15dce06272384662c2562`.
 
-The full Team host currently has an inherited 74/77 result. All three variants
-of `already-paused Team retires Help and controller intent ...` expect the Help
-reader to own focus at line 1486, while the host retains `coop-help-toggle`.
-The same three failures reproduce on the exact reconciled base after removing
-this candidate's two production hunks, so they are not caused by moving Arena.
-They remain a base-stack blocker to a fully green release claim.
+The original full-Team-host evidence was misreported. The exact v0.134.0
+candidate was 69/77: five import cases still supplied plain file doubles after
+production required a genuine `Blob`, and three foreground-loss cases asked an
+unauthorized synthetic click to bypass the controller Confirm echo window.
+The v0.135.0 follow-up corrects those fixtures without relaxing production Blob
+validation or input guards; the current stacked Team host passes 77/77.
 
 The passing tests model keyboard, touch/pointer, controller assignment, Steam
 Deck native Confirm echoes, passive picture preparation, and exact gallery
