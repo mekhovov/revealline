@@ -23,6 +23,13 @@ export function authoredPackageId(routeId, mode, packId) {
 
 /** Resolve from the exact loaded edition, never from a live server catalogue. */
 export function authoredMissionDownloadGroup(route, mode, missionId) {
+  if (route?.navigation) {
+    const view = route.navigation.views[mode];
+    const campaign = view?.campaigns.find((item) =>
+      item.levels.some((level) => level.id === missionId),
+    );
+    return campaign ? authoredPackageId(route.id, mode, campaign.packId) : null;
+  }
   if (!route?.source || !['solo', 'versus'].includes(mode)) return null;
   const mission = route.source.missions.find((item) => item.id === missionId);
   if (!mission?.modes.includes(mode)) return null;

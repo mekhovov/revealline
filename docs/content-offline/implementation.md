@@ -53,6 +53,40 @@ published release or user checkout was deleted.
    using the existing profile writer/journal/flight safeguards, and official-file
    repair bypassing a corrupt cached response. Missing mission packages open the
    consent flow; ordinary worker requests cannot silently download missing assets.
+5. **Independent Solo runtime:** the publisher emits lightweight browsing metadata
+   and complete per-pack runtime snapshots. Solo boots only Horizon and loads
+   another pack after its download is approved. Original campaign identities,
+   mission ordinals and full-project appearance authority remain unchanged. Versus
+   and Team entry points are optional runtime packages; shared compiler and replay
+   helpers remain in core. The other mode browsers still use complete route sources
+   inside their optional packages.
+6. **Played dependency retention:** deliberate play pins the complete verified
+   official chapter closure under the same storage lock as removal. Passive
+   previews do not pin packages. Deselecting a played chapter cannot remove its
+   runtime snapshot or original pictures. This is intentionally conservative:
+   precise save/replay-aware reclamation is still a separate qualification gate.
+7. **Cold bookmark recovery:** missing optional mode documents and archived route
+   bootstraps reach the cached consent screen before the host needs them. Exact
+   URLs are preserved; the confirmation resolves only a published destination.
+   Separate checkpoints protect previous download choices, and verified additions
+   are remembered for updates to the matching installed edition. See
+   [bookmark recovery and its retention limitation](BOOKMARK-RECOVERY.md).
+
+Focused integration evidence includes a published Solo saved-flight restore after
+chapter deselection and reopening with optional runtime/art requests blocked. Team
+tests cover preview without pinning, Start waiting for the retention lock, blur
+cancelling that attempt, and explicit retry before play. Published Solo provider
+tests preserve original full-source actor appearance pins across the new chapter
+representation.
+
+Final focused checks: retention/host integration **53/53**; bookmark recovery,
+worker and installed-state integration **63/63**; lazy provider and identity
+regressions **7/7**; bootstrap/destination publisher checks **5/5**. Counts describe
+separate commands and are not a deduplicated whole-repository test total. Logs are
+`/tmp/revealline-retention-final.log`, `/tmp/revealline-bookmark-bootstrap-tests.log`
+and the provider/publisher commands recorded in their focused test files. Repository
+validation passed at this integration; lint and formatting are repeated after the
+final bootstrap change. Full-suite baseline failures above remain explicitly open.
 
 The inventory's 386 current mission/mode owners differ from browsing-row counts:
 it covers additional modes, revisions and effective presentation ownership.
@@ -88,27 +122,51 @@ icon/device test, a completed full Journey, an external-network traffic capture,
 or proof of every mode. The IAB tool did not expose its exact engine version.
 Follow-up review fixed bounded catalogue cancellation, cancellation during final
 verification/activation, and the position of download confirmation above the long
-chapter list. Those follow-up changes have focused test coverage and require
-another exact-candidate browser pass.
+chapter list.
+
+The strict-runtime candidate `ee63b744b95f13b9bde35a6aa1d97d6996ab0618d7f9c01e56a969658e641a62`
+was then built and checked at a new origin, port 8879:
+
+- Start displayed a 56.9 MiB confirmation with zero recordings selected; approving
+  it automatically prepared the launcher and started First return.
+- With the HTTP server stopped and connection refusal confirmed, a new launcher
+  tab restored the saved flight, then launched the previously unvisited Long way
+  home mission (72% target). The timer advanced and no console errors were reported.
+- Direct undownloaded Versus and archived `whole-spatial-v10` bookmarks reached
+  their cached, correctly targeted size-confirmation screens without the server.
+  No download was approved while the server was stopped.
+
+That visual check exposed a CSS override of the HTML `hidden` attribute on recovery
+choices. A final CSS-only correction restores hidden-state precedence; the core
+runtime behavior above was already verified. The package report records the final
+rebuilt artifact, separately from this predecessor's exact build ID.
+Final build `757fd1ac920697fb0bc55ddef275173591f036c3d920855a0297044d141af6b8`
+passed build validation (1,362 files); its recovery page was checked at a fresh
+origin on port 8880 and correctly hides unrelated starter/all-game choices. The
+UI showed its exact 58.6 MiB fresh Versus selection and zero installed recordings.
+No optional transfer was approved in that final display check. Full-origin-failure
+gameplay evidence above applies to its otherwise identical CSS predecessor.
 
 ## Gates still open
 
 - Finish complete pilot runs and evaluate actual route alternatives, failures and
   difficulty before approving designs. Obtain the requested design/artwork review
   before bulk production.
-- Produce replacement images, provenance and accessible descriptions. Add rotated,
-  reflected, perceptual/crop/recolour screening and review contact sheets. Exact
-  bytes or pixel hashes alone do not prove distinct compositions.
-- Implement full independent mode bootstraps and truly lazy chapter runtime
-  consumption. The current small flattened route snapshot preserves the existing
-  synchronous navigation/progression contract; shared runtime still includes
-  other mode hosts and recovery validators.
+- Produce replacement images, provenance and accessible descriptions, then obtain
+  visual approval. The supplementary screening report now covers exact transformed
+  copies and perceptual/crop/recolour hypotheses using a pinned decoder and
+  comparison implementation. Its current matches are review candidates; no
+  replacement composition has been approved.
+- Qualify additional chapter splitting inside the optional Versus and Team
+  runtimes. Solo now consumes independent chapter snapshots; other modes retain
+  their existing full-route browsing/restore contract after their runtime download.
 - Remove embedded base64 from new official chapter runtimes while retaining old
   import/export readers. Introduce rendition descriptors and qualify lossless WebP
   across colour, collections, backups and original-byte export before conversion.
-- Complete saved-flight/replay dependency pinning and storage reclamation
-  accounting before deleting any historical dependency. This implementation
-  retains historical definitions and original bytes.
+- Qualify precise storage reclamation and report bytes actually reclaimable after
+  retained saves/replays/collections. Played dependency closures currently remain
+  pinned conservatively; a downloaded-but-unused package may be removed. Historical
+  definitions and original bytes remain available.
 - Complete recovery/quota/eviction, multi-window update/rollback and failed-save
   migration journeys against the exact candidate with zero or partial soundtracks.
 - Collect physical iPhone/iPad/Android and desktop installed-app evidence with
@@ -127,3 +185,14 @@ published releases or advertise unpassed uniqueness/device-support gates.
 See [package measurements](packages.md) for the measured development-build byte
 breakdown, dependency closures and remaining packaging limitations. New unique
 artwork will change that budget; the earlier 393 MiB projection remains withdrawn.
+
+## Research constraints retained in implementation
+
+The core/content separation follows [web.dev's PWA assets guidance](https://web.dev/learn/pwa/assets-and-data)
+and the [Santa Tracker scene-packaging example](https://web.dev/case-studies/santa).
+Installation and cache preparation remain separate states. Apple installation help
+keeps the [WebKit website-data transfer limitation](https://webkit.org/blog/14787/webkit-features-in-safari-17-2/)
+visible. Encoding conversion remains gated: the [WebP encoder's exact-transparency
+and metadata options](https://developers.google.com/speed/webp/docs/cwebp) must be
+qualified against original-byte export and the existing PNG readers before a
+conversion can count as a saving.

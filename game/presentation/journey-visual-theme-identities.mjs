@@ -2,6 +2,7 @@ import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../da
 import { createContentExecutionCatalog } from '../content-design/execution.mjs';
 import { hashPresentationBytes } from './bundle.mjs';
 import { snapshotVisualThemeContext } from './visual-theme-catalogue.mjs';
+import { publishedSourceAuthority } from '../content-design/published-journey.mjs';
 
 const bounds = Object.freeze({
   maxBytes: 4 * 1024 * 1024,
@@ -23,7 +24,13 @@ export async function createJourneyVisualThemeIdentityAdapter(source, { mode, si
   required(['solo', 'versus', 'team'].includes(mode), 'Choose an explicit Journey mode.');
   const project = boundedJSON(source, bounds);
   const catalogue = createContentExecutionCatalog(project, { mode });
-  const projectSha256 = await sha(project);
+  const published = publishedSourceAuthority(source);
+  required(
+    !published ||
+      (published.projectId === project.id && published.projectRevision === project.revision),
+    'Published chapter project authority differs.',
+  );
+  const projectSha256 = published?.projectSha256 ?? (await sha(project));
   abort(signal);
   const adapter = Object.freeze({
     async prepareHostSelection({ host, selection, level, association }, options = {}) {

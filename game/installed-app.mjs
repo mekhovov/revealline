@@ -236,6 +236,37 @@ export async function updateInstalledSelection(
   });
 }
 
+/** Add explicitly prepared packages to future updates without switching editions
+ * or replacing a broader selection made in another window. */
+export async function rememberInstalledPackages(
+  scope,
+  groups,
+  { storage = globalThis.localStorage, locks = globalThis.navigator?.locks, signal } = {},
+) {
+  signal?.throwIfAborted();
+  if (
+    !Array.isArray(groups) ||
+    !groups.length ||
+    groups.length > 100 ||
+    groups.some((id) => typeof id !== 'string' || !id.length || id.length > 200)
+  )
+    throw new Error('Remembering downloads requires exact package identities.');
+  if (!locks?.request) throw new Error('Changing installed downloads requires Web Locks.');
+  return locks.request('revealline.installed-app.switch', { signal }, async () => {
+    signal?.throwIfAborted();
+    const state = readInstalledState(storage);
+    if (state.active?.scope !== scope) return false;
+    const selection = [...new Set([...(state.active.selection || []), ...groups])];
+    if (selection.length > 100)
+      throw new Error('The installed download selection exceeds its package limit.');
+    storage.setItem(
+      INSTALLED_STATE_KEY,
+      JSON.stringify({ ...state, active: { ...state.active, selection } }),
+    );
+    return true;
+  });
+}
+
 export function invalidateInstalledMigration(storage = globalThis.localStorage) {
   const state = readInstalledState(storage);
   if (state.migration)

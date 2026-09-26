@@ -123,6 +123,16 @@ export function buildPackageReport({ catalogue, core, manifest, launcher, archiv
       officialFiles: starterFiles,
       soundtrackFiles: starterFiles.filter((file) => file.kind === 'soundtrack').length,
       coreChapterSnapshots: core.files.filter(chapterSnapshot).map((file) => file.path),
+      coreModeEntries: core.files
+        .filter((file) =>
+          [
+            'game/couch/index.html',
+            'game/couch/relay-rescue.html',
+            'game/couch/couch.mjs',
+            'game/couch/relay-rescue.mjs',
+          ].includes(file.path),
+        )
+        .map((file) => file.path),
       currentMetadataSnapshots: core.files.filter(
         (file) => /\/runtime\/[^/]+\.json$/.test(file.path) && !chapterSnapshot(file),
       ),
@@ -135,8 +145,8 @@ export function buildPackageReport({ catalogue, core, manifest, launcher, archiv
     limitations: [
       'This is a development build measurement, not a frozen release or physical-device certification.',
       'The starter has nine Horizon original pictures and no recorded music. Full current navigation metadata remains available.',
-      'Shared runtime still includes Solo, Versus, Team, replay and controller entry dependencies. Fully independent mode bootstraps remain to be implemented.',
-      'Chapter snapshots are separate packages; the current route snapshot still retains complete authored mission definitions to preserve the synchronous host contract.',
+      'Solo uses navigation metadata and one opening-chapter runtime. Other executable chapters, Versus/Team host entry points and historical route sources are separate packages; shared compiler, replay, controller and presentation helpers remain in core.',
+      'Versus and Team runtimes still include complete route sources needed by their existing browsers. Further mode-internal chapter splitting remains unqualified.',
       'Original PNG bytes are unchanged. These numbers do not assume new artwork or promise a final optimized image budget.',
       'Browser cache overhead, temporary verification buffers, imports, saves and retained previous editions require additional space beyond stored payload bytes.',
     ],

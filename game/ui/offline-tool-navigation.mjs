@@ -1,14 +1,28 @@
 import { offlineAvailability } from '../offline.mjs';
+import { guardInstallOfflineBlur } from './install-offline-panel.mjs';
 
 /** Tool links share the explicit package consent flow. Modified clicks, downloads,
  * external destinations and host-owned mode departure handlers keep their owners. */
-export function attachOfflineToolNavigation({
-  document: doc = globalThis.document,
-  window: win = globalThis.window,
-  access,
-  availability = offlineAvailability(),
-  onError = () => {},
-} = {}) {
+export function attachOfflineToolNavigation(options) {
+  return attachOfflineNavigation(options, 'tools');
+}
+
+/** Plain mode links prepare the receiving host without bypassing an existing
+ * flight's explicit departure/replace handler. Those handlers gate themselves. */
+export function attachOfflineModeNavigation(options) {
+  return attachOfflineNavigation(options, 'modes');
+}
+
+function attachOfflineNavigation(
+  {
+    document: doc = globalThis.document,
+    window: win = globalThis.window,
+    access,
+    availability = offlineAvailability(),
+    onError = () => {},
+  } = {},
+  kind,
+) {
   if (!availability.available || !availability.packageConsent) return () => {};
   const scope = new URL(availability.scope);
   let disposed = false,
@@ -30,13 +44,22 @@ export function attachOfflineToolNavigation({
     if (destination.origin !== scope.origin || !destination.pathname.startsWith(scope.pathname))
       return;
     const path = destination.pathname.slice(scope.pathname.length);
-    if (!/^(?:authoring\/|docs\/|game\/playground\/)/.test(path)) return;
+    if (kind === 'tools') {
+      if (!/^(?:authoring\/|docs\/|game\/playground\/)/.test(path)) return;
+    } else {
+      if (!/^game\/(?:index\.html|couch\/(?:index\.html|relay-rescue\.html)?)?$/.test(path)) return;
+      const current = new URL(win.location.href);
+      if (destination.pathname === current.pathname && destination.search === current.search)
+        return;
+    }
     event.preventDefault();
     if (pending) return;
     const controller = new AbortController();
     pending = controller;
     try {
-      await access.ensureURL(destination, { signal: controller.signal });
+      await access[kind === 'tools' ? 'ensureURL' : 'ensureDestination'](destination, {
+        signal: controller.signal,
+      });
       if (!disposed && !controller.signal.aborted && !doc.hidden && doc.hasFocus?.() !== false)
         win.location.assign(destination.href);
     } catch (error) {
@@ -50,7 +73,9 @@ export function attachOfflineToolNavigation({
   const hidden = () => {
     if (doc.hidden) cancel();
   };
+  const blurred = guardInstallOfflineBlur(cancel, doc);
   win.addEventListener('pagehide', cancel);
+  win.addEventListener('blur', blurred);
   doc.addEventListener('visibilitychange', hidden);
   return () => {
     disposed = true;
@@ -58,5 +83,6 @@ export function attachOfflineToolNavigation({
     doc.removeEventListener('click', click);
     doc.removeEventListener('visibilitychange', hidden);
     win.removeEventListener('pagehide', cancel);
+    win.removeEventListener('blur', blurred);
   };
 }

@@ -216,3 +216,83 @@ test('game closure includes shared artwork without including or depending on sou
   catalogue.groups[0].requires.push('album');
   assert.throws(() => downloadFiles(catalogue, ['chapter']), /dependency/);
 });
+
+test('played chapter retains its complete runtime and artwork after deselection while unplayed bytes are freed', async () => {
+  const h = setup(),
+    runtime = { ...(await file('runtime.mjs', 'exact chapter runtime')), kind: 'gameplay' },
+    chapter = { ...a, kind: 'gameplay' },
+    artwork = { ...b, kind: 'gameplay' },
+    unplayed = { ...(await file('unplayed.json', 'unplayed chapter')), kind: 'gameplay' };
+  bodies.set(runtime.path, 'exact chapter runtime');
+  bodies.set(unplayed.path, 'unplayed chapter');
+  const files = [runtime, chapter, artwork, unplayed];
+  await h.store.download({ ...job, files });
+  await (await h.caches.open('user-imports')).put(`${origin}/owned`, new Response('user bytes'));
+  await h.store.pin({
+    edition: job.edition,
+    group: 'solo:chapter',
+    files: [runtime, chapter, artwork],
+  });
+  await h.store.pin({
+    edition: job.edition,
+    group: 'solo:chapter',
+    files: [runtime, chapter, artwork],
+  });
+  assert.equal(
+    (await h.store.states()).filter((state) => state.edition === 'played-dependencies').length,
+    1,
+  );
+  await h.store.retain({ ...job, files: [], selection: [] });
+  assert.equal((await h.store.inspect([runtime, chapter, artwork], { verify: true })).ready, true);
+  assert.equal((await h.store.inspect([unplayed], { verify: true })).ready, false);
+  await h.store.remove(job.edition, job.group);
+  const offline = createOfficialDownloads({
+    ...h.options,
+    fetch: () => {
+      throw new Error('Network blocked');
+    },
+  });
+  await offline.pin({
+    edition: job.edition,
+    group: 'solo:chapter',
+    files: [runtime, chapter, artwork],
+  });
+  assert.equal((await offline.inspect([runtime, chapter, artwork], { verify: true })).ready, true);
+  assert.equal(
+    await (await (await h.caches.open('user-imports')).match(`${origin}/owned`)).text(),
+    'user bytes',
+  );
+  assert.deepEqual(
+    h.calls,
+    files.map((item) => item.path),
+  );
+});
+
+test('missing, corrupt, aborted and soundtrack files cannot acquire a played chapter owner', async () => {
+  const h = setup(),
+    files = [
+      { ...a, kind: 'gameplay' },
+      { ...b, kind: 'gameplay' },
+    ],
+    pin = { edition: job.edition, group: 'solo:chapter', files };
+  await assert.rejects(h.store.pin(pin), /Verify this complete chapter/);
+  await h.store.download(job);
+  const controller = new AbortController();
+  controller.abort();
+  await assert.rejects(h.store.pin({ ...pin, signal: controller.signal }), { name: 'AbortError' });
+  await assert.rejects(
+    h.store.pin({ ...pin, files: [{ ...a, kind: 'soundtrack' }] }),
+    /Gameplay retention/,
+  );
+  await (
+    await h.caches.open(OFFICIAL_CACHE)
+  ).put(
+    officialAssetURL(a.sha256, origin),
+    new Response('x'.repeat(a.bytes), { headers: { 'Content-Length': String(a.bytes) } }),
+  );
+  await assert.rejects(h.store.pin(pin), /Verify this complete chapter/);
+  assert.equal(
+    (await h.store.states()).some((state) => state.edition === 'played-dependencies'),
+    false,
+  );
+});

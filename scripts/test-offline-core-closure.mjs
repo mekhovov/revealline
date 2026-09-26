@@ -8,7 +8,7 @@ const entries = (values) =>
     bytes: Buffer.from(typeof value === 'string' ? value : JSON.stringify(value)),
   }));
 
-test('startup graph retains boot styles, deferred mode modules and production authoring assets', () => {
+test('Solo startup graph retains boot styles and production assets while mode hosts stay separate', () => {
   const files = entries({
     'game/index.html':
       '<link rel="stylesheet" data-boot-href="style.css"><script src="boot.mjs"></script><a href="../authoring/tool.html">Tool</a>',
@@ -36,16 +36,21 @@ test('startup graph retains boot styles, deferred mode modules and production au
     'game/font.woff2',
     'game/app.mjs',
     'game/shared.mjs',
-    'game/couch/couch.mjs',
     'authoring/library/player.png',
     'game/presentation/compiled/runtime.json',
     'game/presentation/visual-themes.json',
   ])
     assert(result.retained.has(name), name);
+  const versus = selectOfflineCore(files, new Set(), { mode: 'versus' });
+  assert(versus.retained.has('game/couch/couch.mjs'));
+  assert(!result.retained.has('game/couch/couch.mjs'));
   assert.deepEqual(result.optional.sort(), [
     'authoring/library/editor-reference.png',
     'authoring/tool.html',
     'authoring/tool.mjs',
+    'game/couch/couch.mjs',
+    'game/couch/index.html',
+    'game/couch/launcher.js',
     'game/presentation/compiled/manifest.json',
     'game/presentation/compiled/studio.json',
   ]);

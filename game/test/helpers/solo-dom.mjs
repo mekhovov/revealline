@@ -170,6 +170,7 @@ export async function soloPage(
     pictures,
     waitForPictures = true,
     initialReadyTimeoutMs = 5000,
+    browserSetup,
     readPads = () => [],
   } = {},
 ) {
@@ -442,6 +443,7 @@ export async function soloPage(
   win.location = globals.location;
   // Real browser Window and global sessionStorage refer to the same tab store.
   win.sessionStorage = previewStorage;
+  browserSetup?.({ document: doc, window: win, globals });
   for (const [key, value] of Object.entries(globals)) {
     originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
     Object.defineProperty(globalThis, key, { value, configurable: true, writable: true });

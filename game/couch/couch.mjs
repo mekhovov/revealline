@@ -16,6 +16,7 @@ import { attachJourneyModePictures } from '../ui/journey-mode-pictures.mjs';
 import { createBoardFootprints } from './board-footprint.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
+import { isOfficialPack } from '../packs.mjs';
 import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
 import { createCouchStaticPictures } from './couch-static-pictures.mjs';
 import { createCandidateCouchPictures } from './candidate-pictures.mjs';
@@ -26,6 +27,8 @@ import {
   journeyActorThemeMaterial,
 } from '../presentation/journey-actor-materials.mjs';
 import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
+import { attachOfflineModeNavigation } from '../ui/offline-tool-navigation.mjs';
+import { offlineAvailability } from '../offline.mjs';
 import { DEFAULT_JOURNEY_ROUTES, resolveJourneyRequest } from '../content-design/default-entry.mjs';
 import { authoredJourneyUsesActorMaterials } from '../content-design/mode-href.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
@@ -330,6 +333,7 @@ try {
     resolveJourneyRequest(new URL(location.href).searchParams, {
       mode: 'versus',
     }),
+    { fullSource: true },
   );
   const authoredJourney = !!authoredRoute;
   const libraryHandoff = readMissionLibraryHandoff(new URL(location.href).searchParams);
@@ -1176,6 +1180,25 @@ try {
       p.skipCelebration?.();
     });
   }
+  async function ensureVersusPackage(entry, options, reader = installed) {
+    if (!offlineAvailability().packageConsent) return;
+    if (candidateJourney?.owns(entry))
+      await gameplayDownloads.ensureMission(
+        { routeId: authoredRoute.id, missionId: entry.level.id, mode: 'versus' },
+        options,
+      );
+    else if (shippedMaps.includes(entry))
+      await gameplayDownloads.ensure(
+        `destination:versus:${entry.sourcePackId ? `chapter:${entry.sourcePackId}` : 'classic:base'}`,
+        options,
+      );
+    else {
+      // The reader brands the accepted row and returns its exact installed pack.
+      // A user import with a matching pack ID never acquires official ownership.
+      const owner = reader.presentationOwner(entry);
+      if (isOfficialPack(owner.pack)) await gameplayDownloads.ensureClassic(owner.pack.id, options);
+    }
+  }
   function loadPreparedPicture(entry, { prompt = false } = {}) {
     contentReady = false;
     contentBusy = true;
@@ -1202,13 +1225,7 @@ try {
       let nextActors = null,
         adoptedActors = false;
       try {
-        if (candidateJourney?.owns(entry))
-          await gameplayDownloads.ensureMission(
-            { routeId: authoredRoute.id, missionId: entry.level.id, mode: 'versus' },
-            { signal: controller.signal, prompt },
-          );
-        else if (staticEntry)
-          await gameplayDownloads.ensureClassic(null, { signal: controller.signal, prompt });
+        await ensureVersusPackage(entry, { signal: controller.signal, prompt });
         if (!current()) return false;
         const image = await owner.select(entry, {
           themeId: theme.id,
@@ -1382,16 +1399,11 @@ try {
       ownsNextActors = false,
       prepared = null;
     try {
-      if (candidateJourney?.owns(entry))
-        await gameplayDownloads.ensureMission(
-          { routeId: authoredRoute.id, missionId: entry.level.id, mode: 'versus' },
-          { signal: controller.signal, prompt: !configured },
-        );
-      else if (isStatic)
-        await gameplayDownloads.ensureClassic(null, {
-          signal: controller.signal,
-          prompt: !configured,
-        });
+      await ensureVersusPackage(entry, {
+        signal: controller.signal,
+        prompt: !configured,
+        retain: !configured,
+      });
       if (!current()) return null;
       lease = await owner.stage(entry, {
         themeId: attempt.recipe.theme.id,
@@ -1663,6 +1675,10 @@ try {
       preparationDisplay = display;
       updateMenu();
       try {
+        if (offlineAvailability().packageConsent) {
+          await ensureVersusPackage(entry, { signal: controller.signal, retain: true });
+          if (!ownsReadyStart()) return;
+        }
         const confirmation = (shippedMaps.includes(entry) ? staticPictures : installed).confirm(
           entry,
           {
@@ -2328,6 +2344,12 @@ try {
     if (!context.isCurrent() || missionLibrary.library.find(row.id) !== row) return false;
     if (confirmInventory && !(await confirmInventory())) return false;
     if (!context.isCurrent() || missionLibrary.library.find(row.id) !== row) return false;
+    if (offlineAvailability().packageConsent)
+      await gameplayDownloads.ensureDestination(href, {
+        signal: context.signal,
+        runtimeOnly: row.collection === 'Custom',
+      });
+    if (!context.isCurrent() || missionLibrary.library.find(row.id) !== row) return false;
     location.href = href;
     return true;
   }
@@ -2623,7 +2645,8 @@ try {
     missionLibraryLoading = (async () => {
       const index = await readActorMissionIndex();
       const route =
-        authoredRoute || (await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.versus));
+        authoredRoute ||
+        (await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.versus, { fullSource: true }));
       const originalThemes = (await json('../content-design/themes.json')).themes;
       const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
         ? journeyActorThemeCandidates(originalThemes, {
@@ -3099,6 +3122,8 @@ try {
       return {
         async confirm() {
           check();
+          await ensureVersusPackage(entry, { signal, retain: true }, candidateReader);
+          check();
           await lease.confirm({ onStatus });
           check();
         },
@@ -3226,6 +3251,17 @@ try {
     : null;
   const gameplayDownloads = createOfflineDownloadAccess({
     requestPackage: (request) => installOfflinePanel.requestPackage(request),
+  });
+  const detachModeDownloads = attachOfflineModeNavigation({
+    document,
+    window,
+    access: gameplayDownloads,
+    onError: (error) => {
+      $('race-message').textContent = error.message;
+    },
+  });
+  window.addEventListener('pagehide', (event) => {
+    if (!event.persisted) detachModeDownloads();
   });
   if ($('race-offline')) $('race-offline').onclick = () => installOfflinePanel.open();
 
