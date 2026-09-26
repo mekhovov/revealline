@@ -51,8 +51,23 @@ test('Versus Pause exposes the shared player actions and retries with one delibe
   assert.deepEqual(page.checkpoint(), retried);
 });
 
-test('Team Pause puts Help, Settings and Home in the direct shared hierarchy', async (t) => {
-  const page = await teamPage(t, { nativeFocus: true, capturePaint: true });
+test('Team Pause puts Help, Settings, Sound and Home in the direct shared hierarchy', async (t) => {
+  const stored = new Map();
+  const page = await teamPage(t, {
+    nativeFocus: true,
+    capturePaint: true,
+    beforeImport({ install }) {
+      install('localStorage', {
+        value: {
+          getItem: (key) => stored.get(key) ?? null,
+          setItem: (key, value) => stored.set(key, String(value)),
+          removeItem: (key) => stored.delete(key),
+        },
+      });
+    },
+  });
+  assert.equal(page.$('coop-optional-setup').open, false, 'Quick-start setup stays collapsed.');
+  assert.equal(page.doc.activeElement.id, 'coop-start', 'Quick Start retains initial focus.');
   page.$('coop-start').click();
   page.tick(3);
   page.$('coop-pause').click();
@@ -61,14 +76,28 @@ test('Team Pause puts Help, Settings and Home in the direct shared hierarchy', a
   assert.equal(core.hidden, false);
   assert.deepEqual(
     core.children.map((element) => element.id),
-    ['coop-help', 'coop-settings-open', 'coop-home-paused'],
+    ['coop-help', 'coop-settings-open', 'coop-quick-sound', 'coop-home-paused'],
   );
-  for (const id of ['coop-resume', 'coop-retry', 'coop-discovery-paused', 'coop-settings-open'])
+  assert.equal(page.$('coop-quick-sound').parentNode, core);
+  for (const id of [
+    'coop-resume',
+    'coop-retry',
+    'coop-discovery-paused',
+    'coop-settings-open',
+    'coop-quick-sound',
+  ])
     assert.equal(visible(page.$(id)), true, `${id} is visible from Pause.`);
   assert.equal(page.$('coop-help-toggle').textContent.trim(), 'How to play and controls');
   assert.equal(page.$('coop-home-paused').textContent, 'Home');
 
   const paused = page.$('coop-clock').textContent;
+  page.$('coop-quick-sound').click();
+  page.tick(120);
+  assert.equal(page.$('coop-quick-sound').parentNode, core);
+  assert.equal(page.$('coop-quick-sound').textContent, 'Sound: on');
+  assert.equal(page.$('coop-quick-sound').getAttribute('aria-pressed'), 'true');
+  assert.equal(page.$('coop-clock').textContent, paused, 'Sound changes cannot resume Team play.');
+
   page.$('coop-settings-open').click();
   assert.equal(page.$('coop-options').open, true);
   page.$('coop-settings-close').click();

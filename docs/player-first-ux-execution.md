@@ -32,6 +32,12 @@ It remains unpushed and cannot enter its release cycle until v0.141.1 is publicl
 accepted. This preparation is dependency evidence only and does not claim that
 PR #590 or v0.141.1 is merged, released, deployed or publicly accepted.
 
+**Prepared follow-up:** v0.141.3 Couch secondary navigation is reconciled as a
+clean local child of v0.141.2 candidate
+`2904091ca99400529a39c1491b0770037fffc00e`. The complete Couch shell/shared
+Pause hosts pass 27/27 and the departure/markup/quick-start boundary passes
+37/37. It remains unpushed and inherits the same predecessor acceptance gate.
+
 **Active and ordered:** each row is a working allocation, not an accepted
 release. Reconcile each item onto the publicly accepted predecessor, rerun its
 exact-head gates and publish it before accepting the next row. Older target
@@ -42,7 +48,7 @@ with this order.
 | ----- | --------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | 1     | v0.141.1        | Compact complete mission gallery                                     | [PR #590](https://github.com/mekhovov/revealline/pull/590)                                                                  |
 | 2     | v0.141.2        | Team quick-start                                                     | prepared donor from PR #549                                                                                                 |
-| 3     | v0.141.3        | Couch secondary navigation                                           | prepared donor from PR #539                                                                                                 |
+| 3     | v0.141.3        | Couch secondary navigation                                           | prepared local child of v0.141.2 candidate; audited donor from PR #539                                                      |
 | 4     | v0.141.4        | Contextual Team teaching                                             | prepared donor from PR #543                                                                                                 |
 | 5     | v0.141.5        | Deliberate Team terminal Retry                                       | [PR #545](https://github.com/mekhovov/revealline/pull/545)                                                                  |
 | 6     | v0.141.6        | Readable Versus countdown and Retry cue                              | [PR #552](https://github.com/mekhovov/revealline/pull/552)                                                                  |
