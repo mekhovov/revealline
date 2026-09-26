@@ -317,7 +317,7 @@ function pngSize(bytes) {
     u32be(bytes, 8) !== 13 ||
     ascii(bytes, 12, 4) !== 'IHDR'
   )
-    throw new Error('PNG signature or IHDR is invalid');
+    throw new Error(contentError('image.pngSignature'));
   const size = { width: u32be(bytes, 16), height: u32be(bytes, 20) };
   let p = 8,
     data = false,
@@ -325,9 +325,9 @@ function pngSize(bytes) {
   while (p + 12 <= bytes.length) {
     const length = u32be(bytes, p),
       kind = ascii(bytes, p + 4, 4);
-    if (p + 12 + length > bytes.length) throw new Error('PNG chunk is truncated');
-    if (kind === 'IHDR' && p !== 8) throw new Error('PNG has multiple frame headers');
-    if (kind === 'acTL') throw new Error('Animated PNG is not supported in static visual roles');
+    if (p + 12 + length > bytes.length) throw new Error(contentError('image.pngChunkTruncated'));
+    if (kind === 'IHDR' && p !== 8) throw new Error(contentError('image.pngRepeatedHeader'));
+    if (kind === 'acTL') throw new Error(contentError('image.pngAnimatedUnsupported'));
     if (kind === 'IDAT') data = true;
     p += 12 + length;
     if (kind === 'IEND') {
@@ -335,35 +335,35 @@ function pngSize(bytes) {
       break;
     }
   }
-  if (!data || !end || p !== bytes.length)
-    throw new Error('PNG must contain complete image data and IEND');
+  if (!data || !end || p !== bytes.length) throw new Error(contentError('image.pngIncomplete'));
   return size;
 }
 function jpegSize(bytes) {
-  if (bytes[0] !== 0xff || bytes[1] !== 0xd8) throw new Error('JPEG signature is invalid');
+  if (bytes[0] !== 0xff || bytes[1] !== 0xd8) throw new Error(contentError('image.jpegSignature'));
   let p = 2,
     size = null;
   while (p < bytes.length) {
-    if (bytes[p++] !== 0xff) throw new Error('JPEG marker is invalid');
+    if (bytes[p++] !== 0xff) throw new Error(contentError('image.jpegMarker'));
     while (bytes[p] === 0xff) p++;
     const marker = bytes[p++];
     if (marker === 0xd9) break;
     if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) continue;
-    if (p + 2 > bytes.length) throw new Error('JPEG segment is truncated');
+    if (p + 2 > bytes.length) throw new Error(contentError('image.jpegSegmentTruncated'));
     const length = u16be(bytes, p);
-    if (length < 2 || p + length > bytes.length) throw new Error('JPEG segment is truncated');
+    if (length < 2 || p + length > bytes.length)
+      throw new Error(contentError('image.jpegSegmentTruncated'));
     if (
       [0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7, 0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf].includes(
         marker,
       )
     ) {
-      if (length < 8 || size) throw new Error('JPEG frame header is invalid or repeated');
+      if (length < 8 || size) throw new Error(contentError('image.jpegFrameHeader'));
       size = { height: u16be(bytes, p + 3), width: u16be(bytes, p + 5) };
     }
     if (marker === 0xda) break;
     p += length;
   }
-  if (!size) throw new Error('JPEG dimensions are missing');
+  if (!size) throw new Error(contentError('image.jpegDimensionsMissing'));
   return size;
 }
 function webpSize(bytes) {
@@ -373,7 +373,7 @@ function webpSize(bytes) {
     ascii(bytes, 8, 4) !== 'WEBP' ||
     u32le(bytes, 4) + 8 !== bytes.length
   )
-    throw new Error('WebP RIFF container is invalid');
+    throw new Error(contentError('image.webpContainer'));
   let p = 12,
     canvas = null,
     frame = null;
@@ -382,31 +382,30 @@ function webpSize(bytes) {
       length = u32le(bytes, p + 4),
       start = p + 8,
       end = start + length;
-    if (end > bytes.length) throw new Error('WebP chunk is truncated');
+    if (end > bytes.length) throw new Error(contentError('image.webpChunkTruncated'));
     if (kind === 'VP8X') {
-      if (length !== 10 || canvas) throw new Error('WebP canvas header is invalid or repeated');
-      if (bytes[start] & 2)
-        throw new Error('Animated WebP is not supported in static visual roles');
+      if (length !== 10 || canvas) throw new Error(contentError('image.webpCanvasHeader'));
+      if (bytes[start] & 2) throw new Error(contentError('image.webpAnimatedUnsupported'));
       canvas = { width: 1 + u24le(bytes, start + 4), height: 1 + u24le(bytes, start + 7) };
     }
     if (kind === 'VP8 ') {
       if (frame || length < 10 || ascii(bytes, start + 3, 3) !== '\x9d\x01\x2a')
-        throw new Error('WebP frame header is invalid or repeated');
+        throw new Error(contentError('image.webpFrameHeader'));
       frame = { width: u16le(bytes, start + 6) & 0x3fff, height: u16le(bytes, start + 8) & 0x3fff };
     }
     if (kind === 'VP8L') {
       if (frame || length < 5 || bytes[start] !== 0x2f)
-        throw new Error('WebP lossless frame header is invalid or repeated');
+        throw new Error(contentError('image.webpLosslessHeader'));
       const bits = u32le(bytes, start + 1);
       frame = { width: 1 + (bits & 0x3fff), height: 1 + ((bits >>> 14) & 0x3fff) };
     }
     if (kind === 'ANIM' || kind === 'ANMF')
-      throw new Error('Animated WebP is not supported in static visual roles');
+      throw new Error(contentError('image.webpAnimatedUnsupported'));
     p = end + (length % 2);
   }
-  if (p !== bytes.length || !frame) throw new Error('WebP image frame is missing or truncated');
+  if (p !== bytes.length || !frame) throw new Error(contentError('image.webpFrameMissing'));
   if (canvas && (canvas.width !== frame.width || canvas.height !== frame.height))
-    throw new Error('WebP canvas/frame dimensions disagree');
+    throw new Error(contentError('image.webpDimensionsDisagree'));
   return frame;
 }
 /** Read bounded media headers before allocating an Image. This is not a decoder:
@@ -417,17 +416,17 @@ export function inspectImageDataUrl(dataUrl) {
   const errors = [];
   let mime, width, height, byteLength;
   if (typeof dataUrl !== 'string' || dataUrl.length > CONTENT_LIMITS.maxEncodedImageChars)
-    return result(['Image exceeds the encoded budget or is not a string']);
+    return result([contentError('image.encodedBudgetOrType')]);
   const match = /^data:image\/(png|jpeg|webp);base64,/.exec(dataUrl);
-  if (!match) return result(['Image requires an embedded PNG, JPEG or WebP data URL']);
+  if (!match) return result([contentError('image.embeddedDataUrlRequired')]);
   mime = `image/${match[1]}`;
   const encoded = dataUrl.slice(match[0].length);
   if (!encoded.length || encoded.length % 4 !== 0 || !/^[A-Za-z0-9+/]*={0,2}$/.test(encoded))
-    return result(['Image base64 is malformed']);
+    return result([contentError('image.malformedBase64')]);
   byteLength =
     (encoded.length / 4) * 3 - (encoded.endsWith('==') ? 2 : encoded.endsWith('=') ? 1 : 0);
   if (byteLength > CONTENT_LIMITS.maxImageBytes)
-    return result(['Image exceeds the 4 MiB original-byte budget']);
+    return result([contentError('image.originalByteBudget')]);
   try {
     const binary = atob(encoded),
       bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0)),
@@ -445,9 +444,9 @@ export function inspectImageDataUrl(dataUrl) {
       height > CONTENT_LIMITS.maxImageSide ||
       width * height > CONTENT_LIMITS.maxImagePixels
     )
-      errors.push('Image exceeds 8192 pixels per side or the 16 megapixel budget');
+      errors.push(contentError('image.dimensionBudget'));
   } catch (error) {
-    errors.push(error.message || 'Image header could not be read');
+    errors.push(error.message || contentError('image.headerUnreadable'));
   }
   return result(errors, { mime, width, height, byteLength });
 }
