@@ -75,7 +75,7 @@ The worker runs on an internal database network with no external route. Its imag
 package volume are read-only; only a 128 MiB, non-executable `/tmp` is writable for bounded local
 video inspection. Compose also drops every Linux capability, forbids privilege elevation, and caps
 the worker at one CPU, 1 GiB of memory, and 64 processes. The API retains a separate edge network
-for the HTTPS proxy and outbound account mail.
+so host loopback proxying and outbound account mail remain available.
 
 Copy `production.env.example` to an untracked operator-owned file, replace every placeholder, and
 start both Compose files together:
@@ -304,6 +304,26 @@ the worker never trusts an uploaded approval flag.
 
 ## Adapter boundaries
 
+### Supported storage target and S3 workstream
+
+The executable production service is currently filesystem-backed. The initial supported Phase 4/5
+target is one host running the production Compose stack with durable package and tus volumes. That
+target includes the current readiness checks, interrupted-upload acceptance, offline backup and
+restore, and source-to-target recovery rehearsal. S3 is not a prerequisite for deploying or
+accepting this single-host target.
+
+S3 is a separate post-deployment workstream for multi-host or AWS operation. Completing it requires
+one storage factory shared by the API, worker, preflight and recovery commands; bounded stream-safe
+staging that verifies size and SHA-256 before immutable publication; the maintained tus S3
+datastore with deterministic completed-upload and expiry cleanup; package and tus dependency
+readiness probes; S3-aware backup, restore and recovery rehearsal; a MinIO end-to-end integration;
+and a real AWS smoke run with private buckets and scoped IAM access.
+
+The focused estimate is 4–6 engineering days after this workstream starts: 2–3 days for runtime
+wiring, configuration and verified staging; 1.5–2 days for recovery and MinIO coverage; and 0.5–1
+day after AWS buckets and IAM access are available for the final smoke evidence. These are focused
+engineering estimates rather than calendar release dates.
+
 - **Authentication:** production configuration creates a real Better Auth PostgreSQL instance,
   mounts `/api/auth/*`, requires verified email, supports password recovery, and resolves ownership
   from `auth.api.getSession`. An injected HTTPS webhook is the mail-delivery boundary; the provider
@@ -312,10 +332,10 @@ the worker never trusts an uploaded approval flag.
   and password reset through the local mail adapter, and proves that the resulting session owns the
   submission. The constant-token adapter remains available only behind
   `COMMUNITY_ALLOW_DEV_AUTH=true`.
-- **Blobs:** `DiskBlobStore` is runnable locally. `S3CompatibleBlobStore` accepts an injected S3
-  client plus `put`, `head`, and `get` command factories, avoiding a second SDK choice in this
-  scaffold. Production S3 wiring must stage and verify bytes before immutable upload, set private
-  bucket policy, and rehearse database/blob restore.
+- **Blobs:** `DiskBlobStore` is the executable production implementation.
+  `S3CompatibleBlobStore` currently provides only a tested injected-client byte boundary; it is not
+  selected by the API, worker, readiness or recovery entry points. The S3 workstream must add the
+  real SDK-backed factory and stream-safe verified staging before claiming executable support.
 - **Uploads:** the executable server mounts the maintained tus Node server with its disk store.
   `completeTusUpload` is the verified completion boundary that can also admit an S3-backed tus
   stream. PostgreSQL advisory locks coordinate API replicas, and the PostgreSQL upload registry
@@ -471,9 +491,10 @@ and remove the uniquely named edition before reusing that deployment.
 The default package ceiling is 256 MiB and catalog pages are capped at 50 entries. A reverse proxy
 still needs request timeouts, connection limits, and HTTPS. Public deployment also requires a live
 administrator-session rehearsal of the shipped report triage UI, stronger process/container
-isolation for media validation, malware policy, metrics, an off-host backup schedule, a real
-PostgreSQL/blob restore rehearsal, and an explicit infrastructure decision. The S3 adapter is tested
-at its byte boundary but is not wired into the executable deployment. No AWS, mail provider,
+isolation for media validation, malware policy, metrics, an off-host backup schedule, and a real
+PostgreSQL/filesystem restore rehearsal. The supported initial deployment remains the single-host
+filesystem target described above. S3, multi-host scaling and AWS qualification follow through the
+separately estimated workstream and acceptance gates; no AWS claim is made here. No mail provider,
 domain, or production restore claim is made here. Email verification and password recovery are
 integrated at the application boundary, but public launch still requires an operator-selected mail
 gateway, sender-domain authentication, templates, deliverability monitoring, abuse handling, and a

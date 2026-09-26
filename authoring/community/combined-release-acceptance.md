@@ -254,6 +254,6 @@ The remaining acceptance is environment-dependent: live community infrastructure
 two-user journey need 0.5–1 day after PostgreSQL/proxy/mail/blob infrastructure is available;
 Firefox, Safari, physical mobile, physical-speaker and broader-codec qualification need 1–2 days
 when those environments are available. Genuine browser-wide quota exhaustion, deliberate storage
-corruption and measured peak-memory acceptance also remain unclaimed. Because `v0.141.2` is the
-highest published stable release, earlier working allocations are stale. Future candidates require
+corruption and measured peak-memory acceptance also remain unclaimed. `v0.141.3` is the highest
+published stable release, while Pages still selects `v0.141.2`; earlier working allocations are stale. Future candidates require
 fresh allocation after checking the open `v0.142.0` through `v0.149.x` ranges.

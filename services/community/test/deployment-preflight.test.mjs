@@ -283,6 +283,7 @@ test('production Compose profile fails closed and preserves every shared admissi
   assert.match(worker, /cpus: 1\.0/u);
   assert.match(worker, /community-blobs:\/data\/blobs:ro/u);
   assert.match(worker, /networks:\n\s+- community-backend/u);
+  assert.doesNotMatch(worker, /community-edge/u);
   assert.match(worker, /restart: unless-stopped/u);
   assert.doesNotMatch(worker, /ports:/u);
   assert.doesNotMatch(worker, /BETTER_AUTH_SECRET|COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN/u);

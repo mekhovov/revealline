@@ -6,9 +6,9 @@
 
 ## Current checkpoint — 26 September 2026
 
-- **Completed:** immutable
+- **Completed Pages baseline:** immutable
   [v0.141.2](https://github.com/mekhovov/revealline/releases/tag/v0.141.2) is the
-  current published release. Its exact product source is
+  current Pages release. Its exact product source is
   `12978e5fd3fe0ce70bbee96aa543f569f64622d4` from
   [PR #675](https://github.com/mekhovov/revealline/pull/675), preserving the
   accepted v0.141.1 compact gallery and adding community deployment hardening.
@@ -16,11 +16,13 @@
   as `34f45503c32479591dcdc36e7236aaa2eb348a2f`; run `36252239829` audited 1,888
   files and 630,471,797 bytes with zero retries or failures. Archive95 preserves
   v0.141.0.
-- **Merged next source:** [PR #679](https://github.com/mekhovov/revealline/pull/679)
+- **Latest stable release:** [PR #679](https://github.com/mekhovov/revealline/pull/679)
   merged v0.141.3 Team quick-start as
-  `7509d790dadb6194d70a5bc1efafee40fbb0b3b7`. Its immutable release, Pages
-  selector and public player-flow acceptance remain open, so v0.141.2 is still
-  the public baseline.
+  `7509d790dadb6194d70a5bc1efafee40fbb0b3b7`. Coordinator run `36254346397`
+  published its immutable nine-asset
+  [v0.141.3 release](https://github.com/mekhovov/revealline/releases/tag/v0.141.3).
+  Its Pages selector and public player-flow acceptance remain open, so v0.141.2
+  is still the Pages baseline.
 - **Next working allocation:** v0.141.4 Couch
   secondary navigation; v0.141.5 Team teaching; v0.141.6
   deliberate Team terminal Retry; v0.141.7 Versus countdown; v0.141.8 named
@@ -39,8 +41,8 @@
   skipped long suites are not passes; modeled pads and DOM clicks are not physical
   controller, Steam Deck or touch-device evidence. Human balance, cross-runtime
   replay portability and physical installed-device acceptance remain separate
-  gates. The merged Team quick-start source does not yet claim a release,
-  deployment or public acceptance.
+  gates. The Team quick-start release does not yet claim a Pages deployment or
+  public player-flow acceptance.
 
 The 23 September register and later dated sections are preserved below as
 historical scope, evidence and design contracts. Their old version, PR-count and
