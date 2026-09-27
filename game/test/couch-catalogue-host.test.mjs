@@ -6,6 +6,7 @@ import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
+import { createCouchChapterInstaller } from '../couch/couch-chapter-install.mjs';
 import { libraryMissionId } from '../mission-library/library.mjs';
 
 const catalogue = JSON.parse(
@@ -115,7 +116,7 @@ function mediaBoundary() {
   return media;
 }
 
-async function fixture(t, { beforeImport, pads = [] } = {}) {
+async function fixture(t, { beforeImport, pads = [], preinstalled = false } = {}) {
   const media = mediaBoundary();
   const databases = new Map();
   const solo = new Map([
@@ -128,7 +129,26 @@ async function fixture(t, { beforeImport, pads = [] } = {}) {
     initialLevel: null,
     seconds: '30',
     nativeKeyboard: true,
-    beforeImport,
+    async beforeImport(context) {
+      if (preinstalled) {
+        const installer = createCouchChapterInstaller({
+          channel: 'dev',
+          registeredEntries: [],
+          baseURL: 'http://localhost/',
+        });
+        try {
+          const result = await installer.install(chapter);
+          assert.equal(result.committed, true);
+          assert.equal(result.reused, false);
+          assert.equal(result.pack.id, chapter.id);
+          assert.equal(controls.downloadCount, 1);
+          assert.equal([...databases.values()].flatMap((db) => db.allPuts).length, 1);
+        } finally {
+          installer.dispose();
+        }
+      }
+      await beforeImport?.(context);
+    },
     pads,
     ImageClass: media.ImageClass,
     URLImpl: media.URLImpl,
@@ -173,6 +193,12 @@ async function fixture(t, { beforeImport, pads = [] } = {}) {
     writes: () => [...databases.values()].flatMap((db) => db.allPuts),
     assertSoloKept() {
       assert.deepEqual([...solo], originalSolo);
+      if (preinstalled)
+        assert.equal(
+          [...databases.values()].flatMap((db) => db.allPuts).length,
+          1,
+          'Installed Play must not write the authenticated pack again.',
+        );
       for (const [store, key] of [...databases.values()].flatMap((db) => db.allPuts)) {
         assert.equal(store, 'assets', 'Only the installed-pack store may be written.');
         assert.equal(key, packKey, 'Installation must not write Solo saves or progress.');
@@ -256,18 +282,39 @@ async function closeCatalogue(page) {
   activate(page, 'journey-back');
   await settled(page, () => !page.$('journey-chooser').open, 'Back must close All missions.');
 }
-async function download(page) {
-  const before = snapshot(page);
+async function downloadAndPlay(t, f) {
+  const page = f.page,
+    before = snapshot(page),
+    entered = deferred(),
+    gate = deferred();
+  t.after(() => gate.resolve());
+  f.controls.onDownload = async () => {
+    entered.resolve();
+    await gate.promise;
+  };
   assert.match(missionCard(page).textContent, /Download/);
-  activate(page, missionCard(page));
-  await settled(
-    page,
-    () => missionCard(page)?.querySelector('.journey-card-action').textContent === 'Play',
-    'Verified installation offers separate Play without starting a race.',
-  );
-  assert.equal(page.$('journey-chooser').open, true);
-  assertRetained(page, before);
+  const operation = activate(page, missionCard(page));
+  assert.ok(operation instanceof Promise, 'Download & Play exposes its owned preparation.');
+  try {
+    await entered.promise;
+    assert.equal(page.$('journey-chooser').open, true);
+    assertRetained(page, before);
+    assert.equal(f.writes().length, 0, 'Unverified transport cannot publish a pack.');
+    await activate(page, missionCard(page));
+    assert.equal(f.controls.downloadCount, 1, 'Repeat activation cannot duplicate preparation.');
+    assertRetained(page, before);
+  } finally {
+    gate.resolve();
+  }
+  await operation;
+  f.controls.onDownload = null;
+  page.frame(0, { preserveStartCue: true });
+  assert.equal(page.state(), 'running', 'One Download & Play intent starts the chapter.');
+  assert.equal(page.$('journey-chooser').open, false);
+  assert.equal(f.controls.downloadCount, 1);
+  assert.equal(f.writes().length, 1, 'The authenticated pack is committed exactly once.');
 }
+
 async function start(page) {
   activate(page, 'race-start');
   await settled(page, () => page.state() === 'running', 'Start must run the accepted race.');
@@ -365,61 +412,78 @@ for (const state of ['ready', 'paused', 'finished'])
   );
 
 for (const state of ['paused', 'finished'])
-  hostTest(
-    `Cancel fences a late transport completion without replacing the ${state} race`,
-    async (t) => {
-      const f = await fixture(t),
-        p = f.page,
-        entered = deferred(),
-        gate = deferred(),
-        returned = deferred();
-      t.after(() => gate.resolve());
-      await prepareState(p, state);
-      const before = snapshot(p);
-      await openCatalogue(p);
-      f.controls.onDownload = async () => {
-        entered.resolve();
-        await gate.promise;
-        returned.resolve();
-      };
-      activate(p, missionCard(p));
-      assert.equal(
-        p.doc.activeElement,
-        missionCard(p),
-        'The shared mission card remains the active inline Cancel action.',
-      );
-      await entered.promise;
-      assert.match(missionCard(p).textContent, /Preparing · Cancel/);
-      assert.equal(missionCard(p).disabled, false);
-      assert.equal(p.doc.activeElement, missionCard(p));
-      assertRetained(p, before);
-      activate(p, missionCard(p));
-      assert.ok(p.doc.activeElement === missionCard(p), 'Focus returns to the exact Play action.');
-      gate.resolve();
-      await returned.promise;
-      await settled(
-        p,
-        () => /cancelled/i.test(p.$('journey-chooser-status').textContent),
-        'Cancel must settle visibly without installing the late transport.',
-      );
-      await closeCatalogue(p);
-      assertRetained(p, before);
-      assert.deepEqual(f.writes(), []);
-      f.assertSoloKept();
-    },
-  );
+  for (const cancellation of ['Back', 'new focus'])
+    hostTest(
+      `${cancellation} fences a late transport completion without replacing the ${state} race`,
+      async (t) => {
+        const f = await fixture(t),
+          p = f.page,
+          entered = deferred(),
+          gate = deferred(),
+          returned = deferred();
+        let signal;
+        t.after(() => gate.resolve());
+        await prepareState(p, state);
+        const before = snapshot(p);
+        await openCatalogue(p);
+        f.controls.onDownload = async (options) => {
+          signal = options.signal;
+          entered.resolve();
+          await gate.promise;
+          returned.resolve();
+        };
+        const operation = activate(p, missionCard(p));
+        assert.ok(operation instanceof Promise);
+        try {
+          await entered.promise;
+          assert.equal(signal.aborted, false);
+          assert.equal(p.doc.activeElement, missionCard(p));
+          assertRetained(p, before);
+          if (cancellation === 'Back') {
+            await closeCatalogue(p);
+            assert.equal(p.doc.activeElement, p.$('race-chapters'));
+          } else {
+            p.$('journey-back').focus();
+            assert.equal(p.$('journey-chooser').open, true);
+            assert.equal(p.doc.activeElement, p.$('journey-back'));
+          }
+          assert.equal(signal.aborted, true, 'The public cancellation aborts transport ownership.');
+          assertRetained(p, before);
+        } finally {
+          gate.resolve();
+        }
+        await returned.promise;
+        await operation;
+        assertRetained(p, before);
+        assert.equal(p.$('race-library-replace')?.open ?? false, false);
+        if (cancellation === 'Back') {
+          assert.equal(p.$('journey-chooser').open, false);
+          assert.equal(p.doc.activeElement, p.$('race-chapters'));
+        } else {
+          assert.equal(p.$('journey-chooser').open, true);
+          assert.equal(p.doc.activeElement, p.$('journey-back'));
+          assert.equal(missionCard(p).disabled, false);
+          assert.match(
+            missionCard(p).querySelector('.journey-card-action').textContent,
+            /Download/,
+          );
+          await closeCatalogue(p);
+        }
+        assertRetained(p, before);
+        assert.equal(f.controls.downloadCount, 1);
+        assert.deepEqual(f.writes(), []);
+        f.assertSoloKept();
+      },
+    );
 
 hostTest(
-  'Download retains the ready race and separate Play starts once with the same authenticated original on both boards',
+  'Download & Play retains the ready race until verified and starts once with the same authenticated original on both boards',
   async (t) => {
     const f = await fixture(t),
       p = f.page,
       before = snapshot(p);
     await openCatalogue(p);
-    await download(p);
-    const operation = activate(p, missionCard(p));
-    assert.ok(operation instanceof Promise, 'Catalogue Play exposes its owned preparation.');
-    await operation;
+    await downloadAndPlay(t, f);
     assert.equal(p.state(), 'running');
     releaseMissionCue(p);
     assert.equal(p.$('journey-chooser').open, false);
@@ -450,9 +514,7 @@ hostTest(
     const f = await fixture(t),
       p = f.page;
     await openCatalogue(p);
-    await download(p);
-    activate(p, missionCard(p));
-    await settled(p, () => p.state() === 'running', 'The chapter must start first.');
+    await downloadAndPlay(t, f);
     p.key('KeyS');
     p.frames(12);
     p.key('KeyS', false);
@@ -509,14 +571,14 @@ for (const interruption of ['Back then setup', 'foreground loss'])
   hostTest(
     `late picture preparation after ${interruption} cannot adopt or start the catalogue race`,
     async (t) => {
-      const f = await fixture(t),
+      const f = await fixture(t, { preinstalled: true }),
         p = f.page,
         gate = deferred(),
         returned = deferred();
       t.after(() => gate.resolve());
       const before = snapshot(p);
       await openCatalogue(p);
-      await download(p);
+      assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
       let heldImage;
       f.media.onDecode = async (image) => {
         // Embedded originals decode from data URLs. Hold the first actual
@@ -545,6 +607,8 @@ for (const interruption of ['Back then setup', 'foreground loss'])
           'A newer browse intent must expose Back while the retired decoder is unresolved.',
         );
         await closeCatalogue(p);
+        tap(p, 'race-optional-setup-toggle');
+        assert.equal(p.$('race-optional-setup').open, true);
         activate(p, 'race-focus');
         assert.equal(p.$('race-setup').hidden, false);
         focus = p.doc.activeElement;
@@ -579,13 +643,7 @@ hostTest(
     const before = snapshot(p);
     await openCatalogue(p);
     assertRetained(p, before);
-    await download(p);
-    activate(p, missionCard(p));
-    await settled(
-      p,
-      () => p.state() === 'running',
-      'Results may deliberately start another chapter.',
-    );
+    await downloadAndPlay(t, f);
     assert.equal(p.$('race-library-replace')?.open ?? false, false);
     p.renders.forEach((run, seat) => {
       assert.ok(run !== before.runs[seat], 'Replacement creates a new run.');
@@ -604,7 +662,7 @@ hostTest(
 hostTest(
   'foreground loss releases catalogue actions while picture decoding is still unresolved',
   async (t) => {
-    const f = await fixture(t),
+    const f = await fixture(t, { preinstalled: true }),
       p = f.page,
       gate = deferred(),
       before = snapshot(p);
@@ -612,7 +670,7 @@ hostTest(
       decoded = false;
     t.after(() => gate.resolve());
     await openCatalogue(p);
-    await download(p);
+    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
     f.media.onDecode = async (image) => {
       if (heldImage || !f.writes().length || sha(image.bytes) !== sha(firstPicture)) return;
       heldImage = image;
@@ -656,14 +714,14 @@ hostTest(
 hostTest(
   'moving focus to another host action retires late preparation without restoring stale chooser feedback',
   async (t) => {
-    const f = await fixture(t),
+    const f = await fixture(t, { preinstalled: true }),
       p = f.page,
       gate = deferred();
     t.after(() => gate.resolve());
     await prepareState(p, 'finished');
     const before = snapshot(p);
     await openCatalogue(p);
-    await download(p);
+    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
     let heldImage;
     f.media.onDecode = async (image) => {
       if (heldImage || !f.writes().length || sha(image.bytes) !== sha(firstPicture)) return;
@@ -697,12 +755,12 @@ hostTest(
 hostTest(
   'touch Play from Back focus keeps a paused race on Stay and a fresh Replace starts once',
   async (t) => {
-    const f = await fixture(t),
+    const f = await fixture(t, { preinstalled: true }),
       p = f.page;
     await prepareState(p, 'paused');
     const before = snapshot(p);
     await openCatalogue(p);
-    await download(p);
+    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
     p.$('journey-back').focus();
     assert.ok(p.doc.activeElement === p.$('journey-back'), 'Back owns initial touch focus.');
     tap(p, missionCard(p));
@@ -747,12 +805,12 @@ hostTest(
 hostTest(
   'touch Replace starts one prepared race when catalogue Play began with Back still focused',
   async (t) => {
-    const f = await fixture(t),
+    const f = await fixture(t, { preinstalled: true }),
       p = f.page;
     await prepareState(p, 'paused');
     const before = snapshot(p);
     await openCatalogue(p);
-    await download(p);
+    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
     p.$('journey-back').focus();
     assert.ok(p.doc.activeElement === p.$('journey-back'), 'Back owns initial touch focus.');
     tap(p, missionCard(p));
