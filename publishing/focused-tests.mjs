@@ -126,6 +126,242 @@ export function focusedTestPlan(paths, manifest, { fallbackHandled = false } = {
   };
 }
 
+function packageScriptName(command) {
+  if (
+    command?.command !== 'npm' ||
+    command.args?.length !== 2 ||
+    command.args[0] !== 'run' ||
+    !/^[a-z0-9:_-]+$/iu.test(command.args[1])
+  )
+    return null;
+  return command.args[1];
+}
+
+function singleNodeTestPath(command) {
+  if (
+    command?.command !== 'node' ||
+    command.args?.length !== 2 ||
+    command.args[0] !== '--test' ||
+    !safeChangedPath(command.args[1]) ||
+    !command.args[1].endsWith('.mjs') ||
+    command.args[1].includes('*')
+  )
+    return null;
+  return command.args[1];
+}
+
+function packageNodeTestPatterns(script) {
+  if (typeof script !== 'string') return null;
+  const tokens = script.trim().split(/\s+/u);
+  if (tokens.length < 3 || tokens[0] !== 'node' || tokens[1] !== '--test') return null;
+  const patterns = tokens.slice(2);
+  if (
+    patterns.some(
+      (pattern) =>
+        !safeChangedPath(pattern) ||
+        !/^[a-z0-9_./*-]+$/iu.test(pattern) ||
+        pattern.startsWith('-') ||
+        !pattern.endsWith('.mjs') ||
+        pattern.includes('**') ||
+        path.dirname(pattern).includes('*'),
+    )
+  )
+    return null;
+  return patterns;
+}
+
+function escapeRegularExpression(value) {
+  let escaped = '';
+  for (const character of value) {
+    if ('.*+?^$()|[]\\{}'.includes(character)) escaped += '\\';
+    escaped += character;
+  }
+  return escaped;
+}
+
+function expandPackageNodeTests(patterns, repositoryFiles) {
+  const files = new Set(repositoryFiles.filter(safeChangedPath));
+  const expanded = [];
+  for (const pattern of patterns) {
+    if (!pattern.includes('*')) {
+      if (!files.has(pattern)) return null;
+      expanded.push(pattern);
+      continue;
+    }
+    const basenamePattern = path.basename(pattern);
+    const escaped = basenamePattern.split('*').map(escapeRegularExpression).join('.*');
+    const matcher = new RegExp('^' + escaped + '$', 'u');
+    const directory = path.dirname(pattern);
+    const matches = [...files]
+      .filter((candidate) => {
+        const basename = path.basename(candidate);
+        return (
+          path.dirname(candidate) === directory &&
+          (!basename.startsWith('.') || basenamePattern.startsWith('.')) &&
+          matcher.test(basename)
+        );
+      })
+      .sort();
+    if (!matches.length) return null;
+    expanded.push(...matches);
+  }
+  return [...new Set(expanded)];
+}
+
+export function focusedCommandExecutionPlan(
+  commands,
+  { packageScripts = {}, repositoryFiles = [], shellSemantics = null } = {},
+) {
+  const packageCoverage = [];
+  const diagnostics = [];
+  const coveredTests = new Set();
+  for (const command of commands) {
+    const scriptName = packageScriptName(command);
+    if (!scriptName) continue;
+    if (!Object.hasOwn(packageScripts, scriptName)) {
+      diagnostics.push({ id: command.id, script: scriptName, reason: 'missing-package-script' });
+      continue;
+    }
+    const script = packageScripts[scriptName];
+    if (typeof script !== 'string') {
+      diagnostics.push({
+        id: command.id,
+        script: scriptName,
+        reason: 'invalid-package-script',
+      });
+      continue;
+    }
+    if (!/^node\s+--test(?:\s|$)/u.test(script.trim())) continue;
+    if (shellSemantics !== 'posix') {
+      diagnostics.push({
+        id: command.id,
+        script: scriptName,
+        reason: 'unsupported-script-shell',
+      });
+      continue;
+    }
+    const patterns = packageNodeTestPatterns(script);
+    if (!patterns) {
+      diagnostics.push({
+        id: command.id,
+        script: scriptName,
+        reason: 'unsupported-package-script',
+      });
+      continue;
+    }
+    const tests = expandPackageNodeTests(patterns, repositoryFiles);
+    if (!tests) {
+      diagnostics.push({
+        id: command.id,
+        script: scriptName,
+        reason: 'unresolved-package-tests',
+      });
+      continue;
+    }
+    packageCoverage.push({ id: command.id, script: scriptName, tests });
+    for (const testFile of tests) coveredTests.add(testFile);
+  }
+
+  const deduplicated = [];
+  const executionCommands = commands.filter((command) => {
+    const testFile = singleNodeTestPath(command);
+    if (!testFile || !coveredTests.has(testFile)) return true;
+    const coveredBy = packageCoverage
+      .filter(({ tests }) => tests.includes(testFile))
+      .map(({ id }) => id);
+    deduplicated.push({ id: command.id, testFile, coveredBy });
+    return false;
+  });
+  return {
+    commands: executionCommands,
+    packageCoverage,
+    deduplicated,
+    diagnostics,
+  };
+}
+
+export function packageScriptShellSemantics(
+  root,
+  { platform = process.platform, spawn = spawnSync } = {},
+) {
+  if (platform === 'win32') return null;
+  let result;
+  try {
+    result = spawn('npm', ['config', 'get', 'script-shell'], {
+      cwd: root,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+      env: { ...process.env, CI: 'true' },
+    });
+  } catch {
+    return null;
+  }
+  if (result?.error || result?.signal || result?.status !== 0 || typeof result.stdout !== 'string')
+    return null;
+  return result.stdout.trim() === 'null' ? 'posix' : null;
+}
+
+export async function loadFocusedExecutionInputs(
+  commands,
+  root,
+  {
+    readFile = fs.readFile,
+    readDirectory = fs.readdir,
+    statPath = fs.stat,
+    shellSemantics = null,
+  } = {},
+) {
+  let packageScripts = {};
+  try {
+    const packageJson = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));
+    if (
+      packageJson?.scripts &&
+      typeof packageJson.scripts === 'object' &&
+      !Array.isArray(packageJson.scripts)
+    )
+      packageScripts = packageJson.scripts;
+  } catch {
+    return { packageScripts, repositoryFiles: [], shellSemantics };
+  }
+
+  const repositoryFiles = new Set();
+  const patterns = commands.flatMap((command) => {
+    const scriptName = packageScriptName(command);
+    const script = scriptName ? packageScripts[scriptName] : null;
+    return typeof script === 'string' ? packageNodeTestPatterns(script) || [] : [];
+  });
+  for (const pattern of patterns) {
+    if (!pattern.includes('*')) {
+      try {
+        if ((await statPath(path.join(root, pattern))).isFile()) repositoryFiles.add(pattern);
+      } catch {
+        // An incomplete script cannot authorize deduplication.
+      }
+      continue;
+    }
+    const directory = path.dirname(pattern);
+    try {
+      const entries = await readDirectory(path.join(root, directory), { withFileTypes: true });
+      for (const entry of entries) {
+        const candidate = path.posix.join(directory, entry.name);
+        if (entry.isFile()) {
+          repositoryFiles.add(candidate);
+          continue;
+        }
+        if (!entry.isSymbolicLink()) continue;
+        try {
+          if ((await statPath(path.join(root, candidate))).isFile()) repositoryFiles.add(candidate);
+        } catch {
+          // An unreadable link cannot authorize deduplication.
+        }
+      }
+    } catch {
+      // An incomplete glob cannot authorize deduplication.
+    }
+  }
+  return { packageScripts, repositoryFiles: [...repositoryFiles], shellSemantics };
+}
+
 export function runFocusedCommands(
   commands,
   { root = '.', spawn = spawnSync, stdout = process.stdout, stderr = process.stderr } = {},
@@ -222,7 +458,19 @@ async function main() {
     }
     return;
   }
-  const result = runFocusedCommands(plan.commands, { root });
+  const execution = focusedCommandExecutionPlan(
+    plan.commands,
+    await loadFocusedExecutionInputs(plan.commands, root, {
+      shellSemantics: packageScriptShellSemantics(root),
+    }),
+  );
+  for (const diagnostic of execution.diagnostics)
+    process.stderr.write(`[focused:coverage] ${JSON.stringify(diagnostic)}\n`);
+  if (execution.deduplicated.length)
+    process.stdout.write(
+      `Focused executions: ${execution.commands.length} (${execution.deduplicated.length} exact duplicate tests covered by selected package scripts)\n`,
+    );
+  const result = runFocusedCommands(execution.commands, { root });
   if (result.exitCode !== 0) process.exitCode = result.exitCode;
 }
 
