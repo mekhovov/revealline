@@ -68,8 +68,8 @@ const OFFLINE_MESSAGE_KEYS = Object.freeze({
 export function offlineMessage(value, translate) {
   const code = value?.offlineCode ?? value?.messageCode;
   const detail = value?.summary ?? value?.message ?? '';
-  const key = OFFLINE_MESSAGE_KEYS[code];
-  if (key) return translate(key);
+  const key = Object.hasOwn(OFFLINE_MESSAGE_KEYS, code) ? OFFLINE_MESSAGE_KEYS[code] : null;
+  if (typeof key === 'string') return translate(key);
   if (detail) return translate('interface:downloads.unknownDetail', { detail });
   return translate('interface:downloads.unknownError');
 }
