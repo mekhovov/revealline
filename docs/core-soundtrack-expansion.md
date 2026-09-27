@@ -55,17 +55,26 @@ mirror files or migrate the existing 194 recordings.
 
 ### Remaining release work and estimates
 
-| Step                     | State                                                                                      | Next action                                                                                                                                                                                   | Hands-on estimate                     |
-| ------------------------ | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| Archive source PR        | PR #10 published at exact head `ee94624`; hosted checks pending                            | Pass exact-head checks, review and merge                                                                                                                                                      | 0.5 day plus CI                       |
-| Archive Pages acceptance | Pending archive merge                                                                      | Verify filters, shared URLs, mixed playback and broken-track continuation on the public site                                                                                                  | 1–2 hours                             |
-| Game PR #716             | Feature source implemented; release sequencing remains blocked by the shared game pipeline | Push the cumulative PR update, pass required exact-head checks, then use the established immutable release and Pages selector flow                                                            | 0.5–1 day plus shared CI/release wait |
-| Real S3-object proof     | Blocked by missing input                                                                   | Supply one stable public MP3 object URL with public HEAD/GET/Range CORS and recording rights; ingest through a normal archive PR, then prove automatic discovery in the already-released game | 1–2 hours after the URL exists        |
+| Step                     | State                                                                                                                                                             | Next action                                                                                                                                                                                   | Hands-on estimate                     |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Archive source PR        | Complete: PR #10 passed at exact head `ee94624` and merged as `4e3ecd7`                                                                                           | Preserve the exact merge and verification evidence                                                                                                                                            | Complete                              |
+| Archive Pages acceptance | Complete for source/UI delivery: run 36340413372 passed; live root, hosted-URL intake, Share-this-list module and empty deterministic inventory returned HTTP 200 | Repeat mixed external/repository playback and broken-track continuation with the first rights-cleared hosted object                                                                           | 1–2 hours after a real URL exists     |
+| Game PR #716             | Feature source implemented; release sequencing remains blocked by the shared game pipeline                                                                        | Push the cumulative PR update, pass required exact-head checks, then use the established immutable release and Pages selector flow                                                            | 0.5–1 day plus shared CI/release wait |
+| Real S3-object proof     | Blocked by missing input                                                                                                                                          | Supply one stable public MP3 object URL with public HEAD/GET/Range CORS and recording rights; ingest through a normal archive PR, then prove automatic discovery in the already-released game | 1–2 hours after the URL exists        |
 
 The real-object proof must switch among that S3 recording, a GitHub Release-backed
 recording, bundled music and an uploaded MP3, including failure recovery and an
 exact-byte offline installation. Until that proof and the immutable game release
 are complete, this item remains **implemented in source, not publicly delivered**.
+
+Archive PR #10 merged as `4e3ecd747ced49921be22ac361e40ddc26fb6fb6`.
+Its exact post-merge [Pages run 36340413372](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36340413372)
+passed publication, deterministic verification and deployment. Direct checks of
+the deployed root, `filter-url.mjs` and `external-deliveries.json` returned HTTP
+200; the root contains both **Use hosted MP3 URLs** and **Share this list**. The
+external inventory is intentionally empty until the first stable, rights-cleared
+hosted MP3 is supplied. This proves the archive delivery path without claiming the
+still-pending real-object playback acceptance.
 
 ### Deferred hosting architecture
 
