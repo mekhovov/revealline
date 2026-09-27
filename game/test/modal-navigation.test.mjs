@@ -492,7 +492,13 @@ for (const [dialog, opener, prefix] of [
     assert.equal(h.$(dialog).open, true);
     assert.equal(h.doc.activeElement.id, `${prefix}-read`);
     assert.equal(h.$(`${prefix}-reading-done`).disabled, true);
+    // Back returns ownership to the reader control. A separate deliberate
+    // Confirm must finish the same Steam/native echo window as first entry;
+    // otherwise a slow hosted sample can leave the reader inactive and let
+    // the following native Escape close the dialog.
+    pad.frame(1251);
     pad.pulse(0);
+    assert.equal(h.doc.activeElement.id, region.id);
     const escape = region.emit('keydown', { key: 'Escape', code: 'Escape' });
     assert.equal(escape.defaultPrevented, true);
     assert.equal(h.$(dialog).open, true);
@@ -881,6 +887,70 @@ function nativeEscape(dialog) {
   const event = dialog.emit('cancel');
   if (!event.defaultPrevented) dialog.close();
 }
+
+async function activateOwnedPromise(button, message) {
+  const handler = button.onclick;
+  let operation;
+  button.onclick = (...args) => (operation = handler.apply(button, args));
+  try {
+    button.click();
+  } finally {
+    button.onclick = handler;
+  }
+  assert.ok(operation instanceof Promise, message);
+  await operation;
+}
+
+async function startPreparedFlight(h) {
+  assert.equal(
+    h.doc.body.dataset.flightState,
+    'briefing',
+    'The explicit Start gesture must own the transition from briefing to flight.',
+  );
+  const bodyDataset = h.doc.body.dataset,
+    status = h.$('flight-preparation-status'),
+    statusDataset = status.dataset;
+  let complete, fail;
+  const terminal = new Promise((resolve, reject) => {
+    complete = resolve;
+    fail = reject;
+  });
+  h.doc.body.dataset = new Proxy(bodyDataset, {
+    set(target, property, value, receiver) {
+      const updated = Reflect.set(target, property, value, receiver);
+      if (property === 'flightState' && value === 'running') complete();
+      return updated;
+    },
+  });
+  status.dataset = new Proxy(statusDataset, {
+    set(target, property, value, receiver) {
+      const updated = Reflect.set(target, property, value, receiver);
+      if (property === 'state' && ['error', 'cancelled', 'detached'].includes(value))
+        fail(new Error(`Flight preparation ended as ${value}: ${status.textContent}`));
+      return updated;
+    },
+  });
+  try {
+    h.$('start-button').click();
+    // Join the operation's real terminal adoption signal. This remains stable
+    // when manifest/decode work takes longer than a wall-clock polling window.
+    await terminal;
+  } finally {
+    h.doc.body.dataset = bodyDataset;
+    status.dataset = statusDataset;
+  }
+  assert.equal(
+    h.doc.body.dataset.flightState,
+    'running',
+    JSON.stringify({
+      state: h.doc.body.dataset.flightState,
+      picture: h.doc.body.dataset.pictureState,
+      preparation: h.$('flight-preparation-status').dataset.state,
+      message: h.$('flight-preparation-status').textContent,
+      errors: h.errors.map(String),
+    }),
+  );
+}
 for (const exit of ['controller', 'escape', 'close button'])
   test(`title picture ${exit} returns through Collection to its exact title opener`, async (t) => {
     const { page: h } = await earnedTitleCollection(t),
@@ -973,8 +1043,11 @@ test('Collection resets its return label from title to a direct paused-flight vi
   collectionBack(h).click();
   await Promise.resolve();
   assert.equal(h.$('shell-home').open, true);
-  h.$('shell-featured').click();
-  await settle(() => h.doc.body.dataset.flightState === 'running');
+  await activateOwnedPromise(
+    h.$('shell-featured'),
+    'The title Start control owns its actual flight preparation.',
+  );
+  assert.equal(h.doc.body.dataset.flightState, 'running');
   h.key('ArrowDown');
   h.key('ArrowDown', false);
   for (let i = 0; i < 20; i++) h.frame();
@@ -1005,8 +1078,7 @@ test('programmatic Collection after a real win does not refocus a hidden opener'
   await openFirstPicture(h);
   h.$('gallery-replay').click();
   await settle(() => h.doc.body.dataset.pictureState === 'ready');
-  h.$('start-button').click();
-  await settle(() => h.doc.body.dataset.flightState === 'running');
+  await startPreparedFlight(h);
   h.key('ArrowDown');
   for (let i = 0; i < 1000 && h.rendered.run.status === 'running'; i++) h.frame();
   h.key('ArrowDown', false);
