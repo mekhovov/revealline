@@ -419,3 +419,65 @@ test('online archive loading falls back to the hardcoded primary and rejects cro
     /duplicate recording/,
   );
 });
+
+test('online archive fallback retains a localized directory diagnostic', async () => {
+  const loaded = await fetchOnlineSoundtrackCatalogues({
+    fetch: async (url) =>
+      url === ONLINE_SOUNDTRACK_DIRECTORY_URL
+        ? response(url, {}, { status: 503 })
+        : response(url, catalogue),
+  });
+  assert.equal(loaded.tracks.length, 1);
+  assert.equal(loaded.unavailable[0].id, 'archive-directory');
+  assert.equal(
+    loaded.unavailable[0].error.localization.key,
+    'errors:soundtrack.catalogue.directoryDirectResponseRequired',
+  );
+});
+test('optional shard validation is transactional on a late conflict', async () => {
+  const archive = {
+      id: 'revealline-soundtracks-02',
+      url: 'https://mekhovov.github.io/revealline-soundtracks-02/catalogue.json',
+      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-02/',
+      required: false,
+    },
+    b = 'b'.repeat(64),
+    c = 'c'.repeat(64),
+    other = {
+      ...catalogue,
+      archive: { id: archive.id, baseURL: archive.baseURL },
+      tracks: [
+        {
+          ...track,
+          id: 'creator.unique',
+          audio: { path: `objects/${b}.mp3`, bytes: 2, sha256: b },
+        },
+        { ...track, audio: { path: `objects/${c}.mp3`, bytes: 3, sha256: c } },
+      ],
+      counts: { declaredTracks: 2, uniqueRecordings: 2, duplicateAliases: 0, audioBytes: 5 },
+    },
+    both = { ...directory, catalogues: [...directory.catalogues, archive] },
+    loaded = await fetchOnlineSoundtrackCatalogues({
+      fetch: async (url) =>
+        url === ONLINE_SOUNDTRACK_DIRECTORY_URL
+          ? response(url, both)
+          : url === ONLINE_SOUNDTRACK_CATALOGUE_URL
+            ? response(url, catalogue)
+            : response(url, other),
+    });
+  assert.deepEqual(
+    loaded.tracks.map((x) => x.archiveTrackId),
+    ['creator.song'],
+  );
+  assert.deepEqual(loaded.counts, {
+    declaredTracks: 1,
+    uniqueRecordings: 1,
+    duplicateAliases: 0,
+    audioBytes: 1234,
+  });
+  assert.equal(loaded.unavailable[0].id, archive.id);
+  assert.equal(
+    loaded.unavailable[0].error.localization.key,
+    'errors:soundtrack.catalogue.duplicateRecording',
+  );
+});

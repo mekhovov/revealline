@@ -410,30 +410,29 @@ function onlineCatalogueFixture() {
   };
 }
 
-function onlineCatalogueResponse(catalogue) {
+function onlineCatalogueResponse(catalogue, url = ONLINE_SOUNDTRACK_CATALOGUE_URL) {
   const body = new TextEncoder().encode(JSON.stringify(catalogue));
   return {
     status: 200,
     redirected: false,
-    url: ONLINE_SOUNDTRACK_CATALOGUE_URL,
+    url,
     headers: { get: () => String(body.byteLength) },
     body: new Response(body).body,
   };
 }
 
-function onlineDirectoryResponse() {
+function onlineDirectoryResponse(
+  catalogues = [
+    {
+      id: 'revealline-soundtracks-01',
+      url: ONLINE_SOUNDTRACK_CATALOGUE_URL,
+      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+      required: true,
+    },
+  ],
+) {
   const body = new TextEncoder().encode(
-    JSON.stringify({
-      format: 'revealline-public-soundtrack-directory.v1',
-      catalogues: [
-        {
-          id: 'revealline-soundtracks-01',
-          url: ONLINE_SOUNDTRACK_CATALOGUE_URL,
-          baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
-          required: true,
-        },
-      ],
-    }),
+    JSON.stringify({ format: 'revealline-public-soundtrack-directory.v1', catalogues }),
   );
   return {
     status: 200,
@@ -3575,4 +3574,95 @@ test('legacy music libraries retain a visible playlist playback choice without a
   app.choose('selection', 'builtin.all');
   await app.click('use-selection');
   assert.equal((await app.store.read()).library.selection.playlistId, 'builtin.all');
+});
+
+test('partial archives stay playable and queues remain bounded past 256', async (t) => {
+  t.after(() => setLocale('en'));
+  const primary = onlineCatalogueFixture(),
+    archive = {
+      id: 'revealline-soundtracks-02',
+      url: 'https://mekhovov.github.io/revealline-soundtracks-02/catalogue.json',
+      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-02/',
+      required: false,
+    },
+    tracks = Array.from({ length: 251 }, (_, index) => {
+      const sha256 = (index + 100).toString(16).padStart(64, '0');
+      return {
+        ...primary.tracks[0],
+        id: `second.song-${index}`,
+        title: `Second ${index}`,
+        fileName: `second-${index}.mp3`,
+        audio: { path: `objects/${sha256}.mp3`, bytes: 2 + index, sha256 },
+      };
+    }),
+    secondary = {
+      ...primary,
+      archive: { id: archive.id, baseURL: archive.baseURL },
+      tracks,
+      counts: {
+        declaredTracks: tracks.length,
+        uniqueRecordings: tracks.length,
+        duplicateAliases: 0,
+        audioBytes: tracks.reduce((n, x) => n + x.audio.bytes, 0),
+      },
+    },
+    entries = [
+      {
+        id: 'revealline-soundtracks-01',
+        url: ONLINE_SOUNDTRACK_CATALOGUE_URL,
+        baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+        required: true,
+      },
+      archive,
+    ];
+  let available = false;
+  const app = await setup(t, {
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async (url) => {
+          if (url === ONLINE_SOUNDTRACK_DIRECTORY_URL) return onlineDirectoryResponse(entries);
+          if (url === ONLINE_SOUNDTRACK_CATALOGUE_URL) return onlineCatalogueResponse(primary);
+          return available
+            ? onlineCatalogueResponse(secondary, archive.url)
+            : new Response('no', { status: 503 });
+        },
+      },
+    },
+  });
+  await settleOnlineCatalogue(
+    () =>
+      app.node('online-results').children.length === 6 &&
+      /Some public archives/.test(app.node('online-status').textContent),
+    'partial',
+  );
+  await app.click(`online-play-${primary.tracks[0].audio.sha256}`);
+  assert.equal(app.calls.findLast(([n]) => n === 'remote')[1].length, 6);
+  setLocale('uk');
+  assert.match(app.node('online-status').textContent, /Деякі публічні архіви/);
+  setLocale('en');
+  available = true;
+  await app.click('online-reload');
+  await settleOnlineCatalogue(
+    () => app.node('online-results').children.length === 257,
+    'recovered',
+  );
+  assert.match(app.node('online-status').textContent, /Playback queues 256 of 257/);
+  await app.click('online-play-all');
+  let call = app.calls.findLast(([n]) => n === 'remote');
+  assert.equal(call[1].length, 256);
+  app.choose('online-order', 'ordered');
+  app.choose('online-repeat', 'off');
+  app.node('online-mix-library').checked = false;
+  const last = tracks.at(-1);
+  await app.click(`online-play-${last.audio.sha256}`);
+  call = app.calls.findLast(([n]) => n === 'remote');
+  assert.equal(call[1].length, 256);
+  assert.equal(call[1][0].id, `online.${last.audio.sha256}`);
+  assert.deepEqual(call[2], {
+    order: 'ordered',
+    repeat: 'off',
+    startTrackId: `online.${last.audio.sha256}`,
+    mixWithLibrary: false,
+  });
 });
