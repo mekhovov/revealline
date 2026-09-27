@@ -32,10 +32,15 @@ export const PUBLIC_SECURITY_HEADERS = Object.freeze({
 // previews need only this code-admitted archive path added for verified fetches.
 const PREVIEW_SECURITY_HEADERS = Object.freeze({
   ...PUBLIC_SECURITY_HEADERS,
-  'Content-Security-Policy': PUBLIC_SECURITY_HEADERS['Content-Security-Policy'].replace(
-    "connect-src 'self';",
-    "connect-src 'self' https://mekhovov.github.io/revealline-soundtracks-01/;",
-  ),
+  'Content-Security-Policy': PUBLIC_SECURITY_HEADERS['Content-Security-Policy']
+    .replace(
+      "connect-src 'self';",
+      "connect-src 'self' https://mekhovov.github.io/revealline-soundtracks/;",
+    )
+    .replace(
+      "media-src 'self' data: blob:;",
+      "media-src 'self' data: blob: https://github.com https://release-assets.githubusercontent.com;",
+    ),
 });
 const MIME = {
   '.html': 'text/html; charset=utf-8',

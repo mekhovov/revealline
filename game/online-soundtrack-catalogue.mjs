@@ -2,8 +2,8 @@ import { boundedJSON, exactKeys } from './data-json.mjs';
 import { throwIfSoundtrackAborted } from './mp3.mjs';
 
 export const ONLINE_SOUNDTRACK_CATALOGUE_URL =
-  'https://mekhovov.github.io/revealline-soundtracks-01/catalogue.json';
-const BASE_URL = 'https://mekhovov.github.io/revealline-soundtracks-01/';
+  'https://mekhovov.github.io/revealline-soundtracks/catalogue.json';
+const BASE_URL = 'https://mekhovov.github.io/revealline-soundtracks/';
 const BASE = new URL(BASE_URL);
 const FORMAT = 'revealline-public-soundtrack-catalogue.v1';
 const MAX_BYTES = 512 * 1024;
@@ -38,6 +38,8 @@ const LICENSE_IDENTITIES = new Map([
   ],
 ]);
 const AUDIO_PATH = /^(?:objects|batches\/[a-z0-9][a-z0-9-]{0,63}\/objects)\/[a-f0-9]{64}\.mp3$/;
+const RELEASE_AUDIO =
+  /^https:\/\/github\.com\/mekhovov\/revealline-soundtracks\/releases\/download\/audio-[a-z0-9-]+\/([a-f0-9]{64})\.mp3$/;
 const RESOLVED_TRACKS = new WeakSet();
 
 function catalogueFailure(key, message, values = Object.create(null), cause = null) {
@@ -88,16 +90,18 @@ export function onlineSoundtrackRecordingURL(value, sha256) {
     const url = new URL(value),
       prefix = BASE.pathname,
       path = url.pathname.startsWith(prefix) ? url.pathname.slice(prefix.length) : '';
+    const release = RELEASE_AUDIO.exec(url.href);
     return (
       HASH.test(sha256) &&
-      url.origin === BASE.origin &&
       !url.username &&
       !url.password &&
       !url.search &&
       !url.hash &&
-      path.length > 0 &&
-      AUDIO_PATH.test(path) &&
-      path.endsWith(`/${sha256}.mp3`)
+      ((url.origin === BASE.origin &&
+        path.length > 0 &&
+        AUDIO_PATH.test(path) &&
+        path.endsWith(`/${sha256}.mp3`)) ||
+        release?.[1] === sha256)
     );
   } catch {
     return false;
@@ -128,6 +132,51 @@ function text(value, label, maximum = 2048) {
 
 function structuredRights(value, legacy, id) {
   const identity = LICENSE_IDENTITIES.get(legacy.licenseURL);
+  if (legacy.licenseURL === null) {
+    catalogueExactKeys(
+      value,
+      [
+        'licenseId',
+        'licenseVersion',
+        'licenseURL',
+        'rightsEvidenceURL',
+        'attribution',
+        'derivativeChangeNotice',
+        'permissionBasis',
+        'shareAlike',
+      ],
+      'online soundtrack uploader-confirmed rights',
+    );
+    catalogueExactKeys(
+      value?.shareAlike,
+      ['required', 'deliveryLicenseId', 'deliveryLicenseVersion', 'deliveryLicenseURL'],
+      'online soundtrack uploader-confirmed share-alike rights',
+    );
+    catalogueRequired(
+      value &&
+        value.licenseId === 'UNKNOWN' &&
+        value.licenseVersion === null &&
+        value.licenseURL === null &&
+        value.rightsEvidenceURL === legacy.source &&
+        value.attribution === legacy.credit &&
+        value.permissionBasis === 'uploader-confirmed-public-redistribution-and-web-playback' &&
+        value.shareAlike?.required === null &&
+        secureURL(value.rightsEvidenceURL),
+      'rightsMismatch',
+      `Online soundtrack uploader-confirmed rights differ from trusted metadata: ${id}.`,
+      { id },
+    );
+    return Object.freeze({
+      licenseId: 'UNKNOWN',
+      licenseVersion: null,
+      licenseURL: null,
+      evidence: value.rightsEvidenceURL,
+      attribution: legacy.credit,
+      derivativeChangeNotice: text(value.derivativeChangeNotice, 'derivative change notice', 2048),
+      permissionBasis: value.permissionBasis,
+      shareAlike: Object.freeze({ ...value.shareAlike }),
+    });
+  }
   catalogueRequired(
     identity,
     'rightsLicenceUnsupported',
@@ -153,6 +202,7 @@ function structuredRights(value, legacy, id) {
       'attribution',
       'derivativeChangeNotice',
       'shareAlike',
+      'permissionBasis',
     ],
     'online soundtrack rights',
   );
@@ -218,6 +268,7 @@ function track(value, ids, hashes) {
       'fileName',
       'archiveId',
       'collection',
+      'collections',
       'status',
       'listeningApproval',
       'gameCatalogueAdmission',
@@ -261,14 +312,16 @@ function track(value, ids, hashes) {
     { id },
   );
   catalogueRequired(
-    LICENSES.has(value.licenseURL),
+    value.licenseURL === null || LICENSES.has(value.licenseURL),
     'licenceUnsupported',
     `Online soundtrack licence is unsupported: ${id}.`,
     { id },
   );
   const licenseIdentity = LICENSE_IDENTITIES.get(value.licenseURL);
   catalogueRequired(
-    value.license === licenseIdentity.label,
+    value.licenseURL === null
+      ? value.license === 'Unknown — uploader-confirmed rights'
+      : value.license === licenseIdentity.label,
     'licenceInvalid',
     `Online soundtrack licence is invalid: ${id}.`,
     { id },
@@ -298,8 +351,7 @@ function track(value, ids, hashes) {
   catalogueExactKeys(value.audio, ['path', 'bytes', 'sha256'], 'online soundtrack audio');
   catalogueRequired(
     HASH.test(value.audio.sha256) &&
-      AUDIO_PATH.test(value.audio.path) &&
-      value.audio.path.endsWith(`/${value.audio.sha256}.mp3`) &&
+      onlineSoundtrackRecordingURL(new URL(value.audio.path, BASE_URL).href, value.audio.sha256) &&
       Number.isSafeInteger(value.audio.bytes) &&
       value.audio.bytes > 0 &&
       value.audio.bytes <= 100_000_000 &&
@@ -316,6 +368,25 @@ function track(value, ids, hashes) {
     { id },
   );
   const credit = text(value.credit, 'credit');
+  const collection = text(value.collection, 'collection', 200);
+  const collections = value.collections ?? [collection];
+  catalogueRequired(
+    Array.isArray(collections) &&
+      collections.length >= 1 &&
+      collections.length <= 16 &&
+      collections.includes(collection) &&
+      new Set(collections).size === collections.length &&
+      collections.every(
+        (item) =>
+          typeof item === 'string' &&
+          item.trim() === item &&
+          item.length >= 1 &&
+          item.length <= 200,
+      ),
+    'collectionsInvalid',
+    `Online soundtrack collections are invalid: ${id}.`,
+    { id },
+  );
   const rightsEvidence = structuredRights(
     value.rights,
     { licenseURL: value.licenseURL, source: value.source, credit },
@@ -329,7 +400,8 @@ function track(value, ids, hashes) {
     artist: text(value.artist, 'artist', 200),
     durationSeconds: value.durationSeconds,
     tags: Object.freeze([...value.tags]),
-    collection: text(value.collection, 'collection', 200),
+    collection,
+    collections: Object.freeze([...collections]),
     fileName: text(value.fileName, 'filename', 300),
     url: new URL(value.audio.path, BASE_URL).href,
     bytes: value.audio.bytes,
@@ -338,7 +410,9 @@ function track(value, ids, hashes) {
     recordingModeEligible: value.recordingModeEligible,
     websites: Object.freeze([
       Object.freeze({ label: 'Creator source', url: value.source }),
-      Object.freeze({ label: value.license ?? 'Recording licence', url: value.licenseURL }),
+      ...(value.licenseURL
+        ? [Object.freeze({ label: value.license ?? 'Recording licence', url: value.licenseURL })]
+        : []),
     ]),
     rights: Object.freeze({
       kind: 'licensed',
@@ -366,7 +440,7 @@ export function resolveOnlineSoundtrackCatalogue(source) {
   );
   catalogueExactKeys(value.archive, ['id', 'baseURL'], 'online soundtrack archive');
   catalogueRequired(
-    value.archive.id === 'revealline-soundtracks-01' && value.archive.baseURL === BASE_URL,
+    value.archive.id === 'revealline-soundtracks' && value.archive.baseURL === BASE_URL,
     'archiveInvalid',
     'Online soundtrack catalogue must use the project archive.',
   );
@@ -381,7 +455,7 @@ export function resolveOnlineSoundtrackCatalogue(source) {
     'online soundtrack counts',
   );
   catalogueRequired(
-    Array.isArray(value.tracks) && value.tracks.length <= 256,
+    Array.isArray(value.tracks) && value.tracks.length <= 512,
     'listTooLarge',
     'Online soundtrack list is too large.',
   );

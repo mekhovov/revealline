@@ -20,6 +20,72 @@ reviewer names, listening approval or device results.
 
 ## Completed and current baseline
 
+### Canonical library consolidation checkpoint — 27 September 2026
+
+The two active soundtrack Pages repositories no longer scale as the public source:
+Archive 01 contains 163 recordings / 887,503,800 audio bytes and Archive 02 contains
+31 recordings / 145,375,900 audio bytes. Together they exceed the recommended
+GitHub Pages published-site size. Canonical archive
+[PR #1](https://github.com/mekhovov/revealline-soundtracks/pull/1) merged as
+`b3978d1a9872fb9197b116593d13179088b2735c` and consolidates all **194 unique
+recordings / 47 collections / 1,032,879,700 exact audio bytes** in
+`mekhovov/revealline-soundtracks`.
+
+The canonical repository keeps its 0.54 MiB Pages UI, catalogue, rights evidence,
+tests and intake automation in Git. SHA-256-named MP3s live in versioned GitHub
+Release volumes in the same repository. Repository immutable releases are enabled
+for future volumes; the foundation volume predates that setting and remains bound
+by its exact manifest and hashes rather than being described as immutable. On every accepted intake PR, Actions first
+verifies and publishes all referenced draft volumes, then deploys the Pages player.
+The one public site exposes search, same-page playback, style mixing, ordered or
+shuffled playback, repeat controls and multi-collection membership. `ФПВ` and `UA`
+are independent styles; the TRENCH ORDERLY recordings belong to both `TRENCH
+ORDERLY` and `ФПВ`. `--license unknown` records uploader-confirmed public playback
+and redistribution, shows no invented open licence and remains Recording-mode
+ineligible.
+
+This replaces further numbered archive shards. Archive 01 and Archive 02 remain
+read-only migration evidence until the canonical game client is public; do not
+rename them because GitHub states that project Pages URLs do not redirect after a
+repository rename. GitHub Pages' published site is limited to 1 GiB and has a soft
+100 GiB/month bandwidth limit, while GitHub Releases allow up to 1,000 assets per
+release with each asset below 2 GiB. Sources:
+[Pages limits](https://docs.github.com/en/enterprise-cloud@latest/pages/getting-started-with-github-pages/github-pages-limits),
+[repository limits](https://docs.github.com/en/repositories/creating-and-managing-repositories/repository-limits),
+[release limits](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases), and
+[rename behavior](https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository).
+
+The first canonical format is bounded to 512 recordings, leaving capacity for 318
+additional tracks. Before 450 recordings, add a paged catalogue index in the same
+repository so the game can load bounded pages without creating another repository.
+If direct Release delivery later needs fetch-based offline installation, stronger
+cache controls or usage analytics, migrate only the audio object URLs to an
+S3-compatible origin such as Cloudflare R2 or Amazon S3 behind a custom domain;
+retain this repository and catalogue as the control plane. Git LFS and more Pages
+shards are rejected because they do not improve the deployed-site or client
+integration boundary.
+
+Remaining work and current estimates:
+
+1. **Completed:** canonical Pages, all 194 catalogue entries, representative exact
+   Release bytes, range playback and same-page Next were verified publicly.
+2. Release the game adapter that accepts canonical structured rights, multi-
+   collections, `ФПВ`/`UA`, Release URLs and non-CORS media-element streaming while
+   retaining remote-error recovery and built-in/uploaded fallback: about one day
+   plus release coordination.
+3. Add migration notices to the two legacy roots and freeze their intake: about
+   half a day after canonical game acceptance.
+4. Implement paged catalogue metadata before the 450-track trigger: one to two
+   working days; it does not block the current 194-track release.
+
+The main technical concern is that GitHub Release assets support direct media
+playback and range requests but do not expose the normal cross-origin response
+needed for JavaScript byte fetching. The canonical game therefore uses a trusted
+plain `HTMLAudioElement` source for online streaming and must not request anonymous
+CORS on Release URLs. Offline installation of these Release-backed auditions is a
+separate future feature. Physical Safari, iPhone and controller playback remain
+acceptance work rather than inferred passes.
+
 | Area                     | Completed                                                                                                                                                                                                                                         | Remaining                                                                                                                    |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | Existing catalogue       | 70 hosted recordings / 15 albums; earlier 24-track collection is included                                                                                                                                                                         | Selective listening and trusted metadata curation                                                                            |
