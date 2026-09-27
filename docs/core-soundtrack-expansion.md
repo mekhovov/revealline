@@ -65,6 +65,29 @@ retain this repository and catalogue as the control plane. Git LFS and more Page
 shards are rejected because they do not improve the deployed-site or client
 integration boundary.
 
+Ranked storage options after the current Release-backed design are:
+
+1. **Cloudflare R2 behind a project audio domain:** the preferred scale-up path.
+   R2 documents free Internet egress, a 10 GB Standard-storage free tier and
+   configurable browser CORS, which resolves the current Release-asset limitation
+   for fetch-based offline installation. It adds an account, bucket credentials,
+   DNS and billing ownership. Sources: [R2 pricing](https://developers.cloudflare.com/r2/pricing/)
+   and [R2 CORS](https://developers.cloudflare.com/r2/buckets/cors/).
+2. **Amazon S3 with CloudFront:** the most configurable established option when
+   access logs, lifecycle policy and CDN controls justify its operational cost.
+   CloudFront must forward the browser `Origin` and relevant preflight headers for
+   S3 CORS: [AWS CloudFront CORS guidance](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/header-caching.html#header-caching-web-cors).
+3. **Backblaze B2 with a CDN:** an S3-compatible storage alternative. B2 supports
+   explicit CORS rules, but a simple bucket does not directly map to a custom domain,
+   so CDN/domain setup is less direct than R2 for this public player. Sources:
+   [B2 CORS](https://www.backblaze.com/docs/cloud-storage-cross-origin-resource-sharing-rules)
+   and [B2 buckets](https://www.backblaze.com/docs/cloud-storage-buckets).
+
+Keep the current GitHub Release design until actual bandwidth, catalogue paging or
+offline-fetch requirements justify that migration. It already removes audio from
+the Git/Pages size boundary while preserving one repository, one catalogue and one
+public player.
+
 Remaining work and current estimates:
 
 1. **Completed:** canonical Pages, all 194 catalogue entries, representative exact
