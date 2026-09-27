@@ -4,7 +4,7 @@ import { createHorizonNextBatchCandidates } from './horizon-next-batch-candidate
 import { createTeamImpactOriginalCandidates } from './team-impact-originals.mjs';
 import { compileContentProject, resolveMission } from './project.mjs';
 
-export const UNIQUENESS_PILOT_VERSION = 'revealline-uniqueness-pilot.v1';
+export const UNIQUENESS_PILOT_VERSION = 'revealline-uniqueness-pilot.v2';
 // Review-only successors. No current default, progress ID, collection owner,
 // source pack or historical factory is modified by constructing this pilot.
 const CLASSIC_BRIEFS = [

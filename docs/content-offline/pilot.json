@@ -1,5 +1,5 @@
 {
-  "format": "revealline-uniqueness-pilot.v1",
+  "format": "revealline-uniqueness-pilot.v2",
   "status": "Design review pending; no current content or reward assignments changed.",
   "controls": {
     "solo": {
@@ -650,14 +650,14 @@
               "coverage": 0.0148861646234676
             },
             "failures": [],
-            "checkpoint": "762c239d7a6a9790",
             "replayVerified": true,
             "segments": [
               {
                 "direction": "down",
                 "ticks": 469
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:94668f14f33cfebf03d187d104079fc909e3967636e38320664af8eb73e480e9"
           },
           {
             "seed": 17,
@@ -676,7 +676,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "919ef3076001141b",
             "replayVerified": true,
             "segments": [
               {
@@ -687,7 +686,8 @@
                 "direction": "down",
                 "ticks": 49
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:6ecea6cb7494b0c457c9eb2e9db4a3554c797b9baa65c2d808a6a248d681e32b"
           },
           {
             "seed": 17,
@@ -706,7 +706,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "216a0a5aa3ef165c",
             "replayVerified": true,
             "segments": [
               {
@@ -717,7 +716,8 @@
                 "direction": "down",
                 "ticks": 270
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:6d21b5e8e204d9727438033ada9ca679d14f236b667279aa92dbda03b8aa0791"
           },
           {
             "seed": 17,
@@ -736,7 +736,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "089891eef4cc7dc0",
             "replayVerified": true,
             "segments": [
               {
@@ -747,7 +746,8 @@
                 "direction": "down",
                 "ticks": 392
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:0adcc3fdc7d73a68ed439592cb9fb83d0434114bfc7e1c6af624db93653197aa"
           },
           {
             "seed": 17,
@@ -766,7 +766,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "1946b626170e3986",
             "replayVerified": true,
             "segments": [
               {
@@ -777,7 +776,8 @@
                 "direction": "down",
                 "ticks": 144
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:3152cd2191a84133d3607f0f6e23df9ff93a97549207967b30b11bb5b7c0e278"
           },
           {
             "seed": 17,
@@ -796,7 +796,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "7d05f12874d2fab7",
             "replayVerified": true,
             "segments": [
               {
@@ -807,7 +806,8 @@
                 "direction": "down",
                 "ticks": 206
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:2a4d8785b37db434b9eb40b10d6138a4b9818cf7aa5703a9d0746f8c7565d827"
           },
           {
             "seed": 17,
@@ -826,7 +826,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "8b544da2c77f148e",
             "replayVerified": true,
             "segments": [
               {
@@ -837,7 +836,8 @@
                 "direction": "down",
                 "ticks": 21
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:f002aabf81412ad1c450e49424826eed11173fa02b163ea0d22483a9f1aa1d53"
           },
           {
             "seed": 17,
@@ -854,7 +854,6 @@
               "coverage": 0.021015761821366025
             },
             "failures": [],
-            "checkpoint": "9c4d3b358ce4b941",
             "replayVerified": true,
             "segments": [
               {
@@ -869,7 +868,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:88c17d34ee0c0230622d651b21abeacf2e093e9d621a026efe907acc3f41062c"
           },
           {
             "seed": 17,
@@ -888,7 +888,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "c624a320617074a2",
             "replayVerified": true,
             "segments": [
               {
@@ -903,7 +902,8 @@
                 "direction": "right",
                 "ticks": 182
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:1ae47cd05c8984ab3a78199a6c1949c68876d55ec7367d2a68e9054d7eadfa69"
           },
           {
             "seed": 17,
@@ -920,7 +920,6 @@
               "coverage": 0.03677758318739054
             },
             "failures": [],
-            "checkpoint": "d6bfa3524159a4de",
             "replayVerified": true,
             "segments": [
               {
@@ -935,7 +934,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:c8a450e881acaf07e97f85f27263df270d7541a7fc4785e062cfce6ce95143fe"
           },
           {
             "seed": 17,
@@ -954,7 +954,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "7055425a7f25bf43",
             "replayVerified": true,
             "segments": [
               {
@@ -969,7 +968,8 @@
                 "direction": "right",
                 "ticks": 150
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:8d2fc7268cc09c371071ab8a6b516c499ed7769718d10df2799efdd50a85226e"
           },
           {
             "seed": 17,
@@ -988,7 +988,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "dacfd5c3f291f62f",
             "replayVerified": true,
             "segments": [
               {
@@ -1003,7 +1002,8 @@
                 "direction": "left",
                 "ticks": 975
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:4d24695fdddb68d62f1477ad2a464c433d5da58c08fbac3a1457fdd08fe9d35a"
           },
           {
             "seed": 17,
@@ -1020,7 +1020,6 @@
               "coverage": 0.08231173380035026
             },
             "failures": [],
-            "checkpoint": "a329c30552101655",
             "replayVerified": true,
             "segments": [
               {
@@ -1035,7 +1034,8 @@
                 "direction": "right",
                 "ticks": 630
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:3866c776e01900608b585cec705e65e7f252a8451252a137c19f0e206cc78e2c"
           },
           {
             "seed": 17,
@@ -1054,7 +1054,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "bd60c0136dd9211f",
             "replayVerified": true,
             "segments": [
               {
@@ -1069,7 +1068,8 @@
                 "direction": "left",
                 "ticks": 910
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:51e37ffbfd73568be61369903ae1bbe26c6731199b9263df0ee1444ce984927c"
           },
           {
             "seed": 17,
@@ -1086,7 +1086,6 @@
               "coverage": 0.14404553415061297
             },
             "failures": [],
-            "checkpoint": "107179e1a614a8ca",
             "replayVerified": true,
             "segments": [
               {
@@ -1101,7 +1100,8 @@
                 "direction": "right",
                 "ticks": 630
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:6119973020a57ed43a275074bba8f4888ada7cd435ca7f5bf08d248e37db668b"
           },
           {
             "seed": 17,
@@ -1120,7 +1120,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "7cfd05d94c15c740",
             "replayVerified": true,
             "segments": [
               {
@@ -1131,7 +1130,8 @@
                 "direction": "left",
                 "ticks": 1136
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:121dbff0d98570540c052ee65cb47877a9026ae540832a2b01d7223c1d6a1534"
           },
           {
             "seed": 17,
@@ -1150,7 +1150,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "c594821ffb77c320",
             "replayVerified": true,
             "segments": [
               {
@@ -1161,7 +1160,8 @@
                 "direction": "right",
                 "ticks": 340
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:9fd988194ac190483a421de10cdf8c36246c49ac2e92faf521e972299e3995fa"
           },
           {
             "seed": 17,
@@ -1180,7 +1180,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "232740b6712dae80",
             "replayVerified": true,
             "segments": [
               {
@@ -1191,7 +1190,8 @@
                 "direction": "left",
                 "ticks": 1028
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:0056f8455e45faa6ec13349909756d2fdcaf29a64e403ec24158e60d24a05f26"
           },
           {
             "seed": 17,
@@ -1210,7 +1210,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "c3cff175a528988f",
             "replayVerified": true,
             "segments": [
               {
@@ -1221,7 +1220,8 @@
                 "direction": "right",
                 "ticks": 241
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:61d732dd814255409f5b7e449469a62e5d4346a47943f97da7ce2641662b561c"
           },
           {
             "seed": 17,
@@ -1235,7 +1235,6 @@
             "coverage": 0,
             "closure": null,
             "failures": [],
-            "checkpoint": "a81ef46941a09217",
             "replayVerified": true,
             "segments": [
               {
@@ -1250,7 +1249,8 @@
                 "direction": "left",
                 "ticks": 984
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:c692795a59d748f26369036477e721d7de712cd5ac0faa79f1433457fd2140f8"
           },
           {
             "seed": 17,
@@ -1269,7 +1269,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "a6948630ee456b23",
             "replayVerified": true,
             "segments": [
               {
@@ -1284,7 +1283,8 @@
                 "direction": "right",
                 "ticks": 179
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:419f3d6d59081f746551be98fac1a142941b7e655354112ab454e1026eda6767"
           },
           {
             "seed": 17,
@@ -1303,7 +1303,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "e71e9a05d22bb85e",
             "replayVerified": true,
             "segments": [
               {
@@ -1318,7 +1317,8 @@
                 "direction": "left",
                 "ticks": 83
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:c6c44814e1dd1e485c796d1480edad299b9704d6fb71a85b4c492734c419cd7e"
           },
           {
             "seed": 17,
@@ -1337,7 +1337,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "34b69a6cdfd94ab2",
             "replayVerified": true,
             "segments": [
               {
@@ -1352,7 +1351,8 @@
                 "direction": "right",
                 "ticks": 80
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:326a1acec8ad6d7c6dcf1b3d1f3b1b0111a5f084cab0621d821d659bde031c02"
           },
           {
             "seed": 17,
@@ -1371,7 +1371,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "b07a589ba60f8d98",
             "replayVerified": true,
             "segments": [
               {
@@ -1386,7 +1385,8 @@
                 "direction": "left",
                 "ticks": 84
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:596a48acc0edc1d165d2e038953e90ae72dbcb43e3320a535aae20b0485a945e"
           },
           {
             "seed": 17,
@@ -1405,7 +1405,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "f7b06a0f5b8b95e1",
             "replayVerified": true,
             "segments": [
               {
@@ -1420,7 +1419,8 @@
                 "direction": "right",
                 "ticks": 131
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:05f0a6aa3f030c4caf09fb296c4eedde568cdbfe8f9c8e96012e269162dea01a"
           },
           {
             "seed": 17,
@@ -1439,7 +1439,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "6062278491fde13c",
             "replayVerified": true,
             "segments": [
               {
@@ -1454,7 +1453,8 @@
                 "direction": "left",
                 "ticks": 94
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:5d2b6b02663e3011a23cfa5702a9e15c8b9654aa7ec435cf6d6f541a485bb2c9"
           },
           {
             "seed": 17,
@@ -1473,7 +1473,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "d9bd28edef9304e4",
             "replayVerified": true,
             "segments": [
               {
@@ -1488,7 +1487,8 @@
                 "direction": "right",
                 "ticks": 110
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:ce6861719e46b0c38e2c72510062199eb13a10b9ce6c5df0b8418c7550248f21"
           }
         ],
         "seedChecks": [
@@ -1507,7 +1507,6 @@
               "coverage": 0.14404553415061297
             },
             "failures": [],
-            "checkpoint": "5a568d7cedd5d86e",
             "replayVerified": true,
             "segments": [
               {
@@ -1522,7 +1521,8 @@
                 "direction": "right",
                 "ticks": 630
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:574f7a155bbfbb4ccffa0eca7ecfd904d805bf48f478876e1b80553eee54fe2b"
           },
           {
             "seed": 2,
@@ -1541,7 +1541,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "3bcc0a03f9df85a5",
             "replayVerified": true,
             "segments": [
               {
@@ -1556,7 +1555,8 @@
                 "direction": "right",
                 "ticks": 416
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:008602e5036875bb32e602951e919af0856617aad47889eabedc90607559ecd2"
           },
           {
             "seed": 1,
@@ -1573,7 +1573,6 @@
               "coverage": 0.08231173380035026
             },
             "failures": [],
-            "checkpoint": "0564f377b5161af0",
             "replayVerified": true,
             "segments": [
               {
@@ -1588,7 +1587,8 @@
                 "direction": "right",
                 "ticks": 630
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:db581ef2ee3b45babacac35a5da36eca0ef40b59e40f2a5642d5daad0cbb90bf"
           },
           {
             "seed": 2,
@@ -1607,7 +1607,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "1327d132448ccc84",
             "replayVerified": true,
             "segments": [
               {
@@ -1622,7 +1621,8 @@
                 "direction": "right",
                 "ticks": 360
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:2b87ab24ef51c424bb518a67d535b2cae79f631fc3d3014e0ff6a1d1778048eb"
           }
         ],
         "successfulOpenings": 5
@@ -1870,14 +1870,14 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "ec87b1bcb353ad49",
             "replayVerified": true,
             "segments": [
               {
                 "direction": "down",
                 "ticks": 263
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:743f9fd5ee90fbf45c94393b1627d80944a61ae636484acdaa75bdd12301aa28"
           },
           {
             "seed": 17,
@@ -1896,7 +1896,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "07508337b32bf917",
             "replayVerified": true,
             "segments": [
               {
@@ -1907,7 +1906,8 @@
                 "direction": "down",
                 "ticks": 49
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:6ecea6cb7494b0c457c9eb2e9db4a3554c797b9baa65c2d808a6a248d681e32b"
           },
           {
             "seed": 17,
@@ -1926,7 +1926,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "84959c885d850c36",
             "replayVerified": true,
             "segments": [
               {
@@ -1937,7 +1936,8 @@
                 "direction": "down",
                 "ticks": 237
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:a011e90f9ea60fef9f685710b61fa235463b5784ebec676abc0f74e77d85fa09"
           },
           {
             "seed": 17,
@@ -1956,7 +1956,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "8802c6754e4d8ccf",
             "replayVerified": true,
             "segments": [
               {
@@ -1967,7 +1966,8 @@
                 "direction": "down",
                 "ticks": 278
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:0c8b8d7c4d57513d7d0a0eadfb39adc01e96ac0430f29f2d8863754c43355265"
           },
           {
             "seed": 17,
@@ -1986,7 +1986,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "9cf5bede23e334cb",
             "replayVerified": true,
             "segments": [
               {
@@ -1997,7 +1996,8 @@
                 "direction": "down",
                 "ticks": 144
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:3152cd2191a84133d3607f0f6e23df9ff93a97549207967b30b11bb5b7c0e278"
           },
           {
             "seed": 17,
@@ -2016,7 +2016,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "c4d2aab83ab82787",
             "replayVerified": true,
             "segments": [
               {
@@ -2027,7 +2026,8 @@
                 "direction": "down",
                 "ticks": 206
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:2a4d8785b37db434b9eb40b10d6138a4b9818cf7aa5703a9d0746f8c7565d827"
           },
           {
             "seed": 17,
@@ -2046,7 +2046,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "01d42563c132b307",
             "replayVerified": true,
             "segments": [
               {
@@ -2057,7 +2056,8 @@
                 "direction": "down",
                 "ticks": 206
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:53b252df5db4fa4cfc4d7adc777cbe8e0b7cf9e13ad10b6d7365a80625392506"
           },
           {
             "seed": 17,
@@ -2074,7 +2074,6 @@
               "coverage": 0.020869565217391306
             },
             "failures": [],
-            "checkpoint": "6132527c4ac4cc7c",
             "replayVerified": true,
             "segments": [
               {
@@ -2089,7 +2088,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:38dd6c5b82321aaf383277099a18c6d1c0d05ecec57884ecb7372b561dc37069"
           },
           {
             "seed": 17,
@@ -2108,7 +2108,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "164cee5607b8664b",
             "replayVerified": true,
             "segments": [
               {
@@ -2123,7 +2122,8 @@
                 "direction": "right",
                 "ticks": 215
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:8252ec5948ce268b31432285aa8596333b10ee171c2ce63cf08645b865cff7c0"
           },
           {
             "seed": 17,
@@ -2140,7 +2140,6 @@
               "coverage": 0.036521739130434785
             },
             "failures": [],
-            "checkpoint": "1852c413265c7a36",
             "replayVerified": true,
             "segments": [
               {
@@ -2155,7 +2154,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:e3046c1cfd417a7cd6f74593cfa572ec544082456e37c883cf4faea0d39974eb"
           },
           {
             "seed": 17,
@@ -2174,7 +2174,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "100aa13080204e6d",
             "replayVerified": true,
             "segments": [
               {
@@ -2189,7 +2188,8 @@
                 "direction": "right",
                 "ticks": 174
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:637e41ca13eccb53dd9f2dec3e29fd0006b4af57cbad5ad3204087f6decf15df"
           },
           {
             "seed": 17,
@@ -2208,7 +2208,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "1d3f596203dd5b1c",
             "replayVerified": true,
             "segments": [
               {
@@ -2223,7 +2222,8 @@
                 "direction": "left",
                 "ticks": 268
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:65195b6538aa5a0c78ccdff27b6ecca1b6a34437119ca1e404f02984c527d2fd"
           },
           {
             "seed": 17,
@@ -2242,7 +2242,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "73ed47df16e01f90",
             "replayVerified": true,
             "segments": [
               {
@@ -2257,7 +2256,8 @@
                 "direction": "right",
                 "ticks": 268
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:7962411abd2e7a1df37b37a9f2b0b5160ce1ab4e4b7df27242315111bf71867b"
           },
           {
             "seed": 17,
@@ -2276,7 +2276,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "bb0141ddc7b715bc",
             "replayVerified": true,
             "segments": [
               {
@@ -2291,7 +2290,8 @@
                 "direction": "left",
                 "ticks": 227
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:bed2eacb92b09dbdea256bed38e074b06902a159d33452a51ca5c2683fc6d6bc"
           },
           {
             "seed": 17,
@@ -2310,7 +2310,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "319721cf2b53c4cf",
             "replayVerified": true,
             "segments": [
               {
@@ -2325,7 +2324,8 @@
                 "direction": "right",
                 "ticks": 227
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:5a9442fc7e55ea8fc30337e79603e7d6c1e7d617a4271da0fecab4ea6d5b3a80"
           },
           {
             "seed": 17,
@@ -2344,7 +2344,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "c0268c550f19d1de",
             "replayVerified": true,
             "segments": [
               {
@@ -2355,7 +2354,8 @@
                 "direction": "left",
                 "ticks": 90
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:8669ec6194b902e59da10bfd3269552ceffb82e3a67167f24383c9a83aee758b"
           },
           {
             "seed": 17,
@@ -2374,7 +2374,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "4033d0a546ca6d5c",
             "replayVerified": true,
             "segments": [
               {
@@ -2385,7 +2384,8 @@
                 "direction": "right",
                 "ticks": 217
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:4e972abfed3b80f11a71fc3db99e4533b4f0fcde2610df30a9b89f633c4d791a"
           },
           {
             "seed": 17,
@@ -2404,7 +2404,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "0626615ceaab8a59",
             "replayVerified": true,
             "segments": [
               {
@@ -2415,7 +2414,8 @@
                 "direction": "left",
                 "ticks": 175
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:e8dc2586e9e3b0c999cb750451a5f3c4513b19107a1e2bead8e8f79f02c9e135"
           },
           {
             "seed": 17,
@@ -2434,7 +2434,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "69dae11e00dce625",
             "replayVerified": true,
             "segments": [
               {
@@ -2445,7 +2444,8 @@
                 "direction": "right",
                 "ticks": 175
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:b779a4f2e04cd6220976971c5965d3b93ee410219720eaddbcf83143cb86a7b2"
           },
           {
             "seed": 17,
@@ -2464,7 +2464,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "63a6bca154d0218e",
             "replayVerified": true,
             "segments": [
               {
@@ -2479,7 +2478,8 @@
                 "direction": "left",
                 "ticks": 191
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:d7682cba1fc9c998ea77b849a4d62abecd87c98968e8968c2cac1dad7a310341"
           },
           {
             "seed": 17,
@@ -2498,7 +2498,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "547fc3f42921814b",
             "replayVerified": true,
             "segments": [
               {
@@ -2513,7 +2512,8 @@
                 "direction": "right",
                 "ticks": 179
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:419f3d6d59081f746551be98fac1a142941b7e655354112ab454e1026eda6767"
           },
           {
             "seed": 17,
@@ -2532,7 +2532,6 @@
                 "cause": "enemy-player"
               }
             ],
-            "checkpoint": "c81002b0a8f05d4d",
             "replayVerified": true,
             "segments": [
               {
@@ -2547,7 +2546,8 @@
                 "direction": "left",
                 "ticks": 72
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:4f2a6f83167e9ebabcbfe29efc0e8066a921c26da97fe4fbb1ec66318d71d0c3"
           },
           {
             "seed": 17,
@@ -2566,7 +2566,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "566e15540e73b00d",
             "replayVerified": true,
             "segments": [
               {
@@ -2581,7 +2580,8 @@
                 "direction": "right",
                 "ticks": 80
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:326a1acec8ad6d7c6dcf1b3d1f3b1b0111a5f084cab0621d821d659bde031c02"
           },
           {
             "seed": 17,
@@ -2600,7 +2600,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "773bace4da2b95cd",
             "replayVerified": true,
             "segments": [
               {
@@ -2615,7 +2614,8 @@
                 "direction": "left",
                 "ticks": 84
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:596a48acc0edc1d165d2e038953e90ae72dbcb43e3320a535aae20b0485a945e"
           },
           {
             "seed": 17,
@@ -2632,7 +2632,6 @@
               "coverage": 0.019130434782608695
             },
             "failures": [],
-            "checkpoint": "996aff61639bf3b4",
             "replayVerified": true,
             "segments": [
               {
@@ -2647,7 +2646,8 @@
                 "direction": "right",
                 "ticks": 145
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:cd3571e86839ae4b8994d4f6b562520c2eb5da047ceff9ccec318fd044cf82d6"
           },
           {
             "seed": 17,
@@ -2666,7 +2666,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "83ee3101739ecaa5",
             "replayVerified": true,
             "segments": [
               {
@@ -2681,7 +2680,8 @@
                 "direction": "left",
                 "ticks": 94
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:5d2b6b02663e3011a23cfa5702a9e15c8b9654aa7ec435cf6d6f541a485bb2c9"
           },
           {
             "seed": 17,
@@ -2700,7 +2700,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "e3b9d656d7fcda87",
             "replayVerified": true,
             "segments": [
               {
@@ -2715,7 +2714,8 @@
                 "direction": "right",
                 "ticks": 110
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:ce6861719e46b0c38e2c72510062199eb13a10b9ce6c5df0b8418c7550248f21"
           }
         ],
         "seedChecks": [
@@ -2734,7 +2734,6 @@
               "coverage": 0.036521739130434785
             },
             "failures": [],
-            "checkpoint": "0ee04a7c87b7f16f",
             "replayVerified": true,
             "segments": [
               {
@@ -2749,7 +2748,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:bb05d67be94e8aee2119dde8fdbaee9a0e272a4f56c0bfba60660b205475dd66"
           },
           {
             "seed": 2,
@@ -2766,7 +2766,6 @@
               "coverage": 0.036521739130434785
             },
             "failures": [],
-            "checkpoint": "5636c8231514ec77",
             "replayVerified": true,
             "segments": [
               {
@@ -2781,7 +2780,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:298bbc00c561338393225c7f2d81de51ccb27184a8bc0c3c4f9d605ff50cec9e"
           },
           {
             "seed": 1,
@@ -2798,7 +2798,6 @@
               "coverage": 0.020869565217391306
             },
             "failures": [],
-            "checkpoint": "452e3680c48448dc",
             "replayVerified": true,
             "segments": [
               {
@@ -2813,7 +2812,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:f91c33d5bc4cc8219fc5dcbe584bb5a833b6f6c570c620380035369d2d529b09"
           },
           {
             "seed": 2,
@@ -2830,7 +2830,6 @@
               "coverage": 0.020869565217391306
             },
             "failures": [],
-            "checkpoint": "067beb5f9df2b44a",
             "replayVerified": true,
             "segments": [
               {
@@ -2845,7 +2844,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:572fe3a23b34b49c3562bf022c69af40198fb046e9291cb97c5beb65be0ba6b7"
           }
         ],
         "successfulOpenings": 3
@@ -3076,14 +3076,14 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "8609c7cc57e50940",
             "replayVerified": true,
             "segments": [
               {
                 "direction": "down",
                 "ticks": 271
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:0c8cdcf02e22fef488180b7dc1d02494e29fe2cc24ddc08e8bf75653013caa6f"
           },
           {
             "seed": 17,
@@ -3097,7 +3097,6 @@
             "coverage": 0,
             "closure": null,
             "failures": [],
-            "checkpoint": "5946e7906adcebe9",
             "replayVerified": true,
             "segments": [
               {
@@ -3108,7 +3107,8 @@
                 "direction": "down",
                 "ticks": 794
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:a39871d1be926c3035819fce2101169094c8b92014d9af485c32c8871695dc3d"
           },
           {
             "seed": 17,
@@ -3122,7 +3122,6 @@
             "coverage": 0,
             "closure": null,
             "failures": [],
-            "checkpoint": "00ace6f4fabcc6d0",
             "replayVerified": true,
             "segments": [
               {
@@ -3133,7 +3132,8 @@
                 "direction": "down",
                 "ticks": 876
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:5fd9768f70b23341e6f5376fe011885b7d732aef93227e07f14fead84b4de508"
           },
           {
             "seed": 17,
@@ -3152,7 +3152,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "4d9cd4c415f0f32b",
             "replayVerified": true,
             "segments": [
               {
@@ -3163,7 +3162,8 @@
                 "direction": "down",
                 "ticks": 278
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:0c8b8d7c4d57513d7d0a0eadfb39adc01e96ac0430f29f2d8863754c43355265"
           },
           {
             "seed": 17,
@@ -3182,7 +3182,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "9945cb970502ecfa",
             "replayVerified": true,
             "segments": [
               {
@@ -3193,7 +3192,8 @@
                 "direction": "down",
                 "ticks": 144
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:3152cd2191a84133d3607f0f6e23df9ff93a97549207967b30b11bb5b7c0e278"
           },
           {
             "seed": 17,
@@ -3212,7 +3212,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "0bf0531a3794e705",
             "replayVerified": true,
             "segments": [
               {
@@ -3223,7 +3222,8 @@
                 "direction": "down",
                 "ticks": 206
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:2a4d8785b37db434b9eb40b10d6138a4b9818cf7aa5703a9d0746f8c7565d827"
           },
           {
             "seed": 17,
@@ -3242,7 +3242,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "9edb56bf1378c901",
             "replayVerified": true,
             "segments": [
               {
@@ -3253,7 +3252,8 @@
                 "direction": "down",
                 "ticks": 206
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:53b252df5db4fa4cfc4d7adc777cbe8e0b7cf9e13ad10b6d7365a80625392506"
           },
           {
             "seed": 17,
@@ -3270,7 +3270,6 @@
               "coverage": 0.021052631578947368
             },
             "failures": [],
-            "checkpoint": "e8e4e128969b3aba",
             "replayVerified": true,
             "segments": [
               {
@@ -3285,7 +3284,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:9f266ce95a25eca72eb65e669653ce871e022ab3d8c2df880662af07db2c5c2c"
           },
           {
             "seed": 17,
@@ -3304,7 +3304,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "76e77bba5e2fef56",
             "replayVerified": true,
             "segments": [
               {
@@ -3319,7 +3318,8 @@
                 "direction": "right",
                 "ticks": 564
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:d06928996024da879f43fd8cf8de57f90d5db1342b586a14ecbab26ab885fdd5"
           },
           {
             "seed": 17,
@@ -3336,7 +3336,6 @@
               "coverage": 0.03684210526315789
             },
             "failures": [],
-            "checkpoint": "da116816c59c1e40",
             "replayVerified": true,
             "segments": [
               {
@@ -3351,7 +3350,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:80a88ead5984d3a0c8e93511ce1e26e25bfeee3a76a269d85bab03345612d7a4"
           },
           {
             "seed": 17,
@@ -3370,7 +3370,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "4bbf0d0c696c0ad4",
             "replayVerified": true,
             "segments": [
               {
@@ -3385,7 +3384,8 @@
                 "direction": "right",
                 "ticks": 664
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:9375c8b6cbc40b59129dd71008162a207e13ab5920577754925caab521929660"
           },
           {
             "seed": 17,
@@ -3404,7 +3404,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "d1dfce2b0973e09d",
             "replayVerified": true,
             "segments": [
               {
@@ -3419,7 +3418,8 @@
                 "direction": "left",
                 "ticks": 268
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:65195b6538aa5a0c78ccdff27b6ecca1b6a34437119ca1e404f02984c527d2fd"
           },
           {
             "seed": 17,
@@ -3438,7 +3438,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "127377b648d7fa5e",
             "replayVerified": true,
             "segments": [
               {
@@ -3453,7 +3452,8 @@
                 "direction": "right",
                 "ticks": 268
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:7962411abd2e7a1df37b37a9f2b0b5160ce1ab4e4b7df27242315111bf71867b"
           },
           {
             "seed": 17,
@@ -3472,7 +3472,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "e0bbfd66ba5cf3dd",
             "replayVerified": true,
             "segments": [
               {
@@ -3487,7 +3486,8 @@
                 "direction": "left",
                 "ticks": 227
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:bed2eacb92b09dbdea256bed38e074b06902a159d33452a51ca5c2683fc6d6bc"
           },
           {
             "seed": 17,
@@ -3506,7 +3506,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "c1bc5f4a913d3d22",
             "replayVerified": true,
             "segments": [
               {
@@ -3521,7 +3520,8 @@
                 "direction": "right",
                 "ticks": 227
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:5a9442fc7e55ea8fc30337e79603e7d6c1e7d617a4271da0fecab4ea6d5b3a80"
           },
           {
             "seed": 17,
@@ -3540,7 +3540,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "7f6458ba47c6be18",
             "replayVerified": true,
             "segments": [
               {
@@ -3551,7 +3550,8 @@
                 "direction": "left",
                 "ticks": 90
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:8669ec6194b902e59da10bfd3269552ceffb82e3a67167f24383c9a83aee758b"
           },
           {
             "seed": 17,
@@ -3570,7 +3570,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "6c479cc241833c1e",
             "replayVerified": true,
             "segments": [
               {
@@ -3581,7 +3580,8 @@
                 "direction": "right",
                 "ticks": 217
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:4e972abfed3b80f11a71fc3db99e4533b4f0fcde2610df30a9b89f633c4d791a"
           },
           {
             "seed": 17,
@@ -3600,7 +3600,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "d1f590e80406b66f",
             "replayVerified": true,
             "segments": [
               {
@@ -3611,7 +3610,8 @@
                 "direction": "left",
                 "ticks": 175
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:e8dc2586e9e3b0c999cb750451a5f3c4513b19107a1e2bead8e8f79f02c9e135"
           },
           {
             "seed": 17,
@@ -3630,7 +3630,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "a482dc18fd62ee3d",
             "replayVerified": true,
             "segments": [
               {
@@ -3641,7 +3640,8 @@
                 "direction": "right",
                 "ticks": 175
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:b779a4f2e04cd6220976971c5965d3b93ee410219720eaddbcf83143cb86a7b2"
           },
           {
             "seed": 17,
@@ -3660,7 +3660,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "6fce97d6502bd651",
             "replayVerified": true,
             "segments": [
               {
@@ -3675,7 +3674,8 @@
                 "direction": "left",
                 "ticks": 191
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:d7682cba1fc9c998ea77b849a4d62abecd87c98968e8968c2cac1dad7a310341"
           },
           {
             "seed": 17,
@@ -3694,7 +3694,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "f591164d2241067b",
             "replayVerified": true,
             "segments": [
               {
@@ -3709,7 +3708,8 @@
                 "direction": "right",
                 "ticks": 179
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:419f3d6d59081f746551be98fac1a142941b7e655354112ab454e1026eda6767"
           },
           {
             "seed": 17,
@@ -3728,7 +3728,6 @@
                 "cause": "enemy-player"
               }
             ],
-            "checkpoint": "297aa85c5443bf06",
             "replayVerified": true,
             "segments": [
               {
@@ -3743,7 +3742,8 @@
                 "direction": "left",
                 "ticks": 72
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:4f2a6f83167e9ebabcbfe29efc0e8066a921c26da97fe4fbb1ec66318d71d0c3"
           },
           {
             "seed": 17,
@@ -3762,7 +3762,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "75adb7780abfc438",
             "replayVerified": true,
             "segments": [
               {
@@ -3777,7 +3776,8 @@
                 "direction": "right",
                 "ticks": 80
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:326a1acec8ad6d7c6dcf1b3d1f3b1b0111a5f084cab0621d821d659bde031c02"
           },
           {
             "seed": 17,
@@ -3796,7 +3796,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "bd6a133e793c984e",
             "replayVerified": true,
             "segments": [
               {
@@ -3811,7 +3810,8 @@
                 "direction": "left",
                 "ticks": 84
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:596a48acc0edc1d165d2e038953e90ae72dbcb43e3320a535aae20b0485a945e"
           },
           {
             "seed": 17,
@@ -3828,7 +3828,6 @@
               "coverage": 0.01929824561403509
             },
             "failures": [],
-            "checkpoint": "aa5af76cf4c76286",
             "replayVerified": true,
             "segments": [
               {
@@ -3843,7 +3842,8 @@
                 "direction": "right",
                 "ticks": 145
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:55542656e194204295f744e9a0e5a0938e18281c7a60f888bf16ada0ec263733"
           },
           {
             "seed": 17,
@@ -3862,7 +3862,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "6d0593a89bb8076a",
             "replayVerified": true,
             "segments": [
               {
@@ -3877,7 +3876,8 @@
                 "direction": "left",
                 "ticks": 94
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:5d2b6b02663e3011a23cfa5702a9e15c8b9654aa7ec435cf6d6f541a485bb2c9"
           },
           {
             "seed": 17,
@@ -3896,7 +3896,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "8a5e048f23302f8c",
             "replayVerified": true,
             "segments": [
               {
@@ -3911,7 +3910,8 @@
                 "direction": "right",
                 "ticks": 110
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:ce6861719e46b0c38e2c72510062199eb13a10b9ce6c5df0b8418c7550248f21"
           }
         ],
         "seedChecks": [
@@ -3930,7 +3930,6 @@
               "coverage": 0.03684210526315789
             },
             "failures": [],
-            "checkpoint": "34fd1b9b1bc06fa7",
             "replayVerified": true,
             "segments": [
               {
@@ -3945,7 +3944,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:4852c8e78e95424050fdd732b1c9476274d4e16d906594e198b3c1ba2a249ca9"
           },
           {
             "seed": 2,
@@ -3962,7 +3962,6 @@
               "coverage": 0.03684210526315789
             },
             "failures": [],
-            "checkpoint": "2e183a8dd2b4426b",
             "replayVerified": true,
             "segments": [
               {
@@ -3977,7 +3976,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:99e7431e74d1418756dcac53ab38fe3d6fe3eea3ae4344dd677a689e28678b25"
           },
           {
             "seed": 1,
@@ -3994,7 +3994,6 @@
               "coverage": 0.021052631578947368
             },
             "failures": [],
-            "checkpoint": "944c357801c312e8",
             "replayVerified": true,
             "segments": [
               {
@@ -4009,7 +4008,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:075978817ff9c5ca7355960460dc181627cad1e1fce9db39c8280bd9ef05e8cf"
           },
           {
             "seed": 2,
@@ -4026,7 +4026,6 @@
               "coverage": 0.021052631578947368
             },
             "failures": [],
-            "checkpoint": "e9144e818d2b30b6",
             "replayVerified": true,
             "segments": [
               {
@@ -4041,7 +4040,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:2e529e8326ff024d4bf09961e528acf16fb82bb2896bee81cb8d9aa3b6e7e247"
           }
         ],
         "successfulOpenings": 3
@@ -4313,14 +4313,14 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "f45cfb9bdb76dfe7",
             "replayVerified": true,
             "segments": [
               {
                 "direction": "down",
                 "ticks": 271
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:0c8cdcf02e22fef488180b7dc1d02494e29fe2cc24ddc08e8bf75653013caa6f"
           },
           {
             "seed": 17,
@@ -4339,7 +4339,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "3eafefb730128e8f",
             "replayVerified": true,
             "segments": [
               {
@@ -4350,7 +4349,8 @@
                 "direction": "down",
                 "ticks": 49
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:6ecea6cb7494b0c457c9eb2e9db4a3554c797b9baa65c2d808a6a248d681e32b"
           },
           {
             "seed": 17,
@@ -4369,7 +4369,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "d1319a5fada51bb9",
             "replayVerified": true,
             "segments": [
               {
@@ -4380,7 +4379,8 @@
                 "direction": "down",
                 "ticks": 270
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:6d21b5e8e204d9727438033ada9ca679d14f236b667279aa92dbda03b8aa0791"
           },
           {
             "seed": 17,
@@ -4399,7 +4399,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "25a551b42df2043c",
             "replayVerified": true,
             "segments": [
               {
@@ -4410,7 +4409,8 @@
                 "direction": "down",
                 "ticks": 279
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:a491c1a6cf6e5926c06f4c21f081cdc1bb0d2a0cd6422846d705923d935a79ca"
           },
           {
             "seed": 17,
@@ -4429,7 +4429,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "bd8699da6c6e60a8",
             "replayVerified": true,
             "segments": [
               {
@@ -4440,7 +4439,8 @@
                 "direction": "down",
                 "ticks": 362
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:d9a02a49e919c517968f6feb95aa599f386fa9a94adcce5ee7ec0374c2f390cb"
           },
           {
             "seed": 17,
@@ -4459,7 +4459,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "3fb422a75ca524c3",
             "replayVerified": true,
             "segments": [
               {
@@ -4470,7 +4469,8 @@
                 "direction": "down",
                 "ticks": 367
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:f5590e3953072c3e3b5e08c8fae8521ea85b5074abf7ac9b4978de61d9c89efa"
           },
           {
             "seed": 17,
@@ -4489,7 +4489,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "9a19fc9801342fa4",
             "replayVerified": true,
             "segments": [
               {
@@ -4500,7 +4499,8 @@
                 "direction": "down",
                 "ticks": 259
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:6f62c2dea10026bdc17cb5d5d88d9a7dbc6b6bd44df296b962588a574c4620a9"
           },
           {
             "seed": 17,
@@ -4517,7 +4517,6 @@
               "coverage": 0.02146690518783542
             },
             "failures": [],
-            "checkpoint": "664a1016b0762ae6",
             "replayVerified": true,
             "segments": [
               {
@@ -4532,7 +4531,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:d4c9850a03283c952a73eb6c7450664c08fcb5f3c8936da4cbc03d442bc31669"
           },
           {
             "seed": 17,
@@ -4551,7 +4551,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "9650a8a3941d9ef8",
             "replayVerified": true,
             "segments": [
               {
@@ -4566,7 +4565,8 @@
                 "direction": "right",
                 "ticks": 215
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:8252ec5948ce268b31432285aa8596333b10ee171c2ce63cf08645b865cff7c0"
           },
           {
             "seed": 17,
@@ -4583,7 +4583,6 @@
               "coverage": 0.03756708407871199
             },
             "failures": [],
-            "checkpoint": "2c90756cdf6c12f6",
             "replayVerified": true,
             "segments": [
               {
@@ -4598,7 +4597,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:f97509fc06c9c18c32470df09f5781875ef3b2ce20f2b4cf0688ec5636d3394a"
           },
           {
             "seed": 17,
@@ -4617,7 +4617,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "88da242426766833",
             "replayVerified": true,
             "segments": [
               {
@@ -4632,7 +4631,8 @@
                 "direction": "right",
                 "ticks": 174
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:637e41ca13eccb53dd9f2dec3e29fd0006b4af57cbad5ad3204087f6decf15df"
           },
           {
             "seed": 17,
@@ -4651,7 +4651,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "aa88141a9890f349",
             "replayVerified": true,
             "segments": [
               {
@@ -4666,7 +4665,8 @@
                 "direction": "left",
                 "ticks": 278
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:1e2290bf457f310d984288155bcb139e3c04587642ffa7945f16c17d327124a3"
           },
           {
             "seed": 17,
@@ -4685,7 +4685,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "4d8e7cdfc0decd74",
             "replayVerified": true,
             "segments": [
               {
@@ -4700,7 +4699,8 @@
                 "direction": "right",
                 "ticks": 159
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:942a4062ef47ebdfb746d53eca19b3347e5104a3afa4329b97ad13098ee9d65f"
           },
           {
             "seed": 17,
@@ -4719,7 +4719,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "7c38627ea81416de",
             "replayVerified": true,
             "segments": [
               {
@@ -4734,7 +4733,8 @@
                 "direction": "left",
                 "ticks": 237
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:ba65ea648b7a997f3ac261ce07e5cb888c775d9b017f465dc0f5417530e83ae5"
           },
           {
             "seed": 17,
@@ -4753,7 +4753,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "215b1f8f222400ff",
             "replayVerified": true,
             "segments": [
               {
@@ -4768,7 +4767,8 @@
                 "direction": "right",
                 "ticks": 237
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:55aae97146f12a20c48dc6a6a9eae059e67c03dcd9132b7ab1707326351cb3b3"
           },
           {
             "seed": 17,
@@ -4787,7 +4787,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "7eae201958ced136",
             "replayVerified": true,
             "segments": [
               {
@@ -4798,7 +4797,8 @@
                 "direction": "left",
                 "ticks": 150
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:097cef0d5dccf3ce67c19a75eb4d54257b570d60e76831902b59df1093711566"
           },
           {
             "seed": 17,
@@ -4817,7 +4817,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "72b047e6df34154a",
             "replayVerified": true,
             "segments": [
               {
@@ -4828,7 +4827,8 @@
                 "direction": "right",
                 "ticks": 180
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:07a04b03c9593f3902258d3a621cf32f52f241b9c30400968050b6ba6a1a8148"
           },
           {
             "seed": 17,
@@ -4847,7 +4847,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "c0cdb7e62da4ec48",
             "replayVerified": true,
             "segments": [
               {
@@ -4858,7 +4857,8 @@
                 "direction": "left",
                 "ticks": 135
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:abcb27d5f59f6b8f648f755a5a675308e036a8c8e5bbbb5ab6e53bb2ba621543"
           },
           {
             "seed": 17,
@@ -4877,7 +4877,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "e84180aff95c6465",
             "replayVerified": true,
             "segments": [
               {
@@ -4888,7 +4887,8 @@
                 "direction": "right",
                 "ticks": 135
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:51209b9b3f112c048296030c70ce83fbcbd26ea45272fff405cc266653f7db72"
           },
           {
             "seed": 17,
@@ -4907,7 +4907,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "3449cd082f17e94b",
             "replayVerified": true,
             "segments": [
               {
@@ -4922,7 +4921,8 @@
                 "direction": "left",
                 "ticks": 237
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:b2ff4a6085a028b400b914571755e9645ff56375ad73979d558d4af2419316e2"
           },
           {
             "seed": 17,
@@ -4939,7 +4939,6 @@
               "coverage": 0.04114490161001789
             },
             "failures": [],
-            "checkpoint": "2ff77d2cf7f51f74",
             "replayVerified": true,
             "segments": [
               {
@@ -4954,7 +4953,8 @@
                 "direction": "right",
                 "ticks": 308
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:b21e35805c7cc94690b59a4cf448bbd61c1ce8e22095319c209fa97c284bbd38"
           },
           {
             "seed": 17,
@@ -4973,7 +4973,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "59c55d6409e04766",
             "replayVerified": true,
             "segments": [
               {
@@ -4988,7 +4987,8 @@
                 "direction": "left",
                 "ticks": 164
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:61515554cb0a3809dbfad57db6ecca748ebe93675bb00d3049d0a8351f3f099c"
           },
           {
             "seed": 17,
@@ -5005,7 +5005,6 @@
               "coverage": 0.0129695885509839
             },
             "failures": [],
-            "checkpoint": "54ab0ddbf1152d82",
             "replayVerified": true,
             "segments": [
               {
@@ -5020,7 +5019,8 @@
                 "direction": "right",
                 "ticks": 308
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:103b63b88c45ffe5e4a6ae2f62ddb8e0e15f8ec79223548cf3178078ca304660"
           },
           {
             "seed": 17,
@@ -5039,7 +5039,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "2734205b703bda69",
             "replayVerified": true,
             "segments": [
               {
@@ -5054,7 +5053,8 @@
                 "direction": "left",
                 "ticks": 609
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:cb2607f32ed14e9cb44ebcd050e390a2164ebf375af2a6790bdb1aca9108298a"
           },
           {
             "seed": 17,
@@ -5071,7 +5071,6 @@
               "coverage": 0.01967799642218247
             },
             "failures": [],
-            "checkpoint": "40f1eaaf244adde5",
             "replayVerified": true,
             "segments": [
               {
@@ -5086,7 +5085,8 @@
                 "direction": "right",
                 "ticks": 145
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:34b2185765f70c9a46cad2a7e16a1b2212fb1a5e4a9b943206435f0e6337e153"
           },
           {
             "seed": 17,
@@ -5105,7 +5105,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "294483e440b5bb2e",
             "replayVerified": true,
             "segments": [
               {
@@ -5120,7 +5119,8 @@
                 "direction": "left",
                 "ticks": 516
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:31b6aac36a5a883606968405c38839b87507fcc90985acce4a776448d06bdcca"
           },
           {
             "seed": 17,
@@ -5137,7 +5137,6 @@
               "coverage": 0.03443649373881932
             },
             "failures": [],
-            "checkpoint": "1ca9df1eb9bda1a8",
             "replayVerified": true,
             "segments": [
               {
@@ -5152,7 +5151,8 @@
                 "direction": "right",
                 "ticks": 145
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:4ffee8649d0c5f1bb235ae8956c5a1e588771935f371e9aa6b9e1ffc47f0d4b2"
           }
         ],
         "seedChecks": [
@@ -5173,7 +5173,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "4edfd3d9feff2880",
             "replayVerified": true,
             "segments": [
               {
@@ -5188,7 +5187,8 @@
                 "direction": "right",
                 "ticks": 165
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:99e42affec983adb9b8aaa91a5be99cd579a1645a6c84b4717e2bae5835b9a81"
           },
           {
             "seed": 2,
@@ -5207,7 +5207,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "0f93a1885ed8775d",
             "replayVerified": true,
             "segments": [
               {
@@ -5222,7 +5221,8 @@
                 "direction": "right",
                 "ticks": 159
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:de751660911e72c508a06ad2a8309531f1fbb2ff1189bbfc2d49df234af9fbb3"
           },
           {
             "seed": 1,
@@ -5239,7 +5239,6 @@
               "coverage": 0.03756708407871199
             },
             "failures": [],
-            "checkpoint": "b43e5550d7e9c643",
             "replayVerified": true,
             "segments": [
               {
@@ -5254,7 +5253,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:4a39aad497e5fdc9d2872f5cb44710c60eab75b93cd16a09d3d0540d8cfbb102"
           },
           {
             "seed": 2,
@@ -5271,7 +5271,6 @@
               "coverage": 0.03756708407871199
             },
             "failures": [],
-            "checkpoint": "00bd7d0dad4ba0aa",
             "replayVerified": true,
             "segments": [
               {
@@ -5286,7 +5285,8 @@
                 "direction": "left",
                 "ticks": 158
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:abb406438d3a3e2c947a1e67b4d26c8cd452040b26aefe53e8aa2d549118861f"
           }
         ],
         "successfulOpenings": 6
@@ -5423,14 +5423,14 @@
               "coverage": 0.004344048653344918
             },
             "failures": [],
-            "checkpoint": "fe66525870a3ba64",
             "replayVerified": true,
             "segments": [
               {
                 "direction": "down",
                 "ticks": 143
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:52ee8cc57a8a0d9dc42b194686d88e02483ac73c392cb58d551fd8f290534a68"
           },
           {
             "seed": 17,
@@ -5449,7 +5449,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "c6b6a1fc95568a7c",
             "replayVerified": true,
             "segments": [
               {
@@ -5460,7 +5459,8 @@
                 "direction": "down",
                 "ticks": 353
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:3eef33e9cda7ae44d290c991cd2dfeb73b463bea3b58cf12a02ff76eef0a8fda"
           },
           {
             "seed": 17,
@@ -5477,7 +5477,6 @@
               "coverage": 0.014769765421372719
             },
             "failures": [],
-            "checkpoint": "beb5057609e445c1",
             "replayVerified": true,
             "segments": [
               {
@@ -5488,7 +5487,8 @@
                 "direction": "down",
                 "ticks": 469
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:8547d467d7a04eba0964b553dc1008d97f345b0006e2275cfa3d8ed4c94653c9"
           },
           {
             "seed": 17,
@@ -5507,7 +5507,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "aa33f00d3303e34f",
             "replayVerified": true,
             "segments": [
               {
@@ -5518,7 +5517,8 @@
                 "direction": "down",
                 "ticks": 143
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:85638dca795b6266ad9cc6ab9deddc16a721e05b2266ea7c4e5965f0eae5e9e9"
           },
           {
             "seed": 17,
@@ -5535,7 +5535,6 @@
               "coverage": 0.009122502172024326
             },
             "failures": [],
-            "checkpoint": "0b4794a81302e78c",
             "replayVerified": true,
             "segments": [
               {
@@ -5546,7 +5545,8 @@
                 "direction": "down",
                 "ticks": 292
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:bb46cdf7e5dec14c872404562b2852f5d2c07b5404474a40dbda0024fcc92746"
           },
           {
             "seed": 17,
@@ -5565,7 +5565,6 @@
                 "cause": "enemy-trail"
               }
             ],
-            "checkpoint": "8af79cc512c45a5c",
             "replayVerified": true,
             "segments": [
               {
@@ -5576,7 +5575,8 @@
                 "direction": "down",
                 "ticks": 394
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:a63c22ba4bb272444eee300907fe1c7364a48dba722311bf92e67e8c3bea0d57"
           },
           {
             "seed": 17,
@@ -5593,7 +5593,6 @@
               "coverage": 0.020851433536055605
             },
             "failures": [],
-            "checkpoint": "3180a95c3b5ba0f9",
             "replayVerified": true,
             "segments": [
               {
@@ -5604,7 +5603,8 @@
                 "direction": "left",
                 "ticks": 157
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:f455215057ca4bda87005cb2d14654e4b5df45adf5fd30986d5202806685f1ba"
           },
           {
             "seed": 17,
@@ -5621,7 +5621,6 @@
               "coverage": 0.10251954821894005
             },
             "failures": [],
-            "checkpoint": "cf716a3fe18a5ab1",
             "replayVerified": true,
             "segments": [
               {
@@ -5632,7 +5631,8 @@
                 "direction": "right",
                 "ticks": 795
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:cdfa0c6a9bc8c2947f1b9275a07f7c234e92e22a9d449c3bb52fe1f9640fde6f"
           },
           {
             "seed": 17,
@@ -5649,7 +5649,6 @@
               "coverage": 0.036490008688097306
             },
             "failures": [],
-            "checkpoint": "e63b796cbf17863d",
             "replayVerified": true,
             "segments": [
               {
@@ -5660,7 +5659,8 @@
                 "direction": "left",
                 "ticks": 157
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:af16e1af73e398a8656d79b710880c4638d3f81d89fed704acad3ee4e3b16d61"
           },
           {
             "seed": 17,
@@ -5677,7 +5677,6 @@
               "coverage": 0.17940920938314509
             },
             "failures": [],
-            "checkpoint": "50f26e624cea15f7",
             "replayVerified": true,
             "segments": [
               {
@@ -5688,7 +5687,8 @@
                 "direction": "right",
                 "ticks": 795
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:0fca04a6bfe9b2a7d5896c2a5ee4a9ce6668dfb91f11b23627ffc08d528a1d8a"
           },
           {
             "seed": 17,
@@ -5705,7 +5705,6 @@
               "coverage": 0.04170286707211121
             },
             "failures": [],
-            "checkpoint": "d04b048a438c1519",
             "replayVerified": true,
             "segments": [
               {
@@ -5720,7 +5719,8 @@
                 "direction": "left",
                 "ticks": 318
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:b01faf744cc94bf662fed5927812f552c32d9f7a2430a7606a35c8eb90199667"
           },
           {
             "seed": 17,
@@ -5737,7 +5737,6 @@
               "coverage": 0.08166811468288444
             },
             "failures": [],
-            "checkpoint": "fbddacc9d6ad355d",
             "replayVerified": true,
             "segments": [
               {
@@ -5752,7 +5751,8 @@
                 "direction": "right",
                 "ticks": 634
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:547ced2a78b6d3a7be99b6589a48d34c77c5e844f593083e940ec13c1ae94806"
           },
           {
             "seed": 17,
@@ -5769,7 +5769,6 @@
               "coverage": 0.07298001737619461
             },
             "failures": [],
-            "checkpoint": "524a8068140c6ec3",
             "replayVerified": true,
             "segments": [
               {
@@ -5784,7 +5783,8 @@
                 "direction": "left",
                 "ticks": 318
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:1925741fd3c79c972a743cff84c805d2af05e593e675d9db739058c10946faa1"
           },
           {
             "seed": 17,
@@ -5801,7 +5801,6 @@
               "coverage": 0.1429192006950478
             },
             "failures": [],
-            "checkpoint": "7ffc6250b060ee39",
             "replayVerified": true,
             "segments": [
               {
@@ -5816,7 +5815,8 @@
                 "direction": "right",
                 "ticks": 634
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:51fa118973a7cad9577ff4523a0cf5bfbb9653ea0d9f81552660d68ba20a9b0b"
           },
           {
             "seed": 17,
@@ -5833,7 +5833,6 @@
               "coverage": 0.020851433536055605
             },
             "failures": [],
-            "checkpoint": "3180a95c3b5ba0f9",
             "replayVerified": true,
             "segments": [
               {
@@ -5844,7 +5843,8 @@
                 "direction": "left",
                 "ticks": 157
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:f455215057ca4bda87005cb2d14654e4b5df45adf5fd30986d5202806685f1ba"
           },
           {
             "seed": 17,
@@ -5861,7 +5861,6 @@
               "coverage": 0.10251954821894005
             },
             "failures": [],
-            "checkpoint": "cf716a3fe18a5ab1",
             "replayVerified": true,
             "segments": [
               {
@@ -5872,7 +5871,8 @@
                 "direction": "right",
                 "ticks": 795
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:cdfa0c6a9bc8c2947f1b9275a07f7c234e92e22a9d449c3bb52fe1f9640fde6f"
           },
           {
             "seed": 17,
@@ -5889,7 +5889,6 @@
               "coverage": 0.036490008688097306
             },
             "failures": [],
-            "checkpoint": "e63b796cbf17863d",
             "replayVerified": true,
             "segments": [
               {
@@ -5900,7 +5899,8 @@
                 "direction": "left",
                 "ticks": 157
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:af16e1af73e398a8656d79b710880c4638d3f81d89fed704acad3ee4e3b16d61"
           },
           {
             "seed": 17,
@@ -5917,7 +5917,6 @@
               "coverage": 0.17940920938314509
             },
             "failures": [],
-            "checkpoint": "50f26e624cea15f7",
             "replayVerified": true,
             "segments": [
               {
@@ -5928,7 +5927,8 @@
                 "direction": "right",
                 "ticks": 795
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:0fca04a6bfe9b2a7d5896c2a5ee4a9ce6668dfb91f11b23627ffc08d528a1d8a"
           },
           {
             "seed": 17,
@@ -5945,7 +5945,6 @@
               "coverage": 0.08340573414422242
             },
             "failures": [],
-            "checkpoint": "3e07cc154e2428f9",
             "replayVerified": true,
             "segments": [
               {
@@ -5960,7 +5959,8 @@
                 "direction": "left",
                 "ticks": 644
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:315e2237d216a29be17ddc9c9dc72a6284eb3fef7b7b5c3873896700fdcb6869"
           },
           {
             "seed": 17,
@@ -5977,7 +5977,6 @@
               "coverage": 0.03996524761077324
             },
             "failures": [],
-            "checkpoint": "07ccd9d74c73c303",
             "replayVerified": true,
             "segments": [
               {
@@ -5992,7 +5991,8 @@
                 "direction": "right",
                 "ticks": 308
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:ec235cfaf97770def4308328755863eb3d86b682ea64a06a37d3ceac37821cf0"
           },
           {
             "seed": 17,
@@ -6006,7 +6006,6 @@
             "coverage": 0,
             "closure": null,
             "failures": [],
-            "checkpoint": "d30f1eee1281cac5",
             "replayVerified": true,
             "segments": [
               {
@@ -6021,7 +6020,8 @@
                 "direction": "left",
                 "ticks": 617
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:383c35c84e5afb16fc22f569912cd6b1224263a47f346c61117d15b4101e4a5e"
           },
           {
             "seed": 17,
@@ -6038,7 +6038,6 @@
               "coverage": 0.06993918331885317
             },
             "failures": [],
-            "checkpoint": "383797407b840097",
             "replayVerified": true,
             "segments": [
               {
@@ -6053,7 +6052,8 @@
                 "direction": "right",
                 "ticks": 308
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:88ac889ec24437a72446e2f5512c91bf1146fe0bfaca8ecab91ef673f48d65f2"
           },
           {
             "seed": 17,
@@ -6067,7 +6067,6 @@
             "coverage": 0,
             "closure": null,
             "failures": [],
-            "checkpoint": "cb9cb311b2b9c496",
             "replayVerified": true,
             "segments": [
               {
@@ -6082,7 +6081,8 @@
                 "direction": "left",
                 "ticks": 495
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:38e312218ee055431fc1f67ba0468455e76c1798524b665152b2750c47da9474"
           },
           {
             "seed": 17,
@@ -6099,7 +6099,6 @@
               "coverage": 0.019113814074717638
             },
             "failures": [],
-            "checkpoint": "70a02fbabff7fe2e",
             "replayVerified": true,
             "segments": [
               {
@@ -6114,7 +6113,8 @@
                 "direction": "right",
                 "ticks": 145
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:9174b283ec52f1b4a62d02af69233a034f4eed88a81424ddd944baeb4a723ccb"
           },
           {
             "seed": 17,
@@ -6128,7 +6128,6 @@
             "coverage": 0,
             "closure": null,
             "failures": [],
-            "checkpoint": "57ab15627bcb8303",
             "replayVerified": true,
             "segments": [
               {
@@ -6143,7 +6142,8 @@
                 "direction": "left",
                 "ticks": 454
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:a1fe94468b896d0eb8467b9b9b4bf66dbb1db1435259a8269364f16331de38ea"
           },
           {
             "seed": 17,
@@ -6160,7 +6160,6 @@
               "coverage": 0.03344917463075586
             },
             "failures": [],
-            "checkpoint": "b1b2ec832be52cc4",
             "replayVerified": true,
             "segments": [
               {
@@ -6175,7 +6174,8 @@
                 "direction": "right",
                 "ticks": 145
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:b7d1230f2d1e9ec0239967feb1cda0c387d074f54c376d497fe835055f4de29c"
           }
         ],
         "seedChecks": [
@@ -6194,7 +6194,6 @@
               "coverage": 0.17940920938314509
             },
             "failures": [],
-            "checkpoint": "6fd6c6bf86f2d0fb",
             "replayVerified": true,
             "segments": [
               {
@@ -6205,7 +6204,8 @@
                 "direction": "right",
                 "ticks": 795
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:e9e3498ec6dd6838965332637dd02b0ff7bdcff011a0121daaa18f54bc113ca6"
           },
           {
             "seed": 2,
@@ -6222,7 +6222,6 @@
               "coverage": 0.17940920938314509
             },
             "failures": [],
-            "checkpoint": "d62fe036e4184b6b",
             "replayVerified": true,
             "segments": [
               {
@@ -6233,7 +6232,8 @@
                 "direction": "right",
                 "ticks": 795
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:80d25fd24c988676d47f68de82f550d1145121ef6bd57a8a81681899efe9701a"
           },
           {
             "seed": 1,
@@ -6250,7 +6250,6 @@
               "coverage": 0.17940920938314509
             },
             "failures": [],
-            "checkpoint": "6fd6c6bf86f2d0fb",
             "replayVerified": true,
             "segments": [
               {
@@ -6261,7 +6260,8 @@
                 "direction": "right",
                 "ticks": 795
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:e9e3498ec6dd6838965332637dd02b0ff7bdcff011a0121daaa18f54bc113ca6"
           },
           {
             "seed": 2,
@@ -6278,7 +6278,6 @@
               "coverage": 0.17940920938314509
             },
             "failures": [],
-            "checkpoint": "d62fe036e4184b6b",
             "replayVerified": true,
             "segments": [
               {
@@ -6289,7 +6288,8 @@
                 "direction": "right",
                 "ticks": 795
               }
-            ]
+            ],
+            "evidenceIdentity": "revealline-pilot-proof.v1:80d25fd24c988676d47f68de82f550d1145121ef6bd57a8a81681899efe9701a"
           }
         ],
         "successfulOpenings": 20
@@ -6302,5 +6302,34 @@
     "Verify cooperative Twin landings remains a distinct shared-return decision. It is a control, not a redesign request.",
     "Review the five artwork composition briefs before image generation. No commissioned image or automatic hash difference counts as design approval.",
     "Keep these tooling identities outside current catalogues until full route evidence and human review are recorded."
-  ]
+  ],
+  "evidenceContract": {
+    "format": "revealline-pilot-proof.v1",
+    "portableFields": [
+      "seed",
+      "column",
+      "depth",
+      "side",
+      "status",
+      "ticks",
+      "seconds",
+      "livesLost",
+      "coverage",
+      "closure",
+      "failures",
+      "replayVerified",
+      "segments"
+    ],
+    "historicalExactCheckpoint": {
+      "reportFormat": "revealline-uniqueness-pilot.v1",
+      "retainedInGitHistory": true,
+      "purpose": "Architecture-specific runtime diagnostic; excluded from portable design-proof identity.",
+      "knownEquivalentExample": {
+        "pilotId": "uniqueness-pilot-arcade-delivery",
+        "darwinArm64": "e8e4e128969b3aba",
+        "linuxX64": "83f58b12fcadafda",
+        "difference": "A single-ULP enemy-velocity substitution reproduces the historical Linux hash; the exact Linux field difference remains inferred. Reported route, closure, coverage, failures, segments and replay verification are identical."
+      }
+    }
+  }
 }
