@@ -76,7 +76,12 @@ test("other Team runtime paths retain the navigation gate", () => {
 
 test("documentation-only changes have a zero-command bounded plan", () => {
   const plan = focusedTestPlan(["docs/fast-release-mode.md"], manifest);
-  assert.deepEqual(plan, { categories: [], unknownRuntime: [], commands: [] });
+  assert.deepEqual(plan, {
+    categories: [],
+    unknownRuntime: [],
+    deferredTests: [],
+    commands: [],
+  });
 });
 
 test("changed test files are executed directly without shell evaluation", () => {
@@ -126,6 +131,40 @@ test("publishing changes run the exact-head controller, authority, determinism a
       command.args.includes(required),
       `Missing focused gate: ${required}`,
     );
+});
+
+test("production Team retained-successor coverage is not deferred", () => {
+  const retained = "game/test/coop-reviewed-successor-picture.test.mjs";
+  const plan = focusedTestPlan([retained], manifest);
+  assert.deepEqual(plan.deferredTests, []);
+  assert.ok(plan.commands.some((command) => command.args.includes(retained)));
+  assert.ok(
+    manifest.categories.every(
+      (category) => !category.deferredChangedTestPatterns?.length,
+    ),
+  );
+});
+
+test("an explicit synthetic deferral is reported without altering production coverage", () => {
+  const retained = "game/test/coop-reviewed-successor-picture.test.mjs";
+  const synthetic = structuredClone(manifest);
+  const category = synthetic.categories.find(
+    (entry) => entry.id === "team-picture-bindings",
+  );
+  for (const command of category.commands)
+    command.args = command.args.filter((argument) => argument !== retained);
+  category.deferredChangedTestPatterns = [
+    "^game/test/coop-reviewed-successor-picture\\.test\\.mjs$",
+  ];
+  const plan = focusedTestPlan([retained], synthetic);
+  assert.deepEqual(plan.categories, ["team-picture-bindings"]);
+  assert.deepEqual(plan.deferredTests, [retained]);
+  assert.ok(!plan.commands.some((command) => command.args.includes(retained)));
+  assert.ok(
+    focusedTestPlan([retained], manifest).commands.some((command) =>
+      command.args.includes(retained),
+    ),
+  );
 });
 
 test("unsafe paths and empty selections are rejected", () => {
