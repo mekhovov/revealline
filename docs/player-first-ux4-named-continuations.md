@@ -9,7 +9,7 @@ Result actions now state the destination already owned by the active runtime:
 - Solo authored campaigns name the next level while it is in the same accepted campaign. A
   successor that still requires asynchronous unified-catalogue resolution remains **Next mission**
   until that operation identifies it; the UI does not guess.
-- Versus keeps **Next round: _mission_** and **Rematch: _mission_** for the current match format.
+- Versus retains the existing generic **Next round** and **Rematch** action semantics. This historical donor did not establish a separately qualified named-continuation contract for non-Journey entries.
 - Team already names its exact next mission and keeps **Browse Team arenas** as the terminal primary
   action. This audit leaves that verified host behavior unchanged.
 
