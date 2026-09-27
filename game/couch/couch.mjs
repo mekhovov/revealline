@@ -2395,7 +2395,9 @@ try {
       shell.scope() !== 'main'
     )
       return;
-    const authoredNext = candidateJourney?.next(roundRecipe.entry.mission.id);
+    const authoredNext = candidateJourney?.owns(roundRecipe.entry)
+      ? candidateJourney.next(roundRecipe.entry.mission.id)
+      : null;
     if (authoredNext) {
       await startRace(candidateJourney.row(authoredNext, journeyPreferences.snapshot().difficulty));
       return;
