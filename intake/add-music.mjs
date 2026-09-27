@@ -11,6 +11,7 @@ const ARCHIVE_VALUE_OPTIONS = new Set([
   '--license',
   '--artist',
   '--styles',
+  '--collections',
   '--batch-id',
   '--batch-title',
   '--description',
@@ -26,19 +27,20 @@ const PRIVATE_UNSUPPORTED_FLAGS = new Set(['--confirm-rights', '--open-pr']);
 
 export const LAUNCHER_USAGE = `Usage from the RevealLine game repository:
   node intake/add-music.mjs <mp3-or-folder> [archive intake options]
-    [--archive-root /path/to/revealline-soundtracks-02]
+    [--archive-root /path/to/revealline-soundtracks]
 
 Private unknown-rights UA-FPV intake:
   node intake/add-music.mjs <folder> --license unknown
     --private-output /path/to/new-empty-private-directory
 
-The launcher forwards the request to a clean RevealLine Soundtracks 02 checkout.
+The launcher forwards the request to a clean canonical RevealLine Soundtracks checkout.
 Set REVEALLINE_SOUNDTRACK_ARCHIVE or pass --archive-root when it is not in a
 standard location. Run the archive command with --help for all intake options.
 
 Public intake requires recording-specific redistribution and web-game playback
-rights. A YouTube page alone is not permission. --license unknown builds private
-local UA-FPV .rlsound packs and never writes to the public archive. See
+rights. A YouTube page alone is not permission. Public --license unknown intake
+records uploader-confirmed rights and requires --confirm-rights. Add
+--private-output to build private local UA-FPV .rlsound packs instead. See
 docs/ua-fpv-upload-guide.md.`;
 
 export function splitLauncherArguments(argv) {
@@ -157,13 +159,13 @@ export async function findArchiveRoot({
   if (explicitRoot) {
     if (await isArchiveRoot(explicitRoot)) return path.resolve(explicitRoot);
     throw new Error(
-      `The explicit --archive-root is not a RevealLine Soundtracks 02 checkout: ${explicitRoot}`,
+      `The explicit --archive-root is not a canonical RevealLine Soundtracks checkout: ${explicitRoot}`,
     );
   }
   const candidates = [
     environment.REVEALLINE_SOUNDTRACK_ARCHIVE,
-    path.resolve(repositoryRoot, '..', 'revealline-soundtracks-02'),
-    path.join(homeDirectory, '.codex', 'worktrees', 'revealline-soundtracks-02'),
+    path.resolve(repositoryRoot, '..', 'revealline-soundtracks'),
+    path.join(homeDirectory, '.codex', 'worktrees', 'revealline-soundtracks'),
   ];
   for (const candidate of candidates) {
     if (await isArchiveRoot(candidate)) return path.resolve(candidate);
@@ -212,9 +214,9 @@ export async function launchMusicIntake(argv, dependencies = {}) {
   }
   const licenses = licenseValues(rawForwarded);
   if (licenses.length > 1) throw new Error('--license may be provided only once.');
-  if (licenses[0] === 'unknown') {
-    if (!privateOutput) {
-      throw new Error('--license unknown requires --private-output with a new empty directory.');
+  if (privateOutput) {
+    if (licenses[0] !== 'unknown') {
+      throw new Error('--private-output requires --license unknown.');
     }
     if (explicitRoot) {
       throw new Error('--archive-root is not used with private --license unknown intake.');
@@ -229,9 +231,6 @@ export async function launchMusicIntake(argv, dependencies = {}) {
       stdio: 'inherit',
     });
   }
-  if (privateOutput) {
-    throw new Error('--private-output is supported only with --license unknown.');
-  }
   const forwarded = resolveForwardedInput(rawForwarded, currentDirectory);
   const archiveRoot = await findArchiveRoot({
     explicitRoot,
@@ -241,9 +240,9 @@ export async function launchMusicIntake(argv, dependencies = {}) {
   });
   if (!archiveRoot) {
     throw new Error(
-      'RevealLine Soundtracks 02 was not found. Clone ' +
-        'https://github.com/mekhovov/revealline-soundtracks-02.git and pass ' +
-        '--archive-root /path/to/revealline-soundtracks-02.',
+      'The canonical RevealLine Soundtracks checkout was not found. Clone ' +
+        'https://github.com/mekhovov/revealline-soundtracks.git and pass ' +
+        '--archive-root /path/to/revealline-soundtracks.',
     );
   }
   const script = path.join(archiveRoot, 'intake', 'add-music.mjs');

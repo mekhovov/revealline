@@ -32,6 +32,7 @@ function resolvedRemoteTracks(specifications) {
       fileName: `remote-${index + 1}.mp3`,
       archiveId: `archive.remote-${index}`,
       collection: specification.collection ?? 'test-collection',
+      collections: specification.collections ?? [specification.collection ?? 'test-collection'],
       status: 'Published audition',
       listeningApproval: 'Pending',
       gameCatalogueAdmission: false,
@@ -39,9 +40,12 @@ function resolvedRemoteTracks(specifications) {
       recordingModeEligible: specification.recordingModeEligible ?? true,
       default: false,
       audio: {
-        path: specification.path ?? `objects/${sha256}.mp3`,
+        path:
+          specification.path ??
+          `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${sha256}.mp3`,
         bytes: specification.bytes ?? 1234,
         sha256,
+        ...(specification.delivery ? { delivery: specification.delivery } : {}),
       },
       aliases: [],
     };
@@ -49,8 +53,8 @@ function resolvedRemoteTracks(specifications) {
   return resolveOnlineSoundtrackCatalogue({
     format: 'revealline-public-soundtrack-catalogue.v1',
     archive: {
-      id: 'revealline-soundtracks-01',
-      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+      id: 'revealline-soundtracks',
+      baseURL: 'https://mekhovov.github.io/revealline-soundtracks/',
     },
     sources: [],
     counts: {
@@ -87,6 +91,29 @@ const list = (ids, repeat = 'all') => ({
     { id: 'test.queue', title: 'Test playlist', trackIds: ids, order: 'ordered', repeat },
   ],
   selection: { playlistId: 'test.queue' },
+});
+test('verified external archive playback requests anonymous CORS and remains mixable', async (t) => {
+  const sha256 = 'b'.repeat(64),
+    [external] = resolvedRemoteTracks([
+      {
+        sha256,
+        title: 'Hosted song',
+        path: 'https://bucket.s3.eu-central-1.amazonaws.com/music/song.mp3',
+        delivery: {
+          type: 'external-url',
+          verifiedAt: '2026-09-27T00:00:00.000Z',
+          rangeRequests: true,
+          cors: true,
+        },
+      },
+    ]),
+    h = setup({ library: list([synthIds[0]], 'all') });
+  t.after(() => h.player.dispose());
+  assert.equal(await h.player.playRemotePlaylist([external], { mixWithLibrary: true }), true);
+  assert.equal(h.media.crossOrigin, 'anonymous');
+  h.media.emit('error');
+  await settleUntil(() => h.player.snapshot().track?.kind === 'synth');
+  assert.equal(h.player.snapshot().playing, true);
 });
 
 test('local gameplay skips uninstalled catalogue recordings without changing saved listening preferences', async (t) => {
@@ -162,11 +189,12 @@ test('online archive playback streams its exact HTTPS object through the shared 
         title: 'Remote song',
         tags: ['metal'],
         collection: 'creator-album',
-        path: `batches/creator-album/objects/${sha256}.mp3`,
+        path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${sha256}.mp3`,
       },
     ]);
   assert.equal(await h.player.playRemotePlaylist([remote]), true);
   assert.equal(h.media.src, remote.url);
+  assert.equal(h.media.crossOrigin, null);
   assert.equal(h.player.snapshot().track.title, 'Remote song');
   assert.equal(h.player.snapshot().source, 'remote');
   assert.equal(reads, 0);
