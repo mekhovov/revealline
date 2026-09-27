@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { focusedTestPlan } from './focused-tests.mjs';
+import { focusedTestPlan, runFocusedCommands } from './focused-tests.mjs';
 
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(await readFile(path.join(directory, 'focused-test-map.json'), 'utf8'));
@@ -183,4 +183,89 @@ test('company measurement tools under docs and shared Journey writes retain comp
       changed,
     );
   }
+});
+
+test('focused command execution reports every failure and continues once per command', () => {
+  const commands = [
+    { id: 'exit', command: 'node', args: ['exit'] },
+    { id: 'returned-error', command: 'node', args: ['returned-error'] },
+    { id: 'thrown-error', command: 'node', args: ['thrown-error'] },
+    { id: 'signal', command: 'node', args: ['signal'] },
+    { id: 'later-pass', command: 'node', args: ['later-pass'] },
+  ];
+  const calls = [];
+  const stderr = [];
+  const results = [
+    { status: 7, signal: null },
+    { status: null, signal: null, error: new Error('returned') },
+    new Error('thrown'),
+    { status: 0, signal: 'SIGTERM' },
+    { status: 0, signal: null },
+  ];
+  const summary = runFocusedCommands(commands, {
+    spawn(command, args) {
+      calls.push([command, ...args]);
+      const result = results.shift();
+      if (result instanceof Error) throw result;
+      return result;
+    },
+    stdout: { write() {} },
+    stderr: {
+      write(message) {
+        stderr.push(message);
+      },
+    },
+  });
+  assert.deepEqual(
+    calls,
+    commands.map(({ command, args }) => [command, ...args]),
+  );
+  assert.equal(summary.attempted, commands.length);
+  assert.deepEqual(
+    summary.failures.map(({ id }) => id),
+    ['exit', 'returned-error', 'thrown-error', 'signal'],
+  );
+  assert.equal(summary.exitCode, 7);
+  assert.equal(stderr.length, 4);
+  assert.match(stderr[1], /returned/u);
+  assert.match(stderr[2], /thrown/u);
+  assert.match(stderr[3], /SIGTERM/u);
+});
+
+test('focused command execution uses real child exit status and still runs later commands', () => {
+  const summary = runFocusedCommands(
+    [
+      {
+        id: 'real-exit',
+        command: process.execPath,
+        args: ['-e', 'process.exit(5)'],
+      },
+      {
+        id: 'real-pass',
+        command: process.execPath,
+        args: ['-e', 'process.exit(0)'],
+      },
+    ],
+    {
+      stdout: { write() {} },
+      stderr: { write() {} },
+    },
+  );
+  assert.equal(summary.attempted, 2);
+  assert.deepEqual(
+    summary.failures.map(({ id, status }) => [id, status]),
+    [['real-exit', 5]],
+  );
+  assert.equal(summary.exitCode, 5);
+});
+
+test('focused command execution succeeds only when every command succeeds', () => {
+  const summary = runFocusedCommands([{ id: 'pass', command: 'node', args: ['pass'] }], {
+    spawn() {
+      return { status: 0, signal: null };
+    },
+    stdout: { write() {} },
+    stderr: { write() {} },
+  });
+  assert.deepEqual(summary, { attempted: 1, failures: [], exitCode: 0 });
 });
