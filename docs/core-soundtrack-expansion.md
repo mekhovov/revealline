@@ -18,6 +18,67 @@ public verification. An MP3 preview or a passing transport test is insufficient.
 Keep historical immutable files and failed/partial evidence. Never manufacture
 reviewer names, listening approval or device results.
 
+## Priority delivery — external MP3 URLs first (27 September 2026)
+
+This is the active soundtrack transport priority. The canonical soundtrack
+repository remains the catalogue and rights control plane, while an uploader may
+bind one recording to a stable public HTTPS MP3 URL such as a direct S3 object URL.
+The first version does not provision buckets, upload objects, configure CloudFront,
+mirror files or migrate the existing 194 recordings.
+
+### Implemented source work
+
+- Canonical archive [PR #10](https://github.com/mekhovov/revealline-soundtracks/pull/10)
+  accepts either a
+  local file/folder, `--audio-url`, `--url-manifest` or a metadata-only v2
+  `.rlintake` package. External URLs are re-fetched twice and pinned by final URL,
+  byte count, SHA-256, duration, CORS and byte-range evidence. HTTPS credentials,
+  local/private destinations, expiring query parameters, excessive redirects,
+  non-MP3 content, truncation and byte drift are rejected.
+- `external-deliveries.json` is deterministic and separate from GitHub Release
+  audio volumes. Pull-request and Pages verification re-check every external
+  identity; a weekly read-only audit reports later drift without rewriting the
+  catalogue.
+- The archive player supports external and repository-hosted recordings in one
+  queue, disposes failed media before advancing, and implements shareable `q`,
+  `artist`, `collection`, `styles`, `order`, `repeat` and `track` URL state with
+  browser Back/Forward restoration and a Share-this-list action.
+- Game [PR #716](https://github.com/mekhovov/revealline/pull/716) accepts any
+  archive-verified external domain without a per-domain code change, requests
+  anonymous CORS for external playback, preserves the existing release-backed
+  path, recovers from a broken remote track to other remote, bundled or uploaded
+  music, and verifies exact bytes and SHA-256 before staging an offline copy.
+- Archive verification currently passes 34/34 tests. The focused game catalogue,
+  panel and transport cohort passes 185/185 tests; scoped Prettier and ESLint checks
+  are clean. These are source checks and do not replace a real hosted-object or
+  public release acceptance test.
+
+### Remaining release work and estimates
+
+| Step                     | State                                                                                      | Next action                                                                                                                                                                                   | Hands-on estimate                     |
+| ------------------------ | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Archive source PR        | PR #10 published at exact head `ee94624`; hosted checks pending                            | Pass exact-head checks, review and merge                                                                                                                                                      | 0.5 day plus CI                       |
+| Archive Pages acceptance | Pending archive merge                                                                      | Verify filters, shared URLs, mixed playback and broken-track continuation on the public site                                                                                                  | 1–2 hours                             |
+| Game PR #716             | Feature source implemented; release sequencing remains blocked by the shared game pipeline | Push the cumulative PR update, pass required exact-head checks, then use the established immutable release and Pages selector flow                                                            | 0.5–1 day plus shared CI/release wait |
+| Real S3-object proof     | Blocked by missing input                                                                   | Supply one stable public MP3 object URL with public HEAD/GET/Range CORS and recording rights; ingest through a normal archive PR, then prove automatic discovery in the already-released game | 1–2 hours after the URL exists        |
+
+The real-object proof must switch among that S3 recording, a GitHub Release-backed
+recording, bundled music and an uploaded MP3, including failure recovery and an
+exact-byte offline installation. Until that proof and the immutable game release
+are complete, this item remains **implemented in source, not publicly delivered**.
+
+### Deferred hosting architecture
+
+- Phase 2: private S3 plus CloudFront OAC, GitHub OIDC publishing, immutable object
+  keys, cache/cost controls and monitoring.
+- Phase 3: primary/mirror URLs, GitHub Release mirroring, backfill, failover and
+  historical-release compatibility.
+- Phase 4: R2, Bunny, Spaces, provider-neutral upload adapters, custom-domain
+  migration and game deep links for archive filters.
+
+These phases require a separate design review. The first release treats the
+uploader-supplied public URL as authoritative.
+
 ## Completed and current baseline
 
 ### Canonical library consolidation checkpoint — 27 September 2026
@@ -543,10 +604,10 @@ explicit fast-release policy remain exclusions, never passes.
   admission review gates have no committed ETA.
   Do not publicly redistribute Pixabay or UA-FPV recordings without exact-recording
   permission. Shchedryk remains excluded from Recording mode because of Content ID.
-- Local free space is **about 0.24 GiB**, below the 1 GiB floor. Preserve reachable
-  objects, branches, worktrees, user changes, frozen releases and evidence; do not
-  acquire or convert more media, install dependencies or run local builds until
-  coordinated cleanup restores the reserve.
+- Local free space was rechecked on 27 September and is **about 26 GiB**, above the
+  1 GiB floor. Preserve reachable objects, branches, worktrees, user changes,
+  frozen releases and evidence; continue enforcing the floor before media intake
+  or local builds.
 
 ### Deferred
 

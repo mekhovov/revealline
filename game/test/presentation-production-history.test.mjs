@@ -466,8 +466,7 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
   const uiReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${uiReviewPath}`, import.meta.url)))
     .digest('hex');
-  const continuationPath =
-    'docs/verification/v0.141.0-managed-media-audio-continuation/review.json';
+  const continuationPath = 'docs/verification/external-soundtrack-delivery-2026-09-27/review.json';
   const continuationHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
@@ -505,7 +504,7 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79',
+          'sha256:215abec38205787c9230a68a7a2cc09ea96086728c4f66e01cfaceee2a3962f7',
         ),
         slot.id,
       );
