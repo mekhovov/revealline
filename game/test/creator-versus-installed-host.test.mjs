@@ -136,6 +136,28 @@ async function fixture() {
   return { pack, route, indexedDB, storage };
 }
 
+function reachMissionGo(page) {
+  assert.equal(page.$('race-start-cue').hidden, false);
+  assert.equal(page.$('race-start-cue').dataset.kind, 'mission');
+  assert.equal(page.$('race-start-cue-label').textContent, '3');
+  assert.equal(page.tick(), 0);
+  page.frame(0, { preserveStartCue: true });
+  page.frame(700, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue-label').textContent, '2');
+  page.frame(700, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue-label').textContent, '1');
+  page.frame(700, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue-label').textContent, 'GO');
+  assert.equal(page.tick(), 0);
+  page.frame(1000 / 120, { preserveStartCue: true });
+  assert.equal(page.tick(), 1);
+}
+function finishMissionCue(page) {
+  for (let tick = 1; tick < 42; tick++) page.frame(1000 / 120, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue').hidden, true);
+  assert.equal(page.tick(), 42);
+}
+
 function replayPlayerOne(page, replay) {
   const directionKeys = { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' };
   let heldDirection = null;
@@ -150,7 +172,8 @@ function replayPlayerOne(page, replay) {
       if (direction) page.key(directionKeys[direction]);
       heldDirection = direction;
     }
-    page.frames(segment.ticks);
+    for (let tick = 0; tick < segment.ticks; tick++)
+      page.frame(1000 / 120, { preserveStartCue: true });
   }
   if (heldDirection) page.key(directionKeys[heldDirection], false);
 }
@@ -195,7 +218,7 @@ test('installed creator campaigns continue and restore their earned state in a f
     assert.match(cards[0].textContent, /Custom/);
     firstMissionId = cards[0].dataset.missionId;
     await activateMissionCard(cards[0]);
-    page.frame(0);
+    reachMissionGo(page);
     assert.equal(
       page.renders[0].level.id,
       'picture-1',
@@ -211,9 +234,8 @@ test('installed creator campaigns continue and restore their earned state in a f
     assert.equal(page.$('race-journey-difficulty').value, 'standard');
     assert.equal(page.renders[0].level.revision, exactRevision);
 
-    // The host consumes one neutral resume tick before accepting player input.
-    page.frame();
     replayPlayerOne(page, route.replay);
+    assert.equal(page.$('race-start-cue').hidden, true);
     assert.equal(
       page.renders[0].status,
       'won',
@@ -248,7 +270,8 @@ test('installed creator campaigns continue and restore their earned state in a f
       undefined,
       `${page.$('race-message').textContent} ${page.$('journey-chooser-status').textContent}`,
     );
-    page.frame(0);
+    reachMissionGo(page);
+    finishMissionCue(page);
     assert.equal(
       page.renders[0].level.id,
       'picture-2',

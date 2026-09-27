@@ -791,7 +791,7 @@ try {
   publishedAudio.setPlayer(publishedPlayer);
   let neutralResumeTick = false;
   let startCue = null,
-    pendingStartCueKind = null;
+    pendingStartCue = null;
   const freeBodies = characterPresentations.availableBodies(
     unlockedBodies(emptyProgress(campaign), campaign),
   );
@@ -859,7 +859,7 @@ try {
   }
   function beginStartCue(kind) {
     startCue = { owner: match, generation, cue: createMissionStartCue(kind), released: false };
-    pendingStartCueKind = null;
+    pendingStartCue = null;
     $('race-start-cue').hidden = false;
     $('race-start-cue').dataset.kind = kind;
     $('race-start-cue-label').textContent = kind === 'retry' ? t('interface:ready2') : '3';
@@ -895,6 +895,31 @@ try {
     }
     if (!state.active) hideStartCue();
     return { ...state, released };
+  }
+  function activateAcceptedMatch({ owner, ownerGeneration, cue = null, owns }) {
+    const current = () =>
+      !disposed &&
+      match === owner &&
+      generation === ownerGeneration &&
+      ['ready', 'paused'].includes(match.status) &&
+      owns();
+    if (!current()) return false;
+    clear({ resetDirection: cue !== null });
+    if (!current()) return false;
+    resumeDuel(match, { preserveContinuation: true });
+    if (cue) beginStartCue(cue);
+    else {
+      pendingStartCue = null;
+      neutralResumeTick = true;
+    }
+    showProgressProfileFor(roundRecipe.entry);
+    // Race effects are independent of the music transport and its readiness.
+    void sound.enable();
+    if (music) void music.start();
+    localizedText($('race-message'), () => t('interface:makeYourLineCountFirstClearWins'));
+    updateMenu();
+    input.focus();
+    return match === owner && generation === ownerGeneration && match.status === 'running';
   }
   const preparationStatus = createOperationStatus($('race-preparation'), {
     isCurrent: () => !disposed,
@@ -1725,7 +1750,11 @@ try {
     // may finish, but an interrupted gesture no longer authorizes a start.
     startIntentEpoch++;
     if (startCue) {
-      pendingStartCueKind = startCue.cue.kind;
+      pendingStartCue = {
+        kind: startCue.cue.kind,
+        owner: startCue.owner,
+        generation: startCue.generation,
+      };
       hideStartCue();
     }
     sound.pause();
@@ -1769,11 +1798,17 @@ try {
       destination = roundRecipe.entry;
     const acceptedEntry = roundRecipe?.entry,
       acceptedStatus = match.status,
+      pendingCue =
+        !destination &&
+        pendingStartCue?.owner === match &&
+        pendingStartCue.generation === generation
+          ? pendingStartCue.kind
+          : null,
       requestedRetry =
         focusOrigin === $('race-retry') ||
         (acceptedStatus === 'finished' && destination && destination.key === acceptedEntry?.key),
       requestedCue =
-        pendingStartCueKind ||
+        pendingCue ||
         (requestedRetry
           ? 'retry'
           : acceptedStatus === 'ready' || acceptedStatus === 'finished' || destination
@@ -1943,19 +1978,13 @@ try {
       }
     }
     try {
-      if (!contentReady || disposed) return;
-      clear();
-      if (!ownsStartIntent() || (nextFocus && !nextFocus.ownsAction())) return;
-      resumeDuel(match, { preserveContinuation: true });
-      if (requestedCue) beginStartCue(requestedCue);
-      else neutralResumeTick = true;
-      showProgressProfileFor(roundRecipe.entry);
-      // Race effects are independent of the music transport and its readiness.
-      void sound.enable();
-      if (music) void music.start();
-      localizedText($('race-message'), () => t('interface:makeYourLineCountFirstClearWins'));
-      updateMenu();
-      input.focus();
+      if (!contentReady || disposed) return false;
+      return activateAcceptedMatch({
+        owner: match,
+        ownerGeneration: generation,
+        cue: requestedCue,
+        owns: () => ownsStartIntent() && (!nextFocus || nextFocus.ownsAction()),
+      });
     } finally {
       nextFocus?.releaseFocus();
     }
@@ -3476,19 +3505,12 @@ try {
           return {
             current: accepted,
             start() {
-              if (!accepted() || $('journey-chooser')?.open) return false;
-              clear({ resetDirection: true });
-              if (!accepted()) return false;
-              resumeDuel(nextMatch, { preserveContinuation: true });
-              neutralResumeTick = true;
-              void sound.enable();
-              if (music) void music.start();
-              localizedText($('race-message'), () =>
-                t('interface:makeYourLineCountFirstClearWins'),
-              );
-              updateMenu();
-              input.focus();
-              return match === nextMatch && match.status === 'running';
+              return activateAcceptedMatch({
+                owner: nextMatch,
+                ownerGeneration: raceId,
+                cue: 'mission',
+                owns: () => accepted() && !$('journey-chooser')?.open,
+              });
             },
           };
         },
