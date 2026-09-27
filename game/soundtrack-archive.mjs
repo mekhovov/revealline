@@ -34,11 +34,11 @@ export function resolveSoundtrackArchives(value) {
     ids.add(archive.id);
     required(
       typeof archive.baseURL === 'string' &&
-        /^https:\/\/mekhovov\.github\.io\/revealline-soundtracks-[0-9]+\/(?:batches\/[a-z0-9][a-z0-9-]{0,63}\/)?$/.test(
+        /^https:\/\/mekhovov\.github\.io\/revealline-soundtracks(?:-[0-9]+)?\/(?:batches\/[a-z0-9][a-z0-9-]{0,63}\/)?$/.test(
           archive.baseURL,
         ) &&
         archive.baseURL === new URL(archive.baseURL).href,
-      'Soundtrack archive must use its admitted GitHub Pages owner and path.',
+      'Soundtrack archive must use its admitted canonical GitHub Pages owner and path.',
     );
   }
   return freezeSoundtrack(entries);

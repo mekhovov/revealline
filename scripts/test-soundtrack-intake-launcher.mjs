@@ -61,13 +61,37 @@ test('unknown licence routes the source folder to private UA-FPV pack creation',
   ]);
 });
 
-test('unknown licence cannot publish or omit its private destination', async () => {
-  await assert.rejects(
-    launchMusicIntake(['music', '--license', 'unknown'], {
-      currentDirectory: '/caller',
-    }),
-    /requires --private-output/,
+test('unknown licence publishes through canonical intake or stays private explicitly', async (t) => {
+  const archiveRoot = await fakeArchive(t);
+  let invocation;
+  assert.equal(
+    await launchMusicIntake(
+      [
+        'music',
+        '--license',
+        'unknown',
+        '--archive-root',
+        archiveRoot,
+        '--confirm-rights',
+        '--open-pr',
+      ],
+      {
+        currentDirectory: '/caller',
+        run: async (command, args, options) => {
+          invocation = { command, args, options };
+          return 0;
+        },
+      },
+    ),
+    0,
   );
+  assert.deepEqual(invocation.args.slice(1), [
+    '/caller/music',
+    '--license',
+    'unknown',
+    '--confirm-rights',
+    '--open-pr',
+  ]);
   await assert.rejects(
     launchMusicIntake(
       ['music', '--license', 'unknown', '--private-output', 'private-packs', '--open-pr'],
@@ -188,7 +212,7 @@ test('invalid explicit archive checkout cannot fall back to an automatic checkou
       homeDirectory: path.join(automaticRoot, 'unused-home'),
       repositoryRoot: path.join(automaticRoot, 'unused-game'),
     }),
-    /explicit --archive-root is not a RevealLine Soundtracks 02 checkout/,
+    /explicit --archive-root is not a canonical RevealLine Soundtracks checkout/,
   );
 });
 
