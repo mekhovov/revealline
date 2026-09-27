@@ -45,6 +45,7 @@ function resolvedRemoteTracks(specifications) {
           `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${sha256}.mp3`,
         bytes: specification.bytes ?? 1234,
         sha256,
+        ...(specification.delivery ? { delivery: specification.delivery } : {}),
       },
       aliases: [],
     };
@@ -90,6 +91,29 @@ const list = (ids, repeat = 'all') => ({
     { id: 'test.queue', title: 'Test playlist', trackIds: ids, order: 'ordered', repeat },
   ],
   selection: { playlistId: 'test.queue' },
+});
+test('verified external archive playback requests anonymous CORS and remains mixable', async (t) => {
+  const sha256 = 'b'.repeat(64),
+    [external] = resolvedRemoteTracks([
+      {
+        sha256,
+        title: 'Hosted song',
+        path: 'https://bucket.s3.eu-central-1.amazonaws.com/music/song.mp3',
+        delivery: {
+          type: 'external-url',
+          verifiedAt: '2026-09-27T00:00:00.000Z',
+          rangeRequests: true,
+          cors: true,
+        },
+      },
+    ]),
+    h = setup({ library: list([synthIds[0]], 'all') });
+  t.after(() => h.player.dispose());
+  assert.equal(await h.player.playRemotePlaylist([external], { mixWithLibrary: true }), true);
+  assert.equal(h.media.crossOrigin, 'anonymous');
+  h.media.emit('error');
+  await settleUntil(() => h.player.snapshot().track?.kind === 'synth');
+  assert.equal(h.player.snapshot().playing, true);
 });
 
 test('local gameplay skips uninstalled catalogue recordings without changing saved listening preferences', async (t) => {

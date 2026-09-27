@@ -2211,6 +2211,78 @@ test('public archive searches and plays any published recording through the shar
   assert.match(app.node('online-status').textContent, /Recording mode excludes 7/);
 });
 
+test('verified external recording installs exact bytes as a draft and saves beside local music', async (t) => {
+  const audio = new Uint8Array(silenceBytes),
+    sha256 = createHash('sha256').update(audio).digest('hex'),
+    catalogue = onlineCatalogueFixture(),
+    externalURL = 'https://audio.example.test/library/external-song.mp3',
+    external = {
+      ...catalogue.tracks[0],
+      id: 'external-song',
+      title: 'External Song',
+      fileName: 'external-song.mp3',
+      audio: {
+        path: externalURL,
+        bytes: audio.byteLength,
+        sha256,
+        delivery: {
+          type: 'external-url',
+          verifiedAt: '2026-09-27T00:00:00Z',
+          rangeRequests: true,
+          cors: true,
+        },
+      },
+    };
+  catalogue.tracks[0] = external;
+  catalogue.counts.audioBytes = catalogue.tracks.reduce(
+    (total, track) => total + track.audio.bytes,
+    0,
+  );
+  const requests = [];
+  const app = await setup(t, {
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async (url, options) => {
+          requests.push([url, options]);
+          if (url === ONLINE_SOUNDTRACK_CATALOGUE_URL) return onlineCatalogueResponse(catalogue);
+          assert.equal(url, externalURL);
+          return {
+            status: 206,
+            redirected: false,
+            url,
+            headers: {
+              get: (name) =>
+                name.toLowerCase() === 'content-length' ? String(audio.byteLength) : null,
+            },
+            body: new Response(audio).body,
+          };
+        },
+      },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => app.doc.nodes.has(`soundtrack-online-install-${sha256}`),
+    'the external recording install action',
+  );
+  await app.click(`online-install-${sha256}`);
+  assert.equal((await app.store.read()).assets.length, 0, 'verified download stays a draft');
+  assert.match(app.node('status').textContent, /saved for offline/i);
+  const download = requests.find(([url]) => url === externalURL);
+  assert.deepEqual(download[1].headers, { Range: `bytes=0-${audio.byteLength - 1}` });
+  assert.equal(download[1].credentials, 'omit');
+  assert.equal(download[1].mode, 'cors');
+
+  await app.click('save');
+  const saved = await app.store.read();
+  assert.equal(saved.assets.length, 1);
+  assert.equal(saved.assets[0].sha256, sha256);
+  assert.deepEqual(new Uint8Array(await saved.assets[0].blob.arrayBuffer()), audio);
+  assert.equal(saved.library.tracks.length, 1);
+  assert.equal(saved.library.tracks[0].title, 'External Song');
+  assert.equal(saved.library.tracks[0].artist, 'Signal Artist');
+});
+
 test('public archive refresh discovers newly published recordings without game changes', async (t) => {
   let catalogue = onlineCatalogueFixture(),
     attempts = 0;
