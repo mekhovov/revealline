@@ -352,7 +352,7 @@ export async function createSpatialNextEditionSources({
   let disposed = false;
   const sources = [];
   for (const [historyIndex, edition] of history.entries()) {
-    const route = await loadAuthoredJourneyRoute(edition.routeId);
+    const route = await loadAuthoredJourneyRoute(edition.routeId, { fullSource: true });
     const themes = journeyActorThemeCandidates(originals, {
       includeOriginals: route.preserveOriginalThemes === true,
     });
@@ -411,6 +411,7 @@ export async function createSpatialNextEditionSources({
           );
         }
       const source = journeyLibrarySource({
+        lifecycle: 'archive',
         editionId: route.id,
         edition: `Previous Journey · v${route.id.split('v').at(-1)}`,
         editionLabel: () =>

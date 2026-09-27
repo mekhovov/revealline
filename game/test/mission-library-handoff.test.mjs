@@ -190,6 +190,23 @@ test('failed storage retains an in-memory copy and malformed data never deletes 
   assert.throws(() => createMissionLibrarySessionState({ mode: 'online' }), /mode/);
 });
 
+test('Archive browsing survives a page return without rewriting legacy session records or progress', () => {
+  const storage = memoryStorage();
+  storage.values.set('revealline.profile', 'saved historical flight');
+  const session = createMissionLibrarySessionState({ mode: 'solo', storage });
+  for (const lifecycle of ['current', 'archive', '']) {
+    assert.equal(session.write(state({ lifecycle })), true);
+    assert.deepEqual(
+      createMissionLibrarySessionState({ mode: 'solo', storage }).read(),
+      state({ lifecycle }),
+    );
+  }
+  assert.throws(() => session.write(state({ lifecycle: 'removed' })), /state/);
+  storage.values.set(session.key, JSON.stringify(state()));
+  assert.deepEqual(createMissionLibrarySessionState({ mode: 'solo', storage }).read(), state());
+  assert.equal(storage.values.get('revealline.profile'), 'saved historical flight');
+});
+
 test('a failed newer write cannot be replaced by older readable storage', () => {
   const storage = memoryStorage();
   const session = createMissionLibrarySessionState({ mode: 'solo', storage });

@@ -126,6 +126,7 @@ export function combineJourneyLibrarySources(qualifiedSources) {
       editionId: source.editionId,
       edition: source.edition,
       collection: 'Journey',
+      lifecycle: source.lifecycle ?? 'current',
     };
     if (identity)
       required(

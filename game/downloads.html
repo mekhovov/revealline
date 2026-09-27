@@ -9,58 +9,82 @@
   </head>
   <body>
     <main>
-      <a href="./">← Back to game</a>
-      <h1>Take the game with you</h1>
+      <a id="back-to-game" href="./">← Back to game</a>
+      <h1>Install &amp; offline play</h1>
       <p>
         Download once, then play without an internet connection. Recorded music is optional; game
         sounds and the procedural score are included.
       </p>
+      <section id="destination-recovery" aria-labelledby="destination-title" hidden>
+        <h2 id="destination-title">Prepare the requested mode</h2>
+        <p>
+          This bookmark needs game files that are not saved on this device yet. Review the size
+          below, then choose Download and open. Connect to the internet if files are missing.
+          Soundtracks are not required. Back to game returns to the downloaded Solo menu.
+        </p>
+      </section>
       <section aria-labelledby="installation-title">
         <h2 id="installation-title">Install Reveal Line</h2>
-        <a id="install-app" href="../app/">Open the app launcher</a>
-        <p id="install-help">
-          Install from the launcher for one icon that keeps opening your selected edition.
-          Installing the icon does not download the game.
-        </p>
+        <p id="installation-status" role="status">Checking app installation…</p>
+        <button id="install-native" hidden>Install app</button>
+        <details id="install-guide" open>
+          <summary>How to install</summary>
+          <ol id="install-steps"></ol>
+          <p id="install-help"></p>
+          <a id="install-app" href="../app/" target="_top">Open the app launcher</a>
+        </details>
         <p>
-          On iPhone or iPad, use Safari’s Share → Add to Home Screen, then prepare downloads inside
-          the installed app. To move browser progress, export a complete backup in Game data and
-          import it inside the app.
+          Installing the icon does not download the game. You can also download and keep playing in
+          this browser.
         </p>
       </section>
       <section aria-labelledby="game-title">
         <h2 id="game-title">Game for offline play</h2>
         <p id="game-status" role="status">Checking this edition…</p>
-        <label
-          ><input id="all-game" type="checkbox" checked /> All shipped gameplay (recommended)</label
+        <label id="starter-choice"
+          ><input type="checkbox" checked disabled /> Solo Starter · opening chapter and essential
+          game sounds</label
         >
-        <details id="chapter-choices">
-          <summary>Choose a smaller set of chapters</summary>
-          <div id="chapters"></div>
-        </details>
+        <label><input id="all-game" type="checkbox" /> All current levels and modes</label>
         <p id="game-size"></p>
+        <p>
+          Choose the size that suits your connection; mobile data charges may apply. Keep this app
+          open while downloading. Verification and app setup happen automatically.
+        </p>
         <div class="actions">
-          <button id="download-game" disabled>Download game for offline play</button>
-          <button id="verify-game" disabled>Verify game files</button>
-          <button id="remove-chapters" disabled>Remove chosen chapter downloads</button>
+          <button id="download-game" disabled>Checking download size…</button>
           <button id="pause" disabled>Pause download</button>
           <button id="cancel" disabled>Cancel remaining download</button>
         </div>
         <progress id="progress" hidden></progress>
         <p id="operation-status" role="status" aria-live="polite"></p>
-        <button id="retain">Keep downloads on this device</button>
-        <p id="retention-status">
-          Device storage can be cleared by the browser or the operating system. Keep a portable
-          backup of your progress.
-        </p>
-        <p>
-          Removing chapters keeps the shared game, original reward artwork, imported files and
-          saves. Restore a backup containing official chapter references after preparing the
-          matching game downloads.
-        </p>
-        <button id="activate" hidden>Use this edition in the installed app</button>
+        <details id="chapter-choices">
+          <summary>Choose chapters, modes and optional extras</summary>
+          <div id="chapters"></div>
+        </details>
+        <details>
+          <summary>Storage and repair</summary>
+          <div class="actions">
+            <button id="verify-game" disabled>Verify game files</button>
+            <button id="remove-chapters" disabled>Remove chosen chapter downloads</button>
+            <button id="retain">Keep downloads on this device</button>
+          </div>
+          <p id="retention-status">
+            Device storage can be cleared by the browser or the operating system. Keep a portable
+            backup of your progress.
+          </p>
+          <p>
+            Removing unplayed chapters can free download space. Chapters you have played retain
+            their complete verified game files and artwork to protect saves, replays and earned
+            pictures; removing them from your selection does not reclaim those files yet. Shared
+            files, imported files and saves are kept. Modes prepared from bookmarks also stay
+            downloaded when you remove your main chapter selection. Restore a backup containing
+            official chapter references after preparing the matching game downloads.
+          </p>
+        </details>
+        <button id="activate" hidden>Finish app selection safely</button>
         <p id="activation-status" role="status"></p>
-        <a id="transfer-progress" href="./?journey=legacy" hidden
+        <a id="transfer-progress" href="./?journey=legacy" hidden target="_top"
           >Open progress transfer in Classic</a
         >
       </section>

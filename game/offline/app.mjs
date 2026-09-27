@@ -1,4 +1,8 @@
-import { readInstalledState, validateInstalledEdition } from './installed-app.mjs';
+import {
+  readInstalledState,
+  validateInstalledEdition,
+  installedPresentation,
+} from './installed-app.mjs';
 const $ = (id) => document.getElementById(id);
 let installPrompt;
 window.addEventListener('beforeinstallprompt', (event) => {
@@ -31,6 +35,7 @@ async function check() {
         : `Edition ${candidate.version} is available. Downloads and progress transfer are optional.`;
     $('prepare').href = game(candidate, 'downloads.html');
     $('prepare').hidden = false;
+    if (!active && installedPresentation()) location.replace(game(candidate, 'downloads.html'));
   } catch (error) {
     $('edition').textContent =
       `${error.message} Open your installed game without checking for updates.`;
