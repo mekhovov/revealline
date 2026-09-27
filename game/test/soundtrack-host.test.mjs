@@ -41,7 +41,29 @@ const ticks = (page, count) => {
 };
 async function startFlight(page) {
   page.$('start-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  try {
+    await settle(() => page.doc.body.dataset.flightState === 'running');
+  } catch (error) {
+    const preparation = page.$('flight-preparation-status');
+    error.message +=
+      '\n' +
+      JSON.stringify({
+        flightState: page.doc.body.dataset.flightState ?? null,
+        pictureState: page.doc.body.dataset.pictureState ?? null,
+        start: page.$('start-button').textContent,
+        preparation: {
+          hidden: preparation.hidden,
+          state: preparation.dataset.state ?? null,
+          stage: preparation.dataset.stage ?? null,
+          text: preparation.textContent,
+        },
+        runMessage: page.$('run-message').textContent,
+        saveWarning: page.$('save-warning').textContent,
+        openDialogs: page.doc.querySelectorAll('dialog[open]').map((dialog) => dialog.id),
+        errors: page.errors.map((value) => String(value?.stack ?? value)),
+      });
+    throw error;
+  }
 }
 async function waitFor(predicate, label) {
   for (let i = 0; i < 100; i++) {
