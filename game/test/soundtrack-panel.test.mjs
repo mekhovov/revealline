@@ -385,8 +385,8 @@ function onlineCatalogueFixture() {
       durationSeconds: 180 + index,
       tags,
       source: `https://artists.example/${index + 1}`,
-      license: 'CC BY 4.0 International',
-      licenseURL: 'https://creativecommons.org/licenses/by/4.0/',
+      license: index === 6 ? 'Unknown — uploader-confirmed rights' : 'CC BY 4.0 International',
+      licenseURL: index === 6 ? null : 'https://creativecommons.org/licenses/by/4.0/',
       credit: `${title} by ${artist}`,
       fileName: `${title}.mp3`,
       archiveId: `fixture-${index + 1}`,
@@ -403,6 +403,25 @@ function onlineCatalogueFixture() {
         sha256,
       },
       aliases: [],
+      ...(index === 6
+        ? {
+            rights: {
+              licenseId: 'UNKNOWN',
+              licenseVersion: null,
+              licenseURL: null,
+              rightsEvidenceURL: `https://artists.example/${index + 1}`,
+              attribution: `${title} by ${artist}`,
+              derivativeChangeNotice: 'Exact submitted MP3 bytes retained.',
+              permissionBasis: 'uploader-confirmed-public-redistribution-and-web-playback',
+              shareAlike: {
+                required: null,
+                deliveryLicenseId: null,
+                deliveryLicenseVersion: null,
+                deliveryLicenseURL: null,
+              },
+            },
+          }
+        : {}),
     }),
   );
   return {
@@ -2106,6 +2125,11 @@ test('public archive searches and plays any published recording through the shar
   assert.equal(requests[0][1].credentials, 'omit');
   assert.equal(app.node('online-results').children.length, 7);
   assert.match(app.node('online-status').textContent, /7 of 7 published recordings/);
+  const fpvItem = app.node(`online-play-${'7'.repeat(64)}`).parentNode;
+  assert.match(fpvItem.textContent, /FPV Run/);
+  assert.match(fpvItem.textContent, /TRENCH ORDERLY/);
+  assert.doesNotMatch(fpvItem.textContent, /Unknown|licen[cs]e/i);
+  assert.equal(fpvItem.lastElementChild.getAttribute('href'), 'https://artists.example/7');
 
   app.node('online-search').value = 'dnipro';
   app.node('online-search').oninput();
@@ -2185,6 +2209,65 @@ test('public archive searches and plays any published recording through the shar
   assert.equal(app.node('online-results').children.length, 0);
   assert.equal(app.node('online-play-all').disabled, true);
   assert.match(app.node('online-status').textContent, /Recording mode excludes 7/);
+});
+
+test('public archive refresh discovers newly published recordings without game changes', async (t) => {
+  let catalogue = onlineCatalogueFixture(),
+    attempts = 0;
+  const app = await setup(t, {
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async () => {
+          attempts++;
+          return onlineCatalogueResponse(catalogue);
+        },
+      },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => attempts === 1 && app.node('online-results').children.length === 7,
+    'the initial public catalogue',
+  );
+  const sha256 = '8'.repeat(64),
+    published = {
+      ...catalogue.tracks[0],
+      id: 'newly-published-song',
+      title: 'Newly Published Song',
+      artist: 'New Artist',
+      source: 'https://artists.example/new',
+      credit: 'Newly Published Song by New Artist',
+      collection: 'New collection',
+      collections: ['New collection'],
+      fileName: 'newly-published-song.mp3',
+      audio: {
+        path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${sha256}.mp3`,
+        bytes: 2048,
+        sha256,
+      },
+    };
+  catalogue = {
+    ...catalogue,
+    counts: {
+      declaredTracks: 8,
+      uniqueRecordings: 8,
+      duplicateAliases: 0,
+      audioBytes: catalogue.counts.audioBytes + published.audio.bytes,
+    },
+    tracks: [...catalogue.tracks, published],
+  };
+  await app.click('online-reload');
+  await settleOnlineCatalogue(
+    () => attempts === 2 && app.node('online-results').children.length === 8,
+    'the newly published recording',
+  );
+  app.node('online-search').value = 'newly published';
+  app.node('online-search').oninput();
+  assert.equal(app.node('online-results').children.length, 1);
+  assert.match(app.node('online-results').textContent, /Newly Published Song/);
+  assert.match(app.node('online-results').textContent, /New Artist/);
+  await app.click(`online-play-${sha256}`);
+  assert.equal(app.calls.findLast(([name]) => name === 'remote')[1][0].title, published.title);
 });
 
 test('public archive catalogue outage can refresh without disabling built-in controls', async (t) => {
