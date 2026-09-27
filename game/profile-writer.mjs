@@ -1,3 +1,9 @@
+const ownedWriters = new WeakMap();
+
+/** Only an actual, still-held lease from this module can authorize its owner. */
+export const ownsProfileWriter = (lease, key) =>
+  ownedWriters.get(lease) === key && lease.writable === true;
+
 /** A conservative single writing tab. Reading, practice and exporting do not need
  * this lease. Hold the Web Lock for the page lifetime and release on pagehide.
  * Every release writer must participate; legacy clients are outside this guard.
@@ -61,6 +67,7 @@ export async function claimProfileWriter(lockManager, key) {
           return;
         }
         writable = true;
+        ownedWriters.set(lease, key);
         settle(lease);
         await holding;
       },

@@ -106,6 +106,47 @@ function setup(sources, options = {}) {
   return { doc, library, chooser, opener, $: (id) => doc.getElementById(id) };
 }
 
+test('Archive is explicit, retains exact launch ownership and reveals a saved historical mission', async () => {
+  let launched;
+  const archivedOwner = owner({
+    id: 'historical',
+    lifecycle: 'archive',
+    launch: (value) => {
+      launched = value;
+      return true;
+    },
+  });
+  const h = setup([owner(), archivedOwner]);
+  const archived = h.library.missions.find((entry) => entry.lifecycle === 'archive');
+  assert.equal(h.$('journey-lifecycle').value, 'current');
+  assert.equal(h.$('journey-cards').children.length, 1);
+  assert.notEqual(h.$('journey-cards').children[0].dataset.missionId, archived.id);
+  h.$('journey-lifecycle').value = 'archive';
+  h.$('journey-lifecycle').emit('change');
+  assert.equal(h.$('journey-cards').children.length, 1);
+  assert.equal(h.$('journey-cards').children[0].dataset.missionId, archived.id);
+  h.chooser.close();
+  h.chooser.open(h.opener);
+  assert.equal(h.$('journey-lifecycle').value, 'archive');
+  h.$('journey-lifecycle').value = 'current';
+  h.$('journey-lifecycle').emit('change');
+  assert.equal(h.chooser.reveal(archived.id), true);
+  assert.equal(h.$('journey-lifecycle').value, 'archive');
+  h.doc.activeElement.click();
+  await tick();
+  assert.equal(launched, archivedOwner.entries[0]);
+  h.chooser.destroy();
+});
+
+test('opening an explicit historical edition starts on its Archive mission', () => {
+  const historical = owner({ id: 'historical', lifecycle: 'archive' });
+  const exact = createMissionLibrary([historical]).missions[0];
+  const h = setup([owner(), historical], { getCurrentId: () => exact.id });
+  assert.equal(h.$('journey-lifecycle').value, 'archive');
+  assert.equal(h.doc.activeElement.dataset.missionId, exact.id);
+  h.chooser.destroy();
+});
+
 test('opening and controller fallback focus the first enabled mission without a search step', () => {
   const { doc, $, chooser } = setup([
     owner({

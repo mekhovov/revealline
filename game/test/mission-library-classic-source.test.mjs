@@ -19,6 +19,31 @@ const adapters = {
   launch: () => true,
 };
 
+test('Archive retains superseded First Light and pilot owners while named chapters stay current', () => {
+  const identity = dataIdentity(index);
+  const sources = classicLibrarySources(index, adapters);
+  const archivedPacks = new Set([
+    'fpv-arcade',
+    'fpv-arcade-r2',
+    'fpv-arcade-r3',
+    'fpv-arcade-r4',
+    'original-fpv-pressure-external',
+  ]);
+  for (const source of sources) {
+    const original = source.entries[0];
+    assert.equal(
+      source.lifecycle,
+      original.source === 'archived' || archivedPacks.has(original.packId) ? 'archive' : 'current',
+      original.packId,
+    );
+  }
+  const library = createMissionLibrary(sources);
+  assert.equal(library.search('', { lifecycle: 'current' }).length, 161);
+  assert.equal(library.search('', { lifecycle: 'archive' }).length, 27);
+  assert.equal(library.search('', { lifecycle: '' }).length, 188);
+  assert.equal(dataIdentity(index), identity);
+});
+
 test('Classic editions translate exact source metadata while retaining launch ownership and authored imports', (context) => {
   const locale = getLocale();
   context.after(() => setLocale(locale, { persist: false }));
