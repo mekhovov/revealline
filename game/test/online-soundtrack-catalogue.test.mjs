@@ -3,6 +3,7 @@ import test from 'node:test';
 import {
   ONLINE_SOUNDTRACK_CATALOGUE_URL,
   fetchOnlineSoundtrackCatalogue,
+  fetchVerifiedOnlineSoundtrack,
   resolveOnlineSoundtrackCatalogue,
 } from '../online-soundtrack-catalogue.mjs';
 import { setLocale } from '../i18n/index.mjs';
@@ -60,6 +61,61 @@ test('online catalogue creates a bounded immutable remote playback entry', () =>
   assert(Object.isFrozen(resolved.tracks));
   assert.equal(resolved.tracks[0].contentId, true);
   assert.equal(resolved.tracks[0].recordingModeEligible, false);
+});
+
+test('online catalogue accepts hash-bound external delivery without a domain allowlist', async () => {
+  const bytes = new Uint8Array([0xff, 0xfb, 0x90, 0x64]);
+  const digest = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+  const url = 'https://example-bucket.s3.eu-central-1.amazonaws.com/music/song.mp3';
+  const externalTrack = {
+    ...track,
+    audio: {
+      path: url,
+      bytes: bytes.length,
+      sha256: digest,
+      delivery: {
+        type: 'external-url',
+        verifiedAt: '2026-09-27T00:00:00.000Z',
+        rangeRequests: true,
+        cors: true,
+      },
+    },
+  };
+  const resolved = resolveOnlineSoundtrackCatalogue({
+    ...catalogue,
+    counts: { ...catalogue.counts, audioBytes: bytes.length },
+    tracks: [externalTrack],
+  }).tracks[0];
+  assert.equal(resolved.url, url);
+  assert.equal(resolved.delivery.type, 'external-url');
+  const blob = await fetchVerifiedOnlineSoundtrack(resolved, {
+    fetch: async (_url, options) => {
+      assert.equal(options.credentials, 'omit');
+      assert.equal(options.headers.Range, `bytes=0-${bytes.length - 1}`);
+      return {
+        status: 206,
+        redirected: false,
+        url,
+        headers: new Headers({ 'content-length': String(bytes.length) }),
+        body: new Response(bytes).body,
+      };
+    },
+  });
+  assert.equal(blob.size, bytes.length);
+  for (const path of [
+    'http://cdn.example/song.mp3',
+    'https://127.0.0.1/song.mp3',
+    `${url}?X-Amz-Signature=temporary`,
+  ])
+    assert.throws(() =>
+      resolveOnlineSoundtrackCatalogue({
+        ...catalogue,
+        counts: { ...catalogue.counts, audioBytes: bytes.length },
+        tracks: [{ ...externalTrack, audio: { ...externalTrack.audio, path } }],
+      }),
+    );
 });
 
 test('online catalogue accepts legacy entries and validates mirrored structured rights', () => {

@@ -108,6 +108,61 @@ export function onlineSoundtrackRecordingURL(value, sha256) {
   }
 }
 
+const EXPIRING_AUDIO_PARAMETERS = new Set([
+  'x-amz-signature',
+  'x-amz-expires',
+  'x-amz-credential',
+  'x-amz-security-token',
+  'signature',
+  'expires',
+  'access_token',
+  'download_token',
+  'token',
+]);
+
+function externalRecordingURL(value) {
+  try {
+    const url = new URL(value),
+      host = url.hostname.toLowerCase().replace(/^\[|\]$/g, '');
+    if (
+      url.protocol !== 'https:' ||
+      url.username ||
+      url.password ||
+      url.hash ||
+      host === 'localhost' ||
+      host.endsWith('.localhost') ||
+      host.endsWith('.local') ||
+      /^(?:0|10|127|169\.254|192\.168)\./.test(host) ||
+      /^172\.(?:1[6-9]|2\d|3[01])\./.test(host) ||
+      host === '::1'
+    )
+      return false;
+    return [...url.searchParams.keys()].every(
+      (key) => !EXPIRING_AUDIO_PARAMETERS.has(key.toLowerCase()),
+    );
+  } catch {
+    return false;
+  }
+}
+
+function externalDelivery(value, url) {
+  catalogueExactKeys(
+    value,
+    ['type', 'verifiedAt', 'rangeRequests', 'cors'],
+    'online soundtrack external delivery',
+  );
+  catalogueRequired(
+    value?.type === 'external-url' &&
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/.test(value.verifiedAt) &&
+      value.rangeRequests === true &&
+      value.cors === true &&
+      externalRecordingURL(url),
+    'audioDeliveryInvalid',
+    'Online soundtrack external delivery evidence is invalid.',
+  );
+  return Object.freeze({ ...value });
+}
+
 function secureURL(value) {
   try {
     const url = new URL(value);
@@ -348,10 +403,22 @@ function track(value, ids, hashes) {
     `Online soundtrack default policy is invalid: ${id}.`,
     { id },
   );
-  catalogueExactKeys(value.audio, ['path', 'bytes', 'sha256'], 'online soundtrack audio');
+  catalogueExactKeys(
+    value.audio,
+    ['path', 'bytes', 'sha256', ...(Object.hasOwn(value.audio, 'delivery') ? ['delivery'] : [])],
+    'online soundtrack audio',
+  );
+  const delivery = value.audio.delivery
+    ? externalDelivery(value.audio.delivery, value.audio.path)
+    : null;
   catalogueRequired(
     HASH.test(value.audio.sha256) &&
-      onlineSoundtrackRecordingURL(new URL(value.audio.path, BASE_URL).href, value.audio.sha256) &&
+      (delivery
+        ? externalRecordingURL(value.audio.path)
+        : onlineSoundtrackRecordingURL(
+            new URL(value.audio.path, BASE_URL).href,
+            value.audio.sha256,
+          )) &&
       Number.isSafeInteger(value.audio.bytes) &&
       value.audio.bytes > 0 &&
       value.audio.bytes <= 100_000_000 &&
@@ -406,6 +473,7 @@ function track(value, ids, hashes) {
     url: new URL(value.audio.path, BASE_URL).href,
     bytes: value.audio.bytes,
     sha256: value.audio.sha256,
+    delivery,
     contentId: value.contentId,
     recordingModeEligible: value.recordingModeEligible,
     websites: Object.freeze([
@@ -557,4 +625,97 @@ export async function fetchOnlineSoundtrackCatalogue({
     );
   }
   return resolveOnlineSoundtrackCatalogue(source);
+}
+
+export async function fetchVerifiedOnlineSoundtrack(
+  track,
+  { fetch: request = globalThis.fetch, signal } = {},
+) {
+  catalogueRequired(
+    isResolvedOnlineSoundtrackTrack(track) && track.delivery?.type === 'external-url',
+    'audioDeliveryInvalid',
+    'Only a verified external soundtrack recording can be installed directly.',
+  );
+  throwIfSoundtrackAborted(signal);
+  let response;
+  try {
+    response = await request(track.url, {
+      signal,
+      redirect: 'error',
+      credentials: 'omit',
+      mode: 'cors',
+      cache: 'no-store',
+      headers: { Range: `bytes=0-${track.bytes - 1}` },
+    });
+  } catch (error) {
+    throw catalogueFailure(
+      'responseUnreadable',
+      'This recording is stream-only because its host no longer permits verified browser fetching.',
+      undefined,
+      error,
+    );
+  }
+  catalogueRequired(
+    [200, 206].includes(response?.status) && !response.redirected && response.url === track.url,
+    'directResponseRequired',
+    'External soundtrack installation needs a direct stable response.',
+  );
+  const declared = response.headers.get('content-length');
+  catalogueRequired(
+    declared === null || (/^[0-9]+$/.test(declared) && Number(declared) === track.bytes),
+    'countsMismatch',
+    'External soundtrack byte count changed.',
+  );
+  const reader = response.body?.getReader?.();
+  catalogueRequired(
+    reader,
+    'responseUnreadable',
+    'External soundtrack response cannot be read safely.',
+  );
+  const chunks = [];
+  let size = 0;
+  try {
+    while (true) {
+      throwIfSoundtrackAborted(signal);
+      const { done, value } = await reader.read();
+      if (done) break;
+      catalogueRequired(
+        value instanceof Uint8Array,
+        'responseInvalid',
+        'External soundtrack response is invalid.',
+      );
+      size += value.byteLength;
+      if (size > track.bytes) {
+        try {
+          await reader.cancel('External soundtrack exceeds its verified byte count.');
+        } catch {}
+        throw catalogueFailure('countsMismatch', 'External soundtrack byte count changed.');
+      }
+      chunks.push(value);
+    }
+  } finally {
+    reader.releaseLock?.();
+  }
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  throwIfSoundtrackAborted(signal);
+  catalogueRequired(
+    bytes.byteLength === track.bytes,
+    'countsMismatch',
+    'External soundtrack download was truncated.',
+  );
+  const actual = [...new Uint8Array(await globalThis.crypto.subtle.digest('SHA-256', bytes))]
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+  throwIfSoundtrackAborted(signal);
+  catalogueRequired(
+    actual === track.sha256,
+    'audioIdentityInvalid',
+    'External soundtrack SHA-256 changed.',
+  );
+  return new Blob([bytes], { type: 'audio/mpeg' });
 }
