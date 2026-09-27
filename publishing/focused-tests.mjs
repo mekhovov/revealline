@@ -126,6 +126,180 @@ export function focusedTestPlan(paths, manifest, { fallbackHandled = false } = {
   };
 }
 
+function packageScriptName(command) {
+  if (
+    command?.command !== 'npm' ||
+    command.args?.length !== 2 ||
+    command.args[0] !== 'run' ||
+    !/^[a-z0-9:_-]+$/iu.test(command.args[1])
+  )
+    return null;
+  return command.args[1];
+}
+
+function singleNodeTestPath(command) {
+  if (
+    command?.command !== 'node' ||
+    command.args?.length !== 2 ||
+    command.args[0] !== '--test' ||
+    !safeChangedPath(command.args[1]) ||
+    !command.args[1].endsWith('.mjs') ||
+    command.args[1].includes('*')
+  )
+    return null;
+  return command.args[1];
+}
+
+function packageNodeTestPatterns(script) {
+  if (typeof script !== 'string') return null;
+  const tokens = script.trim().split(/\s+/u);
+  if (tokens.length < 3 || tokens[0] !== 'node' || tokens[1] !== '--test') return null;
+  const patterns = tokens.slice(2);
+  if (
+    patterns.some(
+      (pattern) =>
+        !safeChangedPath(pattern) ||
+        !pattern.endsWith('.mjs') ||
+        pattern.includes('**') ||
+        /[?[\]{}]/u.test(pattern) ||
+        path.dirname(pattern).includes('*'),
+    )
+  )
+    return null;
+  return patterns;
+}
+
+function escapeRegularExpression(value) {
+  let escaped = '';
+  for (const character of value) {
+    if ('.*+?^$()|[]\\{}'.includes(character)) escaped += '\\';
+    escaped += character;
+  }
+  return escaped;
+}
+
+function expandPackageNodeTests(patterns, repositoryFiles) {
+  const files = new Set(repositoryFiles.filter(safeChangedPath));
+  const expanded = [];
+  for (const pattern of patterns) {
+    if (!pattern.includes('*')) {
+      if (!files.has(pattern)) return null;
+      expanded.push(pattern);
+      continue;
+    }
+    const escaped = path.basename(pattern).split('*').map(escapeRegularExpression).join('.*');
+    const matcher = new RegExp('^' + escaped + '$', 'u');
+    const directory = path.dirname(pattern);
+    const matches = [...files]
+      .filter(
+        (candidate) =>
+          path.dirname(candidate) === directory && matcher.test(path.basename(candidate)),
+      )
+      .sort();
+    if (!matches.length) return null;
+    expanded.push(...matches);
+  }
+  return [...new Set(expanded)];
+}
+
+export function focusedCommandExecutionPlan(
+  commands,
+  { packageScripts = {}, repositoryFiles = [] } = {},
+) {
+  const packageCoverage = [];
+  const diagnostics = [];
+  const coveredTests = new Set();
+  for (const command of commands) {
+    const scriptName = packageScriptName(command);
+    if (!scriptName) continue;
+    if (!Object.hasOwn(packageScripts, scriptName)) {
+      diagnostics.push({ id: command.id, script: scriptName, reason: 'missing-package-script' });
+      continue;
+    }
+    const script = packageScripts[scriptName];
+    const patterns = packageNodeTestPatterns(script);
+    if (!patterns) {
+      if (/^node\s+--test(?:\s|$)/u.test(script.trim()))
+        diagnostics.push({
+          id: command.id,
+          script: scriptName,
+          reason: 'unsupported-package-script',
+        });
+      continue;
+    }
+    const tests = expandPackageNodeTests(patterns, repositoryFiles);
+    if (!tests) {
+      diagnostics.push({
+        id: command.id,
+        script: scriptName,
+        reason: 'unresolved-package-tests',
+      });
+      continue;
+    }
+    packageCoverage.push({ id: command.id, script: scriptName, tests });
+    for (const testFile of tests) coveredTests.add(testFile);
+  }
+
+  const deduplicated = [];
+  const executionCommands = commands.filter((command) => {
+    const testFile = singleNodeTestPath(command);
+    if (!testFile || !coveredTests.has(testFile)) return true;
+    const coveredBy = packageCoverage
+      .filter(({ tests }) => tests.includes(testFile))
+      .map(({ id }) => id);
+    deduplicated.push({ id: command.id, testFile, coveredBy });
+    return false;
+  });
+  return {
+    commands: executionCommands,
+    packageCoverage,
+    deduplicated,
+    diagnostics,
+  };
+}
+
+async function loadFocusedExecutionInputs(commands, root) {
+  let packageScripts = {};
+  try {
+    const packageJson = JSON.parse(await fs.readFile(path.join(root, 'package.json'), 'utf8'));
+    if (
+      packageJson?.scripts &&
+      typeof packageJson.scripts === 'object' &&
+      !Array.isArray(packageJson.scripts)
+    )
+      packageScripts = packageJson.scripts;
+  } catch {
+    return { packageScripts, repositoryFiles: [] };
+  }
+
+  const repositoryFiles = new Set();
+  const patterns = commands.flatMap((command) => {
+    const scriptName = packageScriptName(command);
+    return scriptName ? packageNodeTestPatterns(packageScripts[scriptName]) || [] : [];
+  });
+  for (const pattern of patterns) {
+    if (!pattern.includes('*')) {
+      try {
+        if ((await fs.stat(path.join(root, pattern))).isFile()) repositoryFiles.add(pattern);
+      } catch {
+        // An incomplete script cannot authorize deduplication.
+      }
+      continue;
+    }
+    const directory = path.dirname(pattern);
+    try {
+      const entries = await fs.readdir(path.join(root, directory), { withFileTypes: true });
+      for (const entry of entries) {
+        if (entry.isFile() || entry.isSymbolicLink())
+          repositoryFiles.add(path.posix.join(directory, entry.name));
+      }
+    } catch {
+      // An incomplete glob cannot authorize deduplication.
+    }
+  }
+  return { packageScripts, repositoryFiles: [...repositoryFiles] };
+}
+
 export function runFocusedCommands(
   commands,
   { root = '.', spawn = spawnSync, stdout = process.stdout, stderr = process.stderr } = {},
@@ -222,7 +396,17 @@ async function main() {
     }
     return;
   }
-  const result = runFocusedCommands(plan.commands, { root });
+  const execution = focusedCommandExecutionPlan(
+    plan.commands,
+    await loadFocusedExecutionInputs(plan.commands, root),
+  );
+  for (const diagnostic of execution.diagnostics)
+    process.stderr.write(`[focused:coverage] ${JSON.stringify(diagnostic)}\n`);
+  if (execution.deduplicated.length)
+    process.stdout.write(
+      `Focused executions: ${execution.commands.length} (${execution.deduplicated.length} exact duplicate tests covered by selected package scripts)\n`,
+    );
+  const result = runFocusedCommands(execution.commands, { root });
   if (result.exitCode !== 0) process.exitCode = result.exitCode;
 }
 
