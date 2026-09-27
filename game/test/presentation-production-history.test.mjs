@@ -530,16 +530,22 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
   const currentReviewPath =
-    'docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json';
-  const currentReviewSHA256 = '067305195ea075c35f14402d970fb5d2819044720875374b157c9431d9c5d820';
+    'docs/verification/canonical-soundtrack-rebase-audio-continuation-2026-09-27/review.json';
+  const currentReviewSHA256 = '697c094ae2c1cc0a83b77ad0e647c0967a9c3219b3ed10ba4d42f8691b9d54e7';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'audio',
   ]);
-  assert.equal(current.review.priorReview.path, continuationPath);
-  assert.equal(current.review.priorReview.sha256, continuationHash);
   assert.equal(
-    current.review.priorReview.fingerprintSHA256,
-    '77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79',
+    current.review.priorReviews.acceptedMain.path,
+    'docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json',
+  );
+  assert.equal(
+    current.review.priorReviews.acceptedMain.sha256,
+    '067305195ea075c35f14402d970fb5d2819044720875374b157c9431d9c5d820',
+  );
+  assert.equal(
+    current.review.priorReviews.canonicalExternalDelivery.sha256,
+    '2b36f81f1afd641bac82334e051f6dc3bac0887329327eb47a10944a8a6d39c6',
   );
   const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
   assert.equal(reviewed.length, 32);

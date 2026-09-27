@@ -3866,7 +3866,7 @@ export const SOUNDTRACK_CATALOGUE = {
 export const SOUNDTRACK_ARCHIVES = [
   {
     id: 'licensed-preview-01',
-    baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+    baseURL: 'https://mekhovov.github.io/revealline-soundtracks/',
     inventorySha256: '2706445dafe995f6c4dc044ad5e92031cae60627699f6a72985e67a972064ccd',
   },
 ];

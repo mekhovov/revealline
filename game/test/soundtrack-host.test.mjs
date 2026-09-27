@@ -9,10 +9,7 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { SOUNDTRACK_CATALOGUE } from '../content/soundtrack-catalogue.mjs';
-import {
-  ONLINE_SOUNDTRACK_CATALOGUE_URL,
-  ONLINE_SOUNDTRACK_DIRECTORY_URL,
-} from '../online-soundtrack-catalogue.mjs';
+import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
@@ -147,7 +144,7 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
   const { page } = await setup(t, {
     emptyMusic: true,
     fetchResponse: async (url) => {
-      if (String(url).includes('revealline-soundtracks-')) requests.push(String(url));
+      if (String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL) requests.push(String(url));
     },
   });
   await waitFor(
@@ -155,7 +152,7 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
     'Silent library preparation settles',
   );
   await openStudio(page);
-  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_DIRECTORY_URL, ONLINE_SOUNDTRACK_CATALOGUE_URL]);
+  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);
   assert.equal(
     requests.some((url) => /\.mp3(?:$|[?#])/.test(url)),
     false,
