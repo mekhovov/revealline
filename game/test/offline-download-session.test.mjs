@@ -65,6 +65,12 @@ test('semantic offline and installed results keep known states translatable and 
     offlineMessage({ offlineCode: 'new-code', message: 'Exact diagnostic' }, translate),
     'interface:downloads.unknownDetail:Exact diagnostic',
   );
+  for (const code of ['toString', 'constructor', '__proto__'])
+    assert.equal(
+      offlineMessage({ messageCode: code, message: 'Exact prototype diagnostic' }, translate),
+      'interface:downloads.unknownDetail:Exact prototype diagnostic',
+      code,
+    );
   const known = new Set([
     'interface:downloads.repairBeforeSelecting',
     'interface:downloads.unknownDetail',
