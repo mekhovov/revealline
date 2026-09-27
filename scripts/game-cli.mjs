@@ -596,7 +596,7 @@ export function offlineIcons(sizes = [180, 192, 512]) {
 }
 
 /** Adds a content-addressed offline app only when this source has its explicit UI helper. */
-async function addOfflineEntries(
+export async function addOfflineEntries(
   root,
   entries,
   info,
@@ -668,7 +668,13 @@ async function addOfflineEntries(
       if (mission.packId) excluded.add(mission.sourceFile.path);
   const { buildOfflineContent } = await import('./offline-content.mjs');
   const contentCatalogue = await buildOfflineContent(entries, excluded, info.version);
-  entries.push({ name: 'offline-content.json', bytes: Buffer.from(json(contentCatalogue)) });
+  const { finalizeOfflineContent } = await import('./offline-finalize.mjs');
+  const contentEntry = { name: 'offline-content.json', bytes: Buffer.from(json(contentCatalogue)) };
+  entries.push(contentEntry);
+  const refreshCatalogue = () => {
+    finalizeOfflineContent(entries, contentCatalogue);
+    contentEntry.bytes = Buffer.from(json(contentCatalogue));
+  };
   const placeholder = '0'.repeat(64),
     injected = [];
   for (const entry of entries.filter(
@@ -698,8 +704,10 @@ async function addOfflineEntries(
     );
     injected.push(entry);
   }
-  // Placeholder metadata prevents a circular hash; all other shipped bytes,
-  // generated icon/manifest bytes and the worker logic participate in identity.
+  // Hash a canonical placeholder form, including the optional HTML descriptors.
+  // Final build IDs and their derived catalogue hashes cannot hash themselves.
+  refreshCatalogue();
+  // All other shipped bytes, generated icons and worker logic participate in identity.
   const buildId = sha256(
     Buffer.from(
       json({
@@ -713,6 +721,9 @@ async function addOfflineEntries(
   );
   for (const entry of injected)
     entry.bytes = Buffer.from(entry.bytes.toString().replace(placeholder, buildId));
+  // Bind catalogue, worker and inventory to the final emitted optional bytes.
+  // The core digest list below must also see this final catalogue.
+  refreshCatalogue();
   const files = [...entries]
     // The complete generated catalog is cached. Canonical JSON sources are also
     // distributed for contributors, but duplicating them in the offline cache

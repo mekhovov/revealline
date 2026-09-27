@@ -215,6 +215,24 @@
           ]
         }
       ]
+    },
+    {
+      "id": "offline-final-bytes",
+      "pathPatterns": [
+        "^scripts/(game-cli|offline-finalize|test-offline-finalize)\\.mjs$",
+        "^publishing/(frozen-offline\\.test\\.mjs|utility/(verify_frozen_offline|test_verify_frozen_offline)\\.py)$"
+      ],
+      "commands": [
+        {
+          "id": "offline-final-bytes",
+          "command": "node",
+          "args": [
+            "--test",
+            "scripts/test-offline-finalize.mjs",
+            "publishing/frozen-offline.test.mjs"
+          ]
+        }
+      ]
     }
   ],
   "ignoredPathPatterns": ["^(docs/|.*\\.md$)", "^publishing/pages-controller/(evidence|metadata)/"],

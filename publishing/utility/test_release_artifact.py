@@ -281,7 +281,10 @@ class OriginalFixtureTests(unittest.TestCase):
             files = {'game/index.html': index, 'game/build-info.json': encoded({'formatVersion': 1,
                      'version': version, 'sourceRevision': commit, 'entry': 'game/index.html'})}
             def rows(contents): return [{'path': n, 'bytes': len(b), 'sha256': utility.sha(b)} for n, b in contents.items()]
-            offline = {**marker, 'files': rows(files)}
+            optional = {'game/optional.html': b'<html><body>Final optional HTML</body></html>'}
+            offline = {**marker, 'files': rows(files),
+                       'downloadFiles': [{**row, 'kind': 'gameplay'} for row in rows(optional)]}
+            files.update(optional)
             files['offline-cache.json'] = encoded(offline)
             files['service-worker.js'] = worker.read_bytes().replace(b'__XONIX_OFFLINE_CONFIG__', encoded(offline))
             manifest = encoded({'formatVersion': 1, 'version': version, 'sourceRevision': commit,
@@ -332,7 +335,10 @@ class OriginalFixtureTests(unittest.TestCase):
                     '--download-sha256', utility.pin(download)['sha256'], '--manifest-sha256', utility.sha(manifest)]
             result = subprocess.run(command, capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-            self.assertEqual(json.loads((base / 'frozen-offline-review/review.json').read_text())['offline']['files'], 2)
+            offline_review = json.loads((base / 'frozen-offline-review/review.json').read_text())['offline']
+            self.assertEqual(offline_review['files'], 2)
+            self.assertEqual(offline_review['downloadFiles'], 1)
+            self.assertTrue(offline_review['allDownloadRowsMatchFrozenManifest'])
             # Wrong immutable source and wrong original SHA must not produce a passing output.
             for option, value in [('--expected-commit', 'f' * 40), ('--artifact-sha256', 'f' * 64)]:
                 bad = [sys.executable, str(inspector), str(original), '--repo', str(repo), '--expected-commit', commit,
