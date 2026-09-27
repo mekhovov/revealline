@@ -10,6 +10,9 @@ import { auditSources } from './localization-audit.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const locales = ['en', 'uk'];
+export const isTranslationKeyLiteral = (value) =>
+  typeof value === 'string' &&
+  /^(?:common|interface|gameplay|content|tools|website|errors):\w+(?:\.\w+)*$/.test(value);
 export async function readCatalogs(directory = root) {
   const resources = {};
   for (const locale of locales) {
@@ -156,11 +159,7 @@ export async function extractTranslations(directory = root) {
         if (node.type === 'CallExpression' && ['t', 'localizedMessage'].includes(node.callee?.name))
           add(node.arguments[0]?.value, file, node.loc.start.line);
         // Explicit key registries keep compatibility adapters visible to validation.
-        if (
-          node.type === 'Literal' &&
-          typeof node.value === 'string' &&
-          /^(?:common|interface|gameplay|content|tools|website|errors):[\w.]+$/.test(node.value)
-        )
+        if (node.type === 'Literal' && isTranslationKeyLiteral(node.value))
           add(node.value, file, node.loc.start.line);
         const markup =
           node.type === 'TemplateElement'
