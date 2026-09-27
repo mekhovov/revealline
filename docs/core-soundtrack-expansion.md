@@ -115,7 +115,21 @@ Remaining work and current estimates:
    bytes against inventory SHA-256
    `2706445dafe995f6c4dc044ad5e92031cae60627699f6a72985e67a972064ccd`
    and confirmed 194 canonical catalogue entries.
-3. Release the game adapter that accepts canonical structured rights, multi-
+3. **Completed:** canonical archive
+   [PR #6](https://github.com/mekhovov/revealline-soundtracks/pull/6) added a
+   permanent exact-union verifier for both legacy catalogues. It proves all 194
+   recording hashes / 1,032,879,700 audio bytes are retained, including the
+   legitimate `peachtea.last-stand-lets-go` ID collision and seven intentional
+   TRENCH ORDERLY rights corrections. Canonical archive
+   [PR #7](https://github.com/mekhovov/revealline-soundtracks/pull/7) then added
+   the **Foundation 70** collection without changing the 70 stable recording
+   identities or bytes. Exact-head verification and Pages
+   [run 36335291318](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36335291318)
+   passed. Direct public browser acceptance selected the 70-song collection,
+   started `Last Stand Lets Go`, advanced to `Now This Is A Waterpark!` and kept
+   playback inside the same Foundation queue. The public catalogue reports 70
+   exact collection members / 354,986,122 bytes with the same inventory hash set.
+4. Release the game adapter that accepts canonical structured rights, multi-
    collections, `ФПВ`/`UA`, Release URLs and non-CORS media-element streaming while
    retaining remote-error recovery and built-in/uploaded fallback: about one day
    plus release coordination. Game [PR #716](https://github.com/mekhovov/revealline/pull/716)
@@ -128,13 +142,13 @@ Remaining work and current estimates:
    `createSoundtrackSource`, downloaded Holizna's `Drama`, decoded all 8,431,885
    bytes and matched SHA-256
    `bacdf4eae1d6031a357837389b86f5b114997629be60ca9cb3d2e14284fee34b`.
-4. Add migration notices to the two legacy roots and freeze their intake: about
+5. Add migration notices to the two legacy roots and freeze their intake: about
    half a day after canonical game acceptance.
-5. **Completed:** the canonical
+6. **Completed:** the canonical
    [compatibility prerelease](https://github.com/mekhovov/revealline-soundtracks/releases/tag/legacy-playlists-2026-09-21)
    carries the 15 exact `.rlsound` packs and four evidence assets. All 19 names,
    sizes and GitHub-reported SHA-256 digests match the Archive 01 source release.
-6. Implement paged catalogue metadata before the 450-track trigger: one to two
+7. Implement paged catalogue metadata before the 450-track trigger: one to two
    working days; it does not block the current 194-track release.
 
 Both numbered repositories can then be archived read-only. Deleting them is not a
