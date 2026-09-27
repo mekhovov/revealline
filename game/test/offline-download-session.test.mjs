@@ -3,6 +3,10 @@ import assert from 'node:assert/strict';
 import {
   gameplaySelection,
   finishOfflineSelection,
+  downloadErrorMessage,
+  installedResultMessage,
+  offlineMessage,
+  offlineReadinessCode,
   offlineReadinessLabel,
   runApprovedDownload,
 } from '../offline-download-session.mjs';
@@ -23,6 +27,7 @@ test('base is the default; all current gameplay never selects archive, creator t
   assert.deepEqual(gameplaySelection(catalogue), ['base']);
   const all = gameplaySelection(catalogue, { all: true });
   assert.deepEqual(all, ['base', 'shared', 'solo:horizon-starter', 'solo:border', 'versus:border']);
+  assert.equal(offlineReadinessCode(catalogue, ['base']), 'baseReady');
   assert.equal(offlineReadinessLabel(catalogue, ['base']), 'Base game ready offline');
   assert.equal(
     offlineReadinessLabel({ ...catalogue, format: 'revealline-offline-content.v2' }, ['base']),
@@ -34,6 +39,65 @@ test('base is the default; all current gameplay never selects archive, creator t
     'Selected chapters ready offline',
   );
 });
+test('semantic offline and installed results keep known states translatable and unknown detail intact', () => {
+  const translate = (key, values = {}) => key + (values.detail ? ':' + values.detail : '');
+  assert.equal(
+    offlineMessage({ messageCode: 'verifying', message: 'old English' }, translate),
+    'interface:downloads.offline.verifying',
+  );
+  assert.equal(
+    offlineMessage({ offlineCode: 'new-code', message: 'Exact diagnostic' }, translate),
+    'interface:downloads.unknownDetail:Exact diagnostic',
+  );
+  const known = new Set([
+    'interface:downloads.repairBeforeSelecting',
+    'interface:downloads.unknownDetail',
+  ]);
+  const catalogTranslate = (key, values = {}) =>
+    known.has(key)
+      ? key + (values.detail ? ':' + values.detail : '')
+      : (values.defaultValue ?? key);
+  assert.equal(
+    downloadErrorMessage(
+      {
+        localization: { key: 'interface:downloads.repairBeforeSelecting' },
+        message: 'old English',
+      },
+      catalogTranslate,
+    ),
+    'interface:downloads.repairBeforeSelecting',
+  );
+  assert.equal(
+    downloadErrorMessage(
+      { localization: { key: 'interface:future.missing' }, message: 'Exact authored detail' },
+      catalogTranslate,
+    ),
+    'interface:downloads.unknownDetail:Exact authored detail',
+  );
+  assert.equal(
+    installedResultMessage({ activated: true, message: 'old English' }, translate),
+    'interface:downloads.activationReady',
+  );
+  assert.equal(
+    installedResultMessage({ deferred: true, message: 'old English' }, translate),
+    'interface:downloads.activationDeferred',
+  );
+  assert.equal(
+    installedResultMessage(
+      {
+        activated: false,
+        message: 'Open Flight library to Bring progress from an earlier release.',
+      },
+      translate,
+    ),
+    'interface:downloads.transferInstructions',
+  );
+  assert.equal(
+    installedResultMessage({ activated: false, message: 'Exact diagnostic' }, translate),
+    'interface:downloads.activationFailedDetail:Exact diagnostic',
+  );
+});
+
 test('requested mission stays pending until safe edition activation settles', async () => {
   let settle,
     continued = false;
