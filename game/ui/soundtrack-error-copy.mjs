@@ -82,6 +82,18 @@ const ownedLocalizationKeys = new Set([
   'errors:soundtrack.catalogue.byteLimit',
   'errors:soundtrack.catalogue.responseUnreadable',
   'errors:soundtrack.catalogue.responseInvalid',
+  'errors:soundtrack.catalogue.directoryInvalidData',
+  'errors:soundtrack.catalogue.directoryInvalidShape',
+  'errors:soundtrack.catalogue.directoryEntryInvalid',
+  'errors:soundtrack.catalogue.directoryUnsupported',
+  'errors:soundtrack.catalogue.directoryDuplicate',
+  'errors:soundtrack.catalogue.directoryPrimaryRequired',
+  'errors:soundtrack.catalogue.directoryURLInvalid',
+  'errors:soundtrack.catalogue.directoryDirectResponseRequired',
+  'errors:soundtrack.catalogue.directoryByteLimit',
+  'errors:soundtrack.catalogue.directoryResponseUnreadable',
+  'errors:soundtrack.catalogue.directoryResponseInvalid',
+  'errors:soundtrack.catalogue.duplicateRecording',
 ]);
 
 export function soundtrackErrorText(error) {

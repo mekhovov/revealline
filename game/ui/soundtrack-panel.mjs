@@ -596,6 +596,14 @@ export function attachSoundtrackPanel({
     startTrackId,
     mixWithLibrary: onlineMixLibrary.checked,
   });
+  const onlinePlaybackWindow = (matches, startTrackId = null) => {
+    const limit = SOUNDTRACK_LIMITS.catalogueTracks;
+    if (matches.length <= limit) return matches;
+    if (startTrackId === null) return matches.slice(0, limit);
+    const selected = matches.findIndex((track) => track.id === startTrackId);
+    if (selected < 0) return matches.slice(0, limit);
+    return [...matches.slice(selected), ...matches.slice(0, selected)].slice(0, limit);
+  };
   const playOnlineResults = button(
     'online-play-all',
     localizedMessage('interface:playSelectedSongs'),
@@ -603,7 +611,7 @@ export function attachSoundtrackPanel({
       const matches = onlineMatches();
       if (matches.length)
         return controlMusic(
-          () => player.playRemotePlaylist(matches, onlinePlaybackOptions()),
+          () => player.playRemotePlaylist(onlinePlaybackWindow(matches), onlinePlaybackOptions()),
           true,
         );
     },
@@ -1761,7 +1769,11 @@ export function attachSoundtrackPanel({
           localizedMessage('common:actions.playback'),
           () => {
             return controlMusic(
-              () => player.playRemotePlaylist(matches, onlinePlaybackOptions(track.id)),
+              () =>
+                player.playRemotePlaylist(
+                  onlinePlaybackWindow(matches, track.id),
+                  onlinePlaybackOptions(track.id),
+                ),
               true,
             );
           },
@@ -1796,9 +1808,28 @@ export function attachSoundtrackPanel({
           total: onlineCatalogue.tracks.length,
         });
         const recording = excluded
-          ? ' ' + t('interface:soundtrack.recordingModeExcluded', { count: excluded })
-          : '';
-        return `${shown}${recording} ${t('interface:soundtrack.publicPlaybackHint')}`;
+            ? ' ' + t('interface:soundtrack.recordingModeExcluded', { count: excluded })
+            : '',
+          unavailable = onlineCatalogue.unavailable?.length
+            ? ' ' +
+              t('interface:soundtrack.publicPartial', {
+                archives: onlineCatalogue.unavailable
+                  .map(
+                    ({ id, error }) =>
+                      `${id === 'archive-directory' ? t('interface:soundtrack.archiveDirectory') : id}: ${message(error)}`,
+                  )
+                  .join('; '),
+              })
+            : '',
+          limited =
+            matches.length > SOUNDTRACK_LIMITS.catalogueTracks
+              ? ' ' +
+                t('interface:soundtrack.queueLimited', {
+                  limit: SOUNDTRACK_LIMITS.catalogueTracks,
+                  count: matches.length,
+                })
+              : '';
+        return `${shown}${recording}${unavailable}${limited} ${t('interface:soundtrack.publicPlaybackHint')}`;
       });
   }
   async function loadOnlineCatalogue(force = false) {
