@@ -15,9 +15,11 @@ import {
 import { createRun, stepRun, FIXED_DT, CLASSES } from '../core/index.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { gameplayDifficultyLabel } from '../ui/gameplay-copy.mjs';
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { dataIdentity } from '../data-json.mjs';
+import { ACTOR_SESSION_FORMAT } from '../sessions.mjs';
 import { expectedRouteEvidence, assertRouteEvidence } from './helpers/route-evidence.mjs';
 
 const authoredRoute = createAuthoredJourneyRoute('authored');
@@ -347,9 +349,12 @@ test('failed difficulty save offers truthful export and retry without replacing 
   assert.equal(p.rendered.run, run);
   assert.equal(p.rendered.backdrop, picture);
   assert.equal(p.rendered.run.lives, 3);
-  assert.match(
-    p.$('difficulty-note').textContent,
-    /This flight: standard. Next fresh attempt: expert/,
+  assert.ok(
+    p
+      .$('difficulty-note')
+      .textContent.includes(
+        `This flight: ${gameplayDifficultyLabel('standard')}. Next fresh attempt: ${gameplayDifficultyLabel('expert')}`,
+      ),
   );
   assert.deepEqual(p.errors, []);
 });
@@ -374,9 +379,12 @@ test('cross-tab difficulty intent refreshes controls but preserves the current a
   assert.equal(p.rendered.run, run);
   assert.equal(p.rendered.backdrop, picture);
   assert.equal(p.rendered.run.lives, 3);
-  assert.match(
-    p.$('difficulty-note').textContent,
-    /This flight: standard. Next fresh attempt: gentle/,
+  assert.ok(
+    p
+      .$('difficulty-note')
+      .textContent.includes(
+        `This flight: ${gameplayDifficultyLabel('standard')}. Next fresh attempt: ${gameplayDifficultyLabel('gentle')}`,
+      ),
   );
   assert.deepEqual(p.errors, []);
 });
@@ -497,7 +505,9 @@ test('candidate Skip takes two actions, uses next-attempt Expert intent, and res
   assert(savedRaw);
   const saved = JSON.parse(savedRaw);
   assert.equal(saved.themeId, 'horizon');
-  assert.equal(saved.presentationPins, undefined);
+  assert.equal(saved.format, ACTOR_SESSION_FORMAT);
+  assert.equal(saved.presentationPins, null);
+  assert.ok(saved.actorAppearancePin);
   assert.equal(verifyReplay(saved.replay).match, true);
   p.change('difficulty-select', 'expert');
   assert.equal(p.rendered.run, retained);

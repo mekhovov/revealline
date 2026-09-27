@@ -388,8 +388,9 @@ test('saved other-mode browsing restores Team’s own filter and lazily loads ma
   await open(f);
   assert.equal(f.$('journey-mode').value, 'solo');
   assert.equal(f.$('journey-search').value, 'Two keepers');
+  assert.equal(f.$('journey-lifecycle').value, 'current');
   await f.remoteReady();
-  assert.equal(cards(f).length, 2);
+  assert.equal(cards(f).length, 1);
   assert(cards(f).some((card) => card.querySelector('strong').textContent === 'Two keepers'));
   assert.equal(f.$('coop-library-preview').hidden, true);
   assert.equal(f.reads.length, 4);
@@ -412,7 +413,8 @@ test('a Team page return restores the actual departing Solo search and campaign 
     await loaded(f);
     f.$('journey-search').value = 'Two keepers';
     f.$('journey-search').emit('input');
-    assert.equal(cards(f).length, 2);
+    assert.equal(f.$('journey-lifecycle').value, 'current');
+    assert.equal(cards(f).length, 1);
     const button = cards(f).find(
       (card) => card.querySelector('strong').textContent === 'Two keepers',
     );
@@ -429,6 +431,7 @@ test('a Team page return restores the actual departing Solo search and campaign 
     const saved = JSON.parse(values.get('revealline.mission-library.selector.v1.team'));
     assert.equal(saved.mode, 'solo');
     assert.equal(saved.search, 'Two keepers');
+    assert.equal(saved.lifecycle, 'current');
     assert.equal(saved.campaign, campaign);
     assert.equal(saved.selectedId, missionId);
     assert.equal(saved.scroll, 37);
@@ -439,6 +442,7 @@ test('a Team page return restores the actual departing Solo search and campaign 
     await open(f);
     assert.equal(f.$('journey-mode').value, 'solo');
     assert.equal(f.$('journey-search').value, 'Two keepers');
+    assert.equal(f.$('journey-lifecycle').value, 'current');
     await f.remoteReady();
     assert.equal(cards(f).length, 1);
     assert.equal(f.$('journey-campaign').value, campaign);
