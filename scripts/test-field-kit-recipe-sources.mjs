@@ -114,3 +114,120 @@ test('audio continuation pins both current review and immutable predecessor byte
     false,
   );
 });
+
+test('current presentation continuation authenticates each immutable predecessor', async () => {
+  const {
+    readBulkPresentationContinuation,
+    bulkPresentationContinuation,
+    BULK_PRESENTATION_REVIEW_PATH,
+  } = await import('./bulk-presentation-continuation.mjs');
+  const read = (name) => readFile(new URL('../' + name, import.meta.url));
+  const bytes = await readBulkPresentationContinuation(read);
+  const review = bulkPresentationContinuation(bytes);
+  assert.equal(review.format, 'revealline-bulk-presentation-continuation.v1');
+  assert.equal(bulkPresentationContinuation(Buffer.concat([bytes, Buffer.from(' ')])), null);
+  for (const changed of [
+    BULK_PRESENTATION_REVIEW_PATH,
+    ...Object.values(review.priorReviews).map((entry) => entry.path),
+  ]) {
+    await assert.rejects(
+      readBulkPresentationContinuation(async (name) => {
+        const body = await read(name);
+        return name === changed ? Buffer.concat([body, Buffer.from(' ')]) : body;
+      }),
+      /review bytes changed/,
+    );
+    await assert.rejects(
+      readBulkPresentationContinuation(async (name) => {
+        if (name === changed) throw new Error('Missing review bytes');
+        return read(name);
+      }),
+      /Missing review bytes/,
+    );
+  }
+});
+
+test('scoped current Team and equipment approval retains every semantic guard', async () => {
+  const { createFieldKitProduction, fieldKitEquipmentQuality, fieldKitEquipmentSource } =
+    await import('./produce-field-kit-theme.mjs');
+  const { fieldKitTeamRecipeQuality } = await import('./team-recipe-review.mjs');
+  const { createDefaultThemeBundle } = await import('../game/presentation/catalog.mjs');
+  const { readBulkPresentationContinuation, bulkPresentationContinuation } = await import(
+    './bulk-presentation-continuation.mjs'
+  );
+  const read = (name) => readFile(new URL('../' + name, import.meta.url));
+  const bulkContinuationReviewBytes = await readBulkPresentationContinuation(read);
+  const review = bulkPresentationContinuation(bulkContinuationReviewBytes);
+  const [reviewBytes, successorReviewBytes, continuationReviewBytes] = await Promise.all([
+    read(review.priorReviews.team.path),
+    read(review.priorReviews.teamSuccessor.path),
+    read(review.priorReviews.teamContinuation.path),
+  ]);
+  const production = await createFieldKitProduction();
+  const baseline = createDefaultThemeBundle();
+  const inheritedAssets = Object.fromEntries(
+    production.document.assets
+      .filter((asset) => asset.kind === 'image')
+      .map((asset) => [asset.id, asset]),
+  );
+  const original = JSON.parse(reviewBytes);
+  for (const slotId of review.fingerprints.team.slots) {
+    const asset = production.document.assets.find((entry) => entry.id === slotId + '.field-kit');
+    const args = {
+      slotId,
+      source: asset.provenance.source,
+      recipe: asset.recipe,
+      defaultAsset: baseline.assets.find((entry) => entry.id === asset.provenance.parent.id),
+      inheritedAssets,
+      reviewBytes,
+      successorReviewBytes,
+      continuationReviewBytes,
+      bulkContinuationReviewBytes,
+    };
+    assert.equal(fieldKitTeamRecipeQuality(args).stage, 'reviewed', slotId);
+    for (const override of [
+      { slotId: 'team.not-reviewed' },
+      { source: args.source + ' altered' },
+      { recipe: { ...args.recipe, id: 'unknown.recipe' } },
+      { defaultAsset: { ...args.defaultAsset, description: 'altered' } },
+      { reviewBytes: Buffer.concat([reviewBytes, Buffer.from(' ')]) },
+      { successorReviewBytes: Buffer.concat([successorReviewBytes, Buffer.from(' ')]) },
+      { continuationReviewBytes: Buffer.concat([continuationReviewBytes, Buffer.from(' ')]) },
+      {
+        bulkContinuationReviewBytes: Buffer.concat([bulkContinuationReviewBytes, Buffer.from(' ')]),
+      },
+      { bulkContinuationReviewBytes: undefined },
+    ])
+      assert.equal(fieldKitTeamRecipeQuality({ ...args, ...override }).stage, 'source', slotId);
+    for (const expected of original.inheritedImages) {
+      const changed = {
+        ...inheritedAssets,
+        [expected.asset.id]: { ...inheritedAssets[expected.asset.id], description: 'altered' },
+      };
+      assert.equal(
+        fieldKitTeamRecipeQuality({ ...args, inheritedAssets: changed }).stage,
+        'source',
+        slotId + '/' + expected.asset.id,
+      );
+    }
+  }
+  const source = await fieldKitEquipmentSource(read);
+  for (const slotId of review.fingerprints.equipment.slots) {
+    const asset = production.document.assets.find((entry) => entry.id === slotId + '.field-kit');
+    assert.equal(asset.quality.stage, 'reviewed', slotId);
+    const quality = (id, fingerprint, png, current = bulkContinuationReviewBytes) =>
+      fieldKitEquipmentQuality(
+        id,
+        fingerprint,
+        png,
+        successorReviewBytes,
+        continuationReviewBytes,
+        current,
+      ).stage;
+    assert.equal(quality(slotId, source, asset.file.sha256), 'reviewed');
+    assert.equal(quality(slotId, source + ' altered', asset.file.sha256), 'produced');
+    assert.equal(quality(slotId, source, '0'.repeat(64)), 'produced');
+    assert.equal(quality('team.not-reviewed', source, asset.file.sha256), 'produced');
+    assert.equal(quality(slotId, source, asset.file.sha256, Buffer.alloc(0)), 'produced');
+  }
+});
