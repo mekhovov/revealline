@@ -28,7 +28,8 @@ test('archival changes discovery without changing historical project, execution 
   assert.deepEqual(recovered.source, createOpeningCandidates({ artwork: true }));
   assert.equal(recovered.sessionKey, 'revealline.suspended.journey-opening.v1');
   assert.deepEqual(resolveContentJourney(recovered.source, { mode: 'solo' }), resolved);
-  assert.equal(classifyContent({ family: 'journey', id: 'whole-spatial-v11' }), 'current');
+  assert.equal(classifyContent({ family: 'journey', id: 'whole-spatial-v25' }), 'current');
+  assert.equal(classifyContent({ family: 'journey', id: 'whole-spatial-v11' }), 'archived');
 });
 
 test('code-owned policy cannot classify imports by a familiar name or expose compatibility records', () => {
@@ -56,8 +57,13 @@ test('code-owned policy cannot classify imports by a familiar name or expose com
   assert.equal(discoverableContent('compatibility-only', { archive: true, tooling: true }), false);
   assert.equal(classifyContent({ family: 'journey', id: 'https://untrusted.invalid' }), null);
   assert.equal(
-    TEAM_CONTENT_ROUTES.find(({ id }) => id === 'team-trail-impact-originals-1').classification,
+    TEAM_CONTENT_ROUTES.find(({ id }) => id === 'team-cultural-specialist-originals-2')
+      .classification,
     'current',
+  );
+  assert.equal(
+    TEAM_CONTENT_ROUTES.find(({ id }) => id === 'team-trail-impact-originals-1').classification,
+    'archived',
   );
 });
 
