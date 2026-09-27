@@ -178,8 +178,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '86e0d8771d9ea29e9628e1fd5f779d2d997d54799d71340f7a27319cd6e7b554',
+    sha256: 'f6f89072a29833af077a92f2e2a0eb4174e78edc0f03be1eb04f71daf467967c',
     evidence: [
+      'Scoped company-startup continuation: docs/verification/v0.141.7-company-startup-audio-continuation/review.json sha256:1d3660001a2ebe7d4d2daf5e68ab745e9e902d5c2f1757a398439de3caedccad; exact26 inputs sha256:f6f89072a29833af077a92f2e2a0eb4174e78edc0f03be1eb04f71daf467967c. Eight existing procedural recipes only; company package admission changes startup timing and consent, not recipe identities, audio routing or payloads. Immutable predecessors retained; final frozen/public/listening/device acceptance remains separate.',
       'Scoped cumulative continuation: docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json sha256:067305195ea075c35f14402d970fb5d2819044720875374b157c9431d9c5d820; exact26 ordered audio inputs sha256:86e0d8771d9ea29e9628e1fd5f779d2d997d54799d71340f7a27319cd6e7b554. Eight existing procedural recipes only; retained records/payloads unchanged. Exact source and child receipts are scoped in the record; final hosted, frozen/public and listening/device acceptance remain separate.',
       'v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.',
       'v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.',
@@ -226,6 +227,17 @@ export function verifyFieldKitAudioContinuationReview(reviewBytes, predecessorBy
   );
 }
 
+export function verifyFieldKitCompanyAudioContinuationReview(
+  currentBytes,
+  priorBytes,
+  managedBytes,
+) {
+  return (
+    hash(currentBytes) === '1d3660001a2ebe7d4d2daf5e68ab745e9e902d5c2f1757a398439de3caedccad' &&
+    verifyFieldKitAudioContinuationReview(priorBytes, managedBytes)
+  );
+}
+
 /** Explicit dependency fingerprints; a helper change must reopen its review group. */
 export async function fieldKitRecipeSources(read) {
   return Object.fromEntries(
@@ -245,7 +257,8 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   const recipeSources = await fieldKitRecipeSources(read);
   const bulkContinuationReviewBytes = await readBulkPresentationContinuation(read);
   if (
-    !verifyFieldKitAudioContinuationReview(
+    !verifyFieldKitCompanyAudioContinuationReview(
+      await read('docs/verification/v0.141.7-company-startup-audio-continuation/review.json'),
       await read('docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json'),
       await read('docs/verification/v0.141.0-managed-media-audio-continuation/review.json'),
     )

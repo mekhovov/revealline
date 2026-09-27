@@ -530,15 +530,26 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
   const currentReviewPath =
-    'docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json';
-  const currentReviewSHA256 = '067305195ea075c35f14402d970fb5d2819044720875374b157c9431d9c5d820';
+    'docs/verification/v0.141.7-company-startup-audio-continuation/review.json';
+  const currentReviewSHA256 = '1d3660001a2ebe7d4d2daf5e68ab745e9e902d5c2f1757a398439de3caedccad';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'audio',
   ]);
-  assert.equal(current.review.priorReview.path, continuationPath);
-  assert.equal(current.review.priorReview.sha256, continuationHash);
   assert.equal(
-    current.review.priorReview.fingerprintSHA256,
+    current.review.priorReview.path,
+    'docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json',
+  );
+  assert.equal(
+    current.review.priorReview.sha256,
+    '067305195ea075c35f14402d970fb5d2819044720875374b157c9431d9c5d820',
+  );
+  const previousReview = JSON.parse(
+    await fs.readFile(new URL('../../' + current.review.priorReview.path, import.meta.url)),
+  );
+  assert.equal(previousReview.priorReview.path, continuationPath);
+  assert.equal(previousReview.priorReview.sha256, continuationHash);
+  assert.equal(
+    previousReview.priorReview.fingerprintSHA256,
     '77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79',
   );
   const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
