@@ -25,7 +25,234 @@ public verification. An MP3 preview or a passing transport test is insufficient.
 Keep historical immutable files and failed/partial evidence. Never manufacture
 reviewer names, listening approval or device results.
 
+## Priority delivery — external MP3 URLs first (27 September 2026)
+
+This is the active soundtrack transport priority. The canonical soundtrack
+repository remains the catalogue and rights control plane, while an uploader may
+bind one recording to a stable public HTTPS MP3 URL such as a direct S3 object URL.
+The first version does not provision buckets, upload objects, configure CloudFront,
+mirror files or migrate the existing 194 recordings.
+
+### Implemented source work
+
+- Canonical archive [PR #10](https://github.com/mekhovov/revealline-soundtracks/pull/10)
+  accepts either a
+  local file/folder, `--audio-url`, `--url-manifest` or a metadata-only v2
+  `.rlintake` package. External URLs are re-fetched twice and pinned by final URL,
+  byte count, SHA-256, duration, CORS and byte-range evidence. HTTPS credentials,
+  local/private destinations, expiring query parameters, excessive redirects,
+  non-MP3 content, truncation and byte drift are rejected.
+- `external-deliveries.json` is deterministic and separate from GitHub Release
+  audio volumes. Pull-request and Pages verification re-check every external
+  identity; a weekly read-only audit reports later drift without rewriting the
+  catalogue.
+- The archive player supports external and repository-hosted recordings in one
+  queue, disposes failed media before advancing, and implements shareable `q`,
+  `artist`, `collection`, `styles`, `order`, `repeat` and `track` URL state with
+  browser Back/Forward restoration and a Share-this-list action.
+- Game [PR #716](https://github.com/mekhovov/revealline/pull/716) accepts any
+  archive-verified external domain without a per-domain code change, requests
+  anonymous CORS for external playback, preserves the existing release-backed
+  path, recovers from a broken remote track to other remote, bundled or uploaded
+  music, and verifies exact bytes and SHA-256 before staging an offline copy.
+- Archive verification currently passes 34/34 tests. The focused game catalogue,
+  panel and transport cohort passes 185/185 tests; scoped Prettier and ESLint checks
+  are clean. These are source checks and do not replace a real hosted-object or
+  public release acceptance test.
+
+### Remaining release work and estimates
+
+| Step                     | State                                                                                                                                                             | Next action                                                                                                                                                                                   | Hands-on estimate                     |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Archive source PR        | Complete: PR #10 passed at exact head `ee94624` and merged as `4e3ecd7`                                                                                           | Preserve the exact merge and verification evidence                                                                                                                                            | Complete                              |
+| Archive Pages acceptance | Complete for source/UI delivery: run 36340413372 passed; live root, hosted-URL intake, Share-this-list module and empty deterministic inventory returned HTTP 200 | Repeat mixed external/repository playback and broken-track continuation with the first rights-cleared hosted object                                                                           | 1–2 hours after a real URL exists     |
+| Game PR #716             | Feature source implemented; release sequencing remains blocked by the shared game pipeline                                                                        | Push the cumulative PR update, pass required exact-head checks, then use the established immutable release and Pages selector flow                                                            | 0.5–1 day plus shared CI/release wait |
+| Real S3-object proof     | Blocked by missing input                                                                                                                                          | Supply one stable public MP3 object URL with public HEAD/GET/Range CORS and recording rights; ingest through a normal archive PR, then prove automatic discovery in the already-released game | 1–2 hours after the URL exists        |
+
+The real-object proof must switch among that S3 recording, a GitHub Release-backed
+recording, bundled music and an uploaded MP3, including failure recovery and an
+exact-byte offline installation. Until that proof and the immutable game release
+are complete, this item remains **implemented in source, not publicly delivered**.
+
+Archive PR #10 merged as `4e3ecd747ced49921be22ac361e40ddc26fb6fb6`.
+Its exact post-merge [Pages run 36340413372](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36340413372)
+passed publication, deterministic verification and deployment. Direct checks of
+the deployed root, `filter-url.mjs` and `external-deliveries.json` returned HTTP
+200; the root contains both **Use hosted MP3 URLs** and **Share this list**. The
+external inventory is intentionally empty until the first stable, rights-cleared
+hosted MP3 is supplied. This proves the archive delivery path without claiming the
+still-pending real-object playback acceptance.
+
+### Deferred hosting architecture
+
+- Phase 2: private S3 plus CloudFront OAC, GitHub OIDC publishing, immutable object
+  keys, cache/cost controls and monitoring.
+- Phase 3: primary/mirror URLs, GitHub Release mirroring, backfill, failover and
+  historical-release compatibility.
+- Phase 4: R2, Bunny, Spaces, provider-neutral upload adapters, custom-domain
+  migration and game deep links for archive filters.
+
+These phases require a separate design review. The first release treats the
+uploader-supplied public URL as authoritative.
+
 ## Completed and current baseline
+
+### Canonical library consolidation checkpoint — 27 September 2026
+
+The two active soundtrack Pages repositories no longer scale as the public source:
+Archive 01 contains 163 recordings / 887,503,800 audio bytes and Archive 02 contains
+31 recordings / 145,375,900 audio bytes. Together they exceed the recommended
+GitHub Pages published-site size. Canonical archive
+[PR #1](https://github.com/mekhovov/revealline-soundtracks/pull/1) merged as
+`b3978d1a9872fb9197b116593d13179088b2735c` and consolidates all **194 unique
+recordings / 47 collections / 1,032,879,700 exact audio bytes** in
+`mekhovov/revealline-soundtracks`.
+
+The canonical repository keeps its 0.54 MiB Pages UI, catalogue, rights evidence,
+tests and intake automation in Git. SHA-256-named MP3s live in versioned GitHub
+Release volumes in the same repository. Repository immutable releases are enabled
+for future volumes; the foundation volume predates that setting and remains bound
+by its exact manifest and hashes rather than being described as immutable. On every accepted intake PR, Actions first
+verifies and publishes all referenced draft volumes, then deploys the Pages player.
+The one public site exposes search, same-page playback, style mixing, ordered or
+shuffled playback, repeat controls and multi-collection membership. `ФПВ` and `UA`
+are independent styles; the TRENCH ORDERLY recordings belong to both `TRENCH
+ORDERLY` and `ФПВ`. `--license unknown` records uploader-confirmed public playback
+and redistribution, shows no invented open licence and remains Recording-mode
+ineligible.
+
+Catalogue usability [PR #4](https://github.com/mekhovov/revealline-soundtracks/pull/4)
+merged as `91b60190bfc7b7df4f9a2231bdfca99b3ce82956`; publication/Pages
+[run 36331917412](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36331917412)
+passed. Artist, collection and tag metadata is now exposed as accessible filter
+controls across all 194 recordings. Clicking `UA` shows the seven current UA
+recordings. Direct MP3 download links are retained in code but hidden from the
+public player; creator source and rights evidence remain visible. Intake verification
+now requires a non-empty title, artist, collection and searchable tags for every
+recording. Both the browser-created `.rlintake` path and the direct file/folder CLI
+path feed the same deterministic catalogue and automatic post-merge deployment.
+
+Operator documentation [PR #8](https://github.com/mekhovov/revealline-soundtracks/pull/8)
+expanded the repository README and Markdown guide with complete one-file, folder,
+browser-package, multiple-collection and `unknown`-rights examples; Pages
+[run 36335718722](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36335718722)
+passed. Web-guide [PR #9](https://github.com/mekhovov/revealline-soundtracks/pull/9)
+published an accessible, responsive
+[upload guide](https://mekhovov.github.io/revealline-soundtracks/upload-guide/),
+linked it from the main player and pinned it in the verified deployment manifest.
+Exact-merge Pages [run 36335989981](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36335989981)
+passed, followed by direct public-browser verification of every guide section and
+navigation target.
+
+This replaces further numbered archive shards. Archive 01 and Archive 02 remain
+read-only migration evidence until the canonical game client is public; do not
+rename them because GitHub states that project Pages URLs do not redirect after a
+repository rename. GitHub Pages' published site is limited to 1 GiB and has a soft
+100 GiB/month bandwidth limit, while GitHub Releases allow up to 1,000 assets per
+release with each asset below 2 GiB. Sources:
+[Pages limits](https://docs.github.com/en/enterprise-cloud@latest/pages/getting-started-with-github-pages/github-pages-limits),
+[repository limits](https://docs.github.com/en/repositories/creating-and-managing-repositories/repository-limits),
+[release limits](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases), and
+[rename behavior](https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository).
+
+The first canonical format is bounded to 512 recordings, leaving capacity for 318
+additional tracks. Before 450 recordings, add a paged catalogue index in the same
+repository so the game can load bounded pages without creating another repository.
+If direct Release delivery later needs fetch-based offline installation, stronger
+cache controls or usage analytics, migrate only the audio object URLs to an
+S3-compatible origin such as Cloudflare R2 or Amazon S3 behind a custom domain;
+retain this repository and catalogue as the control plane. Git LFS and more Pages
+shards are rejected because they do not improve the deployed-site or client
+integration boundary.
+
+Ranked storage options after the current Release-backed design are:
+
+1. **Cloudflare R2 behind a project audio domain:** the preferred scale-up path.
+   R2 documents free Internet egress, a 10 GB Standard-storage free tier and
+   configurable browser CORS, which resolves the current Release-asset limitation
+   for fetch-based offline installation. It adds an account, bucket credentials,
+   DNS and billing ownership. Sources: [R2 pricing](https://developers.cloudflare.com/r2/pricing/)
+   and [R2 CORS](https://developers.cloudflare.com/r2/buckets/cors/).
+2. **Amazon S3 with CloudFront:** the most configurable established option when
+   access logs, lifecycle policy and CDN controls justify its operational cost.
+   CloudFront must forward the browser `Origin` and relevant preflight headers for
+   S3 CORS: [AWS CloudFront CORS guidance](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/header-caching.html#header-caching-web-cors).
+3. **Backblaze B2 with a CDN:** an S3-compatible storage alternative. B2 supports
+   explicit CORS rules, but a simple bucket does not directly map to a custom domain,
+   so CDN/domain setup is less direct than R2 for this public player. Sources:
+   [B2 CORS](https://www.backblaze.com/docs/cloud-storage-cross-origin-resource-sharing-rules)
+   and [B2 buckets](https://www.backblaze.com/docs/cloud-storage-buckets).
+
+Keep the current GitHub Release design until actual bandwidth, catalogue paging or
+offline-fetch requirements justify that migration. It already removes audio from
+the Git/Pages size boundary while preserving one repository, one catalogue and one
+public player.
+
+Remaining work and current estimates:
+
+1. **Completed:** canonical Pages, all 194 catalogue entries, representative exact
+   Release bytes, range playback and same-page Next were verified publicly.
+2. **Completed:** canonical archive
+   [PR #5](https://github.com/mekhovov/revealline-soundtracks/pull/5) mirrors the
+   original 70 exact MP3 objects and inventory, preserves both numbered archives'
+   control-plane evidence, and pins the old prerelease's 19 assets (15 `.rlsound`
+   packs). Its local verifier reports 194 catalogue records, 70 compatibility
+   objects and 356,015,756 public bytes; 23/23 archive tests pass. It merged as
+   `132ef40faae4617349a7e2870a0d6012f5f54c47`; exact-source verification and
+   [Pages deployment](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36334003357)
+   passed. Direct public verification fetched and hashed all 70 objects / 354,986,122
+   bytes against inventory SHA-256
+   `2706445dafe995f6c4dc044ad5e92031cae60627699f6a72985e67a972064ccd`
+   and confirmed 194 canonical catalogue entries.
+3. **Completed:** canonical archive
+   [PR #6](https://github.com/mekhovov/revealline-soundtracks/pull/6) added a
+   permanent exact-union verifier for both legacy catalogues. It proves all 194
+   recording hashes / 1,032,879,700 audio bytes are retained, including the
+   legitimate `peachtea.last-stand-lets-go` ID collision and seven intentional
+   TRENCH ORDERLY rights corrections. Canonical archive
+   [PR #7](https://github.com/mekhovov/revealline-soundtracks/pull/7) then added
+   the **Foundation 70** collection without changing the 70 stable recording
+   identities or bytes. Exact-head verification and Pages
+   [run 36335291318](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36335291318)
+   passed. Direct public browser acceptance selected the 70-song collection,
+   started `Last Stand Lets Go`, advanced to `Now This Is A Waterpark!` and kept
+   playback inside the same Foundation queue. The public catalogue reports 70
+   exact collection members / 354,986,122 bytes with the same inventory hash set.
+4. Release the game adapter that accepts canonical structured rights, multi-
+   collections, `ФПВ`/`UA`, Release URLs and non-CORS media-element streaming while
+   retaining remote-error recovery and built-in/uploaded fallback: about one day
+   plus release coordination. Game [PR #716](https://github.com/mekhovov/revealline/pull/716)
+   implements this adapter. A regression now proves that Refresh discovers and
+   plays a newly published catalogue entry with its title, artist and source and
+   without a game allowlist or per-song code change. Unknown licence text is not
+   exposed in the game. The PR remains on the release-train hold until the sole
+   publisher assigns it a version and runs independent exact-source qualification.
+   A direct current-source acceptance probe loaded the canonical inventory through
+   `createSoundtrackSource`, downloaded Holizna's `Drama`, decoded all 8,431,885
+   bytes and matched SHA-256
+   `bacdf4eae1d6031a357837389b86f5b114997629be60ca9cb3d2e14284fee34b`.
+5. Add migration notices to the two legacy roots and freeze their intake: about
+   half a day after canonical game acceptance.
+6. **Completed:** the canonical
+   [compatibility prerelease](https://github.com/mekhovov/revealline-soundtracks/releases/tag/legacy-playlists-2026-09-21)
+   carries the 15 exact `.rlsound` packs and four evidence assets. All 19 names,
+   sizes and GitHub-reported SHA-256 digests match the Archive 01 source release.
+7. Implement paged catalogue metadata before the 450-track trigger: one to two
+   working days; it does not block the current 194-track release.
+
+Both numbered repositories can then be archived read-only. Deleting them is not a
+regression-free operation: immutable older game editions contain their original
+Pages URLs, and GitHub does not redirect project Pages after repository deletion.
+Keep the archived repositories and Pages payloads available unless breaking those
+historical editions and links is explicitly accepted.
+
+The main technical concern is that GitHub Release assets support direct media
+playback and range requests but do not expose the normal cross-origin response
+needed for JavaScript byte fetching. The canonical game therefore uses a trusted
+plain `HTMLAudioElement` source for online streaming and must not request anonymous
+CORS on Release URLs. Offline installation of these Release-backed auditions is a
+separate future feature. Physical Safari, iPhone and controller playback remain
+acceptance work rather than inferred passes.
 
 | Area                     | Completed                                                                                                                                                                                                                                         | Remaining                                                                                                                    |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
@@ -393,10 +620,10 @@ explicit fast-release policy remain exclusions, never passes.
   admission review gates have no committed ETA.
   Do not publicly redistribute Pixabay or UA-FPV recordings without exact-recording
   permission. Shchedryk remains excluded from Recording mode because of Content ID.
-- Local free space is **about 0.24 GiB**, below the 1 GiB floor. Preserve reachable
-  objects, branches, worktrees, user changes, frozen releases and evidence; do not
-  acquire or convert more media, install dependencies or run local builds until
-  coordinated cleanup restores the reserve.
+- Local free space was rechecked on 27 September and is **about 26 GiB**, above the
+  1 GiB floor. Preserve reachable objects, branches, worktrees, user changes,
+  frozen releases and evidence; continue enforcing the floor before media intake
+  or local builds.
 
 ### Deferred
 
