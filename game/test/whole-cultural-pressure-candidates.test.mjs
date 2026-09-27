@@ -118,6 +118,7 @@ test('v7 remains historical while v8 keeps isolated progress after the normal en
     authoredJourneyModeHref(route.id, 'versus'),
     'couch/?journey=whole-spatial-v8&return=solo',
   );
-  assert.equal(DEFAULT_JOURNEY_ROUTES.solo, 'whole-spatial-v11');
-  assert.equal(DEFAULT_JOURNEY_ROUTES.versus, 'whole-spatial-v11');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.solo, 'whole-spatial-v25');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.versus, 'whole-spatial-v25');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.team, 'team-cultural-specialist-originals-2');
 });

@@ -132,6 +132,18 @@ async function currentJourneySources(root) {
     PRESSURE_DIFFICULTY_CATALOG,
   ]);
   const teamFactories = {
+    'team-cultural-specialist-originals-2': [
+      'team-cultural-specialist-v2-originals.mjs',
+      'createTeamCulturalSpecialistV2OriginalCandidates',
+    ],
+    'team-cultural-specialist-originals-1': [
+      'team-cultural-specialist-originals.mjs',
+      'createTeamCulturalSpecialistOriginalCandidates',
+    ],
+    'team-complete-specialist-originals-1': [
+      'team-complete-specialist-originals.mjs',
+      'createTeamCompleteSpecialistOriginalCandidates',
+    ],
     'team-trail-impact-originals-1': [
       'team-impact-originals.mjs',
       'createTeamImpactOriginalCandidates',
@@ -159,6 +171,10 @@ async function currentJourneySources(root) {
 export async function contentSources(root) {
   const sources = [];
   async function walk(relative) {
+    // Company editions own an English-first content catalog and are compiled
+    // separately. Their authored text must not enter the default game's shared
+    // locale/history registry (or leak other audiences into standalone builds).
+    if (['game/content/company-boot', 'game/content/company-campaigns'].includes(relative)) return;
     for (const item of await fs.readdir(path.join(root, relative), { withFileTypes: true })) {
       const name = path.posix.join(relative, item.name);
       if (item.isDirectory()) await walk(name);

@@ -7,7 +7,10 @@ const source = await readFile(
   new URL('../docs/verification/journey-performance.mjs', import.meta.url),
   'utf8',
 );
-function harness(mode = 'solo', { loaded = true } = {}) {
+function harness(
+  mode = 'solo',
+  { loaded = true, performanceEntries = {}, memory = undefined } = {},
+) {
   let clock = 0,
     serial = 0;
   const rafs = new Map();
@@ -38,6 +41,11 @@ function harness(mode = 'solo', { loaded = true } = {}) {
     [
       'shell-continue',
       'shell-featured',
+      'shell-catalogue',
+      'missions-catalogue',
+      'race-journey-find',
+      'journey-chooser',
+      'journey-cards',
       'level-select',
       'race-level',
       'race-start',
@@ -55,10 +63,15 @@ function harness(mode = 'solo', { loaded = true } = {}) {
     getElementById: (id) => nodes.get(id),
   };
   nodes.get('race-pause').textContent = 'Pause';
+  nodes.get('journey-cards').querySelector = () => nodes.get('journey-library-card');
+  nodes.set('journey-library-card', element('journey-library-card'));
   const root = { ...element('root'), querySelector: (id) => outer.get(id.slice(1)) };
   const win = {
     ...element('win'),
-    performance: { getEntriesByType: () => [], getEntriesByName: () => [] },
+    performance: {
+      getEntriesByType: (type) => performanceEntries[type] || [],
+      ...(memory ? { memory } : {}),
+    },
     innerWidth: 1000,
     innerHeight: 700,
     devicePixelRatio: 1,
@@ -114,6 +127,52 @@ function harness(mode = 'solo', { loaded = true } = {}) {
     },
   };
 }
+
+test('observer records supported navigation, paint and heap snapshots without inventing unavailable values', () => {
+  const h = harness('solo', {
+    performanceEntries: {
+      navigation: [
+        {
+          responseStart: 12,
+          domInteractive: 34,
+          domContentLoadedEventEnd: 56,
+          loadEventEnd: 78,
+        },
+      ],
+      paint: [
+        { name: 'first-paint', startTime: 23 },
+        { name: 'first-contentful-paint', startTime: 45 },
+      ],
+      resource: [],
+    },
+    memory: {
+      usedJSHeapSize: 1024,
+      totalJSHeapSize: 2048,
+      jsHeapSizeLimit: 4096,
+    },
+  });
+
+  assert.deepEqual(h.records()[0].browserAtFrameLoad, {
+    navigation: {
+      responseStartMs: 12,
+      domInteractiveMs: 34,
+      domContentLoadedMs: 56,
+      loadEventEndMs: 78,
+    },
+    paint: { firstPaintMs: 23, firstContentfulPaintMs: 45 },
+    jsHeap: { supported: true, usedBytes: 1024, totalBytes: 2048, limitBytes: 4096 },
+  });
+  h.frame();
+  h.frame();
+  assert.deepEqual(h.records().at(-1).browserAtReady, h.records()[0].browserAtFrameLoad);
+
+  const unsupported = harness();
+  assert.deepEqual(unsupported.records()[0].browserAtFrameLoad, {
+    navigation: null,
+    paint: { firstPaintMs: null, firstContentfulPaintMs: null },
+    jsHeap: { supported: false },
+  });
+});
 
 test('observer waits two ready frames, records native and controller activation, and never drives input', () => {
   const h = harness();
@@ -198,6 +257,29 @@ test('only confirmed restart is timed, excluding time spent deciding', () => {
   h.frame();
   assert.equal(h.records().at(-1).action, 'Confirmed restart');
   assert.equal(h.records().at(-1).ms, 32);
+});
+
+test('both modes time mission-library readiness only after the chooser has a usable card', () => {
+  for (const [mode, trigger] of [
+    ['solo', 'shell-catalogue'],
+    ['versus', 'race-journey-find'],
+  ]) {
+    const h = harness(mode);
+    h.frame();
+    h.frame();
+    h.click(trigger);
+    h.frame(100);
+    assert.notEqual(h.records().at(-1).action, 'Open mission library');
+    h.nodes.get('journey-chooser').open = true;
+    h.frame();
+    h.frame();
+    assert.equal(h.records().at(-1).action, 'Open mission library');
+    assert.equal(h.records().at(-1).ms, 132);
+    assert.equal(
+      h.records().at(-1).outcome,
+      'two consecutive animation-frame readiness observations',
+    );
+  }
 });
 
 test('both modes reject cancelled/detached/error preparations and explicit cancellation', () => {

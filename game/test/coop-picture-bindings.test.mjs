@@ -83,7 +83,7 @@ test('the closed two-row authority is immutable and matches the complete authore
   assert.equal(COOP_PICTURE_BINDINGS.length, 2);
   assert.equal(
     compiled.resolved.theme.revision,
-    91,
+    92,
     'Exact reviewed production metadata, never an unqualified latest alias',
   );
   assert.deepEqual(
@@ -145,16 +145,16 @@ test('the closed two-row authority is immutable and matches the complete authore
   assert.throws(() => COOP_PICTURE_BINDINGS.push(COOP_PICTURE_BINDINGS[0]), TypeError);
 });
 
-test('current91 picture association preserves the exact58–90 closed bindings and policies', () => {
+test('current92 picture association preserves the exact58–91 closed bindings and policies', () => {
   const retained = [
     58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
-    82, 83, 84, 85, 86, 87, 88, 89, 90,
+    82, 83, 84, 85, 86, 87, 88, 89, 90, 91,
   ];
   assert.deepEqual(
     [...new Set(COOP_SUPPORTED_PICTURE_BINDINGS.map((row) => row.themeRevision))].sort(),
-    [...retained, 91],
+    [...retained, 92],
   );
-  assert.equal(COOP_SUPPORTED_PICTURE_BINDINGS.length, 68);
+  assert.equal(COOP_SUPPORTED_PICTURE_BINDINGS.length, 70);
   for (const revision of retained) {
     const previous = COOP_SUPPORTED_PICTURE_BINDINGS.filter(
       (row) => row.themeRevision === revision,
@@ -167,9 +167,10 @@ test('current91 picture association preserves the exact58–90 closed bindings a
   }
   assert.deepEqual(COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.map((row) => row.themeRevision).sort(), [
     ...retained,
-    91,
+    92,
   ]);
-  const current = COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.find((row) => row.themeRevision === 91);
+  assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.length, 35);
+  const current = COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.find((row) => row.themeRevision === 92);
   for (const previous of COOP_HISTORICAL_IMPORT_PICTURE_POLICIES)
     assert.deepEqual(previous, {
       ...current,
@@ -215,14 +216,28 @@ test('the complete real finite-policy host configuration prepares both current s
     );
     t.after(() => f.presentation.dispose());
     const binding = await f.presentation.select(f.request);
-    assert.equal(binding.choice.themeRevision, 91);
+    assert.equal(binding.choice.themeRevision, 92);
     assert.equal(binding.choice.picture.sha256, COOP_PICTURE_BINDINGS[index].picture.sha256);
     assert.equal(f.presentation.confirm(f.request), binding);
     assert.deepEqual(f.calls, { reads: 1, decodes: 1, releases: 0 });
   }
 });
 
-test('historical policy capacity remains exactly thirty-four and duplicate identities still fail', () => {
+test('the complete finite policy rejects an unreviewed next theme before reading pictures', async (t) => {
+  const f = fixture(
+    0,
+    compiled,
+    COOP_SUPPORTED_PICTURE_BINDINGS,
+    COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
+  );
+  t.after(() => f.presentation.dispose());
+  f.snapshot.resolved.theme.revision = 93;
+  await assert.rejects(f.presentation.select(f.request), /No exact Team picture binding/);
+  assert.equal(f.presentation.current(), null);
+  assert.deepEqual(f.calls, { reads: 0, decodes: 0, releases: 0 });
+});
+
+test('historical policy capacity remains exactly thirty-five and duplicate identities still fail', () => {
   const create = (historicalImportPolicy) =>
     createCoopPresentation({
       bindings: COOP_SUPPORTED_PICTURE_BINDINGS,

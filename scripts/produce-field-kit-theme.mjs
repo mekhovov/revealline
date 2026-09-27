@@ -25,6 +25,13 @@ import { readFieldKitRetainedOutput } from './field-kit-retained-runtime.mjs';
 import { retainFieldKitProductionHistory } from './team-production-history.mjs';
 import { importThemeBundle, exportThemeBundle } from '../game/presentation/bundle.mjs';
 
+import {
+  bulkPresentationContinuation,
+  readBulkPresentationContinuation,
+  BULK_PRESENTATION_REVIEW_PATH,
+  BULK_PRESENTATION_REVIEW_SHA256,
+} from './bulk-presentation-continuation.mjs';
+
 const root = fileURLToPath(new URL('../', import.meta.url));
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const reference = (asset) => ({ id: asset.id, revision: asset.revision });
@@ -33,12 +40,12 @@ const sources = {
   screens:
     'game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css',
   motion:
-    'authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/presentation/journey-actor-materials.mjs',
+    'authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/presentation/journey-actor-materials.mjs; game/ui/body-backing.mjs; game/ui/body-motion.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; authoring/motion-lab/animation.mjs; authoring/motion-lab/presets.json; authoring/library/fpv-role-presentations/originals/scout.png; authoring/library/fpv-role-presentations/originals/bomber.png; authoring/library/fpv-role-presentations/originals/carrier.png; authoring/library/fpv-role-presentations/originals/interceptor.png; authoring/library/fpv-role-presentations/originals/fiber.png; authoring/library/fpv-role-presentations/originals/impact.png; authoring/library/fpv-role-presentations/originals/trapper.png',
   effects:
-    'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; game/enemy-catalog.mjs',
-  team: 'game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs',
+    'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; game/enemy-catalog.mjs; game/ui/body-motion.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; game/ui/body-backing.mjs; authoring/motion-lab/animation.mjs',
+  team: 'game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; game/ui/body-backing.mjs; game/ui/body-motion.mjs',
   audio:
-    'game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs',
+    'game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs',
 };
 
 // Image review is independent of the 37 Team recipes. Bind original bytes and
@@ -74,6 +81,7 @@ export function fieldKitEquipmentQuality(
   originalHash,
   successorReviewBytes,
   continuationReviewBytes,
+  bulkContinuationReviewBytes,
 ) {
   const successor =
     successorReviewBytes && hash(successorReviewBytes) === reviewedTeamSuccessorRecord
@@ -101,14 +109,30 @@ export function fieldKitEquipmentQuality(
     continuation.priorReviews.equipment.sha256 ===
       'a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3' &&
     continuation.fingerprints.equipment.priorSHA256 === reviewedEquipmentSuccessorSource;
+  const bulk = bulkPresentationContinuation(bulkContinuationReviewBytes);
+  const bulkContinued =
+    source === bulk?.fingerprints?.equipment?.currentSHA256 &&
+    bulk.fingerprints.equipment.slots.includes(slotId) &&
+    bulk.priorReviews.equipment.sha256 ===
+      'a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3' &&
+    bulk.priorReviews.teamContinuation.sha256 === reviewedTeamContinuationRecord &&
+    continuationReviewBytes &&
+    hash(continuationReviewBytes) === reviewedTeamContinuationRecord &&
+    successorReviewBytes &&
+    hash(successorReviewBytes) === reviewedTeamSuccessorRecord;
   if (
     Object.hasOwn(reviewedEquipmentOriginals, slotId) &&
-    (source === reviewedEquipmentSource || continued || currentContinued) &&
+    (source === reviewedEquipmentSource || continued || currentContinued || bulkContinued) &&
     reviewedEquipmentOriginals[slotId] === originalHash
   )
     return {
       stage: 'reviewed',
       evidence: [
+        ...(bulkContinued
+          ? [
+              `Exact current five-image consumer continuation: ${BULK_PRESENTATION_REVIEW_PATH} sha256:${BULK_PRESENTATION_REVIEW_SHA256}`,
+            ]
+          : []),
         'Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3',
         ...(continued
           ? [
@@ -136,8 +160,9 @@ export function fieldKitEquipmentQuality(
 // release readiness gate rather than silently inheriting this review.
 const REVIEWED_RECIPE_INPUTS = {
   screens: {
-    sha256: '251d09ba8aa8710a134694874bd7ae87f2e76af0000825f9ad2b97da024d1dbd',
+    sha256: '52a6145755fc879c7759d8c3845741bb20c7f5009b77b4da66b6987194185f53',
     evidence: [
+      `Scoped current screens functional continuation: ${BULK_PRESENTATION_REVIEW_PATH} sha256:${BULK_PRESENTATION_REVIEW_SHA256}; exact source closure and preserved immutable predecessors. Fresh aggregate hosted, frozen/public, device and human acceptance remain separate.`,
       'Scoped UX2 shared-screen continuation: docs/verification/ux2-v0115-screen-continuation/review.json sha256:f0baff0c70c3bb3d3e08b92e8bfdb28c60e77913333640160841f58bc4c5c094; four ordered screen inputs sha256:251d09ba8aa8710a134694874bd7ae87f2e76af0000825f9ad2b97da024d1dbd. Only field-kit-flow.css changes after the prior exact review, retaining full-width Start/Continue while compacting the secondary Home actions with existing Field Kit tokens.',
       'Focused input and continuation checks plus retained local Chromium review at 1440 by 900, 390 by 844 and 844 by 390 cover the compact Home and direct player-shell routes. Board geometry, simulation, mission content, payloads and data ownership remain unchanged.',
       'Bounded functional source continuation only. Complete navigation, forced-colour, screen-reader, every viewport, physical device, frozen/public and human acceptance remain separate. Long suites remain waived and are not represented as passing; historical reviews and payloads remain immutable.',
@@ -153,8 +178,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79',
+    sha256: '86e0d8771d9ea29e9628e1fd5f779d2d997d54799d71340f7a27319cd6e7b554',
     evidence: [
+      'Scoped cumulative continuation: docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json sha256:067305195ea075c35f14402d970fb5d2819044720875374b157c9431d9c5d820; exact26 ordered audio inputs sha256:86e0d8771d9ea29e9628e1fd5f779d2d997d54799d71340f7a27319cd6e7b554. Eight existing procedural recipes only; retained records/payloads unchanged. Exact source and child receipts are scoped in the record; final hosted, frozen/public and listening/device acceptance remain separate.',
       'v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.',
       'v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.',
       'Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.',
@@ -163,16 +189,18 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   motion: {
-    sha256: '03a9b8a5eceb9eee63da578807becbb0f7770713d3eb2bd04affe5a75d3316f4',
+    sha256: '5e32f549e39ecdabc7a5449b320f703c40aa23a87889ea27b3594187e69f2f7f',
     evidence: [
+      `Scoped current motion functional continuation: ${BULK_PRESENTATION_REVIEW_PATH} sha256:${BULK_PRESENTATION_REVIEW_SHA256}; exact source closure and preserved immutable predecessors. Fresh aggregate hosted, frozen/public, device and human acceptance remain separate.`,
       'Scoped clean-craft motion continuation: docs/verification/couch-craft-v01120/review.json sha256:fa2120613abf06bc578ba8388ba33af415392583e19e83c2297638af8010c305; three ordered motion inputs sha256:03a9b8a5eceb9eee63da578807becbb0f7770713d3eb2bd04affe5a75d3316f4. Prepared FPV bodies can suppress duplicate procedural blades while the active cutting head gains bounded plate, direction and packet cues.',
       'The exact candidate passed 202 focused actor, renderer, trail, controller, Couch and picture-parity checks. Positions, collision radii, authoritative clocks, path cells and role identities remain unchanged.',
       'Bounded functional visual continuation only, not final subjective art, every-state native/device, human balance, frozen/public or release approval. Historical reviews and original payloads remain immutable; changed motion inputs reopen this group.',
     ],
   },
   effects: {
-    sha256: 'b33868fdd4f6aa898a885043116b939509f4d5b14d4412adb7d71e6e90ed6bbe',
+    sha256: '732ee9b5a46bbfe1bce8ee74f29aace278cd4da67ae59871a2771f0c197b5e3f',
     evidence: [
+      `Scoped current effects functional continuation: ${BULK_PRESENTATION_REVIEW_PATH} sha256:${BULK_PRESENTATION_REVIEW_SHA256}; exact source closure and preserved immutable predecessors. Fresh aggregate hosted, frozen/public, device and human acceptance remain separate.`,
       'v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact effects fingerprint sha256:b33868fdd4f6aa898a885043116b939509f4d5b14d4412adb7d71e6e90ed6bbe. Locale-bound descriptions and mechanically formatted renderers preserve actor geometry, trail cells, collision footprints, sprite construction and effect recipe IDs.',
       'Scoped trail, impact and wreck continuation: docs/verification/couch-craft-v01120/review.json sha256:fa2120613abf06bc578ba8388ba33af415392583e19e83c2297638af8010c305; ten ordered effects inputs sha256:e23e228b4bf4ee68bb7cbbd231aaebe66d6e3da8965fbeae9b2c4acc90f9e053. The active cutting head and authoritative travelling fronts gain bounded readable shapes, prepared player bodies suppress duplicate blades, and FPV failure debris uses compact solid fragments.',
       'The exact candidate passed 202 focused actor, renderer, trail, controller, Couch and picture-parity checks. Reduced effects keeps essential state markers; collision footprints, impact coordinates, role identities, mission state and authoritative clocks remain unchanged.',
@@ -189,6 +217,13 @@ function recipeQuality(group, source) {
     stage: 'source',
     evidence: ['Connected runtime recipe; screen and state review remains required.'],
   };
+}
+
+export function verifyFieldKitAudioContinuationReview(reviewBytes, predecessorBytes) {
+  return (
+    hash(reviewBytes) === '067305195ea075c35f14402d970fb5d2819044720875374b157c9431d9c5d820' &&
+    hash(predecessorBytes) === '16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998'
+  );
 }
 
 /** Explicit dependency fingerprints; a helper change must reopen its review group. */
@@ -208,6 +243,14 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   const json = async (relative) => JSON.parse(await read(relative));
   const baseline = createDefaultThemeBundle();
   const recipeSources = await fieldKitRecipeSources(read);
+  const bulkContinuationReviewBytes = await readBulkPresentationContinuation(read);
+  if (
+    !verifyFieldKitAudioContinuationReview(
+      await read('docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json'),
+      await read('docs/verification/v0.141.0-managed-media-audio-continuation/review.json'),
+    )
+  )
+    throw new Error('Audio continuation review bytes changed; production approval must reopen.');
   const assets = [],
     bindings = {},
     bytes = new Map();
@@ -303,6 +346,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
       reviewBytes: teamReviewBytes,
       successorReviewBytes: teamSuccessorReviewBytes,
       continuationReviewBytes: teamContinuationReviewBytes,
+      bulkContinuationReviewBytes,
     });
   }
   const equipmentSource = 'game/presentation/team-equipment-art.mjs';
@@ -328,7 +372,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
         description: TEAM_EQUIPMENT_DESCRIPTIONS[slotId],
         provenance: {
           creator: 'Reveal Line',
-          source: `${equipmentSource} sha256:${equipmentHash}`,
+          source: `${equipmentSource} sha256:${equipmentHash}; consumer-sha256:${equipmentReviewSource}`,
           license: 'Original project integer-pixel equipment artwork',
           prompt: slot.prompt,
           parent: { id: `${slotId}.default`, revision: 1 },
@@ -339,6 +383,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
           hash(body),
           teamSuccessorReviewBytes,
           teamContinuationReviewBytes,
+          bulkContinuationReviewBytes,
         ),
       },
       body,

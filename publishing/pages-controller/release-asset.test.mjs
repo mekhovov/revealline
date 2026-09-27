@@ -87,3 +87,27 @@ test('refuses absent credentials, missing assets and changed asset sizes', async
     /size does not match/,
   );
 });
+
+test('edition ZIPs use an explicit bounded download budget without raising the default', async () => {
+  const bytes = Buffer.alloc(8_000_001, 1);
+  for (const [maxBytes, accepted] of [
+    [undefined, false],
+    [bytes.length, true],
+  ]) {
+    const queue = responses(bytes);
+    const action = downloadReleaseAsset({
+      repository,
+      version,
+      name,
+      token: 'secret',
+      maxBytes,
+      fetchImpl: async () => queue.shift(),
+    });
+    if (accepted) assert.deepEqual(await action, bytes);
+    else await assert.rejects(action, /does not publish/);
+  }
+  await assert.rejects(
+    downloadReleaseAsset({ repository, version, name, token: 'secret', maxBytes: 950_000_001 }),
+    /bounded/,
+  );
+});

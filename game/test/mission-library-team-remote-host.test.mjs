@@ -90,15 +90,20 @@ function mode(f, value) {
 const loaded = async (f) => {
   await f.remoteReady();
   const rows = cards(f);
-  assert.equal(rows.length, 285, f.$('coop-library-remote-status').textContent);
+  assert.equal(rows.length, 252, f.$('coop-library-remote-status').textContent);
   const identities = rows.map((row) => JSON.parse(row.dataset.missionId));
-  assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v11').length, 91);
-  assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v10').length, 3);
-  assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v9').length, 3);
-  assert.equal(identities.filter((identity) => identity[0].startsWith('["classic",')).length, 188);
+  assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v25').length, 91);
+  for (let edition = 9; edition <= 24; edition++) {
+    assert.equal(
+      identities.filter((identity) => identity[1] === `whole-spatial-v${edition}`).length,
+      0,
+      `Historical v${edition} is not a current mission.`,
+    );
+  }
+  assert.equal(identities.filter((identity) => identity[0].startsWith('["classic",')).length, 161);
 };
 
-test('Team loads all 285 Solo/Versus metadata rows only after selecting another mode and never decodes rewards', async (t) => {
+test('Team lazily loads 252 current and 75 archived Solo/Versus rows without decoding rewards', async (t) => {
   const f = await fixture(t);
   await open(f);
   assert.equal(cards(f).length, 14);
@@ -116,10 +121,34 @@ test('Team loads all 285 Solo/Versus metadata rows only after selecting another 
   assert.equal(f.doc.activeElement.id, 'journey-mode');
   assert(f.$('coop-library-remote-status').textContent.length < 80);
   assert.equal(f.artwork.calls.reads.length, pictureReads);
+  assert.equal(cards(f).filter((row) => row.textContent.includes('Unavailable')).length, 149);
+  const lifecycle = f.$('journey-lifecycle');
+  lifecycle.focus();
+  lifecycle.value = 'archive';
+  lifecycle.emit('change');
+  const archived = cards(f).map((row) => JSON.parse(row.dataset.missionId));
+  assert.equal(archived.length, 75);
+  for (let edition = 11; edition <= 24; edition++) {
+    assert.equal(
+      archived.filter((identity) => identity[1] === `whole-spatial-v${edition}`).length,
+      3,
+      `Historical v${edition} remains accessible in Archive.`,
+    );
+  }
+  assert.equal(archived.filter((identity) => identity[1] === 'whole-spatial-v10').length, 3);
+  assert.equal(archived.filter((identity) => identity[1] === 'whole-spatial-v9').length, 3);
+  assert.equal(archived.filter((identity) => identity[0].startsWith('["classic",')).length, 27);
+  lifecycle.value = '';
+  lifecycle.emit('change');
+  assert.equal(cards(f).length, 327, 'All historical identities remain available in All.');
   assert.equal(cards(f).filter((row) => row.textContent.includes('Unavailable')).length, 176);
   mode(f, 'versus');
-  assert.equal(cards(f).length, 285);
+  assert.equal(cards(f).length, 327);
+  lifecycle.value = 'current';
+  lifecycle.emit('change');
+  assert.equal(cards(f).length, 252);
   assert.equal(f.reads.length, 4);
+  assert.equal(f.artwork.calls.reads.length, pictureReads);
   mode(f, 'team');
   assert.equal(cards(f).length, 14);
   assert.equal(f.$('coop-library-remote-status').hidden, true);
@@ -154,7 +183,7 @@ test('Team exact nonfirst Versus handoff keeps its attempt on Stay and only depa
   await waitFor(() => f.visits.length === 1);
   const destination = new URL(f.visits[0]);
   assert.equal(destination.pathname, '/game/couch/');
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v11');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v25');
   assert.equal(destination.searchParams.get('library-mission'), exactId);
   assert.equal(destination.searchParams.get('return'), 'team');
   assert.equal(destination.searchParams.get('journey-return'), 'legacy');
@@ -359,8 +388,9 @@ test('saved other-mode browsing restores Team’s own filter and lazily loads ma
   await open(f);
   assert.equal(f.$('journey-mode').value, 'solo');
   assert.equal(f.$('journey-search').value, 'Two keepers');
+  assert.equal(f.$('journey-lifecycle').value, 'current');
   await f.remoteReady();
-  assert.equal(cards(f).length, 2);
+  assert.equal(cards(f).length, 1);
   assert(cards(f).some((card) => card.querySelector('strong').textContent === 'Two keepers'));
   assert.equal(f.$('coop-library-preview').hidden, true);
   assert.equal(f.reads.length, 4);
@@ -383,7 +413,8 @@ test('a Team page return restores the actual departing Solo search and campaign 
     await loaded(f);
     f.$('journey-search').value = 'Two keepers';
     f.$('journey-search').emit('input');
-    assert.equal(cards(f).length, 2);
+    assert.equal(f.$('journey-lifecycle').value, 'current');
+    assert.equal(cards(f).length, 1);
     const button = cards(f).find(
       (card) => card.querySelector('strong').textContent === 'Two keepers',
     );
@@ -400,6 +431,7 @@ test('a Team page return restores the actual departing Solo search and campaign 
     const saved = JSON.parse(values.get('revealline.mission-library.selector.v1.team'));
     assert.equal(saved.mode, 'solo');
     assert.equal(saved.search, 'Two keepers');
+    assert.equal(saved.lifecycle, 'current');
     assert.equal(saved.campaign, campaign);
     assert.equal(saved.selectedId, missionId);
     assert.equal(saved.scroll, 37);
@@ -410,6 +442,7 @@ test('a Team page return restores the actual departing Solo search and campaign 
     await open(f);
     assert.equal(f.$('journey-mode').value, 'solo');
     assert.equal(f.$('journey-search').value, 'Two keepers');
+    assert.equal(f.$('journey-lifecycle').value, 'current');
     await f.remoteReady();
     assert.equal(cards(f).length, 1);
     assert.equal(f.$('journey-campaign').value, campaign);

@@ -6,6 +6,14 @@ disable-model-invocation: true
 
 # Deploy a RevealLine release to GitHub Pages
 
+## Current hosting policy — 2026-09-27
+
+Future releases use only `mekhovov/revealline`. Do not create, allocate, append, deploy or admit a `revealline-archive-XX` repository as a release step. Historical archive deployment and per-PR publication are not prerequisites.
+
+Publish the exact qualified current game on the main Pages site and keep original immutable ZIPs, manifests, checksums and source evidence in the main repository's GitHub Releases. Unarchived historical editions become explicitly download-only, not broken Play links. Existing accepted archive links, repositories, tags, assets, saved data and evidence remain unchanged; their frozen registry is compatibility history, not a recurring remote-admission gate. Do not delete or republish them.
+
+Keep current-source qualification, reviewed selector, protected-main checks, frozen independent inspection, bounded extraction, full artifact/public-byte verification, latest-release validation and scoped player acceptance. Preserve explicit test waivers as SKIPPED. The main Pages budget remains 950,000,000 bytes; exceeding it requires a new reviewed decision, not another repository or a raised limit. See [main-repository publishing policy](../../../docs/main-repository-publishing.md).
+
 ## Procedure
 
 For the current redesign, consult the [cross-mode execution register](../../../docs/cross-mode-execution.md) and [phase prompts](../../../authoring/prompts/cross-mode-delivery.md). Each phase/campaign needs a new exact-source receipt and public acceptance before advancement. Keep its game source, publishing revision, asset-byte evidence, input/viewports and outstanding physical checks separate. A source-only inventory or an earlier candidate's passing run does not qualify the current release.
@@ -17,14 +25,14 @@ Exercise offline feedback with the full shipped optional-pack catalogue. Its nam
 1. Confirm the requested immutable tag and published stable GitHub Release exist. Do not infer a release from an unreleased package version or move an existing tag. When publishing the newest intended stable release, explicitly set `make_latest: "true"` and read `GET /repos/mekhovov/revealline/releases/latest` back to confirm the exact release ID and tag. GitHub's Latest pointer is separate from the reviewed Pages selector. If it is stale, first reverify the existing release, tag and nine asset descriptors, then update only that release's `make_latest` field and verify again; preserve the original attempt and all immutable payloads.
    Publishing a draft may change `browser_download_url` from an untagged draft URL to the canonical versioned release URL. Compare each asset's exact ID, name, size, digest and uploaded state, then require its new canonical URL. Do not require whole asset-object equality or repeat a successful publication PATCH because the URL changed. Preserve the original overbroad comparison refusal and the successful readback; payload identity remains separate from mutable URL metadata.
    A draft release lookup by tag can return 404 even after creation. Preserve that response and use the actual release ID from the successful create response or an authenticated release listing: `GET /repos/<owner>/<repo>/releases/<release_id>`. Verify its tag, draft state, target and existing asset descriptors before continuing. Do not infer that the draft is absent, create a duplicate release, or repeat an upload because the tag lookup failed. After publication, verify the canonical tag route separately.
-2. Read `publishing/pages-controller/publication.json` on `main`. The enabled reviewed selector must name the newest published stable version, its exact six-gate source qualification, and admitted archive routes. `/game/` and the root entry must always follow that selector; never point the player default at a development tag.
-3. Keep every immutable semantic tag visible in the `/releases/` explorer. Use `retainedReleasesPerMajor: "all"` for this complete-history requirement; numeric 1–100 policies deliberately select only recent entries per major. Check the complete catalog and every applicable archive admission after the 100th entry; keep the 1,024-entry catalog cap and 950 MB main / 800 MB archive budgets unchanged. Historical tags use their admitted archive route. A newly deployed but still comparison-only archive may use an explicit `testingRoutes` entry: it is playable from the explorer but cannot become the root default. Raw branch heads are mutable and must first be frozen as a semantic tag before being offered as a playable version.
+2. Read `publishing/pages-controller/publication.json` on `main`. The enabled reviewed selector must name the newest published stable version, its exact source qualification (including honest explicit waivers), and main-repository-only hosting policy. `/game/` and the root entry must always follow that selector; never point the player default at a development tag.
+3. Keep the reviewed `retainedReleaseCount: 5` global history selection. The current edition is playable on main Pages; unarchived historical editions are download-only from the main GitHub Releases. Preserve accepted legacy archive links and all immutable historical metadata, tags, releases, assets and evidence. Never allocate or admit another archive to advance the selector. Raw branch heads are not immutable releases.
 4. Run `node publishing/pages-controller/sync-release-metadata.mjs --versions <comma-separated-tags> --qualification <current-tag>` to download and pin the original release record, manifest, checksum and selected source qualification. Review the resulting catalog/metadata diff; the script is a preparation tool and must not run during deployment. It preflights the whole requested batch and qualification, verifies the record/manifest/ZIP-checksum chain, refuses changes to existing pins or files, and preserves a byte-identical no-op. Keep its stale-input, ordinary-path and no-clobber guards; do not bypass a refusal or rewrite a prior release.
-5. Prepare and review all original metadata, qualification, archive byte/browser evidence, testing routes, and selector changes before committing the publishing controller. The selection commit triggers `publish-frozen-pages.yml` on `main`. Keep controller identity separate from the immutable game source and use its original ZIP; do not rebuild or amend historical releases.
+5. Prepare and review all original metadata, current qualification, frozen-artifact evidence, and selector changes before committing the publishing controller. The selection commit triggers `publish-frozen-pages.yml` on `main`. Keep controller identity separate from the immutable game source and use its original ZIP; do not rebuild or amend historical releases.
 6. For a retry, dispatch `publish-frozen-pages.yml` from `main` with the exact `release_tag`. The legacy `deploy-pages.yml` manual entry on `main` routes to the same publisher. Historical tags retain historical workflow files, so do not assume their release event can execute the current controller or test sharder.
 7. Verify the focused controller checks, bounded ZIP extraction, complete artifact byte reread, latest-stable guard, Pages upload, and protected deployment all pass. New game source still requires the six source gates; source pull requests retain preflight and four test shards.
 8. Keep source and test automation distinct. Source check jobs place the selected checkout under `source/` and use the separate `automation/` runner pinned to `github.workflow_sha`, invoked with `--root .` from `source/`. Never copy newer tests into an immutable source. Initialize only generated `.cache` state.
-9. Confirm `https://mekhovov.github.io/revealline/release.json` reports the selected version and exact frozen source revision. Audit every public byte, check the release registry contains every semantic tag, and test actual current play/offline plus routed historical/comparison entries before claiming completion. Keep installed-scope checks separate from fresh navigation.
+9. Confirm `https://mekhovov.github.io/revealline/release.json` reports the selected version and exact frozen source revision. Audit every public byte, check the selected release history exposes honest Play or Download actions, and test actual current play/offline plus affected legacy/download entry routes before claiming completion. Keep installed-scope checks separate from fresh navigation.
 
 ## Safety rules
 
@@ -63,7 +71,7 @@ verify the final public binding before acceptance.
 
 ## Example publishing prompt
 
-“Publish the exact qualified frozen release selected on main. Preserve every immutable source/tag/asset pin, the complete semantic release explorer with `retainedReleasesPerMajor: "all"` and direct archive routes. Check more than 100 entries without dropping old admissions or routes; retain the catalog and byte limits. Keep comparison-only testing routes distinct from full byte/browser admissions and the stable root default. Verify original ZIP and all output/public bytes, latest stable selection, GitHub Latest ID/tag readback and actual current play/offline; keep failed attempts and successful retries in the evidence.”
+“Publish one exact qualified frozen release from `mekhovov/revealline`, using the main-repository-only selector. Do not create or append archives. Preserve immutable source/tag/asset pins and existing legacy links. Verify the original ZIP, current qualification, complete artifact/public bytes, latest stable selection and actual bounded player journey; keep failed attempts and skipped suites explicit.”
 
 ## Snapshot and integration checks
 
@@ -79,82 +87,7 @@ and retain the failure; recover only the newly created clean worktree to its
 reviewed sparse paths. Do not reset, stash or remove files from other worktrees,
 and do not guess a prior common-config value that was not captured.
 
-Before preparing a new small archive repository, inspect the configured Git
-transport in the current repository and an accepted sibling archive. Reuse that
-working, already-authorized transport for the new repository; do not assume HTTPS
-or change unrelated remotes. A definite HTTPS OAuth rejection for a workflow file
-is different from an ambiguous push outcome. Retain the original rejection and
-any dependent read-only branch-precheck 404. If the existing repositories already
-use configured SSH, an explicitly recorded same-head push through that transport
-may complete the authorized operation without new OAuth scope, credentials or
-user action. Do not broaden authentication scopes to repair a transport mismatch.
-Afterward, read the remote branch again and match its exact reviewed commit/tree
-before creating the PR. If the first push result was ambiguous, discover the
-actual remote state before any repeat; a suggested PR URL is not that readback.
-
-Example prompt: “Create this bounded archive using the Git transport already
-configured for the project and accepted archives. Preserve a definite rejected
-push and its branch-precheck 404 if present, then verify the exact remote head and
-tree before opening the PR. Reuse existing authorization; do not add credentials
-or scope. Keep repository creation, source PR, deployment and public admission as
-separate actual records.”
-
-Before appending a release to an archive, compare its workflow's explicit tag fetch
-against **every** release in that archive's final `source-lock.json`, including
-unchanged cohorts. Run the read-only check from the reviewed controller checkout:
-
-```sh
-node publishing/pages-controller/archive-tag-fetch.mjs --source-lock /path/to/archive/source-lock.json --workflow /path/to/archive/.github/workflows/deploy.yml
-node --test publishing/pages-controller/archive-tag-fetch.test.mjs
-```
-
-The supported archive template uses a direct `jobs/build/steps` named step with no step condition,
-`working-directory: source` and a one-line `git fetch --depth=1 origin` command,
-followed by `refs/tags/V:refs/tags/V` for each locked version. A checkout of the
-extractor's tooling commit alone does not fetch those release tags. Missing older
-or newly appended cohorts, another destination ref, forced refs, and dynamic or
-conditional fetch declarations must be corrected and reviewed before dispatch.
-The checker verifies declared coverage only; retain the hosted tag-object and
-peeled-source checks, complete byte audit and native archive admission. Preserve
-the failed first attempt if an omitted tag already caused a deployment failure.
-Do not remove old cohorts, move tags, infer archive acceptance from a successful
-workflow, or change the live selector while publication/retention is pending.
-
-Derive archive preservation counts from the accepted inventory: a new archive has
-zero previously accepted paths; an append must preserve the exact prior path set
-and bytes, with any mutable index exception stated explicitly. Check the count in
-both prepared inputs and final summaries instead of carrying an earlier literal.
-Exercise the serialized preparation and final-report outputs with offline fixtures
-for both an empty prior inventory and an append. Distinguish preserved release
-rows from root support files, changed indexes and newly added rows; pin the
-accepted prior inventory used for that derivation.
-If only a summary field is wrong, preserve executed helpers, reports and all rows;
-attach an explicit correction backed by independent complete-row reconciliation.
-Do not silently rewrite originals or repeat payload requests for that metadata error.
-
-Before adapting a receipt verifier, derive each release-specific value from the
-exact retained originals: hash the original manifest bytes, compare the
-distribution hash with the original release record and published asset descriptor,
-and derive historical bridge counts from the full semantic catalog under the
-reviewed retention policy. Match every retained archive identity to the current
-accepted admission and its actual deployment. An archive append can change those
-identities while retaining the archive number. Review the observer, receipt
-verifier, offline binding and final public validator as one chain; changing the
-version string alone is insufficient.
-
-If review catches stale checks before an artifact GET, preserve the donor,
-executed static utility and prior originals. Prepare only the corrected helper
-successor and exact input pins; keep capacity, transport, ZIP, time and retry
-limits unchanged. Verify the already-applied static outputs still match. Do not
-redownload a payload, rerun source qualification or rewrite historical evidence
-to repair a copied metadata assertion. Use the existing pure contracts and compare
-complete actual input pins; add a regression only for a new behavior or missing
-invariant, not a duplicate of implementation literals. A metadata review does not
-establish public-byte, native gameplay or device acceptance.
-
-Example prompt: “Retain this release in a new archive. Report zero prior accepted
-paths, derive every total from the exact inventory, and keep native play separate
-from byte acceptance. For an append, prove the stated prior paths remain unchanged.”
+Archive repository creation, appends, tag-fetch preparation and archive admissions are retired release steps. Do not run their old example prompts. Historical protocols remain in `docs/archive-hosting-design.md` for interpreting preserved evidence only. A workflow-write permission refusal must not be bypassed with another transport, token or Git-tree workaround; obtain legitimate authorization before updating a workflow.
 
 Before committing verification evidence, check every manifest-pinned original with `git ls-files --error-unmatch`. Repository ignore rules can omit original `.log` files even when their JSON manifest is staged. Add only those explicitly reviewed original paths with `git add -f`, then verify all recorded sizes and hashes against the index. Preserve original log/diff bytes, including whitespace; never normalize evidence to satisfy a source-format check. Run exact-source qualification only after that evidence-complete commit.
 
@@ -214,7 +147,7 @@ For complete catalog/admission validation without copying historical evidence, a
 
 Count authored evidence files such as README and browser admission separately from copied originals. Verify every final evidence pin against the staged index, including complete original ZIPs and their member indexes. Preserve prepared cutoffs; add truthful current acceptance above them instead of leaving pending instructions as the current summary.
 
-Example prompt: “Review only the publisher's related hunks, validate every catalog row and archive admission using exact original bytes, preserve all historical routes and evidence, and distinguish local sparse fixtures from the complete hosted checks. Update the current report only after actual public acceptance.”
+Example prompt: “Review the main-only publisher hunks, verify current qualification and immutable metadata, preserve legacy compatibility links and all evidence, and test that the next predecessor needs no archive. Keep hosted/public acceptance separate.”
 
 
 ## Validate evidence ZIPs with their actual upload consumer
@@ -233,9 +166,9 @@ frozen game bytes, or repeat an ambiguous payload upload without fresh asset che
 
 A PR's cached `base.sha` can name an earlier main commit even when GitHub has already computed a clean merge against current main. Preserve that mismatch and the refused first check. Before merging, fetch the proposed merge commit itself: require its parents to equal the freshly read main and exact qualified PR head, and its tree to equal the qualified source tree. Recheck main immediately before the merge and verify the returned merge parents/tree afterward. Never substitute a stale base or re-label older qualification. If the proposed tree differs, integrate and qualify the new source instead.
 
-## Single-cohort archive fixtures
+## Legacy archive records
 
-When preparing a new archive from an append template, update only the explicit release-specific fixture expectations and derive the qualification path from the selected release record. Preserve generic corruption, source-identity and missing-gate tests. Include the canonical base in the expected inventory and re-pin its exact bytes before staging. Keep a stale-fixture first failure beside the corrected complete cohort; unchanged production helpers and passing fixtures still require hosted extraction, public-byte and scoped native checks.
+Keep existing archive fixtures and accepted records as preservation evidence. They do not authorize a new repository, deployment or admission and are not prerequisites for current releases.
 
 ### Retained-media conflicts during public installation checks
 

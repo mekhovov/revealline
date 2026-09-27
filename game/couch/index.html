@@ -99,6 +99,16 @@
         hidden
         data-i18n-aria-label="interface:twoSeparateRaceBoards"
       >
+        <div
+          id="race-start-cue"
+          class="race-start-cue"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          hidden
+        >
+          <strong id="race-start-cue-label"></strong>
+        </div>
         <section
           class="racer"
           data-player="0"
@@ -472,6 +482,14 @@
               Settings
             </button>
             <button
+              id="race-offline"
+              type="button"
+              data-i18n="interface:installAppGameAndSoundtrackDownloads"
+            >
+              Install &amp; offline play
+            </button>
+            <p id="race-offline-status" class="race-footnote" role="status"></p>
+            <button
               id="race-quick-sound"
               type="button"
               class="quick-sound"
@@ -509,7 +527,7 @@
             >
             <a
               id="race-library-switch"
-              href="?journey=whole-spatial-v11"
+              href="?journey=whole-spatial-v25"
               data-i18n="interface:newJourney"
               >New Journey</a
             >

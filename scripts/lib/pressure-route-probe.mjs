@@ -127,9 +127,15 @@ export function probePressureRoute(
   }
   for (const mission of project.missions.filter((m) => m.id === missionId)) {
     const start = Date.now(),
-      manifest = resolveMission(project, mission.id, { difficulty });
+      authoredManifest = resolveMission(project, mission.id, { difficulty }),
+      manifest = searchPolicy.prepareManifest
+        ? searchPolicy.prepareManifest(authoredManifest, difficulty)
+        : authoredManifest,
+      level = searchPolicy.prepareLevel
+        ? searchPolicy.prepareLevel(manifest.level, difficulty)
+        : manifest.level;
     const options = { seed, classId: 'scout', turnPolicy };
-    let run = createRun(manifest.level, options),
+    let run = createRun(level, options),
       log = [],
       cuts = 0;
     if (resumePath) {
@@ -266,8 +272,8 @@ export function probePressureRoute(
       log.push(...best.moves);
       cuts++;
     }
-    const verify = createRun(manifest.level, options),
-      recorder = createRecorder(manifest.level, options),
+    const verify = createRun(level, options),
+      recorder = createRecorder(level, options),
       events = [],
       closures = [];
     for (const segment of log)
@@ -309,6 +315,7 @@ export function probePressureRoute(
         seed,
         status: run.status,
         simulationIdentity: manifest.simulationIdentity,
+        ...(manifest.gameplayTuning ? { gameplayTuning: manifest.gameplayTuning } : {}),
         ticks: run.tick,
         lives: run.lives,
         coverage: run.coverage,

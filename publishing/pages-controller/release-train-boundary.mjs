@@ -26,8 +26,14 @@ export function verifyNextReleaseTitle(title, latest) {
   throw new Error(`Release v${match[1]} must be newer than published ${latest}.`);
 }
 
-export function verifyPublishedBase(baseVersion, latest) {
+export function verifyPublishedBase(baseVersion, latest, requested = null) {
   const base = `v${stableVersion(baseVersion)}`;
+  // A cumulative root may finish the version already allocated on main.
+  // This does not admit a different unpublished product root or reuse a release.
+  if (requested === base) {
+    verifyNextReleaseTitle(`Release ${requested}`, latest);
+    return base;
+  }
   if (base !== latest)
     throw new Error(
       `Current main source ${base} is not the publicly accepted ${latest} release. ` +
@@ -135,10 +141,11 @@ async function verifyPublic() {
     rootRelease,
     buildInfo,
   });
+  const requested = verifyNextReleaseTitle(process.env.PR_TITLE, boundary.latest);
   return {
     ...boundary,
-    base: verifyPublishedBase(process.env.PR_BASE_VERSION, boundary.latest),
-    requested: verifyNextReleaseTitle(process.env.PR_TITLE, boundary.latest),
+    base: verifyPublishedBase(process.env.PR_BASE_VERSION, boundary.latest, requested),
+    requested,
   };
 }
 

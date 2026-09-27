@@ -1,0 +1,75 @@
+body[data-edition-id] {
+  --fk-accent: var(--brand-accent);
+  --fk-bg: var(--brand-ink);
+  --fk-panel: var(--brand-grid);
+  --fk-text: var(--brand-paper);
+  --fk-muted: var(--brand-muted);
+}
+body[data-edition-id] #shell-home {
+  isolation: isolate;
+}
+.edition-home-art {
+  display: block;
+  width: 100%;
+  max-height: min(38dvh, 320px);
+  object-fit: cover;
+  border-radius: 8px;
+  margin-block-end: 18px;
+}
+.edition-brand-logo {
+  display: block;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  background: white;
+  border-radius: 6px;
+  padding: 3px;
+}
+.edition-switcher,
+.edition-about {
+  margin-block: 16px;
+}
+.edition-about p {
+  max-width: 70ch;
+}
+.edition-lesson-dialog {
+  width: min(760px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  padding: 24px;
+  background: var(--brand-ink, #10202a);
+  color: var(--brand-paper, #fff);
+}
+.edition-lesson-dialog button,
+.edition-lesson-dialog select {
+  min-height: 44px;
+  font: inherit;
+}
+.edition-lesson-dialog button {
+  border: 1px solid var(--brand-accent, #5fd6ff);
+  color: inherit;
+  background: transparent;
+  padding: 8px 12px;
+}
+.edition-lesson-dialog select {
+  max-width: 100%;
+}
+.edition-lesson-dialog .company-workbench-field {
+  display: grid;
+  gap: 6px;
+  margin-block: 12px;
+}
+.edition-lesson-dialog .company-workbench-record {
+  margin-block: 12px;
+  padding: 12px;
+  border: 1px solid var(--brand-muted, #789);
+}
+.edition-learning-data,
+.edition-offline {
+  margin-block: 20px;
+}
+.edition-learning-data label {
+  display: grid;
+  gap: 8px;
+  margin-block: 12px;
+}

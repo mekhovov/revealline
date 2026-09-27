@@ -14,6 +14,20 @@ const DIFFICULTY_KEYS = Object.freeze({
 
 const UKRAINIAN_CULTURAL_SPATIAL_REVISION = 'cultural-spatial-triptych-1';
 const UKRAINIAN_HORIZON_JOINS_REVISION = 'horizon-cultural-joins-1';
+const UKRAINIAN_BORDER_ROUTES_REVISION = 'border-cultural-routes-1';
+const UKRAINIAN_BORDER_SIGNAL_ROUTES_REVISION = 'border-signal-cultural-routes-1';
+const UKRAINIAN_EARLY_ROUTES_REVISION = 'early-cultural-routes-1';
+const UKRAINIAN_SIGNAL_ROUTES_REVISION = 'signal-cultural-routes-1';
+const UKRAINIAN_NEON_ROUTES_REVISION = 'neon-cultural-routes-1';
+const UKRAINIAN_NEON_FINALE_ROUTES_REVISION = 'neon-cultural-routes-2';
+const UKRAINIAN_ROVER_ROUTES_REVISION = 'rover-cultural-routes-1';
+const UKRAINIAN_FRACTURE_ROUTES_REVISION = 'fracture-cultural-routes-1';
+const UKRAINIAN_PHASEWORKS_ROUTES_REVISION = 'phaseworks-cultural-routes-1';
+const UKRAINIAN_LIVEWIRE_ROUTES_REVISION = 'livewire-cultural-routes-1';
+const UKRAINIAN_RELAY_ROUTES_REVISION = 'relay-cultural-routes-1';
+const UKRAINIAN_CROSSWIND_ROUTES_REVISION = 'crosswind-cultural-routes-1';
+const UKRAINIAN_SENTINEL_ROUTES_REVISION = 'sentinel-cultural-routes-1';
+const UKRAINIAN_APEX_ROUTES_REVISION = 'apex-cultural-routes-1';
 
 /** Text-only projection of an already resolved manifest. No engine, geometry,
  * image fetching or decoding is needed to describe a mission at its preset. */
@@ -53,9 +67,24 @@ export function authoredJourneyMissionTags(mission, manifest) {
   )
     tags.push('Ukrainian');
   if (
-    [UKRAINIAN_CULTURAL_SPATIAL_REVISION, UKRAINIAN_HORIZON_JOINS_REVISION].includes(
-      manifest.level?.revision,
-    )
+    [
+      UKRAINIAN_CULTURAL_SPATIAL_REVISION,
+      UKRAINIAN_HORIZON_JOINS_REVISION,
+      UKRAINIAN_BORDER_ROUTES_REVISION,
+      UKRAINIAN_BORDER_SIGNAL_ROUTES_REVISION,
+      UKRAINIAN_EARLY_ROUTES_REVISION,
+      UKRAINIAN_SIGNAL_ROUTES_REVISION,
+      UKRAINIAN_NEON_ROUTES_REVISION,
+      UKRAINIAN_NEON_FINALE_ROUTES_REVISION,
+      UKRAINIAN_ROVER_ROUTES_REVISION,
+      UKRAINIAN_FRACTURE_ROUTES_REVISION,
+      UKRAINIAN_PHASEWORKS_ROUTES_REVISION,
+      UKRAINIAN_LIVEWIRE_ROUTES_REVISION,
+      UKRAINIAN_RELAY_ROUTES_REVISION,
+      UKRAINIAN_CROSSWIND_ROUTES_REVISION,
+      UKRAINIAN_SENTINEL_ROUTES_REVISION,
+      UKRAINIAN_APEX_ROUTES_REVISION,
+    ].includes(manifest.level?.revision)
   )
     tags.push('Ukrainian');
   if (mission.packId === 'workshop-routing-study' && mission.campaignId === 'workshop-routing')

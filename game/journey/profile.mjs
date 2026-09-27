@@ -222,10 +222,16 @@ export function applyJourneyEvent(source, event) {
 export function createJourneyBackend({
   indexedDB = globalThis.indexedDB,
   profileKey = 'journey',
+  canWrite = () => true,
 } = {}) {
   // Content-review editions may isolate progress without changing the database
   // or historical default record. Never derive this key from a release version.
   validateProfileKey(profileKey);
+  if (typeof canWrite !== 'function') throw new TypeError('A profile write guard is required.');
+  const checkWrite = (events) => {
+    if (events.length && !canWrite())
+      throw new Error('The profile saving lease is no longer held.');
+  };
   let opening;
   const open = () => {
     if (!indexedDB) return Promise.reject(new Error(t('errors:journey.storageUnavailable')));
@@ -255,7 +261,9 @@ export function createJourneyBackend({
     }));
   };
   async function transaction(events) {
+    checkWrite(events);
     const db = await open();
+    checkWrite(events);
     return new Promise((resolve, reject) => {
       const tx = db.transaction('profiles', events.length ? 'readwrite' : 'readonly'),
         store = tx.objectStore('profiles'),
@@ -267,6 +275,7 @@ export function createJourneyBackend({
       const loaded = () => {
         if (--remaining) return;
         try {
+          checkWrite(events);
           next = {
             profile:
               read.result === undefined
@@ -321,9 +330,11 @@ export function createJourneyProfileStore({
   profileKey = backend?.profileKey ?? 'journey',
   onStatus = () => {},
   operationTimeoutMs = 1500,
+  canWrite = () => true,
 } = {}) {
   validateProfileKey(profileKey);
-  backend ??= createJourneyBackend({ profileKey });
+  if (typeof canWrite !== 'function') throw new TypeError('A profile write guard is required.');
+  backend ??= createJourneyBackend({ profileKey, canWrite });
   if (backend.profileKey !== undefined && backend.profileKey !== profileKey)
     throw new TypeError(t('errors:journey.backendEditionMismatch'));
   if (!Number.isFinite(operationTimeoutMs) || operationTimeoutMs <= 0)
@@ -369,6 +380,7 @@ export function createJourneyProfileStore({
       ? validateState(await backend.readState())
       : { profile: validateJourneyProfile(await backend.read()), pictures: emptyJourneyPictures() };
   const commitState = async (events) => {
+    if (!canWrite()) throw new Error('The profile saving lease is no longer held.');
     if (backend.commitState) return validateState(await backend.commitState(events));
     if (events.some((event) => event.picture !== undefined || event.pictures !== undefined))
       throw new Error(t('errors:journey.pictureReceiptsUnsupported'));

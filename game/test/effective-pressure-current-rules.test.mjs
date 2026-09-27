@@ -7,7 +7,7 @@ import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createContentAttemptPreparer } from '../content-design/attempt.mjs';
 import { inspectEffectiveGameplay } from '../content-design/pressure-candidates.mjs';
-import { createWholeErosionReviewCandidates } from '../content-design/whole-spatial-candidates.mjs';
+import { createApexCulturalRoutesCandidates } from '../content-design/apex-cultural-routes-candidates.mjs';
 import { createTeamImpactOriginalCandidates } from '../content-design/team-impact-originals.mjs';
 import {
   createTeamSpecialistOriginalCandidates,
@@ -36,7 +36,7 @@ const pressureMissions = [
 ];
 
 test('all twelve current pressure adaptations report exact tuned attacks and global trail impacts', () => {
-  assert.equal(route.id, 'whole-spatial-v11');
+  assert.equal(route.id, 'whole-spatial-v25');
   for (const id of pressureMissions)
     for (const difficulty of ['gentle', 'standard', 'expert'])
       for (const mode of ['solo', 'versus']) {
@@ -78,7 +78,7 @@ test('all twelve current pressure adaptations report exact tuned attacks and glo
 test('inspection matches actual Solo attempt preparation with fresh admin settings, without changing the authored preview', async () => {
   // Greybox and pictured current factories compile byte-equivalent gameplay.
   // Use that real greybox preparation to avoid claiming image decode acceptance.
-  const source = createWholeErosionReviewCandidates();
+  const source = createApexCulturalRoutesCandidates({ artwork: false });
   const greybox = compileContentProject(source);
   const { themes } = JSON.parse(
     await readFile(new URL('../content-design/themes.json', import.meta.url)),
@@ -136,7 +136,7 @@ test('inspection matches actual Solo attempt preparation with fresh admin settin
 });
 
 test('current Team impact and specialist diagnostics read their actual top-level runtime contracts', () => {
-  assert.equal(DEFAULT_JOURNEY_ROUTES.team, 'team-trail-impact-originals-1');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.team, 'team-cultural-specialist-originals-2');
   for (const source of [
     createTeamImpactOriginalCandidates(),
     createTeamSpecialistOriginalCandidates(),

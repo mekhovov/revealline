@@ -1,5 +1,14 @@
 # Feature delivery and public verification
 
+## Current hosting policy — 2026-09-27
+
+Future releases use only `mekhovov/revealline`. Do not create, allocate, append, deploy or admit a `revealline-archive-XX` repository as a release step. Historical archive deployment and per-PR publication are not prerequisites.
+
+Publish the exact qualified current game on the main Pages site and keep original immutable ZIPs, manifests, checksums and source evidence in the main repository's GitHub Releases. Unarchived historical editions become explicitly download-only, not broken Play links. Existing accepted archive links, repositories, tags, assets, saved data and evidence remain unchanged; their frozen registry is compatibility history, not a recurring remote-admission gate. Do not delete or republish them.
+
+Keep current-source qualification, reviewed selector, protected-main checks, frozen independent inspection, bounded extraction, full artifact/public-byte verification, latest-release validation and scoped player acceptance. Preserve explicit test waivers as SKIPPED. The main Pages budget remains 950,000,000 bytes; exceeding it requires a new reviewed decision, not another repository or a raised limit. See [main-repository publishing policy](main-repository-publishing.md).
+
+
 **Current priorities and delivery status:** [current delivery plan](current-delivery-plan.md). The checkpoints below retain their original observation times and pending-gate wording.
 
 Use the [release queue title convention](release-queue-titles.md) for every open
@@ -11,7 +20,7 @@ The active FPV redesign follows the approved [Field Kit design contract](fpv-red
 
 This project’s current authorization is to commit each completed feature or phase, freeze a new independently playable version, create and merge its pull request, deploy it to GitHub Pages, and verify that deployment. No repeated permission request is needed for these scoped actions. This does not authorize unrelated external messages or native-store purchases/submissions.
 
-Before freezing a successor, project the main and archive Pages sizes from immutable manifests and the proposed allocation. The main site carries a mutable current graph in addition to every unarchived version. Passing game-source tests does not establish hosting capacity. A changed allocation requires a new source candidate; deploy and verify the archive before enabling main-site forwarding. Preserve the held candidate's successful evidence rather than relabelling it as a game failure.
+Before freezing a successor, check the main Pages budget from the exact current graph and small history metadata. Historical payloads remain original main-repository GitHub Release downloads. Do not allocate or deploy another archive. Passing game-source tests does not establish current artifact or public-byte acceptance.
 
 **Current status checkpoint:** v040 is published/publicly verified with 17 assets; frozen041 source 4d has passing gates and artifacts but still requires native, PR #17/main and public closure. Source-only UI/roles/recovery/audio companions are listed separately in the [current delivery plan](current-delivery-plan.md). Keep count units explicit: published works, frozen candidates, source originals, distinct geometry and fully approved presentation/story/music sets are different evidence. The current docs branch does not change a frozen source, release tag or save channel.
 
@@ -23,7 +32,7 @@ Before freezing a successor, project the main and archive Pages sizes from immut
 4. Use the tested CLI’s `release-snapshot --ref FULL_SHA --version vX.Y.Z`. Never overwrite a release/tag. Create the annotated tag on that source SHA. Verify the manifest, ZIP and source hashes, old release/tag preservation and frozen browser play.
 5. Push the feature branch and the exact new tag. Create a PR with the problem/result and validation evidence. Wait for PR checks; review the concrete diff, resolve failures, and merge with history preserved. A successful local test is not a merged PR.
 6. Publish the tag’s original `distribution.zip`, checksum and `release.json` as GitHub Release assets. Historical releases use `--latest=false`; only the current delivered milestone is marked latest. Never regenerate an asset under the same version.
-7. The main-branch Pages workflow verifies source, builds the exact package-version tag, and deploys only after verification. Public mutable-root HTML must lead into the complete immutable versioned graph. That graph's manifest and `game/build-info.json` must match the frozen source, even when the main merge commit is later than the source tag. Generated root aliases and root-worker retirement are explicit delivery overrides recorded in `current-entry-routing.json`; compare them against their prepared output, not the frozen HTML/worker bytes they intentionally replace. An archive transition must deploy and verify its canonical archive first, before enabling main-site forwarding; follow the storage contract below.
+7. The main-branch Pages workflow verifies source, builds the exact package-version tag, and deploys only after verification. Public mutable-root HTML must lead into the complete immutable versioned graph. That graph's manifest and `game/build-info.json` must match the frozen source, even when the main merge commit is later than the source tag. Generated root aliases and root-worker retirement are explicit delivery overrides recorded in `current-entry-routing.json`; compare them against their prepared output, not the frozen HTML/worker bytes they intentionally replace. New archive transitions are not part of release delivery; follow the main-repository-only policy above.
 8. Verify the completed Actions run and compare the full prepared public inventory. Test the public game in fresh and previously cached browsers; inspect actual document/module URLs, saved-flight continuation and the new offline scope. Network-byte equality alone is insufficient: a worker may still return older cached modules. For an archive transition, hash every canonical payload and check old entry forwarding, saved-data continuity and worker migration separately. Record version/source identity, public URL, PR, deployment run, failed checks and remaining issues. Only then mark the feature delivered.
 
 ## Current release boundary
@@ -140,7 +149,7 @@ For device-aware controls, follow the [current touch presentation review](resear
 - “Replace the large pause message with a compact dock. Keep explicit Resume, exact live-cut continuation and accessible Main menu; prove that opening and closing a menu never resumes the flight.”
 - “Add a Large-text preference through existing profile APIs. Preserve saved flights and failed-write recovery, then inspect compact portrait and landscape reflow with keyboard/controller focus.”
 - “Teach a registered enemy or line impact through Field Guide practice. Use actual legal inputs, grant no campaign awards, restore the original paused flight and listening intent, and reject stale child returns.”
-- “Move an explicit historical version group into its bounded archive. Preserve canonical bytes and tags, deploy and hash the archive first, then verify old HTML/worker migration before changing main routing.”
+- “Publish the current qualified game from the main repository; keep prior immutable releases downloadable without creating an archive repository.”
 - “Qualify immutable entry from a previously cached root and a fresh browser. Inspect the complete versioned graph, preserve saved flights and old caches, exercise normal retirement/offline preparation, and retain any failure even when all public network bytes match.”
 
 All project skill entry points link here. Skill text supports the user’s chosen scope; it does not turn a design-only request into a release or bypass a failed check.

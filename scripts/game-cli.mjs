@@ -678,6 +678,9 @@ async function addOfflineEntries(
     const marker = {
       format: 'revealline-offline.v1',
       downloadCatalogue: true,
+      ...(contentCatalogue.format === 'revealline-offline-content.v2'
+        ? { packageConsent: true }
+        : {}),
       version: info.version,
       buildId: placeholder,
       scope: `${relativeRoot}/`,
@@ -733,6 +736,9 @@ async function addOfflineEntries(
     buildId,
     files,
     downloadOriginals: contentCatalogue.originals,
+    ...(contentCatalogue.format === 'revealline-offline-content.v2'
+      ? { packageConsent: true, navigationBootstraps: contentCatalogue.navigationBootstraps }
+      : {}),
     downloadFiles: contentCatalogue.files.filter((file) => file.kind === 'gameplay'),
     ...(optionalPacks.length ? { optionalPacks } : {}),
     ...(optionalArtwork ? { optionalArtwork } : {}),
@@ -1191,6 +1197,9 @@ export async function releaseSnapshot({
     const frozenCli = path.join(source, 'scripts/game-cli.mjs');
     if (!(await exists(frozenCli)))
       fail('Selected ref predates the playable build CLI; keep it as a source reference instead');
+    const sourceEligibility = path.join(source, 'scripts/check-edition-source.mjs');
+    if (await exists(sourceEligibility))
+      command(process.execPath, [sourceEligibility, source], { cwd: source });
     command(
       process.execPath,
       [

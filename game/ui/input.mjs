@@ -242,13 +242,24 @@ export function attachInput({
   };
   listen(window, 'keydown', down);
   listen(window, 'keyup', up);
-  listen(window, 'blur', () => {
+  const loseForeground = () => {
     // Releases outside the document may be unobservable. A returning held key
     // still produces repeat events, which never count as a fresh command.
     keysDown.clear();
     pointersDown.clear();
     lifecycleClear();
-  });
+  };
+  listen(window, 'blur', loseForeground);
+  // Embedded views can become hidden without a window blur. Capture the
+  // document event too: releases while hidden may never reach this adapter.
+  listen(
+    window,
+    'visibilitychange',
+    () => {
+      if (document.hidden) loseForeground();
+    },
+    true,
+  );
   if (!readControllerCommand)
     listen(window, 'gamepaddisconnected', (event) => {
       if (selectedPad && selectedPad.index === event.gamepad?.index) padDisconnected = true;

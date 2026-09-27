@@ -41,6 +41,11 @@ export class SoloElement extends Element {
   get lastElementChild() {
     return this.children.at(-1) ?? null;
   }
+  prepend(...nodes) {
+    const prior = [...this.children];
+    this.append(...nodes);
+    this.children = [...nodes, ...prior.filter((node) => !nodes.includes(node))];
+  }
   showModal() {
     this.open = true;
     this.setAttribute('open', '');
@@ -170,6 +175,7 @@ export async function soloPage(
     pictures,
     waitForPictures = true,
     initialReadyTimeoutMs = 5000,
+    browserSetup,
     readPads = () => [],
   } = {},
 ) {
@@ -442,6 +448,7 @@ export async function soloPage(
   win.location = globals.location;
   // Real browser Window and global sessionStorage refer to the same tab store.
   win.sessionStorage = previewStorage;
+  browserSetup?.({ document: doc, window: win, globals });
   for (const [key, value] of Object.entries(globals)) {
     originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
     Object.defineProperty(globalThis, key, { value, configurable: true, writable: true });
@@ -510,7 +517,7 @@ export async function soloPage(
     }
   }
   await initialReady(
-    () => $('builtin-packs').children.length > 0,
+    () => !!doc.body.dataset.editionId || $('builtin-packs').children.length > 0,
     'Bundled pack index must finish loading.',
   );
   function frame(ms = 1000 / 120) {

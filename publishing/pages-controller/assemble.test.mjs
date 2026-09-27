@@ -1103,3 +1103,32 @@ test('128 independently pinned archives retain admission bounds and original-byt
   await repin(substituted, httpPath, { ...originalHTTP, expectedInventorySha256: inventorySha256 });
   await assert.rejects(validate(substituted), /does not preserve the pinned original/);
 });
+
+test('main-only assembly rotates current to download-only without historical archive evidence', async (t) => {
+  const f = await fixture(t, ['v0.141.6', 'v0.142.0']);
+  const accepted = JSON.parse(await fs.readFile(new URL('./publication.json', import.meta.url), 'utf8'));
+  const allocations = await fs.readFile(new URL('./allocations.json', import.meta.url));
+  f.configuration.hostingPolicy = accepted.hostingPolicy;
+  f.configuration.allocationSha256 = accepted.allocationSha256;
+  f.configuration.admissions = accepted.admissions;
+  await f.write(path.join(f.directory, 'publication.json'), jsonBytes(f.configuration));
+  await f.write(path.join(f.directory, 'allocations.json'), allocations);
+  for (const name of ['inventory.json', 'http.json', 'browser.json', 'native.txt'])
+    await fs.unlink(path.join(f.directory, name));
+  const result = await assemble(f);
+  assert.equal(result.currentVersion, 'v0.142.0');
+  assert.equal(result.historicalBridges, 1);
+  const index = JSON.parse(await fs.readFile(path.join(f.outputDirectory, 'releases/index.json'), 'utf8'));
+  const historical = index.releases.find((row) => row.version === 'v0.141.6');
+  assert.equal(historical.availability, 'download-only');
+  assert.equal(historical.play, null);
+  assert.match(historical.download, /^https:\/\/github.com\/mekhovov\/revealline\/releases\/download\//);
+  const landing = await fs.readFile(path.join(f.outputDirectory, 'releases/v0.141.6/site/game/index.html'), 'utf8');
+  assert.match(landing, /Download original ZIP/);
+  const current = await fs.readFile(path.join(f.outputDirectory, 'releases/v0.142.0/site/game/index.html'), 'utf8');
+  assert.equal(current, 'game v0.142.0');
+  assert.deepEqual(JSON.parse(await fs.readFile(path.join(f.outputDirectory, 'releases/v0.141.6/release.json'), 'utf8')), f.records[0]);
+  const { metadata } = await loadCatalog(f.directory);
+  await f.write(path.join(f.directory, 'qualification.json'), '{}');
+  await assert.rejects(validateAdmissions({ directory: f.directory, configuration: f.configuration, metadata }), /qualification byte pin mismatch/);
+});

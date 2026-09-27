@@ -4,6 +4,7 @@ import { t } from '../i18n/index.mjs';
 
 export const LIBRARY_COLLECTIONS = Object.freeze(['Journey', 'Classic', 'Custom']);
 export const LIBRARY_MODES = Object.freeze(['solo', 'versus', 'team']);
+export const LIBRARY_LIFECYCLES = Object.freeze(['current', 'archive']);
 export const LIBRARY_TAGS = Object.freeze([
   ...LIBRARY_COLLECTIONS,
   'Remix',
@@ -68,6 +69,8 @@ export function createMissionLibrary(sources = []) {
     if (store.get(row)?.size === 0) store.delete(row);
   };
   let rows = Object.freeze([]),
+    byId = new Map(),
+    rowsByMode = new Map(LIBRARY_MODES.map((mode) => [mode, Object.freeze([])])),
     disposed = false;
   const emit = () => {
     for (const listener of listeners) listener();
@@ -89,6 +92,18 @@ export function createMissionLibrary(sources = []) {
             LIBRARY_COLLECTIONS.indexOf(a.collection) - LIBRARY_COLLECTIONS.indexOf(b.collection),
         ),
     );
+    // The unified selector asks for exact identities repeatedly while it
+    // reconciles focus, availability and lazy previews. Keep those lookups
+    // linear in the number of rendered cards, not quadratic in the complete
+    // installed catalogue. Rebuild the derived indexes only after the owner
+    // replacement has been accepted so stale rows never become authoritative.
+    byId = new Map(rows.map((row) => [row.id, row]));
+    rowsByMode = new Map(
+      LIBRARY_MODES.map((mode) => [
+        mode,
+        Object.freeze(rows.filter((row) => row.modes.includes(mode))),
+      ]),
+    );
   }
   function cancelOwner(owner) {
     for (const row of owner.rows) {
@@ -101,6 +116,8 @@ export function createMissionLibrary(sources = []) {
     text(source.id, 'sourceId');
     text(source.editionId, 'editionId');
     text(source.edition, 'editionName', 160);
+    if (source.lifecycle !== undefined && !LIBRARY_LIFECYCLES.includes(source.lifecycle))
+      throw new TypeError('Mission source needs a current or archive lifecycle.');
     if (
       source.automaticContinuation !== undefined &&
       typeof source.automaticContinuation !== 'boolean'
@@ -154,6 +171,7 @@ export function createMissionLibrary(sources = []) {
         editionId: source.editionId,
         edition: source.edition,
         collection: source.collection,
+        lifecycle: source.lifecycle ?? 'current',
         automaticContinuation: source.automaticContinuation !== false,
         campaignKey: JSON.stringify([source.id, source.editionId, info.campaignKey]),
         campaignTitle: text(info.campaignTitle, 'campaignTitle', 160),
@@ -214,17 +232,21 @@ export function createMissionLibrary(sources = []) {
       return true;
     },
     find(id) {
-      return rows.find((row) => row.id === id) ?? null;
+      return byId.get(id) ?? null;
     },
     forMode(mode) {
       if (!LIBRARY_MODES.includes(mode))
         throw new TypeError(t('errors:missionLibrary.unknownMode'));
-      return rows.filter((row) => row.modes.includes(mode));
+      return rowsByMode.get(mode);
     },
-    search(query = '', { mode = 'solo', collection = '', campaign = '', tag = '' } = {}) {
+    search(
+      query = '',
+      { mode = 'solo', collection = '', campaign = '', tag = '', lifecycle = '' } = {},
+    ) {
       if (
         !LIBRARY_MODES.includes(mode) ||
-        (collection && !LIBRARY_COLLECTIONS.includes(collection))
+        (collection && !LIBRARY_COLLECTIONS.includes(collection)) ||
+        (lifecycle && !LIBRARY_LIFECYCLES.includes(lifecycle))
       )
         throw new TypeError(t('errors:missionLibrary.unknownFilter'));
       const words = String(query)
@@ -233,10 +255,11 @@ export function createMissionLibrary(sources = []) {
         .trim()
         .split(/\s+/u)
         .filter(Boolean);
-      return rows.filter((row) => {
+      return rowsByMode.get(mode).filter((row) => {
         const display = words.length ? presentation(row) : row;
         return (
           row.modes.includes(mode) &&
+          (!lifecycle || row.lifecycle === lifecycle) &&
           (!collection || row.collection === collection) &&
           (!campaign || row.campaignKey === campaign) &&
           (!tag || row.tags.includes(tag)) &&
@@ -347,6 +370,8 @@ export function createMissionLibrary(sources = []) {
       for (const owner of owners.values()) cancelOwner(owner);
       owners.clear();
       rows = Object.freeze([]);
+      byId = new Map();
+      rowsByMode = new Map(LIBRARY_MODES.map((mode) => [mode, Object.freeze([])]));
       listeners.clear();
     },
   });

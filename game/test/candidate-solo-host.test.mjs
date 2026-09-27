@@ -15,12 +15,15 @@ import {
 import { createRun, stepRun, FIXED_DT, CLASSES } from '../core/index.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { gameplayDifficultyLabel } from '../ui/gameplay-copy.mjs';
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { dataIdentity } from '../data-json.mjs';
+import { ACTOR_SESSION_FORMAT } from '../sessions.mjs';
 import { expectedRouteEvidence, assertRouteEvidence } from './helpers/route-evidence.mjs';
 
-const authoredProject = compileContentProject(createAuthoredJourneyRoute('authored').source);
+const authoredRoute = createAuthoredJourneyRoute('authored');
+const authoredProject = compileContentProject(authoredRoute.source);
 const {
   rows: tunedRoutes,
   optional: optionalRoutes,
@@ -138,6 +141,22 @@ test('the final authored core mission offers Find missions without recording a f
   assert.equal(p.$('journey-skip').textContent, 'Find missions');
   assert.deepEqual(p.errors, []);
 });
+
+for (const [missionId, expected] of [
+  ['first-return', 'Next: Choose your share'],
+  ['two-keepers', 'Next campaign: Horizon School'],
+])
+  test(`Solo result for ${missionId} names its owned continuation`, async (t) => {
+    const { p } = await setup(t);
+    await openMissions(p);
+    missionCard(p, 'opening', missionId).click();
+    await running(p, missionId);
+    p.$('pause-button').click();
+    p.rendered.run.status = 'won';
+    p.$('show-result').click();
+    assert.equal(p.$('next-button').textContent, expected);
+    assert.deepEqual(p.errors, []);
+  });
 
 test('cross-pack Skip failure keeps Horizon intact, then retries into Border without awarding a clear', async (t) => {
   let refuseBorder = false;
@@ -330,9 +349,12 @@ test('failed difficulty save offers truthful export and retry without replacing 
   assert.equal(p.rendered.run, run);
   assert.equal(p.rendered.backdrop, picture);
   assert.equal(p.rendered.run.lives, 3);
-  assert.match(
-    p.$('difficulty-note').textContent,
-    /This flight: standard. Next fresh attempt: expert/,
+  assert.ok(
+    p
+      .$('difficulty-note')
+      .textContent.includes(
+        `This flight: ${gameplayDifficultyLabel('standard')}. Next fresh attempt: ${gameplayDifficultyLabel('expert')}`,
+      ),
   );
   assert.deepEqual(p.errors, []);
 });
@@ -357,9 +379,12 @@ test('cross-tab difficulty intent refreshes controls but preserves the current a
   assert.equal(p.rendered.run, run);
   assert.equal(p.rendered.backdrop, picture);
   assert.equal(p.rendered.run.lives, 3);
-  assert.match(
-    p.$('difficulty-note').textContent,
-    /This flight: standard. Next fresh attempt: gentle/,
+  assert.ok(
+    p
+      .$('difficulty-note')
+      .textContent.includes(
+        `This flight: ${gameplayDifficultyLabel('standard')}. Next fresh attempt: ${gameplayDifficultyLabel('gentle')}`,
+      ),
   );
   assert.deepEqual(p.errors, []);
 });
@@ -480,7 +505,9 @@ test('candidate Skip takes two actions, uses next-attempt Expert intent, and res
   assert(savedRaw);
   const saved = JSON.parse(savedRaw);
   assert.equal(saved.themeId, 'horizon');
-  assert.equal(saved.presentationPins, undefined);
+  assert.equal(saved.format, ACTOR_SESSION_FORMAT);
+  assert.equal(saved.presentationPins, null);
+  assert.ok(saved.actorAppearancePin);
   assert.equal(verifyReplay(saved.replay).match, true);
   p.change('difficulty-select', 'expert');
   assert.equal(p.rendered.run, retained);

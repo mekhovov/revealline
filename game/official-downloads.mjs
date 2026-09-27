@@ -270,7 +270,60 @@ export function createOfficialDownloads({
       for (const hash of old.hashes) if (!used.has(hash)) await data.delete(key(hash));
     });
   }
-  return Object.freeze({ read, inspect, estimate, download, remove, retain, states });
+  /** Prepared gameplay can create saves synchronously after admission. Keep its
+   * complete verified package until a future save-aware reclamation pass can
+   * prove that no flight, replay or collected original still needs it. */
+  async function pin({ edition, group, files, signal }) {
+    if (
+      typeof edition !== 'string' ||
+      !edition.length ||
+      edition.length > 2048 ||
+      typeof group !== 'string' ||
+      !group.length ||
+      group.length > 200 ||
+      !Array.isArray(files) ||
+      files.some((file) => file.kind !== 'gameplay')
+    )
+      throw new Error('Gameplay retention needs an exact edition and package.');
+    aborted(signal);
+    return locked(async () => {
+      aborted(signal);
+      const report = await inspect(files, { verify: true, signal });
+      aborted(signal);
+      if (!report.ready)
+        throw new Error(
+          'Verify this complete chapter before keeping its saved-flight dependencies.',
+        );
+      const owner = JSON.stringify([edition, group]);
+      const url = new URL(
+        `/.revealline-official/owners/played/${encodeURIComponent(owner)}`,
+        origin,
+      ).href;
+      const metadata = await cacheStorage.open(DOWNLOAD_STATE_CACHE);
+      const previous = await metadata.match(url);
+      const retained = previous ? await previous.json() : null;
+      const hashes = [
+        ...new Set([...(retained?.hashes || []), ...files.map((file) => checkFile(file).sha256)]),
+      ];
+      aborted(signal);
+      await metadata.put(
+        url,
+        new Response(
+          JSON.stringify({
+            edition: 'played-dependencies',
+            group: owner,
+            scope: edition,
+            package: group,
+            hashes,
+            complete: true,
+          }),
+        ),
+      );
+      aborted(signal);
+      return { hashes, complete: true };
+    }, signal);
+  }
+  return Object.freeze({ read, inspect, estimate, download, remove, retain, pin, states });
 }
 
 /** Fail closed if browser storage is unavailable; never turn a local miss into a request. */

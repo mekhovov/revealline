@@ -1,6 +1,8 @@
 /** Resolve the transitive, deduplicated file set; soundtrack groups have no game dependencies. */
 export function downloadFiles(catalogue, ids) {
-  if (catalogue?.format !== 'revealline-offline-content.v1')
+  if (
+    !['revealline-offline-content.v1', 'revealline-offline-content.v2'].includes(catalogue?.format)
+  )
     throw new Error('Unsupported offline catalogue.');
   const groups = new Map(catalogue.groups.map((group) => [group.id, group]));
   const files = new Map(catalogue.files.map((file) => [file.path, file]));

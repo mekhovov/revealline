@@ -14,6 +14,13 @@ test('the explicit temporary policy skips only automated suites and never report
   assert.ok(['waived', 'required'].includes(policy.mode));
   assert.equal(policy.authorization, 'explicit-user-request-20260922');
   assert.equal(policy.scope, 'automated-test-suites');
+  assert.deepEqual(policyDecision(policy), {
+    policyMode: 'waived',
+    mode: 'waived',
+    runTests: 'false',
+    qualification: 'tests-waived-by-user',
+    forced: false,
+  });
   assert.deepEqual(policyDecision({ ...policy, mode: 'waived' }), {
     policyMode: 'waived',
     mode: 'waived',
@@ -26,6 +33,13 @@ test('the explicit temporary policy skips only automated suites and never report
 
 test('restored policy or explicit full-test override requires suites without claiming a passing verdict', async () => {
   const policy = await readTestPolicy();
+  assert.deepEqual(policyDecision({ ...policy, mode: 'required' }), {
+    policyMode: 'required',
+    mode: 'required',
+    runTests: 'true',
+    qualification: 'tests-required',
+    forced: false,
+  });
   for (const decision of [
     policyDecision({ ...policy, mode: 'required' }),
     policyDecision(policy, { forceTests: true }),
