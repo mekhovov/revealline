@@ -40,7 +40,10 @@ PR #680 merged as `218e76281e3bfa26f57b7aa0f7b98058f4bd05ad`. It confines the va
 worker to read-only package and image filesystems, bounded temporary storage and process resources,
 an internal database network, and local-only bounded ffprobe inspection. Source assertions cover
 that contract. Preparation PR #709 adds a hosted Linux Compose acceptance. Run `36275412435`
-passed against exact pre-ledger source `122f36c901b13ef47fd94c6688ebb99bb567aa02`: production-shaped
+recorded pre-ledger PR head `122f36c901b13ef47fd94c6688ebb99bb567aa02` in its receipts while
+GitHub checked out a synthetic merge with the same runtime content and changes to three planning
+documents. The workflow now pins that declared revision and fails before installation if the
+checkout differs. In that run, production-shaped
 migrations and readiness, PostgreSQL, filesystem blob/tus storage, the hardened worker, a 17-byte
 interrupted tus resume, retained-volume container recreation, exact publication/download, two-user
 ownership, install/legal completion/reload, moderation and offline replay all passed. The run found
