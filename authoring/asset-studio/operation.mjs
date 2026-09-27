@@ -1,5 +1,6 @@
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { localizedMessage, localizedText, t } from '../../game/i18n/index.mjs';
+import { assetStudioErrorMessage } from './error-copy.mjs';
 
 const cancelled = () => new DOMException(t('errors:studio.operationCancelled'), 'AbortError');
 
@@ -101,7 +102,7 @@ export function createStudioOperations({
           owner.lease.finish({
             message: wasCancelled
               ? localizedMessage('tools:studio.operation.cancelledWorkspaceUnchanged')
-              : error.message || String(error),
+              : assetStudioErrorMessage(error),
             state: wasCancelled ? 'cancelled' : 'error',
           });
         }
