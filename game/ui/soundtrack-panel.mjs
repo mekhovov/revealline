@@ -44,7 +44,7 @@ import {
   fetchSoundtrackAlbumCatalog,
 } from '../soundtrack-album-download.mjs';
 import {
-  fetchOnlineSoundtrackCatalogue,
+  fetchOnlineSoundtrackCatalogues,
   onlineSoundtrackRecordingAllowed,
 } from '../online-soundtrack-catalogue.mjs';
 import { soundtrackErrorText } from './soundtrack-error-copy.mjs';
@@ -1799,7 +1799,7 @@ export function attachSoundtrackPanel({
     reloadOnline.disabled = true;
     localizedText(onlineStatus, () => t('interface:loadingThePublicSoundtrackCatalogue'));
     try {
-      const loaded = await fetchOnlineSoundtrackCatalogue({
+      const loaded = await fetchOnlineSoundtrackCatalogues({
         ...onlineCatalogueDownload,
         signal: current.signal,
       });
