@@ -8,6 +8,7 @@ import {
   installedResultMessage,
   offlineMessage,
   offlineReadinessCode,
+  offlineReadinessKey,
   offlineReadinessLabel,
   runApprovedDownload,
 } from '../offline-download-session.mjs';
@@ -29,12 +30,26 @@ test('base is the default; all current gameplay never selects archive, creator t
   const all = gameplaySelection(catalogue, { all: true });
   assert.deepEqual(all, ['base', 'shared', 'solo:horizon-starter', 'solo:border', 'versus:border']);
   assert.equal(offlineReadinessCode(catalogue, ['base']), 'baseReady');
+  assert.equal(offlineReadinessKey(catalogue, ['base']), 'interface:downloads.baseReady');
   assert.equal(offlineReadinessLabel(catalogue, ['base']), 'Base game ready offline');
   assert.equal(
     offlineReadinessLabel({ ...catalogue, format: 'revealline-offline-content.v2' }, ['base']),
     'Solo starter ready offline',
   );
   assert.equal(offlineReadinessLabel(catalogue, all), 'Game ready offline');
+  assert.equal(offlineReadinessKey(catalogue, all), 'interface:downloads.gameReady');
+  assert.equal(
+    offlineReadinessKey(catalogue, ['base', 'solo:border']),
+    'interface:downloads.chaptersReady',
+  );
+  assert.equal(
+    offlineReadinessKey({ ...catalogue, format: 'revealline-offline-content.v2' }, [
+      'base',
+      'shared',
+      'solo:horizon-starter',
+    ]),
+    'interface:downloads.soloStarterReady',
+  );
   assert.equal(
     offlineReadinessLabel(catalogue, ['base', 'solo:border']),
     'Selected chapters ready offline',

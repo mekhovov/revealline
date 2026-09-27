@@ -25,6 +25,15 @@ export function offlineReadinessCode(catalogue, ids) {
       ? 'soloStarterReady'
       : 'baseReady';
 }
+const OFFLINE_READINESS_KEYS = Object.freeze({
+  gameReady: 'interface:downloads.gameReady',
+  chaptersReady: 'interface:downloads.chaptersReady',
+  soloStarterReady: 'interface:downloads.soloStarterReady',
+  baseReady: 'interface:downloads.baseReady',
+});
+export function offlineReadinessKey(catalogue, ids) {
+  return OFFLINE_READINESS_KEYS[offlineReadinessCode(catalogue, ids)];
+}
 export function offlineReadinessLabel(catalogue, ids) {
   return {
     gameReady: 'Game ready offline',
@@ -34,32 +43,33 @@ export function offlineReadinessLabel(catalogue, ids) {
   }[offlineReadinessCode(catalogue, ids)];
 }
 
-const OFFLINE_MESSAGE_CODES = new Set([
-  'bundled',
-  'development',
-  'unsupported',
-  'connecting',
-  'checking',
-  'downloading',
-  'saving',
-  'verifying',
-  'stillRunning',
-  'unconfirmed',
-  'differentBuild',
-  'unconfirmedBuild',
-  'downloadFailed',
-  'workerChanged',
-  'workerMismatch',
-  'verificationFailed',
-  'prepareFirst',
-  'waiting',
-  'ready',
-  'coreVerified',
-]);
+const OFFLINE_MESSAGE_KEYS = Object.freeze({
+  bundled: 'interface:downloads.offline.bundled',
+  development: 'interface:downloads.offline.development',
+  unsupported: 'interface:downloads.offline.unsupported',
+  connecting: 'interface:downloads.offline.connecting',
+  checking: 'interface:downloads.offline.checking',
+  downloading: 'interface:downloads.offline.downloading',
+  saving: 'interface:downloads.offline.saving',
+  verifying: 'interface:downloads.offline.verifying',
+  stillRunning: 'interface:downloads.offline.stillRunning',
+  unconfirmed: 'interface:downloads.offline.unconfirmed',
+  differentBuild: 'interface:downloads.offline.differentBuild',
+  unconfirmedBuild: 'interface:downloads.offline.unconfirmedBuild',
+  downloadFailed: 'interface:downloads.offline.downloadFailed',
+  workerChanged: 'interface:downloads.offline.workerChanged',
+  workerMismatch: 'interface:downloads.offline.workerMismatch',
+  verificationFailed: 'interface:downloads.offline.verificationFailed',
+  prepareFirst: 'interface:downloads.offline.prepareFirst',
+  waiting: 'interface:downloads.offline.waiting',
+  ready: 'interface:downloads.offline.ready',
+  coreVerified: 'interface:downloads.offline.coreVerified',
+});
 export function offlineMessage(value, translate) {
   const code = value?.offlineCode ?? value?.messageCode;
   const detail = value?.summary ?? value?.message ?? '';
-  if (OFFLINE_MESSAGE_CODES.has(code)) return translate('interface:downloads.offline.' + code);
+  const key = OFFLINE_MESSAGE_KEYS[code];
+  if (key) return translate(key);
   if (detail) return translate('interface:downloads.unknownDetail', { detail });
   return translate('interface:downloads.unknownError');
 }
