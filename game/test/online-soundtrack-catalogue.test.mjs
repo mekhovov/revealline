@@ -63,6 +63,41 @@ test('online catalogue creates a bounded immutable remote playback entry', () =>
   assert.equal(resolved.tracks[0].recordingModeEligible, false);
 });
 
+test('online catalogue validates but excludes unlisted review recordings from game queues', () => {
+  const publicTrack = {
+    ...track,
+    collections: ['Base Game Playlist'],
+  };
+  const heldHash = 'b'.repeat(64);
+  const held = {
+    ...track,
+    id: 'creator.held-song',
+    collections: ['Base Game Review'],
+    visibility: 'review-only',
+    audio: {
+      ...track.audio,
+      path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${heldHash}.mp3`,
+      sha256: heldHash,
+    },
+  };
+  const resolved = resolveOnlineSoundtrackCatalogue({
+    ...catalogue,
+    counts: {
+      declaredTracks: 2,
+      uniqueRecordings: 2,
+      duplicateAliases: 0,
+      audioBytes: publicTrack.audio.bytes + held.audio.bytes,
+    },
+    tracks: [publicTrack, held],
+  });
+  assert.equal(resolved.tracks.length, 1);
+  assert.equal(resolved.tracks[0].archiveTrackId, publicTrack.id);
+  assert.equal(
+    resolved.tracks.some(({ archiveTrackId }) => archiveTrackId === held.id),
+    false,
+  );
+});
+
 test('online catalogue accepts hash-bound external delivery without a domain allowlist', async () => {
   const bytes = new Uint8Array([0xff, 0xfb, 0x90, 0x64]);
   const digest = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
