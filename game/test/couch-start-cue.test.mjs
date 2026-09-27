@@ -32,6 +32,23 @@ test('Retry uses one 600 ms ready cue and cannot release early', () => {
   assert.equal(missionStartCueDuration('retry'), 900);
 });
 
+test('accumulated 120 Hz clocks settle the exact mission boundary', () => {
+  let now = 1000;
+  now += 3000;
+  now += 1000 / 120;
+  const startedAt = now;
+  const cue = createMissionStartCue('mission');
+  assert.equal(cue.sample(now).label, '3');
+  for (const label of ['2', '1', 'GO']) {
+    now += 700;
+    assert.equal(cue.sample(now).label, label);
+  }
+  for (let frame = 0; frame < 42; frame++) now += 1000 / 120;
+  const undershoot = missionStartCueDuration('mission') - (now - startedAt);
+  assert.ok(undershoot > 0 && undershoot < 1e-6);
+  assert.equal(cue.sample(now).active, false);
+});
+
 test('invalid clocks and cue kinds fail closed', () => {
   assert.throws(() => createMissionStartCue('resume'), /mission or retry/);
   const cue = createMissionStartCue('mission');
