@@ -34,6 +34,7 @@ import {
   selectReleaseMetadata,
   validRetentionConfiguration,
 } from "./metadata.mjs";
+import { mainRepositoryRoutes, MAIN_REPOSITORY_POLICY } from "./main-repository-policy.mjs";
 import { validateWaivedSourceQualification } from "./source-qualification.mjs";
 
 const root = path.resolve(
@@ -106,6 +107,7 @@ export async function validateAdmissions({
   if (
     !exact(configuration, [
       "format",
+      ...(Object.hasOwn(configuration, "hostingPolicy") ? ["hostingPolicy"] : []),
       "currentVersion",
       "catalogSha256",
       "allocationSha256",
@@ -118,6 +120,7 @@ export async function validateAdmissions({
       "testingRoutes",
     ]) ||
     configuration.format !== "revealline-pages-controller.v1" ||
+    (Object.hasOwn(configuration, "hostingPolicy") && configuration.hostingPolicy !== MAIN_REPOSITORY_POLICY) ||
     typeof configuration.deploymentEnabled !== "boolean" ||
     !VERSION.test(configuration.currentVersion) ||
     !metadata.has(configuration.currentVersion) ||
@@ -210,6 +213,9 @@ export async function validateAdmissions({
   const allocationsBytes = await readOrdinary(directory, "allocations.json");
   if (digest(allocationsBytes) !== configuration.allocationSha256)
     throw new Error("Allocation byte pin mismatch.");
+  if (configuration.hostingPolicy === MAIN_REPOSITORY_POLICY)
+    return { ...mainRepositoryRoutes(configuration, allocationsBytes, metadata), qualification };
+  // Legacy validation remains available only for historical fixtures/tools, not the active publisher.
   const allocation = parseJSON(allocationsBytes),
     records = [...metadata.values()].map((m) => m.record),
     admitted = new Map(),
@@ -743,7 +749,7 @@ export async function assemble({
     if (rootPaths.has(row.path))
       await copyVerifiedFile(source, path.join(outputDirectory, row.path), row);
   }
-  let redirectedHTMLFiles = 0;
+  let redirectedHTMLFiles = 0, downloadLandingHTMLFiles = 0;
   for (const [version, item] of publicationMetadata) {
     await writeFile(
       outputDirectory,
@@ -758,7 +764,10 @@ export async function assemble({
         `releases/${version}/site/${relative}`,
         bytes,
       );
-      if (relative.endsWith(".html")) redirectedHTMLFiles++;
+      if (relative.endsWith(".html")) {
+        if (publicationSites[version]) redirectedHTMLFiles++;
+        else downloadLandingHTMLFiles++;
+      }
     }
   }
   const catalogPresentation = await copyCatalogPresentation(
@@ -774,7 +783,7 @@ export async function assemble({
       lock.sourceRepository,
       current.record.version,
       publicationSites,
-      { presentation: Boolean(catalogPresentation) },
+      { presentation: Boolean(catalogPresentation), hostingPolicy: configuration.hostingPolicy },
     );
   await writeFile(
     outputDirectory,
@@ -826,7 +835,9 @@ export async function assemble({
     historicalBridges: publicationMetadata.size - 1,
     testingVersions: testingMetadata.size,
     redirectedHTMLFiles,
-    browserAdmissionsRequired: requireBrowser,
+    downloadLandingHTMLFiles,
+    browserAdmissionsRequired: configuration.hostingPolicy === MAIN_REPOSITORY_POLICY ? false : requireBrowser,
+    hostingPolicy: configuration.hostingPolicy || "legacy-archives",
     catalogPresentation,
     currentGraphLayout: "single-canonical-with-root-metadata-v1",
     rootCompatibilityFiles: rootRows,
