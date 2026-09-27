@@ -6,8 +6,10 @@ interruption proxy, and bounded deployed two-user journey. The following source 
 release/source binding, full readiness gating, and a deployed tus interruption runner. Automated
 tests cover each boundary with injected PostgreSQL, filesystem, process, and HTTP failures. The
 updated service suite passes **105/105** on preparation PR #709. Hosted run `36275412435` passes the
-production-shaped Linux Compose path against exact pre-ledger source
-`122f36c901b13ef47fd94c6688ebb99bb567aa02`; no selected-host acceptance is claimed.
+production-shaped Linux Compose path with receipts labelled for pre-ledger PR head
+`122f36c901b13ef47fd94c6688ebb99bb567aa02`; GitHub checked out a synthetic merge with the same
+runtime content and changes to three planning documents. Future runs pin and verify the declared
+revision before installation. No selected-host acceptance is claimed.
 
 ## Automated source evidence
 

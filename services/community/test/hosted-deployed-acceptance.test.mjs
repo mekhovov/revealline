@@ -33,7 +33,27 @@ test('hosted journey uses an isolated exact-source PostgreSQL and disk deploymen
   assert.doesNotMatch(dockerfile, /COPY game \/srv\/game/u);
 
   assert.match(workflow, /runs-on: ubuntu-24\.04/u);
-  assert.match(workflow, /COMMUNITY_SOURCE_REVISION: \$\{\{/u);
+  const sourceRevisionExpression = '\${{ github.event.pull_request.head.sha || github.sha }}';
+  assert.match(
+    workflow,
+    new RegExp(
+      `- name: Check out exact source[\\s\\S]*?ref: ${escapeRegExp(sourceRevisionExpression)}`,
+      'u',
+    ),
+  );
+  assert.match(
+    workflow,
+    new RegExp(`COMMUNITY_SOURCE_REVISION: ${escapeRegExp(sourceRevisionExpression)}`, 'u'),
+  );
+  assert.match(
+    workflow,
+    /- name: Verify exact checked-out source[\s\S]*?git rev-parse HEAD[\s\S]*?COMMUNITY_SOURCE_REVISION/u,
+  );
+  assert.ok(
+    workflow.indexOf('- name: Verify exact checked-out source') <
+      workflow.indexOf('- name: Install acceptance runner dependencies'),
+    'the source assertion must fail before dependencies are installed or services are built',
+  );
   assert.match(workflow, /compose\.production\.yaml/u);
   assert.match(workflow, /acceptance:tus-deployed/u);
   assert.match(workflow, /down --remove-orphans/u);
@@ -42,3 +62,7 @@ test('hosted journey uses an isolated exact-source PostgreSQL and disk deploymen
   assert.match(workflow, /retention-days: 14/u);
   assert.match(workflow, /down --volumes --remove-orphans/u);
 });
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+}

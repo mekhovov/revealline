@@ -57,6 +57,16 @@ jobs:
     steps:
       - name: Check out exact source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Verify exact checked-out source
+        run: |
+          actual_source_revision="$(git rev-parse HEAD)"
+          if [ "$actual_source_revision" != "$COMMUNITY_SOURCE_REVISION" ]; then
+            echo "::error::Checked-out source $actual_source_revision differs from expected $COMMUNITY_SOURCE_REVISION."
+            exit 1
+          fi
 
       - name: Set up Node.js
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
