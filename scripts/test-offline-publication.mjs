@@ -8,7 +8,11 @@ import { buildOfflineContent, buildOfflineInventory } from './offline-content.mj
 import { downloadFiles } from '../game/download-catalogue.mjs';
 import { soundtrackDownloadVolumes } from '../game/soundtrack-download-volumes.mjs';
 import { SOUNDTRACK_CATALOGUE } from '../game/content/soundtrack-catalogue.mjs';
-import { addOfflineLauncher } from './offline-launcher.mjs';
+import {
+  addOfflineLauncher,
+  LAUNCHER_CATALOG_KEYS,
+  LAUNCHER_FILE_LIMIT,
+} from './offline-launcher.mjs';
 import { publishOfflineLauncher } from '../publishing/pages-controller/launcher.mjs';
 import { validateEditionCodeClosure } from './compile-edition.mjs';
 
@@ -72,10 +76,36 @@ test('publisher copies only the frozen lightweight launcher and points at the im
       .map((entry) => [entry.name, entry.bytes]),
   );
   validateEditionCodeClosure(launcher);
-  for (const name of ['edition-context.mjs', 'profile-writer.mjs']) {
-    assert.ok(launcher.has(`app/${name}`));
-    assert.ok(launcher.get('app/service-worker.js').toString().includes(`"path":"${name}"`));
+  const dependencies = [
+    'edition-context.mjs',
+    'profile-writer.mjs',
+    'i18n/index.mjs',
+    'i18n/bootstrap.mjs',
+    'i18n/catalogs.mjs',
+    'i18n/style.css',
+    'vendor/i18next-26.4.2.min.js',
+  ];
+  const workerSource = launcher.get('app/service-worker.js').toString();
+  const workerConfig = JSON.parse(workerSource.match(/const CONFIG = (\{[^\n]+\});/)[1]);
+  const workerFiles = new Map(workerConfig.files.map((file) => [file.path, file]));
+  for (const name of dependencies) {
+    const bytes = launcher.get(`app/${name}`);
+    assert.ok(bytes, name);
+    assert.ok(bytes.length <= LAUNCHER_FILE_LIMIT, name);
+    assert.deepEqual(workerFiles.get(name), {
+      path: name,
+      bytes: bytes.length,
+      sha256: createHash('sha256').update(bytes).digest('hex'),
+    });
   }
+  const prefix = 'globalThis.RevealLineTranslations = ';
+  const catalogSource = launcher.get('app/i18n/catalogs.mjs').toString();
+  const resources = JSON.parse(
+    catalogSource.slice(catalogSource.indexOf(prefix) + prefix.length, -2),
+  );
+  for (const language of ['en', 'uk'])
+    for (const [namespace, keys] of Object.entries(LAUNCHER_CATALOG_KEYS))
+      assert.deepEqual(Object.keys(resources[language][namespace]), keys);
   const temp = await fs.mkdtemp(path.join(os.tmpdir(), 'revealline-launcher-test-'));
   t.after(() => fs.rm(temp, { recursive: true, force: true }));
   const source = path.join(temp, 'frozen'),
@@ -97,19 +127,36 @@ test('publisher copies only the frozen lightweight launcher and points at the im
     await fs.readFile(path.join(source, 'app/service-worker.js'), 'utf8'),
   );
   assert.deepEqual(await fs.readdir(output), ['app']);
-  assert.equal((await fs.readdir(path.join(output, 'app'))).length, 12);
   const published = new Map();
-  for (const name of await fs.readdir(path.join(output, 'app')))
-    published.set(`app/${name}`, await fs.readFile(path.join(output, 'app', name)));
+  async function collect(directory, prefix = 'app') {
+    for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) await collect(file, `${prefix}/${entry.name}`);
+      else published.set(`${prefix}/${entry.name}`, await fs.readFile(file));
+    }
+  }
+  await collect(path.join(output, 'app'));
+  assert.equal(published.size, 17);
   validateEditionCodeClosure(published);
+  const profileWriter = await fs.readFile(path.join(source, 'app/profile-writer.mjs'));
   await fs.rm(path.join(source, 'app/profile-writer.mjs'));
   await assert.rejects(
-    publishOfflineLauncher(source, path.join(temp, 'broken'), 'v1.0.0'),
-    /missing an imported dependency/,
+    publishOfflineLauncher(source, path.join(temp, 'broken-profile'), 'v1.0.0'),
+    /missing an imported dependency: profile-writer\.mjs/,
+  );
+  await fs.writeFile(path.join(source, 'app/profile-writer.mjs'), profileWriter);
+  await fs.rm(path.join(source, 'app/i18n/catalogs.mjs'));
+  await assert.rejects(
+    publishOfflineLauncher(source, path.join(temp, 'broken-catalog'), 'v1.0.0'),
+    /missing an imported dependency: i18n\/catalogs\.mjs/,
   );
   // Historical frozen launchers with no such imports remain byte-preserving.
   await fs.writeFile(path.join(source, 'app/installed-app.mjs'), 'export const historical = true;');
-  await fs.rm(path.join(source, 'app/edition-context.mjs'));
+  await fs.writeFile(path.join(source, 'app/app.mjs'), 'export const historical = true;');
+  await fs.writeFile(
+    path.join(source, 'app/index.html'),
+    '<!doctype html><link rel="stylesheet" href="app.css"><script type="module" src="app.mjs"></script>',
+  );
   assert.equal(await publishOfflineLauncher(source, path.join(temp, 'historical'), 'v1.0.0'), true);
   assert.equal((await fs.readdir(path.join(temp, 'historical/app'))).length, 10);
 });
