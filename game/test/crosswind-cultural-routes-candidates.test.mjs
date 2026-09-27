@@ -237,8 +237,8 @@ test('registered v23 successor preserves v22 order and uses isolated progress ow
   assert(authoredJourneyUsesActorMaterials(current.id));
   assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v23',
-    versus: 'whole-spatial-v23',
+    solo: 'whole-spatial-v25',
+    versus: 'whole-spatial-v25',
     team: 'team-cultural-specialist-originals-2',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v23');
