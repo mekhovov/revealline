@@ -43,6 +43,14 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
     ['game/ui/body-motion.mjs', ['effects', 'motion', 'team']],
     ['authoring/motion-lab/render-character.mjs', ['motion', 'team']],
     ['authoring/motion-lab/animation.mjs', ['effects', 'motion', 'team']],
+    ['authoring/motion-lab/presets.json', ['motion']],
+    ['authoring/library/fpv-role-presentations/originals/scout.png', ['motion']],
+    ['authoring/library/fpv-role-presentations/originals/bomber.png', ['motion']],
+    ['authoring/library/fpv-role-presentations/originals/carrier.png', ['motion']],
+    ['authoring/library/fpv-role-presentations/originals/interceptor.png', ['motion']],
+    ['authoring/library/fpv-role-presentations/originals/fiber.png', ['motion']],
+    ['authoring/library/fpv-role-presentations/originals/impact.png', ['motion']],
+    ['authoring/library/fpv-role-presentations/originals/trapper.png', ['motion']],
     ['game/ui/classic-view.mjs', ['effects', 'team']],
     ['game/couch/coop-view.mjs', ['team']],
     ['game/soundtrack-bundled.mjs', ['audio']],
@@ -70,13 +78,17 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
 });
 
 test('missing helper bytes cannot produce a supposedly valid fingerprint', async () => {
-  await assert.rejects(
-    fieldKitRecipeSources(async (file) => {
-      if (file === 'game/ui/lane-presentation.mjs') throw new Error('Missing required helper');
-      return Buffer.from(file);
-    }),
-    /Missing required helper/,
-  );
+  for (const missing of [
+    'game/ui/lane-presentation.mjs',
+    'authoring/library/fpv-role-presentations/originals/impact.png',
+  ])
+    await assert.rejects(
+      fieldKitRecipeSources(async (file) => {
+        if (file === missing) throw new Error('Missing required helper');
+        return Buffer.from(file);
+      }),
+      /Missing required helper/,
+    );
 });
 
 test('audio continuation pins both current review and immutable predecessor bytes', async () => {
