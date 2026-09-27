@@ -180,6 +180,10 @@ async function open(p) {
     throw error;
   }
 }
+function showAllLifecycles(p) {
+  p.$('journey-lifecycle').value = '';
+  p.$('journey-lifecycle').emit('change');
+}
 async function running(p, id) {
   try {
     await settle(() => {
@@ -210,6 +214,9 @@ async function running(p, id) {
 test('Classic Solo mounts all139 Journey and188 retained Classic missions', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
+  assert.equal(p.$('journey-lifecycle').value, 'current');
+  assert.equal(p.$('journey-cards').children.length, 252);
+  showAllLifecycles(p);
   assert.equal(p.$('journey-cards').children.length, 327);
   assert.equal(p.$('journey-collection').value, '');
   const cards = [...p.$('journey-cards').children];
@@ -479,6 +486,7 @@ test('unknown incoming identity reports failure and never starts a different mis
 test('default Journey mounts327 missions and hands the exact Classic selection to its own host', async (t) => {
   const p = await journeyPage(t);
   await open(p);
+  showAllLifecycles(p);
   assert.equal(p.$('journey-cards').children.length, 327);
   [...p.$('journey-cards').children].find((card) => card.dataset.missionId === lateBase.id).click();
   await settle(() => globalThis.location.href.includes('library-mission='));
@@ -505,6 +513,7 @@ test('Classic hands a Journey card directly to its new-edition host', async (t) 
 test('Solo mode filter exposes the same qualified Journey identities in Versus without duplicates', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
+  showAllLifecycles(p);
   const original = [...p.$('journey-cards').children].map((card) => card.dataset.missionId);
   p.$('journey-mode').value = 'versus';
   p.$('journey-mode').emit('change');
