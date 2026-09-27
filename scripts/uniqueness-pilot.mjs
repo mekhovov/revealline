@@ -169,7 +169,7 @@ export function buildUniquenessPilotReport() {
           darwinArm64: 'e8e4e128969b3aba',
           linuxX64: '83f58b12fcadafda',
           difference:
-            'One ULP in an enemy collision velocity; route, closure, coverage, failures, segments and replay verification are identical.',
+            'A single-ULP enemy-velocity substitution reproduces the historical Linux hash; the exact Linux field difference remains inferred. Reported route, closure, coverage, failures, segments and replay verification are identical.',
         },
       },
     },
