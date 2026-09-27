@@ -575,6 +575,8 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     return pending;
   };
   try {
+    // The prior Confirm opened backup tools; rearm its real 120 ms release lifecycle.
+    sample([], 121);
     sample([0]);
     assert.equal(
       controllerPreparationCalls,
@@ -609,11 +611,13 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   sample([0], 1200);
   assert.equal(requested, 0, 'Held Confirm cannot activate the newly focused action.');
   sample([]);
+  sample([], 121); // A separate Confirm follows the real neutral-release interval.
   sample([0]);
   assert.equal(requested, 1);
   sample([0], 1200);
   assert.equal(requested, 1, 'Held Confirm does not request duplicate downloads.');
   sample([]);
+  sample([], 121); // Observe release before measuring the separate native-echo window.
   const echoed = link.emit('keydown', { code: 'Enter', key: 'Enter', repeat: false });
   assert.equal(
     echoed.defaultPrevented,
