@@ -200,7 +200,7 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
     frame();
     // Each helper call models a separate deliberate press. Keep the pad
     // neutral for the host's bounded release window before another action.
-    for (let i = 0; i < 3; i++) frame();
+    for (let i = 0; i < (mode === 'solo' && index === 0 ? 4 : 3); i++) frame();
   };
   frame();
   frame();
