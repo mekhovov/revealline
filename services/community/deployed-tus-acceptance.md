@@ -1,7 +1,7 @@
 # Deployed tus interruption acceptance
 
-`npm run acceptance:tus-deployed` exercises the actual HTTPS service rather than the in-process
-development fixture. It creates a valid generated `.rlpack`, sends publication traffic through a
+`npm run acceptance:tus-deployed` exercises an actual service rather than the in-process development
+fixture. It creates a valid generated `.rlpack`, sends publication traffic through a
 loopback fault proxy, commits the first 17 bytes of the first tus `PATCH`, and closes the client
 connection before returning the upstream response. The production browser upload adapter must read
 the authoritative offset with `HEAD`, resume the same upload resource, and finish without creating
@@ -34,9 +34,11 @@ Set `COMMUNITY_TUS_ACCEPTANCE_EXPECTED_VERSION`,
 validator configuration. An identity mismatch or failed liveness/readiness probe stops before the
 fault proxy starts, a package is built, or a submission is created.
 
-The base URL must use HTTPS and must not contain credentials, a query, or a fragment. If the service
-is mounted below a path, include its trailing path in the base URL. The local fault proxy binds only
-to loopback and forwards only to the configured HTTPS origin. It rewrites same-service tus
+The base URL must use HTTPS outside loopback and must not contain credentials, a query, or a
+fragment. Plain HTTP is accepted only for `127.0.0.1`, `localhost`, and `[::1]` so the repository's
+isolated hosted workflow can exercise the real Compose service without fabricating TLS. If the
+service is mounted below a path, include its trailing path in the base URL. The local fault proxy
+binds only to loopback and forwards only to the configured origin. It rewrites same-service tus
 `Location` responses back through the loopback boundary so the injected interruption cannot be
 bypassed.
 
