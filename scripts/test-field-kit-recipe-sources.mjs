@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import {
   fieldKitRecipeSources,
   verifyFieldKitAudioContinuationReview,
+  verifyFieldKitCompanyAudioContinuationReview,
 } from './produce-field-kit-theme.mjs';
 
 test('every declared helper invalidates all sharing groups and leaves nonconsumers unchanged', async () => {
@@ -229,5 +230,32 @@ test('scoped current Team and equipment approval retains every semantic guard', 
     assert.equal(quality(slotId, source, '0'.repeat(64)), 'produced');
     assert.equal(quality('team.not-reviewed', source, asset.file.sha256), 'produced');
     assert.equal(quality(slotId, source, asset.file.sha256, Buffer.alloc(0)), 'produced');
+  }
+});
+
+test('company startup audio review and both immutable predecessor byte strings fail closed', async () => {
+  const current = await readFile(
+    new URL(
+      '../docs/verification/v0.141.7-company-startup-audio-continuation/review.json',
+      import.meta.url,
+    ),
+  );
+  const prior = await readFile(
+    new URL(
+      '../docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json',
+      import.meta.url,
+    ),
+  );
+  const managed = await readFile(
+    new URL(
+      '../docs/verification/v0.141.0-managed-media-audio-continuation/review.json',
+      import.meta.url,
+    ),
+  );
+  assert.equal(verifyFieldKitCompanyAudioContinuationReview(current, prior, managed), true);
+  for (let index = 0; index < 3; index++) {
+    const changed = [current, prior, managed];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitCompanyAudioContinuationReview(...changed), false);
   }
 });
