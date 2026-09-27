@@ -12,6 +12,7 @@ import { fileURLToPath } from 'node:url';
 import { importThemeBundle, exportThemeBundle } from '../presentation/bundle.mjs';
 import {
   createFieldKitProduction,
+  fieldKitEquipmentQuality,
   fieldKitEquipmentSource,
 } from '../../scripts/produce-field-kit-theme.mjs';
 import { createHash } from 'node:crypto';
@@ -661,7 +662,7 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
   }
 });
 
-test('equipment consumer changes select produced successors and preserve reviewed history', async () => {
+test('an unknown equipment consumer selects produced successors and preserves reviewed history', async () => {
   const prior = await importThemeBundle(
     new Blob([
       await fs.readFile(
@@ -677,12 +678,12 @@ test('equipment consumer changes select produced successors and preserve reviewe
     return bytes;
   });
   assert.equal(exactInputs.size, 34, 'complete equipment construction and consumer closure');
-  const tampered = await fieldKitEquipmentSource(async (name) =>
+  const unknownSource = await fieldKitEquipmentSource(async (name) =>
     name === 'game/ui/actor-recipes.mjs'
       ? Buffer.concat([exactInputs.get(name), Buffer.from(' changed')])
       : exactInputs.get(name),
   );
-  assert.notEqual(tampered, equipmentSource, 'consumer bytes invalidate equipment review');
+  assert.notEqual(unknownSource, equipmentSource, 'consumer bytes invalidate equipment review');
   await assert.rejects(
     fieldKitEquipmentSource(async (name) => {
       if (name === 'game/ui/actor-recipes.mjs') throw new Error('Missing required consumer');
@@ -701,28 +702,51 @@ test('equipment consumer changes select produced successors and preserve reviewe
     'team.core.exposed',
     'team.core.secured',
   ];
-  const sourceSuffix = '; consumer-sha256:' + equipmentSource;
+  const sourceSuffix = '; consumer-sha256:' + equipmentSource,
+    unknownSuffix = '; consumer-sha256:' + unknownSource;
   for (const slotId of equipment) {
     assert.equal(before.assets[slotId].quality.stage, 'reviewed', 'reviewed prior ' + slotId);
-    assert.equal(proposed.assets[slotId].quality.stage, 'produced', 'reopened ' + slotId);
     assert.ok(proposed.assets[slotId].provenance.source.endsWith(sourceSuffix), slotId);
     assert.deepEqual(proposed.assets[slotId].file, before.assets[slotId].file, slotId);
     assert.deepEqual(proposed.assets[slotId].geometry, before.assets[slotId].geometry, slotId);
+    const priorPayload = prior.assets.get(before.assets[slotId].file.sha256),
+      proposedPayload = production.assets.get(before.assets[slotId].file.sha256);
+    assert.ok(priorPayload && proposedPayload, 'current payload ' + slotId);
+    assert.deepEqual(
+      Buffer.from(await proposedPayload.arrayBuffer()),
+      Buffer.from(await priorPayload.arrayBuffer()),
+      'current byte-identical equipment ' + slotId,
+    );
   }
 
-  const next = retainFieldKitProductionHistory(production.document, prior.document);
-  validateThemeBundle(next, { previous: prior.document, expectedRevision: prior.document.revision });
+  const changed = structuredClone(production.document);
+  const changedSelected = resolvePresentation(changed).assets;
+  for (const slotId of equipment) {
+    const selected = changedSelected[slotId];
+    const record = changed.assets.find(
+      (asset) => asset.id === selected.id && asset.revision === selected.revision,
+    );
+    record.provenance.source = record.provenance.source.replace(sourceSuffix, unknownSuffix);
+    record.quality = fieldKitEquipmentQuality(slotId, unknownSource, record.file.sha256);
+    assert.equal(record.quality.stage, 'produced', 'unknown consumer reopens ' + slotId);
+  }
+
+  const next = retainFieldKitProductionHistory(changed, prior.document);
+  validateThemeBundle(next, {
+    previous: prior.document,
+    expectedRevision: prior.document.revision,
+  });
   const selected = resolvePresentation(next).assets;
-  const successors = next.assets.slice(prior.document.assets.length).filter((asset) =>
-    equipment.includes(asset.id.slice(0, -'.field-kit'.length)),
-  );
+  const successors = next.assets
+    .slice(prior.document.assets.length)
+    .filter((asset) => equipment.includes(asset.id.slice(0, -'.field-kit'.length)));
   assert.equal(successors.length, 5, 'one fail-closed successor per equipment slot');
   for (const slotId of equipment) {
     const old = before.assets[slotId],
       current = selected[slotId];
     assert.equal(current.quality.stage, 'produced', slotId);
     assert.ok(current.revision > old.revision, slotId);
-    assert.ok(current.provenance.source.endsWith(sourceSuffix), slotId);
+    assert.ok(current.provenance.source.endsWith(unknownSuffix), slotId);
     assert.deepEqual(current.file, old.file, slotId);
     assert.deepEqual(current.geometry, old.geometry, slotId);
     assert.deepEqual(
@@ -730,16 +754,8 @@ test('equipment consumer changes select produced successors and preserve reviewe
       old,
       'immutable reviewed predecessor ' + slotId,
     );
-    const priorPayload = prior.assets.get(old.file.sha256),
-      proposedPayload = production.assets.get(old.file.sha256);
-    assert.ok(priorPayload && proposedPayload, 'retained payload ' + slotId);
-    assert.deepEqual(
-      Buffer.from(await proposedPayload.arrayBuffer()),
-      Buffer.from(await priorPayload.arrayBuffer()),
-      'byte-identical equipment ' + slotId,
-    );
   }
-  const second = retainFieldKitProductionHistory(production.document, next);
+  const second = retainFieldKitProductionHistory(changed, next);
   assert.equal(canonicalJSON(second), canonicalJSON(next), 'repeat retention is deterministic');
 });
 
