@@ -47,14 +47,14 @@ const catalogue = {
     {
       path: 'game/couch/',
       mode: 'versus',
-      routeId: DEFAULT_JOURNEY_ROUTES.solo,
+      routeId: DEFAULT_JOURNEY_ROUTES.versus,
       groups: ['versus:horizon'],
       runtimeGroups: ['runtime:versus'],
     },
     {
       path: 'game/couch/',
       mode: 'versus',
-      routeId: DEFAULT_JOURNEY_ROUTES.solo,
+      routeId: DEFAULT_JOURNEY_ROUTES.versus,
       libraryId: exactId,
       groups: ['versus:exact'],
       runtimeGroups: ['runtime:versus'],
@@ -101,7 +101,7 @@ test('standalone continuation selects the exact published owner and preserves op
   assert.deepEqual(request.groups, ['archive:journey:whole-spatial-v11']);
   assert.equal(request.title, 'Versus · Historical v11');
   const current = new URL(target.href);
-  current.searchParams.set('journey', DEFAULT_JOURNEY_ROUTES.solo);
+  current.searchParams.set('journey', DEFAULT_JOURNEY_ROUTES.versus);
   assert.deepEqual(read(current.href).groups, ['versus:exact']);
   assert.equal(Object.isFrozen(request.groups), true);
   assert.deepEqual(read(new URL('game/couch/', scope).href).groups, ['versus:horizon']);
