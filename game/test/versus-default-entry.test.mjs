@@ -137,6 +137,8 @@ test(
       true,
     );
     assert.equal(p.state(), 'paused');
+    // Let the finite controller Confirm echo window expire before a separate pointer click.
+    p.frames(151);
     // Mode departure still uses the retained guarded link. Browsing does not.
     p.$('race-solo-return').click();
     assert.equal(p.$('race-leave-panel').hidden, false);
