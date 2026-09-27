@@ -333,6 +333,7 @@ function track(value, ids, hashes) {
       'audio',
       'aliases',
       'rights',
+      ...(Object.hasOwn(value, 'visibility') ? ['visibility'] : []),
     ],
     'online soundtrack track',
   );
@@ -441,7 +442,6 @@ function track(value, ids, hashes) {
     Array.isArray(collections) &&
       collections.length >= 1 &&
       collections.length <= 16 &&
-      collections.includes(collection) &&
       new Set(collections).size === collections.length &&
       collections.every(
         (item) =>
@@ -452,6 +452,12 @@ function track(value, ids, hashes) {
       ),
     'collectionsInvalid',
     `Online soundtrack collections are invalid: ${id}.`,
+    { id },
+  );
+  catalogueRequired(
+    value.visibility === undefined || value.visibility === 'review-only',
+    'visibilityInvalid',
+    `Online soundtrack visibility is invalid: ${id}.`,
     { id },
   );
   const rightsEvidence = structuredRights(
@@ -491,7 +497,7 @@ function track(value, ids, hashes) {
     }),
   });
   RESOLVED_TRACKS.add(resolved);
-  return resolved;
+  return { resolved, visibility: value.visibility };
 }
 
 export function resolveOnlineSoundtrackCatalogue(source) {
@@ -529,15 +535,18 @@ export function resolveOnlineSoundtrackCatalogue(source) {
   );
   const ids = new Set(),
     hashes = new Set(),
-    tracks = value.tracks.map((entry) => track(entry, ids, hashes));
+    parsedTracks = value.tracks.map((entry) => track(entry, ids, hashes));
   catalogueRequired(
-    value.counts.uniqueRecordings === tracks.length &&
-      value.counts.declaredTracks >= tracks.length &&
-      value.counts.duplicateAliases === value.counts.declaredTracks - tracks.length &&
-      value.counts.audioBytes === tracks.reduce((sum, item) => sum + item.bytes, 0),
+    value.counts.uniqueRecordings === parsedTracks.length &&
+      value.counts.declaredTracks >= parsedTracks.length &&
+      value.counts.duplicateAliases === value.counts.declaredTracks - parsedTracks.length &&
+      value.counts.audioBytes === parsedTracks.reduce((sum, item) => sum + item.resolved.bytes, 0),
     'countsMismatch',
     'Online soundtrack counts differ from the recording list.',
   );
+  const tracks = parsedTracks
+    .filter(({ visibility }) => visibility !== 'review-only')
+    .map(({ resolved }) => resolved);
   return Object.freeze({
     format: FORMAT,
     tracks: Object.freeze(tracks),
