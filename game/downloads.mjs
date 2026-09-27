@@ -8,8 +8,11 @@ import {
   downloadOfflineDestination,
 } from './offline-navigation-recovery.mjs';
 import {
+  downloadErrorMessage,
   gameplaySelection,
-  offlineReadinessLabel,
+  offlineReadinessCode,
+  offlineMessage,
+  installedResultMessage,
   finishOfflineSelection,
   runApprovedDownload,
 } from './offline-download-session.mjs';
@@ -29,7 +32,7 @@ import {
   checkInstalledLauncher,
   installedPresentation,
 } from './installed-app.mjs';
-import { formatNumber, localizedText, t } from './i18n/index.mjs';
+import { formatNumber, localizedText, onLocaleChange, t } from './i18n/index.mjs';
 
 const $ = (id) => document.getElementById(id);
 localizedText($('game-title'), () => t('interface:downloads.gameHeading'));
@@ -45,8 +48,7 @@ const size = (bytes) =>
 const groupTitle = (group) => (group.titleKey ? t(group.titleKey) : group.title);
 const localError = (key, values) =>
   Object.assign(new Error(t(key, values)), { localization: { key, values } });
-const errorText = (error) =>
-  error?.localization ? t(error.localization.key, error.localization.values) : error.message;
+const errorText = (error) => downloadErrorMessage(error, t);
 const available = offlineAvailability();
 const store = createOfficialDownloads();
 let controller,
@@ -72,6 +74,9 @@ const notifyHost = (action, fields = {}) => {
   if (embedded)
     window.parent.postMessage({ format: panelProtocol, action, ...fields }, location.origin);
 };
+onLocaleChange(() =>
+  queueMicrotask(() => notifyHost('status', { text: $('game-status').textContent })),
+);
 const navigation = attachDownloadsNavigation({
   onBack: () => (embedded ? notifyHost('close') : leaveDownloads()),
 });
@@ -123,7 +128,13 @@ else
 const install = captureInstallPrompt();
 function refreshInstall() {
   const installed = installedPresentation();
-  $('installation-status').textContent = installed ? 'App installed' : 'Playing in the browser';
+  localizedText($('installation-status'), () =>
+    t(
+      installed
+        ? 'interface:downloads.installationInstalled'
+        : 'interface:downloads.installationBrowser',
+    ),
+  );
   $('install-native').hidden = embedded || !install?.available() || installed;
   $('install-guide').hidden = installed;
 }
@@ -133,16 +144,28 @@ $('install-native').onclick = () => {
     .request()
     .then(refreshInstall)
     .catch((error) => {
-      $('installation-status').textContent = error.message;
+      localizedText($('installation-status'), () => errorText(error));
     });
 };
 const instructions = installInstructions();
-for (const step of instructions.steps) {
+const instructionKeys = {
+  'apple-mobile': ['appleMobileStep1', 'appleMobileStep2', 'appleMobileStep3'],
+  'safari-desktop': ['safariDesktopStep1', 'safariDesktopStep2'],
+  browser: ['browserInstallStep1', 'browserInstallStep2'],
+};
+for (const key of instructionKeys[instructions.platform]) {
   const item = document.createElement('li');
-  item.textContent = step;
+  localizedText(item, () => t('interface:downloads.install.' + key));
   $('install-steps').append(item);
 }
-$('install-help').textContent = instructions.note;
+const instructionNotes = {
+  'apple-mobile': 'appleMobileNote',
+  'safari-desktop': 'safariDesktopNote',
+  browser: 'browserNote',
+};
+localizedText($('install-help'), () =>
+  t('interface:downloads.install.' + instructionNotes[instructions.platform]),
+);
 refreshInstall();
 const source = createSoundtrackSource({
   catalogue: SOUNDTRACK_CATALOGUE,
@@ -156,17 +179,24 @@ const gameIDs = () =>
   gameplaySelection(catalogue, { all: $('all-game').checked, selected: [...selected] });
 const gameFiles = () => downloadFiles(catalogue, gameIDs());
 function readyMessage() {
-  if (navigationRequest)
-    return 'Requested mode verified and ready offline. Choose Open to continue.';
-  const label = offlineReadinessLabel(catalogue, gameIDs());
-  if (!activationResult || activationResult.activated) return label;
-  let active;
-  try {
-    active = readInstalledState().active;
-  } catch {}
-  return active?.scope === baseURL
-    ? label
-    : `${label} · ${active ? 'app icon keeps the previous edition' : 'finish app setup from the main menu'}`;
+  if (navigationRequest) return () => t('interface:downloads.requestedReady');
+  const code = offlineReadinessCode(catalogue, gameIDs());
+  return () => {
+    const label = t('interface:downloads.' + code);
+    if (!activationResult || activationResult.activated) return label;
+    let active;
+    try {
+      active = readInstalledState().active;
+    } catch {}
+    return t(
+      active?.scope === baseURL
+        ? 'interface:downloads.readyLabel'
+        : active
+          ? 'interface:downloads.readyPreviousEdition'
+          : 'interface:downloads.readyFinishSetup',
+      { label },
+    );
+  };
 }
 function busy(value) {
   for (const id of ['download-game', 'verify-game', 'remove-chapters', 'all-music', 'all-game'])
@@ -240,8 +270,8 @@ async function health({ verify = true, signal } = {}) {
     ready
       ? readyMessage()
       : gameplay.ready && runtime.status === 'ready'
-        ? 'Game files saved. Finish preparing the app launcher for offline launch.'
-        : 'Choose what to download. Completed files are reused when you resume.',
+        ? () => t('interface:downloads.launcherPending')
+        : () => t('interface:downloads.chooseDownload'),
   );
   notifyHost('status', { text: $('game-status').textContent });
   $('details').textContent = JSON.stringify(
@@ -306,7 +336,7 @@ async function run(task, { music = false } = {}) {
     const message = await runApprovedDownload(task, {
       signal: controller.signal,
       onRetry: ({ attempt }) =>
-        operation(`Connection interrupted. Retrying ${attempt}/3 with completed files kept…`),
+        operation(() => t('interface:downloads.retrying', { attempt, total: 3 })),
     });
     operation(message ?? (() => t('interface:downloads.complete')));
   } catch (error) {
@@ -317,7 +347,7 @@ async function run(task, { music = false } = {}) {
     operation(
       error.name === 'AbortError'
         ? yieldedToPlay
-          ? 'Download paused during gameplay. The approved download resumes when you return to the menu.'
+          ? () => t('interface:downloads.pausedDuringGameplay')
           : () => t('interface:downloads.pausedMessage')
         : error.name === 'QuotaExceededError'
           ? () => t('interface:downloads.storageFull')
@@ -401,7 +431,7 @@ $('all-game').onchange = () => {
   lastEstimate = null;
   $('download-game').disabled = true;
   $('activate').hidden = true;
-  void health().catch((error) => operation(error.message));
+  void health().catch((error) => operation(() => errorText(error)));
 };
 $('download-game').onclick = () => {
   if (!lastEstimate || controller) return;
@@ -427,14 +457,11 @@ function downloadApprovedGame(approval) {
     const report = await prepareOffline({
       signal,
       cancelPreparation: true,
-      onStatus: (state) =>
-        operation(
-          state.summary || state.message || (() => t('interface:downloads.verifyingRuntime')),
-        ),
+      onStatus: (state) => operation(() => offlineMessage(state, t)),
     });
     if (report.status !== 'ready')
       throw report.message
-        ? new Error(report.message)
+        ? Object.assign(new Error(report.message), { offlineCode: report.messageCode })
         : localError('interface:downloads.closeOtherWindows');
     const download = {
       edition,
@@ -449,7 +476,7 @@ function downloadApprovedGame(approval) {
       await downloadOfflineDestination(store, { request: navigationRequest, ...download });
     else await store.download(download);
     if (navigationRequest) {
-      operation('Verifying the requested mode before opening it…');
+      operation(() => t('interface:downloads.verifyingDestination'));
       await continueOfflineDestination({
         request: navigationRequest,
         signal,
@@ -466,19 +493,18 @@ function downloadApprovedGame(approval) {
       });
       resumeApprovedGame = null;
       yieldedToPlay = false;
-      return 'Requested mode verified. Opening your original destination…';
+      return () => t('interface:downloads.destinationVerified');
     }
-    operation('Preparing and verifying the app launcher…');
+    operation(() => t('interface:downloads.preparingLauncher'));
     launcherHealth = await prepareInstalledLauncher({ signal });
     signal.throwIfAborted();
     await health({ verify: true, signal });
     signal.throwIfAborted();
-    if (!ready)
-      throw new Error('Offline preparation did not finish. Resume to repair the missing files.');
+    if (!ready) throw localError('interface:downloads.preparationIncomplete');
     await selectEdition({ ids: approval.ids, all: approval.all, signal });
     resumeApprovedGame = null;
     yieldedToPlay = false;
-    return 'Your selected game is verified and ready offline. Recorded soundtracks remain optional.';
+    return () => t('interface:downloads.selectionReady');
   });
 }
 $('verify-game').onclick = () =>
@@ -530,7 +556,7 @@ $('retain').onclick = async () => {
       ),
     );
   } catch (error) {
-    localizedText($('retention-status'), () => error.message);
+    localizedText($('retention-status'), () => errorText(error));
   }
 };
 async function selectEdition({
@@ -588,7 +614,7 @@ async function selectEdition({
     },
     onReady(result) {
       activationResult = result;
-      $('activation-status').textContent = result.message;
+      localizedText($('activation-status'), () => installedResultMessage(result, t));
       $('activate').hidden = result.activated;
       $('transfer-progress').hidden = result.activated || result.deferred === true;
       if (ready) {
@@ -606,8 +632,9 @@ $('activate').onclick = () =>
   run(async (signal) => {
     await health({ verify: true, signal });
     signal.throwIfAborted();
-    if (!ready) throw new Error('Repair gameplay before selecting this edition.');
-    return (await selectEdition({ signal })).message;
+    if (!ready) throw localError('interface:downloads.repairBeforeSelecting');
+    const result = await selectEdition({ signal });
+    return () => installedResultMessage(result, t);
   });
 async function selectRequestedPackage(groupId) {
   const signal = panelController.signal;
@@ -629,9 +656,7 @@ async function selectRequestedPackage(groupId) {
   signal.throwIfAborted();
   if (ready) await selectEdition({ signal });
   else
-    operation(
-      `${group.title} needs its chapter download. Review the size, then choose Download selected to continue.`,
-    );
+    operation(() => t('interface:downloads.packageDownloadRequired', { title: groupTitle(group) }));
 }
 window.addEventListener('message', (event) => {
   if (
@@ -643,7 +668,7 @@ window.addEventListener('message', (event) => {
     return;
   if (event.data.action === 'select-package' && typeof event.data.groupId === 'string')
     void selectRequestedPackage(event.data.groupId).catch((error) => {
-      if (error.name !== 'AbortError') operation(error.message);
+      if (error.name !== 'AbortError') operation(() => errorText(error));
     });
   if (event.data.action === 'host-ready') refreshInstall();
   if (event.data.action === 'panel-closed') {
@@ -658,11 +683,12 @@ window.addEventListener('message', (event) => {
   }
   if (event.data.action === 'panel-opened' && ready && !controller)
     void selectEdition().catch((error) => {
-      $('activation-status').textContent = error.message;
+      localizedText($('activation-status'), () => errorText(error));
     });
 });
 async function initialize() {
-  if (!available.available) throw new Error(available.reason);
+  if (!available.available)
+    throw Object.assign(new Error(available.reason), { offlineCode: available.messageCode });
   if (new URL(location.href).searchParams.has('rollback'))
     localizedText($('activate'), () => t('interface:downloads.restorePrevious'));
   [catalogue, core] = await Promise.all(
@@ -680,15 +706,15 @@ async function initialize() {
   });
   if (navigationRequest) {
     if (embedded || !available.packageConsent)
-      throw new Error('This edition cannot continue the requested offline destination.');
+      throw localError('interface:downloads.destinationUnavailable');
     $('destination-recovery').hidden = false;
     $('destination-title').textContent = navigationRequest.title;
-    localizedText($('game-title'), 'Prepare the requested mode');
+    localizedText($('game-title'), () => t('interface:downloads.prepareRequestedMode'));
     $('starter-choice').hidden = true;
     $('all-game').parentElement.hidden = true;
     $('chapter-choices').hidden = true;
     $('remove-chapters').hidden = true;
-    localizedText($('cancel'), 'Cancel and return to game');
+    localizedText($('cancel'), () => t('interface:downloads.cancelReturn'));
   }
   const saved = (await store.states()).find(
     (state) =>
@@ -731,18 +757,15 @@ async function initialize() {
         lastEstimate = null;
         $('download-game').disabled = true;
         $('activate').hidden = true;
-        void health().catch((error) => operation(error.message));
+        void health().catch((error) => operation(() => errorText(error)));
       };
       const caption = document.createElement('span');
-      localizedText(
-        caption,
-        () =>
-          groupTitle(group) +
-          (group.category === 'archive'
-            ? ' · Archive (optional)'
-            : group.category === 'tooling'
-              ? ' · Extra tool (optional)'
-              : ''),
+      localizedText(caption, () =>
+        group.category === 'archive'
+          ? t('interface:downloads.archiveGroup', { title: groupTitle(group) })
+          : group.category === 'tooling'
+            ? t('interface:downloads.toolGroup', { title: groupTitle(group) })
+            : groupTitle(group),
       );
       label.append(input, caption);
       $('chapters').append(label);
@@ -778,10 +801,7 @@ async function initialize() {
   if (!navigationRequest) launcherHealth = await checkInstalledLauncher({ timeout: 1500 });
   if (requestedPackage) await selectRequestedPackage(requestedPackage);
   await health();
-  if (savedDownload && !ready)
-    operation(
-      'A previous download is unfinished. Review the remaining size and tap Resume. Nothing downloads until you choose it.',
-    );
+  if (savedDownload && !ready) operation(() => t('interface:downloads.previousIncomplete'));
   if (ready && !navigationRequest) await selectEdition();
 }
 void initialize().catch((error) => {
