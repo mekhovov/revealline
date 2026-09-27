@@ -541,10 +541,37 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     page.$('soundtrack-export-bundle'),
     'Controller reaches Prepare through the actual dialog focus scope.',
   );
-  sample([0]);
-  await waitFor(
-    () => !page.$('soundtrack-backup-ready').hidden,
-    'Actual binary preparation finishes',
+  const exportButton = page.$('soundtrack-export-bundle');
+  const originalExport = exportButton.onclick;
+  assert.equal(typeof originalExport, 'function', 'Prepare exposes its real controller action.');
+  let controllerPreparation = null,
+    controllerPreparationCalls = 0;
+  exportButton.onclick = (...args) => {
+    controllerPreparationCalls++;
+    const pending = originalExport.apply(exportButton, args);
+    controllerPreparation = Promise.resolve(pending);
+    return pending;
+  };
+  try {
+    sample([0]);
+    assert.equal(
+      controllerPreparationCalls,
+      1,
+      'Controller Confirm invokes the existing Prepare action exactly once.',
+    );
+    assert.ok(controllerPreparation, 'Controller Confirm returns the real preparation operation.');
+    assert.equal(
+      await controllerPreparation,
+      true,
+      'The controller-triggered binary preparation must complete successfully.',
+    );
+  } finally {
+    exportButton.onclick = originalExport;
+  }
+  assert.equal(
+    page.$('soundtrack-backup-ready').hidden,
+    false,
+    'Actual binary preparation finishes.',
   );
   assert.equal(page.doc.activeElement, link);
   assert.equal(requested, 0, 'Preparation focuses but never activates the download.');
