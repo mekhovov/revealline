@@ -1,4 +1,4 @@
-import { loadRuntimeContentProvider } from './runtime-content-provider.mjs';
+import { loadCompanyStartup } from './ui/company-startup.mjs';
 import { editionDepartureDestinationAllowed } from './editions/departure-destination.mjs';
 import { mountEditionSoloUI } from './ui/edition-solo.mjs';
 import { createEditionPracticeScenario } from './ui/edition-controller-practice.mjs';
@@ -355,7 +355,7 @@ try {
     .map((target) => ({ target, presenter: createOperationStatus(target), lease: null }));
   let attemptFiles = null,
     profileRecovery = null;
-  const runtimeContent = await loadRuntimeContentProvider();
+  const runtimeContent = await loadCompanyStartup();
   const [baseCampaign, themesFile, presets, baseClasses, packCatalogSource, archiveCatalogSource] =
     runtimeContent?.boot ??
     (await Promise.all([

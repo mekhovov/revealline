@@ -150,7 +150,9 @@
         "^publishing/edition-.*\\.mjs$",
         "^authoring/company-studio/",
         "^game/content/company-(boot|campaigns)/",
-        "^game/ui/(body-motion|body-backing|actor-recipes)\\.mjs$"
+        "^game/ui/(body-motion|body-backing|actor-recipes)\\.mjs$",
+        "^game/(boot\\.mjs|ui/(company-startup|install-offline-panel)\\.mjs)$",
+        "^scripts/(company-offline-packages|offline-content)\\.mjs$"
       ],
       "commands": [
         {
@@ -188,6 +190,28 @@
             "game/test/profile-transfer.test.mjs",
             "game/test/profile-channel-reader.test.mjs",
             "scripts/test-offline-publication.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-offline-startup",
+      "pathPatterns": [
+        "^game/(boot\\.mjs|ui/(company-startup|install-offline-panel)\\.mjs)$",
+        "^scripts/(company-offline-packages|offline-content)\\.mjs$",
+        "^game/editions/offline-package-id\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "company-offline-startup",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/boot.test.mjs",
+            "game/test/offline-download-access.test.mjs",
+            "game/test/official-downloads.test.mjs",
+            "game/test/install-offline-panel.test.mjs",
+            "scripts/test-offline-core-closure.mjs"
           ]
         }
       ]

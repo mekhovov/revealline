@@ -1,3 +1,4 @@
+import { editionOfflinePackageId } from './editions/offline-package-id.mjs';
 import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
 import { resolveEditionAssets } from './editions/model.mjs';
@@ -72,7 +73,10 @@ export async function loadRuntimeContentProvider({
   documentRef = globalThis.document,
   fetcher = globalThis.fetch,
   verifyAssets = verifyEditionAssets,
+  ensurePackage = async () => {},
+  signal,
 } = {}) {
+  signal?.throwIfAborted();
   const url = new URL(locationRef.href);
   const compiled = documentRef.documentElement.dataset.editionId;
   const requested = url.searchParams.get('edition') ?? compiled;
@@ -80,8 +84,9 @@ export async function loadRuntimeContentProvider({
   if (compiled)
     required(requested === compiled, 'This installed edition cannot load another audience.');
   const rootURL = new URL('../', url);
+  const read = (url, options) => fetcher(url, { ...options, signal });
   const currentBootstrap = await loadEditionBootstrap({
-    fetcher,
+    fetcher: read,
     catalogURL: new URL(compiled ? '../edition-catalog.json' : 'editions/catalog.json', url).href,
     contentBaseURL: rootURL.href,
     editionId: requested ?? undefined,
@@ -102,16 +107,33 @@ export async function loadRuntimeContentProvider({
         await loadRetainedPresentation(retained, {
           edition: currentBootstrap.selection.edition,
           baseURL: rootURL,
-          fetcher,
+          fetcher: read,
+          signal,
         })
       ).bootstrap
     : currentBootstrap;
   required(bootstrap.boot, 'This edition is missing its Solo startup catalogs.');
+  signal?.throwIfAborted();
+  const startupIds = editionStartupAssetIds(bootstrap);
+  if (!compiled)
+    await ensurePackage(
+      editionOfflinePackageId(bootstrap.selection.edition.id, retainedPresentationId),
+      {
+        signal,
+        retain: true,
+        requiresAssets:
+          resolveEditionAssets(bootstrap.catalog, { editionId: bootstrap.selection.edition.id })
+            .length > 0,
+      },
+    );
+  signal?.throwIfAborted();
   await verifyAssets(bootstrap, {
     baseURL: rootURL,
-    fetcher,
-    ids: editionStartupAssetIds(bootstrap),
+    fetcher: read,
+    signal,
+    ids: startupIds,
   });
+  signal?.throwIfAborted();
   const { route } = bootstrap;
   const projected = projectEditionThemeSelection({
     brand: bootstrap.selection.brand,
@@ -128,6 +150,7 @@ export async function loadRuntimeContentProvider({
   const theme = projected.themes.themes.find((item) => item.id === selection.brand.themeId);
   required(theme, 'This edition is missing its selected presentation.');
   const authoredPresentationSha256 = await editionPresentationSha256(bootstrap);
+  signal?.throwIfAborted();
   const assetURL = (id) => {
     const asset = catalog.assets.find((item) => item.id === id);
     required(asset, 'This edition does not contain the requested artwork.');
