@@ -60,7 +60,10 @@ import {
   resolveCampaignMissionTarget,
 } from './mission-library/installed-target.mjs';
 import { createInstalledMissionLibrary } from './mission-library/installed-library.mjs';
-import { projectClassicCurrentRulesEntry } from './mission-library/classic-current-rules.mjs';
+import {
+  CLASSIC_RULES_ORIGINAL,
+  projectClassicCurrentRulesEntry,
+} from './mission-library/classic-current-rules.mjs';
 import { journeyLibrarySource } from './mission-library/journey-source.mjs';
 import { publishedJourneyLibrarySources } from './mission-library/published-routes.mjs';
 import { combineJourneyLibrarySources } from './mission-library/cross-mode-journey.mjs';
@@ -7949,6 +7952,7 @@ try {
               ? `${activeEntry.classicRulesSourceCampaignKey}::${activeEntry.classicRulesEdition}`
               : activeEntry.baseCampaignKey || campaignKey(campaign),
             sourcePackId: activeEntry.sourcePackId ?? null,
+            rulesEdition: activeEntry.classicRulesEdition ?? CLASSIC_RULES_ORIGINAL,
             ...(retainedLibraryOwner?.entry === activeEntry ? retainedLibraryOwner : {}),
           });
       const next = librarySuccessor(host.library, row, 'solo');
@@ -10879,8 +10883,11 @@ try {
             return retainedLibraryMission(result.library, {
               mode: 'solo',
               levelId: campaign.levels[levelIndex].id,
-              campaignKey: activeEntry.baseCampaignKey || campaignKey(campaign),
+              campaignKey: activeEntry.classicRulesSourceCampaignKey
+                ? `${activeEntry.classicRulesSourceCampaignKey}::${activeEntry.classicRulesEdition}`
+                : activeEntry.baseCampaignKey || campaignKey(campaign),
               sourcePackId: activeEntry.sourcePackId ?? null,
+              rulesEdition: activeEntry.classicRulesEdition ?? CLASSIC_RULES_ORIGINAL,
               ...(retainedLibraryOwner?.entry === activeEntry ? retainedLibraryOwner : {}),
             })?.id;
           } catch {
