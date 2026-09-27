@@ -1,0 +1,1368 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-22T15:35:02.139Z",
+  "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+  "scope": "Committed source coverage only. Dirty and untracked files are outside this proof. All successors remain draft; coverage is not merge or release approval.",
+  "commands": [
+    "gh pr view NUMBER --repo mekhovov/revealline --json headRefOid,baseRefOid,commits",
+    "git diff --find-renames --unified=0 SOURCE_BASE SOURCE -- PATH | git patch-id --stable",
+    "git diff --find-renames --unified=0 TARGET_BASE TARGET -- PATH | git patch-id --stable",
+    "git rev-parse REVISION:PATH"
+  ],
+  "method": "Zero-context stable patch IDs compare changed bytes while excluding surrounding main-integration context. Final blob identities separately establish unchanged outputs. Appended documentation is checked byte-exact as a substring/prefix, not inferred from titles.",
+  "limitations": [
+    "Stable patch IDs ignore whitespace; this is not semantic or CI acceptance.",
+    "PR baseRefOid from gh metadata may be stale; explicit source/target parents are pinned for this proof.",
+    "Revalidate any moved source or successor head before supersession or merge.",
+    "PR256 combines PR233 with PR252 and v0.82.1. Original runtime path deltas are exact, while new-base backup/preflight/session-original behavior is preserved.",
+    "No worktree, branch, or PR state mutated."
+  ],
+  "pairs": [
+    {
+      "sourcePr": 230,
+      "successorPr": 230,
+      "source": "7e1c84484049cca424b939f302f943061d23505d",
+      "target": "283f4e1033505ad6b625dc687a1b83b0ce644c40",
+      "sourceBase": "961a7c48229f8017b5ff46c2faf5fa55f06d9f5c",
+      "targetBase": "f22a47e570f14cee79fdd41e5676c6b58d0a8112",
+      "sourceChangedPaths": 6,
+      "identicalFinalBlobs": 5,
+      "identicalZeroContextPathPatches": 6,
+      "rows": [
+        {
+          "path": "authoring/prompts/chapter-download-retry.md",
+          "sourceBlob": "4d2486389127963f7cb0049180267b4b10423751",
+          "targetBlob": "4d2486389127963f7cb0049180267b4b10423751",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "af51c6553ce59157447736d209a03c0223933fac",
+          "targetZeroContextPatchId": "af51c6553ce59157447736d209a03c0223933fac"
+        },
+        {
+          "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+          "sourceBlob": "622f218431dd65a8d95316ff2e84c2a0da7f4869",
+          "targetBlob": "c8caa6eb2373147eb53d5caebfcc467288c6ddc5",
+          "sameBlob": false,
+          "sourceZeroContextPatchId": "c1122d65bb067ec5c2db5b3c854aa7dfcc0d07a6",
+          "targetZeroContextPatchId": "c1122d65bb067ec5c2db5b3c854aa7dfcc0d07a6"
+        },
+        {
+          "path": "docs/chapter-download-retry.md",
+          "sourceBlob": "a550b5c89f1746648b24e71261df0319b3140d52",
+          "targetBlob": "a550b5c89f1746648b24e71261df0319b3140d52",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "db0e83ccc734767253a4b62aabb9d860b6291a97",
+          "targetZeroContextPatchId": "db0e83ccc734767253a4b62aabb9d860b6291a97"
+        },
+        {
+          "path": "game/chapter-download.mjs",
+          "sourceBlob": "ace247300e57e881165b0b08b3a06109de36c59a",
+          "targetBlob": "ace247300e57e881165b0b08b3a06109de36c59a",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "898ec052531a20989325bf5c8e0a484610b1fde5",
+          "targetZeroContextPatchId": "898ec052531a20989325bf5c8e0a484610b1fde5"
+        },
+        {
+          "path": "game/test/chapter-download.test.mjs",
+          "sourceBlob": "85a7c03047945e1f6fe3a64b9de8c606d8de98f9",
+          "targetBlob": "85a7c03047945e1f6fe3a64b9de8c606d8de98f9",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "8f0ae8e482c483265dbcda840a41bb5a87104fab",
+          "targetZeroContextPatchId": "8f0ae8e482c483265dbcda840a41bb5a87104fab"
+        },
+        {
+          "path": "game/test/title-operation-status-host.test.mjs",
+          "sourceBlob": "cff48554e29893b7c68ed5aa9fee28deaea5c6c7",
+          "targetBlob": "cff48554e29893b7c68ed5aa9fee28deaea5c6c7",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "89219a369b57dc1613f84782d0dccc4dd0d553d6",
+          "targetZeroContextPatchId": "89219a369b57dc1613f84782d0dccc4dd0d553d6"
+        }
+      ],
+      "special": [],
+      "committedCoverage": "complete-at-pinned-successor",
+      "unaccountedCommittedPaths": [],
+      "dirtyChangesCovered": false
+    },
+    {
+      "sourcePr": 231,
+      "successorPr": 231,
+      "source": "b4a4a5b5ba317c7da48ee9160bd824cf8ec6cbc1",
+      "target": "af0520ac139d91edae720376a0f674812cda4e57",
+      "sourceBase": "961a7c48229f8017b5ff46c2faf5fa55f06d9f5c",
+      "targetBase": "f22a47e570f14cee79fdd41e5676c6b58d0a8112",
+      "sourceChangedPaths": 5,
+      "identicalFinalBlobs": 4,
+      "identicalZeroContextPathPatches": 5,
+      "rows": [
+        {
+          "path": "authoring/prompts/replay-display-restoration.md",
+          "sourceBlob": "f7df187d87b8cd485a8389d04f40d9bfe56e73d0",
+          "targetBlob": "f7df187d87b8cd485a8389d04f40d9bfe56e73d0",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "7bcba4b2a8736757477b6cc12bead7ccfcd5fbc2",
+          "targetZeroContextPatchId": "7bcba4b2a8736757477b6cc12bead7ccfcd5fbc2"
+        },
+        {
+          "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+          "sourceBlob": "3d28175ccc6ba5eeecf672df64cbf67b2fe3237f",
+          "targetBlob": "0ff13b3daa7b83e9e9c60995bdc0e4eb6da42d8d",
+          "sameBlob": false,
+          "sourceZeroContextPatchId": "b64e917a31d37440c5dec3e74bdf6b976c5cefa4",
+          "targetZeroContextPatchId": "b64e917a31d37440c5dec3e74bdf6b976c5cefa4"
+        },
+        {
+          "path": "docs/replay-display-restoration.md",
+          "sourceBlob": "b53652781557b30bf7e9d2bb13a601158bbf7cfa",
+          "targetBlob": "b53652781557b30bf7e9d2bb13a601158bbf7cfa",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "de29165b5d32ff06322e17bdec66597831d61722",
+          "targetZeroContextPatchId": "de29165b5d32ff06322e17bdec66597831d61722"
+        },
+        {
+          "path": "game/replay-theater/display.mjs",
+          "sourceBlob": "478938ad2ef5bde4b0a0d084cf2dbff56ee25d95",
+          "targetBlob": "478938ad2ef5bde4b0a0d084cf2dbff56ee25d95",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "4afd21fa610ffece43efd5a82c61a970ec86e7e3",
+          "targetZeroContextPatchId": "4afd21fa610ffece43efd5a82c61a970ec86e7e3"
+        },
+        {
+          "path": "game/test/replay-theater-display-host.test.mjs",
+          "sourceBlob": "2f764c25fa93a1c0aea8f2f34e3ad31949c0d0d8",
+          "targetBlob": "2f764c25fa93a1c0aea8f2f34e3ad31949c0d0d8",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "e24edb72973721fe58d4aed1658377f3d2e0a171",
+          "targetZeroContextPatchId": "e24edb72973721fe58d4aed1658377f3d2e0a171"
+        }
+      ],
+      "special": [],
+      "committedCoverage": "complete-at-pinned-successor",
+      "unaccountedCommittedPaths": [],
+      "dirtyChangesCovered": false
+    },
+    {
+      "sourcePr": 242,
+      "successorPr": 258,
+      "source": "0c241f73def4755627d73b66c1aca17e8c3f32e9",
+      "target": "fcea43eaa0f9c6c98d34fb2409b55040a9eb7864",
+      "sourceBase": "af3bf0ff10c65ff6d172b6742819f2bb7df84b99",
+      "targetBase": "64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e",
+      "sourceChangedPaths": 8,
+      "identicalFinalBlobs": 6,
+      "identicalZeroContextPathPatches": 7,
+      "rows": [
+        {
+          "path": "authoring/prompts/studio-validation-labels.md",
+          "sourceBlob": "740b32aab46a954dba04b6672c7e2e7c97d53af0",
+          "targetBlob": "740b32aab46a954dba04b6672c7e2e7c97d53af0",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "9c25a5d7289112b2835351e79d3788835d8f31ef",
+          "targetZeroContextPatchId": "9c25a5d7289112b2835351e79d3788835d8f31ef"
+        },
+        {
+          "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+          "sourceBlob": "a9e338e1a99f46f1c68492795724a7ead26f5500",
+          "targetBlob": "a14258f1c441e1b269b60b2120ddd79ba5319d0a",
+          "sameBlob": false,
+          "sourceZeroContextPatchId": "d99dd9140558498f28607a034c92f8388772bf1b",
+          "targetZeroContextPatchId": "d99dd9140558498f28607a034c92f8388772bf1b"
+        },
+        {
+          "path": "docs/studio-validation-labels.md",
+          "sourceBlob": "1bc3270a05148a13db81c339c558939b9a843a0c",
+          "targetBlob": "ec2fdc1ef26755d477d782f99c8d915b03d365bf",
+          "sameBlob": false,
+          "sourceZeroContextPatchId": "546d1c535fa2a86401e5338c8b70dc07f7005fc0",
+          "targetZeroContextPatchId": "9430628642c93492245c891b051784044119e700"
+        },
+        {
+          "path": "game/studio/form-focus.mjs",
+          "sourceBlob": "0b98d0ed60ba681422f2e9d56d6fb85a8f5eeb22",
+          "targetBlob": "0b98d0ed60ba681422f2e9d56d6fb85a8f5eeb22",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "3f08d501b7dc26dede53133ce75ddf2850e2b809",
+          "targetZeroContextPatchId": "3f08d501b7dc26dede53133ce75ddf2850e2b809"
+        },
+        {
+          "path": "game/studio/studio.css",
+          "sourceBlob": "f9fbd2166524ab2eee5e12a1bf8b0e357f3c7b86",
+          "targetBlob": "f9fbd2166524ab2eee5e12a1bf8b0e357f3c7b86",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "f0d7aae0a9ca0e75ab600f5002a2e255bf733fc5",
+          "targetZeroContextPatchId": "f0d7aae0a9ca0e75ab600f5002a2e255bf733fc5"
+        },
+        {
+          "path": "game/studio/timed-bonus-editor.mjs",
+          "sourceBlob": "759bafcdd5c2a00ec1186242046dffbf3b461fd4",
+          "targetBlob": "759bafcdd5c2a00ec1186242046dffbf3b461fd4",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "70d2b9ab22f364998cc1c16d4951432e473576c6",
+          "targetZeroContextPatchId": "70d2b9ab22f364998cc1c16d4951432e473576c6"
+        },
+        {
+          "path": "game/test/content-timed-bonuses.test.mjs",
+          "sourceBlob": "a745fb761dc13de6d33183bc28fd26cd801e976a",
+          "targetBlob": "a745fb761dc13de6d33183bc28fd26cd801e976a",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "5f757037fcc0a93b58d64de34d7dfb2fd2b7ee4f",
+          "targetZeroContextPatchId": "5f757037fcc0a93b58d64de34d7dfb2fd2b7ee4f"
+        },
+        {
+          "path": "game/test/studio-form-focus.test.mjs",
+          "sourceBlob": "e631bf9f131c2f23fa5747352ab44f5d4b955e0c",
+          "targetBlob": "e631bf9f131c2f23fa5747352ab44f5d4b955e0c",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "5584cdf0c49fa9cbae79654a556ac5b53887d7df",
+          "targetZeroContextPatchId": "5584cdf0c49fa9cbae79654a556ac5b53887d7df"
+        }
+      ],
+      "special": [
+        {
+          "path": "docs/studio-validation-labels.md",
+          "proof": "Complete original document retained as exact prefix; only recovery evidence appended",
+          "retained": true
+        }
+      ],
+      "committedCoverage": "complete-at-pinned-successor",
+      "unaccountedCommittedPaths": [],
+      "dirtyChangesCovered": false
+    },
+    {
+      "sourcePr": 233,
+      "successorPr": 256,
+      "source": "80a47a3b25167d9dcd0bdf98b1bde6a95d112269",
+      "target": "03833cef639a350c0d1be70d13e9cceec7fad267",
+      "sourceBase": "c3398112e9a739225fdc2e8bf603b45f52a5cbb6",
+      "targetBase": "70d52504c92e94e5905716d195ebc48eb25d87a5",
+      "sourceChangedPaths": 139,
+      "identicalFinalBlobs": 132,
+      "identicalZeroContextPathPatches": 138,
+      "rows": [
+        {
+          "path": ".prettierignore",
+          "sourceBlob": "b3fbf3b0bd84a69780a2daadf972523619fdbbf8",
+          "targetBlob": "b3fbf3b0bd84a69780a2daadf972523619fdbbf8",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "e8e3a55b73fdc78349d77e1699bf6d19b40e40af",
+          "targetZeroContextPatchId": "e8e3a55b73fdc78349d77e1699bf6d19b40e40af"
+        },
+        {
+          "path": "authoring/library/fpv-field-kit/production.rltheme",
+          "sourceBlob": "c791365d0fe7975f73035539beeb062c6ab728ce",
+          "targetBlob": "c791365d0fe7975f73035539beeb062c6ab728ce",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "42bc899e4f6791de25cf98de73edd1828e8b86e9",
+          "targetZeroContextPatchId": "42bc899e4f6791de25cf98de73edd1828e8b86e9"
+        },
+        {
+          "path": "authoring/library/fpv-field-kit/retained/runtime.91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace.json",
+          "sourceBlob": "1d646a8a1b47fc79a5ffbfefdec1219d4993713e",
+          "targetBlob": "1d646a8a1b47fc79a5ffbfefdec1219d4993713e",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "9c8d05bada81601770e0f484437959e8985c348c",
+          "targetZeroContextPatchId": "9c8d05bada81601770e0f484437959e8985c348c"
+        },
+        {
+          "path": "authoring/prompts/field-kit-retained-production.md",
+          "sourceBlob": "6af05d67c3c72b6965271481aa180dd65c5b1fa7",
+          "targetBlob": "6af05d67c3c72b6965271481aa180dd65c5b1fa7",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "a223674d4de88e9e23d73764d8747c4d0a83c8dc",
+          "targetZeroContextPatchId": "a223674d4de88e9e23d73764d8747c4d0a83c8dc"
+        },
+        {
+          "path": "authoring/prompts/fresh-visual-preparation.md",
+          "sourceBlob": "25daef5b433bbb56b349984fb6ad6b0e42aedbcd",
+          "targetBlob": "25daef5b433bbb56b349984fb6ad6b0e42aedbcd",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "cc4cc77cc6dbe9a42c82fb8a0113b5eaa79ef61e",
+          "targetZeroContextPatchId": "cc4cc77cc6dbe9a42c82fb8a0113b5eaa79ef61e"
+        },
+        {
+          "path": "authoring/prompts/pack-snapshot-memory.md",
+          "sourceBlob": "bbf5e8759dee8a39defe83eee1094d1563657788",
+          "targetBlob": "bbf5e8759dee8a39defe83eee1094d1563657788",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "2079d6e025f375b1b7d03274950e7c17ed46d6fa",
+          "targetZeroContextPatchId": "2079d6e025f375b1b7d03274950e7c17ed46d6fa"
+        },
+        {
+          "path": "authoring/prompts/retained-presentation-output.md",
+          "sourceBlob": "86457501af9f65da3935509b52720b13b2797df5",
+          "targetBlob": "86457501af9f65da3935509b52720b13b2797df5",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "68fd61b31bd5f8cbca83378bd7b7588178e8ef4d",
+          "targetZeroContextPatchId": "68fd61b31bd5f8cbca83378bd7b7588178e8ef4d"
+        },
+        {
+          "path": "authoring/prompts/saved-visual-restoration.md",
+          "sourceBlob": "3f147004022702bedfdc0743c1c6d994d660c1ee",
+          "targetBlob": "3f147004022702bedfdc0743c1c6d994d660c1ee",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "208c9050502570d8282105615e7891b7b2821604",
+          "targetZeroContextPatchId": "208c9050502570d8282105615e7891b7b2821604"
+        },
+        {
+          "path": "authoring/prompts/visual-session-references.md",
+          "sourceBlob": "edaa93b1d24d0ae0c8b8ef26f03f5e019f37598f",
+          "targetBlob": "edaa93b1d24d0ae0c8b8ef26f03f5e019f37598f",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "05e89e7853710eabe86b7af3c7a11acc7910d05a",
+          "targetZeroContextPatchId": "05e89e7853710eabe86b7af3c7a11acc7910d05a"
+        },
+        {
+          "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+          "sourceBlob": "3147dd3137ed9075e19a1bd26d62ab1b58de3e8d",
+          "targetBlob": "674a5f7daff7f7797be5c3279b17d25535cfd479",
+          "sameBlob": false,
+          "sourceZeroContextPatchId": "6e610772c287232b87a89df12fab15d3110acc22",
+          "targetZeroContextPatchId": "9cd034327e1cb3b768e827e3b9b251b5a88de7da"
+        },
+        {
+          "path": "docs/field-kit-retained-production.md",
+          "sourceBlob": "e6df66228d2af00be0390eff0c400e4ff4735d88",
+          "targetBlob": "e6df66228d2af00be0390eff0c400e4ff4735d88",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "c74794070649f31e145807ce1785f5da805feaff",
+          "targetZeroContextPatchId": "c74794070649f31e145807ce1785f5da805feaff"
+        },
+        {
+          "path": "docs/fresh-visual-preparation.md",
+          "sourceBlob": "015bca57a6773519e02c78ab53ce2ea71bf3be93",
+          "targetBlob": "015bca57a6773519e02c78ab53ce2ea71bf3be93",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "57909e9664a153e57f1f259c56f5e711b384f814",
+          "targetZeroContextPatchId": "57909e9664a153e57f1f259c56f5e711b384f814"
+        },
+        {
+          "path": "docs/pack-snapshot-memory.md",
+          "sourceBlob": "db552cbf0c31755fce86f0e0f3972c7053bd66ee",
+          "targetBlob": "db552cbf0c31755fce86f0e0f3972c7053bd66ee",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "21fd1f84ffe336a40461dd2c1e51f6e614e5b23e",
+          "targetZeroContextPatchId": "21fd1f84ffe336a40461dd2c1e51f6e614e5b23e"
+        },
+        {
+          "path": "docs/retained-presentation-manifests.md",
+          "sourceBlob": "e76b05dcff4d89b1eeca11a3af033937c1d31110",
+          "targetBlob": "e76b05dcff4d89b1eeca11a3af033937c1d31110",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "45dcf53e78a1de9f1ce9b935e56aacfd657cd1e6",
+          "targetZeroContextPatchId": "45dcf53e78a1de9f1ce9b935e56aacfd657cd1e6"
+        },
+        {
+          "path": "docs/retained-presentation-output.md",
+          "sourceBlob": "4d44c7bccef647ce2730501ab3cec7c765565f2f",
+          "targetBlob": "4d44c7bccef647ce2730501ab3cec7c765565f2f",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "dc18dbcf5c70e0f42b5384b3b78997a77ff9a562",
+          "targetZeroContextPatchId": "dc18dbcf5c70e0f42b5384b3b78997a77ff9a562"
+        },
+        {
+          "path": "docs/saved-visual-restoration.md",
+          "sourceBlob": "feb086de46be6766767a5b79971f3247bbdb264a",
+          "targetBlob": "feb086de46be6766767a5b79971f3247bbdb264a",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "1e3f719974d70408764685b5b4e6611ae13052fc",
+          "targetZeroContextPatchId": "1e3f719974d70408764685b5b4e6611ae13052fc"
+        },
+        {
+          "path": "docs/verification/fresh-presentation-retention/audio-lifecycle-proof.json",
+          "sourceBlob": "27f653f7a105488c2b2d8cdf0732684f74a545b0",
+          "targetBlob": "27f653f7a105488c2b2d8cdf0732684f74a545b0",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "80c7eb8446e16cebd36e9a6e2e0b16a80ecebf3f",
+          "targetZeroContextPatchId": "80c7eb8446e16cebd36e9a6e2e0b16a80ecebf3f"
+        },
+        {
+          "path": "docs/verification/fresh-presentation-retention/comparison.json",
+          "sourceBlob": "d757b49eb041e69304115174d75383080ebcdd97",
+          "targetBlob": "d757b49eb041e69304115174d75383080ebcdd97",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "4c055f818b6c6b3ceacdcbcad235cf6aab973599",
+          "targetZeroContextPatchId": "4c055f818b6c6b3ceacdcbcad235cf6aab973599"
+        },
+        {
+          "path": "docs/verification/fresh-presentation-retention/independent-source-review.md",
+          "sourceBlob": "ab7c6970b9bea5171e08d613f82ba9bab1134b7c",
+          "targetBlob": "ab7c6970b9bea5171e08d613f82ba9bab1134b7c",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "0d034113b0abf85ab6119f16cc9edc28b664046e",
+          "targetZeroContextPatchId": "0d034113b0abf85ab6119f16cc9edc28b664046e"
+        },
+        {
+          "path": "docs/verification/fresh-presentation-retention/review.json",
+          "sourceBlob": "f11bcbded6704c64ece393fc1f4f6b2f47fe0307",
+          "targetBlob": "f11bcbded6704c64ece393fc1f4f6b2f47fe0307",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "250b325b728d046e0ff757baac1d0b56812206c8",
+          "targetZeroContextPatchId": "250b325b728d046e0ff757baac1d0b56812206c8"
+        },
+        {
+          "path": "docs/verification/versus-built-in-picture-parity.md",
+          "sourceBlob": "91e84eaa286376c6b28f61cc46384cf85fe8f501",
+          "targetBlob": "91e84eaa286376c6b28f61cc46384cf85fe8f501",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "14c26430212b5824e08ae9668a5a3a2ffa8fbd97",
+          "targetZeroContextPatchId": "14c26430212b5824e08ae9668a5a3a2ffa8fbd97"
+        },
+        {
+          "path": "docs/visual-session-references.md",
+          "sourceBlob": "4c4b1baf30eeae905beedfcd3b357530f3b05a8b",
+          "targetBlob": "4c4b1baf30eeae905beedfcd3b357530f3b05a8b",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "7014ccfeea574c465529b35ac474704581270fba",
+          "targetZeroContextPatchId": "7014ccfeea574c465529b35ac474704581270fba"
+        },
+        {
+          "path": "game/app.mjs",
+          "sourceBlob": "45bf94eb14e89ce9b57133ea142e9d7834dfb895",
+          "targetBlob": "2e076a99bd23537de4d62649d419cf0fcfcb57b7",
+          "sameBlob": false,
+          "sourceZeroContextPatchId": "d26b550803a83ab3d698ea6e3454a6a840bcbbd9",
+          "targetZeroContextPatchId": "d26b550803a83ab3d698ea6e3454a6a840bcbbd9"
+        },
+        {
+          "path": "game/backup.mjs",
+          "sourceBlob": "7dc4d56c6143e89e83dffa06b88793c6db60daed",
+          "targetBlob": "7dc4d56c6143e89e83dffa06b88793c6db60daed",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "155ed351a01cecba5268515d56293b77ca3ccae3",
+          "targetZeroContextPatchId": "155ed351a01cecba5268515d56293b77ca3ccae3"
+        },
+        {
+          "path": "game/couch/coop-picture-bindings.mjs",
+          "sourceBlob": "6c243ef0c9978c30229c193f2a860e03f8373214",
+          "targetBlob": "6c243ef0c9978c30229c193f2a860e03f8373214",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "c5ac2751eba03d14200149f92e2bda61aed4ac88",
+          "targetZeroContextPatchId": "c5ac2751eba03d14200149f92e2bda61aed4ac88"
+        },
+        {
+          "path": "game/external-chapter-host.mjs",
+          "sourceBlob": "067ea208e1936f2077166aa11b7dec27a39cac1e",
+          "targetBlob": "067ea208e1936f2077166aa11b7dec27a39cac1e",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "c2ded53d97e8f33d38d3b2d0ee818873cd35c2ff",
+          "targetZeroContextPatchId": "c2ded53d97e8f33d38d3b2d0ee818873cd35c2ff"
+        },
+        {
+          "path": "game/presentation/compiled/manifest.json",
+          "sourceBlob": "e90819deaa9d540fc2f9587ba088d33ea47dde29",
+          "targetBlob": "e90819deaa9d540fc2f9587ba088d33ea47dde29",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "536fab348823607152762381f089a4c5edcf1bbf",
+          "targetZeroContextPatchId": "536fab348823607152762381f089a4c5edcf1bbf"
+        },
+        {
+          "path": "game/presentation/compiled/runtime.91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace.json",
+          "sourceBlob": "1d646a8a1b47fc79a5ffbfefdec1219d4993713e",
+          "targetBlob": "1d646a8a1b47fc79a5ffbfefdec1219d4993713e",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "0c432399a8d2a0e0445313fe9e7b83173ce3602d",
+          "targetZeroContextPatchId": "0c432399a8d2a0e0445313fe9e7b83173ce3602d"
+        },
+        {
+          "path": "game/presentation/compiled/runtime.json",
+          "sourceBlob": "d5e6e66b5195a142e9a7205bfbef95429a80bd3c",
+          "targetBlob": "d5e6e66b5195a142e9a7205bfbef95429a80bd3c",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "b8518537bef4732c34024a0019bb20e32064c571",
+          "targetZeroContextPatchId": "b8518537bef4732c34024a0019bb20e32064c571"
+        },
+        {
+          "path": "game/presentation/compiled/studio.json",
+          "sourceBlob": "a26a82af88f53b034bc62a1389cefff40db1b7d1",
+          "targetBlob": "a26a82af88f53b034bc62a1389cefff40db1b7d1",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "50ee4c1b9160d0f88bd8feb6c4d2d3d5c3089cf6",
+          "targetZeroContextPatchId": "50ee4c1b9160d0f88bd8feb6c4d2d3d5c3089cf6"
+        },
+        {
+          "path": "game/presentation/dependencies.mjs",
+          "sourceBlob": "3a61c54fb645eab9b9d336a49232a2be23cb6d6d",
+          "targetBlob": "3a61c54fb645eab9b9d336a49232a2be23cb6d6d",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "3f384fbd20421974fc157cf3830ea7409dfe6c00",
+          "targetZeroContextPatchId": "3f384fbd20421974fc157cf3830ea7409dfe6c00"
+        },
+        {
+          "path": "game/presentation/fresh-visual-theme.mjs",
+          "sourceBlob": "1984c7c325327d199f526f67ae7646dd067cf3ea",
+          "targetBlob": "1984c7c325327d199f526f67ae7646dd067cf3ea",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "9755d03adecdb18bbc83e2ecb00ff75bd75e913d",
+          "targetZeroContextPatchId": "9755d03adecdb18bbc83e2ecb00ff75bd75e913d"
+        },
+        {
+          "path": "game/presentation/host.mjs",
+          "sourceBlob": "a660d96cfb6b293a457d25691f1509042ba0f5ac",
+          "targetBlob": "a660d96cfb6b293a457d25691f1509042ba0f5ac",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "4f4e052ecbd352baa0ffc388cd79a6aa2cd55eef",
+          "targetZeroContextPatchId": "4f4e052ecbd352baa0ffc388cd79a6aa2cd55eef"
+        },
+        {
+          "path": "game/presentation/manifest-path.mjs",
+          "sourceBlob": "51b63efab1bfefadaa2f202b3126ae9ac903754c",
+          "targetBlob": "51b63efab1bfefadaa2f202b3126ae9ac903754c",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "23236a2524107a847a002f5d1ed2bc51a196a6d4",
+          "targetZeroContextPatchId": "23236a2524107a847a002f5d1ed2bc51a196a6d4"
+        },
+        {
+          "path": "game/presentation/saved-visual-theme.mjs",
+          "sourceBlob": "ea71790f9142739a7d64fb0258a51bb998c18885",
+          "targetBlob": "ea71790f9142739a7d64fb0258a51bb998c18885",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "02de90395bc5d0b822a125d2b68af47008bddbcd",
+          "targetZeroContextPatchId": "02de90395bc5d0b822a125d2b68af47008bddbcd"
+        },
+        {
+          "path": "game/presentation/visual-themes.json",
+          "sourceBlob": "e0f61908cb340d032479431f9643ff24dea83dba",
+          "targetBlob": "e0f61908cb340d032479431f9643ff24dea83dba",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "5477d6578b586b579012444fe9fd84241cc930d7",
+          "targetZeroContextPatchId": "5477d6578b586b579012444fe9fd84241cc930d7"
+        },
+        {
+          "path": "game/session-visual-pin.mjs",
+          "sourceBlob": "c8d37acc3ad5a90ca585ff298d3b3b2c938c75b7",
+          "targetBlob": "c8d37acc3ad5a90ca585ff298d3b3b2c938c75b7",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "b496d8f204ecbcfb8f2f050c39689c45e060f85d",
+          "targetZeroContextPatchId": "b496d8f204ecbcfb8f2f050c39689c45e060f85d"
+        },
+        {
+          "path": "game/sessions.mjs",
+          "sourceBlob": "ff71912caea224a39f09d275fb5b09d8d5b28991",
+          "targetBlob": "ff71912caea224a39f09d275fb5b09d8d5b28991",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "1b3d2e93f2901b87e08d24c4defd9be7ef3bbc11",
+          "targetZeroContextPatchId": "1b3d2e93f2901b87e08d24c4defd9be7ef3bbc11"
+        },
+        {
+          "path": "game/test/backup-set-host.test.mjs",
+          "sourceBlob": "4a298cad764ddcefdf14af8a78227b393a918456",
+          "targetBlob": "4a298cad764ddcefdf14af8a78227b393a918456",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "9368eb459de39a760f9a43b886129379eeabf23b",
+          "targetZeroContextPatchId": "9368eb459de39a760f9a43b886129379eeabf23b"
+        },
+        {
+          "path": "game/test/chapter-download-host.test.mjs",
+          "sourceBlob": "071a436c908f5d8524b7497ccc7c71ddbc6b6c19",
+          "targetBlob": "071a436c908f5d8524b7497ccc7c71ddbc6b6c19",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "f58a12d214d4a3b2238ac39af26109b0689154fd",
+          "targetZeroContextPatchId": "f58a12d214d4a3b2238ac39af26109b0689154fd"
+        },
+        {
+          "path": "game/test/collection-context-host.test.mjs",
+          "sourceBlob": "39eb758e327b50564fa9743cdce0e3173c64509b",
+          "targetBlob": "39eb758e327b50564fa9743cdce0e3173c64509b",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "19276db0f0ca31eed714e988137b7f5af07a3290",
+          "targetZeroContextPatchId": "19276db0f0ca31eed714e988137b7f5af07a3290"
+        },
+        {
+          "path": "game/test/collection-records-return-host.test.mjs",
+          "sourceBlob": "712f355d3af41ea22f06dbe3a5d991a78fac4c83",
+          "targetBlob": "712f355d3af41ea22f06dbe3a5d991a78fac4c83",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "f51b9510ea50dcd3e894c3363c4aedf98fe0459c",
+          "targetZeroContextPatchId": "f51b9510ea50dcd3e894c3363c4aedf98fe0459c"
+        },
+        {
+          "path": "game/test/controller-practice-pause-host.test.mjs",
+          "sourceBlob": "18e159704ba6e4c22a7a9bd838a453bfb6840bfc",
+          "targetBlob": "18e159704ba6e4c22a7a9bd838a453bfb6840bfc",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "7b90894f3b8c7dd97101d0000e0c1df8480f9e4a",
+          "targetZeroContextPatchId": "7b90894f3b8c7dd97101d0000e0c1df8480f9e4a"
+        },
+        {
+          "path": "game/test/coop-actor-presentation.test.mjs",
+          "sourceBlob": "ee6916dc63887e732693b5ea8843452b0cf77d42",
+          "targetBlob": "ee6916dc63887e732693b5ea8843452b0cf77d42",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "a3ca9fb997706802ecef7753883b433cbb48682f",
+          "targetZeroContextPatchId": "a3ca9fb997706802ecef7753883b433cbb48682f"
+        },
+        {
+          "path": "game/test/coop-historical-import-picture.test.mjs",
+          "sourceBlob": "a7bd52de7d58095979777284f05e15838395b5a8",
+          "targetBlob": "a7bd52de7d58095979777284f05e15838395b5a8",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "05f8eff98adc48354a9daa059136712ea1618038",
+          "targetZeroContextPatchId": "05f8eff98adc48354a9daa059136712ea1618038"
+        },
+        {
+          "path": "game/test/coop-picture-bindings.test.mjs",
+          "sourceBlob": "ca7e6227014ef4fb654d7eeddb82d08f92b6fcaa",
+          "targetBlob": "ca7e6227014ef4fb654d7eeddb82d08f92b6fcaa",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "fd00eb7aa625a7daad15dff0bb923848f3340cf9",
+          "targetZeroContextPatchId": "fd00eb7aa625a7daad15dff0bb923848f3340cf9"
+        },
+        {
+          "path": "game/test/couch-built-in-picture-parity.test.mjs",
+          "sourceBlob": "9c5f4af9ae208f83a98d86ad4dfe1ae5711b1bba",
+          "targetBlob": "9c5f4af9ae208f83a98d86ad4dfe1ae5711b1bba",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "da740b09de3c5f487e2f7c194b56e8a3637b7c36",
+          "targetZeroContextPatchId": "da740b09de3c5f487e2f7c194b56e8a3637b7c36"
+        },
+        {
+          "path": "game/test/countercurrent-chapter-host.test.mjs",
+          "sourceBlob": "b62e6f228a06d449fa63276dbb85417a803751ed",
+          "targetBlob": "652cf76cf9abfde54df9f8017278f8fbf4bc5911",
+          "sameBlob": false,
+          "sourceZeroContextPatchId": "e36572a840ba501ebae920c770915c055b4bc549",
+          "targetZeroContextPatchId": "e36572a840ba501ebae920c770915c055b4bc549"
+        },
+        {
+          "path": "game/test/device-controls-host.test.mjs",
+          "sourceBlob": "2c841f636b7adaacf46bced54faa353fd0d35758",
+          "targetBlob": "2c841f636b7adaacf46bced54faa353fd0d35758",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "06b83564caad9e964f7604a1e5deec51c5c3d22c",
+          "targetZeroContextPatchId": "06b83564caad9e964f7604a1e5deec51c5c3d22c"
+        },
+        {
+          "path": "game/test/display-preferences-host.test.mjs",
+          "sourceBlob": "1d6f975b9226da8f2df42b01abe710748904e14a",
+          "targetBlob": "1d6f975b9226da8f2df42b01abe710748904e14a",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "60b90b414f57d1ac7d826ad4b68eba5a872311f3",
+          "targetZeroContextPatchId": "60b90b414f57d1ac7d826ad4b68eba5a872311f3"
+        },
+        {
+          "path": "game/test/equipment-help-host.test.mjs",
+          "sourceBlob": "909b2a417b66ae6be09d60e900e20993481ae2b2",
+          "targetBlob": "909b2a417b66ae6be09d60e900e20993481ae2b2",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "3c373f2c1783ee98bfea29c52e2103d1f10c3ee6",
+          "targetZeroContextPatchId": "3c373f2c1783ee98bfea29c52e2103d1f10c3ee6"
+        },
+        {
+          "path": "game/test/external-backup-host.test.mjs",
+          "sourceBlob": "7cf3317f918ac7d5c594bee0ff4c388432129890",
+          "targetBlob": "62925a6eae558d0e31e6b20e586f777aed1fa843",
+          "sameBlob": false,
+          "sourceZeroContextPatchId": "2ea7ccb0c7f27ea601f1f63564d604087248fd17",
+          "targetZeroContextPatchId": "2ea7ccb0c7f27ea601f1f63564d604087248fd17"
+        },
+        {
+          "path": "game/test/external-chapter-app.test.mjs",
+          "sourceBlob": "8135f2d04a15e37b363625e9c7e3bf3b3e4dce41",
+          "targetBlob": "8135f2d04a15e37b363625e9c7e3bf3b3e4dce41",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "f665632c2b9c6416b41174ef049672ef7fb105f0",
+          "targetZeroContextPatchId": "f665632c2b9c6416b41174ef049672ef7fb105f0"
+        },
+        {
+          "path": "game/test/external-chapter-host.test.mjs",
+          "sourceBlob": "57f303c87bdf93ba310fc450fffa5abe9ca56aab",
+          "targetBlob": "57f303c87bdf93ba310fc450fffa5abe9ca56aab",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "035df879abdeb6335cdac517916ad33d4da1d5cd",
+          "targetZeroContextPatchId": "035df879abdeb6335cdac517916ad33d4da1d5cd"
+        },
+        {
+          "path": "game/test/field-kit-retained-runtime.test.mjs",
+          "sourceBlob": "9276bc7ea2d5b43c976162b8a7a060c762a1490f",
+          "targetBlob": "9276bc7ea2d5b43c976162b8a7a060c762a1490f",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "398590e8fec33f700948d05ee42ef03275a0a0f0",
+          "targetZeroContextPatchId": "398590e8fec33f700948d05ee42ef03275a0a0f0"
+        },
+        {
+          "path": "game/test/first-flight-entry.test.mjs",
+          "sourceBlob": "3d411792e0369c54c2c396750438c9d287c1910b",
+          "targetBlob": "3d411792e0369c54c2c396750438c9d287c1910b",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "b0ee7778bb3d8de50b7f1bc982c074d3d473c5e8",
+          "targetZeroContextPatchId": "b0ee7778bb3d8de50b7f1bc982c074d3d473c5e8"
+        },
+        {
+          "path": "game/test/flight-pictures-host.test.mjs",
+          "sourceBlob": "4610354652e350d194bcae4423020924da7a6bd1",
+          "targetBlob": "4610354652e350d194bcae4423020924da7a6bd1",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "456403ed5254fb534d0efaa6cd3ef0428d9a7703",
+          "targetZeroContextPatchId": "456403ed5254fb534d0efaa6cd3ef0428d9a7703"
+        },
+        {
+          "path": "game/test/flight-preparation-status-host.test.mjs",
+          "sourceBlob": "811704dd6e4076ab91474400eda7557382e77c29",
+          "targetBlob": "811704dd6e4076ab91474400eda7557382e77c29",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "3f8f0b7c997ebc7d656d22785f207e066bcb117b",
+          "targetZeroContextPatchId": "3f8f0b7c997ebc7d656d22785f207e066bcb117b"
+        },
+        {
+          "path": "game/test/fracture-chapter-host.test.mjs",
+          "sourceBlob": "5c36ced0da4acae58a4ff7fec0173aaa58bfa767",
+          "targetBlob": "6c96ae0ee99e502882164ab123e7728c4e8887d3",
+          "sameBlob": false,
+          "sourceZeroContextPatchId": "7f16170720e72ee3b717cb6759eab87de6e81cdb",
+          "targetZeroContextPatchId": "7f16170720e72ee3b717cb6759eab87de6e81cdb"
+        },
+        {
+          "path": "game/test/fresh-visual-host.test.mjs",
+          "sourceBlob": "ded64396ce8bb5cef7658e09c7c2d63aa5ca28df",
+          "targetBlob": "ded64396ce8bb5cef7658e09c7c2d63aa5ca28df",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "32e3451fa69ac57aaabb69ba728d56825b0d3377",
+          "targetZeroContextPatchId": "32e3451fa69ac57aaabb69ba728d56825b0d3377"
+        },
+        {
+          "path": "game/test/fresh-visual-policy.test.mjs",
+          "sourceBlob": "3da7b4ba31a7cf5bb6a4754b821557833fb93909",
+          "targetBlob": "3da7b4ba31a7cf5bb6a4754b821557833fb93909",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "698a6a8b2abd522368fb9c375bd618988e2303e8",
+          "targetZeroContextPatchId": "698a6a8b2abd522368fb9c375bd618988e2303e8"
+        },
+        {
+          "path": "game/test/gallery-return-host.test.mjs",
+          "sourceBlob": "82e954bb827be6cd2f7b69bba95981c95325caf7",
+          "targetBlob": "82e954bb827be6cd2f7b69bba95981c95325caf7",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "1efb1d9480872da2525918d9f0da177b359cfb20",
+          "targetZeroContextPatchId": "1efb1d9480872da2525918d9f0da177b359cfb20"
+        },
+        {
+          "path": "game/test/helpers/png-image.mjs",
+          "sourceBlob": "d969c500136c42eae7f28154700d4f182e4ed014",
+          "targetBlob": "d969c500136c42eae7f28154700d4f182e4ed014",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "700b08e3d07d67b604e31f7c2bc4bf9d57ac1170",
+          "targetZeroContextPatchId": "700b08e3d07d67b604e31f7c2bc4bf9d57ac1170"
+        },
+        {
+          "path": "game/test/helpers/released-original.mjs",
+          "sourceBlob": "5b4a7274385ef00e121933903dd9e464eb3bc72f",
+          "targetBlob": "5b4a7274385ef00e121933903dd9e464eb3bc72f",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "b5216aa1e6873648638a7ed7f4ede2e30b7d4dce",
+          "targetZeroContextPatchId": "b5216aa1e6873648638a7ed7f4ede2e30b7d4dce"
+        },
+        {
+          "path": "game/test/helpers/solo-dom.mjs",
+          "sourceBlob": "95bd3100ec82932996941b426c7e68ac5e4ca319",
+          "targetBlob": "95bd3100ec82932996941b426c7e68ac5e4ca319",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "ac9e382e538b9837c730fe1cc8c8171c6a681ad7",
+          "targetZeroContextPatchId": "ac9e382e538b9837c730fe1cc8c8171c6a681ad7"
+        },
+        {
+          "path": "game/test/history-picture-host.test.mjs",
+          "sourceBlob": "7ccaab0f3a5f4dba8fcdadfe9118f48a28c452e0",
+          "targetBlob": "9f1b56cd4928a4b586b7658e8a934465a22cc1eb",
+          "sameBlob": false,
+          "sourceZeroContextPatchId": "ac498c930cc87c71fae9b84486c3f479c67928e6",
+          "targetZeroContextPatchId": "ac498c930cc87c71fae9b84486c3f479c67928e6"
+        },
+        {
+          "path": "game/test/initial-focus-host.test.mjs",
+          "sourceBlob": "0ba734cc949307e57af19a16ebdb22cee6e1d31a",
+          "targetBlob": "0ba734cc949307e57af19a16ebdb22cee6e1d31a",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "fa76cf7f7125b45adf205532671111f59aacb3b8",
+          "targetZeroContextPatchId": "fa76cf7f7125b45adf205532671111f59aacb3b8"
+        },
+        {
+          "path": "game/test/key-capture-navigation-host.test.mjs",
+          "sourceBlob": "9f80da9f2bab8b8e17a3f1b6fe3c7c68bce16c22",
+          "targetBlob": "9f80da9f2bab8b8e17a3f1b6fe3c7c68bce16c22",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "7918b0dd77a740637338e8be76eb672f06fd4689",
+          "targetZeroContextPatchId": "7918b0dd77a740637338e8be76eb672f06fd4689"
+        },
+        {
+          "path": "game/test/menu-style-host.test.mjs",
+          "sourceBlob": "417fadc20ecd117a66767fbd8723b063f31045c5",
+          "targetBlob": "417fadc20ecd117a66767fbd8723b063f31045c5",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "6ef4e0991769f46ddbfdd6265a1fe9e5f2c868e6",
+          "targetZeroContextPatchId": "6ef4e0991769f46ddbfdd6265a1fe9e5f2c868e6"
+        },
+        {
+          "path": "game/test/mission-picker-older.test.mjs",
+          "sourceBlob": "86e4af683eedba1b9fd5b51b99f652355b184fd6",
+          "targetBlob": "86e4af683eedba1b9fd5b51b99f652355b184fd6",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "3f94e9ddae2c58de2e886a32082d30cd1aa76d3b",
+          "targetZeroContextPatchId": "3f94e9ddae2c58de2e886a32082d30cd1aa76d3b"
+        },
+        {
+          "path": "game/test/mission-replacement-host.test.mjs",
+          "sourceBlob": "917981d0b185b51ba259e4a85e58ef521d5cb2da",
+          "targetBlob": "917981d0b185b51ba259e4a85e58ef521d5cb2da",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "df067f9d420115750023e254f5b4e2462477d4d2",
+          "targetZeroContextPatchId": "df067f9d420115750023e254f5b4e2462477d4d2"
+        },
+        {
+          "path": "game/test/modal-navigation.test.mjs",
+          "sourceBlob": "95af372cd6c39ed5a6cc346af2adeba7b063e248",
+          "targetBlob": "95af372cd6c39ed5a6cc346af2adeba7b063e248",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "ca4c90667d34617d938609a4f5596d91dbfc49fa",
+          "targetZeroContextPatchId": "ca4c90667d34617d938609a4f5596d91dbfc49fa"
+        },
+        {
+          "path": "game/test/mode-return-host.test.mjs",
+          "sourceBlob": "3468f672c2c5647798a26b3d94229245795da758",
+          "targetBlob": "3468f672c2c5647798a26b3d94229245795da758",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "309414e907ecd03150aead1ab8a01c718a3dbcde",
+          "targetZeroContextPatchId": "309414e907ecd03150aead1ab8a01c718a3dbcde"
+        },
+        {
+          "path": "game/test/nonmodal-header-navigation.test.mjs",
+          "sourceBlob": "e989442f54b7176d42f09436742dc4fe6fce7ae5",
+          "targetBlob": "e989442f54b7176d42f09436742dc4fe6fce7ae5",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "fa4fa3209514546ade54392c012049d9863d8a2c",
+          "targetZeroContextPatchId": "fa4fa3209514546ade54392c012049d9863d8a2c"
+        },
+        {
+          "path": "game/test/optional-chapter-descriptions.test.mjs",
+          "sourceBlob": "705967dabaf7002ec3bce6fdc0d6846fba3e8ae3",
+          "targetBlob": "705967dabaf7002ec3bce6fdc0d6846fba3e8ae3",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "1b6d74dc041bf148b36424cc7492123f001246bf",
+          "targetZeroContextPatchId": "1b6d74dc041bf148b36424cc7492123f001246bf"
+        },
+        {
+          "path": "game/test/optional-chapters-cancel-host.test.mjs",
+          "sourceBlob": "c65492e996f7446f4cce0ceb19183465bd0b72a4",
+          "targetBlob": "c65492e996f7446f4cce0ceb19183465bd0b72a4",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "7c6c92015ae6a3c67c4c1c506a0be18c2bfb1064",
+          "targetZeroContextPatchId": "7c6c92015ae6a3c67c4c1c506a0be18c2bfb1064"
+        },
+        {
+          "path": "game/test/optional-chapters-checksum-host.test.mjs",
+          "sourceBlob": "a9ddd83b6135b26763dfb1a9fbd81d7570b1d72e",
+          "targetBlob": "a9ddd83b6135b26763dfb1a9fbd81d7570b1d72e",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "42344934fa73aae2dfe380c827a53a5cdd891db8",
+          "targetZeroContextPatchId": "42344934fa73aae2dfe380c827a53a5cdd891db8"
+        },
+        {
+          "path": "game/test/optional-chapters-conflict-host.test.mjs",
+          "sourceBlob": "959c00df9614dac7039b0a2ed5c6e01c2a356fc9",
+          "targetBlob": "959c00df9614dac7039b0a2ed5c6e01c2a356fc9",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "bdd66dc4af12a6094248aec15f3ac9d9a1697f99",
+          "targetZeroContextPatchId": "bdd66dc4af12a6094248aec15f3ac9d9a1697f99"
+        },
+        {
+          "path": "game/test/optional-chapters-host.test.mjs",
+          "sourceBlob": "af95873bc99586931b3f58295635df85e1724c1c",
+          "targetBlob": "af95873bc99586931b3f58295635df85e1724c1c",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "50f18c95555559e3f10ab4a86896a6c9f3f1cb65",
+          "targetZeroContextPatchId": "50f18c95555559e3f10ab4a86896a6c9f3f1cb65"
+        },
+        {
+          "path": "game/test/optional-chapters-navigation-host.test.mjs",
+          "sourceBlob": "f4af494e31824f733f620431d4b057ab2841f634",
+          "targetBlob": "f4af494e31824f733f620431d4b057ab2841f634",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "75d8ef6cb7a6a2c970f0dab7e211f7a3fec573eb",
+          "targetZeroContextPatchId": "75d8ef6cb7a6a2c970f0dab7e211f7a3fec573eb"
+        },
+        {
+          "path": "game/test/optional-chapters-offline-host.test.mjs",
+          "sourceBlob": "4445507cd477694c299b5793446550ffd38e83df",
+          "targetBlob": "4445507cd477694c299b5793446550ffd38e83df",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "1b798a87660d6a2c8c9b5f421e5683ed7b828490",
+          "targetZeroContextPatchId": "1b798a87660d6a2c8c9b5f421e5683ed7b828490"
+        },
+        {
+          "path": "game/test/optional-chapters-quota-host.test.mjs",
+          "sourceBlob": "30b59560179444937d9927dc6007ecc8f9569758",
+          "targetBlob": "30b59560179444937d9927dc6007ecc8f9569758",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "3a1283b8b4d51f57a27c5b4c47304f0dda1d04bd",
+          "targetZeroContextPatchId": "3a1283b8b4d51f57a27c5b4c47304f0dda1d04bd"
+        },
+        {
+          "path": "game/test/optional-chapters-readback-host.test.mjs",
+          "sourceBlob": "01b9765dcb5fb86ccc1481d877dfd576671996de",
+          "targetBlob": "01b9765dcb5fb86ccc1481d877dfd576671996de",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "5d3bdc5fec43de02031ee674a95075f65320049b",
+          "targetZeroContextPatchId": "5d3bdc5fec43de02031ee674a95075f65320049b"
+        },
+        {
+          "path": "game/test/optional-chapters-refresh-host.test.mjs",
+          "sourceBlob": "34b5ccc0a1ccb768ba0a78d3c6cc23f14b5bb817",
+          "targetBlob": "34b5ccc0a1ccb768ba0a78d3c6cc23f14b5bb817",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "406e1dc3e32612f2805be10304dad3ce54b3790d",
+          "targetZeroContextPatchId": "406e1dc3e32612f2805be10304dad3ce54b3790d"
+        },
+        {
+          "path": "game/test/optional-chapters-save-host.test.mjs",
+          "sourceBlob": "29409cd5c14553534d7faae590ae0a58720f1ed1",
+          "targetBlob": "29409cd5c14553534d7faae590ae0a58720f1ed1",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "57ce4d2f0ae83d5f84328bc394d9d9b0abdb8f92",
+          "targetZeroContextPatchId": "57ce4d2f0ae83d5f84328bc394d9d9b0abdb8f92"
+        },
+        {
+          "path": "game/test/optional-chapters-scenarios.mjs",
+          "sourceBlob": "04b468968a3503a705bc8f4c4ace207b6c58e94c",
+          "targetBlob": "04b468968a3503a705bc8f4c4ace207b6c58e94c",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "773d47beccb187f26b3162eb7ac80077c8d62fba",
+          "targetZeroContextPatchId": "773d47beccb187f26b3162eb7ac80077c8d62fba"
+        },
+        {
+          "path": "game/test/optional-chapters-stay-background-host.test.mjs",
+          "sourceBlob": "e3d76c2dfb9b61038bd6d3b202ee12bc361665aa",
+          "targetBlob": "e3d76c2dfb9b61038bd6d3b202ee12bc361665aa",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "6ef47bcca77f83ac35db44ff784089dd8bcd93f3",
+          "targetZeroContextPatchId": "6ef47bcca77f83ac35db44ff784089dd8bcd93f3"
+        },
+        {
+          "path": "game/test/optional-chapters-stay-focus-host.test.mjs",
+          "sourceBlob": "0ead3bdcbbec5dbb9281ea95cc5e9df0ca764eab",
+          "targetBlob": "0ead3bdcbbec5dbb9281ea95cc5e9df0ca764eab",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "cbd592ecf99088b3c193d644b0ed8c60acc25db2",
+          "targetZeroContextPatchId": "cbd592ecf99088b3c193d644b0ed8c60acc25db2"
+        },
+        {
+          "path": "game/test/optional-chapters-stay-host.test.mjs",
+          "sourceBlob": "bb84db65cf779de99fe068b9ee6702d2c886b388",
+          "targetBlob": "bb84db65cf779de99fe068b9ee6702d2c886b388",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "d9c5b4fe0b281a2e8e05a334ee2585a24c5748d6",
+          "targetZeroContextPatchId": "d9c5b4fe0b281a2e8e05a334ee2585a24c5748d6"
+        },
+        {
+          "path": "game/test/optional-chapters-stay-newer-host.test.mjs",
+          "sourceBlob": "b7841f383aa46b220ea3ab8bc5070db662a52539",
+          "targetBlob": "b7841f383aa46b220ea3ab8bc5070db662a52539",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "95b15baf5de2502171d367b77c76373210517c99",
+          "targetZeroContextPatchId": "95b15baf5de2502171d367b77c76373210517c99"
+        },
+        {
+          "path": "game/test/optional-chapters-transaction-host.test.mjs",
+          "sourceBlob": "0cc9f66fd55ed566703488c7bb145d325c10d752",
+          "targetBlob": "0cc9f66fd55ed566703488c7bb145d325c10d752",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "1becf9c795abbee468a033da6fbcc143e560e83a",
+          "targetZeroContextPatchId": "1becf9c795abbee468a033da6fbcc143e560e83a"
+        },
+        {
+          "path": "game/test/optional-world-play-art-conflict-host.test.mjs",
+          "sourceBlob": "a5067bca1a28f42ea7910334ea094d80c48bd9d0",
+          "targetBlob": "a5067bca1a28f42ea7910334ea094d80c48bd9d0",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "b2470f88eca229777efa34804ccce830a0642a45",
+          "targetZeroContextPatchId": "b2470f88eca229777efa34804ccce830a0642a45"
+        },
+        {
+          "path": "game/test/optional-world-play-body-cancel-host.test.mjs",
+          "sourceBlob": "3ab843077b125f439b1d19c5ee8ec3f8ec03ddec",
+          "targetBlob": "3ab843077b125f439b1d19c5ee8ec3f8ec03ddec",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "b0cc96b985e8ee9dc8f4a8b72b996985b44841e2",
+          "targetZeroContextPatchId": "b0cc96b985e8ee9dc8f4a8b72b996985b44841e2"
+        },
+        {
+          "path": "game/test/optional-world-play-current-host.test.mjs",
+          "sourceBlob": "53f717863bf41f6d297b65050e494f77ff2b289d",
+          "targetBlob": "53f717863bf41f6d297b65050e494f77ff2b289d",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "8d04d5cdee45338e76dc28915973d998359fd8b9",
+          "targetZeroContextPatchId": "8d04d5cdee45338e76dc28915973d998359fd8b9"
+        },
+        {
+          "path": "game/test/optional-world-play-embedded-failure-host.test.mjs",
+          "sourceBlob": "5fc3268b55eecbd0d637658c072016f566c71655",
+          "targetBlob": "5fc3268b55eecbd0d637658c072016f566c71655",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "187e5ce421e2e540f970836ebc6447bae71ccc09",
+          "targetZeroContextPatchId": "187e5ce421e2e540f970836ebc6447bae71ccc09"
+        },
+        {
+          "path": "game/test/optional-world-play-embedded-success-host.test.mjs",
+          "sourceBlob": "7b1804e80e409e27caffc6e540ffac3749caecd8",
+          "targetBlob": "7b1804e80e409e27caffc6e540ffac3749caecd8",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "0874b58af553838a42f919e4f0b2dd447251be7f",
+          "targetZeroContextPatchId": "0874b58af553838a42f919e4f0b2dd447251be7f"
+        },
+        {
+          "path": "game/test/optional-world-play-host.test.mjs",
+          "sourceBlob": "a675db0a300b5807efe9bb070ea9b44fe314e9ea",
+          "targetBlob": "a675db0a300b5807efe9bb070ea9b44fe314e9ea",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "2683adab6c280c806dd228a0c78334a2e9eb1e97",
+          "targetZeroContextPatchId": "2683adab6c280c806dd228a0c78334a2e9eb1e97"
+        },
+        {
+          "path": "game/test/optional-world-play-installed-host.test.mjs",
+          "sourceBlob": "05b75cfd6860b645c9d3ea3b107a3598425fbb0d",
+          "targetBlob": "05b75cfd6860b645c9d3ea3b107a3598425fbb0d",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "6372d9802f9f4cb8bd67f7de682e30d2f0549f5d",
+          "targetZeroContextPatchId": "6372d9802f9f4cb8bd67f7de682e30d2f0549f5d"
+        },
+        {
+          "path": "game/test/optional-world-play-late-host.test.mjs",
+          "sourceBlob": "91a53f51c79d4bbdd71ef1e887581580ffde9ffb",
+          "targetBlob": "91a53f51c79d4bbdd71ef1e887581580ffde9ffb",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "79ccd021bae1db5db0485b909583ef9b7d98f3fd",
+          "targetZeroContextPatchId": "79ccd021bae1db5db0485b909583ef9b7d98f3fd"
+        },
+        {
+          "path": "game/test/optional-world-play-lock-conflict-host.test.mjs",
+          "sourceBlob": "aa9f692126b6da95436dfc45dc9f78fd583a7e3b",
+          "targetBlob": "aa9f692126b6da95436dfc45dc9f78fd583a7e3b",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "479b67fce36099124c1ecfb094a947044f71d864",
+          "targetZeroContextPatchId": "479b67fce36099124c1ecfb094a947044f71d864"
+        },
+        {
+          "path": "game/test/optional-world-play-picture-cancel-host.test.mjs",
+          "sourceBlob": "f6d5ea04533ca7fd61ddeeeab872083bfb394677",
+          "targetBlob": "f6d5ea04533ca7fd61ddeeeab872083bfb394677",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "5e9e05959872b4cad222b06e58a5faa6b33988ae",
+          "targetZeroContextPatchId": "5e9e05959872b4cad222b06e58a5faa6b33988ae"
+        },
+        {
+          "path": "game/test/optional-world-play-picture-failure-host.test.mjs",
+          "sourceBlob": "aed6ddb86d79e0a73f6406a82e25968f2aac24ac",
+          "targetBlob": "aed6ddb86d79e0a73f6406a82e25968f2aac24ac",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "23439c44cc59ef9a0c40b9d7485c7f76c41d2624",
+          "targetZeroContextPatchId": "23439c44cc59ef9a0c40b9d7485c7f76c41d2624"
+        },
+        {
+          "path": "game/test/optional-world-play-picture-hidden-host.test.mjs",
+          "sourceBlob": "fc8c5c8496d81ecfd58af53d3edcbae35a227f3c",
+          "targetBlob": "fc8c5c8496d81ecfd58af53d3edcbae35a227f3c",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "0bda9c2441de0792ef78e44c6ecbe5145df109b7",
+          "targetZeroContextPatchId": "0bda9c2441de0792ef78e44c6ecbe5145df109b7"
+        },
+        {
+          "path": "game/test/optional-world-play-reentry-host.test.mjs",
+          "sourceBlob": "504713e5cfa80c023d4676d536efb56a4a55c15a",
+          "targetBlob": "504713e5cfa80c023d4676d536efb56a4a55c15a",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "9f5be0928fe42f135f679c71c52875c142490561",
+          "targetZeroContextPatchId": "9f5be0928fe42f135f679c71c52875c142490561"
+        },
+        {
+          "path": "game/test/optional-world-play-release-original-host.test.mjs",
+          "sourceBlob": "6175c30f9892f74a2fadc708fc137c369e22d378",
+          "targetBlob": "6175c30f9892f74a2fadc708fc137c369e22d378",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "fda3c02ccc87258c456a873ddede070aaec990dc",
+          "targetZeroContextPatchId": "fda3c02ccc87258c456a873ddede070aaec990dc"
+        },
+        {
+          "path": "game/test/optional-world-play-replace-host.test.mjs",
+          "sourceBlob": "931a0b19cebb40e6ff2c91cb88c027910024d170",
+          "targetBlob": "931a0b19cebb40e6ff2c91cb88c027910024d170",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "71ca7fffbdca600c11ab45b7571be985b8d136ab",
+          "targetZeroContextPatchId": "71ca7fffbdca600c11ab45b7571be985b8d136ab"
+        },
+        {
+          "path": "game/test/optional-world-play-save-conflict-host.test.mjs",
+          "sourceBlob": "e5623af028d291505397c6952662513d64f05c4b",
+          "targetBlob": "e5623af028d291505397c6952662513d64f05c4b",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "a64769d98f4c919ab183d11926c383b73b55e67e",
+          "targetZeroContextPatchId": "a64769d98f4c919ab183d11926c383b73b55e67e"
+        },
+        {
+          "path": "game/test/optional-world-play-scenarios.mjs",
+          "sourceBlob": "3270dd10bed6a3bbde054fce440a4f8a343ff519",
+          "targetBlob": "3270dd10bed6a3bbde054fce440a4f8a343ff519",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "705b6e020097a31e8296edb3d9e0f883dce57114",
+          "targetZeroContextPatchId": "705b6e020097a31e8296edb3d9e0f883dce57114"
+        },
+        {
+          "path": "game/test/optional-world-play-settings-return-host.test.mjs",
+          "sourceBlob": "c40357480c941b675318fbfd592bf2536dd76104",
+          "targetBlob": "c40357480c941b675318fbfd592bf2536dd76104",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "0ed5534890e71f300a6fc67717cdfb434d60b144",
+          "targetZeroContextPatchId": "0ed5534890e71f300a6fc67717cdfb434d60b144"
+        },
+        {
+          "path": "game/test/pause-menu-host.test.mjs",
+          "sourceBlob": "76c65a0074d15e345195340adc301bc48a2b172d",
+          "targetBlob": "76c65a0074d15e345195340adc301bc48a2b172d",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "1fd61f9153e6fabcaf2e2241c39f48e3638c6e1d",
+          "targetZeroContextPatchId": "1fd61f9153e6fabcaf2e2241c39f48e3638c6e1d"
+        },
+        {
+          "path": "game/test/practice-brief-host.test.mjs",
+          "sourceBlob": "a655cb30d98cc2a55779ffb57cac0e53ad0a58c4",
+          "targetBlob": "a655cb30d98cc2a55779ffb57cac0e53ad0a58c4",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "fb3084d233189c29ce5ffe585cd1e7ed1af32040",
+          "targetZeroContextPatchId": "fb3084d233189c29ce5ffe585cd1e7ed1af32040"
+        },
+        {
+          "path": "game/test/practice-retry.test.mjs",
+          "sourceBlob": "e7dac9d0a80c6eae92d9099ed62735371fc27511",
+          "targetBlob": "e7dac9d0a80c6eae92d9099ed62735371fc27511",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "ff13e13a013603ca05af3abe6147bc5d9799096c",
+          "targetZeroContextPatchId": "ff13e13a013603ca05af3abe6147bc5d9799096c"
+        },
+        {
+          "path": "game/test/presentation-dependencies.test.mjs",
+          "sourceBlob": "f64ae2b846b9e6a40d6627c24f5127d102136ea4",
+          "targetBlob": "f64ae2b846b9e6a40d6627c24f5127d102136ea4",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "347eff4e55f11dbbcfb3b48342705318763489d8",
+          "targetZeroContextPatchId": "347eff4e55f11dbbcfb3b48342705318763489d8"
+        },
+        {
+          "path": "game/test/presentation-host.test.mjs",
+          "sourceBlob": "6ef689b27f2b33c8c094771dba793a2f9a4a0ebc",
+          "targetBlob": "6ef689b27f2b33c8c094771dba793a2f9a4a0ebc",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "ad403be0455be10ba02ab7957cb49ff246766aad",
+          "targetZeroContextPatchId": "ad403be0455be10ba02ab7957cb49ff246766aad"
+        },
+        {
+          "path": "game/test/presentation-retained-output.test.mjs",
+          "sourceBlob": "8591031eed100819eac19955f5d998e9ecc02129",
+          "targetBlob": "8591031eed100819eac19955f5d998e9ecc02129",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "b435b5bef5893da6cd2a4930535f23f67bf58135",
+          "targetZeroContextPatchId": "b435b5bef5893da6cd2a4930535f23f67bf58135"
+        },
+        {
+          "path": "game/test/published-audio.test.mjs",
+          "sourceBlob": "1cf87c479dda823760d92cbdbff8838750e2174e",
+          "targetBlob": "1cf87c479dda823760d92cbdbff8838750e2174e",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "e8aa99da4d41a715b7e795f766e3bc69f0f8449d",
+          "targetZeroContextPatchId": "e8aa99da4d41a715b7e795f766e3bc69f0f8449d"
+        },
+        {
+          "path": "game/test/restart-picture-retention.test.mjs",
+          "sourceBlob": "b49d45d54b59bb3083e9bb28751d10e46252c3fd",
+          "targetBlob": "b49d45d54b59bb3083e9bb28751d10e46252c3fd",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "8613dd389f99e1993d530e4c5fcf4948d1f0f507",
+          "targetZeroContextPatchId": "8613dd389f99e1993d530e4c5fcf4948d1f0f507"
+        },
+        {
+          "path": "game/test/route-worlds-host.test.mjs",
+          "sourceBlob": "0a7d7d32212506bd46b42219ed40dccb7a217acc",
+          "targetBlob": "0a7d7d32212506bd46b42219ed40dccb7a217acc",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "be3051a5b9afa82347ea9c191a70385b6e1d20e5",
+          "targetZeroContextPatchId": "be3051a5b9afa82347ea9c191a70385b6e1d20e5"
+        },
+        {
+          "path": "game/test/saved-visual-catalogue.test.mjs",
+          "sourceBlob": "f9752425f7ee20207ad6f9ea21969fa31f5f6731",
+          "targetBlob": "f9752425f7ee20207ad6f9ea21969fa31f5f6731",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "8608831fb3a6955e84ae8524774c5cf0743001df",
+          "targetZeroContextPatchId": "8608831fb3a6955e84ae8524774c5cf0743001df"
+        },
+        {
+          "path": "game/test/saved-visual-host.test.mjs",
+          "sourceBlob": "6dc95ce7cdb153fe99a15c5ff40696ba0378d412",
+          "targetBlob": "6dc95ce7cdb153fe99a15c5ff40696ba0378d412",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "453a1242d65a60bb7caf29168e4dff00f2c8b2bc",
+          "targetZeroContextPatchId": "453a1242d65a60bb7caf29168e4dff00f2c8b2bc"
+        },
+        {
+          "path": "game/test/selection-bookmark-host.test.mjs",
+          "sourceBlob": "98fb9a0160659eeccc41838dff421c856c4577ed",
+          "targetBlob": "98fb9a0160659eeccc41838dff421c856c4577ed",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "3370b84ce695990c9f20c757635f86a345db2709",
+          "targetZeroContextPatchId": "3370b84ce695990c9f20c757635f86a345db2709"
+        },
+        {
+          "path": "game/test/sentinel-theme-host.test.mjs",
+          "sourceBlob": "3b937ca1d2717ec2b459d5dbb7b51bd4cdb6d840",
+          "targetBlob": "3b937ca1d2717ec2b459d5dbb7b51bd4cdb6d840",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "da535c1d666711768469eaac4c1bd0d6bb868903",
+          "targetZeroContextPatchId": "da535c1d666711768469eaac4c1bd0d6bb868903"
+        },
+        {
+          "path": "game/test/settings-assists-host.test.mjs",
+          "sourceBlob": "92cc4b9f6f5ed428e96e416e1e14f162c8ce8d43",
+          "targetBlob": "92cc4b9f6f5ed428e96e416e1e14f162c8ce8d43",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "247ae7e235c1ee8ea21a3d8df0b38b945044caa2",
+          "targetZeroContextPatchId": "247ae7e235c1ee8ea21a3d8df0b38b945044caa2"
+        },
+        {
+          "path": "game/test/soundtrack-host.test.mjs",
+          "sourceBlob": "3768fd256d6e490fa8005b57b9f5135f2d7ecd21",
+          "targetBlob": "3768fd256d6e490fa8005b57b9f5135f2d7ecd21",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "eb32ebc76122effc20e52ba4c2440d4b68aecdc5",
+          "targetZeroContextPatchId": "eb32ebc76122effc20e52ba4c2440d4b68aecdc5"
+        },
+        {
+          "path": "game/test/storage-retention-host.test.mjs",
+          "sourceBlob": "fadb4a55d2e11a58c470e9f6b7ed45d490457353",
+          "targetBlob": "fadb4a55d2e11a58c470e9f6b7ed45d490457353",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "4a9a25970382a5d8f4b138b703dd05b2891fd605",
+          "targetZeroContextPatchId": "4a9a25970382a5d8f4b138b703dd05b2891fd605"
+        },
+        {
+          "path": "game/test/terminal-navigation.test.mjs",
+          "sourceBlob": "5dea3d3232f24e62a430879755ec854e1314a72f",
+          "targetBlob": "5dea3d3232f24e62a430879755ec854e1314a72f",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "947f0c84f32a59ec074d64d16520c2ccae6fbfc6",
+          "targetZeroContextPatchId": "947f0c84f32a59ec074d64d16520c2ccae6fbfc6"
+        },
+        {
+          "path": "game/test/text-face-host.test.mjs",
+          "sourceBlob": "f94fe1c79bbe9e40a6d0729d354a06545d5f8e95",
+          "targetBlob": "f94fe1c79bbe9e40a6d0729d354a06545d5f8e95",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "364a55d60ffa17fa1917efa11efe316b03f60dd7",
+          "targetZeroContextPatchId": "364a55d60ffa17fa1917efa11efe316b03f60dd7"
+        },
+        {
+          "path": "game/test/text-size-host.test.mjs",
+          "sourceBlob": "d1e1097a29646458dde0a81236aa6d5f932eb01c",
+          "targetBlob": "d1e1097a29646458dde0a81236aa6d5f932eb01c",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "bc17d04806f35551bb0ca76b2f771f82a77f097b",
+          "targetZeroContextPatchId": "bc17d04806f35551bb0ca76b2f771f82a77f097b"
+        },
+        {
+          "path": "game/test/title-entry-host.test.mjs",
+          "sourceBlob": "98ce7a66f18439778f1950d531c44aa0c220c6f3",
+          "targetBlob": "98ce7a66f18439778f1950d531c44aa0c220c6f3",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "5023b94b3a90b1aa23a9ef78c2abdd60db774f53",
+          "targetZeroContextPatchId": "5023b94b3a90b1aa23a9ef78c2abdd60db774f53"
+        },
+        {
+          "path": "game/test/visual-sessions.test.mjs",
+          "sourceBlob": "f8bafab1e17ad4bb82a3e4059f97591fb7110705",
+          "targetBlob": "f8bafab1e17ad4bb82a3e4059f97591fb7110705",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "f53c9ffde8ba471d828291dad0985f93c230d13c",
+          "targetZeroContextPatchId": "f53c9ffde8ba471d828291dad0985f93c230d13c"
+        },
+        {
+          "path": "game/test/visual-theme-lease.test.mjs",
+          "sourceBlob": "24f4ae55e3972e4a5d99c26281fe07c215333d7a",
+          "targetBlob": "24f4ae55e3972e4a5d99c26281fe07c215333d7a",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "b14548c2785c3b4653b5c8046230321acc6e164f",
+          "targetZeroContextPatchId": "b14548c2785c3b4653b5c8046230321acc6e164f"
+        },
+        {
+          "path": "game/ui/first-flight-entry.mjs",
+          "sourceBlob": "8d05e6c91d5177242065e26c9b210c091aa5d943",
+          "targetBlob": "8d05e6c91d5177242065e26c9b210c091aa5d943",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "30e9fc36383fc5ffb04598ea0d36d3c333e5825e",
+          "targetZeroContextPatchId": "30e9fc36383fc5ffb04598ea0d36d3c333e5825e"
+        },
+        {
+          "path": "game/ui/library-panel.mjs",
+          "sourceBlob": "17d65903d8655b55fced794713482eed7ecd2277",
+          "targetBlob": "d216ac42f6192b8b661ce019c41aa2ce7f13fb96",
+          "sameBlob": false,
+          "sourceZeroContextPatchId": "43e9fcb1b05b04250348ec280e18ce69bc84da80",
+          "targetZeroContextPatchId": "43e9fcb1b05b04250348ec280e18ce69bc84da80"
+        },
+        {
+          "path": "game/ui/published-audio.mjs",
+          "sourceBlob": "fe2af64417d0bba9f0c897343f045c5d111dbcb7",
+          "targetBlob": "fe2af64417d0bba9f0c897343f045c5d111dbcb7",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "c5edcdf6d3ef90011378507a6b48690a1226a532",
+          "targetZeroContextPatchId": "c5edcdf6d3ef90011378507a6b48690a1226a532"
+        },
+        {
+          "path": "scripts/compile-presentation.mjs",
+          "sourceBlob": "44cad6658a31ffbdd89d2c2c7b6e6f8b9d35704f",
+          "targetBlob": "44cad6658a31ffbdd89d2c2c7b6e6f8b9d35704f",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "3cc4ac3c25f96513c94d99fb600897d07c288198",
+          "targetZeroContextPatchId": "3cc4ac3c25f96513c94d99fb600897d07c288198"
+        },
+        {
+          "path": "scripts/field-kit-retained-runtime.mjs",
+          "sourceBlob": "1c7f948758e858e1e45096d3cdb1b7690fd130c2",
+          "targetBlob": "1c7f948758e858e1e45096d3cdb1b7690fd130c2",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "45ed51bbebb6e080c5b98de85f5ad983e4fe2924",
+          "targetZeroContextPatchId": "45ed51bbebb6e080c5b98de85f5ad983e4fe2924"
+        },
+        {
+          "path": "scripts/produce-field-kit-theme.mjs",
+          "sourceBlob": "6e5b04e2b2d6b357a14b35eb232ce4dba98be7fc",
+          "targetBlob": "6e5b04e2b2d6b357a14b35eb232ce4dba98be7fc",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "11a9e9346224c71949b08eeadcc23f5731f00b00",
+          "targetZeroContextPatchId": "11a9e9346224c71949b08eeadcc23f5731f00b00"
+        },
+        {
+          "path": "scripts/retain-presentation-output.mjs",
+          "sourceBlob": "504468879f23736aa472992dc56d5697ea54f8a7",
+          "targetBlob": "504468879f23736aa472992dc56d5697ea54f8a7",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "181b89b55a3942118b7d0dda99a1a3fd6b5d8327",
+          "targetZeroContextPatchId": "181b89b55a3942118b7d0dda99a1a3fd6b5d8327"
+        },
+        {
+          "path": "scripts/write-presentation.mjs",
+          "sourceBlob": "83d558cc4c954aa945cb4102e826568a90610f07",
+          "targetBlob": "83d558cc4c954aa945cb4102e826568a90610f07",
+          "sameBlob": true,
+          "sourceZeroContextPatchId": "3305cb4948aba1cc8942ba7aaf9cdbcb1c1f82a1",
+          "targetZeroContextPatchId": "3305cb4948aba1cc8942ba7aaf9cdbcb1c1f82a1"
+        }
+      ],
+      "special": [
+        {
+          "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+          "proof": "Exact original appended guidance retained as substring",
+          "sourceAppendBytes": 11428,
+          "sourceAppendSha256": "c2fff5acc434053d59c4c312bb28419172aa69eccdb3e6360293e761070aaad6",
+          "retained": true
+        }
+      ],
+      "committedCoverage": "complete-at-pinned-successor",
+      "unaccountedCommittedPaths": [],
+      "dirtyChangesCovered": false
+    }
+  ]
+}

@@ -1,0 +1,798 @@
+{
+  "schemaVersion": 1,
+  "proofKind": "historical-read-only-main-audit-ref",
+  "acceptedEvidenceCommit": "950f19045facacf5151c90661de1ca28d30658df",
+  "recordedLocalRemoteWorktreeObservationAt": "2026-09-23T01:36:42Z",
+  "freshLocalAndRemoteTipsMatchedAtRecordedObservation": true,
+  "classification": "proven-historical",
+  "replayIntoMain": false,
+  "pathListHashEncoding": "git diff --name-only BASE TIP; UTF-8 paths joined by LF with final LF",
+  "publicationPin": {
+    "path": "publishing/pages-controller/publication.json",
+    "bytes": 307751,
+    "sha256": "6e4572542230915f3bc879a6394e723cf522458807134078903f209545c06a5f"
+  },
+  "catalogPin": {
+    "path": "publishing/pages-controller/catalog.json",
+    "bytes": 58399,
+    "sha256": "cf691df6f90f7026e9fb73754b741a38d3d380e1ae6b413cbcb271c38eaafbe5"
+  },
+  "publicationCatalogHashVerified": true,
+  "workflow": {
+    "path": ".github/workflows/qualify-release-source.yml",
+    "trigger": "workflow_dispatch only",
+    "permissions": {
+      "contents": "read"
+    },
+    "deploymentJobs": [],
+    "pagesWritePermission": false,
+    "idTokenPermission": false,
+    "checkoutCredentialsPersisted": false,
+    "remoteSourceReleaseOrPagesWrites": false,
+    "allowedEffects": [
+      "Runner-local bounded audit outputs",
+      "Actions evidence artifact upload"
+    ],
+    "reviewedExecutableBehavior": [
+      "Exact committed payload hashes and dispatch/source/deployment identities checked",
+      "HTTP engine uses unauthenticated GETs for public byte observations",
+      "Pinned completed runner records retain exact source/deployment identity",
+      "No build, tag, release asset upload, Pages artifact assembly or deployment operation"
+    ]
+  },
+  "commonOfflineChecks": {
+    "activePayloadPinsPerRef": 19,
+    "originalAuthorityPinsPerRef": 9,
+    "originalRunSuccessfulAndExactHead": true,
+    "originalDeploymentAndRecordedStatusSuccessfulAndExact": true,
+    "completedReportsRetainedInsideAcceptedMainOriginalsZip": true,
+    "completedReportsDirectArchiveAdmissionPins": false,
+    "coverageExplanation": "These are historical main-site audit reports retained inside the accepted-main originals ZIP packages. They are not the similarly versioned archive-30/archive-31 direct admission reports. The inherited archive30 audit code is covered by the separate historical-audit-ref proof.",
+    "newPublicAcceptanceClaim": false
+  },
+  "refs": [
+    {
+      "ref": "codex/v0621-main-http-audit",
+      "tip": "1fc74f79c61c8e29b234ace57a0ab37d14d27520",
+      "locations": [
+        "local",
+        "github"
+      ],
+      "classification": "proven-historical",
+      "replayIntoMain": false,
+      "base": "ef491211488b1c06f00ad2efbeb4fb23bbae39b8",
+      "uniqueCommitTips": [
+        "12cd3dadf978d2e3148e4981ece5e82270d6379b",
+        "1fc74f79c61c8e29b234ace57a0ab37d14d27520"
+      ],
+      "changedPaths": 45,
+      "pathListSha256": "66a933883b1618ea7bbcad56f79faa3a6a4784a7f253ef43077225762eec2fad",
+      "exactChangedPaths": [
+        ".github/workflows/qualify-release-source.yml",
+        "publishing/utility/archive30-public-audit/binding.proposed.json",
+        "publishing/utility/archive30-public-audit/hosted_run.py",
+        "publishing/utility/archive30-public-audit/payload-pins.json",
+        "publishing/utility/archive30-public-audit/payload/http/collect-live.py",
+        "publishing/utility/archive30-public-audit/payload/http/execution-request.reviewed.json",
+        "publishing/utility/archive30-public-audit/payload/http/http-tools/audit_binding.py",
+        "publishing/utility/archive30-public-audit/payload/http/http-tools/http_audit.py",
+        "publishing/utility/archive30-public-audit/payload/http/http-tools/test_http_audit.py",
+        "publishing/utility/archive30-public-audit/payload/http/inputs/expected-inventory.json",
+        "publishing/utility/archive30-public-audit/payload/http/inputs/prior-expected-inventory.json",
+        "publishing/utility/archive30-public-audit/payload/http/inputs/source-lock.json",
+        "publishing/utility/archive30-public-audit/payload/http/internal-review.json",
+        "publishing/utility/archive30-public-audit/payload/http/public_api_get.py",
+        "publishing/utility/archive30-public-audit/payload/http/reconcile-completed-rows.py",
+        "publishing/utility/archive30-public-audit/payload/http/run-reviewed-operations.py",
+        "publishing/utility/archive30-public-audit/payload/intake/hosted-originals/verification-receipts-original.zip",
+        "publishing/utility/archive30-public-audit/payload/intake/terminal-r1/artifacts.json",
+        "publishing/utility/archive30-public-audit/payload/intake/terminal-r1/commit.json",
+        "publishing/utility/archive30-public-audit/payload/intake/terminal-r1/deployment.json",
+        "publishing/utility/archive30-public-audit/payload/intake/terminal-r1/main.json",
+        "publishing/utility/archive30-public-audit/payload/intake/terminal-r1/run.json",
+        "publishing/utility/archive30-public-audit/payload/intake/terminal-r1/statuses.json",
+        "publishing/utility/archive30-public-audit/test_hosted_run.py",
+        "publishing/utility/main-public-v0621/hosted_run.py",
+        "publishing/utility/main-public-v0621/payload-pins.json",
+        "publishing/utility/main-public-v0621/payload/review-public.py",
+        "publishing/utility/main-public-v0621/payload/tools/audit-main.mjs",
+        "publishing/utility/main-public-v0621/payload/tools/catalog-cohorts.mjs",
+        "publishing/utility/main-public-v0621/payload/tools/http-engine.mjs",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/binding.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/catalog.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/configuration.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/deployment.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/manifest.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/qualification.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/receipt.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/record.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/run.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/statuses.json",
+        "publishing/utility/main-public-v0621/payload/tools/preparation-provenance.json",
+        "publishing/utility/main-public-v0621/payload/tools/retained-catalog.json",
+        "publishing/utility/main-public-v0621/payload/tools/self-check.mjs",
+        "publishing/utility/main-public-v0621/payload/tools/test-all-history-policy.mjs",
+        "publishing/utility/main-public-v0621/payload/tools/test-cohort-output.mjs"
+      ],
+      "attachedWorktreesAtRecordedObservation": [],
+      "payloadPinFile": {
+        "path": "publishing/utility/main-public-v0621/payload-pins.json",
+        "bytes": 3283,
+        "sha256": "a6055dfaa709be68bb038230bba903179f0659296794e7c3d9e3e3e2f658a8ee"
+      },
+      "activePayloadPins": [
+        {
+          "path": "review-public.py",
+          "bytes": 5186,
+          "sha256": "dcae5e1eb28a147c1595f38cb3035109c98c7da1d80e4b5ef85c933e3be0451a"
+        },
+        {
+          "path": "tools/audit-main.mjs",
+          "bytes": 22169,
+          "sha256": "4f319ad02210dd1b49d3b5cdb018c4f1bd53cdb260e4104fa31b222be55a62fb"
+        },
+        {
+          "path": "tools/catalog-cohorts.mjs",
+          "bytes": 1183,
+          "sha256": "f9982cb6c453f2a916ef0f177357312bfe27adb9ecf9a07ce81772f370abec39"
+        },
+        {
+          "path": "tools/http-engine.mjs",
+          "bytes": 3851,
+          "sha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/binding.json",
+          "bytes": 2041,
+          "sha256": "5026ada119d4f577a0f2f2be797d27180729d80090c9bc378a16a7dbb369a520"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/catalog.json",
+          "bytes": 43269,
+          "sha256": "d50ad23442c68a5ea878a526e12f6dd430141e10b3134311ad8c14861e83fedc"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/configuration.json",
+          "bytes": 165063,
+          "sha256": "8df68f8f627e14ab02b3bf2d6701524bbf815024d01d477bdbee5989cc125d2a"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/deployment.json",
+          "bytes": 3823,
+          "sha256": "4176f30335916ab6f9ad300a1fa52fdd9c72b19d831a9a8aad6ae28c1fa73f1a"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/manifest.json",
+          "bytes": 128708,
+          "sha256": "93a737ca7f046e8f1f64e842e62e0009d405db56dd6f380bd79b22f4fa75de7f"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/qualification.json",
+          "bytes": 89162,
+          "sha256": "63cdee241ff6fb1766549c6e616d29f4a1ee34f5a76880dad09588147666d5ef"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/receipt.json",
+          "bytes": 635888,
+          "sha256": "f586ef2aa0f3187d7efb736a653e4cff4298a0f1305895808733e65434f79d7f"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/record.json",
+          "bytes": 465,
+          "sha256": "093398475870375a97707fc3775c9c5a414587b7a0de16afb4f7ad518c8bfaa3"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/run.json",
+          "bytes": 12204,
+          "sha256": "053506e5a667c4a813cecbef9dcc98e20167a353e0a20d53a506bc5ce0b26323"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/statuses.json",
+          "bytes": 6586,
+          "sha256": "a020b7e480fe53f1fbac00b4125294dca20ff6746efac4426c723800ad643f11"
+        },
+        {
+          "path": "tools/preparation-provenance.json",
+          "bytes": 2523,
+          "sha256": "692aadbc1608113fac21be8c0202e64e0a908570ddb8af50ab03718fe17b07e6"
+        },
+        {
+          "path": "tools/retained-catalog.json",
+          "bytes": 42824,
+          "sha256": "53d972d8489692691b3ecce6e32457c20003ff717996ca72b74bea8db4de7872"
+        },
+        {
+          "path": "tools/self-check.mjs",
+          "bytes": 3958,
+          "sha256": "8179ef896c850e6178aa62650e37f41d2cac9fc092331f5fcbe9047f6cdbe181"
+        },
+        {
+          "path": "tools/test-all-history-policy.mjs",
+          "bytes": 2659,
+          "sha256": "904200b5f6f3c23d6f5b1dbac74e0bb5f35f3a8ed60bd61f8487559708f86e55"
+        },
+        {
+          "path": "tools/test-cohort-output.mjs",
+          "bytes": 1959,
+          "sha256": "221144b3e6ca2b01a9790151a51f16301b428be7f4bba3d18853b0ce02c8056f"
+        }
+      ],
+      "originalAuthorityPins": [
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/catalog.json",
+          "bytes": 43269,
+          "sha256": "d50ad23442c68a5ea878a526e12f6dd430141e10b3134311ad8c14861e83fedc"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/configuration.json",
+          "bytes": 165063,
+          "sha256": "8df68f8f627e14ab02b3bf2d6701524bbf815024d01d477bdbee5989cc125d2a"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/deployment.json",
+          "bytes": 3823,
+          "sha256": "4176f30335916ab6f9ad300a1fa52fdd9c72b19d831a9a8aad6ae28c1fa73f1a"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/manifest.json",
+          "bytes": 128708,
+          "sha256": "93a737ca7f046e8f1f64e842e62e0009d405db56dd6f380bd79b22f4fa75de7f"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/qualification.json",
+          "bytes": 89162,
+          "sha256": "63cdee241ff6fb1766549c6e616d29f4a1ee34f5a76880dad09588147666d5ef"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/receipt.json",
+          "bytes": 635888,
+          "sha256": "f586ef2aa0f3187d7efb736a653e4cff4298a0f1305895808733e65434f79d7f"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/record.json",
+          "bytes": 465,
+          "sha256": "093398475870375a97707fc3775c9c5a414587b7a0de16afb4f7ad518c8bfaa3"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/run.json",
+          "bytes": 12204,
+          "sha256": "053506e5a667c4a813cecbef9dcc98e20167a353e0a20d53a506bc5ce0b26323"
+        },
+        {
+          "path": "tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/statuses.json",
+          "bytes": 6586,
+          "sha256": "a020b7e480fe53f1fbac00b4125294dca20ff6746efac4426c723800ad643f11"
+        }
+      ],
+      "rootAcceptancePin": {
+        "path": "publishing/pages-controller/delivery/evidence/cross-mode-p03/v0621-public/root-acceptance.json",
+        "bytes": 2283,
+        "sha256": "b61412f72bfd65d876db1cf14339834673a0cbc78224b627faf6fca5676392ee"
+      },
+      "rootAcceptance": {
+        "status": "ACCEPTED_SCOPED_PUBLIC_FEATURE_RELEASE",
+        "at": "2026-09-19T07:01:17.096315+00:00",
+        "version": "v0.62.1",
+        "gameSource": "9f04273a09dd23d44236c1715d62cfa460171e24",
+        "sourceTree": "2c35f299f981aba98929ba9ac01addbfe8b48d63",
+        "sourcePR": 153,
+        "publicationPR": 154,
+        "publisher": "3abc9b8d8a61280fd3070ffb3fa926328d14aefb",
+        "publisherTree": "38a121d6309cb3e7ab860fbd4659837835521e20",
+        "pagesRunId": 35427535988,
+        "deploymentId": 6538129092,
+        "deploymentStatusId": 18555712674,
+        "publicURL": "https://mekhovov.github.io/revealline/game/",
+        "immutableURL": "https://mekhovov.github.io/revealline/releases/v0.62.1/site/game/",
+        "sourceTests": {
+          "testsPerFamily": 6184,
+          "filesPerFamily": 478,
+          "families": 2,
+          "actualNodeVersion": "20.19.6",
+          "earlierFocusedMatrixSeparate": true
+        },
+        "publicAudit": {
+          "files": 3338,
+          "bytes": 643669109,
+          "attempts": 3338,
+          "failures": 0,
+          "retries": 0,
+          "uninspected": 0,
+          "catalogAuthorities": 97
+        },
+        "acceptedScope": [
+          "Missions chapter/nested focus clearance and responsive labels/Back",
+          "Brief native keyboard reading/Done/Back and paused restoration",
+          "Solo legal win and Next continuation as observed"
+        ],
+        "evidence": [
+          {
+            "path": "receipt-successors-r1/hosted-result-intake-r1/independent-review.json",
+            "bytes": 1282,
+            "sha256": "ed422381c82c2fa6ce37be51d84fdc9a5ab29abcb0957cf063a88bc539573fb5"
+          },
+          {
+            "path": "after-http-authorities-v0621-r1/result.json",
+            "bytes": 7532,
+            "sha256": "68354d453030276748d2b216e9b13ebb947879e8cb1bd247a615f74e9419a9a4"
+          },
+          {
+            "path": "native-observation-r1.json",
+            "bytes": 1734,
+            "sha256": "c6174ba1c4040d6c68b16cd3e0e78fe2e502b24bdd9597fc835b88644b6dfaf5"
+          },
+          {
+            "path": "native-observation-r2.json",
+            "bytes": 763,
+            "sha256": "c37548f5ab0d76742098b72cb8232cf396f281b57ab48ea20b7a08de1d9b0693"
+          }
+        ],
+        "open": [
+          "P03/P05 parent completion",
+          "Physicalcontroller/touch",
+          "Audio/offline/lifecycle fullqualification",
+          "PublicTeamwin/Next",
+          "PublicNextcancelnotestablishedinthisattempt",
+          "Fullremainingcontent/campaignprogramme"
+        ],
+        "previousAcceptedRelease": "v0.62.0",
+        "wholeProgrammeComplete": false
+      },
+      "originalsIndexPin": {
+        "path": "publishing/pages-controller/delivery/evidence/cross-mode-p03/v0621-public/originals-index.json",
+        "bytes": 27964,
+        "sha256": "ab4be20ee2795c5cc7c5cb379386be77fc5e6e60f065c03abff17d4a5f3b0344"
+      },
+      "originalsArchive": {
+        "path": "publishing/pages-controller/delivery/evidence/cross-mode-p03/v0621-public/originals.zip",
+        "bytes": 1059516,
+        "sha256": "1e58d5b2e63ddda1c4e7322cba8e151596f0bb511fd8bdeacc7aa4d88bf6412f",
+        "members": 77,
+        "uncompressedBytes": 6552200
+      },
+      "completedEvidenceMembers": [
+        {
+          "member": "receipt-successors-r1/hosted-result-intake-r1/intake/evidence/dispatch-binding.original.json",
+          "bytes": 2041,
+          "sha256": "5026ada119d4f577a0f2f2be797d27180729d80090c9bc378a16a7dbb369a520"
+        },
+        {
+          "member": "receipt-successors-r1/hosted-result-intake-r1/intake/evidence/hosted-result.json",
+          "bytes": 2135,
+          "sha256": "f519fcfd5df0e0beac497974a91d515e0a8b71273c45b0a2b8d5109c1acf9ecf"
+        },
+        {
+          "member": "receipt-successors-r1/hosted-result-intake-r1/intake/evidence/public-row-review-main-full-hosted-r1.json",
+          "bytes": 3530,
+          "sha256": "3629607438cbcb220d53cf37ad3d91f9f24ced5b625d2546e21f588907d49ad2"
+        },
+        {
+          "member": "receipt-successors-r1/hosted-result-intake-r1/intake/evidence/tools/runs/main-full-hosted-r1/report.json",
+          "bytes": 6008,
+          "sha256": "c34041321c6a0bad96b383e260a0079df36641ae5f29b97edbb1cf53ceeb384f"
+        },
+        {
+          "member": "root-acceptance.json",
+          "bytes": 2283,
+          "sha256": "b61412f72bfd65d876db1cf14339834673a0cbc78224b627faf6fca5676392ee"
+        }
+      ],
+      "originalArchivePriorVerification": {
+        "members": 77,
+        "everyMemberSizeAndSha256MatchedIndex": true,
+        "everyMemberCRCVerified": true,
+        "checkedDuringPriorReadOnlyProof": true
+      },
+      "currentCatalogRecord": {
+        "version": "v0.62.1",
+        "sourceRevision": "9f04273a09dd23d44236c1715d62cfa460171e24",
+        "tagObject": "23d74a6b7df7e34154ee916736fa463a63748bc8",
+        "recordSha256": "093398475870375a97707fc3775c9c5a414587b7a0de16afb4f7ad518c8bfaa3",
+        "manifestSha256": "93a737ca7f046e8f1f64e842e62e0009d405db56dd6f380bd79b22f4fa75de7f",
+        "checksumSha256": "27de5ebc4195139ef0ba275ff783fc3365fe480c4e0b7cd06526d2cee9a04372"
+      },
+      "workflowPin": {
+        "path": ".github/workflows/qualify-release-source.yml",
+        "bytes": 2019,
+        "sha256": "7f1ecfeac595132b8487346e3cee284dcbcef36fbccf04691fefef858ba42023"
+      },
+      "hostedRunnerPin": {
+        "path": "publishing/utility/main-public-v0621/hosted_run.py",
+        "bytes": 6343,
+        "sha256": "3ec9d90ee1e709e32a293b9aad7171282bb0a5bbc18c3a6be89db4f029b38213"
+      }
+    },
+    {
+      "ref": "codex/v0630-main-http-audit",
+      "tip": "d3513449935f4d00747e746ed3aa82dc308cf692",
+      "locations": [
+        "local",
+        "github"
+      ],
+      "classification": "proven-historical",
+      "replayIntoMain": false,
+      "base": "ef491211488b1c06f00ad2efbeb4fb23bbae39b8",
+      "uniqueCommitTips": [
+        "12cd3dadf978d2e3148e4981ece5e82270d6379b",
+        "1fc74f79c61c8e29b234ace57a0ab37d14d27520",
+        "d3513449935f4d00747e746ed3aa82dc308cf692"
+      ],
+      "changedPaths": 67,
+      "pathListSha256": "6aaa46ad2049e8eb98209f5838e99fd6fccd6b42f8e9011001da111f9236e9db",
+      "exactChangedPaths": [
+        ".github/workflows/qualify-release-source.yml",
+        "publishing/utility/archive30-public-audit/binding.proposed.json",
+        "publishing/utility/archive30-public-audit/hosted_run.py",
+        "publishing/utility/archive30-public-audit/payload-pins.json",
+        "publishing/utility/archive30-public-audit/payload/http/collect-live.py",
+        "publishing/utility/archive30-public-audit/payload/http/execution-request.reviewed.json",
+        "publishing/utility/archive30-public-audit/payload/http/http-tools/audit_binding.py",
+        "publishing/utility/archive30-public-audit/payload/http/http-tools/http_audit.py",
+        "publishing/utility/archive30-public-audit/payload/http/http-tools/test_http_audit.py",
+        "publishing/utility/archive30-public-audit/payload/http/inputs/expected-inventory.json",
+        "publishing/utility/archive30-public-audit/payload/http/inputs/prior-expected-inventory.json",
+        "publishing/utility/archive30-public-audit/payload/http/inputs/source-lock.json",
+        "publishing/utility/archive30-public-audit/payload/http/internal-review.json",
+        "publishing/utility/archive30-public-audit/payload/http/public_api_get.py",
+        "publishing/utility/archive30-public-audit/payload/http/reconcile-completed-rows.py",
+        "publishing/utility/archive30-public-audit/payload/http/run-reviewed-operations.py",
+        "publishing/utility/archive30-public-audit/payload/intake/hosted-originals/verification-receipts-original.zip",
+        "publishing/utility/archive30-public-audit/payload/intake/terminal-r1/artifacts.json",
+        "publishing/utility/archive30-public-audit/payload/intake/terminal-r1/commit.json",
+        "publishing/utility/archive30-public-audit/payload/intake/terminal-r1/deployment.json",
+        "publishing/utility/archive30-public-audit/payload/intake/terminal-r1/main.json",
+        "publishing/utility/archive30-public-audit/payload/intake/terminal-r1/run.json",
+        "publishing/utility/archive30-public-audit/payload/intake/terminal-r1/statuses.json",
+        "publishing/utility/archive30-public-audit/test_hosted_run.py",
+        "publishing/utility/main-public-v0621/hosted_run.py",
+        "publishing/utility/main-public-v0621/payload-pins.json",
+        "publishing/utility/main-public-v0621/payload/review-public.py",
+        "publishing/utility/main-public-v0621/payload/tools/audit-main.mjs",
+        "publishing/utility/main-public-v0621/payload/tools/catalog-cohorts.mjs",
+        "publishing/utility/main-public-v0621/payload/tools/http-engine.mjs",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/binding.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/catalog.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/configuration.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/deployment.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/manifest.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/qualification.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/receipt.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/record.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/run.json",
+        "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/statuses.json",
+        "publishing/utility/main-public-v0621/payload/tools/preparation-provenance.json",
+        "publishing/utility/main-public-v0621/payload/tools/retained-catalog.json",
+        "publishing/utility/main-public-v0621/payload/tools/self-check.mjs",
+        "publishing/utility/main-public-v0621/payload/tools/test-all-history-policy.mjs",
+        "publishing/utility/main-public-v0621/payload/tools/test-cohort-output.mjs",
+        "publishing/utility/main-public-v0630/hosted_run.py",
+        "publishing/utility/main-public-v0630/payload-pins.json",
+        "publishing/utility/main-public-v0630/payload-pins.pending.json",
+        "publishing/utility/main-public-v0630/payload/review-public.py",
+        "publishing/utility/main-public-v0630/payload/tools/audit-main.mjs",
+        "publishing/utility/main-public-v0630/payload/tools/catalog-cohorts.mjs",
+        "publishing/utility/main-public-v0630/payload/tools/http-engine.mjs",
+        "publishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/binding.json",
+        "publishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/catalog.json",
+        "publishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/configuration.json",
+        "publishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/deployment.json",
+        "publishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/manifest.json",
+        "publishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/qualification.json",
+        "publishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/receipt.json",
+        "publishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/record.json",
+        "publishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/run.json",
+        "publishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/statuses.json",
+        "publishing/utility/main-public-v0630/payload/tools/preparation-provenance.json",
+        "publishing/utility/main-public-v0630/payload/tools/retained-catalog.json",
+        "publishing/utility/main-public-v0630/payload/tools/self-check.mjs",
+        "publishing/utility/main-public-v0630/payload/tools/test-all-history-policy.mjs",
+        "publishing/utility/main-public-v0630/payload/tools/test-cohort-output.mjs"
+      ],
+      "attachedWorktreesAtRecordedObservation": [],
+      "payloadPinFile": {
+        "path": "publishing/utility/main-public-v0630/payload-pins.json",
+        "bytes": 3283,
+        "sha256": "9d156a5a81e6796a11e4c56d15ceca878baeb555f2138c0a00c837188fa0cf7c"
+      },
+      "activePayloadPins": [
+        {
+          "path": "review-public.py",
+          "bytes": 5186,
+          "sha256": "dcae5e1eb28a147c1595f38cb3035109c98c7da1d80e4b5ef85c933e3be0451a"
+        },
+        {
+          "path": "tools/audit-main.mjs",
+          "bytes": 22169,
+          "sha256": "b4a59af7371e8d1fa1fbaa5c4f347acd87795981c6b5f17538f96a6542cbecc7"
+        },
+        {
+          "path": "tools/catalog-cohorts.mjs",
+          "bytes": 1183,
+          "sha256": "f9982cb6c453f2a916ef0f177357312bfe27adb9ecf9a07ce81772f370abec39"
+        },
+        {
+          "path": "tools/http-engine.mjs",
+          "bytes": 3851,
+          "sha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/binding.json",
+          "bytes": 2041,
+          "sha256": "091027e0900b707aeaefdfa094596c7d83f90d93805b7cbe49120ba80050fa09"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/catalog.json",
+          "bytes": 43714,
+          "sha256": "7ad4e0055126c16690a1d95f833d7233f23c39d3af1287263c070634ea392283"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/configuration.json",
+          "bytes": 168047,
+          "sha256": "281ba03e784a9a6e8e72f86a16b2ffdd952e358ad5cb8e7272a195ac94cdd86b"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/deployment.json",
+          "bytes": 3823,
+          "sha256": "7b6ccdd8e5bb5442d1c40533d2531bdb0b17760dc87825b4819100f06f237f27"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/manifest.json",
+          "bytes": 129569,
+          "sha256": "01ab7c1f0c17d8c7e0e9a0108a6c88c1f96e48cfffccc6a3c67cb34c22225b24"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/qualification.json",
+          "bytes": 79549,
+          "sha256": "b7a313dcd32dd164d517533d1fa1b213459fb8efeeeb5fe070073b9878ee9ad4"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/receipt.json",
+          "bytes": 642284,
+          "sha256": "3287df6eade06d19fd83442668d4a955f030432b36ce0ff53ba4dc7bb6eecb9b"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/record.json",
+          "bytes": 465,
+          "sha256": "a6b2a42db22acec03434820db0c9e663b2bd809affd2b1669a38f1dafb3369dc"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/run.json",
+          "bytes": 12209,
+          "sha256": "5c210b9f5e23e6cb5653f7ebc11b55aecddd0636cd2ba7e72c3cdc7bfc6a7b15"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/statuses.json",
+          "bytes": 6586,
+          "sha256": "b5047e7a3f26c6c1a182d6a6fc83a3b3a5815df40683b11b8c7de7bdc85dde6d"
+        },
+        {
+          "path": "tools/preparation-provenance.json",
+          "bytes": 1858,
+          "sha256": "b09aca19d78b838364fad312911909f7e56de103b0a0fcebd76a675be0f18d45"
+        },
+        {
+          "path": "tools/retained-catalog.json",
+          "bytes": 43269,
+          "sha256": "d50ad23442c68a5ea878a526e12f6dd430141e10b3134311ad8c14861e83fedc"
+        },
+        {
+          "path": "tools/self-check.mjs",
+          "bytes": 3958,
+          "sha256": "70b74c10242557b2569941d9830e9b35f1d902290d2ecc71d3864c1b21af5864"
+        },
+        {
+          "path": "tools/test-all-history-policy.mjs",
+          "bytes": 2659,
+          "sha256": "904200b5f6f3c23d6f5b1dbac74e0bb5f35f3a8ed60bd61f8487559708f86e55"
+        },
+        {
+          "path": "tools/test-cohort-output.mjs",
+          "bytes": 1959,
+          "sha256": "1b894d0f7298205d32dd5c115fdd8bac28e46f01907fcde28ae2c543d8da2a6b"
+        }
+      ],
+      "originalAuthorityPins": [
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/catalog.json",
+          "bytes": 43714,
+          "sha256": "7ad4e0055126c16690a1d95f833d7233f23c39d3af1287263c070634ea392283"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/configuration.json",
+          "bytes": 168047,
+          "sha256": "281ba03e784a9a6e8e72f86a16b2ffdd952e358ad5cb8e7272a195ac94cdd86b"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/deployment.json",
+          "bytes": 3823,
+          "sha256": "7b6ccdd8e5bb5442d1c40533d2531bdb0b17760dc87825b4819100f06f237f27"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/manifest.json",
+          "bytes": 129569,
+          "sha256": "01ab7c1f0c17d8c7e0e9a0108a6c88c1f96e48cfffccc6a3c67cb34c22225b24"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/qualification.json",
+          "bytes": 79549,
+          "sha256": "b7a313dcd32dd164d517533d1fa1b213459fb8efeeeb5fe070073b9878ee9ad4"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/receipt.json",
+          "bytes": 642284,
+          "sha256": "3287df6eade06d19fd83442668d4a955f030432b36ce0ff53ba4dc7bb6eecb9b"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/record.json",
+          "bytes": 465,
+          "sha256": "a6b2a42db22acec03434820db0c9e663b2bd809affd2b1669a38f1dafb3369dc"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/run.json",
+          "bytes": 12209,
+          "sha256": "5c210b9f5e23e6cb5653f7ebc11b55aecddd0636cd2ba7e72c3cdc7bfc6a7b15"
+        },
+        {
+          "path": "tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/statuses.json",
+          "bytes": 6586,
+          "sha256": "b5047e7a3f26c6c1a182d6a6fc83a3b3a5815df40683b11b8c7de7bdc85dde6d"
+        }
+      ],
+      "rootAcceptancePin": {
+        "path": "publishing/pages-controller/delivery/evidence/cross-mode-p03/v0630-public/root-acceptance.json",
+        "bytes": 2212,
+        "sha256": "a23de4763b393adad7cc22a983fe4d26d8cdb96a50571867defbbdaa0d518d9a"
+      },
+      "rootAcceptance": {
+        "status": "ACCEPTED_SCOPED_PUBLIC_FEATURE_RELEASE",
+        "at": "2026-09-19T09:09:30.884158+00:00",
+        "version": "v0.63.0",
+        "gameSource": "3e47f60b9f9b4c5088410536d649ff595b2667eb",
+        "sourceTree": "fd0138c0e5f71b8b25368878c1948f5bef14255d",
+        "sourcePR": 155,
+        "publicationPR": 157,
+        "publisher": "d97bea7cd435a55884eaa43586771e481de85fd7",
+        "publisherTree": "60a4230a9f4a1dd119049f8e9a003757e8d2e00a",
+        "pagesRunId": 35433279357,
+        "deploymentId": 6539128893,
+        "deploymentStatusId": 18557975370,
+        "releaseId": 391999066,
+        "publicURL": "https://mekhovov.github.io/revealline/game/",
+        "immutableURL": "https://mekhovov.github.io/revealline/releases/v0.63.0/site/game/",
+        "sourceTests": {
+          "testsPerFamily": 6234,
+          "filesPerFamily": 483,
+          "families": 2,
+          "actualNodeVersion": "20.19.6",
+          "focusedMatrixSeparate": true
+        },
+        "publicAudit": {
+          "files": 3373,
+          "bytes": 643901139,
+          "attempts": 3373,
+          "failures": 0,
+          "retries": 0,
+          "uninspected": 0,
+          "catalogAuthorities": 98
+        },
+        "acceptedScope": [
+          "Field Details nativekeyboardopen/read/Done/Back andopenerrestoration",
+          "ArcadeandTacticaldescriptions; actualunfinishedline stayspausedthroughreading",
+          "StandardThemeandLargePlain at390x844/600x400; exitsvisible",
+          "ExplicitResume/ContinueandlegalArcadecapturesasobserved"
+        ],
+        "evidence": [
+          {
+            "path": "receipt-successors-r1/hosted-result-intake-actual-r1/independent-review.json",
+            "bytes": 1282,
+            "sha256": "be8c976528b7adfbeeb55fb8623bfb5858077004f67e1003c709bd2473e9280b"
+          },
+          {
+            "path": "after-http-authorities-v0630-r1/result.json",
+            "bytes": 7532,
+            "sha256": "f0b6cb54fb68ebd43962727a504f9cf69b7d99ccbe92c1f23fbd07cca4892bd2"
+          },
+          {
+            "path": "native-observation-r1.json",
+            "bytes": 3150,
+            "sha256": "88a6c651349796e571e62319912cd516ef7088fe83e6167f487f59432caf7dbd"
+          }
+        ],
+        "open": [
+          "P03/P05/P08/P18parentcompletion",
+          "Physicalcontroller/touch,zoom,EN/UAfullmatrix",
+          "Fullaudio/offline/lifecyclequalification",
+          "PublicTeamwin/Next",
+          "Remainingcontentandcampaignprogramme"
+        ],
+        "previousAcceptedRelease": "v0.62.1",
+        "wholeProgrammeComplete": false
+      },
+      "originalsIndexPin": {
+        "path": "publishing/pages-controller/delivery/evidence/cross-mode-p03/v0630-public/originals-index.json",
+        "bytes": 28559,
+        "sha256": "74761a676ac384d8c132a288cf0a92a0e5d2032323535cae0b5f03b73648556c"
+      },
+      "originalsArchive": {
+        "path": "publishing/pages-controller/delivery/evidence/cross-mode-p03/v0630-public/originals.zip",
+        "bytes": 1059019,
+        "sha256": "add06c775efc2147dcedf6ae73dd90d894384efe407b293e72b134bbc30eb615",
+        "members": 77,
+        "uncompressedBytes": 6598082
+      },
+      "completedEvidenceMembers": [
+        {
+          "member": "receipt-successors-r1/hosted-result-intake-actual-r1/intake/evidence/dispatch-binding.original.json",
+          "bytes": 2041,
+          "sha256": "091027e0900b707aeaefdfa094596c7d83f90d93805b7cbe49120ba80050fa09"
+        },
+        {
+          "member": "receipt-successors-r1/hosted-result-intake-actual-r1/intake/evidence/hosted-result.json",
+          "bytes": 2135,
+          "sha256": "0c5faf675b5de0bc6a12dcaa1a18f99f14f2d6c5eb3447850c4f76ab5c0723ea"
+        },
+        {
+          "member": "receipt-successors-r1/hosted-result-intake-actual-r1/intake/evidence/public-row-review-main-full-hosted-r1.json",
+          "bytes": 3547,
+          "sha256": "eaa01ad44c96513872775abe55b1f78c8f28e95e3749ffce40d551031b12c2ac"
+        },
+        {
+          "member": "receipt-successors-r1/hosted-result-intake-actual-r1/intake/evidence/tools/runs/main-full-hosted-r1/report.json",
+          "bytes": 6040,
+          "sha256": "5eadbd4641bb9d074105e5e85813c6dd6819cbecfcbaff9e1146217ca3a9e301"
+        },
+        {
+          "member": "root-acceptance.json",
+          "bytes": 2212,
+          "sha256": "a23de4763b393adad7cc22a983fe4d26d8cdb96a50571867defbbdaa0d518d9a"
+        }
+      ],
+      "originalArchivePriorVerification": {
+        "members": 77,
+        "everyMemberSizeAndSha256MatchedIndex": true,
+        "everyMemberCRCVerified": true,
+        "checkedDuringPriorReadOnlyProof": true
+      },
+      "currentCatalogRecord": {
+        "version": "v0.63.0",
+        "sourceRevision": "3e47f60b9f9b4c5088410536d649ff595b2667eb",
+        "tagObject": "8d64aa0959cd0560ea917bc8fad8bf02d9892eb0",
+        "recordSha256": "a6b2a42db22acec03434820db0c9e663b2bd809affd2b1669a38f1dafb3369dc",
+        "manifestSha256": "01ab7c1f0c17d8c7e0e9a0108a6c88c1f96e48cfffccc6a3c67cb34c22225b24",
+        "checksumSha256": "47b0de745435a31a6411b3ea6331faa2f47d179698fd958565324b6ee397f886"
+      },
+      "workflowPin": {
+        "path": ".github/workflows/qualify-release-source.yml",
+        "bytes": 2019,
+        "sha256": "130c3d64e9eba0ef00d3cd3a61624b123f1ea0a8177150cdb973d0ca57798ba3"
+      },
+      "hostedRunnerPin": {
+        "path": "publishing/utility/main-public-v0630/hosted_run.py",
+        "bytes": 6343,
+        "sha256": "029992771b85d82a3756e3cea37861eba8613b13a70bf3157966759554f03f38"
+      }
+    }
+  ],
+  "reconciliationAccounting": {
+    "baseline": "docs/branch-reconciliation/2026-09-22T2133Z/inventory.json",
+    "baselineRawUnclassifiedRows": 165,
+    "previousArchiveAuditProof": "2026-09-23-historical-audit-ref-proof.json",
+    "previousProofAccountedRows": 16,
+    "thisProofRefs": 2,
+    "thisProofLocalAndGitHubRows": 4,
+    "bothProofsAccountedRows": 20,
+    "baselineRowsRemainingUnclassified": 145,
+    "newerRefsAndUniqueDirtyWorkNeedSeparateAccounting": true,
+    "globalCompletion": false,
+    "currentDirtyCount": null,
+    "ignoredWorkCleared": false
+  },
+  "limits": [
+    "Historical metadata/content proof only; no audit reruns or new downloads.",
+    "No gameplay, build, browser, current deployment or public availability reacceptance.",
+    "No coverage inference from ref names; exact commit, path, pin and retained evidence relationships were reviewed.",
+    "No branch deletion, reset, force-push, worktree cleanup or owner-worktree mutation authorized.",
+    "Attached-worktree observation does not clear ignored or dirty work elsewhere.",
+    "Previous accepted historical test evidence is preserved; it does not establish current test passage."
+  ]
+}

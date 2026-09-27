@@ -1,0 +1,3035 @@
+{
+  "schemaVersion": 1,
+  "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+  "generatedAt": "2026-09-22T15:39:15.873Z",
+  "scope": "All captured worktree HEADs, including clean detached checkouts. Branch representation does not imply that branch is already reconciled. Dirty changes remain separate.",
+  "proofs": [
+    {
+      "tip": "677b091681d424198de17c6f7e864795d2618880",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/fpv-redesign",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "f1666eca60ea853dce135cb02ff3468d047a27fc",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/mobile-ux-latest",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "948959769e61bde0ca6ce0070106aceb3ed8eb0c",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/actor-upload-geometry-oracle",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "a97f808486105264866e53b5dda63f8d4a4dc3c9",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "prepare/archive10-controller-admission",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "aceab9f58ffb405c81539f0ef5ebf49175b70e9b",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/archive32-public-byte-audit",
+          "classification": "historical-release-evidence"
+        },
+        {
+          "location": "github",
+          "name": "codex/archive32-public-byte-audit",
+          "classification": "historical-release-evidence"
+        }
+      ]
+    },
+    {
+      "tip": "bcdef9e2b043e7466505aa6ea8e2e248e7567dc4",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/archive32-v0642-public-byte-audit",
+          "classification": "historical-release-evidence"
+        },
+        {
+          "location": "github",
+          "name": "codex/archive32-v0642-public-byte-audit",
+          "classification": "historical-release-evidence"
+        }
+      ]
+    },
+    {
+      "tip": "8ec16b28a136765c339e45f7aa229b42b59547e1",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/archive33-v0643-http-audit",
+          "classification": "historical-release-evidence"
+        },
+        {
+          "location": "github",
+          "name": "codex/archive33-v0643-http-audit",
+          "classification": "historical-release-evidence"
+        }
+      ]
+    },
+    {
+      "tip": "84ab171fa8551d2b6f26ce77e84f04c2cea381f6",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/archive33-v0650-http-audit",
+          "classification": "historical-release-evidence"
+        },
+        {
+          "location": "github",
+          "name": "codex/archive33-v0650-http-audit",
+          "classification": "historical-release-evidence"
+        }
+      ]
+    },
+    {
+      "tip": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-supporting-tools",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p05-supporting-tools",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "06c7f15db4afe4334d6ae5685be009612c128438",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/chapter-download-management",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "981c441121b2ba5feb2a1becb084b90f87960785",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/collection-guide-native-polish",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "618998fdac058150e4b7c66816c14cf13445ddc4",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/collection-result-labels",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "176e08021836336cc756fa20fc6dbd5e624c7ac9",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/collection-title-return",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "8c81c9b39a0d5fca94efd90e8027a1625df8869e",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/compact-track-hud",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/compact-track-hud",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "1456c75ee64427b3eb081aa086a5ce42d41b6397",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/compatible-profile-reader",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "a0622abcc3339e0d28113749e51192554a79594b",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/couch-navigation",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "b9f55d2bc6ca828cf059f8dfaa79b241eb919843",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/course-shell-navigation",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "1f3b9995af43879d54fb7b0053846f0723e2e069",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/cross-mode-gameplay-integration",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "29a98c0e2984b8c3cca7079f40047465e9bf767b",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/cross-mode-source-integration",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p03-pager-gallery-integration",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "aadd855eb707c7d115bcbd29177eadb630a114d0",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/current-chapter-preservation",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/current-chapter-preservation",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "5fa9e74ce7d1b8d4a8d8f965941de7a81c95c8c1",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/dawn-signal-story",
+          "classification": "patch-equivalent-to-main"
+        }
+      ]
+    },
+    {
+      "tip": "9fa3e3e3366a932104278a0140a550439a73a2f2",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/dpad-landscape-clearance",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "23b886bbdbea717be79a54d9c0fffe5eded46bdf",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/earned-picture-resume",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "ceab10901be3cf7d2c39ba9565ff6315f366d826",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/explicit-soundtrack-download",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "e33c04bc0c20bc7d45f2cb61340848a85ad37b7f",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/external-chapter-backup",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "540968774b9aed8bafe4446ee22378b9021b3df9",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/external-media-recovery",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/external-media-recovery",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "492423b140d4dc0a2d0dabcc01e8ff7d66b441d4",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/field-kit-production-ledger",
+          "classification": "patch-equivalent-to-main"
+        }
+      ]
+    },
+    {
+      "tip": "2ce8d1a67baa8fe5ed23ad93f7ed617c1416cde5",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/fpv-enemy-atlas-study",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "a997bab5bb5272b57767545dedc5232a51cc7a47",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/fpv-enemy-presentations",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "316a50fac9ae4671735073a3af560d47d134ea50",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/fracture-chapter-adoption",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "feat/fracture-chapter-adoption",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/full-branch-reconciliation-20260922",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/v0821-public-acceptance",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "main",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "fb4dcc0f288c7735f334a83a06407e7d908295cd",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/gentle-campaign",
+          "classification": "patch-equivalent-to-main"
+        }
+      ]
+    },
+    {
+      "tip": "148362bab537ad88b39281ebb0c690a4d88bb48d",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/guided-backup-set-e421",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "fc847b18817e1cebb1439b3391e1f3d8aa7361fd",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/handheld-v079",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/handheld-v079",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "f2bef7fd743b44b474a38dac074201175b0b50fa",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/journey-combat-c2",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "b935459cde428e4c798a65852b3fd95cec5cb13d",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/journey-couch-music",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/journey-couch-music",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "5178c434e9dbbbd8287530c92daa64978e886e76",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/journey-current-integration",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/journey-current-integration",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "9ed1fe54aaaba5a190f9501f41a72ecd7cfebb59",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/fix-public-release-marker",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "0addde9c12dd364eb3e8384b8abb8dc23ca9be47",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/journey-livewire-spatial",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "03159cc150282b9c5f7512fc2931cdc406aa203c",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/licensed-audio-albums",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "41be167b6a353db96c478f3d36b3b644f069015a",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/licensed-audio-integration",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "71e2995bedac5aa9597117307106ed535c2397c8",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/mission-caption-followup",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "9876f995bc155638cf9dcc62b5d6e1daec963b27",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/mission-focus-v0791",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/mission-focus-v0791",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "f61309ddc1f9a773d2bded369fc3abf9450631d9",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/missions-back-context-80eb",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "57bee98f23a6bf5882f19065f1d70473ece7a12e",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/world-browser-polish",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "feat/world-browser-polish",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "1dc861d6bf4cc4d49c5dcc2e419075d9afd7c19e",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/moving-edges",
+          "classification": "superseded-duplicate"
+        }
+      ]
+    },
+    {
+      "tip": "15882073cd8329b0c117c4716694b588ac4c4d05",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/moving-edges-art",
+          "classification": "unique-changes-require-intake"
+        }
+      ]
+    },
+    {
+      "tip": "838a29f7a7a54256e48d437a0adadac8d8316964",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/music-docs-current-20260922",
+          "classification": "represented-by-open-pr"
+        },
+        {
+          "location": "github",
+          "name": "codex/music-docs-current-20260922",
+          "classification": "represented-by-open-pr"
+        }
+      ]
+    },
+    {
+      "tip": "508a638f556b80817f4c872b9950d7de7b207b17",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/music-native-v070",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/music-native-v070",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "a9b3ac8e049b13cbdf8710ba606c38531a8bb13c",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/optional-chapter-descriptions",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "c113a348ae69bd013b67f0d22a5391d604253545",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p02a-p01-integration",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p02a-shared-audio",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "ac644a99eebb2fef049458f6abf69fa626f81983",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p02a-shared-audio",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p02a-team-sound-note",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p02a-team-sound-note",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "d6800fa53d1d9166fe8f310d44aec9c7240b62fc",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-about-controller-v0614",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-about-controller-v0614",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "a7fd646e40bd93268f56b714fdc5d8aa9b0b1f67",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-backup-feedback",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-backup-feedback",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "ef1430174dfd35a9df441233988b8737d0401851",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-close-focus-tests",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p05-narrow-hud-next",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p05-narrow-hud-numeric-next",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p05-team-large-v621",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p07-team-picture-v06121",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p07-team-picture-v06121",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "356401f936578db5d3643e13cb6287e59535e853",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-collection-records-return",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "72b6845e101850a4ee34df66656dae3c7ad87f5f",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-couch-team-next",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-couch-team-next",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "90e8bc8102cc71a992a57aa1f41d7cdcd6659b3e",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-couch-visible-focus",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-enemy-action-wrap-next",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p03-enemy-reading-next",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p03-focus-scrollport-v06123",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p03-responsive-navigation-next",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/still-media-reload-status-next",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-focus-scrollport-v06123",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "d51acab59232edc4e7f77ab5df491f2c403de709",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-enemy-startup-focus-v06120",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p05-team-large-cues-next",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-enemy-startup-focus-v06120",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-enemy-workshop-return",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p03-release-history-about",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p03-still-preview-focus",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p03-studio-inline-guide",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p03-team-lobby-visible-focus",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p03-team-picture-recovery",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p05-file-control-contrast",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p05-motion-slider-labels",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p08a-team-earned-picture",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p05-motion-slider-labels",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "58ff1b1da3c5487412e168ce34539866ac2f4970",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-enemy-workshop-v0613",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-enemy-workshop-v0613",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "3e47f60b9f9b4c5088410536d649ff595b2667eb",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-field-details",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-field-details",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "76dc4bf36baec11ce4dff6ca49773d3b9d6c0ae5",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-final-integration",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-final-integration",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "7fedeef11991ed7be19bdb1d5841f6aed00dfb09",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-gallery-return",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "9c89f997cdbf0c8266fa65247832dcf2281d61ba",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/global-settings",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/global-settings",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "0368f58f8b866d9ae9e716536e7b914d4a6af818",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-library-pagers",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "9d43ca97dd641932b08b9162718a56c2c93377b1",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-library-row-focus",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "9f04273a09dd23d44236c1715d62cfa460171e24",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-missions-next",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-missions-next",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "b3262eb02a998c50354758ba922324d023138875",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-motion-focus-v0617",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p05-still-media-reading",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-motion-focus-v0617",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "d0925c00518f0be6da0a3ea565112fee106dc8eb",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-operation-focus",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "206c4b9bdd7bc53aecf818f85a1cbf680814a4e5",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-practice-v0591",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-practice-v0591",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "5022cbdfea8be6fe81bdc9bf039a33ce6b6cc794",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-replay-v0607-accepted",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-replay-v0607-accepted",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "03d12fb5bfd6315a2d6f71720b3e4987549ae69d",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-reading-prompts",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "bb8cd8ea8af0cbec6af7e633c05d1bec78815938",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-solo-pause-next",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-solo-pause-next",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "1167291e27773ef076ed64b6e06ba7c0339423a0",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-story-focus",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "d34e283819376eb43e4942287d9767b22a4f6487",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-studio-guide-v0615",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p08-versus-footprint",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-studio-guide-v0615",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "7a9985ec00168b99a86c1d5db0457343ca18ffae",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-workshop-reload",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p03-workshop-reload",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "ec288a4e96d13e5a8fda51dff759838af96b46fe",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03a-navigation",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "c6b57e89ac95935907a77259e81b29752c1ab8cc",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03a1-mode-departure",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "c5bccfc59e9b2dec2defc9d9202565ea3ccceae0",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03a2-solo-versus",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "83152ee216c8f586b522f297cc6aaf896744b372",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03b-title-entry",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "e71d7c4b32341de2acb7b4b30798e71caac1fb5e",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03d-story-focus",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "59e6c55456cc891c947cfe888e014a86df0d2665",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03i-team-departure",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "613dbeed68bd3da08504685de35149ba19bdd847",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03j-workshop-restart",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "346ce26bba5687f206a2466a911377473b7e9070",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03k-course-selection",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "8078796de87ba64ae49076a81e7a444915f5e720",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03l-common-lobby",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "abdca9a71f82f5d97101aae7bb3179574eee5ce4",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03m-title-modes",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "3f7d735d9cfe10c352eafef33e2ebd477dc7449d",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03r3-library-launch",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "5b8629e1706b5a63ddf27039e432c5953c054552",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03r5-ready-focus",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "5822500b4d5821047be21d03ba824afafeac668a",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03r5-versus-focus",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p04-reference-prototype-r1",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p05-narrow-hud-actor622-r5",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p08-actor-minimum-next",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p08-actor-minimum-next",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "657ac7b5528925a8c6bee0f77449a1428962f172",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-couch-resize-focus",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "409cdd5d1d5c165f8167c677f283e5453fe43987",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/post-v076-landscape-hud",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "70fc927c71b521f77c0ee0eb769ae12ad27085a5",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-landscape-playfield",
+          "classification": "unclassified"
+        },
+        {
+          "location": "github",
+          "name": "codex/p05-landscape-playfield",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "a7a4e2d7090e2fe9d1843d88b63bc334b95bf61e",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-media-controls-v0611",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p05-media-controls-v0611",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "80efcc3ddda302a014c3409c248892f36b3a12a9",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-narrow-hud-on-actor622",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "3f934b7508645d2cad03466276d20e8d038f9d76",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-p03-integration",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-picker-clearance-next",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/p08-versus-footprint-v0616",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p08-versus-footprint-v0616",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "0ae4330b8a87d332051db112f5e09b7c3cbef9fa",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-picker-clearance-v0618",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p05-picker-clearance-v0618",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "8ae70850db00777eb9afb233ff8a881fc26714f0",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-replay-text",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p05-replay-text",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "adbfcb94037b8a38d49b9650e7f8a83c7face1db",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-solo-flight-hud",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p05-solo-flight-hud",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "d09b5ffd4b3eda65aed7e58012fb069fac41d337",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-solo-header",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "6db978db40287151489803e915cb4ecb9ea232ee",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-still-media-reading-v0619",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p05-still-media-reading-v0619",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "170508f11dd41204b7e24917a823f21701c15961",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-studio-readability",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p05-studio-readability",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "a336f18306a425f6575b77a3017056d32155043f",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-motion-reading",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p05-motion-reading",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "61fb43b32974187fe664f130117465285223251b",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-team-hud",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "41fe6eae654c4f7a9646eb9109f39aa971850cc0",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05-team-short-landscape",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "5d3560ec8ba491c303236353521c364d2422356e",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05a-display-preferences",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "fcc40321d6d584b94c98aab5ead31bddc6b85a47",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05b-menu-style",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "063ff5d650b6e071d2b59e89fa6e9fb5058b3f08",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p05b-p08-static-integration",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "e8a588da3bf0cfc489b55868a90ddb5d3dfb71d0",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p06-discovery-v0670",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "5598d56248ee4a03d0460ff8a3560eb550a4cc71",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p06-discovery-v0680",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p06-discovery-v0670",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "70d52504c92e94e5905716d195ebc48eb25d87a5",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p07-backup-preflight-r3",
+          "classification": "represented-by-open-pr"
+        },
+        {
+          "location": "github",
+          "name": "codex/p07-backup-preflight-r3",
+          "classification": "represented-by-open-pr"
+        }
+      ]
+    },
+    {
+      "tip": "74e2c9baec91462e68cee130c952550d82d611d0",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p07-campaign-tour",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "fc2c7af6b22c703cc3bb2c081579878b7510f667",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p07-continuation-v0610",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p07-continuation-v0610",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "99f33086c5c381cd91459e59e672c4adba1fe18d",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p07-next-result-transaction",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "c4851d140b8c7c8ebaebfede998b4d9e60f18807",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p07-retry-contract-tests",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "cc161f7d97b2a90482e84d875a4360e4bf4afffe",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p07-solo-continuation",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "dae39ba7d4f1a64e309566f9cacca826958e7de2",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p08-cross-mode-authoring",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p08-cross-mode-authoring",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "57fdc39aa78683f6de479eb77f810f60e7c6756a",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p08-imported-team-main-integration",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p08-imported-team",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "d30f883df1e11d04fb8a5682e17171f98da67901",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p08-team-actors",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "0c5ee5fc866eecec6e924c1030b0078bce0f6531",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p08-team-bindings",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "d3ff0bc1e9948f5752e79c5b21c8207dd74c69e1",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p08-team-host",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "7c9d34f7011a904b9c100f66884a19808666315a",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p08-team-presentation",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p08-team-presentation",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "1817377c00049874eb8ab3f47f0b630894ba28f8",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p08a-p05-integration",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "1da77ee586d0fdd3ac73883235a822b959e85b37",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p08a-static-pictures",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "bb5e6e7787bf81232368b96845d716a808c21309",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p08a-team-composed-v0612",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p08a-team-composed-v0612",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "e5b2b91e480b235a6c24ba1fd44ba6e42415c743",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p08a-team-presentation",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "3c671d0d8dbd757641efcd1575460f99bea163fa",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p11-inner-receiver-study",
+          "classification": "represented-by-open-pr"
+        },
+        {
+          "location": "github",
+          "name": "codex/p11-inner-receiver-study",
+          "classification": "represented-by-open-pr"
+        }
+      ]
+    },
+    {
+      "tip": "1cc9360652504526a9c1c0aebc7e1a3ffbf97a5d",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/pages-v081",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "e1b58ad673f30bddda15ff66b76c03d149e155e1",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/pause-clearance-v0692",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/pause-clearance-v0692",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "f7f0259096359ad3c4624febf0d02fd1438f5775",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/picture-ready-status",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "276cbba302b4638b60bcc9aec7ac7f7eb5b61ca1",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/player-menus-v0681",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/player-menus-v0681",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "a05ae1b0106711aac53b911a2c2d5c745193a610",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/post034-plan",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "4ef5fc77fe7ed7ec2539fe3d64e1f30c8ea8f361",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/practice-media-v3",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "feae2e75de3d33878b3e1c7f0298785163c0112f",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/presentation-media-bindings",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "15f9a9c7c18cc5a8842a0e7bc9227e1e59c1920d",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/ready-attempt-export",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "ea9ba01338eaaab8cecb500d8a0cba9e1193dd09",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/relay-rescue-field-kit-68abd",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "a36d62f2fc3af67e3fffcafda3656c413ca77341",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p08-team-picture-revision27",
+          "classification": "already-merged"
+        },
+        {
+          "location": "local",
+          "name": "codex/replay-disabled-actions",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/replay-disabled-actions",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "fbd314d7190c81e2ff67981e9006c49993d35d43",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "art/retro-role-presentations",
+          "classification": "unique-changes-require-intake"
+        }
+      ]
+    },
+    {
+      "tip": "9304b3ef203a6a0ac54602aac42828732dae9e54",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/sentinel-details-copy",
+          "classification": "unclassified"
+        },
+        {
+          "location": "github",
+          "name": "codex/sentinel-details-copy",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "a3cb15e3ec50d13d7a57cb873cf72d4b0f1dd289",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/shared-couch-music-integration",
+          "classification": "unclassified"
+        },
+        {
+          "location": "github",
+          "name": "codex/shared-couch-music-integration",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "432110b51c570b838cdae390790b67dfa76f0785",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/shared-device-play",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "d646e47c186e1552bf67410e45fa875c3006b58a",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/short-landscape-arena",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "f08325cbbf2725c8cf46e7cc64a5390f03823906",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "short-landscape-warning",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "809f5a91c18c9eeb777ecc1b452637f861d92795",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/snapshot-archive-transfer",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "52e5d5458174e727e6d48d567ca69dbb3bc9e4a7",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/soundtrack-expansion-36",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "c1bf73baafca3ce4d4cad666263f9c3aee9b016b",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/soundtrack-player-ux",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/soundtrack-player-ux",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "3d2e75bb3621aacfbd9b7a931cd1f8ff917a7ba6",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/source-identity-checker-362e5bf",
+          "classification": "patch-equivalent-to-main"
+        }
+      ]
+    },
+    {
+      "tip": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "art/spend-role-presentations",
+          "classification": "unique-changes-require-intake"
+        }
+      ]
+    },
+    {
+      "tip": "b8774ec65d3dcc36a600b865eeb8b6c89ca97367",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/sprite-derivative-tool",
+          "classification": "unique-changes-require-intake"
+        }
+      ]
+    },
+    {
+      "tip": "406637f36c039f991e83d241cb49d4568a871109",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/story-restore-focus",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/story-restore-focus",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "9747b3e86e43d4e66b1c7b4aea6e05b220bf3ad5",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/story-runtime-adoption",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "feat/story-runtime-adoption",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "3b80ebd1159720883b82982016d9d688ddbd4629",
+      "ahead": 1,
+      "behind": 1471,
+      "uniqueCommits": [
+        "3b80ebd1159720883b82982016d9d688ddbd4629"
+      ],
+      "kind": "historical-patch-match-needs-retention-review",
+      "patches": [
+        {
+          "commit": "3b80ebd1159720883b82982016d9d688ddbd4629",
+          "patchId": "086319ca49bdadf8304715974e542dbcce12a67d",
+          "mainSuccessors": [
+            "a052434cc53e1954af1cc8fa5bc452b6d153be83"
+          ]
+        }
+      ],
+      "changedPaths": [
+        "M\tdocs/continuity-transfer.md",
+        "M\tgame/profile-transfer.mjs",
+        "A\tgame/test/profile-transfer-suspended.test.mjs",
+        "M\tgame/ui/profile-transfer-panel.mjs"
+      ]
+    },
+    {
+      "tip": "595fdadddf3cf5c4240c430b78d27772915df83d",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/team-after-music",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "17de30bbfe9ff15d961fd9e8a444da3a93e842e7",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/post-v076-team-lobby",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "61af3634cc3fd4419d741b1d809a03c4e394d896",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/team-landscape-next",
+          "classification": "unclassified"
+        },
+        {
+          "location": "github",
+          "name": "codex/team-landscape-next",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/team-presentation-next",
+          "classification": "unclassified"
+        },
+        {
+          "location": "github",
+          "name": "codex/team-presentation-next",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "2447c7f6f06e27bab61621f06b29b7a7bee33b6a",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/team-presentation-test-fixtures",
+          "classification": "unclassified"
+        },
+        {
+          "location": "github",
+          "name": "codex/team-presentation-test-fixtures",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "2f7e31cdb87864df54a2db1fb39999794427f12a",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/test-fixture-efficiency",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "eb17b205b807a2ec3be3ca60e77c6a2051c26a95",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/title-settings-return",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "87fc6c1dd237d1b2634335e117023f4075f3118b",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/touch-steering-hand",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "53d553485b8d7dc0f912959892947819a19d9803",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "art/ukraine-enemy-presentations",
+          "classification": "unique-changes-require-intake"
+        }
+      ]
+    },
+    {
+      "tip": "dce317f1862ea73a6a8033ad8b70087b653e353e",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/ukraine-role-presentations",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "bc53b9f1b46944739881419a567b104f14678a05",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "feat/ukraine-role-runtime",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "70836db6ac7559791ef61ecfbf31c0785604ffc0",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/unified-mission-library",
+          "classification": "active-awaiting-owner-draft"
+        },
+        {
+          "location": "local",
+          "name": "codex/ux-default-journey",
+          "classification": "represented-by-open-pr"
+        },
+        {
+          "location": "github",
+          "name": "codex/ux-default-journey",
+          "classification": "represented-by-open-pr"
+        }
+      ]
+    },
+    {
+      "tip": "03833cef639a350c0d1be70d13e9cceec7fad267",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/ux-retained-presentation-recovery",
+          "classification": "represented-by-open-pr"
+        },
+        {
+          "location": "github",
+          "name": "codex/ux-retained-presentation-recovery",
+          "classification": "represented-by-open-pr"
+        }
+      ]
+    },
+    {
+      "tip": "fccd82efc36af896643f647c941c0b302ffcc6ea",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/ux-sprite-history-focus",
+          "classification": "represented-by-open-pr"
+        },
+        {
+          "location": "github",
+          "name": "codex/ux-sprite-history-focus",
+          "classification": "represented-by-open-pr"
+        }
+      ]
+    },
+    {
+      "tip": "fcea43eaa0f9c6c98d34fb2409b55040a9eb7864",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/ux-studio-validation-recovery",
+          "classification": "represented-by-open-pr"
+        },
+        {
+          "location": "github",
+          "name": "codex/ux-studio-validation-recovery",
+          "classification": "represented-by-open-pr"
+        }
+      ]
+    },
+    {
+      "tip": "5c065b3824160a26b6ce093c0b4ba347990aeaa4",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v042-async-host-correction",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "443dae763c0d77ad25575dbfba6d04dd5b66471f",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/v042-distribution-fixtures",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "0c833a18f0e5dbd1f7d72de8fc7de708dc83d08a",
+      "ahead": 1,
+      "behind": 1188,
+      "uniqueCommits": [
+        "0c833a18f0e5dbd1f7d72de8fc7de708dc83d08a"
+      ],
+      "kind": "historical-patch-match-needs-retention-review",
+      "patches": [
+        {
+          "commit": "0c833a18f0e5dbd1f7d72de8fc7de708dc83d08a",
+          "patchId": "ce6a00d2bcd00e688764ade3877ca97d87153559",
+          "mainSuccessors": [
+            "aa355de6a20ed794d5b654c74751425d9c6dff1f"
+          ]
+        }
+      ],
+      "changedPaths": [
+        "M\tgame/test/campaign-difficulty-library.test.mjs",
+        "M\tgame/test/compatibility-v0100.test.mjs",
+        "M\tgame/test/controller-boost-library.test.mjs",
+        "M\tgame/test/mastery-v070-compatibility.test.mjs"
+      ]
+    },
+    {
+      "tip": "85128992a9669a1263f538f22ec943af2434640a",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v042-source-import-waits",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "d5c04916964f037f00548558d41ab594b8b623ee",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/v042-test-concurrency",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "436aae27d96eda3b3bf404fd23e9f621d134b0ed",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0641-main-http-audit",
+          "classification": "historical-release-evidence"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0641-main-http-audit",
+          "classification": "historical-release-evidence"
+        }
+      ]
+    },
+    {
+      "tip": "327a11ca54f945d150fc06f1ef88267fd72a8ad9",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0641-pages",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0641-pages",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "2ae7c91c0ba9bfbe16bb4c3775bd1fa308abe09e",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0642-main-http-audit",
+          "classification": "historical-release-evidence"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0642-main-http-audit",
+          "classification": "historical-release-evidence"
+        }
+      ]
+    },
+    {
+      "tip": "ce9e4f54e37079cc792c8de828c3ab6d17b81421",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0642-pages",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0642-pages",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "0376f1f2d3b077208418836d32d6610d0a154fdc",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0643-main-http-audit",
+          "classification": "historical-release-evidence"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0643-main-http-audit",
+          "classification": "historical-release-evidence"
+        }
+      ]
+    },
+    {
+      "tip": "f43dd3e1f5925e874d60b021a507c279c7992d87",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0643-pages",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0643-pages",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "8af3d87b10d660e78735da669f676ed4b9a2c2ff",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0650-main-http-audit",
+          "classification": "historical-release-evidence"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0650-main-http-audit",
+          "classification": "historical-release-evidence"
+        }
+      ]
+    },
+    {
+      "tip": "c07aa41d5621b8af63101b7e98aaa1f8ce76d891",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0650-pages",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0650-pages",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "5ddddd87f4b6c9cb85697eeae326000e7d63d5db",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0660-acceptance",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0660-acceptance",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "94f7ac356778cf8854b6de046f21642873534d8c",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0660-main-http-audit",
+          "classification": "historical-release-evidence"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0660-main-http-audit",
+          "classification": "historical-release-evidence"
+        }
+      ]
+    },
+    {
+      "tip": "465918ad41b954f85c2ce17ac0c9a2efbe924557",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0670-public-acceptance",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0670-public-acceptance",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "5dc68feaa8234e03f3e87ad5d00470262bf19ce4",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0680-pages",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0680-pages",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "942d410d10a95bb056d2fb7de9684cf123c33a39",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/pages-v0690",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/pages-v0690",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "ace1c5cf9dec3de9316f8a07fca04a3b8b6398ac",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/publish-v0691",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/publish-v0691",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "904cd973b9ede30f21dd6b378562831def194350",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/publish-v0692",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/publish-v0692",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "fe1169291ed726a5c4cd0bc59df4e08583de1156",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/publish-v0693",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/publish-v0693",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "6c51b7e9bda575ac9e7e329784a3db0edfa8ddbd",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/xposed-journey-v076-final",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/xposed-journey-v076-final",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "17bd1965a2979489f5a163de13dc23c47c5b538d",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0761-ux-integration",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0761-ux-integration",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "05fee366cfb09d5b9a8270e290a4eb70179232b6",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/publish-v0790",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/publish-v0790",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "3556e25730e055b86b8dd90b53cef8d7f687d148",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/xposed-journey-p01",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/xposed-journey-p01",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "bbbbf87b4493d3d0180274c7ac59a5048045caba",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/xposed-journey-p02",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/xposed-journey-p02",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "9ee58177d11b2e7e0e3df6b4394e12503f67242f",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/xposed-journey-p03",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/xposed-journey-p03",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "6b5d8528e18eb630bcfda52c07e896401b0dd5f4",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/xposed-journey-p04",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/xposed-journey-p04",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "8a970b07bfb52d15f7037d18ec89815248010956",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/xposed-journey-p05",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/xposed-journey-p05",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "7d1f99dda110090de447d37e7bd5560137ad7c58",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/xposed-journey-p15",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "661be3bf58c2c5504d94657775aa0e4b1f07b657",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/community-guide-contracts",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "856850ce8d4597c1fb6e8bb28ddb8a63db337a8c",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p01-recovery-return",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p01-recovery-return",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "3f7cc34232e0b8520ec5a10adf7561ea395a3e85",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/fpv-redesign-delivery",
+          "classification": "unclassified"
+        }
+      ]
+    },
+    {
+      "tip": "8af0d47d73e8633c771823fe024a3456441d62c1",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/fpv-redesign-phase5-qualification",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/fpv-redesign-phase5-qualification",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "5d4bd98718955fa471fe71d798715864af166d18",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/fpv-redesign-isolated",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "604f5995fc3b96698968d32a97dd4f6f326ce4d5",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/fpv-redesign-phase0",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/fpv-redesign-phase0",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "d52b634a231ce0907b83ea681e1e1aaf02387485",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/fpv-redesign-phase6-qualification",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/fpv-redesign-phase6-qualification",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "7945c6d07714d41cee9b6f848059b8dc18aed86c",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p01-file-dialog-cancel",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p01-file-dialog-cancel",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "114a5eb42083009db6865d50bcbb53a8e7592b53",
+      "ahead": 0,
+      "behind": 904,
+      "uniqueCommits": [],
+      "kind": "already-merged"
+    },
+    {
+      "tip": "a7194f1cfc618f9f8b4575f8b76da45f9521a7bd",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p01-v0574-public-evidence",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p01-v0574-public-evidence",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "db2da913cf3d86e180a6ec556cf26021f2a57125",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p02-v058-publication",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/p02-v058-publication",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "5f6782803b6218555e3f7a419fb594e73414c95d",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/p03-couch-reading",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "7618d571dbe8d176e7b426139755354d355940c7",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/frozen-pages-field-kit-final",
+          "classification": "already-merged"
+        },
+        {
+          "location": "github",
+          "name": "codex/frozen-pages-field-kit-final",
+          "classification": "already-merged"
+        }
+      ]
+    },
+    {
+      "tip": "97063f0ed85087c438a238ad864ed24bead2ee17",
+      "kind": "recorded-branch-tip",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/presentation-control-lifetime",
+          "classification": "unclassified"
+        }
+      ]
+    }
+  ]
+}
