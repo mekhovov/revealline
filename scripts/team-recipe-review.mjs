@@ -1,5 +1,10 @@
 /** Exact scoped Team functional review; immutable ancestor records are never edited. */
 import { createHash } from 'node:crypto';
+import {
+  bulkPresentationContinuation,
+  BULK_PRESENTATION_REVIEW_PATH,
+  BULK_PRESENTATION_REVIEW_SHA256,
+} from './bulk-presentation-continuation.mjs';
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const reviewedRecord = '7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b';
 const successorRecord = '45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05';
@@ -33,6 +38,7 @@ export function fieldKitTeamRecipeQuality({
   reviewBytes,
   successorReviewBytes,
   continuationReviewBytes,
+  bulkContinuationReviewBytes,
 }) {
   if (!reviewBytes || hash(reviewBytes) !== reviewedRecord) return unreviewed();
   const review = JSON.parse(reviewBytes);
@@ -68,12 +74,28 @@ export function fieldKitTeamRecipeQuality({
         continuation.priorReviews?.teamSuccessor?.fingerprintSHA256 !==
           successor.fingerprint.sha256 ||
         continuation.fingerprints?.team?.group !== 'team' ||
-        continuation.fingerprints?.team?.priorSHA256 !== successor.fingerprint.sha256 ||
-        source !==
-          `${continuation.fingerprints.team.paths} sha256:${continuation.fingerprints.team.currentSHA256}`
+        continuation.fingerprints?.team?.priorSHA256 !== successor.fingerprint.sha256
       )
         return unreviewed();
-      evidence = `v0.132.5 exact Team continuation: ${continuationReviewPath} sha256:${continuationRecord}; prior ${successorReviewPath} sha256:${successorRecord}; original ${priorReviewPath} sha256:${reviewedRecord}`;
+      if (
+        source ===
+        `${continuation.fingerprints.team.paths} sha256:${continuation.fingerprints.team.currentSHA256}`
+      ) {
+        evidence = `v0.132.5 exact Team continuation: ${continuationReviewPath} sha256:${continuationRecord}; prior ${successorReviewPath} sha256:${successorRecord}; original ${priorReviewPath} sha256:${reviewedRecord}`;
+      } else {
+        const bulk = bulkPresentationContinuation(bulkContinuationReviewBytes);
+        if (
+          !bulk ||
+          bulk.priorReviews.teamContinuation.path !== continuationReviewPath ||
+          bulk.priorReviews.teamContinuation.sha256 !== continuationRecord ||
+          bulk.fingerprints.team.priorSHA256 !== continuation.fingerprints.team.currentSHA256 ||
+          !bulk.fingerprints.team.slots.includes(slotId) ||
+          source !==
+            `${bulk.fingerprints.team.paths} sha256:${bulk.fingerprints.team.currentSHA256}`
+        )
+          return unreviewed();
+        evidence = `Scoped current Team continuation: ${BULK_PRESENTATION_REVIEW_PATH} sha256:${BULK_PRESENTATION_REVIEW_SHA256}; prior ${continuationReviewPath} sha256:${continuationRecord}; original ${priorReviewPath} sha256:${reviewedRecord}`;
+      }
     }
   }
   const role = review.recipes.find((entry) => entry.slot === slotId);
