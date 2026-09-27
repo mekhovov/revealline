@@ -9,7 +9,7 @@ import {
 import { CURRENT_ART_SOURCES } from '../presentation/current-art-sources.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { geometrySignature, normalizedGameplay } from '../../scripts/content-inventory.mjs';
-import { probePilotOpening } from '../../scripts/uniqueness-pilot.mjs';
+import { pilotEvidenceIdentity, probePilotOpening } from '../../scripts/uniqueness-pilot.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { AUTHORED_JOURNEY_ROUTE_IDS } from '../content-design/mode-href.mjs';
 import {
@@ -21,6 +21,7 @@ import { createCoop, startCoop } from '../coop/core.mjs';
 
 test('pilot successors own new identities and leave current content and originals untouched', () => {
   const before = JSON.stringify(CURRENT_ART_SOURCES);
+  const defaultSoloBefore = DEFAULT_JOURNEY_ROUTES.solo;
   const pilots = createClassicUniquenessPilots();
   assert.equal(pilots.length, 4);
   assert.equal(new Set(pilots.map(({ level }) => geometrySignature(level))).size, 4);
@@ -34,10 +35,46 @@ test('pilot successors own new identities and leave current content and original
     assert(!CURRENT_ART_SOURCES.some((row) => row.owner.levelId === pilot.level.id));
   }
   assert.equal(JSON.stringify(CURRENT_ART_SOURCES), before);
-  assert.equal(DEFAULT_JOURNEY_ROUTES.solo, 'whole-spatial-v11');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.solo, defaultSoloBefore);
+  assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(defaultSoloBefore));
+  assert(!defaultSoloBefore.includes('uniqueness-pilot'));
   assert(!AUTHORED_JOURNEY_ROUTE_IDS.some((id) => id.includes('uniqueness-pilot')));
 });
 
+test('portable pilot identity covers design proof and ignores exact-state diagnostics', () => {
+  const proof = {
+    seed: 17,
+    column: 12.5,
+    depth: 4.5,
+    side: 'left',
+    status: 'running',
+    ticks: 537,
+    seconds: 4.475,
+    livesLost: 0,
+    coverage: 0.021052631578947368,
+    closure: { tick: 537, coverage: 0.021052631578947368 },
+    failures: [],
+    replayVerified: true,
+    segments: [
+      { direction: 'left', ticks: 324 },
+      { direction: 'down', ticks: 55 },
+      { direction: 'left', ticks: 158 },
+    ],
+  };
+  const identity = pilotEvidenceIdentity(proof);
+  assert.match(identity, /^revealline-pilot-proof\.v1:[0-9a-f]{64}$/);
+  assert.equal(pilotEvidenceIdentity({ ...proof, checkpoint: 'e8e4e128969b3aba' }), identity);
+  assert.equal(pilotEvidenceIdentity({ ...proof, checkpoint: '83f58b12fcadafda' }), identity);
+  for (const changed of [
+    { ...proof, column: 24.5 },
+    { ...proof, coverage: proof.coverage + 0.01 },
+    { ...proof, closure: null },
+    { ...proof, failures: [{ tick: 537, cause: 'line-hit' }] },
+    { ...proof, segments: [...proof.segments, { direction: 'right', ticks: 1 }] },
+    { ...proof, replayVerified: false },
+  ])
+    assert.notEqual(pilotEvidenceIdentity(changed), identity);
+});
 test('Horizon competitive pilot is a separate course with neutral art and exact unchanged controls', () => {
   const controls = createUniquenessPilotControls();
   const project = createHorizonVersusUniquenessPilot();
@@ -58,6 +95,9 @@ test('every neutral pilot has repeatable recorded public-input first-return evid
   const report = JSON.parse(
     await fs.readFile(new URL('../../docs/content-offline/pilot.json', import.meta.url)),
   );
+  assert.equal(report.format, 'revealline-uniqueness-pilot.v2');
+  assert.equal(report.evidenceContract.format, 'revealline-pilot-proof.v1');
+  assert.equal(report.evidenceContract.historicalExactCheckpoint.retainedInGitHistory, true);
   const source = createHorizonVersusUniquenessPilot();
   const levels = new Map(createClassicUniquenessPilots().map((row) => [row.id, row.level]));
   levels.set(
@@ -67,6 +107,8 @@ test('every neutral pilot has repeatable recorded public-input first-return evid
   for (const pilot of report.pilots) {
     const proof = pilot.evidence.attempts.find((row) => row.closure && row.livesLost === 0);
     assert(proof, `${pilot.id} requires an actual first return before design review.`);
+    assert(!Object.hasOwn(proof, 'checkpoint'));
+    assert.match(proof.evidenceIdentity, /^revealline-pilot-proof\.v1:[0-9a-f]{64}$/);
     const actual = probePilotOpening(levels.get(pilot.id), proof);
     assert.deepEqual(actual, proof);
     assert.equal(actual.replayVerified, true);
