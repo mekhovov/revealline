@@ -124,6 +124,10 @@ Remaining work and current estimates:
    without a game allowlist or per-song code change. Unknown licence text is not
    exposed in the game. The PR remains on the release-train hold until the sole
    publisher assigns it a version and runs independent exact-source qualification.
+   A direct current-source acceptance probe loaded the canonical inventory through
+   `createSoundtrackSource`, downloaded Holizna's `Drama`, decoded all 8,431,885
+   bytes and matched SHA-256
+   `bacdf4eae1d6031a357837389b86f5b114997629be60ca9cb3d2e14284fee34b`.
 4. Add migration notices to the two legacy roots and freeze their intake: about
    half a day after canonical game acceptance.
 5. **Completed:** the canonical
