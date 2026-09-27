@@ -199,9 +199,11 @@ test('closed library preserves every static Inspect action, paired edition contr
 test('Sorting successor search preserves the paired Rover edition selector and Inspect action', () => {
   const { search, visible, $ } = setup();
   search('rover sorting');
-  assert.equal(visible().length, 1);
-  assert.equal(visible()[0], $('rover').closest('[data-library-entry]'));
-  assert(visible()[0].querySelector('#rover-edition'));
+  assert.equal(visible().length, 2);
+  const sorting = $('rover').closest('[data-library-entry]');
+  assert(visible().includes(sorting));
+  assert(sorting.querySelector('#rover-edition'));
+  assert(visible().includes($('whole-variety-edition').closest('[data-library-entry]')));
 });
 
 test('inner receiver search keeps the original edition and explicit Inspect in the same entry', () => {
@@ -247,6 +249,20 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
     'whole-ornament-v2',
     'whole-ornament-v1',
     'whole-spatial-v11',
+    'whole-spatial-v12',
+    'whole-spatial-v13',
+    'whole-spatial-v14',
+    'whole-spatial-v15',
+    'whole-spatial-v16',
+    'whole-spatial-v17',
+    'whole-spatial-v18',
+    'whole-spatial-v19',
+    'whole-spatial-v20',
+    'whole-spatial-v21',
+    'whole-spatial-v22',
+    'whole-spatial-v23',
+    'whole-spatial-v24',
+    'whole-spatial-v25',
     'whole-spatial-v10',
     'whole-spatial-v9',
     'whole-spatial-v8',
@@ -270,6 +286,9 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
     '../couch/relay-rescue.html?journey=team-pressure-originals-1',
     '../couch/relay-rescue.html?journey=team-spatial-originals-1',
     '../couch/relay-rescue.html?journey=team-trail-impact-originals-1',
+    '../couch/relay-rescue.html?journey=team-complete-specialist-originals-1',
+    '../couch/relay-rescue.html?journey=team-cultural-specialist-originals-1',
+    '../couch/relay-rescue.html?journey=team-cultural-specialist-originals-2',
     '../couch/relay-rescue.html?journey=team-specialist-originals-1',
   );
   assert.deepEqual(links.map((link) => link.getAttribute('href')).toSorted(), expected.toSorted());
@@ -283,19 +302,25 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
     if (edition && href.includes('relay-rescue')) {
       assert.equal(
         link.getAttribute('aria-label'),
-        edition === 'team-specialist-originals-1'
-          ? 'Play bundled Team specialist test (does not include draft edits) · team-specialist-originals-1 (new tab)'
-          : edition === 'team-trail-impact-originals-1'
-            ? 'Play bundled Team travelling-impact test (does not include draft edits) · team-trail-impact-originals-1 (new tab)'
-            : edition === 'team-spatial-originals-1'
-              ? 'Play bundled Team changing-return test (does not include draft edits) · team-spatial-originals-1 (new tab)'
-              : edition === 'team-pressure-originals-1'
-                ? 'Play bundled Team pressure test (does not include draft edits) · team-pressure-originals-1 (new tab)'
-                : edition === 'team-depot-spatial-1'
-                  ? 'Play bundled depot-lane test (does not include draft edits) · team-depot-spatial-1 (new tab)'
-                  : edition === 'team-window-spatial-1'
-                    ? 'Play bundled outer-pocket test (does not include draft edits) · team-window-spatial-1 (new tab)'
-                    : 'Play bundled Shared windows test (does not include draft edits) · team-timed-originals (new tab)',
+        edition === 'team-cultural-specialist-originals-2'
+          ? 'Play current Team Journey with Ukrainian spatial specialists II · team-cultural-specialist-originals-2 (new tab)'
+          : edition === 'team-cultural-specialist-originals-1'
+            ? 'Play previous Team Journey with Ukrainian spatial specialists · team-cultural-specialist-originals-1 (new tab)'
+            : edition === 'team-complete-specialist-originals-1'
+              ? 'Play previous Team Journey with complementary specialists · team-complete-specialist-originals-1 (new tab)'
+              : edition === 'team-specialist-originals-1'
+                ? 'Play bundled Team specialist test (does not include draft edits) · team-specialist-originals-1 (new tab)'
+                : edition === 'team-trail-impact-originals-1'
+                  ? 'Play bundled Team travelling-impact test (does not include draft edits) · team-trail-impact-originals-1 (new tab)'
+                  : edition === 'team-spatial-originals-1'
+                    ? 'Play bundled Team changing-return test (does not include draft edits) · team-spatial-originals-1 (new tab)'
+                    : edition === 'team-pressure-originals-1'
+                      ? 'Play bundled Team pressure test (does not include draft edits) · team-pressure-originals-1 (new tab)'
+                      : edition === 'team-depot-spatial-1'
+                        ? 'Play bundled depot-lane test (does not include draft edits) · team-depot-spatial-1 (new tab)'
+                        : edition === 'team-window-spatial-1'
+                          ? 'Play bundled outer-pocket test (does not include draft edits) · team-window-spatial-1 (new tab)'
+                          : 'Play bundled Shared windows test (does not include draft edits) · team-timed-originals (new tab)',
       );
     } else if (edition) {
       const mode = href.includes('/couch/') ? 'Versus' : 'Solo';

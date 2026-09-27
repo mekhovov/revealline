@@ -1457,6 +1457,17 @@ dialog .eyebrow {
   }
 }
 
+/* The in-game Reduced effects switch must provide the same DOM-motion contract
+   as the operating-system preference. Canvas feedback remains governed by the
+   renderer so essential trail, impact and danger state stays visible. */
+body[data-effects='reduced'] *,
+body[data-effects='reduced'] *::before,
+body[data-effects='reduced'] *::after {
+  scroll-behavior: auto !important;
+  transition: none !important;
+  animation: none !important;
+}
+
 /* Keep held touch controls independent from page scrolling. */
 .direction-controls button,
 #boost-button {

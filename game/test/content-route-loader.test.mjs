@@ -39,6 +39,28 @@ const golden = {
   'whole-spatial-v9': [257778, '80d2406bece474a0dc169e9d8ea31b473d04d68144e8df6dd4eff41c7850e27a'],
   'whole-spatial-v10': [258783, '04b2c25e1e6bbbf8890b89a6661ec80fadac53f280ae2ae2caf77fd3de3ed4fc'],
   'whole-spatial-v11': [259575, '3d7b5b67d5d78a3f25a8108468385f9a6f1b2520fc12b275bcc3bf952ae0d978'],
+  'whole-spatial-v12': [260606, '93ff983369b33f0b0cf005ddd3e3112475c8af6ac5d3d43ef1bdbe49e9df2325'],
+  'whole-spatial-v13': [261539, 'dbad0867d7642b78fe46d8eb1b1bf13d367d433248b673b0f00933fdc79491c2'],
+  'whole-spatial-v14': [262645, 'a5fa79c0174104525174559a7701c6241c747b2df3d8fc1f99484cfbca8312ef'],
+  'whole-spatial-v15': [263597, 'bd832d139178a8e82dbb8eea68aca94ee2e1b395897bcf6818af1cbb7966c6c9'],
+  'whole-spatial-v16': [264185, 'cb4761bfb1b528c0264de5b44ab9bb1e05b7d1b9bff752ba50828fbd1b650b8e'],
+  'whole-spatial-v17': [265782, '615510f0643bc972817bdf0d285a00bc6986a3bfb04667754393dc509929b0ea'],
+  'whole-spatial-v18': [267605, '2eef985ba79babbac1a1b761f039dd6678bd447fbd02c18eb28367d20a5fdedb'],
+  'whole-spatial-v19': [269126, 'd0e631a5b8551d422ee6b3d5a2476aa25bdf38b824bdd86def06312f0c10658e'],
+  'whole-spatial-v20': [270352, '505b52ec7be45d06c71ccbfdaa6ab23a962dc6777d147c619cd0d0e6b33abe1d'],
+  'whole-spatial-v21': [271337, '45eff01ef344cb77700977c7135a265e9e0c7c2c7ff1e7f3366644c8517473b8'],
+  'whole-spatial-v22': [273373, '4268a186d8565460ee8efc5566f0571d8150ec4d665380fbe329fdbd214b4072'],
+  'whole-spatial-v23': [275331, '3b006b71af58209831aa9973dad88d47405188d0c8f28bad74d0ec03bd52a660'],
+  'whole-spatial-v24': [276540, '54af78a72743cfb23ae5c9d091aec92e9f4a63a588aacd81953949c2ad4d5385'],
+  'whole-spatial-v25': [277154, '26cafd633827012c3c8729329bb2fad0c3feedd2637c2e257bf50d8e123585e7'],
+  'whole-spatial-v26': [279214, '6ff6965830e88fde5f8b4093b613b4221e8be1dbed12e08533f12224a4d2253f'],
+  'whole-spatial-v27': [280620, '495b6a7263c5909c24bec10d706359fa2035d4dfff247b271135774f729af9b7'],
+  'whole-spatial-v28': [282309, '7f71aa07c97da8c086c50b89193b9f20476dd27d1d4ae719891f809bcf99af10'],
+  'whole-spatial-v29': [283404, '8fa6e5368dfa0d8e7e445b19f7b70330a6f805f87e835a386cb912faedb2d32e'],
+  'whole-spatial-v30': [284976, '17f22561e47659fc98585f304986585319de08ce576892faff656f4114515751'],
+  'whole-spatial-v31': [285792, 'bf4941592c74c3ccd99522fd00c6636703aa69c8b64fe8d3a08cf513eef613e6'],
+  'whole-spatial-v32': [286785, 'c139f8caff19b46be2783216a48ca9879b540435af11a24a2e9d3ea32ec2f827'],
+  'whole-spatial-v33': [288134, '4382995ba242ed867efaa303abb01679170ab09c9811bae0a4676b4d1a56f245'],
   'whole-ornament-v1': [260665, '3b29bc220cdb06a33fedefabb6adec9527bd10902a9dd44899270e885ddfc4ad'],
   'whole-ornament-v2': [266314, '3f0116efe9cb9b2e134fb60dd252ac5bfbd44758a993e18a56abb2131ca10a1b'],
 };
@@ -151,6 +173,296 @@ test('Horizon successor imports only its bounded successor chain', () => {
   assert(!has(result, 'horizon-candidates.mjs'));
 });
 
+test('Border successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v12');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v12' });
+  assert(has(result, 'border-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'horizon-next-batch-candidates.mjs'));
+  assert(has(result, 'spatial-next-batch-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Border and Signal successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v13');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v13' });
+  assert(has(result, 'border-signal-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'border-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'horizon-next-batch-candidates.mjs'));
+  assert(has(result, 'spatial-next-batch-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Early cultural successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v14');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v14' });
+  assert(has(result, 'early-cultural-routes-candidates.mjs'));
+  assert(has(result, 'border-signal-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'border-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'horizon-next-batch-candidates.mjs'));
+  assert(has(result, 'spatial-next-batch-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Signal cultural successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v15');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v15' });
+  assert(has(result, 'signal-cultural-routes-candidates.mjs'));
+  assert(has(result, 'early-cultural-routes-candidates.mjs'));
+  assert(has(result, 'border-signal-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'border-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'horizon-next-batch-candidates.mjs'));
+  assert(has(result, 'spatial-next-batch-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Neon cultural successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v16');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v16' });
+  assert(has(result, 'neon-cultural-routes-candidates.mjs'));
+  assert(has(result, 'signal-cultural-routes-candidates.mjs'));
+  assert(has(result, 'early-cultural-routes-candidates.mjs'));
+  assert(has(result, 'border-signal-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'border-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'horizon-next-batch-candidates.mjs'));
+  assert(has(result, 'spatial-next-batch-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Neon cultural finale imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v17');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v17' });
+  assert(has(result, 'neon-cultural-routes-finale-candidates.mjs'));
+  assert(has(result, 'neon-cultural-routes-candidates.mjs'));
+  assert(has(result, 'signal-cultural-routes-candidates.mjs'));
+  assert(has(result, 'early-cultural-routes-candidates.mjs'));
+  assert(has(result, 'border-signal-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'border-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'horizon-next-batch-candidates.mjs'));
+  assert(has(result, 'spatial-next-batch-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Rover cultural successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v18');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v18' });
+  assert(has(result, 'rover-cultural-routes-candidates.mjs'));
+  assert(has(result, 'neon-cultural-routes-finale-candidates.mjs'));
+  assert(has(result, 'neon-cultural-routes-candidates.mjs'));
+  assert(has(result, 'signal-cultural-routes-candidates.mjs'));
+  assert(has(result, 'early-cultural-routes-candidates.mjs'));
+  assert(has(result, 'border-signal-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'border-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'horizon-next-batch-candidates.mjs'));
+  assert(has(result, 'spatial-next-batch-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Fractured Grid cultural successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v19');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v19' });
+  assert(has(result, 'fracture-cultural-routes-candidates.mjs'));
+  assert(has(result, 'rover-cultural-routes-candidates.mjs'));
+  assert(has(result, 'neon-cultural-routes-finale-candidates.mjs'));
+  assert(has(result, 'neon-cultural-routes-candidates.mjs'));
+  assert(has(result, 'signal-cultural-routes-candidates.mjs'));
+  assert(has(result, 'early-cultural-routes-candidates.mjs'));
+  assert(has(result, 'border-signal-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'border-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'horizon-next-batch-candidates.mjs'));
+  assert(has(result, 'spatial-next-batch-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Phaseworks cultural successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v20');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v20' });
+  assert(has(result, 'phaseworks-cultural-routes-candidates.mjs'));
+  assert(has(result, 'fracture-cultural-routes-candidates.mjs'));
+  assert(has(result, 'rover-cultural-routes-candidates.mjs'));
+  assert(has(result, 'neon-cultural-routes-finale-candidates.mjs'));
+  assert(has(result, 'neon-cultural-routes-candidates.mjs'));
+  assert(has(result, 'signal-cultural-routes-candidates.mjs'));
+  assert(has(result, 'early-cultural-routes-candidates.mjs'));
+  assert(has(result, 'border-signal-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'border-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'horizon-next-batch-candidates.mjs'));
+  assert(has(result, 'spatial-next-batch-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Livewire cultural successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v21');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v21' });
+  assert(has(result, 'livewire-cultural-routes-candidates.mjs'));
+  assert(has(result, 'phaseworks-cultural-routes-candidates.mjs'));
+  assert(has(result, 'fracture-cultural-routes-candidates.mjs'));
+  assert(has(result, 'rover-cultural-routes-candidates.mjs'));
+  assert(has(result, 'neon-cultural-routes-finale-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Relay cultural successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v22');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v22' });
+  assert(has(result, 'relay-cultural-routes-candidates.mjs'));
+  assert(has(result, 'livewire-cultural-routes-candidates.mjs'));
+  assert(has(result, 'phaseworks-cultural-routes-candidates.mjs'));
+  assert(has(result, 'fracture-cultural-routes-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Crosswind cultural successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v23');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v23' });
+  assert(has(result, 'crosswind-cultural-routes-candidates.mjs'));
+  assert(has(result, 'relay-cultural-routes-candidates.mjs'));
+  assert(has(result, 'livewire-cultural-routes-candidates.mjs'));
+  assert(has(result, 'phaseworks-cultural-routes-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Sentinel cultural successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v24');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v24' });
+  assert(has(result, 'sentinel-cultural-routes-candidates.mjs'));
+  assert(has(result, 'crosswind-cultural-routes-candidates.mjs'));
+  assert(has(result, 'relay-cultural-routes-candidates.mjs'));
+  assert(has(result, 'livewire-cultural-routes-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Apex cultural successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v25');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v25' });
+  assert(has(result, 'apex-cultural-routes-candidates.mjs'));
+  assert(has(result, 'sentinel-cultural-routes-candidates.mjs'));
+  assert(has(result, 'crosswind-cultural-routes-candidates.mjs'));
+  assert(has(result, 'relay-cultural-routes-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Relay cultural completion imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v26');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v26' });
+  assert(has(result, 'relay-cultural-completion-candidates.mjs'));
+  assert(has(result, 'apex-cultural-routes-candidates.mjs'));
+  assert(has(result, 'relay-cultural-routes-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Crosswind cultural completion imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v27');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v27' });
+  assert(has(result, 'crosswind-cultural-completion-candidates.mjs'));
+  assert(has(result, 'relay-cultural-completion-candidates.mjs'));
+  assert(has(result, 'apex-cultural-routes-candidates.mjs'));
+  assert(has(result, 'crosswind-cultural-routes-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Fracture and Apex cultural completion imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v28');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v28' });
+  assert(has(result, 'fracture-apex-cultural-completion-candidates.mjs'));
+  assert(has(result, 'crosswind-cultural-completion-candidates.mjs'));
+  assert(has(result, 'relay-cultural-completion-candidates.mjs'));
+  assert(has(result, 'apex-cultural-routes-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Neon cultural completion imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v29');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v29' });
+  assert(has(result, 'neon-cultural-completion-candidates.mjs'));
+  assert(has(result, 'fracture-apex-cultural-completion-candidates.mjs'));
+  assert(has(result, 'crosswind-cultural-completion-candidates.mjs'));
+  assert(has(result, 'relay-cultural-completion-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Rover cultural completion imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v30');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v30' });
+  assert(has(result, 'rover-cultural-completion-candidates.mjs'));
+  assert(has(result, 'journey-rover-spatial-pair.mjs'));
+  assert(has(result, 'neon-cultural-completion-candidates.mjs'));
+  assert(has(result, 'fracture-apex-cultural-completion-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Border cultural completion imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v31');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v31' });
+  assert(has(result, 'border-cultural-completion-candidates.mjs'));
+  assert(has(result, 'rover-cultural-completion-candidates.mjs'));
+  assert(has(result, 'neon-cultural-completion-candidates.mjs'));
+  assert(has(result, 'border-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Border frontier and pocket completion imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v32');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v32' });
+  assert(has(result, 'border-frontier-pocket-candidates.mjs'));
+  assert(has(result, 'border-cultural-completion-candidates.mjs'));
+  assert(has(result, 'border-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'spatial-next-batch-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
+test('Cultural timed pressure imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v33');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v33' });
+  assert(has(result, 'cultural-timed-bonus-pressure-candidates.mjs'));
+  assert(has(result, 'border-frontier-pocket-candidates.mjs'));
+  assert(has(result, 'border-cultural-completion-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
 test('ornament editions import only their bounded opt-in source chain', () => {
   const study = routeProbe('whole-ornament-v1');
   assert.deepEqual(study.output, { id: 'whole-ornament-v1' });
@@ -202,6 +514,28 @@ test('all literal lazy imports and shared modules are in the actual game build i
   const source = await readFile(new URL(loaderURL), 'utf8');
   const imports = [...source.matchAll(/import\('(.+?)'\)/g)].map((m) => m[1]);
   assert.deepEqual(imports, [
+    './cultural-timed-bonus-pressure-candidates.mjs',
+    './border-frontier-pocket-candidates.mjs',
+    './border-cultural-completion-candidates.mjs',
+    './rover-cultural-completion-candidates.mjs',
+    './neon-cultural-completion-candidates.mjs',
+    './fracture-apex-cultural-completion-candidates.mjs',
+    './crosswind-cultural-completion-candidates.mjs',
+    './relay-cultural-completion-candidates.mjs',
+    './apex-cultural-routes-candidates.mjs',
+    './sentinel-cultural-routes-candidates.mjs',
+    './crosswind-cultural-routes-candidates.mjs',
+    './relay-cultural-routes-candidates.mjs',
+    './livewire-cultural-routes-candidates.mjs',
+    './phaseworks-cultural-routes-candidates.mjs',
+    './fracture-cultural-routes-candidates.mjs',
+    './rover-cultural-routes-candidates.mjs',
+    './neon-cultural-routes-finale-candidates.mjs',
+    './neon-cultural-routes-candidates.mjs',
+    './signal-cultural-routes-candidates.mjs',
+    './early-cultural-routes-candidates.mjs',
+    './border-signal-cultural-next-batch-candidates.mjs',
+    './border-cultural-next-batch-candidates.mjs',
     './ukrainian-ornament-atlas.mjs',
     './ukrainian-ornament-candidates.mjs',
     './horizon-next-batch-candidates.mjs',

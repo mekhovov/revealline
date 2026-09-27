@@ -7,7 +7,51 @@ import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 export async function loadAuthoredJourneyRoute(id) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   let factories;
-  if (id === 'whole-ornament-v2') {
+  if (id === 'whole-spatial-v33') {
+    factories = await import('./cultural-timed-bonus-pressure-candidates.mjs');
+  } else if (id === 'whole-spatial-v32') {
+    factories = await import('./border-frontier-pocket-candidates.mjs');
+  } else if (id === 'whole-spatial-v31') {
+    factories = await import('./border-cultural-completion-candidates.mjs');
+  } else if (id === 'whole-spatial-v30') {
+    factories = await import('./rover-cultural-completion-candidates.mjs');
+  } else if (id === 'whole-spatial-v29') {
+    factories = await import('./neon-cultural-completion-candidates.mjs');
+  } else if (id === 'whole-spatial-v28') {
+    factories = await import('./fracture-apex-cultural-completion-candidates.mjs');
+  } else if (id === 'whole-spatial-v27') {
+    factories = await import('./crosswind-cultural-completion-candidates.mjs');
+  } else if (id === 'whole-spatial-v26') {
+    factories = await import('./relay-cultural-completion-candidates.mjs');
+  } else if (id === 'whole-spatial-v25') {
+    factories = await import('./apex-cultural-routes-candidates.mjs');
+  } else if (id === 'whole-spatial-v24') {
+    factories = await import('./sentinel-cultural-routes-candidates.mjs');
+  } else if (id === 'whole-spatial-v23') {
+    factories = await import('./crosswind-cultural-routes-candidates.mjs');
+  } else if (id === 'whole-spatial-v22') {
+    factories = await import('./relay-cultural-routes-candidates.mjs');
+  } else if (id === 'whole-spatial-v21') {
+    factories = await import('./livewire-cultural-routes-candidates.mjs');
+  } else if (id === 'whole-spatial-v20') {
+    factories = await import('./phaseworks-cultural-routes-candidates.mjs');
+  } else if (id === 'whole-spatial-v19') {
+    factories = await import('./fracture-cultural-routes-candidates.mjs');
+  } else if (id === 'whole-spatial-v18') {
+    factories = await import('./rover-cultural-routes-candidates.mjs');
+  } else if (id === 'whole-spatial-v17') {
+    factories = await import('./neon-cultural-routes-finale-candidates.mjs');
+  } else if (id === 'whole-spatial-v16') {
+    factories = await import('./neon-cultural-routes-candidates.mjs');
+  } else if (id === 'whole-spatial-v15') {
+    factories = await import('./signal-cultural-routes-candidates.mjs');
+  } else if (id === 'whole-spatial-v14') {
+    factories = await import('./early-cultural-routes-candidates.mjs');
+  } else if (id === 'whole-spatial-v13') {
+    factories = await import('./border-signal-cultural-next-batch-candidates.mjs');
+  } else if (id === 'whole-spatial-v12') {
+    factories = await import('./border-cultural-next-batch-candidates.mjs');
+  } else if (id === 'whole-ornament-v2') {
     factories = await import('./ukrainian-ornament-atlas.mjs');
   } else if (id === 'whole-ornament-v1') {
     factories = await import('./ukrainian-ornament-candidates.mjs');

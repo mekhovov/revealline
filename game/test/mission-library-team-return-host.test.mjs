@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { createHash, webcrypto } from 'node:crypto';
 import { page } from './helpers/coop-host.mjs';
 import { waitFor } from './helpers/coop-presentation-fixture.mjs';
-import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
+import { createTeamCulturalSpecialistV2OriginalCandidates } from '../content-design/team-cultural-specialist-v2-originals.mjs';
 import { createRemoteTeamLibrarySources } from '../mission-library/remote-team.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { missionLibraryHref } from '../mission-library/handoff.mjs';
@@ -12,7 +12,7 @@ import { createModeReturn } from '../mode-return.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 
 const root = 'http://localhost/releases/v-test/game/';
-const source = createTeamSpatialOriginalCandidates();
+const source = createTeamCulturalSpecialistV2OriginalCandidates();
 const library = createMissionLibrary(createRemoteTeamLibrarySources({ launch: () => true }));
 const originals = new Map(
   await Promise.all(
@@ -48,7 +48,7 @@ function href(mode, journey, collection, returnToken) {
     baseURL: mode === 'solo' ? root : root + 'couch/',
     currentMode: mode,
     mode: 'team',
-    journey: collection === 'Journey' ? 'team-trail-impact-originals-1' : 'legacy',
+    journey: collection === 'Journey' ? 'team-cultural-specialist-originals-2' : 'legacy',
     sourceJourney: journey,
     missionId: target(collection).id,
     returnToken,
@@ -173,6 +173,9 @@ for (const route of [
   'legacy',
   'team-spatial-originals-1',
   'team-trail-impact-originals-1',
+  'team-complete-specialist-originals-1',
+  'team-cultural-specialist-originals-1',
+  'team-cultural-specialist-originals-2',
   'team-greybox',
 ])
   test(`outgoing Team ${route} mission handoff preserves its exact finite source route`, async (t) => {
@@ -212,14 +215,14 @@ for (const route of [
     }
     assert.equal(pending.length, 1, 'Mode selection owns one remote metadata operation.');
     await pending[0];
-    assert.equal(f.$('journey-cards').children.length, 201);
+    assert.equal(f.$('journey-cards').children.length, 327);
     const selected = f.$('journey-cards').children[8];
     selected.focus();
     f.tap('Enter');
     await waitFor(() => f.visits.length === 1);
     const destination = new URL(f.visits[0]);
     assert.equal(destination.pathname, '/releases/v-test/game/');
-    assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v6');
+    assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v25');
     assert.equal(destination.searchParams.get('library-mission'), selected.dataset.missionId);
     assert.equal(destination.searchParams.get('return'), 'team');
     assert.equal(destination.searchParams.get('journey-return'), route);
