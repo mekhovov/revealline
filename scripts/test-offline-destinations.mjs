@@ -2,13 +2,20 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { buildOfflineDestinations, buildNavigationBootstraps } from './offline-destinations.mjs';
+import { CULTURAL_TEAM_OFFLINE_PROJECT_FACTORIES } from './offline-content.mjs';
+import { DEFAULT_JOURNEY_ROUTES } from '../game/content-design/default-entry.mjs';
+import { classifyContent } from '../game/content-design/content-lifecycle.mjs';
 import { AUTHORED_JOURNEY_ROUTE_IDS } from '../game/content-design/mode-href.mjs';
 import { loadAuthoredJourneyRoute } from '../game/content-design/route-loader.mjs';
 import { createTeamImpactOriginalCandidates } from '../game/content-design/team-impact-originals.mjs';
+import { createTeamCulturalSpecialistOriginalCandidates } from '../game/content-design/team-cultural-specialist-originals.mjs';
+import { createTeamCulturalSpecialistV2OriginalCandidates } from '../game/content-design/team-cultural-specialist-v2-originals.mjs';
 import { journeyMissionId } from '../game/journey/catalog.mjs';
 import { libraryMissionId } from '../game/mission-library/library.mjs';
 
 const route = await loadAuthoredJourneyRoute('whole-spatial-v11');
+const culturalTeamV1 = createTeamCulturalSpecialistOriginalCandidates({ artwork: true });
+const culturalTeamV2 = createTeamCulturalSpecialistV2OriginalCandidates({ artwork: true });
 const classicIndex = JSON.parse(
   await readFile(new URL('../game/content/mission-library-index.json', import.meta.url)),
 );
@@ -19,6 +26,8 @@ const destinations = buildOfflineDestinations({
       routeId: 'team-trail-impact-originals-1',
       source: createTeamImpactOriginalCandidates({ artwork: true }),
     },
+    { routeId: 'team-cultural-specialist-originals-1', source: culturalTeamV1 },
+    { routeId: DEFAULT_JOURNEY_ROUTES.team, source: culturalTeamV2 },
   ],
   classicIndex,
   arenas: {
@@ -44,6 +53,60 @@ test('every destination uses one complete approval group and explicit runtime de
     defaults.find((item) => item.mode === 'team' && item.routeId === 'legacy').groups,
     ['runtime:team'],
   );
+});
+
+function assertTeamDestination(routeId, teamSource, classification) {
+  assert.equal(classifyContent({ family: 'team', id: routeId }), classification);
+  const pack = teamSource.packs[0],
+    campaign = teamSource.campaigns.find((item) => pack.campaignIds.includes(item.id)),
+    mission = journeyMissionId({
+      source: 'candidate',
+      packId: pack.id,
+      campaignId: campaign.id,
+      levelId: campaign.missionIds[0],
+    }),
+    libraryId = libraryMissionId({
+      owner: 'journey:' + routeId,
+      edition: routeId,
+      campaign: JSON.stringify(['candidate', pack.id, campaign.id]),
+      mission,
+    }),
+    group = classification === 'current' ? 'team:' + pack.id : 'archive:team:' + routeId,
+    root = destinations.find(
+      (item) => item.mode === 'team' && item.routeId === routeId && !item.libraryId,
+    ),
+    selected = destinations.find(
+      (item) => item.mode === 'team' && item.routeId === routeId && item.libraryId === libraryId,
+    );
+  for (const item of [root, selected]) {
+    assert(item);
+    assert.equal(item.path, 'game/couch/relay-rescue.html');
+    assert.deepEqual(item.groups, [group]);
+    assert.deepEqual(item.runtimeGroups, ['runtime:team']);
+  }
+}
+
+test('Team lifecycle keeps cultural-v2 current and superseded editions archived', () => {
+  assert.equal(DEFAULT_JOURNEY_ROUTES.team, 'team-cultural-specialist-originals-2');
+  assert.deepEqual(CULTURAL_TEAM_OFFLINE_PROJECT_FACTORIES, [
+    [
+      'team-cultural-specialist-originals',
+      'createTeamCulturalSpecialistOriginalCandidates',
+      'team-cultural-specialist-originals-1',
+    ],
+    [
+      'team-cultural-specialist-v2-originals',
+      'createTeamCulturalSpecialistV2OriginalCandidates',
+      DEFAULT_JOURNEY_ROUTES.team,
+    ],
+  ]);
+  assertTeamDestination(
+    'team-trail-impact-originals-1',
+    createTeamImpactOriginalCandidates({ artwork: true }),
+    'archived',
+  );
+  assertTeamDestination('team-cultural-specialist-originals-1', culturalTeamV1, 'archived');
+  assertTeamDestination(DEFAULT_JOURNEY_ROUTES.team, culturalTeamV2, 'current');
 });
 
 test('authored destination selection keeps exact opaque owner IDs', () => {

@@ -20,6 +20,21 @@ for (const [key, value] of Object.entries(contentMessages)) {
 }
 const contentTitleKey = (title) => contentKeysByEnglish.get(title) || undefined;
 
+export const CULTURAL_TEAM_OFFLINE_PROJECT_FACTORIES = Object.freeze(
+  [
+    [
+      'team-cultural-specialist-originals',
+      'createTeamCulturalSpecialistOriginalCandidates',
+      'team-cultural-specialist-originals-1',
+    ],
+    [
+      'team-cultural-specialist-v2-originals',
+      'createTeamCulturalSpecialistV2OriginalCandidates',
+      'team-cultural-specialist-originals-2',
+    ],
+  ].map(Object.freeze),
+);
+
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 /** Built from the exact frozen bytes, never a second, independently maintained asset list. */
 export async function buildOfflineContent(entries, excluded, version) {
@@ -169,6 +184,7 @@ export async function buildOfflineContent(entries, excluded, version) {
         'createTeamCompleteSpecialistOriginalCandidates',
         'team-complete-specialist-originals-1',
       ],
+      ...CULTURAL_TEAM_OFFLINE_PROJECT_FACTORIES,
       ['team-timed-originals', 'createTeamTimedOriginalCandidates', 'team-timed-originals'],
       [
         'team-window-spatial-candidates',
