@@ -2,6 +2,7 @@ import { applyFieldKitCopy } from './field-kit-copy.mjs';
 import { attachSettingsPanels } from './settings-panels.mjs';
 import { createMenuStylePreferences } from '../menu-style-preferences.mjs';
 import { createMenuAppearance } from './menu-appearance.mjs';
+import { hasEditionToolRequest } from './edition-tool-provider.mjs';
 
 /** Presentation navigation only. Original host controls own preferences and saves. */
 export function attachFieldKitSurfaces({
@@ -31,7 +32,11 @@ export function attachFieldKitSurfaces({
   const hasNativeSkinOwner = ['menu-palette', 'race-menu-palette', 'coop-menu-palette'].some((id) =>
     doc.getElementById(id),
   );
-  if (doc.body?.dataset.fieldKitPage && !hasNativeSkinOwner) {
+  if (
+    doc.body?.dataset.fieldKitPage &&
+    !hasNativeSkinOwner &&
+    !hasEditionToolRequest({ document: doc, window: win })
+  ) {
     const appearance = createMenuAppearance({ document: doc }),
       preferences = createMenuStylePreferences({ window: win, getStorage }),
       stopAppearance = preferences.subscribe((state) => appearance.set(state));

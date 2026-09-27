@@ -5025,5 +5025,8 @@
   "startCueGo": "РУШ",
   "nextMissionNamed": "Далі: {{mission}}",
   "nextCampaignNamed": "Наступна кампанія: {{campaign}}",
+  "soloDeparture.artwork": "Відкриється «{{destination}}» для цього самого видання. Ваш прогрес залишається спільним. Після повернення політ не продовжиться автоматично.",
+  "soloDeparture.currentArtwork": "Поточне оформлення",
+  "soloDeparture.retainedArtwork": "Збережене оригінальне оформлення",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }

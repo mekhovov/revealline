@@ -4919,5 +4919,8 @@
   "startCueGo": "GO",
   "nextMissionNamed": "Next: {{mission}}",
   "nextCampaignNamed": "Next campaign: {{campaign}}",
+  "soloDeparture.artwork": "This opens {{destination}} for the same edition. Your mission progress stays shared. Returning does not resume a flight automatically.",
+  "soloDeparture.currentArtwork": "Current artwork",
+  "soloDeparture.retainedArtwork": "Retained original artwork",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }

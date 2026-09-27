@@ -196,6 +196,29 @@ test('support-skin CSS owns chrome tokens but never canvas, board geometry or hi
   assert.doesNotMatch(skin, /\bcanvas\b|display:\s*none|visibility:\s*hidden|pointer-events/);
 });
 
+test('edition tool chrome cannot be replaced by a saved default-game palette', () => {
+  for (const compiled of [false, true]) {
+    const doc = new Document();
+    doc.body.dataset.fieldKitPage = 'controller';
+    if (compiled) doc.documentElement.dataset.editionId = 'selected-public';
+    const win = {
+      location: {
+        href: `https://example.test/game/controller-lab/${compiled ? '' : '?edition=selected-public'}`,
+      },
+    };
+    const owner = attachFieldKitSurfaces({
+      document: doc,
+      window: win,
+      getStorage: () => {
+        throw new Error('Edition tool must not read the default cosmetic profile.');
+      },
+    });
+    assert.equal(doc.body.dataset.menuPalette, undefined);
+    assert.equal(doc.body.dataset.menuOrnaments, undefined);
+    owner.destroy();
+  }
+});
+
 test('surface copy supports regional locales and preserves native controls', () => {
   assert.equal(fieldKitCopy('settings.display', 'en-GB'), 'Appearance & accessibility');
   assert.equal(fieldKitCopy('settings.display', 'uk-UA'), 'Оформлення й доступність');

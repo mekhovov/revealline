@@ -123,10 +123,20 @@ async function journeyContext(envelope, options) {
     fetchAsset: (path, request) =>
       options.fetcher(new URL(`game/content-design/${path}`, appRoot).href, request),
   };
-  const route = await loadAuthoredJourneyRoute(
-    envelope.actorAppearancePin.content.editionId,
-    snapshotOptions,
-  );
+  const authored = envelope.actorAppearancePin.authoredPresentationSha256 ? options.authored : null;
+  if (envelope.actorAppearancePin.authoredPresentationSha256)
+    required(
+      authored?.editionId === envelope.actorAppearancePin.content.editionId &&
+        authored.authoredPresentationSha256 ===
+          envelope.actorAppearancePin.authoredPresentationSha256,
+      'This recording needs its exact earlier edition artwork and actor recipes. Open the matching release; the recording has not been changed.',
+    );
+  const route = authored
+    ? authored.route
+    : await loadAuthoredJourneyRoute(
+        envelope.actorAppearancePin.content.editionId,
+        snapshotOptions,
+      );
   abort(options.signal);
   required(route, unavailable);
   const descriptor = route.navigation?.chapters.find(
@@ -137,17 +147,21 @@ async function journeyContext(envelope, options) {
       descriptor && descriptor.packId === envelope.actorAppearancePin.content.owner.packId,
       unavailable,
     );
-  const source = descriptor
-    ? await loadPublishedChapter(route, descriptor, snapshotOptions)
-    : route.source;
+  const source =
+    !authored && descriptor
+      ? await loadPublishedChapter(route, descriptor, snapshotOptions)
+      : route.source;
   abort(options.signal);
-  const themes = await readJSON('game/content-design/themes.json', 262144, options);
+  const themes = authored
+    ? { themes: authored.themes }
+    : await readJSON('game/content-design/themes.json', 262144, options);
   const host = createCandidateSoloHost(source, {
-    themes: authoredJourneyUsesActorMaterials(route.id)
-      ? journeyActorThemeCandidates(themes.themes, {
-          includeOriginals: route.preserveOriginalThemes === true,
-        })
-      : themes.themes,
+    themes:
+      !authored && authoredJourneyUsesActorMaterials(route.id)
+        ? journeyActorThemeCandidates(themes.themes, {
+            includeOriginals: route.preserveOriginalThemes === true,
+          })
+        : themes.themes,
     corePackIds: descriptor ? [descriptor.packId] : route.corePackIds,
     optionalCampaignIds: descriptor ? [] : route.optionalCampaignIds,
   });
@@ -168,6 +182,12 @@ async function journeyContext(envelope, options) {
     });
     return {
       scope: 'journey',
+      ...(authored
+        ? {
+            authoredPresentationSha256: authored.authoredPresentationSha256,
+            authoredBackground: manifest.background,
+          }
+        : {}),
       content: await adapter.prepareHostSelection(
         {
           host,
@@ -267,11 +287,14 @@ async function classicContext(envelope, options) {
  * readiness. Uploaded identities only select among code-owned sources. No
  * local Custom pack, latest preference or uploaded URL participates in trust.
  */
-export async function prepareReplayActorContext(source, { signal, fetcher = fetch } = {}) {
+export async function prepareReplayActorContext(
+  source,
+  { signal, fetcher = fetch, authored } = {},
+) {
   const envelope = snapshotReplayPresentation(source);
   abort(signal);
   required(typeof fetcher === 'function', 'Replay owner resolution requires a transport.');
-  const options = { signal, fetcher };
+  const options = { signal, fetcher, authored };
   const owner = envelope.actorAppearancePin.content.owner;
   required(['journey', 'campaign'].includes(owner.kind), 'This replay owner is not supported.');
   const result = await (owner.kind === 'journey'

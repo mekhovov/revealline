@@ -1,4 +1,5 @@
 import { versionParts, compare, targetVersion, sourceFor } from './profile-channel.mjs';
+import { profileWriterOwns } from './profile-writer.mjs';
 import {
   BACKUP_FORMAT,
   EXTERNAL_BACKUP_FORMAT,
@@ -59,7 +60,7 @@ async function fingerprintValue(value, digest) {
  * deliberately excluded. A saved flight can exist before the first profile
  * write, so discover both exact namespaces. No value reads or writes.
  */
-export function discoverProfileTransfers({ storage, currentVersion } = {}) {
+export function discoverProfileTransfers({ storage, currentVersion, editionId } = {}) {
   const current = targetVersion(currentVersion);
   required(storage && typeof storage.key === 'function', 'Storage key discovery is unavailable.');
   const length = storage.length;
@@ -73,7 +74,7 @@ export function discoverProfileTransfers({ storage, currentVersion } = {}) {
     required(key === null || typeof key === 'string', 'Storage key discovery failed.');
     const namespace = discoveryPrefixes.find((value) => key?.startsWith(value));
     if (!namespace || !key.endsWith(suffix)) continue;
-    const source = sourceFor(key.slice(namespace.length, -suffix.length), current);
+    const source = sourceFor(key.slice(namespace.length, -suffix.length), current, { editionId });
     if (!source) continue;
     sources.set(source.id, source);
     if (sources.size > TRANSFER_LIMITS.candidates) {
@@ -158,6 +159,8 @@ export async function prepareProfileTransfer(
     readAsset,
     lockManager,
     currentVersion,
+    editionId,
+    heldWriter,
     campaigns = [],
     resolveCampaign,
     expandCampaigns,
@@ -171,7 +174,7 @@ export async function prepareProfileTransfer(
     timeoutMs = TRANSFER_LIMITS.timeoutMs,
   } = {},
 ) {
-  const source = sourceFor(sourceId, targetVersion(currentVersion));
+  const source = sourceFor(sourceId, targetVersion(currentVersion), { editionId });
   required(source, 'Choose a recognized earlier release collection.');
   required(
     storage && typeof storage.getItem === 'function' && typeof readAsset === 'function',
@@ -191,14 +194,24 @@ export async function prepareProfileTransfer(
   // the held locks. No steal or queued lock request is used.
   const locked = (key, task) =>
     op.wait(() =>
-      lockManager.request(key, { mode: 'exclusive', ifAvailable: true }, async (lock) => {
-        op.check();
-        required(
-          lock,
-          `The ${source.version} collection is busy. Close its other game tabs before copying progress.`,
-        );
-        return task();
-      }),
+      key === source.writerKey && profileWriterOwns(heldWriter, key)
+        ? (async () => {
+            const result = await task();
+            op.check();
+            required(
+              profileWriterOwns(heldWriter, key),
+              'The edition saving lease was released during transfer.',
+            );
+            return result;
+          })()
+        : lockManager.request(key, { mode: 'exclusive', ifAvailable: true }, async (lock) => {
+            op.check();
+            required(
+              lock,
+              `The ${source.version} collection is busy. Close its other game tabs before copying progress.`,
+            );
+            return task();
+          }),
     );
   try {
     return await locked(source.writerKey, () =>

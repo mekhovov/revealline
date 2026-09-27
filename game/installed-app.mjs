@@ -1,3 +1,9 @@
+import {
+  editionIdFromLocation,
+  installedStateKey,
+  resolveEditionContext,
+} from './edition-context.mjs';
+import { profileWriterOwns } from './profile-writer.mjs';
 export const INSTALLED_STATE_KEY = 'revealline.installed-app.v1';
 export function installedAppURL(locationRef = globalThis.location) {
   const url = new URL(locationRef.href);
@@ -18,8 +24,11 @@ export function installedPresentation(
       windowRef?.matchMedia?.('(display-mode: fullscreen)').matches,
   );
 }
-export function readInstalledState(storage = globalThis.localStorage) {
-  const raw = storage.getItem(INSTALLED_STATE_KEY);
+export function readInstalledState(
+  storage = globalThis.localStorage,
+  { locationRef = globalThis.location, editionId = editionIdFromLocation(locationRef) } = {},
+) {
+  const raw = storage.getItem(installedStateKey(editionId));
   if (!raw) return { active: null, previous: null, pending: null };
   const value = JSON.parse(raw);
   if (!value || typeof value !== 'object')
@@ -29,6 +38,9 @@ export function readInstalledState(storage = globalThis.localStorage) {
 export function validateInstalledEdition(value, locationRef = globalThis.location) {
   const scope = new URL(value?.scope);
   const app = new URL(installedAppURL(locationRef));
+  const editionId = editionIdFromLocation(locationRef);
+  if (value.editionId !== undefined && value.editionId !== editionId)
+    throw new Error('The installed edition identity differs from this app.');
   if (
     !/^v?\d+\.\d+\.\d+$/.test(value.version) ||
     scope.origin !== app.origin ||
@@ -48,6 +60,7 @@ export function validateInstalledEdition(value, locationRef = globalThis.locatio
   )
     throw new Error('The installed edition is outside this app.');
   return {
+    ...(editionId === undefined ? {} : { editionId }),
     version: value.version,
     scope: scope.href,
     selection: value.selection || [],
@@ -60,15 +73,19 @@ export async function stageInstalledEdition(
 ) {
   const candidate = validateInstalledEdition(value, locationRef);
   storage.setItem(
-    INSTALLED_STATE_KEY,
-    JSON.stringify({ ...readInstalledState(storage), pending: candidate }),
+    installedStateKey(candidate.editionId),
+    JSON.stringify({
+      ...readInstalledState(storage, { editionId: candidate.editionId }),
+      pending: candidate,
+    }),
   );
   return candidate;
 }
-const profile = (version) => `revealline.library.release-${version}.v1`;
-async function fingerprint(version, storage, readAsset) {
-  const key = profile(version),
-    channel = `release-${version}`;
+const context = (value) =>
+  resolveEditionContext(typeof value === 'string' ? { version: value } : value);
+const profile = (value) => context(value).profileKey;
+async function fingerprint(value, storage, readAsset) {
+  const { profileKey: key, channel } = context(value);
   const values = [
     storage.getItem(key),
     storage.getItem(`revealline.suspended.${channel}.v1`),
@@ -90,9 +107,14 @@ async function fingerprint(version, storage, readAsset) {
 export async function reviewInstalledMigration(
   sourceVersion,
   targetVersion,
-  { storage = globalThis.localStorage, readAsset } = {},
+  {
+    storage = globalThis.localStorage,
+    readAsset,
+    locationRef = globalThis.location,
+    editionId = editionIdFromLocation(locationRef),
+  } = {},
 ) {
-  const state = readInstalledState(storage);
+  const state = readInstalledState(storage, { editionId });
   if (
     !state.active ||
     !state.pending ||
@@ -101,26 +123,39 @@ export async function reviewInstalledMigration(
   )
     return null;
   return {
+    ...(editionId === undefined ? {} : { editionId }),
     from: state.active.version,
     to: state.pending.version,
-    source: await fingerprint(state.active.version, storage, readAsset),
+    source: await fingerprint(state.active, storage, readAsset),
   };
 }
 export async function recordInstalledMigration(
   review,
-  { storage = globalThis.localStorage, readAsset } = {},
+  {
+    storage = globalThis.localStorage,
+    readAsset,
+    locationRef = globalThis.location,
+    editionId = editionIdFromLocation(locationRef),
+  } = {},
 ) {
   if (!review) return;
-  if (review.source !== (await fingerprint(review.from, storage, readAsset)))
+  if (review.editionId !== editionId)
+    throw new Error('Progress review belongs to another edition.');
+  if (
+    review.source !== (await fingerprint({ version: review.from, editionId }, storage, readAsset))
+  )
     throw new Error(
       'Earlier progress changed while copying. Review the transfer again before switching editions.',
     );
-  const state = readInstalledState(storage);
+  const state = readInstalledState(storage, { editionId });
   storage.setItem(
-    INSTALLED_STATE_KEY,
+    installedStateKey(editionId),
     JSON.stringify({
       ...state,
-      migration: { ...review, target: await fingerprint(review.to, storage, readAsset) },
+      migration: {
+        ...review,
+        target: await fingerprint({ version: review.to, editionId }, storage, readAsset),
+      },
     }),
   );
 }
@@ -133,107 +168,132 @@ export async function activateInstalledEdition(
     locks = globalThis.navigator?.locks,
     readAsset,
     restorePrevious = false,
-    // A trusted embedded host may already hold the exact branded profile lease.
-    // The host checks its safe menu boundary and lease; an iframe receives no lease.
+    heldWriter,
     ownsWriter = () => false,
   } = {},
 ) {
   const candidate = validateInstalledEdition(value, locationRef);
   if (!locks?.request || !readAsset)
     throw new Error('Safe edition switching needs Web Locks and profile storage.');
-  return locks.request('revealline.installed-app.switch', async () => {
-    const state = readInstalledState(storage),
-      active = state.active;
-    const borrowed = new Set();
-    const assertOwnership = () => {
-      for (const key of borrowed)
-        if (!ownsWriter(key))
+  const editionId = candidate.editionId;
+  const logicalWriterKey =
+    editionId === undefined ? null : `revealline.company.${editionId}.writer`;
+  const borrowed = logicalWriterKey && profileWriterOwns(heldWriter, logicalWriterKey);
+  const borrowedProfiles = new Set();
+  return locks.request(
+    editionId === undefined
+      ? 'revealline.installed-app.switch'
+      : `${installedStateKey(editionId)}.switch`,
+    async () => {
+      const state = readInstalledState(storage, { editionId }),
+        active = state.active;
+      const switchEdition = async () => {
+        for (const value of [active, candidate].filter(Boolean)) {
+          const key = profile(value);
+          if (
+            storage.getItem(`${key}.backup-lock`) ||
+            (await readAsset(`${key}.backup-journal`)) ||
+            (await readAsset(`${key}.external-chapter-journal.v1`))
+          )
+            throw new Error(
+              'Finish game-data recovery before switching editions. Your working edition is kept.',
+            );
+        }
+        if (restorePrevious && state.previous?.scope !== candidate.scope)
+          throw new Error('The previous edition changed. Open its download screen again.');
+        if (active && context(active).channel !== context(candidate).channel && !restorePrevious) {
+          const hasProgress =
+            storage.getItem(profile(active)) !== null ||
+            storage.getItem(context(active).sessionKey) !== null;
+          if (
+            hasProgress &&
+            (state.migration?.editionId !== editionId ||
+              state.migration?.from !== active.version ||
+              state.migration?.to !== candidate.version ||
+              state.migration.source !== (await fingerprint(active, storage, readAsset)) ||
+              storage.getItem(profile(candidate)) === null)
+          )
+            return {
+              activated: false,
+              message:
+                'Edition downloaded. Open this edition’s Game data → Flight library → Bring progress from an earlier release. Review and copy the previous edition there, then return here to switch. An incompatible saved flight or a busy profile leaves your working edition selected.',
+            };
+        }
+        if (borrowed && !profileWriterOwns(heldWriter, logicalWriterKey))
           throw new Error(
-            'The game stopped owning its save profile. Your working edition is kept.',
+            'The edition saving lease was released. Retry the installation selection.',
           );
-    };
-    const switchEdition = async () => {
-      for (const version of new Set([active?.version, candidate.version].filter(Boolean))) {
-        const key = profile(version);
-        if (
-          storage.getItem(`${key}.backup-lock`) ||
-          (await readAsset(`${key}.backup-journal`)) ||
-          (await readAsset(`${key}.external-chapter-journal.v1`))
-        )
-          throw new Error(
-            'Finish game-data recovery before switching editions. Your working edition is kept.',
-          );
-      }
-      if (restorePrevious && state.previous?.scope !== candidate.scope)
-        throw new Error('The previous edition changed. Open its download screen again.');
-      if (active && active.version !== candidate.version && !restorePrevious) {
-        const hasProgress =
-          storage.getItem(profile(active.version)) !== null ||
-          storage.getItem(`revealline.suspended.release-${active.version}.v1`) !== null;
-        if (
-          hasProgress &&
-          (state.migration?.from !== active.version ||
-            state.migration?.to !== candidate.version ||
-            state.migration.source !== (await fingerprint(active.version, storage, readAsset)) ||
-            storage.getItem(profile(candidate.version)) === null)
-        )
-          return {
-            activated: false,
-            message:
-              'Edition downloaded. Open this edition’s Game data → Flight library → Bring progress from an earlier release. Review and copy the previous edition there, then return here to switch. An incompatible saved flight or a busy profile leaves your working edition selected.',
-          };
-      }
-      assertOwnership();
-      storage.setItem(
-        INSTALLED_STATE_KEY,
-        JSON.stringify({
-          ...state,
-          active: candidate,
-          previous: active?.scope === candidate.scope ? state.previous : active,
-          pending: null,
-          migration: null,
-        }),
-      );
-      return {
-        activated: true,
-        message:
-          'This edition will open from the app icon at the next launch. Your previous edition and its progress are kept.',
+        for (const key of borrowedProfiles)
+          if (!ownsWriter(key))
+            throw new Error(
+              'The game stopped owning its save profile. Your working edition is kept.',
+            );
+        storage.setItem(
+          installedStateKey(editionId),
+          JSON.stringify({
+            ...state,
+            active: candidate,
+            previous: active?.scope === candidate.scope ? state.previous : active,
+            pending: null,
+            migration: null,
+          }),
+        );
+        return {
+          activated: true,
+          message:
+            'This edition will open from the app icon at the next launch. Your previous edition and its progress are kept.',
+        };
       };
-    };
-    const versions = [...new Set([active?.version, candidate.version].filter(Boolean))].sort();
-    const acquire = (index) => {
-      if (index === versions.length) return switchEdition();
-      const key = `${profile(versions[index])}.writer`;
-      if (ownsWriter(key)) {
-        borrowed.add(key);
-        return acquire(index + 1);
-      }
-      return locks.request(key, { ifAvailable: true }, (lock) => {
-        if (!lock)
-          throw new Error(
-            'Close the game window that owns this profile, then switch editions. No live game was reloaded.',
-          );
-        return acquire(index + 1);
-      });
-    };
-    return acquire(0);
-  });
+      const writerKeys = [
+        ...new Set([
+          ...[active, candidate].filter(Boolean).map((value) => `${profile(value)}.writer`),
+          ...(logicalWriterKey && !borrowed ? [logicalWriterKey] : []),
+        ]),
+      ].sort();
+      const acquire = (index) => {
+        if (index === writerKeys.length) return switchEdition();
+        const key = writerKeys[index];
+        if (key !== logicalWriterKey && ownsWriter(key)) {
+          borrowedProfiles.add(key);
+          return acquire(index + 1);
+        }
+        return locks.request(key, { ifAvailable: true }, (lock) => {
+          if (!lock)
+            throw new Error(
+              'Close the game window that owns this profile, then switch editions. No live game was reloaded.',
+            );
+          return acquire(index + 1);
+        });
+      };
+      return acquire(0);
+    },
+  );
 }
 
 export async function updateInstalledSelection(
   scope,
   selection,
-  { storage = globalThis.localStorage, locks = globalThis.navigator?.locks } = {},
+  {
+    storage = globalThis.localStorage,
+    locks = globalThis.navigator?.locks,
+    locationRef = globalThis.location,
+    editionId = editionIdFromLocation(locationRef),
+  } = {},
 ) {
   if (!locks?.request) throw new Error('Changing installed downloads requires Web Locks.');
-  await locks.request('revealline.installed-app.switch', async () => {
-    const state = readInstalledState(storage);
-    if (state.active?.scope === scope)
-      storage.setItem(
-        INSTALLED_STATE_KEY,
-        JSON.stringify({ ...state, active: { ...state.active, selection, allGameplay: false } }),
-      );
-  });
+  await locks.request(
+    editionId === undefined
+      ? 'revealline.installed-app.switch'
+      : `${installedStateKey(editionId)}.switch`,
+    async () => {
+      const state = readInstalledState(storage, { editionId });
+      if (state.active?.scope === scope)
+        storage.setItem(
+          installedStateKey(editionId),
+          JSON.stringify({ ...state, active: { ...state.active, selection, allGameplay: false } }),
+        );
+    },
+  );
 }
 
 /** Add explicitly prepared packages to future updates without switching editions
@@ -241,7 +301,13 @@ export async function updateInstalledSelection(
 export async function rememberInstalledPackages(
   scope,
   groups,
-  { storage = globalThis.localStorage, locks = globalThis.navigator?.locks, signal } = {},
+  {
+    storage = globalThis.localStorage,
+    locks = globalThis.navigator?.locks,
+    signal,
+    locationRef = globalThis.location,
+    editionId = editionIdFromLocation(locationRef),
+  } = {},
 ) {
   signal?.throwIfAborted();
   if (
@@ -252,25 +318,34 @@ export async function rememberInstalledPackages(
   )
     throw new Error('Remembering downloads requires exact package identities.');
   if (!locks?.request) throw new Error('Changing installed downloads requires Web Locks.');
-  return locks.request('revealline.installed-app.switch', { signal }, async () => {
-    signal?.throwIfAborted();
-    const state = readInstalledState(storage);
-    if (state.active?.scope !== scope) return false;
-    const selection = [...new Set([...(state.active.selection || []), ...groups])];
-    if (selection.length > 100)
-      throw new Error('The installed download selection exceeds its package limit.');
-    storage.setItem(
-      INSTALLED_STATE_KEY,
-      JSON.stringify({ ...state, active: { ...state.active, selection } }),
-    );
-    return true;
-  });
+  return locks.request(
+    editionId === undefined
+      ? 'revealline.installed-app.switch'
+      : installedStateKey(editionId) + '.switch',
+    { signal },
+    async () => {
+      signal?.throwIfAborted();
+      const state = readInstalledState(storage, { editionId });
+      if (state.active?.scope !== scope) return false;
+      const selection = [...new Set([...(state.active.selection || []), ...groups])];
+      if (selection.length > 100)
+        throw new Error('The installed download selection exceeds its package limit.');
+      storage.setItem(
+        installedStateKey(editionId),
+        JSON.stringify({ ...state, active: { ...state.active, selection } }),
+      );
+      return true;
+    },
+  );
 }
 
-export function invalidateInstalledMigration(storage = globalThis.localStorage) {
-  const state = readInstalledState(storage);
+export function invalidateInstalledMigration(
+  storage = globalThis.localStorage,
+  { locationRef = globalThis.location, editionId = editionIdFromLocation(locationRef) } = {},
+) {
+  const state = readInstalledState(storage, { editionId });
   if (state.migration)
-    storage.setItem(INSTALLED_STATE_KEY, JSON.stringify({ ...state, migration: null }));
+    storage.setItem(installedStateKey(editionId), JSON.stringify({ ...state, migration: null }));
 }
 
 let launcherRequest = 0;

@@ -1,5 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { editionAdmissionFixture } from './edition-fixture.mjs';
+import { EDITION_REVIEW_GATES } from './edition-promotion.mjs';
 
 import {
   RELEASE_ASSET_NAMES,
@@ -9,6 +13,7 @@ import {
   ensureDraftRelease,
   normalizeAssetDigest,
   publishExactRelease,
+  reconcileReleaseAssets,
 } from './fastline-release-publisher.mjs';
 
 const sourceSha = 'a'.repeat(40);
@@ -507,4 +512,274 @@ test('publishes only an exact complete draft and reuses an exact publication', a
     inspect,
   });
   assert.equal(second.published_at, '2026-09-26T00:00:00Z');
+});
+
+// Synthetic reviews exercise admission only; they assert no real human approval.
+function reviewedEditions(formatVersion = 1) {
+  const coreExpected = releaseAssetNames(formatVersion).map((name, index) => ({
+    ...expected[index],
+    name,
+  }));
+  const fixture = editionAdmissionFixture({ version });
+  const encode = (value) => Buffer.from(JSON.stringify(value));
+  const hash = (value) => createHash('sha256').update(value).digest('hex');
+  const proof = Buffer.from('Synthetic fixture evidence, not human qualification.');
+  fixture.files.set('review-fixture.txt', proof);
+  const review = {
+    format: 'revealline-edition-review.v1',
+    version,
+    sourceRevision: sourceSha,
+    sourceTree: fixture.envelope.sourceTree,
+    publication: 'public',
+    editions: fixture.envelope.editions.map(({ id }) => ({
+      id,
+      gates: EDITION_REVIEW_GATES.map((gate) => ({
+        id: gate,
+        status: 'passed',
+        reviewer: 'Synthetic fixture',
+        reviewedAt: '2026-09-26T12:00:00.000Z',
+        evidence: {
+          path: 'review-fixture.txt',
+          bytes: proof.length,
+          sha256: hash(proof),
+          publication: 'public',
+          approved: true,
+        },
+      })),
+    })),
+  };
+  const rebind = () => {
+    const envelope = encode(fixture.envelope);
+    review.envelopeSha256 = hash(envelope);
+    fixture.files.set('editions.json', envelope);
+    fixture.files.set('edition-review.json', encode(review));
+  };
+  rebind();
+  const release = {
+    id: 19,
+    tag_name: version,
+    target_commitish: sourceSha,
+    draft: true,
+    prerelease: false,
+  };
+  const actual = () => [
+    ...coreExpected,
+    ...[...fixture.files].map(([name, bytes], index) => ({
+      id: 100 + index,
+      name,
+      size: bytes.length,
+      digest: `sha256:${hash(bytes)}`,
+    })),
+  ];
+  let patches = 0;
+  let downloads = 0;
+  const request = async (url, options = {}) => {
+    if (url.endsWith('/assets?per_page=100&page=1')) return actual();
+    if (url.endsWith(`/git/commits/${sourceSha}`))
+      return { sha: sourceSha, tree: { sha: 'b'.repeat(40) } };
+    if (options.method === 'PATCH') {
+      patches++;
+      return {
+        ...release,
+        draft: false,
+        published_at: '2026-09-26T12:00:00.000Z',
+      };
+    }
+    throw new Error(`unexpected fixture request: ${url}`);
+  };
+  const options = {
+    repository,
+    version,
+    sourceSha,
+    expected: coreExpected,
+    release,
+    request,
+    readAsset: async ({ asset, maxBytes }) => {
+      downloads++;
+      assert.ok(asset.size <= maxBytes);
+      return fixture.files.get(asset.name);
+    },
+    inspect: async () => ({ release }),
+  };
+  return {
+    ...fixture,
+    options,
+    review,
+    rebind,
+    encode,
+    hash,
+    patches: () => patches,
+    downloads: () => downloads,
+  };
+}
+
+for (const formatVersion of [1, 2]) {
+  test(`source format ${formatVersion} core assets need no edition admission`, async () => {
+    const fixture = reviewedEditions(formatVersion);
+    fixture.files.clear();
+    assert.deepEqual(await reconcileReleaseAssets(fixture.options), {
+      missing: [],
+      reused: releaseAssetNames(formatVersion),
+    });
+    assert.equal((await publishExactRelease(fixture.options)).draft, false);
+    assert.equal(fixture.patches(), 1);
+    assert.equal(fixture.downloads(), 0);
+  });
+
+  test(`source format ${formatVersion} publishes reviewed additions after original ZIP admission`, async () => {
+    const fixture = reviewedEditions(formatVersion);
+    const result = await reconcileReleaseAssets(fixture.options);
+    assert.deepEqual(result.missing, []);
+    assert.deepEqual(result.reused, releaseAssetNames(formatVersion));
+    assert.deepEqual(result.admittedEditionAssets, [...fixture.files.keys()].sort());
+    assert.equal((await publishExactRelease(fixture.options)).draft, false);
+    assert.equal(fixture.patches(), 1);
+    assert.ok(fixture.downloads() > 0);
+  });
+
+  test(`source format ${formatVersion} rejects extras and the other source representation`, async (t) => {
+    const otherSource = formatVersion === 1 ? 'source-manifest.json' : 'source.tar';
+    for (const withEdition of [false, true]) {
+      for (const name of ['private-note.txt', otherSource]) {
+        await t.test(`${name}, reviewed edition ${withEdition}`, async () => {
+          const fixture = reviewedEditions(formatVersion);
+          if (!withEdition) fixture.files.clear();
+          fixture.files.set(name, Buffer.from('unadmitted extra'));
+          await assert.rejects(
+            publishExactRelease(fixture.options),
+            withEdition ? /outside the admitted/ : /complete edition envelope/,
+          );
+          assert.equal(fixture.patches(), 0);
+          if (!withEdition) assert.equal(fixture.downloads(), 0);
+        });
+      }
+    }
+  });
+
+  test(`source format ${formatVersion} validates expected core names before edition downloads`, async () => {
+    const fixture = reviewedEditions(formatVersion);
+    fixture.options.expected = [
+      ...fixture.options.expected,
+      {
+        ...expected[0],
+        name: formatVersion === 1 ? 'source-manifest.json' : 'source.tar',
+      },
+    ];
+    await assert.rejects(publishExactRelease(fixture.options), /exactly nine names/);
+    assert.equal(fixture.downloads(), 0);
+    assert.equal(fixture.patches(), 0);
+  });
+}
+
+test('additive publication rejects incomplete, unreviewed, changed and unrelated bytes before PATCH', async (t) => {
+  const cases = [
+    ['missing envelope', (f) => f.files.delete('editions.json'), /complete edition envelope/],
+    [
+      'missing member',
+      (f) => f.files.delete(f.envelope.editions[0].manifest.path),
+      /missing or oversized/,
+    ],
+    [
+      'unknown extra',
+      (f) => f.files.set('private-note.txt', Buffer.from('must not publish')),
+      /outside the admitted/,
+    ],
+    [
+      'pending review',
+      (f) => {
+        f.review.editions[0].gates[0].status = 'pending';
+        f.rebind();
+      },
+      /Every promotion gate/,
+    ],
+    [
+      'foreign source tree',
+      (f) => {
+        f.envelope.sourceTree = 'c'.repeat(40);
+        f.rebind();
+      },
+      /source commit and tree/,
+    ],
+    [
+      'foreign version',
+      (f) => {
+        f.envelope.version = 'v9.9.9';
+        f.rebind();
+      },
+      /source commit and tree/,
+    ],
+    [
+      'foreign source commit',
+      (f) => {
+        f.envelope.sourceRevision = 'c'.repeat(40);
+        f.rebind();
+      },
+      /source commit and tree/,
+    ],
+    [
+      'changed evidence with a valid server digest',
+      (f) => f.files.set('review-fixture.txt', Buffer.from('unreviewed replacement')),
+      /evidence bytes changed|missing or oversized/,
+    ],
+    [
+      'changed download',
+      (f) => {
+        f.options.readAsset = async ({ asset }) =>
+          Buffer.concat([f.files.get(asset.name), Buffer.from('changed')]);
+      },
+      /original bytes differ/,
+    ],
+    [
+      'corrupt ZIP despite rebound outer hash',
+      (f) => {
+        const descriptor = f.envelope.editions[0].sourceArchive;
+        const archive = Buffer.from(f.files.get(descriptor.path));
+        archive[50] ^= 1;
+        f.files.set(descriptor.path, archive);
+        descriptor.sha256 = f.hash(archive);
+        f.rebind();
+      },
+      /ZIP|zip|CRC|member/,
+    ],
+  ];
+  for (const [name, mutate, error] of cases)
+    await t.test(name, async () => {
+      const fixture = reviewedEditions();
+      mutate(fixture);
+      await assert.rejects(publishExactRelease(fixture.options), error);
+      assert.equal(fixture.patches(), 0);
+    });
+});
+
+test('duplicate default or additive server names cannot disappear in a map', async () => {
+  assert.throws(
+    () => decideReleaseAssets({ expected, actual: [...expected, expected[0]] }),
+    /duplicate/,
+  );
+  const fixture = reviewedEditions(),
+    request = fixture.options.request;
+  fixture.options.request = async (url, options) => {
+    const result = await request(url, options);
+    return url.includes('/assets?') ? [...result, result.at(-1)] : result;
+  };
+  await assert.rejects(publishExactRelease(fixture.options), /duplicate/);
+  assert.equal(fixture.patches(), 0);
+});
+
+test('trusted publisher sparse checkout includes the complete static edition validator closure', async () => {
+  const workflow = await readFile(
+    new URL('../.github/workflows/fastline-release.yml', import.meta.url),
+    'utf8',
+  );
+  const checkout = workflow
+    .split('- name: Check out trusted guarded publisher')[1]
+    ?.split('- name:')[0];
+  assert.ok(checkout);
+  for (const file of [
+    'publishing/edition-promotion.mjs',
+    'publishing/edition-admission.mjs',
+    'publishing/edition-zip.mjs',
+    'game/edition-context.mjs',
+  ])
+    assert.ok(checkout.includes(file), file);
 });

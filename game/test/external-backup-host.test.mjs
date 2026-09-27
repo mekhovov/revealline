@@ -240,7 +240,10 @@ test('paused external flight exports exact v2 descriptor/session; import and Und
     backup = await exportCurrent(p);
     assert.equal(backup.format, 'xonix-backup.v2');
     assert.deepEqual(backup.externalChapters.chapters, [pilot.descriptor]);
-    assert.equal(backup.session.format, 'xonix-session.v4');
+    // Current Solo attempts preserve the independent actor pin in v6.
+    assert.equal(backup.session.format, 'xonix-session.v6');
+    assert.equal(backup.session.actorAppearancePin.content.owner.kind, 'campaign');
+    assert.equal(backup.session.actorAppearancePin.content.level.id, p.rendered.run.level.id);
     assert.equal(backup.session.replay.ticks, p.rendered.run.tick);
     assert.equal(backup.packs.packs[0].id, pilot.descriptor.id);
     assert(!JSON.stringify(backup).includes('data:image'));
@@ -543,7 +546,16 @@ for (const mode of ['own-v2', 'mixed', 'legacy-v1-indexed'])
       assert.equal(f.storage.getItem(keys.lockKey), null);
       assert.match(p.$('save-warning').textContent, /rolled back|Interrupted/);
     } else {
-      await settle(() => /Picture unavailable: Pending/.test(p.$('run-message').textContent));
+      await settle(() => /Picture unavailable/.test(p.$('run-message').textContent)).catch(
+        (error) => {
+          error.message += JSON.stringify({
+            message: p.$('run-message').textContent,
+            warning: p.$('save-warning').textContent,
+            errors: p.errors.map(String),
+          });
+          throw error;
+        },
+      );
       assert.notEqual(p.doc.body.dataset.pictureState, 'ready');
       assert.deepEqual(f.assets.contents(), rawAssets);
       assert.deepEqual(f.storage.map, rawLocal);
