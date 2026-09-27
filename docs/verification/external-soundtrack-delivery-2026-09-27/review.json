@@ -1,0 +1,75 @@
+{
+  "format": "revealline-external-soundtrack-delivery-review.v1",
+  "status": "bounded exact-source and focused-test continuation; real S3, public release, full-track listening and physical-device acceptance pending",
+  "reviewedAt": "2026-09-27T18:30:00Z",
+  "candidateSourceCommit": "ad3df7f79f788396492c2471e074b9078a09c3da",
+  "baselineReview": {
+    "path": "docs/verification/v0.141.0-managed-media-audio-continuation/review.json",
+    "sha256": "16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998",
+    "fingerprintSHA256": "77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79"
+  },
+  "scope": "Continue the eight existing Field Kit audio recipes across the cumulative canonical soundtrack-library source and the external-URL delivery addition. The change migrates discovery to the canonical archive, adds bounded online-catalogue parsing, mixed remote/local queues, opening-theme failure recovery, localized error reporting, anonymous-CORS external playback and exact-byte offline installation. It does not alter a recipe payload or approve any recording.",
+  "fingerprint": {
+    "group": "audio",
+    "paths": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs",
+    "priorSHA256": "77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79",
+    "currentSHA256": "215abec38205787c9230a68a7a2cc09ea96086728c4f66e01cfaceee2a3962f7",
+    "algorithm": "SHA256 of the ordered raw source bytes concatenated, matching fieldKitRecipeSources"
+  },
+  "changedInputs": [
+    {
+      "path": "game/app.mjs",
+      "priorSHA256": "88e5e90d766459f07bfc63611250465cf30238bbc5e3c4bf877b10cfb78d2f25",
+      "currentSHA256": "afad775b9fd1c173cd9d78746c481d33d5dabb41c8123836179f2aae7cd202ee",
+      "assessment": "Localizes soundtrack failures and repairs modal return focus while retaining the shared soundtrack player, master volume, library ownership and audio recipes."
+    },
+    {
+      "path": "game/opening-soundtrack.mjs",
+      "priorSHA256": "32b0bd42056ad76439d56e560d2569c33dac136c006ef4d815df89c2f0075461",
+      "currentSHA256": "237ac4932d4baeee30f7a6e7e355294fe598832624b47017f29cce23437b310b",
+      "assessment": "Adds a bounded one-shot fallback when the optional opening recording is unavailable, without replacing a newer explicit player choice."
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "priorSHA256": "4529d335bb544e49ec099773882e44449f5a565b055e6dd904b2184682ad85e5",
+      "currentSHA256": "ea5903fc869f5caf3ce512da3a5c15cc70dcd1725f5bacb639aab5633fe23f15",
+      "assessment": "Adds trusted canonical remote queues, two-deck acquisition, anonymous CORS for externally hosted recordings and finite failed-deck disposal while preserving bundled and uploaded fallback."
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "priorSHA256": "58f7b0045d7bc6d403f0cfd1d3af1d728d9067e644426a8b32ab11061061d015",
+      "currentSHA256": "e553284948e61561c10cded4719e3e6af33dd9e5d95ae18b56eb2bc40d7e021d",
+      "assessment": "Adds the canonical archive browser and exact-hash offline installation for verified external recordings. Downloads remain drafts until the existing atomic Save action."
+    },
+    {
+      "path": "game/content/soundtrack-catalogue.mjs",
+      "priorSHA256": "2847a371fe4d0d6242f8fac34207247f3c47ca5579eda3786a946c253c3317fb",
+      "currentSHA256": "b712a11fa82bbd4b2c380a8ed7d50abb14b78642585c1a34f54450f9630f5ed2",
+      "assessment": "Moves the historical Foundation 70 archive base to the canonical repository without changing recording IDs, hashes, rights or built-in playlist identities."
+    },
+    {
+      "path": "game/online-soundtrack-catalogue.mjs",
+      "priorSHA256": "ae26b75678258a6c8ca5595cf57a26df6406bbde3a80d9ea3d9c6e269bc6c715",
+      "currentSHA256": "88e6d849433223e35c0fe6aedfeb9abe21b8e7156ffb8dd54c73d37128482b6a",
+      "assessment": "Introduces the bounded canonical-catalogue trust boundary and accepts only archive-verified external delivery metadata; offline fetches are CORS-only, credential-free, byte-bounded and exact-hash checked."
+    }
+  ],
+  "qualification": {
+    "automated": [
+      "The focused online catalogue, Music Player panel and shared transport cohort passes 185/185 tests with zero skips.",
+      "Repository validation, full lint, scoped Prettier and the production build pass on the exact candidate source.",
+      "The canonical archive implementation separately passes 34/34 intake, external-delivery, filter and compatibility tests."
+    ],
+    "reviewedBehavior": [
+      "External, GitHub Release-backed, bundled and uploaded entries retain one transport owner and one mixed queue contract.",
+      "A failed external deck removes listeners and source state before advancing; built-in and uploaded playback remain available.",
+      "External offline installation verifies the catalogue byte count and SHA-256 before adding the exact blob to an unsaved draft, then uses the existing atomic store path."
+    ]
+  },
+  "excluded": [
+    "No composition, recording, musical suitability, Ukrainian authenticity, cultural review or full-track listening is approved.",
+    "No real S3 object, physical speaker, Safari, Firefox, mobile, controller, frozen artifact, immutable release or public Pages acceptance is claimed.",
+    "No automatic bucket upload, CloudFront, OIDC, mirror or existing-recording migration is included."
+  ],
+  "decision": "Continue only the eight existing Field Kit audio recipe approvals for exact fingerprint 215abec38205787c9230a68a7a2cc09ea96086728c4f66e01cfaceee2a3962f7 when this review record and its exact predecessor both match. Any ordered input, fingerprint, recipe payload or review byte change reopens the group."
+}
