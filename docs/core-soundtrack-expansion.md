@@ -55,6 +55,18 @@ now requires a non-empty title, artist, collection and searchable tags for every
 recording. Both the browser-created `.rlintake` path and the direct file/folder CLI
 path feed the same deterministic catalogue and automatic post-merge deployment.
 
+Operator documentation [PR #8](https://github.com/mekhovov/revealline-soundtracks/pull/8)
+expanded the repository README and Markdown guide with complete one-file, folder,
+browser-package, multiple-collection and `unknown`-rights examples; Pages
+[run 36335718722](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36335718722)
+passed. Web-guide [PR #9](https://github.com/mekhovov/revealline-soundtracks/pull/9)
+published an accessible, responsive
+[upload guide](https://mekhovov.github.io/revealline-soundtracks/upload-guide/),
+linked it from the main player and pinned it in the verified deployment manifest.
+Exact-merge Pages [run 36335989981](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36335989981)
+passed, followed by direct public-browser verification of every guide section and
+navigation target.
+
 This replaces further numbered archive shards. Archive 01 and Archive 02 remain
 read-only migration evidence until the canonical game client is public; do not
 rename them because GitHub states that project Pages URLs do not redirect after a
