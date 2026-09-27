@@ -24,6 +24,16 @@ const toolResources = Object.fromEntries(
     ]),
   ),
 );
+const interfaceResources = Object.fromEntries(
+  await Promise.all(
+    ['en', 'uk'].map(async (locale) => [
+      locale,
+      JSON.parse(
+        await fs.readFile(new URL(`../game/locales/${locale}/interface.json`, import.meta.url)),
+      ),
+    ]),
+  ),
+);
 const assets = [
   'game/vendor/i18next-26.4.2.min.js',
   'game/i18n/catalogs.mjs',
@@ -193,4 +203,80 @@ test('maintained sprite review pages localize static and generated presentation 
   const inlineScripts = [...generated.matchAll(/<script>([\s\S]*?)<\/script>/g)];
   assert.ok(inlineScripts.length);
   assert.doesNotThrow(() => new Function(inlineScripts.at(-1)[1]));
+});
+
+test('offline download and launcher routes provide live language controls and bilingual fallbacks', async () => {
+  for (const { file, prefix } of [
+    { file: '../game/downloads.html', prefix: '' },
+    { file: '../game/offline/app.html', prefix: '' },
+  ]) {
+    const source = await fs.readFile(new URL(file, import.meta.url), 'utf8');
+    const nodes = descendants(parse(source));
+    assert.ok(
+      nodes.some((node) => attribute(node, 'data-language-control') !== undefined),
+      file,
+    );
+    assert.ok(source.includes('"' + prefix + 'i18n/style.css"'), file + ': stylesheet');
+    const moduleName = file.endsWith('app.html') ? 'app.mjs' : 'downloads.mjs';
+    assert.ok(source.includes('type="module" src="' + moduleName + '"'), file + ': module entry');
+    const moduleSource = await fs.readFile(
+      new URL(file.replace(/html$/, 'mjs'), import.meta.url),
+      'utf8',
+    );
+    assert.match(
+      moduleSource,
+      /from ['"]\.\/i18n\/index\.mjs['"]/,
+      file + ': local module closure',
+    );
+    assert.doesNotMatch(
+      source,
+      /(?:src|href)="\.\.\/(?:i18n|vendor)\//,
+      file + ': no escaping launcher dependency',
+    );
+    const keys = nodes.map((node) => attribute(node, 'data-i18n')).filter(Boolean);
+    assert.ok(keys.length >= 8, `${file}: static catalog coverage`);
+    for (const key of keys) {
+      assert.match(key, /^interface:/, `${file}: ${key}`);
+      for (const locale of ['en', 'uk'])
+        assert.equal(
+          typeof interfaceResources[locale][key.slice('interface:'.length)],
+          'string',
+          `${file}: ${locale}: ${key}`,
+        );
+    }
+    const noScript = nodes.find((node) => node.tagName === 'noscript');
+    assert.ok(noScript, `${file}: noscript fallback`);
+    assert.match(noScript.childNodes[0].value, /JavaScript/);
+    assert.match(noScript.childNodes[0].value, /потрібен JavaScript/);
+  }
+});
+
+test('offline runtime-owned captions have one live binding owner', async () => {
+  for (const [file, ids] of [
+    [
+      '../game/downloads.html',
+      ['game-title', 'game-status', 'cancel', 'retention-status', 'music-status', 'all-music'],
+    ],
+    ['../game/offline/app.html', ['status']],
+  ]) {
+    const html = await fs.readFile(new URL(file, import.meta.url), 'utf8');
+    const nodes = descendants(parse(html));
+    const moduleSource = await fs.readFile(
+      new URL(file.replace(/html$/, 'mjs'), import.meta.url),
+      'utf8',
+    );
+    for (const id of ids) {
+      const node = nodes.find((item) => attribute(item, 'id') === id);
+      assert.ok(node, file + ': ' + id);
+      assert.equal(attribute(node, 'data-i18n'), undefined, file + ': dynamic owner ' + id);
+      assert.ok(
+        moduleSource.includes("localizedText($('" + id + "'),"),
+        file + ': live binding ' + id,
+      );
+      assert.ok(
+        !moduleSource.includes("$('" + id + "').textContent ="),
+        file + ': no stale binding ' + id,
+      );
+    }
+  }
 });

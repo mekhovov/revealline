@@ -8,6 +8,17 @@ import { addAuthoredRuntimeSnapshots } from './authored-runtime-snapshots.mjs';
 import { selectOfflineCore } from './offline-core-closure.mjs';
 import { downloadFiles } from '../game/download-catalogue.mjs';
 import { buildOfflineDestinations, buildNavigationBootstraps } from './offline-destinations.mjs';
+import { readFileSync } from 'node:fs';
+
+const contentMessages = JSON.parse(
+  readFileSync(new URL('../game/locales/en/content.json', import.meta.url), 'utf8'),
+);
+const contentKeysByEnglish = new Map();
+for (const [key, value] of Object.entries(contentMessages)) {
+  if (contentKeysByEnglish.has(value)) contentKeysByEnglish.set(value, null);
+  else contentKeysByEnglish.set(value, `content:${key}`);
+}
+const contentTitleKey = (title) => contentKeysByEnglish.get(title) || undefined;
 
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 /** Built from the exact frozen bytes, never a second, independently maintained asset list. */
@@ -373,6 +384,10 @@ export async function buildOfflineContent(entries, excluded, version) {
                 : group.modes.length === 1
                   ? 3 + ['solo', 'versus', 'team'].indexOf(group.modes[0])
                   : 5;
+  for (const group of groups) {
+    const titleKey = contentTitleKey(group.title);
+    if (titleKey) group.titleKey = titleKey;
+  }
   groups.sort((left, right) => groupRank(left) - groupRank(right));
   const allAssigned = new Set(groups.flatMap((group) => group.files));
   if (files.some((file) => !allAssigned.has(file.path)))
