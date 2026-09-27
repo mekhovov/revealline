@@ -246,15 +246,9 @@ function nativeDialogs(t) {
   const originalOpen = SoloElement.prototype.showModal,
     originalClose = SoloElement.prototype.close;
   const origins = new WeakMap();
-  const nativeClick = SoloElement.prototype.click;
-  t.mock.method(SoloElement.prototype, 'click', function () {
-    nativeClick.call(this);
-    if (this.tagName === 'SUMMARY') {
-      const details = this.parentElement;
-      details.open = !details.open;
-      details.emit('toggle');
-    }
-  });
+  // SoloElement.click() already models the browser's one native <summary>
+  // toggle. Do not add another local toggle here: keyboard, touch and the
+  // controller adapter all finish through that same default click.
   const originalAttribute = SoloElement.prototype.setAttribute;
   SoloElement.prototype.setAttribute = function (key, value) {
     originalAttribute.call(this, key, value);
@@ -282,6 +276,50 @@ function nativeDialogs(t) {
     SoloElement.prototype.close = originalClose;
   });
 }
+
+for (const activation of ['keyboard', 'touch'])
+  test(`Collection ${activation} disclosure activation toggles exactly once and preserves the paused attempt`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: false, initialReadyTimeoutMs: 15000 });
+    h.$('collection-button').click();
+    const details = h.$('collection-progress'),
+      summary = details.querySelector('summary'),
+      checkpoint = authoritativeCheckpoint(h.rendered.run),
+      storage = [...h.storage.map],
+      writes = h.storage.writes.length;
+    summary.focus();
+    if (activation === 'keyboard') {
+      const key = summary.emit('keydown', { key: 'Enter', code: 'Enter' });
+      assert.equal(key.defaultPrevented, false, 'The browser keeps native summary activation.');
+    } else {
+      const down = summary.emit('pointerdown', {
+        button: 0,
+        isPrimary: true,
+        pointerId: 4,
+        pointerType: 'touch',
+      });
+      summary.emit('pointerup', {
+        button: 0,
+        isPrimary: true,
+        pointerId: 4,
+        pointerType: 'touch',
+      });
+      assert.equal(down.defaultPrevented, false, 'Direct touch keeps the browser activation.');
+    }
+    // The test boundary invokes the browser's click default after its input
+    // event. One activation must open rather than immediately reopen/close.
+    summary.click();
+    assert.equal(details.open, true);
+    assert.equal(h.doc.activeElement, summary);
+    summary.click();
+    assert.equal(details.open, false);
+    assert.equal(h.doc.activeElement, summary);
+    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    assert.deepEqual([...h.storage.map], storage);
+    assert.equal(h.storage.writes.length, writes);
+    assert.equal(h.rendered.paused, true);
+    assert.deepEqual(h.errors, []);
+  });
 
 test(
   'actual title → Missions → Progress backup controller Back closes only the front dialog and never starts flight',
@@ -352,9 +390,10 @@ test(
   },
 );
 
+let controllerClock = 1000;
 function controllerPad(h, t) {
   const prior = Object.getOwnPropertyDescriptor(performance, 'now');
-  let now = 1000;
+  let now = (controllerClock += 10000);
   Object.defineProperty(performance, 'now', { configurable: true, value: () => now });
   t.after(() =>
     prior ? Object.defineProperty(performance, 'now', prior) : delete performance.now,
@@ -369,7 +408,7 @@ function controllerPad(h, t) {
   };
   navigator.getGamepads = () => [pad];
   const frame = (ms = 16) => {
-    now += ms;
+    controllerClock = now += ms;
     h.frame(ms);
   };
   const set = (index, pressed) => {
@@ -380,6 +419,10 @@ function controllerPad(h, t) {
     frame();
     set(index, false);
     frame();
+    // The production host owns Confirm until its neutral-release window has
+    // elapsed. Model a complete fresh press instead of relying on unrelated
+    // host work to advance this safety interval between menu actions.
+    if (index === 0) frame(121);
   };
   frame();
   // The host now adopts a neutral controller automatically. A Confirm pulse
@@ -435,6 +478,11 @@ for (const [dialog, opener, prefix] of [
     region.clientHeight = 100;
     region.scrollHeight = 480;
     h.$(`${prefix}-read`).focus();
+    // Adopt the newly focused control, then finish the production guard's
+    // 1.25s Steam/native echo window before the next deliberate Confirm.
+    pad.frame();
+    pad.frame(1251);
+    assert.equal(h.$(`${prefix}-read`).classList.contains('controller-focus'), true);
     pad.pulse(0);
     assert.equal(h.doc.activeElement.id, region.id);
     assert.equal(h.$(`${prefix}-reading-done`).disabled, false);
@@ -455,45 +503,56 @@ for (const [dialog, opener, prefix] of [
     assert.equal(h.$(dialog).open, false);
   });
 
-for (const lateFocus of [false, true])
-  test(`Collection disclosure ends reading on collapse without ${lateFocus ? 'stealing later focus' : 'leaving hidden focus or resuming'}`, async (t) => {
-    nativeDialogs(t);
-    const h = await soloPage(t, { titleScreen: false }),
-      pad = controllerPad(h, t);
-    h.$('collection-button').click();
-    pad.frame();
-    pad.frame();
-    const details = h.$('collection-progress'),
-      summary = details.querySelector('summary');
-    summary.focus();
-    pad.pulse(0);
-    h.$('collection-read').focus();
-    pad.pulse(0);
-    assert.equal(h.doc.activeElement.id, 'collection-reading');
-    const checkpoint = authoritativeCheckpoint(h.rendered.run),
-      storage = [...h.storage.map],
-      writes = h.storage.writes.length;
-    // Native toggle is queued after open changes; it may arrive after focus moves.
-    details.open = false;
-    if (lateFocus) h.$('gallery-search').focus();
-    details.emit('toggle');
-    const expected = lateFocus ? h.$('gallery-search') : summary;
-    assert.ok(h.doc.activeElement === expected, h.doc.activeElement?.id);
-    assert.equal(h.$('collection-reading-done').disabled, true);
-    assert.equal(h.$('collection-read').getAttribute('aria-pressed'), 'false');
-    pad.frame();
-    assert.equal(h.$('collection-dialog').open, true);
-    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
-    assert.deepEqual([...h.storage.map], storage);
-    assert.equal(h.storage.writes.length, writes);
-    assert.equal(h.rendered.paused, true);
-    // A delayed toggle after dialog closure must also preserve its restored opener.
-    h.$('collection-dialog').close();
-    const opener = h.doc.activeElement;
-    details.emit('toggle');
-    assert.ok(h.doc.activeElement === opener, h.doc.activeElement?.id);
-    assert.deepEqual(h.errors, []);
-  });
+test('Collection disclosure collapse preserves reading, focus and the paused attempt', async (t) => {
+  nativeDialogs(t);
+  const h = await soloPage(t, { titleScreen: false }),
+    pad = controllerPad(h, t),
+    details = h.$('collection-progress'),
+    summary = details.querySelector('summary');
+  for (const lateFocus of [false, true])
+    await t.test(
+      `without ${lateFocus ? 'stealing later focus' : 'leaving hidden focus or resuming'}`,
+      () => {
+        // One real host exercises both queued-toggle orders. This avoids
+        // replacing global browser fixtures between the paired lifecycle cases.
+        pad.frame(1251);
+        h.$('collection-button').click();
+        pad.frame();
+        pad.frame();
+        summary.focus();
+        pad.pulse(0);
+        h.$('collection-read').focus();
+        pad.frame();
+        pad.frame(1251);
+        assert.equal(h.$('collection-read').classList.contains('controller-focus'), true);
+        pad.pulse(0);
+        assert.equal(h.doc.activeElement.id, 'collection-reading');
+        const checkpoint = authoritativeCheckpoint(h.rendered.run),
+          storage = [...h.storage.map],
+          writes = h.storage.writes.length;
+        // Native toggle is queued after open changes; it may arrive after focus moves.
+        details.open = false;
+        if (lateFocus) h.$('gallery-search').focus();
+        details.emit('toggle');
+        const expected = lateFocus ? h.$('gallery-search') : summary;
+        assert.ok(h.doc.activeElement === expected, h.doc.activeElement?.id);
+        assert.equal(h.$('collection-reading-done').disabled, true);
+        assert.equal(h.$('collection-read').getAttribute('aria-pressed'), 'false');
+        pad.frame();
+        assert.equal(h.$('collection-dialog').open, true);
+        assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+        assert.deepEqual([...h.storage.map], storage);
+        assert.equal(h.storage.writes.length, writes);
+        assert.equal(h.rendered.paused, true);
+        // A delayed toggle after dialog closure must also preserve its restored opener.
+        h.$('collection-dialog').close();
+        const opener = h.doc.activeElement;
+        details.emit('toggle');
+        assert.ok(h.doc.activeElement === opener, h.doc.activeElement?.id);
+        assert.deepEqual(h.errors, []);
+      },
+    );
+});
 
 test('actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns', async (t) => {
   nativeDialogs(t);
@@ -512,9 +571,18 @@ test('actual Settings → Studio listbox/range edits preview, cancel and apply t
   pad.pulse(0);
   assert.equal(h.$('settings-panel-audio').hidden, false);
   h.$('soundtrack-open').focus();
+  pad.frame();
+  pad.frame(1251);
+  assert.equal(h.$('soundtrack-open').classList.contains('controller-focus'), true);
   pad.pulse(0);
-  await settle(() =>
-    /Saved library loaded|Music library ready/.test(h.$('soundtrack-status')?.textContent),
+  assert.equal(
+    h.$('soundtrack-dialog').open,
+    true,
+    'A fresh controller Confirm opens the Studio after changing Settings tabs.',
+  );
+  await settle(
+    () => h.$('soundtrack-dialog').open && !h.$('soundtrack-close').disabled,
+    'The actual Studio reload must finish and restore its Close action.',
   );
   pad.frame();
   pad.frame();
@@ -523,12 +591,16 @@ test('actual Settings → Studio listbox/range edits preview, cancel and apply t
   const tracks = h.$('soundtrack-tracks'),
     volume = h.$('soundtrack-volume');
   assert.equal(tracks.size, '7', 'The actual multirow listbox uses the select editor');
+  pad.frame(1251);
   h.$('soundtrack-advanced-library-toggle').click();
+  assert.equal(h.$('soundtrack-advanced-library-toggle').getAttribute('aria-expanded'), 'true');
   for (const [element, direction] of [
     [tracks, 13],
     [volume, 15],
   ]) {
     element.focus();
+    pad.frame();
+    pad.frame(1251);
     const initial = element.value;
     let changes = 0;
     element.addEventListener('change', () => changes++);
