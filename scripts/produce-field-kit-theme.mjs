@@ -343,7 +343,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
         description: TEAM_EQUIPMENT_DESCRIPTIONS[slotId],
         provenance: {
           creator: 'Reveal Line',
-          source: `${equipmentSource} sha256:${equipmentHash}`,
+          source: `${equipmentSource} sha256:${equipmentHash}; consumer-sha256:${equipmentReviewSource}`,
           license: 'Original project integer-pixel equipment artwork',
           prompt: slot.prompt,
           parent: { id: `${slotId}.default`, revision: 1 },
