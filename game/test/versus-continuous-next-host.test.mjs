@@ -97,6 +97,7 @@ function finish(p) {
 }
 
 function assertMissionCue(p, levelId) {
+  p.frame(0, { preserveStartCue: true });
   assert.equal(p.state(), 'running');
   assert.equal(p.renders[0].levelId, levelId);
   assert.equal(p.renders[1].levelId, levelId);
@@ -107,7 +108,6 @@ function assertMissionCue(p, levelId) {
 }
 function releaseMissionCue(p, levelId) {
   assertMissionCue(p, levelId);
-  p.frame(0, { preserveStartCue: true });
   p.frame(700, { preserveStartCue: true });
   assert.equal(p.$('race-start-cue-label').textContent, '2');
   p.frame(700, { preserveStartCue: true });
@@ -144,6 +144,13 @@ async function openVersusLibrary(p) {
   assert.match(p.$('race-message').textContent, /Preparing missions/);
   await pending[0];
   assert.equal(p.$('journey-chooser').open, true);
+}
+
+function showCurrentLifecycle(p) {
+  const lifecycle = p.$('journey-lifecycle');
+  assert.equal(lifecycle.value, 'archive');
+  lifecycle.value = 'current';
+  lifecycle.emit('change');
 }
 
 function beginNext(p, { clicks = 1 } = {}) {
@@ -370,6 +377,7 @@ test('final Journey opens Browse missions and explicit Classic handoff carries s
     picture = p.drawOptions[0].backdrop;
   assert.equal(p.$('race-journey-next').textContent, 'Browse missions');
   await openMissionLibrary(p, 'race-journey-next');
+  showCurrentLifecycle(p);
   assert.deepEqual(p.checkpoint(), before);
   const selected = [...p.$('journey-cards').children].find((card) => {
     const [owner, , , id] = JSON.parse(card.dataset.missionId);
@@ -423,6 +431,7 @@ test('paused Journey can Stay and then explicitly Replace with exact Classic set
   const before = p.checkpoint(),
     picture = p.drawOptions[0].backdrop;
   await openMissionLibrary(p, 'race-journey-find');
+  showCurrentLifecycle(p);
   assert.deepEqual(p.checkpoint(), before);
   const selected = [...p.$('journey-cards').children].find((card) => {
     const [owner, , , id] = JSON.parse(card.dataset.missionId);
@@ -516,6 +525,7 @@ test('failed or cancelled cross-host target picture preflight keeps Journey resu
   const before = p.checkpoint(),
     picture = p.drawOptions[0].backdrop;
   await openMissionLibrary(p, 'race-journey-next');
+  showCurrentLifecycle(p);
   const selected = [...p.$('journey-cards').children].find((card) => {
     const [owner, , , id] = JSON.parse(card.dataset.missionId);
     return owner === JSON.stringify(['classic', 'base', null]) && id === 'signal-01';
@@ -598,6 +608,7 @@ test('Journey boundary preflights an exact installed Classic pack without adopti
     picture = p.drawOptions[0].backdrop;
   assert.equal(p.$('race-journey-next').textContent, 'Browse missions');
   await openMissionLibrary(p, 'race-journey-next');
+  showCurrentLifecycle(p);
   assert.deepEqual(p.checkpoint(), before);
   const selected = [...p.$('journey-cards').children].find((card) => {
     const [owner, , , id] = JSON.parse(card.dataset.missionId);

@@ -75,6 +75,8 @@ test('a backgrounded mission cue stays with its exact attempt and cannot leak in
   page.$('race-start').click();
   await waitFor(() => !page.$('race-start-cue').hidden);
   assert.equal(page.$('race-start-cue').dataset.kind, 'mission');
+  cueFrame(page, 0);
+  assert.equal(page.tick(), 0);
   cueFrame(page, 700);
   assert.equal(page.$('race-start-cue-label').textContent, '2');
 

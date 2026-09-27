@@ -104,7 +104,10 @@ import { prepareCampaignVisualThemeContext } from '../presentation/visual-theme-
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { verifyIndexedInstalledPack } from '../mission-library/pack-identity.mjs';
 import { prepareMissionLibraryIndex } from '../mission-library/classic-source.mjs';
-import { projectClassicCurrentRulesLevel } from '../mission-library/classic-current-rules.mjs';
+import {
+  CLASSIC_RULES_ORIGINAL,
+  projectClassicCurrentRulesLevel,
+} from '../mission-library/classic-current-rules.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 import { settingsTabOwnsKey } from '../ui/settings-panels.mjs';
@@ -2460,6 +2463,7 @@ try {
                 levelId: entry.level.id,
                 campaignKey: entry.musicCampaignKey,
                 sourcePackId: entry.sourcePackId ?? entry.pictureEntry?.sourcePackId ?? null,
+                rulesEdition: roundRecipe.rulesEdition ?? CLASSIC_RULES_ORIGINAL,
               });
       if (!row) throw new Error(t('interface:theExactCurrentMissionEditionIsUnavailable'));
       let next = librarySuccessor(library, row, 'versus');
@@ -3229,6 +3233,7 @@ try {
               levelId: entry.level.id,
               campaignKey: entry.musicCampaignKey,
               sourcePackId: entry.sourcePackId ?? entry.pictureEntry?.sourcePackId ?? null,
+              rulesEdition: roundRecipe.rulesEdition ?? CLASSIC_RULES_ORIGINAL,
             })?.id;
           } catch {
             // An unavailable retained edition cannot block browsing other missions.
