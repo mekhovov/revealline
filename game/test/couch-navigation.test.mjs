@@ -25,8 +25,7 @@ const pad = (index) => ({
 // Keep controller dispatch and every core route/checkpoint assertion unchanged.
 async function nextAction(f, activate) {
   const button = f.$('race-start'),
-    handler = button.onclick,
-    preparingNext = f.state() === 'finished';
+    handler = button.onclick;
   let operation;
   button.onclick = (event) => (operation = handler(event));
   try {
@@ -35,7 +34,8 @@ async function nextAction(f, activate) {
   } finally {
     button.onclick = handler;
   }
-  if (preparingNext) f.frame(0);
+  // Settle the accepted Ready or rematch cue before a route supplies held input.
+  f.frame(0);
 }
 
 test('two sparse pads deliberately claim one menu; join/held Confirm cannot start or leak flight actions', async (t) => {
