@@ -122,6 +122,10 @@ async function open(p) {
   await beginOpen(p);
   assert.equal(p.$('journey-chooser')?.open, true, p.$('race-message').textContent);
 }
+function showAllLifecycles(p) {
+  p.$('journey-lifecycle').value = '';
+  p.$('journey-lifecycle').emit('change');
+}
 
 async function running(p, id) {
   try {
@@ -147,6 +151,9 @@ test('Versus All missions lists exact Journey and retained Classic rows without 
   await open(p);
   assert.equal(p.$('journey-mode').value, 'versus');
   assert.equal(p.$('journey-collection').value, '');
+  assert.equal(p.$('journey-lifecycle').value, 'current');
+  assert.equal(p.$('journey-cards').children.length, 252);
+  showAllLifecycles(p);
   assert.equal(p.$('journey-cards').children.length, 327);
   assert.match(p.$('journey-cards').children[0].textContent, /Journey/);
   const classic = [...p.$('journey-cards').children].filter((card) =>
@@ -336,6 +343,7 @@ test('Classic Versus selects an exact Journey handoff and preserves the release 
 test('Versus mode filter exposes the same qualified Journey identities in Solo without duplicates', async (t) => {
   const p = await fixture(t);
   await open(p);
+  showAllLifecycles(p);
   const original = [...p.$('journey-cards').children].map((card) => card.dataset.missionId);
   p.$('journey-mode').value = 'solo';
   p.$('journey-mode').emit('change');
@@ -451,6 +459,7 @@ test('new Journey Versus mounts the same library and chooses an exact authored m
   const p = await fixture(t, { href: 'http://localhost/game/couch/' });
   assert.equal(p.renders[0].level.id, 'first-return');
   await open(p);
+  showAllLifecycles(p);
   assert.equal(p.$('journey-cards').children.length, 327);
   const card = [...p.$('journey-cards').children].find((card) =>
     JSON.parse(card.dataset.missionId)[3].endsWith('/choose-your-share'),
@@ -625,6 +634,7 @@ for (const interruption of ['blur', 'focus', 'pointer'])
         assert.equal(p.$('journey-chooser').open, false);
         assert.equal(p.doc.activeElement, focused);
         await open(p);
+        showAllLifecycles(p);
         assert.equal(p.$('journey-cards').children.length, 327);
       } finally {
         release();
