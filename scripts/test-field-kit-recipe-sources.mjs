@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { fieldKitRecipeSources } from './produce-field-kit-theme.mjs';
+import { readFile } from 'node:fs/promises';
+import {
+  fieldKitRecipeSources,
+  verifyFieldKitAudioContinuationReview,
+} from './produce-field-kit-theme.mjs';
 
 test('every declared helper invalidates all sharing groups and leaves nonconsumers unchanged', async () => {
   const inputs = new Map();
@@ -67,5 +71,29 @@ test('missing helper bytes cannot produce a supposedly valid fingerprint', async
       return Buffer.from(file);
     }),
     /Missing required helper/,
+  );
+});
+
+test('audio continuation pins both current review and immutable predecessor bytes', async () => {
+  const current = await readFile(
+    new URL(
+      '../docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json',
+      import.meta.url,
+    ),
+  );
+  const predecessor = await readFile(
+    new URL(
+      '../docs/verification/v0.141.0-managed-media-audio-continuation/review.json',
+      import.meta.url,
+    ),
+  );
+  assert.equal(verifyFieldKitAudioContinuationReview(current, predecessor), true);
+  assert.equal(
+    verifyFieldKitAudioContinuationReview(Buffer.concat([current, Buffer.from(' ')]), predecessor),
+    false,
+  );
+  assert.equal(
+    verifyFieldKitAudioContinuationReview(current, Buffer.concat([predecessor, Buffer.from(' ')])),
+    false,
   );
 });
