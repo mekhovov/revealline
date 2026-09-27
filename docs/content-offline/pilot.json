@@ -1,6 +1,35 @@
 {
   "format": "revealline-uniqueness-pilot.v2",
   "status": "Design review pending; no current content or reward assignments changed.",
+  "evidenceContract": {
+    "format": "revealline-pilot-proof.v1",
+    "portableFields": [
+      "seed",
+      "column",
+      "depth",
+      "side",
+      "status",
+      "ticks",
+      "seconds",
+      "livesLost",
+      "coverage",
+      "closure",
+      "failures",
+      "replayVerified",
+      "segments"
+    ],
+    "historicalExactCheckpoint": {
+      "reportFormat": "revealline-uniqueness-pilot.v1",
+      "retainedInGitHistory": true,
+      "purpose": "Architecture-specific runtime diagnostic; excluded from portable design-proof identity.",
+      "knownEquivalentExample": {
+        "pilotId": "uniqueness-pilot-arcade-delivery",
+        "darwinArm64": "e8e4e128969b3aba",
+        "linuxX64": "83f58b12fcadafda",
+        "difference": "A single-ULP enemy-velocity substitution reproduces the historical Linux hash; the exact Linux field difference remains inferred. Reported route, closure, coverage, failures, segments and replay verification are identical."
+      }
+    }
+  },
   "controls": {
     "solo": {
       "format": "ResolvedMissionV1",
@@ -6302,34 +6331,5 @@
     "Verify cooperative Twin landings remains a distinct shared-return decision. It is a control, not a redesign request.",
     "Review the five artwork composition briefs before image generation. No commissioned image or automatic hash difference counts as design approval.",
     "Keep these tooling identities outside current catalogues until full route evidence and human review are recorded."
-  ],
-  "evidenceContract": {
-    "format": "revealline-pilot-proof.v1",
-    "portableFields": [
-      "seed",
-      "column",
-      "depth",
-      "side",
-      "status",
-      "ticks",
-      "seconds",
-      "livesLost",
-      "coverage",
-      "closure",
-      "failures",
-      "replayVerified",
-      "segments"
-    ],
-    "historicalExactCheckpoint": {
-      "reportFormat": "revealline-uniqueness-pilot.v1",
-      "retainedInGitHistory": true,
-      "purpose": "Architecture-specific runtime diagnostic; excluded from portable design-proof identity.",
-      "knownEquivalentExample": {
-        "pilotId": "uniqueness-pilot-arcade-delivery",
-        "darwinArm64": "e8e4e128969b3aba",
-        "linuxX64": "83f58b12fcadafda",
-        "difference": "A single-ULP enemy-velocity substitution reproduces the historical Linux hash; the exact Linux field difference remains inferred. Reported route, closure, coverage, failures, segments and replay verification are identical."
-      }
-    }
-  }
+  ]
 }
