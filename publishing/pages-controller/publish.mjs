@@ -19,7 +19,8 @@ import {
 } from "./metadata.mjs";
 import { publishedReleasePages, releaseDecision } from "./release-policy.mjs";
 import { downloadReleaseAsset } from "./release-asset.mjs";
-import { verifyArchiveAuthorities } from "./archive-authority.mjs";
+import { requireMainRepositoryPolicy } from "./main-repository-policy.mjs";
+import { frozenEditionOverlay, validateEditionPublication } from "../edition-promotion.mjs";
 
 const root = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -44,6 +45,8 @@ async function workflowSummary(lines) {
     );
 }
 async function verify({ preview = false, remote = false } = {}) {
+  const editionSelectorBytes = await readOrdinary(directory, "editions.json");
+  validateEditionPublication(parseJSON(editionSelectorBytes));
   const {
       lock,
       metadata: catalogMetadata,
@@ -52,6 +55,7 @@ async function verify({ preview = false, remote = false } = {}) {
     configuration = parseJSON(
       await readOrdinary(directory, "publication.json"),
     );
+  requireMainRepositoryPolicy(configuration);
   if (configuration.catalogSha256 !== catalogSha256)
     throw new Error("Frozen catalog changed.");
   const testingVersions = new Set(
@@ -73,7 +77,7 @@ async function verify({ preview = false, remote = false } = {}) {
       (() => {
         throw new Error("A development testing route has no frozen metadata.");
       })(),
-    { qualification, admissions } = await validateAdmissions({
+    { qualification, canonicalSites, downloadOnlyVersions } = await validateAdmissions({
       directory,
       configuration,
       metadata: new Map([...metadata, ...testingMetadata]),
@@ -121,9 +125,7 @@ async function verify({ preview = false, remote = false } = {}) {
     throw new Error(
       "Publishing checkout does not equal its triggering commit.",
     );
-  const observations = [];
-  let releasePolicy = null,
-    authorityMetrics = null;
+  let releasePolicy = null;
   if (remote) {
     if (!preview) {
       if (process.env.GITHUB_REF !== "refs/heads/main")
@@ -146,38 +148,7 @@ async function verify({ preview = false, remote = false } = {}) {
       throw new Error(
         "Published source qualification does not match the reviewed pin.",
       );
-    let remoteAdmissions = admissions;
-    if (preview && process.env.PR_BASE_SHA) {
-      try {
-        const base = parseJSON(
-          Buffer.from(
-            run("git", [
-              "show",
-              `${process.env.PR_BASE_SHA}:publishing/pages-controller/publication.json`,
-            ]),
-          ),
-        );
-        const previous = new Map(
-          base.admissions.map((admission) => [admission.id, admission]),
-        );
-        remoteAdmissions = admissions.filter(
-          (admission) =>
-            JSON.stringify(previous.get(admission.id)) !==
-            JSON.stringify(admission),
-        );
-      } catch (error) {
-        process.stderr.write(
-          `Preview base comparison failed closed to all authorities: ${error.message}\n`,
-        );
-      }
-    }
-    const authority = await verifyArchiveAuthorities({
-      admissions: remoteAdmissions,
-      token: process.env.GH_TOKEN,
-      cacheFile: path.join(root, ".cache/frozen-pages/authority-etags.json"),
-    });
-    observations.push(...authority.observations);
-    authorityMetrics = authority.metrics;
+
   }
   return {
     configuration,
@@ -185,9 +156,10 @@ async function verify({ preview = false, remote = false } = {}) {
     controllerTree,
     catalogSha256,
     qualifiedSourceTree,
-    admittedArchives: admissions.length,
-    observations,
-    authorityMetrics,
+    editionSelectorSha256: digest(editionSelectorBytes),
+    hostingPolicy: configuration.hostingPolicy,
+    retainedLegacyRoutes: Object.keys(canonicalSites).length,
+    downloadOnlyVersions,
     releasePolicy,
     publishable: !preview,
   };
@@ -229,6 +201,7 @@ async function main() {
       authority.controllerTree !== identity.controllerTree ||
       authority.catalogSha256 !== identity.catalogSha256 ||
       authority.qualifiedSourceTree !== identity.qualifiedSourceTree ||
+      authority.editionSelectorSha256 !== identity.editionSelectorSha256 ||
       authority.currentVersion !== identity.configuration.currentVersion ||
       authority.configurationSha256 !==
         digest(await readOrdinary(directory, "publication.json")) ||
@@ -239,8 +212,6 @@ async function main() {
       );
     identity = {
       ...identity,
-      observations: authority.observations,
-      authorityMetrics: authority.authorityMetrics,
       releasePolicy: authority.releasePolicy,
     };
   }
@@ -255,11 +226,9 @@ async function main() {
     await workflowSummary([
       "### Frozen Pages authority verification",
       "",
-      `Archives remotely checked: ${identity.observations.length}`,
-      `GraphQL requests: ${identity.authorityMetrics?.graphqlRequests ?? 0}`,
-      `Conditional REST requests: ${identity.authorityMetrics?.restRequests ?? 0}`,
-      `REST cache hits: ${identity.authorityMetrics?.cacheHits ?? 0}`,
-      `Rate-limit retries: ${identity.authorityMetrics?.retries ?? 0}`,
+      "Hosting: main repository only; no new archive repositories or archive authority requests.",
+      `Retained legacy links: ${identity.retainedLegacyRoutes}`,
+      `Download-only historical releases: ${identity.downloadOnlyVersions.length}`,
     ]);
     return;
   }
@@ -272,6 +241,7 @@ async function main() {
       receipt.controllerCommit !== identity.controllerCommit ||
       receipt.controllerTree !== identity.controllerTree ||
       receipt.qualifiedSourceTree !== identity.qualifiedSourceTree ||
+      receipt.editionSelectorSha256 !== identity.editionSelectorSha256 ||
       receipt.currentVersion !== identity.configuration.currentVersion ||
       receipt.catalogSha256 !== identity.catalogSha256 ||
       receipt.configurationSha256 !==
@@ -327,6 +297,29 @@ async function main() {
       16_000_000,
     ),
   });
+  const editionFiles = await frozenEditionOverlay(
+    parseJSON(await readOrdinary(directory, "editions.json")),
+    { targetBasePath: "/revealline/", resolveReleaseIdentity: (version) => ({
+      sourceRevision: run("git", ["rev-parse", `${version}^{commit}`]),
+      sourceTree: run("git", ["rev-parse", `${version}^{tree}`]),
+    }), readReleaseAsset: (version, name, maxBytes) => downloadReleaseAsset({
+      repository: "mekhovov/revealline", version, name, maxBytes,
+    }) },
+  );
+  if (receipt.totalBytes + [...editionFiles.values()].reduce((sum, bytes) => sum + bytes.length, 0) > 950_000_000)
+    throw new Error("Combined default and edition site exceeds the existing Pages budget.");
+  for (const [relative, bytes] of editionFiles) {
+    const target = path.join(output, "artifact", relative);
+    await fs.mkdir(path.dirname(target), { recursive: true });
+    await fs.writeFile(target, bytes, { flag: "wx" });
+  }
+  if (editionFiles.size) {
+    receipt.files = await directoryInventory(path.join(output, "artifact"));
+    receipt.totalBytes = receipt.files.reduce((sum, row) => sum + row.bytes, 0);
+    if (receipt.totalBytes > 950_000_000)
+      throw new Error("Combined default and edition site exceeds the existing Pages budget.");
+    receipt.editionFiles = editionFiles.size;
+  }
   const { configuration: _configuration, ...binding } = identity;
   await fs.writeFile(
     path.join(output, "artifact-receipt.json"),
@@ -347,7 +340,7 @@ async function main() {
     "",
     `Files: ${receipt.files.length}`,
     `Bytes assembled: ${receipt.totalBytes}`,
-    `Authority API calls: ${(identity.authorityMetrics?.graphqlRequests ?? 0) + (identity.authorityMetrics?.restRequests ?? 0)}`,
+    "Current source qualification and complete artifact/public byte checks remain required.",
   ]);
 }
 main().catch((error) => {

@@ -126,6 +126,7 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     assert.equal(p.renders[1].status, 'won');
     assert.equal(p.renders[0].coverage, p.renders[1].coverage);
     assert.match(p.$('race-message').textContent, /Draw.*First clear/);
+    assert.equal(p.$('race-journey-next').textContent, 'Next: Choose your share');
     const previous = p.renders[0],
       picture = p.drawOptions[0].backdrop;
     assert.equal(p.$('race-journey-next').hidden, false);
@@ -296,12 +297,9 @@ test('controller can open and leave the flat chooser without starting or clearin
   await waitFor(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
   p.frame(); // The asynchronously mounted scope observes a neutral controller frame.
   assert.equal(p.$('journey-chooser').open, true);
+  p.$('journey-lifecycle').value = 'archive';
+  p.$('journey-lifecycle').emit('change');
   const cards = [...p.$('journey-cards').children];
-  assert.equal(
-    cards.length,
-    198,
-    'the complete 66-mission opening catalogue exposes all three difficulty cards',
-  );
   const route = createAuthoredJourneyRoute('opening'),
     themes = JSON.parse(
       await readFile(new URL('../content-design/themes.json', import.meta.url)),
@@ -315,6 +313,11 @@ test('controller can open and leave the flat chooser without starting or clearin
       const [ownerId, editionId] = JSON.parse(card.dataset.missionId);
       return ownerId === 'journey:opening' && editionId === 'opening';
     });
+  assert.equal(
+    currentCards.length,
+    currentInventory.length,
+    'the archived opening owner exposes exactly one card per mission',
+  );
   assert.deepEqual(
     currentCards.map((card) => JSON.parse(card.dataset.missionId)[3]),
     currentInventory.map((mission) => mission.id),

@@ -5,6 +5,13 @@ work. It replaces the separate conversational plans without removing completed,
 blocked, rejected or deferred requirements. The user approved implementation of
 this consolidated plan.
 
+PR #643's detailed historical snapshot is preserved in
+[the dated history file](history/core-soundtrack-expansion-pr643.md), including research leads
+that remain available for later revalidation. Active work follows this master plan and the
+latest-first, all-open bulk reconciliation policy: reconcile every open input with the accepted
+aggregate and publish only the final independently qualified aggregate. Intermediate green
+heads are not releases; historical deployment is not a prerequisite.
+
 ## Plan maintenance and status rules
 
 Each M0–M11 item keeps its ID, status, dependency, next action, effort estimate,

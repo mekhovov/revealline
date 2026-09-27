@@ -217,11 +217,12 @@ test("source qualification retains mandatory guards and restorable suites while 
   );
 });
 
-test("public selector retains five playable releases globally", async () => {
+test("public selector retains five releases in main-repository-only history globally", async () => {
   const publication = JSON.parse(
     await fs.readFile(new URL("./publication.json", import.meta.url), "utf8"),
   );
   assert.equal(publication.retainedReleaseCount, 5);
+  assert.equal(publication.hostingPolicy, "main-repository-only");
   assert.equal(Object.hasOwn(publication, "retainedReleasesPerMajor"), false);
 });
 
@@ -294,7 +295,7 @@ test("fast mode waives long suites while release source and publication guards s
         "Verify all originals and upload two absent members to the existing draft",
       ],
     ],
-    [pages, ["Validate frozen selector and admitted archives"]],
+    [pages, ["Validate main-repository selector and current source qualification"]],
   ]) {
     const blocks = workflow.split("      - name: ");
     for (const name of names) {
@@ -385,28 +386,15 @@ test("publisher infrastructure suites run only when full CI and the test policy 
   assert.doesNotMatch(block, /continue-on-error|\|\| true/);
 });
 
-test("Pages authority fallback restores and saves a bounded conditional ETag cache", async () => {
-  const workflow = await fs.readFile(
-    new URL(
-      "../../.github/workflows/publish-frozen-pages.yml",
-      import.meta.url,
-    ),
-    "utf8",
-  );
-  assert.match(
-    workflow,
-    /actions\/cache\/restore@0057852bfaa89a56745cba8c7296529d2fc39830/u,
-  );
-  assert.match(
-    workflow,
-    /actions\/cache\/save@0057852bfaa89a56745cba8c7296529d2fc39830/u,
-  );
-  assert.match(workflow, /\.cache\/frozen-pages\/authority-etags\.json/u);
-  assert.match(workflow, /frozen-pages-authority-\$\{\{ runner\.os \}\}-/u);
-  assert.match(
-    workflow,
-    /if: success\(\) && hashFiles\('\.cache\/frozen-pages\/authority-etags\.json'\) != ''/u,
-  );
+test("main-only publisher does not query or cache archive authorities", async () => {
+  const workflow = await fs.readFile(new URL("../../.github/workflows/publish-frozen-pages.yml", import.meta.url), "utf8");
+  const publisher = await fs.readFile(new URL("./publish.mjs", import.meta.url), "utf8");
+  assert.doesNotMatch(workflow, /archive-authority|authority-etags|actions\/cache\//);
+  assert.doesNotMatch(publisher, /verifyArchiveAuthorities|remoteAdmissions|archive-authority/);
+  assert.match(publisher, /requireMainRepositoryPolicy\(configuration\)/);
+  assert.match(publisher, /Published source qualification does not match the reviewed pin/);
+  assert.match(workflow, /publish\.mjs verify-artifact/);
+  assert.match(workflow, /public-byte-audit\.mjs/);
 });
 
 test("freeze admits required-success or explicit-waiver-skipped only, never failure or cancellation", async () => {

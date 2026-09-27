@@ -17,6 +17,9 @@ const enabled = (node) => shown(node) && !node.disabled;
 const actions = new Map([
   ['shell-continue', 'Continue'],
   ['shell-featured', 'Play'],
+  ['shell-catalogue', 'Open mission library'],
+  ['missions-catalogue', 'Open mission library'],
+  ['race-journey-find', 'Open mission library'],
   ['start-button', 'Start/resume'],
   ['next-button', 'Next'],
   ['retry-button', 'Retry'],
@@ -70,6 +73,36 @@ document.querySelector('#load').addEventListener('click', () => {
       });
       return;
     }
+    const finite = (value) => (Number.isFinite(value) ? value : null);
+    const browserSnapshot = () => {
+      const nav = win.performance.getEntriesByType('navigation')[0];
+      const paints = Object.fromEntries(
+        win.performance.getEntriesByType('paint').map((entry) => [entry.name, entry.startTime]),
+      );
+      const memory = win.performance.memory;
+      return {
+        navigation: nav
+          ? {
+              responseStartMs: finite(nav.responseStart),
+              domInteractiveMs: finite(nav.domInteractive),
+              domContentLoadedMs: finite(nav.domContentLoadedEventEnd),
+              loadEventEndMs: finite(nav.loadEventEnd),
+            }
+          : null,
+        paint: {
+          firstPaintMs: finite(paints['first-paint']),
+          firstContentfulPaintMs: finite(paints['first-contentful-paint']),
+        },
+        jsHeap: memory
+          ? {
+              supported: true,
+              usedBytes: finite(memory.usedJSHeapSize),
+              totalBytes: finite(memory.totalJSHeapSize),
+              limitBytes: finite(memory.jsHeapSizeLimit),
+            }
+          : { supported: false },
+      };
+    };
     let pending = null,
       raf,
       attemptTimer,
@@ -85,6 +118,11 @@ document.querySelector('#load').addEventListener('click', () => {
         : enabled(byId('race-pause')) &&
           byId('race-pause').textContent.trim() === 'Pause' &&
           shown(byId('race-boards'));
+    const libraryReady = () => {
+      const chooser = byId('journey-chooser');
+      const card = byId('journey-cards')?.querySelector?.('.journey-card:not(:disabled)');
+      return chooser?.open === true && enabled(card);
+    };
     const fail = (outcome) => {
       if (!pending) return;
       clearTimeout(attemptTimer);
@@ -183,7 +221,11 @@ document.querySelector('#load').addEventListener('click', () => {
         const boot = doc.documentElement.dataset[mode === 'solo' ? 'bootState' : 'toolState'];
         const ready =
           boot === 'ready' &&
-          (pending.action === 'Load to playable menu' ? menu : running() && targetMatches);
+          (pending.action === 'Load to playable menu'
+            ? menu
+            : pending.action === 'Open mission library'
+              ? libraryReady()
+              : running() && targetMatches);
         const failed = pending.statuses.find((status) => {
           const state = byId(status.id)?.dataset.state;
           if (state === 'busy') status.sawBusy = true;
@@ -221,6 +263,7 @@ document.querySelector('#load').addEventListener('click', () => {
                       height: win.innerHeight,
                       dpr: win.devicePixelRatio,
                     },
+                    browserAtReady: browserSnapshot(),
                   }
                 : {}),
             });
@@ -232,14 +275,11 @@ document.querySelector('#load').addEventListener('click', () => {
       raf = win.requestAnimationFrame(tick);
     };
     raf = win.requestAnimationFrame(tick);
-    const nav = win.performance.getEntriesByType('navigation')[0];
-    const paint = win.performance.getEntriesByName('first-contentful-paint')[0];
     report({
       action: 'Navigation timing',
       mode,
       outcome: 'browser entries; no device qualification',
-      domContentLoadedMs: nav?.domContentLoadedEventEnd ?? null,
-      firstContentfulPaintMs: paint?.startTime ?? null,
+      browserAtFrameLoad: browserSnapshot(),
       resourcesAtFrameLoad: win.performance.getEntriesByType('resource').length,
     });
     dispose = () => {
@@ -254,6 +294,6 @@ document.querySelector('#load').addEventListener('click', () => {
       window.removeEventListener('pagehide', pagehide);
     };
   };
-  frame.src = `${path}?journey=whole-spatial-v4`;
+  frame.src = `${path}?journey=1`;
   status.textContent = `Loading ${mode}…`;
 });

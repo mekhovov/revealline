@@ -1,5 +1,6 @@
 {
   "format": "revealline-pages-controller.v1",
+  "hostingPolicy": "main-repository-only",
   "currentVersion": "v0.141.6",
   "catalogSha256": "252a285391a175558c39cf413d9b665ffa86aaf0581edca0b0b72af5b6688492",
   "allocationSha256": "13e7c63e9e54db8c19f250fe4ed22d577ca8d821b302094c7c332d176975c750",

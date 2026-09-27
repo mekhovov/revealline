@@ -2,6 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { librarySuccessor, retainedLibraryMission } from '../mission-library/continuous-next.mjs';
+import { classicLibrarySources } from '../mission-library/classic-source.mjs';
+import {
+  CLASSIC_RULES_CURRENT,
+  CLASSIC_RULES_ORIGINAL,
+  classicRulesCampaignIdentity,
+} from '../mission-library/classic-current-rules.mjs';
 
 function source(id, collection, missions, editionId = 'edition-1') {
   return {
@@ -36,7 +42,12 @@ test('Next crosses campaigns, packs and collections without using filters or com
     assert.equal(librarySuccessor(library, rows[i], 'solo'), rows[i + 1]);
   assert.equal(librarySuccessor(library, rows.at(-1), 'solo'), null);
   assert.equal(
-    retainedLibraryMission(library, { mode: 'solo', levelId: 'a', campaignKey: 'base@1' }),
+    retainedLibraryMission(library, {
+      mode: 'solo',
+      levelId: 'a',
+      campaignKey: 'base@1',
+      rulesEdition: 'original',
+    }),
     rows[2],
   );
   assert.equal(
@@ -45,6 +56,7 @@ test('Next crosses campaigns, packs and collections without using filters or com
       levelId: 'a',
       campaignKey: 'custom@1',
       sourcePackId: 'mine',
+      rulesEdition: 'original',
     }),
     rows[3],
   );
@@ -101,6 +113,140 @@ test('Classic Next accepts an opaque Team owner as original rules without parsin
     library.forMode('team')[1],
   );
 });
+test('retained production identities preserve Current, Original and Custom in Solo and Versus', () => {
+  const indexedMission = {
+    id: 'classic/base/base/first-signal/same/1',
+    source: 'base',
+    packId: null,
+    campaignId: 'first-signal',
+    campaignRevision: '2',
+    campaignKey: 'first-signal/2/verified',
+    levelId: 'same',
+    levelRevision: '1',
+    levelIndex: 0,
+    name: 'Same name',
+    campaignTitle: 'First Signal',
+    edition: 'Base game',
+    themeId: null,
+    modes: ['solo', 'versus'],
+    tags: ['Classic'],
+    rules: 'Authored',
+    ruleDetails: {
+      ruleset: 'xonix-core.v5',
+      coverage: 0.45,
+      lives: 3,
+      moveSpeed: 10,
+      timeLimitSeconds: 0,
+      enemies: [],
+      requiredObjectives: 0,
+    },
+    difficultiesByMode: { solo: ['standard'], versus: ['standard'] },
+    sourceFile: { path: 'game/content/campaign.json', bytes: 1, sha256: 'a'.repeat(64) },
+  };
+  const library = createMissionLibrary([
+    ...classicLibrarySources(
+      { format: 'revealline-mission-library-index.v1', missions: [indexedMission] },
+      { availability: () => ({ state: 'ready' }), launch: () => true },
+    ),
+    source(
+      '["custom","mine"]',
+      'Custom',
+      [{ id: 'same', campaignKey: 'custom@1' }],
+      'custom-edition',
+    ),
+  ]);
+  const currentCampaignKey = classicRulesCampaignIdentity({
+    campaignKey: indexedMission.campaignKey,
+    rulesEdition: CLASSIC_RULES_CURRENT,
+  });
+  const originalCampaignKey = classicRulesCampaignIdentity({
+    campaignKey: indexedMission.campaignKey,
+    rulesEdition: CLASSIC_RULES_ORIGINAL,
+  });
+  for (const mode of ['solo', 'versus']) {
+    const rows = library.forMode(mode);
+    const currentRow = rows.find(
+      (row) =>
+        row.collection === 'Classic' &&
+        row.ownerId === JSON.stringify(['classic', 'base', null, CLASSIC_RULES_CURRENT]),
+    );
+    const originalRow = rows.find(
+      (row) =>
+        row.collection === 'Classic' && row.ownerId === JSON.stringify(['classic', 'base', null]),
+    );
+    const customRow = rows.find((row) => row.collection === 'Custom');
+    assert.equal(
+      retainedLibraryMission(library, {
+        mode,
+        levelId: 'same',
+        campaignKey: currentCampaignKey,
+        rulesEdition: CLASSIC_RULES_CURRENT,
+      }),
+      currentRow,
+    );
+    assert.equal(
+      retainedLibraryMission(library, {
+        mode,
+        levelId: 'same',
+        campaignKey: originalCampaignKey,
+        rulesEdition: CLASSIC_RULES_ORIGINAL,
+      }),
+      originalRow,
+    );
+    assert.equal(
+      retainedLibraryMission(library, {
+        mode,
+        levelId: 'same',
+        campaignKey: 'custom@1',
+        sourcePackId: 'mine',
+        ownerId: customRow.ownerId,
+        editionId: customRow.editionId,
+        rulesEdition: CLASSIC_RULES_ORIGINAL,
+      }),
+      customRow,
+    );
+    assert.throws(
+      () =>
+        retainedLibraryMission(library, {
+          mode,
+          levelId: 'same',
+          campaignKey: originalCampaignKey,
+          rulesEdition: CLASSIC_RULES_CURRENT,
+        }),
+      /exact/,
+    );
+    assert.throws(
+      () =>
+        retainedLibraryMission(library, {
+          mode,
+          levelId: 'same',
+          campaignKey: originalCampaignKey,
+        }),
+      /rules edition/,
+    );
+    assert.throws(
+      () =>
+        retainedLibraryMission(library, {
+          mode,
+          levelId: 'same',
+          campaignKey: originalCampaignKey,
+          rulesEdition: 'future-rules',
+        }),
+      /rules edition/,
+    );
+    assert.throws(
+      () =>
+        retainedLibraryMission(library, {
+          mode,
+          levelId: 'same',
+          campaignKey: currentCampaignKey,
+          rulesEdition: CLASSIC_RULES_CURRENT,
+          ownerId: originalRow.ownerId,
+        }),
+      /exact/,
+    );
+  }
+});
 test('stale, absent and ambiguous owners never silently launch a same-name replacement', () => {
   const owner = source('["classic","base",null]', 'Classic', [{ id: 'a', campaignKey: 'base@1' }]);
   const library = createMissionLibrary([owner]);
@@ -109,14 +255,25 @@ test('stale, absent and ambiguous owners never silently launch a same-name repla
   assert.throws(() => librarySuccessor(library, stale, 'solo'), /changed/);
   assert.throws(
     () =>
-      retainedLibraryMission(library, { mode: 'solo', levelId: 'missing', campaignKey: 'base@1' }),
+      retainedLibraryMission(library, {
+        mode: 'solo',
+        levelId: 'missing',
+        campaignKey: 'base@1',
+        rulesEdition: 'original',
+      }),
     /exact/,
   );
   library.register(
     source('["classic","archived",null]', 'Classic', [{ id: 'a', campaignKey: 'base@1' }]),
   );
   assert.throws(
-    () => retainedLibraryMission(library, { mode: 'solo', levelId: 'a', campaignKey: 'base@1' }),
+    () =>
+      retainedLibraryMission(library, {
+        mode: 'solo',
+        levelId: 'a',
+        campaignKey: 'base@1',
+        rulesEdition: 'original',
+      }),
     /exact/,
   );
 });

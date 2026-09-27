@@ -96,6 +96,30 @@ function finish(p) {
   assert.equal(p.$('race-journey-next').hidden, false);
 }
 
+function assertMissionCue(p, levelId) {
+  p.frame(0, { preserveStartCue: true });
+  assert.equal(p.state(), 'running');
+  assert.equal(p.renders[0].levelId, levelId);
+  assert.equal(p.renders[1].levelId, levelId);
+  assert.equal(p.$('race-start-cue').hidden, false);
+  assert.equal(p.$('race-start-cue').dataset.kind, 'mission');
+  assert.equal(p.$('race-start-cue-label').textContent, '3');
+  assert.equal(p.tick(), 0);
+}
+function releaseMissionCue(p, levelId) {
+  assertMissionCue(p, levelId);
+  p.frame(700, { preserveStartCue: true });
+  assert.equal(p.$('race-start-cue-label').textContent, '2');
+  p.frame(700, { preserveStartCue: true });
+  assert.equal(p.$('race-start-cue-label').textContent, '1');
+  p.frame(700, { preserveStartCue: true });
+  assert.equal(p.$('race-start-cue-label').textContent, 'GO');
+  assert.equal(p.tick(), 0);
+  for (let tick = 0; tick < 42; tick++) p.frame(1000 / 120, { preserveStartCue: true });
+  assert.equal(p.$('race-start-cue').hidden, true);
+  assert.equal(p.tick(), 42);
+}
+
 async function openVersusLibrary(p) {
   const opener = p.$('race-library-switch'),
     listeners = opener.listeners.get('click'),
@@ -120,6 +144,13 @@ async function openVersusLibrary(p) {
   assert.match(p.$('race-message').textContent, /Preparing missions/);
   await pending[0];
   assert.equal(p.$('journey-chooser').open, true);
+}
+
+function showCurrentLifecycle(p) {
+  const lifecycle = p.$('journey-lifecycle');
+  assert.equal(lifecycle.value, 'archive');
+  lifecycle.value = 'current';
+  lifecycle.emit('change');
 }
 
 function beginNext(p, { clicks = 1 } = {}) {
@@ -181,10 +212,7 @@ test(
     finish(p);
     assert.match(p.$('race-start').textContent, /Next round/);
     await beginNext(p, { clicks: 2 });
-    p.frame(0);
-    assert.equal(p.state(), 'running');
-    assert.equal(p.renders[0].levelId, 'signal-02');
-    assert.equal(p.renders[1].levelId, 'signal-02');
+    releaseMissionCue(p, 'signal-02');
     assert.equal(p.$('series-score').textContent, '0 : 0');
     assert.equal(p.$('race-format').value, 'first-to-two');
     assert.equal(p.$('journey-chooser').open, false);
@@ -224,16 +252,11 @@ test(
     await start(p);
     finish(p);
     await beginNext(p);
-    p.frame(0);
-    assert.equal(p.state(), 'running');
-    assert.equal(p.renders[0].levelId, 'night-shift-01');
-    assert.equal(p.renders[1].levelId, 'night-shift-01');
+    releaseMissionCue(p, 'night-shift-01');
     assert.equal(p.$('journey-chooser').open, false);
     finish(p);
     await beginNext(p);
-    p.frame(0);
-    assert.equal(p.state(), 'running');
-    assert.equal(p.renders[0].levelId, 'night-shift-02');
+    releaseMissionCue(p, 'night-shift-02');
     finish(p);
     const before = p.checkpoint(),
       picture = p.drawOptions[0].backdrop;
@@ -268,9 +291,7 @@ test('same-ID modified Custom edition keeps its exact owner through Rematch and 
   );
   assert(card);
   await activateMissionCard(card);
-  p.frame(0);
-  assert.equal(p.state(), 'running');
-  assert.equal(p.renders[0].levelId, 'night-shift-03');
+  releaseMissionCue(p, 'night-shift-03');
   finish(p);
   await start(p);
   finish(p);
@@ -356,6 +377,7 @@ test('final Journey opens Browse missions and explicit Classic handoff carries s
     picture = p.drawOptions[0].backdrop;
   assert.equal(p.$('race-journey-next').textContent, 'Browse missions');
   await openMissionLibrary(p, 'race-journey-next');
+  showCurrentLifecycle(p);
   assert.deepEqual(p.checkpoint(), before);
   const selected = [...p.$('journey-cards').children].find((card) => {
     const [owner, , , id] = JSON.parse(card.dataset.missionId);
@@ -409,6 +431,7 @@ test('paused Journey can Stay and then explicitly Replace with exact Classic set
   const before = p.checkpoint(),
     picture = p.drawOptions[0].backdrop;
   await openMissionLibrary(p, 'race-journey-find');
+  showCurrentLifecycle(p);
   assert.deepEqual(p.checkpoint(), before);
   const selected = [...p.$('journey-cards').children].find((card) => {
     const [owner, , , id] = JSON.parse(card.dataset.missionId);
@@ -502,6 +525,7 @@ test('failed or cancelled cross-host target picture preflight keeps Journey resu
   const before = p.checkpoint(),
     picture = p.drawOptions[0].backdrop;
   await openMissionLibrary(p, 'race-journey-next');
+  showCurrentLifecycle(p);
   const selected = [...p.$('journey-cards').children].find((card) => {
     const [owner, , , id] = JSON.parse(card.dataset.missionId);
     return owner === JSON.stringify(['classic', 'base', null]) && id === 'signal-01';
@@ -584,6 +608,7 @@ test('Journey boundary preflights an exact installed Classic pack without adopti
     picture = p.drawOptions[0].backdrop;
   assert.equal(p.$('race-journey-next').textContent, 'Browse missions');
   await openMissionLibrary(p, 'race-journey-next');
+  showCurrentLifecycle(p);
   assert.deepEqual(p.checkpoint(), before);
   const selected = [...p.$('journey-cards').children].find((card) => {
     const [owner, , , id] = JSON.parse(card.dataset.missionId);
@@ -655,7 +680,5 @@ test('cancelled boundary metadata does not adopt or clear the result and Next ca
   assert.equal(p.drawOptions[0].backdrop, picture);
   assert.match(p.$('race-message').textContent, /cancelled.*Results are kept/);
   await beginNext(p);
-  p.frame(0);
-  assert.equal(p.state(), 'running');
-  assert.equal(p.renders[0].levelId, 'signal-02');
+  releaseMissionCue(p, 'signal-02');
 });

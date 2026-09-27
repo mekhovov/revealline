@@ -106,6 +106,70 @@ function setup(sources, options = {}) {
   return { doc, library, chooser, opener, $: (id) => doc.getElementById(id) };
 }
 
+test('Archive is explicit, retains exact launch ownership and reveals a saved historical mission', async () => {
+  let launched;
+  const archivedOwner = owner({
+    id: 'historical',
+    lifecycle: 'archive',
+    launch: (value) => {
+      launched = value;
+      return true;
+    },
+  });
+  const h = setup([owner(), archivedOwner]);
+  const archived = h.library.missions.find((entry) => entry.lifecycle === 'archive');
+  assert.equal(h.$('journey-lifecycle').value, 'current');
+  assert.equal(h.$('journey-cards').children.length, 1);
+  assert.notEqual(h.$('journey-cards').children[0].dataset.missionId, archived.id);
+  h.$('journey-lifecycle').value = 'archive';
+  h.$('journey-lifecycle').emit('change');
+  assert.equal(h.$('journey-cards').children.length, 1);
+  assert.equal(h.$('journey-cards').children[0].dataset.missionId, archived.id);
+  h.chooser.close();
+  h.chooser.open(h.opener);
+  assert.equal(h.$('journey-lifecycle').value, 'archive');
+  h.$('journey-lifecycle').value = 'current';
+  h.$('journey-lifecycle').emit('change');
+  assert.equal(h.chooser.reveal(archived.id), true);
+  assert.equal(h.$('journey-lifecycle').value, 'archive');
+  h.doc.activeElement.click();
+  await tick();
+  assert.equal(launched, archivedOwner.entries[0]);
+  h.chooser.destroy();
+});
+
+test('opening an explicit historical edition starts on its Archive mission', () => {
+  const historical = owner({ id: 'historical', lifecycle: 'archive' });
+  const exact = createMissionLibrary([historical]).missions[0];
+  const h = setup([owner(), historical], { getCurrentId: () => exact.id });
+  assert.equal(h.$('journey-lifecycle').value, 'archive');
+  assert.equal(h.doc.activeElement.dataset.missionId, exact.id);
+  h.chooser.destroy();
+});
+
+test('a Solo-only content provider excludes unsupported filters and stale saved modes', () => {
+  const { $, chooser } = setup([owner({ collection: 'Journey' })], {
+    supportedModes: ['solo'],
+    availableCollectionsOnly: true,
+    description: 'Selected company',
+    readState: () => ({ mode: 'versus', collection: 'Custom' }),
+  });
+  assert.deepEqual(
+    [...$('journey-mode').children].map((option) => option.value),
+    ['solo'],
+  );
+  assert.deepEqual(
+    [...$('journey-collection').children].map((option) => option.value),
+    ['', 'Journey'],
+  );
+  assert.equal(chooser.state().mode, 'solo');
+  assert.equal(chooser.state().collection, '');
+  $('journey-mode').value = 'team';
+  $('journey-mode').emit('change');
+  assert.equal(chooser.state().mode, 'solo');
+  chooser.destroy();
+});
+
 test('opening and controller fallback focus the first enabled mission without a search step', () => {
   const { doc, $, chooser } = setup([
     owner({
@@ -719,6 +783,78 @@ test('Journey text refreshes with preset while keeping bounded visible previews 
     2,
     'Open and explicit refresh each rebuild only the visible card preview.',
   );
+  chooser.destroy();
+});
+
+test('late lazy previews keep the already-focused mission visible', () => {
+  const doc = new Document(),
+    frames = [],
+    observed = [];
+  let intersection;
+  doc.defaultView.requestAnimationFrame = (callback) => {
+    frames.push(callback);
+    return frames.length;
+  };
+  doc.defaultView.cancelAnimationFrame = () => {};
+  doc.defaultView.IntersectionObserver = class {
+    constructor(callback) {
+      intersection = callback;
+    }
+    observe(target) {
+      observed.push(target);
+    }
+    unobserve() {}
+    disconnect() {}
+  };
+  const create = doc.createElement.bind(doc);
+  doc.createElement = (tag) => {
+    const element = create(tag);
+    if (tag === 'canvas')
+      element.getContext = () => ({
+        save() {},
+        restore() {},
+        fillRect() {},
+        beginPath() {},
+        moveTo() {},
+        lineTo() {},
+        fill() {},
+        stroke() {},
+        strokeRect() {},
+      });
+    return element;
+  };
+  const preview = {
+      width: 2,
+      height: 2,
+      cells: [0, 0, 0, 0],
+      terrain: [0, 0, 0, 0],
+      spawn: { x: 0, y: 0 },
+      actors: [],
+      objectives: [],
+    },
+    library = createMissionLibrary([
+      owner({
+        entries: [row('first'), row('current')],
+        card: () => preview,
+      }),
+    ]),
+    opener = doc.createElement('button');
+  doc.body.append(opener);
+  const chooser = attachJourneyChooser({
+    document: doc,
+    library,
+    getCurrentId: () => library.missions[1].id,
+  });
+  chooser.open(opener);
+  const focused = doc.activeElement,
+    before = focused.scrolled;
+  assert.equal(focused.dataset.missionId, library.missions[1].id);
+  assert.equal(new Set(observed).size, 2);
+  intersection([{ target: observed[0], isIntersecting: true }]);
+  assert.equal(frames.length, 1, 'Preview layout schedules one bounded focus correction.');
+  frames.shift()();
+  assert.equal(doc.activeElement, focused);
+  assert.equal(focused.scrolled, before + 1);
   chooser.destroy();
 });
 

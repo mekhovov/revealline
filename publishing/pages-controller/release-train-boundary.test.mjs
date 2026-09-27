@@ -101,3 +101,19 @@ test('another product root waits until the main source version is publicly accep
   );
   assert.throws(() => verifyPublishedBase('next', 'v0.115.0'), /stable numeric version/);
 });
+
+test('a cumulative root may finish its exact already-allocated unpublished version', () => {
+  assert.equal(verifyPublishedBase('0.141.7', 'v0.141.6', 'v0.141.7'), 'v0.141.7');
+  assert.equal(verifyPublishedBase('0.141.6', 'v0.141.6', 'v0.141.7'), 'v0.141.6');
+  assert.throws(
+    () => verifyPublishedBase('0.141.7', 'v0.141.6', 'v0.141.8'),
+    /Finish its immutable release/,
+  );
+  assert.throws(() => verifyPublishedBase('0.141.7', 'v0.141.6'), /Finish its immutable release/);
+  assert.throws(() => verifyPublishedBase('0.141.6', 'v0.141.6', 'v0.141.6'), /must be newer/);
+  assert.throws(() => verifyPublishedBase('0.141.5', 'v0.141.6', 'v0.141.5'), /must be newer/);
+  assert.throws(
+    () => verifyPublishedBase('next', 'v0.141.6', 'v0.141.7'),
+    /stable numeric version/,
+  );
+});

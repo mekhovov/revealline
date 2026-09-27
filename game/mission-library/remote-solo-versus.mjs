@@ -60,7 +60,11 @@ export async function createRemoteSoloVersusLibrarySources({
     return { text, value };
   }
   const [route, indexFile, themeFile, campaignFile, classesFile] = await Promise.all([
-    loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo),
+    loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo, {
+      fullSource: true,
+      signal,
+      fetchAsset: (path, options) => request(new URL(`content-design/${path}`, root), options),
+    }),
     read('content/mission-library-index.json'),
     read('content-design/themes.json'),
     read('content/campaign.json'),

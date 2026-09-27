@@ -200,7 +200,7 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
     frame();
     // Each helper call models a separate deliberate press. Keep the pad
     // neutral for the host's bounded release window before another action.
-    for (let i = 0; i < 3; i++) frame();
+    for (let i = 0; i < (mode === 'solo' && index === 0 ? 4 : 3); i++) frame();
   };
   frame();
   frame();
@@ -393,13 +393,25 @@ for (const mode of ['solo', 'versus', 'team'])
       assert.equal(p.renders[0].level.id, 'first-return');
       assert.equal(p.renders[1].level.id, 'first-return');
     } else assert.equal(p.$('coop-level').value, 'twin-landings');
-    const edition = mode === 'team' ? 'team-trail-impact-originals-1' : 'whole-spatial-v11';
+    const edition = mode === 'team' ? 'team-cultural-specialist-originals-2' : 'whole-spatial-v25';
+    if (mode !== 'team') {
+      p.$('journey-lifecycle').value = '';
+      p.$('journey-lifecycle').emit('change');
+    }
     const card = [...p.$('journey-cards').children].find((row) => {
       const identity = JSON.parse(row.dataset.missionId);
       return identity[0] === `journey:${edition}` && identity[1] === edition;
     });
     assert(card, 'The normal host offers its current, not Classic, mission edition.');
     if (mode !== 'team') {
+      const priorV11 = [...p.$('journey-cards').children].filter((row) => {
+        const identity = JSON.parse(row.dataset.missionId);
+        return (
+          identity[0] === 'journey:whole-spatial-v11' &&
+          identity[1] === 'whole-spatial-v11' &&
+          ['second-landing', 'long-rail', 'new-frontier'].includes(identity[3].split('/').at(-1))
+        );
+      });
       const priorV10 = [...p.$('journey-cards').children].filter((row) => {
         const identity = JSON.parse(row.dataset.missionId);
         return (
@@ -420,6 +432,11 @@ for (const mode of ['solo', 'versus', 'team'])
           )
         );
       });
+      assert.equal(
+        priorV11.length,
+        3,
+        'The normal selector exposes exactly three prior v11 cards.',
+      );
       assert.equal(
         priorV10.length,
         3,

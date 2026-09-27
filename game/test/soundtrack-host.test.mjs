@@ -9,7 +9,10 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { SOUNDTRACK_CATALOGUE } from '../content/soundtrack-catalogue.mjs';
-import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';
+import {
+  ONLINE_SOUNDTRACK_CATALOGUE_URL,
+  ONLINE_SOUNDTRACK_DIRECTORY_URL,
+} from '../online-soundtrack-catalogue.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
@@ -37,8 +40,51 @@ const ticks = (page, count) => {
   for (let i = 0; i < count; i++) page.frame();
 };
 async function startFlight(page) {
-  page.$('start-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  const button = page.$('start-button'),
+    action = button.onclick;
+  assert.equal(typeof action, 'function', 'Start exposes its existing host action.');
+  let pending = null,
+    calls = 0;
+  button.onclick = (...args) => {
+    calls++;
+    pending = action.apply(button, args);
+    return pending;
+  };
+  try {
+    button.click();
+    assert.equal(calls, 1, 'Start invokes the existing host action exactly once.');
+    if (page.doc.body.dataset.flightState !== 'running') {
+      assert.equal(
+        typeof pending?.then,
+        'function',
+        'Fresh Start returns its real visual preparation operation.',
+      );
+      await pending;
+    }
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+  } catch (error) {
+    const preparation = page.$('flight-preparation-status');
+    error.message +=
+      '\n' +
+      JSON.stringify({
+        flightState: page.doc.body.dataset.flightState ?? null,
+        pictureState: page.doc.body.dataset.pictureState ?? null,
+        start: page.$('start-button').textContent,
+        preparation: {
+          hidden: preparation.hidden,
+          state: preparation.dataset.state ?? null,
+          stage: preparation.dataset.stage ?? null,
+          text: preparation.textContent,
+        },
+        runMessage: page.$('run-message').textContent,
+        saveWarning: page.$('save-warning').textContent,
+        openDialogs: page.doc.querySelectorAll('dialog[open]').map((dialog) => dialog.id),
+        errors: page.errors.map((value) => String(value?.stack ?? value)),
+      });
+    throw error;
+  } finally {
+    button.onclick = action;
+  }
 }
 async function waitFor(predicate, label) {
   for (let i = 0; i < 100; i++) {
@@ -109,7 +155,7 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
     'Silent library preparation settles',
   );
   await openStudio(page);
-  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);
+  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_DIRECTORY_URL, ONLINE_SOUNDTRACK_CATALOGUE_URL]);
   assert.equal(
     requests.some((url) => /\.mp3(?:$|[?#])/.test(url)),
     false,
@@ -538,10 +584,39 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     page.$('soundtrack-export-bundle'),
     'Controller reaches Prepare through the actual dialog focus scope.',
   );
-  sample([0]);
-  await waitFor(
-    () => !page.$('soundtrack-backup-ready').hidden,
-    'Actual binary preparation finishes',
+  const exportButton = page.$('soundtrack-export-bundle');
+  const originalExport = exportButton.onclick;
+  assert.equal(typeof originalExport, 'function', 'Prepare exposes its real controller action.');
+  let controllerPreparation = null,
+    controllerPreparationCalls = 0;
+  exportButton.onclick = (...args) => {
+    controllerPreparationCalls++;
+    const pending = originalExport.apply(exportButton, args);
+    controllerPreparation = Promise.resolve(pending);
+    return pending;
+  };
+  try {
+    // The prior Confirm opened backup tools; rearm its real 120 ms release lifecycle.
+    sample([], 121);
+    sample([0]);
+    assert.equal(
+      controllerPreparationCalls,
+      1,
+      'Controller Confirm invokes the existing Prepare action exactly once.',
+    );
+    assert.ok(controllerPreparation, 'Controller Confirm returns the real preparation operation.');
+    assert.equal(
+      await controllerPreparation,
+      true,
+      'The controller-triggered binary preparation must complete successfully.',
+    );
+  } finally {
+    exportButton.onclick = originalExport;
+  }
+  assert.equal(
+    page.$('soundtrack-backup-ready').hidden,
+    false,
+    'Actual binary preparation finishes.',
   );
   assert.equal(page.doc.activeElement, link);
   assert.equal(requested, 0, 'Preparation focuses but never activates the download.');
@@ -557,11 +632,13 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   sample([0], 1200);
   assert.equal(requested, 0, 'Held Confirm cannot activate the newly focused action.');
   sample([]);
+  sample([], 121); // A separate Confirm follows the real neutral-release interval.
   sample([0]);
   assert.equal(requested, 1);
   sample([0], 1200);
   assert.equal(requested, 1, 'Held Confirm does not request duplicate downloads.');
   sample([]);
+  sample([], 121); // Observe release before measuring the separate native-echo window.
   const echoed = link.emit('keydown', { code: 'Enter', key: 'Enter', repeat: false });
   assert.equal(
     echoed.defaultPrevented,

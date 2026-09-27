@@ -44,10 +44,15 @@ function indexedDatabases() {
   };
 }
 
-async function creatorCampaign() {
+async function creatorCampaign({ firstMissionId = 'picture-1' } = {}) {
   const first = generateCreatorProject({ id: 'versus-installed', name: 'Picture race', seed: 8 });
   const second = generateCreatorProject({ id: 'versus-next', name: 'Picture race', seed: 9 });
   const project = structuredClone(first.project);
+  const firstMission = project.missions[0];
+  firstMission.id = firstMissionId;
+  if (firstMissionId !== 'picture-1') firstMission.name = 'Custom first return';
+  project.campaigns[0].missionIds = [firstMission.id];
+  const firstProvenance = { ...first.provenance, missionId: firstMission.id };
   const secondMap = structuredClone(second.project.maps[0]);
   secondMap.id = 'picture-map-2';
   const secondMission = structuredClone(second.project.missions[0]);
@@ -80,7 +85,7 @@ async function creatorCampaign() {
       project,
       packId: 'collection',
       themes,
-      provenance: [first.provenance, { ...second.provenance, missionId: secondMission.id }],
+      provenance: [firstProvenance, { ...second.provenance, missionId: secondMission.id }],
       credits: {
         creator: 'Creator host fixture',
         picture: 'Original fixture',
@@ -91,13 +96,13 @@ async function creatorCampaign() {
     { decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }) },
   );
   const route = pack.manifest.evidence
-    .find((entry) => entry.missionId === first.provenance.missionId)
+    .find((entry) => entry.missionId === firstProvenance.missionId)
     .routes.find((entry) => entry.difficulty === 'standard' && entry.turnPolicy === 'immediate');
   assert(route?.replay, 'the installed mission needs its verified route recording');
   return { pack, route };
 }
 
-async function openCreatorHost(t, indexedDB, storage) {
+async function openCreatorHost(t, indexedDB, storage, options = {}) {
   return couchPage(t, {
     initialLevel: null,
     storage,
@@ -111,10 +116,11 @@ async function openCreatorHost(t, indexedDB, storage) {
       if (path === '../content/packs/fpv-arcade-r5.json')
         return new Response('Fixture isolates installed creator content', { status: 503 });
     },
+    ...options,
   });
 }
 
-async function fixture() {
+async function fixture(options) {
   const indexedDB = indexedDatabases(),
     local = new Map(),
     storage = {
@@ -122,7 +128,7 @@ async function fixture() {
       setItem: (key, value) => local.set(key, value),
       removeItem: (key) => local.delete(key),
     },
-    { pack, route } = await creatorCampaign(),
+    { pack, route } = await creatorCampaign(options),
     store = createCreatorStore({ indexedDB }),
     approval = approveCreatorBundle(pack);
   await installPreparedCreatorBundle(
@@ -134,6 +140,28 @@ async function fixture() {
   );
   store.close();
   return { pack, route, indexedDB, storage };
+}
+
+function reachMissionGo(page) {
+  assert.equal(page.$('race-start-cue').hidden, false);
+  assert.equal(page.$('race-start-cue').dataset.kind, 'mission');
+  assert.equal(page.$('race-start-cue-label').textContent, '3');
+  page.frame(0, { preserveStartCue: true });
+  assert.equal(page.tick(), 0);
+  page.frame(700, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue-label').textContent, '2');
+  page.frame(700, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue-label').textContent, '1');
+  page.frame(700, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue-label').textContent, 'GO');
+  assert.equal(page.tick(), 0);
+  page.frame(1000 / 120, { preserveStartCue: true });
+  assert.equal(page.tick(), 1);
+}
+function finishMissionCue(page) {
+  for (let tick = 1; tick < 42; tick++) page.frame(1000 / 120, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue').hidden, true);
+  assert.equal(page.tick(), 42);
 }
 
 function replayPlayerOne(page, replay) {
@@ -150,7 +178,8 @@ function replayPlayerOne(page, replay) {
       if (direction) page.key(directionKeys[direction]);
       heldDirection = direction;
     }
-    page.frames(segment.ticks);
+    for (let tick = 0; tick < segment.ticks; tick++)
+      page.frame(1000 / 120, { preserveStartCue: true });
   }
   if (heldDirection) page.key(directionKeys[heldDirection], false);
 }
@@ -180,6 +209,24 @@ async function openMissionLibrary(page) {
   assert.equal(page.$('journey-chooser').open, true);
 }
 
+test('installed Creator launch does not evaluate an absent authored Journey route', async (t) => {
+  const { pack, indexedDB, storage } = await fixture(),
+    page = await openCreatorHost(t, indexedDB, storage);
+  await openMissionLibrary(page);
+  const card = [...page.$('journey-cards').children].find((candidate) => {
+    const [owner, edition] = JSON.parse(candidate.dataset.missionId);
+    return owner === 'creator:' + pack.editionId && edition === pack.editionId;
+  });
+  assert(card, 'the installed Creator mission must be selectable without a Journey route');
+  await activateMissionCard(card);
+  page.frame(0);
+  assert.equal(
+    page.renders[0].level.id,
+    'picture-1',
+    page.$('race-message').textContent + ' ' + page.$('journey-chooser-status').textContent,
+  );
+});
+
 test('installed creator campaigns continue and restore their earned state in a fresh Versus host', async (t) => {
   const { pack, route, indexedDB, storage } = await fixture();
   let firstMissionId;
@@ -195,7 +242,7 @@ test('installed creator campaigns continue and restore their earned state in a f
     assert.match(cards[0].textContent, /Custom/);
     firstMissionId = cards[0].dataset.missionId;
     await activateMissionCard(cards[0]);
-    page.frame(0);
+    reachMissionGo(page);
     assert.equal(
       page.renders[0].level.id,
       'picture-1',
@@ -211,9 +258,8 @@ test('installed creator campaigns continue and restore their earned state in a f
     assert.equal(page.$('race-journey-difficulty').value, 'standard');
     assert.equal(page.renders[0].level.revision, exactRevision);
 
-    // The host consumes one neutral resume tick before accepting player input.
-    page.frame();
     replayPlayerOne(page, route.replay);
+    assert.equal(page.$('race-start-cue').hidden, true);
     assert.equal(
       page.renders[0].status,
       'won',
@@ -248,7 +294,8 @@ test('installed creator campaigns continue and restore their earned state in a f
       undefined,
       `${page.$('race-message').textContent} ${page.$('journey-chooser-status').textContent}`,
     );
-    page.frame(0);
+    reachMissionGo(page);
+    finishMissionCue(page);
     assert.equal(
       page.renders[0].level.id,
       'picture-2',
@@ -275,4 +322,56 @@ test('installed creator campaigns continue and restore their earned state in a f
     assert.equal(cleared.dataset.pictureState, 'earned');
     assert.match(cleared.textContent, /Cleared/);
   });
+});
+
+test('installed Creator mission identity collision cannot resolve a Journey successor', async (t) => {
+  const { pack, route, indexedDB, storage } = await fixture({ firstMissionId: 'first-return' });
+  const page = await openCreatorHost(t, indexedDB, storage, {
+    href: 'http://localhost/game/couch/?journey=opening',
+  });
+  await openMissionLibrary(page);
+  const lifecycle = page.$('journey-lifecycle');
+  assert.equal(lifecycle.value, 'archive');
+  lifecycle.value = 'current';
+  lifecycle.emit('change');
+  const card = [...page.$('journey-cards').children].find((candidate) => {
+    const identity = JSON.parse(candidate.dataset.missionId);
+    return (
+      identity[0] === 'creator:' + pack.editionId &&
+      identity[1] === pack.editionId &&
+      identity.includes('first-return')
+    );
+  });
+  assert(card, 'the colliding installed mission remains separately selectable');
+  await activateMissionCard(card);
+  reachMissionGo(page);
+  assert.equal(page.renders[0].level.id, 'first-return');
+
+  replayPlayerOne(page, route.replay);
+  assert.equal(page.renders[0].status, 'won');
+  assert.equal(page.renders[1].status, 'running');
+  assert.equal(page.$('race-journey-next').hidden, false);
+  assert.equal(page.$('race-journey-next').textContent, 'Next mission');
+  assert.doesNotMatch(page.$('race-journey-next').textContent, /Choose your share/);
+
+  const next = page.$('race-journey-next'),
+    nextHandler = next.onclick;
+  let continuation;
+  next.onclick = (...args) => (continuation = nextHandler.apply(next, args));
+  try {
+    next.click();
+  } finally {
+    next.onclick = nextHandler;
+  }
+  assert(continuation instanceof Promise);
+  assert.equal(
+    await continuation,
+    undefined,
+    page.$('race-message').textContent + ' ' + page.$('journey-chooser-status').textContent,
+  );
+  reachMissionGo(page);
+  finishMissionCue(page);
+  assert.equal(page.renders[0].level.id, 'picture-2');
+  assert.notEqual(page.renders[0].level.id, 'choose-your-share');
+  assert.equal(page.renders[1].level.id, 'picture-2');
 });

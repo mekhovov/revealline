@@ -7,7 +7,11 @@ import {
   formatNumber,
   render as renderMessage,
 } from '../i18n/index.mjs';
-import { LIBRARY_COLLECTIONS, LIBRARY_MODES } from '../mission-library/library.mjs';
+import {
+  LIBRARY_COLLECTIONS,
+  LIBRARY_MODES,
+  LIBRARY_LIFECYCLES,
+} from '../mission-library/library.mjs';
 import { paintMissionThumbnail } from '../content-design/mission-card.mjs';
 import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
 
@@ -42,8 +46,25 @@ export function attachMissionLibraryChooser({
   writeState = () => {},
   launchContext = () => ({}),
   getCurrentId = () => null,
+  supportedModes = LIBRARY_MODES,
+  availableCollectionsOnly = false,
+  description = localizedMessage('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir'),
 }) {
-  if (!LIBRARY_MODES.includes(mode)) throw new TypeError(t('interface:unknownMissionLibraryMode'));
+  if (
+    !Array.isArray(supportedModes) ||
+    !supportedModes.includes(mode) ||
+    supportedModes.some((value) => !LIBRARY_MODES.includes(value))
+  )
+    throw new TypeError(t('interface:unknownMissionLibraryMode'));
+  const modes = [...new Set(supportedModes)];
+  const collections = () =>
+    availableCollectionsOnly
+      ? LIBRARY_COLLECTIONS.filter((value) =>
+          library.missions.some(
+            (row) => row.collection === value && row.modes.some((item) => modes.includes(item)),
+          ),
+        )
+      : LIBRARY_COLLECTIONS;
   const node = (tag, id, text) => {
     const result = doc.createElement(tag);
     if (id) result.id = id;
@@ -58,11 +79,7 @@ export function attachMissionLibraryChooser({
     'journey-chooser-title',
     localizedMessage('interface:findYourNextLine'),
   );
-  const copy = node(
-    'p',
-    null,
-    localizedMessage('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir'),
-  );
+  const copy = node('p', null, description);
   copy.className = 'journey-library-copy';
   const filters = node('div');
   filters.className = 'journey-filters';
@@ -108,6 +125,12 @@ export function attachMissionLibraryChooser({
     'select',
     filterOptions,
   );
+  const lifecycle = field(
+    localizedMessage('interface:missionLibrary.lifecycle.filter'),
+    'journey-lifecycle',
+    'select',
+    filterOptions,
+  );
   const campaign = field(
     localizedMessage('interface:campaign'),
     'journey-campaign',
@@ -140,10 +163,16 @@ export function attachMissionLibraryChooser({
   };
   collection.append(
     option(localizedMessage('interface:all'), ''),
-    ...LIBRARY_COLLECTIONS.map((value) => option(() => t(LIBRARY_TAG_KEYS[value]), value)),
+    ...collections().map((value) => option(() => t(LIBRARY_TAG_KEYS[value]), value)),
   );
   collection.value = '';
-  modeFilter.append(...LIBRARY_MODES.map((value) => option(() => modeLabel(value), value)));
+  lifecycle.append(
+    option(localizedMessage('interface:current'), 'current'),
+    option(localizedMessage('interface:missionLibrary.lifecycle.archive'), 'archive'),
+    option(localizedMessage('interface:missionLibrary.lifecycle.all'), ''),
+  );
+  lifecycle.value = 'current';
+  modeFilter.append(...modes.map((value) => option(() => modeLabel(value), value)));
   modeFilter.value = mode;
   const status = node('p', 'journey-chooser-status');
   status.setAttribute('role', 'status');
@@ -173,6 +202,7 @@ export function attachMissionLibraryChooser({
     restoringCardFocus = false,
     resizeFrame = null,
     message = '';
+  let initialOpen = true;
   let saved = null;
   try {
     saved = readState();
@@ -181,10 +211,12 @@ export function attachMissionLibraryChooser({
   }
   if (saved && typeof saved === 'object') {
     if (typeof saved.search === 'string') search.value = saved.search.slice(0, 512);
-    if (LIBRARY_COLLECTIONS.includes(saved.collection)) collection.value = saved.collection;
+    if (collections().includes(saved.collection)) collection.value = saved.collection;
+    if (saved.lifecycle === '' || LIBRARY_LIFECYCLES.includes(saved.lifecycle))
+      lifecycle.value = saved.lifecycle;
     // The caller scopes state by hosting mode. Its browsing filter can point at
     // another mode and must survive a round trip back to this same host.
-    if (LIBRARY_MODES.includes(saved.mode)) {
+    if (modes.includes(saved.mode)) {
       modeFilter.value = saved.mode;
       selectedId = typeof saved.selectedId === 'string' ? saved.selectedId : '';
       savedScroll = Number.isFinite(saved.scroll) ? Math.max(0, saved.scroll) : 0;
@@ -195,6 +227,7 @@ export function attachMissionLibraryChooser({
     return {
       search: search.value || '',
       collection: collection.value || '',
+      lifecycle: lifecycle.value,
       campaign: campaign.value || pendingCampaign,
       mode: modeFilter.value,
       selectedId,
@@ -219,9 +252,22 @@ export function attachMissionLibraryChooser({
       }
   }
   function rebuildCampaigns(requested = campaign.value || pendingCampaign) {
+    if (!modes.includes(modeFilter.value)) modeFilter.value = mode;
+    if (availableCollectionsOnly) {
+      const selected = collection.value,
+        choices = collections();
+      collection.replaceChildren(
+        option(localizedMessage('interface:all'), ''),
+        ...choices.map((value) => option(() => t(LIBRARY_TAG_KEYS[value]), value)),
+      );
+      collection.value = choices.includes(selected) ? selected : '';
+    }
     const choices = new Map();
     for (const row of library.forMode(modeFilter.value))
-      if (!collection.value || row.collection === collection.value)
+      if (
+        (!collection.value || row.collection === collection.value) &&
+        (!lifecycle.value || row.lifecycle === lifecycle.value)
+      )
         choices.set(row.campaignKey, () => {
           const display = library.presentation?.(row) ?? row;
           return `${display.campaignTitle} · ${display.edition}`;
@@ -542,6 +588,7 @@ export function attachMissionLibraryChooser({
     const railRows = library.search(search.value || '', {
       mode: modeFilter.value,
       collection: collection.value,
+      lifecycle: lifecycle.value,
     });
     const matches = campaign.value
       ? railRows.filter((row) => row.campaignKey === campaign.value)
@@ -551,7 +598,11 @@ export function attachMissionLibraryChooser({
       () =>
         `${t('common:counts.missions', { count: matches.length })} · ${modeLabel(modeFilter.value)}${message ? ` · ${renderMessage(message)}` : ''}`,
     );
-    const filtersActive = !!collection.value || !!campaign.value || modeFilter.value !== mode;
+    const filtersActive =
+      !!collection.value ||
+      !!campaign.value ||
+      modeFilter.value !== mode ||
+      lifecycle.value !== 'current';
     localizedText(filterSummary, () =>
       filtersActive ? t('interface:filtersActive') : t('interface:filters'),
     );
@@ -691,11 +742,20 @@ export function attachMissionLibraryChooser({
   // Decode only near the viewport. An earned picture owns the same exact
   // descriptor as Collection; release its decoded bytes when it leaves view.
   function hidePreview(card) {
+    const changed =
+      !!card.artwork ||
+      !!card.diagram ||
+      !!card.button.querySelector('.journey-card-map') ||
+      !!card.button.querySelector('.journey-card-picture-status');
     card.artwork?.release();
     card.artwork = null;
     card.diagram = null;
     card.button.querySelector('.journey-card-map')?.remove();
     card.button.querySelector('.journey-card-picture-status')?.remove();
+    // Lazy previews above the selected card can change the scroll geometry
+    // without a viewport resize. Preserve the player's exact focus and bring
+    // that same card back into view after the complete observer batch settles.
+    if (changed) keepFocusedCardVisible();
   }
   function showPreview(card) {
     if (card.diagram || !dialog.open || !list.contains(card.button)) return;
@@ -721,6 +781,7 @@ export function attachMissionLibraryChooser({
         paintMissionThumbnail(canvas.getContext('2d'), diagram, canvas.width);
         card.button.append(canvas);
       }
+      keepFocusedCardVisible();
     } catch {
       /* Optional previews cannot prevent a mission launch. */
     }
@@ -863,6 +924,9 @@ export function attachMissionLibraryChooser({
     cancelResizeScroll();
     ++visit;
     opener = origin;
+    if (initialOpen && !saved && library.find(getCurrentId())?.lifecycle === 'archive')
+      lifecycle.value = 'archive';
+    initialOpen = false;
     localizedText(back, () => returnLabel);
     onPause?.();
     invalidateDiagrams();
@@ -911,7 +975,7 @@ export function attachMissionLibraryChooser({
     });
     remember();
   };
-  for (const control of [collection, campaign, modeFilter])
+  for (const control of [collection, campaign, modeFilter, lifecycle])
     control.addEventListener('change', () => {
       retirePendingSelection();
       retirePreparations();
@@ -959,6 +1023,7 @@ export function attachMissionLibraryChooser({
       // browsing session was looking at a different mode.
       const modeChanged = modeFilter.value !== mode;
       modeFilter.value = mode;
+      lifecycle.value = row.lifecycle;
       pendingCampaign = '';
       if (modeChanged || !list.contains(cards.get(id)?.button)) {
         search.value = '';

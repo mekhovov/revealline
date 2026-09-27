@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { claimProfileWriter } from '../profile-writer.mjs';
+import { claimProfileWriter, ownsProfileWriter } from '../profile-writer.mjs';
 import { profileWriterMessage } from '../ui/profile-writer-copy.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 class Locks {
@@ -18,6 +18,16 @@ class Locks {
   }
 }
 const turn = () => new Promise((resolve) => setTimeout(resolve, 0));
+test('only the exact branded, live lease proves ownership of its profile', async () => {
+  const locks = new Locks();
+  const lease = await claimProfileWriter(locks, 'profile');
+  assert.equal(ownsProfileWriter({ writable: true }, 'profile'), false);
+  assert.equal(ownsProfileWriter(lease, 'other-profile'), false);
+  assert.equal(ownsProfileWriter(lease, 'profile'), true);
+  lease.release();
+  assert.equal(ownsProfileWriter(lease, 'profile'), false);
+  await turn();
+});
 test('one tab receives a lifetime exclusive lease while a second stays session-only', async () => {
   const locks = new Locks(),
     first = await claimProfileWriter(locks, 'profile'),

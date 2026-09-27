@@ -18,6 +18,9 @@ export function attachJourneyChooser({
   writeState,
   launchContext,
   getCurrentId,
+  supportedModes,
+  availableCollectionsOnly,
+  description,
 }) {
   if (library) {
     const chooser = attachMissionLibraryChooser({
@@ -30,6 +33,9 @@ export function attachJourneyChooser({
       writeState,
       launchContext,
       getCurrentId,
+      supportedModes,
+      availableCollectionsOnly,
+      description,
     });
     if (profile) {
       const button = doc.createElement('button');

@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Company Studio · Reveal / Line</title>
+    <link rel="stylesheet" href="studio.css" />
+    <script type="module" src="studio.mjs"></script>
+  </head>
+  <body>
+    <a class="skip" href="#workspace">Skip to workspace</a>
+    <header>
+      <a class="wordmark" href="../../game/company.html"
+        >REVEAL / LINE <span>Company Studio</span></a
+      >
+      <div class="header-actions">
+        <label class="file-button"
+          >Import catalog or draft<input
+            id="import-draft"
+            type="file"
+            accept="application/json,.json" /></label
+        ><button id="export-draft" class="primary">Export source draft ↗</button>
+      </div>
+    </header>
+    <div class="studio-layout">
+      <aside class="sidebar">
+        <p class="eyebrow">A WORLD OF YOUR OWN</p>
+        <h1>One framework.<br />Your company.</h1>
+        <label>Edition<select id="edition-select"></select></label>
+        <nav aria-label="Company setup steps" id="steps">
+          <button data-step="0" aria-current="step"><span>01</span> Identity</button
+          ><button data-step="1"><span>02</span> Artwork</button
+          ><button data-step="2"><span>03</span> Actors &amp; atmosphere</button
+          ><button data-step="3"><span>04</span> Campaigns</button
+          ><button data-step="4"><span>05</span> Learning</button
+          ><button data-step="5"><span>06</span> Whole-game preview</button
+          ><button data-step="6"><span>07</span> Validate &amp; export</button>
+        </nav>
+        <p class="sidebar-note">
+          Changes stay in this tab until you export. Your published game stays untouched.
+        </p>
+        <a href="../asset-studio/">Open Asset Studio ↗</a
+        ><a href="../../game/company.html">Play company journeys ↗</a
+        ><a href="playtest.html">Try transfer practice ↗</a>
+      </aside>
+      <main id="workspace" tabindex="-1">
+        <div class="workspace-bar">
+          <span id="draft-label">Loading registered source</span
+          ><span id="draft-state" class="pill">Source draft</span>
+        </div>
+        <p id="status" role="status" aria-live="polite">Opening the company catalog…</p>
+        <section data-panel="0">
+          <p class="eyebrow">01 / IDENTITY</p>
+          <h2 tabindex="-1">Give this world a name.</h2>
+          <p class="lede">
+            Keep the company identity and the audience edition explicit. A shared brand can have
+            several focused journeys.
+          </p>
+          <div class="panel">
+            <form id="identity-form" class="form-grid">
+              <label>Company name<input id="brand-name" required maxlength="160" /></label
+              ><label>Edition name<input id="edition-name" required maxlength="160" /></label
+              ><label
+                >Audience ID<input
+                  id="audience"
+                  required
+                  pattern="[A-Za-z0-9][A-Za-z0-9._-]{0,79}" /></label
+              ><label
+                >Edition revision<input
+                  id="revision"
+                  type="number"
+                  min="1"
+                  step="1"
+                  required /></label
+              ><label class="wide"
+                >Company description<textarea
+                  id="description"
+                  rows="3"
+                  maxlength="2048"
+                  required
+                ></textarea>
+              </label>
+              <p id="identity-ids" class="small wide"></p>
+              <button class="primary" type="submit">Apply identity</button>
+            </form>
+          </div>
+          <div id="brand-sources" class="panel source-links"></div>
+          <details class="panel">
+            <summary>Full catalog JSON</summary>
+            <p>
+              For new identities, paths or asset records, edit the same validated catalog used by
+              the compiler.
+            </p>
+            <label
+              >Catalog JSON<textarea
+                id="catalog-json"
+                class="code"
+                rows="16"
+                spellcheck="false"
+              ></textarea></label
+            ><button id="apply-catalog">Validate &amp; apply catalog</button>
+          </details>
+          <div class="callout">
+            <strong>Starting with another company?</strong>
+            <p>Create a neutral workspace, then import its source-draft.json packet here.</p>
+            <code
+              >node scripts/company-studio.mjs init --brand acme --edition acme-public --name 'Acme'
+              --workspace .cache/acme-source</code
+            >
+          </div>
+        </section>
+        <section data-panel="1" hidden>
+          <p class="eyebrow">02 / ARTWORK</p>
+          <h2 tabindex="-1">A place people recognize.</h2>
+          <p class="lede">
+            Assign registered originals to the home page and identity. Every media file carries its
+            own byte count, hash and publication decision.
+          </p>
+          <form id="art-form" class="panel form-grid">
+            <label>Identity mark<select id="logo-asset"></select></label
+            ><label>Home artwork<select id="hero-asset"></select></label
+            ><label>Install icon<select id="icon-asset"></select></label
+            ><label>Brand font<select id="font-asset"></select></label
+            ><button class="primary">Apply artwork roles</button>
+          </form>
+          <p class="small">
+            Install icons use a registered 512 pixel square derivative with its matching 192 pixel
+            dependency. Fonts and icons travel with the selected brand’s declared assets. Media
+            admission checks bytes and dependencies; it does not approve final artwork, trademark
+            use or human playtesting.
+          </p>
+          <div id="asset-grid" class="asset-grid"></div>
+          <div class="callout">
+            <strong>Add or replace original media</strong>
+            <p>
+              Use Asset Studio, save the bytes in your source workspace, and update the catalog’s
+              asset record. The compiler checks the actual bytes before a preview is admitted.
+            </p>
+            <a href="../asset-studio/">Open Asset Studio ↗</a>
+          </div>
+        </section>
+        <section data-panel="2" hidden>
+          <p class="eyebrow">03 / ACTORS &amp; ATMOSPHERE</p>
+          <h2 tabindex="-1">Set the tone of play.</h2>
+          <p class="lede">
+            Palette, vocabulary, moving characters, threat recipes and soundtrack live in the
+            selected edition’s presentation files. Collision rules stay in the game engine.
+          </p>
+          <div class="panel">
+            <p id="theme-path" class="path"></p>
+            <label
+              >Theme JSON<textarea
+                id="theme-json"
+                class="code"
+                rows="18"
+                spellcheck="false"
+              ></textarea></label
+            ><button id="apply-theme" class="primary">Validate &amp; apply theme</button>
+          </div>
+          <div class="panel">
+            <p id="presets-path" class="path"></p>
+            <label
+              >Character presets<textarea
+                id="presets-json"
+                class="code"
+                rows="16"
+                spellcheck="false"
+              ></textarea></label
+            ><button id="apply-presets">Validate &amp; apply actors</button>
+          </div>
+          <p class="small">
+            Use original marks as intact images. Reduced motion stops cosmetic animation in the
+            player.
+          </p>
+        </section>
+        <section data-panel="3" hidden>
+          <p class="eyebrow">04 / CAMPAIGNS</p>
+          <h2 tabindex="-1">Build a connected journey.</h2>
+          <p class="lede">
+            Choose the campaigns for this audience, then author the maps and mission briefs in the
+            existing content format.
+          </p>
+          <form id="campaign-form" class="panel">
+            <fieldset id="campaign-choices"><legend>Included campaigns</legend></fieldset>
+            <label>Opening campaign<select id="entry-campaign"></select></label
+            ><button class="primary">Apply campaign selection</button>
+          </form>
+          <div class="panel">
+            <label>Campaign to edit<select id="campaign-select"></select></label>
+            <p id="campaign-path" class="path"></p>
+            <label
+              >Campaign project JSON<textarea
+                id="campaign-json"
+                class="code"
+                rows="22"
+                spellcheck="false"
+              ></textarea></label
+            ><button id="apply-campaign">Compile &amp; apply campaign</button>
+            <p id="campaign-summary" class="small"></p>
+          </div>
+        </section>
+        <section data-panel="4" hidden>
+          <p class="eyebrow">05 / LEARNING</p>
+          <h2 tabindex="-1">Turn evidence into action.</h2>
+          <p class="lede">
+            Use fictional records with role-specific handoffs. Practice requires inspected evidence
+            and a successful local commit within an optional after-win bonus; it never gates arcade
+            progress. Reflection records a choice without scoring a person’s values.
+          </p>
+          <div class="panel">
+            <label>Learning campaign<select id="learning-campaign-select"></select></label>
+            <p id="learning-path" class="path"></p>
+            <label
+              >Versioned lesson JSON<textarea
+                id="learning-json"
+                class="code"
+                rows="24"
+                spellcheck="false"
+              ></textarea></label
+            ><button id="apply-learning">Validate &amp; apply lessons</button>
+            <p id="learning-summary" class="small"></p>
+          </div>
+          <p class="small">
+            Lessons are offline illustrations. Include authoritative sources, a review date and a
+            new fixture revision when the teaching content changes.
+          </p>
+        </section>
+        <section data-panel="5" hidden>
+          <p class="eyebrow">06 / WHOLE-GAME PREVIEW</p>
+          <h2 tabindex="-1">See the entire experience.</h2>
+          <p class="lede">
+            Open the compiled artifact to review the home page, menus, actors, missions, collection
+            and workbench together.
+          </p>
+          <div class="panel preview-tools">
+            <div>
+              <strong>Compiled draft preview</strong>
+              <p id="preview-note">
+                Import the compiler’s report after exporting and compiling your draft.
+              </p>
+            </div>
+            <label class="file-button"
+              >Import compiler report<input
+                id="import-report"
+                type="file"
+                accept="application/json,.json" /></label
+            ><button id="open-preview" class="primary" disabled>Verify &amp; open preview</button
+            ><a id="preview-new-tab" hidden target="_blank" rel="noopener noreferrer"
+              >Open compiled game in a new tab ↗</a
+            >
+          </div>
+          <div class="reference">
+            <span>Source reference</span
+            ><a id="source-preview" target="_blank" rel="noopener noreferrer"
+              >Open the registered game ↗</a
+            >
+            <p>
+              This reference uses the saved repository source. Edits in this studio appear only
+              after compilation.
+            </p>
+          </div>
+          <iframe
+            id="preview-frame"
+            title="Compiled company game preview"
+            allow="gamepad; autoplay"
+            hidden
+          ></iframe>
+          <div id="report-checks" class="panel" hidden></div>
+          <section id="mission-review" class="panel" aria-labelledby="mission-review-title" hidden>
+            <h3 id="mission-review-title">Mission artwork and content observations</h3>
+            <p>
+              Record what you observe in the verified game. Artwork observations are separate from
+              formative playtesting and do not repeat or replace its reported results. These notes
+              grant no asset or release approval.
+            </p>
+            <p id="review-binding" class="path"></p>
+            <p id="review-state" role="status"></p>
+            <p id="review-coverage" class="small"></p>
+            <div class="review-actions">
+              <label class="file-button"
+                >Import observations<input
+                  id="import-observations"
+                  type="file"
+                  accept="application/json,.json"
+              /></label>
+              <label class="file-button"
+                >Import generation notes<input
+                  id="import-generation-notes"
+                  type="file"
+                  accept="application/json,.json"
+              /></label>
+              <button id="export-observations" type="button" disabled>
+                Export manual observations
+              </button>
+              <button id="review-new-artifact" type="button" hidden>
+                Discard prior observations and review current artifact
+              </button>
+            </div>
+            <p class="small">
+              Imports are limited to 2 MiB. Generation notes must match the exact selected picture.
+              They are recorded prose, not independent approval. No original master is fetched.
+              Export before closing this tab.
+            </p>
+            <form id="review-form">
+              <fieldset id="review-fields">
+                <legend>Observed mission and scene</legend>
+                <label>Mission<select id="review-mission"></select></label>
+                <pre id="review-picture" class="review-picture"></pre>
+                <details>
+                  <summary>Content and source references</summary>
+                  <div id="review-attribution" class="source-links"></div>
+                </details>
+                <details>
+                  <summary>Recorded generation notes and warnings</summary>
+                  <div id="review-generation-notes" class="source-links"></div>
+                </details>
+                <div class="form-grid">
+                  <label
+                    >Observer<input
+                      id="review-observer"
+                      required
+                      maxlength="160"
+                      autocomplete="off"
+                  /></label>
+                  <label
+                    >Motion actually observed<select id="review-motion" required>
+                      <option value="">Choose motion</option>
+                      <option value="standard">Standard motion</option>
+                      <option value="reduced">Reduced motion</option>
+                    </select></label
+                  >
+                  <label
+                    >Viewport width (CSS pixels)<input
+                      id="review-width"
+                      type="number"
+                      min="240"
+                      max="8192"
+                      required
+                  /></label>
+                  <label
+                    >Viewport height (CSS pixels)<input
+                      id="review-height"
+                      type="number"
+                      min="240"
+                      max="8192"
+                      required
+                  /></label>
+                  <label class="wide"
+                    >Scene actually observed<select id="review-scene" required>
+                      <option value="">Choose scene state</option>
+                    </select></label
+                  >
+                </div>
+                <p class="small">
+                  Use the normal Missions selector and controls in the preview. Full-art diagnostic
+                  overlays are not legal captures or completed runs. Repeating the same mission,
+                  viewport, motion and scene state updates that observation.
+                </p>
+                <div id="review-checks"></div>
+                <label
+                  >Additional findings and composition-warning disposition<textarea
+                    id="review-notes"
+                    rows="3"
+                    maxlength="4000"
+                  ></textarea>
+                </label>
+                <button class="primary" type="submit">Save manual observation</button>
+              </fieldset>
+            </form>
+            <details>
+              <summary>Recorded observations</summary>
+              <ul id="review-observation-list"></ul>
+            </details>
+          </section>
+        </section>
+        <section data-panel="6" hidden>
+          <p class="eyebrow">07 / VALIDATE &amp; EXPORT</p>
+          <h2 tabindex="-1">Make a reviewable release.</h2>
+          <p class="lede">
+            Export the complete source packet, compile a selected edition, then bring its report
+            back for a verified whole-game preview.
+          </p>
+          <ol class="delivery-steps">
+            <li>
+              <strong>Export source draft</strong>
+              <p>
+                The packet contains the catalog and every declared JSON source. Media stays in the
+                source workspace and is copied only when its bytes match the catalog.
+              </p>
+              <button id="export-draft-bottom" class="primary">Download source draft</button>
+            </li>
+            <li>
+              <strong>Import and compile</strong>
+              <p>
+                Run these commands from the repository. Use new workspace and output directories.
+              </p>
+              <pre id="compile-commands"></pre>
+            </li>
+            <li>
+              <strong>Review the artifact</strong>
+              <p>
+                Import the output’s <code>.report.json</code> in step 06. Review the admitted files,
+                excluded editions and required playtest evidence before publishing.
+              </p>
+            </li>
+          </ol>
+          <div id="delivery-report" class="panel"><p>No compiler report imported.</p></div>
+          <p class="small">
+            Schema checks and replay proofs are separate from visual, accessibility and human
+            playtesting. This studio does not publish a GitHub release.
+          </p>
+        </section>
+        <div class="step-footer">
+          <button id="previous-step">← Previous</button><span id="step-position">Step 1 of 7</span
+          ><button id="next-step" class="primary">Next: Artwork →</button>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

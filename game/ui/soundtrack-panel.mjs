@@ -44,7 +44,7 @@ import {
   fetchSoundtrackAlbumCatalog,
 } from '../soundtrack-album-download.mjs';
 import {
-  fetchOnlineSoundtrackCatalogue,
+  fetchOnlineSoundtrackCatalogues,
   onlineSoundtrackRecordingAllowed,
 } from '../online-soundtrack-catalogue.mjs';
 import { soundtrackErrorText } from './soundtrack-error-copy.mjs';
@@ -334,7 +334,9 @@ export function attachSoundtrackPanel({
   masterVolume.element.oninput = masterVolume.element.onchange = () =>
     changeMaster('volume', Number(masterVolume.element.value));
   if (audioMaster) bindings.push(audioMaster.subscribe(updateMaster));
-  function usePlaylist(chosen, { start = false, onStarted = null } = {}) {
+  const savedPlaylistPlaybackHint = () =>
+    `${t('interface:savedOnThisDevice')} ${t('interface:playlistSelectedChoosePlayMusicIfItIsPaused')}`;
+  function usePlaylist(chosen, { start = false, onPlaybackResult = null } = {}) {
     return task(t('interface:savingYourPlaylistChoice'), async (signal) => {
       edit((value) => {
         value.selection.playlistId = chosen;
@@ -345,12 +347,19 @@ export function attachSoundtrackPanel({
       wakeAudio();
       await player.selectPlaylist(draft.selection.playlistId);
       if (start) await (musicSession ? musicSession.play() : player.play());
+      if (disposed) return;
       await notifyPlayback();
-      if (start) onStarted?.();
+      if (disposed) return;
+      // A durable save does not imply playback: browsers can require a fresh
+      // gesture, and session transports may settle without starting the player.
+      const playing = player.snapshot().playing;
+      if (start) onPlaybackResult?.(playing);
       setStatus(
         committed.warning ||
           (start
-            ? t('interface:playlistSelectedAndPlaying')
+            ? playing
+              ? t('interface:playlistSelectedAndPlaying')
+              : savedPlaylistPlaybackHint()
             : t('interface:playlistSelectedPlaybackIsUnchanged')),
       );
     });
@@ -587,6 +596,14 @@ export function attachSoundtrackPanel({
     startTrackId,
     mixWithLibrary: onlineMixLibrary.checked,
   });
+  const onlinePlaybackWindow = (matches, startTrackId = null) => {
+    const limit = SOUNDTRACK_LIMITS.catalogueTracks;
+    if (matches.length <= limit) return matches;
+    if (startTrackId === null) return matches.slice(0, limit);
+    const selected = matches.findIndex((track) => track.id === startTrackId);
+    if (selected < 0) return matches.slice(0, limit);
+    return [...matches.slice(selected), ...matches.slice(0, selected)].slice(0, limit);
+  };
   const playOnlineResults = button(
     'online-play-all',
     localizedMessage('interface:playSelectedSongs'),
@@ -594,7 +611,7 @@ export function attachSoundtrackPanel({
       const matches = onlineMatches();
       if (matches.length)
         return controlMusic(
-          () => player.playRemotePlaylist(matches, onlinePlaybackOptions()),
+          () => player.playRemotePlaylist(onlinePlaybackWindow(matches), onlinePlaybackOptions()),
           true,
         );
     },
@@ -707,9 +724,11 @@ export function attachSoundtrackPanel({
       if (!playlist) return;
       return usePlaylist(playlist.id, {
         start: true,
-        onStarted: () =>
+        onPlaybackResult: (playing) =>
           localizedText(collectionSummary, () =>
-            t('interface:soundtrack.privateCollectionSaved', { title: playlist.title }),
+            playing
+              ? t('interface:soundtrack.privateCollectionSaved', { title: playlist.title })
+              : savedPlaylistPlaybackHint(),
           ),
       });
     },
@@ -1750,7 +1769,11 @@ export function attachSoundtrackPanel({
           localizedMessage('common:actions.playback'),
           () => {
             return controlMusic(
-              () => player.playRemotePlaylist(matches, onlinePlaybackOptions(track.id)),
+              () =>
+                player.playRemotePlaylist(
+                  onlinePlaybackWindow(matches, track.id),
+                  onlinePlaybackOptions(track.id),
+                ),
               true,
             );
           },
@@ -1785,9 +1808,28 @@ export function attachSoundtrackPanel({
           total: onlineCatalogue.tracks.length,
         });
         const recording = excluded
-          ? ' ' + t('interface:soundtrack.recordingModeExcluded', { count: excluded })
-          : '';
-        return `${shown}${recording} ${t('interface:soundtrack.publicPlaybackHint')}`;
+            ? ' ' + t('interface:soundtrack.recordingModeExcluded', { count: excluded })
+            : '',
+          unavailable = onlineCatalogue.unavailable?.length
+            ? ' ' +
+              t('interface:soundtrack.publicPartial', {
+                archives: onlineCatalogue.unavailable
+                  .map(
+                    ({ id, error }) =>
+                      `${id === 'archive-directory' ? t('interface:soundtrack.archiveDirectory') : id}: ${message(error)}`,
+                  )
+                  .join('; '),
+              })
+            : '',
+          limited =
+            matches.length > SOUNDTRACK_LIMITS.catalogueTracks
+              ? ' ' +
+                t('interface:soundtrack.queueLimited', {
+                  limit: SOUNDTRACK_LIMITS.catalogueTracks,
+                  count: matches.length,
+                })
+              : '';
+        return `${shown}${recording}${unavailable}${limited} ${t('interface:soundtrack.publicPlaybackHint')}`;
       });
   }
   async function loadOnlineCatalogue(force = false) {
@@ -1799,7 +1841,7 @@ export function attachSoundtrackPanel({
     reloadOnline.disabled = true;
     localizedText(onlineStatus, () => t('interface:loadingThePublicSoundtrackCatalogue'));
     try {
-      const loaded = await fetchOnlineSoundtrackCatalogue({
+      const loaded = await fetchOnlineSoundtrackCatalogues({
         ...onlineCatalogueDownload,
         signal: current.signal,
       });
