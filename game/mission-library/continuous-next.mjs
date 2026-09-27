@@ -1,4 +1,5 @@
 import { LIBRARY_MODES } from './library.mjs';
+import { CLASSIC_RULES_CURRENT, CLASSIC_RULES_ORIGINAL } from './classic-current-rules.mjs';
 
 // Classic Solo/Versus owners encode their current-rules lane in the fourth
 // component of a JSON identity. Team's retained arenas deliberately use an
@@ -38,10 +39,13 @@ export function librarySuccessor(library, currentRow, mode) {
  * title or an execution-projection campaign key. Fail closed on ambiguity. */
 export function retainedLibraryMission(
   library,
-  { mode, levelId, campaignKey, sourcePackId = null, ownerId, editionId },
+  { mode, levelId, campaignKey, sourcePackId = null, ownerId, editionId, rulesEdition },
 ) {
+  if (![CLASSIC_RULES_ORIGINAL, CLASSIC_RULES_CURRENT].includes(rulesEdition))
+    throw new Error('The exact current mission rules edition is unavailable. Your result is kept.');
   const rows = library.forMode(mode).filter((row) => {
     if (!['Classic', 'Custom'].includes(row.collection) || row.runtimeId !== levelId) return false;
+    if (row.collection === 'Classic' && classicRulesEdition(row) !== rulesEdition) return false;
     if ((ownerId && row.ownerId !== ownerId) || (editionId && row.editionId !== editionId))
       return false;
     const campaign = JSON.parse(row.campaignKey);

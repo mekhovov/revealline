@@ -146,8 +146,8 @@ function reachMissionGo(page) {
   assert.equal(page.$('race-start-cue').hidden, false);
   assert.equal(page.$('race-start-cue').dataset.kind, 'mission');
   assert.equal(page.$('race-start-cue-label').textContent, '3');
-  assert.equal(page.tick(), 0);
   page.frame(0, { preserveStartCue: true });
+  assert.equal(page.tick(), 0);
   page.frame(700, { preserveStartCue: true });
   assert.equal(page.$('race-start-cue-label').textContent, '2');
   page.frame(700, { preserveStartCue: true });
@@ -330,6 +330,10 @@ test('installed Creator mission identity collision cannot resolve a Journey succ
     href: 'http://localhost/game/couch/?journey=opening',
   });
   await openMissionLibrary(page);
+  const lifecycle = page.$('journey-lifecycle');
+  assert.equal(lifecycle.value, 'archive');
+  lifecycle.value = 'current';
+  lifecycle.emit('change');
   const card = [...page.$('journey-cards').children].find((candidate) => {
     const identity = JSON.parse(candidate.dataset.missionId);
     return (
