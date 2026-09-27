@@ -10,7 +10,7 @@ import {
 import {
   downloadErrorMessage,
   gameplaySelection,
-  offlineReadinessCode,
+  offlineReadinessKey,
   offlineMessage,
   installedResultMessage,
   finishOfflineSelection,
@@ -149,23 +149,31 @@ $('install-native').onclick = () => {
 };
 const instructions = installInstructions();
 const instructionKeys = {
-  'apple-mobile': ['appleMobileStep1', 'appleMobileStep2', 'appleMobileStep3'],
-  'safari-desktop': ['safariDesktopStep1', 'safariDesktopStep2'],
-  browser: ['browserInstallStep1', 'browserInstallStep2'],
+  'apple-mobile': [
+    'interface:downloads.install.appleMobileStep1',
+    'interface:downloads.install.appleMobileStep2',
+    'interface:downloads.install.appleMobileStep3',
+  ],
+  'safari-desktop': [
+    'interface:downloads.install.safariDesktopStep1',
+    'interface:downloads.install.safariDesktopStep2',
+  ],
+  browser: [
+    'interface:downloads.install.browserInstallStep1',
+    'interface:downloads.install.browserInstallStep2',
+  ],
 };
 for (const key of instructionKeys[instructions.platform]) {
   const item = document.createElement('li');
-  localizedText(item, () => t('interface:downloads.install.' + key));
+  localizedText(item, () => t(key));
   $('install-steps').append(item);
 }
 const instructionNotes = {
-  'apple-mobile': 'appleMobileNote',
-  'safari-desktop': 'safariDesktopNote',
-  browser: 'browserNote',
+  'apple-mobile': 'interface:downloads.install.appleMobileNote',
+  'safari-desktop': 'interface:downloads.install.safariDesktopNote',
+  browser: 'interface:downloads.install.browserNote',
 };
-localizedText($('install-help'), () =>
-  t('interface:downloads.install.' + instructionNotes[instructions.platform]),
-);
+localizedText($('install-help'), () => t(instructionNotes[instructions.platform]));
 refreshInstall();
 const source = createSoundtrackSource({
   catalogue: SOUNDTRACK_CATALOGUE,
@@ -180,9 +188,9 @@ const gameIDs = () =>
 const gameFiles = () => downloadFiles(catalogue, gameIDs());
 function readyMessage() {
   if (navigationRequest) return () => t('interface:downloads.requestedReady');
-  const code = offlineReadinessCode(catalogue, gameIDs());
+  const key = offlineReadinessKey(catalogue, gameIDs());
   return () => {
-    const label = t('interface:downloads.' + code);
+    const label = t(key);
     if (!activationResult || activationResult.activated) return label;
     let active;
     try {
