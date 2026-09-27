@@ -44,6 +44,17 @@ ORDERLY` and `ФПВ`. `--license unknown` records uploader-confirmed public pla
 and redistribution, shows no invented open licence and remains Recording-mode
 ineligible.
 
+Catalogue usability [PR #4](https://github.com/mekhovov/revealline-soundtracks/pull/4)
+merged as `91b60190bfc7b7df4f9a2231bdfca99b3ce82956`; publication/Pages
+[run 36331917412](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36331917412)
+passed. Artist, collection and tag metadata is now exposed as accessible filter
+controls across all 194 recordings. Clicking `UA` shows the seven current UA
+recordings. Direct MP3 download links are retained in code but hidden from the
+public player; creator source and rights evidence remain visible. Intake verification
+now requires a non-empty title, artist, collection and searchable tags for every
+recording. Both the browser-created `.rlintake` path and the direct file/folder CLI
+path feed the same deterministic catalogue and automatic post-merge deployment.
+
 This replaces further numbered archive shards. Archive 01 and Archive 02 remain
 read-only migration evidence until the canonical game client is public; do not
 rename them because GitHub states that project Pages URLs do not redirect after a
@@ -95,7 +106,12 @@ Remaining work and current estimates:
 2. Release the game adapter that accepts canonical structured rights, multi-
    collections, `ФПВ`/`UA`, Release URLs and non-CORS media-element streaming while
    retaining remote-error recovery and built-in/uploaded fallback: about one day
-   plus release coordination.
+   plus release coordination. Game [PR #716](https://github.com/mekhovov/revealline/pull/716)
+   implements this adapter. A regression now proves that Refresh discovers and
+   plays a newly published catalogue entry with its title, artist and source and
+   without a game allowlist or per-song code change. Unknown licence text is not
+   exposed in the game. The PR remains on the release-train hold until the sole
+   publisher assigns it a version and runs independent exact-source qualification.
 3. Add migration notices to the two legacy roots and freeze their intake: about
    half a day after canonical game acceptance.
 4. Implement paged catalogue metadata before the 450-track trigger: one to two

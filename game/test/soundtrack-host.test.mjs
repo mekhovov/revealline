@@ -101,7 +101,7 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
   const { page } = await setup(t, {
     emptyMusic: true,
     fetchResponse: async (url) => {
-      if (String(url).includes('revealline-soundtracks-')) requests.push(String(url));
+      if (String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL) requests.push(String(url));
     },
   });
   await waitFor(
