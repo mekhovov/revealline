@@ -1,3 +1,4 @@
+import { t, setLocale, getLocale } from '../i18n/index.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
@@ -239,4 +240,40 @@ test('pausing or integrity/quota errors never restart work automatically', async
     { name: 'AbortError' },
   );
   assert.equal(called, false);
+});
+
+test('download error fallback survives the actual EN/UK translator missing-key behavior', async () => {
+  const previous = getLocale();
+  try {
+    for (const language of ['en', 'uk']) {
+      await setLocale(language);
+      const detail = 'Exact authored diagnostic';
+      // i18next returnEmptyString:false does not honor an empty fallback sentinel.
+      assert.equal(t('interface:future.missing', { defaultValue: '' }), 'future.missing');
+      for (const key of [
+        'interface:future.missing',
+        'interface:constructor',
+        'interface:bad:extra',
+      ]) {
+        assert.equal(
+          downloadErrorMessage({ localization: { key }, message: detail }, t),
+          t('interface:downloads.unknownDetail', { detail }),
+        );
+        assert.ok(
+          downloadErrorMessage({ localization: { key }, message: detail }, t).includes(detail),
+        );
+      }
+      const key = 'interface:downloads.repairBeforeSelecting';
+      assert.equal(
+        downloadErrorMessage({ localization: { key }, message: 'stale English' }, t),
+        t(key),
+      );
+      assert.equal(
+        offlineMessage({ messageCode: 'verifying', message: 'stale English' }, t),
+        t('interface:downloads.offline.verifying'),
+      );
+    }
+  } finally {
+    await setLocale(previous);
+  }
 });

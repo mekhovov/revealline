@@ -65,12 +65,18 @@ export function offlineMessage(value, translate) {
 }
 export function downloadErrorMessage(error, translate) {
   const localization = error?.localization;
-  if (localization?.key) {
-    const translated = translate(localization.key, {
-      ...(localization.values || {}),
-      defaultValue: '',
-    });
-    if (translated) return translated;
+  if (typeof localization?.key === 'string') {
+    const [namespace, messageKey, extra] = localization.key.split(':');
+    const catalog = globalThis.RevealLineTranslations?.en?.[namespace];
+    // Empty defaults are not a missing-key sentinel: the runtime rejects empty
+    // translations. Only registered messages may replace an authored diagnostic.
+    if (
+      extra === undefined &&
+      catalog &&
+      Object.hasOwn(catalog, messageKey) &&
+      typeof catalog[messageKey] === 'string'
+    )
+      return translate(localization.key, localization.values ?? Object.create(null));
   }
   if (error?.offlineCode || error?.messageCode) return offlineMessage(error, translate);
   const detail = error?.message;
