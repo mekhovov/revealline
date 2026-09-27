@@ -541,7 +541,7 @@ try {
   $('cancel-load').addEventListener('click', cancelLoad);
   $('load-text').addEventListener('click', () => {
     const text = $('replay-text').value;
-    void load(async () => text, t('interface:pastedReplay'));
+    return load(async () => text, t('interface:pastedReplay'));
   });
   $('replay-file').addEventListener('change', () => {
     const file = $('replay-file').files?.[0];
