@@ -40,9 +40,28 @@ const ticks = (page, count) => {
   for (let i = 0; i < count; i++) page.frame();
 };
 async function startFlight(page) {
-  page.$('start-button').click();
+  const button = page.$('start-button'),
+    action = button.onclick;
+  assert.equal(typeof action, 'function', 'Start exposes its existing host action.');
+  let pending = null,
+    calls = 0;
+  button.onclick = (...args) => {
+    calls++;
+    pending = action.apply(button, args);
+    return pending;
+  };
   try {
-    await settle(() => page.doc.body.dataset.flightState === 'running');
+    button.click();
+    assert.equal(calls, 1, 'Start invokes the existing host action exactly once.');
+    if (page.doc.body.dataset.flightState !== 'running') {
+      assert.equal(
+        typeof pending?.then,
+        'function',
+        'Fresh Start returns its real visual preparation operation.',
+      );
+      await pending;
+    }
+    assert.equal(page.doc.body.dataset.flightState, 'running');
   } catch (error) {
     const preparation = page.$('flight-preparation-status');
     error.message +=
@@ -63,6 +82,8 @@ async function startFlight(page) {
         errors: page.errors.map((value) => String(value?.stack ?? value)),
       });
     throw error;
+  } finally {
+    button.onclick = action;
   }
 }
 async function waitFor(predicate, label) {

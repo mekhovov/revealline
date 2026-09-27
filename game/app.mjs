@@ -8686,7 +8686,7 @@ try {
           owner.ensure(selectedTheme, { signal: controller.signal, onStatus: feedback.update })
         );
       })();
-      void prepared
+      return prepared
         .then(async () => {
           if (needsFreshVisuals)
             stagedVisuals = await prepareFreshAttemptVisuals(
@@ -8758,7 +8758,6 @@ try {
           if (pictureVisualController === controller) pictureVisualController = null;
           if (pictureResume === ticket) pictureResume = null;
         });
-      return;
     }
     pictureResume = null;
     // Readiness may finish while focus is elsewhere. Retire its Resume instruction
