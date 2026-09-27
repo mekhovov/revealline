@@ -36,7 +36,12 @@ test('Next crosses campaigns, packs and collections without using filters or com
     assert.equal(librarySuccessor(library, rows[i], 'solo'), rows[i + 1]);
   assert.equal(librarySuccessor(library, rows.at(-1), 'solo'), null);
   assert.equal(
-    retainedLibraryMission(library, { mode: 'solo', levelId: 'a', campaignKey: 'base@1' }),
+    retainedLibraryMission(library, {
+      mode: 'solo',
+      levelId: 'a',
+      campaignKey: 'base@1',
+      rulesEdition: 'original',
+    }),
     rows[2],
   );
   assert.equal(
@@ -45,6 +50,7 @@ test('Next crosses campaigns, packs and collections without using filters or com
       levelId: 'a',
       campaignKey: 'custom@1',
       sourcePackId: 'mine',
+      rulesEdition: 'original',
     }),
     rows[3],
   );
@@ -101,6 +107,72 @@ test('Classic Next accepts an opaque Team owner as original rules without parsin
     library.forMode('team')[1],
   );
 });
+test('retained Classic identity selects one explicit rules lane and rejects absent or unknown rules', () => {
+  const current = 'current-line-impact.v1';
+  const library = createMissionLibrary([
+    source(
+      `["classic","base",null,"${current}"]`,
+      'Classic',
+      [{ id: 'same', campaignKey: 'base@1' }],
+      'current-edition',
+    ),
+    source(
+      '["classic","base",null]',
+      'Classic',
+      [{ id: 'same', campaignKey: 'base@1' }],
+      'original-edition',
+    ),
+  ]);
+  const [currentRow, originalRow] = library.forMode('versus');
+  assert.equal(
+    retainedLibraryMission(library, {
+      mode: 'versus',
+      levelId: 'same',
+      campaignKey: 'base@1',
+      rulesEdition: current,
+    }),
+    currentRow,
+  );
+  assert.equal(
+    retainedLibraryMission(library, {
+      mode: 'versus',
+      levelId: 'same',
+      campaignKey: 'base@1',
+      rulesEdition: 'original',
+    }),
+    originalRow,
+  );
+  assert.throws(
+    () =>
+      retainedLibraryMission(library, {
+        mode: 'versus',
+        levelId: 'same',
+        campaignKey: 'base@1',
+      }),
+    /rules edition/,
+  );
+  assert.throws(
+    () =>
+      retainedLibraryMission(library, {
+        mode: 'versus',
+        levelId: 'same',
+        campaignKey: 'base@1',
+        rulesEdition: 'future-rules',
+      }),
+    /rules edition/,
+  );
+  assert.throws(
+    () =>
+      retainedLibraryMission(library, {
+        mode: 'versus',
+        levelId: 'same',
+        campaignKey: 'base@1',
+        rulesEdition: current,
+        ownerId: originalRow.ownerId,
+      }),
+    /exact/,
+  );
+});
 test('stale, absent and ambiguous owners never silently launch a same-name replacement', () => {
   const owner = source('["classic","base",null]', 'Classic', [{ id: 'a', campaignKey: 'base@1' }]);
   const library = createMissionLibrary([owner]);
@@ -109,14 +181,25 @@ test('stale, absent and ambiguous owners never silently launch a same-name repla
   assert.throws(() => librarySuccessor(library, stale, 'solo'), /changed/);
   assert.throws(
     () =>
-      retainedLibraryMission(library, { mode: 'solo', levelId: 'missing', campaignKey: 'base@1' }),
+      retainedLibraryMission(library, {
+        mode: 'solo',
+        levelId: 'missing',
+        campaignKey: 'base@1',
+        rulesEdition: 'original',
+      }),
     /exact/,
   );
   library.register(
     source('["classic","archived",null]', 'Classic', [{ id: 'a', campaignKey: 'base@1' }]),
   );
   assert.throws(
-    () => retainedLibraryMission(library, { mode: 'solo', levelId: 'a', campaignKey: 'base@1' }),
+    () =>
+      retainedLibraryMission(library, {
+        mode: 'solo',
+        levelId: 'a',
+        campaignKey: 'base@1',
+        rulesEdition: 'original',
+      }),
     /exact/,
   );
 });
