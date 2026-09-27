@@ -203,6 +203,24 @@ async function openMissionLibrary(page) {
   assert.equal(page.$('journey-chooser').open, true);
 }
 
+test('installed Creator launch does not evaluate an absent authored Journey route', async (t) => {
+  const { pack, indexedDB, storage } = await fixture(),
+    page = await openCreatorHost(t, indexedDB, storage);
+  await openMissionLibrary(page);
+  const card = [...page.$('journey-cards').children].find((candidate) => {
+    const [owner, edition] = JSON.parse(candidate.dataset.missionId);
+    return owner === 'creator:' + pack.editionId && edition === pack.editionId;
+  });
+  assert(card, 'the installed Creator mission must be selectable without a Journey route');
+  await activateMissionCard(card);
+  page.frame(0);
+  assert.equal(
+    page.renders[0].level.id,
+    'picture-1',
+    page.$('race-message').textContent + ' ' + page.$('journey-chooser-status').textContent,
+  );
+});
+
 test('installed creator campaigns continue and restore their earned state in a fresh Versus host', async (t) => {
   const { pack, route, indexedDB, storage } = await fixture();
   let firstMissionId;
