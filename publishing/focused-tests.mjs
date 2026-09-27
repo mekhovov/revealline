@@ -159,9 +159,10 @@ function packageNodeTestPatterns(script) {
     patterns.some(
       (pattern) =>
         !safeChangedPath(pattern) ||
+        !/^[a-z0-9_./*-]+$/iu.test(pattern) ||
+        pattern.startsWith('-') ||
         !pattern.endsWith('.mjs') ||
         pattern.includes('**') ||
-        /[?[\]{}]/u.test(pattern) ||
         path.dirname(pattern).includes('*'),
     )
   )
@@ -187,14 +188,19 @@ function expandPackageNodeTests(patterns, repositoryFiles) {
       expanded.push(pattern);
       continue;
     }
-    const escaped = path.basename(pattern).split('*').map(escapeRegularExpression).join('.*');
+    const basenamePattern = path.basename(pattern);
+    const escaped = basenamePattern.split('*').map(escapeRegularExpression).join('.*');
     const matcher = new RegExp('^' + escaped + '$', 'u');
     const directory = path.dirname(pattern);
     const matches = [...files]
-      .filter(
-        (candidate) =>
-          path.dirname(candidate) === directory && matcher.test(path.basename(candidate)),
-      )
+      .filter((candidate) => {
+        const basename = path.basename(candidate);
+        return (
+          path.dirname(candidate) === directory &&
+          (!basename.startsWith('.') || basenamePattern.startsWith('.')) &&
+          matcher.test(basename)
+        );
+      })
       .sort();
     if (!matches.length) return null;
     expanded.push(...matches);
@@ -204,7 +210,7 @@ function expandPackageNodeTests(patterns, repositoryFiles) {
 
 export function focusedCommandExecutionPlan(
   commands,
-  { packageScripts = {}, repositoryFiles = [] } = {},
+  { packageScripts = {}, repositoryFiles = [], shellSemantics = null } = {},
 ) {
   const packageCoverage = [];
   const diagnostics = [];
@@ -217,14 +223,30 @@ export function focusedCommandExecutionPlan(
       continue;
     }
     const script = packageScripts[scriptName];
+    if (typeof script !== 'string') {
+      diagnostics.push({
+        id: command.id,
+        script: scriptName,
+        reason: 'invalid-package-script',
+      });
+      continue;
+    }
+    if (!/^node\s+--test(?:\s|$)/u.test(script.trim())) continue;
+    if (shellSemantics !== 'posix') {
+      diagnostics.push({
+        id: command.id,
+        script: scriptName,
+        reason: 'unsupported-script-shell',
+      });
+      continue;
+    }
     const patterns = packageNodeTestPatterns(script);
     if (!patterns) {
-      if (/^node\s+--test(?:\s|$)/u.test(script.trim()))
-        diagnostics.push({
-          id: command.id,
-          script: scriptName,
-          reason: 'unsupported-package-script',
-        });
+      diagnostics.push({
+        id: command.id,
+        script: scriptName,
+        reason: 'unsupported-package-script',
+      });
       continue;
     }
     const tests = expandPackageNodeTests(patterns, repositoryFiles);
@@ -258,10 +280,40 @@ export function focusedCommandExecutionPlan(
   };
 }
 
-async function loadFocusedExecutionInputs(commands, root) {
+export function packageScriptShellSemantics(
+  root,
+  { platform = process.platform, spawn = spawnSync } = {},
+) {
+  if (platform === 'win32') return null;
+  let result;
+  try {
+    result = spawn('npm', ['config', 'get', 'script-shell'], {
+      cwd: root,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+      env: { ...process.env, CI: 'true' },
+    });
+  } catch {
+    return null;
+  }
+  if (result?.error || result?.signal || result?.status !== 0) return null;
+  const configured = typeof result.stdout === 'string' ? result.stdout.trim() : '';
+  return ['', 'null', 'undefined'].includes(configured) ? 'posix' : null;
+}
+
+export async function loadFocusedExecutionInputs(
+  commands,
+  root,
+  {
+    readFile = fs.readFile,
+    readDirectory = fs.readdir,
+    statPath = fs.stat,
+    shellSemantics = null,
+  } = {},
+) {
   let packageScripts = {};
   try {
-    const packageJson = JSON.parse(await fs.readFile(path.join(root, 'package.json'), 'utf8'));
+    const packageJson = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));
     if (
       packageJson?.scripts &&
       typeof packageJson.scripts === 'object' &&
@@ -269,18 +321,19 @@ async function loadFocusedExecutionInputs(commands, root) {
     )
       packageScripts = packageJson.scripts;
   } catch {
-    return { packageScripts, repositoryFiles: [] };
+    return { packageScripts, repositoryFiles: [], shellSemantics };
   }
 
   const repositoryFiles = new Set();
   const patterns = commands.flatMap((command) => {
     const scriptName = packageScriptName(command);
-    return scriptName ? packageNodeTestPatterns(packageScripts[scriptName]) || [] : [];
+    const script = scriptName ? packageScripts[scriptName] : null;
+    return typeof script === 'string' ? packageNodeTestPatterns(script) || [] : [];
   });
   for (const pattern of patterns) {
     if (!pattern.includes('*')) {
       try {
-        if ((await fs.stat(path.join(root, pattern))).isFile()) repositoryFiles.add(pattern);
+        if ((await statPath(path.join(root, pattern))).isFile()) repositoryFiles.add(pattern);
       } catch {
         // An incomplete script cannot authorize deduplication.
       }
@@ -288,16 +341,25 @@ async function loadFocusedExecutionInputs(commands, root) {
     }
     const directory = path.dirname(pattern);
     try {
-      const entries = await fs.readdir(path.join(root, directory), { withFileTypes: true });
+      const entries = await readDirectory(path.join(root, directory), { withFileTypes: true });
       for (const entry of entries) {
-        if (entry.isFile() || entry.isSymbolicLink())
-          repositoryFiles.add(path.posix.join(directory, entry.name));
+        const candidate = path.posix.join(directory, entry.name);
+        if (entry.isFile()) {
+          repositoryFiles.add(candidate);
+          continue;
+        }
+        if (!entry.isSymbolicLink()) continue;
+        try {
+          if ((await statPath(path.join(root, candidate))).isFile()) repositoryFiles.add(candidate);
+        } catch {
+          // An unreadable link cannot authorize deduplication.
+        }
       }
     } catch {
       // An incomplete glob cannot authorize deduplication.
     }
   }
-  return { packageScripts, repositoryFiles: [...repositoryFiles] };
+  return { packageScripts, repositoryFiles: [...repositoryFiles], shellSemantics };
 }
 
 export function runFocusedCommands(
@@ -398,7 +460,9 @@ async function main() {
   }
   const execution = focusedCommandExecutionPlan(
     plan.commands,
-    await loadFocusedExecutionInputs(plan.commands, root),
+    await loadFocusedExecutionInputs(plan.commands, root, {
+      shellSemantics: packageScriptShellSemantics(root),
+    }),
   );
   for (const diagnostic of execution.diagnostics)
     process.stderr.write(`[focused:coverage] ${JSON.stringify(diagnostic)}\n`);
