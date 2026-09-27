@@ -11,6 +11,8 @@ const RECIPES = Object.freeze({
   ]),
 });
 
+const PHASE_BOUNDARY_EPSILON_MS = 1e-6;
+
 export const missionStartCueDuration = (kind) =>
   (RECIPES[kind] || []).reduce((total, phase) => total + phase.durationMs, 0);
 
@@ -28,7 +30,9 @@ export function createMissionStartCue(kind) {
       let cursor = 0;
       for (const [index, phase] of recipe.entries()) {
         cursor += phase.durationMs;
-        if (elapsed < cursor)
+        // Repeated RAF additions can land an exact boundary a fraction below it.
+        // Collapse only representation error, far below DOM timer resolution.
+        if (elapsed < cursor - PHASE_BOUNDARY_EPSILON_MS)
           return Object.freeze({
             active: true,
             blocksPlay: phase.blocksPlay,
