@@ -106,6 +106,22 @@ async function page(
     paints = [],
     previous = new Map(),
     reads = [];
+  let textLoadAction = null,
+    textLoadDispatches = 0;
+  const textLoadButton = $('load-text'),
+    addTextLoadListener = textLoadButton.addEventListener.bind(textLoadButton);
+  textLoadButton.addEventListener = (type, listener, options) =>
+    addTextLoadListener(
+      type,
+      type === 'click'
+        ? (event) => {
+            textLoadDispatches++;
+            textLoadAction = listener(event);
+            return textLoadAction;
+          }
+        : listener,
+      options,
+    );
   board.remove();
   main.append(stage);
   stage.append(board);
@@ -195,6 +211,11 @@ async function page(
       else delete globalThis[key];
   });
   await import(`../replay-theater/app.mjs?recorded-actors=${++serial}`);
+  assert.equal(
+    $('load-text').listeners.get('click')?.size,
+    1,
+    'Theater registers one pasted-replay action.',
+  );
   if (!editionFixture)
     await until(
       () => $('playback-phase').textContent === 'paused',
@@ -209,7 +230,16 @@ async function page(
     transport,
     load(value) {
       $('replay-text').value = typeof value === 'string' ? value : JSON.stringify(value);
+      const before = textLoadDispatches;
+      textLoadAction = null;
       $('load-text').emit('click');
+      assert.equal(textLoadDispatches, before + 1, 'One click starts one pasted-replay action.');
+      assert.equal(
+        typeof textLoadAction?.then,
+        'function',
+        'The pasted-replay action exposes its existing completion promise.',
+      );
+      return textLoadAction;
     },
     async loaded() {
       await until(
@@ -566,7 +596,7 @@ test('actual Solo Journey export loads in Theater with exact actors and complete
     'actual Theater resolves the shipped Journey owner and retains the download pin',
     async (t) => {
       const p = await page(t, { source: exported });
-      p.load(exported);
+      await p.load(exported);
       await p.loaded();
       const initial = p.frame(),
         appearance = initial.actorAppearance;
