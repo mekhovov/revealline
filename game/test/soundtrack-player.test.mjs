@@ -32,6 +32,7 @@ function resolvedRemoteTracks(specifications) {
       fileName: `remote-${index + 1}.mp3`,
       archiveId: `archive.remote-${index}`,
       collection: specification.collection ?? 'test-collection',
+      collections: specification.collections ?? [specification.collection ?? 'test-collection'],
       status: 'Published audition',
       listeningApproval: 'Pending',
       gameCatalogueAdmission: false,
@@ -39,7 +40,9 @@ function resolvedRemoteTracks(specifications) {
       recordingModeEligible: specification.recordingModeEligible ?? true,
       default: false,
       audio: {
-        path: specification.path ?? `objects/${sha256}.mp3`,
+        path:
+          specification.path ??
+          `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${sha256}.mp3`,
         bytes: specification.bytes ?? 1234,
         sha256,
       },
@@ -49,8 +52,8 @@ function resolvedRemoteTracks(specifications) {
   return resolveOnlineSoundtrackCatalogue({
     format: 'revealline-public-soundtrack-catalogue.v1',
     archive: {
-      id: 'revealline-soundtracks-01',
-      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+      id: 'revealline-soundtracks',
+      baseURL: 'https://mekhovov.github.io/revealline-soundtracks/',
     },
     sources: [],
     counts: {
@@ -162,11 +165,12 @@ test('online archive playback streams its exact HTTPS object through the shared 
         title: 'Remote song',
         tags: ['metal'],
         collection: 'creator-album',
-        path: `batches/creator-album/objects/${sha256}.mp3`,
+        path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${sha256}.mp3`,
       },
     ]);
   assert.equal(await h.player.playRemotePlaylist([remote]), true);
   assert.equal(h.media.src, remote.url);
+  assert.equal(h.media.crossOrigin, null);
   assert.equal(h.player.snapshot().track.title, 'Remote song');
   assert.equal(h.player.snapshot().source, 'remote');
   assert.equal(reads, 0);

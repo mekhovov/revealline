@@ -22,19 +22,24 @@ const track = {
   fileName: 'song.mp3',
   archiveId: 'creator-album',
   collection: 'Creator album',
+  collections: ['Creator album', 'Metal action'],
   status: 'licensed-preview',
   listeningApproval: 'not-reviewed',
   gameCatalogueAdmission: false,
   contentId: true,
   recordingModeEligible: false,
-  audio: { path: `batches/creator-album/objects/${sha256}.mp3`, bytes: 1234, sha256 },
+  audio: {
+    path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${sha256}.mp3`,
+    bytes: 1234,
+    sha256,
+  },
   aliases: [],
 };
 const catalogue = {
   format: 'revealline-public-soundtrack-catalogue.v1',
   archive: {
-    id: 'revealline-soundtracks-01',
-    baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+    id: 'revealline-soundtracks',
+    baseURL: 'https://mekhovov.github.io/revealline-soundtracks/',
   },
   sources: [],
   counts: { declaredTracks: 1, uniqueRecordings: 1, duplicateAliases: 0, audioBytes: 1234 },
@@ -49,7 +54,7 @@ test('online catalogue creates a bounded immutable remote playback entry', () =>
   assert.equal(resolved.tracks[0].id, `online.${sha256}`);
   assert.equal(
     resolved.tracks[0].url,
-    `https://mekhovov.github.io/revealline-soundtracks-01/batches/creator-album/objects/${sha256}.mp3`,
+    `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${sha256}.mp3`,
   );
   assert(Object.isFrozen(resolved));
   assert(Object.isFrozen(resolved.tracks));
@@ -99,6 +104,42 @@ test('online catalogue accepts legacy entries and validates mirrored structured 
         resolveOnlineSoundtrackCatalogue({ ...catalogue, tracks: [{ ...track, rights: invalid }] }),
       /rights|share-alike/i,
     );
+});
+
+test('online catalogue preserves uploader-confirmed unknown rights without forging a licence', () => {
+  const credit = 'Song by Creator. Rights confirmed by uploader.';
+  const rights = {
+    licenseId: 'UNKNOWN',
+    licenseVersion: null,
+    licenseURL: null,
+    rightsEvidenceURL: track.source,
+    attribution: credit,
+    derivativeChangeNotice: 'Exact submitted MP3 bytes retained.',
+    permissionBasis: 'uploader-confirmed-public-redistribution-and-web-playback',
+    shareAlike: {
+      required: null,
+      deliveryLicenseId: null,
+      deliveryLicenseVersion: null,
+      deliveryLicenseURL: null,
+    },
+  };
+  const resolved = resolveOnlineSoundtrackCatalogue({
+    ...catalogue,
+    tracks: [
+      {
+        ...track,
+        license: 'Unknown — uploader-confirmed rights',
+        licenseURL: null,
+        credit,
+        rights,
+        recordingModeEligible: false,
+      },
+    ],
+  }).tracks[0];
+  assert.equal(resolved.rights.license, 'Unknown — uploader-confirmed rights');
+  assert.equal(resolved.rights.evidence.permissionBasis, rights.permissionBasis);
+  assert.equal(resolved.websites.length, 1);
+  assert.deepEqual(resolved.collections, ['Creator album', 'Metal action']);
 });
 
 test('online catalogue requires compatible delivery terms for share-alike recordings', () => {

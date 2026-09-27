@@ -368,33 +368,48 @@ function onlineCatalogueFixture() {
       'Space collection',
       ['ambient', 'atmospheric'],
     ],
+    [
+      '7'.repeat(64),
+      'FPV Run',
+      'TRENCH ORDERLY',
+      'TRENCH ORDERLY',
+      ['ФПВ', 'UA', 'rock'],
+      ['TRENCH ORDERLY', 'ФПВ'],
+    ],
   ];
-  const tracks = definitions.map(([sha256, title, artist, collection, tags], index) => ({
-    id: `fixture-${index + 1}`,
-    title,
-    artist,
-    durationSeconds: 180 + index,
-    tags,
-    source: `https://artists.example/${index + 1}`,
-    license: 'CC BY 4.0 International',
-    licenseURL: 'https://creativecommons.org/licenses/by/4.0/',
-    credit: `${title} by ${artist}`,
-    fileName: `${title}.mp3`,
-    archiveId: `fixture-${index + 1}`,
-    collection,
-    status: 'published-audition',
-    listeningApproval: 'pending',
-    gameCatalogueAdmission: false,
-    contentId: index === 2 ? true : 'unknown',
-    recordingModeEligible: false,
-    audio: { path: `objects/${sha256}.mp3`, bytes: 1000 + index, sha256 },
-    aliases: [],
-  }));
+  const tracks = definitions.map(
+    ([sha256, title, artist, collection, tags, collections = [collection]], index) => ({
+      id: `fixture-${index + 1}`,
+      title,
+      artist,
+      durationSeconds: 180 + index,
+      tags,
+      source: `https://artists.example/${index + 1}`,
+      license: 'CC BY 4.0 International',
+      licenseURL: 'https://creativecommons.org/licenses/by/4.0/',
+      credit: `${title} by ${artist}`,
+      fileName: `${title}.mp3`,
+      archiveId: `fixture-${index + 1}`,
+      collection,
+      collections,
+      status: 'published-audition',
+      listeningApproval: 'pending',
+      gameCatalogueAdmission: false,
+      contentId: index === 2 ? true : 'unknown',
+      recordingModeEligible: false,
+      audio: {
+        path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${sha256}.mp3`,
+        bytes: 1000 + index,
+        sha256,
+      },
+      aliases: [],
+    }),
+  );
   return {
     format: 'revealline-public-soundtrack-catalogue.v1',
     archive: {
-      id: 'revealline-soundtracks-01',
-      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+      id: 'revealline-soundtracks',
+      baseURL: 'https://mekhovov.github.io/revealline-soundtracks/',
     },
     sources: [],
     counts: {
@@ -2045,7 +2060,7 @@ test('archive website remains a secondary credits and download link', async (t) 
   await app.click('advanced-community-toggle');
   const link = app.node('licensed-previews');
   assert.equal(link.tagName, 'A');
-  assert.equal(link.getAttribute('href'), 'https://mekhovov.github.io/revealline-soundtracks-01/');
+  assert.equal(link.getAttribute('href'), 'https://mekhovov.github.io/revealline-soundtracks/');
   assert.equal(link.getAttribute('target'), '_blank');
   assert.equal(link.getAttribute('rel'), 'noopener noreferrer');
   assert.match(link.textContent, /Open the public archive website/);
@@ -2083,14 +2098,14 @@ test('public archive searches and plays any published recording through the shar
     },
   });
   await settleOnlineCatalogue(
-    () => requests.length === 1 && app.node('online-results').children.length === 6,
+    () => requests.length === 1 && app.node('online-results').children.length === 7,
     'the public catalogue results',
   );
   assert.equal(requests.length, 1);
   assert.equal(requests[0][0], ONLINE_SOUNDTRACK_CATALOGUE_URL);
   assert.equal(requests[0][1].credentials, 'omit');
-  assert.equal(app.node('online-results').children.length, 6);
-  assert.match(app.node('online-status').textContent, /6 of 6 published recordings/);
+  assert.equal(app.node('online-results').children.length, 7);
+  assert.match(app.node('online-status').textContent, /7 of 7 published recordings/);
 
   app.node('online-search').value = 'dnipro';
   app.node('online-search').oninput();
@@ -2115,15 +2130,15 @@ test('public archive searches and plays any published recording through the shar
   app.node('online-style-synth').onchange();
   app.node('online-style-ukrainian').checked = true;
   app.node('online-style-ukrainian').onchange();
-  assert.equal(app.node('online-results').children.length, 2);
+  assert.equal(app.node('online-results').children.length, 3);
   app.choose('online-order', 'ordered');
   app.choose('online-repeat', 'off');
   await app.click('online-play-all');
   const mixed = app.calls.findLast(([name]) => name === 'remote');
-  assert.equal(mixed[1].length, 2);
+  assert.equal(mixed[1].length, 3);
   assert.deepEqual(
     mixed[1].map((track) => track.title),
-    ['Night Circuit', 'Dnipro Bells'],
+    ['Night Circuit', 'Dnipro Bells', 'FPV Run'],
   );
   assert.deepEqual(mixed[2], {
     order: 'ordered',
@@ -2136,9 +2151,21 @@ test('public archive searches and plays any published recording through the shar
   assert.equal(app.calls.findLast(([name]) => name === 'remote')[2].mixWithLibrary, false);
 
   await app.click('online-styles-all');
-  assert.equal(app.node('online-results').children.length, 6);
+  assert.equal(app.node('online-results').children.length, 7);
 
   await app.click('online-styles-none');
+  app.node('online-style-fpv').checked = true;
+  app.node('online-style-fpv').onchange();
+  assert.equal(app.node('online-results').children.length, 1);
+  assert.match(app.node('online-results').textContent, /FPV Run/);
+  app.node('online-style-ua').checked = true;
+  app.node('online-style-ua').onchange();
+  assert.equal(app.node('online-results').children.length, 1);
+  app.choose('online-collection', 'ФПВ');
+  assert.equal(app.node('online-results').children.length, 1);
+
+  await app.click('online-styles-none');
+  app.choose('online-collection', '');
   app.node('online-style-chiptune').checked = true;
   app.node('online-style-chiptune').onchange();
   assert.equal(app.node('online-results').children.length, 1);
@@ -2147,16 +2174,17 @@ test('public archive searches and plays any published recording through the shar
   app.node('online-style-rock').onchange();
   app.node('online-style-ambient').checked = true;
   app.node('online-style-ambient').onchange();
-  assert.equal(app.node('online-results').children.length, 3);
+  assert.equal(app.node('online-results').children.length, 4);
   assert.match(app.node('online-results').textContent, /Road Voltage/);
   assert.match(app.node('online-results').textContent, /Quiet Orbit/);
+  assert.match(app.node('online-results').textContent, /FPV Run/);
 
   app.node('recording-mode').checked = true;
   await app.click('apply-listening');
   assert.equal((await app.store.read()).library.listening.recordingMode, true);
   assert.equal(app.node('online-results').children.length, 0);
   assert.equal(app.node('online-play-all').disabled, true);
-  assert.match(app.node('online-status').textContent, /Recording mode excludes 6/);
+  assert.match(app.node('online-status').textContent, /Recording mode excludes 7/);
 });
 
 test('public archive catalogue outage can refresh without disabling built-in controls', async (t) => {
@@ -2191,11 +2219,11 @@ test('public archive catalogue outage can refresh without disabling built-in con
   await settleOnlineCatalogue(
     () =>
       attempts === 2 &&
-      /6 of 6 published recordings/.test(failed.node('online-status').textContent),
+      /7 of 7 published recordings/.test(failed.node('online-status').textContent),
     'the refreshed public catalogue',
   );
   assert.equal(attempts, 2);
-  assert.match(failed.node('online-status').textContent, /6 of 6 published recordings/);
+  assert.match(failed.node('online-status').textContent, /7 of 7 published recordings/);
   await failed.click(`online-play-${'1'.repeat(64)}`);
   const recovered = failed.calls.findLast(([name]) => name === 'remote');
   assert.equal(recovered[1][0].title, 'Night Circuit');

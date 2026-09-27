@@ -55,6 +55,8 @@ const seconds = (value = 0) =>
   `${Math.floor(value / 60)}:${String(Math.floor(value % 60)).padStart(2, '0')}`;
 const bytes = (value) => `${(value / 1024 / 1024).toFixed(1)} MiB`;
 const ONLINE_STYLE_CHOICES = Object.freeze([
+  ['fpv', localizedMessage('interface:fpvMusic')],
+  ['ua', localizedMessage('interface:uaMusic')],
   ['synth', localizedMessage('interface:synthElectronic')],
   ['metal', localizedMessage('interface:metal')],
   ['ukrainian', localizedMessage('interface:ukrainian')],
@@ -1426,7 +1428,7 @@ export function attachSoundtrackPanel({
       class: 'micro-note',
     }),
     node('a', 'licensed-previews', localizedMessage('interface:openThePublicArchiveWebsite'), {
-      href: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+      href: 'https://mekhovov.github.io/revealline-soundtracks/',
       target: '_blank',
       rel: 'noopener noreferrer',
       class: 'button secondary',
@@ -1687,7 +1689,9 @@ export function attachSoundtrackPanel({
   function matchesOnlineStyle(track, style) {
     const tags = track.tags.map((tag) => tag.toLowerCase()),
       has = (...values) => values.some((value) => tags.some((tag) => tag.includes(value)));
-    if (style === 'ukrainian') return has('ukrain');
+    if (style === 'fpv') return has('фпв', 'fpv');
+    if (style === 'ua') return tags.some((tag) => tag === 'ua');
+    if (style === 'ukrainian') return has('ukrain') || tags.some((tag) => tag === 'ua');
     if (style === 'metal') return has('metal');
     if (style === 'synth') return has('synth', 'electro', 'tracker', 'fm', 'dance', 'techno');
     if (style === 'chiptune') return has('chiptune', '8-bit', 'fakebit');
@@ -1721,7 +1725,7 @@ export function attachSoundtrackPanel({
       const searchable = [
         track.title,
         track.artist,
-        track.collection,
+        ...(track.collections ?? [track.collection]),
         track.fileName,
         ...track.tags,
       ]
@@ -1730,7 +1734,7 @@ export function attachSoundtrackPanel({
       return (
         (!draft.listening?.recordingMode || onlineSoundtrackRecordingAllowed(track)) &&
         (!query || searchable.includes(query)) &&
-        (!collection || track.collection === collection) &&
+        (!collection || (track.collections ?? [track.collection]).includes(collection)) &&
         [...styles].some((style) => matchesOnlineStyle(track, style))
       );
     });
@@ -1765,7 +1769,11 @@ export function attachSoundtrackPanel({
         details.append(
           node('strong', null, track.title),
           node('span', null, track.artist),
-          node('small', null, `${track.collection} · ${track.tags.join(' · ')}`),
+          node(
+            'small',
+            null,
+            `${(track.collections ?? [track.collection]).join(' · ')} · ${track.tags.join(' · ')}`,
+          ),
         );
         const source = node('a', null, localizedMessage('interface:source'), {
           href: track.websites[0].url,
@@ -1807,7 +1815,7 @@ export function attachSoundtrackPanel({
       onlineCatalogue = loaded;
       options(onlineCollection.element, [
         ['', t('interface:allCollections')],
-        ...[...new Set(loaded.tracks.map((track) => track.collection))]
+        ...[...new Set(loaded.tracks.flatMap((track) => track.collections ?? [track.collection]))]
           .sort((a, b) => a.localeCompare(b))
           .map((collection) => [collection, collection]),
       ]);

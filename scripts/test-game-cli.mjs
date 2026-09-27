@@ -766,10 +766,14 @@ test('public package has local entry, accurate storage notices and enforced prev
       .split(';')
       .find((value) => value.trim().startsWith('connect-src'))
       .trim(),
-    "connect-src 'self' https://mekhovov.github.io/revealline-soundtracks-01/",
+    "connect-src 'self' https://mekhovov.github.io/revealline-soundtracks/",
     'Local preview fetches may reach only the code-admitted soundtrack archive path.',
   );
   assert.match(PUBLIC_SECURITY_HEADERS['Content-Security-Policy'], /connect-src 'self';/);
+  assert.match(
+    release.headers['content-security-policy'],
+    /media-src 'self' data: blob: https:\/\/github\.com https:\/\/release-assets\.githubusercontent\.com/,
+  );
   assert.equal(release.headers['referrer-policy'], 'no-referrer');
   assert.equal(release.headers['cache-control'], 'no-cache');
   const entry = await getRaw(releaseServer.url, '/');
@@ -782,7 +786,7 @@ test('public package has local entry, accurate storage notices and enforced prev
   assert.match(credits, /Carol of the Bells \(Metal Version\)/);
   assert.match(credits, /Alexander Nakarada \(CreatorChords\)/);
   assert.match(credits, /Creative Commons Attribution 4\.0 International/);
-  assert.match(credits, /Mykola Leontovych’s <cite>Shchedryk<\/cite>/);
+  assert.match(credits, /Mykola Leontovych’s <cite[^>]*>Shchedryk<\/cite>/);
   const publishedHeaders = await fs.readFile(path.join(out, '_headers'), 'utf8');
   assert.match(publishedHeaders, /Content-Security-Policy/);
   assert.doesNotMatch(publishedHeaders, /revealline-soundtracks-01/);
