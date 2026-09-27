@@ -12,3 +12,15 @@ All open inputs are being reconciled into one candidate before cumulative tests 
 No intermediate release or historical deployment is required. Exact-source identity, required
 focused/static/provenance checks, production review and final publication-byte checks remain.
 This document is integration accounting, not successful test or release qualification evidence.
+
+## PR #611: optional reporting retained, no production deferrals
+
+The original proposal at `14f07bca6d7caf238e1ca1390db9fe5969b74905` is retained
+in merge ancestry. Optional per-category deferral reporting is available and explicitly labels
+such selections as not passed. Its regression uses a cloned synthetic manifest only.
+
+The production focused-test map is unchanged: retained Team successor-picture coverage remains
+in its blocking command; changed tests continue to run; package/version paths retain fail-closed
+unknown-runtime handling. Existing exact-head build fallback delegation is preserved. No retained
+coverage is reduced without a separately evidenced equivalence review and reviewed policy change.
+Aggregate policy, focused-selector, admission and workflow verification is still required.

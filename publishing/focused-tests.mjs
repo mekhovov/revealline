@@ -61,6 +61,9 @@ export function validateFocusedTestMap(manifest) {
     return {
       ...category,
       patterns: compilePatterns(category.pathPatterns),
+      deferredChangedTestPatterns: compilePatterns(
+        category.deferredChangedTestPatterns || [],
+      ),
       commands: category.commands.map(validateCommand),
     };
   });
@@ -108,6 +111,7 @@ export function focusedTestPlan(
   if (unknownRuntime.length && !fallbackHandled)
     commands.push(...map.fallbackCommands);
 
+  const deferredTests = [];
   for (const changed of paths) {
     if (!changed.endsWith(".test.mjs")) continue;
     if (
@@ -125,6 +129,16 @@ export function focusedTestPlan(
       )
     )
       continue;
+    if (
+      categories.some((category) =>
+        category.deferredChangedTestPatterns.some((pattern) =>
+          pattern.test(changed),
+        ),
+      )
+    ) {
+      deferredTests.push(changed);
+      continue;
+    }
     commands.push({
       id: `changed-test:${changed}`,
       command: "node",
@@ -138,6 +152,7 @@ export function focusedTestPlan(
   return {
     categories: categories.map((category) => category.id),
     unknownRuntime,
+    deferredTests,
     commands: uniqueCommands,
   };
 }
@@ -178,6 +193,10 @@ async function main() {
       fallbackHandled
         ? `Fallback validation delegated to the required exact-head release build: ${plan.unknownRuntime.join(", ")}`
         : `Fallback validation: ${plan.unknownRuntime.join(", ")}`,
+    );
+  if (plan.deferredTests.length)
+    summary.push(
+      `Deferred long matrices: ${plan.deferredTests.join(", ")} (not passed)`,
     );
   if (process.env.GITHUB_STEP_SUMMARY)
     await fs.appendFile(
