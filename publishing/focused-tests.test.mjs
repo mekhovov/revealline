@@ -3,7 +3,11 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { focusedTestPlan, runFocusedCommands } from './focused-tests.mjs';
+import {
+  focusedCommandExecutionPlan,
+  focusedTestPlan,
+  runFocusedCommands,
+} from './focused-tests.mjs';
 
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(await readFile(path.join(directory, 'focused-test-map.json'), 'utf8'));
@@ -268,4 +272,96 @@ test('focused command execution succeeds only when every command succeeds', () =
     stderr: { write() {} },
   });
   assert.deepEqual(summary, { attempted: 1, failures: [], exitCode: 0 });
+});
+
+test('execution planning removes only exact tests covered by the selected package script', () => {
+  const commands = [
+    { id: 'aggregate', command: 'npm', args: ['run', 'suite'] },
+    { id: 'any-id-a', command: 'node', args: ['--test', 'tests/a.test.mjs'] },
+    { id: 'any-id-b', command: 'node', args: ['--test', 'other/b.test.mjs'] },
+    { id: 'syntax', command: 'node', args: ['--check', 'tests/a.test.mjs'] },
+  ];
+  const execution = focusedCommandExecutionPlan(commands, {
+    packageScripts: {
+      suite: 'node --test tests/*.test.mjs scripts/test-extra.mjs',
+    },
+    repositoryFiles: [
+      'tests/a.test.mjs',
+      'tests/c.test.mjs',
+      'other/b.test.mjs',
+      'scripts/test-extra.mjs',
+    ],
+  });
+  assert.deepEqual(
+    execution.commands.map(({ id }) => id),
+    ['aggregate', 'any-id-b', 'syntax'],
+  );
+  assert.deepEqual(execution.packageCoverage, [
+    {
+      id: 'aggregate',
+      script: 'suite',
+      tests: ['tests/a.test.mjs', 'tests/c.test.mjs', 'scripts/test-extra.mjs'],
+    },
+  ]);
+  assert.deepEqual(execution.deduplicated, [
+    {
+      id: 'any-id-a',
+      testFile: 'tests/a.test.mjs',
+      coveredBy: ['aggregate'],
+    },
+  ]);
+  assert.deepEqual(execution.diagnostics, []);
+  const before = new Set([
+    ...execution.packageCoverage[0].tests,
+    'tests/a.test.mjs',
+    'other/b.test.mjs',
+  ]);
+  const after = new Set([...execution.packageCoverage[0].tests, 'other/b.test.mjs']);
+  assert.deepEqual(after, before);
+});
+
+test('package-script drift cannot silently remove focused coverage', () => {
+  const commands = [
+    { id: 'aggregate', command: 'npm', args: ['run', 'suite'] },
+    { id: 'a', command: 'node', args: ['--test', 'tests/a.test.mjs'] },
+    { id: 'b', command: 'node', args: ['--test', 'tests/b.test.mjs'] },
+  ];
+  const execution = focusedCommandExecutionPlan(commands, {
+    packageScripts: { suite: 'node --test tests/a.test.mjs' },
+    repositoryFiles: ['tests/a.test.mjs', 'tests/b.test.mjs'],
+  });
+  assert.deepEqual(
+    execution.commands.map(({ id }) => id),
+    ['aggregate', 'b'],
+  );
+  assert.deepEqual(
+    execution.deduplicated.map(({ testFile }) => testFile),
+    ['tests/a.test.mjs'],
+  );
+});
+
+test('missing files and unsupported or missing scripts retain every command', () => {
+  const commands = [
+    { id: 'aggregate', command: 'npm', args: ['run', 'suite'] },
+    { id: 'a', command: 'node', args: ['--test', 'tests/a.test.mjs'] },
+  ];
+  for (const inputs of [
+    {
+      packageScripts: { suite: 'node --test tests/missing.test.mjs' },
+      repositoryFiles: ['tests/a.test.mjs'],
+    },
+    {
+      packageScripts: { suite: 'node --test tests/a.test.mjs && echo unsafe' },
+      repositoryFiles: ['tests/a.test.mjs'],
+    },
+    {
+      packageScripts: {},
+      repositoryFiles: ['tests/a.test.mjs'],
+    },
+  ]) {
+    const execution = focusedCommandExecutionPlan(commands, inputs);
+    assert.deepEqual(execution.commands, commands);
+    assert.deepEqual(execution.deduplicated, []);
+    assert.equal(execution.diagnostics.length, 1);
+  }
 });
