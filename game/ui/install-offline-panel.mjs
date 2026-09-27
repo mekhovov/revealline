@@ -50,6 +50,7 @@ export function attachInstallOfflinePanel({
   onOpen = () => {},
   onClose = () => {},
   onStatus = () => {},
+  mountRoot = doc?.body,
 } = {}) {
   const url = new URL(downloadsURL, win?.location?.href);
   url.searchParams.set('embedded', '1');
@@ -184,7 +185,7 @@ export function attachInstallOfflinePanel({
     };
     header.append(title, installButton, downloadsButton, closeButton);
     dialog.append(header, frame);
-    doc.body.append(dialog);
+    mountRoot.append(dialog);
     ownedFrames.set(doc, { dialog, frame });
     dialog.addEventListener('close', () => {
       if (pendingPackage) {
@@ -201,7 +202,8 @@ export function attachInstallOfflinePanel({
   const panel = {
     label,
     open() {
-      if (!doc?.body || !win?.location || origin !== win.location.origin) return false;
+      if (!doc?.body || !mountRoot?.isConnected || !win?.location || origin !== win.location.origin)
+        return false;
       if (dialog?.open) return true;
       opener = doc.activeElement;
       onOpen();

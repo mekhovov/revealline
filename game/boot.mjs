@@ -30,6 +30,20 @@
   let frame = null;
   let padNeutral = false;
   let padCommand = null;
+  let inputOwners = 0;
+  function suspendInput() {
+    inputOwners++;
+    padNeutral = false;
+    padCommand = null;
+    let released = false;
+    return () => {
+      if (released) return;
+      released = true;
+      inputOwners--;
+      padNeutral = false;
+      padCommand = null;
+    };
+  }
   const styleCleanups = new Set();
   const $ = (id) => doc.getElementById(id);
 
@@ -150,7 +164,7 @@
     controls[(index + direction + controls.length) % controls.length].focus();
   }
   function keydown(event) {
-    if (state === 'ready' || event.altKey || event.ctrlKey || event.metaKey) return;
+    if (inputOwners || state === 'ready' || event.altKey || event.ctrlKey || event.metaKey) return;
     // Native keyboard/pointer interaction wins until a held pad returns neutral.
     padNeutral = false;
     if (['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft'].includes(event.key)) {
@@ -161,7 +175,7 @@
   function pollPad() {
     if (state === 'ready') return;
     frame = host.requestAnimationFrame(pollPad);
-    if (doc.hidden || !doc.hasFocus()) {
+    if (inputOwners || doc.hidden || !doc.hasFocus()) {
       padNeutral = false;
       padCommand = null;
       return;
@@ -233,7 +247,7 @@
       })
       .catch(fail);
   }
-  host.RevealLineBoot = Object.freeze({ ready, fail, progress });
+  host.RevealLineBoot = Object.freeze({ ready, fail, progress, suspendInput });
   host.addEventListener('error', resourceError, true);
   if (doc.readyState !== 'complete')
     doc.addEventListener('DOMContentLoaded', mount, { once: true });

@@ -567,3 +567,32 @@ test('missing or malformed npm shell-probe output cannot authorize deduplication
     null,
   );
 });
+
+test('company packaging and boot admission always select company and startup regressions', () => {
+  for (const changed of [
+    'game/boot.mjs',
+    'game/ui/company-startup.mjs',
+    'game/ui/install-offline-panel.mjs',
+    'game/editions/offline-package-id.mjs',
+    'scripts/company-offline-packages.mjs',
+    'scripts/offline-content.mjs',
+  ]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.ok(plan.categories.includes('company-editions'), changed);
+    assert.ok(plan.categories.includes('company-offline-startup'), changed);
+    assert.deepEqual(plan.unknownRuntime, [], changed);
+    assert.ok(
+      plan.commands.some((c) => c.id === 'company-runtime-and-publication'),
+      changed,
+    );
+    const startup = plan.commands.find((c) => c.id === 'company-offline-startup');
+    for (const required of [
+      'game/test/boot.test.mjs',
+      'game/test/offline-download-access.test.mjs',
+      'game/test/official-downloads.test.mjs',
+      'game/test/install-offline-panel.test.mjs',
+      'scripts/test-offline-core-closure.mjs',
+    ])
+      assert.ok(startup.args.includes(required), required);
+  }
+});

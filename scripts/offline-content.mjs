@@ -1,3 +1,4 @@
+import { companyOfflinePackages } from './company-offline-packages.mjs';
 import { soundtrackDownloadVolumes } from '../game/soundtrack-download-volumes.mjs';
 import { createHash } from 'node:crypto';
 import { SOUNDTRACK_CATALOGUE } from '../game/content/soundtrack-catalogue.mjs';
@@ -56,6 +57,9 @@ export async function buildOfflineContent(entries, excluded, version) {
     authoredMissions = [],
     teamProjects = [],
     authoredPaths = new Set();
+  const company = await companyOfflinePackages(entries);
+  for (const name of company.paths) excluded.add(name);
+  groups.push(...company.groups);
   const currentChapter = new Map((snapshots?.chapters || []).map((item) => [item.pack.id, item]));
   const routeSnapshots = new Map(
     (snapshots?.routes || []).map((item) => [
@@ -345,6 +349,7 @@ export async function buildOfflineContent(entries, excluded, version) {
         (file) =>
           !chapterPaths.has(file.path) &&
           !authoredPaths.has(file.path) &&
+          !company.paths.has(file.path) &&
           !authoredSnapshotPaths.has(file.path) &&
           !file.path.startsWith('game/content-design/assets/') &&
           !toolingPaths.has(file.path) &&

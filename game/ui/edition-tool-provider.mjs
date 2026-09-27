@@ -1,4 +1,4 @@
-import { loadRuntimeContentProvider } from '../runtime-content-provider.mjs';
+import { loadCompanyStartup } from './company-startup.mjs';
 import { mountEditionNavigation } from './edition-navigation.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
 
@@ -13,7 +13,7 @@ export async function loadEditionToolProvider({
   const tool = new URL(locationRef.href),
     game = new URL('../index.html', tool);
   game.search = tool.search;
-  const provider = await loadRuntimeContentProvider({
+  const provider = await loadCompanyStartup({
     ...options,
     locationRef: { href: game.href },
     documentRef,
