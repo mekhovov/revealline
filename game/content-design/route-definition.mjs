@@ -22,11 +22,275 @@ export function createAuthoredJourneyRouteDefinition(
     createWholeErosionReviewCandidates,
     createSpatialNextBatchCandidates,
     createHorizonNextBatchCandidates,
+    createBorderCulturalNextBatchCandidates,
+    createBorderSignalCulturalNextBatchCandidates,
+    createEarlyCulturalRoutesCandidates,
+    createSignalCulturalRoutesCandidates,
+    createNeonCulturalRoutesCandidates,
+    createNeonCulturalRoutesFinaleCandidates,
+    createRoverCulturalRoutesCandidates,
+    createFractureCulturalRoutesCandidates,
+    createPhaseworksCulturalRoutesCandidates,
+    createLivewireCulturalRoutesCandidates,
+    createRelayCulturalRoutesCandidates,
+    createCrosswindCulturalRoutesCandidates,
+    createSentinelCulturalRoutesCandidates,
+    createApexCulturalRoutesCandidates,
+    createRelayCulturalCompletionCandidates,
+    createCrosswindCulturalCompletionCandidates,
+    createFractureApexCulturalCompletionCandidates,
+    createNeonCulturalCompletionCandidates,
+    createRoverCulturalCompletionCandidates,
+    createBorderCulturalCompletionCandidates,
+    createBorderFrontierPocketCandidates,
+    createCulturalTimedBonusPressureCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v33')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Cultural timed opportunity pressure · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v33',
+      profileKey: 'journey-whole-spatial-v33',
+      source: createCulturalTimedBonusPressureCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v32')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Border frontier and pocket completion · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v32',
+      profileKey: 'journey-whole-spatial-v32',
+      source: createBorderFrontierPocketCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v31')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Border Ukrainian cultural completion · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v31',
+      profileKey: 'journey-whole-spatial-v31',
+      source: createBorderCulturalCompletionCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v30')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Rover Ukrainian and FPV spatial completion · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v30',
+      profileKey: 'journey-whole-spatial-v30',
+      source: createRoverCulturalCompletionCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v29')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Neon Ukrainian cultural completion · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v29',
+      profileKey: 'journey-whole-spatial-v29',
+      source: createNeonCulturalCompletionCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v28')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Fracture and Apex Ukrainian cultural completion · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v28',
+      profileKey: 'journey-whole-spatial-v28',
+      source: createFractureApexCulturalCompletionCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v27')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Crosswind Ukrainian cultural completion · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v27',
+      profileKey: 'journey-whole-spatial-v27',
+      source: createCrosswindCulturalCompletionCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v26')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Relay Ukrainian cultural completion · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v26',
+      profileKey: 'journey-whole-spatial-v26',
+      source: createRelayCulturalCompletionCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v25')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Apex Ukrainian cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v25',
+      profileKey: 'journey-whole-spatial-v25',
+      source: createApexCulturalRoutesCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v24')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Sentinel Ukrainian cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v24',
+      profileKey: 'journey-whole-spatial-v24',
+      source: createSentinelCulturalRoutesCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v23')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Crosswind Ukrainian cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v23',
+      profileKey: 'journey-whole-spatial-v23',
+      source: createCrosswindCulturalRoutesCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v22')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Relay Ukrainian cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v22',
+      profileKey: 'journey-whole-spatial-v22',
+      source: createRelayCulturalRoutesCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v21')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Livewire Ukrainian cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v21',
+      profileKey: 'journey-whole-spatial-v21',
+      source: createLivewireCulturalRoutesCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v20')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Phaseworks Ukrainian cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v20',
+      profileKey: 'journey-whole-spatial-v20',
+      source: createPhaseworksCulturalRoutesCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v19')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Fractured Grid Ukrainian cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v19',
+      profileKey: 'journey-whole-spatial-v19',
+      source: createFractureCulturalRoutesCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v18')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Rover Ukrainian cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v18',
+      profileKey: 'journey-whole-spatial-v18',
+      source: createRoverCulturalRoutesCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v17')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Neon Ukrainian cultural routes finale · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v17',
+      profileKey: 'journey-whole-spatial-v17',
+      source: createNeonCulturalRoutesFinaleCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v16')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Neon Ukrainian cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v16',
+      profileKey: 'journey-whole-spatial-v16',
+      source: createNeonCulturalRoutesCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v15')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Signal Ukrainian cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v15',
+      profileKey: 'journey-whole-spatial-v15',
+      source: createSignalCulturalRoutesCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v14')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey early Ukrainian cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v14',
+      profileKey: 'journey-whole-spatial-v14',
+      source: createEarlyCulturalRoutesCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v13')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Border and Signal cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v13',
+      profileKey: 'journey-whole-spatial-v13',
+      source: createBorderSignalCulturalNextBatchCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v12')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Border cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v12',
+      profileKey: 'journey-whole-spatial-v12',
+      source: createBorderCulturalNextBatchCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-ornament-v2')
     return freezeDesign({
       id,

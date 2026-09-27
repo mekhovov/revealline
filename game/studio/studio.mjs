@@ -47,6 +47,20 @@ import {
 } from '../content-design/whole-spatial-candidates.mjs';
 import { createSpatialNextBatchCandidates } from '../content-design/spatial-next-batch-candidates.mjs';
 import { createHorizonNextBatchCandidates } from '../content-design/horizon-next-batch-candidates.mjs';
+import { createBorderCulturalNextBatchCandidates } from '../content-design/border-cultural-next-batch-candidates.mjs';
+import { createBorderSignalCulturalNextBatchCandidates } from '../content-design/border-signal-cultural-next-batch-candidates.mjs';
+import { createEarlyCulturalRoutesCandidates } from '../content-design/early-cultural-routes-candidates.mjs';
+import { createSignalCulturalRoutesCandidates } from '../content-design/signal-cultural-routes-candidates.mjs';
+import { createNeonCulturalRoutesCandidates } from '../content-design/neon-cultural-routes-candidates.mjs';
+import { createNeonCulturalRoutesFinaleCandidates } from '../content-design/neon-cultural-routes-finale-candidates.mjs';
+import { createRoverCulturalRoutesCandidates } from '../content-design/rover-cultural-routes-candidates.mjs';
+import { createFractureCulturalRoutesCandidates } from '../content-design/fracture-cultural-routes-candidates.mjs';
+import { createPhaseworksCulturalRoutesCandidates } from '../content-design/phaseworks-cultural-routes-candidates.mjs';
+import { createLivewireCulturalRoutesCandidates } from '../content-design/livewire-cultural-routes-candidates.mjs';
+import { createRelayCulturalRoutesCandidates } from '../content-design/relay-cultural-routes-candidates.mjs';
+import { createCrosswindCulturalRoutesCandidates } from '../content-design/crosswind-cultural-routes-candidates.mjs';
+import { createSentinelCulturalRoutesCandidates } from '../content-design/sentinel-cultural-routes-candidates.mjs';
+import { createApexCulturalRoutesCandidates } from '../content-design/apex-cultural-routes-candidates.mjs';
 import { createUkrainianOrnamentJourney } from '../content-design/ukrainian-ornament-candidates.mjs';
 import { createUkrainianOrnamentAtlasJourney } from '../content-design/ukrainian-ornament-atlas.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
@@ -54,6 +68,9 @@ import { createTeamSignalCandidates } from '../content-design/team-signal-candid
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
 import { createTeamPressureOriginalCandidates } from '../content-design/team-pressure-originals.mjs';
 import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
+import { createTeamCompleteSpecialistOriginalCandidates } from '../content-design/team-complete-specialist-originals.mjs';
+import { createTeamCulturalSpecialistOriginalCandidates } from '../content-design/team-cultural-specialist-originals.mjs';
+import { createTeamCulturalSpecialistV2OriginalCandidates } from '../content-design/team-cultural-specialist-v2-originals.mjs';
 import { createTeamTimedCandidates } from '../content-design/team-timed-candidates.mjs';
 import { createTeamTimedOriginalCandidates } from '../content-design/team-timed-originals.mjs';
 import { createTeamWindowSpatialCandidates } from '../content-design/team-window-spatial-candidates.mjs';
@@ -858,11 +875,17 @@ $('team-signal').onclick = guarded(() => {
 $('team-journey').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(
-    $('team-journey-edition').value === 'spatial-originals-1'
-      ? createTeamSpatialOriginalCandidates()
-      : $('team-journey-edition').value === 'pressure-originals-1'
-        ? createTeamPressureOriginalCandidates()
-        : createTeamJourneyCandidates({ artwork: true }),
+    $('team-journey-edition').value === 'cultural-specialist-originals-2'
+      ? createTeamCulturalSpecialistV2OriginalCandidates()
+      : $('team-journey-edition').value === 'cultural-specialist-originals-1'
+        ? createTeamCulturalSpecialistOriginalCandidates()
+        : $('team-journey-edition').value === 'complete-specialist-originals-1'
+          ? createTeamCompleteSpecialistOriginalCandidates()
+          : $('team-journey-edition').value === 'spatial-originals-1'
+            ? createTeamSpatialOriginalCandidates()
+            : $('team-journey-edition').value === 'pressure-originals-1'
+              ? createTeamPressureOriginalCandidates()
+              : createTeamJourneyCandidates({ artwork: true }),
     null,
     2,
   );
@@ -1002,6 +1025,20 @@ $('whole-variety').onclick = guarded(() => {
       'erosion-counterplay-1': createWholeErosionReviewCandidates,
       'cultural-spatial-triptych-1': createSpatialNextBatchCandidates,
       'horizon-cultural-joins-1': createHorizonNextBatchCandidates,
+      'border-cultural-routes-1': createBorderCulturalNextBatchCandidates,
+      'border-signal-cultural-routes-1': createBorderSignalCulturalNextBatchCandidates,
+      'early-cultural-routes-1': createEarlyCulturalRoutesCandidates,
+      'signal-cultural-routes-1': createSignalCulturalRoutesCandidates,
+      'neon-cultural-routes-1': createNeonCulturalRoutesCandidates,
+      'neon-cultural-routes-2': createNeonCulturalRoutesFinaleCandidates,
+      'rover-cultural-routes-1': createRoverCulturalRoutesCandidates,
+      'fracture-cultural-routes-1': createFractureCulturalRoutesCandidates,
+      'phaseworks-cultural-routes-1': createPhaseworksCulturalRoutesCandidates,
+      'livewire-cultural-routes-1': createLivewireCulturalRoutesCandidates,
+      'relay-cultural-routes-1': createRelayCulturalRoutesCandidates,
+      'crosswind-cultural-routes-1': createCrosswindCulturalRoutesCandidates,
+      'sentinel-cultural-routes-1': createSentinelCulturalRoutesCandidates,
+      'apex-cultural-routes-1': createApexCulturalRoutesCandidates,
       'ukrainian-ornament-study-1': createUkrainianOrnamentJourney,
       'ukrainian-ornament-atlas-1': createUkrainianOrnamentAtlasJourney,
     }[$('whole-variety-edition').value] ?? createWholeVarietyCandidates;
