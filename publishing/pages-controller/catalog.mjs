@@ -125,9 +125,11 @@ export function publishedReleaseIndex(
   options = {},
 ) {
   if (!/^[\w.-]+\/[\w.-]+$/.test(repository)) throw new Error('Invalid GitHub repository.');
+  const downloadOnly = (record) => options.hostingPolicy === "main-repository-only" && record.version !== latest && !canonicalSites[record.version];
   const releases = records
     .map((record) => ({
       ...record,
+      ...(downloadOnly(record) ? { play: null, availability: "download-only" } : {}),
       download: `https://github.com/${repository}/releases/download/${encodeURIComponent(record.version)}/distribution.zip`,
       ...(canonicalSites[record.version]
         ? { canonicalPlay: `${canonicalSites[record.version]}game/` }
@@ -137,8 +139,8 @@ export function publishedReleaseIndex(
   return {
     json: { formatVersion: 1, latest, releases },
     html: catalogShell(
-      'Reveal Line · Playable versions',
-      `<p class="field-kit-eyebrow">Reveal Line / Release archive</p><h1>Playable versions</h1><p>Current: ${escapeHTML(latest)}. Every edition keeps its original gameplay, saves and artwork.</p><ul class="release-list">${releases.map((r) => `<li class="release-card" data-current="${r.version === latest}"><h2>${escapeHTML(r.version)}${r.version === latest ? ' · Current' : ''}</h2><code>${escapeHTML(r.sourceRevision)}</code><nav aria-label="${escapeHTML(r.version)} actions"><a class="button primary" href="${escapeHTML(r.canonicalPlay || `./${r.play}`)}">Play</a><a class="button" href="${escapeHTML(r.download)}">Download ZIP</a><a class="button" href="./${escapeHTML(r.version)}/release.json">Manifest</a></nav></li>`).join('')}</ul>`,
+      'Reveal Line · Release history',
+      `<p class="field-kit-eyebrow">Reveal Line / Release archive</p><h1>Release history</h1><p>Current: ${escapeHTML(latest)}. Older editions remain downloadable; previously accepted archive links are preserved.</p><ul class="release-list">${releases.map((r) => `<li class="release-card" data-current="${r.version === latest}"><h2>${escapeHTML(r.version)}${r.version === latest ? ' · Current' : ''}</h2><code>${escapeHTML(r.sourceRevision)}</code><nav aria-label="${escapeHTML(r.version)} actions">${r.availability === "download-only" ? '<span>Download only</span>' : `<a class="button primary" href="${escapeHTML(r.canonicalPlay || `./${r.play}`)}">Play</a>`}<a class="button" href="${escapeHTML(r.download)}">Download ZIP</a><a class="button" href="./${escapeHTML(r.version)}/release.json">Manifest</a></nav></li>`).join('')}</ul>`,
       options,
     ),
   };

@@ -78,14 +78,6 @@ jobs:
         id: test_policy
         run: node publishing/test-policy.mjs
 
-      - name: Restore conditional archive-authority ETags
-        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
-        with:
-          path: .cache/frozen-pages/authority-etags.json
-          key: frozen-pages-authority-${{ runner.os }}-${{ github.run_id }}
-          restore-keys: |
-            frozen-pages-authority-${{ runner.os }}-
-
       - name: Verify metadata bridges and bounded ZIP extraction in full mode
         if: vars.REVEALLINE_FULL_CI == 'true' && steps.test_policy.outputs.runTests == 'true'
         run: |
@@ -99,7 +91,7 @@ jobs:
           printf '%s\n' \
             '### Fast-release mode' \
             '' \
-            'Focused publisher tests are deferred. Selector, archive, artifact-byte, and latest-release verification remain mandatory.' >> "$GITHUB_STEP_SUMMARY"
+            'Focused publisher tests are deferred. Selector, source-qualification, artifact-byte, and latest-release verification remain mandatory.' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Require publication workspace capacity
         run: |
@@ -109,19 +101,11 @@ jobs:
           assert free >= 8 * 1024**3, f'At least 8 GiB free required; found {free}'
           PY
 
-      - name: Validate frozen selector and admitted archives
+      - name: Validate main-repository selector and current source qualification
         env:
           GH_TOKEN: ${{ github.token }}
           PREVIEW: ${{ github.event_name == 'pull_request' && '--preview' || '' }}
-          PR_BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}
         run: node publishing/pages-controller/publish.mjs verify $PREVIEW
-
-      - name: Save refreshed conditional archive-authority ETags
-        if: success() && hashFiles('.cache/frozen-pages/authority-etags.json') != ''
-        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
-        with:
-          path: .cache/frozen-pages/authority-etags.json
-          key: frozen-pages-authority-${{ runner.os }}-${{ github.run_id }}
 
       - name: Assemble exact current ZIP and historical metadata bridges
         if: github.event_name != 'pull_request' || vars.REVEALLINE_FULL_CI == 'true'
@@ -140,7 +124,7 @@ jobs:
       - name: Defer Pages artifact assembly to main publication
         if: github.event_name == 'pull_request' && vars.REVEALLINE_FULL_CI != 'true'
         run: |
-          echo 'Fast mode: selector and archive validation passed; full Pages bytes are assembled once after merge.'
+          echo 'Fast mode: selector and current source validation passed; full Pages bytes are assembled once after merge.'
           echo 'Production assembly, independent byte reread, upload, and deployment remain blocking.'
 
       - name: Preserve exact publishing receipts

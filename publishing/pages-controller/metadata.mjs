@@ -1,4 +1,4 @@
-/** Historical bridges use authenticated metadata; original payloads stay at admitted archives. */
+/** Historical routes use authenticated metadata and original main-repository release downloads. */
 import { createHash } from 'node:crypto';
 import { archiveRedirect, archiveRetirementWorker } from '../../scripts/pages-archive.mjs';
 
@@ -222,6 +222,23 @@ export function validateMetadata({ recordBytes, manifestBytes, checksumBytes, pi
 /** No historical asset reads or network requests. Canonical URLs come from validated allocation. */
 export function metadataBridges(metadata, canonicalSite) {
   const { record, manifest, manifestBytes, checksumBytes } = metadata;
+  if (canonicalSite === undefined) {
+    if (!VERSION.test(record.version)) throw new Error('Invalid historical download version.');
+    const releaseURL = `https://github.com/mekhovov/revealline/releases/tag/${record.version}`;
+    const downloadURL = `https://github.com/mekhovov/revealline/releases/download/${record.version}/distribution.zip`;
+    const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reveal Line ${record.version} download</title></head><body><main><h1>Reveal Line ${record.version}</h1><p>This historical edition is available as its original ZIP. It is not hosted as a separate website.</p><p><a href="${downloadURL}">Download original ZIP</a> · <a href="${releaseURL}">Release details and checksums</a> · <a href="https://mekhovov.github.io/revealline/releases/">Release history</a></p><p>Your existing saved data and offline installation are not cleared or migrated.</p></main></body></html>\n`;
+    // Normal activation only: never claim clients, delete caches, force navigation or alter saved data.
+    const worker = "self.addEventListener('activate', event => { event.waitUntil(self.registration.unregister()); });\n";
+    const files = new Map([
+      ['manifest.json', Buffer.from(manifestBytes)],
+      ['distribution.zip.sha256', Buffer.from(checksumBytes)],
+    ]);
+    for (const row of manifest.files) {
+      if (row.path.endsWith('.html')) files.set(row.path, Buffer.from(html));
+      else if (row.path === 'service-worker.js') files.set(row.path, Buffer.from(worker));
+    }
+    return files;
+  }
   const url = new URL(canonicalSite);
   if (
     url.protocol !== 'https:' ||

@@ -19,7 +19,7 @@ import {
 } from "./metadata.mjs";
 import { publishedReleasePages, releaseDecision } from "./release-policy.mjs";
 import { downloadReleaseAsset } from "./release-asset.mjs";
-import { verifyArchiveAuthorities } from "./archive-authority.mjs";
+import { requireMainRepositoryPolicy } from "./main-repository-policy.mjs";
 import { frozenEditionOverlay, validateEditionPublication } from "../edition-promotion.mjs";
 
 const root = path.resolve(
@@ -55,6 +55,7 @@ async function verify({ preview = false, remote = false } = {}) {
     configuration = parseJSON(
       await readOrdinary(directory, "publication.json"),
     );
+  requireMainRepositoryPolicy(configuration);
   if (configuration.catalogSha256 !== catalogSha256)
     throw new Error("Frozen catalog changed.");
   const testingVersions = new Set(
@@ -76,7 +77,7 @@ async function verify({ preview = false, remote = false } = {}) {
       (() => {
         throw new Error("A development testing route has no frozen metadata.");
       })(),
-    { qualification, admissions } = await validateAdmissions({
+    { qualification, canonicalSites, downloadOnlyVersions } = await validateAdmissions({
       directory,
       configuration,
       metadata: new Map([...metadata, ...testingMetadata]),
@@ -124,9 +125,7 @@ async function verify({ preview = false, remote = false } = {}) {
     throw new Error(
       "Publishing checkout does not equal its triggering commit.",
     );
-  const observations = [];
-  let releasePolicy = null,
-    authorityMetrics = null;
+  let releasePolicy = null;
   if (remote) {
     if (!preview) {
       if (process.env.GITHUB_REF !== "refs/heads/main")
@@ -149,38 +148,7 @@ async function verify({ preview = false, remote = false } = {}) {
       throw new Error(
         "Published source qualification does not match the reviewed pin.",
       );
-    let remoteAdmissions = admissions;
-    if (preview && process.env.PR_BASE_SHA) {
-      try {
-        const base = parseJSON(
-          Buffer.from(
-            run("git", [
-              "show",
-              `${process.env.PR_BASE_SHA}:publishing/pages-controller/publication.json`,
-            ]),
-          ),
-        );
-        const previous = new Map(
-          base.admissions.map((admission) => [admission.id, admission]),
-        );
-        remoteAdmissions = admissions.filter(
-          (admission) =>
-            JSON.stringify(previous.get(admission.id)) !==
-            JSON.stringify(admission),
-        );
-      } catch (error) {
-        process.stderr.write(
-          `Preview base comparison failed closed to all authorities: ${error.message}\n`,
-        );
-      }
-    }
-    const authority = await verifyArchiveAuthorities({
-      admissions: remoteAdmissions,
-      token: process.env.GH_TOKEN,
-      cacheFile: path.join(root, ".cache/frozen-pages/authority-etags.json"),
-    });
-    observations.push(...authority.observations);
-    authorityMetrics = authority.metrics;
+
   }
   return {
     configuration,
@@ -189,9 +157,9 @@ async function verify({ preview = false, remote = false } = {}) {
     catalogSha256,
     qualifiedSourceTree,
     editionSelectorSha256: digest(editionSelectorBytes),
-    admittedArchives: admissions.length,
-    observations,
-    authorityMetrics,
+    hostingPolicy: configuration.hostingPolicy,
+    retainedLegacyRoutes: Object.keys(canonicalSites).length,
+    downloadOnlyVersions,
     releasePolicy,
     publishable: !preview,
   };
@@ -244,8 +212,6 @@ async function main() {
       );
     identity = {
       ...identity,
-      observations: authority.observations,
-      authorityMetrics: authority.authorityMetrics,
       releasePolicy: authority.releasePolicy,
     };
   }
@@ -260,11 +226,9 @@ async function main() {
     await workflowSummary([
       "### Frozen Pages authority verification",
       "",
-      `Archives remotely checked: ${identity.observations.length}`,
-      `GraphQL requests: ${identity.authorityMetrics?.graphqlRequests ?? 0}`,
-      `Conditional REST requests: ${identity.authorityMetrics?.restRequests ?? 0}`,
-      `REST cache hits: ${identity.authorityMetrics?.cacheHits ?? 0}`,
-      `Rate-limit retries: ${identity.authorityMetrics?.retries ?? 0}`,
+      "Hosting: main repository only; no new archive repositories or archive authority requests.",
+      `Retained legacy links: ${identity.retainedLegacyRoutes}`,
+      `Download-only historical releases: ${identity.downloadOnlyVersions.length}`,
     ]);
     return;
   }
@@ -376,7 +340,7 @@ async function main() {
     "",
     `Files: ${receipt.files.length}`,
     `Bytes assembled: ${receipt.totalBytes}`,
-    `Authority API calls: ${(identity.authorityMetrics?.graphqlRequests ?? 0) + (identity.authorityMetrics?.restRequests ?? 0)}`,
+    "Current source qualification and complete artifact/public byte checks remain required.",
   ]);
 }
 main().catch((error) => {

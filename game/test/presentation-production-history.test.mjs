@@ -415,6 +415,46 @@ test('production refuses silent slot contract mutation and can explicitly return
   );
 });
 
+async function authenticatedCurrentReview(relative, expectedSHA256, groups) {
+  const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
+  const read = (relative) => fs.readFile(new URL('../../' + relative, import.meta.url));
+  const bytes = await read(relative);
+  assert.equal(digest(bytes), expectedSHA256, 'immutable current review ' + relative);
+  const review = JSON.parse(bytes);
+  const predecessors = review.priorReviews
+    ? Object.values(review.priorReviews)
+    : [review.priorReview];
+  for (const prior of predecessors)
+    assert.equal(
+      digest(await read(prior.path)),
+      prior.sha256,
+      'immutable predecessor ' + prior.path,
+    );
+  const sources = {};
+  for (const group of groups) {
+    const fingerprint = review.fingerprints?.[group] ?? review.fingerprint;
+    assert.equal(fingerprint.group, group);
+    const inputs = fingerprint.inputs ?? fingerprint.paths;
+    const bodies = [];
+    for (const input of inputs) {
+      const body = await read(input.path);
+      assert.equal(body.length, input.bytes, 'reviewed input length ' + input.path);
+      const blob = createHash('sha1')
+        .update('blob ' + body.length + '\0')
+        .update(body)
+        .digest('hex');
+      assert.equal(blob, input.gitBlob ?? input.blob, 'reviewed Git blob ' + input.path);
+      if (input.sha256) assert.equal(digest(body), input.sha256, input.path);
+      bodies.push(body);
+    }
+    const paths = inputs.map((input) => input.path).join('; ');
+    if (typeof fingerprint.paths === 'string') assert.equal(paths, fingerprint.paths);
+    assert.equal(digest(Buffer.concat(bodies)), fingerprint.currentSHA256, group);
+    sources[group] = paths + ' sha256:' + fingerprint.currentSHA256;
+  }
+  return { review, sources };
+}
+
 test('Journey feedback dependencies bind only the reviewed player-craft effects inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
@@ -431,7 +471,17 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
     review.effects.currentFingerprintSHA256,
     'e23e228b4bf4ee68bb7cbbd231aaebe66d6e3da8965fbeae9b2c4acc90f9e053',
   );
-  for (const slotId of [
+  const currentReviewPath =
+    'docs/verification/bulk-integration-presentation-continuation-2026-09-27/review.json';
+  const currentReviewSHA256 = 'ad469766d926795fddca108b77042b226282cc17b3a130429ad2b548b5e2edf5';
+  const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
+    'effects',
+  ]);
+  assert.equal(
+    current.review.fingerprints.effects.priorSHA256,
+    'b33868fdd4f6aa898a885043116b939509f4d5b14d4412adb7d71e6e90ed6bbe',
+  );
+  const slots = [
     'trail.active',
     'trail.secured',
     'trail.head',
@@ -442,13 +492,17 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
     'effect.shield',
     'effect.respawn',
     'effect.pressure',
-  ]) {
+  ];
+  assert.deepEqual(current.review.fingerprints.effects.slots, slots);
+  for (const slotId of slots) {
     const asset = resolved.assets[slotId];
     assert.equal(asset.quality.stage, 'reviewed', slotId);
+    assert.equal(asset.provenance.source, current.sources.effects, slotId);
     assert.ok(
-      asset.provenance.source.endsWith(
-        'sha256:b33868fdd4f6aa898a885043116b939509f4d5b14d4412adb7d71e6e90ed6bbe',
+      asset.quality.evidence.some((entry) =>
+        entry.includes(currentReviewPath + ' sha256:' + currentReviewSHA256),
       ),
+      slotId,
     );
     assert.match(asset.provenance.source, /game\/ui\/lane-presentation\.mjs/);
     assert.match(asset.provenance.source, /game\/content-design\/actor-marker\.mjs/);
@@ -475,6 +529,18 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
   const continuationHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
+  const currentReviewPath =
+    'docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json';
+  const currentReviewSHA256 = '067305195ea075c35f14402d970fb5d2819044720875374b157c9431d9c5d820';
+  const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
+    'audio',
+  ]);
+  assert.equal(current.review.priorReview.path, continuationPath);
+  assert.equal(current.review.priorReview.sha256, continuationHash);
+  assert.equal(
+    current.review.priorReview.fingerprintSHA256,
+    '77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79',
+  );
   const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
   assert.equal(reviewed.length, 32);
   for (const slot of reviewed) {
@@ -507,9 +573,10 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
         ),
         slot.id,
       );
+      assert.equal(asset.provenance.source, current.sources.audio, slot.id);
       assert.ok(
-        asset.provenance.source.endsWith(
-          'sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79',
+        asset.quality.evidence.some((entry) =>
+          entry.includes(currentReviewPath + ' sha256:' + currentReviewSHA256),
         ),
         slot.id,
       );
@@ -533,6 +600,13 @@ test('soundtrack screen and Journey motion reviews bind only the inspected curre
     screenReviewHash,
     'f0baff0c70c3bb3d3e08b92e8bfdb28c60e77913333640160841f58bc4c5c094',
   );
+  const currentReviewPath =
+    'docs/verification/bulk-integration-presentation-continuation-2026-09-27/review.json';
+  const currentReviewSHA256 = 'ad469766d926795fddca108b77042b226282cc17b3a130429ad2b548b5e2edf5';
+  const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
+    'screens',
+    'motion',
+  ]);
   const fingerprints = {
     screens: '251d09ba8aa8710a134694874bd7ae87f2e76af0000825f9ad2b97da024d1dbd',
     motion: '03a9b8a5eceb9eee63da578807becbb0f7770713d3eb2bd04affe5a75d3316f4',
@@ -541,10 +615,26 @@ test('soundtrack screen and Journey motion reviews bind only the inspected curre
     (slot) => slot.group in fingerprints && resolved.assets[slot.id].kind === 'recipe',
   );
   assert.equal(reviewed.length, 14);
+  for (const group of Object.keys(fingerprints)) {
+    assert.equal(current.review.fingerprints[group].priorSHA256, fingerprints[group]);
+    assert.deepEqual(
+      [...current.review.fingerprints[group].slots].sort(),
+      reviewed
+        .filter((slot) => slot.group === group)
+        .map((slot) => slot.id)
+        .sort(),
+    );
+  }
   for (const slot of reviewed) {
     const asset = resolved.assets[slot.id];
     assert.equal(asset.quality.stage, 'reviewed', slot.id);
-    assert.ok(asset.provenance.source.endsWith(`sha256:${fingerprints[slot.group]}`), slot.id);
+    assert.equal(asset.provenance.source, current.sources[slot.group], slot.id);
+    assert.ok(
+      asset.quality.evidence.some((entry) =>
+        entry.includes(currentReviewPath + ' sha256:' + currentReviewSHA256),
+      ),
+      slot.id,
+    );
     assert.ok(
       asset.quality.evidence.some((entry) =>
         entry.includes(
