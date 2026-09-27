@@ -20,6 +20,7 @@ import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { bindAudioMasterMedia } from '../../game/ui/audio-master.mjs';
 import { createCurrentArtPreview } from '../../game/presentation/current-art.mjs';
 import { pictureOwnerContext } from './picture-context.mjs';
+import { assetStudioErrorMessage, assetStudioErrorText } from './error-copy.mjs';
 import {
   playerRecipePreview,
   boardContextPreview,
@@ -771,8 +772,15 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
   } catch (error) {
     if (!isCurrent()) return;
     failed = true;
-    lease?.finish({ message: `${label}: ${error.message || error}`, state: 'error' });
-    surface.replaceChildren(text('p', error.message || String(error), '', 'body'));
+    lease?.finish({
+      message: () =>
+        t('tools:studio.preview.status', {
+          label: valueOf(label),
+          message: assetStudioErrorText(error),
+        }),
+      state: 'error',
+    });
+    surface.replaceChildren(text('p', assetStudioErrorMessage(error), '', 'body'));
     if (cancelButton) {
       localizedText(cancelButton, () => t('common:preview.retry'));
       cancelButton.onclick = () =>
