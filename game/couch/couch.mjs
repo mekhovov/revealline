@@ -115,6 +115,7 @@ import {
   installOfflineOwnsElement,
 } from '../ui/install-offline-panel.mjs';
 import { createOfflineDownloadAccess } from '../offline-download-access.mjs';
+import { ensureVersusEntryPackage } from './versus-package-readiness.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { soloCompatibleMusicContext } from './couch-music-context.mjs';
 import { campaignKey } from '../library.mjs';
@@ -1387,23 +1388,17 @@ try {
     });
   }
   async function ensureVersusPackage(entry, options, reader = installed) {
-    if (!offlineAvailability().packageConsent) return;
-    if (candidateJourney?.owns(entry))
-      await gameplayDownloads.ensureMission(
-        { routeId: authoredRoute.id, missionId: entry.level.id, mode: 'versus' },
-        options,
-      );
-    else if (shippedMaps.includes(entry))
-      await gameplayDownloads.ensure(
-        `destination:versus:${entry.sourcePackId ? `chapter:${entry.sourcePackId}` : 'classic:base'}`,
-        options,
-      );
-    else {
-      // The reader brands the accepted row and returns its exact installed pack.
-      // A user import with a matching pack ID never acquires official ownership.
-      const owner = reader.presentationOwner(entry);
-      if (isOfficialPack(owner.pack)) await gameplayDownloads.ensureClassic(owner.pack.id, options);
-    }
+    return ensureVersusEntryPackage(entry, {
+      options,
+      packageConsent: offlineAvailability().packageConsent,
+      creatorOwnerFor: (row) => creatorVersusOwners.get(row),
+      candidateJourney,
+      authoredRouteId: authoredRoute?.id,
+      shippedMaps,
+      downloads: gameplayDownloads,
+      reader,
+      isOfficialPack,
+    });
   }
   function loadPreparedPicture(entry, { prompt = false } = {}) {
     contentReady = false;
