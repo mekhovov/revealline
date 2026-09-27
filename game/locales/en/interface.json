@@ -2847,6 +2847,8 @@
   "prepareTheCurrentSessionOriginalsBeforeDownloading": "Prepare the current session originals before downloading.",
   "sessionOriginalsDownloadRequestedConfirmItInYourBrowserThen": "Session originals download requested. Confirm it in your browser, then export game data. This prepared download remains available to retry.",
   "end": "End",
+  "fpvMusic": "ФПВ",
+  "uaMusic": "UA",
   "synthElectronic": "Synth & electronic",
   "ukrainian": "Ukrainian",
   "chiptune8Bit": "Chiptune & 8-bit",
