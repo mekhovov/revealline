@@ -1,3 +1,6 @@
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -168,4 +171,12 @@ test('neutral difficulty uses exact authored presets and historical Classic Gent
     assert.deepEqual(runtime.sourceLevel, resolved.level);
     assert.equal(runtime.tuning.difficulty, difficulty);
   }
+});
+
+test('the complete generated pilot report matches the canonical CLI byte check', async () => {
+  await promisify(execFile)(
+    process.execPath,
+    [fileURLToPath(new URL('../../scripts/uniqueness-pilot.mjs', import.meta.url)), '--check'],
+    { maxBuffer: 1024 * 1024 },
+  );
 });
