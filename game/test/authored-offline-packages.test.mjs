@@ -10,8 +10,10 @@ import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { loadRouteSnapshot } from '../content-design/route-snapshot.mjs';
 import { createContentExecutionCatalog } from '../content-design/execution.mjs';
 import { authoredMissionDownloadGroup } from '../content-design/offline-packages.mjs';
+import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 
-const route = await loadAuthoredJourneyRoute('whole-spatial-v11');
+const route = await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo);
+const historicalRoute = await loadAuthoredJourneyRoute('whole-spatial-v11');
 
 test('complete chapter snapshots retain every preset execution and campaign identity', () => {
   for (const mode of ['solo', 'versus']) {
@@ -50,6 +52,11 @@ test('the nine-mission Horizon starter excludes the remix and other modes', () =
 });
 
 test('archive package mapping keeps exact old route ownership', async () => {
+  for (const mode of ['solo', 'versus'])
+    assert.equal(
+      authoredMissionDownloadGroup(historicalRoute, mode, 'first-return'),
+      'archive:journey:whole-spatial-v11',
+    );
   const archived = await loadAuthoredJourneyRoute('opening');
   assert.equal(
     authoredMissionDownloadGroup(archived, 'solo', archived.source.missions[0].id),
@@ -57,7 +64,7 @@ test('archive package mapping keeps exact old route ownership', async () => {
   );
 });
 
-test('published current source snapshot keeps the complete route byte for byte', async () => {
+test('published current and historical source snapshots keep complete routes byte for byte', async () => {
   const entries = [
     {
       name: 'game/content-design/route-loader.mjs',
@@ -66,11 +73,13 @@ test('published current source snapshot keeps the complete route byte for byte',
   ];
   const generated = await addAuthoredRuntimeSnapshots(entries);
   assert.equal(generated.chapters.length, route.source.packs.length);
-  const entry = entries.find((item) => item.name.endsWith('/whole-spatial-v11.json'));
+  const historicalEntry = entries.find((item) => item.name.endsWith('/whole-spatial-v11.json'));
+  assert.equal(historicalEntry.bytes.toString(), JSON.stringify(historicalRoute));
+  const entry = entries.find((item) => item.name.endsWith(`/${route.id}.json`));
   assert.equal(entry.bytes.toString(), JSON.stringify(route));
   const descriptor = {
     id: route.id,
-    path: 'runtime/whole-spatial-v11.json',
+    path: `runtime/${route.id}.json`,
     bytes: entry.bytes.length,
     sha256: createHash('sha256').update(entry.bytes).digest('hex'),
   };

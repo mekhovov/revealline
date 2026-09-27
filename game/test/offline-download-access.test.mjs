@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createOfflineDownloadAccess } from '../offline-download-access.mjs';
+import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 
 const hash = 'a'.repeat(64);
 const file = { path: 'picture.png', sha256: hash, bytes: 12, kind: 'gameplay' };
@@ -222,7 +223,13 @@ test('an online network blackhole times out and can retry without reopening the 
 
 function destinationFixture() {
   const value = structuredClone(catalogue);
-  const ids = ['runtime:versus', 'versus:horizon', 'versus:border', 'classic:base'];
+  const ids = [
+    'runtime:versus',
+    'versus:horizon',
+    'versus:border',
+    'classic:base',
+    'archive:journey:whole-spatial-v11',
+  ];
   ids.forEach((id, index) => {
     const asset = { ...file, path: `${id}.json`, sha256: String(index + 1).repeat(64) };
     value.files.push(asset);
@@ -231,12 +238,17 @@ function destinationFixture() {
   const destination = {
     path: 'game/couch/',
     mode: 'versus',
-    routeId: 'whole-spatial-v11',
+    routeId: DEFAULT_JOURNEY_ROUTES.solo,
     runtimeGroups: ['runtime:versus'],
     groups: ['runtime:versus', 'versus:horizon'],
   };
   value.destinations = [
     destination,
+    {
+      ...destination,
+      routeId: 'whole-spatial-v11',
+      groups: ['runtime:versus', 'archive:journey:whole-spatial-v11'],
+    },
     {
       ...destination,
       libraryId: '["exact published owner"]',
@@ -274,6 +286,16 @@ test('mode navigation prepares the exact published destination and rejects guess
   assert.equal(requested.length, 2, 'rejected owners never prepare a fallback chapter');
   await access.ensureDestination('https://game.test/site/game/couch/');
   assert.deepEqual(requested, ['runtime:versus', 'versus:border', 'versus:horizon']);
+});
+
+test('an explicit historical destination retains its exact archive owner', async () => {
+  const { access, requested } = destinationFixture();
+  const url = new URL('https://game.test/site/game/couch/?journey=whole-spatial-v11');
+  await access.ensureDestination(url);
+  assert.deepEqual(requested, ['runtime:versus', 'archive:journey:whole-spatial-v11']);
+  url.searchParams.set('library-mission', '["exact published owner"]');
+  await assert.rejects(access.ensureDestination(url), /exact destination/);
+  assert.equal(requested.length, 2, 'a current owner never substitutes the historical owner');
 });
 
 test('local imported/return ownership only prepares its receiving runtime', async () => {
