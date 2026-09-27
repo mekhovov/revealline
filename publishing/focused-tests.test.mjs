@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url';
 import {
   focusedCommandExecutionPlan,
   focusedTestPlan,
+  loadFocusedExecutionInputs,
+  packageScriptShellSemantics,
   runFocusedCommands,
 } from './focused-tests.mjs';
 
@@ -285,6 +287,7 @@ test('execution planning removes only exact tests covered by the selected packag
     packageScripts: {
       suite: 'node --test tests/*.test.mjs scripts/test-extra.mjs',
     },
+    shellSemantics: 'posix',
     repositoryFiles: [
       'tests/a.test.mjs',
       'tests/c.test.mjs',
@@ -328,6 +331,7 @@ test('package-script drift cannot silently remove focused coverage', () => {
   ];
   const execution = focusedCommandExecutionPlan(commands, {
     packageScripts: { suite: 'node --test tests/a.test.mjs' },
+    shellSemantics: 'posix',
     repositoryFiles: ['tests/a.test.mjs', 'tests/b.test.mjs'],
   });
   assert.deepEqual(
@@ -348,14 +352,17 @@ test('missing files and unsupported or missing scripts retain every command', ()
   for (const inputs of [
     {
       packageScripts: { suite: 'node --test tests/missing.test.mjs' },
+      shellSemantics: 'posix',
       repositoryFiles: ['tests/a.test.mjs'],
     },
     {
       packageScripts: { suite: 'node --test tests/a.test.mjs && echo unsafe' },
+      shellSemantics: 'posix',
       repositoryFiles: ['tests/a.test.mjs'],
     },
     {
       packageScripts: {},
+      shellSemantics: 'posix',
       repositoryFiles: ['tests/a.test.mjs'],
     },
   ]) {
@@ -364,4 +371,166 @@ test('missing files and unsupported or missing scripts retain every command', ()
     assert.deepEqual(execution.deduplicated, []);
     assert.equal(execution.diagnostics.length, 1);
   }
+});
+
+test('POSIX wildcard coverage excludes leading-dot files unless the pattern names the dot', () => {
+  const commands = [
+    { id: 'aggregate', command: 'npm', args: ['run', 'suite'] },
+    { id: 'hidden', command: 'node', args: ['--test', 'tests/.hidden.test.mjs'] },
+  ];
+  const execution = focusedCommandExecutionPlan(commands, {
+    packageScripts: { suite: 'node --test tests/*.test.mjs' },
+    repositoryFiles: ['tests/a.test.mjs', 'tests/.hidden.test.mjs'],
+    shellSemantics: 'posix',
+  });
+  assert.deepEqual(
+    execution.commands.map(({ id }) => id),
+    ['aggregate', 'hidden'],
+  );
+  assert.deepEqual(execution.packageCoverage[0].tests, ['tests/a.test.mjs']);
+});
+
+test('shell expansion syntax and non-string scripts retain all commands', () => {
+  const commands = [
+    { id: 'aggregate', command: 'npm', args: ['run', 'suite'] },
+    { id: 'literal-dollar', command: 'node', args: ['--test', 'tests/$CASE.test.mjs'] },
+  ];
+  for (const script of [
+    'node --test tests/$CASE.test.mjs',
+    'node --test "tests/a.test.mjs"',
+    'node --test tests/a.test.mjs && echo unsafe',
+    42,
+    null,
+    [],
+    {},
+  ]) {
+    const execution = focusedCommandExecutionPlan(commands, {
+      packageScripts: { suite: script },
+      repositoryFiles: ['tests/$CASE.test.mjs', 'tests/a.test.mjs'],
+      shellSemantics: 'posix',
+    });
+    assert.deepEqual(execution.commands, commands);
+    assert.deepEqual(execution.deduplicated, []);
+    assert.equal(execution.diagnostics.length, 1);
+  }
+});
+
+test('deduplication requires confirmed POSIX npm script-shell semantics', () => {
+  const commands = [
+    { id: 'aggregate', command: 'npm', args: ['run', 'suite'] },
+    { id: 'a', command: 'node', args: ['--test', 'tests/a.test.mjs'] },
+  ];
+  const inputs = {
+    packageScripts: { suite: 'node --test tests/*.test.mjs' },
+    repositoryFiles: ['tests/a.test.mjs'],
+  };
+  const unsupported = focusedCommandExecutionPlan(commands, inputs);
+  assert.deepEqual(unsupported.commands, commands);
+  assert.deepEqual(
+    unsupported.diagnostics.map(({ reason }) => reason),
+    ['unsupported-script-shell'],
+  );
+  assert.equal(
+    packageScriptShellSemantics('/root', {
+      platform: 'linux',
+      spawn() {
+        return { status: 0, signal: null, stdout: 'null\n' };
+      },
+    }),
+    'posix',
+  );
+  assert.equal(
+    packageScriptShellSemantics('/root', {
+      platform: 'linux',
+      spawn() {
+        return { status: 0, signal: null, stdout: '/bin/bash\n' };
+      },
+    }),
+    null,
+  );
+  assert.equal(
+    packageScriptShellSemantics('/root', {
+      platform: 'win32',
+      spawn() {
+        throw new Error('must not run');
+      },
+    }),
+    null,
+  );
+});
+
+test('execution input loading fails closed for missing directories, links, nonfiles and I/O errors', async () => {
+  const commands = [{ id: 'aggregate', command: 'npm', args: ['run', 'suite'] }];
+  const readFile = async () =>
+    JSON.stringify({
+      scripts: {
+        suite: 'node --test tests/*.test.mjs other/exact.test.mjs',
+      },
+    });
+  const inputs = await loadFocusedExecutionInputs(commands, '/root', {
+    readFile,
+    async readDirectory() {
+      return [
+        {
+          name: 'a.test.mjs',
+          isFile: () => true,
+          isSymbolicLink: () => false,
+        },
+        {
+          name: 'linked-file.test.mjs',
+          isFile: () => false,
+          isSymbolicLink: () => true,
+        },
+        {
+          name: 'linked-directory.test.mjs',
+          isFile: () => false,
+          isSymbolicLink: () => true,
+        },
+        {
+          name: 'directory.test.mjs',
+          isFile: () => false,
+          isSymbolicLink: () => false,
+        },
+      ];
+    },
+    async statPath(candidate) {
+      if (candidate.endsWith('linked-file.test.mjs')) return { isFile: () => true };
+      if (candidate.endsWith('linked-directory.test.mjs')) return { isFile: () => false };
+      throw new Error('unreadable');
+    },
+    shellSemantics: 'posix',
+  });
+  assert.deepEqual(inputs, {
+    packageScripts: {
+      suite: 'node --test tests/*.test.mjs other/exact.test.mjs',
+    },
+    repositoryFiles: ['tests/a.test.mjs', 'tests/linked-file.test.mjs'],
+    shellSemantics: 'posix',
+  });
+  const execution = focusedCommandExecutionPlan(
+    [...commands, { id: 'a', command: 'node', args: ['--test', 'tests/a.test.mjs'] }],
+    inputs,
+  );
+  assert.deepEqual(
+    execution.commands.map(({ id }) => id),
+    ['aggregate', 'a'],
+  );
+  assert.deepEqual(execution.deduplicated, []);
+  assert.deepEqual(
+    execution.diagnostics.map(({ reason }) => reason),
+    ['unresolved-package-tests'],
+  );
+
+  const missingDirectory = await loadFocusedExecutionInputs(commands, '/root', {
+    readFile,
+    async readDirectory() {
+      throw new Error('missing');
+    },
+    async statPath() {
+      throw new Error('missing');
+    },
+    shellSemantics: 'posix',
+  });
+  assert.deepEqual(missingDirectory.repositoryFiles, []);
+  assert.deepEqual(focusedCommandExecutionPlan(commands, missingDirectory).commands, commands);
 });
