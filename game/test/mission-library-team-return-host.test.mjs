@@ -194,7 +194,11 @@ for (const route of [
     assert(opening instanceof Promise, 'Keyboard activation owns catalogue preparation.');
     await opening;
     assert.equal(f.$('journey-chooser').open, true);
-    const archivedSource = route === 'team-spatial-originals-1';
+    const archivedSource = [
+      'team-spatial-originals-1',
+      'team-trail-impact-originals-1',
+      'team-cultural-specialist-originals-1',
+    ].includes(route);
     const lifecycle = f.$('journey-lifecycle');
     assert.equal(lifecycle.value, archivedSource ? 'archive' : 'current');
     const mode = f.$('journey-mode'),
