@@ -238,7 +238,7 @@ function destinationFixture() {
   const destination = {
     path: 'game/couch/',
     mode: 'versus',
-    routeId: DEFAULT_JOURNEY_ROUTES.solo,
+    routeId: DEFAULT_JOURNEY_ROUTES.versus,
     runtimeGroups: ['runtime:versus'],
     groups: ['runtime:versus', 'versus:horizon'],
   };
