@@ -534,3 +534,36 @@ test('execution input loading fails closed for missing directories, links, nonfi
   assert.deepEqual(missingDirectory.repositoryFiles, []);
   assert.deepEqual(focusedCommandExecutionPlan(commands, missingDirectory).commands, commands);
 });
+
+test('missing or malformed npm shell-probe output cannot authorize deduplication', () => {
+  for (const stdout of [undefined, null, 42, Buffer.from('null'), '', '  ', 'undefined']) {
+    assert.equal(
+      packageScriptShellSemantics('/root', {
+        platform: 'linux',
+        spawn() {
+          return { status: 0, signal: null, stdout };
+        },
+      }),
+      null,
+    );
+  }
+  for (const result of [
+    { status: 1, signal: null, stdout: 'null' },
+    { status: 0, signal: 'SIGTERM', stdout: 'null' },
+    { status: 0, error: new Error('probe unavailable'), stdout: 'null' },
+  ]) {
+    assert.equal(
+      packageScriptShellSemantics('/root', { platform: 'linux', spawn: () => result }),
+      null,
+    );
+  }
+  assert.equal(
+    packageScriptShellSemantics('/root', {
+      platform: 'linux',
+      spawn() {
+        throw new Error('probe unavailable');
+      },
+    }),
+    null,
+  );
+});

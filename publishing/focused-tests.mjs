@@ -296,9 +296,9 @@ export function packageScriptShellSemantics(
   } catch {
     return null;
   }
-  if (result?.error || result?.signal || result?.status !== 0) return null;
-  const configured = typeof result.stdout === 'string' ? result.stdout.trim() : '';
-  return ['', 'null', 'undefined'].includes(configured) ? 'posix' : null;
+  if (result?.error || result?.signal || result?.status !== 0 || typeof result.stdout !== 'string')
+    return null;
+  return result.stdout.trim() === 'null' ? 'posix' : null;
 }
 
 export async function loadFocusedExecutionInputs(
