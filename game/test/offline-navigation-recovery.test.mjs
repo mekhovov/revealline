@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import {
   readOfflineDestination,
   continueOfflineDestination,
@@ -34,13 +35,28 @@ const catalogue = {
       requires: ['runtime:versus'],
       files: [],
     },
+    {
+      id: 'archive:journey:whole-spatial-v11',
+      title: 'Historical v11',
+      kind: 'gameplay',
+      requires: ['runtime:versus'],
+      files: [],
+    },
   ],
   destinations: [
     {
       path: 'game/couch/',
       mode: 'versus',
-      routeId: 'whole-spatial-v11',
+      routeId: DEFAULT_JOURNEY_ROUTES.solo,
       groups: ['versus:horizon'],
+      runtimeGroups: ['runtime:versus'],
+    },
+    {
+      path: 'game/couch/',
+      mode: 'versus',
+      routeId: DEFAULT_JOURNEY_ROUTES.solo,
+      libraryId: exactId,
+      groups: ['versus:exact'],
       runtimeGroups: ['runtime:versus'],
     },
     {
@@ -48,7 +64,7 @@ const catalogue = {
       mode: 'versus',
       routeId: 'whole-spatial-v11',
       libraryId: exactId,
-      groups: ['versus:exact'],
+      groups: ['archive:journey:whole-spatial-v11'],
       runtimeGroups: ['runtime:versus'],
     },
     {
@@ -82,8 +98,11 @@ test('standalone continuation selects the exact published owner and preserves op
   target.searchParams.set('journey-return', 'whole-spatial-v2');
   const request = read(target.href);
   assert.equal(request.href, target.href);
-  assert.deepEqual(request.groups, ['versus:exact']);
-  assert.equal(request.title, 'Versus · Original chapter');
+  assert.deepEqual(request.groups, ['archive:journey:whole-spatial-v11']);
+  assert.equal(request.title, 'Versus · Historical v11');
+  const current = new URL(target.href);
+  current.searchParams.set('journey', DEFAULT_JOURNEY_ROUTES.solo);
+  assert.deepEqual(read(current.href).groups, ['versus:exact']);
   assert.equal(Object.isFrozen(request.groups), true);
   assert.deepEqual(read(new URL('game/couch/', scope).href).groups, ['versus:horizon']);
   const local = new URL('game/couch/?mode-return=opaque%2Bvalue', scope);
