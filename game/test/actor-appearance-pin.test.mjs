@@ -60,6 +60,21 @@ test('explicit campaign actors retain no additional presentation source', () => 
   pin.presentation = fixture().presentation;
   assert.throws(() => snapshotActorAppearancePin(pin), /authored presentation/);
 });
+test('authored v2 receipt is closed, bounded and cannot masquerade as FPV or a historical v1 pin', () => {
+  const pin = {
+    ...fixture('campaign'),
+    format: 'revealline-actor-appearance-pin.v2',
+    authoredPresentationSha256: 'c'.repeat(64),
+  };
+  assert.deepEqual(snapshotActorAppearancePin(pin), pin);
+  for (const changed of [
+    { ...pin, authoredPresentationSha256: null },
+    { ...pin, authoredPresentationSha256: 'latest' },
+    { ...pin, format: ACTOR_APPEARANCE_PIN_FORMAT },
+    { ...pin, style: 'fpv', presentation: fixture().presentation },
+  ])
+    assert.throws(() => snapshotActorAppearancePin(changed));
+});
 
 test('all fields, renderer policy and exact revisions/hashes are strict', () => {
   for (const field of ['format', 'style', 'rendererPolicy', 'content', 'presentation']) {

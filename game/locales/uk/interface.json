@@ -5026,5 +5026,8 @@
   "launcher.preparationFailed": "Не вдалося підготувати засіб запуску: {{error}}",
   "startCueGo": "РУШ",
   "nextMissionNamed": "Далі: {{mission}}",
-  "nextCampaignNamed": "Наступна кампанія: {{campaign}}"
+  "nextCampaignNamed": "Наступна кампанія: {{campaign}}",
+  "soloDeparture.artwork": "Відкриється «{{destination}}» для цього самого видання. Ваш прогрес залишається спільним. Після повернення політ не продовжиться автоматично.",
+  "soloDeparture.currentArtwork": "Поточне оформлення",
+  "soloDeparture.retainedArtwork": "Збережене оригінальне оформлення"
 }

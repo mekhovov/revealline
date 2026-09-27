@@ -3,6 +3,13 @@ const journey = (source, target) => {
   const values = source.searchParams.getAll('journey');
   if (values.length === 1 && /^(?:1|[a-z][a-z0-9-]{0,39})$/.test(values[0]))
     target.searchParams.set('journey', values[0]);
+  const editions = source.searchParams.getAll('edition');
+  if (
+    editions.length === 1 &&
+    editions[0].length <= 64 &&
+    /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(editions[0])
+  )
+    target.searchParams.set('edition', editions[0]);
   return target;
 };
 

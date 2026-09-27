@@ -3,6 +3,7 @@ import { PACK_LIMITS } from './packs.mjs';
 import { abortExternalChapter, externalChapterHash } from './external-chapter.mjs';
 import { createProfileChannelAssets } from './profile-channel-assets.mjs';
 import { recoveryChannel } from './profile-channel.mjs';
+import { parseEditionChannel } from './edition-context.mjs';
 
 const own = (v) =>
   boundedJSON(v, {
@@ -13,11 +14,15 @@ const own = (v) =>
     maxArray: 4096,
   });
 function pointerKeys(profileKey, packsKey) {
+  const id =
+    typeof profileKey === 'string' && /^revealline\.library\.(.+)\.v1$/.exec(profileKey)?.[1];
+  const edition = parseEditionChannel(id);
   required(
     typeof profileKey === 'string' &&
-      /^revealline\.library\.(?:dev|release-v?(?:0|[1-9]\d{0,4})\.(?:0|[1-9]\d{0,4})\.(?:0|[1-9]\d{0,4}))\.v1$/.test(
-        profileKey,
-      ),
+      (edition ||
+        /^revealline\.library\.(?:dev|release-v?(?:0|[1-9]\d{0,4})\.(?:0|[1-9]\d{0,4})\.(?:0|[1-9]\d{0,4}))\.v1$/.test(
+          profileKey,
+        )),
     'Use an exact supported profile channel.',
   );
   required(
@@ -27,7 +32,7 @@ function pointerKeys(profileKey, packsKey) {
   return Object.freeze({
     profileKey,
     packsKey,
-    writerKey: `${profileKey}.writer`,
+    writerKey: edition ? `revealline.company.${edition.editionId}.writer` : `${profileKey}.writer`,
     lockKey: `${profileKey}.backup-lock`,
     backupJournalKey: `${profileKey}.backup-journal`,
     journalKey: `${profileKey}.external-chapter-journal.v1`,
@@ -199,7 +204,18 @@ export function createExternalChapterInventoryReader({
   const id = profileKey.slice('revealline.library.'.length, -'.v1'.length);
   // The version argument classifies recovery/transfer only. This reader uses
   // the exact authenticated keys; dev is not assigned a release identity.
-  const channel = recoveryChannel(id, id === 'dev' ? '0.0.0' : id.slice('release-'.length));
+  const edition = parseEditionChannel(id);
+  const channel = recoveryChannel(
+    id,
+    edition
+      ? edition.version === 'DEV'
+        ? '0.0.0'
+        : edition.version
+      : id === 'dev'
+        ? '0.0.0'
+        : id.slice('release-'.length),
+    edition ? { editionId: edition.editionId } : {},
+  );
   const assets = createProfileChannelAssets({ indexedDB, timeoutMs });
   const owned = new WeakSet(),
     pending = new Set();

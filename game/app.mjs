@@ -1,3 +1,8 @@
+import { loadRuntimeContentProvider } from './runtime-content-provider.mjs';
+import { editionDepartureDestinationAllowed } from './editions/departure-destination.mjs';
+import { mountEditionSoloUI } from './ui/edition-solo.mjs';
+import { createEditionPracticeScenario } from './ui/edition-controller-practice.mjs';
+import { projectEditionGuideScenario } from './editions/selected-presentation.mjs';
 import { installedPresentation, invalidateInstalledMigration } from './installed-app.mjs';
 import { createGameWakeLock } from './ui/game-wake-lock.mjs';
 import { localOfficialChapter } from './official-chapter-source.mjs';
@@ -308,6 +313,7 @@ const getJSON = async (path) => {
   return r.json();
 };
 const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
+let startupEditionWriter = null;
 const timeLabel = (time) =>
   `${Math.floor(time / 60)}:${String(Math.floor(time % 60)).padStart(2, '0')}`;
 // A valid tool return owns the normal native autofocus produced while the
@@ -346,25 +352,29 @@ try {
     .map((target) => ({ target, presenter: createOperationStatus(target), lease: null }));
   let attemptFiles = null,
     profileRecovery = null;
+  const runtimeContent = await loadRuntimeContentProvider();
   const [baseCampaign, themesFile, presets, baseClasses, packCatalogSource, archiveCatalogSource] =
-    await Promise.all([
+    runtimeContent?.boot ??
+    (await Promise.all([
       getJSON('content/campaign.json'),
       getJSON('content/themes.json'),
       getJSON('../authoring/motion-lab/presets.json'),
       getJSON('content/classes.json'),
       getJSON('content/packs/catalog.json'),
       getJSON('content/packs/archive-catalog.json'),
-    ]);
+    ]));
   // Guide lessons keep the canonical catalog when a selected pack narrows flight themes.
   const guideThemes = themesFile.themes;
   const characterPresentations = createCharacterPresentations(presets);
-  const packCatalog = preparePackCatalog({
-    ...packCatalogSource,
-    packs: [
-      ...preparePackCatalog(packCatalogSource).packs,
-      ...preparePackCatalog(archiveCatalogSource).packs,
-    ],
-  });
+  const packCatalog = runtimeContent
+    ? { packs: [] }
+    : preparePackCatalog({
+        ...packCatalogSource,
+        packs: [
+          ...preparePackCatalog(packCatalogSource).packs,
+          ...preparePackCatalog(archiveCatalogSource).packs,
+        ],
+      });
   let campaign = baseCampaign,
     classRegistry = baseClasses;
   campaign.classRecipes = classRegistry;
@@ -382,7 +392,9 @@ try {
   let chapterSnapshot = null;
   let installedEntries = [baseEntry],
     executionCatalog = createExecutionCatalog(installedEntries),
-    masteryCatalog = createMasteryCatalog([{ campaign: baseEntry.campaign, sourcePackId: null }]);
+    masteryCatalog = createMasteryCatalog(
+      runtimeContent ? [] : [{ campaign: baseEntry.campaign, sourcePackId: null }],
+    );
   function prepareContentCatalog(nextPacks) {
     const entries = [
       baseEntry,
@@ -391,13 +403,15 @@ try {
       ),
     ];
     const registrations = createMasteryCatalog(
-      entries.map((entry) => ({
-        campaign: entry.campaign,
-        sourcePackId: entry.sourcePackId,
-        ...(entry.sourcePackFormat
-          ? { sourcePackFormat: entry.sourcePackFormat, masteries: entry.masteries }
-          : {}),
-      })),
+      entries
+        .filter((entry) => !runtimeContent || entry !== baseEntry)
+        .map((entry) => ({
+          campaign: entry.campaign,
+          sourcePackId: entry.sourcePackId,
+          ...(entry.sourcePackFormat
+            ? { sourcePackFormat: entry.sourcePackFormat, masteries: entry.masteries }
+            : {}),
+        })),
     );
     return {
       packs: nextPacks,
@@ -437,7 +451,7 @@ try {
   let courseRequest = resolveCourseRequest(params);
   const courseSession = !!courseRequest;
   const courseEmbedded = window.parent !== window;
-  const courseTheme = themesFile.themes.find((item) => item.id === 'fpv');
+  const courseTheme = themesFile.themes.find((item) => item.id === 'fpv') ?? runtimeContent?.theme;
   let scenario = null;
   if (courseRequest) {
     scenario = createLessonScenario(courseRequest.lessonId, {
@@ -445,9 +459,18 @@ try {
       theme: courseTheme,
     });
   } else if (params.get('practice') === '1') {
-    const raw = sessionStorage.getItem('revealline.playground.current');
-    if (!raw) throw new Error(t('interface:thisPracticeTabHasNoConfigurationOpenThePlaygroundAnd'));
-    const prepared = await prepareScenario(JSON.parse(raw), { classRecipes: classRegistry });
+    const raw = runtimeContent ? null : sessionStorage.getItem('revealline.playground.current');
+    if (!runtimeContent && !raw)
+      throw new Error(t('interface:thisPracticeTabHasNoConfigurationOpenThePlaygroundAnd'));
+    const requested = runtimeContent
+      ? createEditionPracticeScenario(runtimeContent, {
+          missionId: params.get('edition-mission'),
+          classId: params.get('class') ?? 'scout',
+          turnPolicy: params.get('turn-policy') ?? 'immediate',
+          difficulty: params.get('difficulty') ?? 'standard',
+        })
+      : JSON.parse(raw);
+    const prepared = await prepareScenario(requested, { classRecipes: classRegistry });
     scenario = prepared.scenario;
   }
   // Switching source maps inside an authored preview must not turn the same
@@ -458,26 +481,33 @@ try {
     auxiliary: practiceSession,
   });
   let installOfflinePanel = null;
-  const gameplayDownloads = createOfflineDownloadAccess({
-    requestPackage: (request) => {
-      if (!installOfflinePanel)
-        throw new Error('Open Install & offline play to prepare this chapter.');
-      return installOfflinePanel.requestPackage(request);
-    },
-  });
-  const authoredRoute = !practiceSession && (await loadAuthoredJourneyRoute(journeyRequest));
+  const gameplayDownloads = runtimeContent
+    ? null
+    : createOfflineDownloadAccess({
+        requestPackage: (request) => {
+          if (!installOfflinePanel)
+            throw new Error('Open Install & offline play to prepare this chapter.');
+          return installOfflinePanel.requestPackage(request);
+        },
+      });
+  const authoredRoute =
+    !practiceSession && (runtimeContent?.route ?? (await loadAuthoredJourneyRoute(journeyRequest)));
   const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
     ? await createSoloRouteHost(authoredRoute, {
-        themes: authoredJourneyUsesActorMaterials(authoredRoute.id)
-          ? journeyActorThemeCandidates((await getJSON('content-design/themes.json')).themes, {
-              includeOriginals: authoredRoute.preserveOriginalThemes === true,
-            })
-          : (await getJSON('content-design/themes.json')).themes,
+        themes:
+          runtimeContent?.themes ??
+          (authoredJourneyUsesActorMaterials(authoredRoute.id)
+            ? journeyActorThemeCandidates((await getJSON('content-design/themes.json')).themes, {
+                includeOriginals: authoredRoute.preserveOriginalThemes === true,
+              })
+            : (await getJSON('content-design/themes.json')).themes),
         buildVersion,
         corePackIds: authoredRoute.corePackIds,
         optionalCampaignIds: authoredRoute.optionalCampaignIds,
-        ensurePackage: (groupId, options) => gameplayDownloads.ensure(groupId, options),
+        ...(!runtimeContent
+          ? { ensurePackage: (groupId, options) => gameplayDownloads.ensure(groupId, options) }
+          : {}),
       })
     : null;
   const journeyPreferences = authoredJourney ? createJourneyPreferences({ window }) : null;
@@ -508,10 +538,16 @@ try {
       : null;
   const journeyCatalog =
     candidateHost?.catalog ??
-    journeyFromPackCatalog(baseCampaign, preparePackCatalog(packCatalogSource));
+    journeyFromPackCatalog(
+      baseCampaign,
+      runtimeContent ? packCatalog : preparePackCatalog(packCatalogSource),
+    );
+  let editionWriter = null,
+    editionUI = null;
   const journeyProfile = journeyEnabled
     ? createJourneyProfileStore({
         profileKey: authoredRoute?.profileKey,
+        ...(runtimeContent ? { canWrite: () => editionWriter?.writable === true } : {}),
         onStatus: (status) => journeySaveNotice.update(status),
       })
     : null;
@@ -564,7 +600,8 @@ try {
   });
   // Each archived release keeps its own profile schema, packs and save slot.
   // A portable complete backup transfers progress without changing older versions.
-  const channel = isRelease ? `release-${buildVersion}` : 'dev';
+  const editionContext = runtimeContent?.context(isRelease ? buildVersion : 'dev');
+  const channel = editionContext?.channel ?? (isRelease ? `release-${buildVersion}` : 'dev');
   const libraryKey = `revealline.library.${channel}.v1`;
   const packsKey = `revealline.packs.${channel}.v1`;
   // Candidate saves are revision-pinned and independent of Legacy/release slots.
@@ -608,7 +645,14 @@ try {
         },
         release() {},
       }
-    : await claimProfileWriter(navigator.locks, `${libraryKey}.writer`);
+    : await claimProfileWriter(
+        navigator.locks,
+        runtimeContent
+          ? `revealline.company.${runtimeContent.editionId}.writer`
+          : `${libraryKey}.writer`,
+      );
+  editionWriter = writer;
+  if (runtimeContent) startupEditionWriter = writer;
   let pictureManager = null;
   const getPictureManager = () =>
     (pictureManager ??= createManagedMediaStore({ storyMedia: true, soundtrackCatalogue: true }));
@@ -1028,7 +1072,7 @@ try {
   });
   let actorChangesReady = false;
   const stopActorView = actorPreferences.subscribe(({ actorStyle, revision }) => {
-    $('menu-actor-style').value = actorStyle;
+    $('menu-actor-style').value = runtimeContent ? 'campaign' : actorStyle;
     if (actorChangesReady && revision > 0) {
       if (titleFlight?.actorsFresh) cancelTitleFlight();
       cancelWorldAttempt();
@@ -1358,26 +1402,42 @@ try {
     const pictureEntry = pictureExecutionForEntry(entry),
       pictureLevel = pictureLevelForRun(nextRun, entry, pictureEntry);
     const guarded = (owner) =>
-      withOfflinePictureGate(owner, async ({ signal }) => {
-        if (candidateHost?.owns(entry)) {
-          await gameplayDownloads.ensureMission(
-            { routeId: authoredRoute.id, missionId: nextRun.levelId, mode: 'solo' },
-            { signal, retain: true },
-          );
-          return;
-        }
-        const source =
-          entry.classicRulesPresentationCampaign || entry.baseCampaign || entry.campaign;
-        if (!entry.sourcePackId && campaignKey(source) === campaignKey(baseEntry.campaign))
-          await gameplayDownloads.ensureClassic(null, { signal, retain: true });
-        else if (
-          entry.sourcePackId &&
-          isOfficialPack(packs.packs.find((pack) => pack.id === entry.sourcePackId))
-        )
-          await gameplayDownloads.ensureClassic(entry.sourcePackId, { signal, retain: true });
-      });
+      runtimeContent && candidateHost?.owns(entry)
+        ? owner
+        : withOfflinePictureGate(owner, async ({ signal }) => {
+            if (candidateHost?.owns(entry)) {
+              await gameplayDownloads.ensureMission(
+                { routeId: authoredRoute.id, missionId: nextRun.levelId, mode: 'solo' },
+                { signal, retain: true },
+              );
+              return;
+            }
+            const source =
+              entry.classicRulesPresentationCampaign || entry.baseCampaign || entry.campaign;
+            if (!entry.sourcePackId && campaignKey(source) === campaignKey(baseEntry.campaign))
+              await gameplayDownloads.ensureClassic(null, { signal, retain: true });
+            else if (
+              entry.sourcePackId &&
+              isOfficialPack(packs.packs.find((pack) => pack.id === entry.sourcePackId))
+            )
+              await gameplayDownloads.ensureClassic(entry.sourcePackId, { signal, retain: true });
+          });
     if (candidateHost?.owns(entry)) {
       const manifest = entry.manifests.find((item) => item.level.id === nextRun.levelId);
+      if (runtimeContent && manifest.background === null) {
+        return createFlightPictures({
+          context: {
+            runId: nextRunId,
+            executionKey: campaignKey(entry.campaign),
+            levelId: nextRun.levelId,
+            levelRevision: pictureLevel.revision,
+            themeId: manifest.presentation.themeId,
+          },
+          level: pictureLevel,
+          themeIds: entry.themes.map((item) => item.id),
+          legacy: true,
+        });
+      }
       return guarded(
         createCandidateFlightPictures({
           context: {
@@ -1915,24 +1975,26 @@ try {
     pagePresentationSnapshot = null,
     presentationReady = Promise.resolve(null);
   try {
-    presentationHost = createPresentationHost({
-      baseURL: new URL('presentation/compiled/', location.href),
-    });
-    presentationReady = presentationHost
-      .load({ onStatus: presentationFeedback.update })
-      .then((snapshot) => {
-        pagePresentationSnapshot = snapshot;
-        if (!flightVisualLease) applyFlightPresentation();
-        return snapshot;
-      })
-      .catch((error) => {
-        if (error.name === 'AbortError') return null;
-        compiledPresentationWarning = t(
-          'interface:releaseArtworkIsUnavailableSourceArtworkIsShown',
-        );
-        painter.onAsset('');
-        return null;
+    if (!runtimeContent)
+      presentationHost = createPresentationHost({
+        baseURL: new URL('presentation/compiled/', location.href),
       });
+    if (presentationHost)
+      presentationReady = presentationHost
+        .load({ onStatus: presentationFeedback.update })
+        .then((snapshot) => {
+          pagePresentationSnapshot = snapshot;
+          if (!flightVisualLease) applyFlightPresentation();
+          return snapshot;
+        })
+        .catch((error) => {
+          if (error.name === 'AbortError') return null;
+          compiledPresentationWarning = t(
+            'interface:releaseArtworkIsUnavailableSourceArtworkIsShown',
+          );
+          painter.onAsset('');
+          return null;
+        });
   } catch {
     compiledPresentationWarning = t('interface:releaseArtworkIsUnavailableSourceArtworkIsShown');
   }
@@ -2060,7 +2122,14 @@ try {
     themeId,
     { pin = undefined, style = actorPreferences.snapshot().actorStyle, ...options } = {},
   ) {
-    if (pin === null) return null;
+    if (pin === null) {
+      if (runtimeContent && candidateHost?.owns(entry))
+        throw new Error(
+          'This earlier flight has no exact company artwork receipt. Open its original release; the save is preserved for recovery.',
+        );
+      return null;
+    }
+    if (runtimeContent && candidateHost?.owns(entry) && pin === undefined) style = 'campaign';
     const identity = await actorContent(entry, level, themeId, {
       ...options,
       retained: pin !== undefined,
@@ -2070,14 +2139,18 @@ try {
         throw new Error(t('interface:thisContentHasNoAcceptedActorAppearanceOwner'));
       return null;
     }
+    const acceptedIdentity =
+      runtimeContent && candidateHost?.owns(entry)
+        ? { ...identity, authoredPresentationSha256: runtimeContent.authoredPresentationSha256 }
+        : identity;
     const dependencies = {
       baseURL: new URL('presentation/compiled/', location.href),
       currentManifestSha256: pagePresentationSnapshot?.manifestSha256 ?? null,
       ...options,
     };
     return pin === undefined
-      ? prepareActorAppearanceLease({ ...identity, style }, dependencies)
-      : prepareRetainedActorAppearanceLease({ ...identity, pin }, dependencies);
+      ? prepareActorAppearanceLease({ ...acceptedIdentity, style }, dependencies)
+      : prepareRetainedActorAppearanceLease({ ...acceptedIdentity, pin }, dependencies);
   }
   function adoptFlightActors(next, ready = true) {
     const prior = flightActorLease;
@@ -2663,7 +2736,15 @@ try {
     getPresentation: () => presentationSnapshot,
     getThemeId: () => theme.id,
     getTurnPolicy: () => turnPolicy,
-    loadImpactScenario: () => getJSON('content/scenarios/line-impact-demo.json'),
+    loadImpactScenario: async () => {
+      const source = await getJSON('content/scenarios/line-impact-demo.json');
+      return runtimeContent
+        ? projectEditionGuideScenario(source, {
+            theme: runtimeContent.theme,
+            classes: runtimeContent.boot[3],
+          })
+        : source;
+    },
     onPractice: () => {
       clearInput();
       guideMusicWasPlaying = soundtrackPlayer?.snapshot().desired ?? sound.enabled;
@@ -2713,6 +2794,7 @@ try {
     controllerPreview?.clear();
     if (!event.persisted) {
       stopLocaleView();
+      editionUI?.dispose();
       touchPreferences.destroy();
       flightDetails.dispose();
       flightInformation.dispose();
@@ -3097,7 +3179,7 @@ try {
         });
       }
       assertCurrent();
-      const target = new URL('./', location.href);
+      const target = new URL(runtimeContent?.href() ?? './', location.href);
       target.searchParams.set('course', 'first-flight');
       target.searchParams.set('lesson', FIRST_FLIGHT_LESSONS[0].id);
       target.searchParams.set('turn-policy', turnPolicy);
@@ -3116,7 +3198,7 @@ try {
       $('first-flight-help-enter').focus({ preventScroll: true });
     }
   }
-  const catalogueHref = authoredRoute ? './?journey=legacy' : './';
+  const catalogueHref = runtimeContent?.href() ?? (authoredRoute ? './?journey=legacy' : './');
   const catalogueLabel = () =>
     authoredRoute ? t('interface:legacyMissions2') : t('interface:newJourney');
   const librarySourceReturn = readMissionLibraryReturn(params, { mode: 'solo' });
@@ -3142,23 +3224,35 @@ try {
         : t('interface:separateTeamArenas2Players'),
     );
   }
-  const modeLabel = (kind) =>
-    kind === 'library'
-      ? t('interface:selectedMission')
-      : kind === 'catalogue'
-        ? catalogueLabel()
-        : kind === 'versus'
-          ? t('interface:versus2')
-          : t('interface:team');
+  const modeLabel = (kind, destinationLabel = null, presentationId = undefined) =>
+    presentationId !== undefined
+      ? presentationId === null
+        ? t('interface:soloDeparture.currentArtwork')
+        : t('interface:soloDeparture.retainedArtwork')
+      : (destinationLabel ??
+        (kind === 'library'
+          ? t('interface:selectedMission')
+          : kind === 'catalogue'
+            ? catalogueLabel()
+            : kind === 'versus'
+              ? t('interface:versus2')
+              : t('interface:team')));
   const currentAuthoredModeRoute = () =>
     candidateHost?.owns(activeEntry) ? authoredRoute.id : null;
   const modeDestination = (ticket) =>
+    ticket.destinationHref ||
     ticket.libraryHref ||
     (librarySourceReturn?.mode === ticket.kind && librarySourceDestination) ||
     authoredJourneyModeHref(ticket.journeyRouteId, ticket.kind) ||
     modeDestinations[ticket.kind];
   async function prepareModeDestination(ticket, destination = modeDestination(ticket)) {
     modeDepartureCurrent(ticket);
+    if (runtimeContent) {
+      if (!editionDepartureDestinationAllowed(runtimeContent, ticket, destination, location.href))
+        throw new Error(t('interface:thisContentHasNoAcceptedActorAppearanceOwner'));
+      modeDepartureCurrent(ticket);
+      return;
+    }
     await gameplayDownloads.ensureDestination(new URL(destination, location.href), {
       signal: ticket.controller.signal,
       // Only the unified library's authenticated import binding may choose an
@@ -3205,7 +3299,7 @@ try {
     if (librarySourceReturn?.mode === ticket.kind)
       return { token: null, href: new URL(modeDestination(ticket), location.href).href };
     if (ticket.kind === 'catalogue')
-      return { token: null, href: new URL(catalogueHref, location.href).href };
+      return { token: null, href: new URL(modeDestination(ticket), location.href).href };
     // Authored progress and suspended attempts already have their own route.
     // Do not write a Legacy selection bookmark for a candidate execution.
     if (ticket.journeyRouteId)
@@ -3276,7 +3370,9 @@ try {
       canonicalJSON(modeSelection()) !== canonicalJSON(ticket.selection)
     )
       throw new Error(
-        t('interface:soloDeparture.changed', { destination: modeLabel(ticket.kind) }),
+        t('interface:soloDeparture.changed', {
+          destination: modeLabel(ticket.kind, ticket.destinationLabel, ticket.presentationId),
+        }),
       );
   }
   function modeDepartureMessage(ticket) {
@@ -3295,7 +3391,17 @@ try {
                 : '',
             })
           : ticket.kind === 'catalogue'
-            ? t('interface:soloDeparture.catalogue', { destination: catalogueLabel() })
+            ? ticket.presentationId !== undefined
+              ? t('interface:soloDeparture.artwork', {
+                  destination: modeLabel(
+                    ticket.kind,
+                    ticket.destinationLabel,
+                    ticket.presentationId,
+                  ),
+                })
+              : t('interface:soloDeparture.catalogue', {
+                  destination: ticket.destinationLabel ?? catalogueLabel(),
+                })
             : ticket.journeyRouteId
               ? t('interface:soloDeparture.journey', {
                   destination:
@@ -3305,14 +3411,14 @@ try {
                 })
               : ticket.origin === 'solo-title'
                 ? t('interface:soloDeparture.titleReturn', {
-                    destination: modeLabel(ticket.kind),
+                    destination: modeLabel(ticket.kind, ticket.destinationLabel),
                   })
                 : ticket.fallback
                   ? t('interface:soloDeparture.fallbackReturn', {
-                      destination: modeLabel(ticket.kind),
+                      destination: modeLabel(ticket.kind, ticket.destinationLabel),
                     })
                   : t('interface:soloDeparture.missionsReturn', {
-                      destination: modeLabel(ticket.kind),
+                      destination: modeLabel(ticket.kind, ticket.destinationLabel),
                     });
       const failure = ticket.failure
         ? ' ' + t('interface:soloDeparture.saveUnverified', { error: ticket.failure })
@@ -3372,7 +3478,14 @@ try {
     kind,
     event,
     opener,
-    { origin = 'solo-missions', isCurrent = null, libraryTarget = null, libraryMode = 'solo' } = {},
+    {
+      origin = 'solo-missions',
+      isCurrent = null,
+      libraryTarget = null,
+      libraryMode = 'solo',
+      editionId = null,
+      presentationId = undefined,
+    } = {},
   ) {
     if (
       event.defaultPrevented ||
@@ -3385,6 +3498,34 @@ try {
       return;
     event.preventDefault();
     if (!Object.hasOwn(modeDestinations, kind)) return;
+    const destinationEdition =
+      editionId === null
+        ? null
+        : (runtimeContent?.currentCatalog ?? runtimeContent?.catalog).editions.find(
+            (edition) => edition.id === editionId,
+          );
+    const presentationChange = presentationId !== undefined;
+    if (
+      presentationChange &&
+      (kind !== 'catalogue' ||
+        !runtimeContent ||
+        editionId !== null ||
+        presentationId === runtimeContent.retainedPresentationId ||
+        (presentationId !== null &&
+          !runtimeContent.presentationHistory.some((item) => item.id === presentationId)))
+    )
+      return false;
+    if (
+      editionId !== null &&
+      (kind !== 'catalogue' || !destinationEdition || editionId === runtimeContent.editionId)
+    )
+      return false;
+    const destinationHref = destinationEdition
+      ? runtimeContent.href({ edition: editionId, presentation: null })
+      : presentationChange
+        ? runtimeContent.href({ presentation: presentationId })
+        : null;
+    const destinationLabel = destinationEdition?.name ?? null;
     if (
       kind === 'library' &&
       (unifiedLibrary?.library.find(libraryTarget?.id) !== libraryTarget ||
@@ -3412,13 +3553,17 @@ try {
     ) {
       warning(
         localizedMessage('interface:soloDeparture.finishCurrentOperation', {
-          destination: modeLabel(kind),
+          destination: modeLabel(kind, destinationLabel, presentationId),
         }),
       );
       return false;
     }
     const ticket = {
       kind,
+      destinationHref,
+      destinationLabel,
+      destinationEditionId: destinationEdition?.id ?? null,
+      presentationId,
       origin,
       isCurrent,
       opener,
@@ -3475,7 +3620,7 @@ try {
         cancelModeDeparture({ restore: true });
         warning(
           localizedMessage('interface:soloDeparture.openFailed', {
-            destination: modeLabel(kind),
+            destination: modeLabel(kind, destinationLabel, presentationId),
             error: error.message,
           }),
         );
@@ -3506,10 +3651,14 @@ try {
         : t('interface:checkingTheReturnToMissions'),
     );
     localizedText($('mode-leave-title'), () =>
-      t('interface:soloDeparture.openTitle', { destination: modeLabel(kind) }),
+      t('interface:soloDeparture.openTitle', {
+        destination: modeLabel(kind, destinationLabel, presentationId),
+      }),
     );
     localizedText($('mode-leave-confirm'), () =>
-      t('interface:soloDeparture.leaveFor', { destination: modeLabel(kind) }),
+      t('interface:soloDeparture.leaveFor', {
+        destination: modeLabel(kind, destinationLabel, presentationId),
+      }),
     );
     ticket.dialogShown = true;
     try {
@@ -4635,7 +4784,7 @@ try {
     } else {
       coursePhase = 'leaving';
       refreshCourse();
-      location.assign(new URL('./', location.href).href);
+      location.assign(runtimeContent?.href() ?? new URL('./', location.href).href);
     }
   }
   function catalog() {
@@ -5352,6 +5501,7 @@ try {
     if (installed) return { pack: installed, installed: false };
     const summary = packCatalog.packs.find((pack) => pack.id === packId);
     if (!summary) throw new Error(t('interface:thisPackIsNotBundledWithTheCurrentBuild'));
+    if (runtimeContent) throw new Error(t('interface:thisPackIsNotBundledWithTheCurrentBuild'));
     await gameplayDownloads.ensureClassic(packId);
     packLaunchGuard.assert(operation, packs);
     assertWriter();
@@ -6364,6 +6514,8 @@ try {
           readAsset: readAssetStore,
           lockManager: navigator.locks,
           currentVersion: buildVersion,
+          editionId: runtimeContent?.editionId,
+          heldWriter: runtimeContent ? writer : undefined,
           installedApp: true,
           ...(externalBackup ? { readExternalSnapshot: externalBackup.readExternalSnapshot } : {}),
         }
@@ -6740,6 +6892,8 @@ try {
   };
   profileRecovery = attachProfileRecoveryDialog({
     currentVersion: buildVersion,
+    editionId: runtimeContent?.editionId,
+    heldWriter: runtimeContent ? writer : undefined,
     packaged: isRelease,
     resolveSourceVersion: async () => (await getJSON('build-config.json')).version,
     onOpen: () => clearInput(),
@@ -6758,44 +6912,62 @@ try {
       return '';
     },
   });
-  const offlinePanel = attachOfflinePanel();
-  installOfflinePanel = $('shell-offline')
-    ? attachInstallOfflinePanel({
+  const offlinePanel = runtimeContent ? null : attachOfflinePanel();
+  installOfflinePanel =
+    !runtimeContent && $('shell-offline')
+      ? attachInstallOfflinePanel({
+          document,
+          window,
+          downloadsURL: new URL('./downloads.html', import.meta.url),
+          getWriter: () => ({ key: `${libraryKey}.writer`, lease: writer }),
+          onOpen: () => {
+            if (started && !paused) pause(true);
+          },
+          canActivate: () => !started && !sessionBusy && !backupBusy && !contentSwitchBusy,
+          onStatus: (message) => {
+            if ($('shell-offline-status')) $('shell-offline-status').textContent = message;
+          },
+        })
+      : null;
+  const stopOfflineToolNavigation = runtimeContent
+    ? () => {}
+    : attachOfflineToolNavigation({
         document,
         window,
-        downloadsURL: new URL('./downloads.html', import.meta.url),
-        getWriter: () => ({ key: `${libraryKey}.writer`, lease: writer }),
-        onOpen: () => {
-          if (started && !paused) pause(true);
-        },
-        canActivate: () => !started && !sessionBusy && !backupBusy && !contentSwitchBusy,
-        onStatus: (message) => {
-          if ($('shell-offline-status')) $('shell-offline-status').textContent = message;
-        },
-      })
-    : null;
-  const stopOfflineToolNavigation = attachOfflineToolNavigation({
-    document,
-    window,
-    access: gameplayDownloads,
-    onError: (error) => warning(error.message, null, 'host.offline'),
-  });
-  const stopOfflineModeNavigation = attachOfflineModeNavigation({
-    document,
-    window,
-    access: gameplayDownloads,
-    onError: (error) => warning(error.message, null, 'host.offline'),
-  });
-  if ($('shell-offline')) $('shell-offline').onclick = () => installOfflinePanel.open();
+        access: gameplayDownloads,
+        onError: (error) => warning(error.message, null, 'host.offline'),
+      });
+  const stopOfflineModeNavigation = runtimeContent
+    ? () => {}
+    : attachOfflineModeNavigation({
+        document,
+        window,
+        access: gameplayDownloads,
+        onError: (error) => warning(error.message, null, 'host.offline'),
+      });
+  if (installOfflinePanel && $('shell-offline'))
+    $('shell-offline').onclick = () => installOfflinePanel.open();
   if ($('settings-offline'))
     $('settings-offline').onclick = (event) => {
       if (!installOfflinePanel) return;
       event.preventDefault();
       installOfflinePanel.open();
     };
+  if (runtimeContent) {
+    for (const id of [
+      'offline-button',
+      'offline-stop',
+      'offline-status',
+      'offline-optional-note',
+      'offline-details',
+      'shell-offline',
+      'settings-offline',
+    ])
+      if ($(id)) $(id).hidden = true;
+  }
   window.addEventListener('pagehide', (event) => {
     if (!event.persisted) {
-      offlinePanel.destroy();
+      offlinePanel?.destroy();
       installOfflinePanel?.dispose();
       stopOfflineToolNavigation();
       stopOfflineModeNavigation();
@@ -7053,6 +7225,7 @@ try {
     painter.style = scenario?.presentation?.style || library.preferences.style;
     updateBodies();
     painter.setLook(theme, bodyId, painterVisuals());
+    if (runtimeContent && theme.soundtrack && !musicOverride) assignMusic(theme.soundtrack);
     soundtrackPlayer?.setContext(soundtrackContext());
   }
   function updateBodies() {
@@ -7370,6 +7543,7 @@ try {
     show('game-overlay', true);
     show('show-result', false);
     show('view-picture', kind === 'won');
+    editionUI?.refresh();
     victoryStoryButton.hidden =
       kind !== 'won' ||
       practice ||
@@ -7956,10 +8130,11 @@ try {
         throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
       let candidateAttempt = null;
       if (candidateHost?.owns(entry)) {
-        await gameplayDownloads.ensureMission(
-          { routeId: authoredRoute.id, missionId: level.id, mode: 'solo' },
-          { signal: ticket.controller.signal, retain: true },
-        );
+        if (!runtimeContent)
+          await gameplayDownloads.ensureMission(
+            { routeId: authoredRoute.id, missionId: level.id, mode: 'solo' },
+            { signal: ticket.controller.signal, retain: true },
+          );
         if (!resultAttemptCurrent(ticket))
           throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
         candidateAttempt = await candidateHost.preparer.prepare(
@@ -8499,7 +8674,7 @@ try {
         if (prewarm.latest) feedback.update(prewarm.latest);
       }
       const prepared = (async () => {
-        if (candidateHost?.owns(selectedEntry))
+        if (!runtimeContent && candidateHost?.owns(selectedEntry))
           await gameplayDownloads.ensureMission(
             { routeId: authoredRoute.id, missionId: selectedLevel.id, mode: 'solo' },
             { signal: controller.signal, retain: true },
@@ -9925,6 +10100,7 @@ try {
   };
   const journeyCollection = attachJourneyCollection({
     document,
+    onPictureReady: (record) => editionUI?.pictureReady(record),
     getState: async () => {
       if (!collectionJourneyState) await getUnifiedMissionLibrary();
       return collectionJourneyState;
@@ -10032,7 +10208,7 @@ try {
       // The accepted attempt owns this pin. A newly selected preference must
       // never rewrite the appearance of an already recorded route.
       const recorded =
-        actorPin?.style === 'fpv'
+        actorPin?.style === 'fpv' || actorPin?.authoredPresentationSha256
           ? exportReplayPresentation({
               execution: {
                 campaignKey: campaignKey(campaign),
@@ -10053,7 +10229,9 @@ try {
       $('download-raw-replay').hidden = !recorded;
       localizedText($('replay-appearance-note'), () =>
         recorded
-          ? t('interface:recordedFpvActorsArePinnedForReplayTheaterThisDoes')
+          ? actorPin?.authoredPresentationSha256
+            ? 'This recording pins the exact company actors and palette. Replay Theater requires the matching edition artwork; original pictures, music and interface are not restored.'
+            : t('interface:recordedFpvActorsArePinnedForReplayTheaterThisDoes')
           : t('interface:thisRecordingUsesTheOriginalSimulationOnlyFormatReplayTheater'),
       );
       $('replay-dialog').showModal();
@@ -10199,6 +10377,7 @@ try {
         return;
       const dt = clamp(delta / 1000, 0, 1);
       update(dt);
+      editionUI?.refresh();
       const { width, height } = boardPaintSizeForRun(run);
       if (width !== this.boardSize.width || height !== this.boardSize.height) {
         this.boardTexture.setSize(width, height);
@@ -10243,9 +10422,12 @@ try {
     banner: false,
   });
   missionPicker = attachMissionPicker({
-    archivedIds: preparePackCatalog(archiveCatalogSource).packs.map(({ id }) => id),
+    archivedIds: runtimeContent
+      ? []
+      : preparePackCatalog(archiveCatalogSource).packs.map(({ id }) => id),
   });
   async function prepareLibraryClassic(row, { signal }) {
+    if (runtimeContent) throw new Error(t('interface:thisPackIsNotBundledWithTheCurrentBuild'));
     await gameplayDownloads.ensureClassic(row.packId, { signal });
     if (row.source === 'external')
       return installSourceChapter(row.packId, null, { signal, download: true });
@@ -10380,10 +10562,12 @@ try {
     if (unifiedLibrary) return unifiedLibrary;
     if (unifiedLibraryLoading) return unifiedLibraryLoading;
     unifiedLibraryLoading = (async () => {
-      const index = await getJSON('content/mission-library-index.json');
+      const index =
+        runtimeContent?.missionIndex ?? (await getJSON('content/mission-library-index.json'));
       actorMissionIndex = Promise.resolve(index);
       const route = authoredRoute || (await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo));
-      const originalThemes = (await getJSON('content-design/themes.json')).themes;
+      const originalThemes =
+        runtimeContent?.themes ?? (await getJSON('content-design/themes.json')).themes;
       const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
         ? journeyActorThemeCandidates(originalThemes, {
             includeOriginals: route.preserveOriginalThemes === true,
@@ -10398,7 +10582,9 @@ try {
           buildVersion,
           corePackIds: route.corePackIds,
           optionalCampaignIds: route.optionalCampaignIds,
-          ensurePackage: (groupId, options) => gameplayDownloads.ensure(groupId, options),
+          ...(!runtimeContent
+            ? { ensurePackage: (groupId, options) => gameplayDownloads.ensure(groupId, options) }
+            : {}),
         }));
       const profile = candidateHost
         ? journeyProfile
@@ -10414,7 +10600,30 @@ try {
       };
       let journeySources,
         spatialEditions = { dispose() {} };
-      if (views) {
+      if (runtimeContent) {
+        const manifestFor = (
+          mission,
+          difficulty = browsingJourneyPreferences.snapshot().difficulty,
+        ) =>
+          host
+            .select(mission, difficulty)
+            ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
+        const source = journeyLibrarySource({
+          editionId: route.id,
+          edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
+          editionLabel: () =>
+            route.id === DEFAULT_JOURNEY_ROUTES.solo
+              ? t('interface:newJourney')
+              : contentText(route, 'label'),
+          catalog: host.catalog,
+          profile,
+          details: (mission) => journeyMissionDetails(manifestFor(mission)),
+          tags: (mission) => authoredJourneyMissionTags(mission, manifestFor(mission, 'standard')),
+          card: (mission) => host.card(mission, browsingJourneyPreferences.snapshot().difficulty),
+          launch: launchSolo,
+        });
+        journeySources = [source];
+      } else if (views) {
         journeySources = publishedJourneyLibrarySources({
           route,
           views,
@@ -10522,8 +10731,10 @@ try {
         const entry = classicRuntimeEntry(row);
         return entry ? campaignKey(entry.campaign) : null;
       };
+      const selectedEditionPacks = runtimeContent ? emptyPackLibrary() : null;
       const result = await createInstalledMissionLibrary({
         getProjectSources: async () => {
+          if (runtimeContent) return [];
           const { installedCreatorLibrarySources } = await import(
             './mission-library/creator-source.mjs'
           );
@@ -10539,7 +10750,7 @@ try {
         },
         index,
         journeySources,
-        getPacks: () => packs,
+        getPacks: () => selectedEditionPacks ?? packs,
         baseEntry,
         compatibility: ({ entry, level }) => {
           const supported = [];
@@ -10647,6 +10858,13 @@ try {
       unifiedChooser = attachJourneyChooser({
         library: result.library,
         profile,
+        ...(runtimeContent
+          ? {
+              supportedModes: runtimeContent.selection.edition.modes,
+              availableCollectionsOnly: true,
+              description: runtimeContent.selection.edition.name,
+            }
+          : {}),
         getCurrentId: () => {
           const mission = candidateHost && journeyMission();
           if (mission)
@@ -10965,72 +11183,75 @@ try {
     onPlayActivation: captureWorldPlay,
     getLibrary: () => packs,
     getUsage: () => chapterSnapshot?.usage,
-    sourceChapters: !practiceSession
-      ? SOURCE_EXTERNAL_EDITIONS.map((edition) => {
-          const { descriptor, name, description, mode, levels } = edition;
-          return presentSourceChapter(edition, {
-            id: descriptor.id,
-            controlId:
-              descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'source' : `source-${descriptor.id}`,
-            name,
-            description,
-            mode,
-            themeId: descriptor.themeId,
-            levels,
-            sourceOnly: !isRelease,
-            bytes: descriptor.pack.bytes + descriptor.media.bytes,
-            download: isRelease
-              ? (options) =>
-                  installSourceChapter(descriptor.id, null, { ...options, download: true })
-              : null,
-            backupSupported: !!externalBackup,
-            async inspect({ signal }) {
-              const snapshot = await inspectChapters({ signal });
-              if (snapshot.status !== 'checked') return { status: snapshot.reason };
-              const installed = snapshot.index.chapters.some((d) => d.id === descriptor.id);
-              if (installed) await externalChapters.readiness(snapshot, descriptor.id, { signal });
-              return { status: installed ? 'installed' : 'absent' };
-            },
-            install: (files, options) => installSourceChapter(descriptor.id, files, options),
-            async play({ signal, onStatus, launch }) {
-              if (!storedStateAdopted || !persistenceReady)
-                throw new Error(t('interface:reloadAfterRecoveryBeforePlayingThisChapter'));
-              const snapshot = await checkedChapters({ signal });
-              await externalChapters.readiness(snapshot, descriptor.id, { signal });
-              assertWorldPlay(launch);
-              adoptContentCatalog(contentFromChapters(snapshot));
-              const pack = packs.packs.find((item) => item.id === descriptor.id);
-              return requestWorldPlay(pack, { signal, launch, onStatus });
-            },
-            async choose({ signal, onStatus, launch }) {
-              if (!storedStateAdopted || !persistenceReady)
-                throw new Error(
-                  t('interface:reloadAfterRecoveryToAdoptThePreservedProfileBeforeChoosing'),
+    sourceChapters:
+      !practiceSession && !runtimeContent
+        ? SOURCE_EXTERNAL_EDITIONS.map((edition) => {
+            const { descriptor, name, description, mode, levels } = edition;
+            return presentSourceChapter(edition, {
+              id: descriptor.id,
+              controlId:
+                descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'source' : `source-${descriptor.id}`,
+              name,
+              description,
+              mode,
+              themeId: descriptor.themeId,
+              levels,
+              sourceOnly: !isRelease,
+              bytes: descriptor.pack.bytes + descriptor.media.bytes,
+              download: isRelease
+                ? (options) =>
+                    installSourceChapter(descriptor.id, null, { ...options, download: true })
+                : null,
+              backupSupported: !!externalBackup,
+              async inspect({ signal }) {
+                const snapshot = await inspectChapters({ signal });
+                if (snapshot.status !== 'checked') return { status: snapshot.reason };
+                const installed = snapshot.index.chapters.some((d) => d.id === descriptor.id);
+                if (installed)
+                  await externalChapters.readiness(snapshot, descriptor.id, { signal });
+                return { status: installed ? 'installed' : 'absent' };
+              },
+              install: (files, options) => installSourceChapter(descriptor.id, files, options),
+              async play({ signal, onStatus, launch }) {
+                if (!storedStateAdopted || !persistenceReady)
+                  throw new Error(t('interface:reloadAfterRecoveryBeforePlayingThisChapter'));
+                const snapshot = await checkedChapters({ signal });
+                await externalChapters.readiness(snapshot, descriptor.id, { signal });
+                assertWorldPlay(launch);
+                adoptContentCatalog(contentFromChapters(snapshot));
+                const pack = packs.packs.find((item) => item.id === descriptor.id);
+                return requestWorldPlay(pack, { signal, launch, onStatus });
+              },
+              async choose({ signal, onStatus, launch }) {
+                if (!storedStateAdopted || !persistenceReady)
+                  throw new Error(
+                    t('interface:reloadAfterRecoveryToAdoptThePreservedProfileBeforeChoosing'),
+                  );
+                preparationStatus(
+                  onStatus,
+                  t('interface:checkingInstalledChapterOriginals'),
+                  'verifying',
+                  () => !signal?.aborted,
                 );
-              preparationStatus(
-                onStatus,
-                t('interface:checkingInstalledChapterOriginals'),
-                'verifying',
-                () => !signal?.aborted,
-              );
-              const snapshot = await checkedChapters({ signal });
-              await externalChapters.readiness(snapshot, descriptor.id, { signal });
-              if (signal.aborted || !launch?.isCurrent())
-                throw new DOMException(t('interface:chapterSelectionCancelled'), 'AbortError');
-              // Reconcile only checked content; this does not replace the run.
-              // The explicit selection below still requires Stay / Replace.
-              adoptContentCatalog(contentFromChapters(snapshot));
-              const pack = packs.packs.find((p) => p.id === descriptor.id);
-              return requestWorldLaunch(
-                resolvePackCampaign(pack, pack.campaigns[0].id),
-                launch,
-                onStatus,
-              );
-            },
-          });
-        })
-      : [],
+                const snapshot = await checkedChapters({ signal });
+                await externalChapters.readiness(snapshot, descriptor.id, { signal });
+                if (signal.aborted || !launch?.isCurrent())
+                  throw new DOMException(t('interface:chapterSelectionCancelled'), 'AbortError');
+                // Reconcile only checked content; this does not replace the run.
+                // The explicit selection below still requires Stay / Replace.
+                adoptContentCatalog(contentFromChapters(snapshot));
+                const pack = packs.packs.find((p) => p.id === descriptor.id);
+                return requestWorldLaunch(
+                  resolvePackCampaign(pack, pack.campaigns[0].id),
+                  launch,
+                  onStatus,
+                );
+              },
+            });
+          })
+        : [],
     loadCatalog: async ({ signal }) => {
+      if (runtimeContent) return { format: 'revealline-optional-chapters.v1', packs: [] };
       const options = { signal, baseURL: new URL('../', location.href) };
       if (isRelease) await loadExternalCatalog(options);
       return loadOptionalCatalog(options);
@@ -11205,6 +11426,38 @@ try {
     authoredRoute?.id ?? (journeyEnabled ? '1' : 'legacy'),
   );
   mountWorkshopLinks({ document, href: workshopContext.href });
+  editionUI = runtimeContent
+    ? await mountEditionSoloUI({
+        provider: runtimeContent,
+        document,
+        window,
+        writer,
+        version: isRelease ? buildVersion : 'DEV',
+        pause: () => {
+          pause(true);
+          clearInput();
+        },
+        getRun: () => run,
+        getRecorder: () => recorder,
+        getPictureVisible: () =>
+          run?.status === 'won' && $('game-overlay').hidden && !$('show-result').hidden,
+        report: (message) => warning(message),
+        onMissions: (opener) => openUnifiedMissions(opener),
+        onEditionChange: (editionId, opener) =>
+          requestModeDeparture('catalogue', { preventDefault() {} }, opener, {
+            origin: 'solo-title',
+            editionId,
+            isCurrent: () => $('shell-home').open && $('shell-home').contains(opener),
+          }),
+        getSavedPresentation: () => savedAttempt()?.actorAppearancePin?.authoredPresentationSha256,
+        onPresentationChange: (presentationId, opener) =>
+          requestModeDeparture('catalogue', { preventDefault() {} }, opener, {
+            origin: 'solo-title',
+            presentationId,
+            isCurrent: () => $('shell-home').open && $('shell-home').contains(opener),
+          }),
+      })
+    : null;
   attachFullscreen($('shell-fullscreen'));
   void initializeSoundtrack();
   if (autoplayPackLaunch)
@@ -11344,7 +11597,10 @@ try {
     const target = controllerFocus();
     if (availableFocusTarget(target)) target.focus({ preventScroll: true });
   }
+  startupEditionWriter = null;
 } catch (error) {
+  startupEditionWriter?.release();
+  startupEditionWriter = null;
   retireBootWorkshopInput();
   globalThis.RevealLineBoot?.fail(error);
   localizedText($('overlay-title'), () => t('interface:theGameCouldNotLoad'));

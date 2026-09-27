@@ -8,6 +8,13 @@ import { BoardPainter } from '../ui/render.mjs';
 import { attachFieldKitSurfaces } from '../ui/field-kit-surfaces.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
+import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
+import { loadRuntimeContentProvider } from '../runtime-content-provider.mjs';
+import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
+import { createJourneyVisualThemeIdentityAdapter } from '../presentation/journey-visual-theme-identities.mjs';
+import { prepareActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { exportReplayPresentation } from '../replay-presentation.mjs';
 
 const read = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
 const html = readFileSync(new URL('../replay-theater/index.html', import.meta.url), 'utf8');
@@ -46,7 +53,14 @@ async function until(predicate, label) {
 }
 function fixture(
   t,
-  { stored = encode(), systemReduced = false, holdBoot = false, failBoot = false } = {},
+  {
+    stored = encode(),
+    systemReduced = false,
+    holdBoot = false,
+    failBoot = false,
+    edition = null,
+    failEdition = false,
+  } = {},
 ) {
   const doc = new Document(),
     win = new Events(),
@@ -78,7 +92,8 @@ function fixture(
     paints = [],
     frames = new Map(),
     writes = [],
-    reads = [];
+    reads = [],
+    requests = [];
   const data = new Map([
     [DISPLAY_PREFERENCES_KEY, stored],
     ['revealline.library.dev.v1', 'untouched player profile'],
@@ -119,7 +134,9 @@ function fixture(
     document: doc,
     window: win,
     localStorage: storage,
-    location: { href: 'https://example.test/game/replay-theater/' },
+    location: {
+      href: `https://example.test/game/replay-theater/${edition ? '?edition=sample-public' : ''}`,
+    },
     navigator: { getGamepads: () => [] },
     matchMedia: () => media,
     requestAnimationFrame: (fn) => {
@@ -128,6 +145,8 @@ function fixture(
     },
     cancelAnimationFrame: (id) => frames.delete(id),
     fetch: async (path) => {
+      requests.push(String(path));
+      if (edition) return failEdition ? new Response('', { status: 503 }) : edition.fetcher(path);
       if (String(path).includes('content/themes') || String(path).includes('motion-lab/presets')) {
         markBootStarted();
         await bootGate;
@@ -198,6 +217,7 @@ function fixture(
     storage,
     writes,
     reads,
+    requests,
     paints,
     frames,
     original,
@@ -248,6 +268,34 @@ function fixture(
     },
   };
 }
+
+test('edition theater boots from selected presentation, imports raw replays, and never requests historical examples', async (t) => {
+  const edition = await editionProviderFixture(),
+    p = fixture(t, { edition });
+  await p.loading;
+  assert.equal(p.doc.body.dataset.editionId, 'sample-public');
+  assert.equal(p.$('example').hidden, true);
+  assert.equal(p.$('load-example').disabled, true);
+  assert.equal(p.$('theme').children.length, 1);
+  assert.ok(
+    !p.requests.some((path) => /fieldcraft|motion-lab\/presets|content\/themes/.test(path)),
+  );
+  p.$('replay-text').value = JSON.stringify(p.original);
+  p.$('load-text').click();
+  await until(
+    () => p.$('recording-name').textContent === 'Display proof',
+    'The selected edition must import a verified recording.',
+  );
+  assert.equal(p.frame(0).tick, 0);
+  noPlayerAccess(p);
+});
+
+test('edition theater reports unavailable catalog through its ordinary boot status', async (t) => {
+  const p = fixture(t, { edition: await editionProviderFixture(), failEdition: true });
+  await p.loading;
+  assert.match(p.$('boot-status').textContent, /could not start/i);
+  assert.equal(p.frames.size, 0);
+});
 async function ready(page) {
   await page.loading;
   await until(
@@ -473,3 +521,77 @@ for (const denied of [false, true])
     assert.equal(p.$('replay-text-size').value, 'standard');
     assert.equal(p.writes.length, writes + 1);
   });
+
+test('recorded company receipt restores selected actors and rejects changed artwork while retaining playback', async (t) => {
+  const edition = await editionProviderFixture();
+  const provider = await loadRuntimeContentProvider({
+    locationRef: { href: 'https://example.test/game/index.html?edition=sample-public' },
+    documentRef: { documentElement: { dataset: {} } },
+    fetcher: edition.fetcher,
+  });
+  const host = createCandidateSoloHost(provider.route.source, {
+    themes: provider.themes,
+    corePackIds: provider.route.corePackIds,
+  });
+  const entry = host.entries.find((item) => item.difficulty === 'standard'),
+    level = entry.campaign.levels[0];
+  const adapter = await createJourneyVisualThemeIdentityAdapter(provider.route.source, {
+    mode: 'solo',
+  });
+  const content = await adapter.prepareHostSelection({
+    host,
+    selection: entry,
+    level,
+    association: { editionId: provider.editionId, contentThemeId: provider.theme.id, mode: 'solo' },
+  });
+  const lease = await prepareActorAppearanceLease({
+    style: 'campaign',
+    scope: 'journey',
+    content,
+    authoredPresentationSha256: provider.authoredPresentationSha256,
+  });
+  const tuned = applyGameplayTuning(level, resolveGameplayTuning('standard')),
+    options = { seed: 1, classId: 'scout', turnPolicy: 'immediate' };
+  const run = createRun(tuned, options),
+    recorder = createRecorder(tuned, options, 'receipt-test');
+  for (let tick = 0; tick < 12; tick++) {
+    stepRun(run, {}, FIXED_DT);
+    recordInput(recorder, {});
+  }
+  const envelope = exportReplayPresentation({
+    execution: { campaignKey: entry.executionKey, sourcePackId: entry.sourcePackId ?? null },
+    actorAppearancePin: lease.pin(),
+    replay: exportReplay(recorder, run),
+  });
+  lease.release();
+  host.preparer.dispose();
+  const p = fixture(t, { edition });
+  await p.loading;
+  p.$('replay-text').value = JSON.stringify(envelope);
+  p.$('load-text').click();
+  await until(
+    () => p.$('recording-name').textContent === level.name,
+    'Matching company recording must load.',
+  );
+  assert.equal(p.$('theme').disabled, true);
+  assert.match(p.$('recorded-appearance').textContent, /exact artwork receipt/);
+  p.$('step').click();
+  assert.equal(p.frame(0).tick, 1);
+  p.$('restart').click();
+  assert.equal(p.frame(0).tick, 0);
+  const changed = structuredClone(envelope);
+  changed.actorAppearancePin.authoredPresentationSha256 = 'f'.repeat(64);
+  p.$('replay-text').value = JSON.stringify(changed);
+  p.$('load-text').click();
+  await until(
+    () => /matching release/.test(p.$('import-status').textContent),
+    'Wrong receipt must be rejected.',
+  );
+  assert.equal(p.$('recording-name').textContent, level.name);
+  assert.equal(p.frame(0).tick, 0);
+  assert.ok(
+    !p.requests.some((path) =>
+      /fieldcraft|content-design\/themes|mission-library-index/.test(path),
+    ),
+  );
+});

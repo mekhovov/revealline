@@ -4920,5 +4920,8 @@
   "launcher.preparationFailed": "Launcher preparation failed: {{error}}",
   "startCueGo": "GO",
   "nextMissionNamed": "Next: {{mission}}",
-  "nextCampaignNamed": "Next campaign: {{campaign}}"
+  "nextCampaignNamed": "Next campaign: {{campaign}}",
+  "soloDeparture.artwork": "This opens {{destination}} for the same edition. Your mission progress stays shared. Returning does not resume a flight automatically.",
+  "soloDeparture.currentArtwork": "Current artwork",
+  "soloDeparture.retainedArtwork": "Retained original artwork"
 }

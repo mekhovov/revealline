@@ -195,7 +195,7 @@ const contexts = new Map(
   }),
 );
 
-/** Inject the already loaded FPV theme; never fetch cosmetic JSON inside the registry. */
+/** Inject an already validated theme; teaching geometry and rules are independent of cosmetics. */
 export function createLessonScenario(lessonId, { turnPolicy = 'immediate', theme } = {}) {
   const lesson = getFirstFlightLesson(lessonId);
   ensure(TURN_POLICIES.includes(turnPolicy), 'Unknown course turn policy.');
@@ -207,10 +207,6 @@ export function createLessonScenario(lessonId, { turnPolicy = 'immediate', theme
   });
   const checkedTheme = validateTheme(ownedTheme);
   ensure(checkedTheme.valid, `Invalid course theme: ${checkedTheme.errors.join('; ')}`);
-  ensure(
-    ownedTheme.id === 'fpv' && ownedTheme.family === 'fpv',
-    'The course requires the FPV theme.',
-  );
   const scenario = {
     format: SCENARIO_VERSION,
     level: levelFor(lesson),

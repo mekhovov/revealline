@@ -127,7 +127,10 @@ export function probePressureRoute(
   }
   for (const mission of project.missions.filter((m) => m.id === missionId)) {
     const start = Date.now(),
-      manifest = resolveMission(project, mission.id, { difficulty }),
+      authoredManifest = resolveMission(project, mission.id, { difficulty }),
+      manifest = searchPolicy.prepareManifest
+        ? searchPolicy.prepareManifest(authoredManifest, difficulty)
+        : authoredManifest,
       level = searchPolicy.prepareLevel
         ? searchPolicy.prepareLevel(manifest.level, difficulty)
         : manifest.level;
@@ -312,6 +315,7 @@ export function probePressureRoute(
         seed,
         status: run.status,
         simulationIdentity: manifest.simulationIdentity,
+        ...(manifest.gameplayTuning ? { gameplayTuning: manifest.gameplayTuning } : {}),
         ticks: run.tick,
         lives: run.lives,
         coverage: run.coverage,

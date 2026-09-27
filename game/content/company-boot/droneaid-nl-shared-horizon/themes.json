@@ -1,0 +1,411 @@
+{
+  "themes": [
+    {
+      "actorRecipes": {
+        "border-patrol": "fpv-whoop",
+        "bouncer": "fpv-whoop",
+        "claimed-rover": "fpv-whoop",
+        "contour-patrol": "fpv-whoop",
+        "eroder": "fpv-whoop",
+        "lane-boss": "fpv-whoop",
+        "relay-sentinel": "fpv-whoop"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "droneaid-nl-propeller",
+        "carrier": "droneaid-nl-propeller",
+        "fiber": "droneaid-nl-propeller",
+        "impact": "droneaid-nl-propeller",
+        "interceptor": "droneaid-nl-propeller",
+        "scout": "droneaid-nl-propeller",
+        "trapper": "droneaid-nl-propeller"
+      },
+      "coverColor": "#0D0B2E",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-nl-community",
+      "labels": {
+        "ability": "Support",
+        "boss": "Practice lead",
+        "currency": "Connections",
+        "enemy": "Practice quad",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid Netherlands",
+      "palette": {
+        "accent": "#FFD62C",
+        "danger": "#FF9A88",
+        "field": "#0D0B2E",
+        "grid": "#2C286D",
+        "ink": "#0D0B2E",
+        "land": "#4238EB",
+        "muted": "#BFCBF3",
+        "paper": "#FFFFFF",
+        "safe": "#96EAAA",
+        "sky": "#DCEBFD"
+      },
+      "patrolShape": "spark",
+      "player": "droneaid-nl-propeller",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "ambient",
+        "id": "workshop-first-light",
+        "name": "Workshop First Light",
+        "root": 57,
+        "scale": "dorian",
+        "tempo": 72
+      },
+      "subtitle": "Build together. Connect the community."
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "fpv-whoop",
+        "bouncer": "fpv-whoop",
+        "claimed-rover": "fpv-whoop",
+        "contour-patrol": "fpv-whoop",
+        "eroder": "fpv-whoop",
+        "lane-boss": "fpv-whoop",
+        "relay-sentinel": "fpv-whoop"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "droneaid-nl-propeller",
+        "carrier": "droneaid-nl-propeller",
+        "fiber": "droneaid-nl-propeller",
+        "impact": "droneaid-nl-propeller",
+        "interceptor": "droneaid-nl-propeller",
+        "scout": "droneaid-nl-propeller",
+        "trapper": "droneaid-nl-propeller"
+      },
+      "coverColor": "#0D0B2E",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-nl-workshop-lights-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Practice lead",
+        "currency": "Connections",
+        "enemy": "Practice quad",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid Netherlands · FPV Workshop",
+      "palette": {
+        "accent": "#FFD62C",
+        "danger": "#FF9A88",
+        "field": "#0D0B2E",
+        "grid": "#2C286D",
+        "ink": "#0D0B2E",
+        "land": "#4238EB",
+        "muted": "#BFCBF3",
+        "paper": "#FFFFFF",
+        "safe": "#96EAAA",
+        "sky": "#DCEBFD"
+      },
+      "patrolShape": "spark",
+      "player": "droneaid-nl-propeller",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "chiptune",
+        "id": "droneaid-nl-workshop-lights-score",
+        "name": "FPV Workshop",
+        "root": 60,
+        "scale": "major",
+        "tempo": 104
+      },
+      "subtitle": "Workshop Lights"
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "fpv-open-x",
+        "bouncer": "fpv-open-x",
+        "claimed-rover": "fpv-open-x",
+        "contour-patrol": "fpv-open-x",
+        "eroder": "fpv-open-x",
+        "lane-boss": "fpv-open-x",
+        "relay-sentinel": "fpv-open-x"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "droneaid-nl-propeller",
+        "carrier": "droneaid-nl-propeller",
+        "fiber": "droneaid-nl-propeller",
+        "impact": "droneaid-nl-propeller",
+        "interceptor": "droneaid-nl-propeller",
+        "scout": "droneaid-nl-propeller",
+        "trapper": "droneaid-nl-propeller"
+      },
+      "coverColor": "#111339",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-nl-parts-in-motion-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Practice lead",
+        "currency": "Connections",
+        "enemy": "Sorting quad",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid Netherlands · FPV Component Depot",
+      "palette": {
+        "accent": "#FFD62C",
+        "danger": "#FF9A88",
+        "field": "#111339",
+        "grid": "#2C286D",
+        "ink": "#0D0B2E",
+        "land": "#4D55DA",
+        "muted": "#BFCBF3",
+        "paper": "#FFFFFF",
+        "safe": "#96EAAA",
+        "sky": "#DCEBFD"
+      },
+      "patrolShape": "spark",
+      "player": "droneaid-nl-propeller",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "chiptune",
+        "id": "droneaid-nl-parts-in-motion-score",
+        "name": "FPV Component Depot",
+        "root": 62,
+        "scale": "major",
+        "tempo": 112
+      },
+      "subtitle": "Parts in Motion"
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "fpv-stretched",
+        "bouncer": "fpv-stretched",
+        "claimed-rover": "fpv-stretched",
+        "contour-patrol": "fpv-stretched",
+        "eroder": "fpv-stretched",
+        "lane-boss": "fpv-stretched",
+        "relay-sentinel": "fpv-stretched"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "droneaid-nl-propeller",
+        "carrier": "droneaid-nl-propeller",
+        "fiber": "droneaid-nl-propeller",
+        "impact": "droneaid-nl-propeller",
+        "interceptor": "droneaid-nl-propeller",
+        "scout": "droneaid-nl-propeller",
+        "trapper": "droneaid-nl-propeller"
+      },
+      "coverColor": "#21163A",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-nl-makers-together-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Practice lead",
+        "currency": "Connections",
+        "enemy": "Relay quad",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid Netherlands · Drone Building Together",
+      "palette": {
+        "accent": "#F6D570",
+        "danger": "#FF9A88",
+        "field": "#21163A",
+        "grid": "#2C286D",
+        "ink": "#0D0B2E",
+        "land": "#6550C9",
+        "muted": "#BFCBF3",
+        "paper": "#FFFFFF",
+        "safe": "#96EAAA",
+        "sky": "#DCEBFD"
+      },
+      "patrolShape": "spark",
+      "player": "droneaid-nl-propeller",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "ambient",
+        "id": "droneaid-nl-makers-together-score",
+        "name": "Drone Building Together",
+        "root": 65,
+        "scale": "dorian",
+        "tempo": 88
+      },
+      "subtitle": "Makers Together"
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "fpv-caged",
+        "bouncer": "fpv-caged",
+        "claimed-rover": "fpv-caged",
+        "contour-patrol": "fpv-caged",
+        "eroder": "fpv-caged",
+        "lane-boss": "fpv-caged",
+        "relay-sentinel": "fpv-caged"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "droneaid-nl-propeller",
+        "carrier": "droneaid-nl-propeller",
+        "fiber": "droneaid-nl-propeller",
+        "impact": "droneaid-nl-propeller",
+        "interceptor": "droneaid-nl-propeller",
+        "scout": "droneaid-nl-propeller",
+        "trapper": "droneaid-nl-propeller"
+      },
+      "coverColor": "#111A36",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-nl-careful-handoff-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Practice lead",
+        "currency": "Connections",
+        "enemy": "Guarded quad",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid Netherlands · FPV Donation Depot",
+      "palette": {
+        "accent": "#FFD62C",
+        "danger": "#FF9A88",
+        "field": "#111A36",
+        "grid": "#2C286D",
+        "ink": "#0D0B2E",
+        "land": "#4552BC",
+        "muted": "#BFCBF3",
+        "paper": "#FFFFFF",
+        "safe": "#96EAAA",
+        "sky": "#DCEBFD"
+      },
+      "patrolShape": "spark",
+      "player": "droneaid-nl-propeller",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "chiptune",
+        "id": "droneaid-nl-careful-handoff-score",
+        "name": "FPV Donation Depot",
+        "root": 60,
+        "scale": "major",
+        "tempo": 98
+      },
+      "subtitle": "The Careful Handoff"
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "fpv-antenna",
+        "bouncer": "fpv-antenna",
+        "claimed-rover": "fpv-antenna",
+        "contour-patrol": "fpv-antenna",
+        "eroder": "fpv-antenna",
+        "lane-boss": "fpv-antenna",
+        "relay-sentinel": "fpv-antenna"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "droneaid-nl-propeller",
+        "carrier": "droneaid-nl-propeller",
+        "fiber": "droneaid-nl-propeller",
+        "impact": "droneaid-nl-propeller",
+        "interceptor": "droneaid-nl-propeller",
+        "scout": "droneaid-nl-propeller",
+        "trapper": "droneaid-nl-propeller"
+      },
+      "coverColor": "#20133C",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-nl-signals-of-support-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Practice lead",
+        "currency": "Connections",
+        "enemy": "Signal quad",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid Netherlands · Workshop Open Day",
+      "palette": {
+        "accent": "#FFD62C",
+        "danger": "#FF9A88",
+        "field": "#20133C",
+        "grid": "#2C286D",
+        "ink": "#0D0B2E",
+        "land": "#6042CD",
+        "muted": "#BFCBF3",
+        "paper": "#FFFFFF",
+        "safe": "#96EAAA",
+        "sky": "#DCEBFD"
+      },
+      "patrolShape": "spark",
+      "player": "droneaid-nl-propeller",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "chiptune",
+        "id": "droneaid-nl-signals-of-support-score",
+        "name": "Workshop Open Day",
+        "root": 67,
+        "scale": "major",
+        "tempo": 116
+      },
+      "subtitle": "Signals of Support"
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "fpv-survey",
+        "bouncer": "fpv-survey",
+        "claimed-rover": "fpv-survey",
+        "contour-patrol": "fpv-survey",
+        "eroder": "fpv-survey",
+        "lane-boss": "fpv-survey",
+        "relay-sentinel": "fpv-survey"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "droneaid-nl-propeller",
+        "carrier": "droneaid-nl-propeller",
+        "fiber": "droneaid-nl-propeller",
+        "impact": "droneaid-nl-propeller",
+        "interceptor": "droneaid-nl-propeller",
+        "scout": "droneaid-nl-propeller",
+        "trapper": "droneaid-nl-propeller"
+      },
+      "coverColor": "#10112F",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-nl-shared-horizon-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Practice lead",
+        "currency": "Connections",
+        "enemy": "Horizon quad",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid Netherlands · Ukraine Support Horizon",
+      "palette": {
+        "accent": "#FFE18B",
+        "danger": "#FF9A88",
+        "field": "#10112F",
+        "grid": "#2C286D",
+        "ink": "#0D0B2E",
+        "land": "#4740AD",
+        "muted": "#BFCBF3",
+        "paper": "#FFFFFF",
+        "safe": "#96EAAA",
+        "sky": "#DCEBFD"
+      },
+      "patrolShape": "spark",
+      "player": "droneaid-nl-propeller",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "ambient",
+        "id": "droneaid-nl-shared-horizon-score",
+        "name": "Ukraine Support Horizon",
+        "root": 62,
+        "scale": "dorian",
+        "tempo": 82
+      },
+      "subtitle": "Shared Horizon"
+    }
+  ],
+  "version": "xonix-themes.v1"
+}

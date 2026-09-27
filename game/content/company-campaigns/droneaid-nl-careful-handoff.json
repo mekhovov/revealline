@@ -1,0 +1,657 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [
+    {
+      "alt": "A carbon FPV quad beside foam-lined donation cases and goggles in a violet Dutch workshop, with blue-and-yellow fabric.",
+      "bytes": 373593,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-careful-handoff-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-01.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "a18c0fd50924e46b4f7b277c4a1848cbde105012174df1ea87756bb81d5b08fe",
+      "width": 640
+    },
+    {
+      "alt": "A complete four-motor carbon FPV quad on a violet packing mat, blank labels and tags, goggles and cases around a clear aisle.",
+      "bytes": 340440,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-careful-handoff-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-02.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "bd7d16c482fb993ff5af5282f935e9222d98425b6f18ec7e53a6a7cf38ee1111",
+      "width": 640
+    },
+    {
+      "alt": "A camera-equipped carbon FPV quad nested in a foam-lined donation case in a practical violet-accented collection room.",
+      "bytes": 361665,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-careful-handoff-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-03.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "fe9059ea223db49a583c25946656b0eed1edcd23047479fa2c00e185b9cbd4d4",
+      "width": 640
+    },
+    {
+      "alt": "A carbon FPV quad and goggles beside plain case tags and a blank clipboard on shared packing benches.",
+      "bytes": 351275,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-careful-handoff-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-04.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "39b8e2cd81130fbf146c52f55086f0f407993b46b3c34db12645e6fc58219b4f",
+      "width": 640
+    },
+    {
+      "alt": "A foam-lined carbon FPV quad case and donation trolley at a Dutch workshop doorway at dusk.",
+      "bytes": 355585,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-careful-handoff-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-05.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "3eda2b221539263cff8f5730149d4ea0b9f8ef38d6c3fa926c6c7b9b63221caf",
+      "width": 640
+    },
+    {
+      "alt": "Prepared quad and goggles cases on a violet workshop packing table with blue-and-yellow cloth.",
+      "bytes": 320718,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-careful-handoff-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-06.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "d2adb95ca3ee0186e20f0491e3de41c51241cc50121cbcffdd48f9c3ae507fc2",
+      "width": 640
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 7,
+      "format": "CampaignDesignV1",
+      "id": "droneaid-nl-careful-handoff",
+      "missionIds": [
+        "droneaid-nl-careful-handoff-01",
+        "droneaid-nl-careful-handoff-02",
+        "droneaid-nl-careful-handoff-03",
+        "droneaid-nl-careful-handoff-04",
+        "droneaid-nl-careful-handoff-05",
+        "droneaid-nl-careful-handoff-06"
+      ],
+      "name": "The Careful Handoff",
+      "revision": "2"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "droneaid-nl-careful-handoff",
+  "maps": [
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 3, "w": 15, "x": 28, "y": 14 },
+        { "h": 4, "w": 8, "x": 10, "y": 24 },
+        { "h": 4, "w": 8, "x": 53, "y": 6 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "droneaid-nl-careful-handoff-01-map",
+      "name": "From Bench to Box",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 30.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 14, "x": 13, "y": 10 },
+        { "h": 2, "w": 14, "x": 44, "y": 24 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 3, "w": 15, "x": 28, "y": 15 },
+        { "h": 4, "w": 8, "x": 10, "y": 24 },
+        { "h": 4, "w": 8, "x": 53, "y": 7 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "droneaid-nl-careful-handoff-02-map",
+      "name": "The Label Trail",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 31.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 14, "x": 14, "y": 10 },
+        { "h": 2, "w": 14, "x": 43, "y": 24 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 3, "w": 15, "x": 28, "y": 16 },
+        { "h": 4, "w": 8, "x": 10, "y": 24 },
+        { "h": 4, "w": 8, "x": 53, "y": 6 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "droneaid-nl-careful-handoff-03-map",
+      "name": "Collection Point",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 32.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 14, "x": 15, "y": 10 },
+        { "h": 2, "w": 14, "x": 42, "y": 24 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 3, "w": 15, "x": 28, "y": 14 },
+        { "h": 4, "w": 8, "x": 10, "y": 24 },
+        { "h": 4, "w": 8, "x": 53, "y": 7 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "droneaid-nl-careful-handoff-04-map",
+      "name": "Shared Manifest",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 33.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 14, "x": 16, "y": 10 },
+        { "h": 2, "w": 14, "x": 41, "y": 24 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 3, "w": 15, "x": 28, "y": 15 },
+        { "h": 4, "w": 8, "x": 10, "y": 24 },
+        { "h": 4, "w": 8, "x": 53, "y": 6 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "droneaid-nl-careful-handoff-05-map",
+      "name": "Across the Quay",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 34.5, "y": 0.5 }],
+      "terrain": [{ "h": 2, "id": "slow-1", "kind": "slow", "w": 16, "x": 31, "y": 28 }],
+      "walls": [
+        { "h": 2, "w": 14, "x": 17, "y": 10 },
+        { "h": 2, "w": 14, "x": 40, "y": 24 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 3, "w": 15, "x": 28, "y": 16 },
+        { "h": 4, "w": 8, "x": 10, "y": 24 },
+        { "h": 4, "w": 8, "x": 53, "y": 7 }
+      ],
+      "gates": [{ "h": 6, "id": "return-1", "w": 1, "x": 57, "y": 1 }],
+      "height": 36,
+      "id": "droneaid-nl-careful-handoff-06-map",
+      "name": "Ready for the Next Team",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "terrain": [{ "h": 2, "id": "slow-1", "kind": "slow", "w": 17, "x": 31, "y": 28 }],
+      "walls": [
+        { "h": 2, "w": 14, "x": 18, "y": 10 },
+        { "h": 2, "w": 14, "x": 39, "y": 24 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "trail-pursuer",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 28.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.5780000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "difficulty": {
+          "band": 7,
+          "coordination": 0,
+          "execution": 6,
+          "mechanicLoad": 7,
+          "planning": 7,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["trail-pursuer"],
+        "lesson": "Connect the workshop and the packing bench. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "A carbon-frame FPV quad and goggles sit beside an open foam-lined donation case.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "trail-pursuer"
+        ],
+        "routeDecision": "Use the packing table before crossing to the far dock. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "droneaid-nl-careful-handoff-01",
+      "map": { "id": "droneaid-nl-careful-handoff-01-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "From Bench to Box",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 26.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-careful-handoff-01-picture",
+        "themeId": "droneaid-nl-careful-handoff-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "trail-pursuer",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 28.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6280000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "difficulty": {
+          "band": 7,
+          "coordination": 0,
+          "execution": 6,
+          "mechanicLoad": 7,
+          "planning": 7,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Link the label desk and the two packing stations. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Plain packing cards, protected FPV equipment and blue-and-yellow case straps connect two benches.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "trail-pursuer"
+        ],
+        "routeDecision": "Choose the upper or lower packing return around the central divider. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "droneaid-nl-careful-handoff-02",
+      "map": { "id": "droneaid-nl-careful-handoff-02-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "The Label Trail",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 26.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-careful-handoff-02-picture",
+        "themeId": "droneaid-nl-careful-handoff-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 28.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6580000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "difficulty": {
+          "band": 7,
+          "coordination": 0,
+          "execution": 6,
+          "mechanicLoad": 7,
+          "planning": 7,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["heading-interceptor"],
+        "lesson": "Bring the nearby collection courts into one network. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "FPV donation cases and a clearly visible carbon quad gather at a fictional Dutch collection point.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor"
+        ],
+        "routeDecision": "Connect the small collection court before the broad loading area. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "droneaid-nl-careful-handoff-03",
+      "map": { "id": "droneaid-nl-careful-handoff-03-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Collection Point",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 56.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-careful-handoff-03-picture",
+        "themeId": "droneaid-nl-careful-handoff-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 28.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 28.5, "y": 14.5 }],
+      "coverage": 0.678,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+        "difficulty": {
+          "band": 8,
+          "coordination": 0,
+          "execution": 6,
+          "mechanicLoad": 8,
+          "planning": 8,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["lane-emitter"],
+        "lesson": "Connect each fictional handoff station before the last crossing. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Blank handoff records, foam-lined cases and finished FPV quads connect a fictional donation batch.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter"
+        ],
+        "routeDecision": "Use the long inner dock to avoid an exposed perimeter return. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "droneaid-nl-careful-handoff-04",
+      "map": { "id": "droneaid-nl-careful-handoff-04-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Shared Manifest",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-careful-handoff-04-picture",
+        "themeId": "droneaid-nl-careful-handoff-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 28.5
+        },
+        {
+          "axis": "vertical",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 28.5, "y": 15.5 }],
+      "coverage": 0.6980000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+        "difficulty": {
+          "band": 8,
+          "coordination": 0,
+          "execution": 6,
+          "mechanicLoad": 8,
+          "planning": 8,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Join the near packing hall and the far collection bay. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Protected FPV equipment and hard cases move between fictional workshop and collection spaces.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter"
+        ],
+        "routeDecision": "Build the middle return before attempting the far side. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "droneaid-nl-careful-handoff-05",
+      "map": { "id": "droneaid-nl-careful-handoff-05-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Across the Quay",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-careful-handoff-05-picture",
+        "themeId": "droneaid-nl-careful-handoff-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 28.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 28.5, "y": 16.5 }],
+      "coverage": 0.7380000000000001,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter", "relay-gates"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 8,
+          "coordination": 0,
+          "execution": 6,
+          "mechanicLoad": 8,
+          "planning": 8,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["relay-gates"],
+        "lesson": "Complete the handoff picture with every station connected. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Ready-to-close FPV cases and blue-and-yellow fabric celebrate careful preparation for Ukraine support.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter",
+          "relay-gates"
+        ],
+        "routeDecision": "Join the two inner docks before completing the outer loop. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV2",
+      "id": "droneaid-nl-careful-handoff-06",
+      "map": { "id": "droneaid-nl-careful-handoff-06-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Ready for the Next Team",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-careful-handoff-06-picture",
+        "themeId": "droneaid-nl-careful-handoff-theme"
+      },
+      "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "The Careful Handoff",
+  "packs": [
+    {
+      "campaignIds": ["droneaid-nl-careful-handoff"],
+      "format": "PackDesignV1",
+      "id": "droneaid-nl-careful-handoff-pack",
+      "name": "The Careful Handoff",
+      "revision": "2"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "2"
+}

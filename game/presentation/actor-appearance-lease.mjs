@@ -4,6 +4,7 @@ import { createPresentationHost, ACTOR_PRESENTATION_SLOTS } from './host.mjs';
 import { snapshotVisualThemeContext } from './visual-theme-catalogue.mjs';
 import {
   ACTOR_APPEARANCE_PIN_FORMAT,
+  AUTHORED_ACTOR_APPEARANCE_PIN_FORMAT,
   ACTOR_APPEARANCE_RENDERER_POLICY,
   snapshotActorAppearancePin,
   validateActorAppearancePinForContent,
@@ -53,8 +54,18 @@ const pinFor = (style, content, presentation) =>
     presentation,
   });
 
-function campaignLease(content) {
-  const pin = pinFor('campaign', content, null);
+function campaignLease(content, authoredPresentationSha256) {
+  const pin =
+    authoredPresentationSha256 === undefined
+      ? pinFor('campaign', content, null)
+      : snapshotActorAppearancePin({
+          format: AUTHORED_ACTOR_APPEARANCE_PIN_FORMAT,
+          style: 'campaign',
+          rendererPolicy: ACTOR_APPEARANCE_RENDERER_POLICY,
+          content,
+          presentation: null,
+          authoredPresentationSha256,
+        });
   let closed = false;
   return Object.freeze({
     snapshot: null,
@@ -117,6 +128,7 @@ export async function prepareActorAppearanceLease(
     content: sourceContent,
     scope,
     presentation = ACTOR_APPEARANCE_RELEASES[0].presentation,
+    authoredPresentationSha256,
   },
   {
     createHost = createPresentationHost,
@@ -130,7 +142,7 @@ export async function prepareActorAppearanceLease(
   abort(signal);
   const content = scopedContent(sourceContent, scope);
   resolveActorStyle(style);
-  if (style === 'campaign') return campaignLease(content);
+  if (style === 'campaign') return campaignLease(content, authoredPresentationSha256);
   const declaration = pinFor('fpv', content, presentation),
     approved = ACTOR_APPEARANCE_RELEASES.find(
       (release) =>
@@ -263,13 +275,23 @@ export async function prepareActorAppearanceLease(
  * has no approval authority. Same names or a newer source never substitute.
  */
 export async function prepareRetainedActorAppearanceLease(
-  { pin: source, content, scope },
+  { pin: source, content, scope, authoredPresentationSha256 },
   options = {},
 ) {
   abort(options.signal);
   const pin = validateActorAppearancePinForContent(source, content);
+  required(
+    pin.authoredPresentationSha256 === authoredPresentationSha256,
+    'This flight needs its exact earlier artwork and actor recipes. Open the matching edition release; the original save is preserved.',
+  );
   return prepareActorAppearanceLease(
-    { style: pin.style, content: pin.content, scope, presentation: pin.presentation },
+    {
+      style: pin.style,
+      content: pin.content,
+      scope,
+      presentation: pin.presentation,
+      authoredPresentationSha256,
+    },
     options,
   );
 }

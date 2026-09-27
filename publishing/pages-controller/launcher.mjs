@@ -19,6 +19,17 @@ export async function publishOfflineLauncher(source, output, version) {
     if (error.code === 'ENOENT') return false;
     throw error;
   }
+  const installed = await fs.readFile(path.join(source, 'app/installed-app.mjs'), 'utf8');
+  for (const file of ['edition-context.mjs', 'profile-writer.mjs']) {
+    try {
+      await fs.access(path.join(source, 'app', file));
+      files.push(file);
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+      if (installed.includes(`'./${file}'`) || installed.includes(`"./${file}"`))
+        throw new Error(`Frozen launcher is missing an imported dependency: ${file}`);
+    }
+  }
   await fs.mkdir(path.join(output, 'app'), { recursive: true });
   for (const file of files) {
     const bytes = await fs.readFile(path.join(source, 'app', file));
