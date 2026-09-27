@@ -103,7 +103,19 @@ Remaining work and current estimates:
 
 1. **Completed:** canonical Pages, all 194 catalogue entries, representative exact
    Release bytes, range playback and same-page Next were verified publicly.
-2. Release the game adapter that accepts canonical structured rights, multi-
+2. **Completed:** canonical archive
+   [PR #5](https://github.com/mekhovov/revealline-soundtracks/pull/5) mirrors the
+   original 70 exact MP3 objects and inventory, preserves both numbered archives'
+   control-plane evidence, and pins the old prerelease's 19 assets (15 `.rlsound`
+   packs). Its local verifier reports 194 catalogue records, 70 compatibility
+   objects and 356,015,756 public bytes; 23/23 archive tests pass. It merged as
+   `132ef40faae4617349a7e2870a0d6012f5f54c47`; exact-source verification and
+   [Pages deployment](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36334003357)
+   passed. Direct public verification fetched and hashed all 70 objects / 354,986,122
+   bytes against inventory SHA-256
+   `2706445dafe995f6c4dc044ad5e92031cae60627699f6a72985e67a972064ccd`
+   and confirmed 194 canonical catalogue entries.
+3. Release the game adapter that accepts canonical structured rights, multi-
    collections, `ФПВ`/`UA`, Release URLs and non-CORS media-element streaming while
    retaining remote-error recovery and built-in/uploaded fallback: about one day
    plus release coordination. Game [PR #716](https://github.com/mekhovov/revealline/pull/716)
@@ -112,10 +124,20 @@ Remaining work and current estimates:
    without a game allowlist or per-song code change. Unknown licence text is not
    exposed in the game. The PR remains on the release-train hold until the sole
    publisher assigns it a version and runs independent exact-source qualification.
-3. Add migration notices to the two legacy roots and freeze their intake: about
+4. Add migration notices to the two legacy roots and freeze their intake: about
    half a day after canonical game acceptance.
-4. Implement paged catalogue metadata before the 450-track trigger: one to two
+5. **Completed:** the canonical
+   [compatibility prerelease](https://github.com/mekhovov/revealline-soundtracks/releases/tag/legacy-playlists-2026-09-21)
+   carries the 15 exact `.rlsound` packs and four evidence assets. All 19 names,
+   sizes and GitHub-reported SHA-256 digests match the Archive 01 source release.
+6. Implement paged catalogue metadata before the 450-track trigger: one to two
    working days; it does not block the current 194-track release.
+
+Both numbered repositories can then be archived read-only. Deleting them is not a
+regression-free operation: immutable older game editions contain their original
+Pages URLs, and GitHub does not redirect project Pages after repository deletion.
+Keep the archived repositories and Pages payloads available unless breaking those
+historical editions and links is explicitly accepted.
 
 The main technical concern is that GitHub Release assets support direct media
 playback and range requests but do not expose the normal cross-origin response
