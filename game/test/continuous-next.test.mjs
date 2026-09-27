@@ -122,11 +122,17 @@ test('retained Classic identity selects one explicit rules lane and rejects abse
       [{ id: 'same', campaignKey: 'base@1' }],
       'original-edition',
     ),
+    source(
+      '["custom","mine"]',
+      'Custom',
+      [{ id: 'same', campaignKey: 'custom@1' }],
+      'custom-edition',
+    ),
   ]);
-  const [currentRow, originalRow] = library.forMode('versus');
+  const [currentRow, originalRow, customRow] = library.forMode('solo');
   assert.equal(
     retainedLibraryMission(library, {
-      mode: 'versus',
+      mode: 'solo',
       levelId: 'same',
       campaignKey: 'base@1',
       rulesEdition: current,
@@ -135,17 +141,29 @@ test('retained Classic identity selects one explicit rules lane and rejects abse
   );
   assert.equal(
     retainedLibraryMission(library, {
-      mode: 'versus',
+      mode: 'solo',
       levelId: 'same',
       campaignKey: 'base@1',
       rulesEdition: 'original',
     }),
     originalRow,
   );
+  assert.equal(
+    retainedLibraryMission(library, {
+      mode: 'solo',
+      levelId: 'same',
+      campaignKey: 'custom@1',
+      sourcePackId: 'mine',
+      ownerId: customRow.ownerId,
+      editionId: customRow.editionId,
+      rulesEdition: 'original',
+    }),
+    customRow,
+  );
   assert.throws(
     () =>
       retainedLibraryMission(library, {
-        mode: 'versus',
+        mode: 'solo',
         levelId: 'same',
         campaignKey: 'base@1',
       }),
@@ -154,7 +172,7 @@ test('retained Classic identity selects one explicit rules lane and rejects abse
   assert.throws(
     () =>
       retainedLibraryMission(library, {
-        mode: 'versus',
+        mode: 'solo',
         levelId: 'same',
         campaignKey: 'base@1',
         rulesEdition: 'future-rules',
@@ -164,7 +182,7 @@ test('retained Classic identity selects one explicit rules lane and rejects abse
   assert.throws(
     () =>
       retainedLibraryMission(library, {
-        mode: 'versus',
+        mode: 'solo',
         levelId: 'same',
         campaignKey: 'base@1',
         rulesEdition: current,
