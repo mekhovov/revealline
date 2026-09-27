@@ -190,6 +190,22 @@ async function settled(page, predicate, message) {
     { timeoutMs: 45000, message },
   );
 }
+
+function releaseMissionCue(page) {
+  assert.equal(page.$('race-start-cue').hidden, false);
+  assert.equal(page.$('race-start-cue').dataset.kind, 'mission');
+  assert.equal(page.$('race-start-cue-label').textContent, '3');
+  assert.equal(page.tick(), 0);
+  page.frame(0, { preserveStartCue: true });
+  page.frame(700, { preserveStartCue: true });
+  page.frame(700, { preserveStartCue: true });
+  page.frame(700, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue-label').textContent, 'GO');
+  assert.equal(page.tick(), 0);
+  for (let tick = 0; tick < 42; tick++) page.frame(1000 / 120, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue').hidden, true);
+  assert.equal(page.tick(), 42);
+}
 function activate(page, id) {
   const element = typeof id === 'string' ? page.$(id) : id;
   assert.ok(element, `Missing public control ${id}`);
@@ -401,12 +417,11 @@ hostTest(
       before = snapshot(p);
     await openCatalogue(p);
     await download(p);
-    activate(p, missionCard(p));
-    await settled(
-      p,
-      () => p.state() === 'running',
-      'Catalogue Play must start without another Start.',
-    );
+    const operation = activate(p, missionCard(p));
+    assert.ok(operation instanceof Promise, 'Catalogue Play exposes its owned preparation.');
+    await operation;
+    assert.equal(p.state(), 'running');
+    releaseMissionCue(p);
     assert.equal(p.$('journey-chooser').open, false);
     assert.equal(p.$('race-library-replace')?.open ?? false, false);
     const accepted = [...p.renders],
