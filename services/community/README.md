@@ -524,6 +524,15 @@ off-host snapshot record.
 
 ## Deployed two-user acceptance
 
+The `Community hosted acceptance` workflow combines `compose.yaml`, `compose.production.yaml`, and
+the clearly marked CI-only `compose.hosted-acceptance.yaml` overlay. It runs the production
+migrations, preflight, PostgreSQL, disk blob/tus stores, and hardened worker; injects fixed disposable
+development actors only into the API; verifies an interrupted tus upload; recreates the containers
+without deleting their volumes; and then runs the complete two-user journey below. Both redacted
+receipts are retained as workflow artifacts. This proves the repository's Linux Compose path and
+restart persistence. It does not prove real TLS/proxy behavior, mail delivery, Better Auth sessions,
+a selected production host, or AWS.
+
 `npm run acceptance:deployed` exercises a running service over HTTP. Creator A publishes a small
 valid `.rlpack`; Creator B proves owner isolation, discovers the published edition, and downloads
 the exact bytes. The runner installs those downloaded bytes into isolated in-memory storage adapters,
