@@ -181,6 +181,13 @@ export class Element extends Events {
     siblings.splice(siblings.indexOf(this) + 1, 0, node);
     node.parentNode = this.parentNode;
   }
+  before(node) {
+    if (!this.parentNode) return;
+    const siblings = this.parentNode.children;
+    node.remove?.();
+    siblings.splice(siblings.indexOf(this), 0, node);
+    node.parentNode = this.parentNode;
+  }
   insertAdjacentElement(position, node) {
     assert.equal(position, 'afterend');
     this.after(node);

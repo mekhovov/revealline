@@ -154,7 +154,7 @@ export function validateCampaignDescriptor(source) {
     value,
     ['id', 'revision', 'name', 'brandId', 'publication', 'sourcePath', 'assetIds', 'modes'],
     'Campaign descriptor',
-    ['lessonPath'],
+    ['lessonPath', 'rewardPath'],
   );
   required(
     stableId(value.id) &&
@@ -172,6 +172,11 @@ export function validateCampaignDescriptor(source) {
     required(
       editionRelativePath(value.lessonPath) && value.lessonPath.endsWith('.json'),
       'Lessons require a bounded JSON path.',
+    );
+  if (value.rewardPath !== undefined)
+    required(
+      editionRelativePath(value.rewardPath) && value.rewardPath.endsWith('.json'),
+      'Completion rewards require a bounded JSON path.',
     );
   list(value.assetIds, EDITION_LIMITS.assets, 'campaign assets');
   modeList(value.modes);

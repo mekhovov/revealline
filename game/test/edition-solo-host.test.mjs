@@ -13,6 +13,7 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { createRewardMissionBindings } from '../rewards/bindings.mjs';
 
 test('artwork update offers explicit exact-snapshot recovery and Continue retains the original save', async (t) => {
   const f = await retainedEditionFixture(),
@@ -685,6 +686,53 @@ test('edition controller practice reconstructs only its selected mission without
     { turnPolicy: 'grid-center' },
   );
   assert.equal(companySimulationIdentity(page.rendered.run), companySimulationIdentity(expected));
+  assert.deepEqual(page.errors, []);
+});
+
+test('reward-enabled controller practice boots without a Journey authority and cannot earn discoveries', async (t) => {
+  const f = await editionProviderFixture(),
+    catalog = structuredClone(f.catalog);
+  const descriptor = catalog.campaigns[0],
+    mission = createRewardMissionBindings(f.source)[0];
+  descriptor.rewardPath = 'game/content/sample/rewards.json';
+  const copy = { title: 'Practice discovery', teaser: 'Win this mission in Solo to collect.' };
+  f.files.set('game/editions/catalog.json', catalog);
+  f.files.set('edition-catalog.json', catalog);
+  f.files.set(descriptor.rewardPath, [
+    {
+      format: 'revealline-completion-reward.v1',
+      id: 'sample-discovery',
+      revision: '1',
+      brandId: 'sample',
+      campaignId: descriptor.id,
+      scope: { kind: 'mission', id: mission.missionId },
+      locales: { en: copy, uk: copy },
+      requirements: {
+        missions: [{ missionId: mission.missionId, bindings: mission.bindings }],
+        learning: [],
+        mastery: [],
+      },
+      payloads: [
+        {
+          id: 'explanation',
+          type: 'knowledge',
+          locales: {
+            en: { title: 'Explanation', paragraphs: ['A public discovery.'] },
+            uk: { title: 'Пояснення', paragraphs: ['Публічне відкриття.'] },
+          },
+        },
+      ],
+    },
+  ]);
+  const page = await soloPage(t, {
+    search: `?edition=sample-public&practice=1&edition-mission=${mission.missionId}&difficulty=expert`,
+    fetchResponse: f.fetcher,
+  });
+  assert.equal(page.rendered.run.levelId, mission.missionId);
+  for (let i = 0; i < 20; i++) page.frame();
+  const card = page.$('completion-reward-shelf').querySelector('article');
+  assert.equal(card.dataset.earned, 'false');
+  assert.equal(card.querySelector('button'), null);
   assert.deepEqual(page.errors, []);
 });
 

@@ -14,6 +14,15 @@ import {
 import { COMPANY_CAMPAIGNS } from '../game/company-campaigns/catalog.mjs';
 import { COMPANY_LESSONS } from '../game/company-campaigns/lessons.mjs';
 import { createCompanyProject } from '../game/company-campaigns/content.mjs';
+import {
+  COMPANY_REWARD_CAMPAIGN_IDS,
+  createCompanyRewards,
+} from '../game/company-campaigns/rewards.mjs';
+import { createRewardMissionBindings } from '../game/rewards/bindings.mjs';
+import {
+  completionRewardAssetReferences,
+  validateCompletionRewards,
+} from '../game/rewards/model.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const bytes = (value) => Buffer.from(canonicalJSON(value) + '\n');
@@ -49,6 +58,25 @@ export async function produceCompanyContent({ assets, artwork = [], classes = []
       required(descriptor, `Campaign artwork has no exact public inventory entry: ${asset.id}.`);
       return descriptor.id;
     });
+    const rewardPath = COMPANY_REWARD_CAMPAIGN_IDS.includes(definition.id)
+      ? `game/content/company-campaigns/${definition.id}.rewards.json`
+      : null;
+    if (rewardPath) {
+      const rewards = validateCompletionRewards(
+        createCompanyRewards({
+          definition,
+          source,
+          assets,
+          missionBindings: createRewardMissionBindings(source),
+        }),
+      );
+      for (const reference of completionRewardAssetReferences(rewards))
+        required(
+          assetIds.includes(reference.assetId),
+          `Reward artwork is not admitted by its campaign: ${reference.assetId}.`,
+        );
+      files.set(rewardPath, bytes(rewards));
+    }
     return {
       id: definition.id,
       revision: definition.revision,
@@ -59,6 +87,7 @@ export async function produceCompanyContent({ assets, artwork = [], classes = []
       assetIds: [...new Set(assetIds)],
       modes: definition.modes,
       ...(lessonPath ? { lessonPath } : {}),
+      ...(rewardPath ? { rewardPath } : {}),
     };
   });
   for (const edition of COMPANY_EDITIONS) {

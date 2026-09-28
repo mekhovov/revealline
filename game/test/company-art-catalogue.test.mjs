@@ -119,7 +119,10 @@ test('all 36 current Dutch pictures advance without changing gameplay or losing 
     });
     assert.equal(
       snapshot.catalog.editions[0].revision +
-        (['droneaid-nl-community', 'droneaid-nl-parts-in-motion'].includes(edition.id) ? 2 : 1),
+        (['droneaid-nl-community', 'droneaid-nl-parts-in-motion'].includes(edition.id) ? 2 : 1) +
+        // Discovery rewards advance these exact presentation editions once more;
+        // their retained originals and every gameplay comparison below still apply.
+        (['droneaid-nl-community', 'droneaid-nl-workshop-lights'].includes(edition.id) ? 1 : 0),
       edition.revision,
     );
     for (const campaign of snapshot.catalog.campaigns)
@@ -168,7 +171,10 @@ test('the corrected FPV crop advances only its campaign and combined edition wit
     assert.equal(bytes.length, descriptor.bytes);
     const { snapshot } = await validateRetainedPresentation(JSON.parse(bytes), { edition });
     assert.equal(snapshot.authoredPresentationSha256, descriptor.id);
-    assert.equal(snapshot.catalog.editions[0].revision + 1, edition.revision);
+    assert.equal(
+      snapshot.catalog.editions[0].revision + 1 + (editionId === 'droneaid-nl-community' ? 1 : 0),
+      edition.revision,
+    );
     const prior = snapshot.catalog.assets.find(
       (asset) => asset.id === 'droneaid-nl-parts-in-motion-03-reveal-v2',
     );

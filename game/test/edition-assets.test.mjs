@@ -47,6 +47,38 @@ test('corrupt or incomplete asset download cannot activate a presentation', asyn
     /pinned revision/,
   );
 });
+test('reward viewers receive only verified bytes, without a second unverified download', async () => {
+  const asset = catalog.assets.find((item) => item.id === 'coupa-flower');
+  const original = await fs.readFile(new URL(asset.path, root));
+  let received = 0,
+    requests = 0;
+  const options = {
+    baseURL: 'https://example.test/',
+    ids: [asset.id],
+    fetcher: async () => {
+      requests++;
+      return new Response(original);
+    },
+    onVerifiedAsset: ({ asset: verified, bytes }) => {
+      received++;
+      assert.equal(verified.sha256, asset.sha256);
+      assert.deepEqual(Buffer.from(bytes), original);
+    },
+  };
+  await verifyEditionAssets(bootstrap, options);
+  assert.equal(received, 1);
+  assert.equal(requests, 1);
+  const altered = Buffer.from(original);
+  altered[0] ^= 1;
+  await assert.rejects(
+    verifyEditionAssets(bootstrap, {
+      ...options,
+      fetcher: async () => new Response(altered),
+    }),
+    /pinned revision/,
+  );
+  assert.equal(received, 1, 'Unverified bytes never reach the viewer.');
+});
 test('cancellation and oversized streams reject before presentation adoption', async () => {
   const controller = new AbortController();
   controller.abort();

@@ -5,7 +5,7 @@ import { resolveEditionAssets } from './model.mjs';
  * streaming bounds peak memory and never loads another edition's artwork. */
 export async function verifyEditionAssets(
   bootstrap,
-  { baseURL, fetcher = globalThis.fetch, signal, ids = null } = {},
+  { baseURL, fetcher = globalThis.fetch, signal, ids = null, onVerifiedAsset = null } = {},
 ) {
   const { catalog, selection } = bootstrap;
   const selected = resolveEditionAssets(catalog, { editionId: selection.edition.id });
@@ -77,6 +77,8 @@ export async function verifyEditionAssets(
     ).join('');
     signal?.throwIfAborted();
     required(hash === asset.sha256, `Presentation asset differs from its pinned revision: ${id}.`);
+    if (onVerifiedAsset) await onVerifiedAsset({ asset, bytes });
+    signal?.throwIfAborted();
     verified.push(id);
   }
   return Object.freeze(verified);
