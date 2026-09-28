@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-knowledge-connects-key-v1",
-          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+          "assetId": "victory-drones-knowledge-connects-01-reveal-v1",
+          "sha256": "614c9a38f9c9233c01a649f4b59e9f638e5b9dd712cda0bb04b2bc2a25a184a7"
         },
         "id": "victory-drones-knowledge-connects-01-image",
         "locales": {
           "en": {
-            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
+            "alt": "Original illustrated learning observatory with a yellow compass-inspired floor, a simple wheel model and a single blank question card.",
             "title": "A Learning Compass"
           },
           "uk": {
-            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
+            "alt": "Оригінальна ілюстрована навчальна обсерваторія з жовтою підлогою, натхненною компасом, простою моделлю колеса та порожньою карткою запитання.",
             "title": "Навчальний компас"
           }
         },
@@ -118,7 +118,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "victory-drones-knowledge-connects-01", "kind": "mission" }
   },
   {
@@ -133,17 +133,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-knowledge-connects-key-v1",
-          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+          "assetId": "victory-drones-knowledge-connects-02-reveal-v1",
+          "sha256": "794cca9930fae791df22caef7e2caa3a5379557396974585c17986609a1140de"
         },
         "id": "victory-drones-knowledge-connects-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
+            "alt": "Original illustrated twin learning pavilions comparing a simple bookshelf drawing with a small physical bookshelf, joined by a yellow bridge.",
             "title": "Two Ways to Explain"
           },
           "uk": {
-            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
+            "alt": "Оригінальні ілюстровані навчальні павільйони, з’єднані жовтим містком, зіставляють простий малюнок книжкової полиці та невелику фізичну модель.",
             "title": "Два способи пояснити"
           }
         },
@@ -234,7 +234,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "victory-drones-knowledge-connects-02", "kind": "mission" }
   },
   {
@@ -255,17 +255,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-knowledge-connects-key-v1",
-          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+          "assetId": "victory-drones-knowledge-connects-03-reveal-v1",
+          "sha256": "3be987f6c3072b1de39b9cdfb7c38c95a3808e4657765fea1cfbd3bf4990287e"
         },
         "id": "victory-drones-knowledge-connects-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
+            "alt": "Original illustrated research hall with a still wheel model, a linked blank source notebook and an empty card holder for an unresolved question.",
             "title": "Ask and Verify"
           },
           "uk": {
-            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
+            "alt": "Оригінальна ілюстрована дослідницька зала з нерухомою моделлю колеса, пов’язаним порожнім джерельним зошитом і порожнім місцем для невирішеного запитання.",
             "title": "Запитайте й перевірте"
           }
         },
@@ -356,7 +356,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "victory-drones-knowledge-connects-03", "kind": "mission" }
   },
   {
@@ -377,17 +377,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-knowledge-connects-key-v1",
-          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+          "assetId": "victory-drones-knowledge-connects-04-reveal-v1",
+          "sha256": "fcf58c0d74e131fa7a9163285512cf77c66ffc2d7c793dc013f714bde27368b6"
         },
         "id": "victory-drones-knowledge-connects-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
+            "alt": "Original illustrated quiet learning courtyard with yellow seating, blank question wall and separate geometric study pieces on a low table.",
             "title": "Room for Questions"
           },
           "uk": {
-            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
+            "alt": "Оригінальний ілюстрований спокійний навчальний двір із жовтими сидіннями, порожньою стіною запитань та окремими геометричними навчальними формами на низькому столі.",
             "title": "Місце для запитань"
           }
         },
@@ -478,7 +478,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "victory-drones-knowledge-connects-04", "kind": "mission" }
   },
   {
@@ -499,17 +499,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-knowledge-connects-key-v1",
-          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+          "assetId": "victory-drones-knowledge-connects-05-reveal-v1",
+          "sha256": "04e343285fbad88d8c4e32ad365652c29c51aa1927b6be4ba7f751c126fbd4e6"
         },
         "id": "victory-drones-knowledge-connects-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
+            "alt": "Original illustrated comparison library with a simple bicycle-wheel drawing, a more detailed original wheel illustration and one shared blank question card.",
             "title": "Compare Before Concluding"
           },
           "uk": {
-            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
+            "alt": "Оригінальна ілюстрована бібліотека порівнянь із простим малюнком велосипедного колеса, детальнішою оригінальною ілюстрацією та спільною порожньою карткою запитання.",
             "title": "Порівняйте перед висновком"
           }
         },
@@ -600,7 +600,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "victory-drones-knowledge-connects-05", "kind": "mission" }
   },
   {
@@ -621,17 +621,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-knowledge-connects-key-v1",
-          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+          "assetId": "victory-drones-knowledge-connects-06-reveal-v1",
+          "sha256": "494447b8b5ba6af10d8eaa4dcc7497ac480cb754104f6f36ac1d7d76885aa350"
         },
         "id": "victory-drones-knowledge-connects-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
+            "alt": "Original illustrated learning-network finale with a bicycle display, empty discussion seats and yellow bridges connecting earlier discovery spaces.",
             "title": "Teach It Forward"
           },
           "uk": {
-            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
+            "alt": "Оригінальний ілюстрований фінал навчальної мережі з моделлю велосипеда, вільними місцями для обговорення та жовтими містками між попередніми просторами відкриттів.",
             "title": "Поясніть наступному"
           }
         },
@@ -722,7 +722,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "victory-drones-knowledge-connects-06", "kind": "mission" }
   },
   {
@@ -767,17 +767,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-knowledge-connects-key-v1",
-          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+          "assetId": "victory-drones-knowledge-connects-01-reveal-v1",
+          "sha256": "614c9a38f9c9233c01a649f4b59e9f638e5b9dd712cda0bb04b2bc2a25a184a7"
         },
         "id": "victory-drones-knowledge-connects-01-image",
         "locales": {
           "en": {
-            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
+            "alt": "Original illustrated learning observatory with a yellow compass-inspired floor, a simple wheel model and a single blank question card.",
             "title": "A Learning Compass"
           },
           "uk": {
-            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
+            "alt": "Оригінальна ілюстрована навчальна обсерваторія з жовтою підлогою, натхненною компасом, простою моделлю колеса та порожньою карткою запитання.",
             "title": "Навчальний компас"
           }
         },
@@ -785,17 +785,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-knowledge-connects-key-v1",
-          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+          "assetId": "victory-drones-knowledge-connects-02-reveal-v1",
+          "sha256": "794cca9930fae791df22caef7e2caa3a5379557396974585c17986609a1140de"
         },
         "id": "victory-drones-knowledge-connects-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
+            "alt": "Original illustrated twin learning pavilions comparing a simple bookshelf drawing with a small physical bookshelf, joined by a yellow bridge.",
             "title": "Two Ways to Explain"
           },
           "uk": {
-            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
+            "alt": "Оригінальні ілюстровані навчальні павільйони, з’єднані жовтим містком, зіставляють простий малюнок книжкової полиці та невелику фізичну модель.",
             "title": "Два способи пояснити"
           }
         },
@@ -803,17 +803,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-knowledge-connects-key-v1",
-          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+          "assetId": "victory-drones-knowledge-connects-03-reveal-v1",
+          "sha256": "3be987f6c3072b1de39b9cdfb7c38c95a3808e4657765fea1cfbd3bf4990287e"
         },
         "id": "victory-drones-knowledge-connects-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
+            "alt": "Original illustrated research hall with a still wheel model, a linked blank source notebook and an empty card holder for an unresolved question.",
             "title": "Ask and Verify"
           },
           "uk": {
-            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
+            "alt": "Оригінальна ілюстрована дослідницька зала з нерухомою моделлю колеса, пов’язаним порожнім джерельним зошитом і порожнім місцем для невирішеного запитання.",
             "title": "Запитайте й перевірте"
           }
         },
@@ -821,17 +821,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-knowledge-connects-key-v1",
-          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+          "assetId": "victory-drones-knowledge-connects-04-reveal-v1",
+          "sha256": "fcf58c0d74e131fa7a9163285512cf77c66ffc2d7c793dc013f714bde27368b6"
         },
         "id": "victory-drones-knowledge-connects-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
+            "alt": "Original illustrated quiet learning courtyard with yellow seating, blank question wall and separate geometric study pieces on a low table.",
             "title": "Room for Questions"
           },
           "uk": {
-            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
+            "alt": "Оригінальний ілюстрований спокійний навчальний двір із жовтими сидіннями, порожньою стіною запитань та окремими геометричними навчальними формами на низькому столі.",
             "title": "Місце для запитань"
           }
         },
@@ -839,17 +839,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-knowledge-connects-key-v1",
-          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+          "assetId": "victory-drones-knowledge-connects-05-reveal-v1",
+          "sha256": "04e343285fbad88d8c4e32ad365652c29c51aa1927b6be4ba7f751c126fbd4e6"
         },
         "id": "victory-drones-knowledge-connects-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
+            "alt": "Original illustrated comparison library with a simple bicycle-wheel drawing, a more detailed original wheel illustration and one shared blank question card.",
             "title": "Compare Before Concluding"
           },
           "uk": {
-            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
+            "alt": "Оригінальна ілюстрована бібліотека порівнянь із простим малюнком велосипедного колеса, детальнішою оригінальною ілюстрацією та спільною порожньою карткою запитання.",
             "title": "Порівняйте перед висновком"
           }
         },
@@ -857,17 +857,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-knowledge-connects-key-v1",
-          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+          "assetId": "victory-drones-knowledge-connects-06-reveal-v1",
+          "sha256": "494447b8b5ba6af10d8eaa4dcc7497ac480cb754104f6f36ac1d7d76885aa350"
         },
         "id": "victory-drones-knowledge-connects-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
+            "alt": "Original illustrated learning-network finale with a bicycle display, empty discussion seats and yellow bridges connecting earlier discovery spaces.",
             "title": "Teach It Forward"
           },
           "uk": {
-            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
+            "alt": "Оригінальний ілюстрований фінал навчальної мережі з моделлю велосипеда, вільними місцями для обговорення та жовтими містками між попередніми просторами відкриттів.",
             "title": "Поясніть наступному"
           }
         },
@@ -938,7 +938,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "victory-drones-knowledge-connects", "kind": "campaign" }
   }
 ]
