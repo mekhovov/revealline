@@ -94,7 +94,7 @@
           "revision": "feedback-b49aedd7a0984ad6",
           "victoryMotif": "open-horizon-v1"
         },
-        "finaleRewardRef": { "id": "ukraine-threads-finale", "revision": "4" }
+        "finaleRewardRef": { "id": "ukraine-threads-finale", "revision": "5" }
       },
       "format": "CampaignDesignV1",
       "id": "ukraine-threads",
@@ -362,7 +362,7 @@
         "memorableMoment": "Original ivory textile architecture with angled light revealing raised white threads, openwork and nested exhibition courts.",
         "pacingBeat": "combine",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "ukraine-threads-03-discovery", "revision": "4" },
+        "rewardRef": { "id": "ukraine-threads-03-discovery", "revision": "5" },
         "routeDecision": "Use the outer textile ledge before moving into the small inner gallery."
       },
       "format": "MissionDesignV1",
@@ -569,9 +569,9 @@
       "format": "PackDesignV1",
       "id": "ukraine-threads-pack",
       "name": "Threads Across Ukraine",
-      "revision": "5"
+      "revision": "6"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "5"
+  "revision": "6"
 }

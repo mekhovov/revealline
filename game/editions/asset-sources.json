@@ -9180,6 +9180,678 @@
       "publication": "public",
       "review": "Original bilingual instrumental description and optional listening prompt; artist and licence copied from existing cleared source records; no invented lyrics or audition-specific claims.",
       "attribution": "RevealLine original description; recording by 3xBlast, CC0 1.0 Universal."
+    },
+    {
+      "id": "textile-light-diffuse-v1",
+      "path": "game/editions/assets/discovery/textile-light-diffuse-v1.png",
+      "sha256": "eabcef992854e71c481a7e4fdb17fcaf86894375e2950644b940886a7ea1c7e1",
+      "bytes": 3333938,
+      "revision": 1,
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "Assistant visually inspected 2026-09-28: matching fictional studies with small generated stitch differences, not measured relighting or a real museum specimen. Human art review remains deferred.",
+      "width": 1536,
+      "height": 1024,
+      "notes": [
+        "Exact original generated PNG bytes, without re-encoding.",
+        "Invented pale textile pattern; not attributed to a particular craftsperson, region or historical collection."
+      ],
+      "prompt": "Use case: scientific-educational. Asset type: game discovery collectible, original fictional textile study, landscape 3:2.\nCreate a beautifully detailed painterly macro illustration of ONE small square ivory linen swatch with raised white thread embroidery on a warm charcoal museum board. The swatch is nearly flat, straight rectangular edges with tiny frayed ends, all four corners visible, directly overhead camera. Design only a simple original geometric motif: one centered raised-thread diamond, four smaller hollow diamonds around it at north east south west, and a thin raised-thread border. Realistic fine linen weave, rich tactile thread relief, no dye, no printed pattern. Elegant educational museum illustration with subtle hand-painted finish, clearly original and not a photographed historic garment. This swatch will later be used for matched lighting variants, so use a restrained simple easily repeatable stitch arrangement, fixed camera and fixed geometry.\nLighting: broad soft DIFFUSE light from above, even low contrast, very gentle shadows. Charcoal background visible around all sides. No tools, people, frames, hands, letters, captions, arrows, logos, watermark. Do not make cultural authenticity claims in the image. Maximize the crisp tangible thread detail; avoid decorative unrelated objects."
+    },
+    {
+      "id": "textile-light-left-v1",
+      "path": "game/editions/assets/discovery/textile-light-left-v1.png",
+      "sha256": "09ff0b2d7811b9ae6076db4ab2708688250ac66d4f683c0fba6e2de92dea4607",
+      "bytes": 3145957,
+      "revision": 1,
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "Assistant visually inspected 2026-09-28: matching fictional studies with small generated stitch differences, not measured relighting or a real museum specimen. Human art review remains deferred.",
+      "width": 1536,
+      "height": 1024,
+      "notes": [
+        "Exact original generated PNG bytes, without re-encoding.",
+        "Invented pale textile pattern; not attributed to a particular craftsperson, region or historical collection."
+      ],
+      "prompt": "Use case: lighting-weather. Edit target: the supplied original fictional linen swatch study. Change ONLY the lighting: illuminate the same swatch with a soft low-angle raking light from the LEFT side so raised thread casts short readable shadows toward the opposite side. Keep cloth color ivory white, no stain or changed thread. Preserve exact camera, scale, crop, swatch outline, all stitch/diamond positions, border, charcoal board and empty surroundings. Do not redraw or add motifs, rotate swatch, add folds or texture, deepen relief, add words or arrows. The educational goal is comparing illustrated light direction on the same design. Keep every point recognizably aligned with the input. Gentle museum aesthetic, detailed weave, light revealing texture, no dramatic spotlight."
+    },
+    {
+      "id": "textile-light-right-v1",
+      "path": "game/editions/assets/discovery/textile-light-right-v1.png",
+      "sha256": "53fe2601e7dfff5ea54f63fea9481c29c1cf7acdea3025f6967bacfdcc88259d",
+      "bytes": 3114152,
+      "revision": 1,
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "Assistant visually inspected 2026-09-28: matching fictional studies with small generated stitch differences, not measured relighting or a real museum specimen. Human art review remains deferred.",
+      "width": 1536,
+      "height": 1024,
+      "notes": [
+        "Exact original generated PNG bytes, without re-encoding.",
+        "Invented pale textile pattern; not attributed to a particular craftsperson, region or historical collection."
+      ],
+      "prompt": "Use case: lighting-weather. Edit target: the supplied original fictional linen swatch study. Change ONLY the lighting: illuminate the same swatch with a soft low-angle raking light from the RIGHT side so raised thread casts short readable shadows toward the opposite side. Keep cloth color ivory white, no stain or changed thread. Preserve exact camera, scale, crop, swatch outline, all stitch/diamond positions, border, charcoal board and empty surroundings. Do not redraw or add motifs, rotate swatch, add folds or texture, deepen relief, add words or arrows. The educational goal is comparing illustrated light direction on the same design. Keep every point recognizably aligned with the input. Gentle museum aesthetic, detailed weave, light revealing texture, no dramatic spotlight."
+    },
+    {
+      "id": "fpv-motion-makers-video",
+      "path": "game/editions/assets/discovery/motion-makers/motion-makers-v1.mp4",
+      "bytes": 188873,
+      "sha256": "2c6ab067612b4530f729e6c92b49c5ebeb278eb44b4020cd8b3ff34e8e90cc5b",
+      "revision": 1,
+      "rights": "original-project-artwork",
+      "source": "scripts/produce-motion-makers.mjs",
+      "publication": "public",
+      "review": "Original conceptual artwork and bilingual labels inspected by assistant; exact media and two reproducible builds verified. Human art and physical-device review deferred.",
+      "locales": {
+        "en": {
+          "title": "Motion Makers · two different roles",
+          "alt": "Silent original diagram with a dark blue background and two circular panels. Left: the motor is separated into eight amber stator shapes that remain still and a cyan outer rotor ring with moving markers. These shapes are schematic and do not specify a real motor. Right: a cyan two-blade propeller icon turns at the same illustrative rate. Pale dots appear below it as a symbol for air, not a measured flow field. A plus sign connects the two roles conceptually; it is not a wiring connection. Labels are in English and Ukrainian. The opening holds still, the middle shows slow motion, and the ending settles. The poster holds the same complete diagram with stator, rotor, propeller and air labels. No soundtrack, real speed, blade direction prescription, dimensions or performance data is included.",
+          "caption": "This silent 12-second illustration is a conceptual explanation, not a recording of hardware, an assembly procedure or a simulation of speed, thrust or flight. The positions, eight decorative stator shapes, blade silhouette and motion have no specification meaning. A typical FPV outrunner can have a rotating outer bell; do not interpret “stator” as meaning every outer housing stays fixed. No wiring or correct rotation direction is shown. Sources explain the general roles and do not endorse this fictional model."
+        },
+        "uk": {
+          "title": "Джерела руху · дві різні ролі",
+          "alt": "Беззвучна оригінальна схема на темно-синьому тлі з двома круглими панелями. Ліворуч мотор поділено на вісім нерухомих бурштинових форм статора й зовнішнє бірюзове кільце ротора з рухомими мітками. Форми умовні й не задають конструкції реального мотора. Праворуч бірюзовий значок дволопатевого пропелера обертається з тією самою ілюстративною швидкістю. Світлі крапки під ним позначають повітря, а не виміряне поле потоку. Знак «плюс» поєднує дві ролі на рівні понять і не означає електричного з’єднання. Підписи англійською й українською. На початку зображення нерухоме, у середині рух повільний, наприкінці він зупиняється. Статичний постер зберігає повну схему з підписами статора, ротора, пропелера й повітря. Немає звукової доріжки, реальної швидкості, припису напрямку лопатей, розмірів чи даних про продуктивність.",
+          "caption": "Ця беззвучна 12-секундна ілюстрація пояснює поняття, а не показує запис реального обладнання, порядок складання чи моделювання швидкості, тяги або польоту. Розташування, вісім умовних форм статора, контур лопатей і рух не задають технічних параметрів. У поширеного FPV-мотора із зовнішнім ротором зовнішній дзвін може обертатися; слово «статор» не означає, що будь-який зовнішній корпус нерухомий. Тут немає схеми проводів чи вказівки правильного напрямку обертання. Джерела пояснюють загальні ролі й не схвалюють цю вигадану модель."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "title": "NASA Glenn — Propeller Propulsion",
+          "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+        },
+        {
+          "title": "NASA — Electric Machines",
+          "url": "https://www.nasa.gov/eap-technology/electric-machines/"
+        }
+      ],
+      "sourceModules": [
+        {
+          "path": "scripts/motion-makers-diagram.mjs",
+          "bytes": 10728,
+          "sha256": "1ca8b1fc20acd167455c71387b2b061c935ca3361dc7362d8cff80e0fc5bf4c7"
+        },
+        {
+          "path": "scripts/produce-motion-makers.mjs",
+          "bytes": 5904,
+          "sha256": "de67e010689237742d36ef658f764b6e957319a066f1e52fb92371822ad0adbb"
+        },
+        {
+          "path": "game/company-campaigns/curriculum-motion-makers.mjs",
+          "bytes": 11789,
+          "sha256": "8e027c069fb0fe346ba2bafe7ce1f4ff5627fae8fb8438ddc7579c4e2d51ea9d"
+        },
+        {
+          "path": "scripts/produce-field-kit-sprites.mjs",
+          "bytes": 26860,
+          "sha256": "9ba2b3bd86e66dadaeffd7f55f7e2ba6bb20ce26a52d519fc96ff801b8b2d5a0"
+        }
+      ],
+      "encoder": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers",
+      "encoderArguments": [
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-nostdin",
+        "-y",
+        "-fflags",
+        "+bitexact",
+        "-f",
+        "rawvideo",
+        "-pixel_format",
+        "rgba",
+        "-video_size",
+        "960x540",
+        "-framerate",
+        "24",
+        "-i",
+        "pipe:0",
+        "-frames:v",
+        "288",
+        "-an",
+        "-c:v",
+        "libx264",
+        "-threads",
+        "1",
+        "-preset",
+        "veryslow",
+        "-crf",
+        "21",
+        "-profile:v",
+        "baseline",
+        "-pix_fmt",
+        "yuv420p",
+        "-flags:v",
+        "+bitexact",
+        "-sws_flags",
+        "accurate_rnd+bitexact",
+        "-map_metadata",
+        "-1",
+        "-movflags",
+        "+faststart",
+        "motion-makers-v1.mp4"
+      ],
+      "notes": [
+        "Original schematic role illustration, not hardware footage, a wiring plan or a measured simulation.",
+        "No copied third-party images, fonts, audio or footage."
+      ]
+    },
+    {
+      "id": "fpv-motion-makers-poster",
+      "path": "game/editions/assets/discovery/motion-makers/motion-makers-poster-v1.png",
+      "bytes": 42073,
+      "sha256": "a78136eb42349fb9f8faeb17b96144bb82217354dc2b86f7a936134b3c753297",
+      "revision": 1,
+      "rights": "original-project-artwork",
+      "source": "scripts/produce-motion-makers.mjs",
+      "publication": "public",
+      "review": "Original conceptual artwork and bilingual labels inspected by assistant; exact media and two reproducible builds verified. Human art and physical-device review deferred.",
+      "locales": {
+        "en": {
+          "title": "Motion Makers · two different roles",
+          "alt": "Silent original diagram with a dark blue background and two circular panels. Left: the motor is separated into eight amber stator shapes that remain still and a cyan outer rotor ring with moving markers. These shapes are schematic and do not specify a real motor. Right: a cyan two-blade propeller icon turns at the same illustrative rate. Pale dots appear below it as a symbol for air, not a measured flow field. A plus sign connects the two roles conceptually; it is not a wiring connection. Labels are in English and Ukrainian. The opening holds still, the middle shows slow motion, and the ending settles. The poster holds the same complete diagram with stator, rotor, propeller and air labels. No soundtrack, real speed, blade direction prescription, dimensions or performance data is included.",
+          "caption": "This silent 12-second illustration is a conceptual explanation, not a recording of hardware, an assembly procedure or a simulation of speed, thrust or flight. The positions, eight decorative stator shapes, blade silhouette and motion have no specification meaning. A typical FPV outrunner can have a rotating outer bell; do not interpret “stator” as meaning every outer housing stays fixed. No wiring or correct rotation direction is shown. Sources explain the general roles and do not endorse this fictional model."
+        },
+        "uk": {
+          "title": "Джерела руху · дві різні ролі",
+          "alt": "Беззвучна оригінальна схема на темно-синьому тлі з двома круглими панелями. Ліворуч мотор поділено на вісім нерухомих бурштинових форм статора й зовнішнє бірюзове кільце ротора з рухомими мітками. Форми умовні й не задають конструкції реального мотора. Праворуч бірюзовий значок дволопатевого пропелера обертається з тією самою ілюстративною швидкістю. Світлі крапки під ним позначають повітря, а не виміряне поле потоку. Знак «плюс» поєднує дві ролі на рівні понять і не означає електричного з’єднання. Підписи англійською й українською. На початку зображення нерухоме, у середині рух повільний, наприкінці він зупиняється. Статичний постер зберігає повну схему з підписами статора, ротора, пропелера й повітря. Немає звукової доріжки, реальної швидкості, припису напрямку лопатей, розмірів чи даних про продуктивність.",
+          "caption": "Ця беззвучна 12-секундна ілюстрація пояснює поняття, а не показує запис реального обладнання, порядок складання чи моделювання швидкості, тяги або польоту. Розташування, вісім умовних форм статора, контур лопатей і рух не задають технічних параметрів. У поширеного FPV-мотора із зовнішнім ротором зовнішній дзвін може обертатися; слово «статор» не означає, що будь-який зовнішній корпус нерухомий. Тут немає схеми проводів чи вказівки правильного напрямку обертання. Джерела пояснюють загальні ролі й не схвалюють цю вигадану модель."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "title": "NASA Glenn — Propeller Propulsion",
+          "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+        },
+        {
+          "title": "NASA — Electric Machines",
+          "url": "https://www.nasa.gov/eap-technology/electric-machines/"
+        }
+      ],
+      "sourceModules": [
+        {
+          "path": "scripts/motion-makers-diagram.mjs",
+          "bytes": 10728,
+          "sha256": "1ca8b1fc20acd167455c71387b2b061c935ca3361dc7362d8cff80e0fc5bf4c7"
+        },
+        {
+          "path": "scripts/produce-motion-makers.mjs",
+          "bytes": 5904,
+          "sha256": "de67e010689237742d36ef658f764b6e957319a066f1e52fb92371822ad0adbb"
+        },
+        {
+          "path": "game/company-campaigns/curriculum-motion-makers.mjs",
+          "bytes": 11789,
+          "sha256": "8e027c069fb0fe346ba2bafe7ce1f4ff5627fae8fb8438ddc7579c4e2d51ea9d"
+        },
+        {
+          "path": "scripts/produce-field-kit-sprites.mjs",
+          "bytes": 26860,
+          "sha256": "9ba2b3bd86e66dadaeffd7f55f7e2ba6bb20ce26a52d519fc96ff801b8b2d5a0"
+        }
+      ],
+      "encoder": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers",
+      "encoderArguments": [
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-nostdin",
+        "-y",
+        "-fflags",
+        "+bitexact",
+        "-f",
+        "rawvideo",
+        "-pixel_format",
+        "rgba",
+        "-video_size",
+        "960x540",
+        "-framerate",
+        "24",
+        "-i",
+        "pipe:0",
+        "-frames:v",
+        "288",
+        "-an",
+        "-c:v",
+        "libx264",
+        "-threads",
+        "1",
+        "-preset",
+        "veryslow",
+        "-crf",
+        "21",
+        "-profile:v",
+        "baseline",
+        "-pix_fmt",
+        "yuv420p",
+        "-flags:v",
+        "+bitexact",
+        "-sws_flags",
+        "accurate_rnd+bitexact",
+        "-map_metadata",
+        "-1",
+        "-movflags",
+        "+faststart",
+        "motion-makers-v1.mp4"
+      ],
+      "notes": [
+        "Original schematic role illustration, not hardware footage, a wiring plan or a measured simulation.",
+        "No copied third-party images, fonts, audio or footage."
+      ]
+    },
+    {
+      "id": "fpv-motion-makers-transcript-en",
+      "path": "game/editions/assets/discovery/motion-makers/motion-makers-en-v1.txt",
+      "bytes": 2154,
+      "sha256": "f9f4d52645201f655e24d3e47376d90df72ad4e180c33ac53c15bf24aedb9cda",
+      "revision": 1,
+      "rights": "original-project-artwork",
+      "source": "scripts/produce-motion-makers.mjs",
+      "publication": "public",
+      "review": "Original conceptual artwork and bilingual labels inspected by assistant; exact media and two reproducible builds verified. Human art and physical-device review deferred.",
+      "locales": {
+        "en": {
+          "title": "Motion Makers · two different roles",
+          "alt": "Silent original diagram with a dark blue background and two circular panels. Left: the motor is separated into eight amber stator shapes that remain still and a cyan outer rotor ring with moving markers. These shapes are schematic and do not specify a real motor. Right: a cyan two-blade propeller icon turns at the same illustrative rate. Pale dots appear below it as a symbol for air, not a measured flow field. A plus sign connects the two roles conceptually; it is not a wiring connection. Labels are in English and Ukrainian. The opening holds still, the middle shows slow motion, and the ending settles. The poster holds the same complete diagram with stator, rotor, propeller and air labels. No soundtrack, real speed, blade direction prescription, dimensions or performance data is included.",
+          "caption": "This silent 12-second illustration is a conceptual explanation, not a recording of hardware, an assembly procedure or a simulation of speed, thrust or flight. The positions, eight decorative stator shapes, blade silhouette and motion have no specification meaning. A typical FPV outrunner can have a rotating outer bell; do not interpret “stator” as meaning every outer housing stays fixed. No wiring or correct rotation direction is shown. Sources explain the general roles and do not endorse this fictional model."
+        },
+        "uk": {
+          "title": "Джерела руху · дві різні ролі",
+          "alt": "Беззвучна оригінальна схема на темно-синьому тлі з двома круглими панелями. Ліворуч мотор поділено на вісім нерухомих бурштинових форм статора й зовнішнє бірюзове кільце ротора з рухомими мітками. Форми умовні й не задають конструкції реального мотора. Праворуч бірюзовий значок дволопатевого пропелера обертається з тією самою ілюстративною швидкістю. Світлі крапки під ним позначають повітря, а не виміряне поле потоку. Знак «плюс» поєднує дві ролі на рівні понять і не означає електричного з’єднання. Підписи англійською й українською. На початку зображення нерухоме, у середині рух повільний, наприкінці він зупиняється. Статичний постер зберігає повну схему з підписами статора, ротора, пропелера й повітря. Немає звукової доріжки, реальної швидкості, припису напрямку лопатей, розмірів чи даних про продуктивність.",
+          "caption": "Ця беззвучна 12-секундна ілюстрація пояснює поняття, а не показує запис реального обладнання, порядок складання чи моделювання швидкості, тяги або польоту. Розташування, вісім умовних форм статора, контур лопатей і рух не задають технічних параметрів. У поширеного FPV-мотора із зовнішнім ротором зовнішній дзвін може обертатися; слово «статор» не означає, що будь-який зовнішній корпус нерухомий. Тут немає схеми проводів чи вказівки правильного напрямку обертання. Джерела пояснюють загальні ролі й не схвалюють цю вигадану модель."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "title": "NASA Glenn — Propeller Propulsion",
+          "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+        },
+        {
+          "title": "NASA — Electric Machines",
+          "url": "https://www.nasa.gov/eap-technology/electric-machines/"
+        }
+      ],
+      "sourceModules": [
+        {
+          "path": "scripts/motion-makers-diagram.mjs",
+          "bytes": 10728,
+          "sha256": "1ca8b1fc20acd167455c71387b2b061c935ca3361dc7362d8cff80e0fc5bf4c7"
+        },
+        {
+          "path": "scripts/produce-motion-makers.mjs",
+          "bytes": 5904,
+          "sha256": "de67e010689237742d36ef658f764b6e957319a066f1e52fb92371822ad0adbb"
+        },
+        {
+          "path": "game/company-campaigns/curriculum-motion-makers.mjs",
+          "bytes": 11789,
+          "sha256": "8e027c069fb0fe346ba2bafe7ce1f4ff5627fae8fb8438ddc7579c4e2d51ea9d"
+        },
+        {
+          "path": "scripts/produce-field-kit-sprites.mjs",
+          "bytes": 26860,
+          "sha256": "9ba2b3bd86e66dadaeffd7f55f7e2ba6bb20ce26a52d519fc96ff801b8b2d5a0"
+        }
+      ],
+      "encoder": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers",
+      "encoderArguments": [
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-nostdin",
+        "-y",
+        "-fflags",
+        "+bitexact",
+        "-f",
+        "rawvideo",
+        "-pixel_format",
+        "rgba",
+        "-video_size",
+        "960x540",
+        "-framerate",
+        "24",
+        "-i",
+        "pipe:0",
+        "-frames:v",
+        "288",
+        "-an",
+        "-c:v",
+        "libx264",
+        "-threads",
+        "1",
+        "-preset",
+        "veryslow",
+        "-crf",
+        "21",
+        "-profile:v",
+        "baseline",
+        "-pix_fmt",
+        "yuv420p",
+        "-flags:v",
+        "+bitexact",
+        "-sws_flags",
+        "accurate_rnd+bitexact",
+        "-map_metadata",
+        "-1",
+        "-movflags",
+        "+faststart",
+        "motion-makers-v1.mp4"
+      ],
+      "notes": [
+        "Original schematic role illustration, not hardware footage, a wiring plan or a measured simulation.",
+        "No copied third-party images, fonts, audio or footage."
+      ]
+    },
+    {
+      "id": "fpv-motion-makers-transcript-uk",
+      "path": "game/editions/assets/discovery/motion-makers/motion-makers-uk-v1.txt",
+      "bytes": 3846,
+      "sha256": "afaad10bc2d870f3493ec1549b1a0cde87cb97b433e29f26ec6ca4b0550430f5",
+      "revision": 1,
+      "rights": "original-project-artwork",
+      "source": "scripts/produce-motion-makers.mjs",
+      "publication": "public",
+      "review": "Original conceptual artwork and bilingual labels inspected by assistant; exact media and two reproducible builds verified. Human art and physical-device review deferred.",
+      "locales": {
+        "en": {
+          "title": "Motion Makers · two different roles",
+          "alt": "Silent original diagram with a dark blue background and two circular panels. Left: the motor is separated into eight amber stator shapes that remain still and a cyan outer rotor ring with moving markers. These shapes are schematic and do not specify a real motor. Right: a cyan two-blade propeller icon turns at the same illustrative rate. Pale dots appear below it as a symbol for air, not a measured flow field. A plus sign connects the two roles conceptually; it is not a wiring connection. Labels are in English and Ukrainian. The opening holds still, the middle shows slow motion, and the ending settles. The poster holds the same complete diagram with stator, rotor, propeller and air labels. No soundtrack, real speed, blade direction prescription, dimensions or performance data is included.",
+          "caption": "This silent 12-second illustration is a conceptual explanation, not a recording of hardware, an assembly procedure or a simulation of speed, thrust or flight. The positions, eight decorative stator shapes, blade silhouette and motion have no specification meaning. A typical FPV outrunner can have a rotating outer bell; do not interpret “stator” as meaning every outer housing stays fixed. No wiring or correct rotation direction is shown. Sources explain the general roles and do not endorse this fictional model."
+        },
+        "uk": {
+          "title": "Джерела руху · дві різні ролі",
+          "alt": "Беззвучна оригінальна схема на темно-синьому тлі з двома круглими панелями. Ліворуч мотор поділено на вісім нерухомих бурштинових форм статора й зовнішнє бірюзове кільце ротора з рухомими мітками. Форми умовні й не задають конструкції реального мотора. Праворуч бірюзовий значок дволопатевого пропелера обертається з тією самою ілюстративною швидкістю. Світлі крапки під ним позначають повітря, а не виміряне поле потоку. Знак «плюс» поєднує дві ролі на рівні понять і не означає електричного з’єднання. Підписи англійською й українською. На початку зображення нерухоме, у середині рух повільний, наприкінці він зупиняється. Статичний постер зберігає повну схему з підписами статора, ротора, пропелера й повітря. Немає звукової доріжки, реальної швидкості, припису напрямку лопатей, розмірів чи даних про продуктивність.",
+          "caption": "Ця беззвучна 12-секундна ілюстрація пояснює поняття, а не показує запис реального обладнання, порядок складання чи моделювання швидкості, тяги або польоту. Розташування, вісім умовних форм статора, контур лопатей і рух не задають технічних параметрів. У поширеного FPV-мотора із зовнішнім ротором зовнішній дзвін може обертатися; слово «статор» не означає, що будь-який зовнішній корпус нерухомий. Тут немає схеми проводів чи вказівки правильного напрямку обертання. Джерела пояснюють загальні ролі й не схвалюють цю вигадану модель."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "title": "NASA Glenn — Propeller Propulsion",
+          "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+        },
+        {
+          "title": "NASA — Electric Machines",
+          "url": "https://www.nasa.gov/eap-technology/electric-machines/"
+        }
+      ],
+      "sourceModules": [
+        {
+          "path": "scripts/motion-makers-diagram.mjs",
+          "bytes": 10728,
+          "sha256": "1ca8b1fc20acd167455c71387b2b061c935ca3361dc7362d8cff80e0fc5bf4c7"
+        },
+        {
+          "path": "scripts/produce-motion-makers.mjs",
+          "bytes": 5904,
+          "sha256": "de67e010689237742d36ef658f764b6e957319a066f1e52fb92371822ad0adbb"
+        },
+        {
+          "path": "game/company-campaigns/curriculum-motion-makers.mjs",
+          "bytes": 11789,
+          "sha256": "8e027c069fb0fe346ba2bafe7ce1f4ff5627fae8fb8438ddc7579c4e2d51ea9d"
+        },
+        {
+          "path": "scripts/produce-field-kit-sprites.mjs",
+          "bytes": 26860,
+          "sha256": "9ba2b3bd86e66dadaeffd7f55f7e2ba6bb20ce26a52d519fc96ff801b8b2d5a0"
+        }
+      ],
+      "encoder": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers",
+      "encoderArguments": [
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-nostdin",
+        "-y",
+        "-fflags",
+        "+bitexact",
+        "-f",
+        "rawvideo",
+        "-pixel_format",
+        "rgba",
+        "-video_size",
+        "960x540",
+        "-framerate",
+        "24",
+        "-i",
+        "pipe:0",
+        "-frames:v",
+        "288",
+        "-an",
+        "-c:v",
+        "libx264",
+        "-threads",
+        "1",
+        "-preset",
+        "veryslow",
+        "-crf",
+        "21",
+        "-profile:v",
+        "baseline",
+        "-pix_fmt",
+        "yuv420p",
+        "-flags:v",
+        "+bitexact",
+        "-sws_flags",
+        "accurate_rnd+bitexact",
+        "-map_metadata",
+        "-1",
+        "-movflags",
+        "+faststart",
+        "motion-makers-v1.mp4"
+      ],
+      "notes": [
+        "Original schematic role illustration, not hardware footage, a wiring plan or a measured simulation.",
+        "No copied third-party images, fonts, audio or footage."
+      ]
+    },
+    {
+      "id": "fpv-motion-makers-captions-en",
+      "path": "game/editions/assets/discovery/motion-makers/motion-makers-en-v1.vtt",
+      "bytes": 455,
+      "sha256": "6f70bfd2bac0003663b660fdc83612a9439b4131f6cc167d1aa83619612e7193",
+      "revision": 1,
+      "rights": "original-project-artwork",
+      "source": "scripts/produce-motion-makers.mjs",
+      "publication": "public",
+      "review": "Original conceptual artwork and bilingual labels inspected by assistant; exact media and two reproducible builds verified. Human art and physical-device review deferred.",
+      "locales": {
+        "en": {
+          "title": "Motion Makers · two different roles",
+          "alt": "Silent original diagram with a dark blue background and two circular panels. Left: the motor is separated into eight amber stator shapes that remain still and a cyan outer rotor ring with moving markers. These shapes are schematic and do not specify a real motor. Right: a cyan two-blade propeller icon turns at the same illustrative rate. Pale dots appear below it as a symbol for air, not a measured flow field. A plus sign connects the two roles conceptually; it is not a wiring connection. Labels are in English and Ukrainian. The opening holds still, the middle shows slow motion, and the ending settles. The poster holds the same complete diagram with stator, rotor, propeller and air labels. No soundtrack, real speed, blade direction prescription, dimensions or performance data is included.",
+          "caption": "This silent 12-second illustration is a conceptual explanation, not a recording of hardware, an assembly procedure or a simulation of speed, thrust or flight. The positions, eight decorative stator shapes, blade silhouette and motion have no specification meaning. A typical FPV outrunner can have a rotating outer bell; do not interpret “stator” as meaning every outer housing stays fixed. No wiring or correct rotation direction is shown. Sources explain the general roles and do not endorse this fictional model."
+        },
+        "uk": {
+          "title": "Джерела руху · дві різні ролі",
+          "alt": "Беззвучна оригінальна схема на темно-синьому тлі з двома круглими панелями. Ліворуч мотор поділено на вісім нерухомих бурштинових форм статора й зовнішнє бірюзове кільце ротора з рухомими мітками. Форми умовні й не задають конструкції реального мотора. Праворуч бірюзовий значок дволопатевого пропелера обертається з тією самою ілюстративною швидкістю. Світлі крапки під ним позначають повітря, а не виміряне поле потоку. Знак «плюс» поєднує дві ролі на рівні понять і не означає електричного з’єднання. Підписи англійською й українською. На початку зображення нерухоме, у середині рух повільний, наприкінці він зупиняється. Статичний постер зберігає повну схему з підписами статора, ротора, пропелера й повітря. Немає звукової доріжки, реальної швидкості, припису напрямку лопатей, розмірів чи даних про продуктивність.",
+          "caption": "Ця беззвучна 12-секундна ілюстрація пояснює поняття, а не показує запис реального обладнання, порядок складання чи моделювання швидкості, тяги або польоту. Розташування, вісім умовних форм статора, контур лопатей і рух не задають технічних параметрів. У поширеного FPV-мотора із зовнішнім ротором зовнішній дзвін може обертатися; слово «статор» не означає, що будь-який зовнішній корпус нерухомий. Тут немає схеми проводів чи вказівки правильного напрямку обертання. Джерела пояснюють загальні ролі й не схвалюють цю вигадану модель."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "title": "NASA Glenn — Propeller Propulsion",
+          "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+        },
+        {
+          "title": "NASA — Electric Machines",
+          "url": "https://www.nasa.gov/eap-technology/electric-machines/"
+        }
+      ],
+      "sourceModules": [
+        {
+          "path": "scripts/motion-makers-diagram.mjs",
+          "bytes": 10728,
+          "sha256": "1ca8b1fc20acd167455c71387b2b061c935ca3361dc7362d8cff80e0fc5bf4c7"
+        },
+        {
+          "path": "scripts/produce-motion-makers.mjs",
+          "bytes": 5904,
+          "sha256": "de67e010689237742d36ef658f764b6e957319a066f1e52fb92371822ad0adbb"
+        },
+        {
+          "path": "game/company-campaigns/curriculum-motion-makers.mjs",
+          "bytes": 11789,
+          "sha256": "8e027c069fb0fe346ba2bafe7ce1f4ff5627fae8fb8438ddc7579c4e2d51ea9d"
+        },
+        {
+          "path": "scripts/produce-field-kit-sprites.mjs",
+          "bytes": 26860,
+          "sha256": "9ba2b3bd86e66dadaeffd7f55f7e2ba6bb20ce26a52d519fc96ff801b8b2d5a0"
+        }
+      ],
+      "encoder": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers",
+      "encoderArguments": [
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-nostdin",
+        "-y",
+        "-fflags",
+        "+bitexact",
+        "-f",
+        "rawvideo",
+        "-pixel_format",
+        "rgba",
+        "-video_size",
+        "960x540",
+        "-framerate",
+        "24",
+        "-i",
+        "pipe:0",
+        "-frames:v",
+        "288",
+        "-an",
+        "-c:v",
+        "libx264",
+        "-threads",
+        "1",
+        "-preset",
+        "veryslow",
+        "-crf",
+        "21",
+        "-profile:v",
+        "baseline",
+        "-pix_fmt",
+        "yuv420p",
+        "-flags:v",
+        "+bitexact",
+        "-sws_flags",
+        "accurate_rnd+bitexact",
+        "-map_metadata",
+        "-1",
+        "-movflags",
+        "+faststart",
+        "motion-makers-v1.mp4"
+      ],
+      "notes": [
+        "Original schematic role illustration, not hardware footage, a wiring plan or a measured simulation.",
+        "No copied third-party images, fonts, audio or footage."
+      ]
+    },
+    {
+      "id": "fpv-motion-makers-captions-uk",
+      "path": "game/editions/assets/discovery/motion-makers/motion-makers-uk-v1.vtt",
+      "bytes": 709,
+      "sha256": "8dfd9aeb10bfdcaa89faf19b66c68966b08be609b35e028b3db06bf7a6c070cf",
+      "revision": 1,
+      "rights": "original-project-artwork",
+      "source": "scripts/produce-motion-makers.mjs",
+      "publication": "public",
+      "review": "Original conceptual artwork and bilingual labels inspected by assistant; exact media and two reproducible builds verified. Human art and physical-device review deferred.",
+      "locales": {
+        "en": {
+          "title": "Motion Makers · two different roles",
+          "alt": "Silent original diagram with a dark blue background and two circular panels. Left: the motor is separated into eight amber stator shapes that remain still and a cyan outer rotor ring with moving markers. These shapes are schematic and do not specify a real motor. Right: a cyan two-blade propeller icon turns at the same illustrative rate. Pale dots appear below it as a symbol for air, not a measured flow field. A plus sign connects the two roles conceptually; it is not a wiring connection. Labels are in English and Ukrainian. The opening holds still, the middle shows slow motion, and the ending settles. The poster holds the same complete diagram with stator, rotor, propeller and air labels. No soundtrack, real speed, blade direction prescription, dimensions or performance data is included.",
+          "caption": "This silent 12-second illustration is a conceptual explanation, not a recording of hardware, an assembly procedure or a simulation of speed, thrust or flight. The positions, eight decorative stator shapes, blade silhouette and motion have no specification meaning. A typical FPV outrunner can have a rotating outer bell; do not interpret “stator” as meaning every outer housing stays fixed. No wiring or correct rotation direction is shown. Sources explain the general roles and do not endorse this fictional model."
+        },
+        "uk": {
+          "title": "Джерела руху · дві різні ролі",
+          "alt": "Беззвучна оригінальна схема на темно-синьому тлі з двома круглими панелями. Ліворуч мотор поділено на вісім нерухомих бурштинових форм статора й зовнішнє бірюзове кільце ротора з рухомими мітками. Форми умовні й не задають конструкції реального мотора. Праворуч бірюзовий значок дволопатевого пропелера обертається з тією самою ілюстративною швидкістю. Світлі крапки під ним позначають повітря, а не виміряне поле потоку. Знак «плюс» поєднує дві ролі на рівні понять і не означає електричного з’єднання. Підписи англійською й українською. На початку зображення нерухоме, у середині рух повільний, наприкінці він зупиняється. Статичний постер зберігає повну схему з підписами статора, ротора, пропелера й повітря. Немає звукової доріжки, реальної швидкості, припису напрямку лопатей, розмірів чи даних про продуктивність.",
+          "caption": "Ця беззвучна 12-секундна ілюстрація пояснює поняття, а не показує запис реального обладнання, порядок складання чи моделювання швидкості, тяги або польоту. Розташування, вісім умовних форм статора, контур лопатей і рух не задають технічних параметрів. У поширеного FPV-мотора із зовнішнім ротором зовнішній дзвін може обертатися; слово «статор» не означає, що будь-який зовнішній корпус нерухомий. Тут немає схеми проводів чи вказівки правильного напрямку обертання. Джерела пояснюють загальні ролі й не схвалюють цю вигадану модель."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "title": "NASA Glenn — Propeller Propulsion",
+          "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+        },
+        {
+          "title": "NASA — Electric Machines",
+          "url": "https://www.nasa.gov/eap-technology/electric-machines/"
+        }
+      ],
+      "sourceModules": [
+        {
+          "path": "scripts/motion-makers-diagram.mjs",
+          "bytes": 10728,
+          "sha256": "1ca8b1fc20acd167455c71387b2b061c935ca3361dc7362d8cff80e0fc5bf4c7"
+        },
+        {
+          "path": "scripts/produce-motion-makers.mjs",
+          "bytes": 5904,
+          "sha256": "de67e010689237742d36ef658f764b6e957319a066f1e52fb92371822ad0adbb"
+        },
+        {
+          "path": "game/company-campaigns/curriculum-motion-makers.mjs",
+          "bytes": 11789,
+          "sha256": "8e027c069fb0fe346ba2bafe7ce1f4ff5627fae8fb8438ddc7579c4e2d51ea9d"
+        },
+        {
+          "path": "scripts/produce-field-kit-sprites.mjs",
+          "bytes": 26860,
+          "sha256": "9ba2b3bd86e66dadaeffd7f55f7e2ba6bb20ce26a52d519fc96ff801b8b2d5a0"
+        }
+      ],
+      "encoder": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers",
+      "encoderArguments": [
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-nostdin",
+        "-y",
+        "-fflags",
+        "+bitexact",
+        "-f",
+        "rawvideo",
+        "-pixel_format",
+        "rgba",
+        "-video_size",
+        "960x540",
+        "-framerate",
+        "24",
+        "-i",
+        "pipe:0",
+        "-frames:v",
+        "288",
+        "-an",
+        "-c:v",
+        "libx264",
+        "-threads",
+        "1",
+        "-preset",
+        "veryslow",
+        "-crf",
+        "21",
+        "-profile:v",
+        "baseline",
+        "-pix_fmt",
+        "yuv420p",
+        "-flags:v",
+        "+bitexact",
+        "-sws_flags",
+        "accurate_rnd+bitexact",
+        "-map_metadata",
+        "-1",
+        "-movflags",
+        "+faststart",
+        "motion-makers-v1.mp4"
+      ],
+      "notes": [
+        "Original schematic role illustration, not hardware footage, a wiring plan or a measured simulation.",
+        "No copied third-party images, fonts, audio or footage."
+      ]
     }
   ]
 }
