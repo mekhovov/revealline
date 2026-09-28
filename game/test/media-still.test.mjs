@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { prepareStillAsset } from '../media-still.mjs';
 import { MEDIA_LIMITS } from '../media-library.mjs';
 import { pngBytes, provenance, deferred } from './helpers/media-fixtures.mjs';
+import { rasterFixtures } from './helpers/raster-fixtures.mjs';
 
 const metadata = () => ({ id: 'injected-picture', provenance: provenance() });
 const dimensions = () => ({ naturalWidth: 1, naturalHeight: 1 });
@@ -15,6 +16,33 @@ const pngHeader = (width, height) => {
   b.writeUInt32BE(height, 20);
   return b;
 };
+
+test('static WebP keeps exact bytes and still requires complete matching decode', async () => {
+  const { bytes } = rasterFixtures().find((row) => row.extension === 'webp');
+  const result = await prepareStillAsset(new Blob([bytes], { type: 'image/png' }), metadata(), {
+    decodeImage: async (blob) => {
+      assert.equal(blob.type, 'image/webp');
+      return dimensions();
+    },
+  });
+  assert.equal(result.asset.mime, 'image/webp');
+  assert.equal(result.asset.sha256, hash(bytes));
+  assert.deepEqual(Buffer.from(await result.blob.arrayBuffer()), bytes);
+  await assert.rejects(
+    prepareStillAsset(new Blob([bytes]), metadata(), {
+      decodeImage: async () => ({ naturalWidth: 2, naturalHeight: 1 }),
+    }),
+    /dimensions/,
+  );
+  const animated = Buffer.from(bytes);
+  animated.write('ANIM', 12);
+  await assert.rejects(
+    prepareStillAsset(new Blob([animated]), metadata(), {
+      decodeImage: () => assert.fail('Animated WebP cannot allocate a decoder'),
+    }),
+    /Animated/,
+  );
+});
 
 test('PNG bytes, hash and metadata stay exact; filename/type do not determine the format', async () => {
   const bytes = pngBytes(),

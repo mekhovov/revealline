@@ -1,0 +1,735 @@
+[
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-four-controls",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-four-controls-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Learn a layout while keeping other layouts possible.",
+        "title": "Two Sticks, Four Names"
+      },
+      "uk": {
+        "teaser": "Вивчіть одне розташування, пам’ятаючи про інші.",
+        "title": "Два стіки, чотири назви"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-four-controls-01-image",
+        "locales": {
+          "en": {
+            "alt": "Two Sticks, Four Names — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Two Sticks, Four Names"
+          },
+          "uk": {
+            "alt": "Два стіки, чотири назви — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Два стіки, чотири назви"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-four-controls-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "ArduPilot describes Mode 2 as left-stick throttle/yaw and right-stick pitch/roll. Other stick modes exist; a physical controller must be checked against its actual mapping.",
+              "On our untimed diagram, match four name cards to the labelled axes. “Mode 2” describes placement here, not a flight mode or a promise about what centering a stick will do."
+            ],
+            "sources": [
+              {
+                "title": "ArduPilot — Radio control: Mode 1 and Mode 2",
+                "url": "https://ardupilot.org/copter/docs/common-radio-control-calibration.html"
+              }
+            ],
+            "title": "Two Sticks, Four Names"
+          },
+          "uk": {
+            "paragraphs": [
+              "ArduPilot описує Mode 2 як газ і рискання на лівому стіку, тангаж і крен — на правому. Існують інші схеми; реальний пульт перевіряють за його фактичним призначенням.",
+              "На схемі без таймера зіставте чотири назви з підписаними осями. «Mode 2» тут описує розташування, а не режим польоту чи гарантію реакції на центрування стіка."
+            ],
+            "sources": [
+              {
+                "title": "ArduPilot — Radio control: Mode 1 and Mode 2",
+                "url": "https://ardupilot.org/copter/docs/common-radio-control-calibration.html"
+              }
+            ],
+            "title": "Два стіки, чотири назви"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6272f6694cf75c16" },
+            { "difficulty": "standard", "gameplayId": "8c963980e045c563" },
+            { "difficulty": "expert", "gameplayId": "93e07eb6494ab72b" }
+          ],
+          "missionId": "fpv-four-controls-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-four-controls-01", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-four-controls",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-four-controls-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A side view makes a hidden rotation easier to see.",
+        "title": "Pitch: Read the Nose"
+      },
+      "uk": {
+        "teaser": "Вигляд збоку робить непомітне обертання зрозумілим.",
+        "title": "Тангаж: стежте за носом"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-four-controls-02-image",
+        "locales": {
+          "en": {
+            "alt": "Pitch: Read the Nose — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Pitch: Read the Nose"
+          },
+          "uk": {
+            "alt": "Тангаж: стежте за носом — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Тангаж: стежте за носом"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-four-controls-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Pitch is rotation about the aircraft’s side-to-side axis. In PX4 Manual/Stabilized mode, pitch input requests a tilt angle; different modes interpret input differently.",
+              "Our card shows a nose-down and a level silhouette. Point to the rotation before predicting movement. The conceptual control lab displays this relationship; the optional assisted practice model instead labels its simplified travel commands explicitly."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Manual/Stabilized multicopter mode",
+                "url": "https://docs.px4.io/main/en/flight_modes_mc/manual_stabilized"
+              }
+            ],
+            "title": "Pitch: Read the Nose"
+          },
+          "uk": {
+            "paragraphs": [
+              "Тангаж — обертання навколо поперечної осі апарата. У PX4 Manual/Stabilized команда тангажу задає кут нахилу; інші режими тлумачать команди інакше.",
+              "Картка показує силует носом униз і горизонтальний силует. Спершу вкажіть обертання, потім прогнозуйте рух. Лабораторія пояснює цей зв’язок; необов’язкова практика окремо позначає спрощені команди переміщення."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Manual/Stabilized multicopter mode",
+                "url": "https://docs.px4.io/main/en/flight_modes_mc/manual_stabilized"
+              }
+            ],
+            "title": "Тангаж: стежте за носом"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "82e7485552aba0ef" },
+            { "difficulty": "standard", "gameplayId": "3cdb8392adc85dea" },
+            { "difficulty": "expert", "gameplayId": "8bd90d2d9685fc84" }
+          ],
+          "missionId": "fpv-four-controls-02"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-four-controls-02", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-four-controls",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-four-controls-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "The aircraft’s left is not always the viewer’s left.",
+        "title": "Roll: One Wingtip Lower"
+      },
+      "uk": {
+        "teaser": "Лівий бік апарата не завжди ліворуч для глядача.",
+        "title": "Крен: один бік нижче"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-four-controls-03-image",
+        "locales": {
+          "en": {
+            "alt": "Roll: One Wingtip Lower — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Roll: One Wingtip Lower"
+          },
+          "uk": {
+            "alt": "Крен: один бік нижче — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Крен: один бік нижче"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-four-controls-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Roll is rotation about the aircraft’s front-to-back axis. The name describes an orientation change, not a guarantee of sideways position hold.",
+              "Turn our paper model to face the reader and keep its left side marked blue. Compare aircraft-left with screen-left, then predict which label moves when the viewpoint changes. Use the mode-specific source when moving beyond this static explanation."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Science Behind Quadcopters, educator guide",
+                "url": "https://www.nasa.gov/wp-content/uploads/2020/05/aam-science-behind-quadcopters-educator-guide_1.pdf"
+              }
+            ],
+            "title": "Roll: One Wingtip Lower"
+          },
+          "uk": {
+            "paragraphs": [
+              "Крен — обертання навколо поздовжньої осі апарата. Назва описує зміну орієнтації, а не гарантує утримання бокового положення.",
+              "Поверніть паперову модель до читача, зберігши синю позначку її лівого боку. Порівняйте ліворуч для апарата й екрана та передбачте зміну написів зі зміною точки огляду. Для реальної поведінки звертайтеся до джерела конкретного режиму."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Science Behind Quadcopters, educator guide",
+                "url": "https://www.nasa.gov/wp-content/uploads/2020/05/aam-science-behind-quadcopters-educator-guide_1.pdf"
+              }
+            ],
+            "title": "Крен: один бік нижче"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "98d796258d1117f3" },
+            { "difficulty": "standard", "gameplayId": "f41b4137fba67ec9" },
+            { "difficulty": "expert", "gameplayId": "c211f849d510c9d9" }
+          ],
+          "missionId": "fpv-four-controls-03"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-four-controls-03", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-four-controls",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-four-controls-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A compass card turns while its centre stays in place.",
+        "title": "Yaw: Turn the Heading"
+      },
+      "uk": {
+        "teaser": "Компасна картка обертається, а її центр залишається на місці.",
+        "title": "Рискання: змініть курс"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-four-controls-04-image",
+        "locales": {
+          "en": {
+            "alt": "Yaw: Turn the Heading — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Yaw: Turn the Heading"
+          },
+          "uk": {
+            "alt": "Рискання: змініть курс — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Рискання: змініть курс"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-four-controls-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Yaw is rotation about the vertical axis. In the linked PX4 modes, yaw input controls rotation rate rather than selecting a compass heading directly.",
+              "Our still diagrams put a model at the same point, first facing the window and then the door. Identify what changed and what did not. This picture isolates one idea; it is not a claim that a real aircraft automatically stays over that point."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Position multicopter mode",
+                "url": "https://docs.px4.io/main/en/flight_modes_mc/position"
+              }
+            ],
+            "title": "Yaw: Turn the Heading"
+          },
+          "uk": {
+            "paragraphs": [
+              "Рискання — обертання навколо вертикальної осі. У наведених режимах PX4 команда рискання задає швидкість обертання, а не безпосередньо напрямок компаса.",
+              "На статичних схемах модель стоїть у тій самій точці: спершу носом до вікна, потім до дверей. Визначте зміну й незмінне. Малюнок виділяє одну ідею, але не стверджує, що реальний апарат автоматично тримає цю точку."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Position multicopter mode",
+                "url": "https://docs.px4.io/main/en/flight_modes_mc/position"
+              }
+            ],
+            "title": "Рискання: змініть курс"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "48118d3803614914" },
+            { "difficulty": "standard", "gameplayId": "c1c8feda8def714a" },
+            { "difficulty": "expert", "gameplayId": "e93634fb9f72481d" }
+          ],
+          "missionId": "fpv-four-controls-04"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-four-controls-04", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-four-controls",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-four-controls-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "The same stick position can have different meanings.",
+        "title": "Throttle Needs a Model"
+      },
+      "uk": {
+        "teaser": "Однакове положення стіка може мати різний зміст.",
+        "title": "Газ потребує пояснення моделі"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-four-controls-05-image",
+        "locales": {
+          "en": {
+            "alt": "Throttle Needs a Model — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Throttle Needs a Model"
+          },
+          "uk": {
+            "alt": "Газ потребує пояснення моделі — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Газ потребує пояснення моделі"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-four-controls-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "PX4 Position mode interprets throttle as an ascent/descent command; Manual/Stabilized requires the pilot to manage throttle for altitude. Centering is therefore not a universal “hover” command.",
+              "Choose between two fictional captions: “this assisted model holds height at neutral” and “every aircraft hovers at centre”. Keep the bounded first statement and explain what evidence the second would need. No real throttle settings are supplied."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Position multicopter mode",
+                "url": "https://docs.px4.io/main/en/flight_modes_mc/position"
+              },
+              {
+                "title": "PX4 — Manual/Stabilized multicopter mode",
+                "url": "https://docs.px4.io/main/en/flight_modes_mc/manual_stabilized"
+              }
+            ],
+            "title": "Throttle Needs a Model"
+          },
+          "uk": {
+            "paragraphs": [
+              "PX4 Position тлумачить газ як команду набору або зниження висоти; у Manual/Stabilized пілот керує газом для підтримання висоти. Центр стіка не є універсальною командою зависання.",
+              "Порівняйте підписи: «ця модель із допомогою тримає висоту в нейтралі» та «кожен апарат зависає в центрі». Залиште обмежене перше твердження й поясніть, чого бракує другому. Реальних налаштувань газу тут немає."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Position multicopter mode",
+                "url": "https://docs.px4.io/main/en/flight_modes_mc/position"
+              },
+              {
+                "title": "PX4 — Manual/Stabilized multicopter mode",
+                "url": "https://docs.px4.io/main/en/flight_modes_mc/manual_stabilized"
+              }
+            ],
+            "title": "Газ потребує пояснення моделі"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "d7ddf6c6c6c54245" },
+            { "difficulty": "standard", "gameplayId": "dfc20541e3902d7e" },
+            { "difficulty": "expert", "gameplayId": "84e4d7d9b0a301e7" }
+          ],
+          "missionId": "fpv-four-controls-05"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-four-controls-05", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-four-controls",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-four-controls-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Four familiar controls become one explainable model.",
+        "title": "Predict, Then Explain"
+      },
+      "uk": {
+        "teaser": "Чотири знайомі команди стають зрозумілою моделлю.",
+        "title": "Спрогнозуйте й поясніть"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-four-controls-06-image",
+        "locales": {
+          "en": {
+            "alt": "Predict, Then Explain — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Predict, Then Explain"
+          },
+          "uk": {
+            "alt": "Спрогнозуйте й поясніть — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Спрогнозуйте й поясніть"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-four-controls-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Our fictional control card states its assumptions first: Mode 2 placement, a visible nose marker and a separate response diagram. The optional lab can be explored without a reading timer.",
+              "Predict the illustrated change for one command, then change only the viewpoint and explain what remains true. A correct diagram answer earns understanding in this exhibit, not aircraft certification or proof of a real controller’s mapping."
+            ],
+            "sources": [
+              {
+                "title": "ArduPilot — Radio control: Mode 1 and Mode 2",
+                "url": "https://ardupilot.org/copter/docs/common-radio-control-calibration.html"
+              }
+            ],
+            "title": "Predict, Then Explain"
+          },
+          "uk": {
+            "paragraphs": [
+              "Вигадана картка спершу задає припущення: Mode 2, видима позначка носа й окрема схема реакції. Необов’язкову лабораторію можна досліджувати без таймера читання.",
+              "Передбачте ілюстровану зміну для однієї команди, потім змініть лише точку огляду й поясніть незмінне. Правильна відповідь стосується цієї експозиції, а не сертифікації чи доказу призначень реального пульта."
+            ],
+            "sources": [
+              {
+                "title": "ArduPilot — Radio control: Mode 1 and Mode 2",
+                "url": "https://ardupilot.org/copter/docs/common-radio-control-calibration.html"
+              }
+            ],
+            "title": "Спрогнозуйте й поясніть"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "648d8d62702c356d" },
+            { "difficulty": "standard", "gameplayId": "9a99b0e3625a58d6" },
+            { "difficulty": "expert", "gameplayId": "d901124ff341dc53" }
+          ],
+          "missionId": "fpv-four-controls-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-four-controls-06", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-four-controls",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-four-controls-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "The Control and Response Atlas"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Атлас керування та реакцій"
+      }
+    },
+    "payloads": [
+      {
+        "id": "fpv-four-controls-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Complete a two-part control atlas: where a command is placed in the illustrated Mode 2 layout, and what the selected model does with it. Compare pitch, roll, yaw and throttle without treating a stick location as a universal aircraft response. Use the optional untimed control lab to explain a prediction, not to claim flight proficiency."
+            ],
+            "sources": [
+              {
+                "title": "ArduPilot — Radio control: Mode 1 and Mode 2",
+                "url": "https://ardupilot.org/copter/docs/common-radio-control-calibration.html"
+              }
+            ],
+            "title": "The Control and Response Atlas"
+          },
+          "uk": {
+            "paragraphs": [
+              "Завершіть атлас із двох частин: де розміщено команду на ілюстрованому пульті Mode 2 і як на неї реагує обрана модель. Порівняйте тангаж, крен, рискання та газ, не ототожнюючи положення стіка з універсальною реакцією дрона. У необов’язковій лабораторії без таймера поясніть прогноз; це не підтвердження льотної майстерності."
+            ],
+            "sources": [
+              {
+                "title": "ArduPilot — Radio control: Mode 1 and Mode 2",
+                "url": "https://ardupilot.org/copter/docs/common-radio-control-calibration.html"
+              }
+            ],
+            "title": "Атлас керування та реакцій"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-four-controls-01-image",
+        "locales": {
+          "en": {
+            "alt": "Two Sticks, Four Names — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Two Sticks, Four Names"
+          },
+          "uk": {
+            "alt": "Два стіки, чотири назви — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Два стіки, чотири назви"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-four-controls-02-image",
+        "locales": {
+          "en": {
+            "alt": "Pitch: Read the Nose — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Pitch: Read the Nose"
+          },
+          "uk": {
+            "alt": "Тангаж: стежте за носом — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Тангаж: стежте за носом"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-four-controls-03-image",
+        "locales": {
+          "en": {
+            "alt": "Roll: One Wingtip Lower — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Roll: One Wingtip Lower"
+          },
+          "uk": {
+            "alt": "Крен: один бік нижче — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Крен: один бік нижче"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-four-controls-04-image",
+        "locales": {
+          "en": {
+            "alt": "Yaw: Turn the Heading — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Yaw: Turn the Heading"
+          },
+          "uk": {
+            "alt": "Рискання: змініть курс — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Рискання: змініть курс"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-four-controls-05-image",
+        "locales": {
+          "en": {
+            "alt": "Throttle Needs a Model — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Throttle Needs a Model"
+          },
+          "uk": {
+            "alt": "Газ потребує пояснення моделі — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Газ потребує пояснення моделі"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-four-controls-06-image",
+        "locales": {
+          "en": {
+            "alt": "Predict, Then Explain — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Predict, Then Explain"
+          },
+          "uk": {
+            "alt": "Спрогнозуйте й поясніть — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Спрогнозуйте й поясніть"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-four-controls-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "type": "url",
+        "url": "https://ardupilot.org/copter/docs/common-radio-control-calibration.html"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6272f6694cf75c16" },
+            { "difficulty": "standard", "gameplayId": "8c963980e045c563" },
+            { "difficulty": "expert", "gameplayId": "93e07eb6494ab72b" }
+          ],
+          "missionId": "fpv-four-controls-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "82e7485552aba0ef" },
+            { "difficulty": "standard", "gameplayId": "3cdb8392adc85dea" },
+            { "difficulty": "expert", "gameplayId": "8bd90d2d9685fc84" }
+          ],
+          "missionId": "fpv-four-controls-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "98d796258d1117f3" },
+            { "difficulty": "standard", "gameplayId": "f41b4137fba67ec9" },
+            { "difficulty": "expert", "gameplayId": "c211f849d510c9d9" }
+          ],
+          "missionId": "fpv-four-controls-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "48118d3803614914" },
+            { "difficulty": "standard", "gameplayId": "c1c8feda8def714a" },
+            { "difficulty": "expert", "gameplayId": "e93634fb9f72481d" }
+          ],
+          "missionId": "fpv-four-controls-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "d7ddf6c6c6c54245" },
+            { "difficulty": "standard", "gameplayId": "dfc20541e3902d7e" },
+            { "difficulty": "expert", "gameplayId": "84e4d7d9b0a301e7" }
+          ],
+          "missionId": "fpv-four-controls-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "648d8d62702c356d" },
+            { "difficulty": "standard", "gameplayId": "9a99b0e3625a58d6" },
+            { "difficulty": "expert", "gameplayId": "d901124ff341dc53" }
+          ],
+          "missionId": "fpv-four-controls-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-four-controls", "kind": "campaign" }
+  }
+]

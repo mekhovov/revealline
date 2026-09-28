@@ -413,12 +413,12 @@ export function createPresentationHost({
       const file = asset.file,
         frame = asset.geometry.frame;
       required(
-        ['image/png', 'image/jpeg'].includes(file.mime) &&
+        ['image/png', 'image/jpeg', 'image/webp'].includes(file.mime) &&
           frame.x === 0 &&
           frame.y === 0 &&
           frame.width === file.width &&
           frame.height === file.height,
-        'A picture original requires its complete PNG/JPEG frame.',
+        'A picture original requires its complete PNG/JPEG/WebP frame.',
       );
       const controller = new AbortController(),
         abort = () => controller.abort();
