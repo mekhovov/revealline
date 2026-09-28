@@ -22,7 +22,7 @@ export function createJourneyMasteryProofStore({
 }) {
   required(typeof acceptClear === 'function', 'Journey mastery needs an accepted-clear authority.');
   required(
-    Array.isArray(requirements) && requirements.length <= 128,
+    Array.isArray(requirements) && requirements.length <= 4096,
     'Journey mastery requirements exceed their budget.',
   );
   const catalog = new Map(
@@ -60,10 +60,13 @@ export function createJourneyMasteryProofStore({
       inspect,
       async verify(source, { signal }) {
         const result = await verifyJourneyMasteryRun({ ...source, bindings }, { signal });
-        required(
-          verifiedJourneyMasteryEvidence(result),
-          'That accepted win lost a life; optional mastery remains available for another attempt.',
-        );
+        if (!verifiedJourneyMasteryEvidence(result)) {
+          const error = new Error(
+            'That accepted win lost a life; optional mastery remains available for another attempt.',
+          );
+          error.code = 'mastery-unqualified';
+          throw error;
+        }
         inspect(source);
       },
     },
