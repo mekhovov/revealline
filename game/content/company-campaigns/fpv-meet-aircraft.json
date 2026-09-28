@@ -2,6 +2,19 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
+      "alt": "An original fictional museum exhibit with a bare carbon X frame, separate trays and a sunlit courtyard; illustrative, not a build diagram.",
+      "bytes": 193494,
+      "format": "AssetRevisionV1",
+      "height": 640,
+      "id": "fpv-meet-aircraft-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-meet-aircraft-01-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "8b79d705bb064333eefece3c6acdd0f9f0a4a9079cab8ab2939401ae47689fe8",
+      "width": 960
+    },
+    {
       "alt": "An original fictional component museum with a propeller-free X frame, separate motors and a camera display.",
       "bytes": 1062590,
       "format": "AssetRevisionV1",
@@ -20,7 +33,7 @@
       "band": 1,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "fpv-meet-aircraft-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "fpv-meet-aircraft-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-meet-aircraft",
@@ -178,7 +191,7 @@
         "memorableMoment": "An original civilian learning workshop with an exploded carbon frame on a cyan display, no connected battery and no mounted props.",
         "pacingBeat": "discover",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-meet-aircraft-01-discovery", "revision": "2" },
         "routeDecision": "Take short returns to the central frame island or a wider capture around its open west side."
       },
       "format": "MissionDesignV1",
@@ -188,7 +201,7 @@
       "name": "The Frame",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 14.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-meet-aircraft-01-picture",
         "themeId": "fpv-meet-aircraft-theme"
       },
       "revision": "1",
@@ -228,7 +241,7 @@
         "memorableMoment": "Four civilian display stations with separated motors and unmounted props, illustrative cyan airflow ribbons and orange accents.",
         "pacingBeat": "choose",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-meet-aircraft-02-discovery", "revision": "2" },
         "routeDecision": "Choose adjacent workstations for short cuts or opposing stations for a broader capture."
       },
       "format": "MissionDesignV1",
@@ -344,7 +357,7 @@
         "memorableMoment": "An original cyan controller pavilion with sensor, interpretation and command display layers around a quiet nested court.",
         "pacingBeat": "breathe",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-meet-aircraft-04-discovery", "revision": "2" },
         "routeDecision": "Build a return through the outer court before linking the smaller sensor gallery."
       },
       "format": "MissionDesignV1",
@@ -493,9 +506,9 @@
       "format": "PackDesignV1",
       "id": "fpv-meet-aircraft-pack",
       "name": "Meet the Aircraft",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }

@@ -175,8 +175,8 @@ export function validateStillAsset(source) {
     'Still asset exceeds its 4 MiB byte budget.',
   );
   required(
-    ['image/png', 'image/jpeg'].includes(value.mime),
-    'Only static PNG/JPEG assets are supported.',
+    ['image/png', 'image/jpeg', 'image/webp'].includes(value.mime),
+    'Only static PNG/JPEG/WebP assets are supported.',
   );
   required(
     integer(value.width, MEDIA_LIMITS.imageSide) &&
