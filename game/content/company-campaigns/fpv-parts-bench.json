@@ -2,16 +2,16 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original fictional component museum with a propeller-free X frame, separate motors and a camera display.",
-      "bytes": 1062590,
+      "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
+      "bytes": 227588,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "fpv-learning-home-picture",
+      "id": "fpv-parts-bench-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-learning-home-v1.png",
+      "path": "editions/assets/discovery/fpv-parts-bench-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8",
+      "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265",
       "width": 960
     }
   ],
@@ -215,7 +215,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-parts-bench-key-picture",
         "themeId": "fpv-parts-bench-theme"
       },
       "revision": "2",
@@ -287,7 +287,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-parts-bench-key-picture",
         "themeId": "fpv-parts-bench-theme"
       },
       "revision": "2",
@@ -359,7 +359,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 7.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-parts-bench-key-picture",
         "themeId": "fpv-parts-bench-theme"
       },
       "revision": "2",
@@ -441,7 +441,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-parts-bench-key-picture",
         "themeId": "fpv-parts-bench-theme"
       },
       "revision": "2",
@@ -523,7 +523,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-parts-bench-key-picture",
         "themeId": "fpv-parts-bench-theme"
       },
       "revision": "2",
@@ -605,7 +605,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-parts-bench-key-picture",
         "themeId": "fpv-parts-bench-theme"
       },
       "revision": "2",

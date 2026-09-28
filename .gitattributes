@@ -6,3 +6,6 @@ authoring/library/four-worlds-chapters/packs/original-spend-network.json linguis
 
 # Preserve exact raw failure output; whitespace is part of the retained evidence.
 docs/verification/quick-music-controls-2026-09-24/unmuted-retry-red-r3.txt -whitespace
+
+# Preserve pinned upstream encoder bytes; the sole appended export is documented.
+game/vendor/qrcodegen-1.8.0.mjs -whitespace

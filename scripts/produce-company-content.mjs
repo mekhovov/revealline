@@ -26,6 +26,10 @@ import {
 } from '../game/company-campaigns/rewards.mjs';
 import { createRewardMissionBindings } from '../game/rewards/bindings.mjs';
 import {
+  COMPANY_LEARNING_REWARD_CAMPAIGN_IDS,
+  createCompanyLearningRewards,
+} from '../game/company-campaigns/learning-rewards.mjs';
+import {
   completionRewardAssetReferences,
   validateCompletionRewards,
 } from '../game/rewards/model.mjs';
@@ -35,7 +39,12 @@ const bytes = (value) => Buffer.from(canonicalJSON(value) + '\n');
 
 /** Build-time authoring exports are projected to independent JSON. No runtime
  * import of this module, brand registry or complete lesson factory is necessary. */
-export async function produceCompanyContent({ assets, artwork = [], classes = [] }) {
+export async function produceCompanyContent({
+  assets,
+  artwork = [],
+  assetSources = [],
+  classes = [],
+}) {
   const files = new Map(),
     projects = new Map();
   const factories = new Map([
@@ -43,7 +52,11 @@ export async function produceCompanyContent({ assets, artwork = [], classes = []
       entry.id,
       {
         project: createCompanyProject,
-        rewards: COMPANY_REWARD_CAMPAIGN_IDS.includes(entry.id) ? createCompanyRewards : null,
+        rewards: COMPANY_REWARD_CAMPAIGN_IDS.includes(entry.id)
+          ? createCompanyRewards
+          : COMPANY_LEARNING_REWARD_CAMPAIGN_IDS.includes(entry.id)
+            ? createCompanyLearningRewards
+            : null,
       },
     ]),
     ...CURRICULUM_CAMPAIGNS.map((entry) => [
@@ -112,7 +125,9 @@ export async function produceCompanyContent({ assets, artwork = [], classes = []
             definition,
             source,
             assets,
+            assetSources,
             missionBindings: createRewardMissionBindings(source),
+            lessons: selectedLessons,
           }),
         );
         for (const reference of completionRewardAssetReferences(rewards))
@@ -209,7 +224,10 @@ async function main(args) {
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
-  const result = await produceCompanyContent({ assets, artwork, classes });
+  const assetSources = JSON.parse(
+    await fs.readFile(path.join(root, 'game/editions/asset-sources.json'), 'utf8'),
+  ).assets;
+  const result = await produceCompanyContent({ assets, artwork, assetSources, classes });
   for (const [file, data] of result.files) {
     const target = path.join(root, file);
     if (args.includes('--check'))
