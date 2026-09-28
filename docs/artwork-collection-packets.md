@@ -2,8 +2,9 @@
 
 Asset Studio's **Artwork collections · source candidates** panel imports a JSON
 packet together with every named original image, previews a verified source, and
-exports a portable `.rlart` packet. Import that export to recover the same
-declarations and original bytes. Choose the JSON and images in one file-selection
+exports a portable `.rlart` packet. It can also prepare a separate board-sized PNG
+derivative from a retained reveal image. Import an export to recover the same
+declarations and retained bytes. Choose the JSON and images in one file-selection
 operation; a portable `.rlart` is selected alone.
 
 This is a separate, unsaved authoring draft. It neither changes the Studio's
@@ -97,7 +98,8 @@ Roles are `reveal`, `actor`, `interface`; media are `pixel-art`, `photograph`.
 Origins are `original`, `generated`, `derivative`. Generated originals require a
 nonempty effective prompt. Derivatives require
 `{"parent":"retained-artwork-id","changes":"Actual changes"}`; their parent
-original must remain in the same packet. Missing parents and cycles are rejected.
+artwork and its ancestor chain must remain in the same packet. Missing parents
+and cycles are rejected.
 Every source ID resolves to a structured source declaration. Source artwork needs
 a declared rights basis; unknown permission cannot become usable artwork merely
 by importing it.
@@ -106,24 +108,87 @@ by importing it.
 
 The reader accepts static PNG, JPEG and WebP through the existing bounded image
 header guard. Each file is at most **4 MiB**, each side at most **8192 pixels**, and
-each image at most **16 million pixels**. A packet holds at most 16 originals,
-32 reference declarations, 32 MiB of original bytes and 256 KiB of metadata.
+each image at most **16 million pixels**. A packet holds at most **16 artwork
+files total**, counting originals and derivatives, 32 reference declarations,
+**32 MiB of combined file payload** and 256 KiB of metadata.
 Metadata has bounded strings, depth and node counts; executable fields, getters,
 unexpected keys, paths, duplicate names and unknown versions are rejected.
 
 All supplied original byte counts, SHA-256 hashes and static headers are checked
 before any image decode. Native browser decoding must then agree with the declared
 dimensions. Node tests inject a dimension decoder; those tests do not qualify image
-appearance. Oversized originals are rejected visibly, never downsampled or cropped.
+appearance. Oversized originals are rejected visibly during import; the separate
+derivative operation cannot bypass that intake limit.
 For example, the retained 4,590,659-byte Synevyr photograph exceeds this particular
 importer's 4 MiB limit and is not a supported original here.
 
 The `.rlart` transport uses eight-byte `RLART1\r\n` magic, a big-endian four-byte
-metadata length, canonical UTF-8 JSON and then original payloads in `artworks`
+metadata length, canonical UTF-8 JSON and then retained payloads in `artworks`
 order. It contains no archive paths or executable content. Truncated and trailing
-bytes fail import. Export re-verifies originals and copies them unchanged.
+bytes fail import. Export re-verifies retained originals and derivatives and
+copies them unchanged.
 
-The preview fits the complete source with letterboxing. Pixel-art declarations
+## Prepare a board derivative
+
+After importing a valid collection, select a retained artwork with role `reveal`.
+Under **Prepare board image**, choose the output size and fitting policy, then
+choose **Create board candidate**. The operation appends a separately identified
+PNG and advances the collection revision. It selects the verified result for
+inspection while retaining every existing file byte-for-byte. Actor and interface
+artworks are not supported by this board preparation operation.
+
+| Choice                | Result                                                                                                                 |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Wide                  | Native output frame of 1152 × 576 pixels (2:1).                                                                        |
+| Classic               | Native output frame of 768 × 576 pixels (4:3).                                                                         |
+| Fit (`contain`)       | Uniformly scales the complete source to fit, centered over opaque ink `#08131e`; unmatched space becomes letterboxing. |
+| Centre crop (`cover`) | Uniformly scales to fill the frame and crops the excess equally from opposite outer edges.                             |
+
+Both choices preserve aspect ratio; neither stretches artwork or changes a
+mission's logical dimensions. The chosen plan is rejected if its uniform scale
+would exceed 1. The tool never upscales a small source to manufacture detail or
+silently switches fitting policy.
+
+Sampling follows the selected parent's declared medium: `pixel-art` uses
+nearest-pixel sampling with Canvas smoothing disabled; `photograph` uses smooth
+sampling at high quality. A photograph still requires explicit
+`photographic-reveals` collection treatment. There is no automatic medium
+classification. The result is a native-sized PNG, not proof that a generated
+scene has been reconstructed on a coherent pixel grid.
+
+Before rasterization, the operation re-verifies retained byte counts, SHA-256
+hashes, static headers and decoded dimensions. It re-verifies the appended result
+and whole collection before acceptance. The 16-file, 4-MiB-per-file and
+32-MiB-total limits include derivatives and their retained parents. Capacity,
+decode, encode, cancellation or stale-operation failure preserves the previously
+accepted collection. Decode/draw/encode has a 15-second timeout; temporary image
+URLs and canvases are released on every settled exit. Reference URLs are never
+fetched as image inputs.
+
+The new record has `origin: "derivative"` and a `derivative.parent` pointing to
+the selected retained artwork. It inherits the parent's role, medium, creator,
+license and source IDs. Its existing `derivative.changes` string records a
+`board-derivative.v1` plan: board/fit choices, original/output dimensions, source
+and destination rectangles, ink background, sampling, tool name,
+`native-canvas-png` encoder and `candidate-not-production-approved` review status.
+This uses the existing packet schema; it does not migrate historical readers.
+
+The actual encoded PNG determines its byte count and SHA-256. Browser sampling
+and native encoders may differ, so the same plan does not promise identical bytes
+or hashes on another browser. Preserve and reimport the exported `.rlart` to
+recover the exact accepted result, rather than regenerate it. A parent hash is
+never substituted for a derivative hash.
+
+Generated Ukrainian cultural scenes remain candidates after this preparation.
+They still need deliberate cleanup of native pixel clusters, palette and edges,
+plus cultural-detail and real-board readability review. Nearest-pixel reduction
+alone does not complete that work. This operation does not approve art, resolve
+rights claims, produce a `.rltheme`, assign an approved pin, replace campaign
+artwork or authorize publication.
+
+## Preview and departure
+
+The preview fits the complete selected retained file with letterboxing. Pixel-art declarations
 use nearest-neighbor display sampling; photographic declarations use normal image
 sampling. Neither modifies source bytes or proves native-grid quality. Rights,
 creator, source use, original facts, derivative parent and prompt remain visible.
@@ -135,6 +200,6 @@ replacement and departure. A browser back/forward-cache return stays without a
 decoded preview until **Show source** is chosen. There is no remote source fetch,
 save-data write, campaign change or approval promotion.
 
-Implementation: `authoring/asset-studio/artwork-collection.mjs` and
-`artwork-panel.mjs`. Focused verification:
+Implementation: `authoring/asset-studio/artwork-collection.mjs`,
+`artwork-derivative.mjs` and `artwork-panel.mjs`. Focused verification:
 `node --test game/test/artwork-collection.test.mjs`.

@@ -119,3 +119,13 @@ Use the [read-only cumulative reserve catalog](../../library/reserve-illustratio
 Copyable request: “Open the reserve illustration catalog, filter to THEME, and compare existing source choices one at a time. Link the selected original, its exact prompt(s), provenance and wave limitations. Keep this an authoring selection; do not install it, award a picture or imply a released level. If I later request adoption, preserve the original and use the existing picture-authoring contract with separate validation.”
 
 The cumulative catalog has a scoped native select/Previous/Next and exact-original download check. That does not replace the individual waves’ small-view limits or establish exhaustive keyboard, physical-device, gameplay or runtime-adoption qualification.
+
+## Retained artwork board candidates
+
+Use the implemented [Asset Studio preparation](../../asset-studio/README.md) for
+mechanical board derivatives from a retained `.rlart` reveal: wide1152×576 or
+classic768×576, contain or center crop, no upscale. This is an explicit authoring
+operation, not a build-time mutation of accepted originals. Preserve the original
+record/bytes and derivative parent/fit/sampling/hash; nearest sampling is not
+native-grid cleanup. Export/reimport the real downloaded packet. C5 culture,
+contrast and production binding review remain separate. See [batch10](../../../docs/verification/actor-batch-10/README.md).

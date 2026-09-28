@@ -538,6 +538,142 @@ function freezeView(h) {
   };
 }
 
+for (const reduced of [false, true])
+  test(`Motion attachments edit actual wing paint while retaining paused clocks and reduced=${reduced}`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    h.change('character', 'ukrainian-bird');
+    h.images.find((image) => image.src.endsWith('ukrainian-bird.png')).onload();
+    h.tick(0);
+    h.tick(100);
+    h.host.emit('blur');
+    h.cap(reduced);
+    assert.equal(h.$('parts-editor-root').hidden, false);
+    const before = freezeView(h),
+      writes = h.writes.length,
+      source = h.$('parts-editor-json').value,
+      paint = () => {
+        const calls = h.$('inspection').context.calls;
+        calls.length = 0;
+        h.$('rotor-editor-guides').emit('change');
+        return calls.filter((call) =>
+          ['translate', 'rotate', 'lineTo', 'ellipse', 'fillRect'].includes(call.op),
+        );
+      },
+      original = paint();
+    const rotations = original.filter((call) => call.op === 'rotate').slice(1);
+    assert.equal(rotations.length, 2, 'Real paintCharacter draws both attached wings');
+    if (reduced) assert.ok(rotations.every((call) => call.args[0] === 0));
+    else assert.ok(rotations.every((call) => call.args[0] !== 0));
+    h.$('parts-editor-x').focus();
+    h.change('parts-editor-anchor', '1');
+    h.change('parts-editor-x', '0.25');
+    h.change('parts-editor-rate', '3');
+    const accepted = h.$('parts-editor-json').value,
+      edited = paint();
+    assert.equal(JSON.parse(accepted)[0].anchors[1][0], 0.25);
+    assert.equal(JSON.parse(accepted)[0].frequencyHz, 3);
+    assert.notDeepEqual(edited, original);
+    h.$('parts-editor-json').value = '{pending';
+    h.$('parts-editor-apply').click();
+    assert.match(h.$('parts-editor-status').textContent, /rejected/);
+    assert.deepEqual(paint(), edited, 'Rejected text retains the actual accepted preview');
+    h.external({ textFace: 'plain', textSize: 'large', reducedEffects: reduced });
+    assert.equal(h.$('parts-editor-json').value, '{pending');
+    h.$('parts-editor-json').value = accepted;
+    h.$('parts-editor-apply').click();
+    h.$('parts-editor-reset').click();
+    assert.equal(h.$('parts-editor-json').value, source);
+    assert.deepEqual(paint(), original, 'Restoring the source preserves the exact paused phase');
+    assert.deepEqual(freezeView(h), before);
+    assert.equal(h.$('play-pause').textContent, 'Play');
+    assert.equal(h.frames.size, 0);
+    assert.equal(h.writes.length, writes);
+    assert.equal(h.doc.activeElement, h.$('parts-editor-x'));
+    h.host.emit('pagehide', { persisted: true });
+    h.host.emit('pageshow', { persisted: true });
+    assert.equal(h.frames.size, 0, 'BFCache return does not resume edited animation');
+    assert.deepEqual(paint(), original);
+  });
+
+test('Motion attachment controls offer fractional keyboard steps and commit completed edits without advancing paused playback', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  h.change('character', 'ukrainian-bird');
+  h.images.find((image) => image.src.endsWith('ukrainian-bird.png')).onload();
+  h.tick(0);
+  h.tick(100);
+  h.host.emit('blur');
+  const before = freezeView(h),
+    writes = h.writes.length;
+  for (const [id, value, acceptedValue] of [
+    ['parts-editor-x', '0.25', (parts) => parts[0].anchors[0][0]],
+    ['parts-editor-y', '-0.25', (parts) => parts[0].anchors[0][1]],
+    ['parts-editor-rate', '3.25', (parts) => parts[0].frequencyHz],
+  ]) {
+    const control = h.$(id),
+      increment = Number(control.getAttribute('step')),
+      accepted = h.$('parts-editor-json').value;
+    assert.equal(control.type, 'number');
+    assert.ok(
+      increment > 0 && increment <= 0.01,
+      `${id} needs a fractional native increment; a unit step jumps across the normalized body`,
+    );
+    control.focus();
+    h.change(id, value, 'input');
+    assert.equal(h.$('parts-editor-json').value, accepted, 'Typing alone is not a recipe commit');
+    control.emit('change');
+    assert.equal(acceptedValue(JSON.parse(h.$('parts-editor-json').value)), Number(value));
+    assert.deepEqual(freezeView(h), before);
+    assert.equal(h.doc.activeElement, control);
+  }
+  assert.equal(h.frames.size, 0);
+  assert.equal(h.$('play-pause').textContent, 'Play');
+  assert.equal(h.writes.length, writes);
+});
+
+test('Motion attachment drafts are per character and live edits keep the existing single frame owner', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  h.change('character', 'ukrainian-bird');
+  h.images.find((image) => image.src.endsWith('ukrainian-bird.png')).onload();
+  h.tick(0);
+  h.tick(100);
+  const frames = [...h.frames.keys()],
+    before = freezeView(h),
+    writes = h.writes.length;
+  h.change('parts-editor-rate', '3.25');
+  const accepted = h.$('parts-editor-json').value;
+  assert.deepEqual([...h.frames.keys()], frames);
+  assert.deepEqual(freezeView(h), before);
+  assert.equal(h.$('play-pause').textContent, 'Pause');
+  h.$('parts-editor-json').value = '{unapplied';
+  h.change('character', 'navi-avatar');
+  assert.equal(JSON.parse(h.$('parts-editor-json').value)[0].type, 'pulse');
+  h.change('parts-editor-rate', '1.25');
+  h.change('character', 'ukrainian-bird');
+  assert.equal(
+    h.$('parts-editor-json').value,
+    accepted,
+    'Pending text cannot overwrite another character',
+  );
+  h.change('character', 'navi-avatar');
+  assert.equal(JSON.parse(h.$('parts-editor-json').value)[0].frequencyHz, 1.25);
+  h.change('animation-recipe', 'swallow-flight');
+  assert.equal(
+    JSON.parse(h.$('parts-editor-json').value)[0].frequencyHz,
+    2.1,
+    'An explicit recipe change starts from its own source attachments',
+  );
+  h.host.emit('pagehide', { persisted: false });
+  const afterDispose = h.$('parts-editor-json').value;
+  h.change('parts-editor-rate', '4');
+  h.$('parts-editor-reset').click();
+  assert.equal(h.$('parts-editor-json').value, afterDispose);
+  assert.equal(h.frames.size, 0);
+  assert.equal(h.writes.length, writes);
+});
+
 test('Motion HTML adopts reading policy before held app startup with one explicit size writer', async (t) => {
   const h = await harness(t, {
     stored: encode({ textFace: 'plain', textSize: 'large' }),

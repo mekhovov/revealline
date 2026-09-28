@@ -91,6 +91,28 @@ function pilotPose(run, player, frame, old, dt, reduced) {
   };
 }
 
+/** Hunters lock an exposed point before moving. Their prepared body's nose
+ * must agree with that lock, not the previous patrol or a live player position.
+ * Commitment uses the core's actual velocity; recovery retains its last pose.
+ * No interpolation delays the visible aim or advances a paused checkpoint. */
+function hunterPose(run, enemy, frame, old) {
+  if (run.status !== 'running' && old)
+    return { heading: old.heading, bank: frame.reduced ? 0 : old.bank };
+  let dx, dy;
+  if (enemy.phase === 'warning') {
+    dx = enemy.targetPoint?.x - enemy.x;
+    dy = enemy.targetPoint?.y - enemy.y;
+  } else if (enemy.phase === 'commit') {
+    dx = enemy.vx;
+    dy = enemy.vy;
+  } else if (enemy.phase !== 'recovery') return null;
+  const heading =
+    Number.isFinite(dx) && Number.isFinite(dy) && Math.hypot(dx, dy) > 0.00001
+      ? Math.atan2(dy, dx) + Math.PI / 2
+      : (old?.heading ?? frame.heading);
+  return { heading, bank: 0 };
+}
+
 /** Borrow prepared sprites and keep cosmetic samples only; never acquire assets or mutate a run. */
 export function createCoopActorPresentation({
   loadEnemyCatalog = loadEnemyPresentationCatalog,
@@ -275,6 +297,9 @@ export function createCoopActorPresentation({
         nextPilots.set(id, result.sample);
         // Geometry must use the final heading, including pivot and rotor bounds.
         frame = { ...sampled, ...result.pose };
+      } else if (description.enemy?.type === 'hunter') {
+        const pose = hunterPose(run, description.enemy, sampled, entries.get(id)?.frame);
+        if (pose) frame = { ...sampled, ...pose };
       }
       const stateSlot = description.player
         ? teamPilotSlot(description.player.id, frame.pilotState, treatment)

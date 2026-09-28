@@ -20,6 +20,41 @@ Open [the lab](http://127.0.0.1:8080/authoring/motion-lab/). No npm, build step,
 
 Defaults remain **hybrid terrain** and a **1.25-cell FPV body slot**. The scale slider changes presentation only. The body readout reports the slot's CSS-pixel width; transparent padding and contained non-square art may occupy less of that slot. The enlarged north-up **inspection view** uses the same body and attachment rig without enlarging the arena character. Its slow mode exposes blades/flaps/exhaust detail; disabling it follows the normal visual response.
 
+### Other moving parts
+
+For a recipe with **wings, exhaust, pulses or lights**, the inspection panel exposes
+its existing attachment anchors and base animation rate. For example, inspect
+Atlas bird to adjust a wing hinge, Tape runner for exhaust, or Spend Sprite for a
+pulse and separate blinking lights. The current `paintCharacter` renderer draws
+the accepted draft in the inspection view and, when that character is equipped,
+the arena. The editor does not add a simulation state or a new animation type.
+
+Anchor X and Y are offsets from the body's presentation origin, scaled by the
+fitted image width and height respectively. Wings rotate around these anchors;
+their optional third tuple value retains the authored side. The existing reader
+allows anchor coordinates from −1 to 1. These decorative effects can overhang the
+image; this is not a production collision or complete-sweep validation.
+
+Base rates retain the existing limits: wings 0.1–5 Hz, exhaust flicker 0.1–12 Hz,
+and pulse/light cycles 0.1–2 Hz. Wings still add their authored speed-dependent
+frequency gain. Pausing retains the current pose and both clocks; reduced motion
+retains the current renderer's steady pose. An edit, rejection, restore or export
+does not resume, rephase, equip a character, change travel or write collection data.
+
+**Attachment JSON** imports/exports the existing non-rotor component-array
+fragment, bounded to 16,384 characters. It permits known fields of the selected
+recipe's existing component identities in their existing order, using the current
+animation validator for numeric and color limits. It cannot add, rename or change
+component types. Invalid or stale input retains the accepted preview. Export uses
+the accepted fragment even when the text area contains unapplied text.
+
+Accepted drafts are per character for this page lifetime. Changing the inspected
+character discards unapplied text and shows that character's accepted draft.
+Changing its recipe clears its attachment draft and uses the newly selected
+recipe; **Restore recipe attachments** returns to that recipe's source values.
+Source presets, manifests, historical readers and registered assets stay unchanged.
+There is no new save format or `.rltheme` approval path in this editor.
+
 ## Two configurable turn policies
 
 Use **Turn policy** above the arena. The value is also configurable as `motion.turnPolicy` in [presets.json](presets.json): `immediate` (default) or `grid-center`. A missing value preserves immediate compatibility. These are demo movement policies; the planned game ruleset IDs are `input.turn-immediate.v1` and `input.turn-grid-center.v1`, not registered content-pack primitives.

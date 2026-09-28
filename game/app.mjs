@@ -171,6 +171,7 @@ import { attachControllerReading } from './ui/controller-reading.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
 import { createPracticeRenderFailure } from './ui/practice-render-failure.mjs';
+import { readPracticePresentation } from './ui/practice-presentation.mjs';
 import { requestControllerPracticeExit } from './ui/controller-practice-exit.mjs';
 import { playgroundTabBoundary } from './ui/playground-tab-boundary.mjs';
 import { attachEnemyWorkshopReturn } from './ui/enemy-workshop-return.mjs';
@@ -480,6 +481,9 @@ try {
   // Switching source maps inside an authored preview must not turn the same
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
+  const practicePresentation = readPracticePresentation(location.search, {
+    practice: practiceSession && !courseSession,
+  });
   const practiceRenderFailure = createPracticeRenderFailure({
     enabled: practiceSession,
     document,
@@ -10426,6 +10430,7 @@ try {
           reduced: displayPreferences.snapshot().effectiveReducedEffects,
           fullReveal: run.status === 'won',
           showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
+          showCombatScrap: practicePresentation.showCombatScrap,
           backdrop: flightPictures?.current(),
           celebrationPaused: document.hidden || dialogOpen(),
           defeatEffectsRunning: defeatEffectsRunning(),

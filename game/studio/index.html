@@ -2729,6 +2729,27 @@
             ><span data-i18n="interface:practiceOnlyNoAwardsCandidatePresentation"
               >Practice only · no awards · candidate presentation</span
             >
+            <div id="preview-remains-options" class="preview-remains-options" hidden>
+              <label class="preview-remains-toggle"
+                ><input
+                  id="preview-show-remains"
+                  type="checkbox"
+                  checked
+                  disabled
+                  aria-describedby="preview-remains-hint"
+                /><span data-i18n="tools:studio.preview.showRemains"
+                  >Show enemy remains</span
+                ></label
+              >
+              <p
+                id="preview-remains-hint"
+                class="note"
+                data-i18n="tools:studio.preview.remainsHint"
+              >
+                For the next Solo preview only. Hides inert remains when off; live enemies, aim
+                warnings, shots and brief sparks stay visible. Does not change the draft or replay.
+              </p>
+            </div>
             <button id="export-team" hidden data-i18n="interface:exportExactTeamTestMission">
               Export exact Team test mission
             </button>

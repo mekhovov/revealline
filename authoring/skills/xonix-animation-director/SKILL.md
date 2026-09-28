@@ -159,3 +159,14 @@ formula or claim a new hitbox.”
 ## Declared prepared rotor correction (C1-A)
 
 For the current implementation candidate, follow [the shared rotor evidence and prompt](../../../docs/verification/rotor-motion/README.md) and [live actor coverage](../../../docs/actor-motion-live-baseline.md). Prepared player rigs use their exact frame-normalized hub/radius geometry and the shared connected-blade painter; original/manual bitmaps retain their existing no-additional-blades path. Do not enable a moving layer based on an enemy name or assume the prepared patrol's missing anchors are supplied. Motion/source checks do not qualify a new rig or public release. Keep the canonical publisher's source-review and historical preservation gates intact.
+
+## Existing non-rotor components and hunter intent
+
+Motion Lab's **Other moving parts** edits existing wing/thruster/pulse/blink
+anchors and base rates through the current validator. Per-character drafts,
+JSON and Restore retain source identities; new attacks and gameplay states do
+not belong in attachment recipes. Check native keyboard commit, pause/reduced
+clocks, invalid retention and full export/import. Team hunters show the core's
+locked warning point, then actual charge velocity and held recovery heading;
+never turn a passed-target charge back towards a live target in presentation.
+See [batch10 evidence](../../../docs/verification/actor-batch-10/README.md).
