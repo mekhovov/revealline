@@ -153,7 +153,7 @@ test('bonus backup labels and pending status change language without replacing f
   assert.equal(h.doc.activeElement, h.upload);
   assert.equal(h.doc.querySelector('.edition-learning-data').querySelector('input'), h.upload);
   assert.equal(heading.textContent, 'Записи необов’язкового навчання');
-  assert.equal(h.status.textContent, 'Перевірка навчальних записів…');
+  assert.equal(h.status.textContent, 'Перевіряємо навчальні записи…');
   assert.deepEqual(h.storage.writes, []);
   finish(JSON.stringify({ format: 'revealline-edition-learning-backup.v1', editionId: 'foreign' }));
   await importing;

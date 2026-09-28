@@ -46,6 +46,7 @@ async function fixture(
     getLearningEvidence,
     mastery = false,
     getMasteryEvidence,
+    rewardRevision = 'r1',
   } = {},
 ) {
   const base = await editionProviderFixture();
@@ -121,7 +122,7 @@ async function fixture(
   const missionReward = (mission) => ({
     format: 'revealline-completion-reward.v1',
     id: `${mission.missionId}-discovery`,
-    revision: 'r1',
+    revision: rewardRevision,
     brandId: selection.brand.id,
     campaignId: source.campaigns[0].id,
     scope: { kind: 'mission', id: mission.missionId },
@@ -470,6 +471,57 @@ test('changing language retains earned reader focus without playing media or cha
   external.focus();
   changeLanguage();
   assert.equal(f.doc.activeElement, external);
+});
+
+test('normally initialized readers report conflicting backup revisions without losing current or incoming discoveries', async (t) => {
+  const initialLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(initialLocale, { persist: false }));
+  const source = await fixture(t);
+  source.accepted(1);
+  source.view.refresh();
+  await source.settle();
+  const backup = await source.exportState(),
+    original = JSON.stringify(backup);
+  const destination = await fixture(t, { rewardRevision: 'r2' });
+  await destination.settle();
+  const before = await destination.exportState(),
+    disk = await destination.backend.read();
+  const journey = copy(destination.profile);
+  const upload = destination.settings.querySelector('input');
+  upload.files = [{ size: original.length, text: async () => original }];
+  await upload.onchange();
+  await destination.settle();
+  const notice = destination.doc.getElementById('completion-reward-import-status');
+  assert.equal(notice.hidden, false);
+  assert.match(notice.textContent, /different discovery revisions/);
+  assert.deepEqual(await destination.exportState(), before);
+  assert.deepEqual(await destination.backend.read(), disk);
+  assert.deepEqual(destination.profile, journey);
+  assert.equal(JSON.stringify(await source.exportState()), original);
+  setLocale('uk', { persist: false });
+  destination.view.refresh();
+  assert.match(notice.textContent, /інші редакції відкриттів/);
+  assert.equal(upload.value, '');
+});
+
+test('matching discovery backups merge after normal reader initialization without creating Journey wins', async (t) => {
+  const source = await fixture(t);
+  source.accepted(1);
+  source.view.refresh();
+  await source.settle();
+  const backup = await source.exportState(),
+    bytes = JSON.stringify(backup);
+  const destination = await fixture(t);
+  await destination.settle();
+  const journey = copy(destination.profile),
+    upload = destination.settings.querySelector('input');
+  upload.files = [{ size: bytes.length, text: async () => bytes }];
+  await upload.onchange();
+  await destination.settle();
+  assert.deepEqual((await destination.exportState()).receipts, backup.receipts);
+  assert.deepEqual(destination.profile, journey);
+  assert.equal(destination.doc.getElementById('completion-reward-import-status').hidden, true);
 });
 
 test('learning-only evidence changes refresh rewards without changing arcade progress or persisting an unsaved proof', async (t) => {
