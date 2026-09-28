@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { canonicalJSON } from '../data-json.mjs';
 import { readFile } from 'node:fs/promises';
 import {
   CURRICULUM_CAMPAIGNS,
@@ -238,6 +239,7 @@ test('explicit public dependencies include only selected campaign art and seven 
     ),
     {
       'ukraine-threads': ['met-degas-ukrainian-dress-436157'],
+      'ukraine-cities-symbols-time': ['reference-ukraine-state-flag', 'reference-ukraine-state-emblem'],
       'fpv-meet-aircraft': ['reference-fpv-pixhawk-controller', 'reference-fpv-brushless-motor'],
       'fpv-soldering-workshop': [
         'reference-fpv-solder-iron',
@@ -266,7 +268,7 @@ test('four edition art upgrades preserve all36 first-discovery missions and exac
     'fpv-learning',
   ]) {
     const edition = catalog.editions.find((entry) => entry.id === editionId);
-    assert.equal(edition.revision, 2);
+    assert.ok(edition.revision >= 2);
     const retained = edition.presentationHistory.find((entry) =>
       entry.path.endsWith('-first-discoveries.json'),
     );
@@ -284,7 +286,7 @@ test('four edition art upgrades preserve all36 first-discovery missions and exac
         const next = current.rewards.find((reward) => reward.id === oldReward.id);
         assert.deepEqual(next.requirements, oldReward.requirements);
         assert.equal(oldReward.revision, '1');
-        assert.equal(next.revision, '2');
+        assert.ok(Number(next.revision) >= 2);
         for (const ref of completionRewardAssetReferences([oldReward]))
           assert.ok(
             snapshot.catalog.assets.some(
@@ -293,7 +295,7 @@ test('four edition art upgrades preserve all36 first-discovery missions and exac
           );
       }
       assert.equal(oldSource.packs[0].revision, '1');
-      assert.equal(current.source.packs[0].revision, '2');
+      assert.ok(Number(current.source.packs[0].revision) >= 2);
       for (const before of oldSource.missions) {
         const after = current.source.missions.find((mission) => mission.id === before.id);
         assert.notEqual(
@@ -377,5 +379,35 @@ test('later curricula use canonical progression with registered distinct present
     assert.notDeepEqual(next.actorRecipes, first.actorRecipes);
     assert.notEqual(next.soundtrack.id, first.soundtrack.id);
     assert.notEqual(next.palette.field, first.palette.field);
+  }
+});
+
+test('mission-art expansion retains every prior gameplay binding and revises each changed reward payload', async () => {
+  for (const editionId of ['ukraine-culture', 'fpv-learning']) {
+    const edition = catalog.editions.find((entry) => entry.id === editionId);
+    const retained = edition.presentationHistory.find((entry) =>
+      entry.path.endsWith('-before-mission-art-2.json'),
+    );
+    assert.ok(retained);
+    const { snapshot } = await validateRetainedPresentation(await json('../../' + retained.path), {
+      edition,
+    });
+    assert.equal(snapshot.catalog.editions[0].revision, 2);
+    for (const descriptor of snapshot.catalog.campaigns) {
+      const previous = snapshot.files.find((file) => file.path === descriptor.sourcePath).data;
+      const current = projects.find(({ definition }) => definition.id === descriptor.id);
+      assert.deepEqual(createRewardMissionBindings(previous), current.missionBindings);
+      const oldRewards = snapshot.files.find((file) => file.path === descriptor.rewardPath).data;
+      for (const before of oldRewards) {
+        const after = current.rewards.find((reward) => reward.id === before.id);
+        assert.deepEqual(after.requirements, before.requirements);
+        if (canonicalJSON(after.payloads) !== canonicalJSON(before.payloads))
+          assert.notEqual(
+            after.revision,
+            before.revision,
+            before.id + ' changed without a reward revision',
+          );
+      }
+    }
   }
 });
