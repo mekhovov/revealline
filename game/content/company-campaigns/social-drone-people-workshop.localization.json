@@ -1,0 +1,110 @@
+{
+  "campaignId": "social-drone-people-workshop",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "People Behind the Workshop", "uk": "Люди майстерні" } },
+      "id": "social-drone-people-workshop",
+      "identity": "df54a638559f0168",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the welcome court and discover the community’s public purpose.",
+          "uk": "З’єднайте вітальний двір і дізнайтеся про публічну мету спільноти."
+        },
+        "design.routeDecision": {
+          "en": "Use the wide welcome island for short returns, or capture the open west court first.",
+          "uk": "Використайте широкий вітальний острів для коротких повернень або спершу відкрийте західний двір."
+        },
+        "name": { "en": "Welcome to the Network", "uk": "Вітаємо у спільноті" }
+      },
+      "id": "social-drone-people-workshop-01",
+      "identity": "671110e1f6251c4d",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Link two workspaces through their shared meeting point.",
+          "uk": "З’єднайте два робочі простори через спільне місце зустрічі."
+        },
+        "design.routeDecision": {
+          "en": "Choose the upper meeting alcove or lower workbench as your first safe return.",
+          "uk": "Оберіть верхню нішу для зустрічей або нижній робочий стіл для першого безпечного повернення."
+        },
+        "name": { "en": "Many Ways to Contribute", "uk": "Різні способи долучитися" }
+      },
+      "id": "social-drone-people-workshop-02",
+      "identity": "d3f1d6ae93b86b87",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the archive stations while keeping both drifting gaps in view.",
+          "uk": "З’єднайте архівні станції, стежачи за обома рухомими перешкодами."
+        },
+        "design.routeDecision": {
+          "en": "Return through the offset archive islands before attempting the long east aisle.",
+          "uk": "Повертайтеся через зміщені архівні острови перед перетином довгого східного проходу."
+        },
+        "name": { "en": "Find the Source", "uk": "Знайдіть джерело" }
+      },
+      "id": "social-drone-people-workshop-03",
+      "identity": "a234d9fc0e3dba97",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Explore the quiet discussion court using its interior return.",
+          "uk": "Дослідіть спокійний двір обговорень через внутрішнє повернення."
+        },
+        "design.routeDecision": {
+          "en": "Follow the wide inner bench while the patrol passes the exposed outer edge.",
+          "uk": "Рухайтеся вздовж широкої внутрішньої лави, поки патруль проходить відкритим зовнішнім краєм."
+        },
+        "name": { "en": "Ask a Useful Question", "uk": "Поставте корисне запитання" }
+      },
+      "id": "social-drone-people-workshop-04",
+      "identity": "d20039c391b41081",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the checking desks without mistaking a quick route for a careful result.",
+          "uk": "З’єднайте столи перевірки, не плутаючи швидкий маршрут з уважним результатом."
+        },
+        "design.routeDecision": {
+          "en": "Link the staggered desks using the lower return to avoid the slow aisle.",
+          "uk": "З’єднайте зміщені столи через нижнє повернення, оминаючи повільний прохід."
+        },
+        "name": { "en": "Care Before Certainty", "uk": "Уважність перед упевненістю" }
+      },
+      "id": "social-drone-people-workshop-05",
+      "identity": "bd933fb82d26d1e9",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Join the welcome, archive and discussion spaces in one revealed picture.",
+          "uk": "Об’єднайте вітальний, архівний і дискусійний простори в одному зображенні."
+        },
+        "design.routeDecision": {
+          "en": "Join the central mosaic first or connect the small archive and welcome islands before the broad crossing.",
+          "uk": "Спершу з’єднайте центральну мозаїку або малі архівний і вітальний острови перед широким перетином."
+        },
+        "name": { "en": "The Community Mosaic", "uk": "Мозаїка спільноти" }
+      },
+      "id": "social-drone-people-workshop-06",
+      "identity": "f032ec1ba101d95a",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}
