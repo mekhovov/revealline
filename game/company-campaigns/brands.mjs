@@ -201,6 +201,12 @@ const retainedPresentations = Object.freeze({
   ],
   'social-drone-ua': [
     {
+      id: '985d7722d69526a98abc1d7026c2279ace2a64443362dcc861aab6cd92fb608b',
+      path: 'game/editions/retained/social-drone-ua-before-mission-alt.json',
+      sha256: '13d119e2e5aa67bd6636a2d83d9e1374d792a05edc33c462654f19d965efe409',
+      bytes: 176563,
+    },
+    {
       id: 'b082d3766168bd305e235adad284813b2a8578de5de009f8ca985aaf1a2e5bd6',
       path: 'game/editions/retained/social-drone-ua-before-listening-room.json',
       sha256: 'd1637bf018f2197a6e10e6df5a13fe2e8cff807d4c19165258bff331ccc30528',
@@ -233,6 +239,12 @@ const retainedPresentations = Object.freeze({
   ],
   'ukraine-culture': [
     {
+      id: '430cb1cb0c5231f9c42dc9fd9d2b0e55b35a49c676e09c0df8effa17f9a396b2',
+      path: 'game/editions/retained/ukraine-culture-before-textile-and-motion.json',
+      sha256: 'c7122ae0c8f17932986df03fc636c02900d83a30c235529789f0a90f253c7555',
+      bytes: 587410,
+    },
+    {
       id: '95915f9348a50bb93f6c5d234624f85fc1a758f59d1db2bb4f804876257a3c25',
       path: 'game/editions/retained/ukraine-culture-before-visual-atlas.json',
       sha256: 'fb63b425bdc90769bdb9a5f7bbb8a3d4a3c18086bee0d87f4187712398e4dcb0',
@@ -264,6 +276,12 @@ const retainedPresentations = Object.freeze({
     },
   ],
   'fpv-learning': [
+    {
+      id: 'a34183de94677f3e2d20a88062a3643778723a34b53a57c606eb667740e9d70c',
+      path: 'game/editions/retained/fpv-learning-before-textile-and-motion.json',
+      sha256: 'e50b6a3c0197f4944756942af314e31a76a2db559b505a23d310185e834a0289',
+      bytes: 727944,
+    },
     {
       id: '2ccf3e4f9b9066359219e3fdcd2dad32366f9ea3e2cf12d1b16c0de09d36c604',
       path: 'game/editions/retained/fpv-learning-before-visual-atlas.json',
@@ -544,11 +562,11 @@ export const COMPANY_EDITIONS = Object.freeze(
                 : brandId === 'droneaid-nl'
                   ? 4
                   : id === 'fpv-learning'
-                    ? 7
+                    ? 8
                     : id === 'social-drone-ua'
-                      ? 6
+                      ? 7
                       : id === 'ukraine-culture'
-                        ? 6
+                        ? 7
                         : [
                               'social-drone-ua',
                               'victory-drones',

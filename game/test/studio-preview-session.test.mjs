@@ -116,6 +116,8 @@ test('actual Studio game launch, accepted win, reward reveal and Retry never ope
     page.frame(0);
     return page.$('completion-reward-shelf').querySelector('article')?.dataset.earned === 'true';
   });
+  assert.match(page.$('overlay-copy').textContent, /Preview mission complete/);
+  assert.match(page.$('overlay-copy').textContent, /Player progress is unchanged/);
   assert.equal(page.$('completion-reward-save-status').dataset.durable, 'false');
   assert.equal(page.$('completion-reward-retry-save').hidden, true);
   assert.equal(page.$('journey-save-export').hidden, true);
@@ -139,5 +141,36 @@ test('actual Studio game launch, accepted win, reward reveal and Retry never ope
   assert.deepEqual(storage.writes, []);
   assert.equal(databaseOpens, 0);
   assert.equal(locks, 0);
+  assert.deepEqual(page.errors, []);
+});
+
+test('a normal edition win uses player-facing campaign copy instead of authored test wording', async (t) => {
+  const f = await editionProviderFixture();
+  f.source.missions[0].actors = [];
+  f.source.missions[0].coverage = 0.2;
+  const compiled = compileContentProject(f.source);
+  f.data.campaign.levels = [
+    resolveMission(compiled, f.source.missions[0].id, { difficulty: 'standard' }).level,
+  ];
+  const page = await soloPage(t, {
+    search: '?edition=sample-public',
+    titleScreen: true,
+    storage: memoryStorage(),
+    fetchResponse: f.fetcher,
+  });
+  page.$('shell-featured').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.frame(0);
+  page.key('ArrowDown');
+  for (let tick = 0; tick < 900 && page.rendered.run.status === 'running'; tick++) page.frame();
+  page.key('ArrowDown', false);
+  page.frame(0);
+  assert.equal(page.rendered.run.status, 'won');
+  assert.match(
+    page.$('overlay-copy').textContent,
+    /Mission complete\. Keep exploring your campaign/,
+  );
+  assert.doesNotMatch(page.$('overlay-copy').textContent, /authored test|Legacy|preview/i);
+  assert.equal(page.$('next-button').disabled, false);
   assert.deepEqual(page.errors, []);
 });

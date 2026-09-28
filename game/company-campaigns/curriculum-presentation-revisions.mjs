@@ -5,10 +5,10 @@ import { required } from '../data-json.mjs';
 // These reading/art revisions never change gameplay or promised requirements.
 export const CURRICULUM_PRESENTATION_REVISIONS = freezeDesign({
   'social-drone-people-workshop': {
-    pack: '4',
-    finale: '4',
+    pack: '5',
+    finale: '5',
     missionRewards: {
-      'social-drone-people-workshop-01': '4',
+      'social-drone-people-workshop-01': '5',
       'social-drone-people-workshop-02': '4',
       'social-drone-people-workshop-03': '4',
       'social-drone-people-workshop-04': '4',
@@ -29,23 +29,23 @@ export const CURRICULUM_PRESENTATION_REVISIONS = freezeDesign({
     },
   },
   'ukraine-threads': {
-    pack: '5',
-    finale: '4',
+    pack: '6',
+    finale: '5',
     missionRewards: {
       'ukraine-threads-01': '5',
       'ukraine-threads-02': '4',
-      'ukraine-threads-03': '4',
+      'ukraine-threads-03': '5',
       'ukraine-threads-04': '4',
       'ukraine-threads-05': '4',
       'ukraine-threads-06': '4',
     },
   },
   'fpv-meet-aircraft': {
-    pack: '6',
-    finale: '5',
+    pack: '7',
+    finale: '6',
     missionRewards: {
-      'fpv-meet-aircraft-01': '5',
-      'fpv-meet-aircraft-02': '5',
+      'fpv-meet-aircraft-01': '6',
+      'fpv-meet-aircraft-02': '6',
       'fpv-meet-aircraft-03': '5',
       'fpv-meet-aircraft-04': '5',
       'fpv-meet-aircraft-05': '5',

@@ -3716,6 +3716,8 @@
   "campaignEnd": "CAMPAIGN END",
   "endOfThisCampaign": "End of this campaign.",
   "journeyMissionComplete": "Journey mission complete.",
+  "editionMissionComplete": "Mission complete. Keep exploring your campaign.",
+  "studioPreviewMissionComplete": "Preview mission complete. Player progress is unchanged.",
   "authoredTestClearRecordedInJourneyProgressNoLegacyCollection": "Authored test clear recorded in Journey progress. No Legacy collection awards.",
   "pictureCollectedForThisSessionExportGameDataAndSession": "Picture collected for this session. Export game data and session originals from Settings → Game data → Saves & recovery to keep it.",
   "browseMissions2": "Browse missions →",
@@ -5419,5 +5421,7 @@
   "rewardPlaylist.help": "Choose a recording, then press Play. Tracks do not start or advance automatically.",
   "rewardPlaylist.previous": "Previous recording",
   "rewardPlaylist.next": "Next recording",
-  "rewardPlaylist.selected": "{{index}} of {{count}}: {{title}}"
+  "rewardPlaylist.selected": "{{index}} of {{count}}: {{title}}",
+  "completionRewards.sessionOnlyShort": "Saved in this tab only · backup guidance in More",
+  "completionRewards.saving": "Saving discoveries…"
 }
