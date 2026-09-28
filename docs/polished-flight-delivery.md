@@ -7,21 +7,21 @@ unchanged. New first-person flight belongs to the separate `civilian-fpv` packag
 ## Order and compatibility
 
 Deliver Phase 2 → 3 → 4 → 6, with qualification in every batch, through integration
-PR #758 while open. The branch was refreshed onto main `a10fcbf8a` before this work.
+PR #758 while open. The branch was refreshed onto main `a5859df78` (v0.142.2) for the latest batch.
 Keep 18 campaigns, 108 arcade missions, English/Ukrainian, shared arcade simulation,
 and every already-published reward promise. Human learning, artwork and physical
 radio testing remain explicitly deferred. Passing synthetic inputs is not hardware
 qualification. Release coordination owns versions and production promotion.
 
-| Batch          | Deliverable                                                                        | Current integration state                                  |
-| -------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| A / 2          | Shared screen polish, practice discovery, guided lesson and atlas editing          | Implemented                                                |
-| B / 3          | First three polished missions in each of four existing showcase campaigns          | Implemented                                                |
-| C / 4          | Six missions per showcase, different application fixtures, control lab             | Implemented                                                |
-| D / 6          | USB-radio diagnostics, arbitrary channels, calibration, separate response profiles | Implemented; physical devices unverified                   |
-| E / 6          | First-person model, Self-level/manual throttle and Acro, representative drills     | Implemented; portable numeric fixtures pass                |
-| F / 6          | Twelve drills, typed practice rewards, notebook and studio round trips             | Implemented                                                |
-| Continuous / 7 | Reproducible archives, portable proofs, lifecycle/performance, admission           | Frozen baseline verified; follow-up CI/publication pending |
+| Batch          | Deliverable                                                                        | Current integration state                                                |
+| -------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| A / 2          | Shared screen polish, practice discovery, guided lesson and atlas editing          | Implemented                                                              |
+| B / 3          | First three polished missions in each of four existing showcase campaigns          | Implemented                                                              |
+| C / 4          | Six missions per showcase, different application fixtures, control lab             | Implemented                                                              |
+| D / 6          | USB-radio diagnostics, arbitrary channels, calibration, separate response profiles | Implemented; physical devices unverified                                 |
+| E / 6          | First-person model, Self-level/manual throttle and Acro, representative drills     | Implemented; portable numeric fixtures pass                              |
+| F / 6          | Twelve drills, typed practice rewards, notebook and studio round trips             | Implemented                                                              |
+| Continuous / 7 | Reproducible archives, portable proofs, lifecycle/performance, admission           | Local integration verified; remaining performance/publication gates open |
 
 ## Acceptance contracts
 
@@ -87,8 +87,9 @@ These inform implementation; they do not prove learning effectiveness or real-fl
   Demonstration, authoring and replay sessions cannot earn. Custom course imports
   preserve reward metadata and require new revisions for changed requirements.
   Long proof verification yields in batches of at most 200 simulation ticks.
-  Imports can be cancelled, including during storage hydration; closing prevents
-  late writes or playback. Immediate Retry preserves the completed attempt while
+  Imports can be cancelled, including during storage hydration; explicit cancellation
+  or notebook disposal prevents late writes or playback. Hiding the dialog alone
+  does not dispose its notebook. Immediate Retry preserves the completed attempt while
   its single cooperative notebook admission finishes.
 - **Continuous / Phase 7:** Trusted new-package policy, selected pinned upstream
   renderer/licence, historical gym compatibility, full runtime/source caps and CI
@@ -222,10 +223,85 @@ model-observation proxy, not USB or input-to-photon latency. The evidence pins
 exact fixed runtime bytes from a dirty worktree; it is not frozen-release,
 physical-device or matched 5% regression qualification.
 
-Remaining publication work: fresh candidates for the follow-up code changes,
+At that checkpoint, publication work still included fresh candidates for follow-up code changes,
 complete same-source hosted-target capacity/admission, production promotion and
 real version/public rollback. Desktop frame-pacing/input-stall benchmarking and
 broader memory/device qualification remain distinct from the bounded observations.
 Human comprehension, pacing, artwork and physical-radio/device evidence stays
 **deferred and unverified**. The proposed macOS/Windows browser/device matrix is a
 qualification target, not a list of proven compatible transmitters.
+
+### Rebase and candidate recovery batch
+
+All 31 integration commits were rebased onto main `a5859df784314556072f9215f9b293962e4f2ea4`
+without changing the historical dirty checkout. Studio conflict resolution retains
+main's spatial-review tools alongside the discovery editor and preserves both
+English/Ukrainian translation sets. The generated locale catalogue matches its
+merged sources. The shared arcade core has no diff from main. On clean rebased
+`9105025316c21bfe749ea8617dbb2220fd2b5530`, all **921 company checks** and
+**151 practice checks** pass, with no skips or failures. All seven source hashes
+in the earlier four-runtime numeric fixture receipt still match.
+
+The earlier `308745195` candidate CI completed successfully for all eighteen
+editions and both optional packages. That result stays bound to its original
+source. The rebased optional packages were frozen twice and admitted independently:
+FPV remains **50 runtime files / 2,748,040 bytes**, with **52 source files /
+2,762,434 bytes**. The old gym remains **29 runtime files / 178,540 bytes**.
+Neither package exceeds its existing 8 MiB/64-file limits.
+
+The [clean rebased default inspection](verification/evidence/default-capacity-910502531.json)
+found a new publication blocker: prepared
+content is **800,592,677 bytes**, which exceeds the unchanged **800,000,000-byte**
+archive-content ceiling by **592,677 bytes**. Including its **402,023-byte** manifest,
+the payload is **800,994,700 bytes**. Preparation alone is not archive admission.
+This is one source-verified inspection, not two reproducible default archives or
+a whole hosted-site qualification. Earlier capacity totals remain historical and
+must not be combined with the new candidate as though they were one source.
+
+The author guides now describe the delivered simulator, four application bonuses,
+existing no-loss mastery predicate, actual JSON/file transfer routes and separate
+course/reward revisions. Custom course preview, practice proof import and reward
+schema support do not grant publication admission or fabricate arcade progress.
+
+The installation observer now accepts an independently admitted previous frozen
+bundle and requires different versions, commits, trees and archive hashes. It
+stages each candidate's exact launcher, pins both sources even in failed reports,
+and requires two genuinely standalone launcher windows. The
+[distinct-candidate observation](verification/evidence/optional-installation-910502531.json)
+passes seven transitions from `d22621010` / v0.142.1 to `910502531` / v0.142.2:
+offline coexistence, update, rejected truncated download, rollback, and removal
+of the other package. Exported flight proofs and separately stored radio/response
+profiles remain byte-identical. The mapping is explicitly synthetic and unverified.
+The changed files are `app.mjs`, the worker and package manifest; this tests a real
+candidate code update, not an arbitrary model/schema migration or public rollback.
+
+A minimal packaging fix emits only generated `offline-inventory.json` as compact
+JSON. It preserves the inventory data, every asset and historical record, source
+string whitespace and normal manifest hashing. The **39 focused build/offline
+publication/inspector checks pass**, including complete parsed-inventory equivalence
+and original-byte preservation. Formatting, lint and independent review pass.
+The next clean-source inspection must measure the reduction before this closes
+the archive-size blocker.
+
+The [matched arcade observation](verification/evidence/arcade-performance-2026-09-29.json)
+compares the exact `1106ec0ac` FPV edition with frozen `910502531` on the same
+machine and browser. Two unprofiled pairs run in opposite order. All four
+play/results comparisons meet the scoped 5% p95 target with **0% measured change**:
+active play is **16.7 ms**, and corresponding results are **16.7 or 16.8 ms**.
+The candidate's **50 ms** maximum result frame remains in the report. An unpaired
+valid sample and harness setup/route failures are retained, not selected away.
+Twenty ordinary earned-result/viewer cycles per build retain stable connected
+DOM/media counts within that build; the richer candidate starts with more nodes.
+These are neither detached-retainer nor decoded-media memory measurements.
+
+The separate first-win traces do **not** close the 50 ms reward-work target.
+Baseline/current callbacks take **70.131 / 71.348 ms**, mostly inside Phaser's
+animation callback containing gameplay and result work. Timeline-only traces
+cannot assign exclusive reward cost. Unprofiled results also retain page-wide
+long tasks. Further attribution is required; this batch does not waive that gate
+or infer performance across all editions, devices or input hardware.
+
+The legacy three-argument installation observer also passes all seven transitions
+with its narrower same-payload fixtures. The new observer rejects equal candidate
+versions before loading browser automation. Generated company content verifies
+**186 exports**, and source eligibility verifies **294 admitted assets**.
