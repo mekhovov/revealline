@@ -76,6 +76,20 @@ test('deployed tus config requires secure remote transport and bounded credentia
     validateDeployedTusResumeConfig(config({ baseURL: 'http://127.0.0.1:8787/' })).baseURL,
     'http://127.0.0.1:8787/',
   );
+  assert.equal(
+    validateDeployedTusResumeConfig(
+      config({
+        auth: {
+          ...config().auth,
+          creator: {
+            email: 'creator@example.test',
+            password: 'correct horse battery staple',
+          },
+        },
+      }),
+    ).auth.creator.email,
+    'creator@example.test',
+  );
 });
 
 const fetchThroughFastify =
