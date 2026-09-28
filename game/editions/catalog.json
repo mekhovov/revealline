@@ -2615,6 +2615,15 @@
       "path": "game/editions/assets/discovery/motion-makers/motion-makers-uk-v1.vtt",
       "publication": "public",
       "sha256": "8dfd9aeb10bfdcaa89faf19b66c68966b08be609b35e028b3db06bf7a6c070cf"
+    },
+    {
+      "approved": true,
+      "bytes": 1761339,
+      "dependencies": [],
+      "id": "reference-ukraine-met-shirt-fragment-157571",
+      "path": "game/editions/assets/discovery/met-shirt-fragment-157571.jpg",
+      "publication": "public",
+      "sha256": "4a5913f8a42a58165353e44bf492df473f9a90b12bf7b060cc49e3819e6de6bd"
     }
   ],
   "brands": [
@@ -3129,6 +3138,7 @@
         "textile-light-left-v1",
         "textile-light-right-v1",
         "met-degas-ukrainian-dress-436157",
+        "reference-ukraine-met-shirt-fragment-157571",
         "reference-ukraine-met-shirt-fragment"
       ],
       "brandId": "ukraine-culture",
@@ -3136,7 +3146,7 @@
       "id": "ukraine-threads",
       "lessonPath": "game/content/company-campaigns/ukraine-threads.lessons.json",
       "localizationPath": "game/content/company-campaigns/ukraine-threads.localization.json",
-      "localizationSha256": "4379b7e3a4d4820f3fd6404da0a458542aaf44cd87f575f740723f31d6563006",
+      "localizationSha256": "68aba75dfa564557314eeb4ed0bba6bf7f6cf149bdfaa6c7e0b87b03c885abcc",
       "modes": ["solo"],
       "name": "Threads Across Ukraine",
       "publication": "public",
@@ -3167,7 +3177,7 @@
       "id": "fpv-meet-aircraft",
       "lessonPath": "game/content/company-campaigns/fpv-meet-aircraft.lessons.json",
       "localizationPath": "game/content/company-campaigns/fpv-meet-aircraft.localization.json",
-      "localizationSha256": "04040fb32db189319212053c9ab551b7c1cf85e1e3fb97fa40351aabd8e73702",
+      "localizationSha256": "d1721f4d2e172c38c1540d53d77d2a5d38fc19fa0627552d253f8fb3a7114c4a",
       "modes": ["solo"],
       "name": "Meet the Aircraft",
       "publication": "public",
@@ -3194,8 +3204,9 @@
       "brandId": "social-drone-ua",
       "heroAssetId": "social-drone-community-connections-key-v1",
       "id": "social-drone-community-connections",
+      "lessonPath": "game/content/company-campaigns/social-drone-community-connections.lessons.json",
       "localizationPath": "game/content/company-campaigns/social-drone-community-connections.localization.json",
-      "localizationSha256": "6fa9d31c5adea49bd3dd5802ae337fcb01d4d2d389b70f2dfbff222d99306418",
+      "localizationSha256": "362b141518daa61eaf7402ef9698889f49b14dc7b78f4e3e01d5a32a25359dd4",
       "modes": ["solo"],
       "name": "Community Connections",
       "publication": "public",
@@ -3216,8 +3227,9 @@
       "brandId": "victory-drones",
       "heroAssetId": "victory-drones-ideas-understanding-key-v1",
       "id": "victory-drones-ideas-understanding",
+      "lessonPath": "game/content/company-campaigns/victory-drones-ideas-understanding.lessons.json",
       "localizationPath": "game/content/company-campaigns/victory-drones-ideas-understanding.localization.json",
-      "localizationSha256": "043012ab8d1e3d89fc7ca21a812482eed767daba5c78c81f90bb9000c5fff068",
+      "localizationSha256": "2bb53e7caf2c55f251bd15859e74ac729cac78720e337ee07093c806cdd4db7a",
       "modes": ["solo"],
       "name": "Ideas into Understanding",
       "publication": "public",
@@ -3517,6 +3529,12 @@
       "name": "Social Drone UA",
       "presentationHistory": [
         {
+          "bytes": 176323,
+          "id": "3a82bd8aa3306adf9f02be6f56945985b7e54e1606fc3156a2271ba19bbd16a6",
+          "path": "game/editions/retained/social-drone-ua-before-showcase-learning.json",
+          "sha256": "1a360b73d74bfec5bae456e15e1e1f1a42f7c400bc04f0275b342c46160be98f"
+        },
+        {
           "bytes": 176563,
           "id": "985d7722d69526a98abc1d7026c2279ace2a64443362dcc861aab6cd92fb608b",
           "path": "game/editions/retained/social-drone-ua-before-mission-alt.json",
@@ -3554,7 +3572,7 @@
         }
       ],
       "publication": "public",
-      "revision": 7
+      "revision": 8
     },
     {
       "audience": "learners",
@@ -3574,6 +3592,12 @@
       "modes": ["solo"],
       "name": "Victory Drones",
       "presentationHistory": [
+        {
+          "bytes": 169999,
+          "id": "9685f48ccc6c053c69aebb695a1f31e66e54a839806e8956d816258cc07906d8",
+          "path": "game/editions/retained/victory-drones-before-showcase-learning.json",
+          "sha256": "490ed135f5d9e8cb55172dc584a671f6d385afb62c360545b848edfaa1521b2b"
+        },
         {
           "bytes": 142313,
           "id": "abcba1ea9574640497faf043f8caf26a039f1355d34df68f3e2f8546690439b4",
@@ -3600,7 +3624,7 @@
         }
       ],
       "publication": "public",
-      "revision": 5
+      "revision": 6
     },
     {
       "audience": "learners",
@@ -3627,6 +3651,12 @@
       "modes": ["solo"],
       "name": "Ukraine: Living Culture",
       "presentationHistory": [
+        {
+          "bytes": 599212,
+          "id": "3e868c83c369a31d78e3a551e8b83b6179bba80543dca9df19cbb73566deb295",
+          "path": "game/editions/retained/ukraine-culture-before-showcase-learning.json",
+          "sha256": "953829f1b939d98e7bcd66860977504caaa4a2c5a847a1d389aa9398deabcea2"
+        },
         {
           "bytes": 587410,
           "id": "430cb1cb0c5231f9c42dc9fd9d2b0e55b35a49c676e09c0df8effa17f9a396b2",
@@ -3665,7 +3695,7 @@
         }
       ],
       "publication": "public",
-      "revision": 7
+      "revision": 8
     },
     {
       "audience": "learners",
@@ -3694,6 +3724,12 @@
       "modes": ["solo"],
       "name": "FPV Learning",
       "presentationHistory": [
+        {
+          "bytes": 734363,
+          "id": "2b0c8781faf178c7e7952018a07ad290af67cf32217eedcbeeacf9a42c732ace",
+          "path": "game/editions/retained/fpv-learning-before-showcase-learning.json",
+          "sha256": "80dd4e88f348c3ec62f9a12069e897de690f87169eb1280dc9e4b7da694b83e2"
+        },
         {
           "bytes": 727944,
           "id": "a34183de94677f3e2d20a88062a3643778723a34b53a57c606eb667740e9d70c",
@@ -3738,7 +3774,7 @@
         }
       ],
       "publication": "public",
-      "revision": 8
+      "revision": 9
     },
     {
       "audience": "everyone",

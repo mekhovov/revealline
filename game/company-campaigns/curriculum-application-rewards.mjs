@@ -2,13 +2,19 @@ import { curriculumCosmeticPayload } from './curriculum-cosmetics.mjs';
 import { required } from '../data-json.mjs';
 import { completionLearningReference } from '../rewards/learning.mjs';
 
-const campaignIds = new Set(['fpv-meet-aircraft', 'ukraine-threads']);
+const communityCampaigns = new Set([
+  'social-drone-community-connections',
+  'victory-drones-ideas-understanding',
+]);
+const campaignIds = new Set(['fpv-meet-aircraft', 'ukraine-threads', ...communityCampaigns]);
 
 /** Additional rewards never replace a published six-win finale or its promise. */
 export function createCurriculumApplicationRewards({ definition, requirements, lessons, assets }) {
   if (!campaignIds.has(definition.id)) return [];
   const lesson = lessons.find((entry) => entry.id === `${definition.id}-06-lesson`);
   required(lesson?.campaignId === definition.id, 'Application reward needs its exact lesson.');
+  if (communityCampaigns.has(definition.id))
+    return [createCommunityApplicationReward(definition, requirements, lesson)];
   const aircraft = definition.id === 'fpv-meet-aircraft';
   const locales = aircraft
     ? {
@@ -96,4 +102,84 @@ export function createCurriculumApplicationRewards({ definition, requirements, l
       ],
     },
   ];
+}
+
+function createCommunityApplicationReward(definition, requirements, lesson) {
+  const community = definition.id === 'social-drone-community-connections';
+  const locales = community
+    ? {
+        en: {
+          title: 'The community board: checked edition',
+          teaser:
+            'Optional: win the six missions and publish an evidence-backed notice to collect the completed board and its handoff notes.',
+          paragraphs: [
+            'Your fictional board reports 10 booklets available and 2 not yet received. It replaces the old claim of 12 available. Marta has accepted the next check; no delivery date is invented.',
+            'Use the same method with a new shared record: separate what was observed, what remains uncertain and who accepted the next action. A useful correction belongs where people encounter the old claim.',
+          ],
+        },
+        uk: {
+          title: 'Дошка спільноти: перевірене видання',
+          teaser:
+            'Додатково: виграйте шість місій і оприлюдніть підтверджене доказами оголошення, щоб отримати готову дошку й нотатки передачі справ.',
+          paragraphs: [
+            'Ваша вигадана дошка повідомляє про 10 наявних буклетів і 2 ще не отримані. Вона замінює старе твердження про 12 наявних. Марта погодилася на наступну перевірку; дату доставки не вигадано.',
+            'Застосуйте той самий підхід до нового спільного запису: розділіть спостережене, невідоме й узгоджену наступну дію. Корисне виправлення має бути там, де люди бачать старе твердження.',
+          ],
+        },
+      }
+    : {
+        en: {
+          title: 'The comparison notebook',
+          teaser:
+            'Optional: win the six missions and choose a fair comparison to earn the completed notebook and its evidence limits.',
+          paragraphs: [
+            'Your classroom notebook keeps the cart and release conditions fixed while comparing two mats. The invented observations are 80–82 cm on A and 49–51 cm on B; the conclusion remains limited to that cart and those trials.',
+            'For another investigation, identify the intended change, keep relevant conditions comparable, record repeated observations and state what was not tested. An attractive explanation does not replace that evidence.',
+          ],
+        },
+        uk: {
+          title: 'Зошит порівняння',
+          teaser:
+            'Додатково: виграйте шість місій і оберіть коректне порівняння, щоб отримати готовий зошит із межами доказів.',
+          paragraphs: [
+            'Ваш навчальний зошит зберігає візок і умови запуску сталими та порівнює два килимки. Вигадані спостереження: 80–82 см на A і 49–51 см на B; висновок стосується лише цього візка й цих дослідів.',
+            'Для іншого дослідження визначте заплановану зміну, зберігайте суттєві умови порівнюваними, записуйте повторні спостереження й зазначайте, чого не перевіряли. Привабливе пояснення не замінює цих доказів.',
+          ],
+        },
+      };
+  return {
+    format: 'revealline-completion-reward.v1',
+    id: `${definition.id}-application-discovery`,
+    revision: '1',
+    brandId: definition.brandId,
+    campaignId: definition.id,
+    scope: { kind: 'campaign', id: definition.id },
+    locales: Object.fromEntries(
+      Object.entries(locales).map(([locale, copy]) => [
+        locale,
+        { title: copy.title, teaser: copy.teaser },
+      ]),
+    ),
+    requirements: {
+      missions: structuredClone(requirements),
+      learning: [completionLearningReference(lesson)],
+      mastery: [],
+    },
+    payloads: [
+      {
+        id: `${definition.id}-application-notebook`,
+        type: 'knowledge',
+        locales: Object.fromEntries(
+          Object.entries(locales).map(([locale, copy]) => [
+            locale,
+            {
+              title: copy.title,
+              paragraphs: copy.paragraphs,
+              sources: structuredClone(lesson.sources),
+            },
+          ]),
+        ),
+      },
+    ],
+  };
 }

@@ -309,6 +309,44 @@
           ]
         },
         "type": "exploration"
+      },
+      {
+        "id": "ukraine-threads-01-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "For the museum fragment, “small repeated motifs” is an observation; its date and listed materials come from the record; a precise maker remains unestablished here. Keep those three kinds of statement separate as you inspect the image."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Example: three kinds of label"
+          },
+          "uk": {
+            "paragraphs": [
+              "Для музейного фрагмента «дрібні повторювані мотиви» — спостереження; дата й матеріали походять із запису; конкретного майстра тут не встановлено. Розрізняйте ці три типи тверджень під час огляду."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Приклад: три типи підписів"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -325,7 +363,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "ukraine-threads-01", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -451,6 +489,44 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "ukraine-threads-02-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The optional workbench asks which facts require the object record and which are visible. A similar-looking stitch is not enough to name a technique. Use an explicit unknown instead of filling a gap with a confident guess."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Try: label only the evidence"
+          },
+          "uk": {
+            "paragraphs": [
+              "Додаткова вправа питає, які факти потребують запису предмета, а які видно. Схожого стібка недостатньо, щоб назвати техніку. Позначте невідоме, а не заповнюйте прогалину впевненим здогадом."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Спробуйте: підпишіть лише підтверджене"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -467,7 +543,7 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
     "scope": { "id": "ukraine-threads-02", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -738,6 +814,44 @@
           ]
         },
         "type": "exploration"
+      },
+      {
+        "id": "ukraine-threads-03-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Compare the three original illustrated white-thread studies. Shadows can make surface relief easier to notice. These are matched illustrations with small differences, not measured relighting of one historic textile; they cannot establish its real stitch structure."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Compare: light changes what stands out"
+          },
+          "uk": {
+            "paragraphs": [
+              "Порівняйте три оригінальні ілюстровані етюди білої вишивки. Тіні можуть зробити рельєф помітнішим. Це узгоджені ілюстрації з невеликими відмінностями, а не виміряне переосвітлення історичного текстилю; вони не встановлюють його справжньої будови стібка."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Порівняйте: світло змінює помітність"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -754,7 +868,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "ukraine-threads-03", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -888,6 +1002,102 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "reference-ukraine-met-shirt-fragment-157571",
+          "sha256": "4a5913f8a42a58165353e44bf492df473f9a90b12bf7b060cc49e3819e6de6bd"
+        },
+        "id": "reference-ukraine-met-shirt-fragment-157571-image",
+        "locales": {
+          "en": {
+            "alt": "A long cream-coloured textile on black, with red branching floral embroidery, gold and silver-coloured areas, repeated small motifs along both borders, and vertical folds left of centre.",
+            "title": "A second documented shirt fragment"
+          },
+          "uk": {
+            "alt": "Довгий кремовий текстиль на чорному тлі: червона розгалужена квіткова вишивка, золотисті й сріблясті ділянки, повторювані дрібні мотиви вздовж обох країв і вертикальні складки ліворуч від центру.",
+            "title": "Другий документований фрагмент сорочки"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "reference-ukraine-met-shirt-fragment-157571-credit",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "This is Met object 2009.300.2713, separately recorded from the earlier fragment 2009.300.2715. The museum identifies Ukrainian culture, the fourth quarter of the eighteenth century, and silk, linen and metal. Compare the two individual records; similar materials or motifs do not establish one maker, a precise shared locality or a universal symbolic meaning.",
+              "The Metropolitan Museum of Art, Fragment of a shirt, 2009.300.2713. Brooklyn Museum Costume Collection; Gift of the Brooklyn Museum, 2009; Gift of Mrs. Edward S. Harkness in memory of her mother, Elizabeth Greenman Stillman, 1931. Public Domain / CC0. Exact source photograph, unchanged."
+            ],
+            "sources": [
+              {
+                "title": "A second documented shirt fragment",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              },
+              {
+                "title": "License and sharing terms",
+                "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+              }
+            ],
+            "title": "A second documented shirt fragment"
+          },
+          "uk": {
+            "paragraphs": [
+              "Це предмет Метрополітен 2009.300.2713, облікований окремо від попереднього фрагмента 2009.300.2715. Музей зазначає українську культуру, останню чверть XVIII століття та шовк, льон і метал. Порівнюйте два окремі записи; подібні матеріали чи мотиви не встановлюють одного майстра, точної спільної місцевості або універсального символічного значення.",
+              "The Metropolitan Museum of Art, Fragment of a shirt, 2009.300.2713. Brooklyn Museum Costume Collection; Gift of the Brooklyn Museum, 2009; Gift of Mrs. Edward S. Harkness in memory of her mother, Elizabeth Greenman Stillman, 1931. Public Domain / CC0. Exact source photograph, unchanged."
+            ],
+            "sources": [
+              {
+                "title": "Другий документований фрагмент сорочки",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              },
+              {
+                "title": "Ліцензія та умови поширення",
+                "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+              }
+            ],
+            "title": "Другий документований фрагмент сорочки"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "id": "ukraine-threads-04-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Inspect the newly supplied Met object 2009.300.2713 and compare it with 2009.300.2715 in the optional workbench. Retain their separate identities even where the recorded date and materials agree. Two objects cannot stand for every regional tradition."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Apply elsewhere: a second fragment"
+          },
+          "uk": {
+            "paragraphs": [
+              "Розгляньте новий предмет Метрополітен 2009.300.2713 й порівняйте його з 2009.300.2715 у додатковій вправі. Збережіть окрему ідентичність, навіть коли записані дата й матеріали збігаються. Два предмети не представляють усі регіональні традиції."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Застосуйте інакше: другий фрагмент"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -904,7 +1114,7 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
     "scope": { "id": "ukraine-threads-04", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -1030,6 +1240,44 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "ukraine-threads-05-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "When a label describes how a textile was used, ask whether that comes from the individual record, a bearer’s account or a general comparison. Keep the source attached to the claim; appearance alone cannot identify every occasion or meaning."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Explain: an object’s story needs a source"
+          },
+          "uk": {
+            "paragraphs": [
+              "Коли підпис описує використання тканини, запитайте, чи це дані окремого запису, розповідь носія традиції або загальне порівняння. Пов’язуйте твердження з джерелом; вигляд сам по собі не визначає всіх нагод чи значень."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Поясніть: історія предмета потребує джерела"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -1046,7 +1294,7 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
     "scope": { "id": "ukraine-threads-05", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -1172,6 +1420,44 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "ukraine-threads-06-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The existing final workbench changes the evidence again: a dated artwork and an original game illustration. Classify them and choose a justified claim. Six wins still unlock the textile finale; the optional verified lesson retains its separate curator reward."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Resolve: curate two honest labels"
+          },
+          "uk": {
+            "paragraphs": [
+              "Наявна фінальна вправа знову змінює докази: датований твір мистецтва й оригінальна ігрова ілюстрація. Класифікуйте їх та оберіть обґрунтоване твердження. Шість перемог і далі відкривають текстильний фінал; додаткова перевірена вправа зберігає окрему нагороду куратора."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Завершіть: укладіть два чесні підписи"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -1188,7 +1474,7 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
     "scope": { "id": "ukraine-threads-06", "kind": "mission" },
     "teaserImage": {
       "asset": {
