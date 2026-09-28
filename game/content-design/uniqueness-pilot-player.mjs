@@ -11,8 +11,107 @@ import {
 export { resolveNeutralPilotRuntime } from './neutral-pilot-session.mjs';
 import { foundationCompatibleView } from '../ui/foundation-view.mjs';
 import { drawEnemyPressure, drawLineImpacts } from '../ui/classic-view.mjs';
+import { formatNumber, localizedAttribute, localizedText, t } from '../i18n/index.mjs';
 
 const SIZE = 16;
+const difficultyText = (difficulty) =>
+  t(
+    {
+      gentle: 'interface:gentle',
+      standard: 'interface:standard',
+      expert: 'interface:expert',
+    }[difficulty] ?? 'interface:standard',
+  );
+const statusText = (status) =>
+  t(
+    {
+      running: 'gameplay:status.running',
+      won: 'gameplay:status.won',
+      lost: 'gameplay:status.lost',
+    }[status] ?? 'gameplay:status.running',
+  );
+export function neutralPilotEntryLabel(entry) {
+  switch (entry.id) {
+    case 'uniqueness-pilot-illustrated-orchard':
+      return t('tools:neutralPilot.missions.orchardReturnLanes');
+    case 'uniqueness-pilot-woven-crossings':
+      return t('tools:neutralPilot.missions.wovenCrossingBands');
+    case 'uniqueness-pilot-arcade-delivery':
+      return t('tools:neutralPilot.missions.lastDeliveryCircuit');
+    case 'uniqueness-pilot-shared-branches':
+      return t('tools:neutralPilot.missions.sharedMarketBranches');
+    case 'uniqueness-pilot-horizon-race':
+      return t('tools:neutralPilot.missions.horizonTwoBankRace');
+    case 'control-solo':
+      return t('tools:neutralPilot.missions.controlSoloFirstReturn');
+    case 'control-team':
+      return t('tools:neutralPilot.missions.controlTeamTwinLandings');
+    case 'control-pressure':
+      return t('tools:neutralPilot.missions.controlPressureLinesOrchardCrossing');
+    default:
+      return entry.label;
+  }
+}
+export function neutralPilotEntryDecision(entry) {
+  switch (entry.id) {
+    case 'uniqueness-pilot-illustrated-orchard':
+      return t('tools:neutralPilot.decisions.orchardReturnLanes');
+    case 'uniqueness-pilot-woven-crossings':
+      return t('tools:neutralPilot.decisions.wovenCrossingBands');
+    case 'uniqueness-pilot-arcade-delivery':
+      return t('tools:neutralPilot.decisions.lastDeliveryCircuit');
+    case 'uniqueness-pilot-shared-branches':
+      return t('tools:neutralPilot.decisions.sharedMarketBranches');
+    case 'uniqueness-pilot-horizon-race':
+      return t('tools:neutralPilot.decisions.horizonTwoBankRace');
+    case 'control-solo':
+      return t('tools:neutralPilot.decisions.controlSoloFirstReturn');
+    case 'control-team':
+      return t('tools:neutralPilot.decisions.controlTeamTwinLandings');
+    case 'control-pressure':
+      return t('tools:neutralPilot.decisions.controlPressureLinesOrchardCrossing');
+    default:
+      return entry.decision;
+  }
+}
+export const neutralPilotDirectionLabel = (player, direction) =>
+  t('tools:neutralPilot.playerDirection', {
+    player: formatNumber(player),
+    direction: t(
+      {
+        up: 'tools:neutralPilot.direction.up',
+        down: 'tools:neutralPilot.direction.down',
+        left: 'tools:neutralPilot.direction.left',
+        right: 'tools:neutralPilot.direction.right',
+      }[direction],
+    ),
+  });
+export function neutralPilotStatusText({ paused, difficulty, entry, runs, failures }) {
+  const runText = runs
+    .map((run, index) =>
+      t(
+        entry.mode === 'versus'
+          ? 'tools:neutralPilot.run.versus'
+          : 'tools:neutralPilot.run.standard',
+        {
+          player: formatNumber(index + 1),
+          seconds: formatNumber(run.time, { minimumFractionDigits: 1, maximumFractionDigits: 1 }),
+          coverage: formatNumber(run.coverage * 100, {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1,
+          }),
+          status: statusText(run.status),
+        },
+      ),
+    )
+    .join(' | ');
+  return t('tools:neutralPilot.status', {
+    state: t(paused ? 'tools:neutralPilot.paused' : 'tools:neutralPilot.playing'),
+    difficulty: difficultyText(difficulty),
+    runs: runText,
+    count: failures,
+  });
+}
 /** Neutral paint only. Coordinates and warnings come from simulation state. */
 export function drawNeutralPilotBoard(context, run) {
   const dot = (item, color, radius = 5) => {
@@ -68,11 +167,12 @@ export function startNeutralPilotPlayer(document, window) {
     selection = $('mission'),
     boardHost = $('boards'),
     status = $('status');
+  localizedText(status, () => t('tools:neutralPilot.loading'));
   const entries = neutralPilotEntries();
   for (const entry of entries) {
     const option = document.createElement('option');
     option.value = entry.id;
-    option.textContent = entry.label;
+    localizedText(option, () => neutralPilotEntryLabel(entry));
     selection.append(option);
   }
   let entry,
@@ -92,7 +192,9 @@ export function startNeutralPilotPlayer(document, window) {
     accumulator = 0;
     const finished = session && (pilotSessionEnded(session) || session.ticks >= MAX_PILOT_TICKS);
     $('play').disabled = Boolean(finished);
-    $('play').textContent = finished ? 'Reset to play again' : 'Play';
+    localizedText($('play'), () =>
+      finished ? t('tools:neutralPilot.resetToPlayAgain') : t('common:actions.play'),
+    );
   }
   function reset() {
     pause();
@@ -100,26 +202,30 @@ export function startNeutralPilotPlayer(document, window) {
     difficulty = $('difficulty').value;
     session = createNeutralPilotSession({ mission: entry.id, difficulty });
     $('play').disabled = false;
-    $('play').textContent = 'Play';
+    localizedText($('play'), () => t('common:actions.play'));
     $('notes').value = '';
     boardHost.replaceChildren();
     canvases = currentRuns().map((run, index) => {
       const canvas = document.createElement('canvas');
       canvas.width = run.width * SIZE;
       canvas.height = run.height * SIZE;
-      canvas.setAttribute('aria-label', `Neutral game board ${index + 1}`);
+      localizedAttribute(canvas, 'aria-label', () =>
+        t('tools:neutralPilot.boardLabel', { number: formatNumber(index + 1) }),
+      );
       boardHost.append(canvas);
       return canvas;
     });
-    $('brief').textContent = entry.decision;
+    localizedText($('brief'), () => neutralPilotEntryDecision(entry));
     $('pads').children[1].hidden = entry.mode === 'solo';
-    status.textContent = `Ready · ${difficulty} · Seed 17 · review only`;
+    localizedText(status, () =>
+      t('tools:neutralPilot.ready', { difficulty: difficultyText(difficulty), seed: 17 }),
+    );
   }
   for (let seat = 0; seat < 2; seat++) {
     const pad = document.createElement('div');
     pad.className = 'pad';
     const label = document.createElement('strong');
-    label.textContent = `Player ${seat + 1}`;
+    localizedText(label, () => t('tools:neutralPilot.player', { number: formatNumber(seat + 1) }));
     pad.append(label);
     for (const [direction, text, position] of [
       ['up', '↑', 2],
@@ -131,7 +237,9 @@ export function startNeutralPilotPlayer(document, window) {
       button.textContent = text;
       button.style.gridColumn = String(((position - 1) % 3) + 1);
       button.style.gridRow = String(Math.floor((position - 1) / 3) + 2);
-      button.setAttribute('aria-label', `Player ${seat + 1} ${direction}`);
+      localizedAttribute(button, 'aria-label', () =>
+        neutralPilotDirectionLabel(seat + 1, direction),
+      );
       button.addEventListener('pointerdown', (event) => {
         event.preventDefault();
         button.setPointerCapture(event.pointerId);
@@ -177,7 +285,7 @@ export function startNeutralPilotPlayer(document, window) {
       paused = false;
       held.clear();
       accumulator = 0;
-      $('play').textContent = 'Pause';
+      localizedText($('play'), () => t('common:actions.pause'));
     }
   });
   $('reset').addEventListener('click', reset);
@@ -214,14 +322,17 @@ export function startNeutralPilotPlayer(document, window) {
       drawNeutralPilotBoard(canvases[index].getContext('2d'), run),
     );
     if (now - updated > 250) {
-      status.textContent = `${paused ? 'Paused' : 'Playing'} · ${difficulty} · ${currentRuns()
-        .map(
-          (run, index) =>
-            `${entry.mode === 'versus' ? `Player ${index + 1}: ` : ''}${run.time.toFixed(1)}s · ${(run.coverage * 100).toFixed(1)}% · ${run.status}`,
-        )
-        .join(
-          ' | ',
-        )} · ${session.events.filter((event) => ['player.failed', 'player.downed'].includes(event.type)).length} failures`;
+      localizedText(status, () =>
+        neutralPilotStatusText({
+          paused,
+          difficulty,
+          entry,
+          runs: currentRuns(),
+          failures: session.events.filter((event) =>
+            ['player.failed', 'player.downed'].includes(event.type),
+          ).length,
+        }),
+      );
       updated = now;
     }
     window.requestAnimationFrame(frame);

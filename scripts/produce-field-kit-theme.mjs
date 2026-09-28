@@ -179,8 +179,10 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: 'd10dcf448002347b200f9886d0a5f3a23789a7f4fb928bccb4884224359cd575',
+    sha256: '124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34',
     evidence: [
+      'Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.',
+      'Scoped localization14 Flight Details source continuation: docs/verification/localization14-audio-continuation-2026-09-28/review.json sha256:104e5cb33140537f9234fc26966d4a32f70927c89f1e4bfd1e3955432e1910da; exact26 inputs sha256:81a03fb4791564b775735a1cc977a2c63d492ac8221fb043fa9aa3008fcb9509. Existing eight recipes, routing and payloads unchanged; main95/audio47 and all predecessors retained. Append-only production, hosted/frozen/public/listening/device and human acceptance remain separate.',
       'Scoped main/bulk audio continuation: docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json sha256:afcfcca1612109e117595c424e03ac002271165ccb1a4082697011e16c4c5a75; exact26 inputs sha256:d10dcf448002347b200f9886d0a5f3a23789a7f4fb928bccb4884224359cd575. Fresh canonical-main successors only; all main records and payloads retained, divergent unpublished branch identities preserved as immutable Git evidence without relabelling. Existing recipes only; final production, candidate, hosted, frozen/public and listening/device gates remain separate.',
       'Scoped v0.141.8 Steam Deck Confirm continuation: docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json sha256:15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867; exact26 inputs sha256:b4af6423e29eded7ef998d4b8c1713b28e1f7f9dcd9a288a6777a651a6202825. Only game/app.mjs changes, wiring the release-committed controller Confirm transaction and opt-in local trace while preserving all eight procedural recipes, audio routing and payloads. Immutable predecessors retained; frozen/public/listening/device acceptance remains separate.',
       'Scoped bulk queue audio continuation: docs/verification/bulk-queue-audio-effects-2026-09-28/review.json sha256:5ec246c93cf5dfe6d5a3f6538788d618575037a11d2c1890d88d0257f2e7d0b3; exact inputs sha256:5537720994b355021ba876a5122231a0304cdadc6eb861b3a5091556858e7071. Only existing recipes and payloads; immutable reviews and production history retained. Final source, frozen/public, listening/device and human acceptance remain separate.',
@@ -331,6 +333,20 @@ export function verifyFieldKitMainBulkAudioReview(currentBytes, mainBytes, bulkB
   );
 }
 
+export function verifyFieldKitLocalizationAudioReview(currentBytes, mainBytes) {
+  return (
+    hash(currentBytes) === '104e5cb33140537f9234fc26966d4a32f70927c89f1e4bfd1e3955432e1910da' &&
+    hash(mainBytes) === 'afcfcca1612109e117595c424e03ac002271165ccb1a4082697011e16c4c5a75'
+  );
+}
+
+export function verifyFieldKitPlayerReadinessAudioReview(currentBytes, priorBytes) {
+  return (
+    hash(currentBytes) === '0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608' &&
+    hash(priorBytes) === '104e5cb33140537f9234fc26966d4a32f70927c89f1e4bfd1e3955432e1910da'
+  );
+}
+
 /** Explicit dependency fingerprints; a helper change must reopen its review group. */
 export async function fieldKitRecipeSources(read) {
   return Object.fromEntries(
@@ -421,6 +437,24 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   )
     throw new Error(
       'Main/bulk audio continuation review bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitLocalizationAudioReview(
+      await read('docs/verification/localization14-audio-continuation-2026-09-28/review.json'),
+      await read('docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json'),
+    )
+  )
+    throw new Error(
+      'Localization audio continuation review bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitPlayerReadinessAudioReview(
+      await read('docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json'),
+      await read('docs/verification/localization14-audio-continuation-2026-09-28/review.json'),
+    )
+  )
+    throw new Error(
+      'Player readiness audio continuation review bytes changed; production approval must reopen.',
     );
   const assets = [],
     bindings = {},

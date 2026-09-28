@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   fieldKitRecipeSources,
+  verifyFieldKitPlayerReadinessAudioReview,
+  verifyFieldKitLocalizationAudioReview,
   verifyFieldKitSteamDeckPresentationContinuationReview,
   verifyFieldKitMainBulkAudioReview,
   verifyFieldKitAudioContinuationReview,
@@ -367,4 +369,38 @@ test('main and bulk continuation rejects every altered immutable review byte str
     changed[i] = Buffer.concat([changed[i], Buffer.from(' ')]);
     assert.equal(verifyFieldKitMainBulkAudioReview(...changed), false);
   }
+});
+
+test('localization audio continuation rejects either altered immutable review', async () => {
+  const paths = [
+    'docs/verification/localization14-audio-continuation-2026-09-28/review.json',
+    'docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitLocalizationAudioReview(...bytes), true);
+  for (let i = 0; i < bytes.length; i++) {
+    const changed = [...bytes];
+    changed[i] = Buffer.concat([changed[i], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitLocalizationAudioReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitLocalizationAudioReview(bytes[1], bytes[0]), false);
+});
+
+test('player readiness audio continuation rejects either altered immutable review', async () => {
+  const paths = [
+    'docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json',
+    'docs/verification/localization14-audio-continuation-2026-09-28/review.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitPlayerReadinessAudioReview(...bytes), true);
+  for (let i = 0; i < bytes.length; i++) {
+    const changed = [...bytes];
+    changed[i] = Buffer.concat([changed[i], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitPlayerReadinessAudioReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitPlayerReadinessAudioReview(bytes[1], bytes[0]), false);
 });

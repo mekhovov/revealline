@@ -1,0 +1,400 @@
+TAP version 13
+# Subtest: mounted Settings keeps live key capture and the paused grid turn through language changes
+not ok 1 - mounted Settings keeps live key capture and the paused grid turn through language changes
+  ---
+  duration_ms: 1081.797708
+  location: '/private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale-host.test.mjs:33:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+
+      assert.ok(boost.textContent.includes(bindingLabels().boost))
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale-host.test.mjs:65:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: open EN/UK/EN settings translate key names, accessible labels and idle instructions
+not ok 2 - open EN/UK/EN settings translate key names, accessible labels and idle instructions
+  ---
+  duration_ms: 9.706
+  location: '/private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:136:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+
+      assert.ok(boost.textContent.includes(labels.boost))
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:142:12
+    cycle (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:130:5)
+    TestContext.<anonymous> (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:140:3)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: locale changes preserve active capture and one fresh physical key applies exactly once
+not ok 3 - locale changes preserve active capture and one fresh physical key applies exactly once
+  ---
+  duration_ms: 4.350792
+  location: '/private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:158:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Choose one physical key for Boost. Escape or Tab cancels. Existing bindings remain unchanged until a valid key is chosen.'
+    - 'Вибери одну фізичну клавішу для «Прискорення». Escape або Tab — скасувати. Поточні призначення залишаться, доки не вибереш допустиму клавішу.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Вибери одну фізичну клавішу для «Прискорення». Escape або Tab — скасувати. Поточні призначення залишаться, доки не вибереш допустиму клавішу.'
+  actual: 'Choose one physical key for Boost. Escape or Tab cancels. Existing bindings remain unchanged until a valid key is chosen.'
+  operator: 'strictEqual'
+  stack: |-
+    file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:167:12
+    cycle (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:130:5)
+    TestContext.<anonymous> (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:162:3)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Escape cancellation remains translated and never adopts a binding
+not ok 4 - Escape cancellation remains translated and never adopts a binding
+  ---
+  duration_ms: 2.556333
+  location: '/private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:200:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Use ability unchanged. Key capture cancelled.'
+    - '«Застосувати здібність» не змінено. Призначення клавіші скасовано.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '«Застосувати здібність» не змінено. Призначення клавіші скасовано.'
+  actual: 'Use ability unchanged. Key capture cancelled.'
+  operator: 'strictEqual'
+  stack: |-
+    file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:211:14
+    cycle (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:130:5)
+    TestContext.<anonymous> (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:210:5)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Tab cancellation remains translated and never adopts a binding
+not ok 5 - Tab cancellation remains translated and never adopts a binding
+  ---
+  duration_ms: 2.213917
+  location: '/private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:200:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Use ability unchanged. Key capture cancelled.'
+    - '«Застосувати здібність» не змінено. Призначення клавіші скасовано.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '«Застосувати здібність» не змінено. Призначення клавіші скасовано.'
+  actual: 'Use ability unchanged. Key capture cancelled.'
+  operator: 'strictEqual'
+  stack: |-
+    file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:211:14
+    cycle (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:130:5)
+    TestContext.<anonymous> (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:210:5)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: button cancellation remains translated and never adopts a binding
+not ok 6 - button cancellation remains translated and never adopts a binding
+  ---
+  duration_ms: 2.574166
+  location: '/private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:200:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Use ability unchanged. Key capture cancelled.'
+    - '«Застосувати здібність» не змінено. Призначення клавіші скасовано.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '«Застосувати здібність» не змінено. Призначення клавіші скасовано.'
+  actual: 'Use ability unchanged. Key capture cancelled.'
+  operator: 'strictEqual'
+  stack: |-
+    file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:211:14
+    cycle (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:130:5)
+    TestContext.<anonymous> (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:210:5)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: composition feedback follows locale while native input and capture ownership remain intact
+not ok 7 - composition feedback follows locale while native input and capture ownership remain intact
+  ---
+  duration_ms: 2.393375
+  location: '/private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:231:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Text composition cannot be a game key. Pick up supply is unchanged. Finish composition, then press one physical key, or cancel.'
+    - 'Складання тексту не може бути ігровою клавішею. «Поповнити запаси» не змінено. Заверши введення й натисни одну фізичну клавішу або скасуй.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Складання тексту не може бути ігровою клавішею. «Поповнити запаси» не змінено. Заверши введення й натисни одну фізичну клавішу або скасуй.'
+  actual: 'Text composition cannot be a game key. Pick up supply is unchanged. Finish composition, then press one physical key, or cancel.'
+  operator: 'strictEqual'
+  stack: |-
+    file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:238:14
+    cycle (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:130:5)
+    TestContext.<anonymous> (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:237:5)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: modifier feedback follows locale while native input and capture ownership remain intact
+not ok 8 - modifier feedback follows locale while native input and capture ownership remain intact
+  ---
+  duration_ms: 2.047833
+  location: '/private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:231:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Cannot bind a modifier combination. Pick up supply is unchanged. Press one key; Shift alone is allowed. Escape or Tab cancels.'
+    - 'Не можна призначити комбінацію з модифікатором. «Поповнити запаси» не змінено. Натисни одну клавішу; окремий Shift дозволено. Escape або Tab — скасувати.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Не можна призначити комбінацію з модифікатором. «Поповнити запаси» не змінено. Натисни одну клавішу; окремий Shift дозволено. Escape або Tab — скасувати.'
+  actual: 'Cannot bind a modifier combination. Pick up supply is unchanged. Press one key; Shift alone is allowed. Escape or Tab cancels.'
+  operator: 'strictEqual'
+  stack: |-
+    file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:238:14
+    cycle (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:130:5)
+    TestContext.<anonymous> (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:237:5)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: preset and Reset feedback retain their accepted selection through EN/UK/EN
+not ok 9 - preset and Reset feedback retain their accepted selection through EN/UK/EN
+  ---
+  duration_ms: 1.919792
+  location: '/private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:247:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Left hand · WASD keyboard preset applied. Escape always pauses the game.'
+    - 'Схему клавіатури «Ліва рука · WASD» застосовано. Escape завжди ставить гру на паузу.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Схему клавіатури «Ліва рука · WASD» застосовано. Escape завжди ставить гру на паузу.'
+  actual: 'Left hand · WASD keyboard preset applied. Escape always pauses the game.'
+  operator: 'strictEqual'
+  stack: |-
+    file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:254:12
+    cycle (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:130:5)
+    TestContext.<anonymous> (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:253:3)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: session-only success preserves the accepted action, key and exact host warning
+not ok 10 - session-only success preserves the accepted action, key and exact host warning
+  ---
+  duration_ms: 2.23975
+  location: '/private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:272:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Use ability changed to Z. Escape always pauses the game. Storage <unavailable> & retry with code α.'
+    - '«Застосувати здібність» змінено на Z. Escape завжди ставить гру на паузу. Storage <unavailable> & retry with code α.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '«Застосувати здібність» змінено на Z. Escape завжди ставить гру на паузу. Storage <unavailable> & retry with code α.'
+  actual: 'Use ability changed to Z. Escape always pauses the game. Storage <unavailable> & retry with code α.'
+  operator: 'strictEqual'
+  stack: |-
+    file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:285:12
+    cycle (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:130:5)
+    TestContext.<anonymous> (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:284:3)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: session-only fallback warning translates without re-reading a mutated host result
+not ok 11 - session-only fallback warning translates without re-reading a mutated host result
+  ---
+  duration_ms: 3.0205
+  location: '/private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:297:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Default keyboard bindings restored. Escape always pauses the game. This keyboard map applies to this session only.'
+    - 'Стандартні клавіші відновлено. Escape завжди призупиняє гру. Ця розкладка клавіатури діє лише в цьому сеансі.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Стандартні клавіші відновлено. Escape завжди призупиняє гру. Ця розкладка клавіатури діє лише в цьому сеансі.'
+  actual: 'Default keyboard bindings restored. Escape always pauses the game. This keyboard map applies to this session only.'
+  operator: 'strictEqual'
+  stack: |-
+    file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:305:12
+    cycle (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:130:5)
+    TestContext.<anonymous> (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:304:3)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: failed capture retains event facts after the host cancels capture and mutates its Error
+not ok 12 - failed capture retains event facts after the host cancels capture and mutates its Error
+  ---
+  duration_ms: 2.557875
+  location: '/private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:312:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Z was not assigned. Host rejected <write> & preserved α. Use ability is unchanged. Choose another key, or press Escape or Tab to cancel.'
+    - '«Z» не призначено. Host rejected <write> & preserved α. «Застосувати здібність» не змінено. Вибери іншу клавішу або натисни Escape чи Tab, щоб скасувати.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '«Z» не призначено. Host rejected <write> & preserved α. «Застосувати здібність» не змінено. Вибери іншу клавішу або натисни Escape чи Tab, щоб скасувати.'
+  actual: 'Z was not assigned. Host rejected <write> & preserved α. Use ability is unchanged. Choose another key, or press Escape or Tab to cancel.'
+  operator: 'strictEqual'
+  stack: |-
+    file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:325:12
+    cycle (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:130:5)
+    TestContext.<anonymous> (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:324:3)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: preset error feedback translates around unchanged external detail
+not ok 13 - preset error feedback translates around unchanged external detail
+  ---
+  duration_ms: 1.541166
+  location: '/private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:338:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Keyboard preset was not applied. Write blocked <exact> & code β.'
+    - 'Схему клавіатури не застосовано. Write blocked <exact> & code β.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Схему клавіатури не застосовано. Write blocked <exact> & code β.'
+  actual: 'Keyboard preset was not applied. Write blocked <exact> & code β.'
+  operator: 'strictEqual'
+  stack: |-
+    file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:347:14
+    cycle (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:130:5)
+    TestContext.<anonymous> (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:346:5)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: reset error feedback translates around unchanged external detail
+not ok 14 - reset error feedback translates around unchanged external detail
+  ---
+  duration_ms: 1.383167
+  location: '/private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:338:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Keyboard bindings were not reset. Write blocked <exact> & code β.'
+    - 'Призначення клавіш не скинуто. Write blocked <exact> & code β.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Призначення клавіш не скинуто. Write blocked <exact> & code β.'
+  actual: 'Keyboard bindings were not reset. Write blocked <exact> & code β.'
+  operator: 'strictEqual'
+  stack: |-
+    file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:347:14
+    cycle (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:130:5)
+    TestContext.<anonymous> (file:///private/tmp/revealline-ux-followup-20260928/game/test/key-settings-locale.test.mjs:346:5)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: destroyed settings cannot re-enter capture or write when locale and old controls change
+ok 15 - destroyed settings cannot re-enter capture or write when locale and old controls change
+  ---
+  duration_ms: 1.333458
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 1
+# fail 14
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1489.5795

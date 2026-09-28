@@ -2,6 +2,9 @@
 export function committedCaches() {
   const caches = new Map();
   return {
+    async keys() {
+      return [...caches.keys()];
+    },
     async open(name) {
       if (!caches.has(name)) caches.set(name, new Map());
       const entries = caches.get(name),
