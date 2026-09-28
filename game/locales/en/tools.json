@@ -2377,5 +2377,10 @@
   "fieldKitSpriteReview.description.life": "Coral heart with a broad pale highlight, drawn as a small independent pixel symbol.",
   "fieldKitSpriteReview.description.speed": "Two forward cyan chevrons with a dark separating edge.",
   "fieldKitSpriteReview.description.slowPickup": "Amber hourglass with a pale waist and metal end caps.",
-  "fieldKitSpriteReview.description.freeze": "Cyan eight-point freeze symbol with a pale central crystal and axial tips."
+  "fieldKitSpriteReview.description.freeze": "Cyan eight-point freeze symbol with a pale central crystal and axial tips.",
+  "studio.image.bundledReference": "Load Synevyr raft reference · CC0",
+  "studio.image.bundledNote": "Try a real Ukrainian landscape detail: rafts on Synevyr Lake. Loading it changes only the reference overlay, never your map, reveal picture or published content.",
+  "studio.image.downloadReference": "Download reference",
+  "studio.spatialReview.solo": "Solo · {{id}} (new tab)",
+  "studio.spatialReview.versus": "Versus · {{id}} (new tab)"
 }
