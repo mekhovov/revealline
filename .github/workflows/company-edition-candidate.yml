@@ -56,10 +56,8 @@ jobs:
       - run: npm ci
       - name: Verify optional routes, replay, input and installation isolation
         run: npm run practice:test
-      - name: Build explicitly admitted optional candidate
-        env:
-          ENGINE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
-        run: node scripts/build-optional-practice.mjs .cache/optional-flight-candidate "$ENGINE_COMMIT" "$(git rev-parse HEAD^{tree})"
+      - name: Freeze twice and verify optional package artifacts
+        run: node scripts/bundle-optional-practice.mjs --out .cache/optional-flight-candidate --base-path /revealline/
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: optional-flight-candidate-${{ github.event.pull_request.head.sha || github.sha }}

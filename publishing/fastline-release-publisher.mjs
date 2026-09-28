@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 import { decideReleaseObjects, inspectReleaseObjects } from './fastline-release-objects.mjs';
 import { verifyEditionReview } from './edition-promotion.mjs';
+import { verifyOptionalPackageReview } from './optional-package-admission.mjs';
 
 const SHA = /^[0-9a-f]{40}$/u;
 const VERSION = /^v[0-9]+\.[0-9]+\.[0-9]+$/u;
@@ -307,8 +308,17 @@ export async function verifyAdditiveEditionAssets({
   if (release.tag_name !== version || release.target_commitish !== sourceSha)
     throw new Error('edition release identity differs from the exact source request');
   const byName = new Map(additions.map((asset) => [asset.name, asset]));
-  if (!byName.has('editions.json') || !byName.has('edition-review.json'))
-    throw new Error('unexpected release assets lack a complete edition envelope and review');
+  const envelopes = [
+    ['editions.json', 'edition-review.json', verifyEditionReview],
+    ['optional-packages.json', 'optional-package-review.json', verifyOptionalPackageReview],
+  ].filter(([envelope, review]) => byName.has(envelope) || byName.has(review));
+  if (
+    !envelopes.length ||
+    envelopes.some(([envelope, review]) => !byName.has(envelope) || !byName.has(review))
+  )
+    throw new Error(
+      'unexpected release assets lack a complete edition envelope and review or optional package envelope and review',
+    );
   let bytesRead = 0;
   const consumed = new Map();
   const read = async (name, limit = 950_000_000) => {
@@ -335,23 +345,23 @@ export async function verifyAdditiveEditionAssets({
     consumed.set(name, bytes);
     return bytes;
   };
-  const envelopeBytes = await read('editions.json', 8_000_000);
-  const envelope = JSON.parse(Buffer.from(envelopeBytes).toString('utf8'));
-  const review = JSON.parse(
-    Buffer.from(await read('edition-review.json', 8_000_000)).toString('utf8'),
-  );
   const commit = await request(`/repos/${repository}/git/commits/${sourceSha}`);
-  if (
-    commit.sha !== sourceSha ||
-    !SHA.test(commit.tree?.sha || '') ||
-    envelope.version !== version ||
-    envelope.sourceRevision !== sourceSha ||
-    envelope.sourceTree !== commit.tree.sha
-  )
+  if (commit.sha !== sourceSha || !SHA.test(commit.tree?.sha || ''))
     throw new Error('edition envelope differs from the exact release source commit and tree');
-  await verifyEditionReview(envelopeBytes, review, {
-    read: (descriptor) => read(descriptor.path, descriptor.bytes),
-  });
+  for (const [envelopeName, reviewName, verify] of envelopes) {
+    const envelopeBytes = await read(envelopeName, 8_000_000);
+    const envelope = JSON.parse(Buffer.from(envelopeBytes).toString('utf8'));
+    const review = JSON.parse(Buffer.from(await read(reviewName, 8_000_000)).toString('utf8'));
+    if (
+      envelope.version !== version ||
+      envelope.sourceRevision !== sourceSha ||
+      envelope.sourceTree !== commit.tree.sha
+    )
+      throw new Error('edition envelope differs from the exact release source commit and tree');
+    await verify(envelopeBytes, review, {
+      read: (descriptor) => read(descriptor.path, descriptor.bytes),
+    });
+  }
   if (consumed.size !== additions.length)
     throw new Error('unexpected release asset outside the admitted edition closure');
   return [...consumed.keys()].sort();
