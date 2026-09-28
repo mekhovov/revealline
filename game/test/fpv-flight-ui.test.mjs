@@ -629,3 +629,62 @@ test('disposing releases generated course callbacks; retained old buttons are in
   host.click();
   assert.equal(hostClicks, 1);
 });
+
+test('stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership', (t) => {
+  for (const mode of ['self-level', 'acro'])
+    for (const owner of ['keyboard', 'radio']) {
+      const f = fixture(t),
+        pad = {
+          id: 'Stall fixture USB',
+          index: 0,
+          connected: true,
+          mapping: '',
+          axes: [0, 0, 0, -1],
+          buttons: [],
+        };
+      let clock = 0;
+      f.win.performance = { now: () => clock };
+      f.$('mode').value = mode;
+      f.$('mode').emit('change');
+      f.$('input-source').value = owner;
+      f.$('input-source').emit('change');
+      if (owner === 'radio') {
+        f.setPads([pad]);
+        f.view.radio.select(0);
+        f.view.radio.setProfile(radioProfile(pad));
+        f.view.radio.verify();
+      }
+      assert.equal(f.view.arm(), true);
+      if (owner === 'radio') pad.axes[2] = 0.5;
+      else f.key('KeyE');
+      f.tick();
+      clock = 20;
+      f.tick();
+      assert.equal(f.view.snapshot().lastInput.yaw, 500);
+      const before = f.view.snapshot().ticks,
+        frames = f.view.exportAttempt().frames.length;
+      // The rAF timestamp moves only 20 ms, while callback execution was delayed 300 ms.
+      clock = 320;
+      f.tick();
+      assert.equal(f.view.snapshot().status, 'paused', `${mode}/${owner}`);
+      assert.equal(f.view.snapshot().ticks, before);
+      assert.equal(f.view.exportAttempt().frames.length, frames);
+      clock = 340;
+      f.tick(4);
+      assert.equal(f.view.snapshot().ticks, before, 'no queued catch-up');
+      if (owner === 'radio') {
+        pad.axes[2] = 0;
+        assert.equal(f.view.arm(), false, 'radio still requires matching pickup');
+        pad.axes[2] = 0.5;
+      } else f.key('KeyE', 'keyup');
+      assert.equal(f.view.arm(), true);
+      clock = 2000;
+      f.tick();
+      clock = 2020;
+      f.tick();
+      assert.equal(f.view.snapshot().status, 'active');
+      assert(f.view.snapshot().ticks > before);
+      assert.equal(f.view.snapshot().lastInput.yaw, owner === 'radio' ? 500 : 0);
+      assert.equal(f.deliveries.length, 0);
+    }
+});

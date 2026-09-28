@@ -1,0 +1,973 @@
+{
+  "format": "FlightInputEvidence.v1",
+  "qualification": false,
+  "scope": "Isolated headless Chrome on one desktop. Live keyboard events and an explicitly synthetic eight-axis radio API fixture; self-level and Acro; armed ground-yaw input on the final-circuit field at zero throttle. No player wins or progress injection, hardware/USB certification, airborne dynamics, input-to-photon latency, matched 5% regression claim or release qualification.",
+  "finding": "A 300 ms arbitrary-task block left one already-timestamped rAF callback eligible to advance one ordinary tick before the rAF-delta guard paused. This is one stale post-stall step, not a catch-up burst. The narrow app guard now checks actual monotonic callback-execution gap as well as the existing rAF delta; the same faults add no ticks or recorded frames after the fix.",
+  "originalRejectedRun": {
+    "source": {
+      "commit": "d226210105de1011f8dab18fcf0ac7ca196b974c",
+      "tree": "cd080fc590dfea19cf96b2f93c52b1ae31c890f3"
+    },
+    "runtimeRevision": "0ab15ae0c80f853d0891b0df8891c947be325243d47916852913e7032768f3df",
+    "harness": {
+      "path": ".cache/phase7-d22621010/observe-fpv-input.mjs",
+      "bytes": 12290,
+      "sha256": "6fe46ebb893191ff1759fb70c3113ae4f0164124cc0db8c8235663b4291fcef4"
+    },
+    "wrapper": {
+      "path": ".cache/phase7-d22621010/wrapper.mjs",
+      "bytes": 2976,
+      "sha256": "e520d8ca9d97577e61437d72021acb587ed60781a83d01ff435ecfa2c4d9d00c"
+    },
+    "host": {
+      "path": ".cache/phase7-d22621010/host.html",
+      "bytes": 7285,
+      "sha256": "e60a67c7b87b9726144ccc9760a17c25907ac2ee0db11e05d9d955541aa459ff"
+    },
+    "failure": {
+      "path": ".cache/phase7-d22621010/failure.json",
+      "bytes": 492,
+      "sha256": "e85302ee74db5aaebef94cede605c8a61cfb80656f4b84570cec1d37e1539a07"
+    },
+    "failureStatement": "Strict zero-tick stall assertion failed: 561 observed versus 560 expected. The first harness asserted before writing the full stall object, so its exact fault scheduling context is unavailable and is not reconstructed.",
+    "naturalWindow": {
+      "course": "flight-12",
+      "owner": "keyboard",
+      "mode": "self-level",
+      "windowMs": 10065.200000017881,
+      "frameSamples": 603,
+      "frameP95Ms": 16.799999999999272,
+      "frameMaxMs": 16.80000000000109,
+      "frameGapsOver50Ms": [],
+      "longTasks": [],
+      "actionCount": 20,
+      "allActionsObserved": true,
+      "keyboardEventsTrusted": true,
+      "allObservedStatesActive": true,
+      "recordedAttemptFrames": 552,
+      "normalizedCommands": "roll 0, pitch 0, throttle 0, yaw -500/0/+500",
+      "inputTimestampProxy": {
+        "p95Ms": 26.300000023841676,
+        "maxMs": 30.000000017881348,
+        "meaning": "Event/sample performance.now to first matching model snapshot rAF timestamp. rAF timestamps can be stale; this is not actual callback-execution, input-to-photon or hardware latency."
+      }
+    },
+    "raw": {
+      "path": ".cache/phase7-d22621010/keyboard-self-level-raw.json",
+      "bytes": 154081,
+      "sha256": "08733bc43fe598e27e7efa2f43f0001d6c06bd2dcdd4ddf96a595a2a163ee068"
+    }
+  },
+  "runs": [
+    {
+      "id": "pre-fix-committed-d226",
+      "source": {
+        "commit": "d226210105de1011f8dab18fcf0ac7ca196b974c",
+        "tree": "cd080fc590dfea19cf96b2f93c52b1ae31c890f3"
+      },
+      "runtimeRevision": "0ab15ae0c80f853d0891b0df8891c947be325243d47916852913e7032768f3df",
+      "runtimeManifest": {
+        "path": ".cache/phase7-d22621010/input-v2/runtime-manifest.json",
+        "bytes": 7813,
+        "sha256": "a735c5bb870a7817d72d5809b867d5df5712363650118d130e1230fc8070bfbb"
+      },
+      "verifiedMembers": 42,
+      "app": {
+        "path": "optional-practice/civilian-fpv/app.mjs",
+        "bytes": 23994,
+        "sha256": "d63a6573a597916cb38bd665bc026f08bf6ffda682e17524dd2d8868ad63692a"
+      },
+      "instrumentation": {
+        "observer": {
+          "path": ".cache/phase7-d22621010/observe-fpv-input-v2.mjs",
+          "bytes": 13352,
+          "sha256": "ff0eb1d97b91c44f65e71a048b5ba8c0c42e20f1471a9103ae0b84bdad65dff9"
+        },
+        "wrapper": {
+          "path": ".cache/phase7-d22621010/input-v2/wrapper.mjs",
+          "bytes": 3387,
+          "sha256": "d18b32fa476ea59638dec70217166eb7ce8ea240db3f47d22f3b9ba0056d5fa0"
+        },
+        "host": {
+          "path": ".cache/phase7-d22621010/input-v2/host.html",
+          "bytes": 7285,
+          "sha256": "e60a67c7b87b9726144ccc9760a17c25907ac2ee0db11e05d9d955541aa459ff"
+        }
+      },
+      "observation": {
+        "path": ".cache/phase7-d22621010/input-v2/observation.json",
+        "bytes": 85983,
+        "sha256": "826ad67589109ed1ae1633385ea7cb7300bc6a62905e4dc7afbc5ec86b937447"
+      },
+      "createdAt": "2026-09-28T21:58:25.668Z",
+      "browser": "154.0.8037.57",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "deviceScaleFactor": 1
+      },
+      "cases": [
+        {
+          "course": "flight-12",
+          "owner": "keyboard",
+          "mode": "self-level",
+          "windowMs": 10053.199999988079,
+          "frameSamples": 602,
+          "frameP95Ms": 16.700000000000728,
+          "frameMaxMs": 16.80000000000109,
+          "frameGapsOver50Ms": [],
+          "longTasks": [],
+          "actionCount": 20,
+          "allActionsObserved": true,
+          "keyboardEventsTrusted": true,
+          "allObservedStatesActive": true,
+          "recordedAttemptFrames": 552,
+          "normalizedCommands": "roll 0, pitch 0, throttle 0, yaw -500/0/+500",
+          "inputTimestampProxy": {
+            "p95Ms": 16.000000017881575,
+            "maxMs": 16.399999999999636,
+            "meaning": "Event/sample performance.now to first matching model snapshot rAF timestamp. rAF timestamps can be stale; this is not actual callback-execution, input-to-photon or hardware latency."
+          },
+          "alignedStall": {
+            "placement": "raf",
+            "injectedBlockingMs": 300,
+            "tickDelta": 0,
+            "recordedFrameDelta": 0,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 11568,
+              "observedAt": 11570.199999988079,
+              "ticks": 556,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 11868,
+              "observedAt": 11871.199999988079,
+              "ticks": 556,
+              "status": "paused"
+            },
+            "observerExecutionGapMs": 301,
+            "rafTimestampGapMs": 300
+          },
+          "arbitraryTaskStall": {
+            "placement": "task",
+            "injectedBlockingMs": 300,
+            "tickDelta": 1,
+            "recordedFrameDelta": 1,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 12201.3,
+              "observedAt": 12202.59999999404,
+              "ticks": 559,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 12217.9,
+              "observedAt": 12507.799999982119,
+              "ticks": 560,
+              "status": "active"
+            },
+            "observerExecutionGapMs": 305.19999998807907,
+            "rafTimestampGapMs": 16.600000000000364
+          },
+          "recovery": {
+            "status": "active",
+            "keyboardYawNeutral": true,
+            "radioMismatchedPickupRejected": null,
+            "radioMatchingPickupAccepted": null
+          },
+          "records": [
+            {
+              "path": ".cache/phase7-d22621010/input-v2/keyboard-self-level-raw.json",
+              "bytes": 153887,
+              "sha256": "b641500de8cdd20b4517fa7e3d216606bbe9e50ea4edaa3e32f4a378af73dc83"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-v2/keyboard-self-level-result.json",
+              "bytes": 17129,
+              "sha256": "561212bb3cf0916a0f91783bcde3544590a65b2753ef597a4130afafcbcc4b68"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-v2/keyboard-self-level-stall.json",
+              "bytes": 4372,
+              "sha256": "d187e1c76c4e62a0bbb7da4a17bb8c1e075e4ab2178fc37e722e7bdaa12796a2"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-v2/keyboard-self-level-arbitrary-task-stall.json",
+              "bytes": 4211,
+              "sha256": "24f1133317dc0838dfa681f3430db6cd5f639ff45cc1ac9e603c1767bcd09f39"
+            }
+          ]
+        },
+        {
+          "course": "flight-12",
+          "owner": "radio",
+          "mode": "self-level",
+          "windowMs": 10052.799999982119,
+          "frameSamples": 588,
+          "frameP95Ms": 16.700000000000728,
+          "frameMaxMs": 250,
+          "frameGapsOver50Ms": [250],
+          "longTasks": [],
+          "actionCount": 20,
+          "allActionsObserved": true,
+          "keyboardEventsTrusted": null,
+          "allObservedStatesActive": true,
+          "recordedAttemptFrames": 551,
+          "normalizedCommands": "roll 0, pitch 0, throttle 0, yaw -500/0/+500",
+          "inputTimestampProxy": {
+            "p95Ms": 15.900000011919474,
+            "maxMs": 18.599999994039536,
+            "meaning": "Event/sample performance.now to first matching model snapshot rAF timestamp. rAF timestamps can be stale; this is not actual callback-execution, input-to-photon or hardware latency."
+          },
+          "alignedStall": {
+            "placement": "raf",
+            "injectedBlockingMs": 300,
+            "tickDelta": 0,
+            "recordedFrameDelta": 0,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 23967.5,
+              "observedAt": 23968.40000000596,
+              "ticks": 554,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 24267.5,
+              "observedAt": 24269.40000000596,
+              "ticks": 554,
+              "status": "paused"
+            },
+            "observerExecutionGapMs": 301,
+            "rafTimestampGapMs": 300
+          },
+          "arbitraryTaskStall": {
+            "placement": "task",
+            "injectedBlockingMs": 300,
+            "tickDelta": 1,
+            "recordedFrameDelta": 1,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 24600.8,
+              "observedAt": 24601.79999998212,
+              "ticks": 557,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 24617.4,
+              "observedAt": 24905.19999998808,
+              "ticks": 558,
+              "status": "active"
+            },
+            "observerExecutionGapMs": 303.40000000596046,
+            "rafTimestampGapMs": 16.600000000002183
+          },
+          "recovery": {
+            "status": "active",
+            "keyboardYawNeutral": null,
+            "radioMismatchedPickupRejected": true,
+            "radioMatchingPickupAccepted": true
+          },
+          "records": [
+            {
+              "path": ".cache/phase7-d22621010/input-v2/radio-self-level-raw.json",
+              "bytes": 149983,
+              "sha256": "ba6caf44bb936ca44ed4838cb3f1f076c3978450293b64c727ab28ef27ff2bfa"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-v2/radio-self-level-result.json",
+              "bytes": 15329,
+              "sha256": "8faa94c8cf6de7d75751f891df4fc8ea06ca4d22beec140575752496d85f422a"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-v2/radio-self-level-stall.json",
+              "bytes": 4370,
+              "sha256": "f19113d9a364bd2bf330f88d0229bfb4c83377731fef1fe142530fb685aaa275"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-v2/radio-self-level-arbitrary-task-stall.json",
+              "bytes": 4246,
+              "sha256": "b497c26a5aed1da1fb845af6824cf8d90a32621c60a85ed0cbd4f09b45b8d8c8"
+            }
+          ]
+        },
+        {
+          "course": "flight-12",
+          "owner": "keyboard",
+          "mode": "acro",
+          "windowMs": 10055.699999988079,
+          "frameSamples": 602,
+          "frameP95Ms": 16.799999999999272,
+          "frameMaxMs": 16.80000000000291,
+          "frameGapsOver50Ms": [],
+          "longTasks": [],
+          "actionCount": 20,
+          "allActionsObserved": true,
+          "keyboardEventsTrusted": true,
+          "allObservedStatesActive": true,
+          "recordedAttemptFrames": 551,
+          "normalizedCommands": "roll 0, pitch 0, throttle 0, yaw -500/0/+500",
+          "inputTimestampProxy": {
+            "p95Ms": 17.50000000595901,
+            "maxMs": 29.299999994040263,
+            "meaning": "Event/sample performance.now to first matching model snapshot rAF timestamp. rAF timestamps can be stale; this is not actual callback-execution, input-to-photon or hardware latency."
+          },
+          "alignedStall": {
+            "placement": "raf",
+            "injectedBlockingMs": 300,
+            "tickDelta": 0,
+            "recordedFrameDelta": 0,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 36400.3,
+              "observedAt": 36401.90000000596,
+              "ticks": 556,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 36700.3,
+              "observedAt": 36703,
+              "ticks": 556,
+              "status": "paused"
+            },
+            "observerExecutionGapMs": 301.09999999403954,
+            "rafTimestampGapMs": 300
+          },
+          "arbitraryTaskStall": {
+            "placement": "task",
+            "injectedBlockingMs": 300,
+            "tickDelta": 1,
+            "recordedFrameDelta": 1,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 37050.3,
+              "observedAt": 37051.79999998212,
+              "ticks": 559,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 37066.9,
+              "observedAt": 37364,
+              "ticks": 560,
+              "status": "active"
+            },
+            "observerExecutionGapMs": 312.2000000178814,
+            "rafTimestampGapMs": 16.599999999998545
+          },
+          "recovery": {
+            "status": "active",
+            "keyboardYawNeutral": true,
+            "radioMismatchedPickupRejected": null,
+            "radioMatchingPickupAccepted": null
+          },
+          "records": [
+            {
+              "path": ".cache/phase7-d22621010/input-v2/keyboard-acro-raw.json",
+              "bytes": 154307,
+              "sha256": "1bc2f1b16c33588d7b8b46a8f428af41fcaf438258dc0bf55c60eda331eae53d"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-v2/keyboard-acro-result.json",
+              "bytes": 16986,
+              "sha256": "65532d366724a220ea4b9ee6f26f2a74026379f2935e803910f8322e4810897b"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-v2/keyboard-acro-stall.json",
+              "bytes": 4227,
+              "sha256": "2964cd16f36c896a5640d3b40a8eef25518ebb1ec91d325667d8f985d02a26a7"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-v2/keyboard-acro-arbitrary-task-stall.json",
+              "bytes": 4226,
+              "sha256": "8e07a6ea46299a0123988bc02fffcf259638d618aa40fbc74b9eff385c64bd07"
+            }
+          ]
+        },
+        {
+          "course": "flight-12",
+          "owner": "radio",
+          "mode": "acro",
+          "windowMs": 10126.600000023842,
+          "frameSamples": 607,
+          "frameP95Ms": 16.700000000004366,
+          "frameMaxMs": 16.80000000000291,
+          "frameGapsOver50Ms": [],
+          "longTasks": [],
+          "actionCount": 20,
+          "allActionsObserved": true,
+          "keyboardEventsTrusted": null,
+          "allObservedStatesActive": true,
+          "recordedAttemptFrames": 555,
+          "normalizedCommands": "roll 0, pitch 0, throttle 0, yaw -500/0/+500",
+          "inputTimestampProxy": {
+            "p95Ms": 25.69999999999709,
+            "maxMs": 28.30000000000291,
+            "meaning": "Event/sample performance.now to first matching model snapshot rAF timestamp. rAF timestamps can be stale; this is not actual callback-execution, input-to-photon or hardware latency."
+          },
+          "alignedStall": {
+            "placement": "raf",
+            "injectedBlockingMs": 300,
+            "tickDelta": 0,
+            "recordedFrameDelta": 0,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 48933.2,
+              "observedAt": 48935.59999999404,
+              "ticks": 559,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 49233.1,
+              "observedAt": 49236.59999999404,
+              "ticks": 559,
+              "status": "paused"
+            },
+            "observerExecutionGapMs": 301,
+            "rafTimestampGapMs": 299.90000000000146
+          },
+          "arbitraryTaskStall": {
+            "placement": "task",
+            "injectedBlockingMs": 300,
+            "tickDelta": 1,
+            "recordedFrameDelta": 1,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 49583.2,
+              "observedAt": 49585.69999998808,
+              "ticks": 562,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 49599.8,
+              "observedAt": 49893.79999998212,
+              "ticks": 563,
+              "status": "active"
+            },
+            "observerExecutionGapMs": 308.09999999403954,
+            "rafTimestampGapMs": 16.60000000000582
+          },
+          "recovery": {
+            "status": "active",
+            "keyboardYawNeutral": null,
+            "radioMismatchedPickupRejected": true,
+            "radioMatchingPickupAccepted": true
+          },
+          "records": [
+            {
+              "path": ".cache/phase7-d22621010/input-v2/radio-acro-raw.json",
+              "bytes": 153785,
+              "sha256": "d6a4b6f29bb86af33321dbac34e0ced2ee760ce2846b67d48fb6474618caa9f7"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-v2/radio-acro-result.json",
+              "bytes": 15202,
+              "sha256": "8ce0c74b9bce743eb4a5d37e8805d742aa14930b26f576f16f160d17686e571e"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-v2/radio-acro-stall.json",
+              "bytes": 4249,
+              "sha256": "97243697e276629dcc1852518bd276faa0ffbc1082b838866cd7f1ddf423501c"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-v2/radio-acro-arbitrary-task-stall.json",
+              "bytes": 4244,
+              "sha256": "6dd22bc36bf4831ccc7ff7062c46a066816028a05dfc2d7edc2995dd7716af39"
+            }
+          ]
+        }
+      ],
+      "procedureComplete": true,
+      "qualification": false
+    },
+    {
+      "id": "fixed-dirty-worktree",
+      "source": {
+        "kind": "dirty-worktree",
+        "baseCommit": "d226210105de1011f8dab18fcf0ac7ca196b974c",
+        "baseTree": "cd080fc590dfea19cf96b2f93c52b1ae31c890f3",
+        "changedFiles": [
+          {
+            "path": "game/test/fpv-flight-ui.test.mjs",
+            "bytes": 23538,
+            "sha256": "1732cf936573cb86338640b7ae251fdce035ac09ec9c5f0af7b0aa38d044cb8e"
+          },
+          {
+            "path": "optional-practice/civilian-fpv/app.mjs",
+            "bytes": 24569,
+            "sha256": "2cd4493731ecdb47612dde7c55d81a81d008ce141cc16a6751af0e232f5601d2"
+          }
+        ],
+        "patchSha256": "af5deffb647d5d23f540fe9bdddf47008bfc5834d146915a363ad79e6e5fc6da"
+      },
+      "runtimeRevision": "eb63d3d2930cd965e850f6393b02897a29d2ddcac809f1865d5550ffbd6e97cb",
+      "runtimeManifest": {
+        "path": ".cache/phase7-d22621010/input-fixed/runtime-manifest.json",
+        "bytes": 7813,
+        "sha256": "5d2ee2397bfd3744159324faefb26f16316c9a9c7e265986a1b3617a6bb457d6"
+      },
+      "verifiedMembers": 42,
+      "app": {
+        "path": "optional-practice/civilian-fpv/app.mjs",
+        "bytes": 24569,
+        "sha256": "2cd4493731ecdb47612dde7c55d81a81d008ce141cc16a6751af0e232f5601d2"
+      },
+      "instrumentation": {
+        "observer": {
+          "path": ".cache/phase7-d22621010/observe-fpv-input-fixed.mjs",
+          "bytes": 13870,
+          "sha256": "84780ab9d833efb448a4401388509ff13ecec43ef5f9eacdfd3c92aea5c45e63"
+        },
+        "wrapper": {
+          "path": ".cache/phase7-d22621010/input-fixed/wrapper.mjs",
+          "bytes": 3387,
+          "sha256": "d18b32fa476ea59638dec70217166eb7ce8ea240db3f47d22f3b9ba0056d5fa0"
+        },
+        "host": {
+          "path": ".cache/phase7-d22621010/input-fixed/host.html",
+          "bytes": 7285,
+          "sha256": "e60a67c7b87b9726144ccc9760a17c25907ac2ee0db11e05d9d955541aa459ff"
+        }
+      },
+      "observation": {
+        "path": ".cache/phase7-d22621010/input-fixed/observation.json",
+        "bytes": 86334,
+        "sha256": "5fcf56b2eee1a98891391913356daf686acfa3e4135e092b44bc2ec771deb788"
+      },
+      "createdAt": "2026-09-28T22:02:58.677Z",
+      "browser": "154.0.8037.57",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "deviceScaleFactor": 1
+      },
+      "cases": [
+        {
+          "course": "flight-12",
+          "owner": "keyboard",
+          "mode": "self-level",
+          "windowMs": 10098.90000000596,
+          "frameSamples": 605,
+          "frameP95Ms": 16.700000000000728,
+          "frameMaxMs": 16.80000000000109,
+          "frameGapsOver50Ms": [],
+          "longTasks": [],
+          "actionCount": 20,
+          "allActionsObserved": true,
+          "keyboardEventsTrusted": true,
+          "allObservedStatesActive": true,
+          "recordedAttemptFrames": 554,
+          "normalizedCommands": "roll 0, pitch 0, throttle 0, yaw -500/0/+500",
+          "inputTimestampProxy": {
+            "p95Ms": 19.399999999999636,
+            "maxMs": 28,
+            "meaning": "Event/sample performance.now to first matching model snapshot rAF timestamp. rAF timestamps can be stale; this is not actual callback-execution, input-to-photon or hardware latency."
+          },
+          "alignedStall": {
+            "placement": "raf",
+            "injectedBlockingMs": 300,
+            "tickDelta": 0,
+            "recordedFrameDelta": 0,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 11732.2,
+              "observedAt": 11732.90000000596,
+              "ticks": 559,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 12015.5,
+              "observedAt": 12034.40000000596,
+              "ticks": 559,
+              "status": "paused"
+            },
+            "observerExecutionGapMs": 301.5,
+            "rafTimestampGapMs": 283.2999999999993
+          },
+          "arbitraryTaskStall": {
+            "placement": "task",
+            "injectedBlockingMs": 300,
+            "tickDelta": 0,
+            "recordedFrameDelta": 0,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 12415.5,
+              "observedAt": 12416,
+              "ticks": 563,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 12432.1,
+              "observedAt": 12729.300000011921,
+              "ticks": 563,
+              "status": "paused"
+            },
+            "observerExecutionGapMs": 313.30000001192093,
+            "rafTimestampGapMs": 16.600000000000364
+          },
+          "recovery": {
+            "status": "active",
+            "keyboardYawNeutral": true,
+            "radioMismatchedPickupRejected": null,
+            "radioMatchingPickupAccepted": null
+          },
+          "records": [
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/keyboard-self-level-raw.json",
+              "bytes": 154650,
+              "sha256": "4c8ab5dc44d24beac8bc2d64e4376436477a0cf9ef8109fc0368cae840bad6e3"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/keyboard-self-level-result.json",
+              "bytes": 17012,
+              "sha256": "bcbda94eb15f6ab348ec9ef9fbee72c5791e18bfd57a90add05aa4397faa94ad"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/keyboard-self-level-stall.json",
+              "bytes": 4244,
+              "sha256": "fba36f8081d5d72142e9d2b016114400da12f834ff27df6e1568f39fce43b58e"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/keyboard-self-level-arbitrary-task-stall.json",
+              "bytes": 4217,
+              "sha256": "86f1aa5b6a72f8612832e9b1f8e6a0c9c30fe9aacb2ce370979f2b83f33d917a"
+            }
+          ]
+        },
+        {
+          "course": "flight-12",
+          "owner": "radio",
+          "mode": "self-level",
+          "windowMs": 10091.600000023842,
+          "frameSamples": 601,
+          "frameP95Ms": 16.799999999999272,
+          "frameMaxMs": 83.39999999999964,
+          "frameGapsOver50Ms": [83.39999999999964],
+          "longTasks": [],
+          "actionCount": 20,
+          "allActionsObserved": true,
+          "keyboardEventsTrusted": null,
+          "allObservedStatesActive": true,
+          "recordedAttemptFrames": 554,
+          "normalizedCommands": "roll 0, pitch 0, throttle 0, yaw -500/0/+500",
+          "inputTimestampProxy": {
+            "p95Ms": 16.50000000595901,
+            "maxMs": 30.200000005959737,
+            "meaning": "Event/sample performance.now to first matching model snapshot rAF timestamp. rAF timestamps can be stale; this is not actual callback-execution, input-to-photon or hardware latency."
+          },
+          "alignedStall": {
+            "placement": "raf",
+            "injectedBlockingMs": 300,
+            "tickDelta": 0,
+            "recordedFrameDelta": 0,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 24298.3,
+              "observedAt": 24299.5,
+              "ticks": 558,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 24598.2,
+              "observedAt": 24600.80000001192,
+              "ticks": 558,
+              "status": "paused"
+            },
+            "observerExecutionGapMs": 301.30000001192093,
+            "rafTimestampGapMs": 299.90000000000146
+          },
+          "arbitraryTaskStall": {
+            "placement": "task",
+            "injectedBlockingMs": 300,
+            "tickDelta": 0,
+            "recordedFrameDelta": 0,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 24931.6,
+              "observedAt": 24933,
+              "ticks": 561,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 24948.3,
+              "observedAt": 25241.90000000596,
+              "ticks": 561,
+              "status": "paused"
+            },
+            "observerExecutionGapMs": 308.90000000596046,
+            "rafTimestampGapMs": 16.700000000000728
+          },
+          "recovery": {
+            "status": "active",
+            "keyboardYawNeutral": null,
+            "radioMismatchedPickupRejected": true,
+            "radioMatchingPickupAccepted": true
+          },
+          "records": [
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/radio-self-level-raw.json",
+              "bytes": 152561,
+              "sha256": "ac5c7aa5f08fa4d25fbf44e106a94d589bdf142c81195a428d8ea7c84b3587c4"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/radio-self-level-result.json",
+              "bytes": 15195,
+              "sha256": "ed61bbc943e91dee4682ce580b4316f5e7d31720883f5d43f1fd2fc9a626dfb2"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/radio-self-level-stall.json",
+              "bytes": 4241,
+              "sha256": "622ab6e8b5fda6c6e66c08f22086c707d4cca875ed5763613679e2a15b0823fd"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/radio-self-level-arbitrary-task-stall.json",
+              "bytes": 4232,
+              "sha256": "3bce014162cbc2ef038f16015abfb2cd74d6622fddd2fb817f3edcc04c1884fb"
+            }
+          ]
+        },
+        {
+          "course": "flight-12",
+          "owner": "keyboard",
+          "mode": "acro",
+          "windowMs": 10080.200000017881,
+          "frameSamples": 604,
+          "frameP95Ms": 16.700000000004366,
+          "frameMaxMs": 16.80000000000291,
+          "frameGapsOver50Ms": [],
+          "longTasks": [],
+          "actionCount": 20,
+          "allActionsObserved": true,
+          "keyboardEventsTrusted": true,
+          "allObservedStatesActive": true,
+          "recordedAttemptFrames": 553,
+          "normalizedCommands": "roll 0, pitch 0, throttle 0, yaw -500/0/+500",
+          "inputTimestampProxy": {
+            "p95Ms": 16.00000000595901,
+            "maxMs": 20.799999999999272,
+            "meaning": "Event/sample performance.now to first matching model snapshot rAF timestamp. rAF timestamps can be stale; this is not actual callback-execution, input-to-photon or hardware latency."
+          },
+          "alignedStall": {
+            "placement": "raf",
+            "injectedBlockingMs": 300,
+            "tickDelta": 0,
+            "recordedFrameDelta": 0,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 36797.8,
+              "observedAt": 36799,
+              "ticks": 557,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 37097.8,
+              "observedAt": 37100,
+              "ticks": 557,
+              "status": "paused"
+            },
+            "observerExecutionGapMs": 301,
+            "rafTimestampGapMs": 300
+          },
+          "arbitraryTaskStall": {
+            "placement": "task",
+            "injectedBlockingMs": 300,
+            "tickDelta": 0,
+            "recordedFrameDelta": 0,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 37431.1,
+              "observedAt": 37432.80000001192,
+              "ticks": 560,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 37447.8,
+              "observedAt": 37742.30000001192,
+              "ticks": 560,
+              "status": "paused"
+            },
+            "observerExecutionGapMs": 309.5,
+            "rafTimestampGapMs": 16.700000000004366
+          },
+          "recovery": {
+            "status": "active",
+            "keyboardYawNeutral": true,
+            "radioMismatchedPickupRejected": null,
+            "radioMatchingPickupAccepted": null
+          },
+          "records": [
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/keyboard-acro-raw.json",
+              "bytes": 154885,
+              "sha256": "7fbf57f39d80abc00dd709c388ac074983569300aa399f0347aa22a905715b3f"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/keyboard-acro-result.json",
+              "bytes": 17126,
+              "sha256": "ea77fc0ac06453db6847e5b4f09a3f79c000c3c7110a3782c5f772e5949bdb0f"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/keyboard-acro-stall.json",
+              "bytes": 4325,
+              "sha256": "7bd1ed1ea20ba71638456a0bd837aa4d7d40dac75655ed1c52b0ce9a47b171af"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/keyboard-acro-arbitrary-task-stall.json",
+              "bytes": 4226,
+              "sha256": "b1a64f41ed4467a377330a92476506fc5fb1f3ec14b76544a72f750f321e6d30"
+            }
+          ]
+        },
+        {
+          "course": "flight-12",
+          "owner": "radio",
+          "mode": "acro",
+          "windowMs": 10093,
+          "frameSamples": 605,
+          "frameP95Ms": 16.700000000004366,
+          "frameMaxMs": 16.80000000000291,
+          "frameGapsOver50Ms": [],
+          "longTasks": [],
+          "actionCount": 20,
+          "allActionsObserved": true,
+          "keyboardEventsTrusted": null,
+          "allObservedStatesActive": true,
+          "recordedAttemptFrames": 554,
+          "normalizedCommands": "roll 0, pitch 0, throttle 0, yaw -500/0/+500",
+          "inputTimestampProxy": {
+            "p95Ms": 27.200000005963375,
+            "maxMs": 31.99999999404099,
+            "meaning": "Event/sample performance.now to first matching model snapshot rAF timestamp. rAF timestamps can be stale; this is not actual callback-execution, input-to-photon or hardware latency."
+          },
+          "alignedStall": {
+            "placement": "raf",
+            "injectedBlockingMs": 300,
+            "tickDelta": 0,
+            "recordedFrameDelta": 0,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 49330.7,
+              "observedAt": 49332.30000001192,
+              "ticks": 559,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 49630.6,
+              "observedAt": 49633.40000000596,
+              "ticks": 559,
+              "status": "paused"
+            },
+            "observerExecutionGapMs": 301.09999999403954,
+            "rafTimestampGapMs": 299.90000000000146
+          },
+          "arbitraryTaskStall": {
+            "placement": "task",
+            "injectedBlockingMs": 300,
+            "tickDelta": 0,
+            "recordedFrameDelta": 0,
+            "statusAfter": "paused",
+            "ticksStableForFollowing200ms": true,
+            "framesStableForFollowing200ms": true,
+            "lastPreBlockObserverFrame": {
+              "at": 49963.9,
+              "observedAt": 49965.5,
+              "ticks": 562,
+              "status": "active"
+            },
+            "firstPostBlockObserverFrame": {
+              "at": 49980.6,
+              "observedAt": 50271.70000001788,
+              "ticks": 562,
+              "status": "paused"
+            },
+            "observerExecutionGapMs": 306.2000000178814,
+            "rafTimestampGapMs": 16.69999999999709
+          },
+          "recovery": {
+            "status": "active",
+            "keyboardYawNeutral": null,
+            "radioMismatchedPickupRejected": true,
+            "radioMatchingPickupAccepted": true
+          },
+          "records": [
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/radio-acro-raw.json",
+              "bytes": 153312,
+              "sha256": "54053b38f56342644c6ddd1a71f65ac7da0feb9056f31f587dd5fa6a9687421f"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/radio-acro-result.json",
+              "bytes": 15173,
+              "sha256": "611107b3424bf809ab1b04f74edc2db7f8c25ac9e9dea9b3ecc7ee6c5b01e23e"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/radio-acro-stall.json",
+              "bytes": 4241,
+              "sha256": "c09b4e15b2aa4892a33ef86d08d7c5408e718eb6b77da41ccdb997cdd31a7362"
+            },
+            {
+              "path": ".cache/phase7-d22621010/input-fixed/radio-acro-arbitrary-task-stall.json",
+              "bytes": 4232,
+              "sha256": "e4abeb4c49455ab3b6b4efd396c26e5d988363d78afd0bf05fa1edc25f36ae20"
+            }
+          ]
+        }
+      ],
+      "procedureComplete": true,
+      "qualification": false
+    }
+  ],
+  "interpretation": {
+    "preFixArbitraryTaskFaults": "All four cases advanced exactly one tick after a stale rAF timestamp, then paused and stayed paused.",
+    "fixedFaults": "Both boundary-aligned and arbitrary-task 300 ms faults added zero ticks and zero recorded frames in all four cases. Keyboard resumed neutral; synthetic radio rejected mismatched pickup and accepted explicit matching pickup.",
+    "naturalSlowFramesRetained": "Pre-fix synthetic-radio/self-level includes a 250 ms rAF gap; fixed corresponding window includes an 83.4 ms gap. Neither was discarded. No PerformanceObserver long-task entries were observed in these natural windows; this is not proof of no scheduling/rendering stalls.",
+    "inputProxy": "Reported input delays are rAF timestamp proxies; actual callback execution can lag these timestamps. Fault records separately preserve observed callback execution times.",
+    "source": "The fixed run was built from a dirty worktree based on d226, with explicit app/test file and patch hashes captured before compilation. Later documentation edits do not change the staged runtime. The exact runtime manifest and app hash are authoritative; this is not a frozen d226 artifact.",
+    "contention": "No heavy local builds/tests ran during the timing windows. A separate 584,766-byte metadata download finished 2026-09-28T22:03:23.922Z (1.479 s command); a 1.54 MB metadata digest/extract/validation ran about 22:03:52.43–22:03:52.72Z (0.286 s command). This small activity may overlap the fixed observation and is not excluded from its samples."
+  },
+  "validation": {
+    "focused": "26/26 UI and radio tests passed, including both modes/owners with stale rAF and advanced execution clock.",
+    "fullPractice": "Root reported 151/151 practice tests passed before fixed measurements.",
+    "trackedProductChanges": ["optional-practice/civilian-fpv/app.mjs"],
+    "trackedRegression": ["game/test/fpv-flight-ui.test.mjs"],
+    "modelRendererReplayMathChanged": false
+  },
+  "limitations": [
+    "Each case is a single bounded window, not a population estimate or cross-device guarantee.",
+    "Procedure completion is distinct from timing qualification; no success flag silently gates p95 or maximum frame time.",
+    "Synthetic radio exercises mapping, normalization, polling, input ownership and recording, not an actual radio or USB transport.",
+    "Intentional faults are separate from natural windows. Both failed and corrected observations are preserved.",
+    "The original failed run lacks its full fault object; later reproduction supplies independent scheduling evidence rather than filling that gap.",
+    "No product state was fabricated or granted. The non-completing ground workload deliberately avoids earning.",
+    "Raw records, exact harnesses and manifests are preserved under ignored relative paths; this receipt contains bounded summaries and hashes."
+  ]
+}
