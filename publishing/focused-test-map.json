@@ -22,6 +22,26 @@
       ]
     },
     {
+      "id": "neutral-pilot-evidence",
+      "pathPatterns": [
+        "^game/content-design/(neutral-pilot-session|uniqueness-pilot(-player)?)\\.mjs$",
+        "^game/test/(neutral-pilot-session|uniqueness-pilot)\\.test\\.mjs$",
+        "^scripts/verify-pilot-observations\\.mjs$",
+        "^docs/content-offline/pilot-player\\.html$"
+      ],
+      "commands": [
+        {
+          "id": "neutral-pilot-evidence",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/neutral-pilot-session.test.mjs",
+            "game/test/uniqueness-pilot.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
       "id": "content-inventory",
       "pathPatterns": [
         "^scripts/(content-inventory|content-artwork-screening|artwork-screening)\\.mjs$",
@@ -88,7 +108,10 @@
         {
           "id": "i18n-check",
           "command": "npm",
-          "args": ["run", "i18n:check"]
+          "args": [
+            "run",
+            "i18n:check"
+          ]
         },
         {
           "id": "localization-runtime",
@@ -106,7 +129,12 @@
     },
     {
       "id": "offline",
-      "pathPatterns": ["offline", "service-worker", "manifest\\.webmanifest", "optional-chapters"],
+      "pathPatterns": [
+        "offline",
+        "service-worker",
+        "manifest\\.webmanifest",
+        "optional-chapters"
+      ],
       "commands": [
         {
           "id": "offline-runtime",
@@ -194,17 +222,26 @@
         {
           "id": "company-generated-source-and-media",
           "command": "npm",
-          "args": ["run", "company:check"]
+          "args": [
+            "run",
+            "company:check"
+          ]
         },
         {
           "id": "company-runtime-and-publication",
           "command": "npm",
-          "args": ["run", "company:test"]
+          "args": [
+            "run",
+            "company:test"
+          ]
         },
         {
           "id": "company-review-measurements",
           "command": "node",
-          "args": ["--test", "scripts/test-company-review.mjs"]
+          "args": [
+            "--test",
+            "scripts/test-company-review.mjs"
+          ]
         },
         {
           "id": "edition-appearance-contracts",
@@ -271,7 +308,10 @@
       ]
     }
   ],
-  "ignoredPathPatterns": ["^(docs/|.*\\.md$)", "^publishing/pages-controller/(evidence|metadata)/"],
+  "ignoredPathPatterns": [
+    "^(docs/|.*\\.md$)",
+    "^publishing/pages-controller/(evidence|metadata)/"
+  ],
   "runtimePathPatterns": [
     "^(game|scripts|site|platforms|publishing)/",
     "^(package(-lock)?\\.json|eslint\\.config\\.mjs)$"
@@ -280,7 +320,10 @@
     {
       "id": "unknown-runtime-validate",
       "command": "npm",
-      "args": ["run", "validate"]
+      "args": [
+        "run",
+        "validate"
+      ]
     }
   ]
 }
