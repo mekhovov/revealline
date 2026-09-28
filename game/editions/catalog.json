@@ -2480,6 +2480,60 @@
       "path": "game/editions/assets/discovery/met-shirt-fragment-157573.jpg",
       "publication": "public",
       "sha256": "edb86aaaa16ec601d1816765940cdfa37d761e3e557b9e5c2ba37d642fbc216f"
+    },
+    {
+      "approved": true,
+      "bytes": 1423569,
+      "dependencies": [],
+      "id": "social-community-listening-jellyfish",
+      "path": "game/editions/assets/discovery/audio/3xblast-jellyfish-v1.mp3",
+      "publication": "public",
+      "sha256": "f03927dbb34fca2946b4d156523e24d8ada69fbf390ed522597b9fbaedbf09a6"
+    },
+    {
+      "approved": true,
+      "bytes": 779,
+      "dependencies": [],
+      "id": "social-community-listening-jellyfish-en",
+      "path": "game/editions/assets/discovery/audio/3xblast-jellyfish-en-v1.txt",
+      "publication": "public",
+      "sha256": "eeabea4dcee857b57b0b16a18db66634e1a5e60c726889b8d00810024e2fa813"
+    },
+    {
+      "approved": true,
+      "bytes": 1242,
+      "dependencies": [],
+      "id": "social-community-listening-jellyfish-uk",
+      "path": "game/editions/assets/discovery/audio/3xblast-jellyfish-uk-v1.txt",
+      "publication": "public",
+      "sha256": "607565e80f20763ae3ae31e42b9aac372eb84d4015f663970ed0e1fdbb8f8ddb"
+    },
+    {
+      "approved": true,
+      "bytes": 1781342,
+      "dependencies": [],
+      "id": "social-community-listening-thanks",
+      "path": "game/editions/assets/discovery/audio/3xblast-thanks-v1.mp3",
+      "publication": "public",
+      "sha256": "ecf32b424b78773ba6df4c56a5068ddb0e1674f5c3fdadc47d23c79dde15f5af"
+    },
+    {
+      "approved": true,
+      "bytes": 783,
+      "dependencies": [],
+      "id": "social-community-listening-thanks-en",
+      "path": "game/editions/assets/discovery/audio/3xblast-thanks-en-v1.txt",
+      "publication": "public",
+      "sha256": "964728a066d5761e7e5b69d81662fbce30210eacf67904873d535108dc5fcc9f"
+    },
+    {
+      "approved": true,
+      "bytes": 1246,
+      "dependencies": [],
+      "id": "social-community-listening-thanks-uk",
+      "path": "game/editions/assets/discovery/audio/3xblast-thanks-uk-v1.txt",
+      "publication": "public",
+      "sha256": "269063c609e595b1482573ceb11233d5f5364457aaf4c8a79bdc01325e865237"
     }
   ],
   "brands": [
@@ -3039,13 +3093,19 @@
         "social-drone-community-connections-04-reveal-v1",
         "social-drone-community-connections-05-reveal-v1",
         "social-drone-community-connections-06-reveal-v1",
-        "social-drone-community-connections-key-v1"
+        "social-drone-community-connections-key-v1",
+        "social-community-listening-jellyfish",
+        "social-community-listening-jellyfish-en",
+        "social-community-listening-jellyfish-uk",
+        "social-community-listening-thanks",
+        "social-community-listening-thanks-en",
+        "social-community-listening-thanks-uk"
       ],
       "brandId": "social-drone-ua",
       "heroAssetId": "social-drone-community-connections-key-v1",
       "id": "social-drone-community-connections",
       "localizationPath": "game/content/company-campaigns/social-drone-community-connections.localization.json",
-      "localizationSha256": "5216f5aaf726571c7caa79936c9051d3cf41d62795a05f601e8818f319c60f92",
+      "localizationSha256": "6fa9d31c5adea49bd3dd5802ae337fcb01d4d2d389b70f2dfbff222d99306418",
       "modes": ["solo"],
       "name": "Community Connections",
       "publication": "public",
@@ -3367,6 +3427,12 @@
       "name": "Social Drone UA",
       "presentationHistory": [
         {
+          "bytes": 170542,
+          "id": "b082d3766168bd305e235adad284813b2a8578de5de009f8ca985aaf1a2e5bd6",
+          "path": "game/editions/retained/social-drone-ua-before-listening-room.json",
+          "sha256": "d1637bf018f2197a6e10e6df5a13fe2e8cff807d4c19165258bff331ccc30528"
+        },
+        {
           "bytes": 143061,
           "id": "9ae68b77e05e8b2a0dc934510e080af89ee5223a3304a0197c3b53a2e61af1b0",
           "path": "game/editions/retained/social-drone-ua-before-discovery-feedback.json",
@@ -3392,7 +3458,7 @@
         }
       ],
       "publication": "public",
-      "revision": 5
+      "revision": 6
     },
     {
       "audience": "learners",
