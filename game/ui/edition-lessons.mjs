@@ -9,7 +9,9 @@ import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.m
 import { createRun } from '../core/index.mjs';
 import { exportReplay } from '../replay.mjs';
 import { boundedJSON } from '../data-json.mjs';
-import { localizedText, render, t } from '../i18n/index.mjs';
+import { getLocale, localizedText, render, t } from '../i18n/index.mjs';
+
+import { localizeCompanyLesson } from '../company-campaigns/lesson-localization.mjs';
 
 const localizedIssue = (key) =>
   Object.assign(new TypeError(t(key)), { localizedMessage: () => t(key) });
@@ -155,7 +157,7 @@ export async function mountEditionLessons({
         visible
           ? rendered
           : t('interface:editionLessons.namedReport', {
-              title: lesson.title,
+              title: localizeCompanyLesson(lesson, getLocale()).title,
               message: rendered,
             }),
       );

@@ -1,3 +1,4 @@
+import { curriculumCosmeticAssetIds } from './curriculum-cosmetics.mjs';
 import { CURRICULUM_CAMPAIGNS } from './curriculum.mjs';
 
 export const curriculumCampaignIds = (brandId) =>
@@ -108,7 +109,7 @@ export const CURRICULUM_BRANDS = Object.freeze(
   CURRICULUM_IDENTITIES.map((item) => ({
     format: 'revealline-brand-pack.v1',
     id: item.id,
-    revision: 1,
+    revision: curriculumCosmeticAssetIds(item.id).length ? 2 : 1,
     name: item.name,
     description: item.description,
     publication: 'public',
@@ -119,7 +120,7 @@ export const CURRICULUM_BRANDS = Object.freeze(
     heroAssetId: `${item.id}-home`,
     iconAssetId: null,
     fontAssetId: null,
-    assetIds: [`${item.id}-home`],
+    assetIds: [`${item.id}-home`, ...curriculumCosmeticAssetIds(item.id)],
     sources: [{ title: `${item.name} — contextual reference`, url: item.source, kind: 'official' }],
   })),
 );

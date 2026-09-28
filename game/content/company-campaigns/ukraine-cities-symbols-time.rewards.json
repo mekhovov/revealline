@@ -124,8 +124,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-cities-symbols-time-01", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-cities-symbols-time-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-cities-symbols-time-key-v1",
+        "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+      },
+      "locales": {
+        "en": {
+          "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery."
+        },
+        "uk": {
+          "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -252,8 +266,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-cities-symbols-time-02", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-cities-symbols-time-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-cities-symbols-time-key-v1",
+        "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+      },
+      "locales": {
+        "en": {
+          "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery."
+        },
+        "uk": {
+          "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -380,8 +408,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-cities-symbols-time-03", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-cities-symbols-time-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-cities-symbols-time-key-v1",
+        "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+      },
+      "locales": {
+        "en": {
+          "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery."
+        },
+        "uk": {
+          "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -574,8 +616,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-cities-symbols-time-04", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-cities-symbols-time-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-cities-symbols-time-key-v1",
+        "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+      },
+      "locales": {
+        "en": {
+          "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery."
+        },
+        "uk": {
+          "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -760,8 +816,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-cities-symbols-time-05", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-cities-symbols-time-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-cities-symbols-time-key-v1",
+        "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+      },
+      "locales": {
+        "en": {
+          "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery."
+        },
+        "uk": {
+          "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -888,8 +958,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-cities-symbols-time-06", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-cities-symbols-time-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-cities-symbols-time-key-v1",
+        "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+      },
+      "locales": {
+        "en": {
+          "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery."
+        },
+        "uk": {
+          "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -1110,7 +1194,21 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-cities-symbols-time", "kind": "campaign" }
+    "revision": "4",
+    "scope": { "id": "ukraine-cities-symbols-time", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-cities-symbols-time-key-v1",
+        "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+      },
+      "locales": {
+        "en": {
+          "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery."
+        },
+        "uk": {
+          "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї."
+        }
+      }
+    }
   }
 ]

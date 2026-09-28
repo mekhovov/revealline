@@ -85,7 +85,16 @@
       "band": 6,
       "discovery": {
         "exhibitLayout": "route",
-        "finaleRewardRef": { "id": "fpv-first-flight-finale", "revision": "2" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["A new flight-pattern illustration joins your collection."],
+            "uk": ["Нова ілюстрація траєкторії поповнила вашу колекцію."]
+          },
+          "revision": "feedback-a6e72e31af4d1c45",
+          "victoryMotif": "bright-return-v1"
+        },
+        "finaleRewardRef": { "id": "fpv-first-flight-finale", "revision": "3" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-first-flight",
@@ -267,7 +276,7 @@
           "travelling-trail-impact",
           "trail-pursuer"
         ],
-        "rewardRef": { "id": "fpv-first-flight-01-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-first-flight-01-discovery", "revision": "3" },
         "routeDecision": "Establish the pause island early or connect the start terrace by a shorter return. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -334,7 +343,7 @@
           "travelling-trail-impact",
           "trail-pursuer"
         ],
-        "rewardRef": { "id": "fpv-first-flight-02-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-first-flight-02-discovery", "revision": "3" },
         "routeDecision": "Climb the arcade’s marker chain or capture the wider observation bay first. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -401,7 +410,7 @@
           "travelling-trail-impact",
           "heading-interceptor"
         ],
-        "rewardRef": { "id": "fpv-first-flight-03-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-first-flight-03-discovery", "revision": "3" },
         "routeDecision": "Use the long straight island as a return or connect the two viewpoint alcoves. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -477,7 +486,7 @@
           "heading-interceptor",
           "lane-emitter"
         ],
-        "rewardRef": { "id": "fpv-first-flight-04-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-first-flight-04-discovery", "revision": "3" },
         "routeDecision": "Take the broad window terrace or make two short captures from the side mat. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -553,7 +562,7 @@
           "heading-interceptor",
           "lane-emitter"
         ],
-        "rewardRef": { "id": "fpv-first-flight-05-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-first-flight-05-discovery", "revision": "3" },
         "routeDecision": "Secure opposite corner islands or follow neighbouring corners around the board. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -630,7 +639,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-first-flight-06-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-first-flight-06-discovery", "revision": "3" },
         "routeDecision": "Join the three landmark returns first or close the route’s outer envelope. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV2",
@@ -659,9 +668,9 @@
       "format": "PackDesignV1",
       "id": "fpv-first-flight-pack",
       "name": "First Flight Patterns",
-      "revision": "2"
+      "revision": "3"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "2"
+  "revision": "3"
 }
