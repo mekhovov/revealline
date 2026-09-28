@@ -2,6 +2,11 @@
 <html lang="en" data-build-version="__REVEALLINE_VERSION__" data-boot-state="loading">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="./i18n/style.css" />
+    <script src="./vendor/i18next-26.4.2.min.js"></script>
+    <script src="./i18n/catalogs.mjs"></script>
+    <script src="./i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#070914" />
     <!-- Safari uses these when a player adds the game to the Home Screen. -->
@@ -26,7 +31,10 @@
         min-height: 100vh;
         box-sizing: border-box;
         padding: 24px;
-        font: 18px/1.5 monospace;
+        font:
+          18px/1.5 'Field Kit UI',
+          system-ui,
+          sans-serif;
       }
       #boot-screen a {
         color: #68d9fa;
@@ -42,6 +50,7 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="ui/controller-settings.css" />
     <link rel="stylesheet" href="ui/game-shell.css" />
+    <link rel="stylesheet" href="ui/demo.css" />
     <link rel="stylesheet" href="ui/pixel-theme.css" />
     <link rel="stylesheet" href="ui/mission-picker.css" />
     <link rel="stylesheet" href="ui/mission-brief.css" />
@@ -49,45 +58,48 @@
     <link rel="stylesheet" href="ui/story-dialog.css" />
     <link rel="stylesheet" href="ui/optional-chapters-panel.css" />
     <link rel="stylesheet" href="ui/device-controls.css" />
+    <link rel="stylesheet" href="ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="ui/field-kit-tokens.css" />
+    <link rel="stylesheet" href="ui/field-kit-components.css" />
   </head>
-  <body>
+  <body class="field-kit">
     <section id="boot-screen" class="launch-screen" aria-labelledby="boot-title">
       <div class="launch-card">
         <p class="launch-kicker">REVEAL / LINE</p>
         <div class="launch-signal" aria-hidden="true"><i></i><i></i><i></i></div>
-        <h1 id="boot-title">Your next flight.</h1>
-        <p id="boot-status" class="launch-status" role="status">
+        <h1 class="field-kit-display" id="boot-title" data-i18n="interface:yourNextFlight">Your next flight.</h1>
+        <p id="boot-status" class="launch-status" role="status" data-i18n="interface:preparingYourArcadeIfThisScreenStaysHereReloadOr">
           Preparing your arcade. If this screen stays here, reload or open the online game.
         </p>
         <noscript
           ><p class="launch-notice">
             JavaScript is disabled. Enable JavaScript to play, then reload this page. Your saved
             files have not been changed.
-          </p></noscript
+          </p><p lang="uk">Для гри потрібен JavaScript. Увімкни його в браузері й перезавантаж сторінку. Для завантаженої копії запусти локальний сервер або відкрий гру онлайн.</p></noscript
         >
-        <nav class="launch-actions" aria-label="Launch options">
-          <a id="boot-retry" href="" class="launch-action">Reload game</a>
+        <nav class="launch-actions" aria-label="Launch options" data-i18n-aria-label="interface:launchOptions">
+          <a id="boot-retry" href="" class="launch-action" data-i18n="interface:reloadGame">Reload game</a>
           <a
             id="boot-online"
             href="https://mekhovov.github.io/revealline/game/"
             class="launch-action"
-            >Play online</a
+             data-i18n="interface:playOnline">Play online</a
           >
         </nav>
         <details id="boot-local" class="launch-help">
-          <summary>Playing a downloaded copy?</summary>
-          <p>
-            Open the folder containing <code>game</code> in a terminal, then start a local web
+          <summary data-i18n="interface:playingADownloadedCopy">Playing a downloaded copy?</summary>
+          <p data-i18n-rich="interface:openTheFolderContainingInATerminalThenStartA">
+            Open the folder containing <code data-i18n-slot="slot0">game</code> in a terminal, then start a local web
             server:
           </p>
           <code class="launch-command">python3 -m http.server 8768 --bind 127.0.0.1</code>
-          <p>
+          <p data-i18n-rich="interface:leaveThatTerminalOpenAndVisitIfThatPortIs">
             Leave that terminal open and visit
-            <a href="http://127.0.0.1:8768/game/">127.0.0.1:8768/game/</a>. If that port is busy,
+            <a href="http://127.0.0.1:8768/game/" data-i18n="interface:1270018768Game" data-i18n-slot="slot0">127.0.0.1:8768/game/</a>. If that port is busy,
             choose a free port in both the command and address.
           </p>
-          <p>
-            Opening <code>game/index.html</code> directly as a file cannot start the game. Python is
+          <p data-i18n-rich="interface:openingDirectlyAsAFileCannotStartTheGamePython">
+            Opening <code data-i18n-slot="slot0">game/index.html</code> directly as a file cannot start the game. Python is
             only needed for this local-server option. Playing online opens a different site; local
             saves are not transferred automatically.
           </p>
@@ -97,7 +109,7 @@
     </section>
 
     <div class="shell-bar" data-boot-inert inert>
-      <button id="shell-menu" type="button" aria-label="Game menu">
+      <button id="shell-menu" data-menu-label="MENU" data-i18n-data-menu-label="common:navigation.menu" type="button" aria-label="Game menu" data-i18n-aria-label="interface:gameMenu">
         ◩ <span>REVEAL / LINE</span>
       </button>
       <span id="shell-edition" class="shell-edition"></span>
@@ -107,7 +119,7 @@
         type="button"
         aria-label="Enter fullscreen"
         hidden
-      >
+       data-i18n-aria-label="interface:enterFullscreen">
         ⛶
       </button>
       <button
@@ -115,43 +127,43 @@
         class="icon-button shell-pause"
         type="button"
         aria-label="Pause or resume"
-      >
+       data-i18n-aria-label="interface:pauseOrResume">
         Ⅱ
       </button>
 
-      <button id="shell-packs" type="button">Missions</button>
-      <button id="shell-collection" type="button">Collection</button>
-      <button id="shell-settings" type="button" aria-label="Game settings">Settings</button>
+      <button id="shell-packs" type="button" data-i18n="interface:missions">Missions</button>
+      <button id="shell-collection" type="button" data-i18n="interface:collection">Collection</button>
+      <button id="shell-settings" type="button" aria-label="Game settings" data-i18n="common:navigation.settings" data-i18n-aria-label="interface:gameSettings">Settings</button>
     </div>
     <header class="masthead" data-boot-inert inert>
       <a class="wordmark" href="./"
-        ><span class="brand-mark" aria-hidden="true">◩</span> REVEAL
-        <span class="slash">/</span> LINE</a
+         data-i18n-rich="interface:revealLine2"><span class="brand-mark" aria-hidden="true" data-i18n-slot="slot0">◩</span> REVEAL
+        <span class="slash" data-i18n-slot="slot1">/</span> LINE</a
       >
       <nav>
-        <a href="playground/">Playground ↗</a><a href="couch/">Couch race</a
-        ><button id="library-button" class="text-button" type="button">Library & saves</button
-        ><button id="settings-button" class="text-button" type="button">Settings</button
-        ><button id="help-button" class="text-button" type="button">How to play</button
+        <a href="playground/" data-i18n="interface:playground">Playground ↗</a><a href="couch/" data-i18n="interface:couchRace">Couch race</a
+        ><button id="library-button" class="text-button" type="button" data-i18n="interface:librarySaves">Library & saves</button
+        ><button id="settings-button" class="text-button" type="button" data-i18n="common:navigation.settings">Settings</button
+        ><button id="help-button" class="text-button" type="button" data-i18n="common:navigation.howToPlay">How to play</button
         ><span id="version" class="version">__REVEALLINE_VERSION__</span>
       </nav>
     </header>
     <main data-boot-inert inert aria-busy="true">
       <div class="edition">
-        <span id="theme-caption">FPV FRONT / DAWN OVER HOME</span
-        ><span id="mode-caption">FIRST SIGNAL · 01 / 12</span>
+        <span id="theme-caption" data-i18n="interface:fpvFrontDawnOverHome">FPV FRONT / DAWN OVER HOME</span
+        ><span id="mode-caption" data-i18n="interface:firstSignal0112">FIRST SIGNAL · 01 / 12</span>
       </div>
       <div class="game-layout">
-        <section class="arena-panel" aria-label="Game">
+        <section class="arena-panel" aria-label="Game" data-i18n-aria-label="interface:game">
           <div class="telemetry">
             <div class="coverage">
-              <span>REVEALED</span><strong id="coverage">0.0<small>%</small></strong>
+              <span data-i18n="interface:revealed">REVEALED</span><strong id="coverage">0.0<small>%</small></strong>
               <div class="meter"><i id="coverage-bar"></i><b id="goal-marker"></b></div>
-              <em id="target">TARGET 45%</em>
+              <em id="target" data-i18n="interface:target45">TARGET 45%</em>
             </div>
-            <div><span>LIVES</span><strong id="lives" aria-label="3 lives">◆ ◆ ◆</strong></div>
-            <div><span>TIME</span><strong id="time">0:00</strong></div>
-            <div><span id="score-label">SCORE</span><strong id="score">00000</strong></div>
+            <div><span data-i18n="interface:lives">LIVES</span><strong id="lives" aria-label="3 lives" data-i18n-aria-label="interface:3Lives">◆ ◆ ◆</strong></div>
+            <div><span data-i18n="interface:time">TIME</span><strong id="time">0:00</strong></div>
+            <div><span id="score-label" data-i18n="interface:score">SCORE</span><strong id="score">00000</strong></div>
           </div>
           <p id="first-flight-task" class="first-flight-task" role="status"></p>
           <div id="arena-shell" class="arena-shell">
@@ -160,7 +172,7 @@
               tabindex="0"
               role="application"
               aria-label="Territory capture game. Arrow keys or WASD move. E uses an ability, R picks up supplies. Escape pauses."
-            ></div>
+             data-i18n-aria-label="interface:territoryCaptureGameArrowKeysOrWasdMoveEUses"></div>
             <div
               id="first-flight-markers"
               class="first-flight-markers"
@@ -169,7 +181,7 @@
             ></div>
             <div id="game-overlay" class="game-overlay">
               <div id="overlay-reading-unit" class="overlay-card">
-                <p id="pause-label" class="pause-label" role="status" hidden>Paused</p>
+                <p id="pause-label" class="pause-label" role="status" hidden data-i18n="interface:paused">Paused</p>
                 <div
                   id="overlay-reading"
                   class="overlay-message"
@@ -177,10 +189,10 @@
                   aria-label="Mission details"
                   tabindex="0"
                   data-game-reading
-                >
-                  <p id="overlay-eyebrow" class="eyebrow">MISSION 01 / FIRST SIGNAL</p>
-                  <h1 id="overlay-title">Clear a path.<br />Reveal a world.</h1>
-                  <p id="overlay-copy">
+                 data-i18n-aria-label="interface:missionDetails">
+                  <p id="overlay-eyebrow" class="eyebrow" data-i18n="interface:mission01FirstSignal">MISSION 01 / FIRST SIGNAL</p>
+                  <h1 id="overlay-title" data-i18n-rich="interface:clearAPathRevealAWorld">Clear a path.<br / data-i18n-slot="slot0">Reveal a world.</h1>
+                  <p id="overlay-copy" data-i18n="interface:leaveTheBlueBorderDrawALineAndReturnTo">
                     Leave the blue border, draw a line and return to safety. Reveal the side without
                     an enemy.
                   </p>
@@ -196,7 +208,7 @@
                       type="button"
                       aria-controls="overlay-reading"
                       aria-pressed="false"
-                    >
+                     data-i18n="interface:readDetails">
                       Read details
                     </button>
                     <button
@@ -204,7 +216,7 @@
                       type="button"
                       aria-controls="overlay-reading"
                       disabled
-                    >
+                     data-i18n="interface:doneReading">
                       Done reading
                     </button>
                   </div>
@@ -214,7 +226,7 @@
                     role="status"
                     aria-live="polite"
                     aria-atomic="true"
-                  >
+                   data-i18n="interface:readWithoutStartingOrResuming">
                     Read without starting or resuming.
                   </p>
                 </div>
@@ -225,51 +237,51 @@
                     type="button"
                     aria-describedby="continue-saved-note"
                     hidden
-                  >
+                   data-i18n="interface:loadSavedFlight">
                     Load saved flight →
                   </button>
                   <button id="start-button" class="button primary" type="button">
-                    Start mission <span>↗</span></button
-                  ><button id="next-button" class="button primary" type="button" hidden>
+                    <span data-i18n="interface:startMission">Start mission</span> <span>↗</span></button
+                  ><button id="next-button" class="button primary" type="button" hidden data-i18n="interface:nextMission">
                     Next mission →</button
-                  ><button id="view-picture" class="button secondary" type="button" hidden>
+                  ><button id="view-picture" class="button secondary" type="button" hidden data-i18n="interface:viewPicture">
                     View picture ⤢
                   </button>
-                  <button id="retry-button" class="button secondary" type="button" hidden>
+                  <button id="retry-button" class="button secondary" type="button" hidden data-i18n="interface:tryAgain">
                     Try again
                   </button>
-                  <button id="choose-mission" class="button secondary" type="button" hidden>
+                  <button id="choose-mission" class="button secondary" type="button" hidden data-i18n="interface:chooseReplayMission">
                     Choose replay mission
                   </button>
-                  <button id="choose-appearance" class="button secondary" type="button" hidden>
+                  <button id="choose-appearance" class="button secondary" type="button" hidden data-i18n="interface:chooseAppearance">
                     Choose appearance
                   </button>
-                  <button id="first-flight-enter" class="button secondary" type="button" hidden>
+                  <button id="first-flight-enter" class="button secondary" type="button" hidden data-i18n="interface:learnByPlaying">
                     Learn by playing
                   </button>
-                  <button id="overlay-restart" class="button secondary" type="button" hidden>
+                  <button id="overlay-restart" class="button secondary" type="button" hidden data-i18n="interface:restartMission">
                     Restart mission
                   </button>
-                  <button id="overlay-brief" class="button secondary" type="button" hidden>
+                  <button id="overlay-brief" class="button secondary" type="button" hidden data-i18n="interface:missionBrief">
                     Mission brief
                   </button>
-                  <button id="overlay-menu" class="button secondary" type="button">
+                  <button id="overlay-menu" class="button secondary" type="button" data-i18n="common:navigation.mainMenu">
                     Main menu
                   </button>
                 </div>
-                <p id="overlay-footnote" class="overlay-footnote">
+                <p id="overlay-footnote" class="overlay-footnote" data-i18n="interface:aShortFirstFlightArrowsWasdTouchControlsBelow">
                   A short first flight · arrows / WASD · touch controls below
                 </p>
               </div>
             </div>
-            <button id="show-result" class="picture-return" type="button" hidden>Results ↗</button>
-            <button id="skip-celebration" class="picture-return" type="button" hidden>
+            <button id="show-result" class="picture-return" type="button" hidden data-i18n="interface:results">Results ↗</button>
+            <button id="skip-celebration" class="picture-return" type="button" hidden data-i18n="interface:keepPicture">
               Keep picture →
             </button>
           </div>
           <div class="flight-status">
-            <span><i id="status-dot"></i><strong id="flight-state">Ready for launch</strong></span
-            ><span id="objective-state">Close a line to reveal the picture</span>
+            <span><i id="status-dot"></i><strong id="flight-state" data-i18n="interface:readyForLaunch">Ready for launch</strong></span
+            ><span id="objective-state" data-i18n="interface:closeALineToRevealThePicture">Close a line to reveal the picture</span>
           </div>
           <p id="controller-boost-cue" class="controller-boost-cue" role="status" hidden></p>
           <div
@@ -278,38 +290,38 @@
             role="group"
             aria-label="Field conditions"
             hidden
-          >
+           data-i18n-aria-label="interface:fieldConditions">
             <strong id="encounter-title"></strong>
             <span id="encounter-instruction"></span>
             <span id="classic-summary" hidden></span>
           </div>
           <p id="appearance-unlock" class="appearance-unlock" hidden></p>
           <div class="play-controls">
-            <div id="touch-surface" role="group" aria-label="Touch steering: drag to fly and turn">
-              <span aria-hidden="true">✥</span><span id="touch-instruction">Drag to steer</span>
+            <div id="touch-surface" role="group" aria-label="Touch steering: drag to fly and turn" data-i18n-aria-label="interface:touchSteeringDragToFlyAndTurn">
+              <span aria-hidden="true">✥</span><span id="touch-instruction" data-i18n="interface:dragToSteer">Drag to steer</span>
             </div>
-            <div class="direction-controls" aria-label="Direction controls">
-              <button type="button" data-move="up" aria-label="Move up">↑</button
-              ><button type="button" data-move="left" aria-label="Move left">←</button
-              ><button type="button" id="stop-button" aria-label="Stop moving" hidden>■</button
-              ><button type="button" data-move="right" aria-label="Move right">→</button
-              ><button type="button" data-move="down" aria-label="Move down">↓</button>
+            <div class="direction-controls" aria-label="Direction controls" data-i18n-aria-label="interface:directionControls">
+              <button type="button" data-move="up" aria-label="Move up" data-i18n-aria-label="interface:moveUp">↑</button
+              ><button type="button" data-move="left" aria-label="Move left" data-i18n-aria-label="interface:moveLeft">←</button
+              ><button type="button" id="stop-button" aria-label="Stop moving" hidden data-i18n-aria-label="interface:stopMoving">■</button
+              ><button type="button" data-move="right" aria-label="Move right" data-i18n-aria-label="interface:moveRight">→</button
+              ><button type="button" data-move="down" aria-label="Move down" data-i18n-aria-label="interface:moveDown">↓</button>
             </div>
             <div class="ability-buttons">
               <button id="action-button" class="button ability" type="button">
-                Scan <kbd>E</kbd></button
+                <span data-i18n="interface:scan">Scan</span> <kbd data-i18n="interface:e">E</kbd></button
               ><button id="pickup-button" class="button secondary" type="button">
-                Supply <kbd>R</kbd></button
+                <span data-i18n="interface:supply">Supply</span> <kbd data-i18n="interface:r">R</kbd></button
               ><button
                 id="boost-button"
                 class="button secondary"
                 type="button"
                 aria-pressed="false"
                 title="Hold to boost. With Tap steering enabled, tap to toggle."
-              >
-                Boost <kbd>Shift</kbd>
+               data-i18n-title="interface:holdToBoostWithTapSteeringEnabledTapToToggle">
+                <span data-i18n="interface:boost">Boost</span> <kbd data-i18n="interface:shift">Shift</kbd>
               </button>
-              <span id="ability-state">Ready</span>
+              <span id="ability-state" data-i18n="common:status.ready">Ready</span>
             </div>
           </div>
           <div id="touch-indicator" aria-hidden="true" hidden><i></i></div>
@@ -318,40 +330,40 @@
             class="first-flight-panel"
             aria-label="First Flight course"
             hidden
-          >
+           data-i18n-aria-label="interface:firstFlightCourse">
             <div class="first-flight-heading">
-              <h2 id="first-flight-title">First Flight</h2>
-              <span>Practice · no rewards</span>
+              <h2 id="first-flight-title" data-i18n="interface:firstFlight">First Flight</h2>
+              <span data-i18n="interface:practiceNoRewards">Practice · no rewards</span>
             </div>
             <p id="first-flight-outcome"></p>
             <details class="first-flight-steps">
-              <summary>Lesson steps</summary>
+              <summary data-i18n="interface:lessonSteps">Lesson steps</summary>
               <ol id="first-flight-step-list"></ol>
               <p id="first-flight-controls"></p>
             </details>
-            <label for="first-flight-select">Choose a lesson</label>
-            <select id="first-flight-select" aria-label="Choose a First Flight lesson"></select>
+            <label for="first-flight-select" data-i18n="interface:chooseALesson">Choose a lesson</label>
+            <select id="first-flight-select" aria-label="Choose a First Flight lesson" data-i18n-aria-label="interface:chooseAFirstFlightLesson"></select>
             <div class="first-flight-actions">
-              <button id="first-flight-next" class="button primary" type="button" hidden>
+              <button id="first-flight-next" class="button primary" type="button" hidden data-i18n="interface:nextLesson">
                 Next lesson
               </button>
-              <button id="first-flight-skip" class="button secondary" type="button">
+              <button id="first-flight-skip" class="button secondary" type="button" data-i18n="interface:skipLesson">
                 Skip lesson
               </button>
-              <button id="first-flight-exit" class="button secondary" type="button">
+              <button id="first-flight-exit" class="button secondary" type="button" data-i18n="interface:returnToTheGame">
                 Return to the game
               </button>
             </div>
             <p id="first-flight-error" role="status" hidden></p>
           </section>
-          <p id="run-message" class="run-message" role="status">
+          <p id="run-message" class="run-message" role="status" data-i18n="interface:yourFirstRouteFlyDownFromTheMarkedStartTo">
             Your first route: fly down from the marked start to the opposite border.
           </p>
           <div class="minor-controls">
-            <label><input id="tap-steering" type="checkbox" /> Tap steering</label
-            ><label><input id="reduced-effects" type="checkbox" /> Reduced effects</label
-            ><button id="demo-button" class="text-button" type="button">Watch first cut</button
-            ><span id="input-status">Keyboard / touch</span>
+            <label><input id="tap-steering" type="checkbox" /> <span data-i18n="interface:tapSteering">Tap steering</span></label
+            ><label><input id="reduced-effects" type="checkbox" /> <span data-i18n="interface:reducedEffects">Reduced effects</span></label
+            ><button id="demo-button" class="text-button" type="button" data-i18n="demo:watch">Watch demo</button
+            ><span id="input-status" data-i18n="interface:keyboardTouch">Keyboard / touch</span>
           </div>
           <p id="save-warning" class="warning" role="status" hidden></p>
           <p id="mastery-status" class="micro-note mastery-note" hidden></p>
@@ -365,13 +377,13 @@
           <p id="controller-ui-hint" class="micro-note controller-hint" role="status" hidden></p>
           <p id="asset-warning" class="warning" role="status" hidden></p>
         </section>
-        <aside class="flight-deck" aria-label="Mission and loadout">
+        <aside class="flight-deck" aria-label="Mission and loadout" data-i18n-aria-label="interface:missionAndLoadout">
           <div class="deck-heading">
-            <span>FLIGHT DECK</span><span id="campaign-progress">00 / 12</span>
+            <span data-i18n="interface:flightDeck">FLIGHT DECK</span><span id="campaign-progress">00 / 12</span>
           </div>
           <p id="continue-saved-note" class="micro-note" role="status" hidden></p>
           <details id="mission-brief" class="mission-brief">
-            <summary>Mission brief</summary>
+            <summary data-i18n="interface:missionBrief">Mission brief</summary>
             <div id="mission-brief-unit">
               <div class="reading-toolbar">
                 <div class="reading-actions">
@@ -380,7 +392,7 @@
                     type="button"
                     aria-controls="mission-brief-reading"
                     aria-pressed="false"
-                  >
+                   data-i18n="interface:readMissionBrief">
                     Read mission brief
                   </button>
                   <button
@@ -388,7 +400,7 @@
                     type="button"
                     aria-controls="mission-brief-reading"
                     disabled
-                  >
+                   data-i18n="interface:doneReading">
                     Done reading
                   </button>
                 </div>
@@ -398,7 +410,7 @@
                   role="status"
                   aria-live="polite"
                   aria-atomic="true"
-                >
+                 data-i18n="interface:readWithoutStartingOrResuming">
                   Read without starting or resuming.
                 </p>
               </div>
@@ -408,7 +420,7 @@
                 aria-label="Full mission brief"
                 tabindex="0"
                 data-game-reading
-              >
+               data-i18n-aria-label="interface:fullMissionBrief">
                 <p id="mission-brief-title" class="mission-brief-title"></p>
                 <p id="mission-brief-copy"></p>
                 <p id="mission-brief-facts"></p>
@@ -418,10 +430,10 @@
           </details>
           <div class="content-switcher" data-course-hide>
             <label class="field"
-              >Pack<select id="pack-select" aria-describedby="content-select-status"></select
+              ><span data-i18n="interface:pack">Pack</span><select id="pack-select" aria-describedby="content-select-status"></select
             ></label>
             <label class="field"
-              >Level<select id="level-select" aria-describedby="content-select-status"></select
+              ><span data-i18n="interface:level">Level</span><select id="level-select" aria-describedby="content-select-status"></select
             ></label>
           </div>
           <p
@@ -429,92 +441,94 @@
             class="content-select-status micro-note"
             role="status"
             data-course-hide
-          >
+           data-i18n="interface:chooseAnyIncludedPackItInstallsOnThisDeviceWhen">
             Choose any included pack. It installs on this device when selected.
           </p>
-          <label class="field" data-course-hide>World<select id="theme-select"></select></label>
+          <label class="field" data-course-hide><span data-i18n="interface:world">World</span><select id="theme-select"></select></label>
           <label class="field" data-course-hide
-            >Campaign<select id="campaign-select"></select
+            ><span data-i18n="interface:campaign">Campaign</span><select id="campaign-select"></select
           ></label>
           <label id="difficulty-field" class="field" data-course-hide>
-            Campaign difficulty
+            <span data-i18n="interface:campaignDifficulty">Campaign difficulty</span>
             <select id="difficulty-select" aria-describedby="difficulty-note">
-              <option value="standard">Standard</option>
-              <option value="gentle">Gentle</option>
+              <option value="standard" data-i18n="interface:standard">Standard</option>
+              <option value="gentle" data-i18n="interface:gentle">Gentle</option>
             </select>
           </label>
           <p id="difficulty-note" class="micro-note" role="status" data-course-hide></p>
           <details id="difficulty-details" class="difficulty-details" data-course-hide hidden>
-            <summary>Compare this mission’s rules</summary>
+            <summary data-i18n="interface:compareThisMissionSRules">Compare this mission’s rules</summary>
             <ul id="difficulty-rule-details"></ul>
           </details>
           <div class="loadout-grid">
             <label class="field" data-course-hide
-              >Starting class<select id="class-select"></select></label
+              ><span data-i18n="interface:startingClass">Starting class</span><select id="class-select"></select></label
             ><label class="field"
-              >Steering<select id="turn-select">
-                <option value="immediate">Immediate</option>
-                <option value="grid-center">Grid + buffer</option>
+              ><span data-i18n="interface:steering">Steering</span><select id="turn-select">
+                <option value="immediate" data-i18n="interface:immediate">Immediate</option>
+                <option value="grid-center" data-i18n="interface:gridBuffer">Grid + buffer</option>
               </select></label
             >
           </div>
           <p id="class-description" class="class-description"></p>
           <p id="world-legend" class="micro-note"></p>
           <label class="field"
-            >Character appearance<select
+            ><span data-i18n="interface:characterAppearance">Character appearance</span><select
               id="body-select"
               aria-describedby="appearance-hint"
             ></select></label
           ><label class="micro-note"
-            ><input id="match-class-appearance" type="checkbox" /> Match appearance to class</label
+            ><input id="match-class-appearance" type="checkbox" /> <span data-i18n="interface:matchAppearanceToClass">Match appearance to class</span></label
           >
           <p id="appearance-hint" class="appearance-hint"></p>
-          <p id="loadout-note" class="micro-note" data-course-hide>
+          <p id="loadout-note" class="micro-note" data-course-hide data-i18n="interface:startingClassChangesBeginAFreshAttemptUseAHangar">
             Starting class changes begin a fresh attempt. Use a hangar to switch during flight.
           </p>
           <div class="deck-actions" data-course-hide>
-            <button id="hangar-button" class="button secondary" type="button">
+            <button id="hangar-button" class="button secondary" type="button" data-i18n="interface:changeCraftG">
               Change craft · G</button
-            ><button id="save-attempt-button" class="button secondary" type="button">
+            ><button id="save-attempt-button" class="button secondary" type="button" data-i18n="interface:savePause">
               Save & pause
             </button>
           </div>
           <p id="hangar-state" class="micro-note"></p>
           <div class="section-line">
-            <span id="campaign-name">CAMPAIGN / FIRST SIGNAL</span
-            ><button id="collection-button" class="text-button" type="button">Collection</button>
+            <span id="campaign-name" data-i18n="interface:campaignFirstSignal">CAMPAIGN / FIRST SIGNAL</span
+            ><button id="collection-button" class="text-button" type="button" data-i18n="interface:collection">Collection</button>
           </div>
           <div id="missions" class="missions"></div>
           <div class="deck-footer">
-            <p>Find your line.</p>
-            <span>Small moves. Bigger possibilities.</span>
+            <p data-i18n="interface:findYourLine">Find your line.</p>
+            <span data-i18n="interface:smallMovesBiggerPossibilities">Small moves. Bigger possibilities.</span>
           </div>
         </aside>
       </div>
       <footer class="page-footer">
-        <span id="footer-note">Original game study · configurable worlds</span>
+        <span id="footer-note" data-i18n="interface:originalGameStudyConfigurableWorlds">Original game study · configurable worlds</span>
         <nav>
-          <a data-source-only href="../authoring/motion-lab/">Motion lab</a
+          <a data-source-only href="../authoring/motion-lab/" data-i18n="interface:motionLab">Motion lab</a
           ><a data-source-only href="../docs/concepts/round-09-reference-atlas.html"
-            >Reference atlas</a
-          ><a data-source-only href="../releases/">Versions</a
-          ><a href="replay-theater/">Replay Theater</a
-          ><a href="controller-lab/">Controller practice</a
-          ><button id="export-replay" class="text-button" type="button">Export replay</button>
+             data-i18n="interface:referenceAtlas">Reference atlas</a
+          ><a data-source-only href="../releases/" data-i18n="interface:versions">Versions</a
+          ><a href="replay-theater/" data-i18n="interface:replayTheater">Replay Theater</a
+          ><a href="controller-lab/" data-i18n="interface:controllerPractice2">Controller practice</a
+          ><button id="export-replay" class="text-button" type="button" data-i18n="interface:exportReplay">Export replay</button>
+          <button id="demo-keep" class="text-button" type="button" data-i18n="demo:keep">Keep for demo</button>
+          <span id="demo-keep-status" class="micro-note" role="status"></span>
         </nav>
       </footer>
     </main>
     <dialog id="help-dialog">
-      <button class="dialog-close" data-close="help-dialog" aria-label="Close help">×</button>
-      <p class="eyebrow">THE SHORT VERSION</p>
-      <h2>Make the next cut count.</h2>
+      <button class="dialog-close" data-close="help-dialog" aria-label="Close help" data-i18n-aria-label="interface:closeHelp">×</button>
+      <p class="eyebrow" data-i18n="interface:theShortVersion">THE SHORT VERSION</p>
+      <h2 data-i18n="interface:makeTheNextCutCount">Make the next cut count.</h2>
       <div id="help-reading-unit">
         <div class="reading-toolbar">
           <div class="reading-actions">
-            <button id="help-read" type="button" aria-controls="help-reading" aria-pressed="false">
+            <button id="help-read" type="button" aria-controls="help-reading" aria-pressed="false" data-i18n="interface:readInstructions">
               Read instructions
             </button>
-            <button id="help-reading-done" type="button" aria-controls="help-reading" disabled>
+            <button id="help-reading-done" type="button" aria-controls="help-reading" disabled data-i18n="interface:doneReading">
               Done reading
             </button>
           </div>
@@ -524,7 +538,7 @@
             role="status"
             aria-live="polite"
             aria-atomic="true"
-          >
+           data-i18n="interface:readWithoutStartingOrResuming">
             Read without starting or resuming.
           </p>
         </div>
@@ -535,101 +549,101 @@
           tabindex="0"
           data-game-reading
           data-menu-reading
-        >
+         data-i18n-aria-label="common:navigation.howToPlay">
           <ol>
-            <li>
+            <li data-i18n="interface:blueGroundIsSafeFromFieldEnemiesLeavingItBegins">
               Blue ground is safe from field enemies. Leaving it begins a vulnerable gold line.
             </li>
-            <li>
+            <li data-i18n="interface:returnToBlueGroundToCloseTheCutRegionsWithout">
               Return to blue ground to close the cut. Regions without a field enemy are revealed. In
               the revised Arcade chapters, closing a cut stops your craft: tap a fresh direction to
               fly again.
             </li>
-            <li>
+            <li data-i18n="interface:enemiesOnBothSidesCanLeaveOnlyYourLineCaptured">
               Enemies on both sides can leave only your line captured. Use that line to begin
               another cut.
             </li>
-            <li id="line-danger-help">
+            <li id="line-danger-help" data-i18n="interface:aFieldEnemyTouchingYourLineOrCrossingYourOwn">
               A field enemy touching your line, or crossing your own line, costs a life. Border
               patrols can also hit you on the outer edge.
             </li>
-            <li>
+            <li data-i18n="interface:reachTheCoverageTargetAndCaptureRequiredObjectivesSpecialChallenge">
               Reach the coverage target and capture required objectives. Special challenge maps can
               limit the clock or live-line length; their briefing and HUD explain those limits.
             </li>
           </ol>
-          <p>
-            <strong>Keyboard:</strong>
+          <p data-i18n-rich="interface:touchDragTheFloatingStickOrSwipeToTurnChoose">
+            <strong data-i18n="interface:keyboard" data-i18n-slot="slot0">Keyboard:</strong>
             <span id="keyboard-help"
-              >arrows/WASD, Shift boost, E ability, R supply, Escape/P pause.</span
+               data-i18n="interface:arrowsWasdShiftBoostEAbilityRSupplyEscapeP" data-i18n-slot="slot1">arrows/WASD, Shift boost, E ability, R supply, Escape/P pause.</span
             >
             Touch: drag the floating stick or swipe to turn. Choose a sliding D-pad, either hand,
             size and opacity in Settings. Releasing keeps you moving. Pause to take a break.
           </p>
           <p>
-            <strong>Controller:</strong>
+            <strong data-i18n="interface:controller2">Controller:</strong>
             <span id="controller-help"
-              >Release controls and press a face button to join. Configure the layout in
+               data-i18n="interface:releaseControlsAndPressAFaceButtonToJoinConfigure">Release controls and press a face button to join. Configure the layout in
               Settings.</span
             >
           </p>
-          <p>
+          <p data-i18n="interface:textEntryAndFilePickersStillUseKeyboardOrTouch">
             Text entry and file pickers still use keyboard or touch. Some browsers also need a
             keyboard or touch action before sound can start. Menu navigation and silent gameplay
             remain available.
           </p>
-          <p>
+          <p data-i18n="interface:eachClassExplainsItsActualEffectInTheFlightDeck">
             Each class explains its actual effect in the flight deck. Scout shows current direction
             hints and hidden objectives; supplies refill charge-based classes. A shield absorbs one
             contact by safely cancelling the line.
           </p>
-          <p>
-            <strong>Campaign difficulty:</strong> Standard and Gentle reveal the same pictures and
+          <p data-i18n-rich="interface:standardAndGentleRevealTheSamePicturesAndShareMission">
+            <strong data-i18n="interface:campaignDifficulty2" data-i18n-slot="slot0">Campaign difficulty:</strong> Standard and Gentle reveal the same pictures and
             share mission and appearance unlocks. Scores and medals stay separate; equipment seals
             require Standard. A change during a flight applies to the next fresh attempt. Resume and
             Load preserve the current flight; Retry starts the selected difficulty from the
             beginning.
           </p>
-          <p>
-            <strong>Long flights:</strong> Replay recording and recoverable saves stop after 30
+          <p data-i18n-rich="interface:replayRecordingAndRecoverableSavesStopAfter30MinutesOf">
+            <strong data-i18n="interface:longFlights" data-i18n-slot="slot0">Long flights:</strong> Replay recording and recoverable saves stop after 30
             minutes of play. A flight can continue, but a completion after two hours cannot be kept
             in the collection. Pause when taking a break, and export your library to keep a backup.
           </p>
         </div>
       </div>
-      <button class="button primary" data-close="help-dialog">Ready to fly →</button>
-      <button id="first-flight-help-enter" class="button secondary" type="button" hidden>
+      <button class="button primary" data-close="help-dialog" data-i18n="interface:readyToFly">Ready to fly →</button>
+      <button id="first-flight-help-enter" class="button secondary" type="button" hidden data-i18n="interface:learnByPlaying">
         Learn by playing
       </button>
       <p id="first-flight-entry-status" role="status" hidden></p>
-      <button id="first-flight-entry-cancel" class="button secondary" type="button" hidden>
+      <button id="first-flight-entry-cancel" class="button secondary" type="button" hidden data-i18n="interface:cancelCourseEntry">
         Cancel course entry
       </button>
     </dialog>
     <dialog id="collection-dialog" aria-labelledby="collection-title">
-      <button class="dialog-close" data-close="collection-dialog" aria-label="Close collection">
+      <button class="dialog-close" data-close="collection-dialog" aria-label="Close collection" data-i18n-aria-label="interface:closeCollection">
         ×
       </button>
-      <p class="eyebrow">YOUR FLIGHT LOG</p>
-      <h2 id="collection-title">Every line leaves a mark.</h2>
-      <p>
+      <p class="eyebrow" data-i18n="interface:yourFlightLog">YOUR FLIGHT LOG</p>
+      <h2 id="collection-title" data-i18n="interface:everyLineLeavesAMark">Every line leaves a mark.</h2>
+      <p data-i18n="interface:completedPicturesStayHereOpenOneToEnjoyItAgain">
         Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new
         best.
       </p>
       <label class="field"
-        >Find a picture<input
+        ><span data-i18n="interface:findAPicture">Find a picture</span><input
           id="gallery-search"
           type="search"
           placeholder="Level name or world"
           autocomplete="off"
-      /></label>
+       data-i18n-placeholder="interface:levelNameOrWorld"/></label>
       <div id="gallery-grid" class="gallery-grid"></div>
-      <nav id="gallery-pages" class="overlay-actions" aria-label="Picture pages"></nav>
+      <nav id="gallery-pages" class="overlay-actions" aria-label="Picture pages" data-i18n-aria-label="interface:picturePages"></nav>
       <label class="field" for="collection-context"
-        >Chapter progress
+        ><span data-i18n="interface:chapterProgress">Chapter progress</span>
         <select id="collection-context" aria-describedby="collection-context-note"></select>
       </label>
-      <p id="collection-context-note">
+      <p id="collection-context-note" data-i18n="interface:viewAchievementsAndAppearancesWithoutChangingYourFlightPicturesAbove">
         View achievements and appearances without changing your flight. Pictures above include every
         chapter.
       </p>
@@ -641,7 +655,7 @@
               type="button"
               aria-controls="collection-reading"
               aria-pressed="false"
-            >
+             data-i18n="interface:readAchievements">
               Read achievements
             </button>
             <button
@@ -649,7 +663,7 @@
               type="button"
               aria-controls="collection-reading"
               disabled
-            >
+             data-i18n="interface:doneReading">
               Done reading
             </button>
           </div>
@@ -659,7 +673,7 @@
             role="status"
             aria-live="polite"
             aria-atomic="true"
-          >
+           data-i18n="interface:readWithoutStartingOrResuming">
             Read without starting or resuming.
           </p>
         </div>
@@ -670,21 +684,21 @@
           tabindex="0"
           data-game-reading
           data-menu-reading
-        >
-          <h3 id="achievement-campaign">Campaign achievements</h3>
+         data-i18n-aria-label="interface:achievementsAndAppearances">
+          <h3 id="achievement-campaign" data-i18n="interface:campaignAchievements">Campaign achievements</h3>
           <div id="achievements"></div>
-          <h3 id="appearance-campaign">Campaign appearances</h3>
+          <h3 id="appearance-campaign" data-i18n="interface:campaignAppearances">Campaign appearances</h3>
           <div id="appearance-rewards" class="appearance-rewards"></div>
           <p id="collection-note"></p>
         </div>
       </div>
-      <button id="collection-choose-appearance" class="button secondary" type="button">
+      <button id="collection-choose-appearance" class="button secondary" type="button" data-i18n="interface:chooseAppearanceForCurrentFlight">
         Choose appearance for current flight
       </button>
-      <button class="button primary" data-close="collection-dialog">Back to the field →</button>
+      <button class="button primary" data-close="collection-dialog" data-i18n="interface:backToTheField">Back to the field →</button>
     </dialog>
     <dialog id="gallery-view-dialog" class="wide-dialog">
-      <button class="dialog-close" data-close="gallery-view-dialog" aria-label="Close picture">
+      <button class="dialog-close" data-close="gallery-view-dialog" aria-label="Close picture" data-i18n-aria-label="interface:closePicture">
         ×
       </button>
       <p class="eyebrow" id="gallery-view-meta"></p>
@@ -694,11 +708,11 @@
         aria-label="Equipment seals"
         tabindex="0"
         hidden
-      ></ul>
-      <h2 id="gallery-view-title">Your picture</h2>
+       data-i18n-aria-label="interface:equipmentSeals"></ul>
+      <h2 id="gallery-view-title" data-i18n="interface:yourPicture">Your picture</h2>
       <label id="gallery-difficulty-field" class="field" hidden>
-        Saved difficulty
-        <select id="gallery-difficulty" aria-label="Saved difficulty" disabled></select>
+        <span data-i18n="interface:savedDifficulty">Saved difficulty</span>
+        <select id="gallery-difficulty" aria-label="Saved difficulty" disabled data-i18n-aria-label="interface:savedDifficulty"></select>
       </label>
       <canvas
         id="gallery-canvas"
@@ -706,328 +720,338 @@
         height="576"
         role="img"
         aria-label="Completed level picture"
-      ></canvas>
+       data-i18n-aria-label="interface:completedLevelPicture"></canvas>
       <div class="overlay-actions">
-        <button id="gallery-animate" class="button primary">Play celebration ↗</button
-        ><button id="gallery-replay" class="button secondary">Replay mission</button
-        ><button class="button secondary" data-close="gallery-view-dialog">
+        <button id="gallery-animate" class="button primary" data-i18n="interface:playCelebration">Play celebration ↗</button
+        ><button id="gallery-replay" class="button secondary" data-i18n="interface:replayMission">Replay mission</button
+        ><button class="button secondary" data-close="gallery-view-dialog" data-i18n="interface:backToCollection">
           Back to collection
         </button>
       </div>
     </dialog>
     <dialog id="hangar-dialog">
-      <button class="dialog-close" data-close="hangar-dialog" aria-label="Close hangar">×</button>
-      <p class="eyebrow">YOUR NEXT FLIGHT</p>
-      <h2>Different tools. New routes.</h2>
-      <p>
+      <button class="dialog-close" data-close="hangar-dialog" aria-label="Close hangar" data-i18n-aria-label="interface:closeHangar">×</button>
+      <p class="eyebrow" data-i18n="interface:yourNextFlight2">YOUR NEXT FLIGHT</p>
+      <h2 data-i18n="interface:differentToolsNewRoutes">Different tools. New routes.</h2>
+      <p data-i18n="interface:returnToAMarkedHangarOnSafeGroundWithNo">
         Return to a marked hangar on safe ground with no live line. Charges and cooldowns stay with
         each craft; changing craft never refills them.
       </p>
-      <label class="field">Next craft<select id="switch-class-select"></select></label>
+      <label class="field"><span data-i18n="interface:nextCraft">Next craft</span><select id="switch-class-select"></select></label>
       <p id="switch-description"></p>
-      <button id="switch-class-button" class="button primary">Switch & continue →</button>
+      <button id="switch-class-button" class="button primary" data-i18n="interface:switchContinue">Switch & continue →</button>
       <p id="switch-status" role="status"></p>
     </dialog>
     <dialog id="settings-dialog" aria-labelledby="settings-title">
-      <button class="dialog-close" data-close="settings-dialog" aria-label="Close settings">
+<div data-language-control></div>
+
+      <button class="dialog-close" data-close="settings-dialog" aria-label="Close settings" data-i18n-aria-label="interface:closeSettings">
         ×
       </button>
-      <p class="eyebrow">TUNE YOUR ARCADE</p>
-      <h2 id="settings-title">Your pace. Your soundtrack.</h2>
+      <p class="eyebrow" data-i18n="interface:tuneYourArcade">TUNE YOUR ARCADE</p>
+      <h2 id="settings-title" data-i18n="interface:yourPaceYourSoundtrack">Your pace. Your soundtrack.</h2>
       <label class="field"
-        >Music<select id="music-select">
-          <option value="synthwave">Sunset synth</option>
-          <option value="chiptune">Cartridge chiptune</option>
-          <option value="rock">Arcade rock</option>
-          <option value="metal">Pixel metal</option>
-          <option value="ambient">Quiet skies</option>
+        ><span data-i18n="interface:music">Music</span><select id="music-select">
+          <option value="synthwave" data-i18n="interface:sunsetSynth">Sunset synth</option>
+          <option value="chiptune" data-i18n="interface:cartridgeChiptune">Cartridge chiptune</option>
+          <option value="rock" data-i18n="interface:arcadeRock">Arcade rock</option>
+          <option value="metal" data-i18n="interface:pixelMetal">Pixel metal</option>
+          <option value="ambient" data-i18n="interface:quietSkies">Quiet skies</option>
         </select></label
       >
       <label class="slider-field"
-        >Master <input id="master-volume" type="range" min="0" max="1" step="0.05" value="0.8"
+        ><span data-i18n="interface:master">Master</span> <input id="master-volume" type="range" min="0" max="1" step="0.05" value="0.8"
       /></label>
       <label class="slider-field"
-        >Music <input id="music-volume" type="range" min="0" max="1" step="0.05" value="0.45"
+        ><span data-i18n="interface:music">Music</span> <input id="music-volume" type="range" min="0" max="1" step="0.05" value="0.45"
       /></label>
       <label class="slider-field"
-        >Effects <input id="sfx-volume" type="range" min="0" max="1" step="0.05" value="0.6"
+        ><span data-i18n="interface:effects">Effects</span> <input id="sfx-volume" type="range" min="0" max="1" step="0.05" value="0.6"
       /></label>
-      <button id="music-preview" class="button secondary">Play music ♫</button>
-      <button id="soundtrack-open" class="button secondary" disabled>
+      <button id="music-preview" class="button secondary" data-i18n="interface:playMusic">Play music ♫</button>
+      <button id="soundtrack-open" class="button secondary" disabled data-i18n="interface:musicLibraryPlaylists">
         Music library & playlists
       </button>
-      <p id="soundtrack-summary" class="micro-note" role="status">Loading music library…</p>
+      <p id="soundtrack-summary" class="micro-note" role="status" data-i18n="interface:loadingMusicLibrary">Loading music library…</p>
       <label class="field"
-        >Text size<select id="text-size">
-          <option value="standard">Standard</option>
-          <option value="large">Large</option>
+        ><span data-i18n="interface:textSize">Text size</span><select id="text-size">
+          <option value="standard" data-i18n="interface:standard">Standard</option>
+          <option value="large" data-i18n="interface:large">Large</option>
         </select></label
       >
       <label class="field"
-        >Terrain detail<select id="terrain-select">
-          <option value="hybrid">Balanced detail</option>
-          <option value="microtile">Small pixel tiles</option>
-          <option value="props">Larger landmarks</option>
+        ><span data-i18n="interface:terrainDetail">Terrain detail</span><select id="terrain-select">
+          <option value="hybrid" data-i18n="interface:balancedDetail">Balanced detail</option>
+          <option value="microtile" data-i18n="interface:smallPixelTiles">Small pixel tiles</option>
+          <option value="props" data-i18n="interface:largerLandmarks">Larger landmarks</option>
         </select></label
       >
-      <label><input id="settings-grid" type="checkbox" /> Show grid guides</label>
+      <label><input id="settings-grid" type="checkbox" /> <span data-i18n="interface:showGridGuides">Show grid guides</span></label>
       <div class="settings-assists">
-        <label><input id="settings-reduced-effects" type="checkbox" /> Reduced effects</label>
+        <label><input id="settings-reduced-effects" type="checkbox" /> <span data-i18n="interface:reducedEffects">Reduced effects</span></label>
         <label class="field"
-          >On-screen steering
+          ><span data-i18n="interface:onScreenSteering">On-screen steering</span>
           <select id="screen-controls">
-            <option value="auto">Auto · touch only</option>
-            <option value="always">Always · touch or mouse</option>
-            <option value="off">Off · keyboard or controller</option>
+            <option value="auto" data-i18n="interface:autoTouchOnly">Auto · touch only</option>
+            <option value="always" data-i18n="interface:alwaysTouchOrMouse">Always · touch or mouse</option>
+            <option value="off" data-i18n="interface:offKeyboardOrController">Off · keyboard or controller</option>
           </select></label
         >
-        <p class="micro-note">
+        <p class="micro-note" data-i18n="interface:autoShowsSteeringDuringTouchPlayKeyboardOrControllerUse">
           Auto shows steering during touch play. Keyboard or controller use hides it. Choose Always
           to steer with a mouse. Drag anywhere on the board, or use the thumb area below.
         </p>
         <label class="field"
-          >Touch steering<select id="touch-mode">
-            <option value="stick">Floating stick · drag from anywhere</option>
-            <option value="swipe">Swipe · flick to turn</option>
-            <option value="dpad">D-pad · tap or slide between directions</option>
+          ><span data-i18n="interface:touchSteering">Touch steering</span><select id="touch-mode">
+            <option value="stick" data-i18n="interface:floatingStickDragFromAnywhere">Floating stick · drag from anywhere</option>
+            <option value="swipe" data-i18n="interface:swipeFlickToTurn">Swipe · flick to turn</option>
+            <option value="dpad" data-i18n="interface:dPadTapOrSlideBetweenDirections">D-pad · tap or slide between directions</option>
           </select></label
         >
         <label class="field"
-          >Steering hand<select id="touch-side">
-            <option value="right">Right</option>
-            <option value="left">Left</option>
+          ><span data-i18n="interface:steeringHand">Steering hand</span><select id="touch-side">
+            <option value="right" data-i18n="interface:right">Right</option>
+            <option value="left" data-i18n="interface:left">Left</option>
           </select></label
         >
         <label class="field"
-          >Touch control size<select id="touch-size">
-            <option value="regular">Regular</option>
-            <option value="large">Large</option>
+          ><span data-i18n="interface:touchControlSize">Touch control size</span><select id="touch-size">
+            <option value="regular" data-i18n="interface:regular">Regular</option>
+            <option value="large" data-i18n="interface:large">Large</option>
           </select></label
         >
         <label class="field"
-          >Touch control opacity<input
+          ><span data-i18n="interface:touchControlOpacity">Touch control opacity</span><input
             id="touch-opacity"
             type="range"
             min="0.2"
             max="1"
             step="0.05"
         /></label>
-        <p class="micro-note">
+        <p class="micro-note" data-i18n="interface:aShortDragTurnsImmediatelyLiftYourFingerToKeep">
           A short drag turns immediately. Lift your finger to keep flying; use Pause to take a
           break. The stick appears under your thumb. In landscape, controls float over the board.
         </p>
         <p id="equipment-help" class="micro-note"></p>
         <label id="screen-boost-setting"
-          ><input id="settings-tap-steering" type="checkbox" /> Toggle on-screen Boost</label
+          ><input id="settings-tap-steering" type="checkbox" /> <span data-i18n="interface:toggleOnScreenBoost">Toggle on-screen Boost</span></label
         >
       </div>
-      <p class="micro-note">
+      <p class="micro-note" data-i18n="interface:reducedEffectsSoftensMovementAndCelebrationEffectsEveryDirectionTap">
         Reduced effects softens movement and celebration effects. Every direction tap keeps you
         moving. Use Pause to take a break. Manual equipment, when provided by a map, uses separate
         controls.
       </p>
-      <p class="micro-note">
+      <p class="micro-note" data-i18n="interface:builtInOriginalSynthPlaylistsAndYourLocalMp3Library">
         Built-in original synth playlists and your local MP3 library. The music studio manages
         custom tracks, playlists and complete audio backups.
       </p>
       <details id="creator-tools" class="creator-tools">
-        <summary>Creator tools and original media</summary>
-        <p class="micro-note">
+        <summary data-i18n="interface:creatorToolsAndOriginalMedia">Creator tools and original media</summary>
+        <p class="micro-note" data-i18n="interface:assignOriginalPicturesToMapsAndWorldsInTheSeparate">
           Assign original pictures to maps and worlds in the separate workshop. Fresh attempts use
           the selected revision; saved flights and earned pictures keep their original choice. This
           opens the workshop for this exact edition.
         </p>
-        <a class="button secondary" href="../authoring/still-media/">Picture workshop</a>
-        <a class="button secondary" href="../authoring/video-poster/">Video poster workshop</a>
-        <p class="micro-note">
+        <a class="button secondary" href="../authoring/still-media/" data-i18n="interface:pictureWorkshop">Picture workshop</a>
+        <a class="button secondary" href="../authoring/video-poster/" data-i18n="interface:videoPosterWorkshop">Video poster workshop</a>
+        <p class="micro-note" data-i18n="interface:backUpOriginalPicturesWithRlmediaAndMusicWithRlsound">
           Back up original pictures with .rlmedia and music with .rlsound. Game-data JSON keeps
           progress and picture references, and does not contain these uploaded files.
         </p>
       </details>
       <details id="keyboard-settings">
-        <summary>Keyboard controls</summary>
-        <p class="micro-note">
+        <summary data-i18n="interface:keyboardControls">Keyboard controls</summary>
+        <p class="micro-note" data-i18n="interface:chooseAPresetOrChangeAnyActionKeysUsePhysical">
           Choose a preset or change any action. Keys use physical positions, so W means the W
           position on a US keyboard. Escape always pauses; Escape or Tab cancels key capture.
           Keyboard changes affect solo play and its practice preview. Couch players keep their
           separate controls.
         </p>
         <label class="field"
-          >Keyboard preset<select id="key-preset">
-            <option value="default">Arrows + WASD</option>
-            <option value="left-hand">Left hand</option>
-            <option value="right-hand">Right hand</option>
-            <option value="custom" disabled>Custom</option>
+          ><span data-i18n="interface:keyboardPreset">Keyboard preset</span><select id="key-preset">
+            <option value="default" data-i18n="interface:arrowsWasd">Arrows + WASD</option>
+            <option value="left-hand" data-i18n="interface:leftHand">Left hand</option>
+            <option value="right-hand" data-i18n="interface:rightHand">Right hand</option>
+            <option value="custom" disabled data-i18n="interface:custom">Custom</option>
           </select></label
         >
         <div id="key-binding-list" class="key-binding-list"></div>
-        <button id="cancel-key-capture" class="button secondary" type="button" hidden>
+        <button id="cancel-key-capture" class="button secondary" type="button" hidden data-i18n="interface:cancelKeyCapture">
           Cancel key capture
         </button>
-        <button id="reset-key-bindings" class="button secondary" type="button">
+        <button id="reset-key-bindings" class="button secondary" type="button" data-i18n="interface:restoreDefaultKeys">
           Restore default keys
         </button>
-        <p id="key-capture-status" class="micro-note" role="status" aria-live="polite">
+        <p id="key-capture-status" class="micro-note" role="status" aria-live="polite" data-i18n="interface:selectAnActionToChangeItsKey">
           Select an action to change its key.
         </p>
       </details>
-      <section id="controller-settings-root" aria-label="Controller controls"></section>
+      <section id="controller-settings-root" aria-label="Controller controls" data-i18n-aria-label="interface:controllerControls"></section>
       <section
         id="controller-boost-setting"
         class="controller-boost-settings"
         aria-label="Solo controller Boost behavior"
-      >
-        <label for="controller-boost-mode">Solo controller Boost</label>
+       data-i18n-aria-label="interface:soloControllerBoostBehavior">
+        <label for="controller-boost-mode" data-i18n="interface:soloControllerBoost">Solo controller Boost</label>
         <select id="controller-boost-mode" aria-describedby="controller-boost-help">
-          <option value="hold">Hold</option>
-          <option value="toggle">Toggle</option>
+          <option value="hold" data-i18n="interface:hold">Hold</option>
+          <option value="toggle" data-i18n="interface:toggle">Toggle</option>
         </select>
-        <p id="controller-boost-help" class="micro-note">
+        <p id="controller-boost-help" class="micro-note" data-i18n="interface:togglePressBoostOnceForOnOffPauseAndRecovery">
           Toggle: press Boost once for on/off. Pause and recovery turn it off. Tap a direction to
           keep flying. Couch keeps its separate Hold controls for Boost.
         </p>
-        <p class="micro-note">
+        <p class="micro-note" data-i18n="interface:thisSettingIsSeparateFromTheButtonMapDraftSelect">
           This setting is separate from the button-map draft. Select Hold to reset it.
         </p>
         <p id="controller-boost-status" class="micro-note" role="status"></p>
       </section>
-      <section aria-label="Download retention">
+      <section aria-label="Download retention" data-i18n-aria-label="interface:downloadRetention">
         <button
           id="storage-retention-button"
           class="button secondary"
           type="button"
           aria-describedby="storage-retention-help storage-retention-status"
-        >
+         data-i18n="interface:keepDownloadsOnThisDevice">
           Keep downloads on this device
         </button>
-        <p id="storage-retention-help" class="micro-note">
+        <p id="storage-retention-help" class="micro-note" data-i18n="interface:askThisBrowserToProtectThisSiteSSavedData">
           Ask this browser to protect this site's saved data from automatic removal. This does not
           download files or replace backups.
         </p>
-        <p id="storage-retention-status" class="micro-note" role="status" aria-live="polite">
+        <p id="storage-retention-status" class="micro-note" role="status" aria-live="polite" data-i18n="interface:retentionHasNotBeenChecked">
           Retention has not been checked.
         </p>
       </section>
-      <p id="offline-status" class="micro-note">
+      <p id="offline-status" class="micro-note" data-i18n="interface:offlineInstallationIsAvailableInPackagedReleases">
         Offline installation is available in packaged releases.
       </p>
+      <section class="demo-settings" aria-labelledby="demo-settings-title">
+        <h3 id="demo-settings-title" data-i18n="demo:settings">Demo mode</h3>
+        <label><input id="demo-auto" type="checkbox" /><span data-i18n="demo:auto">Show a demo after 60 seconds on the idle home screen</span></label>
+        <label><input id="demo-collect" type="checkbox" /><span data-i18n="demo:collect">Use my successful runs in demos</span></label>
+        <p class="micro-note" data-i18n="demo:localOnly">Recordings stay on this device. The disposable demo cache holds up to 12 recordings / 32 MiB and is separate from saved flights.</p>
+        <button id="demo-clear" type="button" class="button secondary" data-i18n="demo:clear">Clear my demo recordings</button>
+        <p id="demo-settings-status" class="micro-note" role="status"></p>
+      </section>
       <a id="native-diagnostics" class="micro-note" href="../diagnostics/" hidden
-        >iPhone runtime checks</a
+         data-i18n="interface:iphoneRuntimeChecks">iPhone runtime checks</a
       >
-      <button id="offline-button" class="button secondary" hidden>Prepare offline play</button>
+      <button id="offline-button" class="button secondary" hidden data-i18n="interface:prepareOfflinePlay">Prepare offline play</button>
       <details>
-        <summary>Offline verification details</summary>
+        <summary data-i18n="interface:offlineVerificationDetails">Offline verification details</summary>
         <pre id="offline-details">No offline check yet.</pre>
       </details>
     </dialog>
     <dialog id="library-dialog" class="wide-dialog">
-      <button class="dialog-close" data-close="library-dialog" aria-label="Close library">×</button>
-      <p class="eyebrow">THE THINGS YOU KEEP</p>
-      <h2>Your arcade library.</h2>
-      <div class="library-tabs" role="group" aria-label="Library sections">
-        <button data-library-panel="scores" class="button secondary">Local scores</button
-        ><button data-library-panel="saves" class="button secondary">Saves & loads</button
-        ><button data-library-panel="packs" class="button secondary">Expansion packs</button
-        ><button data-library-panel="challenges" class="button secondary">Challenges</button>
+      <button class="dialog-close" data-close="library-dialog" aria-label="Close library" data-i18n-aria-label="interface:closeLibrary">×</button>
+      <p class="eyebrow" data-i18n="interface:theThingsYouKeep">THE THINGS YOU KEEP</p>
+      <h2 data-i18n="interface:yourArcadeLibrary">Your arcade library.</h2>
+      <div class="library-tabs" role="group" aria-label="Library sections" data-i18n-aria-label="interface:librarySections">
+        <button data-library-panel="scores" class="button secondary" data-i18n="interface:localScores">Local scores</button
+        ><button data-library-panel="saves" class="button secondary" data-i18n="interface:savesLoads">Saves & loads</button
+        ><button data-library-panel="packs" class="button secondary" data-i18n="interface:expansionPacks">Expansion packs</button
+        ><button data-library-panel="challenges" class="button secondary" data-i18n="interface:challenges">Challenges</button>
       </div>
       <section id="library-scores">
-        <p>
+        <p data-i18n="interface:yourBestClearsGroupedByMapAndExactSetupThese">
           Your best clears, grouped by map and exact setup. These scores are stored on this device;
           there is no global ranking service.
         </p>
         <label class="field"
-          >Find a score<input
+          ><span data-i18n="interface:findAScore">Find a score</span><input
             id="score-search"
             type="search"
             placeholder="Level or class"
             autocomplete="off"
-        /></label>
+         data-i18n-placeholder="interface:levelOrClass"/></label>
         <div id="scoreboard" class="scoreboard"></div>
-        <nav id="score-pages" class="overlay-actions" aria-label="Score pages"></nav>
+        <nav id="score-pages" class="overlay-actions" aria-label="Score pages" data-i18n-aria-label="interface:scorePages"></nav>
       </section>
       <section id="library-saves" hidden>
         <p id="library-capacity" class="micro-note"></p>
-        <button id="export-backup" class="button primary">Export game data</button>
-        <p>
+        <button id="export-backup" class="button primary" data-i18n="interface:exportGameData">Export game data</button>
+        <p data-i18n="interface:thisJsonIncludesYourPlayerLibraryInstalledPacksAndSaved">
           This JSON includes your player library, installed packs and saved flight. Importing it
           replaces those three together. Uploaded originals and custom music need their separate
           .rlmedia and .rlsound backups. Restore originals first when transferring saved custom
           pictures, then import the game data. Keep your current backups to preserve both
           collections.
         </p>
-        <button id="undo-backup" class="button secondary" disabled>Undo game-data import</button>
-        <p id="suspended-status">No suspended attempt.</p>
+        <button id="undo-backup" class="button secondary" disabled data-i18n="interface:undoGameDataImport">Undo game-data import</button>
+        <p id="suspended-status" data-i18n="interface:noSuspendedAttempt">No suspended attempt.</p>
         <div class="overlay-actions">
-          <button id="resume-save" class="button primary">Load suspended attempt</button
+          <button id="resume-save" class="button primary" data-i18n="interface:loadSuspendedAttempt">Load suspended attempt</button
           ><button
             id="export-session"
             class="button secondary"
             aria-describedby="attempt-export-source"
-          >
+           data-i18n="interface:exportSavedAttempt">
             Export saved attempt</button
-          ><button id="cancel-attempt-export" class="button secondary" hidden disabled>
+          ><button id="cancel-attempt-export" class="button secondary" hidden disabled data-i18n="interface:cancelExport">
             Cancel export</button
-          ><button id="export-library" class="button secondary">Export player library</button>
+          ><button id="export-library" class="button secondary" data-i18n="interface:exportPlayerLibrary">Export player library</button>
         </div>
         <p id="attempt-export-source" class="micro-note"></p>
-        <p>
+        <p data-i18n="interface:playerLibraryFilesContainCampaignProgressPictureRecordsLocalScores">
           Player library files contain campaign progress, picture records, local scores and
           preferences. Attempt files contain a verified unfinished flight. Install matching
           expansion packs before resuming their flights.
         </p>
         <label class="field"
-          >Load a saved JSON file<input id="save-file" type="file" accept=".json,application/json"
+          ><span data-i18n="interface:loadASavedJsonFile">Load a saved JSON file</span><input id="save-file" type="file" accept=".json,application/json"
         /></label>
         <details>
-          <summary>Copy or paste save JSON</summary>
-          <textarea id="save-json" aria-label="Save JSON" spellcheck="false"></textarea
-          ><button id="import-save" class="button primary">Load this JSON</button>
+          <summary data-i18n="interface:copyOrPasteSaveJson">Copy or paste save JSON</summary>
+          <textarea id="save-json" aria-label="Save JSON" spellcheck="false" data-i18n-aria-label="interface:saveJson"></textarea
+          ><button id="import-save" class="button primary" data-i18n="interface:loadThisJson">Load this JSON</button>
         </details>
-        <button id="undo-library" class="button secondary" disabled>
+        <button id="undo-library" class="button secondary" disabled data-i18n="interface:undoLastLibraryImport">
           Undo last library import
         </button>
         <p id="save-status" role="status"></p>
       </section>
       <section id="library-packs" hidden>
-        <p>
+        <p data-i18n="interface:expansionPacksAddCampaignsMapsRegisteredAbilitiesThemesImagesAnd">
           Expansion packs add campaigns, maps, registered abilities, themes, images and original
           music recipes. Packs contain data; they cannot execute scripts.
         </p>
         <div id="builtin-packs" class="pack-list"></div>
         <div id="installed-packs" class="pack-list"></div>
         <label class="field"
-          >Install a pack file<input id="pack-file" type="file" accept=".json,application/json"
+          ><span data-i18n="interface:installAPackFile">Install a pack file</span><input id="pack-file" type="file" accept=".json,application/json"
         /></label>
         <details>
-          <summary>Paste pack JSON</summary>
-          <textarea id="pack-json" aria-label="Expansion pack JSON" spellcheck="false"></textarea
-          ><button id="install-pack" class="button primary">Validate & install</button>
+          <summary data-i18n="interface:pastePackJson">Paste pack JSON</summary>
+          <textarea id="pack-json" aria-label="Expansion pack JSON" spellcheck="false" data-i18n-aria-label="interface:expansionPackJson"></textarea
+          ><button id="install-pack" class="button primary" data-i18n="interface:validateInstall">Validate & install</button>
         </details>
-        <button id="export-packs" class="button secondary">Export installed packs</button>
+        <button id="export-packs" class="button secondary" data-i18n="interface:exportInstalledPacks">Export installed packs</button>
         <p id="pack-status" role="status"></p>
       </section>
       <section id="library-challenges" hidden>
-        <p>
+        <p data-i18n="interface:returnWheneverYouLikeDailyBoardsRemainPlayableByDate">
           Return whenever you like. Daily boards remain playable by date; no streak expires and no
           reward depends on logging in.
         </p>
-        <label class="field">Board date<input id="challenge-date" type="date" /></label
+        <label class="field"><span data-i18n="interface:boardDate">Board date</span><input id="challenge-date" type="date" /></label
         ><label class="field"
-          >Challenge<select id="challenge-kind">
-            <option value="daily">Daily route</option>
-            <option value="calm">Open skies · slower patrols</option>
-            <option value="expert">Pressure run · faster patrols</option>
+          ><span data-i18n="interface:challenge">Challenge</span><select id="challenge-kind">
+            <option value="daily" data-i18n="interface:dailyRoute">Daily route</option>
+            <option value="calm" data-i18n="interface:openSkiesSlowerPatrols">Open skies · slower patrols</option>
+            <option value="expert" data-i18n="interface:pressureRunFasterPatrols">Pressure run · faster patrols</option>
           </select></label
         >
-        <button id="launch-challenge" class="button primary">Play this challenge →</button>
+        <button id="launch-challenge" class="button primary" data-i18n="interface:playThisChallenge">Play this challenge →</button>
         <p id="challenge-status" role="status"></p>
       </section>
     </dialog>
     <dialog id="replay-dialog">
-      <button class="dialog-close" data-close="replay-dialog" aria-label="Close replay">×</button>
-      <p class="eyebrow">REPRODUCE THIS ATTEMPT</p>
-      <h2>Your recorded route.</h2>
-      <p>
+      <button class="dialog-close" data-close="replay-dialog" aria-label="Close replay" data-i18n-aria-label="interface:closeReplay">×</button>
+      <p class="eyebrow" data-i18n="interface:reproduceThisAttempt">REPRODUCE THIS ATTEMPT</p>
+      <h2 data-i18n="interface:yourRecordedRoute">Your recorded route.</h2>
+      <p data-i18n="interface:theFileContainsTheExactLevelClassRecipeInputsAnd">
         The file contains the exact level, class recipe, inputs and final state. Paste its JSON into
         the Playground to verify it.
       </p>
@@ -1036,10 +1060,10 @@
         aria-label="Exported replay JSON"
         readonly
         spellcheck="false"
-      ></textarea>
+       data-i18n-aria-label="interface:exportedReplayJson"></textarea>
       <div class="overlay-actions">
-        <button id="download-replay" class="button primary">Download JSON</button
-        ><button class="button" data-close="replay-dialog">Close</button>
+        <button id="download-replay" class="button primary" data-i18n="interface:downloadJson">Download JSON</button
+        ><button class="button" data-close="replay-dialog" data-i18n="common:actions.close">Close</button>
       </div>
     </dialog>
     <dialog
@@ -1049,9 +1073,9 @@
       aria-labelledby="restart-dialog-title"
       aria-describedby="restart-dialog-copy"
     >
-      <p class="eyebrow">CURRENT ATTEMPT</p>
-      <h2 id="restart-dialog-title">Restart this mission?</h2>
-      <p id="restart-dialog-copy">
+      <p class="eyebrow" data-i18n="interface:currentAttempt">CURRENT ATTEMPT</p>
+      <h2 id="restart-dialog-title" data-i18n="interface:restartThisMission">Restart this mission?</h2>
+      <p id="restart-dialog-copy" data-i18n="interface:yourCurrentLineScoreAndElapsedTimeWillBeReset">
         Your current line, score and elapsed time will be reset. Campaign progress you already
         earned stays safe.
       </p>
@@ -1061,10 +1085,42 @@
           class="button primary"
           type="button"
           data-close="restart-dialog"
-        >
+         data-i18n="interface:keepPlaying">
           Keep playing
         </button>
-        <button id="restart-confirm" class="button secondary" type="button">Restart mission</button>
+        <button id="restart-confirm" class="button secondary" type="button" data-i18n="interface:restartMission">Restart mission</button>
+      </div>
+    </dialog>
+    <dialog id="demo-dialog" class="demo-dialog" aria-labelledby="demo-level">
+      <header class="demo-header">
+        <div><p class="eyebrow"><span data-i18n="demo:title">DEMO</span> · <span id="demo-source"></span></p><h2 id="demo-level"></h2></div>
+        <button id="demo-back" type="button" class="button secondary" data-i18n="demo:back">Back</button>
+      </header>
+      <div class="demo-board"><canvas id="demo-canvas" width="768" height="576" tabindex="0" data-i18n-aria-label="demo:canvas" aria-label="Live game demonstration"></canvas></div>
+      <div class="demo-notes"><p id="demo-caption"></p><p id="demo-status"></p><p id="demo-picture-note"></p></div>
+      <button id="demo-interrupt" class="button primary" type="button" data-i18n="demo:takeControl">Want to play? Choose how</button>
+      <div id="demo-actions" class="demo-actions" hidden>
+        <button id="demo-fresh" class="button primary" type="button" data-i18n="demo:fresh">Play from beginning</button>
+        <button id="demo-takeover" class="button secondary" type="button" data-i18n="demo:takeover">Take over · practice</button>
+        <button id="demo-resume" class="button secondary" type="button" data-i18n="demo:keepWatching">Keep watching</button>
+        <button id="demo-next" class="button secondary" type="button" data-i18n="demo:next">Next demonstration</button>
+        <button id="demo-return" class="button secondary" type="button" hidden data-i18n="demo:returnToDemo">Return to demo</button>
+        <button id="demo-pause" class="button secondary" type="button" hidden data-i18n="common:actions.pause">Pause</button>
+      </div>
+      <div id="demo-practice-controls" class="demo-practice-controls" hidden>
+        <p data-i18n="demo:practiceControls">Use your direction keys, controller, swipe the board, or tap these arrows.</p>
+        <p id="demo-bound-controls"></p>
+        <p id="demo-pad-controls" hidden></p>
+        <div class="demo-directions">
+          <button type="button" data-demo-move="left" aria-label="Left" data-i18n-aria-label="demo:left">←</button>
+          <button type="button" data-demo-move="up" aria-label="Up" data-i18n-aria-label="demo:up">↑</button>
+          <button type="button" data-demo-move="down" aria-label="Down" data-i18n-aria-label="demo:down">↓</button>
+          <button type="button" data-demo-move="right" aria-label="Right" data-i18n-aria-label="demo:right">→</button>
+          <button id="demo-boost" type="button" data-demo-action="boost" data-i18n="demo:boost">Boost</button>
+          <button id="demo-ability" type="button" data-demo-action="ability" data-i18n="demo:ability">Ability</button>
+          <button id="demo-pickup" type="button" data-demo-action="pickup" data-i18n="demo:pickup">Supply</button>
+          <select id="demo-craft" aria-label="Practice craft" data-i18n-aria-label="demo:craft"></select>
+        </div>
       </div>
     </dialog>
     <dialog id="shell-home" class="shell-home" aria-labelledby="shell-title">
@@ -1073,32 +1129,35 @@
         <span class="home-craft">✣</span>
       </div>
       <div class="home-content">
-        <p class="eyebrow">A WORLD WORTH UNCOVERING</p>
-        <h1 id="shell-title">REVEAL<span>/ LINE</span></h1>
-        <p class="home-copy">Find an opening.<br />Make your line. Reveal the story.</p>
-        <p id="landing-version" class="landing-version" aria-label="Game version">
+        <p class="eyebrow" data-i18n="interface:aWorldWorthUncovering">A WORLD WORTH UNCOVERING</p>
+        <h1 id="shell-title" data-i18n-rich="interface:reveal">REVEAL<span data-i18n="interface:line" data-i18n-slot="slot0">/ LINE</span></h1>
+        <p class="home-copy" data-i18n-rich="interface:findAnOpeningMakeYourLineRevealTheStory">Find an opening.<br / data-i18n-slot="slot0">Make your line. Reveal the story.</p>
+        <p id="landing-version" class="landing-version" aria-label="Game version" data-i18n-aria-label="interface:gameVersion">
           Version __REVEALLINE_VERSION__
         </p>
-        <nav class="home-actions" aria-label="Main menu">
-          <button id="shell-course-return" type="button" class="button primary" hidden>
+        
+<div data-language-control></div>
+<nav class="home-actions" aria-label="Main menu" data-i18n-aria-label="common:navigation.mainMenu">
+          <button id="shell-course-return" type="button" class="button primary" hidden data-i18n="interface:backToLesson">
             Back to lesson
           </button>
           <button id="shell-featured" type="button" class="button primary">
-            Pressure Lines · Arcade <span>→</span>
+            <span data-i18n="interface:pressureLinesArcade">Pressure Lines · Arcade</span> <span>→</span>
           </button>
           <button id="shell-play" type="button" class="button secondary">
-            All missions <span>→</span>
+            <span data-i18n="interface:allMissions">All missions</span> <span>→</span>
           </button>
-          <button id="shell-worlds" type="button" class="button secondary">More worlds</button>
-          <button id="shell-continue" type="button" class="button secondary">
+          <button id="shell-demo" type="button" class="button secondary" data-i18n="demo:watch">Watch demo</button>
+          <button id="shell-worlds" type="button" class="button secondary" data-i18n="interface:moreWorlds">More worlds</button>
+          <button id="shell-continue" type="button" class="button secondary" data-i18n="interface:continueFlight">
             Continue flight
           </button>
-          <button id="shell-library" type="button" class="button secondary">Scores & saves</button>
-          <button id="shell-gallery" type="button" class="button secondary">
+          <button id="shell-library" type="button" class="button secondary" data-i18n="interface:scoresSaves">Scores & saves</button>
+          <button id="shell-gallery" type="button" class="button secondary" data-i18n="interface:pictureCollection">
             Picture collection
           </button>
-          <a href="couch/" class="button secondary">Couch race · 2 players</a>
-          <button id="shell-options" type="button" class="button secondary">
+          <a href="couch/" class="button secondary" data-i18n="interface:couchRace2Players">Couch race · 2 players</a>
+          <button id="shell-options" type="button" class="button secondary" data-i18n="interface:settingsSound">
             Settings & sound
           </button>
 
@@ -1107,7 +1166,7 @@
             class="button secondary"
             type="button"
             aria-label="Restart mission"
-          >
+           data-i18n="interface:restartMission" data-i18n-aria-label="interface:restartMission">
             Restart mission</button
           ><button
             id="sound-button"
@@ -1116,27 +1175,28 @@
             type="button"
             aria-label="Enable sound"
             aria-pressed="false"
-          >
+           data-i18n="interface:toggleSound" data-i18n-aria-label="interface:enableSound">
             Toggle sound
           </button>
 
-          <button id="shell-music" type="button" class="button secondary">Music on / off</button>
-          <button id="shell-help" type="button" class="button secondary">How to play</button>
-          <button id="shell-guide" type="button" class="button secondary">
+          <button id="shell-music" type="button" class="button secondary" data-i18n="interface:musicOnOff">Music on / off</button>
+          <button id="shell-help" type="button" class="button secondary" data-i18n="common:navigation.howToPlay">How to play</button>
+          <button id="shell-guide" type="button" class="button secondary" data-i18n="interface:fieldGuidePractice">
             Field guide & practice
           </button>
         </nav>
         <p id="shell-featured-status" class="home-status" role="status" hidden></p>
-        <p class="home-hint">Tap a direction to fly. Tap another to turn.</p>
+        <p id="demo-availability" class="home-status" role="status"></p>
+        <p class="home-hint" data-i18n="interface:tapADirectionToFlyTapAnotherToTurn">Tap a direction to fly. Tap another to turn.</p>
         <details class="shell-tools">
-          <summary>Studio & extras</summary>
+          <summary data-i18n="interface:studioExtras">Studio & extras</summary>
           <nav>
-            <a href="../site/about.html">About & build archive</a>
-            <a href="playground/">Playground</a
-            ><a href="../authoring/enemy-catalog/">Enemy workshop</a
-            ><a href="replay-theater/">Replay Theater</a
-            ><a href="controller-lab/">Controller practice</a
-            ><a data-source-only href="../releases/">Playable versions</a>
+            <a href="../site/about.html" data-i18n="interface:aboutBuildArchive">About & build archive</a>
+            <a href="playground/" data-i18n="interface:playground2">Playground</a
+            ><a href="../authoring/enemy-catalog/" data-i18n="interface:enemyWorkshop">Enemy workshop</a
+            ><a href="replay-theater/" data-i18n="interface:replayTheater">Replay Theater</a
+            ><a href="controller-lab/" data-i18n="interface:controllerPractice2">Controller practice</a
+            ><a data-source-only href="../releases/" data-i18n="interface:playableVersions">Playable versions</a>
           </nav>
         </details>
       </div>
@@ -1144,21 +1204,21 @@
     <dialog id="shell-missions" class="shell-missions" aria-labelledby="shell-missions-title">
       <div class="shell-dialog-heading">
         <div>
-          <p id="shell-missions-context" class="eyebrow">YOUR NEXT FLIGHT</p>
-          <h2 id="shell-missions-title">Choose your mission</h2>
+          <p id="shell-missions-context" class="eyebrow" data-i18n="interface:yourNextFlight2">YOUR NEXT FLIGHT</p>
+          <h2 id="shell-missions-title" data-i18n="interface:chooseYourMission">Choose your mission</h2>
         </div>
         <button
           id="shell-missions-back"
           type="button"
           class="button secondary"
           data-close="shell-missions"
-        >
+         data-i18n="common:actions.back">
           Back
         </button>
       </div>
       <div id="shell-mission-content"></div>
       <div id="shell-brief-content" hidden></div>
-      <button id="shell-briefing" type="button" class="button primary">Return to briefing →</button>
+      <button id="shell-briefing" type="button" class="button primary" data-i18n="interface:returnToBriefing">Return to briefing →</button>
     </dialog>
     <script id="boot-phaser" src="vendor/phaser-4.2.1.min.js"></script>
     <p id="controller-connection-hint" class="controller-connection-hint" role="status" hidden></p>

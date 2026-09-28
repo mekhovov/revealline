@@ -1,3 +1,4 @@
+import { localizedText, t } from '../../game/i18n/index.mjs';
 import { createEnemyCatalogInput } from '../../game/ui/enemy-catalog-input.mjs';
 import { attachEnemyWorkshopReturnHost } from '../../game/ui/enemy-workshop-return.mjs';
 import { attachEnemyCatalogPanel } from '../../game/ui/enemy-catalog-panel.mjs';
@@ -18,7 +19,7 @@ let panel = null,
   last = 0;
 async function start() {
   const response = await fetch('../../game/content/themes.json');
-  if (!response.ok) throw new Error('Registered themes could not be loaded.');
+  if (!response.ok) throw new Error(t("tools:registeredThemesCouldNotBeLoaded"));
   const { themes } = await response.json();
   const practiceReturn = attachEnemyWorkshopReturnHost({
     frame,
@@ -27,7 +28,7 @@ async function start() {
       document.getElementById('open-catalog').focus();
       panel.open();
       navigation.sync();
-      status.textContent = 'Returned to the same workshop draft. Practice has ended.';
+      localizedText(status, () =>t("tools:returnedToTheSameWorkshopDraftPracticeHasEnded"));
     },
   });
   let initial = emptyEnemyCatalogDraft();
@@ -35,17 +36,17 @@ async function start() {
     const text = localStorage.getItem(key);
     if (text) initial = validateEnemyCatalogDraft(JSON.parse(text));
   } catch {
-    status.textContent = 'Saved choices unavailable; using the default authoring catalog.';
+    localizedText(status, () =>t("tools:savedChoicesUnavailableUsingTheDefaultAuthoringCatalog"));
   }
   panel = attachEnemyCatalogPanel({
     initialDraft: initial,
     onRead: (request) => navigation.beginReading(request),
     onError: (error) => {
-      status.textContent = error.message;
+      localizedText(status, () =>error.message);
     },
     onApplyDraft: (draft) => {
       localStorage.setItem(key, JSON.stringify(draft));
-      status.textContent = 'Future authoring choices saved locally.';
+      localizedText(status, () =>t("tools:futureAuthoringChoicesSavedLocally"));
     },
     onExport: (draft) => {
       const blob = new Blob([JSON.stringify(draft, null, 2)], { type: 'application/json' }),
@@ -68,8 +69,7 @@ async function start() {
         panel.close();
         frame.focus();
       }, 0);
-      status.textContent =
-        'Separate practice loaded. Pause and choose Return to workshop to keep editing this draft. Campaign progress is untouched.';
+      localizedText(status, () =>t("tools:separatePracticeLoadedPauseAndChooseReturnToWorkshopTo"));
     },
   });
   router = createControllerRouter();
@@ -82,7 +82,7 @@ async function start() {
     keyboard: true,
     onNativeInput: () => menuInput?.clear(),
     onHint: (text) => {
-      status.textContent = text;
+      localizedText(status, () =>text);
     },
   });
   menuInput = createEnemyCatalogInput({
@@ -126,10 +126,10 @@ async function start() {
       raf = requestAnimationFrame(loop);
     }
   });
-  status.textContent = 'Seven behavior roles and four original presentation families ready.';
+  localizedText(status, () =>t("tools:sevenBehaviorRolesAndFourOriginalPresentationFamiliesReady"));
   panel.open();
   raf = requestAnimationFrame(loop);
 }
 start().catch((error) => {
-  status.textContent = `Workshop unavailable: ${error.message}`;
+  localizedText(status, () =>t("tools:workshopUnavailable", { value1: error.message }));
 });

@@ -1,3 +1,4 @@
+import { localizedText, t } from '../i18n/index.mjs';
 import { attachModalNavigation } from './modal-navigation.mjs';
 
 /** Game navigation owns presentation only; the host owns pause, save and start. */
@@ -38,8 +39,8 @@ export function attachGameShell({
     $('shell-brief-content').hidden = true;
     $('shell-mission-content').hidden = false;
     $('shell-briefing').hidden = false;
-    $('shell-missions-title').textContent = title;
-    if ($('shell-missions-context')) $('shell-missions-context').textContent = context;
+    localizedText($('shell-missions-title'), () =>title);
+    if ($('shell-missions-context')) localizedText($('shell-missions-context'), () =>context);
     delete missions.dataset.view;
   };
   const closedMissions = () => {
@@ -111,11 +112,9 @@ export function attachGameShell({
         $('shell-mission-content').hidden = true;
         $('shell-briefing').hidden = true;
         missions.dataset.view = 'brief';
-        $('shell-missions-title').textContent =
-          $('mission-brief-title').textContent || 'Mission brief';
+        localizedText($('shell-missions-title'), () =>$('mission-brief-title').textContent || t("interface:missionBrief"));
         if ($('shell-missions-context'))
-          $('shell-missions-context').textContent =
-            `${$('shell-edition')?.textContent || 'CURRENT FLIGHT'} · MISSION BRIEF`;
+          localizedText($('shell-missions-context'), () =>t("gameplay:missionBrief", { value1: $('shell-edition')?.textContent || t("interface:currentFlight") }));
         missions.scrollTop = 0;
         $('mission-brief-reading').scrollTop = 0;
       }

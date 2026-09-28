@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { localizedText, t } from '../i18n/index.mjs';
 import { prepareBackup, exportBackup, MAX_BACKUP_BYTES } from '../backup.mjs';
 import { importLibrary, exportLibrary, libraryCapacity } from '../library.mjs';
 import {
@@ -23,15 +25,15 @@ const button = (label, fn) => {
   const b = document.createElement('button');
   b.type = 'button';
   b.className = 'button secondary';
-  b.textContent = label;
+  localizedText(b, () =>label);
   b.onclick = fn;
   return b;
 };
 const status = (id, error) =>
-  ($(id).textContent = error instanceof Error ? error.message : String(error));
+  (localizedText($(id), () =>error instanceof Error ? error.message : String(error)));
 const fileText = async (file, max = 32 * 1024 * 1024) => {
-  if (!file) throw new Error('Choose a JSON file.');
-  if (file.size > max) throw new Error('This file exceeds the import budget.');
+  if (!file) throw new Error(t("interface:chooseAJsonFile"));
+  if (file.size > max) throw new Error(t("interface:thisFileExceedsTheImportBudget"));
   return file.text();
 };
 
@@ -75,12 +77,12 @@ export function attachLibraryPanel(api) {
     return difficultyResolver;
   }
   const pictureMeta = (picture) =>
-    `${picture.theme.name} / ${picture.item.medal.toUpperCase()} · ${picture.label} · ${picture.item.score.toLocaleString()} points${Number.isFinite(picture.item.time) ? ` · ${picture.item.time.toFixed(2)}s` : ''}`;
+    t("gameplay:points", { value1: contentText(picture.theme, 'name'), value2: picture.item.medal.toUpperCase(), value3: contentText(picture, 'label'), value4: picture.item.score.toLocaleString(), value5: Number.isFinite(picture.item.time) ? ` · ${picture.item.time.toFixed(2)}s` : '' });
   const storyButton = document.createElement('button');
   storyButton.id = 'gallery-story';
   storyButton.type = 'button';
   storyButton.className = 'button secondary';
-  storyButton.textContent = 'Play earned story';
+  localizedText(storyButton, () =>t("interface:playEarnedStory"));
   storyButton.hidden = true;
   if (api.openStory) $('gallery-view-dialog').querySelector('.overlay-actions').append(storyButton);
   const earnedStory = (picture) => {
@@ -104,7 +106,7 @@ export function attachLibraryPanel(api) {
         picture = view,
         backdrop = viewBackdrop;
       if (!pin) return;
-      if (!backdrop) throw new Error('Restore this earned story’s exact picture before playing.');
+      if (!backdrop) throw new Error(t("interface:restoreThisEarnedStorySExactPictureBeforePlaying"));
       cancelAnimationFrame(galleryFrame);
       void api
         .openStory({
@@ -145,12 +147,12 @@ export function attachLibraryPanel(api) {
     const pages = Math.max(1, Math.ceil(total / size)),
       nav = $(id);
     nav.replaceChildren();
-    const previous = button('Previous', () => change(page - 1)),
-      next = button('Next', () => change(page + 1)),
+    const previous = button(t("common:actions.previous"), () => change(page - 1)),
+      next = button(t("common:actions.next"), () => change(page + 1)),
       label = document.createElement('span');
     previous.disabled = page === 0;
     next.disabled = page >= pages - 1;
-    label.textContent = `${total} entries · page ${page + 1} of ${pages}`;
+    localizedText(label, () =>t("gameplay:entriesPageOf", { value1: total, value2: page + 1, value3: pages }));
     nav.append(previous, label, next);
   }
   function renderScores() {
@@ -165,7 +167,7 @@ export function attachLibraryPanel(api) {
         );
     const query = $('score-search').value.toLowerCase().trim(),
       matches = [...groups.values()].filter((entries) =>
-        `${entries[0].levelName} ${entries[0].classRoute.join(' ')} ${resolver.label(entries[0].campaignKey)}`
+        `${entries[0].levelName} ${entries[0].classRoute.join(' ')} ${contentText(resolver, 'label')(entries[0].campaignKey)}`
           .toLowerCase()
           .includes(query),
       );
@@ -174,23 +176,23 @@ export function attachLibraryPanel(api) {
       const group = document.createElement('section'),
         title = document.createElement('h3'),
         copy = document.createElement('p');
-      title.textContent = entries[0].levelName;
+      localizedText(title, () =>entries[0].levelName);
       copy.className = 'micro-note';
-      copy.textContent = `${resolver.label(entries[0].campaignKey)} · ${entries[0].classRoute.join(' → ')} · ${entries[0].turnPolicy} · seed ${entries[0].seed}`;
+      localizedText(copy, () =>t("gameplay:seed", { value1: contentText(resolver, 'label')(entries[0].campaignKey), value2: entries[0].classRoute.join(' → '), value3: entries[0].turnPolicy, value4: entries[0].seed }));
       group.append(title, copy);
       const list = document.createElement('ol');
       for (const entry of [...entries].sort((a, b) => b.score - a.score || a.time - b.time)) {
         const li = document.createElement('li');
-        li.textContent = `${entry.score.toLocaleString()} points · ${entry.time.toFixed(2)}s · ${entry.medal} · ${entry.completedAt.slice(0, 10)}`;
+        localizedText(li, () =>t("gameplay:pointsS", { value1: entry.score.toLocaleString(), value2: entry.time.toFixed(2), value3: entry.medal, value4: entry.completedAt.slice(0, 10) }));
         list.append(li);
       }
       group.append(list);
       $('scoreboard').append(group);
     }
     if (!matches.length)
-      $('scoreboard').textContent = library.scores.length
-        ? 'No scores match this search.'
-        : 'Your first completed flight will appear here.';
+      localizedText($('scoreboard'), () =>library.scores.length
+        ? t("interface:noScoresMatchThisSearch")
+        : t("interface:yourFirstCompletedFlightWillAppearHere"));
     paginate('score-pages', scorePage, matches.length, 10, (p) => {
       scorePage = p;
       renderScores();
@@ -210,28 +212,27 @@ export function attachLibraryPanel(api) {
     $('undo-library').disabled = !previousLibrary;
     $('undo-backup').disabled = !previousBackup;
     const usage = libraryCapacity(api.get().library);
-    $('library-capacity').textContent =
-      `${usage.gallery} / ${usage.maxGallery} pictures · ${usage.masteries} / ${usage.maxMasteries} equipment seals · ${usage.campaigns} / ${usage.maxCampaigns} campaigns · ${usage.percent.toFixed(1)}% of profile budget. Old pictures are preserved; export archives before reaching capacity.`;
+    localizedText($('library-capacity'), () =>t("gameplay:picturesEquipmentSealsCampaignsOfProfileBudgetOldPicturesAre", { value1: usage.gallery, value2: usage.maxGallery, value3: usage.masteries, value4: usage.maxMasteries, value5: usage.campaigns, value6: usage.maxCampaigns, value7: usage.percent.toFixed(1) }));
     const saved = api.saved();
-    $('suspended-status').textContent = saved
-      ? `Saved flight: ${saved.replay?.level?.name || 'Unknown'} · ${difficulties().label(saved.campaignKey)} · ${typeof saved.savedAt === 'string' ? saved.savedAt.replace('T', ' ').slice(0, 19) : 'Date unavailable'}`
-      : 'No suspended attempt. Use Save & pause during a flight.';
+    localizedText($('suspended-status'), () =>saved
+      ? t("gameplay:savedFlight", { value1: contentText(saved.replay?.level, 'name') || t("interface:unknown"), value2: contentText(difficulties(), 'label')(saved.campaignKey), value3: typeof saved.savedAt === 'string' ? saved.savedAt.replace('T', ' ').slice(0, 19) : t("interface:dateUnavailable") })
+      : t("interface:noSuspendedAttemptUseSavePauseDuringAFlight"));
     $('resume-save').disabled = !saved;
     const exportSource = api.attemptExportSource();
-    $('export-session').textContent = exportSource.label;
+    localizedText($('export-session'), () =>contentText(exportSource, 'label'));
     $('export-session').disabled = busy || exportSource.source === null;
-    $('attempt-export-source').textContent = exportSource.reason;
+    localizedText($('attempt-export-source'), () =>exportSource.reason);
     $('installed-packs').replaceChildren();
     for (const pack of api.get().packs.packs) {
       const row = document.createElement('article');
       const title = document.createElement('strong');
-      title.textContent = `${pack.name} · ${pack.version}`;
+      localizedText(title, () =>`${contentText(pack, 'name')} · ${pack.version}`);
       const p = document.createElement('p');
-      p.textContent = pack.description;
+      localizedText(p, () =>contentText(pack, 'description'));
       row.append(title, p);
       for (const source of pack.campaigns)
         row.append(
-          button(`Play ${source.title || source.name || source.id}`, () => {
+          button(t("gameplay:play", { value1: contentText(source, 'title') || source.name || source.id }), () => {
             api.select(
               api.catalog().find((c) => c.sourcePackId === pack.id && c.campaign.id === source.id),
             );
@@ -240,13 +241,13 @@ export function attachLibraryPanel(api) {
           }),
         );
       row.append(
-        button('Remove from device', () =>
+        button(t("interface:removeFromDevice"), () =>
           task('pack-status', async () => {
             await api.setPacks(removePack(api.get().packs, pack.id));
             refresh();
             status(
               'pack-status',
-              'Pack removed. Player records and earned uploaded originals are preserved. Reinstall its exact pack to play again or view pack-embedded artwork.',
+              t("interface:packRemovedPlayerRecordsAndEarnedUploadedOriginalsArePreserved"),
             );
           }),
         ),
@@ -293,7 +294,7 @@ export function attachLibraryPanel(api) {
   function cancelAttemptExport() {
     if (!attemptExport || attemptExport.phase !== 'verifying') return false;
     endAttemptExport(true);
-    status('save-status', 'Export cancelled. The previous copy is unchanged.');
+    status('save-status', t("interface:exportCancelledThePreviousCopyIsUnchanged"));
     return true;
   }
   $('cancel-attempt-export').onclick = cancelAttemptExport;
@@ -320,14 +321,14 @@ export function attachLibraryPanel(api) {
     $('cancel-attempt-export').focus({ preventScroll: true });
     status(
       'save-status',
-      `Checking the ${source.source === 'stored' ? 'saved' : 'current'} attempt…`,
+      t("gameplay:checkingTheAttempt", { value1: source.source === 'stored' ? 'saved' : 'current' }),
     );
     try {
       const prepared = await api.prepareAttemptFile({
         signal: operation.controller.signal,
         onProgress: ({ ticks, total }) => {
           if (currentAttemptExport(operation))
-            status('save-status', `Checking flight inputs: ${ticks} / ${total} ticks…`);
+            status('save-status', t("gameplay:checkingFlightInputsTicks", { value1: ticks, value2: total }));
         },
       });
       if (!currentAttemptExport(operation)) return;
@@ -343,7 +344,7 @@ export function attachLibraryPanel(api) {
       const session = prepared.session;
       status(
         'save-status',
-        `${prepared.source === 'stored' ? 'Saved' : 'Current'} attempt prepared: ${session.replay.level.name} · ${difficulties().label(session.campaignKey)} · ${session.savedAt.replace('T', ' ').slice(0, 19)}. ${prepared.context === 'replay-only' ? 'Replay verified; the exact matching campaign is still required to resume. ' : ''}${exported.message}`,
+        t("gameplay:attemptPrepared", { value1: prepared.source === 'stored' ? t("interface:saved") : t("interface:current"), value2: contentText(session.replay.level, 'name'), value3: contentText(difficulties(), 'label')(session.campaignKey), value4: session.savedAt.replace('T', ' ').slice(0, 19), value5: prepared.context === 'replay-only' ? ("" + t("interface:replayVerifiedTheExactMatchingCampaignIsStillRequiredTo") + " ") : '', value6: exported.message }),
       );
     } catch (error) {
       if (currentAttemptExport(operation)) status('save-status', error);
@@ -385,7 +386,7 @@ export function attachLibraryPanel(api) {
       (element) => ({ element, disabled: element.disabled }),
     );
     for (const { element } of controls) element.disabled = true;
-    status(id, 'Checking…');
+    status(id, t("interface:checking"));
     try {
       await fn();
     } catch (e) {
@@ -408,12 +409,12 @@ export function attachLibraryPanel(api) {
         next = installPack(before, prepared.pack);
       }
       if (api.get().packs !== before)
-        throw new Error('Installed content changed; prepare this pack again.');
+        throw new Error(t("interface:installedContentChangedPrepareThisPackAgain"));
       await api.setPacks(next);
       refresh();
       status(
         'pack-status',
-        'Validated and installed. Choose Play above or use the Campaign selector.',
+        t("interface:validatedAndInstalledChoosePlayAboveOrUseTheCampaign"),
       );
     });
   }
@@ -423,14 +424,14 @@ export function attachLibraryPanel(api) {
         typeof candidate === 'string' &&
         new TextEncoder().encode(candidate).byteLength > MAX_BACKUP_BYTES
       )
-        throw new Error('This backup exceeds the import budget.');
+        throw new Error(t("interface:thisBackupExceedsTheImportBudget"));
       const parsed = typeof candidate === 'string' ? JSON.parse(candidate) : candidate;
       if (['xonix-backup.v1', 'xonix-backup.v2'].includes(parsed.format)) {
         const prepared = await prepareBackup(parsed, await backupOptions());
         const applied = await applyPrepared(prepared);
         status(
           'save-status',
-          `Game data restored. ${prepared.session ? 'Your saved flight is ready to load.' : 'This backup has no saved flight.'} ${applied.undo ? 'Undo restores the previous collection, packs and saved flight.' : 'The previous data could not form a verified backup, so Undo is unavailable.'} ${applied.warning || ''}`,
+          t("gameplay:gameDataRestored", { value1: prepared.session ? t("interface:yourSavedFlightIsReadyToLoad") : t("interface:thisBackupHasNoSavedFlight"), value2: applied.undo ? t("interface:undoRestoresThePreviousCollectionPacksAndSavedFlight") : t("interface:thePreviousDataCouldNotFormAVerifiedBackupSo"), value3: applied.warning || '' }),
         );
         return;
       }
@@ -452,7 +453,7 @@ export function attachLibraryPanel(api) {
       status(
         'save-status',
         result.ok
-          ? 'Player library loaded. Previous library is available with Undo.'
+          ? t("interface:playerLibraryLoadedPreviousLibraryIsAvailableWithUndo")
           : result.warning,
       );
     });
@@ -499,7 +500,7 @@ export function attachLibraryPanel(api) {
       const exported = await downloadJSON(JSON.parse(text), 'revealline-complete-backup.json');
       status(
         'save-status',
-        `Game data prepared: player library, installed chapters and saved flight. Restore picture originals from .rlmedia before this file. Stories need .rlstory and custom music needs .rlsound. ${exported.message} ${api.sessionNote?.() || ''}`,
+        t("gameplay:gameDataPreparedPlayerLibraryInstalledChaptersAndSavedFlight", { value1: exported.message, value2: api.sessionNote?.() || '' }),
       );
     });
   $('undo-backup').onclick = () =>
@@ -511,7 +512,7 @@ export function attachLibraryPanel(api) {
       $('undo-backup').disabled = true;
       $('undo-library').disabled = true;
       refresh();
-      status('save-status', 'Previous collection, packs and saved flight restored.');
+      status('save-status', t("interface:previousCollectionPacksAndSavedFlightRestored"));
     });
   $('export-library').onclick = () =>
     task('save-status', async () => {
@@ -520,7 +521,7 @@ export function attachLibraryPanel(api) {
       const exported = await downloadJSON(JSON.parse(text), 'revealline-player-library.json');
       status(
         'save-status',
-        `Library prepared. ${exported.message} Keep packs and attempt files alongside it.`,
+        t("gameplay:libraryPreparedKeepPacksAndAttemptFilesAlongsideIt", { value1: exported.message }),
       );
     });
   $('import-save').onclick = () => importSave($('save-json').value);
@@ -543,8 +544,8 @@ export function attachLibraryPanel(api) {
       status(
         'save-status',
         result.ok
-          ? 'Previous player library restored.'
-          : `Previous library is active for this session. ${result.warning}`,
+          ? t("interface:previousPlayerLibraryRestored")
+          : t("gameplay:previousLibraryIsActiveForThisSession", { value1: result.warning }),
       );
     }
   };
@@ -573,7 +574,7 @@ export function attachLibraryPanel(api) {
       const exported = await downloadJSON(JSON.parse(text), 'revealline-expansion-packs.json');
       status(
         'pack-status',
-        `Installed packs prepared with their original embedded images. ${exported.message}`,
+        t("gameplay:installedPacksPreparedWithTheirOriginalEmbeddedImages", { value1: exported.message }),
       );
     });
   $('challenge-date').value = new Date().toISOString().slice(0, 10);
@@ -593,16 +594,16 @@ export function attachLibraryPanel(api) {
   };
   fetch('content/packs/index.json')
     .then((r) => {
-      if (!r.ok) throw new Error('Example packs could not load.');
+      if (!r.ok) throw new Error(t("interface:examplePacksCouldNotLoad"));
       return r.json();
     })
     .then((index) => {
       for (const pack of index.packs) {
         $('builtin-packs').append(
-          button(`Install ${pack.id.replaceAll('-', ' ')}`, async () => {
+          button(t("gameplay:install", { value1: pack.id.replaceAll('-', ' ') }), async () => {
             await task('pack-status', async () => {
               const r = await fetch(`content/packs/${pack.path}`);
-              if (!r.ok) throw new Error('Example pack is unavailable.');
+              if (!r.ok) throw new Error(t("interface:examplePackIsUnavailable"));
               const data = await r.json();
               busy = false;
               await install(data);
@@ -632,7 +633,7 @@ export function attachLibraryPanel(api) {
     try {
       if (picture.mediaError) throw picture.mediaError;
       if (picture.receipt?.presentationPin.kind === 'still') {
-        if (!picture.media) throw new Error('Restore the original picture media before viewing.');
+        if (!picture.media) throw new Error(t("interface:restoreTheOriginalPictureMediaBeforeViewing"));
         backdrop = await acquirePresentationImage({
           pin: picture.receipt.presentationPin,
           metadata: picture.media.metadata,
@@ -679,7 +680,7 @@ export function attachLibraryPanel(api) {
     const seals = sealsFor(picture.item, picture, records);
     const rows = seals.map(
       (seal) =>
-        `◇ ${seal.name} · ${seal.route} · ${seal.steering} · seed ${seal.seed} · ${seal.earnedAt.slice(0, 10)}`,
+        t("gameplay:seed2", { value1: contentText(seal, 'name'), value2: seal.route, value3: seal.steering, value4: seal.seed, value5: seal.earnedAt.slice(0, 10) }),
     );
     const signature = JSON.stringify([picture.item.key, rows]);
     const list = $('gallery-view-masteries');
@@ -687,7 +688,7 @@ export function attachLibraryPanel(api) {
       list.replaceChildren(
         ...rows.map((text) => {
           const row = document.createElement('li');
-          row.textContent = text;
+          localizedText(row, () =>text);
           return row;
         }),
       );
@@ -702,9 +703,9 @@ export function attachLibraryPanel(api) {
       if (!slot.isConnected) continue;
       const seals = records?.length ? sealsFor(item, picture, records) : [];
       const text = seals.length
-        ? `◇ ${[...new Set(seals.map((seal) => seal.name))].join(' · ')}`
+        ? `◇ ${[...new Set(seals.map((seal) => contentText(seal, 'name')))].join(' · ')}`
         : '';
-      if (slot.textContent !== text) slot.textContent = text;
+      if (slot.textContent !== text) localizedText(slot, () =>text);
       slot.hidden = seals.length === 0;
     }
     if (view && $('gallery-view-dialog').open) refreshPictureMasteries(view, records);
@@ -771,7 +772,7 @@ export function attachLibraryPanel(api) {
             .filter(Boolean),
         }))
         .filter((group) =>
-          `${group.item.levelName} ${group.item.themeId} ${group.variants.map((picture) => `${picture.theme.name} ${resolver.label(picture.item.campaignKey)}`).join(' ')} ${group.variants.length ? '' : 'archived difficulty unavailable'}`
+          `${group.item.levelName} ${group.item.themeId} ${group.variants.map((picture) => `${contentText(picture.theme, 'name')} ${contentText(resolver, 'label')(picture.item.campaignKey)}`).join(' ')} ${group.variants.length ? '' : 'archived difficulty unavailable'}`
             .toLowerCase()
             .includes(query),
         );
@@ -787,16 +788,16 @@ export function attachLibraryPanel(api) {
       canvas.height = 240;
       canvas.setAttribute('aria-hidden', 'true');
       const title = document.createElement('strong');
-      title.textContent = item.levelName;
+      localizedText(title, () =>item.levelName);
       const copy = document.createElement('span');
       const otherDifficulties = [...new Set(group.variants.map((variant) => variant.label))].filter(
         (label) => label !== picture?.label,
       );
-      copy.textContent = picture
-        ? `${picture.theme.name} · ${picture.label}: ${item.medal.toUpperCase()} · ${item.score.toLocaleString()} points${otherDifficulties.length ? ` · Also earned: ${otherDifficulties.join(' + ')}` : ''}`
+      localizedText(copy, () =>picture
+        ? t("gameplay:points2", { value1: contentText(picture.theme, 'name'), value2: contentText(picture, 'label'), value3: item.medal.toUpperCase(), value4: item.score.toLocaleString(), value5: otherDifficulties.length ? t("gameplay:alsoEarned", { value1: otherDifficulties.join(' + ') }) : '' })
         : receipts.get(item.key)?.presentationPin.kind === 'still'
-          ? 'Original picture unavailable · restore its .rlmedia originals'
-          : 'Archived picture · reinstall its exact pack to view';
+          ? t("interface:originalPictureUnavailableRestoreItsRlmediaOriginals")
+          : t("interface:archivedPictureReinstallItsExactPackToView"));
       const seal = document.createElement('span');
       seal.className = 'mastery-note';
       seal.hidden = true;
@@ -809,16 +810,15 @@ export function attachLibraryPanel(api) {
       for (const variant of group.variants) galleryCards.set(variant.item.key, card);
       if (picture)
         drawPicture(canvas, picture).catch(() => {
-          copy.textContent =
-            picture.receipt?.presentationPin.kind === 'still'
-              ? 'Original picture unavailable. Restore its .rlmedia originals.'
-              : 'Picture could not decode. Reinstall its pack.';
+          localizedText(copy, () =>picture.receipt?.presentationPin.kind === 'still'
+              ? t("interface:originalPictureUnavailableRestoreItsRlmediaOriginals2")
+              : t("interface:pictureCouldNotDecodeReinstallItsPack"));
         });
     }
     if (!items.length)
-      $('gallery-grid').textContent = api.get().library.gallery.length
-        ? 'No pictures match this search.'
-        : 'A picture is waiting behind your first completed mission.';
+      localizedText($('gallery-grid'), () =>api.get().library.gallery.length
+        ? t("interface:noPicturesMatchThisSearch")
+        : t("interface:aPictureIsWaitingBehindYourFirstCompletedMission"));
     paginate('gallery-pages', galleryPage, items.length, 12, (p) => {
       galleryPage = p;
       populateGallery();
@@ -866,7 +866,7 @@ export function attachLibraryPanel(api) {
         ...variants.map((variant) => {
           const option = document.createElement('option');
           option.value = variant.difficulty ?? '';
-          option.textContent = variant.label;
+          localizedText(option, () =>contentText(variant, 'label'));
           return option;
         }),
       );
@@ -878,9 +878,9 @@ export function attachLibraryPanel(api) {
     const meta = pictureMeta(picture);
     const current = () =>
       generation === viewGeneration && view === picture && $('gallery-view-dialog').open;
-    $('gallery-view-title').textContent = picture.level.name;
+    localizedText($('gallery-view-title'), () =>contentText(picture.level, 'name'));
     $('gallery-view-meta').setAttribute('role', 'status');
-    $('gallery-view-meta').textContent = `${meta} · Loading picture…`;
+    localizedText($('gallery-view-meta'), () =>t("gameplay:loadingPicture", { value1: meta }));
     refreshPictureMasteries(picture, api.get().library.masteries);
     if (!switching) {
       $('collection-dialog').close();
@@ -890,13 +890,12 @@ export function attachLibraryPanel(api) {
       const drawn = await drawPicture($('gallery-canvas'), picture, current);
       if (drawn && current()) {
         pictureReady(true);
-        $('gallery-view-meta').textContent = meta;
+        localizedText($('gallery-view-meta'), () =>meta);
       }
     } catch (e) {
       if (current()) {
         pictureReady(false);
-        $('gallery-view-meta').textContent =
-          `${meta} · Picture could not load. Restore its originals or exact pack, then reopen this view. ${e instanceof Error ? e.message : ''}`;
+        localizedText($('gallery-view-meta'), () =>t("gameplay:pictureCouldNotLoadRestoreItsOriginalsOrExactPack", { value1: meta, value2: e instanceof Error ? e.message : '' }));
       }
     }
   }
@@ -912,8 +911,7 @@ export function attachLibraryPanel(api) {
       const installed = difficulties().picture(view.item);
       if (!installed) {
         pictureReady(false);
-        $('gallery-view-meta').textContent =
-          'Archived picture · reinstall its exact pack before replaying.';
+        localizedText($('gallery-view-meta'), () =>t("interface:archivedPictureReinstallItsExactPackBeforeReplaying"));
         return;
       }
       returnToCollection = false;
@@ -938,15 +936,14 @@ export function attachLibraryPanel(api) {
       if (viewBackdrop) delete visuals.background;
       await galleryPainter.setLook(picture.theme, picture.theme.player, visuals);
       if (!viewBackdrop && picture.visualOverrides.background && !galleryPainter.images.background)
-        throw new Error('The picture artwork is unavailable for celebration.');
+        throw new Error(t("interface:thePictureArtworkIsUnavailableForCelebration"));
     } catch (e) {
       if (generation === viewGeneration && view === picture && $('gallery-view-dialog').open)
-        $('gallery-view-meta').textContent =
-          `${pictureMeta(picture)} · Celebration could not start. The completed picture is still available. ${e instanceof Error ? e.message : ''}`;
+        localizedText($('gallery-view-meta'), () =>t("gameplay:celebrationCouldNotStartTheCompletedPictureIsStillAvailable", { value1: pictureMeta(picture), value2: e instanceof Error ? e.message : '' }));
       return;
     }
     if (generation !== viewGeneration || view !== picture || !$('gallery-view-dialog').open) return;
-    $('gallery-view-meta').textContent = pictureMeta(picture);
+    localizedText($('gallery-view-meta'), () =>pictureMeta(picture));
     galleryPainter.setLevel?.(picture.level, { seed: picture.item.seed ?? 1 });
     galleryPainter.startCelebration?.({
       levelId: picture.level.id,

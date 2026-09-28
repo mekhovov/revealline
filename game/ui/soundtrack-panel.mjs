@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { localizedMessage, localizedText, t, localizedAttribute } from '../i18n/index.mjs';
 import {
   BUILTIN_SOUNDTRACK_PLAYLISTS,
   BUILTIN_SOUNDTRACK_TRACKS,
@@ -16,7 +18,7 @@ const copy = (value) => structuredClone(value);
 const message = (error) => error?.message || String(error);
 const seconds = (value = 0) =>
   `${Math.floor(value / 60)}:${String(Math.floor(value % 60)).padStart(2, '0')}`;
-const bytes = (value) => `${(value / 1024 / 1024).toFixed(1)} MiB`;
+const bytes = (value) => t("gameplay:mib", { value1: (value / 1024 / 1024).toFixed(1) });
 
 /** Local music authoring. Draft changes become authoritative only after one verified store commit. */
 export function attachSoundtrackPanel({
@@ -39,7 +41,7 @@ export function attachSoundtrackPanel({
   beforeAudio = async () => {},
 } = {}) {
   if (!doc?.body || !store?.read || !store?.commit || !player?.snapshot)
-    throw new Error('Soundtrack panel requires a document, store and player.');
+    throw new Error(t("interface:soundtrackPanelRequiresADocumentStoreAndPlayer"));
   const bindings = [];
   let disposed = false,
     busy = false,
@@ -58,8 +60,11 @@ export function attachSoundtrackPanel({
     if (id) {
       element.id = `soundtrack-${id}`;
     }
-    if (text !== undefined && text !== null) element.textContent = text;
-    for (const [key, value] of Object.entries(attrs)) element.setAttribute(key, value);
+    if (text !== undefined && text !== null) localizedText(element, () =>text);
+    for (const [key, value] of Object.entries(attrs)) {
+      if (['aria-label', 'title', 'placeholder', 'alt'].includes(key)) localizedAttribute(element, key, value);
+      else element.setAttribute(key, value);
+    }
     return element;
   };
   const listen = (element, type, handler) => {
@@ -103,100 +108,99 @@ export function attachSoundtrackPanel({
     class: 'soundtrack-dialog',
     'aria-labelledby': 'soundtrack-title',
   });
-  const heading = node('h2', 'title', 'SOUND / STUDIO');
-  const status = node('p', 'status', 'Open the studio to load your local music.', {
+  const heading = node('h2', 'title', localizedMessage("interface:soundStudio"));
+  const status = node('p', 'status', localizedMessage("interface:openTheStudioToLoadYourLocalMusic"), {
     role: 'status',
     'aria-live': 'polite',
   });
   const availability = node(
     'p',
     'availability',
-    'Custom music stays in this browser. Export a .rlsound file to keep its original bytes.',
+    localizedMessage("interface:customMusicStaysInThisBrowserExportARlsoundFile"),
     { class: 'micro-note' },
   );
-  const closeButton = button('close', 'Back to game', () => close());
-  const cancelButton = button('cancel', 'Cancel operation', () => {
+  const closeButton = button('close', localizedMessage("common:navigation.backToGame"), () => close());
+  const cancelButton = button('cancel', localizedMessage("interface:cancelOperation"), () => {
     controller?.abort();
-    status.textContent = 'Cancellation requested…';
+    localizedText(status, () =>t("interface:cancellationRequested"));
   });
   cancelButton.hidden = true;
-  const saveButton = button('save', 'Save all changes', () =>
-    task('Verifying and saving the music library…', (signal) => commitDraft(signal)),
+  const saveButton = button('save', localizedMessage("interface:saveAllChanges"), () =>
+    task(t("interface:verifyingAndSavingTheMusicLibrary"), (signal) => commitDraft(signal)),
   );
-  const undoButton = button('undo', 'Undo unsaved changes', () => {
+  const undoButton = button('undo', localizedMessage("interface:undoUnsavedChanges"), () => {
     if (!saved || busy) return;
     invalidateBackup();
     draft = saved.library;
     assets = [...saved.assets];
     dirty = false;
     render();
-    status.textContent = 'Restored the saved library. Playback is unchanged.';
+    localizedText(status, () =>t("interface:restoredTheSavedLibraryPlaybackIsUnchanged"));
   });
-  const reloadButton = button('reload', 'Reload latest saved', () => reload());
+  const reloadButton = button('reload', localizedMessage("interface:reloadLatestSaved"), () => reload());
   const stateLine = node('p', 'draft-state', '', { class: 'micro-note' });
-  const now = node('p', 'now', 'Music is ready.', { role: 'status', 'aria-live': 'off' });
-  const seek = input('seek', 'Track position', { type: 'range', min: '0', max: '0', step: '0.1' });
-  const volume = input('volume', 'Music volume', {
+  const now = node('p', 'now', localizedMessage("interface:musicIsReady"), { role: 'status', 'aria-live': 'off' });
+  const seek = input('seek', localizedMessage("interface:trackPosition"), { type: 'range', min: '0', max: '0', step: '0.1' });
+  const volume = input('volume', localizedMessage("interface:musicVolume"), {
     type: 'range',
     min: '0',
     max: '1',
     step: '0.01',
   });
-  const selection = input('selection', 'Playback playlist', { tag: 'select' });
-  const useSelection = button('use-selection', 'Save & use playlist', () => {
+  const selection = input('selection', localizedMessage("interface:playbackPlaylist"), { tag: 'select' });
+  const useSelection = button('use-selection', localizedMessage("interface:saveUsePlaylist"), () => {
     const chosen = selection.element.value || null;
-    return task('Saving your playlist choice…', async (signal) => {
+    return task(t("interface:savingYourPlaylistChoice"), async (signal) => {
       edit((value) => {
         value.selection.playlistId = chosen;
       });
       const committed = await commitDraft(signal);
       await stopAudition(false);
-      wakeAudio();
+      await beforeAudio();
       await player.selectPlaylist(draft.selection.playlistId);
       await notifyPlayback();
-      status.textContent =
-        committed.warning || 'Playlist selected. Choose Play music if it is paused.';
+      localizedText(status, () =>committed.warning || t("interface:playlistSelectedChoosePlayMusicIfItIsPaused"));
     });
   });
   const transport = section(
-    'Now playing',
+    localizedMessage("interface:nowPlaying"),
     now,
     row(
-      button('previous', 'Previous', () => controlMusic(() => player.previous())),
-      button('play', 'Play music', () => controlMusic(() => player.play(), true)),
-      button('pause', 'Pause music', () => controlMusic(() => player.pause())),
-      button('next', 'Next', () => controlMusic(() => player.next())),
+      button('previous', localizedMessage("common:actions.previous"), () => controlMusic(() => player.previous())),
+      button('play', localizedMessage("interface:playMusic2"), () => controlMusic(() => player.play(), true)),
+      button('pause', localizedMessage("interface:pauseMusic"), () => controlMusic(() => player.pause())),
+      button('next', localizedMessage("common:actions.next"), () => controlMusic(() => player.next())),
     ),
     seek.field,
     volume.field,
     selection.field,
     useSelection,
   );
-  const tracksSelect = input('tracks', 'Tracks', { tag: 'select', size: '7' });
-  const fileInput = input('mp3-files', 'Add MP3 files', {
+  const tracksSelect = input('tracks', localizedMessage("interface:tracks"), { tag: 'select', size: '7' });
+  const fileInput = input('mp3-files', localizedMessage("interface:addMp3Files"), {
     type: 'file',
     accept: '.mp3,audio/mpeg',
     multiple: '',
   });
-  const importButton = button('import-mp3', 'Import selected MP3s', () => importMP3Files());
-  const trackTitle = input('track-title', 'Track title', { maxlength: '120' });
-  const trackArtist = input('track-artist', 'Artist', { maxlength: '160' });
-  const rightsKind = input('rights-kind', 'Source declaration', { tag: 'select' });
+  const importButton = button('import-mp3', localizedMessage("interface:importSelectedMp3s"), () => importMP3Files());
+  const trackTitle = input('track-title', localizedMessage("interface:trackTitle"), { maxlength: '120' });
+  const trackArtist = input('track-artist', localizedMessage("interface:artist"), { maxlength: '160' });
+  const rightsKind = input('rights-kind', localizedMessage("interface:sourceDeclaration"), { tag: 'select' });
   options(rightsKind.element, [
-    ['personal', 'Personal local upload'],
-    ['original', 'Original work'],
-    ['licensed', 'Licensed work'],
+    ['personal', t("interface:personalLocalUpload")],
+    ['original', t("interface:originalWork")],
+    ['licensed', t("interface:licensedWork")],
   ]);
-  const rightsCredit = input('rights-credit', 'Credit', { maxlength: '280' });
-  const rightsLicense = input('rights-license', 'License / permission', { maxlength: '280' });
-  const rightsSource = input('rights-source', 'Source / provenance', { maxlength: '1024' });
+  const rightsCredit = input('rights-credit', localizedMessage("interface:credit"), { maxlength: '280' });
+  const rightsLicense = input('rights-license', localizedMessage("interface:licensePermission"), { maxlength: '280' });
+  const rightsSource = input('rights-source', localizedMessage("interface:sourceProvenance"), { maxlength: '1024' });
   const trackInfo = node('p', 'track-info', '', { class: 'micro-note' });
-  const applyTrack = button('apply-track', 'Apply track details to draft', () =>
+  const applyTrack = button('apply-track', localizedMessage("interface:applyTrackDetailsToDraft"), () =>
     attempt(() => {
       const id = tracksSelect.element.value;
       edit((value) => {
         const track = value.tracks.find((item) => item.id === id);
-        if (!track) throw new Error('Built-in tracks cannot be edited.');
+        if (!track) throw new Error(t("interface:builtInTracksCannotBeEdited"));
         Object.assign(track, {
           title: trackTitle.element.value,
           artist: trackArtist.element.value,
@@ -209,59 +213,58 @@ export function attachSoundtrackPanel({
         });
       });
       render();
-      status.textContent = 'Track details added to the draft. Save all changes to keep them.';
+      localizedText(status, () =>t("interface:trackDetailsAddedToTheDraftSaveAllChangesTo"));
     }),
   );
-  const deleteTrack = button('delete-track', 'Remove track from draft', () =>
+  const deleteTrack = button('delete-track', localizedMessage("interface:removeTrackFromDraft"), () =>
     attempt(() => {
       const id = tracksSelect.element.value;
       edit((value) => {
         if (!value.tracks.some((item) => item.id === id))
-          throw new Error('Built-in tracks are retained.');
+          throw new Error(t("interface:builtInTracksAreRetained"));
         const references = value.playlists.filter((item) => item.trackIds.includes(id));
         if (references.length)
           throw new Error(
-            `Remove this track from its playlists first: ${references.map((item) => item.title).join(', ')}.`,
+            t("gameplay:removeThisTrackFromItsPlaylistsFirst", { value1: references.map((item) => contentText(item, 'title')).join(', ') }),
           );
         value.tracks = value.tracks.filter((item) => item.id !== id);
       });
       pruneAssets();
       render();
-      status.textContent =
-        'Track removed from the draft; the saved library is unchanged until Save.';
+      localizedText(status, () =>t("interface:trackRemovedFromTheDraftTheSavedLibraryIsUnchanged"));
     }),
   );
   const audition = node('audio', 'audition', null, {
     controls: '',
     preload: 'metadata',
-    'aria-label': 'Imported track audition',
+    'aria-label': localizedMessage("interface:importedTrackAudition"),
   });
   audition.hidden = true;
-  const auditionButton = button('audition-track', 'Audition MP3', () =>
+  const auditionButton = button('audition-track', localizedMessage("interface:auditionMp3"), () =>
     playback(() => startAudition()),
   );
-  const stopAuditionButton = button('stop-audition', 'Finish audition', () =>
+  const stopAuditionButton = button('stop-audition', localizedMessage("interface:finishAudition"), () =>
     playback(() => stopAudition(true)),
   );
-  const auditionSeek = input('audition-seek', 'Audition position', {
+  const auditionSeek = input('audition-seek', localizedMessage("interface:auditionPosition"), {
     type: 'range',
     min: '0',
     max: '0',
     step: '0.5',
   });
-  const auditionVolume = input('audition-volume', 'Audition volume', {
+  const auditionVolume = input('audition-volume', localizedMessage("interface:auditionVolume"), {
     type: 'range',
     min: '0',
     max: '1',
     step: '0.05',
   });
-  const toggleAudition = button('toggle-audition', 'Pause audition', () =>
+  const toggleAudition = button('toggle-audition', localizedMessage("interface:pauseAudition"), () =>
     playback(async () => {
       if (!auditionURL || disposed || busy) return;
       const token = auditionToken;
       if (!audition.paused) audition.pause();
       else {
-        wakeAudio();
+        await beforeAudio();
         if (disposed || token !== auditionToken || !auditionURL) return;
         try {
           await audition.play();
@@ -272,18 +275,18 @@ export function attachSoundtrackPanel({
     }),
   );
   const auditionControls = section(
-    'Audition controls',
+    localizedMessage("interface:auditionControls"),
     row(toggleAudition),
     auditionSeek.field,
     auditionVolume.field,
   );
   auditionControls.hidden = true;
   const tracksSection = section(
-    'Music library',
+    localizedMessage("interface:musicLibrary"),
     node(
       'p',
       null,
-      'Batch import keeps original MP3 bytes. Each file must be at most 32 MiB and 12 minutes. New imports start as personal local uploads; edit the declaration before publishing.',
+      localizedMessage("interface:batchImportKeepsOriginalMp3BytesEachFileMustBe"),
       { class: 'micro-note' },
     ),
     fileInput.field,
@@ -301,50 +304,49 @@ export function attachSoundtrackPanel({
     audition,
     auditionControls,
   );
-  const playlistsSelect = input('playlists', 'Playlists', { tag: 'select', size: '5' });
-  const playlistTitle = input('playlist-title', 'Playlist title', { maxlength: '120' });
-  const order = input('order', 'Playback order', { tag: 'select' });
+  const playlistsSelect = input('playlists', localizedMessage("interface:playlists"), { tag: 'select', size: '5' });
+  const playlistTitle = input('playlist-title', localizedMessage("interface:playlistTitle"), { maxlength: '120' });
+  const order = input('order', localizedMessage("interface:playbackOrder"), { tag: 'select' });
   options(order.element, [
-    ['ordered', 'In order'],
-    ['shuffle', 'Shuffle without repeats until every entry played'],
+    ['ordered', t("interface:inOrder")],
+    ['shuffle', t("interface:shuffleWithoutRepeatsUntilEveryEntryPlayed")],
   ]);
-  const repeat = input('repeat', 'Repeat', { tag: 'select' });
+  const repeat = input('repeat', localizedMessage("interface:repeat"), { tag: 'select' });
   options(repeat.element, [
-    ['all', 'Repeat all'],
-    ['one', 'Repeat one'],
-    ['off', 'Stop at the end'],
+    ['all', t("interface:repeatAll")],
+    ['one', t("interface:repeatOne")],
+    ['off', t("interface:stopAtTheEnd")],
   ]);
-  const entries = input('entries', 'Playlist entries', { tag: 'select', size: '7' });
-  const addTrack = input('add-track', 'Track to add', { tag: 'select' });
-  const createPlaylist = button('create-playlist', 'New playlist with selected track', () =>
+  const entries = input('entries', localizedMessage("interface:playlistEntries"), { tag: 'select', size: '7' });
+  const addTrack = input('add-track', localizedMessage("interface:trackToAdd"), { tag: 'select' });
+  const createPlaylist = button('create-playlist', localizedMessage("interface:newPlaylistWithSelectedTrack"), () =>
     attempt(() => {
       const id = makeId('playlist');
       edit((value) =>
         value.playlists.push({
           id,
-          title: 'New playlist',
+          title: localizedMessage("interface:newPlaylist"),
           trackIds: [tracksSelect.element.value],
           order: 'ordered',
           repeat: 'all',
         }),
       );
       render({ playlistId: id });
-      status.textContent =
-        'New playlist added to the draft. Edit its title, order and entries, then Save.';
+      localizedText(status, () =>t("interface:newPlaylistAddedToTheDraftEditItsTitleOrder"));
     }),
   );
-  const clonePlaylist = button('clone-playlist', 'Clone selected playlist', () =>
+  const clonePlaylist = button('clone-playlist', localizedMessage("interface:cloneSelectedPlaylist"), () =>
     attempt(() => {
       const source = playlists().find((item) => item.id === playlistsSelect.element.value);
       const id = makeId('playlist');
       edit((value) =>
-        value.playlists.push({ ...copy(source), id, title: `${source.title.slice(0, 113)} copy` }),
+        value.playlists.push({ ...copy(source), id, title: localizedMessage("gameplay:copy", { value1: contentText(source, 'title').slice(0, 113) }) }),
       );
       render({ playlistId: id });
-      status.textContent = 'Playlist cloned. The draft copy is editable.';
+      localizedText(status, () =>t("interface:playlistClonedTheDraftCopyIsEditable"));
     }),
   );
-  const applyPlaylist = button('apply-playlist', 'Apply playlist details to draft', () =>
+  const applyPlaylist = button('apply-playlist', localizedMessage("interface:applyPlaylistDetailsToDraft"), () =>
     attempt(() => {
       changePlaylist((item) =>
         Object.assign(item, {
@@ -354,11 +356,10 @@ export function attachSoundtrackPanel({
         }),
       );
       render();
-      status.textContent =
-        'Playlist details added to the draft. The current song will finish normally after Save.';
+      localizedText(status, () =>t("interface:playlistDetailsAddedToTheDraftTheCurrentSongWill"));
     }),
   );
-  const appendEntry = button('add-entry', 'Add selected track', () =>
+  const appendEntry = button('add-entry', localizedMessage("interface:addSelectedTrack"), () =>
     attempt(() => {
       changePlaylist((item) => item.trackIds.push(addTrack.element.value));
       renderPlaylist();
@@ -370,7 +371,7 @@ export function attachSoundtrackPanel({
       const at = Number(entries.element.value);
       changePlaylist((item) => {
         if (!Number.isInteger(at) || at < 0 || at + delta < 0 || at + delta >= item.trackIds.length)
-          throw new Error('Choose an entry that can move in that direction.');
+          throw new Error(t("interface:chooseAnEntryThatCanMoveInThatDirection"));
         [item.trackIds[at], item.trackIds[at + delta]] = [
           item.trackIds[at + delta],
           item.trackIds[at],
@@ -379,43 +380,43 @@ export function attachSoundtrackPanel({
       renderPlaylist(String(at + delta));
       dirtyState();
     });
-  const up = button('entry-up', 'Move entry up', () => moveEntry(-1));
-  const down = button('entry-down', 'Move entry down', () => moveEntry(1));
-  const removeEntry = button('remove-entry', 'Remove selected entry', () =>
+  const up = button('entry-up', localizedMessage("interface:moveEntryUp"), () => moveEntry(-1));
+  const down = button('entry-down', localizedMessage("interface:moveEntryDown"), () => moveEntry(1));
+  const removeEntry = button('remove-entry', localizedMessage("interface:removeSelectedEntry"), () =>
     attempt(() => {
       const at = Number(entries.element.value);
       changePlaylist((item) => {
         if (item.trackIds.length === 1)
-          throw new Error('A playlist needs at least one track. Remove the playlist instead.');
+          throw new Error(t("interface:aPlaylistNeedsAtLeastOneTrackRemoveThePlaylist"));
         if (!Number.isInteger(at) || at < 0 || at >= item.trackIds.length)
-          throw new Error('Select a playlist entry.');
+          throw new Error(t("interface:selectAPlaylistEntry"));
         item.trackIds.splice(at, 1);
       });
       renderPlaylist();
       dirtyState();
     }),
   );
-  const deletePlaylist = button('delete-playlist', 'Remove playlist from draft', () =>
+  const deletePlaylist = button('delete-playlist', localizedMessage("interface:removePlaylistFromDraft"), () =>
     attempt(() => {
       const id = playlistsSelect.element.value;
       edit((value) => {
         if (!value.playlists.some((item) => item.id === id))
-          throw new Error('Clone built-in playlists to edit them.');
+          throw new Error(t("interface:cloneBuiltInPlaylistsToEditThem"));
         if (
           value.selection.playlistId === id ||
           value.assignments.some((item) => item.playlistId === id)
         )
           throw new Error(
-            'Choose another playback playlist and remove assignments before deleting this playlist.',
+            t("interface:chooseAnotherPlaybackPlaylistAndRemoveAssignmentsBeforeDeletingThis"),
           );
         value.playlists = value.playlists.filter((item) => item.id !== id);
       });
       render();
-      status.textContent = 'Playlist removed from the draft.';
+      localizedText(status, () =>t("interface:playlistRemovedFromTheDraft"));
     }),
   );
   const playlistSection = section(
-    'Playlist editor',
+    localizedMessage("interface:playlistEditor"),
     playlistsSelect.field,
     row(createPlaylist, clonePlaylist),
     playlistTitle.field,
@@ -428,19 +429,19 @@ export function attachSoundtrackPanel({
     appendEntry,
     deletePlaylist,
   );
-  const scope = input('scope', 'Assign selected playlist to', { tag: 'select' });
+  const scope = input('scope', localizedMessage("interface:assignSelectedPlaylistTo"), { tag: 'select' });
   options(scope.element, [
-    ['global', 'Whole game'],
-    ['theme', 'Current theme'],
-    ['campaign', 'Current campaign edition'],
-    ['map', 'Current map edition'],
+    ['global', t("interface:wholeGame")],
+    ['theme', t("interface:currentTheme")],
+    ['campaign', t("interface:currentCampaignEdition")],
+    ['map', t("interface:currentMapEdition")],
   ]);
   const key = node('p', 'context-key', '', { class: 'micro-note' });
-  const assignments = input('assignments', 'Saved / drafted assignments', {
+  const assignments = input('assignments', localizedMessage("interface:savedDraftedAssignments"), {
     tag: 'select',
     size: '4',
   });
-  const assign = button('assign', 'Assign playlist to this context', () =>
+  const assign = button('assign', localizedMessage("interface:assignPlaylistToThisContext"), () =>
     attempt(() => {
       const current = assignmentContext();
       edit((value) => {
@@ -451,16 +452,15 @@ export function attachSoundtrackPanel({
       });
       renderAssignments();
       dirtyState();
-      status.textContent =
-        'Assignment added to the draft. Automatic playback uses map, campaign, theme, then global; explicit selection overrides these.';
+      localizedText(status, () =>t("interface:assignmentAddedToTheDraftAutomaticPlaybackUsesMapCampaign"));
     }),
   );
-  const unassign = button('unassign', 'Remove selected assignment', () =>
+  const unassign = button('unassign', localizedMessage("interface:removeSelectedAssignment"), () =>
     attempt(() => {
       const at = Number(assignments.element.value);
       edit((value) => {
         if (!Number.isInteger(at) || at < 0 || at >= value.assignments.length)
-          throw new Error('Select an assignment to remove.');
+          throw new Error(t("interface:selectAnAssignmentToRemove"));
         value.assignments.splice(at, 1);
       });
       renderAssignments();
@@ -468,11 +468,11 @@ export function attachSoundtrackPanel({
     }),
   );
   const assignmentSection = section(
-    'Authored music',
+    localizedMessage("interface:authoredMusic"),
     node(
       'p',
       null,
-      'These exact edition keys come from the game. Choose Automatic in Playback playlist to follow authored assignments.',
+      localizedMessage("interface:theseExactEditionKeysComeFromTheGameChooseAutomatic"),
       { class: 'micro-note' },
     ),
     scope.field,
@@ -481,14 +481,14 @@ export function attachSoundtrackPanel({
     assignments.field,
     unassign,
   );
-  const bundleInput = input('bundle-file', 'Complete soundtrack backup (.rlsound)', {
+  const bundleInput = input('bundle-file', localizedMessage("interface:completeSoundtrackBackupRlsound"), {
     type: 'file',
     accept: '.rlsound,application/octet-stream',
   });
-  const bundleImport = button('import-bundle', 'Review backup as replacement draft', () =>
-    task('Checking soundtrack backup and original audio…', async (signal) => {
+  const bundleImport = button('import-bundle', localizedMessage("interface:reviewBackupAsReplacementDraft"), () =>
+    task(t("interface:checkingSoundtrackBackupAndOriginalAudio"), async (signal) => {
       const source = bundleInput.element.files?.[0];
-      if (!source) throw new Error('Choose a .rlsound backup first.');
+      if (!source) throw new Error(t("interface:chooseARlsoundBackupFirst"));
       const prepared = await importSoundtrackBundle(source, { signal, probeMedia });
       throwIfSoundtrackAborted(signal);
       invalidateBackup();
@@ -496,18 +496,18 @@ export function attachSoundtrackPanel({
       assets = [...prepared.assets];
       dirty = true;
       render();
-      status.textContent = `Backup verified: ${draft.tracks.length} custom tracks, ${draft.playlists.length} custom playlists. Save all changes replaces the local library; Undo keeps the saved library.`;
+      localizedText(status, () =>t("gameplay:backupVerifiedCustomTracksCustomPlaylistsSaveAllChangesReplaces", { value1: draft.tracks.length, value2: draft.playlists.length }));
       bundleInput.element.value = '';
     }),
   );
   const bundleExport = button(
     'export-bundle',
-    'Prepare saved-library backup (.rlsound)',
+    localizedMessage("interface:prepareSavedLibraryBackupRlsound"),
     async () => {
       const complete = await task(
-        'Verifying a complete binary soundtrack backup…',
+        t("interface:verifyingACompleteBinarySoundtrackBackup"),
         async (signal) => {
-          if (!saved) throw new Error('Load the saved music library first.');
+          if (!saved) throw new Error(t("interface:loadTheSavedMusicLibraryFirst"));
           invalidateBackup();
           const blob = await exportSoundtrackBundle(saved.library, saved.assets, { signal });
           throwIfSoundtrackAborted(signal);
@@ -518,8 +518,7 @@ export function attachSoundtrackPanel({
             generation: saved.generation,
             url: typeof download === 'function' ? null : URLImpl.createObjectURL(blob),
           };
-          status.textContent =
-            'Backup prepared. Choose Download prepared backup to request the file. Unsaved draft changes are excluded.';
+          localizedText(status, () =>t("interface:backupPreparedChooseDownloadPreparedBackupToRequestTheFile"));
         },
       );
       if (complete && preparedBackup && dialog.open && !disposed) bundleDownload.focus();
@@ -531,7 +530,7 @@ export function attachSoundtrackPanel({
   const bundleDownload = node(
     typeof download === 'function' ? 'button' : 'a',
     'download-prepared',
-    'Download prepared backup',
+    localizedMessage("interface:downloadPreparedBackup"),
     { class: 'button secondary', ...(typeof download === 'function' ? { type: 'button' } : {}) },
   );
   bundleDownload.onclick = (event) => {
@@ -542,34 +541,31 @@ export function attachSoundtrackPanel({
     }
     if (typeof download === 'function') {
       event?.preventDefault();
-      return task('Requesting the prepared backup from the download adapter…', async (signal) => {
+      return task(t("interface:requestingThePreparedBackupFromTheDownloadAdapter"), async (signal) => {
         await download(prepared.blob, prepared.filename, { signal });
         if (!disposed && preparedBackup === prepared)
-          status.textContent =
-            'Download request handed to the host. Confirm the destination there; the prepared backup is available to retry.';
+          localizedText(status, () =>t("interface:downloadRequestHandedToTheHostConfirmTheDestinationThere"));
       });
     }
-    status.textContent =
-      'Download requested. Confirm it in your browser. If no file appears, choose Download prepared backup again.';
+    localizedText(status, () =>t("interface:downloadRequestedConfirmItInYourBrowserIfNoFile"));
     // No async work, synthetic click or automatic navigation here. The visible
     // anchor's default action uses the already prepared, retained Blob URL.
     return true;
   };
-  const discardBackup = button('discard-backup', 'Discard prepared copy', () => {
+  const discardBackup = button('discard-backup', localizedMessage("interface:discardPreparedCopy"), () => {
     if (busy || disposed) return;
     invalidateBackup();
-    status.textContent =
-      'Prepared copy discarded. Saved music is unchanged; the browser controls any download already requested.';
+    localizedText(status, () =>t("interface:preparedCopyDiscardedSavedMusicIsUnchangedTheBrowserControls"));
   });
   const backupInfo = node('p', 'backup-info', '', { class: 'micro-note' });
   const backupReady = node('div', 'backup-ready', null, { class: 'soundtrack-backup-ready' });
   backupReady.append(backupInfo, row(bundleDownload, discardBackup));
   const transferSection = section(
-    'Local files & backup',
+    localizedMessage("interface:localFilesBackup"),
     node(
       'p',
       null,
-      'This separate soundtrack file contains original MP3 bytes. A normal game JSON backup does not include this audio. Local storage availability is not a guarantee that this browser retains files indefinitely.',
+      localizedMessage("interface:thisSeparateSoundtrackFileContainsOriginalMp3BytesANormal"),
       { class: 'micro-note' },
     ),
     row(bundleExport),
@@ -604,10 +600,9 @@ export function attachSoundtrackPanel({
     return [...BUILTIN_SOUNDTRACK_PLAYLISTS, ...draft.playlists];
   }
   function report(error) {
-    status.textContent =
-      error?.name === 'AbortError'
-        ? 'Operation cancelled. The saved library was not changed by this cancelled operation.'
-        : message(error);
+    localizedText(status, () =>error?.name === 'AbortError'
+        ? t("interface:operationCancelledTheSavedLibraryWasNotChangedByThis")
+        : message(error));
     if (error?.name !== 'AbortError') {
       try {
         onError(error);
@@ -632,7 +627,7 @@ export function attachSoundtrackPanel({
   function changePlaylist(work) {
     edit((value) => {
       const item = value.playlists.find((entry) => entry.id === playlistsSelect.element.value);
-      if (!item) throw new Error('Clone this built-in playlist before editing it.');
+      if (!item) throw new Error(t("interface:cloneThisBuiltInPlaylistBeforeEditingIt"));
       work(item);
     });
   }
@@ -641,9 +636,9 @@ export function attachSoundtrackPanel({
     assets = assets.filter((asset) => needed.has(asset.sha256));
   }
   function dirtyState() {
-    stateLine.textContent = saved
-      ? `${dirty ? 'Unsaved draft' : 'Saved'} · generation ${saved.generation} · ${draft.tracks.length} custom tracks · ${draft.playlists.length} custom playlists · ${bytes(assets.reduce((total, asset) => total + asset.blob.size, 0))} original audio`
-      : 'Local library is unavailable. Built-in playback remains separate.';
+    localizedText(stateLine, () =>saved
+      ? t("gameplay:generationCustomTracksCustomPlaylistsOriginalAudio", { value1: dirty ? t("interface:unsavedDraft") : t("interface:saved"), value2: saved.generation, value3: draft.tracks.length, value4: draft.playlists.length, value5: bytes(assets.reduce((total, asset) => total + asset.blob.size, 0)) })
+      : t("interface:localLibraryIsUnavailableBuiltInPlaybackRemainsSeparate"));
     saveButton.disabled = busy || !saved || !dirty;
     undoButton.disabled = busy || !saved || !dirty;
   }
@@ -662,7 +657,7 @@ export function attachSoundtrackPanel({
     bundleDownload.setAttribute('aria-disabled', String(bundleDownload.disabled));
     discardBackup.disabled = busy || !preparedBackup;
     if (!preparedBackup) return;
-    backupInfo.textContent = `${bytes(preparedBackup.blob.size)} · saved generation ${preparedBackup.generation} · metadata and every referenced original MP3. Unsaved draft edits are excluded. Preparation does not save a file to disk.`;
+    localizedText(backupInfo, () =>t("gameplay:savedGenerationMetadataAndEveryReferencedOriginalMp3UnsavedDraft", { value1: bytes(preparedBackup.blob.size), value2: preparedBackup.generation }));
     if (preparedBackup.url) {
       if (busy) bundleDownload.removeAttribute('href');
       else bundleDownload.setAttribute('href', preparedBackup.url);
@@ -690,9 +685,9 @@ export function attachSoundtrackPanel({
       auditionButton,
     ])
       control.disabled = busy || !saved || !custom;
-    trackInfo.textContent = custom
-      ? `${seconds(track.asset.durationSeconds)} · ${bytes(track.asset.bytes)} · ${track.asset.sampleRate} Hz · original bytes ${assets.some((asset) => asset.sha256 === track.asset.sha256) ? 'present locally' : 'MISSING — restore a complete backup'}`
-      : 'Built-in procedural synth recipe. Use the playback playlist to listen; original finished albums are a separate content milestone.';
+    localizedText(trackInfo, () =>custom
+      ? t("gameplay:hzOriginalBytes", { value1: seconds(track.asset.durationSeconds), value2: bytes(track.asset.bytes), value3: track.asset.sampleRate, value4: assets.some((asset) => asset.sha256 === track.asset.sha256) ? 'present locally' : t("interface:missingRestoreACompleteBackup") })
+      : t("interface:builtInProceduralSynthRecipeUseThePlaybackPlaylistTo"));
   }
   function renderPlaylist(entryIndex) {
     const item = playlists().find((entry) => entry.id === playlistsSelect.element.value);
@@ -730,7 +725,7 @@ export function attachSoundtrackPanel({
         ? null
         : context[{ theme: 'themeId', campaign: 'campaignKey', map: 'mapKey' }[selectedScope]];
     if (contextKey === undefined || (selectedScope !== 'global' && !contextKey))
-      throw new Error(`Choose a game ${selectedScope} before assigning its music.`);
+      throw new Error(t("gameplay:chooseAGameBeforeAssigningItsMusic", { value1: selectedScope }));
     return { scope: selectedScope, key: contextKey };
   }
   function renderAssignments() {
@@ -744,10 +739,10 @@ export function attachSoundtrackPanel({
     );
     try {
       const context = assignmentContext();
-      key.textContent = context.key ?? 'Global fallback for the whole game';
+      localizedText(key, () =>context.key ?? t("interface:globalFallbackForTheWholeGame"));
       assign.disabled = busy || !saved;
     } catch (error) {
-      key.textContent = message(error);
+      localizedText(key, () =>message(error));
       assign.disabled = true;
     }
     unassign.disabled = busy || !saved || !draft.assignments.length;
@@ -757,7 +752,7 @@ export function attachSoundtrackPanel({
       tracksSelect.element,
       tracks().map((item) => [
         item.id,
-        `${item.kind === 'synth' ? 'Built-in · ' : ''}${item.title}`,
+        `${item.kind === 'synth' ? ("" + t("interface:builtIn") + " ") : ''}${contentText(item, 'title')}`,
       ]),
       trackId ?? tracksSelect.element.value,
     );
@@ -769,14 +764,14 @@ export function attachSoundtrackPanel({
       playlistsSelect.element,
       playlists().map((item) => [
         item.id,
-        `${item.id.startsWith('builtin.') ? 'Built-in · ' : ''}${item.title}`,
+        `${item.id.startsWith('builtin.') ? ("" + t("interface:builtIn") + " ") : ''}${contentText(item, 'title')}`,
       ]),
       playlistId ?? playlistsSelect.element.value,
     );
     options(
       selection.element,
       [
-        ['', 'Automatic — follow map / campaign / theme'],
+        ['', t("interface:automaticFollowMapCampaignTheme")],
         ...playlists().map((item) => [item.id, item.title]),
       ],
       draft.selection.playlistId ?? '',
@@ -799,7 +794,7 @@ export function attachSoundtrackPanel({
     busy = true;
     controller = new AbortController();
     const signal = controller.signal;
-    status.textContent = label;
+    localizedText(status, () =>label);
     render();
     try {
       await work(signal);
@@ -814,7 +809,7 @@ export function attachSoundtrackPanel({
     }
   }
   async function reload() {
-    return task('Loading saved music and local audio…', async (signal) => {
+    return task(t("interface:loadingSavedMusicAndLocalAudio"), async (signal) => {
       invalidateBackup();
       const value = await store.read({ signal });
       throwIfSoundtrackAborted(signal);
@@ -824,8 +819,7 @@ export function attachSoundtrackPanel({
       dirty = false;
       player.setLibrary(draft);
       const warning = await notifyLibrary(value);
-      status.textContent =
-        warning || 'Saved library loaded. Imports and edits remain drafts until Save all changes.';
+      localizedText(status, () =>warning || t("interface:savedLibraryLoadedImportsAndEditsRemainDraftsUntilSave"));
     });
   }
   async function notifyLibrary(value) {
@@ -836,11 +830,11 @@ export function attachSoundtrackPanel({
       try {
         onError(error);
       } catch {}
-      return `Library is saved, but the game refresh failed: ${message(error)}. Reload the studio to refresh it.`;
+      return t("gameplay:libraryIsSavedButTheGameRefreshFailedReloadThe", { value1: message(error) });
     }
   }
   async function commitDraft(signal) {
-    if (!saved) throw new Error('Load the local library before saving.');
+    if (!saved) throw new Error(t("interface:loadTheLocalLibraryBeforeSaving"));
     invalidateBackup();
     pruneAssets();
     const prepared = await prepareSoundtrackLibrary(draft, assets, { signal, probeMedia });
@@ -858,39 +852,38 @@ export function attachSoundtrackPanel({
     dirty = false;
     player.setLibrary(draft);
     const warning = await notifyLibrary(saved);
-    status.textContent =
-      warning ||
-      'Music library saved atomically. The current song continues; edited queues and automatic assignments apply at a song boundary.';
+    localizedText(status, () =>warning ||
+      t("interface:musicLibrarySavedAtomicallyTheCurrentSongContinuesEditedQueues"));
     return { ...saved, warning };
   }
   async function importMP3Files() {
-    return task('Inspecting selected MP3 files…', async (signal) => {
-      if (!saved) throw new Error('Load the local library before importing.');
+    return task(t("interface:inspectingSelectedMp3Files"), async (signal) => {
+      if (!saved) throw new Error(t("interface:loadTheLocalLibraryBeforeImporting"));
       const files = [...(fileInput.element.files ?? [])];
-      if (!files.length) throw new Error('Choose one or more MP3 files first.');
+      if (!files.length) throw new Error(t("interface:chooseOneOrMoreMp3FilesFirst"));
       if (
         files.length + draft.tracks.length + BUILTIN_SOUNDTRACK_TRACKS.length >
         SOUNDTRACK_LIMITS.tracks
       )
         throw new Error(
-          'This batch would exceed the 128-track library limit, including built-in tracks.',
+          t("interface:thisBatchWouldExceedThe128TrackLibraryLimitIncluding"),
         );
       const next = copy(draft),
         added = new Map(assets.map((asset) => [asset.sha256, asset.blob]));
       let latest;
       for (let index = 0; index < files.length; index++) {
         const file = files[index];
-        status.textContent = `Inspecting ${index + 1}/${files.length}: ${file.name || 'MP3 audio'}…`;
+        localizedText(status, () =>t("gameplay:inspecting", { value1: index + 1, value2: files.length, value3: file.name || t("interface:mp3Audio") }));
         const imported = await prepareMP3Import(
           file,
           {
             id: makeId('track'),
             title:
-              (file.name || 'Imported MP3').replace(/\.mp3$/i, '').slice(0, 120) || 'Imported MP3',
+              (file.name || 'Imported MP3').replace(/\.mp3$/i, '').slice(0, 120) || t("interface:importedMp3"),
             artist: '',
             rights: {
               kind: 'personal',
-              credit: 'Personal local upload',
+              credit: t("interface:personalLocalUpload"),
               license: '',
               source: (file.name || '').slice(0, 1024),
             },
@@ -903,7 +896,7 @@ export function attachSoundtrackPanel({
           [...added.values()].reduce((total, blob) => total + blob.size, 0) >
           SOUNDTRACK_LIMITS.managedBytes
         )
-          throw new Error('This draft exceeds the 256 MiB audio budget. Import fewer tracks.');
+          throw new Error(t("interface:thisDraftExceedsThe256MibAudioBudgetImportFewer"));
         latest = imported.track.id;
         resolveSoundtrackLibrary(next);
         throwIfSoundtrackAborted(signal);
@@ -916,7 +909,7 @@ export function attachSoundtrackPanel({
       dirty = true;
       render({ trackId: latest });
       fileInput.element.value = '';
-      status.textContent = `${files.length} MP3 file${files.length === 1 ? '' : 's'} verified and added to the draft. Edit details or audition, then Save all changes.`;
+      localizedText(status, () =>t("gameplay:mp3FileVerifiedAndAddedToTheDraftEditDetails", { value1: files.length, value2: files.length === 1 ? '' : 's' }));
     });
   }
   async function stopAudition(restore = false) {
@@ -938,14 +931,14 @@ export function attachSoundtrackPanel({
   }
   async function startAudition() {
     const track = draft.tracks.find((item) => item.id === tracksSelect.element.value);
-    if (!track) throw new Error('Choose an imported MP3 to audition.');
+    if (!track) throw new Error(t("interface:chooseAnImportedMp3ToAudition"));
     const asset = assets.find((item) => item.sha256 === track.asset.sha256);
     if (!asset)
-      throw new Error('This MP3 is missing locally. Restore its complete soundtrack backup.');
+      throw new Error(t("interface:thisMp3IsMissingLocallyRestoreItsCompleteSoundtrackBackup"));
     const state = player.snapshot();
     const previous = restoreMusic || (state.desired ?? state.playing);
-    const stopping = stopAudition(false);
-    wakeAudio();
+    await stopAudition(false);
+    await beforeAudio();
     restoreMusic = previous;
     player.pause();
     const token = ++auditionToken;
@@ -955,10 +948,9 @@ export function attachSoundtrackPanel({
       audition.hidden = false;
       audition.load();
       await audition.play();
-      await stopping;
       if (token === auditionToken) {
         await onAudioEnabled();
-        status.textContent = `Auditioning ${track.title}. Finish audition returns to the previous music state.`;
+        localizedText(status, () =>t("gameplay:auditioningFinishAuditionReturnsToThePreviousMusicState", { value1: contentText(track, 'title') }));
       }
     } catch (error) {
       if (token === auditionToken) await stopAudition(true);
@@ -976,24 +968,11 @@ export function attachSoundtrackPanel({
   }
   async function controlMusic(work, enable = false) {
     return playback(async () => {
-      // Invoke play in the same task as the button activation. In particular,
-      // iOS Safari can reject media.play() after an await, even when the await
-      // was only a local pause or audio-context resume.
-      const stopping = stopAudition(false);
-      if (enable) wakeAudio();
-      const playing = work();
-      await stopping;
-      await playing;
+      await stopAudition(false);
+      if (enable) await beforeAudio();
+      await work();
       await notifyPlayback();
     });
-  }
-  function wakeAudio() {
-    try {
-      const pending = beforeAudio();
-      if (pending?.catch) void pending.catch(report);
-    } catch (error) {
-      report(error);
-    }
   }
   async function notifyPlayback() {
     const state = player.snapshot();
@@ -1004,7 +983,7 @@ export function attachSoundtrackPanel({
     const available = auditionURL !== null && !disposed;
     auditionControls.hidden = !available;
     toggleAudition.disabled = !available || busy;
-    toggleAudition.textContent = audition.paused ? 'Resume audition' : 'Pause audition';
+    localizedText(toggleAudition, () =>audition.paused ? t("interface:resumeAudition") : t("interface:pauseAudition"));
     const duration =
       Number.isFinite(audition.duration) && audition.duration > 0 ? audition.duration : 0;
     auditionSeek.element.max = String(duration);
@@ -1019,7 +998,7 @@ export function attachSoundtrackPanel({
   }
   function update(snapshot = player.snapshot()) {
     if (disposed) return;
-    now.textContent = `${snapshot.track?.title ?? 'No track selected'}${snapshot.track?.artist ? ` · ${snapshot.track.artist}` : ''} · ${snapshot.status} · ${seconds(snapshot.positionSeconds)} / ${seconds(snapshot.durationSeconds)}${snapshot.pendingPlaylistId ? ' · playlist update queued' : ''}${snapshot.notice ? ` · ${snapshot.notice}` : ''}${snapshot.error ? ` · ${snapshot.error}` : ''}`;
+    localizedText(now, () =>`${contentText(snapshot.track, 'title') ?? t("interface:noTrackSelected")}${snapshot.track?.artist ? ` · ${snapshot.track.artist}` : ''} · ${snapshot.status} · ${seconds(snapshot.positionSeconds)} / ${seconds(snapshot.durationSeconds)}${snapshot.pendingPlaylistId ? ' · playlist update queued' : ''}${snapshot.notice ? ` · ${snapshot.notice}` : ''}${snapshot.error ? ` · ${snapshot.error}` : ''}`);
     seek.element.max = String(snapshot.durationSeconds || 0);
     if (doc.activeElement !== seek.element)
       seek.element.value = String(snapshot.positionSeconds || 0);
@@ -1037,11 +1016,11 @@ export function attachSoundtrackPanel({
     if (!saved) await reload();
     else {
       render();
-      status.textContent = preparedBackup
-        ? 'Your prepared saved-library backup is still available to download. Unsaved draft changes are excluded.'
+      localizedText(status, () =>preparedBackup
+        ? t("interface:yourPreparedSavedLibraryBackupIsStillAvailableToDownload")
         : dirty
-          ? 'Your unsaved draft is still here.'
-          : 'Music library ready.';
+          ? t("interface:yourUnsavedDraftIsStillHere")
+          : t("interface:musicLibraryReady"));
     }
   }
   function close() {
@@ -1056,8 +1035,7 @@ export function attachSoundtrackPanel({
     event.preventDefault();
     if (busy) {
       controller?.abort();
-      status.textContent =
-        'Cancellation requested. Wait for the operation to finish before leaving.';
+      localizedText(status, () =>t("interface:cancellationRequestedWaitForTheOperationToFinishBeforeLeaving"));
     } else close();
   });
   listen(dialog, 'keydown', (event) => {
@@ -1128,7 +1106,7 @@ export function attachSoundtrackPanel({
     void playback(async () => {
       await stopAudition(true);
       throw new Error(
-        'The audition could not decode this track. Restore or replace the original MP3.',
+        t("interface:theAuditionCouldNotDecodeThisTrackRestoreOrReplace"),
       );
     });
   });

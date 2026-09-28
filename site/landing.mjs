@@ -1,3 +1,4 @@
+import { localizedText, t, localizedOption } from '../game/i18n/index.mjs';
 import { preparePackCatalog, packLaunchHref } from '../game/content-launch.mjs';
 import { archivedPlayHref } from './release-links.mjs';
 
@@ -35,7 +36,7 @@ const savedClears = (campaign) => {
 function addOption(label, href) {
   const option = document.createElement('option');
   option.value = href;
-  option.textContent = label;
+  localizedText(option, () =>label);
   picker.append(option);
 }
 
@@ -56,12 +57,12 @@ try {
     if (!record || typeof record.version !== 'string' || typeof record.play !== 'string') continue;
     const href = archivedPlayHref(record.canonicalPlay) ?? archivedPlayHref(record.play);
     if (!href) continue;
-    addOption(`${record.version} · preserved`, href);
+    addOption(t("website:preserved", { value1: record.version }), href);
     available++;
   }
-  status.textContent = `${available} preserved build${available === 1 ? '' : 's'} · ${currentLabel} remains the default.`;
+  localizedText(status, () =>t("website:preservedBuildRemainsTheDefault", { value1: available, value2: available === 1 ? '' : 's', value3: currentLabel }));
 } catch {
-  status.textContent = `The current build is ready. Preserved builds will appear when the archive is available.`;
+  localizedText(status, () =>t("website:theCurrentBuildIsReadyPreservedBuildsWillAppearWhen"));
 }
 
 try {
@@ -77,8 +78,7 @@ try {
         return campaign.levels.map((level, index) => {
           const available =
             index === 0 || clears.has(level.id) || clears.has(campaign.levels[index - 1].id);
-          const option = new Option(
-            `${String(index + 1).padStart(2, '0')} · ${level.name}${available ? '' : ' · locked'}`,
+          const option = localizedOption(() => `${String(index + 1).padStart(2, '0')} · ${level.name}${available ? '' : ' · locked'}`,
             level.id,
           );
           option.dataset.campaignId = campaign.id;
@@ -98,12 +98,12 @@ try {
       levelId: level.value,
       play: true,
     });
-    packStatus.textContent = `${pack.name} · ${level.textContent.replace(/^\d+ · /, '')} ready to install and play.`;
+    localizedText(packStatus, () =>t("website:readyToInstallAndPlay", { value1: pack.name, value2: level.textContent.replace(/^\d+ · /, '') }));
   };
 
   packSelect.replaceChildren(
     ...catalog.packs.map(
-      (pack) => new Option(pack.name, pack.id, false, pack.id === 'fpv-arcade-r5'),
+      (pack) => localizedOption(() => pack.name, pack.id, false, pack.id === 'fpv-arcade-r5'),
     ),
   );
   populateLevels();
@@ -116,9 +116,9 @@ try {
 } catch {
   packSelect.disabled = true;
   levelSelect.disabled = true;
-  packStatus.textContent = 'Quick selector unavailable. Use any pack card below.';
+  localizedText(packStatus, () =>t("website:quickSelectorUnavailableUseAnyPackCardBelow"));
 }
 
 for (const label of document.querySelectorAll('[data-current-label]')) {
-  label.textContent = currentLabel;
+  localizedText(label, () =>currentLabel);
 }

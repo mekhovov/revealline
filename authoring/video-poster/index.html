@@ -2,37 +2,44 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../game/i18n/style.css" />
+    <script src="../../game/vendor/i18next-26.4.2.min.js"></script>
+    <script src="../../game/i18n/catalogs.mjs"></script>
+    <script src="../../game/i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>RevealLine — video poster workshop</title>
+    <title data-i18n="tools:reveallineVideoPosterWorkshop">RevealLine — video poster workshop</title>
     <link rel="stylesheet" href="./workshop.css" />
   </head>
   <body>
+<div data-language-control></div>
+
     <main id="video-poster-main">
-      <nav><a id="video-poster-back" href="../../game/">Back to this edition’s game</a></nav>
-      <p>
+      <nav><a id="video-poster-back" href="../../game/" data-i18n="tools:backToThisEditionSGame">Back to this edition’s game</a></nav>
+      <p data-i18n-rich="tools:afterDownloadingAPngImportItInThisEditionS">
         After downloading a PNG, import it in this edition’s
-        <a id="video-poster-still" href="../still-media/">Picture workshop</a> to assign it to a map
+        <a id="video-poster-still" href="../still-media/" data-i18n="tools:pictureWorkshop" data-i18n-slot="slot0">Picture workshop</a> to assign it to a map
         and world. Keep the original video separately; this preview does not store it.
       </p>
-      <h1>VIDEO POSTER WORKSHOP</h1>
-      <p>
+      <h1 data-i18n="tools:videoPosterWorkshop">VIDEO POSTER WORKSHOP</h1>
+      <p data-i18n="tools:inspectYourOwnVideoChooseATimeAndCaptureIts">
         Inspect your own video, choose a time and capture its picture. This preview does not save
         assignments, stories or game data.
       </p>
-      <p id="video-poster-status" role="status" aria-live="polite">
+      <p id="video-poster-status" role="status" aria-live="polite" data-i18n="tools:startingTheLocalAuthoringPreview">
         Starting the local authoring preview…
       </p>
       <fieldset id="video-poster-controls" disabled>
-        <legend>Local source</legend>
-        <label for="video-poster-file">Choose MP4 or WebM</label>
+        <legend data-i18n="tools:localSource">Local source</legend>
+        <label for="video-poster-file" data-i18n="tools:chooseMp4OrWebm">Choose MP4 or WebM</label>
         <input id="video-poster-file" type="file" accept="video/mp4,video/webm,.mp4,.webm" />
-        <p>
+        <p data-i18n="tools:upTo64Mib120SecondsAnd19201080Larger">
           Up to 64 MiB, 120 seconds and 1920 × 1080. Larger sources need deliberate preparation
           elsewhere. Video stays muted and is never played here.
         </p>
-        <p id="video-poster-metadata">No video inspected.</p>
+        <p id="video-poster-metadata" data-i18n="tools:noVideoInspected">No video inspected.</p>
         <div class="time-controls">
-          <label for="video-poster-time">Requested time in seconds</label>
+          <label for="video-poster-time" data-i18n="tools:requestedTimeInSeconds">Requested time in seconds</label>
           <input
             id="video-poster-time"
             type="number"
@@ -42,7 +49,7 @@
             value="0"
             disabled
           />
-          <label for="video-poster-range">Select time</label>
+          <label for="video-poster-range" data-i18n="tools:selectTime">Select time</label>
           <input
             id="video-poster-range"
             type="range"
@@ -54,25 +61,25 @@
           />
         </div>
         <div class="actions">
-          <button id="video-poster-capture" type="button" disabled>Capture poster</button>
-          <button id="video-poster-cancel" type="button" disabled>Cancel</button>
-          <button id="video-poster-clear" type="button" disabled>Clear source</button>
+          <button id="video-poster-capture" type="button" disabled data-i18n="tools:capturePoster">Capture poster</button>
+          <button id="video-poster-cancel" type="button" disabled data-i18n="common:actions.cancel">Cancel</button>
+          <button id="video-poster-clear" type="button" disabled data-i18n="tools:clearSource">Clear source</button>
         </div>
       </fieldset>
       <section id="video-poster-preview" hidden aria-labelledby="video-poster-preview-title">
-        <h2 id="video-poster-preview-title">Captured PNG</h2>
-        <img id="video-poster-image" alt="Captured poster" />
+        <h2 id="video-poster-preview-title" data-i18n="tools:capturedPng">Captured PNG</h2>
+        <img id="video-poster-image" alt="Captured poster"  data-i18n-alt="tools:capturedPoster"/>
         <p id="video-poster-evidence"></p>
-        <a id="video-poster-download" hidden>Download exact PNG</a>
+        <a id="video-poster-download" hidden data-i18n="tools:downloadExactPng">Download exact PNG</a>
       </section>
-      <p id="video-poster-hint">
+      <p id="video-poster-hint" data-i18n="tools:tabArrowsAndEnterNavigateUseTheTimeSliderWith">
         Tab/arrows and Enter navigate. Use the time slider with controller South, then D-pad; South
         confirms and East cancels. File picking/text entry use browser or OS controls. Escape
         cancels work or returns to the game.
       </p>
       <details>
-        <summary>What the timestamps mean</summary>
-        <p>
+        <summary data-i18n="tools:whatTheTimestampsMean">What the timestamps mean</summary>
+        <p data-i18n="tools:theRequestedTimeAsksTheBrowserToSeekAnObserved">
           The requested time asks the browser to seek. An observed frame timestamp comes from its
           decoded-frame callback and can differ. Without that callback, the preview labels an
           approximate playhead and unavailable frame timestamp. Neither value promises arbitrary

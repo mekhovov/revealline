@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { presentationEvent, drawEventFeedback, drawRecoveryCue } from './event-feedback.mjs';
 import { geometryForLevel, geometryForRun } from '../core/geometry.mjs';
 import { drawEncounterLane, drawEncounterCore } from './encounter-view.mjs';
@@ -13,6 +14,7 @@ import {
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { fittedBodySize, paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
 import { createSceneArt } from './scene-art.mjs';
+import { createDemoPictureFilter } from './demo-picture.mjs';
 import {
   createActorPresentation,
   actorDiameter,
@@ -82,12 +84,12 @@ const imageLoad = (src) =>
   new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => resolve(image);
-    image.onerror = () => reject(new Error('Artwork could not be loaded.'));
+    image.onerror = () => reject(new Error(t("interface:artworkCouldNotBeLoaded")));
     image.src = src;
   });
 
 export class BoardPainter {
-  constructor(presets, { onAsset = () => {} } = {}) {
+  constructor(presets, { onAsset = () => {}, pictureCanvasFactory } = {}) {
     this.presets = presets;
     this.onAsset = onAsset;
     this.animation = createAnimationState();
@@ -104,8 +106,23 @@ export class BoardPainter {
     this.celebration = null;
     this._winState = null;
     this._celebrationPrepared = false;
+    this.pictureFilter = createDemoPictureFilter({ canvasFactory: pictureCanvasFactory });
+  }
+  dispose() {
+    // A delayed setLook can finish its own decode, but cannot repopulate a
+    // retired scene or issue an asset callback after its ownership ends.
+    ++this.loadToken;
+    this.pictureFilter.clear();
+    this.images = {};
+    this.image = null;
+    this.background = null;
+    this.theme = null;
+    this.effects = [];
+    this.celebration = null;
+    this._winState = null;
   }
   async setLook(theme, bodyId, overrides = {}) {
+    this.pictureFilter.clear();
     const token = ++this.loadToken;
     this.theme = theme;
     this.bodyId = bodyId;
@@ -148,9 +165,9 @@ export class BoardPainter {
       }
     this.onAsset(
       [
-        !knownBody ? 'The requested body is not registered; a neutral fallback rig is shown.' : '',
+        !knownBody ? t("interface:theRequestedBodyIsNotRegisteredANeutralFallbackRig") : '',
         settled.some((x) => x.status === 'rejected')
-          ? 'Some artwork is unavailable; a clear fallback is shown.'
+          ? t("interface:someArtworkIsUnavailableAClearFallbackIsShown")
           : '',
       ]
         .filter(Boolean)
@@ -161,6 +178,7 @@ export class BoardPainter {
     return createSceneArt(theme, level, seed, () => makeCanvas(384, 288));
   }
   setLevel(level = {}, { seed = 0 } = {}) {
+    this.pictureFilter.clear();
     this.levelInfo = { id: level.id || 'gallery', revision: level.revision || '1' };
     this.artSeed = seed;
     if (this.theme) this.background = this.makeArt(this.theme);
@@ -201,16 +219,24 @@ export class BoardPainter {
       height = ctx.canvas?.height || 576,
       image = null,
       fit = 'cover',
+      pictureVisibility = 'clear',
     } = {},
   ) {
     if (!theme) return;
-    const source = image || this.makeArt(theme, level, seed);
+    const source = this.pictureFilter.select(
+      image || this.makeArt(theme, level, seed),
+      pictureVisibility,
+    );
     ctx.save();
     ctx.imageSmoothingEnabled = false;
     ctx.globalAlpha = 1;
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = theme.palette.field;
     ctx.fillRect(0, 0, width, height);
+    if (!source) {
+      ctx.restore();
+      return;
+    }
     const ratio =
       fit === 'contain'
         ? Math.min(width / source.width, height / source.height)
@@ -249,6 +275,7 @@ export class BoardPainter {
       displayCSSWidth = null,
       actorSkins = {},
       backdrop = null,
+      pictureVisibility = 'clear',
     } = {},
   ) {
     if (!this.theme || !state) return;
@@ -310,11 +337,14 @@ export class BoardPainter {
     // The host owns a fully decoded binding and its lifetime. Select its image
     // and fit together for this frame; never reset rigs/effects or replace the
     // authored fallback. Sampling remains nearest throughout this pixel painter.
-    const picture = backdrop?.image || this.images.background || this.background;
+    const picture = this.pictureFilter.select(
+      backdrop?.image || this.images.background || this.background,
+      pictureVisibility,
+    );
     const fit = backdrop?.image ? backdrop.fit : this.overrides.background?.fit || 'cover';
     ctx.fillStyle = p.field;
     ctx.fillRect(0, 0, W, H);
-    if (fit === 'contain') {
+    if (picture && fit === 'contain') {
       const r = Math.min(W / picture.width, H / picture.height);
       ctx.drawImage(
         picture,
@@ -323,7 +353,7 @@ export class BoardPainter {
         picture.width * r,
         picture.height * r,
       );
-    } else {
+    } else if (picture) {
       const r = Math.max(W / picture.width, H / picture.height);
       ctx.drawImage(
         picture,

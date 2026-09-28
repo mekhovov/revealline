@@ -1,3 +1,4 @@
+import { localizedText, t } from '../i18n/index.mjs';
 /** Browser-origin retention only. This does not install or verify downloads. */
 export function attachStorageRetention({
   button,
@@ -12,13 +13,13 @@ export function attachStorageRetention({
   const current = (version) => !destroyed && active && isOpen() && generation === version;
   const show = (version, message, busy = false) => {
     if (!current(version)) return;
-    status.textContent = message;
+    localizedText(status, () =>message);
     // Keep the focused action and ordinary Back available while the browser decides.
     button.setAttribute('aria-busy', String(busy));
   };
-  const granted = 'Retention granted. Keep backups; you can still clear site data.';
-  const unsupported = 'This browser cannot request download retention. Keep backups.';
-  const requesting = 'Asking the browser… You can close Settings while it decides.';
+  const granted = t("interface:retentionGrantedKeepBackupsYouCanStillClearSiteData");
+  const unsupported = t("interface:thisBrowserCannotRequestDownloadRetentionKeepBackups");
+  const requesting = t("interface:askingTheBrowserYouCanCloseSettingsWhileItDecides");
   async function refresh() {
     if (destroyed || !isOpen()) return;
     active = true;
@@ -28,30 +29,30 @@ export function attachStorageRetention({
       await pending.done;
       if (!current(version)) return;
     }
-    show(version, 'Checking download retention…');
+    show(version, t("interface:checkingDownloadRetention"));
     try {
       const storage = browser?.storage;
       if (typeof storage?.persisted !== 'function') {
         show(
           version,
           typeof storage?.persist === 'function'
-            ? 'Retention status is unavailable. You can still ask this browser.'
+            ? t("interface:retentionStatusIsUnavailableYouCanStillAskThisBrowser")
             : unsupported,
         );
         return;
       }
       const retained = await storage.persisted();
-      if (typeof retained !== 'boolean') throw new Error('Invalid retention result.');
+      if (typeof retained !== 'boolean') throw new Error(t("interface:invalidRetentionResult"));
       show(
         version,
         retained
           ? granted
           : typeof storage.persist === 'function'
-            ? 'Retention is not enabled. Downloads may be removed by the browser.'
+            ? t("interface:retentionIsNotEnabledDownloadsMayBeRemovedByThe")
             : unsupported,
       );
     } catch {
-      show(version, 'Could not check retention. Keep backups.');
+      show(version, t("interface:couldNotCheckRetentionKeepBackups"));
     }
   }
   function request() {
@@ -69,15 +70,15 @@ export function attachStorageRetention({
         show(version, requesting, true);
         // Invoke before the first await, directly in the explicit button action.
         const retained = await storage.persist();
-        if (typeof retained !== 'boolean') throw new Error('Invalid retention result.');
+        if (typeof retained !== 'boolean') throw new Error(t("interface:invalidRetentionResult"));
         show(
           version,
           retained
             ? granted
-            : 'Not granted by this browser. Downloads may be removed; keep backups.',
+            : t("interface:notGrantedByThisBrowserDownloadsMayBeRemovedKeep"),
         );
       } catch {
-        show(version, 'Could not request retention. You can try again; keep backups.');
+        show(version, t("interface:couldNotRequestRetentionYouCanTryAgainKeepBackups"));
       } finally {
         if (pending === token) pending = null;
       }

@@ -1,11 +1,13 @@
+import { contentText } from '../i18n/content.mjs';
+import { localizedText, t } from '../i18n/index.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 
 const ABILITY = Object.freeze({
-  scan: 'Scan',
-  shield: 'Shield',
-  'stun-field': 'Stun field',
-  'slow-field': 'Slow field',
-  'impact-pulse': 'Impact pulse',
+  get scan() { return t("interface:scan"); },
+  get shield() { return t("interface:shield"); },
+  get 'stun-field'() { return t("interface:stunField"); },
+  get 'slow-field'() { return t("interface:slowField"); },
+  get 'impact-pulse'() { return t("interface:impactPulse"); },
 });
 const SCREENS = Object.freeze({
   main: ['race-main', 'race-start'],
@@ -23,10 +25,10 @@ export function couchEquipment(run) {
     action: actions.manualAbility,
     pickup: actions.manualPickup && recipe.capacity > 0 && run.supplies.length > 0,
     boost: actions.manualBoost,
-    label: ABILITY[recipe.primitive] || 'Ability',
+    label: ABILITY[recipe.primitive] || t("interface:ability"),
     description: actions.manualAbility
       ? recipe.description
-      : 'Directions only. Pickups activate on contact.',
+      : t("interface:directionsOnlyPickupsActivateOnContact"),
   });
 }
 
@@ -49,7 +51,7 @@ export function createCouchShell({
     destroyed = false,
     equipment = [];
   const setText = (id, text) => {
-    if ($(id).textContent !== text) $(id).textContent = text;
+    if ($(id).textContent !== text) localizedText($(id), () =>text);
   };
   const listen = (element, type, fn) => {
     element.addEventListener(type, fn);
@@ -75,7 +77,7 @@ export function createCouchShell({
     $('race-shell').inert = running;
     $('race-hud').hidden = !running;
     $('race-pause').disabled = !running;
-    $('race-pause').textContent = screen === 'review' ? 'Results' : 'Pause';
+    localizedText($('race-pause'), () =>screen === 'review' ? t("interface:results2") : t("common:actions.pause"));
     $('race-boards').hidden = !running;
     $('race-boards').inert = !running;
     doc.body.classList.toggle('race-focus', running);
@@ -97,24 +99,24 @@ export function createCouchShell({
       pads[i].closest('.racer').dataset.touch = String(shown[i]);
       const device =
         modality[i] === 'controller'
-          ? 'Controller'
+          ? t("interface:controller")
           : modality[i] === 'pointer'
-            ? 'On-screen controls'
+            ? t("interface:onScreenControls")
             : modality[i] === 'touch'
-              ? 'Touch'
+              ? t("interface:touch")
               : i === 0
-                ? 'W A S D'
-                : 'Arrow keys';
+                ? t("interface:wASD")
+                : t("interface:arrowKeys");
       setText(`race-seat-${i}`, device);
       setText(
         `racer-input-${i}`,
-        `${device} · ${status === 'running' && shown[i] && !wanted ? 'Touch stays visible until pause' : status === 'finished' ? 'Results for options' : 'Pause for options'}`,
+        `${device} · ${status === 'running' && shown[i] && !wanted ? t("interface:touchStaysVisibleUntilPause") : status === 'finished' ? t("interface:resultsForOptions") : t("interface:pauseForOptions")}`,
       );
       for (const button of pads[i].querySelectorAll('button')) {
         const kind = button.dataset.action;
         button.hidden = !!kind && !equipment[i]?.[kind];
         button.disabled = status !== 'running' || button.hidden;
-        if (kind === 'action') button.textContent = equipment[i]?.label || 'Ability';
+        if (kind === 'action') localizedText(button, () =>contentText(equipment[i], 'label') || t("interface:ability"));
       }
     }
   }
@@ -211,19 +213,19 @@ export function createCouchShell({
     setText(
       'race-title',
       contentBusy
-        ? 'Loading the shared picture…'
+        ? t("interface:loadingTheSharedPicture")
         : status === 'paused'
-          ? 'Both boards paused.'
+          ? t("interface:bothBoardsPaused")
           : status === 'finished'
             ? won.some((n) => n >= 2)
-              ? 'Match complete.'
-              : 'Round complete.'
-            : 'Two boards. One race.',
+              ? t("interface:matchComplete")
+              : t("interface:roundComplete")
+            : t("interface:twoBoardsOneRace2"),
     );
     $('race-review').hidden = status !== 'finished';
     $('race-pause').disabled = status !== 'running' && screen !== 'review';
-    $('race-pause').textContent = screen === 'review' ? 'Results' : 'Pause';
-    $('race-focus').textContent = status === 'ready' ? 'Race setup' : 'New match · setup';
+    localizedText($('race-pause'), () =>screen === 'review' ? t("interface:results2") : t("common:actions.pause"));
+    localizedText($('race-focus'), () =>status === 'ready' ? t("interface:raceSetup") : t("interface:newMatchSetup"));
     $('race-class-field').hidden = !equipment[0].action;
     $('race-class').disabled = !equipment[0].action || status !== 'ready';
     for (const id of ['race-level', 'race-theme', 'race-turn', 'race-time'])
@@ -231,24 +233,24 @@ export function createCouchShell({
     $('race-tap-field').hidden = !equipment.some((e) => e.boost);
     $('race-tap').disabled = !equipment.some((e) => e.boost);
     setText('race-loadout', equipment[0].description);
-    const controller = ['D-pad or left stick: move'];
-    if (equipment[0].action) controller.push(`South: ${equipment[0].label}`);
-    if (equipment[0].pickup) controller.push('West: supply');
+    const controller = [t("interface:dPadOrLeftStickMove")];
+    if (equipment[0].action) controller.push(t("gameplay:south", { value1: contentText(equipment[0], 'label') }));
+    if (equipment[0].pickup) controller.push(t("interface:westSupply"));
     if (equipment[0].boost) controller.push('right shoulder: hold Boost');
-    controller.push('Menu: pause');
-    setText('race-controller-help', `Controllers · ${controller.join(' · ')}.`);
+    controller.push(t("interface:menuPause"));
+    setText('race-controller-help', t("gameplay:controllers", { value1: controller.join(' · ') }));
     for (let i = 0; i < 2; i++) {
       const run = match.runs[i],
         e = equipment[i],
-        hints = [i === 0 ? 'W A S D: move' : 'Arrow keys: move'];
-      if (e.action) hints.push(`${i === 0 ? 'Q' : 'Enter'}: ${e.label}`);
-      if (e.pickup) hints.push(`${i === 0 ? 'E' : '/'}: supply`);
-      if (e.boost) hints.push(`${i === 0 ? 'left' : 'right'} Shift: hold Boost`);
+        hints = [i === 0 ? t("interface:wASDMove") : t("interface:arrowKeysMove")];
+      if (e.action) hints.push(`${i === 0 ? 'Q' : t("interface:enter")}: ${e.label}`);
+      if (e.pickup) hints.push(t("gameplay:supply", { value1: i === 0 ? 'E' : '/' }));
+      if (e.boost) hints.push(t("gameplay:shiftHoldBoost", { value1: i === 0 ? 'left' : 'right' }));
       setText(`race-help-${i}`, `${hints.join(' · ')}.`);
       $(`race-result-${i}`).hidden = status !== 'finished';
       setText(
         `race-result-${i}`,
-        `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points · ${won[i]} round wins`,
+        t("gameplay:livesPointsRoundWins", { value1: (run.coverage * 100).toFixed(1), value2: run.lives, value3: run.score, value4: won[i] }),
       );
     }
     renderPads();

@@ -1,3 +1,4 @@
+import { localizedMessage, localizedText, t, localizedAttribute } from '../i18n/index.mjs';
 import { discoverProfileTransfers, prepareProfileTransfer } from '../profile-transfer.mjs';
 
 /** Explicit same-origin release copy. Source validation is read-only; all target
@@ -6,29 +7,32 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
   if (!api.profileTransfer) return null;
   const node = (tag, text, attrs = {}) => {
     const element = document.createElement(tag);
-    if (text) element.textContent = text;
-    for (const [key, value] of Object.entries(attrs)) element.setAttribute(key, value);
+    if (text) localizedText(element, () =>text);
+    for (const [key, value] of Object.entries(attrs)) {
+      if (['aria-label', 'title', 'placeholder', 'alt'].includes(key)) localizedAttribute(element, key, value);
+      else element.setAttribute(key, value);
+    }
     return element;
   };
   const details = node('details', null, { id: 'profile-transfer' });
-  const summary = node('summary', 'Bring progress from an earlier release');
+  const summary = node('summary', localizedMessage("interface:bringProgressFromAnEarlierRelease"));
   const explanation = node(
     'p',
-    'Copy a collection saved by an earlier release in this browser on this site. This replaces this release’s pictures, scores, preferences, installed packs and saved flight together. Export your current game-data backup first to keep both. The earlier release stays unchanged.',
+    localizedMessage("interface:copyACollectionSavedByAnEarlierReleaseInThis"),
     { class: 'micro-note' },
   );
-  const source = node('select', null, { id: 'transfer-source', 'aria-label': 'Earlier release' });
-  const review = node('button', 'Review saved progress', {
+  const source = node('select', null, { id: 'transfer-source', 'aria-label': localizedMessage("interface:earlierRelease") });
+  const review = node('button', localizedMessage("interface:reviewSavedProgress"), {
     id: 'transfer-review',
     type: 'button',
     class: 'button secondary',
   });
-  const copy = node('button', 'Copy reviewed progress', {
+  const copy = node('button', localizedMessage("interface:copyReviewedProgress"), {
     id: 'transfer-copy',
     type: 'button',
     class: 'button primary',
   });
-  const cancel = node('button', 'Cancel check', {
+  const cancel = node('button', localizedMessage("interface:cancelCheck"), {
     id: 'transfer-cancel',
     type: 'button',
     class: 'button secondary',
@@ -38,7 +42,7 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
   const status = node('p', null, { id: 'transfer-status', role: 'status' });
   const fallback = node(
     'p',
-    'Another browser, address, device or native app needs Export game data in the old game, then Import here. Keep picture originals in .rlmedia, stories in .rlstory and custom music in .rlsound alongside it; restore originals before game data. Close earlier game tabs before reviewing or copying.',
+    localizedMessage("interface:anotherBrowserAddressDeviceOrNativeAppNeedsExportGame"),
     { class: 'micro-note' },
   );
   details.append(summary, explanation, source, review, copy, cancel, preview, status, fallback);
@@ -49,7 +53,7 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
 
   function showPreview(value) {
     const p = value.preview;
-    preview.textContent = `${value.source.version} → ${api.profileTransfer.currentVersion}: ${p.completedLevels} completed maps · ${p.pictures} pictures · ${p.scores} score records · ${p.campaigns} campaigns · ${p.packs} packs · ${p.hasSession ? 'one saved flight' : 'no saved flight'}. ${p.profileAbsent ? 'This release has a saved flight but no saved player profile. Copy includes an empty collection and default preferences. ' : ''}${p.missingPackIds.length ? `Some collected pictures need removed packs: ${p.missingPackIds.join(', ')}. Their records will be preserved.` : ''}`;
+    localizedText(preview, () =>t("gameplay:completedMapsPicturesScoreRecordsCampaignsPacks", { value1: value.source.version, value2: api.profileTransfer.currentVersion, value3: p.completedLevels, value4: p.pictures, value5: p.scores, value6: p.campaigns, value7: p.packs, value8: p.hasSession ? 'one saved flight' : 'no saved flight', value9: p.profileAbsent ? ("" + t("interface:thisReleaseHasASavedFlightButNoSavedPlayer") + " ") : '', value10: p.missingPackIds.length ? t("gameplay:someCollectedPicturesNeedRemovedPacksTheirRecordsWillBe", { value1: p.missingPackIds.join(', ') }) : '' }));
   }
   function refresh() {
     if (checking) return;
@@ -60,7 +64,7 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
         ...candidates.map((candidate) => {
           const option = node(
             'option',
-            `${candidate.version}${candidate.legacy ? ' (legacy)' : candidates.filter((c) => c.version === candidate.version).length > 1 ? ` (${candidate.channel})` : ''} · needs review`,
+            localizedMessage("gameplay:needsReview", { value1: candidate.version, value2: candidate.legacy ? ' (legacy)' : candidates.filter((c) => c.version === candidate.version).length > 1 ? ` (${candidate.channel})` : '' }),
           );
           option.value = candidate.id;
           return option;
@@ -69,22 +73,21 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
       if (candidates.some((c) => c.id === selected)) source.value = selected;
       if (reviewed?.source.id !== source.value) {
         reviewed = null;
-        preview.textContent = '';
+        localizedText(preview, () =>'');
       }
       source.disabled = review.disabled = !candidates.length;
       copy.disabled = !reviewed;
       if (!candidates.length)
-        status.textContent =
-          'No compatible earlier collection was found at this address. Use a game-data backup file to transfer from another location.';
+        localizedText(status, () =>t("interface:noCompatibleEarlierCollectionWasFoundAtThisAddressUse"));
     } catch (error) {
       source.disabled = review.disabled = copy.disabled = true;
-      status.textContent = error.message;
+      localizedText(status, () =>error.message);
     }
   }
   source.onchange = () => {
     reviewed = null;
-    preview.textContent = '';
-    status.textContent = 'Review this source before copying.';
+    localizedText(preview, () =>'');
+    localizedText(status, () =>t("interface:reviewThisSourceBeforeCopying"));
     copy.disabled = true;
   };
   cancel.onclick = () => controller?.abort();
@@ -94,7 +97,7 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
       controller = new AbortController();
       cancel.hidden = false;
       cancel.disabled = false;
-      status.textContent = 'Checking the earlier collection, images and saved flight…';
+      localizedText(status, () =>t("interface:checkingTheEarlierCollectionImagesAndSavedFlight"));
       try {
         const fresh = await prepareProfileTransfer(source.value, {
           ...api.profileTransfer,
@@ -108,17 +111,17 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
         reviewed = fresh;
         showPreview(fresh);
         if (!andCopy || !unchanged) {
-          status.textContent = andCopy
-            ? 'The source changed since your review. The summary is updated; review it before choosing Copy again. This release has not changed.'
-            : 'Verified. Copy replaces this release’s collection with the reviewed source. Undo is offered when the current collection can be verified.';
+          localizedText(status, () =>andCopy
+            ? t("interface:theSourceChangedSinceYourReviewTheSummaryIsUpdated")
+            : t("interface:verifiedCopyReplacesThisReleaseSCollectionWithTheReviewed"));
           return;
         }
         controller = null;
         cancel.disabled = true;
         cancel.hidden = true;
-        status.textContent = 'Copying the verified collection…';
+        localizedText(status, () =>t("interface:copyingTheVerifiedCollection"));
         const result = await applyPrepared(fresh.prepared);
-        status.textContent = `Copied from ${fresh.source.version}. ${result.undo ? 'Undo game-data import restores the previous collection.' : 'The previous collection could not form a verified backup; Undo is unavailable.'} ${fresh.preview.hasSession ? 'Your saved flight is ready to load, paused.' : ''} ${result.warning || ''}`;
+        localizedText(status, () =>t("gameplay:copiedFrom", { value1: fresh.source.version, value2: result.undo ? t("interface:undoGameDataImportRestoresThePreviousCollection") : t("interface:thePreviousCollectionCouldNotFormAVerifiedBackupUndo"), value3: fresh.preview.hasSession ? t("interface:yourSavedFlightIsReadyToLoadPaused") : '', value4: result.warning || '' }));
         reviewed = null;
       } finally {
         controller = null;

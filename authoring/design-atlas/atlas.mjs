@@ -1,3 +1,4 @@
+import { t, localizedOption } from '../../game/i18n/index.mjs';
 // Original review mockups only. This module never imports the game or writes player storage.
 const $ = (selector) => document.querySelector(selector);
 
@@ -216,7 +217,7 @@ function renderScreen() {
     `<strong>${screen.purpose}</strong>${screen.label} / ${screen.states.find(([id]) => id === currentState)[1]}`;
   $('#study-rule').textContent = screen.rule;
   $('#review-status').textContent =
-    `${screen.label}, ${screen.states.find(([id]) => id === currentState)[1]} study shown.`;
+    t("tools:studyShown", { value1: screen.label, value2: screen.states.find(([id]) => id === currentState)[1] });
 }
 
 function chooseScreen(name, state) {
@@ -227,14 +228,14 @@ function chooseScreen(name, state) {
     : screens[name].states[0][0];
   $('#screen-select').value = name;
   $('#state-select').replaceChildren(
-    ...screens[name].states.map(([value, label]) => new Option(label, value)),
+    ...screens[name].states.map(([value, label]) => localizedOption(() => label, value)),
   );
   $('#state-select').value = currentState;
   renderScreen();
 }
 
 $('#screen-select').replaceChildren(
-  ...Object.entries(screens).map(([value, { label }]) => new Option(label, value)),
+  ...Object.entries(screens).map(([value, { label }]) => localizedOption(() => label, value)),
 );
 $('#screen-select').addEventListener('change', (event) => chooseScreen(event.target.value));
 $('#state-select').addEventListener('change', (event) => {
@@ -270,7 +271,7 @@ document.querySelectorAll('[data-viewport]').forEach((button) => {
       landscape: 'Short landscape / up to 740 × 370 px',
     }[view];
     $('#review-status').textContent =
-      `${view} preview selected. Width is limited by the available window.`;
+      t("tools:previewSelectedWidthIsLimitedByTheAvailableWindow", { value1: view });
   });
 });
 
@@ -544,7 +545,7 @@ function renderInventory() {
         `<tr><td>${name}<small>${group === 'system' ? 'System state' : group === 'authoring' ? 'Authoring' : group === 'support' ? 'Supporting flow' : 'Player journey'}</small></td><td>${states}</td><td>${treatment}</td><td><span class="badge proposed">${status}</span></td></tr>`,
     )
     .join('');
-  $('#inventory-count').textContent = `${rows.length} / ${inventory.length} surfaces`;
+  $('#inventory-count').textContent = t("tools:surfaces", { value1: rows.length, value2: inventory.length });
 }
 $('#inventory-filter').addEventListener('change', renderInventory);
 
@@ -600,7 +601,7 @@ async function revealLocalReferences() {
   );
   const count = results.filter((result) => result.status === 'fulfilled' && result.value).length;
   $('#reference-status').textContent = count
-    ? `${count} local screenshot previews available from the source research folder. These images are reference evidence, not production assets.`
+    ? t("tools:localScreenshotPreviewsAvailableFromTheSourceResearchFolderThese", { value1: count })
     : 'Source screenshots are not present in this local build. Review the observations here and the official source links below.';
 }
 

@@ -1,38 +1,39 @@
+import { t } from '../i18n/index.mjs';
 const explanations = Object.freeze({
   'self-contact': [
-    'Your unfinished line crossed itself.',
-    'Rejoin safe ground without crossing the line you are drawing.',
+    t("interface:yourUnfinishedLineCrossedItself"),
+    t("interface:rejoinSafeGroundWithoutCrossingTheLineYouAreDrawing"),
   ],
   'enemy-trail': [
-    'An enemy caught your unfinished line.',
-    'Try a shorter cut while keeping enemies away from the open line.',
+    t("interface:anEnemyCaughtYourUnfinishedLine"),
+    t("interface:tryAShorterCutWhileKeepingEnemiesAwayFromThe"),
   ],
   'enemy-player': [
-    'An enemy reached your character.',
-    'Keep a gap from enemies, including patrols on safe ground.',
+    t("interface:anEnemyReachedYourCharacter"),
+    t("interface:keepAGapFromEnemiesIncludingPatrolsOnSafeGround"),
   ],
   'boss-lane': [
-    'An active marked lane caught your character or unfinished line.',
-    'Keep both outside the marked lane while it is active.',
+    t("interface:anActiveMarkedLaneCaughtYourCharacterOrUnfinishedLine"),
+    t("interface:keepBothOutsideTheMarkedLaneWhileItIsActive"),
   ],
   'cut-timeout': [
-    'The time allowed for one open line ran out.',
-    'Rejoin safe ground sooner. Pause the game when you need time to plan.',
+    t("interface:theTimeAllowedForOneOpenLineRanOut"),
+    t("interface:rejoinSafeGroundSoonerPauseTheGameWhenYouNeed"),
   ],
   'cable-limit': [
-    'Your open line exceeded its length limit.',
-    'Plan a shorter line back to safe ground.',
+    t("interface:yourOpenLineExceededItsLengthLimit"),
+    t("interface:planAShorterLineBackToSafeGround"),
   ],
   'lethal-terrain': [
-    'Your character touched a lethal field.',
-    'Route around its warning pattern or enclose it from safe ground before crossing.',
+    t("interface:yourCharacterTouchedALethalField"),
+    t("interface:routeAroundItsWarningPatternOrEncloseItFromSafe"),
   ],
   'mission-timeout': [
-    'The mission clock ran out.',
-    'Plan a shorter route to the required reveal area and objectives.',
+    t("interface:theMissionClockRanOut"),
+    t("interface:planAShorterRouteToTheRequiredRevealAreaAnd"),
   ],
 });
-const fallback = ['That attempt ended.', 'Review the mission brief and choose another route.'];
+const fallback = [t("interface:thatAttemptEnded"), t("interface:reviewTheMissionBriefAndChooseAnotherRoute")];
 
 function ownValue(source, key) {
   if (!source || typeof source !== 'object' || Array.isArray(source)) return undefined;
@@ -46,11 +47,11 @@ function practiceOption(options) {
     typeof options !== 'object' ||
     ![Object.prototype, null].includes(Object.getPrototypeOf(options))
   )
-    throw new TypeError('Retry options must be a plain object');
+    throw new TypeError(t("interface:retryOptionsMustBeAPlainObject"));
   const descriptor = Object.getOwnPropertyDescriptor(options, 'practice');
   if (!descriptor) return false;
   if (!Object.hasOwn(descriptor, 'value') || typeof descriptor.value !== 'boolean')
-    throw new TypeError('Retry practice must be an own data boolean');
+    throw new TypeError(t("interface:retryPracticeMustBeAnOwnDataBoolean"));
   return descriptor.value;
 }
 
@@ -69,7 +70,7 @@ export function retryExplanation(run, options = {}) {
     reason,
     tip,
     footnote: practice
-      ? 'Retry starts this practice again. This reveal resets; practice grants no campaign rewards.'
-      : 'Retry starts this mission again. This reveal resets; collected pictures and best results remain.',
+      ? t("interface:retryStartsThisPracticeAgainThisRevealResetsPracticeGrants")
+      : t("interface:retryStartsThisMissionAgainThisRevealResetsCollectedPictures"),
   };
 }

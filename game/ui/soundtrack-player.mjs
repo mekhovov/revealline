@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { boundedJSON, canonicalJSON, required } from '../data-json.mjs';
 import {
   BUILTIN_SOUNDTRACK_TRACKS,
@@ -15,7 +16,7 @@ const wait = (ms, signal) =>
     const cancel = () => {
       clearTimeout(timer);
       signal?.removeEventListener('abort', cancel);
-      reject(new DOMException('Music transition cancelled.', 'AbortError'));
+      reject(new DOMException(t("interface:musicTransitionCancelled"), 'AbortError'));
     };
     const timer = setTimeout(() => {
       signal?.removeEventListener('abort', cancel);
@@ -46,7 +47,7 @@ export function createSoundtrackPlayer({
         'update',
         'configure',
       ].every((key) => typeof soundscape[key] === 'function'),
-    'A persistent Soundscape with transport hooks is required.',
+    t("interface:aPersistentSoundscapeWithTransportHooksIsRequired"),
   );
   required(
     audioElement &&
@@ -55,11 +56,11 @@ export function createSoundtrackPlayer({
       typeof readAsset === 'function' &&
       typeof onChange === 'function' &&
       typeof random === 'function',
-    'Soundtrack player requires media, storage and callback adapters.',
+    t("interface:soundtrackPlayerRequiresMediaStorageAndCallbackAdapters"),
   );
   required(
     Number.isInteger(fadeMs) && fadeMs >= 0 && fadeMs <= 250,
-    'Invalid music transition duration.',
+    t("interface:invalidMusicTransitionDuration"),
   );
   const media = audioElement;
   let library = emptySoundtrackLibrary(),
@@ -172,13 +173,13 @@ export function createSoundtrackPlayer({
    * Overlapping owners use the lowest factor. Each owner releases only its lease.
    */
   function acquireGain({ factor } = {}) {
-    required(Number.isFinite(factor) && factor >= 0 && factor <= 1, 'Music gain must be 0..1.');
-    required(!disposed, 'The soundtrack player is disposed.');
+    required(Number.isFinite(factor) && factor >= 0 && factor <= 1, t("interface:musicGainMustBe01"));
+    required(!disposed, t("interface:theSoundtrackPlayerIsDisposed"));
     const token = {};
     gainLeases.set(token, factor);
     try {
       gains();
-      required(!disposed, 'The soundtrack player is disposed.');
+      required(!disposed, t("interface:theSoundtrackPlayerIsDisposed"));
     } catch (failure) {
       gainLeases.delete(token);
       try {
@@ -270,7 +271,7 @@ export function createSoundtrackPlayer({
       index = at;
       current = tracks().find((t) => t.id === queue[index]) ?? null;
       pendingSeek = null;
-      if (!current) return failedTrack('Track is unavailable.', token);
+      if (!current) return failedTrack(t("interface:trackIsUnavailable"), token);
       status = desired ? 'loading' : 'paused';
       fade = 1;
       gains();
@@ -283,7 +284,7 @@ export function createSoundtrackPlayer({
           if (token !== generation || disposed) return false;
           if (!allowed) {
             status = 'blocked';
-            error = 'Enable audio to play music.';
+            error = t("interface:enableAudioToPlayMusic");
             emit();
             return false;
           }
@@ -302,7 +303,7 @@ export function createSoundtrackPlayer({
         const actual = await inspectMP3(blob, { signal: controller.signal });
         required(
           canonicalJSON(actual) === canonicalJSON(current.asset),
-          'Stored audio bytes do not match this track.',
+          t("interface:storedAudioBytesDoNotMatchThisTrack"),
         );
         if (token !== generation || disposed) return false;
         url = URLImpl.createObjectURL(blob);
@@ -317,7 +318,7 @@ export function createSoundtrackPlayer({
           if (valid() && desired && !suspended) void advance(true);
         });
         bind('error', () => {
-          if (valid()) void failedTrack('This track could not be played.', generation);
+          if (valid()) void failedTrack(t("interface:thisTrackCouldNotBePlayed"), generation);
         });
         bind('timeupdate', () => {
           if (valid()) emit();
@@ -351,11 +352,11 @@ export function createSoundtrackPlayer({
       if (token !== generation || disposed || failure?.name === 'AbortError') return false;
       if (failure?.name === 'NotAllowedError') {
         status = 'blocked';
-        error = 'Your browser needs an audio play action.';
+        error = t("interface:yourBrowserNeedsAnAudioPlayAction");
         emit();
         return false;
       }
-      return failedTrack(failure?.message || 'This track could not be played.', token);
+      return failedTrack(failure?.message || t("interface:thisTrackCouldNotBePlayed"), token);
     }
   }
   async function failedTrack(message, token) {
@@ -418,7 +419,7 @@ export function createSoundtrackPlayer({
         id: 'builtin.authored',
         kind: 'synth',
         title: recipe.name,
-        artist: 'Authored game soundtrack',
+        artist: t("interface:authoredGameSoundtrack"),
         recipe: Object.freeze(recipe),
       });
     }
@@ -488,7 +489,7 @@ export function createSoundtrackPlayer({
           if (token !== generation || disposed || !desired) return false;
           if (!enabled) {
             status = 'blocked';
-            error = 'Enable audio to play music.';
+            error = t("interface:enableAudioToPlayMusic");
             emit();
             return false;
           }
@@ -513,43 +514,22 @@ export function createSoundtrackPlayer({
         if (token !== generation) return false;
         if (failure?.name === 'NotAllowedError') {
           status = 'blocked';
-          error = 'Your browser needs an audio play action.';
+          error = t("interface:yourBrowserNeedsAnAudioPlayAction");
           emit();
           return false;
         }
-        return failedTrack(failure?.message || 'Playback failed.', token);
+        return failedTrack(failure?.message || t("interface:playbackFailed"), token);
       }
     }
     if (!playlist || dirty || status === 'ended' || status === 'error') install(resolve());
     return startAt(Math.max(0, index));
   }
-  /**
-   * Prepare the selected track without playing it. Hosts use this after local
-   * storage is ready so a later tap can call HTMLMediaElement.play() directly
-   * instead of waiting for IndexedDB, validation, or an object URL first.
-   */
-  async function prepare() {
-    if (disposed || suspended || desired || status === 'playing' || status === 'loading')
-      return false;
-    if (!playlist || dirty || status === 'ended' || status === 'error') install(resolve());
-    return startAt(Math.max(0, index));
-  }
-  /**
-   * Clear a lifecycle suspension in the same event turn as a user gesture.
-   * Do not await this before play(): iOS Safari associates media permission
-   * with the synchronous call stack that contains the gesture.
-   */
-  function wake() {
-    if (disposed) return false;
-    suspended = false;
-    return soundscape.enable();
-  }
   function setIntent(value) {
-    required(typeof value === 'boolean', 'Listening intent must be a boolean.');
+    required(typeof value === 'boolean', t("interface:listeningIntentMustBeABoolean"));
     if (disposed) return snapshot();
     required(
       status !== 'playing' && status !== 'loading',
-      'Restore listening intent only while music is inactive.',
+      t("interface:restoreListeningIntentOnlyWhileMusicIsInactive"),
     );
     desired = value;
     emit();
@@ -569,7 +549,7 @@ export function createSoundtrackPlayer({
   function seek(seconds) {
     required(
       Number.isFinite(seconds) && seconds >= 0 && current && seconds <= position().durationSeconds,
-      'Invalid music seek position.',
+      t("interface:invalidMusicSeekPosition"),
     );
     if (current.kind === 'synth') pendingSeek = soundscape.seekMusic(seconds) ? null : seconds;
     else if (media.readyState >= 1) media.currentTime = seconds;
@@ -577,7 +557,7 @@ export function createSoundtrackPlayer({
     emit();
   }
   function setVolume(value) {
-    required(Number.isFinite(value) && value >= 0 && value <= 1, 'Music volume must be 0..1.');
+    required(Number.isFinite(value) && value >= 0 && value <= 1, t("interface:musicVolumeMustBe01"));
     volume = value;
     gains();
     emit();
@@ -615,15 +595,13 @@ export function createSoundtrackPlayer({
   }
   async function resume() {
     if (disposed) return false;
-    const enabled = wake();
+    suspended = false;
     if (!desired) {
       status = 'paused';
       emit();
       return false;
     }
-    const playing = play();
-    await enabled;
-    return playing;
+    return play();
   }
   function dispose() {
     if (disposed) return;
@@ -648,8 +626,6 @@ export function createSoundtrackPlayer({
     setContext,
     setAuthoredTrack,
     selectPlaylist,
-    prepare,
-    wake,
     play,
     pause,
     setIntent,

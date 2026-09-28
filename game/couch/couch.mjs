@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { localizedText, t, localizedOption } from '../i18n/index.mjs';
 import { createCouchShell } from './couch-shell.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
 import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
@@ -26,7 +28,7 @@ const releaseArtwork = (event) => {
 window.addEventListener('pagehide', releaseArtwork);
 const json = async (url) => {
   const r = await fetch(url, { signal: artworkLifetime.signal });
-  if (!r.ok) throw new Error(`Could not load ${url}`);
+  if (!r.ok) throw new Error(t("gameplay:couldNotLoad", { value1: url }));
   return r.json();
 };
 try {
@@ -74,7 +76,7 @@ try {
     })),
   );
   const shippedMaps = [...maps];
-  let installedStatus = 'Installed chapters have not been checked.';
+  let installedStatus = t("interface:installedChaptersHaveNotBeenChecked");
   try {
     const channel = document.querySelector('meta[name="revealline-offline"]')
       ? `release-${(await json('../build-info.json')).version}`
@@ -96,23 +98,23 @@ try {
     const rows = await installed.refresh({ signal: artworkLifetime.signal });
     maps.push(...rows);
     installedStatus = rows.length
-      ? `${rows.length} installed maps available. Choose a map to check its original.`
-      : 'No installed chapters in this profile. Install chapters in solo More worlds, then refresh.';
+      ? t("gameplay:installedMapsAvailableChooseAMapToCheckItsOriginal", { value1: rows.length })
+      : t("interface:noInstalledChaptersInThisProfileInstallChaptersInSolo");
   } catch (error) {
-    installedStatus = `Installed chapters unavailable: ${error.message}`;
+    installedStatus = t("gameplay:installedChaptersUnavailable", { value1: error.message });
   }
   if (artworkLifetime.signal.aborted)
-    throw new DOMException('Couch artwork loading cancelled.', 'AbortError');
-  const mode = (level) => (arcadeActionCapabilities(level).manualAbility ? 'Tactical' : 'Arcade');
+    throw new DOMException(t("interface:couchArtworkLoadingCancelled"), 'AbortError');
+  const mode = (level) => (arcadeActionCapabilities(level).manualAbility ? t("interface:tactical") : t("interface:arcade"));
   function showMaps() {
     $('race-level').replaceChildren(
-      ...maps.map((m) => new Option(`${m.chapter} · ${m.level.name} · ${mode(m.level)}`, m.key)),
+      ...maps.map((m) => localizedOption(() => `${m.chapter} · ${contentText(m.level, 'name')} · ${mode(m.level)}`, m.key)),
     );
   }
   showMaps();
   $('race-level').value = maps[0].key;
-  for (const t of themes.themes) $('race-theme').append(new Option(t.name, t.id));
-  for (const c of registry) $('race-class').append(new Option(c.label, c.id));
+  for (const t of themes.themes) $('race-theme').append(localizedOption(() => t.name, t.id));
+  for (const c of registry) $('race-class').append(localizedOption(() => c.label, c.id));
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
   const sound = new Soundscape({ persistentMusic: true });
   let neutralResumeTick = false;
@@ -152,7 +154,7 @@ try {
     menuHint = '',
     menuGate = '',
     menuStatus =
-      'Release controls, then press a face button or Menu to choose the menu controller.',
+      t("interface:releaseControlsThenPressAFaceButtonOrMenuTo"),
     menuScope = null,
     inactive = false,
     disposed = false,
@@ -199,10 +201,10 @@ try {
     backdrop = null;
     contentBusy = false;
     contentReady = false;
-    contentError = 'Picture loading cancelled. Retry when you are ready.';
+    contentError = t("interface:pictureLoadingCancelledRetryWhenYouAreReady");
     if (installedStatus === 'Checking installed chapters…')
-      installedStatus = 'Installed chapter check cancelled. Refresh when ready.';
-    $('race-message').textContent = contentError;
+      installedStatus = t("interface:installedChapterCheckCancelledRefreshWhenReady");
+    localizedText($('race-message'), () =>contentError);
     updateMenu();
   }
   function prepare() {
@@ -219,7 +221,7 @@ try {
     const classId = entry.classes.some((c) => c.id === $('race-class').value)
       ? $('race-class').value
       : entry.classes[0].id;
-    $('race-class').replaceChildren(...entry.classes.map((c) => new Option(c.label, c.id)));
+    $('race-class').replaceChildren(...entry.classes.map((c) => localizedOption(() => c.label, c.id)));
     $('race-class').value = classId;
     const themeId =
       selectedMapKey !== entry.key && entry.defaultThemeId
@@ -228,7 +230,7 @@ try {
     selectedMapKey = entry.key;
     backdrop = entry.backdrop || null;
     theme = entry.themes.find((t) => t.id === themeId) || entry.themes[0];
-    $('race-theme').replaceChildren(...entry.themes.map((t) => new Option(t.name, t.id)));
+    $('race-theme').replaceChildren(...entry.themes.map((t) => localizedOption(() => t.name, t.id)));
     $('race-theme').value = theme.id;
     match = createDuel(
       level,
@@ -251,12 +253,12 @@ try {
       p.skipCelebration?.();
     });
     finished = false;
-    $('race-start').textContent = 'Start round ↗';
+    localizedText($('race-start'), () =>t("interface:startRound2"));
     contentReady = shippedMaps.includes(entry);
     contentBusy = !contentReady;
-    $('race-message').textContent = contentReady
-      ? 'Both boards use the same map, class and seed. Ready when you are.'
-      : 'Checking this chapter and loading its original picture…';
+    localizedText($('race-message'), () =>contentReady
+      ? t("interface:bothBoardsUseTheSameMapClassAndSeedReady")
+      : t("interface:checkingThisChapterAndLoadingItsOriginalPicture"));
     updateMenu();
     if (contentReady) return Promise.resolve(true);
     const selectedRun = match,
@@ -273,14 +275,13 @@ try {
           return false;
         backdrop = image;
         contentReady = true;
-        $('race-message').textContent =
-          'Original picture ready for both boards. Start when you are ready.';
+        localizedText($('race-message'), () =>t("interface:originalPictureReadyForBothBoardsStartWhenYouAre"));
         return true;
       } catch (error) {
         if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
           return false;
-        contentError = `This chapter could not load: ${error.message}`;
-        $('race-message').textContent = contentError;
+        contentError = t("gameplay:thisChapterCouldNotLoad", { value1: error.message });
+        localizedText($('race-message'), () =>contentError);
         return false;
       } finally {
         if (!disposed && controller === contentController && !controller.signal.aborted) {
@@ -296,8 +297,8 @@ try {
     pauseDuel(match, { preserveContinuation: true });
     clear();
     if (match.status === 'paused') {
-      $('race-start').textContent = 'Resume round →';
-      $('race-message').textContent = 'Both players are paused. Resume when everyone is ready.';
+      localizedText($('race-start'), () =>t("interface:resumeRound"));
+      localizedText($('race-message'), () =>t("interface:bothPlayersArePausedResumeWhenEveryoneIsReady"));
     }
     updateMenu();
   }
@@ -344,8 +345,8 @@ try {
           !contentController.signal.aborted
         ) {
           contentReady = false;
-          contentError = `Refresh installed chapters in Race setup before starting: ${error.message}`;
-          $('race-message').textContent = contentError;
+          contentError = t("gameplay:refreshInstalledChaptersInRaceSetupBeforeStarting", { value1: error.message });
+          localizedText($('race-message'), () =>contentError);
         }
         return;
       } finally {
@@ -364,7 +365,7 @@ try {
     resumeDuel(match, { preserveContinuation: true });
     neutralResumeTick = true;
     sound.resume().catch(() => {});
-    $('race-message').textContent = 'Make your line count. First clear wins.';
+    localizedText($('race-message'), () =>t("interface:makeYourLineCountFirstClearWins"));
     updateMenu();
     input.focus();
   };
@@ -395,7 +396,7 @@ try {
     contentReady = false;
     contentScope = shell.scope();
     if (!shippedMaps.includes(oldEntry)) backdrop = null;
-    installedStatus = 'Checking installed chapters…';
+    installedStatus = t("interface:checkingInstalledChapters");
     updateMenu();
     try {
       const rows = await installed.refresh({ signal: controller.signal });
@@ -406,16 +407,16 @@ try {
       showMaps();
       $('race-level').value = oldKey;
       installedStatus = rows.length
-        ? `${rows.length} installed maps available.`
-        : 'No installed chapters. Install them in solo More worlds, then refresh.';
+        ? t("gameplay:installedMapsAvailable", { value1: rows.length })
+        : t("interface:noInstalledChaptersInstallThemInSoloMoreWorldsThen");
       const ready = prepare();
       focusController = contentController;
       await ready;
     } catch (error) {
       if (disposed || controller.signal.aborted || controller !== contentController) return;
-      contentError = `Installed chapters unavailable: ${error.message}`;
+      contentError = t("gameplay:installedChaptersUnavailable", { value1: error.message });
       installedStatus = contentError;
-      $('race-message').textContent = contentError;
+      localizedText($('race-message'), () =>contentError);
     } finally {
       if (!disposed && controller === contentController && !controller.signal.aborted) {
         contentBusy = false;
@@ -438,7 +439,7 @@ try {
     })
     .catch((error) => {
       if (!disposed)
-        $('race-message').textContent = `App lifecycle adapter unavailable: ${error.message}`;
+        localizedText($('race-message'), () =>t("gameplay:appLifecycleAdapterUnavailable", { value1: error.message }));
     });
   for (const id of ['race-level', 'race-class', 'race-turn', 'race-time'])
     $(id).onchange = () => {
@@ -454,9 +455,9 @@ try {
     try {
       const on = await sound.toggle();
       if (disposed) return;
-      $('race-audio').textContent = on ? 'Mute music ♫' : 'Enable music ♫';
+      localizedText($('race-audio'), () =>on ? t("interface:muteMusic") : t("interface:enableMusic2"));
     } catch (e) {
-      if (!disposed) $('race-menu-status').textContent = e.message;
+      if (!disposed) localizedText($('race-menu-status'), () =>e.message);
     }
   };
   $('race-tap').onchange = clear;
@@ -473,8 +474,8 @@ try {
     onPads: (count, nextSlots) => {
       assignmentsChanged = nextSlots.some((slot, i) => slot !== slots[i]);
       slots = [...nextSlots];
-      const message = `${count} standard controller${count === 1 ? '' : 's'} assigned · ${slots.map((slot, i) => `Player ${i + 1}: ${slot === null ? 'keyboard/touch' : `pad slot ${slot}`}`).join(' · ')}. Keyboard and touch remain available. Escape pauses both boards.`;
-      if ($('race-pad-status').textContent !== message) $('race-pad-status').textContent = message;
+      const message = t("gameplay:standardControllerAssignedKeyboardAndTouchRemainAvailableEscapePauses", { value1: count, value2: count === 1 ? '' : 's', value3: slots.map((slot, i) => t("gameplay:player", { value1: i + 1, value2: slot === null ? 'keyboard/touch' : t("gameplay:padSlot", { value1: slot }) })).join(' · ') });
+      if ($('race-pad-status').textContent !== message) localizedText($('race-pad-status'), () =>message);
     },
   });
   shell = createCouchShell({
@@ -507,12 +508,12 @@ try {
     framePads = [];
     frameReadError = null;
     try {
-      if (typeof navigator.getGamepads !== 'function') throw new Error('Gamepad API unavailable');
+      if (typeof navigator.getGamepads !== 'function') throw new Error(t("interface:gamepadApiUnavailable"));
       const pads = navigator.getGamepads();
       const count = Number.isInteger(pads?.length) ? Math.max(0, Math.min(32, pads.length)) : 0;
       framePads = Array.from({ length: count }, (_, i) => pads[i] || null);
     } catch (error) {
-      frameReadError = error || new Error('Controller read failed');
+      frameReadError = error || new Error(t("interface:controllerReadFailed"));
     }
     const next = new Map();
     for (const pad of framePads) {
@@ -547,7 +548,7 @@ try {
     if (!match || match.status === 'running' || disposed) return;
     shell.focus();
     navigation.engage();
-    menuHint = 'Choose the primary action with South when everyone is ready.';
+    menuHint = t("interface:chooseThePrimaryActionWithSouthWhenEveryoneIsReady");
     updateMenu();
   }
   function updateMenu() {
@@ -557,7 +558,7 @@ try {
     $('race-chapter-retry').hidden = !contentError || match.status !== 'ready';
     $('race-chapter-retry').disabled = contentBusy;
     $('race-installed-refresh').disabled = match.status !== 'ready' || contentBusy || !installed;
-    $('race-installed-status').textContent = installedStatus;
+    localizedText($('race-installed-status'), () =>installedStatus);
     $('race-pause').disabled = !running;
     $('race-menu-release').hidden = running || !menuOwner;
     $('race-menu-release').disabled = running || !menuOwner;
@@ -566,13 +567,13 @@ try {
       match,
       won,
       contentBusy,
-      summary: `${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${$('race-turn').value === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${Number($('race-time').value)} seconds`,
+      summary: t("gameplay:seconds", { value1: entry.chapter, value2: contentText(entry.level, 'name'), value3: mode(entry.level), value4: contentText(theme, 'name'), value5: $('race-turn').value === 'grid-center' ? t("interface:gridCenterTurns") : t("interface:immediateTurns"), value6: Number($('race-time').value) }),
     });
     const owner = menuOwner ? slots.indexOf(menuOwner.index) : -1;
     const text = running
       ? shell.controllerHint()
-      : `${owner >= 0 ? `Player ${owner + 1} controller has the menu. South selects; East cancels; Menu goes back.` : menuStatus}${menuGate ? ` ${menuGate}` : ''}${menuHint ? ` ${menuHint}` : ''} Keyboard and touch remain available.`;
-    if ($('race-menu-status').textContent !== text) $('race-menu-status').textContent = text;
+      : t("gameplay:keyboardAndTouchRemainAvailable", { value1: owner >= 0 ? t("gameplay:playerControllerHasTheMenuSouthSelectsEastCancelsMenu", { value1: owner + 1 }) : menuStatus, value2: menuGate ? ` ${menuGate}` : '', value3: menuHint ? ` ${menuHint}` : '' });
+    if ($('race-menu-status').textContent !== text) localizedText($('race-menu-status'), () =>text);
   }
   menuRouter = createControllerRouter({ readPads: readAssignedMenuPads });
   const menuIds = new Set([
@@ -612,7 +613,7 @@ try {
     getDefaultFocus: () => shell.primary(),
     keyboard: true,
     accept: (element) => menuIds.has(element.id),
-    getControlLabels: () => ({ directions: 'D-pad / left stick', confirm: 'South', back: 'East' }),
+    getControlLabels: () => ({ directions: t("interface:dPadLeftStick"), confirm: t("interface:south"), back: t("interface:east") }),
     onBack: () => shell.back(),
     onMenu: () => shell.back(),
     onHint: (message) => {
@@ -624,7 +625,7 @@ try {
     navigation.beginReading({
       region: $('race-help-reading'),
       origin: $('race-help-read'),
-      label: 'Couch controls',
+      label: t("interface:couchControls"),
     });
   $('race-menu-release').onclick = () => {
     if (match.status === 'running' || !menuOwner) return;
@@ -632,7 +633,7 @@ try {
     menuOwner = null;
     clear();
     menuStatus =
-      'Menu controller released. Release controls, then press a face button or Menu to join.';
+      t("interface:menuControllerReleasedReleaseControlsThenPressAFaceButton");
     updateMenu();
     shell.focus();
   };
@@ -646,7 +647,7 @@ try {
     menuOwner = result.assigned;
     menuGate =
       menuOwner && ['joined', 'waiting-neutral'].includes(result.status.code)
-        ? 'Release controller buttons and the movement stick to continue.'
+        ? t("interface:releaseControllerButtonsAndTheMovementStickToContinue")
         : '';
     if (result.disconnected) {
       clear();
@@ -655,10 +656,10 @@ try {
       return;
     }
     menuStatus = frameReadError
-      ? 'Controller access is unavailable.'
+      ? t("interface:controllerAccessIsUnavailable")
       : !framePads.some((pad) => pad?.connected && pad.mapping === 'standard') &&
           framePads.some((pad) => pad?.connected)
-        ? 'This controller has no standard mapping.'
+        ? t("interface:thisControllerHasNoStandardMapping")
         : result.status.message;
     if (assignmentsChanged || pendingPadLoss) {
       clear();
@@ -786,12 +787,11 @@ try {
       clear();
       if (match.winner !== null) won[match.winner]++;
       const name =
-        match.winner === 0 ? 'Sunflower' : match.winner === 1 ? 'Skyline' : 'Both players';
-      $('race-message').textContent =
-        `${match.winner === null ? 'Draw' : `${name} wins the round`}. ${match.reason}.${won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''}`;
-      $('race-start').textContent = won.some((n) => n >= 2)
-        ? 'Play another match ↗'
-        : 'Next round ↗';
+        match.winner === 0 ? t("interface:sunflower2") : match.winner === 1 ? t("interface:skyline2") : t("interface:bothPlayers");
+      localizedText($('race-message'), () =>`${match.winner === null ? t("interface:draw") : t("gameplay:winsTheRound", { value1: name })}. ${match.reason}.${won.some((n) => n >= 2) ? t("gameplay:winsTheMatch", { value1: name }) : ''}`);
+      localizedText($('race-start'), () =>won.some((n) => n >= 2)
+        ? t("interface:playAnotherMatch")
+        : t("interface:nextRound"));
       painters.forEach((p, i) => {
         if (match.runs[i].status === 'won')
           p.startCelebration?.({
@@ -801,14 +801,13 @@ try {
           });
       });
     }
-    $('series-score').textContent = `${won[0]} : ${won[1]}`;
+    localizedText($('series-score'), () =>`${won[0]} : ${won[1]}`);
     const left = Math.max(0, Math.ceil((match.limitTicks - match.tick) / 120));
-    $('race-clock').textContent = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+    localizedText($('race-clock'), () =>`${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`);
     for (let i = 0; i < 2; i++) {
       const run = match.runs[i];
-      $(`racer-stats-${i}`).textContent =
-        `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points`;
-      $(`racer-state-${i}`).textContent = match.status === 'running' ? run.status : match.status;
+      localizedText($(`racer-stats-${i}`), () =>t("gameplay:livesPoints", { value1: (run.coverage * 100).toFixed(1), value2: run.lives, value3: run.score }));
+      localizedText($(`racer-state-${i}`), () =>match.status === 'running' ? run.status : match.status);
       const cue = encounterView(run),
         group = $(`racer-encounter-${i}`),
         title = $(`racer-encounter-title-${i}`),
@@ -817,24 +816,24 @@ try {
       if (cue) {
         const context =
           match.status === 'paused'
-            ? 'PAUSED · '
+            ? ("" + t("interface:paused2") + " ")
             : match.status === 'ready'
-              ? 'READY · '
+              ? ("" + t("interface:ready") + " ")
               : match.status === 'finished'
-                ? 'ROUND ENDED · '
+                ? ("" + t("interface:roundEnded") + " ")
                 : '';
-        const heading = `${context}${cue.title}`;
+        const heading = `${context}${contentText(cue, 'title')}`;
         const copy =
           match.status === 'finished' && !['won', 'lost'].includes(run.status)
-            ? `Frozen at round end. Live line ${cue.cutCells} / ${cue.min} new cells.`
+            ? t("gameplay:frozenAtRoundEndLiveLineNewCells", { value1: cue.cutCells, value2: cue.min })
             : cue.instruction;
         // The run owns this clock. Keep paused/finished cues and avoid rewriting unchanged text.
-        if (title.textContent !== heading) title.textContent = heading;
-        if (instruction.textContent !== copy) instruction.textContent = copy;
+        if (title.textContent !== heading) localizedText(title, () =>heading);
+        if (instruction.textContent !== copy) localizedText(instruction, () =>copy);
         group.dataset.phase = cue.phase;
       } else {
-        title.textContent = '';
-        instruction.textContent = '';
+        localizedText(title, () =>'');
+        localizedText(instruction, () =>'');
         delete group.dataset.phase;
       }
       painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
@@ -858,7 +857,7 @@ try {
 } catch (error) {
   releaseArtwork({ persisted: false });
   $('race-start').disabled = true;
-  $('race-message').textContent = `The race could not load: ${error.message}`;
+  localizedText($('race-message'), () =>t("gameplay:theRaceCouldNotLoad", { value1: error.message }));
 } finally {
   document.querySelectorAll('[data-boot-inert]').forEach((element) => {
     element.inert = false;

@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
 import {
   CONTROLLER_PREVIEW_FORMAT,
   parseControllerPreviewStatus,
@@ -27,7 +29,7 @@ let connected = false,
   pendingStick = null,
   disposed = false;
 const status = (message, error = false) => {
-  $('load-status').textContent = message;
+  localizedText($('load-status'), () =>message);
   $('load-status').classList.toggle('error', error);
 };
 function focusGame() {
@@ -57,7 +59,7 @@ function send() {
 function paintAxes() {
   for (const [index, input] of axisInputs.entries()) {
     input.disabled = !loaded || !connected;
-    $(`axis-${index}-value`).textContent = Number(input.value).toFixed(2);
+    localizedText($(`axis-${index}-value`), () =>Number(input.value).toFixed(2));
   }
   $('apply-stick').disabled = !loaded || !connected;
 }
@@ -71,15 +73,15 @@ function paintPad() {
   $('release').disabled = !loaded || !connected;
   $('focus-game').disabled = !loaded;
   paintAxes();
-  $('connection-status').textContent = connected
-    ? `Virtual pad connected. ${held.size} button(s) held. Axes: ${axes.map((value) => value.toFixed(2)).join(', ')}.`
-    : 'Virtual pad disconnected.';
+  localizedText($('connection-status'), () =>connected
+    ? t("gameplay:virtualPadConnectedButtonSHeldAxes", { value1: held.size, value2: axes.map((value) => value.toFixed(2)).join(', ') })
+    : t("interface:virtualPadDisconnected"));
 }
 function cancelStick(message) {
   if (!pendingStick) return;
   clearTimeout(pendingStick.timer);
   pendingStick = null;
-  if (message) $('axis-status').textContent = message;
+  if (message) localizedText($('axis-status'), () =>message);
 }
 function clearPhysical(resetDraft) {
   cancelStick();
@@ -93,7 +95,7 @@ function clearPhysical(resetDraft) {
 }
 function releaseAll() {
   clearPhysical(true);
-  $('axis-status').textContent = 'Both sticks centered; all buttons released.';
+  localizedText($('axis-status'), () =>t("interface:bothSticksCenteredAllButtonsReleased"));
 }
 for (const input of axisInputs)
   input.addEventListener('input', () => {
@@ -102,8 +104,7 @@ for (const input of axisInputs)
       Number.isFinite(value) ? Math.round(Math.max(-1, Math.min(1, value)) * 100) / 100 : 0,
     );
     clearPhysical(false);
-    $('axis-status').textContent =
-      'Draft only. Apply stick returns focus to the game after neutral input is sampled.';
+    localizedText($('axis-status'), () =>'Draft only. Apply stick returns focus to the game after neutral input is sampled.');
   });
 function applyStick() {
   if (!loaded || !connected || disposed) return;
@@ -115,15 +116,14 @@ function applyStick() {
   focusGame();
   const ticket = { values, minimumSequence: send(), timer: null };
   pendingStick = ticket;
-  $('axis-status').textContent = 'Waiting for the game to sample neutral input…';
+  localizedText($('axis-status'), () =>t("interface:waitingForTheGameToSampleNeutralInput"));
   ticket.timer = setTimeout(() => {
     if (pendingStick !== ticket) return;
     pendingStick = null;
     axes.fill(0);
     paintPad();
     send();
-    $('axis-status').textContent =
-      'Stick was not applied. Focus the game and retry Apply stick. Release all resets both stick drafts.';
+    localizedText($('axis-status'), () =>t("interface:stickWasNotAppliedFocusTheGameAndRetryApply"));
   }, 2000);
 }
 function disconnect() {
@@ -132,7 +132,7 @@ function disconnect() {
 }
 function press(index) {
   if (!connected || !loaded) return;
-  cancelStick('Pending stick application cancelled by a button gesture.');
+  cancelStick(t("interface:pendingStickApplicationCancelledByAButtonGesture"));
   focusGame();
   clearTimeout(timers.get(index));
   timers.delete(index);
@@ -194,7 +194,7 @@ $('gesture').addEventListener('change', releaseAll);
 function option(select, value, label) {
   const node = document.createElement('option');
   node.value = value;
-  node.textContent = label;
+  localizedText(node, () =>label);
   select.append(node);
 }
 function selectedMission() {
@@ -205,7 +205,7 @@ function refreshClasses() {
   $('craft').disabled = !!choice?.courseId;
   if (choice?.courseId) {
     $('craft').replaceChildren();
-    option($('craft'), 'scout', 'Scout · fixed course class');
+    option($('craft'), 'scout', localizedMessage("interface:scoutFixedCourseClass"));
     return;
   }
   const entry = choice?.entry;
@@ -223,15 +223,14 @@ function resize() {
   frame.style.height = `${height}px`;
   frame.style.transform = `scale(${scale})`;
   $('frame-space').style.height = `${Math.ceil(height * scale)}px`;
-  $('viewport-readout').textContent =
-    `${width} × ${height} requested · frame reports ${frame.contentWindow?.innerWidth ?? '—'} × ${frame.contentWindow?.innerHeight ?? '—'} · ${Math.round(scale * 100)}% display scale`;
+  localizedText($('viewport-readout'), () =>t("gameplay:requestedFrameReportsDisplayScale", { value1: width, value2: height, value3: frame.contentWindow?.innerWidth ?? '—', value4: frame.contentWindow?.innerHeight ?? '—', value5: Math.round(scale * 100) }));
 }
 async function loadPractice() {
   const choice = selectedMission();
   if (!choice) return;
   const ticket = ++loadEpoch;
   $('load').disabled = true;
-  status('Validating practice before opening the real game…');
+  status(t("interface:validatingPracticeBeforeOpeningTheRealGame"));
   try {
     const candidate = choice.courseId
       ? createLessonScenario(choice.courseId, {
@@ -262,16 +261,16 @@ async function loadPractice() {
     session = nextSession;
     statusSequence = -1;
     paintPad();
-    $('scope').textContent = 'Loading practice';
-    $('focused').textContent = '—';
-    $('pad-status').textContent = 'Not joined';
+    localizedText($('scope'), () =>t("interface:loadingPractice"));
+    localizedText($('focused'), () =>'—');
+    localizedText($('pad-status'), () =>t("interface:notJoined"));
     frame.src = destination;
     status(
-      `${choice.label} prepared. Connect the virtual pad when the game appears.${warnings.length ? ` ${warnings.join(' ')}` : ''}`,
+      t("gameplay:preparedConnectTheVirtualPadWhenTheGameAppears", { value1: contentText(choice, 'label'), value2: warnings.length ? ` ${warnings.join(' ')}` : '' }),
     );
   } catch (error) {
     if (ticket === loadEpoch && !disposed)
-      status(`Practice was not replaced: ${error.message}`, true);
+      status(t("gameplay:practiceWasNotReplaced", { value1: error.message }), true);
   } finally {
     if (ticket === loadEpoch && !disposed) $('load').disabled = false;
   }
@@ -292,9 +291,9 @@ function receiveStatus(event) {
   const value = parseControllerPreviewStatus(event.data);
   if (!value || value.session !== session || value.sequence <= statusSequence) return;
   statusSequence = value.sequence;
-  $('scope').textContent = value.scope || 'No active scope';
-  $('focused').textContent = value.focusedLabel || value.focusedId || 'Game canvas / document';
-  $('pad-status').textContent = `${value.assigned ? 'Joined' : 'Not joined'} · ${value.message}`;
+  localizedText($('scope'), () =>value.scope || t("interface:noActiveScope"));
+  localizedText($('focused'), () =>value.focusedLabel || value.focusedId || t("interface:gameCanvasDocument"));
+  localizedText($('pad-status'), () =>`${value.assigned ? t("interface:joined") : t("interface:notJoined")} · ${value.message}`);
   if (
     pendingStick &&
     value.readSequence >= pendingStick.minimumSequence &&
@@ -304,8 +303,7 @@ function receiveStatus(event) {
     cancelStick();
     axes.splice(0, 4, ...values);
     paintPad();
-    $('axis-status').textContent =
-      'Stick values applied. Release all centers both sticks and releases every button.';
+    localizedText($('axis-status'), () =>t("interface:stickValuesAppliedReleaseAllCentersBothSticksAndReleases"));
     send();
   }
 }
@@ -339,13 +337,13 @@ window.addEventListener('pageshow', (event) => {
 
 async function json(path) {
   const response = await fetch(path);
-  if (!response.ok) throw new Error(`Content request failed (${response.status}).`);
+  if (!response.ok) throw new Error(t("gameplay:contentRequestFailed", { value1: response.status }));
   return response.json();
 }
 try {
   if (origin === 'null')
     throw new Error(
-      'Serve this page over localhost or HTTPS; file URLs cannot host the controller bridge.',
+      t("interface:serveThisPageOverLocalhostOrHttpsFileUrlsCannot"),
     );
   const [campaign, themes, classRecipes] = await Promise.all([
     json('../content/campaign.json'),
@@ -354,29 +352,29 @@ try {
   ]);
   const entry = { campaign, themes: themes.themes, classRecipes };
   for (const level of campaign.levels)
-    missions.push({ entry, levelId: level.id, label: `${campaign.title} / ${level.name}` });
+    missions.push({ entry, levelId: level.id, label: `${contentText(campaign, 'title')} / ${contentText(level, 'name')}` });
   const packNotes = [];
   for (const [name, path] of [
-    ['Fieldcraft', '../content/packs/fieldcraft.json'],
-    ['Sentinel Relay', '../content/packs/sentinel-relay.json'],
-    ['Reading practice', './reading-practice.json'],
+    [t("interface:fieldcraft"), '../content/packs/fieldcraft.json'],
+    [t("interface:sentinelRelay"), '../content/packs/sentinel-relay.json'],
+    [t("interface:readingPractice"), './reading-practice.json'],
   ]) {
     try {
       const { pack } = await preparePack(await json(path));
       for (const campaign of pack.campaigns) {
         const entry = resolvePackCampaign(pack, campaign.id);
         for (const level of entry.campaign.levels)
-          missions.push({ entry, levelId: level.id, label: `${pack.name} / ${level.name}` });
+          missions.push({ entry, levelId: level.id, label: `${contentText(pack, 'name')} / ${contentText(level, 'name')}` });
       }
     } catch (error) {
-      packNotes.push(`${name} unavailable: ${error.message}`);
+      packNotes.push(t("gameplay:unavailable", { value1: name, value2: error.message }));
     }
   }
   for (const lesson of FIRST_FLIGHT_LESSONS)
     missions.push({
       courseId: lesson.id,
       theme: themes.themes.find((theme) => theme.id === 'fpv'),
-      label: `First Flight / ${lesson.title}`,
+      get label() { return t("gameplay:firstFlight2", { value1: contentText(lesson, 'title') }); },
     });
   if (!disposed) {
     missions.forEach((mission, index) => option($('mission'), String(index), mission.label));

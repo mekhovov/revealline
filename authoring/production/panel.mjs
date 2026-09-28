@@ -1,3 +1,4 @@
+import { t } from '../../game/i18n/index.mjs';
 import {
   listProductionSlots,
   summarizeProduction,
@@ -170,10 +171,10 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
         tr.append(make('td', value, { 'data-label': name }));
       body.append(tr);
     }
-    matches.textContent = `${filtered.length} matching slots${missing.checked ? ' without a bound work' : ''}.`;
+    matches.textContent = t("tools:matchingSlots", { value1: filtered.length, value2: missing.checked ? ' without a bound work' : '' });
     previous.disabled = page === 0;
     next.disabled = (page + 1) * 20 >= filtered.length;
-    pageLabel.textContent = `Page ${page + 1} of ${Math.max(1, Math.ceil(filtered.length / 20))}`;
+    pageLabel.textContent = t("tools:pageOf", { value1: page + 1, value2: Math.max(1, Math.ceil(filtered.length / 20)) });
   }
   function turnPage(delta) {
     hideDetail();
@@ -203,7 +204,7 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
       make(
         'p',
         row.binding
-          ? `Binding revision ${row.binding.revision} · work ${row.work.id} revision ${row.work.revision}`
+          ? t("tools:bindingRevisionWorkRevision", { value1: row.binding.revision, value2: row.work.id, value3: row.work.revision })
           : 'This slot has no bound work. Its production checks remain open.',
       ),
     );
@@ -239,7 +240,7 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
             target: '_blank',
             rel: 'noopener noreferrer',
           }),
-          make('p', `${pin.bytes} bytes · SHA-256 ${pin.sha256}`),
+          make('p', t("tools:bytesSha256", { value1: pin.bytes, value2: pin.sha256 })),
         );
       detail.append(provenance);
       const entry = row.work.files.find(
@@ -266,7 +267,7 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
         const output = previewStatus,
           container = imageHost;
         preview.append(
-          button(`Preview ${entry.role}`, () => void previewEntry(entry, output, container)),
+          button(t("tools:preview2", { value1: entry.role }), () => void previewEntry(entry, output, container)),
           button('Clear preview', () => {
             cancelPreview();
             output.textContent = 'Preview cleared.';
@@ -297,12 +298,12 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
       }
       previewValue = result;
       container.replaceChildren(result.image);
-      output.textContent = `Exact source decoded: ${entry.width} × ${entry.height} · ${entry.file.bytes} bytes. No assessment was added.`;
+      output.textContent = t("tools:exactSourceDecodedBytesNoAssessmentWasAdded", { value1: entry.width, value2: entry.height, value3: entry.file.bytes });
     } catch (error) {
       if (!disposed && generation === previewGeneration)
         output.textContent = controller.signal.aborted
           ? 'Preview cancelled or timed out. Choose Preview to try again.'
-          : `Preview unavailable: ${error.message}`;
+          : t("tools:previewUnavailable", { value1: error.message });
     } finally {
       clearTimeout(timer);
       if (previewController === controller) previewController = null;
@@ -331,22 +332,22 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
         const card = make('article');
         card.append(
           make('strong', `${counts.bound} / ${counts.target}`),
-          make('span', `${names[kind]} bound`),
+          make('span', t("tools:bound", { value1: names[kind] })),
           make(
             'p',
             kind === 'reserve'
-              ? `${counts.missing} unbound · ${counts.stages.inspected} inspected`
-              : `${counts.missing} unbound · ${counts.stages.released} fully qualified`,
+              ? t("tools:unboundInspected", { value1: counts.missing, value2: counts.stages.inspected })
+              : t("tools:unboundFullyQualified", { value1: counts.missing, value2: counts.stages.released }),
           ),
         );
         coverage.append(card);
       }
-      context.textContent = `${summary.uniquePictureWorks} unique pictures · ${summary.maps.proposed} proposed / ${summary.maps.approved} approved layout families · ${summary.sharedPresentationWorks} shared rigs for 56 handles · ${summary.recipeTracks} synth recipes. ${summary.uniqueReserveWorks} unique reserves · ${summary.reserveOverlap} selected-picture reuse excluded. ${summary.uniqueStoryWorks} unique story works. Historical delivery: ${summary.historicalDelivery.pictures} pictures and ${summary.historicalDelivery.stories} story. ${summary.enemyHandles} enemy handles are a separate inventory.`;
-      status.textContent = `Register revision ${register.revision}. Source metadata is declared here; use the CLI to verify all source files.`;
+      context.textContent = t("tools:uniquePicturesProposedApprovedLayoutFamiliesSharedRigsFor56", { value1: summary.uniquePictureWorks, value2: summary.maps.proposed, value3: summary.maps.approved, value4: summary.sharedPresentationWorks, value5: summary.recipeTracks, value6: summary.uniqueReserveWorks, value7: summary.reserveOverlap, value8: summary.uniqueStoryWorks, value9: summary.historicalDelivery.pictures, value10: summary.historicalDelivery.stories, value11: summary.enemyHandles });
+      status.textContent = t("tools:registerRevisionSourceMetadataIsDeclaredHereUseTheCli", { value1: register.revision });
       renderList();
     } catch (error) {
       if (!disposed && reloadController === controller)
-        status.textContent = `Register unavailable: ${controller.signal.aborted ? 'request cancelled or timed out' : error.message}. ${register ? 'Previous view retained.' : 'Reload to retry.'}`;
+        status.textContent = t("tools:registerUnavailable", { value1: controller.signal.aborted ? 'request cancelled or timed out' : error.message, value2: register ? 'Previous view retained.' : 'Reload to retry.' });
     } finally {
       clearTimeout(timer);
       if (reloadController === controller) reloadController = null;

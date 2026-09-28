@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { validateLocalization } from './localization.mjs';
 /** Local browser-game tooling. Node built-ins only; no package install needed. */
 import { createHash } from 'node:crypto';
 import { deflateSync } from 'node:zlib';
@@ -372,12 +373,15 @@ async function assertOutput(root, out, inputs) {
   }
 }
 
-function publicPage(title, body) {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>${html(title)} · Reveal Line</title><style>body{margin:0;background:#091324;color:#edf2e8;font:17px/1.7 system-ui}main{max-width:760px;margin:8vh auto;padding:24px}a{color:#7fdbeb}h1{font-size:clamp(32px,6vw,58px);line-height:1.1}nav{display:flex;gap:16px;flex-wrap:wrap;margin:32px 0}nav a{padding:10px 16px;border:1px solid #456071;border-radius:8px;text-decoration:none}small{color:#adc1ca}code{overflow-wrap:anywhere}li{margin:12px 0}</style></head><body><main>${body}</main></body></html>\n`;
+function publicPage(title, body, localized = false) {
+  const localeAssets = localized ? '<link rel="stylesheet" href="./game/i18n/style.css"><script src="./game/vendor/i18next-26.4.2.min.js"></script><script src="./game/i18n/catalogs.mjs"></script><script src="./game/i18n/bootstrap.mjs"></script>' : '';
+  const titleKey = title === 'Privacy and local storage' ? 'website:page.privacyTitle' : title === 'Credits and notices' ? 'website:page.creditsTitle' : 'website:page.playTitle';
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title data-i18n="${titleKey}">${html(title)} · Reveal Line</title>${localeAssets}<style>body{margin:0;background:#091324;color:#edf2e8;font:17px/1.7 system-ui}main{max-width:760px;margin:8vh auto;padding:24px}a{color:#7fdbeb}h1{font-size:clamp(32px,6vw,58px);line-height:1.1}nav{display:flex;gap:16px;flex-wrap:wrap;margin:32px 0}nav a{padding:10px 16px;border:1px solid #456071;border-radius:8px;text-decoration:none}small{color:#adc1ca}code{overflow-wrap:anywhere}li{margin:12px 0}</style></head><body><main>${localized ? '<div data-language-control></div>' : ''}${body}</main></body></html>\n`;
 }
 function addPublicEntries(entries, info) {
   const displayVersion = info.version.startsWith('v') ? info.version : `v${info.version}`;
   const has = (name) => entries.some((e) => e.name === name);
+  const makePage = (title, body) => publicPage(title, body, has('game/i18n/bootstrap.mjs'));
   const links = [
     `<a href="./${html(info.entry)}">Play solo</a>`,
     ...(has('game/couch/index.html') ? ['<a href="./game/couch/">Couch duel</a>'] : []),
@@ -394,7 +398,8 @@ function addPublicEntries(entries, info) {
       .replaceAll('href="./landing.css"', 'href="./site/landing.css"')
       .replaceAll('src="./landing.mjs"', 'src="./site/landing.mjs"')
       .replaceAll('src="./launch.mjs"', 'src="./site/launch.mjs"')
-      .replaceAll('href="../game/boot.css"', 'href="./game/boot.css"')
+      .replaceAll('href="../game/', 'href="./game/')
+      .replaceAll('src="../game/', 'src="./game/')
       .replaceAll('href="../game/"', 'href="./game/"');
     entries.splice(entries.indexOf(landing), 1);
     entries.push({ name: 'index.html', bytes: Buffer.from(rendered) });
@@ -407,7 +412,7 @@ function addPublicEntries(entries, info) {
     entries.push({
       name: 'index.html',
       bytes: Buffer.from(
-        publicPage(
+        makePage(
           'Play',
           `<small>REVEAL LINE · ${html(info.version)}</small><h1>Clear a path.<br>Reveal a world.</h1><p>Close a line through changing worlds, collect the pictures you uncover and try a new route. Play with keys, touch or a compatible controller.</p><nav>${links.join('')}</nav><p><a href="./privacy.html">Privacy and local storage</a> · <a href="./credits.html">Credits and notices</a></p><small>${info.sourceRevision ? `Saved source <code>${html(info.sourceRevision)}</code>` : 'Development distribution — source revision not recorded.'}</small>`,
         ),
@@ -421,22 +426,23 @@ function addPublicEntries(entries, info) {
   entries.push({
     name: 'privacy.html',
     bytes: Buffer.from(
-      publicPage(
+      makePage(
         'Privacy and local storage',
-        '<p><a href="./">← Game home</a></p><h1>Your game stays here.</h1><p>This build has no account system, analytics SDK, advertising tracker, cloud scoreboard or multiplayer server. The game code does not upload your pictures, imported packs, replay files or player library.</p><p>The browser stores preferences, achievements, local scores and a suspended flight locally. Imported image packs and uploaded MP3 libraries use IndexedDB. Custom soundtrack backups contain the original audio bytes; the player-library JSON alone is not a complete media backup. The playground uses session storage to pass its configuration to the preview. If you explicitly prepare offline play, the service worker saves this version’s shipped files in the browser cache.</p><p>Export the player library, packs and suspended flight when you want a portable backup. Clearing site data removes local data; private browsing, storage limits or browser cleanup can also remove it. There is no server backup or cross-device sync.</p><p>A public hosting provider receives ordinary page and asset requests and may keep access logs. This game cannot promise the host keeps no logs. The publisher is responsible for disclosing any hosting-specific collection or additional services it adds.</p><p>Imported content is treated as bounded data and media. Installed packs cannot provide executable game scripts or contacts with remote services. Local scores are editable local records, not authenticated competitive results.</p>',
+        "<p><a href=\"./\" data-i18n=\"website:gameHome\">← Game home</a></p><h1 data-i18n=\"website:yourGameStaysHere\">Your game stays here.</h1><p data-i18n=\"website:thisBuildHasNoAccountSystemAnalyticsSdkAdvertisingTracker\">This build has no account system, analytics SDK, advertising tracker, cloud scoreboard or multiplayer server. The game code does not upload your pictures, imported packs, replay files or player library.</p><p data-i18n=\"website:theBrowserStoresPreferencesAchievementsLocalScoresAndASuspended\">The browser stores preferences, achievements, local scores and a suspended flight locally. Imported image packs and uploaded MP3 libraries use IndexedDB. Custom soundtrack backups contain the original audio bytes; the player-library JSON alone is not a complete media backup. The playground uses session storage to pass its configuration to the preview. If you explicitly prepare offline play, the service worker saves this version’s shipped files in the browser cache.</p><p data-i18n=\"website:exportThePlayerLibraryPacksAndSuspendedFlightWhenYou\">Export the player library, packs and suspended flight when you want a portable backup. Clearing site data removes local data; private browsing, storage limits or browser cleanup can also remove it. There is no server backup or cross-device sync.</p><p data-i18n=\"website:aPublicHostingProviderReceivesOrdinaryPageAndAssetRequests\">A public hosting provider receives ordinary page and asset requests and may keep access logs. This game cannot promise the host keeps no logs. The publisher is responsible for disclosing any hosting-specific collection or additional services it adds.</p><p data-i18n=\"website:importedContentIsTreatedAsBoundedDataAndMediaInstalled\">Imported content is treated as bounded data and media. Installed packs cannot provide executable game scripts or contacts with remote services. Local scores are editable local records, not authenticated competitive results.</p>",
       ),
     ),
   });
   entries.push({
     name: 'credits.html',
     bytes: Buffer.from(
-      publicPage(
+      makePage(
         'Credits and notices',
-        '<p><a href="./">← Game home</a></p><h1>Credits and notices</h1><p>Reveal Line is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p>The included Phaser engine retains its <a href="./game/vendor/PHASER-LICENSE.md">MIT license and copyright notice</a>. Built-in music uses original procedural score recipes. Uploaded MP3s retain their author-supplied metadata and source records.</p><p>The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction. The business-spend theme is a design concept and does not claim endorsement or actual business-product functionality.</p><p>The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>' +
+        "<p><a href=\"./\" data-i18n=\"website:gameHome\">← Game home</a></p><h1 data-i18n=\"website:creditsAndNotices\">Credits and notices</h1><p data-i18n=\"website:revealLineIsAnOriginalTerritoryCaptureGameInspiredBy\">Reveal Line is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p data-i18n-rich=\"website:theIncludedPhaserEngineRetainsItsSlot0BuiltInMusic\">The included Phaser engine retains its <a href=\"./game/vendor/PHASER-LICENSE.md\" data-i18n=\"website:mitLicenseAndCopyrightNotice\" data-i18n-slot=\"slot0\">MIT license and copyright notice</a>. Built-in music uses original procedural score recipes. Uploaded MP3s retain their author-supplied metadata and source records.</p><p data-i18n=\"website:theWorldsBackgroundsAndCharacterRigsAreChangeableFpvGameplay\">The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction. The business-spend theme is a design concept and does not claim endorsement or actual business-product functionality.</p><p data-i18n=\"website:theTelegramEmojiCollectionResearchedForInspirationIsNotIncluded\">The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>" +
+          (has('game/vendor/I18NEXT-LICENSE.txt') ? '<p data-i18n-rich="website:page.i18nextNotice">Localization uses i18next under its <a href="./game/vendor/I18NEXT-LICENSE.txt" data-i18n-slot="slot0" data-i18n="website:page.license">MIT license</a>.</p>' : '') +
           (has('game/ui/fonts/pixelify-sans/OFL.txt')
-            ? '<p>Interface type: Pixelify Sans by Stefie Justprince, used unmodified under the <a href="./game/ui/fonts/pixelify-sans/OFL.txt">SIL Open Font License 1.1</a>. Tiny5 by Stefan Schmidt supplies the Ukrainian capital І under its bundled <a href="./game/ui/fonts/OFL.txt">OFL</a>.</p>'
+            ? "<p data-i18n-rich=\"website:interfaceTypePixelifySansByStefieJustprinceUsedUnmodifiedUnder\">Interface type: Pixelify Sans by Stefie Justprince, used unmodified under the <a href=\"./game/ui/fonts/pixelify-sans/OFL.txt\" data-i18n=\"website:silOpenFontLicense11\" data-i18n-slot=\"slot0\">SIL Open Font License 1.1</a>. Tiny5 by Stefan Schmidt supplies the Ukrainian capital І under its bundled <a href=\"./game/ui/fonts/OFL.txt\" data-i18n=\"website:ofl\" data-i18n-slot=\"slot1\">OFL</a>.</p>"
             : has('game/ui/fonts/OFL.txt')
-              ? '<p>Interface type: Tiny5 by Stefan Schmidt, used unmodified under the <a href="./game/ui/fonts/OFL.txt">SIL Open Font License 1.1</a>.</p>'
+              ? "<p data-i18n-rich=\"website:interfaceTypeTiny5ByStefanSchmidtUsedUnmodifiedUnderThe\">Interface type: Tiny5 by Stefan Schmidt, used unmodified under the <a href=\"./game/ui/fonts/OFL.txt\" data-i18n=\"website:silOpenFontLicense11\" data-i18n-slot=\"slot0\">SIL Open Font License 1.1</a>.</p>"
               : ''),
       ),
     ),
@@ -641,6 +647,7 @@ export async function buildProject({
   const files = await collectBuildFiles(root, config);
   await assertOutput(root, out, config.include);
   await validateBuildReferences(root, files);
+  if (files.includes('game/i18n/catalogs.mjs')) await validateLocalization(root);
   if (files.includes('game/content/campaign.json')) await validateLevels(root);
   if (files.includes('game/content/themes.json')) await validateThemes(root);
   if (files.includes('game/content/classes.json')) await validateClasses(root);

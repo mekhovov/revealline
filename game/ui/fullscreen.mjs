@@ -1,3 +1,4 @@
+import { t, localizedAttribute } from '../i18n/index.mjs';
 /** Fullscreen remains an explicit browser gesture. Safari versions without
  * document fullscreen keep the same responsive layout inside browser chrome. */
 export function attachFullscreen(button, doc = globalThis.document) {
@@ -15,9 +16,7 @@ export function attachFullscreen(button, doc = globalThis.document) {
     const immersive = !!doc.fullscreenElement || !!displayMode?.matches || iosStandalone;
     if (immersive) root?.dataset && (root.dataset.gameFullscreen = 'true');
     else if (root?.dataset) delete root.dataset.gameFullscreen;
-    button.setAttribute(
-      'aria-label',
-      doc.fullscreenElement ? 'Exit fullscreen' : 'Enter fullscreen',
+    localizedAttribute(button, "aria-label", () => doc.fullscreenElement ? t("interface:exitFullscreen") : t("interface:enterFullscreen"),
     );
     button.setAttribute('aria-pressed', String(!!doc.fullscreenElement));
   };
@@ -40,8 +39,7 @@ export function attachFullscreen(button, doc = globalThis.document) {
       // Browsers that support this hint can remove their navigation UI too.
       else await doc.documentElement.requestFullscreen({ navigationUI: 'hide' });
     } catch {
-      button.title =
-        'Fullscreen is unavailable in this browser. The board fits the visible window.';
+      localizedAttribute(button, "title", () => t("interface:fullscreenIsUnavailableInThisBrowserTheBoardFitsThe"));
     }
     sync();
   };

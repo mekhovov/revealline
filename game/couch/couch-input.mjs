@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { gamepadCommand } from '../ui/input.mjs';
 import { neutralCommand } from '../multiplayer.mjs';
 
@@ -175,7 +176,7 @@ export function attachCouchInput({
       }
   }
   function requirePlayer(player) {
-    if (player !== 0 && player !== 1) throw new TypeError('Player must be 0 or 1.');
+    if (player !== 0 && player !== 1) throw new TypeError(t("interface:playerMustBe0Or1"));
   }
   function clearPlayer(player) {
     requirePlayer(player);
@@ -193,9 +194,9 @@ export function attachCouchInput({
   function restoreDirection(player, direction) {
     requirePlayer(player);
     if (direction !== null && !directions.includes(direction))
-      throw new TypeError('Saved direction must be a cardinal direction or null.');
+      throw new TypeError(t("interface:savedDirectionMustBeACardinalDirectionOrNull"));
     if (destroyed || !continuous())
-      throw new Error('Restoring direction requires active continuous steering.');
+      throw new Error(t("interface:restoringDirectionRequiresActiveContinuousSteering"));
     resetPlayer(player, true);
     players[player].direction = direction;
     sync();

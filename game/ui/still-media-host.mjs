@@ -1,3 +1,4 @@
+import { localizedText, t } from '../i18n/index.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { createStoryMediaStore } from '../story-media-store.mjs';
@@ -12,7 +13,7 @@ import { attachControllerNavigation } from './controller-navigation.mjs';
 
 export async function readStillWorkshopChannel({ signal, fetchImpl = globalThis.fetch } = {}) {
   const check = () => {
-    if (signal?.aborted) throw new DOMException('Workshop channel load cancelled.', 'AbortError');
+    if (signal?.aborted) throw new DOMException(t("interface:workshopChannelLoadCancelled"), 'AbortError');
   };
   check();
   const response = await fetchImpl(new URL('../build-info.json', import.meta.url), { signal });
@@ -20,12 +21,12 @@ export async function readStillWorkshopChannel({ signal, fetchImpl = globalThis.
   if (response.status === 404) return 'dev';
   if (!response.ok)
     throw new Error(
-      'Workshop build information could not load. Retry the complete edition; no game channel was selected.',
+      t("interface:workshopBuildInformationCouldNotLoadRetryTheCompleteEdition"),
     );
   const info = await response.json();
   check();
   if (!info || typeof info.version !== 'string')
-    throw new Error('Workshop build version is invalid; no game channel was selected.');
+    throw new Error(t("interface:workshopBuildVersionIsInvalidNoGameChannelWasSelected"));
   const channel = `release-${info.version}`;
   stillAuthoringKeys(channel);
   return channel;
@@ -34,7 +35,7 @@ async function readSource({ signal } = {}) {
   const get = async (path) => {
     const response = await fetch(new URL(path, import.meta.url), { signal });
     if (!response.ok)
-      throw new Error('Source game content could not load. Serve this repository over HTTP.');
+      throw new Error(t("interface:sourceGameContentCouldNotLoadServeThisRepositoryOver"));
     return response.json();
   };
   const [campaign, themes, classes, presets, channel] = await Promise.all([
@@ -105,12 +106,12 @@ export function attachStillMediaHost({
     onBack: () => panel?.back(),
     onNativeInput: () => router.clear(),
     onHint: (text) => {
-      status.textContent = text;
+      localizedText(status, () =>text);
     },
   });
   const explain = (error) =>
     error?.name === 'VersionError'
-      ? 'This database needs a newer compatible media workshop. Open that version to recover/export it. No downgrade or deletion was attempted.'
+      ? t("interface:thisDatabaseNeedsANewerCompatibleMediaWorkshopOpenThat")
       : error instanceof Error
         ? error.message
         : String(error);
@@ -145,8 +146,7 @@ export function attachStillMediaHost({
   async function open() {
     if (disposed || opening) return false;
     if (!['http:', 'https:'].includes(win.location.protocol)) {
-      status.textContent =
-        'Use localhost or HTTPS. File URLs cannot safely open this same-origin workshop.';
+      localizedText(status, () =>t("interface:useLocalhostOrHttpsFileUrlsCannotSafelyOpenThis"));
       return false;
     }
     opening = true;
@@ -192,15 +192,15 @@ export function attachStillMediaHost({
       if (!disposed && ticket === openSerial) {
         router.clear();
         navigation.sync();
-        status.textContent = result
-          ? `Real local media opened for ${channel ?? sourceChannel}. Picture assignments are ready for fresh flights in this edition.`
-          : 'Workshop open failed. Read its error; saved data was not replaced. Audio recovery can be attempted after closing the dialog.';
+        localizedText(status, () =>result
+          ? t("gameplay:realLocalMediaOpenedForPictureAssignmentsAreReadyFor", { value1: channel ?? sourceChannel })
+          : t("interface:workshopOpenFailedReadItsErrorSavedDataWasNot"));
       }
       return result;
     } catch (error) {
       if (ticket !== openSerial) return false;
       closeStorage();
-      if (!disposed) status.textContent = explain(error);
+      if (!disposed) localizedText(status, () =>explain(error));
       return false;
     } finally {
       if (ticket === openSerial) {
@@ -216,7 +216,7 @@ export function attachStillMediaHost({
     const own = new AbortController();
     audioTask = own;
     $('still-host-export-audio').disabled = true;
-    status.textContent = 'Reading and verifying the complete saved soundtrack…';
+    localizedText(status, () =>t("interface:readingAndVerifyingTheCompleteSavedSoundtrack"));
     try {
       const saved = await audio.read({ signal: own.signal });
       const blob = await exportSoundtrackBundle(saved.library, saved.assets, {
@@ -228,11 +228,11 @@ export function attachStillMediaHost({
       link.href = audioURL;
       link.download = 'RevealLine-soundtrack.rlsound';
       link.hidden = false;
-      status.textContent = `Soundtrack backup prepared (${blob.size} bytes). Choose Download soundtrack; this file does not contain still images.`;
+      localizedText(status, () =>t("gameplay:soundtrackBackupPreparedBytesChooseDownloadSoundtrackThisFileDoes", { value1: blob.size }));
       link.focus();
       return true;
     } catch (error) {
-      if (!disposed && audioTask === own) status.textContent = explain(error);
+      if (!disposed && audioTask === own) localizedText(status, () =>explain(error));
       return false;
     } finally {
       if (audioTask === own) {
@@ -245,13 +245,11 @@ export function attachStillMediaHost({
   $('still-host-export-audio').onclick = prepareAudio;
   $('still-host-export-audio').disabled = true;
   $('still-host-download-audio').onclick = () => {
-    status.textContent =
-      'Download requested. Confirm the destination in your browser; the prepared copy remains available to retry.';
+    localizedText(status, () =>t("interface:downloadRequestedConfirmTheDestinationInYourBrowserThePrepared"));
   };
   $('still-host-close').onclick = () => {
     closeStorage();
-    status.textContent =
-      'Local connections closed. Saved originals remain; the database version was not downgraded.';
+    localizedText(status, () =>t("interface:localConnectionsClosedSavedOriginalsRemainTheDatabaseVersionWas"));
     $('still-host-open').focus();
   };
   function poll(now) {

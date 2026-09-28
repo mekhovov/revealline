@@ -1,3 +1,4 @@
+import { localizedText, t, localizedOption, localizedAttribute } from '../i18n/index.mjs';
 import { geometryForLevel } from '../core/geometry.mjs';
 import { paintEditorMap, editorCellFromPointer } from './board-view.mjs';
 import {
@@ -58,7 +59,7 @@ const beginImport = () => {
   $('open-preview').setAttribute('aria-disabled', 'true');
   $('open-preview').removeAttribute('href');
   $('editor-status').setAttribute('aria-busy', 'true');
-  status('Preparing the selected content. Play becomes available after validation and decoding.');
+  status(t("tools:preparingTheSelectedContentPlayBecomesAvailableAfterValidationAnd"));
   return ticket;
 };
 const finishImport = (ticket) => {
@@ -79,11 +80,11 @@ const assertImportCurrent = (ticket) => {
     JSON.stringify(current) !== ticket.before
   )
     throw new Error(
-      'The pack changed while this import was being read. Retry with the latest settings.',
+      t("tools:thePackChangedWhileThisImportWasBeingReadRetry"),
     );
 };
 const status = (message, error = false) => {
-  $('editor-status').textContent = message;
+  localizedText($('editor-status'), () =>message);
   $('editor-status').classList.toggle('error', error);
 };
 const remember = () => {
@@ -107,7 +108,7 @@ const currentTrack = () => current.music;
 
 function useEntry(key, levelId) {
   const entry = catalog.find((item) => item.key === key);
-  if (!entry) throw new Error('This campaign source is unavailable.');
+  if (!entry) throw new Error(t("tools:thisCampaignSourceIsUnavailable"));
   current = entryScenario(entry, levelId, current?.settings, current?.presentation);
   activeKey = key;
   campaign = entry.campaign;
@@ -136,11 +137,10 @@ async function adoptDocument(candidate, message, ticket = beginImport()) {
 }
 function sync() {
   $('campaign-select').replaceChildren(
-    ...catalog.map((entry) => new Option(entry.label, entry.key)),
+    ...catalog.map((entry) => localizedOption(() => entry.label, entry.key)),
   );
   $('campaign-select').value = activeKey;
-  $('source-readout').textContent =
-    `${selectedEntry().label} · ${campaign.levels.length} maps. Editing a working copy; Undo returns to the previous configuration and source.`;
+  localizedText($('source-readout'), () =>t("tools:mapsEditingAWorkingCopyUndoReturnsToThePrevious", { value1: selectedEntry().label, value2: campaign.levels.length }));
   $('export-catalog').disabled = !packLibrary.packs.length;
   const definition = current.masteryDefinition;
   const noMasteries = [
@@ -149,26 +149,25 @@ function sync() {
     'xonix-playground.v5',
   ].includes(current.format);
   $('mastery-json').value = definition ? JSON.stringify(definition, null, 2) : '';
-  $('mastery-readout').textContent =
-    current.format === 'xonix-playground.v5'
-      ? 'Classic edition. Terrain, contact pickups and enemy roles stay in the map JSON. Optional equipment goals are unavailable.'
+  localizedText($('mastery-readout'), () =>current.format === 'xonix-playground.v5'
+      ? t("tools:classicEditionTerrainContactPickupsAndEnemyRolesStayIn")
       : current.format === 'xonix-playground.v4'
-        ? 'Wide edition. Optional equipment goals are unavailable; the map retains its explicit encounter or no-encounter choice.'
+        ? t("tools:wideEditionOptionalEquipmentGoalsAreUnavailableTheMapRetains")
         : current.format === 'xonix-playground.v3'
-          ? 'Staged encounter. This ruleset has no optional equipment goals; its two-stage requirements are part of the map.'
+          ? t("tools:stagedEncounterThisRulesetHasNoOptionalEquipmentGoalsIts")
           : current.format === 'xonix-playground.v2'
             ? definition
-              ? `${definition.name} · ${definition.description} References validate against this map and roster; play the route to test completion.`
-              : 'No optional goal. This explicit choice is retained in practice and expansion exports.'
-            : 'Legacy scenario: only exact shipped content can use its built-in goal. Copy the campaign goal to edit it explicitly, or choose no optional goal.';
+              ? t("tools:referencesValidateAgainstThisMapAndRosterPlayTheRoute", { value1: definition.name, value2: definition.description })
+              : t("tools:noOptionalGoalThisExplicitChoiceIsRetainedInPractice")
+            : t("tools:legacyScenarioOnlyExactShippedContentCanUseItsBuilt"));
   $('use-campaign-goal').disabled = noMasteries || !entryMastery(selectedEntry(), current.level.id);
   $('apply-mastery').disabled = noMasteries;
   $('clear-goal').disabled = noMasteries;
   const encounter = current.level.encounter;
   $('encounter-fields').disabled = !encounter;
-  $('encounter-readout').textContent = encounter
-    ? `Two-stage relay. Close ${encounter.minReleaseCutCells} new trail cells during an opening, or isolate the core to at most ${encounter.minReleaseCutCells} field cells. The sentinel must remain the only field seed. Test every class and steering mode after changing this recipe.`
-    : 'Load Sentinel Relay from the expansion examples to edit its two stages. Ordinary maps keep their existing rules.';
+  localizedText($('encounter-readout'), () =>encounter
+    ? t("tools:twoStageRelayCloseNewTrailCellsDuringAnOpening", { value1: encounter.minReleaseCutCells, value2: encounter.minReleaseCutCells })
+    : t("tools:loadSentinelRelayFromTheExpansionExamplesToEditIts2"));
   if (encounter)
     for (const [id, value] of [
       ['enemy', encounter.enemyId],
@@ -187,9 +186,9 @@ function sync() {
     ])
       $(`encounter-${id}`).value = value;
   const track = currentTrack();
-  $('music-readout').textContent = track
-    ? `Pack music: ${track.name} · ${track.genre} · ${track.tempo} BPM. This exact descriptor is used in practice and retained in the expansion export. Enable sound in the preview to listen.`
-    : 'Original synthesized music is configured in the game audio controls.';
+  localizedText($('music-readout'), () =>track
+    ? t("tools:packMusicBpmThisExactDescriptorIsUsedInPractice", { value1: track.name, value2: track.genre, value3: track.tempo })
+    : t("tools:originalSynthesizedMusicIsConfiguredInTheGameAudioControls"));
   for (const [id, key, fallback] of [
     ['mission-limit', 'timeLimitSeconds', 0],
     ['cut-limit', 'cutTimeLimitSeconds', 0],
@@ -201,22 +200,21 @@ function sync() {
   $('level-select').replaceChildren(
     ...campaign.levels.map(
       (level, i) =>
-        new Option(
-          `${String(i + 1).padStart(2, '0')} / ${i === index ? current.level.name : level.name}`,
+        localizedOption(() => `${String(i + 1).padStart(2, '0')} / ${i === index ? current.level.name : level.name}`,
           String(i),
         ),
     ),
   );
-  if (index < 0) $('level-select').append(new Option(current.level.name, 'custom'));
+  if (index < 0) $('level-select').append(localizedOption(() => current.level.name, 'custom'));
   $('level-select').value = index < 0 ? 'custom' : String(index);
   $('theme-select').replaceChildren(
     ...themes.themes.map(
       (theme) =>
-        new Option(theme.id === current.theme.id ? current.theme.name : theme.name, theme.id),
+        localizedOption(() => theme.id === current.theme.id ? current.theme.name : theme.name, theme.id),
     ),
   );
   if (!themes.themes.some((theme) => theme.id === current.theme.id))
-    $('theme-select').append(new Option(current.theme.name, current.theme.id));
+    $('theme-select').append(localizedOption(() => current.theme.name, current.theme.id));
   $('theme-select').value = current.theme.id;
   $('terrain-style').value = current.presentation?.style || 'hybrid';
   $('show-grid').checked = current.presentation?.showGrid || false;
@@ -224,7 +222,7 @@ function sync() {
   $('speed-input').value = current.level.rules?.moveSpeed ?? 8;
   $('lives-input').value = current.level.rules?.lives ?? 3;
   $('class-select').replaceChildren();
-  for (const c of current.classRecipes) $('class-select').append(new Option(c.label, c.id));
+  for (const c of current.classRecipes) $('class-select').append(localizedOption(() => c.label, c.id));
   $('class-select').value = current.settings.classId;
   $('turn-select').value = current.settings.turnPolicy;
   $('level-json').value = JSON.stringify(current.level, null, 2);
@@ -240,27 +238,26 @@ function drawMap() {
   $('paint-x').max = String(columns - 1);
   $('paint-y').max = String(rows - 1);
   $('trail-limit').max = String((columns - 2) * (rows - 2));
-  $('map-readout').textContent =
-    `${columns} × ${rows} cells · ${current.level.walls.length} wall rectangles · ${current.level.enemies.length} enemies · ${current.level.objectives.length} objectives · ${current.level.signalZones?.length ?? 0} signal zones · ${hangarCount} hangars · start ${current.level.spawn.x}, ${current.level.spawn.y}`;
+  localizedText($('map-readout'), () =>t("tools:cellsWallRectanglesEnemiesObjectivesSignalZonesHangarsStart", { value1: columns, value2: rows, value3: current.level.walls.length, value4: current.level.enemies.length, value5: current.level.objectives.length, value6: current.level.signalZones?.length ?? 0, value7: hangarCount, value8: current.level.spawn.x, value9: current.level.spawn.y }));
 }
 const visualRoleLabels = {
-  background: 'Reveal background',
-  player: 'Player body',
-  enemy: 'Field enemy',
-  patrol: 'Border patrol',
-  boss: 'Boss',
-  objective: 'Objective / support',
-  supply: 'Supply pad',
-  wall: 'Wall tile',
-  contour: 'Contour patrol',
-  rover: 'Claimed rover',
-  eroder: 'Eroder',
-  slowTerrain: 'Slow terrain',
-  lethalTerrain: 'Lethal terrain',
-  lifePickup: 'Extra life pickup',
-  speedPickup: 'Player speed pickup',
-  slowPickup: 'Enemy slow pickup',
-  freezePickup: 'Enemy freeze pickup',
+  get background() { return t("tools:revealBackground"); },
+  get player() { return t("tools:playerBody"); },
+  get enemy() { return t("tools:fieldEnemy"); },
+  get patrol() { return t("tools:borderPatrol"); },
+  get boss() { return t("tools:boss"); },
+  get objective() { return t("tools:objectiveSupport"); },
+  get supply() { return t("tools:supplyPad"); },
+  get wall() { return t("tools:wallTile"); },
+  get contour() { return t("tools:contourPatrol"); },
+  get rover() { return t("tools:claimedRover"); },
+  get eroder() { return t("tools:eroder"); },
+  get slowTerrain() { return t("tools:slowTerrain"); },
+  get lethalTerrain() { return t("tools:lethalTerrain"); },
+  get lifePickup() { return t("tools:extraLifePickup"); },
+  get speedPickup() { return t("tools:playerSpeedPickup"); },
+  get slowPickup() { return t("tools:enemySlowPickup"); },
+  get freezePickup() { return t("tools:enemyFreezePickup"); },
 };
 function drawAssets() {
   const select = $('asset-role'),
@@ -269,7 +266,7 @@ function drawAssets() {
     current.format === 'xonix-playground.v5'
       ? [...VISUAL_ROLES, ...CLASSIC_VISUAL_ROLES]
       : VISUAL_ROLES;
-  select.replaceChildren(...roles.map((role) => new Option(visualRoleLabels[role], role)));
+  select.replaceChildren(...roles.map((role) => localizedOption(() => visualRoleLabels[role], role)));
   select.value = roles.includes(prior) ? prior : 'background';
   $('asset-list').replaceChildren();
   for (const [role, item] of Object.entries(current.visualOverrides)) {
@@ -277,9 +274,9 @@ function drawAssets() {
     card.className = 'asset-card';
     const img = document.createElement('img');
     img.src = item.dataUrl;
-    img.alt = `Replacement for ${role}`;
+    localizedAttribute(img, "alt", () => t("tools:replacementFor", { value1: role }));
     const name = document.createElement('span');
-    name.textContent = `${role} / ${item.name || 'image'}`;
+    localizedText(name, () =>`${role} / ${item.name || 'image'}`);
     card.append(img, name);
     $('asset-list').append(card);
   }
@@ -309,7 +306,7 @@ function checked() {
 function preview() {
   if (pendingImport !== null) {
     status(
-      'The selected content is still being prepared. Wait for validation and decoding before playing.',
+      t("tools:theSelectedContentIsStillBeingPreparedWaitForValidation"),
     );
     return false;
   }
@@ -319,18 +316,18 @@ function preview() {
       $('preview-frame').src = href;
       $('open-preview').href = href;
       status(
-        'First Flight course uses three fixed practice lessons. Your editor, history and saved configuration stay unchanged.',
+        t("tools:firstFlightCourseUsesThreeFixedPracticeLessonsYourEditor"),
       );
       return true;
     } catch (error) {
-      status(`Course preview was not replaced: ${error.message}`, true);
+      status(t("tools:coursePreviewWasNotReplaced", { value1: error.message }), true);
       return false;
     }
   }
   if ($('preview-mode').value === 'couch') {
     $('preview-frame').src = '../couch/?focus=1';
     $('open-preview').href = '../couch/?focus=1';
-    status('Couch preview uses installed maps and packs. Solo configuration stays in the editor.');
+    status(t("tools:couchPreviewUsesInstalledMapsAndPacksSoloConfigurationStays"));
     return true;
   }
   if (!checked()) return false;
@@ -347,14 +344,14 @@ function preview() {
     return true;
   } catch (error) {
     status(
-      `Preview could not save this local pack: ${error.message}. Try smaller images or enable browser session storage.`,
+      t("tools:previewCouldNotSaveThisLocalPackTrySmallerImages", { value1: error.message }),
       true,
     );
     return false;
   }
 }
 function fit() {
-  geometryStale('Preview size or display scale changed. Capture again for current rectangles.');
+  geometryStale(t("tools:previewSizeOrDisplayScaleChangedCaptureAgainForCurrent"));
   const available = $('preview-stage').parentElement.clientWidth,
     scale = Math.min(1, available / width),
     frame = $('preview-frame');
@@ -363,8 +360,7 @@ function fit() {
   frame.style.transform = `scale(${scale})`;
   $('preview-stage').style.width = `${width * scale}px`;
   $('preview-stage').style.height = `${height * scale}px`;
-  $('viewport-readout').textContent =
-    `${width} × ${height} CSS pixels · shown at ${Math.round(scale * 100)}%`;
+  localizedText($('viewport-readout'), () =>t("tools:cssPixelsShownAt", { value1: width, value2: height, value3: Math.round(scale * 100) }));
   measure();
 }
 function resizePreview(nextWidth, nextHeight) {
@@ -378,7 +374,7 @@ function resizePreview(nextWidth, nextHeight) {
     button.setAttribute('aria-pressed', String(button.dataset.size === `${width},${height}`));
   });
   $('preview-size-status').classList.remove('error');
-  $('preview-size-status').textContent = `Preview set to ${width} × ${height} CSS pixels.`;
+  localizedText($('preview-size-status'), () =>t("tools:previewSetToCssPixels", { value1: width, value2: height }));
   fit();
 }
 function measure() {
@@ -388,8 +384,7 @@ function measure() {
       view = frame.contentWindow,
       arena = doc?.querySelector('#arena-shell,#race-boards');
     if (view)
-      $('viewport-readout').textContent =
-        `${width} × ${height} CSS pixels requested · frame reports ${view.innerWidth} × ${view.innerHeight} · shown at ${Math.round(Math.min(1, $('preview-stage').parentElement.clientWidth / width) * 100)}%`;
+      localizedText($('viewport-readout'), () =>t("tools:cssPixelsRequestedFrameReportsShownAt", { value1: width, value2: height, value3: view.innerWidth, value4: view.innerHeight, value5: Math.round(Math.min(1, $('preview-stage').parentElement.clientWidth / width) * 100) }));
     if (!arena) return;
     const r = arena.getBoundingClientRect(),
       visible =
@@ -397,8 +392,7 @@ function measure() {
         r.top >= 0 &&
         r.right <= view.innerWidth + 1 &&
         r.bottom <= view.innerHeight + 1;
-    $('layout-readout').textContent =
-      `Arena ${r.width.toFixed(1)} × ${r.height.toFixed(1)} · top ${r.top.toFixed(0)}, bottom ${r.bottom.toFixed(0)} · ${visible ? 'whole arena visible' : 'scroll needed for whole arena'} · ${doc.documentElement.scrollWidth > view.innerWidth ? 'horizontal overflow' : 'no horizontal overflow'}`;
+    localizedText($('layout-readout'), () =>t("tools:arenaTopBottom", { value1: r.width.toFixed(1), value2: r.height.toFixed(1), value3: r.top.toFixed(0), value4: r.bottom.toFixed(0), value5: visible ? 'whole arena visible' : 'scroll needed for whole arena', value6: doc.documentElement.scrollWidth > view.innerWidth ? 'horizontal overflow' : 'no horizontal overflow' }));
     const controls = [
       ...doc.querySelectorAll(
         '[data-move],#stop-button,#action-button,#pickup-button,#boost-button,#pause-button,#restart-button,#sound-button,.race-pad button,#race-start,#race-pause,#race-focus',
@@ -413,8 +407,7 @@ function measure() {
         r.right <= view.innerWidth + 1 &&
         r.bottom <= view.innerHeight + 1,
     );
-    $('control-readout').textContent =
-      `Controls: minimum ${Math.min(...controls.map((r) => r.width)).toFixed(0)} × ${Math.min(...controls.map((r) => r.height)).toFixed(0)} · ${reachable ? 'all actions visible' : 'scroll to reach some actions'}`;
+    localizedText($('control-readout'), () =>t("tools:controlsMinimum", { value1: Math.min(...controls.map((r) => r.width)).toFixed(0), value2: Math.min(...controls.map((r) => r.height)).toFixed(0), value3: reachable ? 'all actions visible' : 'scroll to reach some actions' }));
     const launchVisible = (button, b) => {
       if (
         b.left < 0 ||
@@ -433,18 +426,18 @@ function measure() {
         rect: button.getBoundingClientRect(),
       }))
       .filter(({ rect }) => rect.width > 0 && rect.height > 0);
-    $('launch-readout').textContent = launch.length
-      ? `Launch actions: ${launch.map(({ button, label, rect: b }) => `${label} ${b.width.toFixed(0)} × ${b.height.toFixed(0)} · ${launchVisible(button, b) ? 'visible in viewport' : 'scroll needed or covered'}`).join('; ')}`
-      : 'No launch overlay is active.';
+    localizedText($('launch-readout'), () =>launch.length
+      ? t("tools:launchActions", { value1: launch.map(({ button, label, rect: b }) => `${label} ${b.width.toFixed(0)} × ${b.height.toFixed(0)} · ${launchVisible(button, b) ? 'visible in viewport' : 'scroll needed or covered'}`).join('; ') })
+      : t("tools:noLaunchOverlayIsActive"));
   } catch {}
 }
 let geometryCaptured = false;
 let geometryDocument = null;
 let geometryView = null;
 function geometryStale(
-  message = 'Preview activity may have changed this snapshot. Capture again.',
+  message = t("tools:previewActivityMayHaveChangedThisSnapshotCaptureAgain"),
 ) {
-  if (geometryCaptured) $('geometry-status').textContent = `Previous capture retained. ${message}`;
+  if (geometryCaptured) localizedText($('geometry-status'), () =>t("tools:previousCaptureRetained", { value1: message }));
 }
 function geometryActivity() {
   geometryStale();
@@ -456,7 +449,7 @@ function observeGeometryPreview() {
   geometryView?.removeEventListener('resize', geometryActivity);
   geometryDocument = null;
   geometryView = null;
-  geometryStale('Preview document reloaded. Capture again.');
+  geometryStale(t("tools:previewDocumentReloadedCaptureAgain"));
   try {
     geometryDocument = $('preview-frame').contentDocument;
     geometryView = $('preview-frame').contentWindow;
@@ -465,7 +458,7 @@ function observeGeometryPreview() {
     geometryView?.addEventListener('scroll', geometryActivity, { passive: true });
     geometryView?.addEventListener('resize', geometryActivity);
   } catch {
-    geometryStale('This preview cannot be measured from the Playground.');
+    geometryStale(t("tools:thisPreviewCannotBeMeasuredFromThePlayground"));
   }
 }
 function captureGeometry() {
@@ -477,14 +470,13 @@ function captureGeometry() {
       requested: { width, height },
       displayScale: Math.min(1, $('preview-stage').parentElement.clientWidth / width),
     });
-    $('geometry-readout').textContent = JSON.stringify(report, null, 2);
+    localizedText($('geometry-readout'), () =>JSON.stringify(report, null, 2));
     geometryCaptured = true;
-    $('geometry-status').textContent =
-      `Captured ${report.capturedAt}${$('preview-mode').value === 'course' ? ' · First Flight course' : ''}. Snapshot only; configuration and run are not edited.`;
+    localizedText($('geometry-status'), () =>t("tools:capturedSnapshotOnlyConfigurationAndRunAreNotEdited", { value1: report.capturedAt, value2: $('preview-mode').value === 'course' ? ' · First Flight course' : '' }));
   } catch (error) {
     geometryCaptured = false;
-    $('geometry-readout').textContent = '';
-    $('geometry-status').textContent = `Capture unavailable: ${error.message}`;
+    localizedText($('geometry-readout'), () =>'');
+    localizedText($('geometry-status'), () =>t("tools:captureUnavailable", { value1: error.message }));
   }
 }
 try {
@@ -513,7 +505,7 @@ try {
   current = editorScenario(current);
   baseEntry = {
     key: 'builtin',
-    label: 'Built-in campaign',
+    get label() { return t("tools:builtInCampaign"); },
     campaign,
     themes: themes.themes,
     classRecipes: recipes,
@@ -527,7 +519,7 @@ try {
       remember();
       useEntry($('campaign-select').value);
       sync();
-      status('Campaign source selected. Play configuration to test this map.');
+      status(t("tools:campaignSourceSelectedPlayConfigurationToTestThisMap"));
     } catch (error) {
       status(error.message, true);
     }
@@ -540,11 +532,10 @@ try {
           const preset = interactionPreset(button.dataset.preset, current, recipes);
           await adopt(
             preset,
-            'Interaction preset ready without an optional goal. Play configuration to try it; Undo restores the previous map and goal.',
+            t("tools:interactionPresetReadyWithoutAnOptionalGoalPlayConfigurationTo"),
             ticket,
           );
-          $('preset-readout').textContent =
-            `New 48 × 36 Standard practice map. ${PRESET_HELP[button.dataset.preset]}`;
+          localizedText($('preset-readout'), () =>t("tools:new4836StandardPracticeMap", { value1: PRESET_HELP[button.dataset.preset] }));
           preview();
         } catch (error) {
           if (importCurrent(ticket)) status(error.message, true);
@@ -554,25 +545,25 @@ try {
       }),
   );
   for (const [id, name] of [
-    ['tactical-read-clearing', 'Read the clearing · Scout'],
-    ['tactical-borrowed-seconds', 'Borrowed seconds · Light carrier'],
-    ['tactical-quiet-crossing', 'Quiet crossing · Fiber relay'],
+    ['tactical-read-clearing', t("tools:readTheClearingScout")],
+    ['tactical-borrowed-seconds', t("tools:borrowedSecondsLightCarrier")],
+    ['tactical-quiet-crossing', t("tools:quietCrossingFiberRelay")],
   ]) {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'button secondary';
     button.dataset.teachingScenario = id;
-    button.textContent = `Load ${name}`;
+    localizedText(button, () =>t("tools:load", { value1: name }));
     button.onclick = async () => {
       const ticket = beginImport();
       try {
         const response = await fetch(
           `../../authoring/library/tactical-teaching/scenarios/${id}.json`,
         );
-        if (!response.ok) throw new Error('Teaching scenario is unavailable. Reload this edition.');
+        if (!response.ok) throw new Error(t("tools:teachingScenarioIsUnavailableReloadThisEdition"));
         await adoptDocument(
           await response.json(),
-          'Teaching scenario ready. Read its instructions, then Play configuration. Practice grants no campaign awards.',
+          t("tools:teachingScenarioReadyReadItsInstructionsThenPlayConfigurationPractice"),
           ticket,
         );
       } catch (error) {
@@ -585,7 +576,7 @@ try {
   }
   fetch('../content/packs/index.json')
     .then((r) => {
-      if (!r.ok) throw new Error('Example list unavailable.');
+      if (!r.ok) throw new Error(t("tools:exampleListUnavailable"));
       return r.json();
     })
     .then((index) => {
@@ -594,15 +585,15 @@ try {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'button secondary';
-        button.textContent = `Load ${entry.id.replaceAll('-', ' ')}`;
+        localizedText(button, () =>t("tools:load", { value1: entry.id.replaceAll('-', ' ') }));
         button.onclick = async () => {
           const ticket = beginImport();
           try {
             const response = await fetch(`../content/packs/${entry.path}`);
-            if (!response.ok) throw new Error('Example expansion is unavailable.');
+            if (!response.ok) throw new Error(t("tools:exampleExpansionIsUnavailable"));
             await adoptDocument(
               await response.json(),
-              'Expansion decoded. Select a campaign, map, theme and class above.',
+              t("tools:expansionDecodedSelectACampaignMapThemeAndClassAbove"),
               ticket,
             );
           } catch (error) {
@@ -617,16 +608,16 @@ try {
     .catch((error) => status(error.message, true));
   campaign.levels.forEach((l, i) =>
     $('level-select').append(
-      new Option(`${String(i + 1).padStart(2, '0')} / ${l.name}`, String(i)),
+      localizedOption(() => `${String(i + 1).padStart(2, '0')} / ${l.name}`, String(i)),
     ),
   );
-  for (const t of themes.themes) $('theme-select').append(new Option(t.name, t.id));
+  for (const t of themes.themes) $('theme-select').append(localizedOption(() => t.name, t.id));
   $('level-select').onchange = () => {
     remember();
     const level = campaign.levels[Number($('level-select').value)];
     if (level) useEntry(activeKey, level.id);
     sync();
-    status('Level selected. Play configuration to test it.');
+    status(t("tools:levelSelectedPlayConfigurationToTestIt"));
   };
   $('theme-select').onchange = () => {
     remember();
@@ -653,11 +644,11 @@ try {
       const definition = JSON.parse($('mastery-json').value);
       await adopt(
         withScenarioMastery(current, definition),
-        'Optional goal validated and applied. Play configuration to test its actual conditions.',
+        t("tools:optionalGoalValidatedAndAppliedPlayConfigurationToTestIts"),
         ticket,
       );
     } catch (error) {
-      if (importCurrent(ticket)) status(`Goal rejected: ${error.message}`, true);
+      if (importCurrent(ticket)) status(t("tools:goalRejected", { value1: error.message }), true);
     } finally {
       finishImport(ticket);
     }
@@ -667,26 +658,26 @@ try {
     remember();
     current = next;
     sync();
-    status('Optional goal disabled explicitly. Undo restores the previous definition.');
+    status(t("tools:optionalGoalDisabledExplicitlyUndoRestoresThePreviousDefinition"));
   };
   $('use-campaign-goal').onclick = () => {
     try {
       const definition = entryMastery(selectedEntry(), current.level.id);
-      if (!definition) throw new Error('This source map has no registered goal.');
+      if (!definition) throw new Error(t("tools:thisSourceMapHasNoRegisteredGoal"));
       const next = withScenarioMastery(current, definition);
       remember();
       current = next;
       sync();
       status(
-        'Campaign goal copied into this editable scenario. Changes apply to this copy; practice never awards progress.',
+        t("tools:campaignGoalCopiedIntoThisEditableScenarioChangesApplyTo"),
       );
     } catch (error) {
-      status(`Goal rejected: ${error.message}`, true);
+      status(t("tools:goalRejected", { value1: error.message }), true);
     }
   };
   $('apply-encounter').onclick = () => {
     try {
-      if (!current.level.encounter) throw new Error('Load a staged encounter first.');
+      if (!current.level.encounter) throw new Error(t("tools:loadAStagedEncounterFirst"));
       const number = (id) => Number($(`encounter-${id}`).value);
       const next = withScenarioEncounter(current, {
         ...current.level.encounter,
@@ -712,10 +703,10 @@ try {
       current = next;
       sync();
       status(
-        'Encounter validated and applied. Play configuration to test the timing and routes. Undo restores the prior recipe.',
+        t("tools:encounterValidatedAndAppliedPlayConfigurationToTestTheTiming"),
       );
     } catch (error) {
-      status(`Encounter rejected: ${error.message}`, true);
+      status(t("tools:encounterRejected", { value1: error.message }), true);
     }
   };
   $('remove-encounter').onclick = () => {
@@ -725,10 +716,10 @@ try {
       current = next;
       sync();
       status(
-        'Converted to an ordinary map. The sentinel was removed; both objectives and artwork remain. Undo restores the encounter.',
+        t("tools:convertedToAnOrdinaryMapTheSentinelWasRemovedBoth"),
       );
     } catch (error) {
-      status(`Conversion rejected: ${error.message}`, true);
+      status(t("tools:conversionRejected", { value1: error.message }), true);
     }
   };
   $('turn-select').onchange = () => {
@@ -756,7 +747,7 @@ try {
         sync();
       } catch (error) {
         sync();
-        status(`Edit rejected: ${error.message}`, true);
+        status(t("tools:editRejected", { value1: error.message }), true);
       }
     };
   $('goal-input').onchange = () => {
@@ -772,7 +763,7 @@ try {
       sync();
     } catch (error) {
       sync();
-      status(`Edit rejected: ${error.message}`, true);
+      status(t("tools:editRejected", { value1: error.message }), true);
     }
   };
   $('generate-button').onclick = async () => {
@@ -797,12 +788,12 @@ try {
       current = next;
       sync();
       status(
-        'New 48 × 36 Standard map generated and validated. This replaces the working map and its Classic-only artwork bindings; Undo restores the previous edition and artwork. Dynamic difficulty still needs playtesting.',
+        t("tools:new4836StandardMapGeneratedAndValidatedThisReplaces"),
       );
     } catch (error) {
       if (importCurrent(ticket))
         status(
-          `${error.message} If the current goal names objects on the previous map, choose No optional goal before generating a new map.`,
+          t("tools:ifTheCurrentGoalNamesObjectsOnThePreviousMap", { value1: error.message }),
           true,
         );
     } finally {
@@ -832,9 +823,9 @@ try {
       $('paint-y').value = y;
       sync();
       checked();
-      status('Map edited. Play configuration to test the actual behavior.');
+      status(t("tools:mapEditedPlayConfigurationToTestTheActualBehavior"));
     } catch (error) {
-      status(`Paint rejected: ${error.message}`, true);
+      status(t("tools:paintRejected", { value1: error.message }), true);
     }
   }
   $('map-editor').addEventListener('pointerdown', (event) => {
@@ -862,7 +853,7 @@ try {
     sync();
     if (checked())
       status(
-        'Previous configuration and source restored. Play configuration to refresh the preview.',
+        t("tools:previousConfigurationAndSourceRestoredPlayConfigurationToRefreshThe"),
       );
   };
   $('preview-button').onclick = preview;
@@ -886,15 +877,15 @@ try {
     if (!file) return;
     const ticket = beginImport();
     try {
-      if (file.size > PACK_LIMITS.libraryBytes) throw new Error('Content is larger than 48 MiB.');
+      if (file.size > PACK_LIMITS.libraryBytes) throw new Error(t("tools:contentIsLargerThan48Mib"));
       const candidate = JSON.parse(await file.text());
       await adoptDocument(
         candidate,
-        'Imported and decoded. The previous pack remains available through Undo.',
+        t("tools:importedAndDecodedThePreviousPackRemainsAvailableThroughUndo"),
         ticket,
       );
     } catch (error) {
-      if (importCurrent(ticket)) status(`Import rejected: ${error.message}`, true);
+      if (importCurrent(ticket)) status(t("tools:importRejected", { value1: error.message }), true);
     } finally {
       finishImport(ticket);
     }
@@ -915,7 +906,7 @@ try {
         candidate.settings = { ...candidate.settings, classId: candidate.classRecipes[0]?.id };
       await adopt(
         candidate,
-        'JSON validated and applied. Play configuration to compare it.',
+        t("tools:jsonValidatedAndAppliedPlayConfigurationToCompareIt"),
         ticket,
       );
     } catch (error) {
@@ -936,11 +927,11 @@ try {
         !['image/png', 'image/jpeg', 'image/webp'].includes(file.type) ||
         file.size > 4 * 1024 * 1024
       )
-        throw new Error('Choose a PNG, JPEG or WebP up to 4 MiB.');
+        throw new Error(t("tools:chooseAPngJpegOrWebpUpTo4Mib"));
       const dataUrl = await new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result);
-        reader.onerror = () => reject(new Error('Image file could not be read.'));
+        reader.onerror = () => reject(new Error(t("tools:imageFileCouldNotBeRead")));
         reader.readAsDataURL(file);
       });
       const inspected = inspectImageDataUrl(dataUrl);
@@ -951,11 +942,10 @@ try {
       };
       await adopt(
         candidate,
-        'Artwork validated and decoded. Play configuration to see it in motion.',
+        t("tools:artworkValidatedAndDecodedPlayConfigurationToSeeItIn"),
         ticket,
       );
-      $('asset-status').textContent =
-        `${file.name}: ${inspected.width} × ${inspected.height}. Bound to ${role}; original bytes unchanged.`;
+      localizedText($('asset-status'), () =>t("tools:boundToOriginalBytesUnchanged", { value1: file.name, value2: inspected.width, value3: inspected.height, value4: role }));
     } catch (error) {
       if (importCurrent(ticket)) status(error.message, true);
     } finally {
@@ -966,7 +956,7 @@ try {
     remember();
     delete current.visualOverrides[$('asset-role').value];
     drawAssets();
-    $('asset-status').textContent = 'Role restored to its authored default.';
+    localizedText($('asset-status'), () =>t("tools:roleRestoredToItsAuthoredDefault"));
   };
   $('asset-fit').onchange = () => {
     remember();
@@ -980,14 +970,14 @@ try {
     const ticket = beginImport();
     try {
       const text = $('pack-json').value;
-      if (text.length > PACK_LIMITS.libraryBytes) throw new Error('Content is larger than 48 MiB.');
+      if (text.length > PACK_LIMITS.libraryBytes) throw new Error(t("tools:contentIsLargerThan48Mib"));
       await adoptDocument(
         text,
-        'Content validated, decoded and applied. Undo preserves the previous source.',
+        t("tools:contentValidatedDecodedAndAppliedUndoPreservesThePreviousSource"),
         ticket,
       );
     } catch (error) {
-      if (importCurrent(ticket)) status(`Import rejected: ${error.message}`, true);
+      if (importCurrent(ticket)) status(t("tools:importRejected", { value1: error.message }), true);
     } finally {
       finishImport(ticket);
     }
@@ -1001,7 +991,7 @@ try {
       $('pack-json').closest('details').open = true;
       const exported = await downloadJSON(pack, `${pack.id}.expansion.json`);
       status(
-        `Edited map prepared as a complete playable expansion.${current.masteryDefinition ? ` Its goal now belongs to the new campaign ${current.level.id}; the new definition identity is separate from the source goal.` : ''} ${exported.message} Import it into the main game to keep campaign progress.`,
+        t("tools:editedMapPreparedAsACompletePlayableExpansionImportIt", { value1: current.masteryDefinition ? t("tools:itsGoalNowBelongsToTheNewCampaignTheNew", { value1: current.level.id }) : '', value2: exported.message }),
       );
     } catch (error) {
       status(error.message, true);
@@ -1016,7 +1006,7 @@ try {
         'workshop-expansions.json',
       );
       status(
-        `Original loaded expansion library prepared. ${exported.message} Current map edits are exported separately with Export map as expansion.`,
+        t("tools:originalLoadedExpansionLibraryPreparedCurrentMapEditsAreExported", { value1: exported.message }),
       );
     } catch (error) {
       status(error.message, true);
@@ -1027,33 +1017,33 @@ try {
     replayController?.abort();
     replayController = new AbortController();
     const signal = replayController.signal;
-    $('replay-result').textContent = '';
+    localizedText($('replay-result'), () =>'');
     try {
       const text = await readText();
-      if (text.length > MAX_REPLAY_BYTES) throw new Error('Replay exceeds the import budget.');
+      if (text.length > MAX_REPLAY_BYTES) throw new Error(t("tools:replayExceedsTheImportBudget"));
       if (epoch !== replayEpoch) return;
-      status('Verifying recorded simulation…');
+      status(t("tools:verifyingRecordedSimulation"));
       const result = await verifyReplayAsync(text, {
         signal,
         onProgress: (p) => {
           if (epoch === replayEpoch)
-            status(`Verifying recorded simulation… ${Math.round(p.fraction * 100)}%`);
+            status(t("tools:verifyingRecordedSimulation2", { value1: Math.round(p.fraction * 100) }));
         },
       });
       if (epoch !== replayEpoch) return;
-      $('replay-result').textContent = JSON.stringify(
+      localizedText($('replay-result'), () =>JSON.stringify(
         { match: result.match, diagnostics: result.diagnostics, actual: result.actual.summary },
         null,
         2,
-      );
+      ));
       status(
         result.match
-          ? 'Replay matches its full recorded simulation state.'
-          : 'Replay differs: check the reported state sections.',
+          ? t("tools:replayMatchesItsFullRecordedSimulationState")
+          : t("tools:replayDiffersCheckTheReportedStateSections"),
         !result.match,
       );
     } catch (error) {
-      if (epoch === replayEpoch) status(`Replay rejected: ${error.message}`, true);
+      if (epoch === replayEpoch) status(t("tools:replayRejected", { value1: error.message }), true);
     }
   }
   $('replay-file').onchange = () => {
@@ -1061,7 +1051,7 @@ try {
     $('replay-file').value = '';
     if (file)
       verifyText(() => {
-        if (file.size > MAX_REPLAY_BYTES) throw new Error('Replay exceeds the import budget.');
+        if (file.size > MAX_REPLAY_BYTES) throw new Error(t("tools:replayExceedsTheImportBudget"));
         return file.text();
       });
   };
@@ -1078,7 +1068,7 @@ try {
       resizePreview($('preview-width').value, $('preview-height').value);
     } catch (error) {
       $('preview-size-status').classList.add('error');
-      $('preview-size-status').textContent = `${error.message} The previous preview size is kept.`;
+      localizedText($('preview-size-status'), () =>t("tools:thePreviousPreviewSizeIsKept", { value1: error.message }));
     }
   };
   window.addEventListener('resize', fit);
@@ -1096,7 +1086,7 @@ try {
   fit();
   preview();
 } catch (error) {
-  status(`Playground could not load: ${error.message}`, true);
+  status(t("tools:playgroundCouldNotLoad", { value1: error.message }), true);
 } finally {
   document.querySelectorAll('[data-boot-inert]').forEach((element) => {
     element.inert = false;

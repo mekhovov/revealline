@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { localizedMessage, localizedText, t, localizedAttribute } from '../i18n/index.mjs';
 import {
   loadOptionalCatalog,
   prepareOptionalCatalog,
@@ -34,7 +36,7 @@ export function attachOptionalChaptersPanel({
   required(
     Array.isArray(sourceChapters) &&
       sourceChapters.length <= EXTERNAL_CHAPTER_LIMITS.catalogChoices,
-    'Too many trusted world choices.',
+    t("interface:tooManyTrustedWorldChoices"),
   );
   let catalog = null,
     disposed = false,
@@ -48,7 +50,7 @@ export function attachOptionalChaptersPanel({
   const node = (tag, id, text = '') => {
     const el = doc.createElement(tag);
     if (id) el.id = `optional-worlds-${id}`;
-    el.textContent = text;
+    localizedText(el, () =>text);
     return el;
   };
   const action = (id, label, fn) => {
@@ -61,11 +63,11 @@ export function attachOptionalChaptersPanel({
   const dialog = node('dialog', 'dialog');
   dialog.className = 'optional-worlds-dialog';
   dialog.setAttribute('aria-labelledby', 'optional-worlds-title');
-  const title = node('h2', 'title', 'More worlds'),
+  const title = node('h2', 'title', localizedMessage("interface:moreWorlds")),
     summary = node(
       'p',
       'summary',
-      'Browse original-picture chapters by theme and mode. Arcade uses continuous steering and contact pickups; Tactical chapters use equipment and route choices.',
+      localizedMessage("interface:browseOriginalPictureChaptersByThemeAndModeArcadeUses"),
     ),
     capacity = node('p', 'capacity'),
     cards = node('div', 'cards'),
@@ -73,25 +75,25 @@ export function attachOptionalChaptersPanel({
   summary.tabIndex = 0;
   summary.setAttribute('data-game-reading', '');
   summary.setAttribute('role', 'region');
-  summary.setAttribute('aria-label', 'About optional worlds');
+  localizedAttribute(summary, "aria-label", () => t("interface:aboutOptionalWorlds"));
   cards.className = 'optional-worlds-cards';
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
-  const reload = action('reload', 'Refresh available worlds', () => reloadCatalog()),
-    manage = action('manage', 'Manage packs & backups', () => {
+  const reload = action('reload', t("interface:refreshAvailableWorlds"), () => reloadCatalog()),
+    manage = action('manage', t("interface:managePacksBackups"), () => {
       close(false);
       onManage();
     }),
-    read = action('read', 'Read about worlds', () =>
-      onRead({ region: summary, origin: read, label: 'More worlds' }),
+    read = action('read', t("interface:readAboutWorlds"), () =>
+      onRead({ region: summary, origin: read, label: t("interface:moreWorlds") }),
     ),
-    cancel = action('cancel', 'Cancel download', cancelPending),
-    back = action('back', 'Back to main menu', () => close()),
-    topBack = action('top-back', 'Back', () => close()),
+    cancel = action('cancel', t("interface:cancelDownload"), cancelPending),
+    back = action('back', t("interface:backToMainMenu"), () => close()),
+    topBack = action('top-back', t("common:actions.back"), () => close()),
     top = node('div'),
     actions = node('div');
   top.className = 'optional-worlds-top';
-  topBack.setAttribute('aria-label', 'Back to main menu');
+  localizedAttribute(topBack, "aria-label", () => t("interface:backToMainMenu"));
   top.append(title, topBack);
   actions.className = 'optional-worlds-actions';
   actions.append(read, reload, manage, back);
@@ -118,21 +120,21 @@ export function attachOptionalChaptersPanel({
     filters.append(wrapper);
     return control;
   };
-  const themeFilter = select('theme', 'Theme', [
-      ['', 'All themes'],
+  const themeFilter = select('theme', t("interface:theme"), [
+      ['', t("interface:allThemes")],
       ...WORLD_THEMES,
-      ['other', 'Other themes'],
+      ['other', t("interface:otherThemes")],
     ]),
-    modeFilter = select('mode', 'Mode', [
-      ['', 'All modes'],
-      ['Arcade', 'Arcade'],
-      ['Tactical', 'Tactical'],
-      ['Other', 'Other / mixed'],
+    modeFilter = select('mode', t("interface:mode"), [
+      ['', t("interface:allModes")],
+      [t("interface:arcade"), t("interface:arcade")],
+      [t("interface:tactical"), t("interface:tactical")],
+      [t("interface:other"), t("interface:otherMixed")],
     ]),
-    previous = action('previous', 'Previous', () => movePage(-1)),
-    nextPage = action('next', 'Next', () => movePage(1));
-  previous.setAttribute('aria-label', 'Previous page');
-  nextPage.setAttribute('aria-label', 'Next page');
+    previous = action('previous', t("common:actions.previous"), () => movePage(-1)),
+    nextPage = action('next', t("common:actions.next"), () => movePage(1));
+  localizedAttribute(previous, "aria-label", () => t("interface:previousPage"));
+  localizedAttribute(nextPage, "aria-label", () => t("interface:nextPage"));
   pageStatus.setAttribute('role', 'status');
   pageStatus.setAttribute('aria-live', 'polite');
   pager.append(previous, pageStatus, nextPage);
@@ -161,23 +163,23 @@ export function attachOptionalChaptersPanel({
       chapter.controlId || (chapter === sourceChapter ? 'source' : `source-${chapter.id}`);
     const card = node('section', prefix === 'source' ? 'source-pilot' : `${prefix}-card`);
     card.className = `optional-world-card world-${chapter.themeId || 'other'}`;
-    const heading = node('h3', null, chapter.name);
+    const heading = node('h3', null, contentText(chapter, 'name'));
     const detail = node(
       'p',
       null,
-      chapter.description || 'Three maps with original reward pictures.',
+      contentText(chapter, 'description') || t("interface:threeMapsWithOriginalRewardPictures"),
     );
     const metadata = node(
       'p',
       null,
-      `${chapter.mode || 'Optional chapter'} · ${chapter.levels ?? 3} original pictures`,
+      t("gameplay:originalPictures", { value1: chapter.mode || t("interface:optionalChapter"), value2: chapter.levels ?? 3 }),
     );
     const recovery = node('details', `${prefix}-recovery`),
-      recoverySummary = node('summary', `${prefix}-recovery-summary`, 'Restore from files'),
+      recoverySummary = node('summary', `${prefix}-recovery-summary`, localizedMessage("interface:restoreFromFiles")),
       recoveryNote = node(
         'p',
         `${prefix}-recovery-note`,
-        `${chapter.sourceOnly === false ? 'Restore this chapter’s matching gameplay and original picture files.' : 'Source candidate: choose its generated pack.json and media.rlmedia pair.'} ${chapter.backupSupported ? 'Game-data backup keeps its descriptor; keep .rlmedia originals separately. Removal is not supported yet.' : 'Backups and removal are not supported yet.'} This does not migrate another edition. Installation keeps your current flight; Choose changes the mission.`,
+        t("gameplay:thisDoesNotMigrateAnotherEditionInstallationKeepsYourCurrent", { value1: chapter.sourceOnly === false ? t("interface:restoreThisChapterSMatchingGameplayAndOriginalPictureFiles") : t("interface:sourceCandidateChooseItsGeneratedPackJsonAndMediaRlmedia"), value2: chapter.backupSupported ? t("interface:gameDataBackupKeepsItsDescriptorKeepRlmediaOriginalsSeparately") : t("interface:backupsAndRemovalAreNotSupportedYet") }),
       );
     recovery.className = 'optional-world-recovery';
     recovery.append(recoverySummary);
@@ -202,10 +204,10 @@ export function attachOptionalChaptersPanel({
       return input;
     };
     card.append(heading, metadata, detail);
-    const pack = file('pack', 'Gameplay file (.json)', '.json,application/json');
+    const pack = file('pack', t("interface:gameplayFileJson"), '.json,application/json');
     const media = file(
       'media',
-      'Exact picture originals (.rlmedia)',
+      t("interface:exactPictureOriginalsRlmedia"),
       '.rlmedia,application/octet-stream',
     );
     const state = node('p', `${prefix}-state`);
@@ -218,27 +220,26 @@ export function attachOptionalChaptersPanel({
       state,
       result: { status: 'checking' },
     };
-    row.install = action(`${prefix}-install`, 'Install / recover exact pair', () =>
+    row.install = action(`${prefix}-install`, t("interface:installRecoverExactPair"), () =>
       run(
         async (signal, current) => {
           const packFile = pack.files?.[0],
             mediaFile = media.files?.[0];
           if (!packFile || !mediaFile)
-            throw new Error('Choose both exact chapter files before installing.');
-          status.textContent = 'Checking gameplay and original pictures…';
+            throw new Error(t("interface:chooseBothExactChapterFilesBeforeInstalling"));
+          localizedText(status, () =>t("interface:checkingGameplayAndOriginalPictures"));
           await chapter.install({ pack: packFile, media: mediaFile }, { signal });
           if (!current()) return;
           const next = await chapter.inspect({ signal });
           if (current()) {
             row.result = next;
-            status.textContent =
-              'Exact original pair committed. Your paused flight is kept. Choose the chapter separately; reload after recovery to restore the saved profile.';
+            localizedText(status, () =>t("interface:exactOriginalPairCommittedYourPausedFlightIsKeptChoose"));
           }
         },
         { origin: row.install, next: row.choose, fallback: recoverySummary },
       ),
     );
-    row.choose = action(`${prefix}-choose`, 'Choose chapter', () =>
+    row.choose = action(`${prefix}-choose`, t("interface:chooseChapter"), () =>
       run(
         async (signal, current) => {
           await chapter.choose({ signal });
@@ -253,18 +254,17 @@ export function attachOptionalChaptersPanel({
     if (chapter.download) {
       row.download = action(
         `${prefix}-download`,
-        `Download & install · ${(chapter.bytes / 1048576).toFixed(1)} MiB`,
+        t("gameplay:downloadInstallMib", { value1: (chapter.bytes / 1048576).toFixed(1) }),
         () =>
           run(
             async (signal, current) => {
-              status.textContent = `Downloading and checking ${chapter.name}…`;
+              localizedText(status, () =>t("gameplay:downloadingAndChecking", { value1: contentText(chapter, 'name') }));
               await chapter.download({ signal });
               if (!current()) return;
               const next = await chapter.inspect({ signal });
               if (current()) {
                 row.result = next;
-                status.textContent =
-                  'Exact original pair committed. Your paused flight is kept. Choose the chapter separately.';
+                localizedText(status, () =>t("interface:exactOriginalPairCommittedYourPausedFlightIsKeptChoose2"));
               }
             },
             { origin: row.download, next: row.choose, fallback: recoverySummary },
@@ -278,7 +278,7 @@ export function attachOptionalChaptersPanel({
   });
   async function inspectSource(signal, current) {
     if (!sourceRows.length) return;
-    if (current()) status.textContent = 'Checking installed pictures…';
+    if (current()) localizedText(status, () =>t("interface:checkingInstalledPictures"));
     for (const row of sourceRows) {
       if (!current()) return;
       let next;
@@ -319,26 +319,26 @@ export function attachOptionalChaptersPanel({
     }
     const usage = getUsage();
     const bytes = usage ? usage.packBytes + usage.indexBytes : measuredBytes;
-    capacity.textContent = `Installed packs: ${(bytes / 1048576).toFixed(1)} / ${PACK_LIMITS.libraryBytes / 1048576} MiB · ${library.packs.length} / ${PACK_LIMITS.installed} packs. Space is shared with your other chapters. Nothing is removed automatically.`;
+    localizedText(capacity, () =>t("gameplay:installedPacksMibPacksSpaceIsSharedWithYourOther", { value1: (bytes / 1048576).toFixed(1), value2: PACK_LIMITS.libraryBytes / 1048576, value3: library.packs.length, value4: PACK_LIMITS.installed }));
     for (const [id, row] of rows) {
       const item = catalog?.packs.find((entry) => entry.id === id),
         available = installed(item);
       const existing = library.packs.find((pack) => pack.id === id);
       const conflict = existing && matches.get(existing)?.get(item.normalizedSha256) === false;
       row.install.disabled = busy || !!existing;
-      row.install.textContent = available
-        ? 'Installed on this device'
+      localizedText(row.install, () =>available
+        ? t("interface:installedOnThisDevice")
         : conflict
-          ? 'Different edition installed'
+          ? t("interface:differentEditionInstalled")
           : existing
-            ? 'Checking installed edition…'
-            : `Install · ${(item.bytes / 1048576).toFixed(1)} MiB`;
+            ? t("interface:checkingInstalledEdition")
+            : t("gameplay:installMib", { value1: (item.bytes / 1048576).toFixed(1) }));
       row.choose.disabled = busy || !available;
-      row.state.textContent = available
-        ? 'Installed · available without another download'
+      localizedText(row.state, () =>available
+        ? t("interface:installedAvailableWithoutAnotherDownload")
         : conflict
-          ? 'This ID contains different artwork/content. Use Manage packs & backups before installing this original.'
-          : 'Optional download · choose Install when connected';
+          ? t("interface:thisIdContainsDifferentArtworkContentUseManagePacksBackups")
+          : t("interface:optionalDownloadChooseInstallWhenConnected"));
     }
     for (const row of sourceRows) {
       const sourceState = row.result;
@@ -346,13 +346,12 @@ export function attachOptionalChaptersPanel({
       if (row.download) row.download.disabled = row.install.disabled;
       row.choose.disabled = busy || sourceState.status !== 'installed';
       row.pack.disabled = row.media.disabled = busy;
-      row.state.textContent =
-        sourceState.status === 'installed'
-          ? 'Installed · ready to choose'
+      localizedText(row.state, () =>sourceState.status === 'installed'
+          ? t("interface:installedReadyToChoose")
           : sourceState.status === 'absent'
-            ? 'Not installed'
+            ? t("interface:notInstalled")
             : sourceState.message ||
-              `Stored state: ${sourceState.status}. Recover the exact files before choosing.`;
+              t("gameplay:storedStateRecoverTheExactFilesBeforeChoosing", { value1: sourceState.status }));
     }
     for (const row of installedRows.values())
       row.choose.disabled = busy || !library.packs.includes(row.pack);
@@ -373,7 +372,7 @@ export function attachOptionalChaptersPanel({
       ...sourceRows.map((row) => ({
         ...row,
         themeId: themeFor(row.chapter.themeId),
-        mode: ['Arcade', 'Tactical'].includes(row.chapter.mode) ? row.chapter.mode : 'Other',
+        mode: ['Arcade', 'Tactical'].includes(row.chapter.mode) ? row.chapter.mode : t("interface:other"),
       })),
       ...[...installedRows.values()].map((row) => ({
         ...row,
@@ -396,14 +395,14 @@ export function attachOptionalChaptersPanel({
       row.card.hidden = !view.visible.includes(row.key);
       row.card.classList.toggle('optional-world-current', row.key === view.pinned);
     }
-    pageStatus.textContent = `Page ${view.page + 1} of ${view.pages} · ${view.total} ${view.total === 1 ? 'chapter' : 'chapters'}`;
+    localizedText(pageStatus, () =>t("gameplay:pageOf", { value1: view.page + 1, value2: view.pages, value3: view.total, value4: view.total === 1 ? 'chapter' : 'chapters' }));
     previous.disabled = view.page === 0;
     nextPage.disabled = view.page === view.pages - 1;
     const held = entries.find((entry) => entry.key === view.pinned);
     operationStatus.hidden = !held;
-    operationStatus.textContent = held
-      ? `${busy ? 'Working on' : 'Current chapter'}: ${held.chapter?.name ?? held.item?.name ?? held.pack.name}. Kept visible while you browse.`
-      : '';
+    localizedText(operationStatus, () =>held
+      ? t("gameplay:keptVisibleWhileYouBrowse", { value1: busy ? t("interface:workingOn") : t("interface:currentChapter"), value2: contentText(held.chapter, 'name') ?? contentText(held.item, 'name') ?? contentText(held.pack, 'name') })
+      : '');
   }
   function movePage(delta) {
     const origin = doc.activeElement;
@@ -444,19 +443,19 @@ export function attachOptionalChaptersPanel({
           detail = node(
             'p',
             null,
-            `${legacyWorldMode(item.id)} · ${item.levels} original pictures`,
+            t("gameplay:originalPictures", { value1: legacyWorldMode(item.id), value2: item.levels }),
           ),
-          description = node('p', `description-${item.id}`, item.description),
+          description = node('p', `description-${item.id}`, contentText(item, 'description')),
           state = node('p');
         row = { key: `legacy:${item.id}`, item, card, heading, detail, description, state };
-        row.install = action(`install-${item.id}`, 'Install', () => installItem(row.item));
-        row.choose = action(`choose-${item.id}`, 'Choose chapter', () => chooseItem(row.item));
+        row.install = action(`install-${item.id}`, t("interface:install"), () => installItem(row.item));
+        row.choose = action(`choose-${item.id}`, t("interface:chooseChapter"), () => chooseItem(row.item));
         card.append(heading, detail, description, state, row.install, row.choose);
         rows.set(item.id, row);
       }
       row.item = item;
-      row.heading.textContent = item.name;
-      row.description.textContent = item.description;
+      localizedText(row.heading, () =>item.name);
+      localizedText(contentText(row, 'description'), () =>contentText(item, 'description'));
       cards.append(row.card);
     }
     for (const row of sourceRows) cards.append(row.card);
@@ -476,7 +475,7 @@ export function attachOptionalChaptersPanel({
         const card = node('section', `installed-${pack.id}`);
         card.className = 'optional-world-card';
         row = { key: `installed:${pack.id}`, pack, card };
-        row.choose = action(`installed-choose-${pack.id}`, 'Choose installed chapter', () =>
+        row.choose = action(`installed-choose-${pack.id}`, t("interface:chooseInstalledChapter"), () =>
           run(
             async (signal, current) => {
               const selected = await chooseInstalled(pack, { signal });
@@ -489,11 +488,11 @@ export function attachOptionalChaptersPanel({
           ),
         );
         card.append(
-          node('h3', null, pack.name),
+          node('h3', null, contentText(pack, 'name')),
           node(
             'p',
             null,
-            `${installedWorldMode(pack)} · installed on this device. Open the Mission brief for its rules and equipment.`,
+            t("gameplay:installedOnThisDeviceOpenTheMissionBriefForIts", { value1: installedWorldMode(pack) }),
           ),
           row.choose,
         );
@@ -539,8 +538,7 @@ export function attachOptionalChaptersPanel({
     pending = null;
     busy = false;
     if (wasBusy)
-      status.textContent =
-        'Pending download cancelled. Completed installs remain available; your flight is kept.';
+      localizedText(status, () =>t("interface:pendingDownloadCancelledCompletedInstallsRemainAvailableYourFlightIs"));
     refresh();
     if (restoreFocus && wasBusy) returnFocus(focusPlan, false, fromCancel);
   }
@@ -565,10 +563,9 @@ export function attachOptionalChaptersPanel({
       succeeded = true;
     } catch (error) {
       if (current())
-        status.textContent =
-          error?.name === 'AbortError'
-            ? 'Download cancelled. Your installed chapters are kept.'
-            : `${error.message || error} Nothing was removed. Use Refresh or Install to retry.`;
+        localizedText(status, () =>error?.name === 'AbortError'
+            ? t("interface:downloadCancelledYourInstalledChaptersAreKept")
+            : t("gameplay:nothingWasRemovedUseRefreshOrInstallToRetry", { value1: error.message || error }));
     } finally {
       if (current()) {
         pending = null;
@@ -581,12 +578,12 @@ export function attachOptionalChaptersPanel({
   }
   async function reloadCatalog() {
     return run(async (signal, current) => {
-      status.textContent = 'Checking installed chapters…';
+      localizedText(status, () =>t("interface:checkingInstalledChapters"));
       if (catalog) await inspectInstalled(signal, catalog);
       await inspectSource(signal, current);
       if (!current()) return;
       refresh();
-      status.textContent = 'Reading the optional chapter list…';
+      localizedText(status, () =>t("interface:readingTheOptionalChapterList"));
       let next = catalog,
         failure = null;
       try {
@@ -600,20 +597,20 @@ export function attachOptionalChaptersPanel({
       if (!current()) return;
       catalog = next;
       render();
-      status.textContent = failure
-        ? `Online list unavailable: ${failure.message || failure}. Installed and previously loaded chapters remain available. Refresh to retry.`
-        : 'Installation keeps your current flight. Choose chapter changes the selected mission.';
+      localizedText(status, () =>failure
+        ? t("gameplay:onlineListUnavailableInstalledAndPreviouslyLoadedChaptersRemainAvailable", { value1: failure.message || failure })
+        : t("interface:installationKeepsYourCurrentFlightChooseChapterChangesTheSelected"));
     });
   }
   async function installItem(item) {
     await run(
       async (signal, current) => {
-        status.textContent = `Downloading and checking ${item.name}…`;
+        localizedText(status, () =>t("gameplay:downloadingAndChecking", { value1: item.name }));
         await install(item, { signal });
         await inspectInstalled(signal);
         if (current()) {
           refresh();
-          status.textContent = `${item.name} installed. Your paused flight is kept. Choose chapter when ready to change missions.`;
+          localizedText(status, () =>t("gameplay:installedYourPausedFlightIsKeptChooseChapterWhenReady", { value1: item.name }));
         }
       },
       { origin: rows.get(item.id)?.install, next: rows.get(item.id)?.choose },
@@ -642,14 +639,13 @@ export function attachOptionalChaptersPanel({
     if (!catalog) await reloadCatalog();
     else
       await run(async (signal, current) => {
-        if (sourceRows.length) status.textContent = 'Checking installed pictures…';
+        if (sourceRows.length) localizedText(status, () =>t("interface:checkingInstalledPictures"));
         if (catalog) await inspectInstalled(signal);
         await inspectSource(signal, current);
         if (!current()) return;
         refresh();
         if (sourceRows.length)
-          status.textContent =
-            'Choose a world to install. Installation keeps your current flight; Choose chapter changes the selected mission.';
+          localizedText(status, () =>t("interface:chooseAWorldToInstallInstallationKeepsYourCurrentFlight"));
       });
   }
   function close(notify = true) {
