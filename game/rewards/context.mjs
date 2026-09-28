@@ -1,6 +1,8 @@
+import { completionLearningReference } from './learning.mjs';
+
 /** Translate only selected authored missions from the Journey authority. Skips,
  * practice results and unknown mission IDs never become reward evidence. */
-export function rewardContext(provider, bindings, profile) {
+export function rewardContext(provider, bindings, profile, acceptedLearning = []) {
   const clears = {};
   const clearAlternatives = {};
   for (const mission of bindings) {
@@ -33,13 +35,28 @@ export function rewardContext(provider, bindings, profile) {
       }
     }
   }
+  // Only the lesson host's replay-verified projection is passed here. The exact
+  // selected lesson and mission must still match; raw attempts never qualify.
+  const selectedMissions = new Set(bindings.map((mission) => mission.missionId));
+  const selectedLessons = (provider.lessons ?? [])
+    .filter(
+      (lesson) =>
+        provider.selection.edition.campaignIds.includes(lesson.campaignId) &&
+        selectedMissions.has(lesson.missionId),
+    )
+    .map(completionLearningReference);
+  const learning = acceptedLearning.filter((record) =>
+    selectedLessons.some((lesson) =>
+      Object.entries(lesson).every(([key, value]) => record[key] === value),
+    ),
+  );
   return {
     editionId: provider.editionId,
     brandId: provider.selection.brand.id,
     campaignIds: provider.selection.edition.campaignIds,
     clears,
     ...(Object.keys(clearAlternatives).length ? { clearAlternatives } : {}),
-    learning: [],
+    learning,
     mastery: [],
   };
 }

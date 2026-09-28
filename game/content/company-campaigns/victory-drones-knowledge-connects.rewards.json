@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-knowledge-connects-key-v1",
+          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
         },
         "id": "victory-drones-knowledge-connects-01-image",
         "locales": {
           "en": {
-            "alt": "A Learning Compass — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
             "title": "A Learning Compass"
           },
           "uk": {
-            "alt": "Навчальний компас — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
             "title": "Навчальний компас"
           }
         },
@@ -74,7 +74,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "victory-drones-knowledge-connects-01", "kind": "mission" }
   },
   {
@@ -89,17 +89,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-knowledge-connects-key-v1",
+          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
         },
         "id": "victory-drones-knowledge-connects-02-image",
         "locales": {
           "en": {
-            "alt": "Two Ways to Explain — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
             "title": "Two Ways to Explain"
           },
           "uk": {
-            "alt": "Два способи пояснити — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
             "title": "Два способи пояснити"
           }
         },
@@ -146,7 +146,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "victory-drones-knowledge-connects-02", "kind": "mission" }
   },
   {
@@ -167,17 +167,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-knowledge-connects-key-v1",
+          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
         },
         "id": "victory-drones-knowledge-connects-03-image",
         "locales": {
           "en": {
-            "alt": "Ask and Verify — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
             "title": "Ask and Verify"
           },
           "uk": {
-            "alt": "Запитайте й перевірте — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
             "title": "Запитайте й перевірте"
           }
         },
@@ -224,7 +224,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "victory-drones-knowledge-connects-03", "kind": "mission" }
   },
   {
@@ -245,17 +245,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-knowledge-connects-key-v1",
+          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
         },
         "id": "victory-drones-knowledge-connects-04-image",
         "locales": {
           "en": {
-            "alt": "Room for Questions — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
             "title": "Room for Questions"
           },
           "uk": {
-            "alt": "Місце для запитань — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
             "title": "Місце для запитань"
           }
         },
@@ -302,7 +302,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "victory-drones-knowledge-connects-04", "kind": "mission" }
   },
   {
@@ -323,17 +323,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-knowledge-connects-key-v1",
+          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
         },
         "id": "victory-drones-knowledge-connects-05-image",
         "locales": {
           "en": {
-            "alt": "Compare Before Concluding — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
             "title": "Compare Before Concluding"
           },
           "uk": {
-            "alt": "Порівняйте перед висновком — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
             "title": "Порівняйте перед висновком"
           }
         },
@@ -380,7 +380,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "victory-drones-knowledge-connects-05", "kind": "mission" }
   },
   {
@@ -401,17 +401,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-knowledge-connects-key-v1",
+          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
         },
         "id": "victory-drones-knowledge-connects-06-image",
         "locales": {
           "en": {
-            "alt": "Teach It Forward — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
             "title": "Teach It Forward"
           },
           "uk": {
-            "alt": "Поясніть наступному — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
             "title": "Поясніть наступному"
           }
         },
@@ -458,7 +458,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "victory-drones-knowledge-connects-06", "kind": "mission" }
   },
   {
@@ -503,17 +503,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-knowledge-connects-key-v1",
+          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
         },
         "id": "victory-drones-knowledge-connects-01-image",
         "locales": {
           "en": {
-            "alt": "A Learning Compass — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
             "title": "A Learning Compass"
           },
           "uk": {
-            "alt": "Навчальний компас — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
             "title": "Навчальний компас"
           }
         },
@@ -521,17 +521,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-knowledge-connects-key-v1",
+          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
         },
         "id": "victory-drones-knowledge-connects-02-image",
         "locales": {
           "en": {
-            "alt": "Two Ways to Explain — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
             "title": "Two Ways to Explain"
           },
           "uk": {
-            "alt": "Два способи пояснити — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
             "title": "Два способи пояснити"
           }
         },
@@ -539,17 +539,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-knowledge-connects-key-v1",
+          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
         },
         "id": "victory-drones-knowledge-connects-03-image",
         "locales": {
           "en": {
-            "alt": "Ask and Verify — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
             "title": "Ask and Verify"
           },
           "uk": {
-            "alt": "Запитайте й перевірте — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
             "title": "Запитайте й перевірте"
           }
         },
@@ -557,17 +557,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-knowledge-connects-key-v1",
+          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
         },
         "id": "victory-drones-knowledge-connects-04-image",
         "locales": {
           "en": {
-            "alt": "Room for Questions — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
             "title": "Room for Questions"
           },
           "uk": {
-            "alt": "Місце для запитань — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
             "title": "Місце для запитань"
           }
         },
@@ -575,17 +575,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-knowledge-connects-key-v1",
+          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
         },
         "id": "victory-drones-knowledge-connects-05-image",
         "locales": {
           "en": {
-            "alt": "Compare Before Concluding — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
             "title": "Compare Before Concluding"
           },
           "uk": {
-            "alt": "Порівняйте перед висновком — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
             "title": "Порівняйте перед висновком"
           }
         },
@@ -593,17 +593,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-knowledge-connects-key-v1",
+          "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
         },
         "id": "victory-drones-knowledge-connects-06-image",
         "locales": {
           "en": {
-            "alt": "Teach It Forward — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
             "title": "Teach It Forward"
           },
           "uk": {
-            "alt": "Поясніть наступному — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
             "title": "Поясніть наступному"
           }
         },
@@ -615,6 +615,7 @@
           "en": { "title": "Explore the official source" },
           "uk": { "title": "Відкрити офіційне джерело" }
         },
+        "qr": true,
         "type": "url",
         "url": "https://victory-drones.com/"
       }
@@ -673,7 +674,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "victory-drones-knowledge-connects", "kind": "campaign" }
   }
 ]
