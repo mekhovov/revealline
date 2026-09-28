@@ -12,12 +12,14 @@ retains its compatibility, artwork and release requirements.
   `7138e7b6187bf69991d50313c3f9ac1620427778`. This is verified version/source identity,
   not another exhaustive player-flow qualification.
 - Fresh main is `a5859df784314556072f9215f9b293962e4f2ea4`. The canonical publisher
-  has frozen **v0.142.2** from that source and created its tag and unpublished
-  draft after independent review. Verified small evidence uploads/readback are in
-  progress. Publishing, selector admission, Pages and public play remain separate.
+  has frozen and published **v0.142.2** on GitHub at
+  `2026-09-28T23:25:58Z` after upload review. The ordinary Pages URL still points
+  to v0.142.1 at this check. Selector admission, deployment and public player
+  acceptance remain separate from GitHub publication.
 - [PR761](https://github.com/mekhovov/revealline/pull/761) is a draft source batch,
-  not a public release. Eleven checkpoints are pushed through
-  `5253247e774a2bd5cb7a6ddc0bfed8c0311095e9`; batch 12 extends that input.
+  not a public release. Batch 12 is pushed at
+  `2192818e7ec19c70cc76465ab09d608f0d6cf6d0`; batch 13 extends that input
+  with paused optional-patrol guidance and a complete production-review map.
   It conflicts with newer main and needs publisher-owned reconciliation.
   Do not rebase the shared worker branch or allocate a competing version.
 - Compatible features continue in one PR, with separate evidence and reversible
@@ -51,21 +53,30 @@ counterplay, and enlarged moving-part inspection needs independent Idle/Cruise/
 Boost/Slow response without moving the arena. See [its evidence](verification/actor-batch-12/README.md)
 for failures, corrections, counts, browser scope and remaining acceptance.
 
+Batch 13 extends paused Field details with optional patrol counts, locked warning
+time, recovery and separately live projectiles. It preserves running event costs,
+missing/disabled output, explicit unavailable states and read-only ownership.
+Independent review caught and corrected misleading terminal all-removed copy.
+The actual source model/bridge cohort passes 49/49 and the application-host cohort
+15/15; native keyboard review returns to the opener while staying paused.
+See [batch 13 evidence](verification/actor-batch-13/README.md). This closes that
+bounded Details gap, not full Field Guide or human encounter qualification.
+
 ## Remaining work and planning ranges
 
 Ranges are effort after each item starts, not publication promises. Independent
 tracks run concurrently. Reconciliation, failed gates and publisher availability
 add delivery time; dates cannot be claimed from queue position alone.
 
-| Priority      | Remaining acceptance                                                                                                                       | Effort range                                          |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------- |
-| C3            | Complete native roster/enemy/Team state review; adopt exact new production revisions; check all applicable modes and preserved history     | 3–5 days                                              |
-| C4            | Finish optional counterplay/Field Guide and paused details; qualify full missions/combinations, fairness, difficulty and replay identities | 3–5 days                                              |
-| C5            | Finish pixel-grid/cultural/contrast review, approved mission bindings and complete community/edition cohorts                               | 2–4 days per cohort                                   |
-| C6            | Complete state/rig tooling, artwork-policy adoption, exact themed restoration and real community workflow                                  | 2–3 days, parallel                                    |
-| C0/C1 support | Regenerate affected coverage on integrated source; close cohort-specific rig, bounds, frame cost and history checks                        | Within each batch; ½–1 day for broader baseline later |
-| C7 / UX6      | Every current binding and player journey, terrain/equipment/effects, offline/performance/accessibility and device checks                   | 4–7 days plus devices                                 |
-| C2 — last     | Three-mission experience benchmark, audio/haptics comparison and two consented rounds with six players                                     | 2–3 days plus participants/listening                  |
+| Priority      | Remaining acceptance                                                                                                                   | Effort range                                          |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| C3            | Complete native roster/enemy/Team state review; adopt exact new production revisions; check all applicable modes and preserved history | 3–5 days                                              |
+| C4            | Finish optional Field Guide and cross-mode counterplay; qualify full missions/combinations, fairness, difficulty and replay identities | 3–5 days                                              |
+| C5            | Finish pixel-grid/cultural/contrast review, approved mission bindings and complete community/edition cohorts                           | 2–4 days per cohort                                   |
+| C6            | Complete state/rig tooling, artwork-policy adoption, exact themed restoration and real community workflow                              | 2–3 days, parallel                                    |
+| C0/C1 support | Regenerate affected coverage on integrated source; close cohort-specific rig, bounds, frame cost and history checks                    | Within each batch; ½–1 day for broader baseline later |
+| C7 / UX6      | Every current binding and player journey, terrain/equipment/effects, offline/performance/accessibility and device checks               | 4–7 days plus devices                                 |
+| C2 — last     | Three-mission experience benchmark, audio/haptics comparison and two consented rounds with six players                                 | 2–3 days plus participants/listening                  |
 
 The wider programme still includes complete map/theme consistency, campaign-specific
 offline dependencies, backup/history recovery, community production and independently
@@ -79,9 +90,16 @@ is added to this bounded actor batch.
 1. **Release integration:** PR761 is conflicting and unversioned as a publisher
    input. Its inherited package version is not a release reservation. One owner
    must reconcile it onto accepted main and qualify the exact integrated source.
-2. **Production review:** changed Team recipe sources require new reviewed
-   successors. The existing two production-review failures remain blocking;
-   do not edit old review fingerprints or weaken assertions to obtain green.
+2. **Production review:** the retained 6-pass/2-fail guard stops at Team and is
+   not a complete mismatch inventory. Read-only dependency hashing identifies
+   **67 existing slots** requiring scoped successor review before full producer
+   adoption: motion 7, effects 10, Team 37, equipment 5 and audio 8. UI and screen
+   fingerprints still match. Equipment PNGs stay exact; their consumer changed.
+   Keep existing approved imagery and the independent fpv62 actor lease for the
+   smallest renderer continuation; native body adoption remains separate.
+   Recalculate this inventory on integrated source, preserve fpv93 and earlier
+   authorities, and append exact reviewed successors. Never edit old fingerprints
+   or weaken assertions. See the [adoption audit](verification/actor-batch-13/production-adoption-audit.md).
 3. **Artwork quality:** generated cultural scenes remain candidates. Native
    export and valid hashes establish preparation, not consistent pixel clusters,
    museum accuracy, composition over gameplay, permission or production approval.

@@ -142,6 +142,22 @@ the deferred C2 pilot does not block these independent changes.
 
 ## Maintenance prompt
 
+Paused Field details reads the existing strict combat projection and groups live
+scouts, sentry warnings, recovery and shots. Running event collection omits this
+extra geometry read. Recovery does not clear an earlier projectile; freeze holds
+patrol and projectile time. Invalid active data must say guidance is unavailable,
+not zero hazards. No optional section is added for absent or disabled combat.
+Terminal retained records use ended copy, including when the winning enclosure
+removed every actor. Exact known combat events receive historical urgency only;
+new unknown types remain visible as unknown effects.
+
+The actual ordinary Details opener retains its existing `pause(true)` save:
+only `savedAt` refreshes, with the same replay and continuation. Do not claim
+that opening is write-free. Reading, scrolling and Back add no writes; reward-free
+practice remains write-free throughout. Native keyboard evidence, model clocks,
+injected freeze-state tests and physical-device checks are separate categories.
+See [batch 13](verification/actor-batch-13/README.md).
+
 “Compile explicit optional-on and optional-off editions without downgrading the
 current actor catalogue. Through the actual Solo painter, compare absent/off
 commands, exercise pressure and sentry locks together, pause/reduced effects,

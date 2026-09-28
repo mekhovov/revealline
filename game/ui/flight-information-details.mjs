@@ -1,5 +1,6 @@
-import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
+import { t, localizedText, localizedMessage, formatNumber } from '../i18n/index.mjs';
 import { enemyCatalogRecord } from '../enemy-catalog.mjs';
+import { FIXED_DT } from '../core/registry.mjs';
 
 const roleName = (type) => enemyCatalogRecord(type)?.label || t('interface:unfamiliarEnemy');
 const sentence = (text) => (/[.!?]$/.test(text) ? text : `${text}.`);
@@ -90,6 +91,43 @@ const laneState = (value) => {
     }[value.phase] || t('interface:watchTheHighlightedLane')
   );
 };
+// Consume only the existing owned combat projection. Counts describe this paused
+// view; a recovering body does not imply that its earlier shot has disappeared.
+function optionalPatrolDetails(combat) {
+  if (!combat) return null;
+  const text = (key, values) => t(`interface:optionalPatrolDetails.${key}`, values),
+    title = localizedMessage('interface:optionalPatrolDetails.title');
+  if (!combat.valid) return section('optional-patrols', title, [text('unavailable')]);
+  const ended = ['won', 'lost'].includes(combat.status);
+  if (!combat.actors.length)
+    return combat.eliminations.length
+      ? section('optional-patrols', title, [text(ended ? 'ended' : 'removed')])
+      : null;
+  const scouts = combat.actors.filter((actor) => actor.role === 'scout').length,
+    sentries = combat.actors.length - scouts,
+    warning = combat.actors.filter((actor) => actor.phase === 'warning'),
+    recovering = combat.actors.filter((actor) => actor.phase === 'recovery').length,
+    lines = [text('counts', { scouts, sentries })];
+  if (ended) lines.push(text('ended'));
+  else {
+    if (warning.length) {
+      // Round upward to a tenth: a positive remaining tick must not read as zero.
+      const seconds = formatNumber(
+        Math.ceil(Math.min(...warning.map((actor) => actor.warningTicks)) * FIXED_DT * 10) / 10,
+        { minimumFractionDigits: 1, maximumFractionDigits: 1 },
+      );
+      lines.push(
+        text(combat.frozen ? 'warningHeld' : 'warning', { warnings: warning.length, seconds }),
+      );
+    }
+    if (recovering) lines.push(text('recovery', { recovering }));
+    if (combat.projectiles.length) lines.push(text('shots', { shots: combat.projectiles.length }));
+    if (combat.frozen) lines.push(text('frozen'));
+    lines.push(text(sentries ? 'counterplay' : 'scoutCounterplay'));
+  }
+  return section('optional-patrols', title, lines);
+}
+
 /** Full paused player information. Typed diagnostic details remain in the read-only source. */
 export function flightDetailsModel(information, context) {
   const s = information?.snapshot,
@@ -204,6 +242,8 @@ export function flightDetailsModel(information, context) {
         context.actorRoles.map((r) => `${r.count} × ${roleName(r.type)}`),
       ),
     );
+  const patrols = optionalPatrolDetails(s.combat);
+  if (patrols) parts.push(patrols);
   if (s.laneBosses.length)
     parts.push(
       section(
