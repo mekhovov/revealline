@@ -4,6 +4,7 @@ export const DISCOVERY_EXPLORATION_RECIPE = Object.freeze({
   id: 'inspect-compare-atlas',
   revision: 1,
 });
+export const DISCOVERY_DIAGRAM_RECIPE = Object.freeze({ id: 'inspect-image-atlas', revision: 1 });
 const SESSION = 'revealline-exploration-session.v1';
 const freeze = (value) => {
   if (value && typeof value === 'object') {
@@ -46,10 +47,15 @@ export function validateExplorationRecipe(input) {
     maxArray: 12,
     maxString: 2048,
   });
-  exactKeys(value, ['id', 'revision', 'cards', 'predictions', 'sources'], 'exploration recipe');
+  const diagram = value.id === DISCOVERY_DIAGRAM_RECIPE.id;
+  exactKeys(
+    value,
+    ['id', 'revision', 'cards', 'predictions', 'sources', ...(diagram ? ['diagram'] : [])],
+    'exploration recipe',
+  );
   required(
-    value.id === DISCOVERY_EXPLORATION_RECIPE.id &&
-      value.revision === DISCOVERY_EXPLORATION_RECIPE.revision,
+    [DISCOVERY_EXPLORATION_RECIPE.id, DISCOVERY_DIAGRAM_RECIPE.id].includes(value.id) &&
+      value.revision === 1,
     'Unsupported exploration recipe revision.',
   );
   list(value.sources, 12, 'sources');
@@ -100,6 +106,31 @@ export function validateExplorationRecipe(input) {
     }
   }
   const cardIds = new Set(value.cards.map((card) => card.id));
+  if (diagram) {
+    exactKeys(value.diagram, ['asset', 'locales', 'hotspots'], 'exploration diagram');
+    exactKeys(value.diagram.asset, ['assetId', 'sha256'], 'diagram image');
+    required(
+      stableId(value.diagram.asset.assetId) && /^[a-f0-9]{64}$/.test(value.diagram.asset.sha256),
+      'Diagram images require exact asset pins.',
+    );
+    locales(value.diagram.locales, ['alt', 'caption']);
+    list(value.diagram.hotspots, 8, 'diagram hotspots', 1);
+    const located = new Set();
+    for (const hotspot of value.diagram.hotspots) {
+      exactKeys(hotspot, ['cardId', 'x', 'y'], 'diagram hotspot');
+      required(
+        cardIds.has(hotspot.cardId) && !located.has(hotspot.cardId),
+        'Diagram hotspots require unique known cards.',
+      );
+      required(
+        ['x', 'y'].every(
+          (key) => Number.isFinite(hotspot[key]) && hotspot[key] >= 0 && hotspot[key] <= 1,
+        ),
+        'Diagram coordinates must be normalized to 0–1.',
+      );
+      located.add(hotspot.cardId);
+    }
+  }
   list(value.predictions, 4, 'predictions');
   unique(value.predictions, 'prediction');
   for (const prediction of value.predictions) {
@@ -145,7 +176,11 @@ export function validateExplorationPayload(input) {
 }
 
 export function explorationAssetReferences(input) {
-  return validateExplorationRecipe(input).cards.flatMap((card) => (card.asset ? [card.asset] : []));
+  const recipe = validateExplorationRecipe(input);
+  return [
+    ...(recipe.diagram ? [recipe.diagram.asset] : []),
+    ...recipe.cards.flatMap((card) => (card.asset ? [card.asset] : [])),
+  ];
 }
 
 export function createExplorationState(input) {
