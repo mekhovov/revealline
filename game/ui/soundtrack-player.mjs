@@ -558,7 +558,17 @@ export function createSoundtrackPlayer({
     });
     deck.media.preload = 'auto';
     deck.media.loop = false;
-    if (track.kind === 'remote') deck.media.crossOrigin = 'anonymous';
+    if (track.kind === 'remote') {
+      // Release assets stream through a signed redirect without CORS response
+      // headers. The trusted catalogue still pins repository, path and hash.
+      if (
+        track.delivery?.type !== 'external-url' &&
+        track.url.startsWith('https://github.com/mekhovov/revealline-soundtracks/releases/')
+      ) {
+        deck.media.removeAttribute?.('crossorigin');
+        deck.media.crossOrigin = null;
+      } else deck.media.crossOrigin = 'anonymous';
+    }
     deck.media.src = deck.url;
     deck.media.load();
     gains();
@@ -1149,10 +1159,10 @@ export function createSoundtrackPlayer({
       t('interface:invalidOnlineSoundtrackStartRecording'),
     );
     const owned = boundedJSON(value, {
-      maxBytes: 512 * 1024,
-      maxNodes: 10000,
+      maxBytes: 1024 * 1024,
+      maxNodes: 65536,
       maxDepth: 5,
-      maxArray: 256,
+      maxArray: 512,
       maxString: 2048,
     });
     required(
@@ -1170,7 +1180,8 @@ export function createSoundtrackPlayer({
           [true, false, null, 'unknown'].includes(track.contentId) &&
           typeof track.recordingModeEligible === 'boolean' &&
           (!track.recordingModeEligible || track.contentId === false) &&
-          onlineSoundtrackRecordingURL(track.url, track.sha256) &&
+          (track.delivery?.type === 'external-url' ||
+            onlineSoundtrackRecordingURL(track.url, track.sha256)) &&
           !ids.has(track.id),
         t('interface:invalidOnlineSoundtrackRecording'),
       );

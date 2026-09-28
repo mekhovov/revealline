@@ -178,8 +178,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: 'f6f89072a29833af077a92f2e2a0eb4174e78edc0f03be1eb04f71daf467967c',
+    sha256: '2bf54d1cf0ee90e36284f3782273a0cb62d49a75954b6d9b50b17b5203cdfc87',
     evidence: [
+      'Scoped canonical soundtrack main-rebase continuation: docs/verification/canonical-soundtrack-main-rebase-2026-09-28/review.json sha256:243ab86179b9bc9d2b2094cd6bacd4f1423659d032b99aec4715f4ebd4d9051f; exact26 inputs sha256:2bf54d1cf0ee90e36284f3782273a0cb62d49a75954b6d9b50b17b5203cdfc87. Four soundtrack catalogue, panel and transport inputs change; the canonical 260-entry catalogue and complete bounded 512-recording playback queue fit their explicit ceilings, and all eight existing procedural recipes and payloads remain unchanged. Exact-head tests, frozen/public, listening and physical-device acceptance remain separate.',
       'Scoped company-startup continuation: docs/verification/v0.141.7-company-startup-audio-continuation/review.json sha256:1d3660001a2ebe7d4d2daf5e68ab745e9e902d5c2f1757a398439de3caedccad; exact26 inputs sha256:f6f89072a29833af077a92f2e2a0eb4174e78edc0f03be1eb04f71daf467967c. Eight existing procedural recipes only; company package admission changes startup timing and consent, not recipe identities, audio routing or payloads. Immutable predecessors retained; final frozen/public/listening/device acceptance remains separate.',
       'Scoped cumulative continuation: docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json sha256:067305195ea075c35f14402d970fb5d2819044720875374b157c9431d9c5d820; exact26 ordered audio inputs sha256:86e0d8771d9ea29e9628e1fd5f779d2d997d54799d71340f7a27319cd6e7b554. Eight existing procedural recipes only; retained records/payloads unchanged. Exact source and child receipts are scoped in the record; final hosted, frozen/public and listening/device acceptance remain separate.',
       'v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.',
@@ -238,6 +239,21 @@ export function verifyFieldKitCompanyAudioContinuationReview(
   );
 }
 
+export function verifyFieldKitCanonicalSoundtrackReview(
+  currentBytes,
+  companyBytes,
+  branchRebaseBytes,
+  externalBytes,
+) {
+  return (
+    hash(currentBytes) === '243ab86179b9bc9d2b2094cd6bacd4f1423659d032b99aec4715f4ebd4d9051f' &&
+    hash(companyBytes) === '1d3660001a2ebe7d4d2daf5e68ab745e9e902d5c2f1757a398439de3caedccad' &&
+    hash(branchRebaseBytes) ===
+      '697c094ae2c1cc0a83b77ad0e647c0967a9c3219b3ed10ba4d42f8691b9d54e7' &&
+    hash(externalBytes) === '2b36f81f1afd641bac82334e051f6dc3bac0887329327eb47a10944a8a6d39c6'
+  );
+}
+
 /** Explicit dependency fingerprints; a helper change must reopen its review group. */
 export async function fieldKitRecipeSources(read) {
   return Object.fromEntries(
@@ -256,14 +272,34 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   const baseline = createDefaultThemeBundle();
   const recipeSources = await fieldKitRecipeSources(read);
   const bulkContinuationReviewBytes = await readBulkPresentationContinuation(read);
+  const companyAudioReviewBytes = await read(
+    'docs/verification/v0.141.7-company-startup-audio-continuation/review.json',
+  );
+  const externalAudioReviewBytes = await read(
+    'docs/verification/external-soundtrack-delivery-2026-09-27/review.json',
+  );
+  const branchRebaseAudioReviewBytes = await read(
+    'docs/verification/canonical-soundtrack-rebase-audio-continuation-2026-09-27/review.json',
+  );
   if (
     !verifyFieldKitCompanyAudioContinuationReview(
-      await read('docs/verification/v0.141.7-company-startup-audio-continuation/review.json'),
+      companyAudioReviewBytes,
       await read('docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json'),
       await read('docs/verification/v0.141.0-managed-media-audio-continuation/review.json'),
     )
   )
     throw new Error('Audio continuation review bytes changed; production approval must reopen.');
+  if (
+    !verifyFieldKitCanonicalSoundtrackReview(
+      await read('docs/verification/canonical-soundtrack-main-rebase-2026-09-28/review.json'),
+      companyAudioReviewBytes,
+      branchRebaseAudioReviewBytes,
+      externalAudioReviewBytes,
+    )
+  )
+    throw new Error(
+      'Canonical soundtrack continuation review bytes changed; production approval must reopen.',
+    );
   const assets = [],
     bindings = {},
     bytes = new Map();
