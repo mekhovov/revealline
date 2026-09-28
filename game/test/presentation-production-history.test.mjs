@@ -538,7 +538,7 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
   const currentReviewPath = 'docs/verification/audio-style-menu-2026-09-28/review.json';
-  const currentReviewSHA256 = '560586ad918091ed211cc755a30a8d492466792c6acb799770f9a52ba99bf6a4';
+  const currentReviewSHA256 = '0fb6e505aa6082a41387d218e792633257a88ff223c177b5a259c4f6afc1a219';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'audio',
   ]);
@@ -985,19 +985,28 @@ test('bulk continuation preserves every exact merged main320 record and original
   assert.equal(prior.document.revision, 94);
   assert.equal(prior.document.assets.length, 2548);
   assert.equal(prior.assets.size, 132);
-  assert.equal(current.document.revision, 96);
+  assert.equal(current.document.revision, 97);
   const priorMainContinuation = structuredClone(current.document);
   priorMainContinuation.revision = 95;
-  priorMainContinuation.assets = priorMainContinuation.assets.slice(0, -8);
-  priorMainContinuation.themes = priorMainContinuation.themes.slice(0, -1);
+  priorMainContinuation.assets = priorMainContinuation.assets.slice(0, -16);
+  priorMainContinuation.themes = priorMainContinuation.themes.slice(0, -2);
   priorMainContinuation.selection.theme = { id: 'fpv', revision: 95 };
+  const priorStyleContinuation = structuredClone(current.document);
+  priorStyleContinuation.revision = 96;
+  priorStyleContinuation.assets = priorStyleContinuation.assets.slice(0, -8);
+  priorStyleContinuation.themes = priorStyleContinuation.themes.slice(0, -1);
+  priorStyleContinuation.selection.theme = { id: 'fpv', revision: 96 };
   validateThemeBundle(priorMainContinuation, {
     previous: prior.document,
     expectedRevision: 94,
   });
-  validateThemeBundle(current.document, {
+  validateThemeBundle(priorStyleContinuation, {
     previous: priorMainContinuation,
     expectedRevision: 95,
+  });
+  validateThemeBundle(current.document, {
+    previous: priorStyleContinuation,
+    expectedRevision: 96,
   });
   for (const group of Object.keys(oracle.groups))
     assert.deepEqual(
@@ -1019,8 +1028,8 @@ test('bulk continuation preserves every exact merged main320 record and original
   assert.equal(ui.length, 24);
   for (const slot of ui) assert.deepEqual(after.assets[slot.id], before.assets[slot.id], slot.id);
   const added = current.document.assets.slice(2548);
-  assert.equal(added.length, 26);
-  assert.equal(added.filter((a) => a.id.startsWith('audio.')).length, 16);
+  assert.equal(added.length, 34);
+  assert.equal(added.filter((a) => a.id.startsWith('audio.')).length, 24);
   for (const asset of added) {
     assert.equal(asset.quality.stage, 'reviewed');
     const old = current.document.assets.find(

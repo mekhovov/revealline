@@ -179,9 +179,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '1b1c1e4005dec1f0ae4103031b12a710c0c0d0a0f9a4bbc437b0d9a5a5af37f2',
+    sha256: '001974ea95a5b3f79046fb232eb1b267cfe3c7579e7eee638f2053a69126d700',
     evidence: [
-      'Scoped Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:560586ad918091ed211cc755a30a8d492466792c6acb799770f9a52ba99bf6a4; exact28 inputs sha256:1b1c1e4005dec1f0ae4103031b12a710c0c0d0a0f9a4bbc437b0d9a5a5af37f2. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure now binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.',
+      'Scoped Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:0fb6e505aa6082a41387d218e792633257a88ff223c177b5a259c4f6afc1a219; exact28 inputs sha256:001974ea95a5b3f79046fb232eb1b267cfe3c7579e7eee638f2053a69126d700. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure now binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.',
       'Scoped main/bulk audio continuation: docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json sha256:afcfcca1612109e117595c424e03ac002271165ccb1a4082697011e16c4c5a75; exact26 inputs sha256:d10dcf448002347b200f9886d0a5f3a23789a7f4fb928bccb4884224359cd575. Fresh canonical-main successors only; all main records and payloads retained, divergent unpublished branch identities preserved as immutable Git evidence without relabelling. Existing recipes only; final production, candidate, hosted, frozen/public and listening/device gates remain separate.',
       'Scoped v0.141.8 Steam Deck Confirm continuation: docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json sha256:15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867; exact26 inputs sha256:b4af6423e29eded7ef998d4b8c1713b28e1f7f9dcd9a288a6777a651a6202825. Only game/app.mjs changes, wiring the release-committed controller Confirm transaction and opt-in local trace while preserving all eight procedural recipes, audio routing and payloads. Immutable predecessors retained; frozen/public/listening/device acceptance remains separate.',
       'Scoped bulk queue audio continuation: docs/verification/bulk-queue-audio-effects-2026-09-28/review.json sha256:5ec246c93cf5dfe6d5a3f6538788d618575037a11d2c1890d88d0257f2e7d0b3; exact inputs sha256:5537720994b355021ba876a5122231a0304cdadc6eb861b3a5091556858e7071. Only existing recipes and payloads; immutable reviews and production history retained. Final source, frozen/public, listening/device and human acceptance remain separate.',
@@ -334,7 +334,7 @@ export function verifyFieldKitMainBulkAudioReview(currentBytes, mainBytes, bulkB
 
 export function verifyFieldKitAudioStyleMenuReview(currentBytes, priorBytes) {
   return (
-    hash(currentBytes) === '560586ad918091ed211cc755a30a8d492466792c6acb799770f9a52ba99bf6a4' &&
+    hash(currentBytes) === '0fb6e505aa6082a41387d218e792633257a88ff223c177b5a259c4f6afc1a219' &&
     hash(priorBytes) === 'afcfcca1612109e117595c424e03ac002271165ccb1a4082697011e16c4c5a75'
   );
 }

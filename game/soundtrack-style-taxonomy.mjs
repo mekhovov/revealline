@@ -1,9 +1,9 @@
 export const PUBLIC_SOUNDTRACK_STYLE_IDS = Object.freeze([
   'synth',
   'metal',
-  'electronic',
   'chiptune',
   'rock',
+  'electronic',
   'ambient',
   'fusion',
   'other',

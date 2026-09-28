@@ -10,9 +10,9 @@ test('public music styles use the player-first order with Ukrainian families las
   assert.deepEqual(PUBLIC_SOUNDTRACK_STYLE_IDS, [
     'synth',
     'metal',
-    'electronic',
     'chiptune',
     'rock',
+    'electronic',
     'ambient',
     'fusion',
     'other',
