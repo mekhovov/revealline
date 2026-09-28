@@ -122,3 +122,28 @@ The collection applies the [Xbox navigation guidance](https://learn.microsoft.co
 ## Measuring responsiveness without changing play
 
 The development-only Journey observer now offers bounded edition selection and a passive 30-second sample. [MDN's animation-frame documentation](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame) explains why hidden pages cannot provide comparable frame samples. The observer therefore discards visibility changes and navigation, and records unsupported counters explicitly. [The W3C Long Tasks API](https://www.w3.org/TR/longtasks-1/) informs the optional page-wide long-task counter. Frame intervals include browser scheduling; they do not measure renderer CPU time, and a page-wide long task cannot by itself be attributed to rewards. Equivalent baseline/candidate scenes and a browser trace are still needed for the proposed regression and reward-rendering gates.
+
+## Looking at one real object
+
+The Met's [Fragment of a shirt, 2009.300.2715](https://www.metmuseum.org/art/collection/search/157573)
+provides a useful distinction between observation and evidence. Its record identifies
+the object as Ukrainian, dates it to the fourth quarter of the eighteenth century,
+and lists linen, silk and metal. Players can inspect flowers, a border and a fold in
+the unchanged public-domain photograph, then decide whether a label's date comes
+from the photograph or the catalogue. No maker, precise region or universal motif
+meaning is invented. The exact original, object credit and CC0 evidence are pinned
+in the public asset inventory; this is the tenth admitted real reference.
+
+The new image-atlas recipe also labels structural parts in the fictional Frame
+illustration. Both use the same bounded card comparison and optional prediction
+adapter. Image points and a numbered list are equivalent controls; narrow views
+use static numbered markers with the full-size list below. This follows the
+[Xbox navigation guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112)
+on predictable, consistent navigation. Exact photographs remain uncropped and
+retain text alternatives. Previewing an exploration never earns a reward.
+
+The [National Museum in Wrocław's Woman's shirt, E-8713](https://muzeumcyfrowe.mnwr.pl/en/exhibit/womans-shirt-17)
+is another useful research record, but its photograph was not imported: the site's
+[image-use terms](https://muzeumcyfrowe.mnwr.pl/en/guidelines-for-using-the-digital-collections)
+distinguish the public-domain object from rights in the image. A public object
+record alone is not permission to redistribute its photograph.

@@ -4,6 +4,29 @@ import { required } from '../data-json.mjs';
 // undocumented wallpaper replacements or a recommendation for a real build.
 export const CURRICULUM_REFERENCE_ASSETS = [
   {
+    id: 'reference-ukraine-met-shirt-fragment',
+    sha256: 'edb86aaaa16ec601d1816765940cdfa37d761e3e557b9e5c2ba37d642fbc216f',
+    missionId: 'ukraine-threads-01',
+    sourceUrl: 'https://www.metmuseum.org/art/collection/search/157573',
+    licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+    attribution:
+      'The Metropolitan Museum of Art, Fragment of a shirt, 2009.300.2715. Brooklyn Museum Costume Collection; gift of the Brooklyn Museum, 2009; earlier Harkness gift, 1931. Public Domain / CC0. Exact source photograph, unchanged.',
+    locales: {
+      en: {
+        title: 'A documented Ukrainian shirt fragment',
+        alt: 'A long pale textile fragment on black, with coloured floral embroidery, a row of small motifs along the lower border, and a vertical fold near the right edge.',
+        caption:
+          'The Met identifies this fragment as Ukrainian, dates it to the final quarter of the eighteenth century, and records linen, silk and metal. That is a record of one object. The photograph alone does not name its maker, establish a precise region, or explain a universal meaning for its flowers. Compare the museum record with what you can actually observe.',
+      },
+      uk: {
+        title: 'Документований фрагмент української сорочки',
+        alt: 'Довгий світлий фрагмент тканини на чорному тлі: кольорова квіткова вишивка, ряд дрібних мотивів уздовж нижнього краю та вертикальна складка праворуч.',
+        caption:
+          'Музей Метрополітен визначає цей фрагмент як український, датує останньою чвертю XVIII століття й зазначає льон, шовк та метал. Це запис про один предмет. Сама фотографія не називає майстра, не визначає точного регіону й не пояснює універсального значення квітів. Порівняйте музейний запис із тим, що справді можна побачити.',
+      },
+    },
+  },
+  {
     id: 'reference-ukraine-state-flag',
     sha256: '2331ad1bb17e2f072b42dbc3fb145917a3963a45efdf0b6cff307d2ee8f7e514',
     missionId: 'ukraine-cities-symbols-time-05',

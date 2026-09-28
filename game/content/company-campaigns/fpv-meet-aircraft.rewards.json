@@ -116,6 +116,152 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "fpv-meet-aircraft-01-structure-exploration",
+        "locales": {
+          "en": {
+            "intro": "Choose a numbered point or a label to inspect the centre, an arm and an empty motor position. Compare two explanations and try the optional prediction. Nothing here needs a timer or changes your arcade result.",
+            "title": "Explore the supporting frame"
+          },
+          "uk": {
+            "intro": "Виберіть пронумеровану точку або підпис, щоб розглянути центр, промінь і вільне місце двигуна. Порівняйте два пояснення та спробуйте необов’язковий прогноз. Тут немає таймера, і ваш аркадний результат не змінюється.",
+            "title": "Дослідіть опорну раму"
+          }
+        },
+        "recipe": {
+          "cards": [
+            {
+              "id": "centre",
+              "locales": {
+                "en": {
+                  "body": "The stacked plates form the centre of this illustrated frame. They provide structure around space that can carry other components. Supporting a component is different from doing its job: a separate flight controller interprets sensor information and calculates commands.",
+                  "sourceNote": "The plate description is an observation of the original game illustration. Betaflight explains the separate flight-controller role; it does not document this fictional frame or its dimensions.",
+                  "title": "Central plates · supporting space"
+                },
+                "uk": {
+                  "body": "Пластини одна над одною утворюють центр зображеної рами. Вони формують конструкцію навколо простору для інших компонентів. Тримати компонент — не те саме, що виконувати його роботу: окремий польотний контролер опрацьовує дані датчиків і обчислює команди.",
+                  "sourceNote": "Опис пластин — спостереження за оригінальною ігровою ілюстрацією. Betaflight пояснює окрему роль польотного контролера, але не описує цю вигадану раму чи її розміри.",
+                  "title": "Центральні пластини · опорний простір"
+                }
+              },
+              "sourceIds": ["fc"]
+            },
+            {
+              "id": "arm",
+              "locales": {
+                "en": {
+                  "body": "Follow the near-left arm from the centre toward its outer end. In this X-shaped illustration, the four arms spread the four motor positions around the body. An arm is a support; the rotating propeller has the different role of producing aerodynamic force.",
+                  "sourceNote": "This arm is identified from the illustration. NASA explains quadcopter rotary-flight forces; the artwork is not a measured NASA aircraft design.",
+                  "title": "Arm · reaching an outer position"
+                },
+                "uk": {
+                  "body": "Простежте ближній лівий промінь від центру до його зовнішнього кінця. На цій X-подібній ілюстрації чотири промені розносять місця двигунів навколо корпусу. Промінь є опорою; пропелер під час обертання виконує іншу роботу — створює аеродинамічну силу.",
+                  "sourceNote": "Цей промінь визначено за ілюстрацією. NASA пояснює сили роторного польоту квадрокоптера; зображення не є кресленням апарата NASA з вимірами.",
+                  "title": "Промінь · шлях до зовнішньої точки"
+                }
+              },
+              "sourceIds": ["nasa"]
+            },
+            {
+              "id": "motor-position",
+              "locales": {
+                "en": {
+                  "body": "The widened end of the near-right arm is drawn as a place to support a motor. It is empty: seeing a mount is not the same as seeing a motor or propeller. The decorative holes do not establish a usable pattern, screw size or compatibility with a real part.",
+                  "sourceNote": "The mount label interprets this original illustration only. NASA supplies general quadcopter context, not mounting specifications for this depicted object.",
+                  "title": "Empty motor position · support is not motion"
+                },
+                "uk": {
+                  "body": "Розширений кінець ближнього правого променя зображено як місце для опори двигуна. Воно порожнє: бачити кріплення — не те саме, що бачити двигун або пропелер. Декоративні отвори не визначають придатної схеми, розміру гвинта чи сумісності з реальною деталлю.",
+                  "sourceNote": "Підпис місця кріплення тлумачить лише цю оригінальну ілюстрацію. NASA надає загальний контекст про квадрокоптери, а не технічні вимоги до кріплення цього зображеного предмета.",
+                  "title": "Вільне місце двигуна · опора не є рухом"
+                }
+              },
+              "sourceIds": ["nasa"]
+            }
+          ],
+          "diagram": {
+            "asset": {
+              "assetId": "fpv-meet-aircraft-01-art-v1",
+              "sha256": "8b79d705bb064333eefece3c6acdd0f9f0a4a9079cab8ab2939401ae47689fe8"
+            },
+            "hotspots": [
+              { "cardId": "centre", "x": 0.484, "y": 0.475 },
+              { "cardId": "arm", "x": 0.286, "y": 0.571 },
+              { "cardId": "motor-position", "x": 0.737, "y": 0.672 }
+            ],
+            "locales": {
+              "en": {
+                "alt": "Original illustrated bare X-shaped frame on a museum worktable. Point 1 marks the central plates, point 2 the near-left arm, and point 3 the empty near-right motor position. No motors, propellers or connected electronics are shown.",
+                "caption": "Fictional civilian display. The points describe structural roles in this illustration, not a product drawing, drilling template, assembly procedure or proof of real-world compatibility."
+              },
+              "uk": {
+                "alt": "Оригінальна ілюстрація порожньої X-подібної рами на музейному столі. Точка 1 позначає центральні пластини, точка 2 — ближній лівий промінь, точка 3 — вільне місце двигуна праворуч попереду. Двигунів, пропелерів і підключеної електроніки немає.",
+                "caption": "Вигадана цивільна експозиція. Точки пояснюють конструктивні ролі на ілюстрації, а не креслення виробу, шаблон свердління, порядок складання чи підтвердження сумісності реальних деталей."
+              }
+            }
+          },
+          "id": "inspect-image-atlas",
+          "predictions": [
+            {
+              "cardIds": ["centre", "arm"],
+              "choices": [
+                {
+                  "id": "support",
+                  "locales": {
+                    "en": {
+                      "feedback": "Yes. The label describes what the supporting frame does.",
+                      "label": "Frame · structural support"
+                    },
+                    "uk": {
+                      "feedback": "Так. Підпис описує роботу опорної рами.",
+                      "label": "Рама · конструктивна опора"
+                    }
+                  }
+                },
+                {
+                  "id": "controller",
+                  "locales": {
+                    "en": {
+                      "feedback": "Compare the verbs. Processing sensor information is different from holding parts in position.",
+                      "label": "Flight controller · information processing"
+                    },
+                    "uk": {
+                      "feedback": "Порівняйте дії. Опрацьовувати дані датчиків — не те саме, що утримувати деталі в певному положенні.",
+                      "label": "Польотний контролер · опрацювання інформації"
+                    }
+                  }
+                }
+              ],
+              "expectedChoiceId": "support",
+              "id": "support-or-command",
+              "locales": {
+                "en": {
+                  "explanation": "Keeping parts in position describes structure. Reading sensor information and calculating commands describes the flight controller. One role cannot substitute for the other.",
+                  "prompt": "A new exhibit label says “keeps components in position relative to one another.” Does it describe the frame’s structural role or the flight controller’s information-processing role?"
+                },
+                "uk": {
+                  "explanation": "Утримання деталей у певному положенні описує конструкцію. Читання даних датчиків і обчислення команд описує польотний контролер. Одна роль не замінює іншу.",
+                  "prompt": "Новий підпис каже: «утримує компоненти у певному положенні один відносно одного». Це конструктивна роль рами чи роль польотного контролера в опрацюванні інформації?"
+                }
+              }
+            }
+          ],
+          "revision": 1,
+          "sources": [
+            {
+              "id": "nasa",
+              "title": "NASA — The Science Behind Quadcopters",
+              "url": "https://www.nasa.gov/stem-content/the-science-behind-quadcopters/"
+            },
+            {
+              "id": "fc",
+              "title": "Betaflight — Getting started",
+              "url": "https://betaflight.com/docs/wiki/getting-started"
+            }
+          ]
+        },
+        "type": "exploration"
       }
     ],
     "requirements": {
@@ -132,7 +278,7 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
     "scope": { "id": "fpv-meet-aircraft-01", "kind": "mission" },
     "teaserImage": {
       "asset": {
