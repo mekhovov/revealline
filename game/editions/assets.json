@@ -1453,5 +1453,149 @@
     "publication": "public",
     "approved": true,
     "dependencies": []
+  },
+  {
+    "id": "ukraine-threads-01-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-threads-01-v1.jpg",
+    "sha256": "948ae2b5db094f54aec6e7d9fe57408bb121dd535b471943425378a7af9de2af",
+    "bytes": 161965,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-threads-02-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-threads-02-v1.jpg",
+    "sha256": "3b0ba003bc7e170dbb16dc46ba35f6bbdbaf81bf6dc9e8b34b7fce78dc3cec72",
+    "bytes": 170394,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-threads-04-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-threads-04-v1.jpg",
+    "sha256": "22ae3b4e43d3e02260437d980e4a421d73bbacc0a35dfd0e809a0300150dec16",
+    "bytes": 158455,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-threads-05-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-threads-05-v1.jpg",
+    "sha256": "d3c81a60d651ba8c9e2801a4de4608e5580fa4d2df5a4df44210e41c5de405c4",
+    "bytes": 173578,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-threads-06-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-threads-06-v1.jpg",
+    "sha256": "f85f89cd0a3513736e1b88867982878176affe8ee8e7c72171c6887ded041614",
+    "bytes": 207158,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-colour-clay-spring-01-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-01-v1.jpg",
+    "sha256": "76afafc6aee7efbbb84b8b97ac96768465023c8cd3acdd7093f7de08b9c3f655",
+    "bytes": 233452,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-colour-clay-spring-02-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-02-v1.jpg",
+    "sha256": "eac1252d6cf2e6b6084f3c00cbc0d07d0278aa1a2f27badf2418b95856caaab1",
+    "bytes": 169956,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-colour-clay-spring-03-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-03-v1.jpg",
+    "sha256": "7df81716961ae08ed04adf4d4359edbad08e9010190563fbd8ef3da3e01a2547",
+    "bytes": 224938,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-colour-clay-spring-04-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-04-v1.jpg",
+    "sha256": "c3ea48e72d2cc67dee8a8bb611580286aa1c1b0afccf1e2ee0bfb97a16e68d2d",
+    "bytes": 140500,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-people-workshop-key-v1",
+    "path": "game/editions/assets/discovery/social-drone-people-workshop-key-v1.jpg",
+    "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782",
+    "bytes": 282921,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-community-connections-key-v1",
+    "path": "game/editions/assets/discovery/social-drone-community-connections-key-v1.jpg",
+    "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb",
+    "bytes": 318557,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-knowledge-connects-key-v1",
+    "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-key-v1.jpg",
+    "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f",
+    "bytes": 304837,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-colour-clay-spring-05-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-05-v1.jpg",
+    "sha256": "3ce2f25907dc3a3aac911729deb7be72180ee39b4510c6d69a8c821c27796b3b",
+    "bytes": 156667,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-colour-clay-spring-06-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-06-v1.jpg",
+    "sha256": "3906cda63a720416d840efb79ceb5acd2cda31f9d8f9b8fcbacdca776651ea27",
+    "bytes": 227413,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-crimea-ornek-01-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-crimea-ornek-01-v1.jpg",
+    "sha256": "dc7fad1a463982a631b34151834fe71cd934972f65ffebe86e894b98edc02ae3",
+    "bytes": 178150,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-ideas-understanding-key-v1",
+    "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-key-v1.jpg",
+    "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb",
+    "bytes": 292281,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
   }
 ]

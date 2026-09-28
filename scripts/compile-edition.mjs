@@ -749,6 +749,9 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
             descriptor,
             editionId: edition.id,
             editionProject,
+            lessons: selectedCampaigns.flatMap((campaign) =>
+              campaign.lessonPath ? readJSON(files.get(campaign.lessonPath)) : [],
+            ),
             assets: resolveEditionAssets(runtimeCatalog, { editionId: edition.id }),
           },
         ),

@@ -1,6 +1,7 @@
 import { validateCompletionReward } from './model.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { inspectRewardMediaBytes } from './media-format.mjs';
+import { createRewardQrImage } from './qr.mjs';
 
 const escape = (value) =>
   String(value).replace(
@@ -143,6 +144,13 @@ export async function createPrintableReward(
       parts.push(
         `<p>${link(text.title, payload.url)}</p><p class="address">${escape(payload.url)}</p>`,
       );
+      if (payload.qr) {
+        const qr = await createRewardQrImage(payload);
+        signal?.throwIfAborted();
+        parts.push(
+          `<figure><img style="width:20rem;max-width:100%" src="${qr.src}" alt="${escape(`QR: ${payload.url}`)}"></figure>`,
+        );
+      }
     } else if (payload.type === 'public-code') {
       parts.push(
         `<p>${escape(payload.issuer)}</p><p><code>${escape(payload.code)}</code></p><p>${escape(text.terms)}</p>`,

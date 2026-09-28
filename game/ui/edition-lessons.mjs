@@ -25,6 +25,8 @@ export async function mountEditionLessons({
 }) {
   if (!provider.lessons.length)
     return {
+      rewardEvidence: () => EMPTY_REWARD_EVIDENCE,
+      onRewardEvidenceChange: () => () => {},
       refresh() {},
       pictureReady() {
         return null;
@@ -99,7 +101,7 @@ export async function mountEditionLessons({
       },
     },
   });
-  const hydration = await proofs.hydrate();
+  const hydration = await proofs.hydrate({ signal: lifetime.signal });
   if (hydration.rejected)
     reportData(
       'Earlier learning records need their matching revision. They remain available in the learning backup.',
@@ -285,6 +287,8 @@ export async function mountEditionLessons({
     }
   };
   return {
+    rewardEvidence: proofs.rewardEvidence,
+    onRewardEvidenceChange: proofs.onRewardEvidenceChange,
     pictureReady(record) {
       if (disposed || record.editionId !== provider.editionId) return null;
       const lesson = provider.lessons.find((entry) => entry.missionId === record.missionId);
@@ -320,3 +324,9 @@ export async function mountEditionLessons({
     },
   };
 }
+
+const EMPTY_REWARD_EVIDENCE = Object.freeze({
+  revision: 0,
+  learning: Object.freeze([]),
+  durableLearning: Object.freeze([]),
+});

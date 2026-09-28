@@ -4,6 +4,7 @@ import { compileContentProject } from '../content-design/project.mjs';
 import { validateCompanyLessons } from '../company-campaigns/learning.mjs';
 import { validateCompletionRewards, completionRewardAssetReferences } from '../rewards/model.mjs';
 import { createRewardMissionBindings } from '../rewards/bindings.mjs';
+import { completionLearningReference } from '../rewards/learning.mjs';
 import { COMPLETION_REWARD_PAYLOAD_TYPES } from '../rewards/capabilities.mjs';
 import { validateDiscoveryRewardBindings } from '../content-design/discovery-schema.mjs';
 
@@ -78,7 +79,7 @@ export function validateEditionLessonBundle(lessons, project) {
 export function validateEditionRewardBundle(
   source,
   project,
-  { descriptor, assets = [], editionId, editionProject = project } = {},
+  { descriptor, assets = [], editionId, editionProject = project, lessons = [] } = {},
 ) {
   const rewards = validateCompletionRewards(source);
   const compiled = compileContentProject(project);
@@ -93,6 +94,10 @@ export function validateEditionRewardBundle(
   const editionBindings = rewards.some((reward) => reward.scope.kind === 'edition')
     ? new Map(createRewardMissionBindings(editionProject).map((row) => [row.missionId, row]))
     : bindings;
+  const learning = validateCompanyLessons(lessons).map((lesson) => ({
+    campaignId: lesson.campaignId,
+    reference: completionLearningReference(lesson),
+  }));
   for (const reward of rewards) {
     required(
       reward.brandId === descriptor.brandId && reward.campaignId === descriptor.id,
@@ -124,10 +129,21 @@ export function validateEditionRewardBundle(
         'Reward gameplay binding differs from the selected mission.',
       );
     }
-    required(
-      reward.requirements.learning.length === 0,
-      'Completion reward learning requires a registered player evidence adapter before export.',
-    );
+    for (const requirement of reward.requirements.learning) {
+      const lesson = learning.find((entry) =>
+        Object.entries(entry.reference).every(([key, value]) => requirement[key] === value),
+      );
+      const mission = (reward.scope.kind === 'edition' ? editionBindings : bindings).get(
+        requirement.missionId,
+      );
+      required(
+        lesson &&
+          mission &&
+          lesson.campaignId === mission.campaignId &&
+          (reward.scope.kind === 'edition' || lesson.campaignId === descriptor.id),
+        'Reward learning requirement differs from an exact selected lesson.',
+      );
+    }
     required(
       reward.requirements.mastery.length === 0,
       'Completion reward mastery requires a registered player evidence adapter before export.',

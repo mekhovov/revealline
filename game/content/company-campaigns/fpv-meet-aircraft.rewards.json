@@ -109,17 +109,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-meet-aircraft-key-v1",
+          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
         },
         "id": "fpv-meet-aircraft-02-image",
         "locales": {
           "en": {
-            "alt": "Motion Makers — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
             "title": "Motion Makers"
           },
           "uk": {
-            "alt": "Джерела руху — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
             "title": "Джерела руху"
           }
         },
@@ -259,17 +259,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-meet-aircraft-key-v1",
+          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
         },
         "id": "fpv-meet-aircraft-03-image",
         "locales": {
           "en": {
-            "alt": "The ESC — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
             "title": "The ESC"
           },
           "uk": {
-            "alt": "Регулятор ESC — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
             "title": "Регулятор ESC"
           }
         },
@@ -322,7 +322,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-meet-aircraft-03", "kind": "mission" }
   },
   {
@@ -343,17 +343,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-meet-aircraft-key-v1",
+          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
         },
         "id": "fpv-meet-aircraft-04-image",
         "locales": {
           "en": {
-            "alt": "The Flight Controller — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
             "title": "The Flight Controller"
           },
           "uk": {
-            "alt": "Польотний контролер — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
             "title": "Польотний контролер"
           }
         },
@@ -485,17 +485,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-meet-aircraft-key-v1",
+          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
         },
         "id": "fpv-meet-aircraft-05-image",
         "locales": {
           "en": {
-            "alt": "Two Different Links — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
             "title": "Two Different Links"
           },
           "uk": {
-            "alt": "Два різні канали — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
             "title": "Два різні канали"
           }
         },
@@ -556,7 +556,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-meet-aircraft-05", "kind": "mission" }
   },
   {
@@ -577,17 +577,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-meet-aircraft-key-v1",
+          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
         },
         "id": "fpv-meet-aircraft-06-image",
         "locales": {
           "en": {
-            "alt": "The Whole Aircraft — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
             "title": "The Whole Aircraft"
           },
           "uk": {
-            "alt": "Цілий дрон — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
             "title": "Цілий дрон"
           }
         },
@@ -664,7 +664,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-meet-aircraft-06", "kind": "mission" }
   },
   {
@@ -977,17 +977,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-meet-aircraft-key-v1",
+          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
         },
         "id": "fpv-meet-aircraft-02-image",
         "locales": {
           "en": {
-            "alt": "Motion Makers — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
             "title": "Motion Makers"
           },
           "uk": {
-            "alt": "Джерела руху — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
             "title": "Джерела руху"
           }
         },
@@ -995,17 +995,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-meet-aircraft-key-v1",
+          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
         },
         "id": "fpv-meet-aircraft-03-image",
         "locales": {
           "en": {
-            "alt": "The ESC — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
             "title": "The ESC"
           },
           "uk": {
-            "alt": "Регулятор ESC — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
             "title": "Регулятор ESC"
           }
         },
@@ -1013,17 +1013,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-meet-aircraft-key-v1",
+          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
         },
         "id": "fpv-meet-aircraft-04-image",
         "locales": {
           "en": {
-            "alt": "The Flight Controller — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
             "title": "The Flight Controller"
           },
           "uk": {
-            "alt": "Польотний контролер — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
             "title": "Польотний контролер"
           }
         },
@@ -1031,17 +1031,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-meet-aircraft-key-v1",
+          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
         },
         "id": "fpv-meet-aircraft-05-image",
         "locales": {
           "en": {
-            "alt": "Two Different Links — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
             "title": "Two Different Links"
           },
           "uk": {
-            "alt": "Два різні канали — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
             "title": "Два різні канали"
           }
         },
@@ -1049,17 +1049,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-meet-aircraft-key-v1",
+          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
         },
         "id": "fpv-meet-aircraft-06-image",
         "locales": {
           "en": {
-            "alt": "The Whole Aircraft — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
             "title": "The Whole Aircraft"
           },
           "uk": {
-            "alt": "Цілий дрон — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
             "title": "Цілий дрон"
           }
         },
@@ -1071,6 +1071,7 @@
           "en": { "title": "Explore the official source" },
           "uk": { "title": "Відкрити офіційне джерело" }
         },
+        "qr": true,
         "type": "url",
         "url": "https://www.nasa.gov/stem-content/the-science-behind-quadcopters/"
       }

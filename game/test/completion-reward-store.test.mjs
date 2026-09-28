@@ -55,6 +55,49 @@ function context(missions = ['mission-1', 'mission-2']) {
 const backendFor = (memory, options = {}) =>
   createRewardBackend({ editionId, indexedDB: memory.indexedDB, ...options });
 
+test('session-only verified learning cannot leak into a later arcade save, flush or reload', async () => {
+  const memory = managedIndexedDB(),
+    backend = backendFor(memory),
+    store = createRewardStore({ editionId, backend }),
+    bonus = definition('learning-bonus'),
+    arcade = definition('next-win', 'mission-2');
+  const requirement = {
+    lessonId: 'lesson-one',
+    lessonRevision: '1',
+    fixtureRevision: '1',
+    lessonIdentity: '1234567890abcdef',
+    missionId: 'mission-1',
+  };
+  bonus.requirements.learning = [requirement];
+  const session = context();
+  session.learning = [{ ...requirement, attemptId: 'verified-attempt' }];
+  const durable = context();
+  await store.load();
+  store.reconcile([bonus], session, { persistenceContext: durable });
+  await store.settled();
+  assert.equal(store.snapshot().receipts.length, 1);
+  assert.equal((await backend.read()).receipts.length, 0);
+  store.reconcile([bonus, arcade], session, { persistenceContext: durable });
+  await store.flush();
+  await store.load();
+  assert.deepEqual(
+    (await backend.read()).receipts.map((r) => r.definition.id),
+    ['next-win'],
+  );
+  assert.equal(store.status().durable, false);
+  assert.equal(store.snapshot().receipts.length, 2);
+  store.reconcile([bonus, arcade], session, { persistenceContext: session });
+  await store.settled();
+  assert.equal((await backend.read()).receipts.length, 2);
+  assert.equal(store.status().durable, true);
+  assert.equal(
+    store.snapshot().receipts.find((r) => r.definition.id === bonus.id).evidence.learning[0]
+      .attemptId,
+    'verified-attempt',
+  );
+  await store.close();
+});
+
 async function putRaw(memory, key, value) {
   const db = await new Promise((resolve, reject) => {
     const request = memory.indexedDB.open(JOURNEY_PROFILE_DATABASE, 1);
