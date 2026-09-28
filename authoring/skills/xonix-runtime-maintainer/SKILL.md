@@ -1625,3 +1625,13 @@ fixed aim, early-return cancellation and still-live shots during sentry recovery
 against real core/replay traces; do not describe bracketed optional robots as
 ordinary dangerous region-keeping enemies. New copy alone does not finish Field
 Guide, paused details, full-mission fairness or production review.
+
+Paused patrol details now reuse the strict `combatView` only when paused. Keep
+live event collection free of another geometry validation, absent/off output
+unchanged and invalid active data visibly unavailable. Count live projectiles
+separately from sentry recovery. Enemy freeze holds both warning and shot clocks;
+ended runs must not describe surviving or removed patrols as current danger.
+Allowlist event urgency by exact emitted type, never by prefix. The ordinary
+opener's existing pause may refresh only `savedAt`; reading and Back must preserve
+checkpoint, replay, continuation, focus and Pause. Practice stays write-free.
+See the updated optional encounter maintenance contract and batch13 evidence.

@@ -4989,5 +4989,17 @@
   "downloads.offline.ready": "Offline files verified. This version can open without a connection while the browser retains its storage.",
   "downloads.offline.coreVerified": "Core offline files verified.",
   "failure.combatProjectile": "A sentry shot hit your character.",
-  "failure.combatProjectileTip": "Change direction after the aim warning, or return to safe ground."
+  "failure.combatProjectileTip": "Change direction after the aim warning, or return to safe ground.",
+  "optionalPatrolDetails.title": "Optional patrols",
+  "optionalPatrolDetails.unavailable": "Optional patrol details are unavailable. Keep watching bracketed bodies, warning rays and shots.",
+  "optionalPatrolDetails.removed": "All bracketed patrols have been removed, along with their shots. Round keepers remain dangerous.",
+  "optionalPatrolDetails.counts": "Scouts: {{scouts}} · Sentries: {{sentries}}.",
+  "optionalPatrolDetails.ended": "This flight has ended; retained patrols and shots no longer advance.",
+  "optionalPatrolDetails.warning": "Aiming sentries: {{warnings}} · earliest shot in {{seconds}}s. Move off the dashed ray or close your cut before firing.",
+  "optionalPatrolDetails.recovery": "Recovering sentries: {{recovering}}. Already fired shots can remain.",
+  "optionalPatrolDetails.shots": "Live sentry shots: {{shots}}. Avoid their path; they threaten exposed craft, not its trail.",
+  "optionalPatrolDetails.frozen": "Enemy freeze holds these patrols, their warnings and shots. Present shots can become dangerous when it ends.",
+  "optionalPatrolDetails.counterplay": "Touch or enclose a bracketed body to remove it and its shots. Do not cross a live shot to reach it; round keepers remain dangerous.",
+  "optionalPatrolDetails.scoutCounterplay": "Touch or enclose bracketed scouts to remove them. They do not damage your line or keep territory hidden; round keepers remain dangerous.",
+  "optionalPatrolDetails.warningHeld": "Aiming sentries: {{warnings}} · warning time held at {{seconds}}s. Move off the dashed ray or close your cut before firing."
 }
