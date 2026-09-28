@@ -1,8 +1,8 @@
 {
   "format": "revealline-pages-controller.v1",
   "hostingPolicy": "main-repository-only",
-  "currentVersion": "v0.141.7",
-  "catalogSha256": "0abdc1044e4ad790ccb2995a267ba4420d229fda0e594feb5fafd547ae513701",
+  "currentVersion": "v0.141.8",
+  "catalogSha256": "3aa1f77115953065159787b9527896849bb037d8c611ba46db9013a825c692f6",
   "allocationSha256": "13e7c63e9e54db8c19f250fe4ed22d577ca8d821b302094c7c332d176975c750",
   "admissions": [
     {
@@ -10351,8 +10351,8 @@
   ],
   "deploymentEnabled": true,
   "currentSourceQualification": {
-    "path": "evidence/current-v01417/source-qualification.json",
-    "sha256": "fd86acbb04b2e4b79a84a30859bab8a69a65767706fab6892026867fb860ed88"
+    "path": "evidence/current-v01418/source-qualification.json",
+    "sha256": "ad77852939f0aedc8f654291c370a69c6bc0eccad48b1ce7f6020c24fc67d0c4"
   },
   "retainedReleaseCount": 5,
   "testingRoutes": {}
