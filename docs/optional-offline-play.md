@@ -3,6 +3,30 @@
 Normal play must not ask players to install the app or download a chapter for
 offline use. This supersedes the earlier package-consent-before-play policy.
 
+## Published v0.142.0 follow-up
+
+The 28 September deployed-source check confirmed that v0.142.0 still ships the
+old required-package helper and worker prerequisite. It was frozen from
+`813dee5feff5d42c54ef91292f6dd434d39d311a`, before the optional-play fix. Clearing
+browser storage or repeating offline preparation is not a fix for that release.
+The reconciled optional-play changes are in release-root PR #768, based on
+`5636af7726b3c0fed15e7455306409fbf371e74b`; they must be published before players
+receive the new behavior. Frozen v0.142.0 files remain unchanged.
+
+The follow-up removes a remaining requirement in the published Solo chapter
+provider: hosts without an offline-retention integration now load verified
+chapter files directly. Hosts that supply retention still keep cancellation and
+exact content ownership. The regression walks every published chapter and its
+saved execution identity without an offline integration. Additional checks cover
+all ordinary access methods and current, shipped, imported and Creator Versus
+entries. Callback counts are asserted outside error-catching code so an
+unexpected popup or package fetch cannot be hidden as a storage failure.
+
+See [the follow-up verification record](verification/online-play-optional-20260928/README.md)
+for execution evidence and release limits.
+
+## Behavior
+
 - Solo, Versus, Team, company editions, navigation and saved-flight restoration
   use their existing loaders to request the content needed for online play.
 - Opening a mission does not open Install & offline play, register an offline
