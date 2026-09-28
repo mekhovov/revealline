@@ -145,10 +145,6 @@ export function validateEditionRewardBundle(
         'Reward learning requirement differs from an exact selected lesson.',
       );
     }
-    required(
-      reward.requirements.mastery.length === 0,
-      'Completion reward mastery export awaits historical accepted-proof retention.',
-    );
     for (const requirement of reward.requirements.mastery) {
       resolveJourneyMasteryRequirement(requirement);
       const mission = (reward.scope.kind === 'edition' ? editionBindings : bindings).get(
