@@ -3,6 +3,18 @@ import { createOfficialDownloads } from './official-downloads.mjs';
 import { downloadFiles } from './download-catalogue.mjs';
 import { resolveJourneyRequest } from './content-design/default-entry.mjs';
 
+export const OFFLINE_PACKAGE_REQUIRED = 'offline-package-required';
+
+export function isOfflinePackageRequired(error) {
+  return error?.code === OFFLINE_PACKAGE_REQUIRED;
+}
+
+function offlinePackageRequired() {
+  const error = new Error('Download this chapter in Install & offline play before playing it.');
+  error.code = OFFLINE_PACKAGE_REQUIRED;
+  return error;
+}
+
 /** Gameplay may consume local packages, but only the download UI may authorize
  * their transfer. Readiness is checked against actual files, never onLine or a
  * saved checkbox. The source checkout and immutable v1 editions keep their
@@ -75,8 +87,7 @@ export function createOfflineDownloadAccess({
       store ||= createOfficialDownloads();
       if (!(await store.inspect(files, { verify: true, signal })).ready) {
         check(signal);
-        if (!prompt)
-          throw new Error('Download this chapter in Install & offline play before playing it.');
+        if (!prompt) throw offlinePackageRequired();
         if (typeof requestPackage !== 'function')
           throw new Error('Open Install & offline play to download this chapter first.');
         await requestPackage({ groupId, signal });
