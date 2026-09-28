@@ -479,9 +479,30 @@ async function applyFile(key) {
     const previous = files.get(path);
     if (previous && format(previous) !== format(data) && previous.revision === data.revision)
       throw new Error('Give changed localization a new revision before applying it.');
+    const owner = {
+      catalog,
+      files,
+      revision,
+      loadGeneration,
+      editionId,
+      campaignId,
+      text: $('localization-json').value,
+    };
+    const localizationSha256 = await campaignLocalizationSha256(data);
+    if (
+      catalog !== owner.catalog ||
+      files !== owner.files ||
+      revision !== owner.revision ||
+      loadGeneration !== owner.loadGeneration ||
+      editionId !== owner.editionId ||
+      campaignId !== owner.campaignId ||
+      $('localization-json').value !== owner.text
+    )
+      throw new Error(
+        'The draft changed while localization was being verified. Apply the current edits again.',
+      );
     const draft = structuredClone(catalog);
-    draft.campaigns.find((item) => item.id === campaign.id).localizationSha256 =
-      await campaignLocalizationSha256(data);
+    draft.campaigns.find((item) => item.id === campaign.id).localizationSha256 = localizationSha256;
     for (const edition of draft.editions.filter((item) => item.campaignIds.includes(campaign.id)))
       edition.revision++;
     catalog = validateEditionRuntimeCatalog(draft);
