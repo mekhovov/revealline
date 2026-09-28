@@ -1,0 +1,110 @@
+{
+  "campaignId": "social-drone-community-connections",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "Community Connections", "uk": "Зв’язки спільноти" } },
+      "id": "social-drone-community-connections",
+      "identity": "fabda05ef48124a3",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Link the welcome desk and purpose board before exploring the wider community hall. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте вітальний стіл і дошку мети перед дослідженням ширшої зали спільноти. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Take the near briefing island first or build a return around the long welcome terrace. Read the moving boundary before committing to the next connection.",
+          "uk": "Спершу відкрийте ближній острів задуму або побудуйте повернення навколо довгої вітальної тераси. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "One Shared Brief", "uk": "Спільний задум" }
+      },
+      "id": "social-drone-community-connections-01",
+      "identity": "8ca6b950c3a39a38",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the reading tables and distinguish an expected set from an actual count. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте столи читання й розрізніть очікуваний набір і фактичну кількість. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Choose the upper booklet bay or the lower count desk, then join them through the middle shelf. Read the moving boundary before committing to the next connection.",
+          "uk": "Оберіть верхній простір буклетів або нижній стіл підрахунку, потім з’єднайте їх через середню полицю. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "Count What Is Here", "uk": "Порахуйте наявне" }
+      },
+      "id": "social-drone-community-connections-02",
+      "identity": "25d129fb4898453e",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Join the handoff alcoves and leave the next person a clear route. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте ніші передачі справ і залиште наступній людині зрозумілий маршрут. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Join the small source alcove before crossing between the two larger handoff desks. Read the moving boundary before committing to the next connection.",
+          "uk": "З’єднайте малу нішу джерел перед перетином між двома більшими столами передачі справ. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "The Next Reader", "uk": "Наступний читач" }
+      },
+      "id": "social-drone-community-connections-03",
+      "identity": "44d18923f4e15095",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Explore the spacious invitation court and use its sheltered reading terrace. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Дослідіть просторий двір запрошень через захищену терасу читання. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Use the wide reading terrace to divide the invitation court into two manageable captures. Read the moving boundary before committing to the next connection.",
+          "uk": "Використайте широку терасу читання, щоб розділити двір запрошень на два посильні захоплення. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "An Invitation That Helps", "uk": "Корисне запрошення" }
+      },
+      "id": "social-drone-community-connections-04",
+      "identity": "05e7449d5307b731",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the image and text galleries while watching the changed frontier. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте галереї зображення й тексту, стежачи за зміненим кордоном. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Connect the text island before the image bay or take the longer lower route around both. Read the moving boundary before committing to the next connection.",
+          "uk": "З’єднайте текстовий острів перед простором зображень або пройдіть довшим нижнім маршрутом навколо обох. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "Describe the Important Part", "uk": "Опишіть важливе" }
+      },
+      "id": "social-drone-community-connections-05",
+      "identity": "4305c0ba9b7ed02b",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Complete the community noticeboard and connect every remaining update point. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Завершіть дошку спільноти й з’єднайте всі точки оновлення. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Choose the central noticeboard first or connect the three update stations before the final crossing. Read the moving boundary before committing to the next connection.",
+          "uk": "Спершу оберіть центральну дошку або з’єднайте три станції оновлення перед фінальним перетином. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "Keep the Story Accurate", "uk": "Збережіть точність історії" }
+      },
+      "id": "social-drone-community-connections-06",
+      "identity": "9e27c0be361249fa",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

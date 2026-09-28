@@ -3,6 +3,8 @@ import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { attachControllerPracticeExit } from '../ui/controller-practice-exit.mjs';
+import { mountControlLab } from '../ui/control-lab.mjs';
+import { FOUR_CONTROLS_FIXTURE } from '../learning/control-lab-fixture.mjs';
 import {
   CONTROLLER_PREVIEW_FORMAT,
   parseControllerPreviewStatus,
@@ -47,6 +49,16 @@ const practiceExit = attachControllerPracticeExit({
   getTarget: (backward) => $(backward ? 'focus-game' : 'mission'),
   releaseInputs: releaseAll,
 });
+const conceptsButton = $('control-concepts-open');
+const concepts = conceptsButton
+  ? mountControlLab({
+      document,
+      window,
+      fixture: FOUR_CONTROLS_FIXTURE,
+      beforeOpen: disconnect,
+    })
+  : null;
+if (conceptsButton) conceptsButton.onclick = () => concepts.open(conceptsButton);
 const status = (message, error = false, busy = false) => {
   const lease = presenter.begin({ message });
   if (!busy) lease.finish({ message, state: error ? 'error' : 'ready' });
@@ -397,6 +409,7 @@ window.addEventListener('pagehide', (event) => {
   if (event.persisted) return;
   disposed = true;
   practiceExit.destroy();
+  concepts?.dispose();
   clearInterval(heartbeat);
   observer.disconnect();
   window.removeEventListener('message', receiveStatus);

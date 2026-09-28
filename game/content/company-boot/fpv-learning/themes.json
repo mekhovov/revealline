@@ -1,0 +1,121 @@
+{
+  "themes": [
+    {
+      "actorRecipes": {
+        "border-patrol": "fpv-caged",
+        "bouncer": "fpv-caged",
+        "claimed-rover": "fpv-caged",
+        "contour-patrol": "fpv-caged",
+        "eroder": "fpv-caged",
+        "lane-boss": "fpv-caged",
+        "relay-sentinel": "fpv-caged"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "fpv-learning-marker",
+        "carrier": "fpv-learning-marker",
+        "fiber": "fpv-learning-marker",
+        "impact": "fpv-learning-marker",
+        "interceptor": "fpv-learning-marker",
+        "scout": "fpv-learning-marker",
+        "trapper": "fpv-learning-marker"
+      },
+      "coverColor": "#102635",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "fpv-learning-home",
+      "labels": {
+        "ability": "Support",
+        "boss": "Practice quad",
+        "currency": "Connections",
+        "enemy": "Practice quad",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "FPV Learning",
+      "palette": {
+        "accent": "#77DCEB",
+        "danger": "#FFAE8A",
+        "field": "#102635",
+        "grid": "#294854",
+        "ink": "#102635",
+        "land": "#2D7892",
+        "muted": "#B8D2DD",
+        "paper": "#F4FCFF",
+        "safe": "#A4E8B8",
+        "sky": "#D2F2F6"
+      },
+      "patrolShape": "spark",
+      "player": "fpv-learning-marker",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "chiptune",
+        "id": "fpv-learning-discovery",
+        "name": "FPV Learning",
+        "root": 60,
+        "scale": "major",
+        "tempo": 110
+      },
+      "subtitle": "Explore, connect and discover something worth keeping."
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "fpv-caged",
+        "bouncer": "fpv-caged",
+        "claimed-rover": "fpv-caged",
+        "contour-patrol": "fpv-caged",
+        "eroder": "fpv-caged",
+        "lane-boss": "fpv-caged",
+        "relay-sentinel": "fpv-caged"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "fpv-learning-marker",
+        "carrier": "fpv-learning-marker",
+        "fiber": "fpv-learning-marker",
+        "impact": "fpv-learning-marker",
+        "interceptor": "fpv-learning-marker",
+        "scout": "fpv-learning-marker",
+        "trapper": "fpv-learning-marker"
+      },
+      "coverColor": "#102635",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "fpv-meet-aircraft-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Practice quad",
+        "currency": "Connections",
+        "enemy": "Practice quad",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "FPV Learning",
+      "palette": {
+        "accent": "#77DCEB",
+        "danger": "#FFAE8A",
+        "field": "#102635",
+        "grid": "#294854",
+        "ink": "#102635",
+        "land": "#2D7892",
+        "muted": "#B8D2DD",
+        "paper": "#F4FCFF",
+        "safe": "#A4E8B8",
+        "sky": "#D2F2F6"
+      },
+      "patrolShape": "spark",
+      "player": "fpv-learning-marker",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "chiptune",
+        "id": "fpv-learning-discovery",
+        "name": "FPV Learning",
+        "root": 60,
+        "scale": "major",
+        "tempo": 110
+      },
+      "subtitle": "Explore, connect and discover something worth keeping."
+    }
+  ],
+  "version": "xonix-themes.v1"
+}

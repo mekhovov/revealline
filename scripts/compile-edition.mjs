@@ -10,6 +10,7 @@ import {
   validateEditionLessonBundle,
   validateEditionRewardBundle,
 } from '../game/editions/project.mjs';
+import { verifyCampaignLocalization } from '../game/editions/localization.mjs';
 import {
   createEditionRuntimeCatalog,
   editionRelativePath,
@@ -132,6 +133,7 @@ export async function collectEditionSelectedFiles({ catalog, editionIds, read })
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
       ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+      ...(campaign.localizationPath ? [campaign.localizationPath] : []),
     ]),
     ...selected.editions.flatMap((edition) => [
       ...Object.values(edition.boot ?? {}),
@@ -413,6 +415,7 @@ export async function compileEdition({
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
       ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+      ...(campaign.localizationPath ? [campaign.localizationPath] : []),
     ]),
   );
   for (const edition of runtimeCatalog.editions) {
@@ -447,6 +450,7 @@ export async function compileEdition({
         campaign.sourcePath,
         ...(campaign.lessonPath ? [campaign.lessonPath] : []),
         ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+        ...(campaign.localizationPath ? [campaign.localizationPath] : []),
       ])
       .filter((file) => !selectedData.has(file)),
     ...catalog.assets.map((asset) => asset.path).filter((file) => !selectedMedia.has(file)),
@@ -652,6 +656,12 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
     }
     if (descriptor.lessonPath)
       validateEditionLessonBundle(readJSON(files.get(descriptor.lessonPath)), project);
+    if (descriptor.localizationPath)
+      await verifyCampaignLocalization(
+        readJSON(files.get(descriptor.localizationPath)),
+        project,
+        descriptor,
+      );
   }
   for (const edition of runtimeCatalog.editions) {
     const rewards = [];

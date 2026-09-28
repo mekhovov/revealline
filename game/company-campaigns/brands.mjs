@@ -1,4 +1,10 @@
 import { COMPANY_CAMPAIGNS } from './catalog.mjs';
+import {
+  CURRICULUM_BRANDS,
+  CURRICULUM_IDENTITIES,
+  curriculumCampaignIds,
+} from './curriculum-brands.mjs';
+import { CURRICULUM_CAMPAIGNS } from './curriculum.mjs';
 
 export const COMPANY_BRANDS = Object.freeze([
   {
@@ -119,9 +125,17 @@ export const COMPANY_BRANDS = Object.freeze([
       },
     ],
   },
+  ...CURRICULUM_BRANDS,
 ]);
 
 const choices = [
+  ...CURRICULUM_IDENTITIES.map((item) => [
+    item.id,
+    item.id,
+    item.name,
+    'learners',
+    curriculumCampaignIds(item.id),
+  ]),
   [
     'coupa-all',
     'coupa',
@@ -406,6 +420,7 @@ export const COMPANY_EDITIONS = Object.freeze(
 );
 
 const palettes = {
+  ...Object.fromEntries(CURRICULUM_IDENTITIES.map((item) => [item.id, item.palette])),
   coupa: {
     ink: '#081D4D',
     paper: '#FFFFFF',
@@ -447,11 +462,13 @@ export function createCompanyTheme(brandId) {
   const brand = COMPANY_BRANDS.find((item) => item.id === brandId);
   if (!brand) throw new TypeError('Choose a registered company.');
   const player = brand.actorSetId;
+  const curriculum = CURRICULUM_IDENTITIES.find((item) => item.id === brandId);
   return {
     id: brand.themeId,
     name: brand.name,
-    subtitle:
-      brandId === 'coupa'
+    subtitle: curriculum
+      ? 'Explore, connect and discover something worth keeping.'
+      : brandId === 'coupa'
         ? 'Connected work. Shared possibilities.'
         : 'Build together. Connect the community.',
     family: 'company',
@@ -460,8 +477,19 @@ export function createCompanyTheme(brandId) {
     enemyShape: 'cube',
     patrolShape: 'spark',
     bossShape: 'core',
-    actorRecipes:
-      brandId === 'droneaid-nl'
+    actorRecipes: curriculum
+      ? Object.fromEntries(
+          [
+            'bouncer',
+            'border-patrol',
+            'contour-patrol',
+            'claimed-rover',
+            'eroder',
+            'lane-boss',
+            'relay-sentinel',
+          ].map((role) => [role, curriculum.recipe]),
+        )
+      : brandId === 'droneaid-nl'
         ? Object.fromEntries(
             [
               'bouncer',
@@ -482,8 +510,16 @@ export function createCompanyTheme(brandId) {
             'lane-boss': 'backlog-knot',
             'relay-sentinel': 'backlog-knot',
           },
-    soundtrack:
-      brandId === 'coupa'
+    soundtrack: curriculum
+      ? {
+          id: `${brandId}-discovery`,
+          name: curriculum.name,
+          genre: curriculum.genre,
+          tempo: curriculum.tempo,
+          root: curriculum.root,
+          scale: curriculum.genre === 'ambient' ? 'dorian' : 'major',
+        }
+      : brandId === 'coupa'
         ? {
             id: 'village-connections',
             name: 'Village Connections',
@@ -509,8 +545,8 @@ export function createCompanyTheme(brandId) {
     labels: {
       objective: 'Connection',
       supply: 'Support station',
-      enemy: brandId === 'droneaid-nl' ? 'Practice quad' : 'Paper tangle',
-      boss: brandId === 'droneaid-nl' ? 'Practice lead' : 'Backlog knot',
+      enemy: curriculum?.enemy ?? (brandId === 'droneaid-nl' ? 'Practice quad' : 'Paper tangle'),
+      boss: curriculum?.enemy ?? (brandId === 'droneaid-nl' ? 'Practice lead' : 'Backlog knot'),
       currency: 'Connections',
       ability: 'Support',
     },
@@ -692,6 +728,30 @@ export function createCompanyThemes(brandId) {
   const base = createCompanyTheme(brandId);
   return [
     base,
+    ...CURRICULUM_CAMPAIGNS.filter((item) => item.brandId === brandId).map((item) => {
+      const theme = { ...structuredClone(base), id: `${item.id}-theme` };
+      if (!item.look) return theme;
+      const { field, land, accent, recipe, enemy, genre, tempo, root } = item.look;
+      return {
+        ...theme,
+        name: `${base.name} · ${item.name}`,
+        subtitle: item.name,
+        palette: { ...theme.palette, field, land, accent },
+        coverColor: field,
+        actorRecipes: Object.fromEntries(
+          Object.keys(theme.actorRecipes).map((role) => [role, recipe]),
+        ),
+        labels: { ...theme.labels, enemy },
+        soundtrack: {
+          id: `${item.id}-score`,
+          name: item.name,
+          genre,
+          tempo,
+          root,
+          scale: genre === 'ambient' ? 'dorian' : 'major',
+        },
+      };
+    }),
     ...COMPANY_CAMPAIGNS.filter((c) => c.brandId === brandId && campaignLooks[c.id]).map(
       (campaign) => {
         const [name, field, land, accent, recipe, enemy, genre, tempo, root] =

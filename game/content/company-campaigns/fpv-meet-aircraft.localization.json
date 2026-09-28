@@ -1,0 +1,110 @@
+{
+  "campaignId": "fpv-meet-aircraft",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "Meet the Aircraft", "uk": "Знайомство з дроном" } },
+      "id": "fpv-meet-aircraft",
+      "identity": "8b8147ba63ff1d37",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Reveal the civilian model’s structure. Physical bench demonstrations require propellers removed.",
+          "uk": "Відкрийте конструкцію цивільної моделі. Для фізичних перевірок на столі знімайте пропелери."
+        },
+        "design.routeDecision": {
+          "en": "Take short returns to the central frame island or a wider capture around its open west side.",
+          "uk": "Робіть короткі повернення до центрального острова рами або ширше захоплення його західного боку."
+        },
+        "name": { "en": "The Frame", "uk": "Рама" }
+      },
+      "id": "fpv-meet-aircraft-01",
+      "identity": "024ac5c1fba36ba8",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect four stations. Motors and props have different roles; remove physical props for bench work.",
+          "uk": "З’єднайте чотири станції. Двигуни й пропелери мають різні ролі; для роботи на столі пропелери знімають."
+        },
+        "design.routeDecision": {
+          "en": "Choose adjacent workstations for short cuts or opposing stations for a broader capture.",
+          "uk": "Оберіть сусідні станції для коротких відсічень або протилежні для ширшого захоплення."
+        },
+        "name": { "en": "Motion Makers", "uk": "Джерела руху" }
+      },
+      "id": "fpv-meet-aircraft-02",
+      "identity": "76d5edd6f9343dc3",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Link the electronics aisles. This role model is not a connection procedure.",
+          "uk": "З’єднайте електронні ряди. Ця модель ролей не є процедурою підключення."
+        },
+        "design.routeDecision": {
+          "en": "Use either offset electronics return before crossing the central power aisle.",
+          "uk": "Скористайтеся будь-яким зміщеним поверненням електроніки перед перетином центрального проходу енергії."
+        },
+        "name": { "en": "The ESC", "uk": "Регулятор ESC" }
+      },
+      "id": "fpv-meet-aircraft-03",
+      "identity": "418d72e3a385b2bc",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Reveal a quieter nested court and distinguish sensing from commanding.",
+          "uk": "Відкрийте спокійний вкладений двір і розрізніть вимірювання та команди."
+        },
+        "design.routeDecision": {
+          "en": "Build a return through the outer court before linking the smaller sensor gallery.",
+          "uk": "Побудуйте повернення через зовнішній двір перед з’єднанням малої галереї датчиків."
+        },
+        "name": { "en": "The Flight Controller", "uk": "Польотний контролер" }
+      },
+      "id": "fpv-meet-aircraft-04",
+      "identity": "7841a61a028cfc15",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect twin bays and separate control information from the camera view.",
+          "uk": "З’єднайте два простори й відокремте інформацію керування від зображення камери."
+        },
+        "design.routeDecision": {
+          "en": "Secure the control bay or video bay first, using their crossing as a safe return.",
+          "uk": "Спершу відкрийте простір керування або відео, використовуючи спільний перехід для безпечного повернення."
+        },
+        "name": { "en": "Two Different Links", "uk": "Два різні канали" }
+      },
+      "id": "fpv-meet-aircraft-05",
+      "identity": "373ecaaf64b4fa21",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Combine earlier returns. Physical bench work remains props-off and component-specific.",
+          "uk": "Поєднайте попередні повернення. Фізична робота на столі потребує знятих пропелерів та інструкцій для конкретних деталей."
+        },
+        "design.routeDecision": {
+          "en": "Join the support hub first or link the energy and information islands before the final broad cut.",
+          "uk": "Спершу з’єднайте опорний вузол або острови енергії та інформації перед широким фінальним відсіченням."
+        },
+        "name": { "en": "The Whole Aircraft", "uk": "Цілий дрон" }
+      },
+      "id": "fpv-meet-aircraft-06",
+      "identity": "d4de8b18bb4d99d0",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

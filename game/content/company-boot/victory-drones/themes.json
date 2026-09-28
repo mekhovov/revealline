@@ -1,0 +1,179 @@
+{
+  "themes": [
+    {
+      "actorRecipes": {
+        "border-patrol": "stale-fragments",
+        "bouncer": "stale-fragments",
+        "claimed-rover": "stale-fragments",
+        "contour-patrol": "stale-fragments",
+        "eroder": "stale-fragments",
+        "lane-boss": "stale-fragments",
+        "relay-sentinel": "stale-fragments"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "victory-drones-marker",
+        "carrier": "victory-drones-marker",
+        "fiber": "victory-drones-marker",
+        "impact": "victory-drones-marker",
+        "interceptor": "victory-drones-marker",
+        "scout": "victory-drones-marker",
+        "trapper": "victory-drones-marker"
+      },
+      "coverColor": "#242329",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "victory-drones-home",
+      "labels": {
+        "ability": "Support",
+        "boss": "Unanswered fragment",
+        "currency": "Connections",
+        "enemy": "Unanswered fragment",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "Victory Drones",
+      "palette": {
+        "accent": "#F5CE61",
+        "danger": "#FFA994",
+        "field": "#242329",
+        "grid": "#444149",
+        "ink": "#242329",
+        "land": "#82713B",
+        "muted": "#D6CCB1",
+        "paper": "#FFFBEA",
+        "safe": "#A9E6CA",
+        "sky": "#F8EBC2"
+      },
+      "patrolShape": "spark",
+      "player": "victory-drones-marker",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "chiptune",
+        "id": "victory-drones-discovery",
+        "name": "Victory Drones",
+        "root": 62,
+        "scale": "major",
+        "tempo": 102
+      },
+      "subtitle": "Explore, connect and discover something worth keeping."
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "stale-fragments",
+        "bouncer": "stale-fragments",
+        "claimed-rover": "stale-fragments",
+        "contour-patrol": "stale-fragments",
+        "eroder": "stale-fragments",
+        "lane-boss": "stale-fragments",
+        "relay-sentinel": "stale-fragments"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "victory-drones-marker",
+        "carrier": "victory-drones-marker",
+        "fiber": "victory-drones-marker",
+        "impact": "victory-drones-marker",
+        "interceptor": "victory-drones-marker",
+        "scout": "victory-drones-marker",
+        "trapper": "victory-drones-marker"
+      },
+      "coverColor": "#242329",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "victory-drones-knowledge-connects-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Unanswered fragment",
+        "currency": "Connections",
+        "enemy": "Unanswered fragment",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "Victory Drones",
+      "palette": {
+        "accent": "#F5CE61",
+        "danger": "#FFA994",
+        "field": "#242329",
+        "grid": "#444149",
+        "ink": "#242329",
+        "land": "#82713B",
+        "muted": "#D6CCB1",
+        "paper": "#FFFBEA",
+        "safe": "#A9E6CA",
+        "sky": "#F8EBC2"
+      },
+      "patrolShape": "spark",
+      "player": "victory-drones-marker",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "chiptune",
+        "id": "victory-drones-discovery",
+        "name": "Victory Drones",
+        "root": 62,
+        "scale": "major",
+        "tempo": 102
+      },
+      "subtitle": "Explore, connect and discover something worth keeping."
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "missing-cloud",
+        "bouncer": "missing-cloud",
+        "claimed-rover": "missing-cloud",
+        "contour-patrol": "missing-cloud",
+        "eroder": "missing-cloud",
+        "lane-boss": "missing-cloud",
+        "relay-sentinel": "missing-cloud"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "victory-drones-marker",
+        "carrier": "victory-drones-marker",
+        "fiber": "victory-drones-marker",
+        "impact": "victory-drones-marker",
+        "interceptor": "victory-drones-marker",
+        "scout": "victory-drones-marker",
+        "trapper": "victory-drones-marker"
+      },
+      "coverColor": "#212D43",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "victory-drones-ideas-understanding-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Unanswered fragment",
+        "currency": "Connections",
+        "enemy": "Unclear assumption",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "Victory Drones · Ideas into Understanding",
+      "palette": {
+        "accent": "#FFDC7C",
+        "danger": "#FFA994",
+        "field": "#212D43",
+        "grid": "#444149",
+        "ink": "#242329",
+        "land": "#365C88",
+        "muted": "#D6CCB1",
+        "paper": "#FFFBEA",
+        "safe": "#A9E6CA",
+        "sky": "#F8EBC2"
+      },
+      "patrolShape": "spark",
+      "player": "victory-drones-marker",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "chiptune",
+        "id": "victory-drones-ideas-understanding-score",
+        "name": "Ideas into Understanding",
+        "root": 67,
+        "scale": "major",
+        "tempo": 108
+      },
+      "subtitle": "Ideas into Understanding"
+    }
+  ],
+  "version": "xonix-themes.v1"
+}

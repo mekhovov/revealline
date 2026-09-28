@@ -13,6 +13,7 @@ export async function mountEditionRewards({
   document: doc,
   window: win,
   writer,
+  previewSession = null,
   pause,
   getRun,
   getJourneyProfile,
@@ -20,7 +21,8 @@ export async function mountEditionRewards({
   getJourneyDurable,
   getReducedMotion = () => false,
 }) {
-  if (!provider.rewards?.length) return { refresh() {}, dispose() {} };
+  if (!provider.rewards?.length)
+    return { refresh() {}, snapshot: () => ({ state: null, progress: [] }), dispose() {} };
   const tr = (key, values) => t(`interface:completionRewards.${key}`, values);
   const localized = (value) => value.locales[getLocale()] ?? value.locales.en;
   const node = (tag, text, className) => {
@@ -103,12 +105,17 @@ export async function mountEditionRewards({
   upload.accept = 'application/json,.json';
   importLabel.append(labelText, upload);
   data.append(dataTitle, dataNote, exportButton, retrySave, importLabel, status);
+  if (previewSession) {
+    exportButton.hidden = true;
+    retrySave.hidden = true;
+    importLabel.hidden = true;
+  }
   doc.getElementById('settings-panel-data').append(data);
   const store = createRewardStore({
     editionId: provider.editionId,
     backend: createRewardBackend({
       editionId: provider.editionId,
-      indexedDB: win.indexedDB,
+      indexedDB: previewSession ? null : win.indexedDB,
       canWrite: () => writer.writable,
     }),
     onStatus: () => {
@@ -132,6 +139,7 @@ export async function mountEditionRewards({
     retrySave.disabled = saved.durable;
   }
   function download() {
+    if (previewSession) return;
     const url = win.URL.createObjectURL(new Blob([store.export()], { type: 'application/json' }));
     const anchor = node('a');
     anchor.href = url;
@@ -141,6 +149,7 @@ export async function mountEditionRewards({
   }
   let importVisit = 0;
   upload.onchange = async () => {
+    if (previewSession) return;
     const visit = ++importVisit;
     try {
       const file = upload.files?.[0];
@@ -189,6 +198,13 @@ export async function mountEditionRewards({
       context.campaignIds.includes(definition.campaignId),
     );
   }
+  function saveNotice() {
+    const note = node('p', tr('sessionOnly'), 'completion-reward-save-note');
+    note.setAttribute('role', 'status');
+    note.setAttribute('aria-live', 'polite');
+    note.setAttribute('aria-atomic', 'true');
+    return note;
+  }
   function renderShelf() {
     const focused = shelf.contains(doc.activeElement) ? doc.activeElement : null;
     const title = node('h3', tr('collection'));
@@ -210,6 +226,7 @@ export async function mountEditionRewards({
       grid.append(card);
     }
     shelf.replaceChildren(title, grid);
+    if (state.receipts.length && !store.status().durable) shelf.append(saveNotice());
     restoreFocus(focused);
   }
   function renderResult(animate = false) {
@@ -242,6 +259,7 @@ export async function mountEditionRewards({
       result.append(node('p', discovery ? localized(discovery).paragraphs[0] : copy.teaser));
     if (won) {
       result.append(exploreButton(receipt, 'result'));
+      if (!store.status().durable) result.append(saveNotice());
     }
     const finale = availableDefinitions().find(
       (item) => item.campaignId === definition.campaignId && item.scope.kind === 'campaign',
@@ -406,6 +424,9 @@ export async function mountEditionRewards({
   refresh();
   return {
     refresh,
+    // Read-only projection for the expedition selector. Retained promises, rather
+    // than newly published conditions, remain the player's finish line.
+    snapshot: () => ({ state, progress }),
     dispose() {
       disposed = true;
       importVisit++;

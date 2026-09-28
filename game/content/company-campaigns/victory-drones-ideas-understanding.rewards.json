@@ -1,0 +1,731 @@
+[
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-ideas-understanding",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-ideas-understanding-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A rolling classroom cart starts a useful scientific question.",
+        "title": "Observe Before Explaining"
+      },
+      "uk": {
+        "teaser": "Рух навчального візка починає корисне наукове запитання.",
+        "title": "Спостерігайте перед поясненням"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-ideas-understanding-01-image",
+        "locales": {
+          "en": {
+            "alt": "Observe Before Explaining — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Observe Before Explaining"
+          },
+          "uk": {
+            "alt": "Спостерігайте перед поясненням — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Спостерігайте перед поясненням"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-ideas-understanding-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Victory Drones publicly connects education with an expert community. Our separate civilian science exhibit begins with an invented observation: a small cart travelled farther on surface A than surface B.",
+              "“The cart travelled farther” is an observation. “Surface A produced less resistance” is a possible explanation that needs a fair comparison. NASA’s learning guide distinguishes a testable idea from the observations used to examine it. What else might have differed?"
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" },
+              {
+                "title": "NASA Space Place — Steps in the scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Observe Before Explaining"
+          },
+          "uk": {
+            "paragraphs": [
+              "Victory Drones публічно поєднує освіту з експертною спільнотою. Наша окрема цивільна виставка починається з вигаданого спостереження: малий візок проїхав далі поверхнею A, ніж B.",
+              "«Візок проїхав далі» — спостереження. «Поверхня A створила менший опір» — можливе пояснення, яке потребує коректного порівняння. Посібник NASA розрізняє перевірювану ідею та спостереження для її дослідження. Що ще могло відрізнятися?"
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" },
+              {
+                "title": "NASA Space Place — Steps in the scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Спостерігайте перед поясненням"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "d8c6721ca9bbbec4" },
+            { "difficulty": "standard", "gameplayId": "8d8dce4d47fd5912" },
+            { "difficulty": "expert", "gameplayId": "d36031d7f66376e2" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-ideas-understanding-01", "kind": "mission" }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-ideas-understanding",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-ideas-understanding-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Discover why an action–reaction pair acts on different objects.",
+        "title": "Forces Come in Pairs"
+      },
+      "uk": {
+        "teaser": "Дізнайтеся, чому пара сил взаємодії діє на різні тіла.",
+        "title": "Сили взаємодії"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-ideas-understanding-02-image",
+        "locales": {
+          "en": {
+            "alt": "Forces Come in Pairs — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Forces Come in Pairs"
+          },
+          "uk": {
+            "alt": "Сили взаємодії — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Сили взаємодії"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-ideas-understanding-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Newton’s third law describes a pair of equal and opposite interaction forces on different objects. The two forces do not cancel on a single object because they act on different bodies.",
+              "In our illustrated example, a hand pushes a wall and the wall pushes the hand. Draw one arrow on each object, then name the object each arrow belongs to. This everyday model explains a relationship without requiring a powered aircraft demonstration."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              }
+            ],
+            "title": "Forces Come in Pairs"
+          },
+          "uk": {
+            "paragraphs": [
+              "Третій закон Ньютона описує рівні й протилежні сили взаємодії, що діють на різні тіла. Вони не врівноважують одна одну на одному тілі, бо прикладені до різних тіл.",
+              "В ілюстрованому прикладі рука тисне на стіну, а стіна — на руку. Намалюйте по стрілці на кожному тілі та назвіть, до якого тіла належить стрілка. Повсякденна модель пояснює зв’язок без демонстрації дрона під живленням."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              }
+            ],
+            "title": "Сили взаємодії"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "9f0897fa3d14b3f9" },
+            { "difficulty": "standard", "gameplayId": "18b642e16f619f4d" },
+            { "difficulty": "expert", "gameplayId": "b423db76bf852e54" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-02"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-ideas-understanding-02", "kind": "mission" }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-ideas-understanding",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-ideas-understanding-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Two arrows can tell a different story from one.",
+        "title": "The Net Force"
+      },
+      "uk": {
+        "teaser": "Дві стрілки можуть розповісти іншу історію, ніж одна.",
+        "title": "Рівнодійна сил"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-ideas-understanding-03-image",
+        "locales": {
+          "en": {
+            "alt": "The Net Force — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Net Force"
+          },
+          "uk": {
+            "alt": "Рівнодійна сил — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Рівнодійна сил"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-ideas-understanding-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The net force combines all forces acting on one object, including their directions. Zero net force means no change in velocity; it does not necessarily mean the object is stationary.",
+              "Our fictional cart diagram shows equal left and right forces. A cart already moving straight can keep a constant velocity in this idealized model. Name the assumption before applying it: the diagram includes all relevant external forces, including any resistance."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Equilibrium",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/equilibrium/"
+              }
+            ],
+            "title": "The Net Force"
+          },
+          "uk": {
+            "paragraphs": [
+              "Рівнодійна поєднує всі сили на одному тілі з урахуванням напрямків. Нульова рівнодійна означає відсутність зміни швидкості як вектора, але не обов’язково нерухомість.",
+              "На вигаданій схемі візка показано рівні сили ліворуч і праворуч. Візок, що вже рухається прямо, може зберігати сталу швидкість в ідеалізованій моделі. Назвіть припущення: схема враховує всі суттєві зовнішні сили, зокрема можливий опір."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Equilibrium",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/equilibrium/"
+              }
+            ],
+            "title": "Рівнодійна сил"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6c750c7b9be2ecad" },
+            { "difficulty": "standard", "gameplayId": "a1a1b7f48f07b7c8" },
+            { "difficulty": "expert", "gameplayId": "6d7d6552afc33ccb" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-03"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-ideas-understanding-03", "kind": "mission" }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-ideas-understanding",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-ideas-understanding-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "An arrow tells you more than a number alone.",
+        "title": "Direction Matters"
+      },
+      "uk": {
+        "teaser": "Стрілка повідомляє більше, ніж саме число.",
+        "title": "Напрямок має значення"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-ideas-understanding-04-image",
+        "locales": {
+          "en": {
+            "alt": "Direction Matters — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Direction Matters"
+          },
+          "uk": {
+            "alt": "Напрямок має значення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Напрямок має значення"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-ideas-understanding-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "A vector describes magnitude and direction. In a diagram, an arrow’s length can represent magnitude and its tip shows direction, provided the diagram states its scale.",
+              "Two fictional arrows both represent a force of 2 newtons, but one points left and the other up. They have equal magnitudes and different directions. Explain why “both are 2” leaves out information. The arcade board’s directions are a metaphor, not a flight-control model."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Vector components",
+                "url": "https://www.grc.nasa.gov/WWW/K-12/BGP/vectpart.html"
+              }
+            ],
+            "title": "Direction Matters"
+          },
+          "uk": {
+            "paragraphs": [
+              "Вектор описує величину й напрямок. На схемі довжина стрілки може передавати величину, а вістря — напрямок, якщо вказано масштаб.",
+              "Дві вигадані стрілки позначають силу 2 ньютони, але одна спрямована ліворуч, інша — вгору. Величини рівні, напрямки різні. Поясніть, яку інформацію втрачає «обидві дорівнюють 2». Напрямки ігрового поля — метафора, а не модель керування польотом."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Vector components",
+                "url": "https://www.grc.nasa.gov/WWW/K-12/BGP/vectpart.html"
+              }
+            ],
+            "title": "Напрямок має значення"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "117e55fa16a18c03" },
+            { "difficulty": "standard", "gameplayId": "012e697eb5ef8c27" },
+            { "difficulty": "expert", "gameplayId": "c494287cf45ff567" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-04"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-ideas-understanding-04", "kind": "mission" }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-ideas-understanding",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-ideas-understanding-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A classroom cart puzzle asks which difference you can explain.",
+        "title": "A Fair Comparison"
+      },
+      "uk": {
+        "teaser": "Загадка навчального візка запитує, яку відмінність можна пояснити.",
+        "title": "Коректне порівняння"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-ideas-understanding-05-image",
+        "locales": {
+          "en": {
+            "alt": "A Fair Comparison — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Fair Comparison"
+          },
+          "uk": {
+            "alt": "Коректне порівняння — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Коректне порівняння"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-ideas-understanding-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Return to the fictional cart. If both its starting push and surface change, a different distance does not identify which change mattered. NASA’s learning guide separates changing variables from conditions kept alike.",
+              "Design the comparison on paper: keep the cart and starting conditions alike, change the surface, and record the result. Name a possible measurement uncertainty. These invented data are a reasoning exercise, not a claim that a real experiment occurred."
+            ],
+            "sources": [
+              {
+                "title": "NASA Space Place — Steps in the scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "A Fair Comparison"
+          },
+          "uk": {
+            "paragraphs": [
+              "Поверніться до вигаданого візка. Якщо змінити і початковий поштовх, і поверхню, інша відстань не покаже, яка зміна вплинула. Посібник NASA розрізняє змінні величини й умови, що залишають однаковими.",
+              "Сплануйте порівняння на папері: той самий візок та початкові умови, інша поверхня, запис результату. Назвіть можливу похибку вимірювання. Вигадані дані є вправою на міркування, а не твердженням про справжній дослід."
+            ],
+            "sources": [
+              {
+                "title": "NASA Space Place — Steps in the scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Коректне порівняння"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "351e3f987d4df748" },
+            { "difficulty": "standard", "gameplayId": "a2379b7a45e781bf" },
+            { "difficulty": "expert", "gameplayId": "7331e84e3ce6d727" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-05"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-ideas-understanding-05", "kind": "mission" }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-ideas-understanding",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-ideas-understanding-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Complete a collection of explanations with visible assumptions.",
+        "title": "Explain the Model"
+      },
+      "uk": {
+        "teaser": "Завершіть колекцію пояснень із видимими припущеннями.",
+        "title": "Поясніть модель"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-ideas-understanding-06-image",
+        "locales": {
+          "en": {
+            "alt": "Explain the Model — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Explain the Model"
+          },
+          "uk": {
+            "alt": "Поясніть модель — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Поясніть модель"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-ideas-understanding-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "NASA’s modeling guidance calls for a stated intended use, assumptions and limits. Our cart-and-arrow exhibit explains simple relationships; it does not reproduce an entire real vehicle.",
+              "Explain one new example, such as a book resting on a table: identify the object, name the relevant forces and state the simplified conditions. Then label what is omitted. The six cards offer a civilian learning routine, not Victory Drones certification or operational instruction."
+            ],
+            "sources": [
+              {
+                "title": "NASA Kennedy — Modeling and simulation FAQ",
+                "url": "https://public.ksc.nasa.gov/mns/faq/"
+              },
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              }
+            ],
+            "title": "Explain the Model"
+          },
+          "uk": {
+            "paragraphs": [
+              "Настанови NASA щодо моделей передбачають визначені мету використання, припущення й межі. Виставка візків та стрілок пояснює прості зв’язки, а не відтворює весь справжній транспортний засіб.",
+              "Поясніть новий приклад, як-от книжку на столі: визначте тіло, назвіть суттєві сили й спрощені умови. Потім позначте пропущене. Шість карток дають спосіб цивільного навчання, а не сертифікацію Victory Drones чи операційні вказівки."
+            ],
+            "sources": [
+              {
+                "title": "NASA Kennedy — Modeling and simulation FAQ",
+                "url": "https://public.ksc.nasa.gov/mns/faq/"
+              },
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              }
+            ],
+            "title": "Поясніть модель"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "89600aa3285649a1" },
+            { "difficulty": "standard", "gameplayId": "0edf88e79f39934e" },
+            { "difficulty": "expert", "gameplayId": "103d64fb8ccf7de0" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-ideas-understanding-06", "kind": "mission" }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-ideas-understanding",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-ideas-understanding-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "A Small Museum of Explanations"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Малий музей пояснень"
+      }
+    },
+    "payloads": [
+      {
+        "id": "victory-drones-ideas-understanding-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Arrange your six civilian science cards as a small exhibit: observation, interacting forces, net force, direction, a fair comparison and a clear explanation. Keep the example’s assumptions visible. A physical model helps answer a specific question; it never turns an arcade route into a flight or engineering qualification."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "A Small Museum of Explanations"
+          },
+          "uk": {
+            "paragraphs": [
+              "Розташуйте шість карток цивільної науки як малу виставку: спостереження, взаємодія сил, рівнодійна, напрямок, коректне порівняння та ясне пояснення. Залиште видимими припущення прикладу. Фізична модель допомагає відповісти на конкретне запитання, але ігровий маршрут не надає льотної чи інженерної кваліфікації."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Малий музей пояснень"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-ideas-understanding-01-image",
+        "locales": {
+          "en": {
+            "alt": "Observe Before Explaining — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Observe Before Explaining"
+          },
+          "uk": {
+            "alt": "Спостерігайте перед поясненням — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Спостерігайте перед поясненням"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-ideas-understanding-02-image",
+        "locales": {
+          "en": {
+            "alt": "Forces Come in Pairs — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Forces Come in Pairs"
+          },
+          "uk": {
+            "alt": "Сили взаємодії — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Сили взаємодії"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-ideas-understanding-03-image",
+        "locales": {
+          "en": {
+            "alt": "The Net Force — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Net Force"
+          },
+          "uk": {
+            "alt": "Рівнодійна сил — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Рівнодійна сил"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-ideas-understanding-04-image",
+        "locales": {
+          "en": {
+            "alt": "Direction Matters — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Direction Matters"
+          },
+          "uk": {
+            "alt": "Напрямок має значення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Напрямок має значення"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-ideas-understanding-05-image",
+        "locales": {
+          "en": {
+            "alt": "A Fair Comparison — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Fair Comparison"
+          },
+          "uk": {
+            "alt": "Коректне порівняння — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Коректне порівняння"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-ideas-understanding-06-image",
+        "locales": {
+          "en": {
+            "alt": "Explain the Model — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Explain the Model"
+          },
+          "uk": {
+            "alt": "Поясніть модель — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Поясніть модель"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-ideas-understanding-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "type": "url",
+        "url": "https://victory-drones.com/"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "d8c6721ca9bbbec4" },
+            { "difficulty": "standard", "gameplayId": "8d8dce4d47fd5912" },
+            { "difficulty": "expert", "gameplayId": "d36031d7f66376e2" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "9f0897fa3d14b3f9" },
+            { "difficulty": "standard", "gameplayId": "18b642e16f619f4d" },
+            { "difficulty": "expert", "gameplayId": "b423db76bf852e54" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6c750c7b9be2ecad" },
+            { "difficulty": "standard", "gameplayId": "a1a1b7f48f07b7c8" },
+            { "difficulty": "expert", "gameplayId": "6d7d6552afc33ccb" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "117e55fa16a18c03" },
+            { "difficulty": "standard", "gameplayId": "012e697eb5ef8c27" },
+            { "difficulty": "expert", "gameplayId": "c494287cf45ff567" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "351e3f987d4df748" },
+            { "difficulty": "standard", "gameplayId": "a2379b7a45e781bf" },
+            { "difficulty": "expert", "gameplayId": "7331e84e3ce6d727" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "89600aa3285649a1" },
+            { "difficulty": "standard", "gameplayId": "0edf88e79f39934e" },
+            { "difficulty": "expert", "gameplayId": "103d64fb8ccf7de0" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-ideas-understanding", "kind": "campaign" }
+  }
+]

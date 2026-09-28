@@ -167,3 +167,253 @@ body[data-edition-id] #shell-home {
   gap: 0.5rem;
   margin-block: 1rem;
 }
+.completion-reward-save-note {
+  padding: 0.6rem 0.8rem;
+  border-inline-start: 3px solid currentColor;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+/* The expedition keeps the canonical mission buttons, focus order and launch
+   guards. Only their arrangement and discovery annotations change. */
+#journey-chooser.edition-expedition[open] {
+  grid-template-rows: auto auto auto auto auto auto minmax(9rem, 1fr) auto;
+  overflow: auto;
+}
+/* Explicit tracks keep the mission viewport in its flexible row when compact
+   mode hides the introduction or a filter hides the campaign rail. */
+#journey-chooser.edition-expedition > h2 {
+  grid-row: 1;
+  margin-block: 0;
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+}
+#journey-chooser.edition-expedition > .journey-library-copy {
+  grid-row: 2;
+  display: none;
+}
+#journey-chooser.edition-expedition > .journey-filters {
+  grid-row: 3;
+  display: flex;
+  align-items: end;
+  gap: 0.75rem;
+}
+#journey-chooser.edition-expedition .journey-filter-details {
+  position: relative;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+}
+#journey-chooser.edition-expedition .journey-filter-details > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 0.9rem;
+  cursor: pointer;
+}
+#journey-chooser.edition-expedition .journey-filter-options {
+  position: absolute;
+  z-index: 5;
+  inset-inline-end: 0;
+  inset-block-start: 100%;
+  width: min(30rem, calc(100vw - 4rem));
+  max-height: min(25rem, 60dvh);
+  overflow: auto;
+  padding: 1rem;
+  background: var(--brand-ink, #081d4d);
+  border: 1px solid var(--brand-accent, #aee5ed);
+  border-radius: 0.6rem;
+  box-shadow: 0 1rem 2rem #0008;
+}
+#journey-chooser.edition-expedition > #journey-chooser-status {
+  grid-row: 4;
+}
+#journey-chooser.edition-expedition > .journey-campaign-rail {
+  grid-row: 5;
+}
+#journey-chooser.edition-expedition > .edition-expedition-toolbar {
+  grid-row: 6;
+}
+#journey-chooser.edition-expedition > .journey-cards {
+  grid-row: 7;
+}
+#journey-chooser.edition-expedition > .journey-footer {
+  grid-row: 8;
+}
+.edition-expedition-toolbar {
+  min-width: 0;
+  margin-block: 0.65rem;
+}
+.edition-expedition-toolbar h3,
+.edition-expedition-toolbar h4,
+.edition-expedition-toolbar p {
+  margin-block: 0 0.35rem;
+}
+.edition-expedition-note,
+.edition-expedition-teaser,
+.edition-expedition-requirements {
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+.edition-expedition-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 0.65rem;
+}
+.edition-expedition-controls button {
+  min-height: 44px;
+}
+.edition-expedition-controls [aria-pressed='true'] {
+  color: var(--brand-ink, #081d4d);
+  background: var(--brand-accent, #aee5ed);
+  border-color: var(--brand-accent, #aee5ed);
+}
+.edition-expedition-overview {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  max-height: 14rem;
+  overflow: auto;
+  padding: 0.2rem;
+}
+.edition-expedition-campaign {
+  flex: 1 0 min(24rem, 82%);
+  min-width: 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--brand-paper, #e5eddd) 25%, transparent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--brand-primary, #1565c0) 15%, transparent);
+  overflow-wrap: anywhere;
+}
+.edition-expedition-campaign[data-finale-earned='true'] {
+  border-color: var(--brand-accent, #aee5ed);
+  box-shadow: inset 3px 0 var(--brand-accent, #aee5ed);
+}
+.edition-expedition-finale {
+  font-weight: 700;
+}
+#journey-chooser.edition-expedition-map .journey-cards {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem 1.5rem;
+  padding: 1rem;
+  isolation: isolate;
+  border-radius: 1rem;
+  background:
+    linear-gradient(120deg, #081525ed, #081525b8), var(--expedition-scene, none),
+    radial-gradient(
+      ellipse at 30% 25%,
+      color-mix(in srgb, var(--brand-primary, #1565c0) 22%, transparent),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse at 85% 80%,
+      color-mix(in srgb, var(--brand-accent, #aee5ed) 10%, transparent),
+      transparent 60%
+    );
+  background-size: cover;
+  background-position: center;
+}
+#journey-chooser.edition-expedition-map .journey-card {
+  position: relative;
+  min-width: 0;
+  min-block-size: 11rem;
+  border-radius: 1.25rem;
+  background: var(--brand-ink, #081d4d);
+  border-color: color-mix(in srgb, var(--brand-paper, #e5eddd) 40%, transparent);
+}
+#journey-chooser.edition-expedition-map .journey-card[data-expedition-connect='true']::after {
+  position: absolute;
+  z-index: -1;
+  content: '';
+  inset-inline-start: 100%;
+  inset-block-start: 50%;
+  width: 1.5rem;
+  border-block-start: 3px dotted var(--brand-accent, #aee5ed);
+  pointer-events: none;
+}
+#journey-chooser.edition-expedition-map .journey-card:nth-child(3n)::after,
+#journey-chooser.edition-expedition-map .journey-card[data-expedition-layout='gallery']::after {
+  display: none;
+}
+#journey-chooser.edition-expedition-map .journey-card-number {
+  display: grid;
+  place-items: center;
+  align-self: start;
+  min-height: 3rem;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  font-size: 1.35rem;
+  color: var(--brand-accent, #aee5ed);
+}
+#journey-chooser.edition-expedition-map
+  .journey-card[data-expedition-layout='mosaic']
+  .journey-card-number {
+  border-radius: 0.35rem;
+}
+#journey-chooser.edition-expedition .journey-card[data-expedition-cleared='true'] {
+  border-color: var(--brand-accent, #aee5ed);
+}
+#journey-chooser.edition-expedition
+  .journey-card[data-expedition-collected='true']
+  .edition-expedition-discovery {
+  color: var(--brand-accent, #aee5ed);
+}
+.edition-expedition-discovery {
+  grid-column: 1 / -1;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+#journey-chooser.edition-expedition-list .journey-cards {
+  grid-template-columns: minmax(0, 1fr);
+}
+#journey-chooser.edition-expedition-list .journey-card {
+  min-block-size: auto;
+}
+@media (max-width: 900px) {
+  #journey-chooser.edition-expedition-map .journey-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #journey-chooser.edition-expedition-map .journey-card:nth-child(3n)::after {
+    display: block;
+  }
+  #journey-chooser.edition-expedition-map .journey-card:nth-child(2n)::after,
+  #journey-chooser.edition-expedition-map .journey-card[data-expedition-layout='gallery']::after {
+    display: none;
+  }
+}
+@media (max-width: 560px) {
+  #journey-chooser.edition-expedition-map .journey-cards {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+    padding: 0.5rem;
+  }
+  #journey-chooser.edition-expedition-map .journey-card[data-expedition-connect='true']::after {
+    display: block;
+    inset-inline-start: 2.5rem;
+    inset-block-start: 100%;
+    width: 0;
+    height: 1.5rem;
+    border-block-start: 0;
+    border-inline-start: 3px dotted var(--brand-accent, #aee5ed);
+  }
+  #journey-chooser.edition-expedition-map .journey-card[data-expedition-layout='gallery']::after {
+    display: none;
+  }
+  .edition-expedition-overview {
+    max-height: 8rem;
+  }
+}
+@media (max-height: 600px) {
+  .edition-expedition-toolbar h3,
+  .edition-expedition-note,
+  .edition-expedition-teaser {
+    display: none;
+  }
+  .edition-expedition-overview {
+    max-height: 5.5rem;
+  }
+  .edition-expedition-controls {
+    margin-block: 0.25rem;
+  }
+}

@@ -1,0 +1,381 @@
+{
+  "id": "ukraine-threads",
+  "levels": [
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "field-gap",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        }
+      ],
+      "foundations": [{ "h": 7, "w": 13, "x": 28, "y": 11 }],
+      "goal": { "coverage": 0.48 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 34.5, "y": 0.5 }],
+      "height": 36,
+      "id": "ukraine-threads-01",
+      "name": "Read the Cloth",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 14.5, "y": 8.5 }],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 34.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "field-gap",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 9, "x": 31, "y": 15 },
+        { "h": 4, "w": 9, "x": 11, "y": 23 },
+        { "h": 4, "w": 8, "x": 48, "y": 10 }
+      ],
+      "goal": { "coverage": 0.53 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 35.5, "y": 0.5 }],
+      "height": 36,
+      "id": "ukraine-threads-02",
+      "name": "Stitch Paths",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 15.5, "y": 8.5 }],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 35.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 2, "w": 15, "x": 15, "y": 10 },
+        { "h": 2, "w": 16, "x": 43, "y": 23 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "field-gap",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "second-gap",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 12.5,
+          "y": 27.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 12, "x": 28, "y": 8 },
+        { "h": 4, "w": 7, "x": 31, "y": 17 },
+        { "h": 3, "w": 12, "x": 28, "y": 26 }
+      ],
+      "goal": { "coverage": 0.56 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 34.5, "y": 0.5 }],
+      "height": 36,
+      "id": "ukraine-threads-03",
+      "name": "White on White",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 16.5, "y": 8.5 }],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 34.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 16, "w": 2, "x": 21, "y": 10 },
+        { "h": 16, "w": 2, "x": 47, "y": 10 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 12.5, "y": 18.5 }],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "field-gap",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-interference",
+          "speed": 2.52,
+          "type": "border-patrol",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "foundations": [
+        { "h": 6, "w": 15, "x": 12, "y": 18 },
+        { "h": 6, "w": 15, "x": 44, "y": 17 },
+        { "h": 4, "w": 11, "x": 30, "y": 25 }
+      ],
+      "goal": { "coverage": 0.5 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 19.5, "y": 0.5 }],
+      "height": 36,
+      "id": "ukraine-threads-04",
+      "name": "Many Local Voices",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 17.5, "y": 8.5 }],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 19.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [{ "h": 8, "w": 3, "x": 33, "y": 8 }],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 32.5, "y": 7.5 }],
+        "terrain": [{ "h": 3, "id": "slow-1", "kind": "slow", "w": 16, "x": 28, "y": 17 }],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "field-gap",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-interference",
+          "speed": 2.52,
+          "type": "border-patrol",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "foundations": [
+        { "h": 8, "w": 8, "x": 32, "y": 7 },
+        { "h": 8, "w": 8, "x": 32, "y": 22 },
+        { "h": 4, "w": 7, "x": 12, "y": 22 }
+      ],
+      "goal": { "coverage": 0.6 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 35.5, "y": 0.5 }],
+      "height": 36,
+      "id": "ukraine-threads-05",
+      "name": "A Rushnyk’s Story",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 18.5, "y": 8.5 }],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 35.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 11, "w": 2, "x": 24, "y": 8 },
+        { "h": 11, "w": 2, "x": 46, "y": 18 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 13.5 }],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "field-gap",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "second-gap",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 12.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-interference",
+          "speed": 2.52,
+          "type": "border-patrol",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "foundations": [
+        { "h": 8, "w": 13, "x": 29, "y": 13 },
+        { "h": 3, "w": 9, "x": 10, "y": 24 },
+        { "h": 4, "w": 9, "x": 49, "y": 8 },
+        { "h": 3, "w": 7, "x": 53, "y": 19 }
+      ],
+      "goal": { "coverage": 0.64 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 35.5, "y": 0.5 }],
+      "height": 36,
+      "id": "ukraine-threads-06",
+      "name": "Wear It Today",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 19.5, "y": 7.5 }],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 35.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 2, "w": 11, "x": 17, "y": 8 },
+        { "h": 2, "w": 12, "x": 45, "y": 26 }
+      ],
+      "width": 72
+    }
+  ],
+  "revision": "1",
+  "title": "Threads Across Ukraine",
+  "version": "xonix-campaign.v1"
+}

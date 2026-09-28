@@ -1,0 +1,110 @@
+{
+  "campaignId": "victory-drones-knowledge-connects",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "Knowledge Connects", "uk": "Знання єднають" } },
+      "id": "victory-drones-knowledge-connects",
+      "identity": "5d2d90a94a3be139",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Reveal the compass court and begin with a clear learning question.",
+          "uk": "Відкрийте двір компаса й почніть із чіткого навчального запитання."
+        },
+        "design.routeDecision": {
+          "en": "Use the crescent-shaped pair of returns or capture the open court in a wider loop.",
+          "uk": "Скористайтеся парою повернень у формі півмісяця або захопіть відкритий двір ширшою петлею."
+        },
+        "name": { "en": "A Learning Compass", "uk": "Навчальний компас" }
+      },
+      "id": "victory-drones-knowledge-connects-01",
+      "identity": "82fd0735322e968d",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the diagram bay and story bay through their shared return.",
+          "uk": "З’єднайте простори схем та історій через спільне повернення."
+        },
+        "design.routeDecision": {
+          "en": "Choose the diagram bay or story bay first; the narrow middle return links both routes.",
+          "uk": "Спершу оберіть простір схем або історій; вузьке центральне повернення з’єднує обидва маршрути."
+        },
+        "name": { "en": "Two Ways to Explain", "uk": "Два способи пояснити" }
+      },
+      "id": "victory-drones-knowledge-connects-02",
+      "identity": "b0e28b8fb9e125ba",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Link three evidence stations while separating two moving threats.",
+          "uk": "З’єднайте три станції доказів, розділяючи дві рухомі загрози."
+        },
+        "design.routeDecision": {
+          "en": "Capture the near evidence island, then split or encircle the two distant stations.",
+          "uk": "Захопіть ближній острів доказів, а потім розділіть або обійдіть дві дальні станції."
+        },
+        "name": { "en": "Ask and Verify", "uk": "Запитайте й перевірте" }
+      },
+      "id": "victory-drones-knowledge-connects-03",
+      "identity": "00c9a3d5f124118f",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Cross the spacious listening gallery through its sheltered inner court.",
+          "uk": "Перетніть простору галерею слухання через захищений внутрішній двір."
+        },
+        "design.routeDecision": {
+          "en": "Use the large quiet court to break a long crossing into two shorter decisions.",
+          "uk": "Скористайтеся великим спокійним двором, щоб розділити довгий перетин на два коротші рішення."
+        },
+        "name": { "en": "Room for Questions", "uk": "Місце для запитань" }
+      },
+      "id": "victory-drones-knowledge-connects-04",
+      "identity": "078fe61f7ccb26db",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Join the comparison shelves and preserve a route around the slow band.",
+          "uk": "З’єднайте полиці порівняння та збережіть шлях навколо повільної смуги."
+        },
+        "design.routeDecision": {
+          "en": "Connect the upper reference shelves before the longer lower route, or reverse the order.",
+          "uk": "З’єднайте верхні довідкові полиці перед довшим нижнім маршрутом або змініть порядок."
+        },
+        "name": { "en": "Compare Before Concluding", "uk": "Порівняйте перед висновком" }
+      },
+      "id": "victory-drones-knowledge-connects-05",
+      "identity": "061b59c16306cc68",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the learning network and reveal its shared explanation.",
+          "uk": "З’єднайте навчальну мережу й відкрийте спільне пояснення."
+        },
+        "design.routeDecision": {
+          "en": "Choose the shorter reference chain or broad outer gallery, returning through the central forum.",
+          "uk": "Оберіть коротший ланцюг довідок або широку зовнішню галерею з поверненням через центральний форум."
+        },
+        "name": { "en": "Teach It Forward", "uk": "Поясніть наступному" }
+      },
+      "id": "victory-drones-knowledge-connects-06",
+      "identity": "0c3345ccbb4f7207",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

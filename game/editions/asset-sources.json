@@ -3546,6 +3546,130 @@
         "height": 887
       },
       "prompt": "Use case: precise-object-edit. Asset type: landscape game mission background, 2:1 composition. Primary request: Reframe the existing workshop photograph slightly wider so the entire FPV quad is inside the frame, including every propeller blade with comfortable margin at the right edge. Input image: edit target; preserve its subject, room, objects, camera angle, lighting, colors, Dutch workshop atmosphere, goggles, component trays, shelves, plants, and blue-yellow cloth. Composition/framing: keep the 2:1 landscape layout and quiet gray work mat centered; move or widen the framing only as much as needed to reveal the clipped rear-right propeller tip and add a small clean margin around the whole drone. Constraints: change only the framing and the minimal newly exposed edge area; preserve the exact recognizable four-motor carbon-frame FPV drone, camera, antenna, goggles and workshop arrangement; realistic materials; no people; no readable labels; no new text; no logos; no weapons; no active flight; no watermark. Avoid: clipped drone parts, added or missing motors, duplicated propellers, deformed frame, altered workshop identity, dramatic cinematic effects, shallow crop."
+    },
+    {
+      "id": "ukraine-culture-home",
+      "path": "game/editions/assets/discovery/ukraine-culture-home-v1.png",
+      "revision": 1,
+      "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144",
+      "bytes": 1106859,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated original and exact selected derivative inspected; human artwork approval deferred",
+      "promptBrief": "Original fictional contemporary museum atrium: six textile-gallery alcoves, suspended undyed linen, tactile white-on-white sample, separate red/charcoal geometric sample, anonymous visitor silhouettes, midnight navy, warm ivory and vermilion, painterly miniature diorama. No copied historical artifact, traditional symbolic claim, text, logos or UI.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-a2f3-7290-927a-06dce78afc5a/exec-27389f7c-45e3-4be7-b402-12bbe6660ee0.png",
+        "sha256": "ee8415866ef649fc927176e0547d6be162715f45abf10fd1507653acea1818a6",
+        "bytes": 2713312,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "width": 960,
+        "height": 640,
+        "aspectRatioPreserved": true
+      },
+      "reusedFor": "Temporary shared campaign scene; distinct mission compositions remain pending."
+    },
+    {
+      "id": "social-drone-ua-home",
+      "path": "game/editions/assets/discovery/social-drone-ua-home-v1.png",
+      "revision": 1,
+      "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185",
+      "bytes": 1043972,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated original and exact selected derivative inspected; human artwork approval deferred",
+      "promptBrief": "Original fictional civilian community makerspace, converted brick workshop, amber windows, turquoise workbench mats, component trays, anonymous adult volunteers exchanging a notebook, propeller-free hobby quad frames on stands, books and plants, blue/yellow accents, overhead cables, dusk indigo. No real facility, weapons, diagrams, text, logos or UI.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-a2f3-7290-927a-06dce78afc5a/exec-61acb9bd-e770-4873-87cc-fcb5acf01a69.png",
+        "sha256": "6b7ae66f964ad7be36acba1693d44c70d1174e5ed4a470e871026e4be0e9636b",
+        "bytes": 2330310,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "width": 960,
+        "height": 640,
+        "aspectRatioPreserved": true
+      },
+      "reusedFor": "Temporary shared campaign scene; distinct mission compositions remain pending."
+    },
+    {
+      "id": "victory-drones-home",
+      "path": "game/editions/assets/discovery/victory-drones-home-v1.png",
+      "revision": 1,
+      "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3",
+      "bytes": 1150183,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated original and exact selected derivative inspected; human artwork approval deferred",
+      "promptBrief": "Original imagined civilian learning observatory: six interconnected library islands beneath glass canopy, amber abstract diagrams, charcoal worktops, warm lamps, blue glass walkways, books, anonymous adult students, protected-propeller educational aircraft display. Sophisticated miniature diorama in gold/charcoal/cream. No real venue, military scene, instruction diagram, text, logos or UI.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-a2f3-7290-927a-06dce78afc5a/exec-5b4bea28-1603-4d7d-bd53-3f93836b0155.png",
+        "sha256": "034117653e1a96e0026ad180974527aae07f1a93839ad57aecf5e838e0385e44",
+        "bytes": 2771943,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "width": 960,
+        "height": 640,
+        "aspectRatioPreserved": true
+      },
+      "reusedFor": "Temporary shared campaign scene; distinct mission compositions remain pending."
+    },
+    {
+      "id": "fpv-learning-home",
+      "path": "game/editions/assets/discovery/fpv-learning-home-v1.png",
+      "revision": 1,
+      "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8",
+      "bytes": 1062590,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated original and exact selected derivative inspected; human artwork approval deferred",
+      "promptBrief": "Original civilian FPV science-workshop diorama at dawn: disconnected X quad frame without props on blue cutting mat, four copper-wound motors on separate pedestals, camera in glass case, small boards in separate trays, curved magnifier lamp, teal blue and tangerine light. No wiring, schematic labels, weapons, assembly procedure, text, logos or UI.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-a2f3-7290-927a-06dce78afc5a/exec-2815cf4d-675a-4a8e-a8b4-aaca56060186.png",
+        "sha256": "d13d81d488df06dadaf2ff5aa06e5c9bc89673ffaee11d1dde8dca8589544148",
+        "bytes": 2453401,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "width": 960,
+        "height": 640,
+        "aspectRatioPreserved": true
+      },
+      "reusedFor": "Temporary shared campaign scene; distinct mission compositions remain pending."
+    },
+    {
+      "id": "met-degas-ukrainian-dress-436157",
+      "path": "game/editions/assets/discovery/met-degas-436157.jpg",
+      "revision": 1,
+      "sha256": "4416b3cd2225bef59671d5bd06a4c73633e27d73a06713dd1d8d336ea1257d11",
+      "bytes": 387825,
+      "rights": "CC0-1.0",
+      "source": "https://www.metmuseum.org/art/collection/search/436157",
+      "download": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/436157/795059/main-image",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseEvidence": "https://www.metmuseum.org/hubs/open-access",
+      "publication": "public",
+      "review": "Public Domain label and Open Access policy checked 2026-09-28; image inspected; no alterations",
+      "title": "Dancer in Ukrainian Dress",
+      "creator": "Edgar Degas",
+      "date": "1899",
+      "accession": "29.100.556",
+      "credit": "The Metropolitan Museum of Art, H. O. Havemeyer Collection, Bequest of Mrs. H. O. Havemeyer, 1929.",
+      "context": "An artist’s interpretation, not a technical garment record or evidence of universal Ukrainian dress."
     }
   ]
 }

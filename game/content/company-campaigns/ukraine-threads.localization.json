@@ -1,0 +1,110 @@
+{
+  "campaignId": "ukraine-threads",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "Threads Across Ukraine", "uk": "Нитки України" } },
+      "id": "ukraine-threads",
+      "identity": "3f9fb043000f90cc",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Reveal the exhibition square and read the record before interpreting its ornament.",
+          "uk": "Відкрийте виставкову площу й прочитайте запис перед тлумаченням орнаменту."
+        },
+        "design.routeDecision": {
+          "en": "Return through the exhibition plinth or open the wide label gallery first.",
+          "uk": "Повертайтеся через виставковий п’єдестал або спершу відкрийте широку галерею підписів."
+        },
+        "name": { "en": "Read the Cloth", "uk": "Прочитайте тканину" }
+      },
+      "id": "ukraine-threads-01",
+      "identity": "a3b8e1c90407c916",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect offset sample aisles and compare a material with a technique.",
+          "uk": "З’єднайте зміщені ряди зразків і порівняйте матеріал із технікою."
+        },
+        "design.routeDecision": {
+          "en": "Choose the upper sample aisle or connect the two lower plinths before crossing between rows.",
+          "uk": "Оберіть верхній ряд зразків або з’єднайте два нижні п’єдестали перед перетином між рядами."
+        },
+        "name": { "en": "Stitch Paths", "uk": "Шляхи стібків" }
+      },
+      "id": "ukraine-threads-02",
+      "identity": "371265188b358f4f",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Reveal nested galleries and notice texture as well as colour.",
+          "uk": "Відкрийте вкладені галереї й помічайте фактуру поряд із кольором."
+        },
+        "design.routeDecision": {
+          "en": "Use the outer textile ledge before moving into the small inner gallery.",
+          "uk": "Скористайтеся зовнішнім текстильним виступом перед переходом до малої внутрішньої галереї."
+        },
+        "name": { "en": "White on White", "uk": "Білим по білому" }
+      },
+      "id": "ukraine-threads-03",
+      "identity": "0c46cad51c302a23",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect two exhibit branches without reducing them to one pattern.",
+          "uk": "З’єднайте дві гілки виставки, не зводячи їх до одного візерунка."
+        },
+        "design.routeDecision": {
+          "en": "Explore either exhibit branch first, returning through the wide shared reading terrace.",
+          "uk": "Спершу дослідіть будь-яку гілку виставки, повертаючись через широку спільну терасу читання."
+        },
+        "name": { "en": "Many Local Voices", "uk": "Розмаїття місцевих голосів" }
+      },
+      "id": "ukraine-threads-04",
+      "identity": "4dfcdbf65a790d7d",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the long exhibition hall and its small provenance alcoves.",
+          "uk": "З’єднайте довгу виставкову залу та малі ніші історії предмета."
+        },
+        "design.routeDecision": {
+          "en": "Use the hall’s side alcoves to shorten exposed crossings toward the far exhibit.",
+          "uk": "Використайте бічні ніші зали для коротших відкритих перетинів до дальнього експоната."
+        },
+        "name": { "en": "A Rushnyk’s Story", "uk": "Історія рушника" }
+      },
+      "id": "ukraine-threads-05",
+      "identity": "d0ca657ad54d3da6",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Join the contemporary design plaza and complete the textile exhibit.",
+          "uk": "З’єднайте площу сучасного дизайну й завершіть текстильну виставку."
+        },
+        "design.routeDecision": {
+          "en": "Connect the central festival platform or take three smaller design islands in sequence.",
+          "uk": "З’єднайте центральну фестивальну платформу або послідовно пройдіть три менші дизайнерські острови."
+        },
+        "name": { "en": "Wear It Today", "uk": "Носіть сьогодні" }
+      },
+      "id": "ukraine-threads-06",
+      "identity": "2eeb8b633efe2a02",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

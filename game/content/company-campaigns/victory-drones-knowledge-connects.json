@@ -1,0 +1,500 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [
+    {
+      "alt": "An original imaginary learning observatory with library islands, glass walkways and an educational aircraft exhibit.",
+      "bytes": 1150183,
+      "format": "AssetRevisionV1",
+      "height": 640,
+      "id": "victory-drones-home-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/victory-drones-home-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3",
+      "width": 960
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 1,
+      "discovery": {
+        "exhibitLayout": "route",
+        "finaleRewardRef": { "id": "victory-drones-knowledge-connects-finale", "revision": "1" }
+      },
+      "format": "CampaignDesignV1",
+      "id": "victory-drones-knowledge-connects",
+      "missionIds": [
+        "victory-drones-knowledge-connects-01",
+        "victory-drones-knowledge-connects-02",
+        "victory-drones-knowledge-connects-03",
+        "victory-drones-knowledge-connects-04",
+        "victory-drones-knowledge-connects-05",
+        "victory-drones-knowledge-connects-06"
+      ],
+      "name": "Knowledge Connects",
+      "revision": "1"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "victory-drones-knowledge-connects",
+  "maps": [
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 5, "w": 6, "x": 25, "y": 9 },
+        { "h": 5, "w": 11, "x": 24, "y": 19 }
+      ],
+      "height": 36,
+      "id": "victory-drones-knowledge-connects-01-map",
+      "name": "A Learning Compass",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 28.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 11, "x": 13, "y": 16 },
+        { "h": 4, "w": 12, "x": 45, "y": 13 }
+      ],
+      "height": 36,
+      "id": "victory-drones-knowledge-connects-02-map",
+      "name": "Two Ways to Explain",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 18.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 8, "w": 3, "x": 33, "y": 8 },
+        { "h": 5, "w": 3, "x": 33, "y": 24 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 5, "w": 8, "x": 12, "y": 10 },
+        { "h": 4, "w": 9, "x": 37, "y": 20 },
+        { "h": 4, "w": 8, "x": 53, "y": 9 }
+      ],
+      "height": 36,
+      "id": "victory-drones-knowledge-connects-03-map",
+      "name": "Ask and Verify",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 16.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [{ "h": 13, "w": 2, "x": 26, "y": 11 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [{ "h": 7, "w": 20, "x": 27, "y": 14 }],
+      "height": 36,
+      "id": "victory-drones-knowledge-connects-04-map",
+      "name": "Room for Questions",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 36.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 12, "x": 14, "y": 9 },
+        { "h": 2, "w": 12, "x": 48, "y": 26 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 11, "x": 30, "y": 8 },
+        { "h": 3, "w": 12, "x": 14, "y": 26 },
+        { "h": 4, "w": 13, "x": 43, "y": 24 }
+      ],
+      "height": 36,
+      "id": "victory-drones-knowledge-connects-05-map",
+      "name": "Compare Before Concluding",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "terrain": [{ "h": 3, "id": "slow-1", "kind": "slow", "w": 16, "x": 28, "y": 16 }],
+      "walls": [
+        { "h": 10, "w": 2, "x": 20, "y": 12 },
+        { "h": 10, "w": 2, "x": 49, "y": 10 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 5, "w": 10, "x": 31, "y": 9 },
+        { "h": 5, "w": 10, "x": 32, "y": 22 },
+        { "h": 4, "w": 9, "x": 10, "y": 24 }
+      ],
+      "height": 36,
+      "id": "victory-drones-knowledge-connects-06-map",
+      "name": "Teach It Forward",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 12, "x": 15, "y": 14 },
+        { "h": 2, "w": 10, "x": 48, "y": 14 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "field-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.48,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+        "combines": [],
+        "counterplay": "Read the field drifter before leaving safety and return to an interior island when a broad cut becomes risky.",
+        "difficulty": {
+          "band": 1,
+          "coordination": 0,
+          "execution": 1,
+          "mechanicLoad": 1,
+          "planning": 1,
+          "threatDensity": 1,
+          "timePressure": 0
+        },
+        "durationSeconds": [60, 180],
+        "introduces": ["foundations"],
+        "lesson": "Reveal the compass court and begin with a clear learning question.",
+        "mastery": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+        "memorableMoment": "An original steel-blue learning observatory with a yellow compass floor and open question stations.",
+        "pacingBeat": "discover",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "rewardRef": { "id": "victory-drones-knowledge-connects-01-discovery", "revision": "1" },
+        "routeDecision": "Use the crescent-shaped pair of returns or capture the open court in a wider loop."
+      },
+      "format": "MissionDesignV1",
+      "id": "victory-drones-knowledge-connects-01",
+      "map": { "id": "victory-drones-knowledge-connects-01-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "A Learning Compass",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 14.5, "y": 8.5 }],
+      "presentation": {
+        "backgroundAssetId": "victory-drones-home-picture",
+        "themeId": "victory-drones-knowledge-connects-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "field-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.53,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+        "combines": [],
+        "counterplay": "Read the field drifter before leaving safety and return to an interior island when a broad cut becomes risky.",
+        "difficulty": {
+          "band": 1,
+          "coordination": 0,
+          "execution": 1,
+          "mechanicLoad": 1,
+          "planning": 1,
+          "threatDensity": 1,
+          "timePressure": 0
+        },
+        "durationSeconds": [60, 180],
+        "introduces": [],
+        "lesson": "Connect the diagram bay and story bay through their shared return.",
+        "mastery": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+        "memorableMoment": "Twin steel-blue pavilions connected by a yellow bridge, with diagram and original story displays.",
+        "pacingBeat": "choose",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "rewardRef": { "id": "victory-drones-knowledge-connects-02-discovery", "revision": "1" },
+        "routeDecision": "Choose the diagram bay or story bay first; the narrow middle return links both routes."
+      },
+      "format": "MissionDesignV1",
+      "id": "victory-drones-knowledge-connects-02",
+      "map": { "id": "victory-drones-knowledge-connects-02-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Two Ways to Explain",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 15.5, "y": 8.5 }],
+      "presentation": {
+        "backgroundAssetId": "victory-drones-home-picture",
+        "themeId": "victory-drones-knowledge-connects-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "field-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 12.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.56,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+        "combines": [],
+        "counterplay": "Read the field drifter before leaving safety and return to an interior island when a broad cut becomes risky.",
+        "difficulty": {
+          "band": 1,
+          "coordination": 0,
+          "execution": 1,
+          "mechanicLoad": 1,
+          "planning": 1,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [60, 180],
+        "introduces": [],
+        "lesson": "Link three evidence stations while separating two moving threats.",
+        "mastery": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+        "memorableMoment": "Three luminous source pedestals in an asymmetric blue research hall with yellow index ribbons.",
+        "pacingBeat": "combine",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "rewardRef": { "id": "victory-drones-knowledge-connects-03-discovery", "revision": "1" },
+        "routeDecision": "Capture the near evidence island, then split or encircle the two distant stations."
+      },
+      "format": "MissionDesignV1",
+      "id": "victory-drones-knowledge-connects-03",
+      "map": { "id": "victory-drones-knowledge-connects-03-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Ask and Verify",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 16.5, "y": 8.5 }],
+      "presentation": {
+        "backgroundAssetId": "victory-drones-home-picture",
+        "themeId": "victory-drones-knowledge-connects-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "field-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-interference",
+          "role": "perimeter-patrol",
+          "tier": "measured",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 27.5, "y": 14.5 }],
+      "coverage": 0.5,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+        "combines": ["foundations", "perimeter-patrol"],
+        "counterplay": "Watch both the field drifter and perimeter patrol; use interior returns to shorten an exposed cut.",
+        "difficulty": {
+          "band": 2,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 2,
+          "planning": 2,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [60, 180],
+        "introduces": ["perimeter-patrol"],
+        "lesson": "Cross the spacious listening gallery through its sheltered inner court.",
+        "mastery": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+        "memorableMoment": "A quiet blue open-air learning court with yellow seating islands and an illuminated question wall.",
+        "pacingBeat": "breathe",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "rewardRef": { "id": "victory-drones-knowledge-connects-04-discovery", "revision": "1" },
+        "routeDecision": "Use the large quiet court to break a long crossing into two shorter decisions."
+      },
+      "format": "MissionDesignV1",
+      "id": "victory-drones-knowledge-connects-04",
+      "map": { "id": "victory-drones-knowledge-connects-04-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Room for Questions",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 17.5, "y": 8.5 }],
+      "presentation": {
+        "backgroundAssetId": "victory-drones-home-picture",
+        "themeId": "victory-drones-knowledge-connects-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "field-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-interference",
+          "role": "perimeter-patrol",
+          "tier": "measured",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 30.5, "y": 8.5 }],
+      "coverage": 0.6,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+        "combines": ["foundations", "perimeter-patrol"],
+        "counterplay": "Watch both the field drifter and perimeter patrol; use interior returns to shorten an exposed cut.",
+        "difficulty": {
+          "band": 2,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 2,
+          "planning": 2,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [180, 360],
+        "introduces": [],
+        "lesson": "Join the comparison shelves and preserve a route around the slow band.",
+        "mastery": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+        "memorableMoment": "A stepped blue comparison library with paired display frames and a yellow reading terrace.",
+        "pacingBeat": "mastery",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "rewardRef": { "id": "victory-drones-knowledge-connects-05-discovery", "revision": "1" },
+        "routeDecision": "Connect the upper reference shelves before the longer lower route, or reverse the order."
+      },
+      "format": "MissionDesignV1",
+      "id": "victory-drones-knowledge-connects-05",
+      "map": { "id": "victory-drones-knowledge-connects-05-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Compare Before Concluding",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 18.5, "y": 8.5 }],
+      "presentation": {
+        "backgroundAssetId": "victory-drones-home-picture",
+        "themeId": "victory-drones-knowledge-connects-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "field-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 12.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-interference",
+          "role": "perimeter-patrol",
+          "tier": "measured",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 31.5, "y": 9.5 }],
+      "coverage": 0.64,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+        "combines": ["foundations", "perimeter-patrol"],
+        "counterplay": "Watch both the field drifter and perimeter patrol; use interior returns to shorten an exposed cut.",
+        "difficulty": {
+          "band": 2,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 2,
+          "planning": 2,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [180, 360],
+        "introduces": [],
+        "lesson": "Connect the learning network and reveal its shared explanation.",
+        "mastery": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+        "memorableMoment": "A completed original learning network joining a compass, source hall and shared forum with yellow bridges.",
+        "pacingBeat": "resolve",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "rewardRef": { "id": "victory-drones-knowledge-connects-06-discovery", "revision": "1" },
+        "routeDecision": "Choose the shorter reference chain or broad outer gallery, returning through the central forum."
+      },
+      "format": "MissionDesignV1",
+      "id": "victory-drones-knowledge-connects-06",
+      "map": { "id": "victory-drones-knowledge-connects-06-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Teach It Forward",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 19.5, "y": 8.5 }],
+      "presentation": {
+        "backgroundAssetId": "victory-drones-home-picture",
+        "themeId": "victory-drones-knowledge-connects-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Knowledge Connects",
+  "packs": [
+    {
+      "campaignIds": ["victory-drones-knowledge-connects"],
+      "format": "PackDesignV1",
+      "id": "victory-drones-knowledge-connects-pack",
+      "name": "Knowledge Connects",
+      "revision": "1"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "1"
+}

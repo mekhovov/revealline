@@ -1,0 +1,679 @@
+[
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-knowledge-connects",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-knowledge-connects-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Discover the public purpose behind a learning community.",
+        "title": "A Learning Compass"
+      },
+      "uk": {
+        "teaser": "Дізнайтеся про публічну мету навчальної спільноти.",
+        "title": "Навчальний компас"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-knowledge-connects-01-image",
+        "locales": {
+          "en": {
+            "alt": "A Learning Compass — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Learning Compass"
+          },
+          "uk": {
+            "alt": "Навчальний компас — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Навчальний компас"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-knowledge-connects-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Victory Drones describes a Ukrainian volunteer project for technology education, community support and advocacy. Its public activities include military and civilian audiences; this game’s practical examples remain civilian.",
+              "Choose a question for our fictional science club: “What role does this part have?” gives a clearer destination than “Learn everything.” A useful question helps you choose a suitable source."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "A Learning Compass"
+          },
+          "uk": {
+            "paragraphs": [
+              "Victory Drones описує український волонтерський проєкт технологічної освіти, підтримки спільноти та адвокації. Його публічні напрями охоплюють військову й цивільну аудиторії; практичні приклади гри залишаються цивільними.",
+              "Оберіть запитання для вигаданого гуртка: «Яка роль цієї деталі?» задає чіткішу мету, ніж «Вивчити все». Корисне запитання допомагає обрати доречне джерело."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Навчальний компас"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "64d9efa29bf12336" },
+            { "difficulty": "standard", "gameplayId": "4a22f70cb8070032" },
+            { "difficulty": "expert", "gameplayId": "0a56f1aa04c8d95b" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-knowledge-connects-01", "kind": "mission" }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-knowledge-connects",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-knowledge-connects-02-discovery",
+    "locales": {
+      "en": { "teaser": "Compare an explanation with an example.", "title": "Two Ways to Explain" },
+      "uk": { "teaser": "Порівняйте пояснення з прикладом.", "title": "Два способи пояснити" }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-knowledge-connects-02-image",
+        "locales": {
+          "en": {
+            "alt": "Two Ways to Explain — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Two Ways to Explain"
+          },
+          "uk": {
+            "alt": "Два способи пояснити — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Два способи пояснити"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-knowledge-connects-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Victory Drones’ public overview brings education and community into the same project. Our fictional gallery asks what a useful explanation can look like.",
+              "A diagram shows a relationship; an example shows its application. Explain one everyday idea twice: describe how a bookshelf supports books, then sketch it. Neither format automatically proves a claim."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Two Ways to Explain"
+          },
+          "uk": {
+            "paragraphs": [
+              "У публічному описі Victory Drones освіта й спільнота є частинами одного проєкту. Наша вигадана галерея запитує, яким буває корисне пояснення.",
+              "Схема показує зв’язок, а приклад — його застосування. Двічі поясніть повсякденну думку: опишіть, як полиця тримає книжки, а потім намалюйте це. Жоден формат сам по собі не доводить твердження."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Два способи пояснити"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "657e4d6b855234d4" },
+            { "difficulty": "standard", "gameplayId": "ae6b65d9fa16dd31" },
+            { "difficulty": "expert", "gameplayId": "ff004e41761efa82" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-02"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-knowledge-connects-02", "kind": "mission" }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-knowledge-connects",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-knowledge-connects-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A source and a limit make a claim easier to inspect.",
+        "title": "Ask and Verify"
+      },
+      "uk": {
+        "teaser": "Джерело й межі допомагають перевірити твердження.",
+        "title": "Запитайте й перевірте"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-knowledge-connects-03-image",
+        "locales": {
+          "en": {
+            "alt": "Ask and Verify — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Ask and Verify"
+          },
+          "uk": {
+            "alt": "Запитайте й перевірте — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Запитайте й перевірте"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-knowledge-connects-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "A fictional club card says a demonstration worked. Ask what was demonstrated, where the record came from and what it does not establish before repeating that claim.",
+              "The public project overview supports a statement about Victory Drones’ stated mission. It does not by itself prove that an invented game character completed a course or achieved a particular outcome."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Ask and Verify"
+          },
+          "uk": {
+            "paragraphs": [
+              "Картка вигаданого гуртка каже, що демонстрація вдалася. Перш ніж повторювати це, з’ясуйте, що демонстрували, звідки запис і чого він не доводить.",
+              "Публічний опис проєкту підтверджує заявлену місію Victory Drones. Сам по собі він не доводить, що вигаданий персонаж завершив курс або досяг певного результату."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Запитайте й перевірте"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a44b6da1aa75f921" },
+            { "difficulty": "standard", "gameplayId": "9e0988af65e2d8b8" },
+            { "difficulty": "expert", "gameplayId": "b9394b014753baab" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-03"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-knowledge-connects-03", "kind": "mission" }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-knowledge-connects",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-knowledge-connects-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Discover a calmer way to make an explanation useful.",
+        "title": "Room for Questions"
+      },
+      "uk": {
+        "teaser": "Дізнайтеся, як спокійно зробити пояснення кориснішим.",
+        "title": "Місце для запитань"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-knowledge-connects-04-image",
+        "locales": {
+          "en": {
+            "alt": "Room for Questions — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Room for Questions"
+          },
+          "uk": {
+            "alt": "Місце для запитань — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Місце для запитань"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-knowledge-connects-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "This original scene imagines a learner pausing an explanation. A useful response asks what is unclear instead of turning reading speed into a score.",
+              "Try “I can name the parts, but cannot explain their relationship yet.” That identifies a next step. Read every discovery at your own pace and revisit it in Collection."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Room for Questions"
+          },
+          "uk": {
+            "paragraphs": [
+              "Оригінальна сцена уявляє, як учасник зупиняє пояснення. Корисна відповідь уточнює незрозуміле, а не оцінює швидкість читання.",
+              "Спробуйте: «Я можу назвати частини, але ще не пояснюю їхній зв’язок». Це визначає наступний крок. Читайте відкриття у власному темпі та повертайтеся до них у колекції."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Місце для запитань"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "8c975df4c6b93c05" },
+            { "difficulty": "standard", "gameplayId": "2141631e7b8461a5" },
+            { "difficulty": "expert", "gameplayId": "14f96f5281acfb03" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-04"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-knowledge-connects-04", "kind": "mission" }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-knowledge-connects",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-knowledge-connects-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Two different examples can share a useful principle.",
+        "title": "Compare Before Concluding"
+      },
+      "uk": {
+        "teaser": "Два різні приклади можуть мати спільний принцип.",
+        "title": "Порівняйте перед висновком"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-knowledge-connects-05-image",
+        "locales": {
+          "en": {
+            "alt": "Compare Before Concluding — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Compare Before Concluding"
+          },
+          "uk": {
+            "alt": "Порівняйте перед висновком — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Порівняйте перед висновком"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-knowledge-connects-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Compare a labelled diagram with an unlabelled photograph in this fictional exercise. The photograph looks realistic; the diagram may explain a selected relationship more clearly. Decide what question each can answer.",
+              "A fair comparison asks both examples the same question and states what remains unknown. Attractive presentation and reliable evidence are different properties."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Compare Before Concluding"
+          },
+          "uk": {
+            "paragraphs": [
+              "У вигаданій вправі порівняйте підписану схему та фотографію без підписів. Фото реалістичне, а схема може ясніше пояснювати обраний зв’язок. На яке запитання відповідає кожен приклад?",
+              "Справедливе порівняння ставить обом прикладам те саме запитання й називає невідоме. Привабливе оформлення та надійні докази — різні властивості."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Порівняйте перед висновком"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "ed2e788adb9b27fa" },
+            { "difficulty": "standard", "gameplayId": "861b88b0ec9e3cd3" },
+            { "difficulty": "expert", "gameplayId": "2246243fb69f5b01" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-05"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-knowledge-connects-05", "kind": "mission" }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-knowledge-connects",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-knowledge-connects-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Complete a learning compass for another subject.",
+        "title": "Teach It Forward"
+      },
+      "uk": {
+        "teaser": "Завершіть навчальний компас для іншої теми.",
+        "title": "Поясніть наступному"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-knowledge-connects-06-image",
+        "locales": {
+          "en": {
+            "alt": "Teach It Forward — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Teach It Forward"
+          },
+          "uk": {
+            "alt": "Поясніть наступному — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Поясніть наступному"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-knowledge-connects-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "You collected questions, explanations, evidence, uncertainty and comparisons. Put them together by explaining a new everyday system, such as a bicycle, to an imaginary newcomer.",
+              "State the question, explain one relationship, attach a source and name one limit. Invite a question in return. This transferable learning routine is not an official Victory Drones qualification."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Teach It Forward"
+          },
+          "uk": {
+            "paragraphs": [
+              "Ви зібрали запитання, пояснення, докази, невизначеність і порівняння. Поєднайте їх, пояснюючи уявному новачку іншу повсякденну систему, наприклад велосипед.",
+              "Сформулюйте запитання, поясніть один зв’язок, додайте джерело й назвіть обмеження. Запросіть запитання у відповідь. Цей спосіб навчання не є офіційною кваліфікацією Victory Drones."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Поясніть наступному"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "50267b09c46b56d7" },
+            { "difficulty": "standard", "gameplayId": "c109d1c7fb98ccc8" },
+            { "difficulty": "expert", "gameplayId": "ebe9c6406a23e40f" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-knowledge-connects-06", "kind": "mission" }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-knowledge-connects",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-knowledge-connects-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "Your Learning Compass"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Ваш навчальний компас"
+      }
+    },
+    "payloads": [
+      {
+        "id": "victory-drones-knowledge-connects-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Plan a fictional civilian learning session with the six cards. Start with a question, choose a source, ask for an explanation, compare ideas, identify what remains unknown and agree on a next step. A confident answer needs clear evidence and limits."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Your Learning Compass"
+          },
+          "uk": {
+            "paragraphs": [
+              "За шістьма картками сплануйте вигадане цивільне заняття. Почніть із запитання, оберіть джерело, попросіть пояснення, порівняйте ідеї, визначте невідоме й узгодьте наступний крок. Упевнена відповідь потребує зрозумілих доказів і меж."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Ваш навчальний компас"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-knowledge-connects-01-image",
+        "locales": {
+          "en": {
+            "alt": "A Learning Compass — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Learning Compass"
+          },
+          "uk": {
+            "alt": "Навчальний компас — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Навчальний компас"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-knowledge-connects-02-image",
+        "locales": {
+          "en": {
+            "alt": "Two Ways to Explain — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Two Ways to Explain"
+          },
+          "uk": {
+            "alt": "Два способи пояснити — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Два способи пояснити"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-knowledge-connects-03-image",
+        "locales": {
+          "en": {
+            "alt": "Ask and Verify — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Ask and Verify"
+          },
+          "uk": {
+            "alt": "Запитайте й перевірте — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Запитайте й перевірте"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-knowledge-connects-04-image",
+        "locales": {
+          "en": {
+            "alt": "Room for Questions — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Room for Questions"
+          },
+          "uk": {
+            "alt": "Місце для запитань — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Місце для запитань"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-knowledge-connects-05-image",
+        "locales": {
+          "en": {
+            "alt": "Compare Before Concluding — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Compare Before Concluding"
+          },
+          "uk": {
+            "alt": "Порівняйте перед висновком — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Порівняйте перед висновком"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-home",
+          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+        },
+        "id": "victory-drones-knowledge-connects-06-image",
+        "locales": {
+          "en": {
+            "alt": "Teach It Forward — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Teach It Forward"
+          },
+          "uk": {
+            "alt": "Поясніть наступному — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Поясніть наступному"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-knowledge-connects-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "type": "url",
+        "url": "https://victory-drones.com/"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "64d9efa29bf12336" },
+            { "difficulty": "standard", "gameplayId": "4a22f70cb8070032" },
+            { "difficulty": "expert", "gameplayId": "0a56f1aa04c8d95b" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "657e4d6b855234d4" },
+            { "difficulty": "standard", "gameplayId": "ae6b65d9fa16dd31" },
+            { "difficulty": "expert", "gameplayId": "ff004e41761efa82" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a44b6da1aa75f921" },
+            { "difficulty": "standard", "gameplayId": "9e0988af65e2d8b8" },
+            { "difficulty": "expert", "gameplayId": "b9394b014753baab" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "8c975df4c6b93c05" },
+            { "difficulty": "standard", "gameplayId": "2141631e7b8461a5" },
+            { "difficulty": "expert", "gameplayId": "14f96f5281acfb03" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "ed2e788adb9b27fa" },
+            { "difficulty": "standard", "gameplayId": "861b88b0ec9e3cd3" },
+            { "difficulty": "expert", "gameplayId": "2246243fb69f5b01" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "50267b09c46b56d7" },
+            { "difficulty": "standard", "gameplayId": "c109d1c7fb98ccc8" },
+            { "difficulty": "expert", "gameplayId": "ebe9c6406a23e40f" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-knowledge-connects", "kind": "campaign" }
+  }
+]

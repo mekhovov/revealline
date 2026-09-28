@@ -399,6 +399,14 @@ test('unavailable storage keeps earned discoveries available with a session-only
   const result = f.doc.getElementById('completion-reward-result');
   assert.equal(result.dataset.reducedMotion, 'true');
   assert.equal(result.classList.contains('completion-reward-arrive'), false);
+  assert.equal(result.querySelector('.completion-reward-save-note').getAttribute('role'), 'status');
+  assert.equal(
+    f.doc
+      .getElementById('completion-reward-shelf')
+      .querySelector('.completion-reward-save-note')
+      .getAttribute('aria-live'),
+    'polite',
+  );
   assert.equal((await f.exportState()).receipts.length, 1);
 });
 

@@ -1,0 +1,735 @@
+[
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-community-connections",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-community-connections-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Turn “help with the event” into a brief someone can understand.",
+        "title": "One Shared Brief"
+      },
+      "uk": {
+        "teaser": "Перетворіть «допоможіть із заходом» на зрозумілий задум.",
+        "title": "Спільний задум"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-community-connections-01-image",
+        "locales": {
+          "en": {
+            "alt": "One Shared Brief — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "One Shared Brief"
+          },
+          "uk": {
+            "alt": "Спільний задум — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Спільний задум"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "social-drone-community-connections-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Social Drone’s public community page distinguishes contributors’ roles. Our separate fictional example is a civilian library science day: Olena welcomes visitors, Maksym prepares display labels, and nobody is assigned real equipment work.",
+              "A useful brief says “Prepare a table explaining three everyday mechanisms for Saturday’s library visitors.” Compare it with “Do something technical.” The first identifies an audience, a purpose and a concrete result without guessing how much time someone can offer."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "One Shared Brief"
+          },
+          "uk": {
+            "paragraphs": [
+              "Публічна сторінка Social Drone розрізняє ролі учасників. Наш окремий вигаданий приклад — цивільний день науки в бібліотеці: Олена зустрічає відвідувачів, Максим готує підписи; ніхто не отримує роботи зі справжнім обладнанням.",
+              "Зрозумілий задум: «Підготуйте стіл із поясненнями трьох повсякденних механізмів для суботніх відвідувачів бібліотеки». Порівняйте з «Зробіть щось технічне». Перший визначає аудиторію, мету й результат, не вгадуючи, скільки часу має учасник."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Спільний задум"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "f95a35ff097e9558" },
+            { "difficulty": "standard", "gameplayId": "8a95643f8c0683aa" },
+            { "difficulty": "expert", "gameplayId": "5ac5978501308e59" }
+          ],
+          "missionId": "social-drone-community-connections-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-community-connections-01", "kind": "mission" }
+  },
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-community-connections",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-community-connections-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A fictional box of booklets makes a small record puzzle.",
+        "title": "Count What Is Here"
+      },
+      "uk": {
+        "teaser": "Вигадана коробка буклетів створює невелику загадку обліку.",
+        "title": "Порахуйте наявне"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-community-connections-02-image",
+        "locales": {
+          "en": {
+            "alt": "Count What Is Here — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Count What Is Here"
+          },
+          "uk": {
+            "alt": "Порахуйте наявне — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Порахуйте наявне"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "social-drone-community-connections-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The original library fixture expects 12 printed booklets, but the table holds 8. A clear note says “8 received; 4 still missing,” not “all ready.” Nothing in this example is a real donation record.",
+              "Now imagine 2 more booklets arrive. Update the received count to 10 and the missing count to 2. Explain which observation justified the change. Accurate small records help the next volunteer avoid repeating a count or making an unsupported promise."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Count What Is Here"
+          },
+          "uk": {
+            "paragraphs": [
+              "В оригінальному бібліотечному прикладі очікують 12 буклетів, але на столі лежать 8. Зрозумілий запис: «8 отримано; 4 ще бракує», а не «все готово». Це не запис про справжню пожертву.",
+              "Уявіть, що надійшло ще 2 буклети. Оновіть отриману кількість до 10, а відсутню — до 2. Поясніть, яке спостереження підтверджує зміну. Точні малі записи допомагають наступному волонтеру не рахувати все повторно й не обіцяти непідтвердженого."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Порахуйте наявне"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6322240f91cb1c89" },
+            { "difficulty": "standard", "gameplayId": "f040490e468509cb" },
+            { "difficulty": "expert", "gameplayId": "c463d599483a120f" }
+          ],
+          "missionId": "social-drone-community-connections-02"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-community-connections-02", "kind": "mission" }
+  },
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-community-connections",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-community-connections-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Discover why “done” can leave a useful question unanswered.",
+        "title": "The Next Reader"
+      },
+      "uk": {
+        "teaser": "Дізнайтеся, чому «готово» може залишити корисне запитання без відповіді.",
+        "title": "Наступний читач"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-community-connections-03-image",
+        "locales": {
+          "en": {
+            "alt": "The Next Reader — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Next Reader"
+          },
+          "uk": {
+            "alt": "Наступний читач — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Наступний читач"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "social-drone-community-connections-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Our fictional display has three labels. Two are checked; the third still needs a source. “Labels done” hides the remaining work. “Two checked; Taras will add the third source before display” preserves the useful distinction.",
+              "W3C’s writing guidance recommends clear instructions. Apply that principle to this handoff: name the unfinished item and the next action, then ask whether the named person has actually accepted it. A proposed owner is not the same as an agreed handoff."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "The Next Reader"
+          },
+          "uk": {
+            "paragraphs": [
+              "Вигадана виставка має три підписи. Два перевірено, третьому ще потрібне джерело. «Підписи готові» приховує роботу. «Два перевірено; Тарас додасть третє джерело до виставки» зберігає важливу різницю.",
+              "Настанови W3C радять зрозумілі вказівки. Застосуйте принцип до передачі справ: назвіть незавершене й наступну дію та з’ясуйте, чи погодилася названа людина. Запропонований відповідальний — не те саме, що узгоджена передача справи."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Наступний читач"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "206ac95231fa5be6" },
+            { "difficulty": "standard", "gameplayId": "0f3f6acdf71b99ae" },
+            { "difficulty": "expert", "gameplayId": "3e0caed38e29871f" }
+          ],
+          "missionId": "social-drone-community-connections-03"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-community-connections-03", "kind": "mission" }
+  },
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-community-connections",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-community-connections-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Make a fictional invitation useful without relying on colour alone.",
+        "title": "An Invitation That Helps"
+      },
+      "uk": {
+        "teaser": "Зробіть вигадане запрошення корисним, не покладаючись лише на колір.",
+        "title": "Корисне запрошення"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-community-connections-04-image",
+        "locales": {
+          "en": {
+            "alt": "An Invitation That Helps — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "An Invitation That Helps"
+          },
+          "uk": {
+            "alt": "Корисне запрошення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Корисне запрошення"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "social-drone-community-connections-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Our library invitation says “Meet at the green door.” A visitor who cannot identify that colour still needs a way to find the room. Add “Reading room, ground floor, beside the main desk,” then keep the useful colour cue as extra information.",
+              "W3C recommends meaningful headings, clear instructions and concise writing. Split the fictional invitation into “Where,” “When” and “What to expect.” An inviting poster should help someone act, not just look attractive."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "An Invitation That Helps"
+          },
+          "uk": {
+            "paragraphs": [
+              "Бібліотечне запрошення каже: «Зустрінемося біля зелених дверей». Людині, яка не визначає цей колір, теж потрібен шлях до кімнати. Додайте: «Читальна зала, перший поверх, біля головної стійки», а колір залиште додатковою підказкою.",
+              "W3C радить змістовні заголовки, ясні вказівки й стислий текст. Розділіть вигадане запрошення на «Де», «Коли» та «Чого очікувати». Привітний плакат має допомагати діяти, а не лише гарно виглядати."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Корисне запрошення"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "95cdf2783de54b92" },
+            { "difficulty": "standard", "gameplayId": "765738ca0ed36fa5" },
+            { "difficulty": "expert", "gameplayId": "2ea1df024ae4d3a3" }
+          ],
+          "missionId": "social-drone-community-connections-04"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-community-connections-04", "kind": "mission" }
+  },
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-community-connections",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-community-connections-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A picture description can carry the information someone needs.",
+        "title": "Describe the Important Part"
+      },
+      "uk": {
+        "teaser": "Опис зображення може передати потрібну інформацію.",
+        "title": "Опишіть важливе"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-community-connections-05-image",
+        "locales": {
+          "en": {
+            "alt": "Describe the Important Part — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Describe the Important Part"
+          },
+          "uk": {
+            "alt": "Опишіть важливе — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Опишіть важливе"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "social-drone-community-connections-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "W3C’s informative-image guidance explains that a text alternative conveys the essential information of an image in its context. “Nice picture” does not explain our fictional room map.",
+              "Try “The reading room is beside the main desk; the accessible entrance is on the east side.” Compare that useful description with an inventory of every decorative plant. Describe the information that answers the reader’s question, and do not invent facilities for a real place."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Informative images",
+                "url": "https://www.w3.org/WAI/tutorials/images/informative/"
+              }
+            ],
+            "title": "Describe the Important Part"
+          },
+          "uk": {
+            "paragraphs": [
+              "Настанови W3C для інформативних зображень пояснюють: текстова альтернатива передає суттєву інформацію в контексті. «Гарна картинка» не пояснює вигадану схему кімнати.",
+              "Спробуйте: «Читальна зала біля головної стійки; доступний вхід — зі сходу». Порівняйте корисний опис із переліком кожної декоративної рослини. Описуйте те, що відповідає на запитання читача, й не вигадуйте зручностей справжнього місця."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Informative images",
+                "url": "https://www.w3.org/WAI/tutorials/images/informative/"
+              }
+            ],
+            "title": "Опишіть важливе"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "92e8252e59e56c96" },
+            { "difficulty": "standard", "gameplayId": "bfd7cc50efb7e936" },
+            { "difficulty": "expert", "gameplayId": "0ee084a73a8d93c4" }
+          ],
+          "missionId": "social-drone-community-connections-05"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-community-connections-05", "kind": "mission" }
+  },
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-community-connections",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-community-connections-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A clear correction can be part of a successful shared story.",
+        "title": "Keep the Story Accurate"
+      },
+      "uk": {
+        "teaser": "Зрозуміле виправлення може стати частиною успішної спільної історії.",
+        "title": "Збережіть точність історії"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-community-connections-06-image",
+        "locales": {
+          "en": {
+            "alt": "Keep the Story Accurate — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Keep the Story Accurate"
+          },
+          "uk": {
+            "alt": "Збережіть точність історії — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Збережіть точність історії"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "social-drone-community-connections-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The fictional notice originally promised 12 booklets. Only 10 are ready. A correction says “10 available now; 2 expected later,” and replaces the old notice where readers will see it. The story becomes more useful by becoming more accurate.",
+              "Review your six discoveries as a newcomer would: purpose, count, handoff, invitation, description and correction. Which detail lets someone participate with less guessing? This is a civilian communication exercise, not an account of a real Social Drone event."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              },
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Keep the Story Accurate"
+          },
+          "uk": {
+            "paragraphs": [
+              "Вигадане оголошення обіцяло 12 буклетів. Готові лише 10. Виправлення каже: «10 доступні зараз; 2 очікуємо пізніше» й замінює старе оголошення там, де його бачать читачі. Точніша історія стає кориснішою.",
+              "Перегляньте шість відкриттів очима новачка: мету, підрахунок, передачу справ, запрошення, опис і виправлення. Яка деталь допомагає долучитися без здогадок? Це цивільна вправа комунікації, а не опис реального заходу Social Drone."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              },
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Збережіть точність історії"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "9af718df915095ad" },
+            { "difficulty": "standard", "gameplayId": "4e663d6aafc65ba6" },
+            { "difficulty": "expert", "gameplayId": "7d6d38b70a4405fe" }
+          ],
+          "missionId": "social-drone-community-connections-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-community-connections-06", "kind": "mission" }
+  },
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-community-connections",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-community-connections-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "A Noticeboard Everyone Can Use"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Дошка оголошень для кожного"
+      }
+    },
+    "payloads": [
+      {
+        "id": "social-drone-community-connections-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Combine the six cards into a fictional library science-day noticeboard: purpose, an accurate count, a useful handoff, understandable directions, image descriptions and a correction. Explain what changed for the next reader. This is an original community-learning exercise, not Social Drone’s internal procedure."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "A Noticeboard Everyone Can Use"
+          },
+          "uk": {
+            "paragraphs": [
+              "Поєднайте шість карток у дошку оголошень вигаданого бібліотечного дня науки: мета, точний підрахунок, зрозуміла передача справ, вказівки, описи зображень і виправлення. Поясніть, що змінилося для наступного читача. Це оригінальна вправа спільного навчання, а не внутрішній процес Social Drone."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Дошка оголошень для кожного"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-community-connections-01-image",
+        "locales": {
+          "en": {
+            "alt": "One Shared Brief — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "One Shared Brief"
+          },
+          "uk": {
+            "alt": "Спільний задум — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Спільний задум"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-community-connections-02-image",
+        "locales": {
+          "en": {
+            "alt": "Count What Is Here — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Count What Is Here"
+          },
+          "uk": {
+            "alt": "Порахуйте наявне — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Порахуйте наявне"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-community-connections-03-image",
+        "locales": {
+          "en": {
+            "alt": "The Next Reader — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Next Reader"
+          },
+          "uk": {
+            "alt": "Наступний читач — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Наступний читач"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-community-connections-04-image",
+        "locales": {
+          "en": {
+            "alt": "An Invitation That Helps — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "An Invitation That Helps"
+          },
+          "uk": {
+            "alt": "Корисне запрошення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Корисне запрошення"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-community-connections-05-image",
+        "locales": {
+          "en": {
+            "alt": "Describe the Important Part — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Describe the Important Part"
+          },
+          "uk": {
+            "alt": "Опишіть важливе — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Опишіть важливе"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-community-connections-06-image",
+        "locales": {
+          "en": {
+            "alt": "Keep the Story Accurate — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Keep the Story Accurate"
+          },
+          "uk": {
+            "alt": "Збережіть точність історії — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Збережіть точність історії"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "social-drone-community-connections-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "type": "url",
+        "url": "https://www.socialdrone.com.ua/"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "f95a35ff097e9558" },
+            { "difficulty": "standard", "gameplayId": "8a95643f8c0683aa" },
+            { "difficulty": "expert", "gameplayId": "5ac5978501308e59" }
+          ],
+          "missionId": "social-drone-community-connections-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6322240f91cb1c89" },
+            { "difficulty": "standard", "gameplayId": "f040490e468509cb" },
+            { "difficulty": "expert", "gameplayId": "c463d599483a120f" }
+          ],
+          "missionId": "social-drone-community-connections-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "206ac95231fa5be6" },
+            { "difficulty": "standard", "gameplayId": "0f3f6acdf71b99ae" },
+            { "difficulty": "expert", "gameplayId": "3e0caed38e29871f" }
+          ],
+          "missionId": "social-drone-community-connections-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "95cdf2783de54b92" },
+            { "difficulty": "standard", "gameplayId": "765738ca0ed36fa5" },
+            { "difficulty": "expert", "gameplayId": "2ea1df024ae4d3a3" }
+          ],
+          "missionId": "social-drone-community-connections-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "92e8252e59e56c96" },
+            { "difficulty": "standard", "gameplayId": "bfd7cc50efb7e936" },
+            { "difficulty": "expert", "gameplayId": "0ee084a73a8d93c4" }
+          ],
+          "missionId": "social-drone-community-connections-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "9af718df915095ad" },
+            { "difficulty": "standard", "gameplayId": "4e663d6aafc65ba6" },
+            { "difficulty": "expert", "gameplayId": "7d6d38b70a4405fe" }
+          ],
+          "missionId": "social-drone-community-connections-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-community-connections", "kind": "campaign" }
+  }
+]

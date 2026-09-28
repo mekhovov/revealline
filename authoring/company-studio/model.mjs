@@ -17,6 +17,10 @@ import {
   validateEditionLessonBundle,
   validateEditionRewardBundle,
 } from '../../game/editions/project.mjs';
+import {
+  validateCampaignLocalization,
+  verifyCampaignLocalization,
+} from '../../game/editions/localization.mjs';
 import { validateCompletionRewards } from '../../game/rewards/model.mjs';
 import { mergeEditionProjects } from '../../game/editions/bootstrap.mjs';
 import { hashPresentationBytes } from '../../game/presentation/bundle.mjs';
@@ -70,6 +74,7 @@ export function declaredJSONPaths(catalog) {
         campaign.sourcePath,
         ...(campaign.lessonPath ? [campaign.lessonPath] : []),
         ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+        ...(campaign.localizationPath ? [campaign.localizationPath] : []),
       ]),
       ...catalog.editions.flatMap((edition) => [
         ...Object.values(edition.boot ?? {}),
@@ -117,6 +122,12 @@ export function validateStudioData(path, input, catalog, files = new Map()) {
     return lessons;
   }
   const rewardCampaign = catalog.campaigns.find((entry) => entry.rewardPath === path);
+  const localizationCampaign = catalog.campaigns.find((entry) => entry.localizationPath === path);
+  if (localizationCampaign) {
+    const project = files.get(localizationCampaign.sourcePath);
+    required(project, 'Load the exact campaign before validating its localization.');
+    return validateCampaignLocalization(data, project, localizationCampaign);
+  }
   if (rewardCampaign) {
     const rewards = validateCompletionRewards(data);
     const project = files.get(rewardCampaign.sourcePath);
@@ -221,6 +232,21 @@ export function validateStudioDraft(input) {
 /** Immutable retained JSON travels as exact text, separate from editable source. */
 export async function validateStudioHistory(catalog, files, { editionId = null, signal } = {}) {
   const retained = [];
+  for (const campaign of catalog.campaigns.filter(
+    (item) =>
+      item.localizationPath &&
+      (!editionId ||
+        catalog.editions.some(
+          (edition) => edition.id === editionId && edition.campaignIds.includes(item.id),
+        )),
+  )) {
+    signal?.throwIfAborted();
+    await verifyCampaignLocalization(
+      files.get(campaign.localizationPath),
+      files.get(campaign.sourcePath),
+      campaign,
+    );
+  }
   for (const edition of catalog.editions.filter((item) => !editionId || item.id === editionId)) {
     for (const descriptor of edition.presentationHistory ?? []) {
       signal?.throwIfAborted();
@@ -313,6 +339,7 @@ export function studioPreviewURL(report, baseURL) {
       !url.hash,
     'Preview must use this server’s origin.',
   );
+  url.searchParams.set('studio-preview', '1');
   return url;
 }
 export function studioSelection(catalog, editionId) {
