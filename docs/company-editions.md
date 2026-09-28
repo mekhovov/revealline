@@ -302,12 +302,34 @@ The 11,094-byte `capacity-inventory.json` SHA-256 is
 Immutable site totals include each runtime manifest. These component sums assume each listed
 edition has one hosted immutable version and an active launcher. They exclude the hub,
 previously retained versions, optional packages and other hosted files; they are not a selector.
-The separately selected older `v0.142.0` default manifest totals 740,350,558 bytes. Adding the six
-candidate components already reaches **984,183,829 bytes**, before the missing overhead.
-Adding the four new editions instead reaches **858,700,183 bytes**. These are dated planning
-estimates, not qualification of a current or future build. The next merged default can grow
-with the new content. No subset is cleared until the exact future default and selected overlays
-are measured together.
+The earlier published `v0.142.0` default manifest counted 740,350,558 content bytes
+(excluding its own manifest). That older default is not a current capacity estimate.
+
+The [committed default inspection summary](verification/evidence/discovery-2026-09-28-default-capacity.json)
+records a successful preparation of `v0.142.1` at source
+`8104e7bb0c4f52e4dc9bb1188b52361ac05cfc02`, tree
+`93541d0836f368f3cf21e6c958167a76d358f414`. Its exact prepared default payload is
+**795,373,867 bytes**: 794,976,856 content bytes across 2,150 manifest entries plus the
+397,011-byte manifest. The manifest SHA-256 is
+`a5a76dabec08d147982e726eafce2dc15c04ff1daff33f8aab9d8c60161d7a2c`.
+The full 420,280-byte local inspection report is pinned by SHA-256
+`4bd637d39d184da855285af43e4a5c6800ebf4f0a34cd75d8f5b42f2eb1bd47e`.
+Normal build validation and source eligibility passed; no ZIP, expanded site or
+reproducibility/publication receipt was produced.
+
+Combining that measured default with the **older, different-head** edition packet above gives
+only the following planning sums:
+
+| Older edition components added | Combined component bytes | Gap to cap before uncounted components |
+| ------------------------------ | -----------------------: | -------------------------------------: |
+| Four new editions              |              913,723,492 |                             36,276,508 |
+| Six selected editions          |            1,039,207,138 |                            -89,207,138 |
+| All 18 editions                |            1,364,194,653 |                           -414,194,653 |
+
+The four-edition gap is **not certified headroom**. These sums mix two source revisions and
+omit retained edition versions, the hub, optional packages and other hosted routes. No subset
+is cleared: exact frozen inputs from the selected release and the final combined publisher
+inventory are still required.
 
 A clean committed checkout can inspect its prospective default manifest without writing a
 full expanded site or allocating its STORE ZIP:
@@ -343,8 +365,13 @@ source but was absent from the default include list. No manifest report or size 
 was produced. The default now admits that one validator module explicitly; it does not admit
 the Company Studio folder or neighboring originals. The version and budgets are unchanged.
 A regression verifies that merely having an authoring dependency on disk is insufficient,
-and that admitting one module does not admit adjacent source files. A new committed inspection
-is required after this repair.
+and that admitting one module does not admit adjacent source files. A second attempt at
+`3c829b56cb5d20b92bea610e7bf34a44c60dc98a` reached soundtrack preparation and stopped because
+a tracked producer was absent from the sparse checkout. Four exact producer/evidence files
+(73,370 bytes), including the conditionally loaded UA-FPV producer, were restored from HEAD;
+the normal soundtrack preparation then verified all 71 catalogue tracks. Neither failed
+attempt produced a report or size claim. The subsequent `8104e7bb0` inspection passed as
+recorded above, with both failures preserved in the linked summary.
 
 With reviewed frozen inputs and selectors available, the existing local staging commands are:
 
