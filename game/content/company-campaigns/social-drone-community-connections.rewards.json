@@ -124,8 +124,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "social-drone-community-connections-01", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "social-drone-community-connections-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "social-drone-community-connections-key-v1",
+        "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway."
+        },
+        "uk": {
+          "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима."
+        }
+      }
+    }
   },
   {
     "brandId": "social-drone-ua",
@@ -252,8 +266,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "social-drone-community-connections-02", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "social-drone-community-connections-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "social-drone-community-connections-key-v1",
+        "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway."
+        },
+        "uk": {
+          "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима."
+        }
+      }
+    }
   },
   {
     "brandId": "social-drone-ua",
@@ -380,8 +408,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "social-drone-community-connections-03", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "social-drone-community-connections-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "social-drone-community-connections-key-v1",
+        "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway."
+        },
+        "uk": {
+          "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима."
+        }
+      }
+    }
   },
   {
     "brandId": "social-drone-ua",
@@ -508,8 +550,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "social-drone-community-connections-04", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "social-drone-community-connections-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "social-drone-community-connections-key-v1",
+        "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway."
+        },
+        "uk": {
+          "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима."
+        }
+      }
+    }
   },
   {
     "brandId": "social-drone-ua",
@@ -636,8 +692,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "social-drone-community-connections-05", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "social-drone-community-connections-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "social-drone-community-connections-key-v1",
+        "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway."
+        },
+        "uk": {
+          "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима."
+        }
+      }
+    }
   },
   {
     "brandId": "social-drone-ua",
@@ -772,8 +842,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "social-drone-community-connections-06", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "social-drone-community-connections-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "social-drone-community-connections-key-v1",
+        "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway."
+        },
+        "uk": {
+          "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима."
+        }
+      }
+    }
   },
   {
     "brandId": "social-drone-ua",
@@ -994,7 +1078,21 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "social-drone-community-connections", "kind": "campaign" }
+    "revision": "5",
+    "scope": { "id": "social-drone-community-connections", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "social-drone-community-connections-key-v1",
+        "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway."
+        },
+        "uk": {
+          "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима."
+        }
+      }
+    }
   }
 ]

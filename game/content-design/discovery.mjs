@@ -70,7 +70,7 @@ export function editDiscoveryReward(source, rewardSource, rewardId, mutate, pref
 /** Presentation-only authoring. Gameplay revision and completion bindings stay intact. */
 export function editContentDiscovery(source, missionId, input, rewardSource = []) {
   const project = structuredClone(compileContentProject(source).source);
-  const command = boundedJSON(input, { maxBytes: 4096, maxNodes: 64 });
+  const command = boundedJSON(input, { maxBytes: 16384, maxNodes: 128 });
   exactKeys(command, ['campaignId', 'pacingBeat', 'rewardRef', 'discovery'], 'discovery command');
   const mission = project.missions.find((item) => item.id === missionId);
   const campaign = project.campaigns.find((item) => item.id === command.campaignId);

@@ -85,7 +85,16 @@
       "band": 3,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "ukraine-colour-clay-spring-finale", "revision": "2" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Colour and clay reveal another detail."],
+            "uk": ["Колір і глина відкривають ще одну деталь."]
+          },
+          "revision": "feedback-ba14db4fc98a03b5",
+          "victoryMotif": "open-horizon-v1"
+        },
+        "finaleRewardRef": { "id": "ukraine-colour-clay-spring-finale", "revision": "3" }
       },
       "format": "CampaignDesignV1",
       "id": "ukraine-colour-clay-spring",
@@ -269,7 +278,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "ukraine-colour-clay-spring-01-discovery", "revision": "2" },
+        "rewardRef": { "id": "ukraine-colour-clay-spring-01-discovery", "revision": "3" },
         "routeDecision": "Close the shallow courtyard first or use the paired garden islands to cross into the long painted wing. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -341,7 +350,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "ukraine-colour-clay-spring-02-discovery", "revision": "2" },
+        "rewardRef": { "id": "ukraine-colour-clay-spring-02-discovery", "revision": "3" },
         "routeDecision": "Take the portrait alcove through its short return or secure the wide study hall before entering the narrow side gallery. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -413,7 +422,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "ukraine-colour-clay-spring-03-discovery", "revision": "2" },
+        "rewardRef": { "id": "ukraine-colour-clay-spring-03-discovery", "revision": "3" },
         "routeDecision": "Secure the low kiln-yard bay for a short retreat or link the offset display islands to capture the upper gallery. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -494,7 +503,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "ukraine-colour-clay-spring-04-discovery", "revision": "2" },
+        "rewardRef": { "id": "ukraine-colour-clay-spring-04-discovery", "revision": "3" },
         "routeDecision": "Cross the open centre for a broad reveal or follow the outer alcoves to inspect each display separately. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -576,7 +585,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "ukraine-colour-clay-spring-05-discovery", "revision": "2" },
+        "rewardRef": { "id": "ukraine-colour-clay-spring-05-discovery", "revision": "3" },
         "routeDecision": "Build two short colour-band captures or use the central foundation to close a larger layered reveal. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -658,7 +667,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "ukraine-colour-clay-spring-06-discovery", "revision": "2" },
+        "rewardRef": { "id": "ukraine-colour-clay-spring-06-discovery", "revision": "3" },
         "routeDecision": "Secure the three exhibition wings separately or connect the central islands before opening the finale court. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -686,9 +695,9 @@
       "format": "PackDesignV1",
       "id": "ukraine-colour-clay-spring-pack",
       "name": "Colour, Clay and Spring",
-      "revision": "2"
+      "revision": "3"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "2"
+  "revision": "3"
 }

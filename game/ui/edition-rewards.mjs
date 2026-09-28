@@ -1,3 +1,4 @@
+import { loadRewardImage } from './reward-image.mjs';
 import { mountRewardCosmetic } from './reward-cosmetic.mjs';
 import {
   createRewardCosmeticRegistry,
@@ -338,7 +339,7 @@ export async function mountEditionRewards({
     label.append(select);
     controls.append(label);
     const pictures = button(
-      tr(showPictures ? 'hideCollectedPictures' : 'showCollectedPictures'),
+      tr(showPictures ? 'hideDiscoveryPictures' : 'showDiscoveryPictures'),
       () => {
         showPictures = !showPictures;
         renderShelf();
@@ -373,12 +374,13 @@ export async function mountEditionRewards({
         ),
         node('h4', copy.title),
       );
-      // Only receipt images are eligible, and at most twelve thumbnails are
-      // retained. Every discovery remains available through its full viewer.
-      if (showPictures && row.image && imageJobs.length < 12) {
+      // Locked cards can request only separately authored teaser art. The
+      // explicit toggle bounds work to twelve pictures in the selected exhibit.
+      const picture = receipt ? row.image : row.teaserImage;
+      if (showPictures && picture && imageJobs.length < 12) {
         const image = node('div', undefined, 'completion-reward-exhibit-picture');
         card.append(image);
-        imageJobs.push({ payload: row.image, container: image });
+        imageJobs.push({ payload: picture, container: image, teaser: !receipt });
       }
       card.append(
         node('p', copy.teaser),
@@ -412,7 +414,15 @@ export async function mountEditionRewards({
       const work = async () => {
         while (imageJobs.length && !controller.signal.aborted) {
           const job = imageJobs.shift();
-          await loadImage(job.payload, job.container, controller.signal, visit, owner, false);
+          await loadImage(
+            job.payload,
+            job.container,
+            controller.signal,
+            visit,
+            owner,
+            false,
+            job.teaser,
+          );
         }
       };
       void Promise.all([work(), work()]);
@@ -429,7 +439,18 @@ export async function mountEditionRewards({
   function selectExhibitFocus() {
     doc.getElementById('completion-reward-exhibit-select')?.focus({ preventScroll: true });
   }
+  let resultImageRequest = null,
+    resultImageVisit = 0;
+  const resultImageURLs = new Set();
+  function releaseResultImage() {
+    resultImageVisit++;
+    resultImageRequest?.abort();
+    resultImageRequest = null;
+    for (const url of resultImageURLs) win.URL.revokeObjectURL(url);
+    resultImageURLs.clear();
+  }
   function renderResult(animate = false) {
+    releaseResultImage();
     const focused = result.contains(doc.activeElement) ? doc.activeElement : null;
     const run = getRun(),
       kind = doc.getElementById('game-overlay').dataset.kind;
@@ -457,6 +478,27 @@ export async function mountEditionRewards({
     result.replaceChildren(title, content);
     if (!won || firstWin)
       result.append(node('p', discovery ? localized(discovery).paragraphs[0] : copy.teaser));
+    if (!won && kind === 'ready' && definition.teaserImage) {
+      const target = node('div', undefined, 'completion-reward-exhibit-picture');
+      const preview = button(tr('previewTeaser'), () => {
+        if (disposed || resultImageRequest) return;
+        preview.disabled = true;
+        const controller = new AbortController(),
+          visit = resultImageVisit;
+        resultImageRequest = controller;
+        void loadImage(
+          definition.teaserImage,
+          target,
+          controller.signal,
+          visit,
+          { urls: resultImageURLs, current: () => resultImageVisit },
+          false,
+          true,
+        );
+      });
+      preview.id = 'completion-reward-preview-teaser';
+      result.append(preview, target);
+    }
     if (won) {
       result.append(exploreButton(receipt, 'result'));
       if (!store.status().durable) result.append(saveNotice());
@@ -486,42 +528,23 @@ export async function mountEditionRewards({
     visit,
     owner = { urls: objectURLs, current: () => mediaVisit },
     downloadable = true,
+    teaser = false,
   ) {
-    let ownedURL = null;
-    try {
-      const { bootstrap, asset } = await resolveRewardAsset(provider, payload.asset, { signal });
-      await verifyEditionAssets(bootstrap, {
-        baseURL: provider.rootURL,
-        ids: [asset.id],
-        signal,
-        onVerifiedAsset({ asset: verified, bytes }) {
-          if (verified.id !== asset.id || disposed || visit !== owner.current() || signal.aborted)
-            return;
-          const type = /\.webp$/i.test(asset.path)
-            ? 'image/webp'
-            : /\.jpe?g$/i.test(asset.path)
-              ? 'image/jpeg'
-              : 'image/png';
-          const url = win.URL.createObjectURL(new Blob([bytes], { type }));
-          owner.urls.add(url);
-          ownedURL = url;
-          const image = node('img');
-          image.alt = localized(payload).alt;
-          image.src = url;
-          const download = node('a', tr('saveImage'));
-          download.href = url;
-          download.download = asset.path.split('/').at(-1);
-          container.replaceChildren(image, ...(downloadable ? [download] : []));
-        },
-      });
-    } catch {
-      if (!disposed && visit === owner.current() && !signal.aborted)
-        container.replaceChildren(node('p', tr('missingMedia')));
-    }
-    return () => {
-      if (ownedURL && owner.urls.delete(ownedURL)) win.URL.revokeObjectURL(ownedURL);
-    };
+    return loadRewardImage({
+      container,
+      image: payload,
+      locale: getLocale(),
+      provider,
+      signal,
+      isCurrent: () => !disposed && visit === owner.current(),
+      urls: owner.urls,
+      URLImpl: win.URL,
+      downloadLabel: downloadable ? tr('saveImage') : null,
+      missingLabel: tr(teaser ? 'missingTeaser' : 'missingMedia'),
+      inspect: teaser,
+    });
   }
+
   let readingProfile = 'beginners';
   function renderViewer() {
     if (!viewing) return;
@@ -824,6 +847,7 @@ export async function mountEditionRewards({
       importVisit++;
       releaseMedia();
       releaseShelfPictures();
+      releaseResultImage();
       shelfObserver?.disconnect();
       collectionDialog.removeEventListener('close', closeShelf);
       stopLocale();

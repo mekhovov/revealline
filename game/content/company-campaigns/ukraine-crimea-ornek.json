@@ -85,7 +85,16 @@
       "band": 5,
       "discovery": {
         "exhibitLayout": "mosaic",
-        "finaleRewardRef": { "id": "ukraine-crimea-ornek-finale", "revision": "3" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Another ornament story is ready to explore."],
+            "uk": ["Ще одна історія орнаменту чекає на дослідження."]
+          },
+          "revision": "feedback-f25318362275a285",
+          "victoryMotif": "open-horizon-v1"
+        },
+        "finaleRewardRef": { "id": "ukraine-crimea-ornek-finale", "revision": "4" }
       },
       "format": "CampaignDesignV1",
       "id": "ukraine-crimea-ornek",
@@ -271,7 +280,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "ukraine-crimea-ornek-01-discovery", "revision": "2" },
+        "rewardRef": { "id": "ukraine-crimea-ornek-01-discovery", "revision": "3" },
         "routeDecision": "Connect the short introductory alcoves or preserve the central return while revealing the long context wall. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -346,7 +355,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "ukraine-crimea-ornek-02-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-crimea-ornek-02-discovery", "revision": "4" },
         "routeDecision": "Use the paired consultation bays for short closures or take the diagonal open space between the two workstations. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -421,7 +430,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "ukraine-crimea-ornek-03-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-crimea-ornek-03-discovery", "revision": "4" },
         "routeDecision": "Capture the three offset record bays in sequence or keep the lower foundation as a shared return for two larger loops. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -504,7 +513,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "ukraine-crimea-ornek-04-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-crimea-ornek-04-discovery", "revision": "4" },
         "routeDecision": "Take the broad quiet courtyard first or use its sheltered side alcoves to make several short returns. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -587,7 +596,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "ukraine-crimea-ornek-05-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-crimea-ornek-05-discovery", "revision": "4" },
         "routeDecision": "Preserve two short returns through the archive islands or capture the longer contemporary wing after checking the moving boundary. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -670,7 +679,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "ukraine-crimea-ornek-06-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-crimea-ornek-06-discovery", "revision": "4" },
         "routeDecision": "Secure the small source alcoves before the large exhibit loop or connect the two central foundations to retain a shorter final return. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -698,9 +707,9 @@
       "format": "PackDesignV1",
       "id": "ukraine-crimea-ornek-pack",
       "name": "Crimea: Ornament and Community",
-      "revision": "3"
+      "revision": "4"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "3"
+  "revision": "4"
 }
