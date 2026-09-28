@@ -31,6 +31,13 @@ Versus formats and Rematch: “Start the default One race, earn a real win or dr
 
 “After changing navigation, enter the shared All missions chooser through the host’s visible Play/Missions entry. Use its collection, campaign and mode filters; Solo setup is the existing Current Solo flight setup disclosure in the same chooser. For missing content, choose Download, wait for verified installation, then choose the exact mission’s separate Play action. Download never starts a mission. Browsing uses read-only metadata, not runtime or picture ownership; Play must validate the exact current source, edition, campaign, mission and revision before staged adoption. Preserve the source-return identity, filters and focus across mode handoffs. Keep the old attempt, pictures, checkpoints and progress through Cancel, Stay, failed preparation or newer input; recheck installed identity after Replace and before departure. A durable install remains installed after cancellation without granting stale launch authority. Preserve explicit Continue/Resume and retained legacy Load semantics rather than using hidden old selectors. Reproduce failures, retain original logs and exact storage/replay assertions, and distinguish fixture capability gaps from product failures. Do not remove guards, raise timeouts or skip tests to restore an obsolete route. Follow the [unified library contract](../../docs/unified-mission-library.md); Release B paired-original native end-to-end and public qualification remain pending, independently of modeled checks.”
 
+For Classic catalogue work, keep the ordinary Current gallery concise: when a
+compatible Current-rules projection exists, expose that edition in Current and
+retain the authenticated Original-rules edition in Archive and exact historical
+handoffs. Do not deduplicate owners by display name, map geometry or artwork.
+Verify Current, Archive and All counts separately and prove that the complete
+identity inventory is unchanged.
+
 “Inspect the current branch, latest main and `docs/cross-mode-execution.md`. Continue the active unaccepted phase. Reconcile related work without touching unrelated hunks. Show exact evidence for its blocking acceptance, fix failures, update this contract and relevant skills, synchronize the next unused version, commit related changes, qualify the exact source, freeze and deploy through the existing Pages controller. Verify all public bytes and ordinary play before marking accepted or beginning the next phase. Report physical devices separately from modeled/browser checks.”
 
 “If a production revision, theme transfer or combined player library fails a JSON capacity check, measure its actual UTF-8 document and wrapper bytes first. Preserve the declared limits and every immutable revision. Count escaped strings, keys and punctuation accurately without executing untrusted getters or toJSON. Before expecting a trusted fixture to be rejected, independently assert that its standalone collections fit and its serialized union exceeds the actual quota; correct an under-limit fixture with valid bounded fields or history, preserving identity, unchanged-input and zero-write checks. Do not change runtime or budgets to restore an obsolete test expectation. Verify exact-limit/one-byte-over inputs and the complete production review, replacement, export and import journey; retain the actual failed source receipt, keep earlier focused results scoped, and qualify the corrected commit afresh.”
@@ -283,11 +290,9 @@ Reproduce delayed Ready → Start confirmation through the real installed-pictur
 
 “Start Team, Pause, set Plain/Large, open Settings and return by keyboard. Rotate 390×844 → 844×390 → portrait; keep the same action focused and its complete outline inside the bordered client scrollport. Repeat Theme/Standard at 600×360. Check unchanged time/coverage/reserves and explicit Resume only. Cover stale focus during measurement, another modal, background/disposal and resize reentry in host tests. Preserve the original failed geometry; native checks do not establish physical-device or public acceptance.”
 
-
 ## Qualify narrow Solo active-flight counters
 
 “Use the exact current source and the selected text preferences. At 600×400, compare the actual running score and its icon with fullscreen/Pause; record the original overlap before changing the layout. Keep all four stats, the coverage target, owned captions, authored actions and the complete board. For 521–680px short landscape, budget two telemetry rows from the existing text tokens rather than shrinking text or letting event updates resize the arena. Preserve tutorial, portrait and Couch rules. Inspect Large/Plain with controls hidden and a shown D-pad, Standard/Theme with the existing floating stick, both boundary widths and 390×844 rotation. Start/play through ordinary UI; do not inject a score or win. Measure full rectangles and at least 44px action targets, then check Pause → Field details → Back and explicit Resume. Report the smaller arena as a play-comfort tradeoff. Retain exact source/CSS pins and original observations; separate a zero-score candidate check from a nonzero public baseline. Do not present modeled rectangles, formatting checks or the Large preference as native, physical-device or 200% zoom acceptance. Finish final integrated-source and affected public gates before closing the feature.” See [the scoped device-layout contract](../../docs/device-controls.md#narrow-solo-flight-counters--p05-hud-correction).
-
 
 Release packaging example: “Validate the complete evidence ZIP with the exact
 source uploader, including the root evidence-manifest.json. Preserve a rejected
@@ -306,7 +311,6 @@ separately from hosted upload success.”
 ## Team teaser and optional full picture preview
 
 Use one read-only draw helper for the ready lobby's recognisable broad border and concealed centre. The unified mission-library cards remain metadata-only and artwork-lazy. The existing explicit Preview picture action for the selected mission shows the complete authenticated original, with clear copy that viewing neither completes the arena nor earns a picture. This supersedes the older card-teaser and locked enlarged-teaser prompt above. Preserve current attempt/profile/checkpoint bytes, no automatic Start, transient preview lease release, cancellation and stale-visit guards; shared chooser Back closes directly to its exact game opener. Test true lobby centre/border pixels and full-preview pixels with both built-ins and imported artwork; qualify native recognisability, responsive controls and focus separately. Do not alter artwork, production recipes, simulation, awards or saves.
-
 
 ## Ordinary default entry qualification
 

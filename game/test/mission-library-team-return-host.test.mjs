@@ -223,13 +223,13 @@ for (const route of [
     }
     assert.equal(pending.length, 1, 'Mode selection owns one remote metadata operation.');
     await pending[0];
-    assert.equal(f.$('journey-cards').children.length, archivedSource ? 75 : 252);
+    assert.equal(f.$('journey-cards').children.length, archivedSource ? 141 : 186);
     // Browsing an archived Team source retains its archive filter until the
     // player explicitly chooses current missions in the receiving mode.
     lifecycle.focus();
     lifecycle.value = 'current';
     lifecycle.emit('change');
-    assert.equal(f.$('journey-cards').children.length, 252);
+    assert.equal(f.$('journey-cards').children.length, 186);
     const selected = f.$('journey-cards').children[8];
     assert.equal(JSON.parse(selected.dataset.missionId)[1], DEFAULT_JOURNEY_ROUTES.solo);
     selected.focus();
