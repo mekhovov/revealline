@@ -4,11 +4,21 @@ This is the executable check list for the remaining installation, offline and re
 It does not reopen formative playtesting: the user reported that complete on 26 September 2026. It does not certify artwork, hardware or a public release. Record an observed result
 for the exact artifact; leave an unrun case pending.
 
-The exact post-merge main baseline is now v0.141.7 commit `6fe52474b5`, tree `282cb34616`.
-[Candidate CI 36363707594](https://github.com/mekhovov/revealline/actions/runs/36363707594)
-and the independent downloaded-byte comparison are recorded in the
-[current phase status](company-editions-phase-status-2026-09-28.md). The artifact remains a
-candidate and does not retroactively populate the physical-device rows below.
+The exact maintenance baseline is now v0.141.7 commit `4cb5e3199e`, tree `d75300e6e5`.
+[Candidate CI 36367544165](https://github.com/mekhovov/revealline/actions/runs/36367544165)
+passed on that exact main commit and uploaded Actions artifact `10948100942`, named
+`company-candidate-4cb5e3199eb0a4c1cee61360ab1dff6a0e866caa`, with GitHub-reported size
+725,315,513 bytes. The artifact remains a candidate and does not retroactively populate the
+physical-device rows below. A reviewer must download it and record its independently computed
+SHA-256 before using it for device evidence.
+
+Use the [qualification recorder](verification/company-qualification.html) to bind observations
+to the frozen `editions.json`, the complete downloaded artifact and its exact main source. The
+recorder starts every gate pending, requires actual non-emulated device details for device claims,
+requires both primary editions for cross-edition checks, and exports a public-review candidate.
+It does not approve or publish anything. The final product release will have a different immutable
+version/envelope, so observations must either be repeated against that envelope or explicitly
+remain preliminary.
 
 ## Evidence available
 
