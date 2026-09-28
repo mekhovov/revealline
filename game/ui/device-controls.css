@@ -160,6 +160,7 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
   min-width: 0;
   max-width: 100%;
 }
+.game-shell .game-overlay:not([data-kind='pause']) .pause-secondary-groups,
 .game-shell .game-overlay:not([data-kind='pause']):not([data-kind='ready']) .pause-menu-section,
 .game-shell .game-overlay[data-kind='ready'] .pause-menu-section:not(.pause-missions-section),
 .game-shell .game-overlay[data-kind='ready'] .pause-missions-section > h3 {
@@ -292,7 +293,7 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
     gap: 6px;
   }
   body.field-kit.game-shell .game-overlay[data-kind='pause'] .pause-label {
-    font-size: 30px;
+    font-size: 13px;
   }
   .game-shell .game-overlay[data-kind='pause'] .overlay-actions {
     gap: 6px;
