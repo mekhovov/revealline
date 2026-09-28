@@ -1,3 +1,5 @@
+import { t, localizedText } from '../i18n/index.mjs';
+
 const safeText = (value, limit = 80) =>
   typeof value === 'string' ? value.replace(/[\r\n\t]/g, ' ').slice(0, limit) : value;
 
@@ -9,10 +11,25 @@ export function attachControllerConfirmTrace({
   limit = 160,
 } = {}) {
   if (!Number.isInteger(limit) || limit < 16 || limit > 1000)
-    throw new RangeError('Controller trace limit is out of bounds.');
+    throw new RangeError(t('errors:controller.confirmTrace.limit'));
   const entries = [];
   let panel = null,
     output = null;
+
+  const renderOutput = () => {
+    if (!output) return;
+    localizedText(output, () =>
+      entries.length
+        ? entries
+            .slice(-24)
+            .map(
+              (item) =>
+                `${item.t ?? '-'} gp:${item.gp ?? '-'} [${item.buttons.join(',') || '-'}] ${item.phase || '-'} ${item.event || '-'}${item.native ? ` native:${item.native}` : ''}${item.target ? ` target:${item.target}` : ''}${item.winner ? ` winner:${item.winner}` : ''}${item.reason ? ` reason:${item.reason}` : ''}`,
+            )
+            .join('\n')
+        : t('interface:controller.confirmTrace.waiting'),
+    );
+  };
 
   if (enabled && doc?.body) {
     panel = doc.createElement('details');
@@ -20,10 +37,10 @@ export function attachControllerConfirmTrace({
     panel.className = 'controller-confirm-trace';
     panel.open = true;
     const summary = doc.createElement('summary');
-    summary.textContent = `Controller trace · ${version}`;
+    localizedText(summary, () => t('interface:controller.confirmTrace.title', { version }));
     output = doc.createElement('pre');
     output.setAttribute('aria-live', 'polite');
-    output.textContent = 'Waiting for Confirm input…';
+    renderOutput();
     panel.append(summary, output);
     doc.body.append(panel);
   }
@@ -45,14 +62,7 @@ export function attachControllerConfirmTrace({
     };
     entries.push(entry);
     if (entries.length > limit) entries.splice(0, entries.length - limit);
-    if (output)
-      output.textContent = entries
-        .slice(-24)
-        .map(
-          (item) =>
-            `${item.t ?? '-'} gp:${item.gp ?? '-'} [${item.buttons.join(',') || '-'}] ${item.phase || '-'} ${item.event || '-'}${item.native ? ` native:${item.native}` : ''}${item.target ? ` target:${item.target}` : ''}${item.winner ? ` winner:${item.winner}` : ''}${item.reason ? ` reason:${item.reason}` : ''}`,
-        )
-        .join('\n');
+    renderOutput();
   }
 
   return {

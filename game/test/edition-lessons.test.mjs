@@ -11,6 +11,7 @@ import { authoritativeCheckpoint, createRecorder, recordInput } from '../replay.
 import { Document } from './helpers/couch-dom.mjs';
 import { memoryStorage } from './helpers/solo-dom.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 async function learningDialogFixture(
   t,
@@ -78,8 +79,56 @@ async function learningDialogFixture(
     },
   });
   const file = (text) => ({ size: text.length, text: async () => text });
-  return { doc, view, settings, upload, status, storage, reports, emptyBackup, file };
+  return { doc, view, settings, upload, status, storage, reports, emptyBackup, file, lesson };
 }
+
+test('optional learning controls and completed imports switch locale without remounting', async (t) => {
+  const previousLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(previousLocale, { persist: false }));
+  const h = await learningDialogFixture(t),
+    panel = h.doc.getElementById('settings-panel-data'),
+    heading = panel.querySelector('h3'),
+    download = panel.querySelector('button'),
+    label = panel.querySelector('label'),
+    opener = h.doc.getElementById('edition-lesson-open');
+  assert.equal(heading.textContent, 'Optional learning records');
+  assert.equal(download.textContent, 'Export optional learning');
+  assert.equal(label.textContent, 'Import matching learning records');
+  assert.equal(opener.textContent, 'Optional bonus · explore this connection');
+
+  setLocale('uk', { persist: false });
+  assert.equal(heading.textContent, 'Записи необов’язкового навчання');
+  assert.equal(download.textContent, 'Експортувати необов’язкове навчання');
+  assert.equal(label.textContent, 'Імпортувати відповідні навчальні записи');
+  assert.equal(opener.textContent, 'Необов’язковий бонус · дослідити цей зв’язок');
+  assert.ok(label.contains(h.upload), 'The localized label retains its file input.');
+
+  h.upload.files = [h.file(h.emptyBackup)];
+  await h.upload.onchange();
+  assert.equal(h.status.textContent, 'Записи необов’язкового навчання імпортовано.');
+  setLocale('en', { persist: false });
+  assert.equal(h.status.textContent, 'Optional learning records imported.');
+
+  const revisit = h.view.pictureReady({
+    editionId: 'sample-public',
+    missionId: h.lesson.missionId,
+  });
+  h.doc.body.append(revisit);
+  assert.equal(revisit.textContent, 'Optional bonus · revisit this connection');
+  setLocale('uk', { persist: false });
+  assert.equal(revisit.textContent, 'Необов’язковий бонус · повернутися до цього зв’язку');
+
+  h.upload.files = [
+    h.file(
+      JSON.stringify({ format: 'revealline-edition-learning-backup.v1', editionId: 'foreign' }),
+    ),
+  ];
+  await h.upload.onchange();
+  assert.equal(h.status.textContent, 'Ця резервна копія навчання належить іншому виданню.');
+  setLocale('en', { persist: false });
+  assert.equal(h.status.textContent, 'This learning backup belongs to another edition.');
+});
 
 test('learning import failures stay in the open Settings live region and leave stored records intact', async (t) => {
   const h = await learningDialogFixture(t, {

@@ -3,14 +3,27 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Company journeys · Reveal / Line</title>
+    <title data-i18n="interface:companyEntry.title">Company journeys · Reveal / Line</title>
+    <link rel="stylesheet" href="i18n/style.css" />
     <script type="module" src="company-entry.mjs"></script>
   </head>
   <body>
     <main>
-      <h1>Company journeys</h1>
-      <p>Opening the full Solo game…</p>
-      <a id="company-entry-link" href="index.html?company=1">Open Solo</a>
+      <div data-language-control></div>
+      <h1 data-i18n="interface:companyJourneys">Company journeys</h1>
+      <p data-i18n="interface:companyEntry.openingSolo">Opening the full Solo game…</p>
+      <a
+        id="company-entry-link"
+        href="index.html?company=1"
+        data-i18n="interface:companyEntry.openSolo"
+        >Open Solo</a
+      >
+      <noscript>
+        <p lang="uk">
+          Відкрийте повну одиночну гру:
+          <a href="index.html?company=1">Відкрити соло</a>.
+        </p>
+      </noscript>
     </main>
   </body>
 </html>
