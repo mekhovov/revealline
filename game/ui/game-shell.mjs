@@ -60,6 +60,11 @@ export function attachGameShell({
         href: doc.defaultView?.location?.href ?? globalThis.location?.href,
       })
     : null;
+  const homePractice = $('shell-home-practice');
+  if (homePractice && optionalPractice?.open) {
+    homePractice.hidden = false;
+    homePractice.onclick = () => optionalPractice.open(homePractice);
+  }
   const releaseExplorer = $('shell-release-explorer');
   if (releaseExplorer)
     releaseExplorer.setAttribute(
@@ -796,6 +801,10 @@ export function attachGameShell({
       modalNavigation?.destroy();
       surfaces.destroy();
       optionalPractice?.dispose();
+      if (homePractice) {
+        homePractice.onclick = null;
+        homePractice.hidden = true;
+      }
       preparationObserver?.disconnect();
     },
   };

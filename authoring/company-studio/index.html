@@ -309,14 +309,20 @@
               >Learning and rewards campaign<select id="learning-campaign-select"></select
             ></label>
             <p id="learning-path" class="path"></p>
-            <label
-              >Versioned lesson JSON<textarea
-                id="learning-json"
-                class="code"
-                rows="24"
-                spellcheck="false"
-              ></textarea></label
-            ><button id="apply-learning">Validate &amp; apply lessons</button>
+            <button id="create-learning" type="button">Add a lesson sidecar</button>
+            <div id="lesson-editor"></div>
+            <details>
+              <summary>Advanced versioned lesson JSON</summary>
+              <label
+                >Versioned lesson JSON<textarea
+                  id="learning-json"
+                  class="code"
+                  rows="24"
+                  spellcheck="false"
+                ></textarea>
+              </label>
+            </details>
+            <button id="apply-learning">Validate &amp; apply lessons</button>
             <p id="learning-summary" class="small"></p>
           </div>
           <p class="small">

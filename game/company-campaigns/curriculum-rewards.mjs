@@ -12,6 +12,7 @@ import {
   CURRICULUM_TEXTILE_LIGHTING_ASSET_IDS,
 } from './curriculum-textile-lighting.mjs';
 import { createCurriculumApplicationRewards } from './curriculum-application-rewards.mjs';
+import { createCurriculumShowcaseContent } from './curriculum-showcase.mjs';
 import { CURRICULUM_LEARNING_PROFILES } from './curriculum-profiles.mjs';
 import {
   CURRICULUM_REFERENCE_ASSETS,
@@ -138,6 +139,7 @@ export function createCurriculumRewards({
         ...createCurriculumMissionExplorations(row.id, assets),
         ...createCurriculumTextileLighting(row.id, assets),
         ...createCurriculumMotionMakersContent(row.id, assets),
+        ...createCurriculumShowcaseContent(row.id),
       ],
     ),
   );

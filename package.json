@@ -12,7 +12,7 @@
     "test": "node scripts/game-cli.mjs test",
     "test:creator-feature": "node scripts/check-creator-feature.mjs",
     "validate": "npm run i18n:check && node scripts/game-cli.mjs validate && node scripts/check-presentation-metadata.mjs",
-    "lint": "eslint \"game/**/*.mjs\" \"intake/**/*.mjs\" \"scripts/**/*.mjs\" \"site/**/*.mjs\" \"platforms/**/*.{mjs,js}\" eslint.config.mjs --max-warnings 0",
+    "lint": "eslint \"game/**/*.mjs\" \"optional-practice/**/*.mjs\" \"intake/**/*.mjs\" \"scripts/**/*.mjs\" \"site/**/*.mjs\" \"platforms/**/*.{mjs,js}\" eslint.config.mjs --max-warnings 0",
     "build": "node scripts/game-cli.mjs build",
     "build:pages": "node scripts/build-pages.mjs",
     "release": "node scripts/game-cli.mjs release-snapshot",
@@ -36,7 +36,7 @@
     "company:studio": "node scripts/company-studio.mjs",
     "company:bundle": "node scripts/bundle-editions.mjs",
     "company:promote": "node scripts/publish-editions.mjs",
-    "practice:test": "node --test game/test/civilian-practice.test.mjs game/test/civilian-practice-ui.test.mjs game/test/optional-installation.test.mjs game/test/optional-practice-panel.test.mjs scripts/test-optional-practice.mjs scripts/test-frozen-source.mjs scripts/test-bundle-optional-practice.mjs scripts/test-publish-optional-packages.mjs publishing/optional-package-admission.test.mjs publishing/optional-package-promotion.test.mjs publishing/optional-package-delivery.test.mjs"
+    "practice:test": "node --test game/test/civilian-practice.test.mjs game/test/civilian-practice-ui.test.mjs game/test/optional-installation.test.mjs game/test/optional-practice-panel.test.mjs scripts/test-optional-practice.mjs scripts/test-frozen-source.mjs scripts/test-bundle-optional-practice.mjs scripts/test-publish-optional-packages.mjs publishing/optional-package-admission.test.mjs publishing/optional-package-promotion.test.mjs publishing/optional-package-delivery.test.mjs game/test/fpv-radio.test.mjs game/test/fpv-flight-model.test.mjs game/test/fpv-flight-boundaries.test.mjs game/test/fpv-cooperative-replay.test.mjs game/test/fpv-notebook.test.mjs game/test/practice-rewards.test.mjs scripts/test-optional-fpv-package.mjs game/test/fpv-flight-ui.test.mjs game/test/fpv-studio-setup.test.mjs"
   },
   "dependencies": {
     "mediabunny": "1.59.1",

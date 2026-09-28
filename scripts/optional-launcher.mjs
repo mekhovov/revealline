@@ -3,7 +3,13 @@ import { installPracticeWorker } from '../optional-practice/civilian-flight/work
 import { createHash } from 'node:crypto';
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const json = (value) => Buffer.from(JSON.stringify(value, null, 2) + '\n');
-export function buildOptionalLauncher({ packageId, basePath, entries, contextSource }) {
+export function buildOptionalLauncher({
+  packageId,
+  basePath,
+  entries,
+  contextSource,
+  installWorker = installPracticeWorker,
+}) {
   if (
     !/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(packageId) ||
     !/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(basePath)
@@ -58,7 +64,7 @@ export function buildOptionalLauncher({ packageId, basePath, entries, contextSou
   launcher.set(
     'worker.js',
     Buffer.from(
-      `// Generated exact optional launcher cache.\n(${installPracticeWorker.toString()})(self, ${JSON.stringify(pins)}, ${JSON.stringify(revision)});\n`,
+      `// Generated exact optional launcher cache.\n(${installWorker.toString()})(self, ${JSON.stringify(pins)}, ${JSON.stringify(revision)});\n`,
     ),
   );
   for (const [name, bytes] of launcher) entries.set(`launcher/${name}`, bytes);
