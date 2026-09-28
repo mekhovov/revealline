@@ -354,6 +354,24 @@
               >
                 Inspect selected combined Journey edition · balance pending
               </button>
+              <p id="spatial-review-links" class="note" hidden>
+                <code id="spatial-review-id"></code> ·
+                <a
+                  id="spatial-review-solo"
+                  target="_blank"
+                  rel="noopener"
+                  data-i18n="interface:solo"
+                  >Solo</a
+                >
+                ·
+                <a
+                  id="spatial-review-versus"
+                  target="_blank"
+                  rel="noopener"
+                  data-i18n="interface:versus"
+                  >Versus</a
+                >
+              </p>
               <p class="note" data-i18n-rich="interface:studio.apexCulturalRoutes.description">
                 Apex Ukrainian cultural routes:
                 <a
@@ -2538,6 +2556,40 @@
               ><span data-i18n="interface:localReferencePicture">Local reference picture</span>
               <input id="reference-file" type="file" accept="image/png,image/jpeg,image/webp" />
             </label>
+            <p class="note" data-i18n="tools:studio.image.bundledNote">
+              Try a real Ukrainian landscape detail: rafts on Synevyr Lake. Loading it changes only
+              the reference overlay, never your map, reveal picture or published content.
+            </p>
+            <button
+              id="reference-synevyr"
+              type="button"
+              data-i18n="tools:studio.image.bundledReference"
+            >
+              Load Synevyr raft reference · CC0
+            </button>
+            <p class="note">
+              <a
+                href="https://commons.wikimedia.org/wiki/File:Synevyr_Lake_rafts.jpg"
+                target="_blank"
+                rel="noopener"
+                >Jan Pešula · 2018</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                target="_blank"
+                rel="noopener"
+                >CC0 1.0</a
+              >
+              ·
+              <a
+                id="reference-synevyr-download"
+                href="../content-design/assets/real-world-r1/synevyr-rafts.jpg"
+                download="synevyr-rafts.jpg"
+                data-i18n="tools:studio.image.downloadReference"
+                >Download reference</a
+              >
+            </p>
             <fieldset id="reference-tools" disabled>
               <legend data-i18n="interface:cropManualTraceOriginalImagePixels">
                 Crop & manual trace · original image pixels

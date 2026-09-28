@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   fieldKitRecipeSources,
+  verifyFieldKitAudioStyleMenuCorrectionReview,
+  verifyFieldKitAudioStyleMenuReview,
   verifyFieldKitPlayerReadinessAudioReview,
   verifyFieldKitLocalizationAudioReview,
   verifyFieldKitSteamDeckPresentationContinuationReview,
@@ -403,4 +405,39 @@ test('player readiness audio continuation rejects either altered immutable revie
     assert.equal(verifyFieldKitPlayerReadinessAudioReview(...changed), false);
   }
   assert.equal(verifyFieldKitPlayerReadinessAudioReview(bytes[1], bytes[0]), false);
+});
+
+test('Audio style-menu continuation and its immutable predecessor fail closed', async () => {
+  const paths = [
+    'docs/verification/audio-style-menu-2026-09-28/review.json',
+    'docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitAudioStyleMenuReview(...bytes), true);
+  for (let index = 0; index < bytes.length; index++) {
+    const changed = [...bytes];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitAudioStyleMenuReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitAudioStyleMenuReview(bytes[1], bytes[0]), false);
+});
+
+test('Audio style-menu correction and production98 predecessor oracle fail closed', async () => {
+  const paths = [
+    'docs/verification/audio-style-menu-correction-2026-09-28/review.json',
+    'docs/verification/audio-style-menu-2026-09-28/review.json',
+    'game/test/fixtures/production-pr770-0d165-audio50.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitAudioStyleMenuCorrectionReview(...bytes), true);
+  for (let index = 0; index < bytes.length; index++) {
+    const changed = [...bytes];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitAudioStyleMenuCorrectionReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitAudioStyleMenuCorrectionReview(...bytes.toReversed()), false);
 });

@@ -32,8 +32,19 @@ export function attachReplayNavigation({
   };
   function hint(message) {
     const node = $('navigation-status');
-    if (node && node.textContent !== message) localizedText(node, () => message);
+    if (node) localizedText(node, typeof message === 'function' ? message : () => message);
   }
+  const controllerStatusKeys = {
+    disposed: 'interface:controllerInputIsStopped',
+    unavailable: 'interface:controllerAccessIsUnavailableKeyboardAndTouchRemainAvailable',
+    disconnected: 'interface:controllerDisconnectedReleaseControlsThenPressAFaceButtonTo',
+    joined: 'interface:controllerJoinedReleaseControlsToContinue',
+    unsupported: 'interface:thisControllerHasNoStandardMappingKeyboardAndTouchRemain',
+    'waiting-controller': 'interface:connectAControllerAndUseItWhileThisPageIs',
+    'ready-to-join': 'interface:pressAFaceButtonOrMenuToJoin',
+    'waiting-neutral': 'interface:releaseTheControllerButtonsAndMovementStick',
+    connected: 'interface:dPadMovesFocusSouthConfirmsEastGoesBackMenu',
+  };
   const preferred = () =>
     pending()
       ? $('cancel-load')
@@ -98,7 +109,8 @@ export function attachReplayNavigation({
       pause();
       focus($('return-game'));
       hint(
-        `Playback paused. ${$('return-game').textContent.trim() || t('interface:return')} is focused; activate it to leave.`,
+        () =>
+          `Playback paused. ${$('return-game').textContent.trim() || t('interface:return')} is focused; activate it to leave.`,
       );
     }
     router.clear();
@@ -138,7 +150,7 @@ export function attachReplayNavigation({
         pause();
         focus(preferred());
         router.clear();
-        hint(t('interface:playbackPausedChoosePlayWhenReady'));
+        hint(() => t('interface:playbackPausedChoosePlayWhenReady'));
       }
     },
     onNativeInput: () => router.clear(),
@@ -191,11 +203,8 @@ export function attachReplayNavigation({
       }
       if (frame.status.code !== status) {
         status = frame.status.code;
-        hint(
-          status === 'connected'
-            ? t('interface:dPadMovesFocusSouthConfirmsEastGoesBackMenu')
-            : frame.status.message,
-        );
+        const key = controllerStatusKeys[status];
+        hint(key ? () => t(key) : frame.status.message);
       }
       if (status === 'joined') navigation.engage();
       else navigation.handle(frame.ui);
