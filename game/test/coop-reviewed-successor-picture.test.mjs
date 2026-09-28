@@ -169,8 +169,9 @@ test('integrated95 retains complete58–94 historical picture and actor records 
   }
   // Revision92 introduced separately reviewed actor successors; preserve those
   // complete records independently instead of relabelling the58–91 lineage.
-  // Revisions94 and95 change audio/effects inputs only; their complete
-  // picture and actor records must remain identical to revision93.
+  // Main revision94 changes UI/audio, and the new main-derived95 adds combined
+  // audio/effects provenance. Both preserve these complete picture/actor records;
+  // this95 is not the unpublished bulk-branch theme95.
   for (const slot of slots) {
     const priorAsset = snapshot(92).resolved.assets[slot];
     assert.deepEqual(snapshot(93).resolved.assets[slot], priorAsset, 'retained92 ' + slot);

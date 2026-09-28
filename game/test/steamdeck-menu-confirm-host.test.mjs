@@ -190,11 +190,13 @@ test('Steam Deck trusted click tails cannot undo Start or paused-menu actions', 
   const beforeSound = page.$('overlay-sound').textContent;
   pad.buttons[0] = { pressed: true, value: 1 };
   frame();
-  const afterSound = page.$('overlay-sound').textContent;
-  assert.notEqual(afterSound, beforeSound);
+  assert.equal(page.$('overlay-sound').textContent, beforeSound);
+  assert.equal(page.$('overlay-sound').getAttribute('data-controller-pressed'), 'true');
   time += 5000;
   pad.buttons[0] = { pressed: false, value: 0 };
   frame();
+  const afterSound = page.$('overlay-sound').textContent;
+  assert.notEqual(afterSound, beforeSound);
   const heldRelease = page.doc.activeElement.emit('click', {
     button: 0,
     pointerId: 17,

@@ -158,6 +158,7 @@ import { attachProfileRecoveryDialog } from './ui/profile-recovery-dialog.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import { attachControllerConfirmGuard } from './ui/controller-confirm-guard.mjs';
 import { createControllerConfirmLifecycle } from './ui/controller-confirm-lifecycle.mjs';
+import { attachControllerConfirmTrace } from './ui/controller-confirm-trace.mjs';
 import {
   cancelControllerToggleBoost,
   controllerBoostAfterRecovery,
@@ -450,6 +451,10 @@ try {
   localizedText($('version'), () => versionLabel);
   localizedText($('landing-version'), () => t('gameplay:version', { value1: versionLabel }));
   const params = new URLSearchParams(location.search);
+  const controllerConfirmTrace = attachControllerConfirmTrace({
+    enabled: params.get('controllerTrace') === '1',
+    version: versionLabel,
+  });
   const libraryHandoff = readMissionLibraryHandoff(params);
   let courseRequest = resolveCourseRequest(params);
   const courseSession = !!courseRequest;
@@ -2276,8 +2281,11 @@ try {
   });
   const controllerConfirmGuard = attachControllerConfirmGuard({
     confirmPressed: () => controller.menuConfirmPressed(),
+    onTrace: controllerConfirmTrace.record,
   });
-  const controllerConfirmLifecycle = createControllerConfirmLifecycle();
+  const controllerConfirmLifecycle = createControllerConfirmLifecycle({
+    onTrace: controllerConfirmTrace.record,
+  });
   let controllerLabels = controllerBindingLabels(library.preferences.controllerBindings),
     controllerDeviceId = '';
   let controllerFrame = null,
@@ -2846,6 +2854,7 @@ try {
       controllerReading.destroy();
       controllerNavigation.destroy();
       controllerConfirmGuard.destroy();
+      controllerConfirmTrace.destroy();
       gameShell?.destroy();
       missionPicker?.destroy();
       modalNavigation.destroy();
@@ -2992,6 +3001,8 @@ try {
     pendingPickup = false;
     pendingSwitch = null;
     controller.clear();
+    controllerConfirmLifecycle.reset('input-clear');
+    controllerConfirmGuard.cancel('input-clear');
     controllerFrame = null;
     if (!preserveNavigation) controllerNavigation?.clear();
     if (resetDirection) input.clear();
@@ -9268,7 +9279,7 @@ try {
         timeMs: controllerTime,
         toggleBoostEligible: run?.status === 'running',
       }),
-      controllerTime,
+      { timeMs: controllerTime, scope },
     );
     refreshControllerBoostCue();
     const { status, assigned, disconnected } = controllerFrame;
@@ -9302,10 +9313,19 @@ try {
       if (assigned && scope !== 'flight') controllerNavigation.engage();
     }
     if (status.code === 'joined' && scope !== 'flight') controllerNavigation.engage();
-    // End controller ownership even when this sample reports loss. A held
-    // Confirm owns its release, but a disconnected pad must not leave native
-    // keyboard activation suppressed indefinitely.
-    controllerConfirmGuard.observe(controllerConfirmLifecycle.owned());
+    const confirmCommand = controllerFrame.ui;
+    if (confirmCommand.confirmStart) {
+      const target = controllerNavigation.handle(confirmCommand);
+      if (target)
+        controllerConfirmGuard.begin(target, {
+          buttons: controllerFrame.confirmTransaction?.buttons || controllerFrame.confirmButtons,
+          gamepadTimestamp: controllerFrame.gamepadTimestamp,
+        });
+      else controllerConfirmLifecycle.reset('unavailable-target');
+    } else if (confirmCommand.confirmCancel) {
+      controllerNavigation.handle(confirmCommand);
+      controllerConfirmGuard.cancel('lifecycle-cancel');
+    }
     if (disconnected) {
       clearInput();
       pause(true);
@@ -9315,7 +9335,13 @@ try {
         ),
       );
     } else {
-      controllerNavigation.handle(controllerFrame.ui);
+      if (!confirmCommand.confirmStart && !confirmCommand.confirmCancel) {
+        const committed = controllerNavigation.handle(confirmCommand);
+        if (confirmCommand.confirmCommit) {
+          if (committed) controllerConfirmGuard.finish('release');
+          else controllerConfirmGuard.cancel('invalid-target');
+        }
+      }
       const flight = controllerFrame?.flight ?? {};
       const capabilities = arcadeActionCapabilities(run?.level);
       if (scope === 'flight' && (flight.stop || (flight.action && !capabilities.manualAbility))) {
