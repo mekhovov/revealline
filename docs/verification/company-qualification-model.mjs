@@ -81,6 +81,17 @@ const CROSS_EDITION_GATES = new Set([
 const PRIMARY_EDITIONS = Object.freeze(['coupa-all', 'droneaid-nl-community']);
 const REVIEW_STATUSES = new Set(['pending', 'passed', 'failed', 'unavailable']);
 const OUTCOMES = new Set(['passed', 'failed', 'unavailable']);
+const DEVICE_ENVIRONMENT_FIELDS = Object.freeze([
+  'actualDevice',
+  'assistiveTechnology',
+  'browser',
+  'device',
+  'emulated',
+  'input',
+  'installedApp',
+  'os',
+  'viewport',
+]);
 
 const fail = (message) => {
   throw new TypeError(message);
@@ -148,21 +159,7 @@ function validateEnvironment(environment, gate, status) {
     return;
   }
   if (status !== 'passed' && environment === null) return;
-  exactKeys(
-    environment,
-    [
-      'actualDevice',
-      'assistiveTechnology',
-      'browser',
-      'device',
-      'emulated',
-      'input',
-      'installedApp',
-      'os',
-      'viewport',
-    ],
-    'Device environment',
-  );
+  exactKeys(environment, DEVICE_ENVIRONMENT_FIELDS, 'Device environment');
   if (
     environment.actualDevice !== true ||
     environment.emulated !== false ||
@@ -259,6 +256,44 @@ function validateReview(review, editionIds, envelope) {
     fail('Human review gates cannot inherit an automation receipt.');
 }
 
+function selectCoherentCoverage(passedReviews, gate) {
+  const groups = [];
+  if (gate === 'same-device-performance') {
+    const byEnvironment = new Map();
+    for (const review of passedReviews) {
+      const key = JSON.stringify(
+        Object.fromEntries(
+          DEVICE_ENVIRONMENT_FIELDS.map((field) => [field, review.environment[field]]),
+        ),
+      );
+      if (!byEnvironment.has(key)) byEnvironment.set(key, []);
+      byEnvironment.get(key).push(review);
+    }
+    groups.push(...byEnvironment.values());
+  } else if (passedReviews.length > 0) groups.push(passedReviews);
+
+  const candidates = (groups.length > 0 ? groups : [[]]).map((reviews) => {
+    const observed = reviews
+        .flatMap((review) => review.observations)
+        .reduce((counts, observation) => {
+          counts.set(observation.scenario, (counts.get(observation.scenario) ?? 0) + 1);
+          return counts;
+        }, new Map()),
+      missingScenarios = [],
+      deficit = COMPANY_GATE_SCENARIOS[gate].reduce((total, scenario) => {
+        const minimum = COMPANY_GATE_SCENARIO_MINIMUMS[gate]?.[scenario] ?? 1,
+          count = observed.get(scenario) ?? 0;
+        if (count < minimum)
+          missingScenarios.push(minimum === 1 ? scenario : `${scenario} (${count}/${minimum})`);
+        return total + Math.max(0, minimum - count);
+      }, 0);
+    return { reviews, missingScenarios, deficit };
+  });
+  return candidates.reduce((best, candidate) =>
+    candidate.deficit < best.deficit ? candidate : best,
+  );
+}
+
 export function createCompanyQualificationRecord(envelope, candidate) {
   validateEnvelope(envelope);
   if (!SHA256.test(candidate?.envelopeSha256 ?? ''))
@@ -294,24 +329,7 @@ export function validateCompanyQualificationRecord(envelope, record, { envelopeS
           (review) => review.gate === gate && review.editionIds.includes(editionId),
         ),
         passed = reviews.filter((review) => review.status === 'passed'),
-        observed = passed
-          .flatMap((review) => review.observations)
-          .reduce((counts, observation) => {
-            counts.set(observation.scenario, (counts.get(observation.scenario) ?? 0) + 1);
-            return counts;
-          }, new Map()),
-        missingScenarios = COMPANY_GATE_SCENARIOS[gate]
-          .filter(
-            (scenario) =>
-              (observed.get(scenario) ?? 0) <
-              (COMPANY_GATE_SCENARIO_MINIMUMS[gate]?.[scenario] ?? 1),
-          )
-          .map((scenario) => {
-            const minimum = COMPANY_GATE_SCENARIO_MINIMUMS[gate]?.[scenario] ?? 1;
-            return minimum === 1
-              ? scenario
-              : `${scenario} (${observed.get(scenario) ?? 0}/${minimum})`;
-          });
+        { missingScenarios } = selectCoherentCoverage(passed, gate);
       let status = 'pending';
       if (reviews.some((review) => review.status === 'failed')) status = 'failed';
       else if (missingScenarios.length === 0) status = 'passed';
@@ -379,10 +397,11 @@ export function compileCompanyQualificationReview(
     editions: envelope.editions.map(({ id }) => ({
       id,
       gates: COMPANY_QUALIFICATION_GATES.map((gate) => {
-        const contributing = record.reviews.filter(
+        const passed = record.reviews.filter(
             (review) =>
               review.status === 'passed' && review.gate === gate && review.editionIds.includes(id),
           ),
+          contributing = selectCoherentCoverage(passed, gate).reviews,
           reviewer = [...new Set(contributing.map(({ reviewer }) => reviewer))].sort().join('; '),
           reviewedAt = contributing
             .map(({ reviewedAt }) => reviewedAt)

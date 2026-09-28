@@ -221,6 +221,63 @@ test('performance requires two real edition-switch observations', () => {
   assert(rows.every(({ missingScenarios }) => missingScenarios.includes('edition-switch (1/2)')));
 });
 
+test('performance evidence cannot combine observations from different device environments', () => {
+  for (const mutateEnvironment of [
+    (value) => {
+      value.device = 'Different synthetic device';
+    },
+    (value) => {
+      value.browser = 'Example Browser 2';
+    },
+  ]) {
+    const record = createCompanyQualificationRecord(envelope, candidate);
+    record.reviews = COMPANY_QUALIFICATION_GATES.map((gate) => review(gate));
+    const secondSwitch = review('same-device-performance', 'split-environment-second-switch');
+    secondSwitch.observations = [observation('edition-switch')];
+    mutateEnvironment(secondSwitch.environment);
+    record.reviews.push(secondSwitch);
+    const report = validateCompanyQualificationRecord(envelope, record, { envelopeSha256 }),
+      rows = report.coverage.filter(({ gate }) => gate === 'same-device-performance');
+    assert.equal(report.ready, false);
+    assert(rows.every(({ status }) => status === 'pending'));
+    assert(rows.every(({ missingScenarios }) => missingScenarios.includes('edition-switch (1/2)')));
+    assert.throws(
+      () =>
+        compileCompanyQualificationReview(envelope, record, {
+          envelopeSha256,
+          evidence: {
+            path: `review-company-qualification-${envelope.version}.json`,
+            bytes: 1,
+            sha256: 'e'.repeat(64),
+            publication: 'public',
+            approved: true,
+          },
+        }),
+      /incomplete/,
+    );
+  }
+});
+
+test('performance evidence combines separate reviews from one exact device environment', () => {
+  const record = createCompanyQualificationRecord(envelope, candidate);
+  record.reviews = COMPANY_QUALIFICATION_GATES.map((gate) => review(gate));
+  const secondSwitch = review('same-device-performance', 'coherent-environment-second-switch');
+  secondSwitch.observations = [observation('edition-switch')];
+  secondSwitch.environment = structuredClone(
+    record.reviews.find(({ gate }) => gate === 'same-device-performance').environment,
+  );
+  record.reviews.push(secondSwitch);
+  const report = validateCompanyQualificationRecord(envelope, record, { envelopeSha256 });
+  assert.equal(report.ready, true);
+  assert(
+    report.coverage
+      .filter(({ gate }) => gate === 'same-device-performance')
+      .every(
+        ({ status, missingScenarios }) => status === 'passed' && missingScenarios.length === 0,
+      ),
+  );
+});
+
 test('one review cannot duplicate a scenario to satisfy a repeated observation', () => {
   const record = createCompanyQualificationRecord(envelope, candidate);
   const entry = review('same-device-performance');
@@ -301,6 +358,24 @@ test('a failed observation remains failed instead of being hidden by a later pas
     report.coverage
       .filter(({ gate }) => gate === 'asset-review')
       .every(({ status }) => status === 'failed'),
+  );
+});
+
+test('an unavailable same-device environment remains unavailable', () => {
+  const record = createCompanyQualificationRecord(envelope, candidate);
+  const unavailable = review('same-device-performance', 'performance-unavailable');
+  unavailable.status = 'unavailable';
+  unavailable.observations = unavailable.observations.map((value) => ({
+    ...value,
+    outcome: 'unavailable',
+    observed: 'The required device environment was unavailable.',
+  }));
+  record.reviews.push(unavailable);
+  const report = validateCompanyQualificationRecord(envelope, record, { envelopeSha256 });
+  assert(
+    report.coverage
+      .filter(({ gate }) => gate === 'same-device-performance')
+      .every(({ status }) => status === 'unavailable'),
   );
 });
 
