@@ -60,6 +60,50 @@
             "title": "Прочитайте тканину"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Make a short label using object, date, place and maker. Keep “unknown” where the record does; do not use the picture to invent a biography."
+              ],
+              "title": "Make a distinction: Read the Cloth"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть короткий підпис: предмет, дата, місце й автор. Залиште «невідомо», якщо так у записі; не вигадуйте біографію за зображенням."
+              ],
+              "title": "Розрізнімо: Прочитайте тканину"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find a place and a time in the shirt’s record together. Which detail does the record leave unknown?"
+              ],
+              "title": "Look together: Read the Cloth"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть разом місце й час у записі про сорочку. Яка подробиця залишається невідомою?"
+              ],
+              "title": "Погляньмо разом: Прочитайте тканину"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare your proposed label with the record for НДФ-6482. Mark each sourced fact and each visual observation separately. What further evidence would a personal story require?"
+              ],
+              "title": "Explore the evidence: Read the Cloth"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зіставте свій підпис із записом НДФ-6482. Окремо позначте факт із джерела та візуальне спостереження. Які додаткові докази потрібні для особистої історії?"
+              ],
+              "title": "Дослідімо докази: Прочитайте тканину"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -77,7 +121,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-threads-01", "kind": "mission" }
   },
   {
@@ -144,6 +188,50 @@
             "title": "Шляхи стібків"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep two columns on an imagined label: material and technique. Use the garment record to place the examples; colour alone will not answer the question."
+              ],
+              "title": "Make a distinction: Stitch Paths"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уявіть два стовпчики підпису: матеріал і техніка. Розмістіть приклади за записом про одяг; самого кольору недостатньо."
+              ],
+              "title": "Розрізнімо: Шляхи стібків"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Take turns sorting “linen” and “cross-stitch.” Which names a material, and which names a way of working?"
+              ],
+              "title": "Look together: Stitch Paths"
+            },
+            "uk": {
+              "paragraphs": [
+                "По черзі розподіліть «льон» і «вишивка хрестиком». Що називає матеріал, а що — спосіб роботи?"
+              ],
+              "title": "Погляньмо разом: Шляхи стібків"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Try the same distinction on a second documented object. Which terms come from its own record, and which would need a specialist’s closer examination?"
+              ],
+              "title": "Explore the evidence: Stitch Paths"
+            },
+            "uk": {
+              "paragraphs": [
+                "Застосуйте це розрізнення до другого документованого предмета. Які терміни є в його записі, а які потребують уважнішого огляду фахівцем?"
+              ],
+              "title": "Дослідімо докази: Шляхи стібків"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -161,7 +249,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-threads-02", "kind": "mission" }
   },
   {
@@ -225,6 +313,50 @@
             "title": "Білим по білому"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Describe texture, raised thread or an opening before naming a technique. The original illustration is a visual study, not proof of a particular historical garment."
+              ],
+              "title": "Make a distinction: White on White"
+            },
+            "uk": {
+              "paragraphs": [
+                "Спершу опишіть фактуру, підняту нитку чи отвір, а тоді називайте техніку. Оригінальна ілюстрація — візуальне дослідження, а не доказ про конкретну давню сорочку."
+              ],
+              "title": "Розрізнімо: Білим по білому"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Look together for a light edge and a tiny shadow in the white threads. Explain one detail you would miss if the picture were flat white."
+              ],
+              "title": "Look together: White on White"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть разом світлий край і маленьку тінь на білих нитках. Поясніть, що зникло б на суцільно білому зображенні."
+              ],
+              "title": "Погляньмо разом: Білим по білому"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare what the illustration makes visible with what the regional source establishes. Draft a caption that distinguishes artistic lighting from documented tradition."
+              ],
+              "title": "Explore the evidence: White on White"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зіставте видиме в ілюстрації з тим, що встановлює регіональне джерело. Складіть підпис, який розрізняє художнє освітлення й документовану традицію."
+              ],
+              "title": "Дослідімо докази: Білим по білому"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -242,7 +374,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-threads-03", "kind": "mission" }
   },
   {
@@ -317,6 +449,50 @@
             "title": "Розмаїття місцевих голосів"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Compare the Volyn and Poltava records using maker, time and place. Describe these two objects without turning their differences into rules for whole regions."
+              ],
+              "title": "Make a distinction: Many Local Voices"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте волинський і полтавський записи за авторством, часом і місцем. Опишіть два предмети, не перетворюючи відмінності на правила для цілих регіонів."
+              ],
+              "title": "Розрізнімо: Розмаїття місцевих голосів"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Read the two maker entries together. One gives a name and one does not. Can both objects still have a careful, useful label?"
+              ],
+              "title": "Look together: Many Local Voices"
+            },
+            "uk": {
+              "paragraphs": [
+                "Прочитайте разом два записи про авторство. Один називає ім’я, інший — ні. Чи можуть обидва предмети мати уважний і корисний підпис?"
+              ],
+              "title": "Погляньмо разом: Розмаїття місцевих голосів"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Curate a paired label that names Anastasiia Kravchuk for НДФ-7132 and preserves the unknown maker of НДФ-6482. Identify one comparison the evidence does not support."
+              ],
+              "title": "Explore the evidence: Many Local Voices"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть парний підпис: назвіть Анастасію Кравчук для НДФ-7132 і збережіть невідоме авторство НДФ-6482. Назвіть одне порівняння, якого докази не підтримують."
+              ],
+              "title": "Дослідімо докази: Розмаїття місцевих голосів"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -334,7 +510,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-threads-04", "kind": "mission" }
   },
   {
@@ -401,6 +577,50 @@
             "title": "Історія рушника"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Give creation and entry into a collection separate timeline places. The 2001 donation does not date the making of the rushnyk."
+              ],
+              "title": "Make a distinction: A Rushnyk’s Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Відведіть виготовленню та надходженню до колекції окремі місця на часовій лінії. Дарування 2001 року не датує виготовлення рушника."
+              ],
+              "title": "Розрізнімо: Історія рушника"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find the older making period and the later donation year together. Tell the object’s journey in two sentences without mixing those dates."
+              ],
+              "title": "Look together: A Rushnyk’s Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть разом давніший час виготовлення й пізніший рік дарування. Розкажіть шлях предмета двома реченнями, не змішуючи дати."
+              ],
+              "title": "Погляньмо разом: Історія рушника"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Draft an object-history note from КН-3081. Separate documented provenance from an imagined ceremonial use, and name what evidence would be needed for that added claim."
+              ],
+              "title": "Explore the evidence: A Rushnyk’s Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть історичну примітку за КН-3081. Відокремте документоване походження від уявного обрядового використання й назвіть докази, потрібні для такого твердження."
+              ],
+              "title": "Дослідімо докази: Історія рушника"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -418,7 +638,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-threads-05", "kind": "mission" }
   },
   {
@@ -485,6 +705,50 @@
             "title": "Носіть сьогодні"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Write two different labels: “original game illustration” and a source-based museum-object label. Keep credit and uncertainty attached to each."
+              ],
+              "title": "Make a distinction: Wear It Today"
+            },
+            "uk": {
+              "paragraphs": [
+                "Напишіть два різні підписи: «оригінальна ілюстрація гри» та підпис музейного предмета за джерелом. Збережіть авторство й невідоме біля кожного."
+              ],
+              "title": "Розрізнімо: Носіть сьогодні"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose one game design and one museum record. Explain together which is a new illustration and which describes a documented object."
+              ],
+              "title": "Look together: Wear It Today"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть один дизайн гри й один музейний запис. Разом поясніть, де нова ілюстрація, а де опис документованого предмета."
+              ],
+              "title": "Погляньмо разом: Носіть сьогодні"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Plan a small exhibition that places contemporary invention beside documented garments. How will visitors distinguish inspiration, reproduction and evidence without assigning universal meanings?"
+              ],
+              "title": "Explore the evidence: Wear It Today"
+            },
+            "uk": {
+              "paragraphs": [
+                "Сплануйте малу виставку сучасних вигадок поруч із документованим одягом. Як відвідувачі розрізнять натхнення, відтворення й докази без універсальних тлумачень?"
+              ],
+              "title": "Дослідімо докази: Носіть сьогодні"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -502,7 +766,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-threads-06", "kind": "mission" }
   },
   {
@@ -955,7 +1219,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-threads", "kind": "campaign" }
   }
 ]

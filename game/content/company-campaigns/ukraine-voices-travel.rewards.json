@@ -63,6 +63,50 @@
             "title": "Інструмент і голос"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep the instrument, performer and way of learning connected. The cited 2024 entry concerns safeguarding a practice, not only preserving an object."
+              ],
+              "title": "Make a distinction: An Instrument and a Voice"
+            },
+            "uk": {
+              "paragraphs": [
+                "Поєднайте інструмент, виконавця й спосіб навчання. Запис 2024 року стосується охорони практики, а не лише збереження предмета."
+              ],
+              "title": "Розрізнімо: Інструмент і голос"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Put an instrument card beside a performer card. Explain together what the instrument’s shape cannot tell you about the person."
+              ],
+              "title": "Look together: An Instrument and a Voice"
+            },
+            "uk": {
+              "paragraphs": [
+                "Покладіть картку інструмента поруч із карткою виконавця. Разом поясніть, чого форма інструмента не розповідає про людину."
+              ],
+              "title": "Погляньмо разом: Інструмент і голос"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare an object-centred label with a practice-centred account. Which questions about teaching and performers remain unanswered by a photograph alone?"
+              ],
+              "title": "Explore the evidence: An Instrument and a Voice"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте підпис про предмет із розповіддю про практику. На які запитання про навчання й виконавців сама фотографія не відповідає?"
+              ],
+              "title": "Дослідімо докази: Інструмент і голос"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -80,7 +124,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-voices-travel-01", "kind": "mission" }
   },
   {
@@ -147,6 +191,50 @@
             "title": "Практика, яку бережуть разом"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Distinguish storing an instrument from supporting an ongoing practice. Use the account of guilds and present-day safeguarding to explain the difference."
+              ],
+              "title": "Make a distinction: A Practice Kept Together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть зберігання інструмента й підтримку живої практики. Поясніть відмінність за розповіддю про цехи та сучасну охорону спадщини."
+              ],
+              "title": "Розрізнімо: Практика, яку бережуть разом"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Imagine three cards for people, skills and chances to perform. What changes when one card is taken away?"
+              ],
+              "title": "Look together: A Practice Kept Together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уявіть три картки: люди, навички й можливості виступати. Що зміниться, якщо прибрати одну?"
+              ],
+              "title": "Погляньмо разом: Практика, яку бережуть разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Design a fictional exhibit that connects an object with people and opportunities to learn. Which parts are sourced, and which are your proposed presentation?"
+              ],
+              "title": "Explore the evidence: A Practice Kept Together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Спроєктуйте вигадану виставку, що поєднує предмет із людьми й можливістю навчатися. Що взято з джерел, а що є вашою пропозицією подання?"
+              ],
+              "title": "Дослідімо докази: Практика, яку бережуть разом"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -164,7 +252,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-voices-travel-02", "kind": "mission" }
   },
   {
@@ -231,6 +319,50 @@
             "title": "Регіон має багато голосів"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Write a specific archive label with tradition, region and source. Avoid replacing the named singing communities with a broad claim about every Ukrainian song."
+              ],
+              "title": "Make a distinction: A Region Has Many Voices"
+            },
+            "uk": {
+              "paragraphs": [
+                "Напишіть конкретний архівний підпис із традицією, регіоном і джерелом. Не замінюйте названі співочі громади твердженням про кожну українську пісню."
+              ],
+              "title": "Розрізнімо: Регіон має багато голосів"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find the region named in the singing record. Explain why one local story need not stand for every singer in Ukraine."
+              ],
+              "title": "Look together: A Region Has Many Voices"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть регіон, названий у записі про спів. Поясніть, чому одна місцева історія не представляє всіх співаків України."
+              ],
+              "title": "Погляньмо разом: Регіон має багато голосів"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare what an Urgent Safeguarding record establishes with what a single recording can reveal. Keep context and observations separate without ranking cultural worth."
+              ],
+              "title": "Explore the evidence: A Region Has Many Voices"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зіставте відомості запису про термінову охорону з тим, що відкриває окремий запис співу. Розрізняйте контекст і спостереження без оцінювання культурної цінності."
+              ],
+              "title": "Дослідімо докази: Регіон має багато голосів"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -248,7 +380,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-voices-travel-03", "kind": "mission" }
   },
   {
@@ -315,6 +447,50 @@
             "title": "«Щедрик» перетинає океан"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep composition, touring ensemble and a dated concert distinct. A title alone does not identify every person and event in the work’s journey."
+              ],
+              "title": "Make a distinction: Shchedryk Crosses an Ocean"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізняйте твір, гастрольний колектив і датований концерт. Самої назви недостатньо, щоб визначити всіх людей і події на шляху твору."
+              ],
+              "title": "Розрізнімо: «Щедрик» перетинає океан"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Sort three cards together: the work Shchedryk, the performers and the 1922 concert. Which card names something that can have many performances?"
+              ],
+              "title": "Look together: Shchedryk Crosses an Ocean"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом розподіліть три картки: твір «Щедрик», виконавці й концерт 1922 року. Яка картка називає те, що може мати багато виконань?"
+              ],
+              "title": "Погляньмо разом: «Щедрик» перетинає океан"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Draft a compact concert-history caption using the Ukrainian Institute account. Identify which statement concerns Leontovych’s work and which concerns the Capella’s particular performance."
+              ],
+              "title": "Explore the evidence: Shchedryk Crosses an Ocean"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть стислий підпис до історії концерту за Українським інститутом. Визначте, що стосується твору Леонтовича, а що — конкретного виступу Капели."
+              ],
+              "title": "Дослідімо докази: «Щедрик» перетинає океан"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -332,7 +508,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-voices-travel-04", "kind": "mission" }
   },
   {
@@ -407,6 +583,50 @@
             "title": "Один голос, потім гурт"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "If you choose the external recording, use a comfortable volume and compare one available part with the group. Describe a difference without ranking the singers."
+              ],
+              "title": "Make a distinction: One Voice, Then the Group"
+            },
+            "uk": {
+              "paragraphs": [
+                "Якщо оберете зовнішній запис, установіть комфортну гучність і порівняйте доступну окрему партію з гуртом. Опишіть різницю без ранжування співаків."
+              ],
+              "title": "Розрізнімо: Один голос, потім гурт"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Imagine listening first to one singing part and then to the group. What might become easier to notice? You can discuss the idea without opening audio."
+              ],
+              "title": "Look together: One Voice, Then the Group"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уявіть слухання спершу однієї партії, а потім гурту. Що стане легше помітити? Можна обговорити це без відкривання аудіо."
+              ],
+              "title": "Погляньмо разом: Один голос, потім гурт"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare a listening observation with the archive’s performer and place information. What can multitrack listening clarify, and what still needs the recording’s context?"
+              ],
+              "title": "Explore the evidence: One Voice, Then the Group"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зіставте слухове спостереження з архівними відомостями про виконавців і місце. Що пояснює багатодоріжкове слухання, а що потребує контексту запису?"
+              ],
+              "title": "Дослідімо докази: Один голос, потім гурт"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -424,7 +644,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-voices-travel-05", "kind": "mission" }
   },
   {
@@ -491,6 +711,50 @@
             "title": "Передайте контекст"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Build a listening recommendation with title, performer or group, place and source. Leave any unavailable detail unknown rather than filling it from a similar recording."
+              ],
+              "title": "Make a distinction: Carry the Context"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть рекомендацію з назвою, виконавцем чи гуртом, місцем і джерелом. Невідоме залиште невідомим, не запозичуючи його зі схожого запису."
+              ],
+              "title": "Розрізнімо: Передайте контекст"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose a recording description to recommend, or imagine one using the lesson. Tell each other why its people and place should travel with the title."
+              ],
+              "title": "Look together: Carry the Context"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть опис запису для рекомендації або уявіть його за уроком. Розкажіть, чому люди й місце мають залишатися поруч із назвою."
+              ],
+              "title": "Погляньмо разом: Передайте контекст"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare two documented variants without choosing a single “correct” performance. Preserve each recording’s own attribution, rights and one question for further listening."
+              ],
+              "title": "Explore the evidence: Carry the Context"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте два документовані варіанти без вибору єдиного «правильного» виконання. Збережіть авторство, права й одне запитання для подальшого слухання кожного."
+              ],
+              "title": "Дослідімо докази: Передайте контекст"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -508,7 +772,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-voices-travel-06", "kind": "mission" }
   },
   {
@@ -730,7 +994,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-voices-travel", "kind": "campaign" }
   }
 ]
