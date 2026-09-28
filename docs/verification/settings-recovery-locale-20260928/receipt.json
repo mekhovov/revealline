@@ -1,0 +1,65 @@
+{
+  "base": "c5885a15561a88331c5566c5312392c4e5d8daf5",
+  "scope": "Settings/earlier-release-transfer live locale refresh; source only",
+  "node": "v20.19.5",
+  "focused": {
+    "tests": 78,
+    "pass": 78,
+    "fail": 0,
+    "skip": 0
+  },
+  "baseline": {
+    "key": {
+      "tests": 15,
+      "pass": 1,
+      "fail": 14,
+      "skip": 0
+    },
+    "transfer": {
+      "tests": 15,
+      "pass": 1,
+      "fail": 3,
+      "skip": 11
+    }
+  },
+  "checks": {
+    "eslint": "pass, five changed JS files",
+    "prettier": "pass, nine source/doc paths",
+    "catalogDecodedEquality": "pass, all EN/UK JSON namespaces",
+    "diffCheck": "pass",
+    "fullSuite": "not run; existing waiver",
+    "build": "not run; existing waiver",
+    "publicBrowser": "not run",
+    "physicalDevice": "not run"
+  },
+  "files": {
+    "game/ui/key-settings.mjs": "f8bfe6c82b2f4cea4ddc02ab3c96f9d9a8d7aa6ca6ecf228e98fee31d059aa09",
+    "game/ui/profile-transfer-panel.mjs": "c506917d2dfdea73903cdb006316496b294d9401a773ec4e210aed339e7773f4",
+    "game/test/key-settings.test.mjs": "8a1af9b16934d6c202e070301de8b30d3b31ad89a178b65d7cfdc40a513af5cd",
+    "game/test/key-bindings.test.mjs": "dd7f407c148eaa361350c0dd1a700bfa125d65cd8b0f94942a1c354663bf2f09",
+    "game/test/key-settings-locale.test.mjs": "b405d3a9781dc084a3673e8b52f8d39b56c3808f57ce2063413ca62a361f8eaa",
+    "game/test/key-settings-locale-host.test.mjs": "a8644604217903d1ea3f07071ad9509b3a9cc6079604186bdfc7090ffafc03ed",
+    "game/test/profile-transfer.test.mjs": "8431847d72dcaee7ec175042d81e7f11425c9d96f8be38911333d7a827e71399",
+    "game/test/profile-transfer-suspended.test.mjs": "56c73a1b2e380beab08083bc9a27796b068cfe81fdaa029200bba0e07ec5108f",
+    "game/locales/en/interface.json": "c974c0a5517464f18002fb82ac298ded50a672a334f2da8e2c30a21b92af0e7a",
+    "game/locales/uk/interface.json": "8962fe60c7944795a6178fa38899d536e1854a872af7ddc04f17c22e2064e041",
+    "game/i18n/catalogs.mjs": "732b315f6cc374f9eb5f8e200edeb5e1be349b9290071be14d15a7d24ef7af6c"
+  },
+  "logs": {
+    "key-baseline-red.tap": {
+      "rawSha256": "4421c015905b92d86d6bca4ea722425af6799f486f39c3472578a7349648e83b",
+      "retainedSha256": "a552a89c2d86ee39b948d7382498356f9d6e13efdfe23001aa0aa8332cd4b2cf",
+      "normalization": "Trailing line whitespace only; assertions and outcomes retained."
+    },
+    "transfer-baseline-red.tap": {
+      "rawSha256": "91e74bafeae0994c94661acf8cf2bedb5c894db7e59aca52da22d0c9e223a78b",
+      "retainedSha256": "48bda5441da4fba64b8e3ecc12d94531b921f4f4132444be88b605386d40f256",
+      "normalization": "Trailing line whitespace only; assertions and outcomes retained."
+    },
+    "focused-green.tap": {
+      "rawSha256": "f31af4ec7065f1f10dea0c0f4d9d8f8f088d24ce35d3120a0eb6581d1f7df8bd",
+      "retainedSha256": "f31af4ec7065f1f10dea0c0f4d9d8f8f088d24ce35d3120a0eb6581d1f7df8bd",
+      "normalization": "Trailing line whitespace only; assertions and outcomes retained."
+    }
+  }
+}

@@ -2,6 +2,47 @@
   "format": "revealline-focused-test-map.v1",
   "categories": [
     {
+      "id": "official-download-retention",
+      "pathPatterns": [
+        "^game/official-downloads\\.mjs$",
+        "^game/test/official-downloads\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "official-download-retention",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/official-downloads.test.mjs",
+            "game/test/offline-download-access.test.mjs",
+            "game/test/offline-team-retention-host.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "optional-offline-play",
+      "pathPatterns": [
+        "^game/offline-download-access\\.mjs$",
+        "^game/offline/service-worker\\.template\\.js$",
+        "^game/ui/company-startup\\.mjs$",
+        "^game/test/optional-offline-access\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "optional-offline-play",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/optional-offline-access.test.mjs",
+            "game/test/company-startup.test.mjs",
+            "game/test/published-solo-entry-host.test.mjs",
+            "game/test/offline-team-retention-host.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
       "id": "content-artwork-preparation",
       "pathPatterns": [
         "^game/content-design/(assets|attempt|limits|picture)\\.mjs$",
@@ -108,10 +149,7 @@
         {
           "id": "i18n-check",
           "command": "npm",
-          "args": [
-            "run",
-            "i18n:check"
-          ]
+          "args": ["run", "i18n:check"]
         },
         {
           "id": "localization-runtime",
@@ -129,12 +167,7 @@
     },
     {
       "id": "offline",
-      "pathPatterns": [
-        "offline",
-        "service-worker",
-        "manifest\\.webmanifest",
-        "optional-chapters"
-      ],
+      "pathPatterns": ["offline", "service-worker", "manifest\\.webmanifest", "optional-chapters"],
       "commands": [
         {
           "id": "offline-runtime",
@@ -222,26 +255,17 @@
         {
           "id": "company-generated-source-and-media",
           "command": "npm",
-          "args": [
-            "run",
-            "company:check"
-          ]
+          "args": ["run", "company:check"]
         },
         {
           "id": "company-runtime-and-publication",
           "command": "npm",
-          "args": [
-            "run",
-            "company:test"
-          ]
+          "args": ["run", "company:test"]
         },
         {
           "id": "company-review-measurements",
           "command": "node",
-          "args": [
-            "--test",
-            "scripts/test-company-review.mjs"
-          ]
+          "args": ["--test", "scripts/test-company-review.mjs"]
         },
         {
           "id": "edition-appearance-contracts",
@@ -308,10 +332,7 @@
       ]
     }
   ],
-  "ignoredPathPatterns": [
-    "^(docs/|.*\\.md$)",
-    "^publishing/pages-controller/(evidence|metadata)/"
-  ],
+  "ignoredPathPatterns": ["^(docs/|.*\\.md$)", "^publishing/pages-controller/(evidence|metadata)/"],
   "runtimePathPatterns": [
     "^(game|scripts|site|platforms|publishing)/",
     "^(package(-lock)?\\.json|eslint\\.config\\.mjs)$"
@@ -320,10 +341,7 @@
     {
       "id": "unknown-runtime-validate",
       "command": "npm",
-      "args": [
-        "run",
-        "validate"
-      ]
+      "args": ["run", "validate"]
     }
   ]
 }

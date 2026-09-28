@@ -995,6 +995,30 @@ Prompt: “Start an exposed cut in both turning modes, pause, open Field details
 
 Flight Details regression prompt: “Start and pause an exposed cut. Enter Field details and Read. Tab to adjacent Done without clearing Read; Shift+Tab back to the text; activate Done and return to Read. Read again, Tab through Done to Back, close and verify the identical paused checkpoint. Reopen after scrolling and verify the heading starts in view. Test Standard/Large at600×400 and portrait/landscape without reducing text size. Keep the native Read/text/Done/Back order, and omit only the zero-required-objective Details row.”
 
+#### Live language changes in Flight Details
+
+Keep the open visit's accepted information, controls, content identities and
+historical notices. An explicit locale change may re-render explanatory text from
+those captured facts; it must not sample a newer run, refresh notice history,
+reset input, restart the reader or resume flight. Capture keyboard/controller
+configurations and device identity, not already translated button labels. Derive
+role, powerup and encounter copy from typed facts. Keep impact carriers distinct
+from ordinary field hunters; preserve the observed notice text byte for byte.
+Use the shared locale transaction to preserve Read/Done ownership, focus and
+scroll. Unsubscribe on disposal and retire visits on close, suspension or owner
+replacement. Locale catalogs use literal flat keys (`keySeparator: false`);
+regenerate the combined catalog after resolving concurrent translation additions.
+
+Prompt: “Pause an unfinished cut with a pending turn in Immediate and Grid + buffer.
+Enter Flight Details → Read → Done focus. Switch EN → UK → EN. Verify translated
+roles, clocks, objective/action descriptions, generic controller and modifier-key
+names, while accepted notices, checkpoint, owner, scroll and reading state stay
+unchanged. Back stays paused; only explicit Resume moves. Exercise an impact
+carrier, an active multi-relay encounter, changed live preferences and a retired
+visit. Keep controller pulses neutral for the configured Confirm rearm interval;
+do not weaken the runtime echo guard to satisfy a synthetic fixture. Run the
+focused host/model regressions and record physical/public checks separately.”
+
 #### Details lifetime through backup completion
 
 Keep the installed Field details presenter owned by the page, not by a backup transaction. Editing the shared declaration must not accidentally rewrite unrelated `backupBusy = false` assignments in finally blocks. Verify actual app-mounted successful import, Undo and failure, then persisted and terminal pagehide. A presentation reference reset can leave click handlers alive while breaking lifecycle cleanup; testing only whether the dialog opens is insufficient.
@@ -1590,3 +1614,38 @@ it on cancellation, filtering, close and offscreen movement. Test second-write
 rollback, session export/retry, conflict rejection and strict older backup readers.
 Backup v3 contains references, not image bytes. Solo admission does not establish
 Versus/Team completion; those hosts remain UX1-A2 qualification work.
+
+## Live language changes in input settings and save recovery
+
+Keyboard remapping must keep captured binding configuration and event-time action,
+key, result and diagnostic facts, but resolve visible key names and status through
+the live locale producer. Do not cancel capture, refocus, reread preferences,
+rewrite bindings or resume gameplay merely to refresh language. Preserve browser
+shortcut/composition guards and exact external warnings. Test EN/UA/EN idle and
+active capture, cancellation, preset/reset, session-only writes and thrown errors.
+
+Earlier-release transfer summaries translate labels from the already-reviewed
+snapshot. Preserve source version, counts, missing-pack IDs, saved-flight facts,
+source selection and copy fingerprint; do not rediscover or recopy on locale change.
+Retain exact unknown diagnostics, busy/cancel state and Undo availability. Capture
+result facts before deferring copy-completion text. Regenerate catalogs from source
+JSON and merge concurrent keys before rebuilding.
+
+Prompt: “Pause a real off-center grid turn; open keyboard settings, start capture,
+switch EN/UA/EN and check focus, instructions, aria labels and unchanged save bytes.
+Assign one fresh key, Back and explicitly Resume. Review an earlier saved flight,
+switch language during review/cancel and after copy; prove no repeated I/O, exact
+reviewed facts, retained destination safety and Undo. Preserve baseline red proof
+and report finite host tests separately from browser, hardware and public release
+evidence. Follow docs/plan-status-2026-09-28-settings.md for this batch’s boundary.”
+
+## Native key identifiers are locale-independent
+
+Settings and other input owners compare browser protocol values, never translated
+labels. Keep `KeyboardEvent.key` Home/End/Arrow identifiers literal even when the
+module first loads in Ukrainian; translated display names belong in labels only.
+Test cold locale initialization before import, later locale switches, first/last
+enabled tabs and one-action ownership with the shared controller navigator. Native
+text/select editing and modified shortcuts must remain excluded. A Settings visit
+must preserve a paused flight and require explicit Resume. Follow the regression
+prompt in [Settings native keys](../../../docs/settings-native-key-navigation.md).
