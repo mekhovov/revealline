@@ -14,6 +14,21 @@ import {
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(await readFile(path.join(directory, 'focused-test-map.json'), 'utf8'));
 
+test('official download changes require ownership recovery and gameplay-admission checks', () => {
+  for (const file of ['game/official-downloads.mjs', 'game/test/official-downloads.test.mjs']) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'official-download-retention');
+    assert.ok(command);
+    for (const required of [
+      'game/test/official-downloads.test.mjs',
+      'game/test/offline-download-access.test.mjs',
+      'game/test/offline-team-retention-host.test.mjs',
+    ])
+      assert.ok(command.args.includes(required));
+  }
+});
+
 test('localization and offline paths select only their bounded gates', () => {
   const plan = focusedTestPlan(['game/localization/en.json', 'game/offline/install.mjs'], manifest);
   assert.deepEqual(plan.categories, ['localization', 'offline']);
