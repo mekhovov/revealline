@@ -29,6 +29,15 @@ test('ownership inventory changes select route coverage and artwork screening re
   assert.ok(plan.commands[0].args.includes('game/test/artwork-screening.test.mjs'));
 });
 
+test('published size reports select metadata integrity and cache-owner measurement checks', () => {
+  const plan = focusedTestPlan(['scripts/report-published-offline-packages.mjs'], manifest);
+  assert.ok(plan.categories.includes('offline-package-measurements'));
+  assert.deepEqual(plan.unknownRuntime, []);
+  const command = plan.commands.find(({ id }) => id === 'offline-package-measurements');
+  assert.ok(command.args.includes('scripts/test-report-published-offline-packages.mjs'));
+  assert.ok(command.args.includes('scripts/test-report-offline-packages.mjs'));
+});
+
 test('localization and offline paths select only their bounded gates', () => {
   const plan = focusedTestPlan(['game/localization/en.json', 'game/offline/install.mjs'], manifest);
   assert.deepEqual(plan.categories, ['localization', 'offline']);

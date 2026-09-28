@@ -41,6 +41,23 @@
       ]
     },
     {
+      "id": "offline-package-measurements",
+      "pathPatterns": [
+        "^scripts/(report-(published-)?offline-packages|test-report-(published-)?offline-packages)\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "offline-package-measurements",
+          "command": "node",
+          "args": [
+            "--test",
+            "scripts/test-report-offline-packages.mjs",
+            "scripts/test-report-published-offline-packages.mjs"
+          ]
+        }
+      ]
+    },
+    {
       "id": "team-picture-bindings",
       "pathPatterns": [
         "^game/couch/coop-(picture-bindings|presentation)\\.mjs$",
