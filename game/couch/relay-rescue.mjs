@@ -752,8 +752,9 @@ export function bootCoop({
       tools.append(sound);
     }
     tools.hidden = running();
-    if (tools.hidden) {
+    if (tools.hidden || paused) {
       $('coop-help').open = false;
+      $('coop-more').open = false;
     }
     showTouch();
   }
