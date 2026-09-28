@@ -2593,6 +2593,7 @@ try {
       $('start-button').focus({ preventScroll: true });
       return;
     }
+    if (editionUI?.closeResultDetails?.()) return;
     if (scope === 'paused') resume();
     else if (scope === 'celebration' || scope === 'defeat-presentation')
       $('skip-celebration').click();
@@ -7753,9 +7754,13 @@ try {
           value4: practice
             ? t('interface:practiceComplete')
             : candidateHost?.owns(activeEntry)
-              ? authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo
-                ? t('interface:journeyMissionComplete')
-                : t('interface:authoredTestClearRecordedInJourneyProgressNoLegacyCollection')
+              ? previewSession
+                ? t('interface:studioPreviewMissionComplete')
+                : runtimeContent
+                  ? t('interface:editionMissionComplete')
+                  : authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo
+                    ? t('interface:journeyMissionComplete')
+                    : t('interface:authoredTestClearRecordedInJourneyProgressNoLegacyCollection')
               : completionWarning
                 ? renderMessage(completionWarning)
                 : saveSucceeded

@@ -124,9 +124,12 @@ The shared [optional character adapter](discovery-cosmetic-rewards.md) now suppo
 
 Asset Studio and Picture Workshop now offer an [exact raster handoff](discovery-asset-handoff.md) to the shared reward controls, including captured video posters. New originals still need the existing source and rights admission.
 
-**Still pending:** complete clip and soundtrack handoffs, expanded dedicated
-reward controls throughout those Studios,
-broader optional application fixtures and simulator rewards. Two authored [verified application bonuses](discovery-learning-rewards.md) already use the existing canonical lesson verifier. The player/compiler
+The shared editor also accepts [exact soundtrack originals](discovery-audio-handoff.md),
+[ordered listening collections](discovery-audio-groups.md), and [complete video clips](discovery-video-handoff.md)
+with exact posters, bilingual transcripts and captions. Picture Workshop hands off the complete inspected clip;
+its playback range does not silently trim the original.
+
+**Still pending:** broader optional application fixtures and simulator rewards. Two authored [verified application bonuses](discovery-learning-rewards.md) already use the existing canonical lesson verifier. The player/compiler
 gate rejects unsupported payloads and unregistered mastery requirements. Existing
 game media, characters and soundtracks retain their independent authoring paths. Registered [campaign result feedback](campaign-feedback.md) is editable and previewable through the shared discovery controls.
 
