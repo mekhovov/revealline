@@ -429,3 +429,57 @@ body[data-edition-id] #shell-home {
 .edition-expedition-campaign-art[hidden] {
   display: none;
 }
+
+/* Authored campaign layouts use the same earned discoveries in every edition. */
+.completion-reward-exhibit-controls {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-block: 1rem;
+}
+.completion-reward-exhibit-controls label {
+  display: grid;
+  gap: 0.35rem;
+  flex: 1 1 15rem;
+}
+.completion-reward-exhibit-controls select {
+  max-width: 100%;
+  min-width: 0;
+}
+.completion-reward-exhibit .completion-reward-card {
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--brand-field, #112543) 80%, transparent);
+}
+.completion-reward-piece {
+  float: inline-end;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: color-mix(in srgb, currentColor 45%, transparent);
+}
+.completion-reward-card[data-earned='true'] .completion-reward-piece {
+  color: var(--brand-safe, #b5dfb2);
+}
+.completion-reward-exhibit[data-layout='mosaic'] {
+  gap: 0.35rem;
+}
+.completion-reward-exhibit[data-layout='mosaic'] .completion-reward-card {
+  border-radius: 0.35rem;
+}
+.completion-reward-exhibit[data-layout='gallery'] .completion-reward-card {
+  border-width: 0.3rem;
+  border-radius: 0.25rem;
+}
+.completion-reward-exhibit .completion-reward-card[data-scope='campaign'] {
+  grid-column: 1 / -1;
+}
+.completion-reward-exhibit-picture img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2;
+  object-fit: contain;
+  border-radius: 0.35rem;
+}

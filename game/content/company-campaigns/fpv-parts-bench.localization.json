@@ -8,7 +8,7 @@
         "name": { "en": "From Parts to a Bench Model", "uk": "Від деталей до настільної моделі" }
       },
       "id": "fpv-parts-bench",
-      "identity": "48901f935c3c153a",
+      "identity": "b7c7595f766e41c3",
       "kind": "campaign"
     },
     {
@@ -24,7 +24,7 @@
         "name": { "en": "A Tray of Questions", "uk": "Лоток запитань" }
       },
       "id": "fpv-parts-bench-01",
-      "identity": "60cbbbfd78a9f6d8",
+      "identity": "acd28a7baaaad9c3",
       "kind": "mission"
     },
     {
@@ -40,7 +40,7 @@
         "name": { "en": "Which Way Is Forward?", "uk": "Де передня частина?" }
       },
       "id": "fpv-parts-bench-02",
-      "identity": "7d4ca98829f55a4b",
+      "identity": "2d0ff6bc71d4eded",
       "kind": "mission"
     },
     {
@@ -56,7 +56,7 @@
         "name": { "en": "Three Coloured Paths", "uk": "Три кольорові шляхи" }
       },
       "id": "fpv-parts-bench-03",
-      "identity": "e5bd965f2d85d309",
+      "identity": "fb12a669cc4be382",
       "kind": "mission"
     },
     {
@@ -72,7 +72,7 @@
         "name": { "en": "Same Shape, Different Label", "uk": "Схожа форма, інший напис" }
       },
       "id": "fpv-parts-bench-04",
-      "identity": "ad72aef11f086aa2",
+      "identity": "afee342a04781284",
       "kind": "mission"
     },
     {
@@ -88,7 +88,7 @@
         "name": { "en": "Look Before the Next Step", "uk": "Огляд перед наступним кроком" }
       },
       "id": "fpv-parts-bench-05",
-      "identity": "744780b3cb0bb215",
+      "identity": "76e60bfa92b4b7ca",
       "kind": "mission"
     },
     {
@@ -104,7 +104,7 @@
         "name": { "en": "The Model Handoff", "uk": "Передача моделі" }
       },
       "id": "fpv-parts-bench-06",
-      "identity": "e82cfd094d46044f",
+      "identity": "e43a94fa66107005",
       "kind": "mission"
     }
   ],
