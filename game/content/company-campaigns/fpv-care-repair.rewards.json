@@ -14,17 +14,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-care-repair-key-v1",
-          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+          "assetId": "fpv-care-repair-01-reveal-v1",
+          "sha256": "7f570a43475e304a926228a28bbc98e1ec0a76ee1df54fbe77deb36a67f3d601"
         },
         "id": "fpv-care-repair-01-image",
         "locales": {
           "en": {
-            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
+            "alt": "A loose paper label on an inert model sits beside separate observation and question cards.",
             "title": "Describe the Symptom"
           },
           "uk": {
-            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
+            "alt": "Послаблена паперова етикетка на неактивній моделі розміщена поряд з окремими картками спостереження й запитання.",
             "title": "Опишіть симптом"
           }
         },
@@ -121,7 +121,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-care-repair-01", "kind": "mission" }
   },
   {
@@ -142,17 +142,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-care-repair-key-v1",
-          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+          "assetId": "fpv-care-repair-02-reveal-v1",
+          "sha256": "5aeb3ea85a03e23f7999282b8648d66322ef0f18a0a1a580d8f7ec287259917e"
         },
         "id": "fpv-care-repair-02-image",
         "locales": {
           "en": {
-            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
+            "alt": "A magnifier compares a broken display bracket, unreadable identifier and closed cover with separate observation cards.",
             "title": "An Unpowered Inspection"
           },
           "uk": {
-            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
+            "alt": "Лупа порівнює зламаний кронштейн експоната, нечитабельний ідентифікатор і закриту кришку з окремими картками спостережень.",
             "title": "Огляд без живлення"
           }
         },
@@ -249,7 +249,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-care-repair-02", "kind": "mission" }
   },
   {
@@ -267,17 +267,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-care-repair-key-v1",
-          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+          "assetId": "fpv-care-repair-03-reveal-v1",
+          "sha256": "e95ecd746401b8ac04f9e440147b4b5f1fdcf3459f59498bd694a48422b9d87c"
         },
         "id": "fpv-care-repair-03-image",
         "locales": {
           "en": {
-            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
+            "alt": "Two matching paper-label displays differ only in the brightness of their lamps.",
             "title": "Change One Question"
           },
           "uk": {
-            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
+            "alt": "Два однакові експонати паперових етикеток відрізняються лише яскравістю ламп.",
             "title": "Змініть одне питання"
           }
         },
@@ -374,7 +374,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-care-repair-03", "kind": "mission" }
   },
   {
@@ -395,17 +395,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-care-repair-key-v1",
-          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+          "assetId": "fpv-care-repair-04-reveal-v1",
+          "sha256": "1592f632fbce43aacc121cfac72476303bb3145fff3ebced154857a29a262aa5"
         },
         "id": "fpv-care-repair-04-image",
         "locales": {
           "en": {
-            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
+            "alt": "A flat battery-warning pictogram, separate stop symbol and help notebook form a calm reference desk.",
             "title": "A Battery Stop Card"
           },
           "uk": {
-            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
+            "alt": "Пласка піктограма попередження про акумулятор, окремий символ зупинки й зошит допомоги утворюють спокійний довідковий стіл.",
             "title": "Картка зупинки через акумулятор"
           }
         },
@@ -510,7 +510,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-care-repair-04", "kind": "mission" }
   },
   {
@@ -531,17 +531,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-care-repair-key-v1",
-          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+          "assetId": "fpv-care-repair-05-reveal-v1",
+          "sha256": "b1426ba3ebb1598179c6ab6b8ec34d052a024d321776aae61276b73bbc39c0bd"
         },
         "id": "fpv-care-repair-05-image",
         "locales": {
           "en": {
-            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
+            "alt": "Paper-label replacement, an unidentified-board question and a battery-warning stop card occupy separate decision spaces.",
             "title": "Repair, Replace, Ask"
           },
           "uk": {
-            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
+            "alt": "Заміна паперової етикетки, запитання про невідому плату й картка зупинки через акумулятор займають окремі простори рішень.",
             "title": "Ремонтувати, замінити, запитати"
           }
         },
@@ -638,7 +638,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-care-repair-05", "kind": "mission" }
   },
   {
@@ -659,17 +659,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-care-repair-key-v1",
-          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+          "assetId": "fpv-care-repair-06-reveal-v1",
+          "sha256": "d3c9b3b8d2acd2fa94a63aa66ef471094c2142badf9700ef6e4afe5d97e54bdb"
         },
         "id": "fpv-care-repair-06-image",
         "locales": {
           "en": {
-            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
+            "alt": "A care notebook with evidence tabs, record fields and an unresolved local-specialist contact completes the handoff.",
             "title": "A Responsible Last Step"
           },
           "uk": {
-            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
+            "alt": "Зошит догляду з вкладками доказів, полями запису й невизначеним місцевим фаховим контактом завершує передачу справ.",
             "title": "Відповідальний останній крок"
           }
         },
@@ -766,7 +766,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-care-repair-06", "kind": "mission" }
   },
   {
@@ -817,17 +817,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-care-repair-key-v1",
-          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+          "assetId": "fpv-care-repair-01-reveal-v1",
+          "sha256": "7f570a43475e304a926228a28bbc98e1ec0a76ee1df54fbe77deb36a67f3d601"
         },
         "id": "fpv-care-repair-01-image",
         "locales": {
           "en": {
-            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
+            "alt": "A loose paper label on an inert model sits beside separate observation and question cards.",
             "title": "Describe the Symptom"
           },
           "uk": {
-            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
+            "alt": "Послаблена паперова етикетка на неактивній моделі розміщена поряд з окремими картками спостереження й запитання.",
             "title": "Опишіть симптом"
           }
         },
@@ -835,17 +835,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-care-repair-key-v1",
-          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+          "assetId": "fpv-care-repair-02-reveal-v1",
+          "sha256": "5aeb3ea85a03e23f7999282b8648d66322ef0f18a0a1a580d8f7ec287259917e"
         },
         "id": "fpv-care-repair-02-image",
         "locales": {
           "en": {
-            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
+            "alt": "A magnifier compares a broken display bracket, unreadable identifier and closed cover with separate observation cards.",
             "title": "An Unpowered Inspection"
           },
           "uk": {
-            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
+            "alt": "Лупа порівнює зламаний кронштейн експоната, нечитабельний ідентифікатор і закриту кришку з окремими картками спостережень.",
             "title": "Огляд без живлення"
           }
         },
@@ -853,17 +853,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-care-repair-key-v1",
-          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+          "assetId": "fpv-care-repair-03-reveal-v1",
+          "sha256": "e95ecd746401b8ac04f9e440147b4b5f1fdcf3459f59498bd694a48422b9d87c"
         },
         "id": "fpv-care-repair-03-image",
         "locales": {
           "en": {
-            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
+            "alt": "Two matching paper-label displays differ only in the brightness of their lamps.",
             "title": "Change One Question"
           },
           "uk": {
-            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
+            "alt": "Два однакові експонати паперових етикеток відрізняються лише яскравістю ламп.",
             "title": "Змініть одне питання"
           }
         },
@@ -871,17 +871,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-care-repair-key-v1",
-          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+          "assetId": "fpv-care-repair-04-reveal-v1",
+          "sha256": "1592f632fbce43aacc121cfac72476303bb3145fff3ebced154857a29a262aa5"
         },
         "id": "fpv-care-repair-04-image",
         "locales": {
           "en": {
-            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
+            "alt": "A flat battery-warning pictogram, separate stop symbol and help notebook form a calm reference desk.",
             "title": "A Battery Stop Card"
           },
           "uk": {
-            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
+            "alt": "Пласка піктограма попередження про акумулятор, окремий символ зупинки й зошит допомоги утворюють спокійний довідковий стіл.",
             "title": "Картка зупинки через акумулятор"
           }
         },
@@ -889,17 +889,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-care-repair-key-v1",
-          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+          "assetId": "fpv-care-repair-05-reveal-v1",
+          "sha256": "b1426ba3ebb1598179c6ab6b8ec34d052a024d321776aae61276b73bbc39c0bd"
         },
         "id": "fpv-care-repair-05-image",
         "locales": {
           "en": {
-            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
+            "alt": "Paper-label replacement, an unidentified-board question and a battery-warning stop card occupy separate decision spaces.",
             "title": "Repair, Replace, Ask"
           },
           "uk": {
-            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
+            "alt": "Заміна паперової етикетки, запитання про невідому плату й картка зупинки через акумулятор займають окремі простори рішень.",
             "title": "Ремонтувати, замінити, запитати"
           }
         },
@@ -907,17 +907,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-care-repair-key-v1",
-          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+          "assetId": "fpv-care-repair-06-reveal-v1",
+          "sha256": "d3c9b3b8d2acd2fa94a63aa66ef471094c2142badf9700ef6e4afe5d97e54bdb"
         },
         "id": "fpv-care-repair-06-image",
         "locales": {
           "en": {
-            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
+            "alt": "A care notebook with evidence tabs, record fields and an unresolved local-specialist contact completes the handoff.",
             "title": "A Responsible Last Step"
           },
           "uk": {
-            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
+            "alt": "Зошит догляду з вкладками доказів, полями запису й невизначеним місцевим фаховим контактом завершує передачу справ.",
             "title": "Відповідальний останній крок"
           }
         },
@@ -988,7 +988,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-care-repair", "kind": "campaign" }
   }
 ]

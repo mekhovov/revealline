@@ -6,7 +6,7 @@
     {
       "fields": { "name": { "en": "Drones in Ukraine", "uk": "Дрони в Україні" } },
       "id": "fpv-drones-ukraine",
-      "identity": "c0fb800eb8fe0430",
+      "identity": "3758ee0ef0150e81",
       "kind": "campaign"
     },
     {
@@ -22,7 +22,7 @@
         "name": { "en": "A Map for Recovery", "uk": "Карта для відбудови" }
       },
       "id": "fpv-drones-ukraine-01",
-      "identity": "3d917a09142c5e2d",
+      "identity": "7af1001692776100",
       "kind": "mission"
     },
     {
@@ -38,7 +38,7 @@
         "name": { "en": "Survey Is Not Clearance", "uk": "Обстеження — не очищення" }
       },
       "id": "fpv-drones-ukraine-02",
-      "identity": "1ea3be4786dbb07b",
+      "identity": "b828366253e3715d",
       "kind": "mission"
     },
     {
@@ -54,7 +54,7 @@
         "name": { "en": "A Pilot Study Has Limits", "uk": "Пілотне дослідження має межі" }
       },
       "id": "fpv-drones-ukraine-03",
-      "identity": "0ee789435ebca1fb",
+      "identity": "6c880b35b04347ac",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "Learning Has Many Roles", "uk": "Навчання має багато ролей" }
       },
       "id": "fpv-drones-ukraine-04",
-      "identity": "99ef33a1fcde2a09",
+      "identity": "fc2b0bfa6fbd90b1",
       "kind": "mission"
     },
     {
@@ -86,7 +86,7 @@
         "name": { "en": "Read the Historical Caption", "uk": "Прочитайте історичний підпис" }
       },
       "id": "fpv-drones-ukraine-05",
-      "identity": "3f0388c25f3861e9",
+      "identity": "666060f55b942430",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "An Exhibit with Boundaries", "uk": "Виставка з чіткими межами" }
       },
       "id": "fpv-drones-ukraine-06",
-      "identity": "2f419d979a957a32",
+      "identity": "85ad79b4a5708eec",
       "kind": "mission"
     }
   ],
