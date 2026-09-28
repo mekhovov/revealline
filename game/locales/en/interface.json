@@ -4987,5 +4987,11 @@
   "downloads.offline.prepareFirst": "Prepare offline play first.",
   "downloads.offline.waiting": "Update saved. Close all tabs of this version to use it; your current game continues unchanged.",
   "downloads.offline.ready": "Offline files verified. This version can open without a connection while the browser retains its storage.",
-  "downloads.offline.coreVerified": "Core offline files verified."
+  "downloads.offline.coreVerified": "Core offline files verified.",
+  "companyJourneys": "Company journeys",
+  "companyEntry.title": "Company journeys · Reveal / Line",
+  "companyEntry.openingSolo": "Opening the full Solo game…",
+  "companyEntry.openSolo": "Open Solo",
+  "creator.communityCard": "Community campaigns [[slot0]]",
+  "creator.communityDescription": "Discover, install and play creator editions"
 }

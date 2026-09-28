@@ -271,5 +271,6 @@
   "musicArchive.guidePlaylist": "Create a playlist, add your tracks, save it and choose it for playback. Turn sound on and press Play.",
   "musicArchive.libraryBudget": "Your browser library shares a 256 MiB media budget; select a few albums instead of importing this entire 338.54 MiB collection at once. Downloads include audio only: preserve the recording credits, source and license from this page when reusing or sharing.",
   "musicArchive.thirdPartyNotice": "Third-party recordings, credited to their creators. No creator endorsement or Content ID clearance is implied. UA-FPV and rejected AI originals are not included in this public archive.",
-  "musicArchive.immutableNotice": "Public files keep immutable SHA-256 paths. The archive does not change the current game release or automatically download music to your browser."
+  "musicArchive.immutableNotice": "Public files keep immutable SHA-256 paths. The archive does not change the current game release or automatically download music to your browser.",
+  "companyJourneys": "Company journeys"
 }
