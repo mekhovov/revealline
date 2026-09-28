@@ -9,6 +9,8 @@ import { createPrintableReward } from '../rewards/printable.mjs';
 import { mountDiscoveryExploration } from './discovery-exploration.mjs';
 import { mountRewardMedia } from './reward-media.mjs';
 import { mountRewardQr } from './reward-qr.mjs';
+import { projectRewardExhibits } from '../rewards/exhibit.mjs';
+import { contentText } from '../i18n/content.mjs';
 
 const EMPTY_LEARNING = Object.freeze({
   revision: 0,
@@ -204,6 +206,14 @@ export async function mountEditionRewards({
     return open;
   }
   function restoreFocus(previous) {
+    if (
+      ['completion-reward-exhibit-select', 'completion-reward-exhibit-pictures'].includes(
+        previous?.id,
+      )
+    ) {
+      doc.getElementById(previous.id)?.focus({ preventScroll: true });
+      return;
+    }
     if (!previous?.dataset.rewardId) return;
     const replacement = doc.querySelector(
       `[data-reward-id="${previous.dataset.rewardId}"][data-reward-surface="${previous.dataset.rewardSurface}"]`,
@@ -222,29 +232,155 @@ export async function mountEditionRewards({
     note.setAttribute('aria-atomic', 'true');
     return note;
   }
+  let shelfContentKey = null;
+  let shelfCampaign = null,
+    showPictures = false,
+    shelfVisit = 0,
+    shelfRequest = null;
+  const shelfURLs = new Set();
+  function releaseShelfPictures() {
+    shelfVisit++;
+    shelfRequest?.abort();
+    shelfRequest = null;
+    for (const url of shelfURLs) win.URL.revokeObjectURL(url);
+    shelfURLs.clear();
+  }
   function renderShelf() {
     const focused = shelf.contains(doc.activeElement) ? doc.activeElement : null;
     const title = node('h3', tr('collection'));
-    const grid = node('div', undefined, 'completion-reward-grid');
-    for (const definition of availableDefinitions()) {
-      const receipt = earned(definition.id),
-        copy = localized(definition);
+    const exhibits = projectRewardExhibits({
+      campaigns: provider.route.source.campaigns.filter((campaign) =>
+        context.campaignIds.includes(campaign.id),
+      ),
+      definitions: availableDefinitions(),
+      receipts: state.receipts,
+      progress,
+    });
+    if (!exhibits.some((item) => item.campaign.id === shelfCampaign))
+      shelfCampaign = exhibits[0]?.campaign.id ?? null;
+    const exhibit = exhibits.find((item) => item.campaign.id === shelfCampaign);
+    const contentKey = JSON.stringify([
+      shelfCampaign,
+      showPictures,
+      getLocale(),
+      state.promises.map(({ id, revision }) => [id, revision]),
+      state.receipts.map(({ definition }) => [definition.id, definition.revision]),
+      progress.map(({ rewardId, completed, total }) => [rewardId, completed, total]),
+    ]);
+    if (shelfContentKey === contentKey) {
+      syncShelfSaveNote();
+      return;
+    }
+    shelfContentKey = contentKey;
+    releaseShelfPictures();
+    const controls = node('div', undefined, 'completion-reward-exhibit-controls');
+    const label = node('label', tr('chooseExhibit'));
+    const select = node('select');
+    select.id = 'completion-reward-exhibit-select';
+    for (const item of exhibits) {
+      const option = node('option', contentText(item.campaign, 'name'));
+      option.value = item.campaign.id;
+      select.append(option);
+    }
+    select.value = shelfCampaign ?? '';
+    select.onchange = () => {
+      shelfCampaign = select.value;
+      renderShelf();
+      selectExhibitFocus();
+    };
+    label.append(select);
+    controls.append(label);
+    const pictures = button(
+      tr(showPictures ? 'hideCollectedPictures' : 'showCollectedPictures'),
+      () => {
+        showPictures = !showPictures;
+        renderShelf();
+        doc.getElementById('completion-reward-exhibit-pictures')?.focus({ preventScroll: true });
+      },
+    );
+    pictures.id = 'completion-reward-exhibit-pictures';
+    pictures.setAttribute('aria-pressed', String(showPictures));
+    controls.append(pictures);
+    const grid = node('div', undefined, 'completion-reward-grid completion-reward-exhibit');
+    grid.dataset.layout = exhibit?.layout ?? 'route';
+    const imageJobs = [];
+    for (const row of exhibit?.rows ?? []) {
+      const receipt = row.receipt,
+        copy = localized(row);
       const card = node('article', undefined, 'completion-reward-card');
       card.dataset.earned = String(!!receipt);
+      card.dataset.rewardId = row.id;
+      card.dataset.scope = row.scope.kind;
+      const number = node(
+        'span',
+        row.scope.kind === 'mission' ? String(row.order + 1).padStart(2, '0') : '✦',
+        'completion-reward-piece',
+      );
+      number.setAttribute('aria-hidden', 'true');
       card.append(
-        node('p', tr(receipt ? 'collected' : 'promise'), 'completion-reward-eyebrow'),
+        number,
+        node(
+          'p',
+          tr(row.scope.kind === 'campaign' ? 'campaignFinale' : receipt ? 'collected' : 'promise'),
+          'completion-reward-eyebrow',
+        ),
         node('h4', copy.title),
       );
-      // Locked cards use only the public teaser: no payload, image fetch or link.
-      card.append(node('p', copy.teaser), node('p', receipt ? tr('collected') : count(definition)));
-      if (receipt) {
-        card.append(exploreButton(receipt, 'collection'));
+      // Only receipt images are eligible, and at most twelve thumbnails are
+      // retained. Every discovery remains available through its full viewer.
+      if (showPictures && row.image && imageJobs.length < 12) {
+        const image = node('div', undefined, 'completion-reward-exhibit-picture');
+        card.append(image);
+        imageJobs.push({ payload: row.image, container: image });
       }
+      card.append(
+        node('p', copy.teaser),
+        node(
+          'p',
+          receipt
+            ? tr('collected')
+            : tr('progress', {
+                completed: row.progress?.completed ?? 0,
+                total: row.progress?.total ?? 1,
+              }),
+        ),
+      );
+      if (receipt) card.append(exploreButton(receipt, 'collection'));
       grid.append(card);
     }
-    shelf.replaceChildren(title, grid);
-    if (state.receipts.length && !store.status().durable) shelf.append(saveNotice());
+    shelf.replaceChildren(title, controls);
+    if (exhibit)
+      shelf.append(
+        node('p', tr('exhibitCollected', { collected: exhibit.collected, total: exhibit.total })),
+      );
+    shelf.append(grid);
+    syncShelfSaveNote();
     restoreFocus(focused);
+    if (imageJobs.length) {
+      const visit = shelfVisit,
+        controller = new AbortController();
+      shelfRequest = controller;
+      const owner = { urls: shelfURLs, current: () => shelfVisit };
+      // Two requests at a time keep decoding away from a burst of full-size art.
+      const work = async () => {
+        while (imageJobs.length && !controller.signal.aborted) {
+          const job = imageJobs.shift();
+          await loadImage(job.payload, job.container, controller.signal, visit, owner, false);
+        }
+      };
+      void Promise.all([work(), work()]);
+    }
+  }
+  function syncShelfSaveNote() {
+    doc.getElementById('completion-reward-exhibit-save-note')?.remove();
+    if (state.receipts.length && !store.status().durable) {
+      const notice = saveNotice();
+      notice.id = 'completion-reward-exhibit-save-note';
+      shelf.append(notice);
+    }
+  }
+  function selectExhibitFocus() {
+    doc.getElementById('completion-reward-exhibit-select')?.focus({ preventScroll: true });
   }
   function renderResult(animate = false) {
     const focused = result.contains(doc.activeElement) ? doc.activeElement : null;
@@ -296,7 +432,14 @@ export async function mountEditionRewards({
     }
     restoreFocus(focused);
   }
-  async function loadImage(payload, container, signal, visit) {
+  async function loadImage(
+    payload,
+    container,
+    signal,
+    visit,
+    owner = { urls: objectURLs, current: () => mediaVisit },
+    downloadable = true,
+  ) {
     let ownedURL = null;
     try {
       const { bootstrap, asset } = await resolveRewardAsset(provider, payload.asset, { signal });
@@ -305,7 +448,7 @@ export async function mountEditionRewards({
         ids: [asset.id],
         signal,
         onVerifiedAsset({ asset: verified, bytes }) {
-          if (verified.id !== asset.id || disposed || visit !== mediaVisit || signal.aborted)
+          if (verified.id !== asset.id || disposed || visit !== owner.current() || signal.aborted)
             return;
           const type = /\.webp$/i.test(asset.path)
             ? 'image/webp'
@@ -313,7 +456,7 @@ export async function mountEditionRewards({
               ? 'image/jpeg'
               : 'image/png';
           const url = win.URL.createObjectURL(new Blob([bytes], { type }));
-          objectURLs.add(url);
+          owner.urls.add(url);
           ownedURL = url;
           const image = node('img');
           image.alt = localized(payload).alt;
@@ -321,15 +464,15 @@ export async function mountEditionRewards({
           const download = node('a', tr('saveImage'));
           download.href = url;
           download.download = asset.path.split('/').at(-1);
-          container.replaceChildren(image, download);
+          container.replaceChildren(image, ...(downloadable ? [download] : []));
         },
       });
     } catch {
-      if (!disposed && visit === mediaVisit && !signal.aborted)
+      if (!disposed && visit === owner.current() && !signal.aborted)
         container.replaceChildren(node('p', tr('missingMedia')));
     }
     return () => {
-      if (ownedURL && objectURLs.delete(ownedURL)) win.URL.revokeObjectURL(ownedURL);
+      if (ownedURL && owner.urls.delete(ownedURL)) win.URL.revokeObjectURL(ownedURL);
     };
   }
   function renderViewer() {
@@ -486,6 +629,21 @@ export async function mountEditionRewards({
     dialog.showModal();
     closeButton.focus({ preventScroll: true });
   }
+  const collectionDialog = doc.getElementById('collection-dialog');
+  const closeShelf = () => {
+    if (disposed || !showPictures) return;
+    showPictures = false;
+    releaseShelfPictures();
+    renderShelf();
+  };
+  collectionDialog.addEventListener('close', closeShelf);
+  const shelfObserver =
+    typeof win.MutationObserver === 'function'
+      ? new win.MutationObserver(() => {
+          if (!collectionDialog.open) closeShelf();
+        })
+      : null;
+  shelfObserver?.observe(collectionDialog, { attributes: true, attributeFilter: ['open'] });
   const onClose = () => {
     viewing = null;
     releaseMedia();
@@ -573,6 +731,9 @@ export async function mountEditionRewards({
       disposed = true;
       importVisit++;
       releaseMedia();
+      releaseShelfPictures();
+      shelfObserver?.disconnect();
+      collectionDialog.removeEventListener('close', closeShelf);
       stopLocale();
       result.removeEventListener('animationend', stopReveal);
       result.removeEventListener('click', stopReveal);

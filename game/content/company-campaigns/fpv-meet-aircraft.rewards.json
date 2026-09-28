@@ -109,17 +109,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-meet-aircraft-key-v1",
-          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+          "assetId": "fpv-meet-aircraft-02-reveal-v1",
+          "sha256": "ecd4d5e5281b903a965724a4fa0632f6a161b1ad57f840cb446e0dc36f150d33"
         },
         "id": "fpv-meet-aircraft-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
+            "alt": "Separate inert motors and unmounted propellers sit on cyan display stations beneath sculptural airflow ribbons.",
             "title": "Motion Makers"
           },
           "uk": {
-            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
+            "alt": "Окремі неактивні двигуни й незмонтовані пропелери лежать на блакитних стендах під скульптурними стрічками повітряного потоку.",
             "title": "Джерела руху"
           }
         },
@@ -238,7 +238,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-meet-aircraft-02", "kind": "mission" }
   },
   {
@@ -259,17 +259,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-meet-aircraft-key-v1",
-          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+          "assetId": "fpv-meet-aircraft-03-reveal-v1",
+          "sha256": "38a92e62c73aacdcda4f9e22cc853f22609f8683a7c08ac4b12fc1271d639c42"
         },
         "id": "fpv-meet-aircraft-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
+            "alt": "A fictional ESC role sculpture stands between separate thin cyan and broad amber light ribbons, with an inert motor model apart from it.",
             "title": "The ESC"
           },
           "uk": {
-            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
+            "alt": "Уявна скульптура ролі ESC стоїть між окремими тонкою блакитною й широкою бурштиновою стрічками світла; неактивна модель двигуна розміщена окремо.",
             "title": "Регулятор ESC"
           }
         },
@@ -322,7 +322,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-meet-aircraft-03", "kind": "mission" }
   },
   {
@@ -343,17 +343,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-meet-aircraft-key-v1",
-          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+          "assetId": "fpv-meet-aircraft-04-reveal-v1",
+          "sha256": "e7566c6d820bb94edec5f2b8ba529137718fdd9a2b9ba39a90ccb79baa60dc11"
         },
         "id": "fpv-meet-aircraft-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
+            "alt": "A quiet cyan pavilion layers a sensor-like sculpture, a central interpretation tile and separate command-light displays around nested courtyards.",
             "title": "The Flight Controller"
           },
           "uk": {
-            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
+            "alt": "Тихий блакитний павільйон розташовує скульптуру-датчик, центральну плитку опрацювання й окремі світлові стенди команд довкола вкладених двориків.",
             "title": "Польотний контролер"
           }
         },
@@ -464,7 +464,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-meet-aircraft-04", "kind": "mission" }
   },
   {
@@ -485,17 +485,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-meet-aircraft-key-v1",
-          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+          "assetId": "fpv-meet-aircraft-05-reveal-v1",
+          "sha256": "bef707ab50ad899059120d49bfd120e82b7f571f84f6666c3bf0f2923a682487"
         },
         "id": "fpv-meet-aircraft-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
+            "alt": "Two separate exhibit bays compare an idle handheld control unit and receiver model with a camera, video tile and viewing goggles.",
             "title": "Two Different Links"
           },
           "uk": {
-            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
+            "alt": "Два окремі стенди порівнюють неактивний пульт і модель приймача з камерою, плиткою відеопередавача й окулярами для перегляду.",
             "title": "Два різні канали"
           }
         },
@@ -556,7 +556,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-meet-aircraft-05", "kind": "mission" }
   },
   {
@@ -577,17 +577,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-meet-aircraft-key-v1",
-          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+          "assetId": "fpv-meet-aircraft-06-reveal-v1",
+          "sha256": "b11754ae638bc1d41d905b8e97024fc5cd7322abdad63c03e356291d6e826db2"
         },
         "id": "fpv-meet-aircraft-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
+            "alt": "A fictional component atlas arranges a four-arm frame, an isolated energy block and separate information components on layered circular museum tables.",
             "title": "The Whole Aircraft"
           },
           "uk": {
-            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
+            "alt": "Уявний атлас компонентів розташовує чотирипроменеву раму, окремий блок енергії й інформаційні компоненти на багаторівневих круглих музейних столах.",
             "title": "Цілий дрон"
           }
         },
@@ -664,7 +664,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-meet-aircraft-06", "kind": "mission" }
   },
   {
@@ -977,17 +977,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-meet-aircraft-key-v1",
-          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+          "assetId": "fpv-meet-aircraft-02-reveal-v1",
+          "sha256": "ecd4d5e5281b903a965724a4fa0632f6a161b1ad57f840cb446e0dc36f150d33"
         },
         "id": "fpv-meet-aircraft-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
+            "alt": "Separate inert motors and unmounted propellers sit on cyan display stations beneath sculptural airflow ribbons.",
             "title": "Motion Makers"
           },
           "uk": {
-            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
+            "alt": "Окремі неактивні двигуни й незмонтовані пропелери лежать на блакитних стендах під скульптурними стрічками повітряного потоку.",
             "title": "Джерела руху"
           }
         },
@@ -995,17 +995,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-meet-aircraft-key-v1",
-          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+          "assetId": "fpv-meet-aircraft-03-reveal-v1",
+          "sha256": "38a92e62c73aacdcda4f9e22cc853f22609f8683a7c08ac4b12fc1271d639c42"
         },
         "id": "fpv-meet-aircraft-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
+            "alt": "A fictional ESC role sculpture stands between separate thin cyan and broad amber light ribbons, with an inert motor model apart from it.",
             "title": "The ESC"
           },
           "uk": {
-            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
+            "alt": "Уявна скульптура ролі ESC стоїть між окремими тонкою блакитною й широкою бурштиновою стрічками світла; неактивна модель двигуна розміщена окремо.",
             "title": "Регулятор ESC"
           }
         },
@@ -1013,17 +1013,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-meet-aircraft-key-v1",
-          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+          "assetId": "fpv-meet-aircraft-04-reveal-v1",
+          "sha256": "e7566c6d820bb94edec5f2b8ba529137718fdd9a2b9ba39a90ccb79baa60dc11"
         },
         "id": "fpv-meet-aircraft-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
+            "alt": "A quiet cyan pavilion layers a sensor-like sculpture, a central interpretation tile and separate command-light displays around nested courtyards.",
             "title": "The Flight Controller"
           },
           "uk": {
-            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
+            "alt": "Тихий блакитний павільйон розташовує скульптуру-датчик, центральну плитку опрацювання й окремі світлові стенди команд довкола вкладених двориків.",
             "title": "Польотний контролер"
           }
         },
@@ -1031,17 +1031,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-meet-aircraft-key-v1",
-          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+          "assetId": "fpv-meet-aircraft-05-reveal-v1",
+          "sha256": "bef707ab50ad899059120d49bfd120e82b7f571f84f6666c3bf0f2923a682487"
         },
         "id": "fpv-meet-aircraft-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
+            "alt": "Two separate exhibit bays compare an idle handheld control unit and receiver model with a camera, video tile and viewing goggles.",
             "title": "Two Different Links"
           },
           "uk": {
-            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
+            "alt": "Два окремі стенди порівнюють неактивний пульт і модель приймача з камерою, плиткою відеопередавача й окулярами для перегляду.",
             "title": "Два різні канали"
           }
         },
@@ -1049,17 +1049,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-meet-aircraft-key-v1",
-          "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+          "assetId": "fpv-meet-aircraft-06-reveal-v1",
+          "sha256": "b11754ae638bc1d41d905b8e97024fc5cd7322abdad63c03e356291d6e826db2"
         },
         "id": "fpv-meet-aircraft-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
+            "alt": "A fictional component atlas arranges a four-arm frame, an isolated energy block and separate information components on layered circular museum tables.",
             "title": "The Whole Aircraft"
           },
           "uk": {
-            "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
+            "alt": "Уявний атлас компонентів розташовує чотирипроменеву раму, окремий блок енергії й інформаційні компоненти на багаторівневих круглих музейних столах.",
             "title": "Цілий дрон"
           }
         },
@@ -1130,7 +1130,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-meet-aircraft", "kind": "campaign" }
   }
 ]
