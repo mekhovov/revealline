@@ -232,6 +232,7 @@ export function editionPublicationAssets(catalog, files) {
           ...old.campaigns.flatMap((item) => [
             item.sourcePath,
             ...(item.lessonPath ? [item.lessonPath] : []),
+            ...(item.rewardPath ? [item.rewardPath] : []),
           ]),
         ]),
         inline = new Map();
