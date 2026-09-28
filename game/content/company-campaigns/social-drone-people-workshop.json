@@ -15,16 +15,68 @@
       "width": 960
     },
     {
-      "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
-      "bytes": 282921,
+      "alt": "Original illustrated teal-and-blue workshop with two equally lit contribution bays connected to a central meeting table.",
+      "bytes": 179440,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "social-drone-people-workshop-key-picture",
+      "height": 480,
+      "id": "social-drone-people-workshop-02-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/social-drone-people-workshop-key-v1.jpg",
+      "path": "editions/assets/discovery/social-drone-people-workshop-02-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782",
+      "sha256": "04549079a9ce5359f9e30e8072d85ccbc17aa71a329832334f69d1a1e582896e",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated source library with a fictional workshop picture attached to its blank source card at a bright evidence desk.",
+      "bytes": 179382,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "social-drone-people-workshop-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/social-drone-people-workshop-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "8583d72d7c92c57bd3532e32136f0950c1c71040e3276c1f945b1da8293dc1bf",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated discussion courtyard with a curved blue bench, empty seats and a civilian display model beneath a clear dome.",
+      "bytes": 182818,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "social-drone-people-workshop-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/social-drone-people-workshop-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "85ad91530e6bc5c33851aab986319a3491e73b3dbbbe8dc24322872f71d3eee9",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated evidence workshop with three separated benches for an inventory tray, an observation card and an open folder with a missing insert.",
+      "bytes": 187972,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "social-drone-people-workshop-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/social-drone-people-workshop-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "14f06f2e8864b7e20ef33d952f8badd7eeaf52c0f61ba83a2973cf62dc575bec",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated community mosaic joining a welcome arch, contribution bays, source library, discussion bench, evidence desk and shared table.",
+      "bytes": 232824,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "social-drone-people-workshop-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/social-drone-people-workshop-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "b6b80c7688e32834f8ce4b7efdf9805aa0679bc3051db86e85829d101f39bb25",
       "width": 960
     }
   ],
@@ -33,7 +85,7 @@
       "band": 1,
       "discovery": {
         "exhibitLayout": "mosaic",
-        "finaleRewardRef": { "id": "social-drone-people-workshop-finale", "revision": "2" }
+        "finaleRewardRef": { "id": "social-drone-people-workshop-finale", "revision": "3" }
       },
       "format": "CampaignDesignV1",
       "id": "social-drone-people-workshop",
@@ -186,7 +238,7 @@
         "memorableMoment": "An original cobalt-blue welcome hall around a community table and civilian learning models.",
         "pacingBeat": "discover",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-01-discovery", "revision": "2" },
+        "rewardRef": { "id": "social-drone-people-workshop-01-discovery", "revision": "3" },
         "routeDecision": "Use the wide welcome island for short returns, or capture the open west court first."
       },
       "format": "MissionDesignV1",
@@ -236,7 +288,7 @@
         "memorableMoment": "Two blue workshop bays with a central meeting alcove and distinct contribution boards.",
         "pacingBeat": "choose",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-02-discovery", "revision": "2" },
+        "rewardRef": { "id": "social-drone-people-workshop-02-discovery", "revision": "3" },
         "routeDecision": "Choose the upper meeting alcove or lower workbench as your first safe return."
       },
       "format": "MissionDesignV1",
@@ -246,7 +298,7 @@
       "name": "Many Ways to Contribute",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 15.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "social-drone-people-workshop-key-picture",
+        "backgroundAssetId": "social-drone-people-workshop-02-picture",
         "themeId": "social-drone-people-workshop-theme"
       },
       "revision": "1",
@@ -294,7 +346,7 @@
         "memorableMoment": "An original source library with open blank cards, connected cobalt shelves and a bright evidence desk.",
         "pacingBeat": "combine",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-03-discovery", "revision": "2" },
+        "rewardRef": { "id": "social-drone-people-workshop-03-discovery", "revision": "3" },
         "routeDecision": "Return through the offset archive islands before attempting the long east aisle."
       },
       "format": "MissionDesignV1",
@@ -304,7 +356,7 @@
       "name": "Find the Source",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 16.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "social-drone-people-workshop-key-picture",
+        "backgroundAssetId": "social-drone-people-workshop-03-picture",
         "themeId": "social-drone-people-workshop-theme"
       },
       "revision": "1",
@@ -352,7 +404,7 @@
         "memorableMoment": "A spacious blue discussion courtyard with a long bench, warm lamps and civilian model cases.",
         "pacingBeat": "breathe",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-04-discovery", "revision": "2" },
+        "rewardRef": { "id": "social-drone-people-workshop-04-discovery", "revision": "3" },
         "routeDecision": "Follow the wide inner bench while the patrol passes the exposed outer edge."
       },
       "format": "MissionDesignV1",
@@ -362,7 +414,7 @@
       "name": "Ask a Useful Question",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 17.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "social-drone-people-workshop-key-picture",
+        "backgroundAssetId": "social-drone-people-workshop-04-picture",
         "themeId": "social-drone-people-workshop-theme"
       },
       "revision": "1",
@@ -410,7 +462,7 @@
         "memorableMoment": "A fictional evidence workshop with orderly inventory cards and three separated blue review benches.",
         "pacingBeat": "mastery",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-05-discovery", "revision": "2" },
+        "rewardRef": { "id": "social-drone-people-workshop-05-discovery", "revision": "3" },
         "routeDecision": "Link the staggered desks using the lower return to avoid the slow aisle."
       },
       "format": "MissionDesignV1",
@@ -420,7 +472,7 @@
       "name": "Care Before Certainty",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 18.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "social-drone-people-workshop-key-picture",
+        "backgroundAssetId": "social-drone-people-workshop-05-picture",
         "themeId": "social-drone-people-workshop-theme"
       },
       "revision": "1",
@@ -476,7 +528,7 @@
         "memorableMoment": "An original completed community mosaic joining the welcome hall, source shelves and discussion tables.",
         "pacingBeat": "resolve",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-06-discovery", "revision": "2" },
+        "rewardRef": { "id": "social-drone-people-workshop-06-discovery", "revision": "3" },
         "routeDecision": "Join the central mosaic first or connect the small archive and welcome islands before the broad crossing."
       },
       "format": "MissionDesignV1",
@@ -486,7 +538,7 @@
       "name": "The Community Mosaic",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 19.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "social-drone-people-workshop-key-picture",
+        "backgroundAssetId": "social-drone-people-workshop-06-picture",
         "themeId": "social-drone-people-workshop-theme"
       },
       "revision": "1",
@@ -501,9 +553,9 @@
       "format": "PackDesignV1",
       "id": "social-drone-people-workshop-pack",
       "name": "People Behind the Workshop",
-      "revision": "2"
+      "revision": "3"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "2"
+  "revision": "3"
 }

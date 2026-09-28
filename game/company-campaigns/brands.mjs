@@ -174,6 +174,12 @@ const choices = [
 const retainedPresentations = Object.freeze({
   'victory-drones': [
     {
+      id: '6de52c0aa1ae09a7f9699adb5d73f69c779a5220e003434cb6dfe5c6333bff9f',
+      path: 'game/editions/retained/victory-drones-before-profiles-art-3.json',
+      sha256: '60cc300a3d75072732afbb76dd258899d4a0134b7e5c1f9c7130773a852eb4be',
+      bytes: 115252,
+    },
+    {
       id: '36e42f75903c47abf1c23da0f22f46b74498284cdf84abd0b5f36b10d5838037',
       path: 'game/editions/retained/victory-drones-first-discoveries.json',
       sha256: '3c2bf181cf224dcc1a477a1b17ccfa7109f06803af31f49e9af379a40deb290f',
@@ -182,6 +188,12 @@ const retainedPresentations = Object.freeze({
   ],
   'social-drone-ua': [
     {
+      id: '776e569d90c869e8cdf96beb046d21d9f5439fde57c9fbe991119e4029e0dcd6',
+      path: 'game/editions/retained/social-drone-ua-before-profiles-art-3.json',
+      sha256: '99d0b6019310a08b71a379571e75a7ae0c16bd81a6b3004fe550f77aaa42bfee',
+      bytes: 115730,
+    },
+    {
       id: '95c2f3c78f07732c3d804e042b5c5a1bb56d9c38f79330b1d09135f46affecd5',
       path: 'game/editions/retained/social-drone-ua-first-discoveries.json',
       sha256: 'c44f6757b369f0ac7c08a86e6ee4b5633ab707cd8f6624d9e43b2b719ac08aaa',
@@ -189,6 +201,12 @@ const retainedPresentations = Object.freeze({
     },
   ],
   'ukraine-culture': [
+    {
+      id: 'b056de12bcb25f16bc3ed5324b5a0e1a7e30f2614a37eb244675ef02a8c2a805',
+      path: 'game/editions/retained/ukraine-culture-before-profiles-art-3.json',
+      sha256: '3940adef9e74a5f5cd83615c26cce573442dfc5685d6855998864772dbc14623',
+      bytes: 398396,
+    },
     {
       id: '976af38b7451ae581864ff9baef4975cab0c3feb385fa73ea8d3680e43ed5742',
       path: 'game/editions/retained/ukraine-culture-before-mission-art-2.json',
@@ -203,6 +221,12 @@ const retainedPresentations = Object.freeze({
     },
   ],
   'fpv-learning': [
+    {
+      id: '108c4348f0a40c6e6b48387a9fa81d95161f006f842d1239e3048986c29696b2',
+      path: 'game/editions/retained/fpv-learning-before-profiles-art-3.json',
+      sha256: 'd874dc8bac209d8095b3316117278adce8c02579e120c19c373366750fe15023',
+      bytes: 481396,
+    },
     {
       id: 'ace3662d4631d798e58b5eeea22d4f0d2c3fc8bf538f6a7a47bcb54ae6938fd0',
       path: 'game/editions/retained/fpv-learning-before-mission-art-2.json',
@@ -459,14 +483,14 @@ export const COMPANY_EDITIONS = Object.freeze(
                 : brandId === 'droneaid-nl'
                   ? 4
                   : ['ukraine-culture', 'fpv-learning'].includes(id)
-                    ? 3
+                    ? 4
                     : [
                           'social-drone-ua',
                           'victory-drones',
                           'ukraine-culture',
                           'fpv-learning',
                         ].includes(id)
-                      ? 2
+                      ? 3
                       : 1,
     name,
     brandId,

@@ -63,6 +63,50 @@
             "title": "Спосіб бачити, а не форма"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Put the camera-view icon under viewing method and the rotor outline under airframe. Explain why FPV does not name one shape."
+              ],
+              "title": "Make the distinction: A View, Not a Shape"
+            },
+            "uk": {
+              "paragraphs": [
+                "Помістіть значок виду камери до способу перегляду, а контур роторів — до конструкції. Чому FPV не називає одну форму?"
+              ],
+              "title": "Розрізніть поняття: Спосіб бачити, а не форма"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Together, point to the viewing equipment and then the aircraft shape. Can these describe different aspects of the same exhibit?"
+              ],
+              "title": "Explore together: A View, Not a Shape"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом покажіть обладнання перегляду, а тоді форму апарата. Чи описують вони різні сторони одного експоната?"
+              ],
+              "title": "Дослідіть разом: Спосіб бачити, а не форма"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A new fictional card says only FPV. List which airframe and assistance details remain unknown rather than inferring them from the viewing method."
+              ],
+              "title": "Apply and question: A View, Not a Shape"
+            },
+            "uk": {
+              "paragraphs": [
+                "Нова вигадана картка каже лише FPV. Які деталі конструкції й допомоги невідомі, замість виведення їх зі способу перегляду?"
+              ],
+              "title": "Застосуйте й запитайте: Спосіб бачити, а не форма"
+            }
+          }
+        },
         "type": "knowledge"
       },
       {
@@ -138,7 +182,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-drone-families-01", "kind": "mission" }
   },
   {
@@ -205,6 +249,50 @@
             "title": "Не лише чотири ротори"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Sort the four-, six- and eight-position silhouettes. Identify a performance claim that cannot be concluded from those counts alone."
+              ],
+              "title": "Make the distinction: More Than Four Rotors"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розподіліть силуети з чотирма, шістьма й вісьмома позиціями. Який висновок про характеристики не випливає лише з кількості?"
+              ],
+              "title": "Розрізніть поняття: Не лише чотири ротори"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Count the visible rotor positions together. Compare the family names without turning the count into a best-to-worst ranking."
+              ],
+              "title": "Explore together: More Than Four Rotors"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом порахуйте видимі місця роторів. Порівняйте назви родин без перетворення кількості на рейтинг від кращого до гіршого."
+              ],
+              "title": "Дослідіть разом: Не лише чотири ротори"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare two fictional designs with different rotor counts but no documented limits. State the civilian question and evidence needed before judging suitability."
+              ],
+              "title": "Apply and question: More Than Four Rotors"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте дві вигадані конструкції з різною кількістю роторів без задокументованих меж. Назвіть цивільне завдання й потрібні дані для оцінки придатності."
+              ],
+              "title": "Застосуйте й запитайте: Не лише чотири ротори"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -222,7 +310,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-drone-families-02", "kind": "mission" }
   },
   {
@@ -297,6 +385,50 @@
             "title": "Крила розповідають інакше"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Separate the fixed-wing and multicopter drawings by structure. Leave operating conditions blank when the exhibit provides no model-specific evidence."
+              ],
+              "title": "Make the distinction: Wings Tell Another Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть малюнки літака з нерухомим крилом і мультикоптера за конструкцією. Не заповнюйте умови роботи без даних конкретної моделі."
+              ],
+              "title": "Розрізніть поняття: Крила розповідають інакше"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Point together to a broad fixed wing and separate rotor discs. Describe the visible structure without guessing how far either craft travels."
+              ],
+              "title": "Explore together: Wings Tell Another Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом покажіть широке нерухоме крило й окремі диски роторів. Опишіть конструкцію без здогадів про дальність польоту."
+              ],
+              "title": "Дослідіть разом: Крила розповідають інакше"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A third fictional design combines features. Explain why one visible feature is insufficient to invent its transition behaviour or performance envelope."
+              ],
+              "title": "Apply and question: Wings Tell Another Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Третя вигадана конструкція поєднує ознаки. Чому однієї видимої ознаки недостатньо, щоб вигадати її переходи між режимами чи межі характеристик?"
+              ],
+              "title": "Застосуйте й запитайте: Крила розповідають інакше"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -314,7 +446,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-drone-families-03", "kind": "mission" }
   },
   {
@@ -375,6 +507,50 @@
             "title": "Спорт має свої умови"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Find the route, viewing area and agreed pause idea in the fictional exhibition. Explain why a sport also needs shared arrangements."
+              ],
+              "title": "Make the distinction: A Sport Has a Setting"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть маршрут, глядацьку зону й узгоджену паузу на вигаданій виставці. Чому спорту також потрібні спільні домовленості?"
+              ],
+              "title": "Розрізніть поняття: Спорт має свої умови"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Compare two club posters together: one shows an organized setting, the other only speed. What helpful context would you add?"
+              ],
+              "title": "Explore together: A Sport Has a Setting"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом порівняйте два клубні плакати: один має організовані умови, інший — лише швидкість. Який корисний контекст додати?"
+              ],
+              "title": "Дослідіть разом: Спорт має свої умови"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Another fictional event advertises an impressive track photograph. Identify which permission and organization claims the photograph does not establish."
+              ],
+              "title": "Apply and question: A Sport Has a Setting"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інша вигадана подія рекламує ефектне фото траси. Які твердження про дозвіл та організацію саме фото не підтверджує?"
+              ],
+              "title": "Застосуйте й запитайте: Спорт має свої умови"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -392,7 +568,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-drone-families-04", "kind": "mission" }
   },
   {
@@ -459,6 +635,50 @@
             "title": "Мета змінює запитання"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Name one missing fact for each fictional brief: setting, approval or equipment. Explain why one power score would hide these differences."
+              ],
+              "title": "Make the distinction: Purpose Changes the Questions"
+            },
+            "uk": {
+              "paragraphs": [
+                "Назвіть відсутній факт для кожного вигаданого завдання: умови, дозвіл чи обладнання. Чому один бал потужності приховає ці відмінності?"
+              ],
+              "title": "Розрізніть поняття: Мета змінює запитання"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose a classroom, photography or parcel-study card together. Ask what the person wants to learn before choosing a comparison."
+              ],
+              "title": "Explore together: Purpose Changes the Questions"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом оберіть картку класу, фотографування чи дослідження доставки. Запитайте, що людина хоче дізнатися, перш ніж порівнювати."
+              ],
+              "title": "Дослідіть разом: Мета змінює запитання"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A different civilian brief changes its purpose but keeps the same aircraft silhouette. Revise the evidence questions without assuming the equipment became suitable."
+              ],
+              "title": "Apply and question: Purpose Changes the Questions"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інше цивільне завдання змінює мету, зберігаючи силует апарата. Оновіть питання до доказів, не припускаючи, що обладнання стало придатним."
+              ],
+              "title": "Застосуйте й запитайте: Мета змінює запитання"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -476,7 +696,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-drone-families-05", "kind": "mission" }
   },
   {
@@ -551,6 +771,50 @@
             "title": "Упорядкуйте атлас родин"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Read camera-equipped hexacopter and sort what it tells you about airframe and viewing. Keep assistance and purpose separate."
+              ],
+              "title": "Make the distinction: Curate the Family Atlas"
+            },
+            "uk": {
+              "paragraphs": [
+                "Прочитайте «гексакоптер із камерою» й визначте, що це каже про конструкцію та перегляд. Допомогу керування й мету розглядайте окремо."
+              ],
+              "title": "Розрізніть поняття: Упорядкуйте атлас родин"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Fill the atlas together, leaving room for unknowns. Explain why an honest blank can be more useful than a confident guess."
+              ],
+              "title": "Explore together: Curate the Family Atlas"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом заповніть атлас, залишивши місце для невідомого. Чому чесне порожнє поле корисніше за впевнений здогад?"
+              ],
+              "title": "Дослідіть разом: Упорядкуйте атлас родин"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Apply the four-field atlas to a new fictional description. Cite the words supporting each filled field and mark anything requiring another source."
+              ],
+              "title": "Apply and question: Curate the Family Atlas"
+            },
+            "uk": {
+              "paragraphs": [
+                "Застосуйте атлас із чотирьох полів до нового вигаданого опису. Назвіть слова на підтвердження кожного поля й позначте потребу в іншому джерелі."
+              ],
+              "title": "Застосуйте й запитайте: Упорядкуйте атлас родин"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -568,7 +832,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-drone-families-06", "kind": "mission" }
   },
   {
@@ -790,7 +1054,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-drone-families", "kind": "campaign" }
   }
 ]

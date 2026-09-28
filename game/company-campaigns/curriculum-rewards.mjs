@@ -1,3 +1,4 @@
+import { CURRICULUM_LEARNING_PROFILES } from './curriculum-profiles.mjs';
 import {
   CURRICULUM_REFERENCE_ASSETS,
   curriculumReferencePayloads,
@@ -67,6 +68,9 @@ export function createCurriculumRewards({
   const knowledge = (id, locales, refs) => ({
     id,
     type: 'knowledge',
+    ...(CURRICULUM_LEARNING_PROFILES[id.replace(/-knowledge$/, '')]
+      ? { profiles: CURRICULUM_LEARNING_PROFILES[id.replace(/-knowledge$/, '')] }
+      : {}),
     locales: localized(locales, ({ title, paragraphs }) => ({
       title,
       paragraphs: [...paragraphs],

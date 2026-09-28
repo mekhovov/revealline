@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-four-controls-key-v1",
-          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+          "assetId": "fpv-four-controls-01-reveal-v1",
+          "sha256": "06376321a870bb8edbb1bff457fe27295d26b06f9a8a481634d578e831d838b7"
         },
         "id": "fpv-four-controls-01-image",
         "locales": {
           "en": {
-            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
+            "alt": "A two-stick museum control sculpture sits among four separate blank command cards.",
             "title": "Two Sticks, Four Names"
           },
           "uk": {
-            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
+            "alt": "Музейна скульптура пульта з двома стіками стоїть серед чотирьох окремих чистих карток команд.",
             "title": "Два стіки, чотири назви"
           }
         },
@@ -63,6 +63,50 @@
             "title": "Два стіки, чотири назви"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Use the displayed Mode 2 labels to match the axes. Explain why stick placement does not specify every aircraft’s response."
+              ],
+              "title": "Make the distinction: Two Sticks, Four Names"
+            },
+            "uk": {
+              "paragraphs": [
+                "За показаними позначеннями Mode 2 зіставте осі. Чому розташування стіків не визначає реакцію кожного апарата?"
+              ],
+              "title": "Розрізніть поняття: Два стіки, чотири назви"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Take turns naming the four controls on the labelled diagram. Compare a stick location with the name of a command."
+              ],
+              "title": "Explore together: Two Sticks, Four Names"
+            },
+            "uk": {
+              "paragraphs": [
+                "По черзі назвіть чотири керування на підписаній схемі. Порівняйте положення стіка з назвою команди."
+              ],
+              "title": "Дослідіть разом: Два стіки, чотири назви"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Another fictional controller uses a different labelled mode. Compare placement without assuming the real mapping or flight mode from its appearance."
+              ],
+              "title": "Apply and question: Two Sticks, Four Names"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інший вигаданий пульт має інший підписаний режим. Порівняйте розташування, не визначаючи реальне зіставлення чи режим польоту за виглядом."
+              ],
+              "title": "Застосуйте й запитайте: Два стіки, чотири назви"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -80,7 +124,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-four-controls-01", "kind": "mission" }
   },
   {
@@ -101,17 +145,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-four-controls-key-v1",
-          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+          "assetId": "fpv-four-controls-02-reveal-v1",
+          "sha256": "affba1dd04bb175292c7179ad667687ec1982977ea388686d352d0d1dfe300bf"
         },
         "id": "fpv-four-controls-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
+            "alt": "Two inert side-view models compare a level attitude with a downward nose tilt around a display hinge.",
             "title": "Pitch: Read the Nose"
           },
           "uk": {
-            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
+            "alt": "Дві неактивні моделі збоку порівнюють рівне положення з нахилом носа вниз навколо виставкового шарніра.",
             "title": "Тангаж: стежте за носом"
           }
         },
@@ -147,6 +191,50 @@
             "title": "Тангаж: стежте за носом"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Find the side-to-side rotation axis. Separate a pitch orientation change from a statement about position or travel."
+              ],
+              "title": "Make the distinction: Pitch: Read the Nose"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть поперечну вісь обертання. Відокремте зміну орієнтації за тангажем від твердження про положення чи переміщення."
+              ],
+              "title": "Розрізніть поняття: Тангаж: стежте за носом"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Point together to the model’s nose in the level and tilted views. Describe the change before guessing where it would move."
+              ],
+              "title": "Explore together: Pitch: Read the Nose"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом покажіть ніс моделі на рівному й нахиленому виглядах. Опишіть зміну, перш ніж вгадувати подальший рух."
+              ],
+              "title": "Дослідіть разом: Тангаж: стежте за носом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A different fictional response card requests tilt rather than travel. State its assumption and identify why the same input name does not prove identical dynamics."
+              ],
+              "title": "Apply and question: Pitch: Read the Nose"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інша вигадана картка реакції задає нахил, а не переміщення. Назвіть припущення: чому однакова назва входу не доводить однакової динаміки?"
+              ],
+              "title": "Застосуйте й запитайте: Тангаж: стежте за носом"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -164,7 +252,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-four-controls-02", "kind": "mission" }
   },
   {
@@ -185,17 +273,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-four-controls-key-v1",
-          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+          "assetId": "fpv-four-controls-03-reveal-v1",
+          "sha256": "2adebfe28917b39bc2686a5b8e30f4243df0fb94eb1a19fa742e8f8ffb281fbd"
         },
         "id": "fpv-four-controls-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
+            "alt": "A front-view inert model tilts one side lower, with a blue arm marker and a separate level comparison.",
             "title": "Roll: One Wingtip Lower"
           },
           "uk": {
-            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
+            "alt": "Неактивна модель спереду нахиляє один бік нижче; синя позначка променя й окремий рівний зразок допомагають порівнянню.",
             "title": "Крен: один бік нижче"
           }
         },
@@ -231,6 +319,50 @@
             "title": "Крен: один бік нижче"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Name the front-to-back axis and the side that lowers. State the viewpoint before using left or right."
+              ],
+              "title": "Make the distinction: Roll: One Wingtip Lower"
+            },
+            "uk": {
+              "paragraphs": [
+                "Назвіть поздовжню вісь і бік, що опускається. Уточніть точку огляду перед словами «ліворуч» і «праворуч»."
+              ],
+              "title": "Розрізніть поняття: Крен: один бік нижче"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Keep the model’s marked side in sight while comparing two views. Does the model’s left always appear on the screen’s left?"
+              ],
+              "title": "Explore together: Roll: One Wingtip Lower"
+            },
+            "uk": {
+              "paragraphs": [
+                "Стежте за позначеним боком моделі, порівнюючи два види. Чи її лівий бік завжди ліворуч на екрані?"
+              ],
+              "title": "Дослідіть разом: Крен: один бік нижче"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A second fixture turns the camera around an unchanged tilted model. Explain which screen description changes and which aircraft-relative observation remains true."
+              ],
+              "title": "Apply and question: Roll: One Wingtip Lower"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інший приклад повертає камеру навколо незмінно нахиленої моделі. Який опис на екрані змінюється, а яке спостереження відносно апарата залишається?"
+              ],
+              "title": "Застосуйте й запитайте: Крен: один бік нижче"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -248,7 +380,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-four-controls-03", "kind": "mission" }
   },
   {
@@ -269,17 +401,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-four-controls-key-v1",
-          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+          "assetId": "fpv-four-controls-04-reveal-v1",
+          "sha256": "8604abd20aced15a333d238d4f041f074508a6adab3a4367bb39d637e951a97d"
         },
         "id": "fpv-four-controls-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
+            "alt": "An overhead exhibit shows one four-arm model at a fixed centre, a blue nose marker and a separate compared heading.",
             "title": "Yaw: Turn the Heading"
           },
           "uk": {
-            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
+            "alt": "Виставка згори показує одну чотирипроменеву модель із нерухомим центром, синю позначку носа й окремий порівнюваний напрямок.",
             "title": "Рискання: змініть курс"
           }
         },
@@ -315,6 +447,50 @@
             "title": "Рискання: змініть курс"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Identify the vertical rotation axis. Keep a changed heading separate from a changed floor position in this static comparison."
+              ],
+              "title": "Make the distinction: Yaw: Turn the Heading"
+            },
+            "uk": {
+              "paragraphs": [
+                "Визначте вертикальну вісь обертання. Відокремте змінений курс від зміненого положення над підлогою в цьому статичному порівнянні."
+              ],
+              "title": "Розрізніть поняття: Рискання: змініть курс"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Compare the two heading markers together. Find the shared centre and explain what the drawing changes around it."
+              ],
+              "title": "Explore together: Yaw: Turn the Heading"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом порівняйте дві позначки напрямку. Знайдіть спільний центр і поясніть, що малюнок змінює навколо нього."
+              ],
+              "title": "Дослідіть разом: Рискання: змініть курс"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Another fictional card describes rotation rate, not a selected compass heading. Explain the difference without assuming real position hold from the still illustration."
+              ],
+              "title": "Apply and question: Yaw: Turn the Heading"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інша вигадана картка описує швидкість обертання, а не обраний компасний курс. Поясніть різницю, не виводячи утримання позиції з нерухомої ілюстрації."
+              ],
+              "title": "Застосуйте й запитайте: Рискання: змініть курс"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -332,7 +508,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-four-controls-04", "kind": "mission" }
   },
   {
@@ -353,17 +529,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-four-controls-key-v1",
-          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+          "assetId": "fpv-four-controls-05-reveal-v1",
+          "sha256": "3a5b9e4f021f5cf7dfa81cbc71a00856487b25ac96a8ff77be0ffef3c14eb992"
         },
         "id": "fpv-four-controls-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
+            "alt": "Paired display cases keep separate model-response studies and assumption cards beside identical stick sculptures.",
             "title": "Throttle Needs a Model"
           },
           "uk": {
-            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
+            "alt": "Парні вітрини зберігають окремі етюди реакції моделей і картки припущень біля однакових скульптур стіків.",
             "title": "Газ потребує пояснення моделі"
           }
         },
@@ -407,6 +583,50 @@
             "title": "Газ потребує пояснення моделі"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Choose the bounded assisted-model statement. Explain why centred throttle cannot be treated as a universal promise of hovering."
+              ],
+              "title": "Make the distinction: Throttle Needs a Model"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть обмежене твердження про модель із допомогою. Чому середній газ не можна вважати універсальною обіцянкою зависання?"
+              ],
+              "title": "Розрізніть поняття: Газ потребує пояснення моделі"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Read the two model captions together. Which one describes this model, and which makes a claim about every aircraft?"
+              ],
+              "title": "Explore together: Throttle Needs a Model"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом прочитайте два підписи моделей. Який описує цю модель, а який — усі апарати?"
+              ],
+              "title": "Дослідіть разом: Газ потребує пояснення моделі"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A new fictional fixture specifies a different throttle interpretation. Identify the mode assumption that must accompany any prediction; no real settings are inferred."
+              ],
+              "title": "Apply and question: Throttle Needs a Model"
+            },
+            "uk": {
+              "paragraphs": [
+                "Новий вигаданий приклад задає іншу інтерпретацію газу. Яке припущення про режим потрібне для прогнозу? Реальні налаштування не виводяться."
+              ],
+              "title": "Застосуйте й запитайте: Газ потребує пояснення моделі"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -424,7 +644,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-four-controls-05", "kind": "mission" }
   },
   {
@@ -445,17 +665,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-four-controls-key-v1",
-          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+          "assetId": "fpv-four-controls-06-reveal-v1",
+          "sha256": "6293ecce59eea58dbe6c6d065d18f54c71f4631ec30455f169dce9db2c7cb825"
         },
         "id": "fpv-four-controls-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
+            "alt": "A completed conceptual atlas surrounds a two-stick sculpture with separate side, front and overhead model views.",
             "title": "Predict, Then Explain"
           },
           "uk": {
-            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
+            "alt": "Завершений концептуальний атлас оточує скульптуру з двома стіками окремими виглядами моделі збоку, спереду та згори.",
             "title": "Спрогнозуйте й поясніть"
           }
         },
@@ -491,6 +711,50 @@
             "title": "Спрогнозуйте й поясніть"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Read the placement and response assumptions first. Make a prediction, then separate the command from the viewpoint used to describe it."
+              ],
+              "title": "Make the distinction: Predict, Then Explain"
+            },
+            "uk": {
+              "paragraphs": [
+                "Спершу прочитайте припущення про розташування й реакцію. Спрогнозуйте зміну, тоді відокремте команду від точки огляду для її опису."
+              ],
+              "title": "Розрізніть поняття: Спрогнозуйте й поясніть"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose one labelled command together and explain the pictured change. Swap viewpoints and see which part of your explanation still works."
+              ],
+              "title": "Explore together: Predict, Then Explain"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом оберіть підписану команду й поясніть показану зміну. Поміняйте точки огляду й перевірте, яка частина пояснення збереглася."
+              ],
+              "title": "Дослідіть разом: Спрогнозуйте й поясніть"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Create a second fictional card that changes only viewpoint. Explain what transfers and what evidence would be needed before applying the idea to real equipment."
+              ],
+              "title": "Apply and question: Predict, Then Explain"
+            },
+            "uk": {
+              "paragraphs": [
+                "Створіть іншу вигадану картку, змінивши лише точку огляду. Що переноситься, а які дані потрібні перед застосуванням до реального обладнання?"
+              ],
+              "title": "Застосуйте й запитайте: Спрогнозуйте й поясніть"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -508,7 +772,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-four-controls-06", "kind": "mission" }
   },
   {
@@ -559,17 +823,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-four-controls-key-v1",
-          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+          "assetId": "fpv-four-controls-01-reveal-v1",
+          "sha256": "06376321a870bb8edbb1bff457fe27295d26b06f9a8a481634d578e831d838b7"
         },
         "id": "fpv-four-controls-01-image",
         "locales": {
           "en": {
-            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
+            "alt": "A two-stick museum control sculpture sits among four separate blank command cards.",
             "title": "Two Sticks, Four Names"
           },
           "uk": {
-            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
+            "alt": "Музейна скульптура пульта з двома стіками стоїть серед чотирьох окремих чистих карток команд.",
             "title": "Два стіки, чотири назви"
           }
         },
@@ -577,17 +841,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-four-controls-key-v1",
-          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+          "assetId": "fpv-four-controls-02-reveal-v1",
+          "sha256": "affba1dd04bb175292c7179ad667687ec1982977ea388686d352d0d1dfe300bf"
         },
         "id": "fpv-four-controls-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
+            "alt": "Two inert side-view models compare a level attitude with a downward nose tilt around a display hinge.",
             "title": "Pitch: Read the Nose"
           },
           "uk": {
-            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
+            "alt": "Дві неактивні моделі збоку порівнюють рівне положення з нахилом носа вниз навколо виставкового шарніра.",
             "title": "Тангаж: стежте за носом"
           }
         },
@@ -595,17 +859,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-four-controls-key-v1",
-          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+          "assetId": "fpv-four-controls-03-reveal-v1",
+          "sha256": "2adebfe28917b39bc2686a5b8e30f4243df0fb94eb1a19fa742e8f8ffb281fbd"
         },
         "id": "fpv-four-controls-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
+            "alt": "A front-view inert model tilts one side lower, with a blue arm marker and a separate level comparison.",
             "title": "Roll: One Wingtip Lower"
           },
           "uk": {
-            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
+            "alt": "Неактивна модель спереду нахиляє один бік нижче; синя позначка променя й окремий рівний зразок допомагають порівнянню.",
             "title": "Крен: один бік нижче"
           }
         },
@@ -613,17 +877,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-four-controls-key-v1",
-          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+          "assetId": "fpv-four-controls-04-reveal-v1",
+          "sha256": "8604abd20aced15a333d238d4f041f074508a6adab3a4367bb39d637e951a97d"
         },
         "id": "fpv-four-controls-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
+            "alt": "An overhead exhibit shows one four-arm model at a fixed centre, a blue nose marker and a separate compared heading.",
             "title": "Yaw: Turn the Heading"
           },
           "uk": {
-            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
+            "alt": "Виставка згори показує одну чотирипроменеву модель із нерухомим центром, синю позначку носа й окремий порівнюваний напрямок.",
             "title": "Рискання: змініть курс"
           }
         },
@@ -631,17 +895,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-four-controls-key-v1",
-          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+          "assetId": "fpv-four-controls-05-reveal-v1",
+          "sha256": "3a5b9e4f021f5cf7dfa81cbc71a00856487b25ac96a8ff77be0ffef3c14eb992"
         },
         "id": "fpv-four-controls-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
+            "alt": "Paired display cases keep separate model-response studies and assumption cards beside identical stick sculptures.",
             "title": "Throttle Needs a Model"
           },
           "uk": {
-            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
+            "alt": "Парні вітрини зберігають окремі етюди реакції моделей і картки припущень біля однакових скульптур стіків.",
             "title": "Газ потребує пояснення моделі"
           }
         },
@@ -649,17 +913,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-four-controls-key-v1",
-          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+          "assetId": "fpv-four-controls-06-reveal-v1",
+          "sha256": "6293ecce59eea58dbe6c6d065d18f54c71f4631ec30455f169dce9db2c7cb825"
         },
         "id": "fpv-four-controls-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
+            "alt": "A completed conceptual atlas surrounds a two-stick sculpture with separate side, front and overhead model views.",
             "title": "Predict, Then Explain"
           },
           "uk": {
-            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
+            "alt": "Завершений концептуальний атлас оточує скульптуру з двома стіками окремими виглядами моделі збоку, спереду та згори.",
             "title": "Спрогнозуйте й поясніть"
           }
         },
@@ -730,7 +994,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-four-controls", "kind": "campaign" }
   }
 ]
