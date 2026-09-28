@@ -3,6 +3,7 @@ import { editorMessageError, editorErrorText } from './editor-copy.mjs';
 import { studioSurfaceName } from './preview-copy.mjs';
 import { studioDifficultyName } from './difficulty-view.mjs';
 import { studioModeName } from './inspection-copy.mjs';
+import { loadBundledReference, SYNEVYR_REFERENCE } from './real-world-reference.mjs';
 import {
   loadMapReference,
   validateReferenceCrop,
@@ -39,11 +40,33 @@ export function createImageWorkbench({
     inspected = null,
     loading = 0;
   let owner = null,
-    observedDraft = null;
+    observedDraft = null,
+    pendingFile = null,
+    pendingDownload = null,
+    downloadURL = null,
+    downloadTimer = null,
+    hasMission = false,
+    bundledListeners = false;
   const draftIdentity = () => JSON.stringify([getSource(), getMission()?.id, getDifficulty()]);
   const identity = () => JSON.stringify([draftIdentity(), rows, crop]);
-  const changed = () => {
+  function syncReferenceButton() {
+    const button = $('reference-synevyr');
+    if (button) button.disabled = !hasMission || !!pendingFile;
+    const download = $('reference-synevyr-download');
+    if (download) {
+      download.disabled = !!pendingDownload;
+      download.setAttribute?.('aria-disabled', String(!!pendingDownload));
+    }
+  }
+  function cancelLoading() {
     loading++;
+    pendingFile?.abort();
+    pendingFile = null;
+    $('reference-tools').disabled = !reference;
+    syncReferenceButton();
+  }
+  const changed = () => {
+    cancelLoading();
     onChange();
   };
   const message = (text) => {
@@ -75,8 +98,18 @@ export function createImageWorkbench({
         : t('tools:studio.image.emptyQueue'),
     );
   }
-  function dispose() {
-    loading++;
+  function clearDownloadURL() {
+    clearTimeout(downloadTimer);
+    downloadTimer = null;
+    if (downloadURL) URL.revokeObjectURL(downloadURL);
+    downloadURL = null;
+  }
+  function resetReference() {
+    cancelLoading();
+    pendingDownload?.abort();
+    pendingDownload = null;
+    clearDownloadURL();
+    syncReferenceButton();
     reference?.dispose();
     reference = null;
     crop = null;
@@ -98,47 +131,132 @@ export function createImageWorkbench({
     if (!reference || !crop || !$('reference-show').checked) return;
     ctx.drawImage(reference.image, crop.x, crop.y, crop.w, crop.h, 0, 0, width, height);
   }
-  $('reference-file').onchange = guard(async () => {
-    const file = $('reference-file').files[0];
-    if (!file) return;
-    const ticket = ++loading,
-      initialOwner = owner;
+  async function loadFile(fileOrAsyncSupplier) {
+    if (!fileOrAsyncSupplier) return false;
+    if (!getMission()) throw editorMessageError('errors:studio.image.chooseMission');
+    cancelLoading();
+    const ticket = loading,
+      initialOwner = owner,
+      initialDraft = draftIdentity(),
+      request = new AbortController();
+    pendingFile = request;
+    syncReferenceButton();
+    const current = () =>
+      ticket === loading && owner === initialOwner && draftIdentity() === initialDraft;
     invalidate(localizedMessage('tools:studio.image.loading'));
     $('reference-tools').disabled = true;
     let next;
     try {
+      const file =
+        typeof fileOrAsyncSupplier === 'function'
+          ? await fileOrAsyncSupplier(request.signal)
+          : fileOrAsyncSupplier;
+      if (!current()) return false;
+      if (!file) {
+        $('reference-tools').disabled = !reference;
+        invalidate(
+          localizedMessage(
+            reference ? 'tools:studio.image.inspectFirst' : 'tools:studio.image.noReference',
+          ),
+        );
+        return false;
+      }
       next = await loadReference(file);
+      if (!current()) return false;
+      const nextCrop = validateReferenceCrop(
+        { x: 0, y: 0, w: next.width, h: next.height },
+        next.width,
+        next.height,
+      );
+      reference?.dispose();
+      reference = next;
+      next = null;
+      crop = nextCrop;
+      for (const key of ['x', 'y', 'w', 'h']) $(`crop-${key}`).value = crop[key];
+      $('reference-tools').disabled = false;
+      $('reference-show').checked = true;
+      invalidate(
+        localizedMessage('tools:studio.image.loaded', {
+          name: file.name,
+          width: reference.width,
+          height: reference.height,
+        }),
+      );
+      redraw();
+      changed();
+      return true;
     } catch (error) {
-      if (ticket === loading) {
+      if (current()) {
         $('reference-tools').disabled = !reference;
         throw error;
       }
-      return;
+      return false;
+    } finally {
+      next?.dispose();
+      if (pendingFile === request) {
+        pendingFile = null;
+        syncReferenceButton();
+      }
     }
-    if (ticket !== loading || owner !== initialOwner) {
-      next.dispose();
-      return;
-    }
-    reference?.dispose();
-    reference = next;
-    crop = validateReferenceCrop(
-      { x: 0, y: 0, w: next.width, h: next.height },
-      next.width,
-      next.height,
-    );
-    for (const key of ['x', 'y', 'w', 'h']) $(`crop-${key}`).value = crop[key];
-    $('reference-tools').disabled = false;
-    $('reference-show').checked = true;
-    invalidate(
-      localizedMessage('tools:studio.image.loaded', {
-        name: file.name,
-        width: next.width,
-        height: next.height,
+  }
+  $('reference-file').onchange = guard(() => loadFile($('reference-file').files[0]));
+  const bundledActions = [
+    ['reference-synevyr', guard(() => loadFile((signal) => loadBundledReference({ signal })))],
+    [
+      'reference-synevyr-download',
+      guard(async (event) => {
+        if (
+          event?.defaultPrevented ||
+          event?.metaKey ||
+          event?.ctrlKey ||
+          event?.shiftKey ||
+          event?.altKey ||
+          (event?.button !== undefined && event.button !== 0)
+        )
+          return;
+        event?.preventDefault();
+        if (pendingDownload) return;
+        const request = new AbortController();
+        pendingDownload = request;
+        syncReferenceButton();
+        try {
+          const file = await loadBundledReference({ signal: request.signal });
+          if (pendingDownload !== request || request.signal.aborted) return;
+          clearDownloadURL();
+          downloadURL = URL.createObjectURL(file);
+          const link = document.createElement('a');
+          try {
+            link.href = downloadURL;
+            link.download = SYNEVYR_REFERENCE.path.split('/').at(-1);
+            document.body.append(link);
+            link.click();
+          } finally {
+            link.remove();
+            // Keep the one verified blob available while a Save dialog is open.
+            downloadTimer = setTimeout(clearDownloadURL, 60000);
+          }
+        } catch (error) {
+          if (pendingDownload === request && !request.signal.aborted) throw error;
+        } finally {
+          if (pendingDownload === request) {
+            pendingDownload = null;
+            syncReferenceButton();
+          }
+        }
       }),
-    );
-    redraw();
-    changed();
-  });
+    ],
+  ];
+  function setBundledListeners(enabled) {
+    if (bundledListeners === enabled) return;
+    bundledListeners = enabled;
+    for (const [id, action] of bundledActions)
+      if (enabled) $(id)?.addEventListener?.('click', action);
+      else $(id)?.removeEventListener?.('click', action);
+  }
+  function dispose() {
+    resetReference();
+    setBundledListeners(false);
+  }
   $('reference-crop').onclick = guard(() => {
     if (!reference) throw editorMessageError('errors:studio.image.uploadFirst');
     const next = validateReferenceCrop(
@@ -153,7 +271,7 @@ export function createImageWorkbench({
   });
   for (const key of ['x', 'y', 'w', 'h'])
     $(`crop-${key}`).oninput = () => {
-      loading++;
+      cancelLoading();
       invalidate(localizedMessage('tools:studio.image.cropChanged'));
     };
   $('reference-show').onchange = () => {
@@ -161,7 +279,7 @@ export function createImageWorkbench({
     changed();
   };
   $('reference-clear').onclick = () => {
-    dispose();
+    resetReference();
     redraw();
     changed();
   };
@@ -253,8 +371,10 @@ export function createImageWorkbench({
     invalidate(localizedMessage('tools:studio.image.applied'));
     changed();
   });
-  dispose();
+  resetReference();
+  setBundledListeners(true);
   return {
+    loadFile,
     snapshot() {
       if (!reference) return null;
       return readImageTrace({
@@ -269,7 +389,8 @@ export function createImageWorkbench({
     async restore(source) {
       const trace = readImageTrace(source);
       assertImageTraceOwner(trace, getSource(), getMission()?.id);
-      const ticket = ++loading,
+      cancelLoading();
+      const ticket = loading,
         initialDraft = draftIdentity();
       const next = await decodeReference(trace);
       if (ticket !== loading || initialDraft !== draftIdentity()) {
@@ -289,19 +410,24 @@ export function createImageWorkbench({
     },
     underlay: () => (reference && crop && $('reference-show').checked ? underlay : null),
     sync() {
+      hasMission = !!getMission();
+      setBundledListeners(true);
       const nextOwner = JSON.stringify([getSource().id, getMission()?.id]);
       const nextDraft = draftIdentity();
       if (nextOwner !== owner) {
-        dispose();
+        resetReference();
         owner = nextOwner;
-      } else if (nextDraft !== observedDraft)
+      } else if (nextDraft !== observedDraft) {
+        cancelLoading();
         invalidate(
           rows.length
             ? localizedMessage('tools:studio.image.draftChanged')
             : localizedMessage('tools:studio.image.draftChangedEmpty'),
         );
+      }
       observedDraft = nextDraft;
       $('reference-file').disabled = !getMission();
+      syncReferenceButton();
     },
     hasPending: () => rows.length > 0,
     dispose,

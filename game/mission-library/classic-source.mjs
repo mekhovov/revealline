@@ -107,14 +107,18 @@ export function classicLibrarySources(index, { availability, prepare, launch, pr
     ]);
     let owner = owners.get(id);
     if (!owner) {
+      const contentLifecycle =
+        classifyContent({ family: 'classic', id: entry.packId, source: entry.source }) ===
+        'archived'
+          ? 'archive'
+          : 'current';
       owner = {
         id,
         collection: 'Classic',
-        lifecycle:
-          classifyContent({ family: 'classic', id: entry.packId, source: entry.source }) ===
-          'archived'
-            ? 'archive'
-            : 'current',
+        // Once a compatible Current-rules projection exists, the authenticated
+        // Original-rules edition remains available through Archive instead of
+        // appearing as a duplicate campaign in ordinary player browsing.
+        lifecycle: !current && supportsClassicCurrentRules(entry) ? 'archive' : contentLifecycle,
         editionId: current
           ? `${entry.sourceFile.sha256}:${CLASSIC_RULES_CURRENT}`
           : entry.sourceFile.sha256,
