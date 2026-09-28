@@ -55,6 +55,102 @@ function context(missions = ['mission-1', 'mission-2']) {
 const backendFor = (memory, options = {}) =>
   createRewardBackend({ editionId, indexedDB: memory.indexedDB, ...options });
 
+test('pending status covers queued reads and overlapping saves until the last operation settles', async () => {
+  let saved = createRewardState(editionId),
+    releaseRead;
+  const writes = [],
+    notices = [],
+    store = createRewardStore({
+      editionId,
+      onStatus: (value) => notices.push(value),
+      backend: {
+        read: () =>
+          new Promise((resolve) => {
+            releaseRead = () => resolve(saved);
+          }),
+        update: (change) =>
+          new Promise((resolve) => {
+            writes.push(() => {
+              saved = change(saved);
+              resolve(saved);
+            });
+          }),
+      },
+    });
+  const waitFor = async (predicate) => {
+    for (let i = 0; !predicate() && i < 30; i++) await Promise.resolve();
+    assert(predicate(), 'The queued operation should enter without a timer delay.');
+  };
+  assert.deepEqual(store.status(), { durable: false, pending: false, error: null });
+  const loading = store.load();
+  assert.deepEqual(store.status(), { durable: false, pending: true, error: null });
+  assert.equal(notices.at(-1).pending, true);
+  await waitFor(() => releaseRead);
+  releaseRead();
+  await loading;
+  assert.deepEqual(store.status(), { durable: true, pending: false, error: null });
+
+  store.reconcile([definition()], context());
+  assert.deepEqual(store.status(), { durable: false, pending: true, error: null });
+  const firstSave = store.settled();
+  store.reconcile([definition(), definition('second', 'mission-2')], context());
+  const bothSaves = store.settled();
+  await waitFor(() => writes.length === 1);
+  writes[0]();
+  await firstSave;
+  assert.equal(saved.receipts.length, 1);
+  assert.deepEqual(store.status(), { durable: false, pending: true, error: null });
+  assert.equal(notices.at(-1).pending, true, 'An earlier save cannot hide the queued successor.');
+  await waitFor(() => writes.length === 2);
+  writes[1]();
+  await bothSaves;
+  assert.equal(saved.receipts.length, 2);
+  assert.deepEqual(store.status(), { durable: true, pending: false, error: null });
+  assert.equal(notices.at(-1).pending, false);
+  assert.equal(Object.hasOwn(JSON.parse(store.export()), 'pending'), false);
+  await store.close();
+});
+
+test('a timed-out predecessor keeps pending true while a queued retry can still save the exact state', async () => {
+  let saved = createRewardState(editionId),
+    attempts = 0,
+    stalledSignal;
+  const notices = [],
+    store = createRewardStore({
+      editionId,
+      operationTimeoutMs: 10,
+      onStatus: (value) => notices.push(value),
+      backend: {
+        read: async () => saved,
+        update(change, { signal }) {
+          if (++attempts === 1) {
+            stalledSignal = signal;
+            return new Promise(() => {});
+          }
+          saved = change(saved);
+          return Promise.resolve(saved);
+        },
+      },
+    });
+  await store.load();
+  store.reconcile([definition()], context());
+  const first = store.settled(),
+    retry = store.flush();
+  await first;
+  assert.equal(stalledSignal.aborted, true);
+  const timeoutNotice = notices.find((value) => value.error?.includes('timed out'));
+  assert.deepEqual(timeoutNotice, {
+    durable: false,
+    pending: true,
+    error: 'Reward storage operation timed out.',
+  });
+  await retry;
+  assert.deepEqual(store.status(), { durable: true, pending: false, error: null });
+  assert.equal(saved.receipts.length, 1);
+  assert.equal(attempts, 2);
+  await store.close();
+});
+
 test('session-only verified learning cannot leak into a later arcade save, flush or reload', async () => {
   const memory = managedIndexedDB(),
     backend = backendFor(memory),
@@ -147,11 +243,15 @@ test('quota failure keeps playable session rewards and a successful retry makes 
   await store.settled();
   assert.equal(store.status().durable, false);
   assert.match(store.status().error, /storage write failure/);
+  assert.equal(store.status().pending, false);
   assert.equal(store.snapshot().receipts.length, 1);
   assert.equal((await backendFor(memory).read()).receipts.length, 0);
   memory.failAnyPutAt = null;
-  await store.flush();
+  const retry = store.flush();
+  assert.equal(store.status().pending, true);
+  await retry;
   assert.equal(store.status().durable, true);
+  assert.equal(store.status().pending, false);
   assert.equal(store.status().error, null);
   assert.equal((await backendFor(memory).read()).receipts.length, 1);
 });
@@ -307,6 +407,7 @@ test('storage observers cannot poison the save queue and missing storage remains
   await unavailable.settled();
   assert.equal(unavailable.snapshot().receipts.length, 1);
   assert.equal(unavailable.status().durable, false);
+  assert.equal(unavailable.status().pending, false);
   assert.match(unavailable.status().error, /unavailable/);
 });
 
@@ -377,10 +478,13 @@ test('a stalled store read times out without blocking session rewards or later s
   await store.load();
   assert.equal(readSignal.aborted, true);
   assert.match(store.status().error, /timed out/);
+  assert.equal(store.status().pending, false);
   store.reconcile([definition()], context());
+  assert.equal(store.status().pending, true);
   assert.equal(store.snapshot().receipts.length, 1);
   await store.settled();
   assert.equal(store.status().durable, true);
+  assert.equal(store.status().pending, false);
   assert.equal(saved.receipts.length, 1);
   await store.close();
 });
@@ -414,6 +518,7 @@ test('a stalled store update preserves the session, rejects late mutation and al
   await store.settled();
   assert.equal(updateSignal.aborted, true);
   assert.match(store.status().error, /timed out/);
+  assert.equal(store.status().pending, false);
   assert.equal(store.snapshot().receipts.length, 1);
   assert.equal(saved.receipts.length, 0);
   assert.throws(() => delayedUpdate(saved), /timed out/);
@@ -445,6 +550,7 @@ test('closing a store during a stalled save is bounded and retains its session r
   assert.equal(store.snapshot().receipts.length, 1);
   assert.equal(store.status().durable, false);
   assert.match(store.status().error, /timed out/);
+  assert.equal(store.status().pending, false);
 });
 
 test('a timed-out IndexedDB open retries and closes late success', async () => {
