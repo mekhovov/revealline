@@ -9,6 +9,8 @@ import {
 import { resolveSoundtrackCatalogue, resolveSoundtrackCollections } from '../game/soundtrack.mjs';
 
 const folder = 'authoring/library/licensed-audio/';
+export const canonicalHostedSoundtrackBaseURL =
+  'https://mekhovov.github.io/revealline-soundtracks/';
 const digest = (body) => createHash('sha256').update(body).digest('hex');
 const same = (a, b) => canonicalJSON(a) === canonicalJSON(b);
 export const hostedSoundtrackId = (id) =>
@@ -114,15 +116,18 @@ export async function compileHostedSoundtracks(root, edition) {
   const publicAlbums = documents.get(snapshotPaths[2]);
   const audit = documents.get(sourcePaths[4]);
   const delivery = documents.get(sourcePaths[5]);
-  const archive = resolveSoundtrackArchives([publication.archive])[0];
+  const historicalArchive = resolveSoundtrackArchives([publication.archive])[0];
   required(
-    archive.inventorySha256 === provenance.remoteMetadata[1].sha256,
+    historicalArchive.inventorySha256 === provenance.remoteMetadata[1].sha256,
     'Hosted inventory pin differs.',
   );
-  const inventory = resolveSoundtrackArchiveInventory(documents.get(snapshotPaths[1]), archive);
+  const inventory = resolveSoundtrackArchiveInventory(
+    documents.get(snapshotPaths[1]),
+    historicalArchive,
+  );
   required(
     delivery.verified === true &&
-      delivery.baseURL === archive.baseURL &&
+      delivery.baseURL === historicalArchive.baseURL &&
       Array.isArray(publication.tracks) &&
       publication.tracks.length > 0 &&
       publication.tracks.length <= 256 &&
@@ -132,6 +137,11 @@ export async function compileHostedSoundtracks(root, edition) {
       publication.tracks.length === register.tracks.length,
     'Hosted publication inventory or rights audit differs.',
   );
+  // Historical source evidence keeps the original publication URL. Runtime uses
+  // the exact inventory and MP3 bytes mirrored by the canonical archive.
+  const archive = resolveSoundtrackArchives([
+    { ...historicalArchive, baseURL: canonicalHostedSoundtrackBaseURL },
+  ])[0];
   const ids = new Set(),
     hashes = new Set();
   const tracks = publication.tracks.map((entry) => {

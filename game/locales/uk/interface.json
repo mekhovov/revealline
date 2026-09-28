@@ -2852,6 +2852,8 @@
   "prepareTheCurrentSessionOriginalsBeforeDownloading": "Підготуйте оригінали поточного сеансу перед завантаженням.",
   "sessionOriginalsDownloadRequestedConfirmItInYourBrowserThen": "Запитано завантаження оригіналів сеансу. Підтвердьте його в браузері, а потім експортуйте дані гри. Підготовлене завантаження залишається доступним для повторної спроби.",
   "end": "Кінець",
+  "fpvMusic": "ФПВ",
+  "uaMusic": "UA",
   "synthElectronic": "Синтезаторна й електронна",
   "ukrainian": "Українська",
   "chiptune8Bit": "Чиптюн і 8-бітна",
