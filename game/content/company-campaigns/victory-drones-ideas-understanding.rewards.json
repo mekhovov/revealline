@@ -110,6 +110,44 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "victory-drones-ideas-understanding-01-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "“The cart travelled farther on A” reports an observation. “A caused less resistance” proposes an explanation. Before accepting it, ask whether the cart, starting position or surface changed together. Keep the two sentences on separate evidence and explanation cards."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              },
+              {
+                "title": "NASA Space Place — Scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Example: observation before explanation"
+          },
+          "uk": {
+            "paragraphs": [
+              "«Візок проїхав далі на A» повідомляє спостереження. «A створила менший опір» пропонує пояснення. Перш ніж прийняти його, перевірте, чи не змінили разом візок, стартове положення й поверхню. Розмістіть речення на окремих картках доказу й пояснення."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              },
+              {
+                "title": "NASA Space Place — Scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Приклад: спостереження перед поясненням"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -126,7 +164,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "victory-drones-ideas-understanding-01", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -252,6 +290,44 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "victory-drones-ideas-understanding-02-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The optional workbench moves from a hand and cart to a foot and floor. Label the object receiving each force. The two members of an interaction pair act on different objects; two arrows on one object answer another question."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              },
+              {
+                "title": "NASA Space Place — Scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Try: who acts on what?"
+          },
+          "uk": {
+            "paragraphs": [
+              "Додаткова вправа переносить приклад із руки й візка на стопу й підлогу. Підпишіть тіло, що отримує кожну силу. Члени пари взаємодії діють на різні тіла; дві стрілки на одному тілі відповідають на інше запитання."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              },
+              {
+                "title": "NASA Space Place — Scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Спробуйте: хто на що діє?"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -268,7 +344,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "victory-drones-ideas-understanding-02", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -394,6 +470,44 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "victory-drones-ideas-understanding-03-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "A cart at rest and a cart moving steadily can both have zero net force in a simplified model. To distinguish them you need motion observations, not just balanced force arrows. Name the missing observation before making a claim."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              },
+              {
+                "title": "NASA Space Place — Scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Combine: balance is not a speed reading"
+          },
+          "uk": {
+            "paragraphs": [
+              "І нерухомий візок, і візок у рівномірному русі можуть мати нульову рівнодійну в спрощеній моделі. Розрізнити їх допомагають спостереження руху, а не лише врівноважені стрілки сил. Назвіть відсутнє спостереження перед висновком."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              },
+              {
+                "title": "NASA Space Place — Scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Поєднайте: баланс не є виміром швидкості"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -410,7 +524,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "victory-drones-ideas-understanding-03", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -536,6 +650,44 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "victory-drones-ideas-understanding-04-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "In the optional workbench, combine eastward and westward forces on one cart. Separate net force, acceleration and unspecified current velocity. This fixture changes the numbers and the question instead of repeating the earlier labels."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              },
+              {
+                "title": "NASA Space Place — Scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Apply elsewhere: opposing directions"
+          },
+          "uk": {
+            "paragraphs": [
+              "У додатковій вправі поєднайте сили на схід і захід на одному візку. Розрізніть рівнодійну, прискорення й незадану поточну швидкість. Цей приклад змінює числа та запитання, а не повторює попередні підписи."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              },
+              {
+                "title": "NASA Space Place — Scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Застосуйте інакше: протилежні напрямки"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -552,7 +704,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "victory-drones-ideas-understanding-04", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -678,6 +830,44 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "victory-drones-ideas-understanding-05-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Compare “change only the mat” with “change the mat and cart together”. The second may produce a difference, but it cannot isolate the mat’s contribution. Predict which records would let another group repeat the comparison."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              },
+              {
+                "title": "NASA Space Place — Scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Explain: keep the comparison fair"
+          },
+          "uk": {
+            "paragraphs": [
+              "Порівняйте «змінити лише килимок» і «змінити килимок та візок разом». Другий варіант може дати різницю, але не виокремлює внеску килимка. Передбачте, які записи дадуть іншій групі повторити порівняння."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              },
+              {
+                "title": "NASA Space Place — Scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Поясніть: збережіть коректність порівняння"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -694,7 +884,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "victory-drones-ideas-understanding-05", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -828,6 +1018,44 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "victory-drones-ideas-understanding-06-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Use the final optional workbench to select a comparison, read repeated measurements and limit the conclusion. The six-win finale stays separate; the verified application adds a notebook that records both the result and what was not tested."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              },
+              {
+                "title": "NASA Space Place — Scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Resolve: a new comparison notebook"
+          },
+          "uk": {
+            "paragraphs": [
+              "У фінальній додатковій вправі оберіть порівняння, прочитайте повторні вимірювання й обмежте висновок. Фінал за шість перемог залишається окремим; перевірене застосування додає зошит із результатом і тим, чого не перевіряли."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              },
+              {
+                "title": "NASA Space Place — Scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Завершіть: новий зошит порівняння"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -844,7 +1072,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "victory-drones-ideas-understanding-06", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -1090,5 +1318,127 @@
         }
       }
     }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-ideas-understanding",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-ideas-understanding-application-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Optional: win the six missions and choose a fair comparison to earn the completed notebook and its evidence limits.",
+        "title": "The comparison notebook"
+      },
+      "uk": {
+        "teaser": "Додатково: виграйте шість місій і оберіть коректне порівняння, щоб отримати готовий зошит із межами доказів.",
+        "title": "Зошит порівняння"
+      }
+    },
+    "payloads": [
+      {
+        "id": "victory-drones-ideas-understanding-application-notebook",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Your classroom notebook keeps the cart and release conditions fixed while comparing two mats. The invented observations are 80–82 cm on A and 49–51 cm on B; the conclusion remains limited to that cart and those trials.",
+              "For another investigation, identify the intended change, keep relevant conditions comparable, record repeated observations and state what was not tested. An attractive explanation does not replace that evidence."
+            ],
+            "sources": [
+              {
+                "title": "NASA Space Place — Scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              },
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              }
+            ],
+            "title": "The comparison notebook"
+          },
+          "uk": {
+            "paragraphs": [
+              "Ваш навчальний зошит зберігає візок і умови запуску сталими та порівнює два килимки. Вигадані спостереження: 80–82 см на A і 49–51 см на B; висновок стосується лише цього візка й цих дослідів.",
+              "Для іншого дослідження визначте заплановану зміну, зберігайте суттєві умови порівнюваними, записуйте повторні спостереження й зазначайте, чого не перевіряли. Привабливе пояснення не замінює цих доказів."
+            ],
+            "sources": [
+              {
+                "title": "NASA Space Place — Scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              },
+              {
+                "title": "NASA Glenn — Newton’s Laws of Motion",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+              }
+            ],
+            "title": "Зошит порівняння"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [
+        {
+          "fixtureRevision": "1",
+          "lessonId": "victory-drones-ideas-understanding-06-lesson",
+          "lessonIdentity": "947b24bff4e64108",
+          "lessonRevision": "1",
+          "missionId": "victory-drones-ideas-understanding-06"
+        }
+      ],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "d8c6721ca9bbbec4" },
+            { "difficulty": "standard", "gameplayId": "8d8dce4d47fd5912" },
+            { "difficulty": "expert", "gameplayId": "d36031d7f66376e2" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "9f0897fa3d14b3f9" },
+            { "difficulty": "standard", "gameplayId": "18b642e16f619f4d" },
+            { "difficulty": "expert", "gameplayId": "b423db76bf852e54" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6c750c7b9be2ecad" },
+            { "difficulty": "standard", "gameplayId": "a1a1b7f48f07b7c8" },
+            { "difficulty": "expert", "gameplayId": "6d7d6552afc33ccb" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "117e55fa16a18c03" },
+            { "difficulty": "standard", "gameplayId": "012e697eb5ef8c27" },
+            { "difficulty": "expert", "gameplayId": "c494287cf45ff567" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "351e3f987d4df748" },
+            { "difficulty": "standard", "gameplayId": "a2379b7a45e781bf" },
+            { "difficulty": "expert", "gameplayId": "7331e84e3ce6d727" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "89600aa3285649a1" },
+            { "difficulty": "standard", "gameplayId": "0edf88e79f39934e" },
+            { "difficulty": "expert", "gameplayId": "103d64fb8ccf7de0" }
+          ],
+          "missionId": "victory-drones-ideas-understanding-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "victory-drones-ideas-understanding", "kind": "campaign" }
   }
 ]

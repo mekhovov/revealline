@@ -125,6 +125,9 @@ test('title keeps its game destinations and quick sound; Workshop and unified Mi
     'shell-play',
     'shell-gallery',
     'shell-options',
+    'shell-home-practice',
+    'shell-offline',
+    'shell-offline-status',
     'shell-workshop',
     'shell-sound',
   ]);
@@ -135,6 +138,14 @@ test('title keeps its game destinations and quick sound; Workshop and unified Mi
   assert.equal(page.$('shell-release-explorer').getAttribute('href'), 'http://localhost/releases/');
   assert.equal(page.$('shell-play-options').open, false, 'Advanced play options stay collapsed.');
   assert.match(page.$('shell-destination').textContent, /Start · First Signal/);
+  page.$('shell-home-practice').focus();
+  page.$('shell-home-practice').click();
+  assert.equal(page.$('optional-practice-dialog').open, true);
+  assert.equal(page.doc.activeElement.id, 'optional-practice-close');
+  page.$('optional-practice-close').click();
+  assert.equal(page.doc.activeElement.id, 'shell-home-practice');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual([...page.storage.map], stored);
   page.$('shell-workshop').click();
   assert.equal(page.$('shell-workshop-dialog').open, true);
   assert.equal(page.doc.activeElement.closest('dialog'), page.$('shell-workshop-dialog'));
@@ -235,6 +246,9 @@ test('visible title Start launches directly and Continue explicitly resumes the 
     'shell-play',
     'shell-gallery',
     'shell-options',
+    'shell-home-practice',
+    'shell-offline',
+    'shell-offline-status',
     'shell-workshop',
     'shell-sound',
   ]);

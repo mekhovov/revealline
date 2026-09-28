@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { CONTROLLER_PREVIEW_STATUS_FORMAT } from '../ui/controller-preview.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 test('actual company lab loads only admitted boot data and never overwrites Playground', async () => {
   const fixture = await editionProviderFixture();
@@ -36,6 +37,7 @@ test('actual company lab loads only admitted boot data and never overwrites Play
     'practice-difficulty',
     'practice-difficulty-field',
     'control-concepts-open',
+    'control-practice-packages',
     ...[0, 1, 2, 3].flatMap((index) => [`axis-${index}`, `axis-${index}-value`]),
   ];
   const selects = new Set([
@@ -74,7 +76,12 @@ test('actual company lab loads only admitted boot data and never overwrites Play
   const globals = {
     window: host,
     document: doc,
-    fetch: fixture.fetcher,
+    fetch: async (url, options) =>
+      String(url) === 'http://localhost/practice/index.json'
+        ? new Response(
+            JSON.stringify({ format: 'revealline-optional-package-launchers.v1', packages: [] }),
+          )
+        : fixture.fetcher(url, options),
     sessionStorage: {
       setItem(...args) {
         writes.push(args);
@@ -163,6 +170,21 @@ test('actual company lab loads only admitted boot data and never overwrites Play
       false,
       'Closing diagrams never reconnects arcade input',
     );
+    assert.deepEqual(writes, []);
+    elements.connect.emit('click', { detail: 0 });
+    assert.equal(posts.at(-1).pad.connected, true);
+    doc.getElementById('shell-optional-practice').click();
+    const practice = doc.getElementById('optional-practice-dialog');
+    assert.equal(practice.open, true);
+    assert.equal(posts.at(-1).pad.connected, false);
+    assert.ok(posts.at(-1).pad.axes.every((value) => value === 0));
+    assert.ok(posts.at(-1).pad.buttons.every((value) => value === false));
+    await waitFor(() => !doc.getElementById('optional-practice-refresh').disabled);
+    assert.equal(practice.querySelector('[data-practice-source-preview]'), null);
+    doc.getElementById('optional-practice-close').click();
+    assert.equal(doc.activeElement.id, 'shell-optional-practice');
+    assert.equal(elements['game-frame'].src, originalSrc);
+    assert.equal(posts.at(-1).pad.connected, false);
     assert.deepEqual(writes, []);
   } finally {
     host.emit('pagehide');
