@@ -1,7 +1,9 @@
 import { rewardPresentationItems } from '../../game/rewards/audio-groups.mjs';
 import { mountRewardAudioGroup } from '../../game/ui/reward-audio-group.mjs';
 import { mountRewardKnowledge } from '../../game/ui/reward-knowledge.mjs';
-import { t } from '../../game/i18n/index.mjs';
+import { getLocale, t } from '../../game/i18n/index.mjs';
+import { createLessonEditor } from './lesson-editor.mjs';
+import { createStudioLessonSidecar, validateStudioLessonRevisions } from './lesson-authoring.mjs';
 import { mountRewardMedia } from '../../game/ui/reward-media.mjs';
 import { mountRewardQr } from '../../game/ui/reward-qr.mjs';
 import { acquireStudioRewardAudio } from '../../game/studio/reward-audio.mjs';
@@ -98,6 +100,17 @@ function disposeRewardPreviews() {
 }
 const selected = () => studioSelection(catalog, editionId);
 const selectedCampaign = () => catalog.campaigns.find((campaign) => campaign.id === campaignId);
+const lessonEditor = createLessonEditor({
+  container: $('lesson-editor'),
+  getCampaign: selectedCampaign,
+  getProject: () => files.get(selectedCampaign().sourcePath),
+  getLessons: () => $('learning-json').value,
+  setLessons(value) {
+    $('learning-json').value = format(value);
+    $('learning-json').oninput?.();
+  },
+  getLocale,
+});
 const discoveryEditor = createDiscoveryEditor({
   document,
   getCosmeticSource: () => ({ catalog, editionId, files }),
@@ -436,6 +449,8 @@ async function renderDocuments() {
       : project.missions[0]?.id,
   );
   discoveryEditor.sync();
+  lessonEditor.sync();
+  $('create-learning').hidden = !!campaign.lessonPath;
   $('campaign-summary').textContent =
     `${project.missions?.length ?? 0} missions · ${project.maps?.length ?? 0} authored maps. Compiling validates rules; route proof is a separate check.`;
   const lessons = campaign.lessonPath ? files.get(campaign.lessonPath) : [];
@@ -531,6 +546,27 @@ async function applyFile(key) {
     localization: campaign.localizationPath,
   }[key];
   const data = validateStudioData(path, $(`${key}-json`).value, catalog, files);
+  if (key === 'learning') {
+    const previous = files.get(path) ?? [];
+    validateStudioLessonRevisions(previous, data);
+    if (format(previous) !== format(data)) {
+      const nextFiles = new Map(files).set(path, data),
+        draft = structuredClone(catalog);
+      // A lesson edit cannot quietly invalidate an already-pinned reward requirement.
+      for (const descriptor of catalog.campaigns.filter((item) => item.rewardPath))
+        if (nextFiles.has(descriptor.rewardPath))
+          validateStudioData(
+            descriptor.rewardPath,
+            nextFiles.get(descriptor.rewardPath),
+            catalog,
+            nextFiles,
+          );
+      for (const edition of draft.editions.filter((item) => item.campaignIds.includes(campaign.id)))
+        edition.revision++;
+      catalog = validateEditionRuntimeCatalog(draft);
+      renderCatalog();
+    }
+  }
   if (key === 'localization') {
     const previous = files.get(path);
     if (previous && format(previous) !== format(data) && previous.revision === data.revision)
@@ -583,6 +619,16 @@ async function createRewardSidecar() {
   await applyCatalog(
     checked,
     'Empty reward sidecar added. Choose a completion rule and author its reward before export.',
+  );
+}
+async function createLessonSidecar() {
+  if (editorBuffers.has('catalog'))
+    throw new Error('Apply or discard pending catalog JSON before adding lessons.');
+  const next = createStudioLessonSidecar(catalog, selectedCampaign().id);
+  files.set(next.path, next.lessons);
+  await applyCatalog(
+    next.catalog,
+    'Lesson sidecar added. Author the objective, evidence, decisions and sources, then apply the lesson draft.',
   );
 }
 function addRewardDraft() {
@@ -1061,6 +1107,9 @@ async function main() {
       .join('\n\n');
   });
   $('create-rewards').onclick = guarded(createRewardSidecar);
+  $('create-learning').onclick = guarded(createLessonSidecar);
+  $('learning-json').onchange = () => lessonEditor.sync();
+  window.addEventListener('pagehide', () => lessonEditor.dispose(), { once: true });
   $('add-reward').onclick = guarded(addRewardDraft);
   $('preview-reward').onclick = guarded(previewRewardDraft);
   $('reward-rule').onchange = () => {

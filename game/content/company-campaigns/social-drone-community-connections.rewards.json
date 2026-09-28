@@ -108,6 +108,36 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "social-drone-community-connections-01-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "“Help on Saturday” leaves the result unclear. “Prepare three explanation cards for Saturday’s library visitors” names an audience and a result. Next, use a counted delivery to practise the same habit: write what the evidence actually establishes."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Example: a useful brief"
+          },
+          "uk": {
+            "paragraphs": [
+              "«Допоможіть у суботу» не визначає результату. «Підготуйте три картки пояснень для суботніх відвідувачів бібліотеки» називає аудиторію й результат. Далі потренуйте цю звичку на підрахованій доставці: записуйте те, що справді підтверджено."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Приклад: корисний задум"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -124,7 +154,7 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
     "scope": { "id": "social-drone-community-connections-01", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -250,6 +280,36 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "social-drone-community-connections-02-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Open the optional workbench and use two counted boxes to update received, missing and public status. A wrong choice explains the mismatch; change it and commit again. The new quantities differ from the worked example."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Try: update the count board"
+          },
+          "uk": {
+            "paragraphs": [
+              "Відкрийте додаткову вправу й за двома перерахованими коробками оновіть отримане, відсутнє та публічний стан. Хибний вибір пояснить невідповідність; змініть його й підтвердьте знову. Кількості відрізняються від прикладу."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Спробуйте: оновіть дошку обліку"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -266,7 +326,7 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
     "scope": { "id": "social-drone-community-connections-02", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -392,6 +452,36 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "social-drone-community-connections-03-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "A note can be numerically right but still leave nobody responsible for the next check. Keep three parts together: observed count, unresolved item and an accepted next action. “We suggested Taras” is not the same as “Taras agreed”."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Combine: count and handoff"
+          },
+          "uk": {
+            "paragraphs": [
+              "Числа можуть бути правильними, але наступну перевірку нікому виконати. Поєднайте три частини: фактичний підрахунок, невирішене питання й узгоджену наступну дію. «Ми запропонували Тараса» не означає «Тарас погодився»."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Поєднайте: підрахунок і передачу справ"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -408,7 +498,7 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
     "scope": { "id": "social-drone-community-connections-03", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -534,6 +624,36 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "social-drone-community-connections-04-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Use the optional workbench to prepare a different library invitation. A precise place and time help someone act; an unverified access promise should remain a question to resolve, not an invented facility."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Apply elsewhere: the invitation"
+          },
+          "uk": {
+            "paragraphs": [
+              "У додатковій вправі підготуйте інше бібліотечне запрошення. Точні місце й час допомагають діяти; неперевірений доступ має залишитися питанням для уточнення, а не вигаданою зручністю."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Застосуйте інакше: запрошення"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -550,7 +670,7 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
     "scope": { "id": "social-drone-community-connections-04", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -676,6 +796,36 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "social-drone-community-connections-05-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Describe this fictional room for a visitor trying to reach the desk, then for someone studying its decorations. Different questions need different details. Keep the useful route information before decorative description."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Explain: what the next reader needs"
+          },
+          "uk": {
+            "paragraphs": [
+              "Опишіть вигадану кімнату для відвідувача, який шукає стійку, а потім для людини, яка вивчає оздоблення. Різні запитання потребують різних деталей. Корисні відомості про шлях поставте перед описом прикрас."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Поясніть: що потрібно наступному читачеві"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -692,7 +842,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "social-drone-community-connections-05", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -826,6 +976,36 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "social-drone-community-connections-06-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The final optional workbench combines new delivery evidence with an accepted handoff and a public correction. Six wins still earn the standard finale; this separate verified application earns the checked noticeboard."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Resolve: publish the correction"
+          },
+          "uk": {
+            "paragraphs": [
+              "Фінальна додаткова вправа поєднує нові дані доставки, узгоджену передачу справ і публічне виправлення. Шість перемог і далі відкривають звичайний фінал; окреме перевірене застосування дає перевірену дошку."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Завершіть: оприлюдніть виправлення"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -842,7 +1022,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "social-drone-community-connections-06", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -1191,5 +1371,119 @@
         }
       }
     }
+  },
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-community-connections",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-community-connections-application-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Optional: win the six missions and publish an evidence-backed notice to collect the completed board and its handoff notes.",
+        "title": "The community board: checked edition"
+      },
+      "uk": {
+        "teaser": "Додатково: виграйте шість місій і оприлюдніть підтверджене доказами оголошення, щоб отримати готову дошку й нотатки передачі справ.",
+        "title": "Дошка спільноти: перевірене видання"
+      }
+    },
+    "payloads": [
+      {
+        "id": "social-drone-community-connections-application-notebook",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Your fictional board reports 10 booklets available and 2 not yet received. It replaces the old claim of 12 available. Marta has accepted the next check; no delivery date is invented.",
+              "Use the same method with a new shared record: separate what was observed, what remains uncertain and who accepted the next action. A useful correction belongs where people encounter the old claim."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "The community board: checked edition"
+          },
+          "uk": {
+            "paragraphs": [
+              "Ваша вигадана дошка повідомляє про 10 наявних буклетів і 2 ще не отримані. Вона замінює старе твердження про 12 наявних. Марта погодилася на наступну перевірку; дату доставки не вигадано.",
+              "Застосуйте той самий підхід до нового спільного запису: розділіть спостережене, невідоме й узгоджену наступну дію. Корисне виправлення має бути там, де люди бачать старе твердження."
+            ],
+            "sources": [
+              {
+                "title": "W3C WAI — Writing for Web Accessibility",
+                "url": "https://www.w3.org/WAI/tips/writing/"
+              }
+            ],
+            "title": "Дошка спільноти: перевірене видання"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [
+        {
+          "fixtureRevision": "1",
+          "lessonId": "social-drone-community-connections-06-lesson",
+          "lessonIdentity": "7cba9cc9a3e9de5e",
+          "lessonRevision": "1",
+          "missionId": "social-drone-community-connections-06"
+        }
+      ],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "f95a35ff097e9558" },
+            { "difficulty": "standard", "gameplayId": "8a95643f8c0683aa" },
+            { "difficulty": "expert", "gameplayId": "5ac5978501308e59" }
+          ],
+          "missionId": "social-drone-community-connections-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6322240f91cb1c89" },
+            { "difficulty": "standard", "gameplayId": "f040490e468509cb" },
+            { "difficulty": "expert", "gameplayId": "c463d599483a120f" }
+          ],
+          "missionId": "social-drone-community-connections-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "206ac95231fa5be6" },
+            { "difficulty": "standard", "gameplayId": "0f3f6acdf71b99ae" },
+            { "difficulty": "expert", "gameplayId": "3e0caed38e29871f" }
+          ],
+          "missionId": "social-drone-community-connections-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "95cdf2783de54b92" },
+            { "difficulty": "standard", "gameplayId": "765738ca0ed36fa5" },
+            { "difficulty": "expert", "gameplayId": "2ea1df024ae4d3a3" }
+          ],
+          "missionId": "social-drone-community-connections-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "92e8252e59e56c96" },
+            { "difficulty": "standard", "gameplayId": "bfd7cc50efb7e936" },
+            { "difficulty": "expert", "gameplayId": "0ee084a73a8d93c4" }
+          ],
+          "missionId": "social-drone-community-connections-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "9af718df915095ad" },
+            { "difficulty": "standard", "gameplayId": "4e663d6aafc65ba6" },
+            { "difficulty": "expert", "gameplayId": "7d6d38b70a4405fe" }
+          ],
+          "missionId": "social-drone-community-connections-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-community-connections", "kind": "campaign" }
   }
 ]

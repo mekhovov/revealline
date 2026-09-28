@@ -9852,6 +9852,26 @@
         "Original schematic role illustration, not hardware footage, a wiring plan or a measured simulation.",
         "No copied third-party images, fonts, audio or footage."
       ]
+    },
+    {
+      "id": "reference-ukraine-met-shirt-fragment-157571",
+      "path": "game/editions/assets/discovery/met-shirt-fragment-157571.jpg",
+      "sha256": "4a5913f8a42a58165353e44bf492df473f9a90b12bf7b060cc49e3819e6de6bd",
+      "bytes": 1761339,
+      "publication": "public",
+      "revision": 1,
+      "rights": "CC0-1.0",
+      "source": "https://www.metmuseum.org/art/collection/search/157571",
+      "download": "https://images.metmuseum.org/CRDImages/es/original/31.529_CP4.jpg",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseEvidence": "https://www.metmuseum.org/hubs/open-access",
+      "review": "Primary museum object record and explicit Public Domain/isPublicDomain status checked 2026-09-28. Exact source image visually inspected by assistant; unchanged 4000×2371 JPEG. Human content/device review deferred.",
+      "title": "Fragment of a shirt",
+      "creator": "Unknown maker",
+      "date": "fourth quarter 18th century",
+      "accession": "2009.300.2713",
+      "credit": "Brooklyn Museum Costume Collection at The Metropolitan Museum of Art, Gift of the Brooklyn Museum, 2009; Gift of Mrs. Edward S. Harkness in memory of her mother, Elizabeth Greenman Stillman, 1931",
+      "context": "Separate Ukrainian shirt fragment used for source comparison. Recorded materials silk, linen and metal; no precise locality, maker or symbolic interpretation inferred from the photograph."
     }
   ]
 }

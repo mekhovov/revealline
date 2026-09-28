@@ -1,0 +1,1139 @@
+{
+  "format": "FlightPortabilityEvidence.v1",
+  "createdAt": "2026-09-28T20:39:50.858Z",
+  "scope": "Numeric golden fixtures only. No radio hardware, performance, human learning or release qualification.",
+  "sourceStable": true,
+  "sources": [
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "sha256": "922a2c819ddb6a26af90addf9fa866aceda700af9ad7eba755f416d9ac576060"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "sha256": "a9f2f829a05062e6b1fa712eaec445edc106320c0abef5eb48e106695bd3ce0e"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/catalogue.mjs",
+      "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstrations.mjs",
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+    },
+    {
+      "path": "game/test/helpers/fpv-portability.mjs",
+      "sha256": "5d240e8cd065ef1c01f0bada60e984d7a9335fb0d94ec220bc214f34a2ebdfe0"
+    }
+  ],
+  "passed": true,
+  "results": [
+    {
+      "runtime": "node",
+      "version": "v20.19.5",
+      "matched": true,
+      "fixtures": [
+        {
+          "course": "flight-01",
+          "mode": "self-level",
+          "ticks": 239,
+          "checkpoint": "f341468b6ddfe4f1"
+        },
+        {
+          "course": "flight-01",
+          "mode": "acro",
+          "ticks": 239,
+          "checkpoint": "f341468b6ddfe4f1"
+        },
+        {
+          "course": "flight-02",
+          "mode": "self-level",
+          "ticks": 383,
+          "checkpoint": "02607361d08faa9e"
+        },
+        {
+          "course": "flight-02",
+          "mode": "acro",
+          "ticks": 383,
+          "checkpoint": "02607361d08faa9e"
+        },
+        {
+          "course": "flight-03",
+          "mode": "self-level",
+          "ticks": 433,
+          "checkpoint": "5233f3822ea55c18"
+        },
+        {
+          "course": "flight-03",
+          "mode": "acro",
+          "ticks": 433,
+          "checkpoint": "bddaadc6a2fbc7ba"
+        },
+        {
+          "course": "flight-04",
+          "mode": "self-level",
+          "ticks": 433,
+          "checkpoint": "832304a5f23581df"
+        },
+        {
+          "course": "flight-04",
+          "mode": "acro",
+          "ticks": 433,
+          "checkpoint": "4632d422e00dec47"
+        },
+        {
+          "course": "flight-05",
+          "mode": "self-level",
+          "ticks": 435,
+          "checkpoint": "857979ac092e3a09"
+        },
+        {
+          "course": "flight-05",
+          "mode": "acro",
+          "ticks": 435,
+          "checkpoint": "4372bef02299461d"
+        },
+        {
+          "course": "flight-06",
+          "mode": "self-level",
+          "ticks": 899,
+          "checkpoint": "d65354624117314c"
+        },
+        {
+          "course": "flight-06",
+          "mode": "acro",
+          "ticks": 900,
+          "checkpoint": "68ad7ff2fbc001e9"
+        },
+        {
+          "course": "flight-07",
+          "mode": "self-level",
+          "ticks": 498,
+          "checkpoint": "fae4edeb1c9ac5a1"
+        },
+        {
+          "course": "flight-07",
+          "mode": "acro",
+          "ticks": 488,
+          "checkpoint": "753a209cd959a235"
+        },
+        {
+          "course": "flight-08",
+          "mode": "self-level",
+          "ticks": 491,
+          "checkpoint": "74133c751750d5d9"
+        },
+        {
+          "course": "flight-08",
+          "mode": "acro",
+          "ticks": 491,
+          "checkpoint": "c1a1aa25c933ab47"
+        },
+        {
+          "course": "flight-09",
+          "mode": "self-level",
+          "ticks": 638,
+          "checkpoint": "b867452ffd5d3320"
+        },
+        {
+          "course": "flight-09",
+          "mode": "acro",
+          "ticks": 638,
+          "checkpoint": "5f3ac5d8a56a2bc4"
+        },
+        {
+          "course": "flight-10",
+          "mode": "self-level",
+          "ticks": 610,
+          "checkpoint": "7ea234657e0dbed0"
+        },
+        {
+          "course": "flight-10",
+          "mode": "acro",
+          "ticks": 610,
+          "checkpoint": "842cc2e198180367"
+        },
+        {
+          "course": "flight-11",
+          "mode": "self-level",
+          "ticks": 1243,
+          "checkpoint": "72cf29cc67a42031"
+        },
+        {
+          "course": "flight-11",
+          "mode": "acro",
+          "ticks": 1243,
+          "checkpoint": "5259432f4393c02f"
+        },
+        {
+          "course": "flight-12",
+          "mode": "self-level",
+          "ticks": 1126,
+          "checkpoint": "296fb251c5ca3606"
+        },
+        {
+          "course": "flight-12",
+          "mode": "acro",
+          "ticks": 1126,
+          "checkpoint": "f4e138242fdf28c2"
+        },
+        {
+          "course": "portability-stress",
+          "mode": "self-level",
+          "ticks": 3000,
+          "checkpoints": [
+            {
+              "tick": 250,
+              "checkpoint": "3a93877a2ceadd72"
+            },
+            {
+              "tick": 500,
+              "checkpoint": "bb9aaa2c08d351a2"
+            },
+            {
+              "tick": 750,
+              "checkpoint": "04ca4bb7ae09ac08"
+            },
+            {
+              "tick": 1000,
+              "checkpoint": "e095fbff104c3ea9"
+            },
+            {
+              "tick": 1250,
+              "checkpoint": "7f1e8d47781c3c43"
+            },
+            {
+              "tick": 1500,
+              "checkpoint": "160def8362c067ed"
+            },
+            {
+              "tick": 1750,
+              "checkpoint": "8e41bf42a40aca08"
+            },
+            {
+              "tick": 2000,
+              "checkpoint": "b82ee0a1286d7591"
+            },
+            {
+              "tick": 2250,
+              "checkpoint": "b78c40926c08624e"
+            },
+            {
+              "tick": 2500,
+              "checkpoint": "94cbedd81107c4a1"
+            },
+            {
+              "tick": 2750,
+              "checkpoint": "a7c1564c9f72f968"
+            },
+            {
+              "tick": 3000,
+              "checkpoint": "33546351f864f1df"
+            }
+          ],
+          "coverage": {
+            "invertedTicks": 0,
+            "groundedTicks": 286,
+            "boundaryTicks": 2486,
+            "contacts": 3039,
+            "yawQuadrants": [0, 1, 2, 3]
+          }
+        },
+        {
+          "course": "portability-stress",
+          "mode": "acro",
+          "ticks": 3000,
+          "checkpoints": [
+            {
+              "tick": 250,
+              "checkpoint": "d26dd10cdb5b83da"
+            },
+            {
+              "tick": 500,
+              "checkpoint": "5696242ee5b41548"
+            },
+            {
+              "tick": 750,
+              "checkpoint": "e33e9afac28b51a1"
+            },
+            {
+              "tick": 1000,
+              "checkpoint": "594979fc5538e6a0"
+            },
+            {
+              "tick": 1250,
+              "checkpoint": "1ccc855da33158aa"
+            },
+            {
+              "tick": 1500,
+              "checkpoint": "e91dd1092bb62c41"
+            },
+            {
+              "tick": 1750,
+              "checkpoint": "71f03dc0e84beb0f"
+            },
+            {
+              "tick": 2000,
+              "checkpoint": "1555237b853d3e82"
+            },
+            {
+              "tick": 2250,
+              "checkpoint": "5b896e6310d6d97e"
+            },
+            {
+              "tick": 2500,
+              "checkpoint": "7dfc72649fabc016"
+            },
+            {
+              "tick": 2750,
+              "checkpoint": "e0f0ead4d87698e3"
+            },
+            {
+              "tick": 3000,
+              "checkpoint": "9ea68ceaf5c3edaa"
+            }
+          ],
+          "coverage": {
+            "invertedTicks": 1281,
+            "groundedTicks": 1341,
+            "boundaryTicks": 1828,
+            "contacts": 1706,
+            "yawQuadrants": [0, 1, 2, 3]
+          }
+        }
+      ]
+    },
+    {
+      "runtime": "chromium",
+      "version": "154.0.8037.57",
+      "matched": true,
+      "fixtures": [
+        {
+          "course": "flight-01",
+          "mode": "self-level",
+          "ticks": 239,
+          "checkpoint": "f341468b6ddfe4f1"
+        },
+        {
+          "course": "flight-01",
+          "mode": "acro",
+          "ticks": 239,
+          "checkpoint": "f341468b6ddfe4f1"
+        },
+        {
+          "course": "flight-02",
+          "mode": "self-level",
+          "ticks": 383,
+          "checkpoint": "02607361d08faa9e"
+        },
+        {
+          "course": "flight-02",
+          "mode": "acro",
+          "ticks": 383,
+          "checkpoint": "02607361d08faa9e"
+        },
+        {
+          "course": "flight-03",
+          "mode": "self-level",
+          "ticks": 433,
+          "checkpoint": "5233f3822ea55c18"
+        },
+        {
+          "course": "flight-03",
+          "mode": "acro",
+          "ticks": 433,
+          "checkpoint": "bddaadc6a2fbc7ba"
+        },
+        {
+          "course": "flight-04",
+          "mode": "self-level",
+          "ticks": 433,
+          "checkpoint": "832304a5f23581df"
+        },
+        {
+          "course": "flight-04",
+          "mode": "acro",
+          "ticks": 433,
+          "checkpoint": "4632d422e00dec47"
+        },
+        {
+          "course": "flight-05",
+          "mode": "self-level",
+          "ticks": 435,
+          "checkpoint": "857979ac092e3a09"
+        },
+        {
+          "course": "flight-05",
+          "mode": "acro",
+          "ticks": 435,
+          "checkpoint": "4372bef02299461d"
+        },
+        {
+          "course": "flight-06",
+          "mode": "self-level",
+          "ticks": 899,
+          "checkpoint": "d65354624117314c"
+        },
+        {
+          "course": "flight-06",
+          "mode": "acro",
+          "ticks": 900,
+          "checkpoint": "68ad7ff2fbc001e9"
+        },
+        {
+          "course": "flight-07",
+          "mode": "self-level",
+          "ticks": 498,
+          "checkpoint": "fae4edeb1c9ac5a1"
+        },
+        {
+          "course": "flight-07",
+          "mode": "acro",
+          "ticks": 488,
+          "checkpoint": "753a209cd959a235"
+        },
+        {
+          "course": "flight-08",
+          "mode": "self-level",
+          "ticks": 491,
+          "checkpoint": "74133c751750d5d9"
+        },
+        {
+          "course": "flight-08",
+          "mode": "acro",
+          "ticks": 491,
+          "checkpoint": "c1a1aa25c933ab47"
+        },
+        {
+          "course": "flight-09",
+          "mode": "self-level",
+          "ticks": 638,
+          "checkpoint": "b867452ffd5d3320"
+        },
+        {
+          "course": "flight-09",
+          "mode": "acro",
+          "ticks": 638,
+          "checkpoint": "5f3ac5d8a56a2bc4"
+        },
+        {
+          "course": "flight-10",
+          "mode": "self-level",
+          "ticks": 610,
+          "checkpoint": "7ea234657e0dbed0"
+        },
+        {
+          "course": "flight-10",
+          "mode": "acro",
+          "ticks": 610,
+          "checkpoint": "842cc2e198180367"
+        },
+        {
+          "course": "flight-11",
+          "mode": "self-level",
+          "ticks": 1243,
+          "checkpoint": "72cf29cc67a42031"
+        },
+        {
+          "course": "flight-11",
+          "mode": "acro",
+          "ticks": 1243,
+          "checkpoint": "5259432f4393c02f"
+        },
+        {
+          "course": "flight-12",
+          "mode": "self-level",
+          "ticks": 1126,
+          "checkpoint": "296fb251c5ca3606"
+        },
+        {
+          "course": "flight-12",
+          "mode": "acro",
+          "ticks": 1126,
+          "checkpoint": "f4e138242fdf28c2"
+        },
+        {
+          "course": "portability-stress",
+          "mode": "self-level",
+          "ticks": 3000,
+          "checkpoints": [
+            {
+              "tick": 250,
+              "checkpoint": "3a93877a2ceadd72"
+            },
+            {
+              "tick": 500,
+              "checkpoint": "bb9aaa2c08d351a2"
+            },
+            {
+              "tick": 750,
+              "checkpoint": "04ca4bb7ae09ac08"
+            },
+            {
+              "tick": 1000,
+              "checkpoint": "e095fbff104c3ea9"
+            },
+            {
+              "tick": 1250,
+              "checkpoint": "7f1e8d47781c3c43"
+            },
+            {
+              "tick": 1500,
+              "checkpoint": "160def8362c067ed"
+            },
+            {
+              "tick": 1750,
+              "checkpoint": "8e41bf42a40aca08"
+            },
+            {
+              "tick": 2000,
+              "checkpoint": "b82ee0a1286d7591"
+            },
+            {
+              "tick": 2250,
+              "checkpoint": "b78c40926c08624e"
+            },
+            {
+              "tick": 2500,
+              "checkpoint": "94cbedd81107c4a1"
+            },
+            {
+              "tick": 2750,
+              "checkpoint": "a7c1564c9f72f968"
+            },
+            {
+              "tick": 3000,
+              "checkpoint": "33546351f864f1df"
+            }
+          ],
+          "coverage": {
+            "invertedTicks": 0,
+            "groundedTicks": 286,
+            "boundaryTicks": 2486,
+            "contacts": 3039,
+            "yawQuadrants": [0, 1, 2, 3]
+          }
+        },
+        {
+          "course": "portability-stress",
+          "mode": "acro",
+          "ticks": 3000,
+          "checkpoints": [
+            {
+              "tick": 250,
+              "checkpoint": "d26dd10cdb5b83da"
+            },
+            {
+              "tick": 500,
+              "checkpoint": "5696242ee5b41548"
+            },
+            {
+              "tick": 750,
+              "checkpoint": "e33e9afac28b51a1"
+            },
+            {
+              "tick": 1000,
+              "checkpoint": "594979fc5538e6a0"
+            },
+            {
+              "tick": 1250,
+              "checkpoint": "1ccc855da33158aa"
+            },
+            {
+              "tick": 1500,
+              "checkpoint": "e91dd1092bb62c41"
+            },
+            {
+              "tick": 1750,
+              "checkpoint": "71f03dc0e84beb0f"
+            },
+            {
+              "tick": 2000,
+              "checkpoint": "1555237b853d3e82"
+            },
+            {
+              "tick": 2250,
+              "checkpoint": "5b896e6310d6d97e"
+            },
+            {
+              "tick": 2500,
+              "checkpoint": "7dfc72649fabc016"
+            },
+            {
+              "tick": 2750,
+              "checkpoint": "e0f0ead4d87698e3"
+            },
+            {
+              "tick": 3000,
+              "checkpoint": "9ea68ceaf5c3edaa"
+            }
+          ],
+          "coverage": {
+            "invertedTicks": 1281,
+            "groundedTicks": 1341,
+            "boundaryTicks": 1828,
+            "contacts": 1706,
+            "yawQuadrants": [0, 1, 2, 3]
+          }
+        }
+      ]
+    },
+    {
+      "runtime": "firefox",
+      "version": "146.0.1",
+      "matched": true,
+      "fixtures": [
+        {
+          "course": "flight-01",
+          "mode": "self-level",
+          "ticks": 239,
+          "checkpoint": "f341468b6ddfe4f1"
+        },
+        {
+          "course": "flight-01",
+          "mode": "acro",
+          "ticks": 239,
+          "checkpoint": "f341468b6ddfe4f1"
+        },
+        {
+          "course": "flight-02",
+          "mode": "self-level",
+          "ticks": 383,
+          "checkpoint": "02607361d08faa9e"
+        },
+        {
+          "course": "flight-02",
+          "mode": "acro",
+          "ticks": 383,
+          "checkpoint": "02607361d08faa9e"
+        },
+        {
+          "course": "flight-03",
+          "mode": "self-level",
+          "ticks": 433,
+          "checkpoint": "5233f3822ea55c18"
+        },
+        {
+          "course": "flight-03",
+          "mode": "acro",
+          "ticks": 433,
+          "checkpoint": "bddaadc6a2fbc7ba"
+        },
+        {
+          "course": "flight-04",
+          "mode": "self-level",
+          "ticks": 433,
+          "checkpoint": "832304a5f23581df"
+        },
+        {
+          "course": "flight-04",
+          "mode": "acro",
+          "ticks": 433,
+          "checkpoint": "4632d422e00dec47"
+        },
+        {
+          "course": "flight-05",
+          "mode": "self-level",
+          "ticks": 435,
+          "checkpoint": "857979ac092e3a09"
+        },
+        {
+          "course": "flight-05",
+          "mode": "acro",
+          "ticks": 435,
+          "checkpoint": "4372bef02299461d"
+        },
+        {
+          "course": "flight-06",
+          "mode": "self-level",
+          "ticks": 899,
+          "checkpoint": "d65354624117314c"
+        },
+        {
+          "course": "flight-06",
+          "mode": "acro",
+          "ticks": 900,
+          "checkpoint": "68ad7ff2fbc001e9"
+        },
+        {
+          "course": "flight-07",
+          "mode": "self-level",
+          "ticks": 498,
+          "checkpoint": "fae4edeb1c9ac5a1"
+        },
+        {
+          "course": "flight-07",
+          "mode": "acro",
+          "ticks": 488,
+          "checkpoint": "753a209cd959a235"
+        },
+        {
+          "course": "flight-08",
+          "mode": "self-level",
+          "ticks": 491,
+          "checkpoint": "74133c751750d5d9"
+        },
+        {
+          "course": "flight-08",
+          "mode": "acro",
+          "ticks": 491,
+          "checkpoint": "c1a1aa25c933ab47"
+        },
+        {
+          "course": "flight-09",
+          "mode": "self-level",
+          "ticks": 638,
+          "checkpoint": "b867452ffd5d3320"
+        },
+        {
+          "course": "flight-09",
+          "mode": "acro",
+          "ticks": 638,
+          "checkpoint": "5f3ac5d8a56a2bc4"
+        },
+        {
+          "course": "flight-10",
+          "mode": "self-level",
+          "ticks": 610,
+          "checkpoint": "7ea234657e0dbed0"
+        },
+        {
+          "course": "flight-10",
+          "mode": "acro",
+          "ticks": 610,
+          "checkpoint": "842cc2e198180367"
+        },
+        {
+          "course": "flight-11",
+          "mode": "self-level",
+          "ticks": 1243,
+          "checkpoint": "72cf29cc67a42031"
+        },
+        {
+          "course": "flight-11",
+          "mode": "acro",
+          "ticks": 1243,
+          "checkpoint": "5259432f4393c02f"
+        },
+        {
+          "course": "flight-12",
+          "mode": "self-level",
+          "ticks": 1126,
+          "checkpoint": "296fb251c5ca3606"
+        },
+        {
+          "course": "flight-12",
+          "mode": "acro",
+          "ticks": 1126,
+          "checkpoint": "f4e138242fdf28c2"
+        },
+        {
+          "course": "portability-stress",
+          "mode": "self-level",
+          "ticks": 3000,
+          "checkpoints": [
+            {
+              "tick": 250,
+              "checkpoint": "3a93877a2ceadd72"
+            },
+            {
+              "tick": 500,
+              "checkpoint": "bb9aaa2c08d351a2"
+            },
+            {
+              "tick": 750,
+              "checkpoint": "04ca4bb7ae09ac08"
+            },
+            {
+              "tick": 1000,
+              "checkpoint": "e095fbff104c3ea9"
+            },
+            {
+              "tick": 1250,
+              "checkpoint": "7f1e8d47781c3c43"
+            },
+            {
+              "tick": 1500,
+              "checkpoint": "160def8362c067ed"
+            },
+            {
+              "tick": 1750,
+              "checkpoint": "8e41bf42a40aca08"
+            },
+            {
+              "tick": 2000,
+              "checkpoint": "b82ee0a1286d7591"
+            },
+            {
+              "tick": 2250,
+              "checkpoint": "b78c40926c08624e"
+            },
+            {
+              "tick": 2500,
+              "checkpoint": "94cbedd81107c4a1"
+            },
+            {
+              "tick": 2750,
+              "checkpoint": "a7c1564c9f72f968"
+            },
+            {
+              "tick": 3000,
+              "checkpoint": "33546351f864f1df"
+            }
+          ],
+          "coverage": {
+            "invertedTicks": 0,
+            "groundedTicks": 286,
+            "boundaryTicks": 2486,
+            "contacts": 3039,
+            "yawQuadrants": [0, 1, 2, 3]
+          }
+        },
+        {
+          "course": "portability-stress",
+          "mode": "acro",
+          "ticks": 3000,
+          "checkpoints": [
+            {
+              "tick": 250,
+              "checkpoint": "d26dd10cdb5b83da"
+            },
+            {
+              "tick": 500,
+              "checkpoint": "5696242ee5b41548"
+            },
+            {
+              "tick": 750,
+              "checkpoint": "e33e9afac28b51a1"
+            },
+            {
+              "tick": 1000,
+              "checkpoint": "594979fc5538e6a0"
+            },
+            {
+              "tick": 1250,
+              "checkpoint": "1ccc855da33158aa"
+            },
+            {
+              "tick": 1500,
+              "checkpoint": "e91dd1092bb62c41"
+            },
+            {
+              "tick": 1750,
+              "checkpoint": "71f03dc0e84beb0f"
+            },
+            {
+              "tick": 2000,
+              "checkpoint": "1555237b853d3e82"
+            },
+            {
+              "tick": 2250,
+              "checkpoint": "5b896e6310d6d97e"
+            },
+            {
+              "tick": 2500,
+              "checkpoint": "7dfc72649fabc016"
+            },
+            {
+              "tick": 2750,
+              "checkpoint": "e0f0ead4d87698e3"
+            },
+            {
+              "tick": 3000,
+              "checkpoint": "9ea68ceaf5c3edaa"
+            }
+          ],
+          "coverage": {
+            "invertedTicks": 1281,
+            "groundedTicks": 1341,
+            "boundaryTicks": 1828,
+            "contacts": 1706,
+            "yawQuadrants": [0, 1, 2, 3]
+          }
+        }
+      ]
+    },
+    {
+      "runtime": "webkit",
+      "version": "26.0",
+      "matched": true,
+      "fixtures": [
+        {
+          "course": "flight-01",
+          "mode": "self-level",
+          "ticks": 239,
+          "checkpoint": "f341468b6ddfe4f1"
+        },
+        {
+          "course": "flight-01",
+          "mode": "acro",
+          "ticks": 239,
+          "checkpoint": "f341468b6ddfe4f1"
+        },
+        {
+          "course": "flight-02",
+          "mode": "self-level",
+          "ticks": 383,
+          "checkpoint": "02607361d08faa9e"
+        },
+        {
+          "course": "flight-02",
+          "mode": "acro",
+          "ticks": 383,
+          "checkpoint": "02607361d08faa9e"
+        },
+        {
+          "course": "flight-03",
+          "mode": "self-level",
+          "ticks": 433,
+          "checkpoint": "5233f3822ea55c18"
+        },
+        {
+          "course": "flight-03",
+          "mode": "acro",
+          "ticks": 433,
+          "checkpoint": "bddaadc6a2fbc7ba"
+        },
+        {
+          "course": "flight-04",
+          "mode": "self-level",
+          "ticks": 433,
+          "checkpoint": "832304a5f23581df"
+        },
+        {
+          "course": "flight-04",
+          "mode": "acro",
+          "ticks": 433,
+          "checkpoint": "4632d422e00dec47"
+        },
+        {
+          "course": "flight-05",
+          "mode": "self-level",
+          "ticks": 435,
+          "checkpoint": "857979ac092e3a09"
+        },
+        {
+          "course": "flight-05",
+          "mode": "acro",
+          "ticks": 435,
+          "checkpoint": "4372bef02299461d"
+        },
+        {
+          "course": "flight-06",
+          "mode": "self-level",
+          "ticks": 899,
+          "checkpoint": "d65354624117314c"
+        },
+        {
+          "course": "flight-06",
+          "mode": "acro",
+          "ticks": 900,
+          "checkpoint": "68ad7ff2fbc001e9"
+        },
+        {
+          "course": "flight-07",
+          "mode": "self-level",
+          "ticks": 498,
+          "checkpoint": "fae4edeb1c9ac5a1"
+        },
+        {
+          "course": "flight-07",
+          "mode": "acro",
+          "ticks": 488,
+          "checkpoint": "753a209cd959a235"
+        },
+        {
+          "course": "flight-08",
+          "mode": "self-level",
+          "ticks": 491,
+          "checkpoint": "74133c751750d5d9"
+        },
+        {
+          "course": "flight-08",
+          "mode": "acro",
+          "ticks": 491,
+          "checkpoint": "c1a1aa25c933ab47"
+        },
+        {
+          "course": "flight-09",
+          "mode": "self-level",
+          "ticks": 638,
+          "checkpoint": "b867452ffd5d3320"
+        },
+        {
+          "course": "flight-09",
+          "mode": "acro",
+          "ticks": 638,
+          "checkpoint": "5f3ac5d8a56a2bc4"
+        },
+        {
+          "course": "flight-10",
+          "mode": "self-level",
+          "ticks": 610,
+          "checkpoint": "7ea234657e0dbed0"
+        },
+        {
+          "course": "flight-10",
+          "mode": "acro",
+          "ticks": 610,
+          "checkpoint": "842cc2e198180367"
+        },
+        {
+          "course": "flight-11",
+          "mode": "self-level",
+          "ticks": 1243,
+          "checkpoint": "72cf29cc67a42031"
+        },
+        {
+          "course": "flight-11",
+          "mode": "acro",
+          "ticks": 1243,
+          "checkpoint": "5259432f4393c02f"
+        },
+        {
+          "course": "flight-12",
+          "mode": "self-level",
+          "ticks": 1126,
+          "checkpoint": "296fb251c5ca3606"
+        },
+        {
+          "course": "flight-12",
+          "mode": "acro",
+          "ticks": 1126,
+          "checkpoint": "f4e138242fdf28c2"
+        },
+        {
+          "course": "portability-stress",
+          "mode": "self-level",
+          "ticks": 3000,
+          "checkpoints": [
+            {
+              "tick": 250,
+              "checkpoint": "3a93877a2ceadd72"
+            },
+            {
+              "tick": 500,
+              "checkpoint": "bb9aaa2c08d351a2"
+            },
+            {
+              "tick": 750,
+              "checkpoint": "04ca4bb7ae09ac08"
+            },
+            {
+              "tick": 1000,
+              "checkpoint": "e095fbff104c3ea9"
+            },
+            {
+              "tick": 1250,
+              "checkpoint": "7f1e8d47781c3c43"
+            },
+            {
+              "tick": 1500,
+              "checkpoint": "160def8362c067ed"
+            },
+            {
+              "tick": 1750,
+              "checkpoint": "8e41bf42a40aca08"
+            },
+            {
+              "tick": 2000,
+              "checkpoint": "b82ee0a1286d7591"
+            },
+            {
+              "tick": 2250,
+              "checkpoint": "b78c40926c08624e"
+            },
+            {
+              "tick": 2500,
+              "checkpoint": "94cbedd81107c4a1"
+            },
+            {
+              "tick": 2750,
+              "checkpoint": "a7c1564c9f72f968"
+            },
+            {
+              "tick": 3000,
+              "checkpoint": "33546351f864f1df"
+            }
+          ],
+          "coverage": {
+            "invertedTicks": 0,
+            "groundedTicks": 286,
+            "boundaryTicks": 2486,
+            "contacts": 3039,
+            "yawQuadrants": [0, 1, 2, 3]
+          }
+        },
+        {
+          "course": "portability-stress",
+          "mode": "acro",
+          "ticks": 3000,
+          "checkpoints": [
+            {
+              "tick": 250,
+              "checkpoint": "d26dd10cdb5b83da"
+            },
+            {
+              "tick": 500,
+              "checkpoint": "5696242ee5b41548"
+            },
+            {
+              "tick": 750,
+              "checkpoint": "e33e9afac28b51a1"
+            },
+            {
+              "tick": 1000,
+              "checkpoint": "594979fc5538e6a0"
+            },
+            {
+              "tick": 1250,
+              "checkpoint": "1ccc855da33158aa"
+            },
+            {
+              "tick": 1500,
+              "checkpoint": "e91dd1092bb62c41"
+            },
+            {
+              "tick": 1750,
+              "checkpoint": "71f03dc0e84beb0f"
+            },
+            {
+              "tick": 2000,
+              "checkpoint": "1555237b853d3e82"
+            },
+            {
+              "tick": 2250,
+              "checkpoint": "5b896e6310d6d97e"
+            },
+            {
+              "tick": 2500,
+              "checkpoint": "7dfc72649fabc016"
+            },
+            {
+              "tick": 2750,
+              "checkpoint": "e0f0ead4d87698e3"
+            },
+            {
+              "tick": 3000,
+              "checkpoint": "9ea68ceaf5c3edaa"
+            }
+          ],
+          "coverage": {
+            "invertedTicks": 1281,
+            "groundedTicks": 1341,
+            "boundaryTicks": 1828,
+            "contacts": 1706,
+            "yawQuadrants": [0, 1, 2, 3]
+          }
+        }
+      ]
+    }
+  ]
+}

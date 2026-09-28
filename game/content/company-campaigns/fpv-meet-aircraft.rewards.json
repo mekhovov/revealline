@@ -262,6 +262,52 @@
           ]
         },
         "type": "exploration"
+      },
+      {
+        "id": "fpv-meet-aircraft-01-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Select a frame hotspot and connect its visible structure to support or spacing. That is a role explanation, not a complete assembly plan. In later discoveries, use the same question—what does this part do?—without assuming that a similar shape proves compatibility."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Propeller propulsion",
+                "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+              },
+              {
+                "title": "Betaflight — Flight-controller roles",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              }
+            ],
+            "title": "Example: structure has a role"
+          },
+          "uk": {
+            "paragraphs": [
+              "Оберіть точку на рамі й пов’яжіть видиму конструкцію з опорою або відстанню між деталями. Це пояснення ролі, а не повний план складання. Далі ставте те саме запитання — що робить деталь? — не вважаючи схожу форму доказом сумісності."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Propeller propulsion",
+                "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+              },
+              {
+                "title": "Betaflight — Flight-controller roles",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              }
+            ],
+            "title": "Приклад: конструкція має роль"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -278,7 +324,7 @@
         }
       ]
     },
-    "revision": "6",
+    "revision": "7",
     "scope": { "id": "fpv-meet-aircraft-01", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -548,6 +594,52 @@
           }
         },
         "type": "video"
+      },
+      {
+        "id": "fpv-meet-aircraft-02-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Watch or read the motion study, then open the optional workbench. Match motor and propeller roles to different display cards. Its answer concerns component function, not a real mounting, rotation direction or powered test."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Propeller propulsion",
+                "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+              },
+              {
+                "title": "Betaflight — Flight-controller roles",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              }
+            ],
+            "title": "Try: motor is not propeller"
+          },
+          "uk": {
+            "paragraphs": [
+              "Перегляньте або прочитайте етюд руху, а потім відкрийте додаткову вправу. Зіставте ролі двигуна й пропелера з різними картками. Відповідь стосується функції компонента, а не реального кріплення, напрямку обертання чи перевірки під живленням."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Propeller propulsion",
+                "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+              },
+              {
+                "title": "Betaflight — Flight-controller roles",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              }
+            ],
+            "title": "Спробуйте: двигун — не пропелер"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -564,7 +656,7 @@
         }
       ]
     },
-    "revision": "6",
+    "revision": "7",
     "scope": { "id": "fpv-meet-aircraft-02", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -690,6 +782,52 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "fpv-meet-aircraft-03-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The ESC acts on motor commands and regulates motor power. Keep “information telling a component what to do” separate from “energy enabling it to work”. A functional explanation does not specify the wiring or ratings of a particular device."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Propeller propulsion",
+                "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+              },
+              {
+                "title": "Betaflight — Flight-controller roles",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              }
+            ],
+            "title": "Combine: a command is not its energy supply"
+          },
+          "uk": {
+            "paragraphs": [
+              "ESC виконує команди двигуна й регулює його живлення. Розрізняйте «інформацію про потрібну дію» та «енергію для роботи». Пояснення функції не задає проводки чи характеристик конкретного пристрою."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Propeller propulsion",
+                "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+              },
+              {
+                "title": "Betaflight — Flight-controller roles",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              }
+            ],
+            "title": "Поєднайте: команда — не джерело енергії"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -706,7 +844,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "fpv-meet-aircraft-03", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -890,6 +1028,52 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "fpv-meet-aircraft-04-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The optional workbench uses a new diagram: one box calculates, one regulates motor power, one supplies energy. Explain the role before choosing the component label. Real products may combine roles even though this diagram separates them."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Propeller propulsion",
+                "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+              },
+              {
+                "title": "Betaflight — Flight-controller roles",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              }
+            ],
+            "title": "Apply elsewhere: three boxes"
+          },
+          "uk": {
+            "paragraphs": [
+              "Додаткова вправа містить нову схему: один блок обчислює, інший регулює живлення двигуна, третій надає енергію. Поясніть роль перед вибором назви. Реальні вироби можуть поєднувати ролі, хоча схема їх розділяє."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Propeller propulsion",
+                "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+              },
+              {
+                "title": "Betaflight — Flight-controller roles",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              }
+            ],
+            "title": "Застосуйте інакше: три блоки"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -906,7 +1090,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "fpv-meet-aircraft-04", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -1040,6 +1224,52 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "fpv-meet-aircraft-05-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "A spectator can receive a camera view without issuing a movement command. Compare the control path with the camera/video path and explain what information each carries. Seeing a picture alone does not establish control or a working radio link."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Propeller propulsion",
+                "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+              },
+              {
+                "title": "Betaflight — Flight-controller roles",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              }
+            ],
+            "title": "Explain: two information paths"
+          },
+          "uk": {
+            "paragraphs": [
+              "Глядач може отримувати зображення камери, не надсилаючи команд руху. Порівняйте шлях керування з камерою та відеоканалом і поясніть інформацію кожного. Саме зображення не підтверджує керування чи справності радіоканалу."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Propeller propulsion",
+                "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+              },
+              {
+                "title": "Betaflight — Flight-controller roles",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              }
+            ],
+            "title": "Поясніть: два інформаційні шляхи"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -1056,7 +1286,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "fpv-meet-aircraft-05", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -1206,6 +1436,52 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "fpv-meet-aircraft-06-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Use the existing final workbench to separate pilot control, camera video and motor commands in new visitor observations. Six wins still earn the aircraft atlas; the optional verified label exercise retains its independent annotations and cosmetic."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Propeller propulsion",
+                "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+              },
+              {
+                "title": "Betaflight — Flight-controller roles",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              }
+            ],
+            "title": "Resolve: repair the exhibit labels"
+          },
+          "uk": {
+            "paragraphs": [
+              "У наявній фінальній вправі розрізніть керування пілота, відео камери й команди двигуна в нових спостереженнях відвідувачів. Шість перемог і далі дають атлас апарата; додаткова перевірена вправа зберігає окремі примітки й вигляд персонажа."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Propeller propulsion",
+                "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+              },
+              {
+                "title": "Betaflight — Flight-controller roles",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              }
+            ],
+            "title": "Завершіть: виправте підписи експозиції"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -1222,7 +1498,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "fpv-meet-aircraft-06", "kind": "mission" },
     "teaserImage": {
       "asset": {
