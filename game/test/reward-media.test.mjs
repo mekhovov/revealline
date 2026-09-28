@@ -345,6 +345,73 @@ test('one audio source owns foreground and 20 result cycles release media, lease
   assert([...h.document.listeners.values()].every((set) => set.size === 0));
 });
 
+test('caption failure before metadata or during playback releases its decoder and requires a fresh explicit Play', async () => {
+  for (const beforeMetadata of [true, false]) {
+    const f = await fixture(),
+      h = harness(f),
+      createMedia = h.options.createMedia;
+    let firstTrack;
+    h.options.createMedia = (type) => {
+      const media = createMedia(type),
+        first = h.videos.length === 1;
+      media.load = function () {
+        this.loads++;
+        if (!this.src) return;
+        const track = this.querySelector('track');
+        if (first) firstTrack = track;
+        queueMicrotask(() => {
+          // Native text-track failures do not bubble to the media element.
+          if (first && beforeMetadata) track.emit('error', { bubbles: false });
+          this.emit('loadedmetadata', { bubbles: false });
+        });
+      };
+      return media;
+    };
+    const viewer = mountRewardMedia(h.options);
+    try {
+      await settles();
+      h.play();
+      await settles();
+      const failed = h.videos[0];
+      if (!beforeMetadata) {
+        assert.equal(failed.playCalls, 1);
+        firstTrack.emit('error', { bubbles: false });
+      }
+      await settles();
+      assert.equal(failed.playCalls, beforeMetadata ? 0 : 1);
+      assert.equal(failed.paused, true);
+      assert.equal(failed.src, '');
+      assert.equal(failed.parentNode, null);
+      assert.equal(failed.children.length, 0);
+      assert(failed.loads >= 2, 'Removing the failed source resets the native decoder.');
+      assert([...failed.listeners.values()].every((set) => set.size === 0));
+      assert([...firstTrack.listeners.values()].every((set) => set.size === 0));
+      assert.deepEqual(h.counts(), { gains: 0, subscribers: 0, urls: 1 });
+      assert(h.container.querySelector('details').textContent.includes('Owned diagnostic'));
+      assert.equal(h.container.querySelector('img').hidden, false);
+      assert.match(
+        h.container.querySelector('[role="status"]').textContent,
+        /This exact recording cannot play here/,
+      );
+      failed.emit('loadedmetadata', { bubbles: false });
+      firstTrack.emit('error', { bubbles: false });
+      await settles();
+      assert.equal(h.videos.length, 1, 'Late decoder events never prepare or play a new source.');
+      h.play();
+      await settles();
+      assert.equal(h.videos.length, 2);
+      assert.equal(h.videos[1].playCalls, 1);
+      assert.equal(h.videos[1].paused, false);
+      assert.deepEqual(h.counts(), { gains: 1, subscribers: 1, urls: 3 });
+    } finally {
+      viewer.dispose();
+    }
+    assert.deepEqual(h.counts(), { gains: 0, subscribers: 0, urls: 0 });
+    assert([...h.window.listeners.values()].every((set) => set.size === 0));
+    assert([...h.document.listeners.values()].every((set) => set.size === 0));
+  }
+});
+
 test('invalid native facts, missing exact bytes, delayed completion and autoplay rejection leave useful fallback', async () => {
   const f = await fixture();
   for (const facts of [
