@@ -1581,3 +1581,14 @@ it on cancellation, filtering, close and offscreen movement. Test second-write
 rollback, session export/retry, conflict rejection and strict older backup readers.
 Backup v3 contains references, not image bytes. Solo admission does not establish
 Versus/Team completion; those hosts remain UX1-A2 qualification work.
+
+## Native key identifiers are locale-independent
+
+Settings and other input owners compare browser protocol values, never translated
+labels. Keep `KeyboardEvent.key` Home/End/Arrow identifiers literal even when the
+module first loads in Ukrainian; translated display names belong in labels only.
+Test cold locale initialization before import, later locale switches, first/last
+enabled tabs and one-action ownership with the shared controller navigator. Native
+text/select editing and modified shortcuts must remain excluded. A Settings visit
+must preserve a paused flight and require explicit Resume. Follow the regression
+prompt in [Settings native keys](../../../docs/settings-native-key-navigation.md).
