@@ -29,6 +29,13 @@ test('ownership inventory changes select route coverage and artwork screening re
   assert.ok(plan.commands[0].args.includes('game/test/artwork-screening.test.mjs'));
 });
 
+test('combined company screening selects exact-copy, ownership and strict-review regressions', () => {
+  const plan = focusedTestPlan(['scripts/company-artwork-screening.mjs'], manifest);
+  assert.deepEqual(plan.categories, ['content-inventory']);
+  assert.deepEqual(plan.unknownRuntime, []);
+  assert.ok(plan.commands[0].args.includes('scripts/test-company-artwork-screening.mjs'));
+});
+
 test('company ownership reports select retained identity and profile preservation checks', () => {
   const plan = focusedTestPlan(['scripts/company-content-inventory.mjs'], manifest);
   assert.ok(plan.categories.includes('company-content-inventory'));
