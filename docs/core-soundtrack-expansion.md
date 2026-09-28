@@ -120,9 +120,9 @@ The public game is v0.141.7. Its release was published at 00:24 UTC on 28 Septem
 and the Pages deployment subsequently passed a 2,223-file, 757,762,788-byte public
 audit with zero failures. Browser entry checks confirmed the Solo, Versus and Team
 catalogues and release links; gameplay and cold-offline acceptance remain in S3.
-Authoritative `main` is
-`c5885a15561a88331c5566c5312392c4e5d8daf5`; its changes after the v0.141.7
-publisher are company evidence and a Steam Deck test correction, not a soundtrack
+Authoritative `main` has advanced to
+`bb9b3640270dc26633d37cfdf4a306aecda277b6`; its changes after the v0.141.7
+publisher include maintenance tests and offline pilot evidence, not a soundtrack
 runtime release. The canonical soundtrack archive itself is current and clean at
 `e7c11aac61b1359c609029fc93871ea17e020444`, with 260 exact recordings: 202 public
 and 58 review-only. It has no open pull requests.
@@ -131,7 +131,7 @@ Ship the remaining soundtrack work in these independently reviewable batches:
 
 | Batch | Included work | Completed evidence | Remaining gate | Hands-on estimate |
 | --- | --- | --- | --- | --- |
-| **S1 — canonical game adapter** | Canonical catalogue discovery, structured rights, external URLs, 512-recording capacity and remote failure recovery | Draft [PR #746](https://github.com/mekhovov/revealline/pull/746) publishes exact candidate `1267bf01305016a5301c1beeea193f8511638b00`; truthful offline-status correction included; focused 111/111, Team 119/119 and source/history 21/21; production revision 95; exact-head preflight/reconciliation pass; [hosted acceptance run 36370988698](https://github.com/mekhovov/revealline/actions/runs/36370988698) passed interrupted-upload recovery, service recreation, two-user publish/install/play/moderation and offline behavior; [company candidate run 36370988635](https://github.com/mekhovov/revealline/actions/runs/36370988635) passed generated-source/media eligibility, focused company/persistence/offline/artifact tests, both release-format/admission checks, double compilation, original ZIP inspection and immutable candidate upload | Draft/unallocated `release-ready` correctly fails while build/focused/test are skipped. Complete independent final review and bounded previous-public acceptance; promote the exact head, require non-skipped release gates, qualify the actual merge and publish once | **0.5–1 working day**, plus shared CI/release queue |
+| **S1 — canonical game adapter** | Canonical catalogue discovery, structured rights, external URLs, 512-recording capacity and remote failure recovery | Draft [PR #746](https://github.com/mekhovov/revealline/pull/746) publishes exact candidate `1267bf01305016a5301c1beeea193f8511638b00`; truthful offline-status correction included; focused 111/111, Team 119/119 and source/history 21/21; production revision 95; exact-head preflight/reconciliation pass; [hosted acceptance run 36370988698](https://github.com/mekhovov/revealline/actions/runs/36370988698) passed interrupted-upload recovery, service recreation, two-user publish/install/play/moderation and offline behavior; [company candidate run 36370988635](https://github.com/mekhovov/revealline/actions/runs/36370988635) passed generated-source/media eligibility, focused company/persistence/offline/artifact tests, both release-format/admission checks, double compilation, original ZIP inspection and immutable candidate upload | Main advanced through #741/#750. A tree-level merge identifies one conflict, `publishing/focused-test-map.json`; soundtrack runtime paths merge cleanly. Rebase, rerun affected exact-head gates, complete independent review and previous-public acceptance, promote, qualify the actual merge and publish once | **0.5–1 working day**, plus shared CI/release queue |
 | **S2 — compact Audio player** | Current title/artist/source, Previous, Play/Pause, Next, game/upload and archive source toggles, all ten archive styles, ordered/shuffled mixed playback and one advanced-library disclosure | Local feature `435da8de428a854484f9b8d751ef48b24418241d`, with complete production-input binding at `9b1146de952bb4130e14582d6f7f126ee223f327`; fresh combined focused/source-closure run 227/227 with zero failures/skips/cancellations; lint/localization/validation/formatting pass; local browser loaded 202 public tracks and switched streamed → bundled playback; isolated application onto exact PR #746 tree confirms runtime/UI/test/HTML/production patches apply cleanly | Resolve only three expected textual post-merge conflicts (`game/i18n/catalogs.mjs` and both interface locale JSON files), append a scoped Field Kit review successor, run hosted build because local packaging hit `ENOSPC`, then independently review and release | **0.5–1 working day after S1**, plus CI |
 | **S3 — device and offline closure** | Physical B/N and touch/controller controls, Shchedryk startup and transitions, iPhone/desktop qualification and cold offline restart | Desktop streamed/bundled recovery and existing public quick controls are already delivered | Requires physical targets and a release containing S1/S2; record device and listening evidence separately | **0.5–1 working day**, depending on device access |
 | **S4 — reviewed music admissions** | Small accepted synthwave/electro, heavier-metal and Ukrainian collections | Archive already publishes the audition pool and exact source/licence metadata; rejected and backup decisions are retained | Full-track listening, transitions, warning audibility and Ukrainian cultural review; admission must use accepted subsets only | **1–2 working days per accepted batch**, excluding reviewer response |
@@ -142,6 +142,11 @@ frozen review. S4 archive research can continue without entering the game releas
 queue, but another public audition dump is lower priority than listening and
 admitting a small accepted subset. A green technical check never changes an
 audition into approved game music.
+
+Local free space was **937 MiB** at the latest checkpoint, below the required 1 GiB
+floor. Do not run local builds, package downloads or media intake until the reserve
+is restored without deleting user work or frozen evidence. Use hosted checks for
+the active release batches.
 
 ## Priority delivery — external MP3 URLs first (27 September 2026)
 
