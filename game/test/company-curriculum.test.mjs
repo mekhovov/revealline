@@ -243,7 +243,10 @@ test('all 108 missions have distinct admitted art and selected public dependenci
       ]),
     ),
     {
-      'ukraine-threads': ['met-degas-ukrainian-dress-436157'],
+      'ukraine-threads': [
+        'met-degas-ukrainian-dress-436157',
+        'reference-ukraine-met-shirt-fragment',
+      ],
       'ukraine-cities-symbols-time': [
         'reference-ukraine-state-flag',
         'reference-ukraine-state-emblem',

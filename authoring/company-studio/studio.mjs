@@ -1,3 +1,5 @@
+import { rewardPresentationItems } from '../../game/rewards/audio-groups.mjs';
+import { mountRewardAudioGroup } from '../../game/ui/reward-audio-group.mjs';
 import { mountRewardKnowledge } from '../../game/ui/reward-knowledge.mjs';
 import { t } from '../../game/i18n/index.mjs';
 import { mountRewardMedia } from '../../game/ui/reward-media.mjs';
@@ -31,6 +33,7 @@ import { mountLocalRewardCosmeticPreview } from '../../game/studio/reward-cosmet
 import { createDiscoveryEditor } from '../../game/studio/discovery-editor.mjs';
 import { createRewardPrintPreview } from '../../game/studio/reward-print-preview.mjs';
 import { mountDiscoveryExploration } from '../../game/ui/discovery-exploration.mjs';
+import { loadRewardImage } from '../../game/ui/reward-image.mjs';
 
 const $ = (id) => document.getElementById(id);
 const labels = [
@@ -690,7 +693,8 @@ function previewRewardDraft() {
     });
     rewardPreviewExplorations.push(printPreview);
     panel.append(printPreview.button, printStatus);
-    for (const payload of reward.payloads) {
+    for (const item of rewardPresentationItems(reward)) {
+      const payload = item.kind === 'audio-group' ? item.group : item.payload;
       panel.append(node('h4', payload.locales[locale].title));
       if (payload.type === 'knowledge') {
         rewardPreviewExplorations.push(mountRewardKnowledge({ container: panel, payload, locale }));
@@ -714,13 +718,16 @@ function previewRewardDraft() {
             context: discoveryCosmeticContext({ catalog, editionId, files }),
           }),
         );
-      } else if (['audio', 'video'].includes(payload.type)) {
+      } else if (item.kind === 'audio-group' || ['audio', 'video'].includes(payload.type)) {
         const section = node('section');
         panel.append(section);
         const audioOwner = acquireStudioRewardAudio(document);
-        const viewer = mountRewardMedia({
+        const mount = item.kind === 'audio-group' ? mountRewardAudioGroup : mountRewardMedia;
+        const viewer = mount({
           container: section,
-          payload,
+          ...(item.kind === 'audio-group'
+            ? { group: item.group, payloads: item.payloads }
+            : { payload }),
           locale,
           audioMaster: audioOwner.master,
           musicDucker: { acquire: () => () => {} },
@@ -741,9 +748,39 @@ function previewRewardDraft() {
       } else if (payload.type === 'exploration') {
         const section = node('section');
         panel.append(section);
-        rewardPreviewExplorations.push(
-          mountDiscoveryExploration({ container: section, payload, locale }),
-        );
+        const urls = new Set(),
+          provider = {
+            editionId,
+            rootURL,
+            catalog,
+            currentCatalog: catalog,
+            bootstrap: { catalog, selection: selected() },
+          };
+        let closed = false;
+        const viewer = mountDiscoveryExploration({
+          container: section,
+          payload,
+          locale,
+          loadImage: (image, container, { signal }) =>
+            loadRewardImage({
+              container,
+              image,
+              locale,
+              provider,
+              signal,
+              urls,
+              isCurrent: () => !closed,
+              missingLabel: previewText('missingMedia'),
+            }),
+        });
+        rewardPreviewExplorations.push({
+          dispose() {
+            closed = true;
+            viewer.dispose();
+            urls.forEach((url) => URL.revokeObjectURL(url));
+            urls.clear();
+          },
+        });
       } else if (payload.type === 'url') {
         panel.append(
           node('p', payload.url),

@@ -1,4 +1,5 @@
 import { t } from '../i18n/index.mjs';
+import { mountDiscoveryDiagram } from './discovery-diagram.mjs';
 import {
   applyExplorationAction,
   createExplorationState,
@@ -61,6 +62,18 @@ export function mountDiscoveryExploration({
     status,
     comparison,
   );
+  let diagram = null;
+  if (recipe.diagram) {
+    const slot = node('div');
+    navigation.before(slot);
+    diagram = mountDiscoveryDiagram({
+      container: slot,
+      recipe,
+      locale,
+      loadImage,
+      onInspect: (cardId) => change({ type: 'inspect', cardId }),
+    });
+  }
   for (const card of recipe.cards) {
     const button = node('button', local(card).title);
     button.type = 'button';
@@ -175,6 +188,7 @@ export function mountDiscoveryExploration({
     };
   }
   function render() {
+    diagram?.update(state.selectedCardIds);
     for (const [id, record] of cards)
       if (!state.selectedCardIds.includes(id)) {
         record.dispose();
@@ -183,7 +197,8 @@ export function mountDiscoveryExploration({
     for (const [id, button] of buttons) {
       const selected = state.selectedCardIds.includes(id);
       button.setAttribute('aria-pressed', String(selected));
-      button.textContent = `${selected ? '✓ ' : ''}${local(recipe.cards.find((card) => card.id === id)).title}`;
+      const card = recipe.cards.find((card) => card.id === id);
+      button.textContent = `${selected ? '✓ ' : ''}${recipe.diagram ? `${recipe.cards.indexOf(card) + 1}. ` : ''}${local(card).title}`;
     }
     status.textContent = state.selectedCardIds.length === 2 ? tr('comparing') : tr('selectTwo');
     for (const id of state.selectedCardIds) {
@@ -198,8 +213,7 @@ export function mountDiscoveryExploration({
       if (!chosen) {
         view.feedback.removeAttribute('data-outcome');
         view.feedback.replaceChildren();
-      }
-      else {
+      } else {
         view.feedback.setAttribute(
           'data-outcome',
           chosen.id === prediction.expectedChoiceId ? 'supported' : 'reconsider',
@@ -221,6 +235,7 @@ export function mountDiscoveryExploration({
       if (disposed) return;
       disposed = true;
       cleanups.forEach((cleanup) => cleanup());
+      diagram?.dispose();
       cards.forEach((card) => card.dispose());
       cards.clear();
       root.remove();
