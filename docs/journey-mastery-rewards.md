@@ -31,8 +31,13 @@ edition-scoped key; it stores replay evidence, never a second Journey completion
 or XP profile. The host passes its existing guarded storage adapter.
 
 A proof must pass its content hash and replay verification on creation, import
-and hydration. The accepted clear is checked again at synchronous adoption.
-Cancelled verification cannot adopt evidence. Session and durable projections
+and hydration. Creation requires the host's exact current accepted winning run.
+After that transition, the verified proof retains its original accepted clear,
+even when a later win replaces Journey's latest-clear slot. Import, hydration and
+synchronous adoption require that the current selected edition still owns that
+mission through a supported gameplay/difficulty binding. Missing or foreign
+mission progress cannot be manufactured by importing a proof. Cancelled
+verification cannot adopt evidence. Session and durable projections
 remain separate after writer loss, denied reads or exhausted storage. Unsupported
 historical gameplay stays in recovery and can be checked again when its exact
 retained presentation is selected. Existing replay, collection and storage byte
@@ -44,7 +49,11 @@ Next or Retry. A losing-life win is still a normal arcade success; the extra
 discovery remains available for a later attempt. A practice run cannot borrow
 an earlier accepted run. The reward projection updates only when proof evidence
 changes, and persists optional rewards only after both Journey and proof storage
-succeed. Failed proof saves cannot become durable through an unrelated later win.
+succeed. Historical clears are projected separately from the session and durable
+proof maps, so a failed replacement preserves the older durable proof. Failed
+proof saves cannot become durable through an unrelated later win. A campaign
+bonus can therefore combine an earlier no-life-lost attempt with a later mission
+win without requiring the player to repeat that earlier achievement.
 
 Settings offers exact proof export, verified import and save retry. Imports are
 bounded, cancellable and checked against selected current or retained gameplay.
