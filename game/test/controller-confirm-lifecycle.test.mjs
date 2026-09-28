@@ -158,6 +158,38 @@ test('native winner survives router clear, changed scope, removed target and a l
   assert.equal(h.lifecycle.owned(), false);
 });
 
+test('native click refreshes its lead window without replacing the original menu target', () => {
+  const h = harness();
+  h.native('keydown');
+  h.state([], { eligible: false });
+  h.at(200);
+  h.native('click');
+  h.lifecycle.cancel('input-clear');
+  h.current.scope = 'settings';
+  h.current.root = {};
+  h.current.focused = h.nextTarget;
+  h.at(300);
+  h.sample([0]);
+  assert.equal(h.lifecycle.phase(), 'native');
+  assert.equal(h.calls.find(([name]) => name === 'begin')[1], h.target);
+  assert.equal(h.calls.filter(([name]) => name === 'capture').length, 0);
+  h.at(5300);
+  h.sample([0]);
+  h.at(5310);
+  h.sample();
+  assert.equal(h.commits().length, 0, 'the native menu transition remains the only activation');
+  assert.equal(h.lifecycle.owned(), false);
+
+  const expired = harness();
+  expired.native('keydown');
+  expired.at(200);
+  expired.native('click');
+  expired.at(451);
+  expired.sample([0]);
+  expired.sample();
+  assert.equal(expired.commits().length, 1, 'the click still has only the existing 250 ms window');
+});
+
 test('delayed Gamepad adopts the original target before the native click', () => {
   const h = harness();
   h.native('pointerdown');

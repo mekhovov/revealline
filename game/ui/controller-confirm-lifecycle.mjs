@@ -194,12 +194,14 @@ export function createControllerConfirmLifecycle({
     if (!prior && !snapshot.eligible) return;
     candidate = {
       ...(prior || {
-        at: time,
         target,
         scope: current.scope,
         root: current.root,
         assigned: snapshot.assigned,
       }),
+      // Associate a later Gamepad edge with the winning native activation,
+      // even when its initial down event preceded the click by most of the lead window.
+      at: event.type === 'click' ? time : (prior?.at ?? time),
       activated: prior?.activated === true || event.type === 'click',
     };
     trace('native-candidate', snapshot, {
