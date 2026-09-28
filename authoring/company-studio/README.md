@@ -54,6 +54,18 @@ The same controls appear in Content Studio. Import the reward JSON sidecar there
 
 Optional `mission.design.pacingBeat` uses `discover`, `choose`, `combine`, `breathe`, `mastery` or `resolve`; `mission.design.rewardRef` stores `{id, revision}`. Optional `campaign.discovery` stores `exhibitLayout` and `finaleRewardRef`. These fields affect presentation only. Discovery edits preserve mission/campaign gameplay revisions while changing the authoring project revision; edition compilation still needs a new immutable presentation revision. Duplicating a mission or campaign retains pacing/layout but removes reward links scoped to the old identity. Author new explicit promises for the copy.
 
+For the four built-in learning showcases and an end-to-end acceptance sequence,
+see the [discovery author guide](../../docs/discovery-rewards-author-guide.md) and
+[verified learning discoveries](../../docs/discovery-learning-rewards.md). The
+showcases keep their six-win finales while separate optional bonuses require
+selected exact lessons. Review the actual compiled result and Collection in an
+isolated player profile as well as the ineligible Studio previews.
+
+Flight courses use the separate [FPV Course Studio](../../docs/civilian-fpv-authoring.md).
+Its bundle is not a Company source draft: it contains one course, a knowledge reward
+and an optional exact demonstration. Company source import cannot turn that bundle
+into an admitted simulator package or a verified player completion.
+
 ## Selected campaign languages
 
 A campaign can declare `localizationPath` and `localizationSha256`. The versioned `revealline-campaign-localization.v1` sidecar pins each complete campaign or mission source record, the original English field and its Ukrainian translation. The SHA-256 is over canonical JSON, so formatting does not change its identity. Translation data never replaces strings inside engine inputs or replay records.

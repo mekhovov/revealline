@@ -8,33 +8,78 @@ import { readEditionZip } from '../publishing/edition-zip.mjs';
 import { validateOptionalPackageAdmission } from '../publishing/optional-package-admission.mjs';
 import { startServer } from './game-cli.mjs';
 
-const [modulePath, bundlePath, output = '/tmp/optional-installation-observation.json'] =
-  process.argv.slice(2);
+const [
+  modulePath,
+  bundlePath,
+  output = '/tmp/optional-installation-observation.json',
+  previousBundlePath,
+] = process.argv.slice(2);
 if (!modulePath || !bundlePath)
-  throw new Error('Pass external Playwright module, frozen optional bundle and output JSON.');
-const { chromium } = await import(pathToFileURL(path.resolve(modulePath)).href);
-const bundle = path.resolve(bundlePath),
-  sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
-const envelopeBytes = await readFile(path.join(bundle, 'optional-packages.json'));
-const envelope = JSON.parse(envelopeBytes);
-const harnessSha256 = sha(await readFile(fileURLToPath(import.meta.url)));
-const admittedBytes = new Map();
-await validateOptionalPackageAdmission(envelope, {
-  read: async (row) => {
-    if (!admittedBytes.has(row.path))
-      admittedBytes.set(row.path, await readFile(path.join(bundle, row.path)));
-    return admittedBytes.get(row.path);
-  },
-});
+  throw new Error(
+    'Pass external Playwright module, frozen optional bundle, output JSON and optional previous frozen bundle.',
+  );
+const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+async function admitBundle(directory) {
+  const bundle = path.resolve(directory),
+    envelopeBytes = await readFile(path.join(bundle, 'optional-packages.json')),
+    envelope = JSON.parse(envelopeBytes),
+    admittedBytes = new Map();
+  await validateOptionalPackageAdmission(envelope, {
+    read: async (row) => {
+      if (!admittedBytes.has(row.path))
+        admittedBytes.set(row.path, await readFile(path.join(bundle, row.path)));
+      return admittedBytes.get(row.path);
+    },
+  });
+  return { envelopeBytes, envelope, admittedBytes };
+}
+const { envelopeBytes, envelope, admittedBytes } = await admitBundle(bundlePath);
+const previous = previousBundlePath ? await admitBundle(previousBundlePath) : null;
 const version = envelope.version,
   fpv = 'civilian-fpv',
-  gym = 'civilian-flight';
-const priorFixture = 'v0.0.0',
+  gym = 'civilian-flight',
+  priorVersion = previous?.envelope.version ?? 'v0.0.0',
   failedFixture = 'v0.0.1';
 assert.ok(
-  ![priorFixture, failedFixture].includes(version),
-  'Fixture paths must differ from candidate.',
+  new Set([version, priorVersion, failedFixture]).size === 3,
+  'Candidate, previous and failed-fixture versions must differ.',
 );
+if (previous) {
+  assert.notEqual(
+    previous.envelope.sourceRevision,
+    envelope.sourceRevision,
+    'Candidates need distinct commits.',
+  );
+  assert.notEqual(
+    previous.envelope.sourceTree,
+    envelope.sourceTree,
+    'Candidates need distinct source trees.',
+  );
+  const priorItem = previous.envelope.packages.find((row) => row.id === fpv),
+    nextItem = envelope.packages.find((row) => row.id === fpv);
+  assert.ok(priorItem && nextItem, 'Both frozen candidates must include civilian-fpv.');
+  assert.notEqual(
+    priorItem.distribution.sha256,
+    nextItem.distribution.sha256,
+    'Candidates need distinct FPV archives.',
+  );
+}
+const { chromium } = await import(pathToFileURL(path.resolve(modulePath)).href);
+const harnessSha256 = sha(await readFile(fileURLToPath(import.meta.url)));
+const transition = {
+  kind: previous ? 'distinct-frozen-candidates' : 'same-payload-path-fixture',
+  fromVersion: priorVersion,
+  toVersion: version,
+  changedFiles: null,
+  previous: previous
+    ? {
+        envelopeSha256: sha(previous.envelopeBytes),
+        sourceRevision: previous.envelope.sourceRevision,
+        sourceTree: previous.envelope.sourceTree,
+        package: previous.envelope.packages.find((row) => row.id === fpv),
+      }
+    : null,
+};
 const work = await mkdtemp(path.join(tmpdir(), 'optional-installation-'));
 const root = path.join(work, 'site'),
   profile = path.join(work, 'browser');
@@ -64,11 +109,12 @@ async function pointer(id, selected) {
     }),
   );
 }
-async function stage(id, selected) {
-  for (const [name, bytes] of entries.get(id)) {
-    await put(site(id, selected) + name, bytes);
+async function stage(id, selected, files = entries.get(id)) {
+  for (const [name, bytes] of files) await put(site(id, selected) + name, bytes);
+}
+async function stageLauncher(id, files = entries.get(id)) {
+  for (const [name, bytes] of files)
     if (name.startsWith('launcher/')) await put(relativeRoot(id) + 'app/' + name.slice(9), bytes);
-  }
 }
 try {
   for (const id of [fpv, gym]) {
@@ -78,10 +124,30 @@ try {
     manifests.set(id, JSON.parse(entries.get(id).get('launcher/app.webmanifest')));
     assert.equal(manifests.get(id).id, '/' + relativeRoot(id));
     await stage(id, version);
+    await stageLauncher(id);
   }
-  await stage(fpv, priorFixture);
+  const priorItem = previous?.envelope.packages.find((row) => row.id === fpv),
+    priorEntries = previous
+      ? readEditionZip(previous.admittedBytes.get(priorItem.distribution.path))
+      : entries.get(fpv);
+  assert.deepEqual(
+    JSON.parse(priorEntries.get('launcher/app.webmanifest')),
+    manifests.get(fpv),
+    'This observer requires the same stable launcher manifest across candidates.',
+  );
+  const changedFiles = [...new Set([...priorEntries.keys(), ...entries.get(fpv).keys()])]
+    .filter(
+      (name) =>
+        !priorEntries.has(name) ||
+        !entries.get(fpv).has(name) ||
+        !priorEntries.get(name).equals(entries.get(fpv).get(name)),
+    )
+    .sort();
+  transition.changedFiles = changedFiles;
+  await stage(fpv, priorVersion, priorEntries);
+  await stageLauncher(fpv, priorEntries);
   await stage(fpv, failedFixture);
-  await pointer(fpv, priorFixture);
+  await pointer(fpv, priorVersion);
   await pointer(gym, version);
   await put('.xonix-build.json', JSON.stringify({ tool: 'xonix-game-cli', formatVersion: 1 }));
   served = await startServer({ root, port: 0 });
@@ -131,26 +197,44 @@ try {
   const installed = (state, id) => JSON.parse(state.keys[keyFor(id)]);
   async function exportedProof() {
     await page.locator('#notebook-button').click();
-    await page.getByRole('button', { name: 'Export verified flight proofs', exact: true }).click();
+    await page
+      .getByRole('button', {
+        name: 'Export verified flight proofs',
+        exact: true,
+      })
+      .click();
     const value = await page
       .getByRole('textbox', { name: 'Flight proof backup JSON', exact: true })
       .inputValue();
     await page.locator('[data-close="notebook-dialog"]').click();
     return value;
   }
-  await open(fpv, priorFixture);
+  async function exportedProfiles() {
+    await page.locator('#setup').click();
+    await page.getByRole('button', { name: 'Export profiles', exact: true }).click();
+    const value = await page
+      .getByRole('textbox', { name: 'Profile JSON', exact: true })
+      .inputValue();
+    await page.locator('[data-close="setup-dialog"]').click();
+    return value;
+  }
+  await open(fpv, priorVersion);
   await prepare(fpv);
   const demonstrations = await import(
     pathToFileURL(
-      path.join(root, site(fpv, priorFixture), 'optional-practice/civilian-fpv/demonstrations.mjs'),
+      path.join(root, site(fpv, priorVersion), 'optional-practice/civilian-fpv/demonstrations.mjs'),
     ).href
   );
   const proof = structuredClone(demonstrations.FLIGHT_DEMONSTRATIONS[0]);
   proof.session = 'practice';
   await page.locator('#notebook-button').click();
-  await page
-    .getByRole('textbox', { name: 'Flight proof backup JSON', exact: true })
-    .fill(JSON.stringify({ format: 'FlightProofBackup.v1', packageId: fpv, attempts: [proof] }));
+  await page.getByRole('textbox', { name: 'Flight proof backup JSON', exact: true }).fill(
+    JSON.stringify({
+      format: 'FlightProofBackup.v1',
+      packageId: fpv,
+      attempts: [proof],
+    }),
+  );
   await page.getByRole('button', { name: 'Import and reverify proofs', exact: true }).click();
   await page
     .locator('#flight-notebook')
@@ -160,10 +244,63 @@ try {
   await page.locator('[data-close="notebook-dialog"]').click();
   const savedProof = await exportedProof();
   assert.equal(JSON.parse(savedProof).attempts.length, 1);
+  const profileFixture = {
+    format: 'FlightProfiles.v1',
+    radio: {
+      format: 'RadioProfile.v1',
+      id: 'installation-observer-v1',
+      name: 'Synthetic persistence fixture',
+      device: {
+        id: 'Installation observer — no physical device',
+        mapping: '',
+        axes: 4,
+        buttons: 0,
+      },
+      stickMode: 3,
+      throttleStyle: 'full-travel',
+      verified: false,
+      channels: Object.fromEntries(
+        [
+          ['roll', 2],
+          ['pitch', 0],
+          ['yaw', 3],
+          ['throttle', 1],
+        ].map(([name, axis]) => [
+          name,
+          {
+            axis,
+            min: -1,
+            max: 1,
+            center: name === 'throttle' ? null : 0,
+            deadZone: name === 'throttle' ? 0 : 0.04,
+            invert: name === 'pitch',
+          },
+        ]),
+      ),
+      switches: { arm: null, pause: null, reset: null },
+    },
+    response: {
+      format: 'FlightResponseProfile.v1',
+      id: 'installation-observer-v1',
+      name: 'Persistence fixture',
+      maxRate: 300,
+      maxTilt: 35,
+      expo: 40,
+      responseTicks: 10,
+    },
+  };
+  await page.locator('#setup').click();
+  await page
+    .getByRole('textbox', { name: 'Profile JSON', exact: true })
+    .fill(JSON.stringify(profileFixture));
+  await page.getByRole('button', { name: 'Import profiles', exact: true }).click();
+  await page.locator('[data-close="setup-dialog"]').click();
+  const savedProfiles = await exportedProfiles();
+  assert.deepEqual(JSON.parse(savedProfiles), profileFixture);
   await open(gym);
   await prepare(gym);
   const both = await inspect('both-prepared');
-  assert.equal(installed(both, fpv).active.version, priorFixture);
+  assert.equal(installed(both, fpv).active.version, priorVersion);
   assert.equal(installed(both, gym).active.version, version);
   for (const id of [fpv, gym]) {
     const manifestId = url(manifests.get(id).id),
@@ -178,7 +315,10 @@ try {
       await cdp.send('PWA.install', { manifestId, installUrlOrBundleUrl });
       app.installed = true;
       app.state = await cdp.send('PWA.getOsAppState', { manifestId });
-      await cdp.send('PWA.changeAppUserSettings', { manifestId, displayMode: 'standalone' });
+      await cdp.send('PWA.changeAppUserSettings', {
+        manifestId,
+        displayMode: 'standalone',
+      });
       const pendingWindow = context.waitForEvent('page', { timeout: 10000 }).catch(() => null);
       app.launch = await cdp.send('PWA.launch', { manifestId });
       const appWindow = await pendingWindow;
@@ -190,16 +330,19 @@ try {
         url: globalThis.location.href,
       }));
       assert.equal(app.window.url, installUrlOrBundleUrl);
+      assert.equal(app.window.standalone, true, 'Installed launcher must run in standalone mode.');
     } catch (error) {
       app.error = error.message;
     }
   }
   await context.setOffline(true);
   await open(gym);
-  await open(fpv, priorFixture);
+  await open(fpv, priorVersion);
   assert.equal(await exportedProof(), savedProof);
+  assert.equal(await exportedProfiles(), savedProfiles);
   await inspect('both-open-offline');
   await context.setOffline(false);
+  await stageLauncher(fpv);
   await pointer(fpv, version);
   await page.goto(url(relativeRoot(fpv) + 'app/'));
   await page.locator('#check').click();
@@ -208,9 +351,14 @@ try {
   assert.equal(page.url(), url(entry(fpv)));
   await prepare(fpv);
   assert.equal(await exportedProof(), savedProof);
-  const upgraded = await inspect('candidate-installed-over-alternate-path');
+  assert.equal(await exportedProfiles(), savedProfiles);
+  const upgraded = await inspect(
+    previous
+      ? 'candidate-installed-over-previous-candidate'
+      : 'candidate-installed-over-alternate-path',
+  );
   assert.equal(installed(upgraded, fpv).active.version, version);
-  assert.equal(installed(upgraded, fpv).previous.version, priorFixture);
+  assert.equal(installed(upgraded, fpv).previous.version, priorVersion);
   assert.equal(upgraded.keys[keyFor(gym)], both.keys[keyFor(gym)]);
   const failureFile = site(fpv, failedFixture) + 'optional-practice/civilian-fpv/README.md';
   await put(failureFile, 'Truncated dependency fixture');
@@ -233,14 +381,15 @@ try {
     .filter({ hasText: /removed/i })
     .waitFor();
   const rolledBack = await inspect('candidate-removed-retained-path-restored');
-  assert.equal(installed(rolledBack, fpv).active.version, priorFixture);
+  assert.equal(installed(rolledBack, fpv).active.version, priorVersion);
   assert.equal(rolledBack.keys[keyFor(gym)], both.keys[keyFor(gym)]);
   await context.setOffline(true);
   await page.goto(url(relativeRoot(fpv) + 'app/'));
   await page.locator('#open').click();
-  await page.waitForURL(url(entry(fpv, priorFixture)));
-  assert.equal(page.url(), url(entry(fpv, priorFixture)));
+  await page.waitForURL(url(entry(fpv, priorVersion)));
+  assert.equal(page.url(), url(entry(fpv, priorVersion)));
   assert.equal(await exportedProof(), savedProof);
+  assert.equal(await exportedProfiles(), savedProfiles);
   await open(gym);
   await inspect('rollback-and-other-package-work-offline');
   await context.setOffline(false);
@@ -274,8 +423,9 @@ try {
     }
   }
   await context.setOffline(true);
-  await open(fpv, priorFixture);
+  await open(fpv, priorVersion);
   assert.equal(await exportedProof(), savedProof);
+  assert.equal(await exportedProfiles(), savedProfiles);
   const osInstallationStatus = osApps.every(
     (app) => app.installed && app.launch?.targetId && !app.error,
   )
@@ -287,7 +437,11 @@ try {
   const harnessStable = harnessSha256 === sha(await readFile(fileURLToPath(import.meta.url)));
   report = {
     format: 'OptionalInstallationObservation.v1',
-    passed: errors.length === 0 && osInstallationStatus === 'passed' && harnessStable,
+    passed:
+      errors.length === 0 &&
+      osInstallationStatus === 'passed' &&
+      standaloneWindowStatus === 'passed' &&
+      harnessStable,
     browserPreparationPassed: true,
     osInstallationStatus,
     standaloneWindowStatus,
@@ -295,7 +449,12 @@ try {
     createdAt: new Date().toISOString(),
     browser: context.browser()?.version() ?? 'Chrome persistent context',
     scope:
-      'Isolated local persistent Chrome profile, exact downloaded CI runtime bytes and ordinary offline/backup UI. v0.0.0/v0.0.1 are same-payload path fixtures, not allocated releases or actual model upgrades. Progress comes from an explicitly scripted verified input import, not a human flight. No public deployment or physical radio claim.',
+      'Isolated local persistent Chrome profile, admitted frozen runtime bytes and ordinary offline/profile/backup UI. ' +
+      (previous
+        ? 'Two distinct frozen candidates with original versions and source bindings; changed files are listed. '
+        : 'v0.0.0 holds the same candidate payload at an alternate path. ') +
+      'v0.0.1 is a deliberately damaged local path fixture. No release is allocated. Progress comes from a scripted verified input import, not a human flight. No public deployment, arbitrary historical-model migration or physical radio claim.',
+    transition,
     envelopeSha256: sha(envelopeBytes),
     sourceRevision: envelope.sourceRevision,
     sourceTree: envelope.sourceTree,
@@ -310,6 +469,12 @@ try {
       sha256: sha(savedProof),
       attempts: 1,
     },
+    profiles: {
+      input:
+        'synthetic unverified radio mapping and independent simulator response imported through Setup',
+      sha256: sha(savedProfiles),
+      radioVerified: false,
+    },
     osApps,
     checkpoints,
     errors,
@@ -321,7 +486,10 @@ try {
     browserPreparationPassed: false,
     createdAt: new Date().toISOString(),
     sourceRevision: envelope.sourceRevision,
+    sourceTree: envelope.sourceTree,
     envelopeSha256: sha(envelopeBytes),
+    artifacts: envelope.packages,
+    transition,
     harnessSha256,
     failure: error.message,
     osApps,

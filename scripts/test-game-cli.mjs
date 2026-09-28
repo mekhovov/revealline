@@ -8,6 +8,8 @@ import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { generatePackCatalogs } from './generate-pack-catalogs.mjs';
+import { buildOfflineInventory } from './offline-content.mjs';
+import { LAUNCHER_CATALOG_KEYS } from './offline-launcher.mjs';
 import {
   buildProject,
   collectBuildFiles,
@@ -826,6 +828,68 @@ test('offline source sentinel requires its template and does not silently emit a
   const { root, out } = await fixture(t);
   await fs.writeFile(path.join(root, 'game/offline.mjs'), 'export {};');
   await assert.rejects(buildProject({ root, out }), /ENOENT/);
+});
+
+test('compact offline inventory retains every derived record and exact manifest integrity', async (t) => {
+  const { root, out } = await fixture(t);
+  const sources = {
+    'game/offline.mjs': 'export {};',
+    'game/installed-app.mjs': 'export {};',
+    'game/offline/service-worker.template.js': 'const CONFIG = __XONIX_OFFLINE_CONFIG__;',
+    'game/offline/app-worker.template.js': 'const CONFIG = __REVEALLINE_LAUNCHER_CONFIG__;',
+    'game/offline/app.html': '<html><head></head><body>Installer</body></html>',
+    'game/offline/app.mjs': 'export {};',
+    'game/downloads.css': 'body { color: navy; }',
+    'game/edition-context.mjs': 'export {};',
+    'game/profile-writer.mjs': 'export {};',
+    'game/i18n/index.mjs': 'export {};',
+    'game/i18n/bootstrap.mjs': 'export {};',
+    'game/i18n/style.css': 'body { color: navy; }',
+    'game/vendor/i18next-26.4.2.min.js': 'globalThis.fixture = true;',
+    'game/historical-original.json': '{"title":"Retained  original\\nОригінал","revision":1}',
+  };
+  for (const language of ['en', 'uk'])
+    for (const [namespace, keys] of Object.entries(LAUNCHER_CATALOG_KEYS))
+      sources[`game/locales/${language}/${namespace}.json`] = JSON.stringify(
+        Object.fromEntries(keys.map((key) => [key, `${language}: ${key}  unchanged\ntext`])),
+      );
+  for (const [name, source] of Object.entries(sources)) {
+    await fs.mkdir(path.dirname(path.join(root, name)), { recursive: true });
+    await fs.writeFile(path.join(root, name), source);
+  }
+  await buildProject({ root, out });
+  const manifest = JSON.parse(await fs.readFile(path.join(out, 'manifest.json')));
+  const inventoryBytes = await fs.readFile(path.join(out, 'offline-inventory.json'));
+  const catalogue = JSON.parse(await fs.readFile(path.join(out, 'offline-content.json')));
+  const cache = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json')));
+  const entries = await Promise.all(
+    manifest.files
+      .filter((file) => file.path !== 'offline-inventory.json')
+      .map(async (file) => ({
+        name: file.path,
+        bytes: await fs.readFile(path.join(out, file.path)),
+      })),
+  );
+  const expected = buildOfflineInventory(entries, catalogue, cache.files);
+  const inventory = JSON.parse(inventoryBytes);
+  // The build sorts output only after inventory generation. Its record order
+  // remains immaterial, while every descriptor, group and size must survive.
+  const normalize = (value) => ({
+    ...value,
+    files: value.files.slice().sort((a, b) => a.path.localeCompare(b.path)),
+  });
+  assert.deepEqual(normalize(inventory), normalize(expected));
+  assert.ok(inventoryBytes.length < Buffer.byteLength(`${JSON.stringify(expected, null, 2)}\n`));
+  assert.deepEqual(
+    manifest.files.find((file) => file.path === 'offline-inventory.json'),
+    { path: 'offline-inventory.json', bytes: inventoryBytes.length, sha256: hash(inventoryBytes) },
+  );
+  for (const [name, source] of Object.entries(sources)) {
+    if (name.startsWith('game/offline/')) continue;
+    const record = inventory.files.find((file) => file.path === name);
+    assert.equal(record?.bytes, Buffer.byteLength(source), name);
+    assert.equal(record?.sha256, hash(Buffer.from(source)), name);
+  }
 });
 
 test('public package has local entry, accurate storage notices and enforced preview headers without changing source serving', async (t) => {

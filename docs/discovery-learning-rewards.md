@@ -3,7 +3,9 @@
 A reward may require both explicitly selected mission wins and named lesson
 completions. The lesson reference pins its ID, revision, fixture revision, content
 identity and mission. This optional bonus never controls Next, arcade progression,
-simulation or scoring. Mastery predicates remain unavailable for edition export.
+simulation or scoring. The separately registered `journey-no-loss-win@1` arcade
+mastery predicate can also be selected explicitly; it does not replace lesson
+verification or certify practical competence.
 
 In Company Studio, open **Learning & rewards → Create a knowledge reward**. Choose
 the mission rule, then check the learning assignments to require. Each assignment's
@@ -70,7 +72,8 @@ move a promised finish line nor gate Next.
   source-supported conclusion. The reward includes curator annotations and the
   **Gallery weaving shuttle** appearance (`reward-textile-discovery-shuttle-v1`).
 
-Open the optional workbench from the won picture. Its Inspect → Configure → Commit
+Open the optional workbench directly from the initial won result while its earned
+picture is shown; no View picture round trip is required. Its Inspect → Configure → Commit
 actions use the existing lesson and arcade replay verifier. Wrong choices receive
 corrective feedback; a corrected transcript must verify before satisfying the
 reward. A Collection revisit without an accepted run remains practice and cannot
@@ -87,6 +90,13 @@ deterministic sprite pipeline and existing body-motion recipes; reduced motion
 remains static. Prompts, original hashes and exact derivative identities are
 recorded, and receipts retain their original recipe and asset revisions. See the
 [cosmetic reward guide](discovery-cosmetic-rewards.md) for authoring and recovery.
+
+To edit or transfer these fixtures, use the guided
+[Company Studio workflow](../authoring/company-studio/README.md#discovery-authoring)
+and the [reward author guide](discovery-rewards-author-guide.md). A Company source
+draft includes lessons and reward sidecars, but original binary media travels
+through the exact-media import route. Keep player Journey, optional-learning and
+Discovery backups separately: authored source is not accepted player evidence.
 
 These exercises do not certify real assembly or flight competence or score cultural
 identity and belonging. The characters are fictional cosmetics, not official marks
