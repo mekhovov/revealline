@@ -538,8 +538,8 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
   const currentReviewPath =
-    'docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json';
-  const currentReviewSHA256 = 'afcfcca1612109e117595c424e03ac002271165ccb1a4082697011e16c4c5a75';
+    'docs/verification/localization14-audio-continuation-2026-09-28/review.json';
+  const currentReviewSHA256 = '104e5cb33140537f9234fc26966d4a32f70927c89f1e4bfd1e3955432e1910da';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'audio',
   ]);
@@ -969,7 +969,7 @@ test('bulk continuation preserves every exact merged main320 record and original
   const oracle = JSON.parse(
     await fs.readFile(new URL('./fixtures/production-main320-fpv94.json', import.meta.url), 'utf8'),
   );
-  const current = await importThemeBundle(
+  const candidate = await importThemeBundle(
     new Blob([
       await fs.readFile(
         new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
@@ -977,6 +977,10 @@ test('bulk continuation preserves every exact merged main320 record and original
     ]),
     { decodeImage: null },
   );
+  const main95Oracle = JSON.parse(
+    await fs.readFile(new URL('./fixtures/production-main813-fpv95.json', import.meta.url), 'utf8'),
+  );
+  const current = await reconstructPinnedProduction(main95Oracle, candidate);
   const prior = await reconstructPinnedProduction(oracle, current);
   assert.equal(prior.document.revision, 94);
   assert.equal(prior.document.assets.length, 2548);
@@ -1014,5 +1018,57 @@ test('bulk continuation preserves every exact merged main320 record and original
     assert.deepEqual(asset.provenance.parent, { id: old.id, revision: old.revision });
     assert.deepEqual(asset.recipe, old.recipe);
     assert.deepEqual(asset.file, old.file);
+  }
+});
+
+test('localization continuation preserves exact main813 theme95 and appends only eight audio48 successors', async () => {
+  const oracle = JSON.parse(
+    await fs.readFile(new URL('./fixtures/production-main813-fpv95.json', import.meta.url), 'utf8'),
+  );
+  const current = await importThemeBundle(
+    new Blob([
+      await fs.readFile(
+        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+      ),
+    ]),
+    { decodeImage: null },
+  );
+  const prior = await reconstructPinnedProduction(oracle, current);
+  assert.equal(prior.document.revision, 95);
+  assert.equal(prior.document.assets.length, 2566);
+  assert.equal(current.document.revision, 96);
+  assert.equal(current.document.assets.length, 2574);
+  validateThemeBundle(current.document, { previous: prior.document, expectedRevision: 95 });
+  for (const group of Object.keys(oracle.groups))
+    assert.deepEqual(
+      current.document[group].slice(0, oracle.groups[group].count),
+      prior.document[group],
+      group,
+    );
+  let payloadBytes = 0;
+  for (const [id, body] of prior.assets) {
+    const before = Buffer.from(await body.arrayBuffer());
+    payloadBytes += before.length;
+    assert.deepEqual(Buffer.from(await current.assets.get(id).arrayBuffer()), before, id);
+  }
+  assert.equal(payloadBytes, 4009342);
+  assert.equal(current.assets.size, 132);
+  const before = resolvePresentation(prior.document),
+    after = resolvePresentation(current.document);
+  for (const [slot, asset] of Object.entries(before.assets))
+    if (!slot.startsWith('audio.')) assert.deepEqual(after.assets[slot], asset, slot);
+  const added = current.document.assets.slice(2566);
+  assert.equal(added.length, 8);
+  for (const a of added) {
+    assert(a.id.startsWith('audio.'));
+    assert.equal(a.revision, 48);
+    assert.equal(a.quality.stage, 'reviewed');
+    const old = prior.document.assets
+      .filter((x) => x.id === a.id)
+      .sort((a, b) => b.revision - a.revision)[0];
+    assert.equal(old.revision, 47);
+    assert.deepEqual(a.provenance.parent, { id: old.id, revision: 47 });
+    assert.deepEqual(a.recipe, old.recipe);
+    assert.deepEqual(a.file, old.file);
   }
 });
