@@ -206,6 +206,10 @@ test('Steam Deck trusted click tails cannot undo Start or paused-menu actions', 
   assert.equal(heldRelease.defaultPrevented, true, 'long-held A release is consumed');
   assert.equal(page.$('overlay-sound').textContent, afterSound, 'paused Sound changes once');
 
+  // A deliberate next press occurs after the release-side echo window has
+  // observed stable neutral input. Presses inside that window belong to the
+  // gesture that just ended and must remain suppressed.
+  frame(130);
   page.$('overlay-settings').focus();
   pulse(0);
   assert.equal(page.$('settings-dialog').open, true);
