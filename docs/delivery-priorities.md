@@ -6,6 +6,14 @@
 > Dated “current” versions and “next” queues below are historical. Default
 > Journey and unified-library delivery are complete; whole-game qualification
 > is not. Update the linked status register after each public acceptance.
+## Character and game-feel priority — 28 September 2026
+
+The approved [character/game-feel plan](character-game-feel-plan.md) now prioritizes
+C0 live coverage, C1 attached rotor correction and C2 playable benchmarks while the
+single publisher finishes the input-release queue. The source candidates and
+remaining gates are recorded there; this does not mark them publicly accepted or
+replace existing release-history evidence.
+
 ## Historical integration checkpoint — 23 September 2026 (v0.85 delivery state)
 
 v0.85.0 recovery was published and publicly accepted at this cutoff. PR256 was then a draft retained-presentation successor rebased onto that accepted source; that integration did not allocate a release or accept its remaining qualification. The superseding [current plan](plan-status-2026-09-23.md) now controls release status and queue order. Each feature still requires final source/version, qualification and public verification.

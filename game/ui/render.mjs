@@ -1,3 +1,4 @@
+import { preparedRotorRecipe } from './rotor-presentation.mjs';
 import { t } from '../i18n/index.mjs';
 import { canvasTextFonts } from '../text-face.mjs';
 import { presentationEvent, drawEventFeedback, drawRecoveryCue } from './event-feedback.mjs';
@@ -430,7 +431,10 @@ export class BoardPainter {
           rotors: sprite.geometry.rotors,
           presentationPivot: sprite.geometry.pivot,
         };
-        playerRecipe = this.presets.animationRecipes[body.animationRecipe];
+        playerRecipe = preparedRotorRecipe(
+          this.presets.animationRecipes[body.animationRecipe],
+          sprite.geometry,
+        );
       }
     }
     const actorFrames = this.actorPresentation.sample(fullReveal ? [] : state.enemies, {
@@ -910,10 +914,9 @@ export class BoardPainter {
         colors: { body: p.safe, accent: p.accent },
         x: state.player.x + bodyOffset.x,
         y: state.player.y + bodyOffset.y,
-        // Approved player sprites already contain their motor hubs. The old
-        // procedural blades read as four detached white corner brackets at
-        // gameplay scale, so keep the authored silhouette unobstructed.
-        showRotors: false,
+        // Only prepared bodies declare separate rotor geometry. Uploaded and
+        // historical originals may contain baked blades and keep their path.
+        showRotors: Boolean(playerGeometry),
       });
       ctx.restore();
       // This ring stays at the simulation contact radius, independent of body
