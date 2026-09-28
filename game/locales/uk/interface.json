@@ -5111,5 +5111,20 @@
   "editionSolo.downloading": "Завантажуємо й перевіряємо це видання…",
   "editionSolo.verifying": "Перевіряємо збережені файли…",
   "editionSolo.activateCheckedUpdate": "Закрийте вкладки цього видання й відкрийте його знову, щоб активувати перевірене оновлення.",
-  "editionSolo.offlineVerified": "Це видання перевірено для офлайн-гри."
+  "editionSolo.offlineVerified": "Це видання перевірено для офлайн-гри.",
+  "editionSolo.downloadVerifyOffline": "Завантажте й перевірте це видання для офлайн-гри.",
+  "companyPlayer.progressAvailableInTab": "Ваш прогрес доступний у цій вкладці. Експортуйте резервну копію перед виходом.",
+  "companyPlayer.buildIdentity": "{{edition}} · редакція вмісту {{revision}} · рушій {{version}}",
+  "companyPlayer.completedInTab": "Ваш зв’язок завершено в цій вкладці. Експортуйте резервну копію перед виходом: {{error}}",
+  "companyPlayer.saveNeedsAttention": "Збереження потребує уваги: {{error}} Експортуйте резервну копію, щоб не втратити цю спробу.",
+  "companyPlayer.importLeaseChanged": "Право на збереження змінилося під час імпорту. Прогрес збережено в цій вкладці; збережіть початкову резервну копію та перезавантажте сторінку перед збереженням.",
+  "companyPlayer.progressImported": "Прогрес відповідного видання імпортовано. Виберіть «Продовжити», коли будете готові.",
+  "companyPlayer.progressImportedInTab": "Прогрес імпортовано в цю вкладку, але сховищу не вдалося зберегти кожен запис. Збережіть резервну копію й експортуйте ще раз перед виходом.",
+  "companyPlayer.recordingLimit": "Ця спроба досягла ліміту запису. Експортуйте її або почніть нову місію.",
+  "companyPlayer.savedProgressUnreadable": "Не вдалося прочитати збережений прогрес. Гра доступна лише в цій вкладці; експортуйте резервну копію перед виходом.",
+  "companyPlayer.learningRevisionMismatch": "Для деяких давніших навчальних записів потрібна відповідна редакція уроку. Їхні початкові дані збережено для резервного копіювання.",
+  "companyPlayer.connectionsToDiscover_one": "{{count}} зв’язок для відкриття. Виберіть свою подорож.",
+  "companyPlayer.connectionsToDiscover_few": "{{count}} зв’язки для відкриття. Виберіть свою подорож.",
+  "companyPlayer.connectionsToDiscover_many": "{{count}} зв’язків для відкриття. Виберіть свою подорож.",
+  "companyPlayer.connectionsToDiscover_other": "{{count}} зв’язку для відкриття. Виберіть свою подорож."
 }

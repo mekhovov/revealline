@@ -5005,5 +5005,18 @@
   "editionSolo.downloading": "Downloading and checking this edition…",
   "editionSolo.verifying": "Verifying the saved files…",
   "editionSolo.activateCheckedUpdate": "Close this edition’s tabs and reopen it to activate the checked update.",
-  "editionSolo.offlineVerified": "This edition is verified for offline play."
+  "editionSolo.offlineVerified": "This edition is verified for offline play.",
+  "editionSolo.downloadVerifyOffline": "Download and verify this edition for offline play.",
+  "companyPlayer.progressAvailableInTab": "Your progress is available in this tab. Export a backup before leaving.",
+  "companyPlayer.buildIdentity": "{{edition}} · content revision {{revision}} · engine {{version}}",
+  "companyPlayer.completedInTab": "Your connection is complete in this tab. Export a backup before leaving: {{error}}",
+  "companyPlayer.saveNeedsAttention": "Saving needs attention: {{error}} Export a backup to keep this attempt.",
+  "companyPlayer.importLeaseChanged": "The saving lease changed during import. Progress is kept in this tab; keep the original backup and reload before saving.",
+  "companyPlayer.progressImported": "Matching edition progress imported. Choose Continue when you are ready.",
+  "companyPlayer.progressImportedInTab": "Progress is imported in this tab, but storage could not keep every record. Keep your backup and export again before leaving.",
+  "companyPlayer.recordingLimit": "This attempt reached its recording limit. Export it or start a new mission.",
+  "companyPlayer.savedProgressUnreadable": "Saved progress could not be read. Play is session-only; export a backup before leaving.",
+  "companyPlayer.learningRevisionMismatch": "Some earlier learning records need their matching lesson revision. Their original data is retained for backup.",
+  "companyPlayer.connectionsToDiscover_one": "{{count}} connection to discover. Choose your journey.",
+  "companyPlayer.connectionsToDiscover_other": "{{count}} connections to discover. Choose your journey."
 }

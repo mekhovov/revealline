@@ -34,6 +34,7 @@ import {
   verifyEditionOffline,
   selectPreparedEdition,
 } from './editions/offline-client.mjs';
+import { localizedText, t } from './i18n/index.mjs';
 
 const $ = (id) => document.getElementById(id);
 const BACKUP_LIMITS = Object.freeze({
@@ -50,7 +51,7 @@ const node = (tag, text, className) => {
   return result;
 };
 const report = (message, error = false) => {
-  $('notice').textContent = message;
+  const rendered = localizedText($('notice'), message);
   $('notice').dataset.error = String(error);
   const dialog = document.querySelector('dialog[open]');
   if (dialog) {
@@ -61,9 +62,10 @@ const report = (message, error = false) => {
       status.setAttribute('aria-live', 'polite');
       dialog.append(status);
     }
-    status.textContent = message;
+    localizedText(status, message);
     status.dataset.error = String(error);
   }
+  return rendered;
 };
 const guard =
   (fn) =>
@@ -109,7 +111,7 @@ async function main() {
   let version = 'DEV';
   if (standalone) {
     const response = await fetch(new URL('build-info.json', location.href));
-    if (!response.ok) throw new Error('This edition is missing its build identity.');
+    if (!response.ok) throw new Error(t('errors:companyPlayer.missingBuildIdentity'));
     version = (await response.json()).version;
   }
   const context = resolveEditionContext({ editionId: selection.edition.id, version });
@@ -129,15 +131,14 @@ async function main() {
     profileKey: route.profileKey,
     canWrite: () => writer.writable && !storage.readError,
     onStatus: (status) => {
-      if (status.error)
-        report('Your progress is available in this tab. Export a backup before leaving.', true);
+      if (status.error) report(() => t('interface:companyPlayer.progressAvailableInTab'), true);
     },
   });
   await profile.load();
   const localLearning = new Map(),
     localClears = new Set();
   const theme = boot.boot.themes.themes.find((entry) => entry.id === selection.brand.themeId);
-  if (!theme) throw new Error('This edition is missing its selected company presentation.');
+  if (!theme) throw new Error(t('errors:companyPlayer.missingPresentation'));
   const brandAsset = (id) => catalog.assets.find((a) => a.id === id);
   const assetURL = (id) => {
     const asset = brandAsset(id);
@@ -170,8 +171,13 @@ async function main() {
   }
   if (selection.brand.heroAssetId) $('home-art').src = assetURL(selection.brand.heroAssetId);
   $('about-copy').textContent = selection.brand.description;
-  $('build-identity').textContent =
-    `${selection.edition.name} · content revision ${selection.edition.revision} · engine ${version}`;
+  localizedText($('build-identity'), () =>
+    t('interface:companyPlayer.buildIdentity', {
+      edition: selection.edition.name,
+      revision: selection.edition.revision,
+      version,
+    }),
+  );
   if (standalone) $('all-worlds')?.remove();
   for (const source of new Map(
     [...(selection.brand.sources ?? []), ...lessons.flatMap((l) => l.sources)].map((s) => [
@@ -239,7 +245,7 @@ async function main() {
     });
   const canvas = $('board'),
     ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('This browser cannot create the game board.');
+  if (!ctx) throw new Error(t('errors:companyPlayer.boardUnavailable'));
   let painter = new BoardPainter(boot.boot.presets, {
     onAsset: (message) => {
       if (message) report(message, true);
@@ -362,10 +368,7 @@ async function main() {
         difficulty: current.selection.difficulty,
       });
     } catch (error) {
-      report(
-        `Your connection is complete in this tab. Export a backup before leaving: ${error.message}`,
-        true,
-      );
+      report(() => t('interface:companyPlayer.completedInTab', { error: error.message }), true);
     }
   }
   function save() {
@@ -386,10 +389,7 @@ async function main() {
       $('continue-button').hidden = false;
       return true;
     } catch (error) {
-      report(
-        `Saving needs attention: ${error.message} Export a backup to keep this attempt.`,
-        true,
-      );
+      report(() => t('interface:companyPlayer.saveNeedsAttention', { error: error.message }), true);
       return false;
     }
   }
@@ -852,16 +852,16 @@ async function main() {
     if (!file) return;
     if (!writer.writable) throw new Error(writer.reason);
     if (file.size > BACKUP_LIMITS.maxBytes)
-      throw new Error('This backup exceeds the import budget.');
+      throw new Error(t('interface:thisBackupExceedsTheImportBudget'));
     const backup = boundedJSON(await file.text(), BACKUP_LIMITS);
     if (
       !['revealline-company-backup.v1', 'revealline-company-backup.v2'].includes(backup.format) ||
       backup.editionId !== context.editionId
     )
-      throw new Error('Choose a backup for this exact audience edition.');
+      throw new Error(t('errors:companyPlayer.wrongEditionBackup'));
     profile.inspectBackup(backup.profile);
     if (!Array.isArray(backup.learning) || backup.learning.length > lessons.length)
-      throw new Error('Invalid learning backup.');
+      throw new Error(t('errors:companyPlayer.invalidLearningBackup'));
     const seen = new Set();
     const proofs = await learningProofs.inspectProofs(backup.learningProofs ?? []);
     const recoverySource = backup.learningRecovery ?? {
@@ -871,7 +871,7 @@ async function main() {
     };
     if (backup.legacyLearning !== undefined && backup.legacyLearning !== null) {
       if (typeof backup.legacyLearning !== 'string' || backup.legacyLearning.length > 1024 * 1024)
-        throw new Error('Invalid legacy learning recovery record.');
+        throw new Error(t('errors:companyPlayer.invalidLegacyLearning'));
       recoverySource.sources.push(backup.legacyLearning);
     }
     const recovery = learningProofs.inspectRecovery(recoverySource);
@@ -883,20 +883,15 @@ async function main() {
         !verifyLearningAttempt(lesson, attempt).valid ||
         !learningIdentities.get(attempt.missionId)?.has(attempt.simulationIdentity)
       )
-        throw new Error(
-          'A learning transcript is duplicated or does not match this edition’s simulations.',
-        );
+        throw new Error(t('errors:companyPlayer.learningTranscriptMismatch'));
       seen.add(attempt.missionId);
       if (
         attempt.status === 'complete' &&
         !proofs.some((proof) => canonicalJSON(proof.attempt) === canonicalJSON(attempt))
       )
-        throw new Error(
-          'Completed learning needs its matching replay proof. Open the backup in its matching earlier release.',
-        );
+        throw new Error(t('errors:companyPlayer.missingLearningReplayProof'));
     }
-    if (preparing)
-      throw new Error('Wait for the mission to finish preparing before importing progress.');
+    if (preparing) throw new Error(t('errors:companyPlayer.importWhilePreparing'));
     pause({ persist: false });
     if (backup.session) {
       const prepared = await restoreCompanySession(backup.session, {
@@ -911,10 +906,7 @@ async function main() {
     profile.restore(backup.profile);
     let durable = await profile.flush();
     if (!writer.writable) {
-      report(
-        'The saving lease changed during import. Progress is kept in this tab; keep the original backup and reload before saving.',
-        true,
-      );
+      report(() => t('interface:companyPlayer.importLeaseChanged'), true);
       return;
     }
     if (!learningProofs.importRecovery(recovery)) durable = false;
@@ -939,16 +931,17 @@ async function main() {
     renderCampaigns();
     report(
       durable
-        ? 'Matching edition progress imported. Choose Continue when you are ready.'
-        : 'Progress is imported in this tab, but storage could not keep every record. Keep your backup and export again before leaving.',
+        ? () => t('interface:companyPlayer.progressImported')
+        : () => t('interface:companyPlayer.progressImportedInTab'),
       !durable,
     );
     $('import-backup').value = '';
   });
   if (standalone) {
     $('prepare-offline').hidden = false;
-    $('offline-status').textContent = 'Download and verify this edition for offline play.';
-    const install = node('button', 'Use this edition in the installed app');
+    localizedText($('offline-status'), () => t('interface:editionSolo.downloadVerifyOffline'));
+    const install = node('button');
+    localizedText(install, () => t('interface:downloads.useEdition'));
     install.disabled = true;
     $('prepare-offline').onclick = guard(async () => {
       $('prepare-offline').disabled = true;
@@ -958,22 +951,24 @@ async function main() {
           editionId: context.editionId,
           version,
           onStatus: (value) => {
-            $('offline-status').textContent =
+            localizedText($('offline-status'), () =>
               value.status === 'downloading'
-                ? 'Downloading and checking this edition…'
-                : 'Verifying the saved files…';
+                ? t('interface:editionSolo.downloading')
+                : t('interface:editionSolo.verifying'),
+            );
           },
         });
         if (prepared.status === 'waiting') {
-          $('offline-status').textContent =
-            'The checked update is waiting. Close this edition’s open tabs and reopen it before selecting the installed version.';
+          localizedText($('offline-status'), () =>
+            t('interface:editionSolo.activateCheckedUpdate'),
+          );
           return;
         }
         await verifyEditionOffline({ editionId: context.editionId, version });
-        $('offline-status').textContent = 'This edition is verified for offline play.';
+        localizedText($('offline-status'), () => t('interface:editionSolo.offlineVerified'));
         install.disabled = false;
       } catch (error) {
-        $('offline-status').textContent = error.message;
+        localizedText($('offline-status'), error.message);
         throw error;
       } finally {
         $('prepare-offline').disabled = false;
@@ -982,10 +977,9 @@ async function main() {
     install.onclick = guard(async () => {
       try {
         await selectPreparedEdition({ editionId: context.editionId, version });
-        $('offline-status').textContent =
-          'Your installed launcher will open this edition. The previous release is kept.';
+        localizedText($('offline-status'), () => t('interface:downloads.activationReady'));
       } catch (error) {
-        $('offline-status').textContent = error.message;
+        localizedText($('offline-status'), error.message);
         throw error;
       }
     });
@@ -1001,10 +995,7 @@ async function main() {
         while (accumulator >= FIXED_DT && ['running', 'respawning'].includes(current.run.status)) {
           if (current.recorder.ticks >= MAX_REPLAY_TICKS) {
             pause();
-            report(
-              'This attempt reached its recording limit. Export it or start a new mission.',
-              true,
-            );
+            report(() => t('interface:companyPlayer.recordingLimit'), true);
             break;
           }
           if (current.run.status === 'respawning')
@@ -1064,11 +1055,14 @@ async function main() {
   $('start-campaign').disabled = false;
   report(
     storage.readError
-      ? 'Saved progress could not be read. Play is session-only; export a backup before leaving.'
+      ? () => t('interface:companyPlayer.savedProgressUnreadable')
       : proofHydration.rejected
-        ? 'Some earlier learning records need their matching lesson revision. Their original data is retained for backup.'
+        ? () => t('interface:companyPlayer.learningRevisionMismatch')
         : writer.writable
-          ? `${source.missions.length} connections to discover. Choose your journey.`
+          ? () =>
+              t('interface:companyPlayer.connectionsToDiscover', {
+                count: source.missions.length,
+              })
           : writer.reason,
     !writer.writable || !!storage.readError,
   );
@@ -1093,6 +1087,6 @@ main().catch((error) => {
   startupWriter?.release();
   startupWriter = null;
   document.documentElement.dataset.companyState = 'failed';
-  report(`Could not open this edition: ${error.message}`, true);
+  report(() => t('errors:companyPlayer.openFailed', { error: error.message }), true);
   $('start-campaign').disabled = true;
 });

@@ -801,5 +801,15 @@
   "library.backupLock": "A backup import acquired the library lock. Local progress is kept in this tab.",
   "library.changedWhileSaving": "The library changed again while saving. Your local progress is kept in this tab; retry saving or export it before reloading.",
   "library.saveFailure": "Library remains available in this session; export a backup. {{message}}",
-  "editionSolo.legacyStorageUnreadable": "Earlier preview storage could not be read. Existing saved records have not been changed."
+  "editionSolo.legacyStorageUnreadable": "Earlier preview storage could not be read. Existing saved records have not been changed.",
+  "companyPlayer.missingBuildIdentity": "This edition is missing its build identity.",
+  "companyPlayer.missingPresentation": "This edition is missing its selected company presentation.",
+  "companyPlayer.boardUnavailable": "This browser cannot create the game board.",
+  "companyPlayer.wrongEditionBackup": "Choose a backup for this exact audience edition.",
+  "companyPlayer.invalidLearningBackup": "Invalid learning backup.",
+  "companyPlayer.invalidLegacyLearning": "Invalid legacy learning recovery record.",
+  "companyPlayer.learningTranscriptMismatch": "A learning transcript is duplicated or does not match this edition’s simulations.",
+  "companyPlayer.missingLearningReplayProof": "Completed learning needs its matching replay proof. Open the backup in its matching earlier release.",
+  "companyPlayer.importWhilePreparing": "Wait for the mission to finish preparing before importing progress.",
+  "companyPlayer.openFailed": "Could not open this edition: {{error}}"
 }
