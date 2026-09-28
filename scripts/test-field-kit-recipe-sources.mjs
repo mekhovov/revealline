@@ -66,6 +66,11 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
     ['game/media-storage-record.mjs', ['audio']],
     ['game/soundtrack-private-intake.mjs', ['audio']],
     ['game/ui/soundtrack-error-copy.mjs', ['audio']],
+    ['game/index.html', ['audio']],
+    ['game/ui/music-credit.mjs', ['audio']],
+    ['game/ui/soundtrack-settings-player.mjs', ['audio']],
+    ['game/ui/soundtrack-settings-player.css', ['audio']],
+    ['game/online-soundtrack-styles.mjs', ['audio']],
   ])
     assert.deepEqual([...(consumers.get(name) ?? [])].sort(), groups, name);
   assert.equal(consumers.size, inputs.size, 'Every read belongs to a declared group');
