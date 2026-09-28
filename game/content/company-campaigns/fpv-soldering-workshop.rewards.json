@@ -1,0 +1,914 @@
+[
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-soldering-workshop",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-soldering-workshop-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A good joint begins with a prepared workspace.",
+        "title": "A Place for the Iron"
+      },
+      "uk": {
+        "teaser": "Добре з’єднання починається з підготовленого місця.",
+        "title": "Місце для паяльника"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-soldering-workshop-01-image",
+        "locales": {
+          "en": {
+            "alt": "A Place for the Iron — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Place for the Iron"
+          },
+          "uk": {
+            "alt": "Місце для паяльника — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Місце для паяльника"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-soldering-workshop-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "HSE identifies rosin-based solder-flux fumes as an asthma hazard and recommends effective exposure control. Adafruit includes a secure iron stand in its basic toolkit.",
+              "In this cold, illustrated exercise, place stand, extraction, eye protection and practice board on a workspace card. Keep the hand path separate from the hot-tool zone. No heating occurs in the game; supervised practice uses the workshop’s actual safety procedure."
+            ],
+            "sources": [
+              {
+                "title": "UK HSE — Electronics soldering: fume controls",
+                "url": "https://www.hse.gov.uk/lung-disease/electronics-soldering.htm"
+              },
+              {
+                "title": "Adafruit — Excellent Soldering: Tools",
+                "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering"
+              }
+            ],
+            "title": "A Place for the Iron"
+          },
+          "uk": {
+            "paragraphs": [
+              "HSE визначає випари каніфольного флюсу як чинник ризику астми й рекомендує дієвий контроль впливу. Adafruit включає стійку підставку паяльника до основного набору.",
+              "У цій вправі без нагрівання розмістіть підставку, витяжку, захист очей і навчальну плату на картці місця. Відокремте рух рук від зони гарячого інструмента. Гра нічого не нагріває; реальна практика під наглядом дотримується правил майстерні."
+            ],
+            "sources": [
+              {
+                "title": "UK HSE — Electronics soldering: fume controls",
+                "url": "https://www.hse.gov.uk/lung-disease/electronics-soldering.htm"
+              },
+              {
+                "title": "Adafruit — Excellent Soldering: Tools",
+                "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering"
+              }
+            ],
+            "title": "Місце для паяльника"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "reference-fpv-solder-iron",
+          "sha256": "4c657713640d71b4b43cadd125c3420304d3a8458609cee4f833b20c28efdf49"
+        },
+        "id": "reference-fpv-solder-iron-image",
+        "locales": {
+          "en": {
+            "alt": "A Pinecil USB-C soldering iron with a green grip, metal tip and illuminated display on a blue surface.",
+            "title": "Recognize a soldering tool"
+          },
+          "uk": {
+            "alt": "Паяльник Pinecil USB-C із зеленим руків’ям, металевим жалом і ввімкненим дисплеєм на синій поверхні.",
+            "title": "Розпізнайте інструмент для паяння"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "reference-fpv-solder-iron-credit",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "4300streetcar’s photograph identifies a soldering tool and its separate handle and tip. The pictured iron has a modified screw and an illuminated temperature display. This is an object reference, not a safe resting arrangement or a recommended temperature; use a proper stand and the workshop’s fume controls.",
+              "4300streetcar — Pinecil USB C soldering iron.jpg — CC BY 4.0 (https://creativecommons.org/licenses/by/4.0). Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes."
+            ],
+            "sources": [
+              {
+                "title": "Recognize a soldering tool",
+                "url": "https://commons.wikimedia.org/wiki/File:Pinecil_USB_C_soldering_iron.jpg"
+              },
+              {
+                "title": "License and sharing terms",
+                "url": "https://creativecommons.org/licenses/by/4.0"
+              }
+            ],
+            "title": "Recognize a soldering tool"
+          },
+          "uk": {
+            "paragraphs": [
+              "Фото 4300streetcar показує паяльник, його руків’я та жало. У зображеному інструменті змінено гвинт і світиться температурний дисплей. Це приклад предмета, а не безпечного положення чи рекомендованої температури; потрібні належна підставка й контроль випарів.",
+              "4300streetcar — Pinecil USB C soldering iron.jpg — CC BY 4.0 (https://creativecommons.org/licenses/by/4.0). Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes."
+            ],
+            "sources": [
+              {
+                "title": "Розпізнайте інструмент для паяння",
+                "url": "https://commons.wikimedia.org/wiki/File:Pinecil_USB_C_soldering_iron.jpg"
+              },
+              {
+                "title": "Ліцензія та умови поширення",
+                "url": "https://creativecommons.org/licenses/by/4.0"
+              }
+            ],
+            "title": "Розпізнайте інструмент для паяння"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "d10f262500aa5d8b" },
+            { "difficulty": "standard", "gameplayId": "4f2e3c0e572ec294" },
+            { "difficulty": "expert", "gameplayId": "3a8dedb63e351d80" }
+          ],
+          "missionId": "fpv-soldering-workshop-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-soldering-workshop-01", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-soldering-workshop",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-soldering-workshop-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "The label matters more than the spool’s colour.",
+        "title": "Read the Spool"
+      },
+      "uk": { "teaser": "Напис важливіший за колір котушки.", "title": "Прочитайте котушку" }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-soldering-workshop-02-image",
+        "locales": {
+          "en": {
+            "alt": "Read the Spool — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Read the Spool"
+          },
+          "uk": {
+            "alt": "Прочитайте котушку — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Прочитайте котушку"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-soldering-workshop-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Solder and flux are materials with their own handling instructions. Lead-free solder does not remove the need to control flux fumes.",
+              "Our fictional labels list material name, supplier guidance and an unknown field. Match only the complete label to the instructor’s practice specification. Put an unlabelled spool aside for identification instead of guessing its composition from appearance."
+            ],
+            "sources": [
+              {
+                "title": "Adafruit — Excellent Soldering: Tools",
+                "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering"
+              },
+              {
+                "title": "UK HSE — Electronics soldering: fume controls",
+                "url": "https://www.hse.gov.uk/lung-disease/electronics-soldering.htm"
+              }
+            ],
+            "title": "Read the Spool"
+          },
+          "uk": {
+            "paragraphs": [
+              "Припій і флюс мають власні правила поводження. Відсутність свинцю не усуває потреби контролювати випари флюсу.",
+              "Вигадані написи містять назву матеріалу, вказівки постачальника й невідоме поле. Підберіть лише повний напис до навчальної специфікації наставника. Непідписану котушку відкладіть для визначення, не вгадуйте склад за зовнішністю."
+            ],
+            "sources": [
+              {
+                "title": "Adafruit — Excellent Soldering: Tools",
+                "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering"
+              },
+              {
+                "title": "UK HSE — Electronics soldering: fume controls",
+                "url": "https://www.hse.gov.uk/lung-disease/electronics-soldering.htm"
+              }
+            ],
+            "title": "Прочитайте котушку"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "reference-fpv-solder-spool-label",
+          "sha256": "5245e5a65b8bd0d7f735c7dca8adab46b32d31d549709afbedf93cbbafa45095"
+        },
+        "id": "reference-fpv-solder-spool-label-image",
+        "locales": {
+          "en": {
+            "alt": "A real solder spool labelled “lead free” and “acid core”, with hazard symbols and a length of wire.",
+            "title": "Read beyond “lead free”"
+          },
+          "uk": {
+            "alt": "Реальна котушка припою з написами «lead free» і «acid core», знаками небезпеки та відрізком дроту.",
+            "title": "Читайте далі за «без свинцю»"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "reference-fpv-solder-spool-label-credit",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Wikideas1’s CC0 photograph contains more information than its generic “lead-free solder” description: the product label also says acid core. Use it only for reading and questioning material labels. It is not an electronics-practice material recommendation; the instructor’s exact material specification still matters.",
+              "Wikideas1 (original upload credited as Kcida10) — Solder on spool.jpeg — CC0 (https://creativecommons.org/publicdomain/zero/1.0/deed.en). Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes."
+            ],
+            "sources": [
+              {
+                "title": "Read beyond “lead free”",
+                "url": "https://commons.wikimedia.org/wiki/File:Solder_on_spool.jpeg"
+              },
+              {
+                "title": "License and sharing terms",
+                "url": "https://creativecommons.org/publicdomain/zero/1.0/deed.en"
+              }
+            ],
+            "title": "Read beyond “lead free”"
+          },
+          "uk": {
+            "paragraphs": [
+              "CC0-фото Wikideas1 містить більше відомостей, ніж загальний опис «безсвинцевий припій»: на виробі також написано acid core. Використовуйте лише для читання й перевірки позначень. Це не рекомендація матеріалу для навчальної електроніки; потрібна точна специфікація наставника.",
+              "Wikideas1 (original upload credited as Kcida10) — Solder on spool.jpeg — CC0 (https://creativecommons.org/publicdomain/zero/1.0/deed.en). Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes."
+            ],
+            "sources": [
+              {
+                "title": "Читайте далі за «без свинцю»",
+                "url": "https://commons.wikimedia.org/wiki/File:Solder_on_spool.jpeg"
+              },
+              {
+                "title": "Ліцензія та умови поширення",
+                "url": "https://creativecommons.org/publicdomain/zero/1.0/deed.en"
+              }
+            ],
+            "title": "Читайте далі за «без свинцю»"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "8a9bee11accce4ec" },
+            { "difficulty": "standard", "gameplayId": "074ad9d7b79e9d41" },
+            { "difficulty": "expert", "gameplayId": "603ed911328419a4" }
+          ],
+          "missionId": "fpv-soldering-workshop-02"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-soldering-workshop-02", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-soldering-workshop",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-soldering-workshop-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Steady parts make the next observation easier to understand.",
+        "title": "Hold the Practice Piece"
+      },
+      "uk": {
+        "teaser": "Нерухомі деталі полегшують наступне спостереження.",
+        "title": "Зафіксуйте навчальну деталь"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-soldering-workshop-03-image",
+        "locales": {
+          "en": {
+            "alt": "Hold the Practice Piece — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Hold the Practice Piece"
+          },
+          "uk": {
+            "alt": "Зафіксуйте навчальну деталь — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Зафіксуйте навчальну деталь"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-soldering-workshop-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Adafruit’s preparation guide describes cleaning and tinning the iron tip; its joint guidance also depends on stable work. Preparation and material choice affect the process.",
+              "Arrange an illustrated practice pad and component lead in a holder, leaving room to inspect both. Explain why holding a part by hand is not our fixture’s plan. Temperature and timing are intentionally left to the actual tool, material and instructor guidance."
+            ],
+            "sources": [
+              {
+                "title": "Adafruit — Excellent Soldering: Preparation",
+                "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/preparation"
+              }
+            ],
+            "title": "Hold the Practice Piece"
+          },
+          "uk": {
+            "paragraphs": [
+              "Підготовчий посібник Adafruit описує очищення й лудіння жала; поради щодо з’єднання також передбачають нерухому деталь. Підготовка та вибір матеріалу впливають на процес.",
+              "Розташуйте навчальний контакт і вивід у зображеному тримачі, залишивши огляд обох. Поясніть, чому тримати деталь рукою — не план цієї вправи. Температуру й час визначають реальний інструмент, матеріал і наставник."
+            ],
+            "sources": [
+              {
+                "title": "Adafruit — Excellent Soldering: Preparation",
+                "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/preparation"
+              }
+            ],
+            "title": "Зафіксуйте навчальну деталь"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "e26d203548abc7cb" },
+            { "difficulty": "standard", "gameplayId": "2789e50117969d9e" },
+            { "difficulty": "expert", "gameplayId": "96e6238662eaf5bb" }
+          ],
+          "missionId": "fpv-soldering-workshop-03"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-soldering-workshop-03", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-soldering-workshop",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-soldering-workshop-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A cutaway explains a connection without hiding it under a blob.",
+        "title": "Where the Heat Goes"
+      },
+      "uk": {
+        "teaser": "Розріз пояснює з’єднання, не ховаючи його під краплею.",
+        "title": "Куди передається тепло"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-soldering-workshop-04-image",
+        "locales": {
+          "en": {
+            "alt": "Where the Heat Goes — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Where the Heat Goes"
+          },
+          "uk": {
+            "alt": "Куди передається тепло — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Куди передається тепло"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-soldering-workshop-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Adafruit’s through-hole example heats the pad and lead together so solder can wet both. Its illustration describes that joint type, not every repair or material.",
+              "Compare two original cutaways: one labels both contact surfaces, the other only a large lump. Choose which drawing explains the intended relationship, then identify what a static drawing cannot show about the real process."
+            ],
+            "sources": [
+              {
+                "title": "Adafruit — Making a good solder joint",
+                "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/making-a-good-solder-joint"
+              }
+            ],
+            "title": "Where the Heat Goes"
+          },
+          "uk": {
+            "paragraphs": [
+              "У прикладі наскрізного монтажу Adafruit нагрівають контакт і вивід разом, щоб припій змочив обидва. Приклад описує цей тип з’єднання, а не будь-який ремонт чи матеріал.",
+              "Порівняйте два оригінальні розрізи: один позначає обидві поверхні, інший — лише велику краплю. Оберіть зрозуміліше пояснення зв’язку й назвіть, чого статичний малюнок не показує про реальний процес."
+            ],
+            "sources": [
+              {
+                "title": "Adafruit — Making a good solder joint",
+                "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/making-a-good-solder-joint"
+              }
+            ],
+            "title": "Куди передається тепло"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "67fe9ecdd0dfa6a0" },
+            { "difficulty": "standard", "gameplayId": "5285907c329fe5ba" },
+            { "difficulty": "expert", "gameplayId": "cab258c4fc1344d8" }
+          ],
+          "missionId": "fpv-soldering-workshop-04"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-soldering-workshop-04", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-soldering-workshop",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-soldering-workshop-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Separate an unintended bridge from an unexplained rough surface.",
+        "title": "An Inspection, Not a Guess"
+      },
+      "uk": {
+        "teaser": "Відрізніть небажану перемичку від нерівної поверхні з невідомою причиною.",
+        "title": "Огляд, а не здогад"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-soldering-workshop-05-image",
+        "locales": {
+          "en": {
+            "alt": "An Inspection, Not a Guess — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "An Inspection, Not a Guess"
+          },
+          "uk": {
+            "alt": "Огляд, а не здогад — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Огляд, а не здогад"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-soldering-workshop-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Adafruit distinguishes unintended solder bridges, incomplete wetting and movement during cooling. Similar-looking faults can have different causes.",
+              "Our three drawn samples show a bridge, an exposed gap and an unclear surface. Record what you can actually see, then request instructor review. A shiny surface alone is not the acceptance rule, and the game never declares a real board electrically sound."
+            ],
+            "sources": [
+              {
+                "title": "Adafruit — Common soldering problems",
+                "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/common-problems"
+              }
+            ],
+            "title": "An Inspection, Not a Guess"
+          },
+          "uk": {
+            "paragraphs": [
+              "Adafruit розрізняє небажані перемички, неповне змочування та рух під час охолодження. Подібні на вигляд дефекти можуть мати різні причини.",
+              "Три намальовані зразки показують перемичку, видимий проміжок і неясну поверхню. Запишіть лише видиме та попросіть огляд наставника. Сам блиск не є критерієм прийняття; гра не підтверджує справність реальної плати."
+            ],
+            "sources": [
+              {
+                "title": "Adafruit — Common soldering problems",
+                "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/common-problems"
+              }
+            ],
+            "title": "Огляд, а не здогад"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "reference-fpv-solder-joint",
+          "sha256": "b0971f7e55c5c93308415698bc7af50038bb583672323adace25eb8f485dde0c"
+        },
+        "id": "reference-fpv-solder-joint-image",
+        "locales": {
+          "en": {
+            "alt": "A red insulated wire is soldered to a component lead on the rear of a green printed circuit board.",
+            "title": "Describe what the photograph shows"
+          },
+          "uk": {
+            "alt": "Червоний ізольований дріт припаяний до виводу компонента на звороті зеленої друкованої плати.",
+            "title": "Опишіть видиме на фотографії"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "reference-fpv-solder-joint-credit",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "MJN123’s photograph, cropped by Soerfm, shows a wire joined to a component lead on a circuit board. Describe visible surfaces and uncertainty. A single photograph does not certify the joint’s electrical reliability or make it an ideal example to reproduce.",
+              "MJN123; source crop by Soerfm — Solderedjoint.jpg — CC BY 3.0 (https://creativecommons.org/licenses/by/3.0). Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes."
+            ],
+            "sources": [
+              {
+                "title": "Describe what the photograph shows",
+                "url": "https://commons.wikimedia.org/wiki/File:Solderedjoint.jpg"
+              },
+              {
+                "title": "License and sharing terms",
+                "url": "https://creativecommons.org/licenses/by/3.0"
+              }
+            ],
+            "title": "Describe what the photograph shows"
+          },
+          "uk": {
+            "paragraphs": [
+              "Фото MJN123, кадрування Soerfm, показує дріт, з’єднаний із виводом на платі. Опишіть видимі поверхні й невизначеність. Один знімок не підтверджує електричну надійність і не робить з’єднання ідеальним зразком для повторення.",
+              "MJN123; source crop by Soerfm — Solderedjoint.jpg — CC BY 3.0 (https://creativecommons.org/licenses/by/3.0). Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes."
+            ],
+            "sources": [
+              {
+                "title": "Опишіть видиме на фотографії",
+                "url": "https://commons.wikimedia.org/wiki/File:Solderedjoint.jpg"
+              },
+              {
+                "title": "Ліцензія та умови поширення",
+                "url": "https://creativecommons.org/licenses/by/3.0"
+              }
+            ],
+            "title": "Опишіть видиме на фотографії"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a9b0fe0559032f31" },
+            { "difficulty": "standard", "gameplayId": "d69628326b76da96" },
+            { "difficulty": "expert", "gameplayId": "a15f55a3e80a9798" }
+          ],
+          "missionId": "fpv-soldering-workshop-05"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-soldering-workshop-05", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-soldering-workshop",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-soldering-workshop-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Sometimes the best repair decision is a well-explained stop.",
+        "title": "Know When to Pause"
+      },
+      "uk": {
+        "teaser": "Іноді найкраще рішення — обґрунтована зупинка.",
+        "title": "Знайте, коли зупинитися"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-soldering-workshop-06-image",
+        "locales": {
+          "en": {
+            "alt": "Know When to Pause — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Know When to Pause"
+          },
+          "uk": {
+            "alt": "Знайте, коли зупинитися — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Знайте, коли зупинитися"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-soldering-workshop-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Adafruit notes that a meter reading alone can miss a marginal connection. An observed result needs context rather than automatic acceptance.",
+              "The fictional card says “intermittent indication; cause not established”. Choose stop, cool safely under workshop procedure and ask the instructor, then preserve the observation. Do not rehearse repeated heating or live diagnosis on an aircraft; this finale stays with beginner practice-board decisions."
+            ],
+            "sources": [
+              {
+                "title": "Adafruit — Soldering FAQ",
+                "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/soldering-faq"
+              }
+            ],
+            "title": "Know When to Pause"
+          },
+          "uk": {
+            "paragraphs": [
+              "Adafruit зазначає, що показ приладу сам собою може не виявити ненадійне з’єднання. Спостережуваний результат потребує контексту, а не автоматичного прийняття.",
+              "Вигадана картка каже: «показ нестабільний; причина не встановлена». Оберіть зупинку, безпечне охолодження за правилами майстерні й звернення до наставника; збережіть спостереження. Фінал стосується навчальної плати, а не повторного нагрівання чи діагностики дрона під живленням."
+            ],
+            "sources": [
+              {
+                "title": "Adafruit — Soldering FAQ",
+                "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/soldering-faq"
+              }
+            ],
+            "title": "Знайте, коли зупинитися"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "10c4ef306d858abd" },
+            { "difficulty": "standard", "gameplayId": "b0f01bfa7579c5a0" },
+            { "difficulty": "expert", "gameplayId": "a563a13445161f93" }
+          ],
+          "missionId": "fpv-soldering-workshop-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-soldering-workshop-06", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-soldering-workshop",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-soldering-workshop-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "A Practice Board, Carefully Explained"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Навчальна плата з поясненнями"
+      }
+    },
+    "payloads": [
+      {
+        "id": "fpv-soldering-workshop-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Build a practice-board exhibit from workspace preparation, material labels, stable parts, heat transfer, inspection and a repair decision. The fictional board has no battery or aircraft electronics. Explain one observation and one reason to stop and ask an instructor. A picture of a joint cannot certify electrical or mechanical reliability."
+            ],
+            "sources": [
+              {
+                "title": "Adafruit — Making a good solder joint",
+                "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/making-a-good-solder-joint"
+              }
+            ],
+            "title": "A Practice Board, Carefully Explained"
+          },
+          "uk": {
+            "paragraphs": [
+              "Зберіть виставку навчальної плати: підготовка місця, позначення матеріалів, фіксація деталей, передавання тепла, огляд і рішення щодо ремонту. Вигадана плата не має акумулятора чи електроніки дрона. Поясніть одне спостереження й одну причину зупинитися та звернутися до наставника. Зображення з’єднання не підтверджує його електричну або механічну надійність."
+            ],
+            "sources": [
+              {
+                "title": "Adafruit — Making a good solder joint",
+                "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/making-a-good-solder-joint"
+              }
+            ],
+            "title": "Навчальна плата з поясненнями"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-soldering-workshop-01-image",
+        "locales": {
+          "en": {
+            "alt": "A Place for the Iron — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Place for the Iron"
+          },
+          "uk": {
+            "alt": "Місце для паяльника — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Місце для паяльника"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-soldering-workshop-02-image",
+        "locales": {
+          "en": {
+            "alt": "Read the Spool — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Read the Spool"
+          },
+          "uk": {
+            "alt": "Прочитайте котушку — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Прочитайте котушку"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-soldering-workshop-03-image",
+        "locales": {
+          "en": {
+            "alt": "Hold the Practice Piece — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Hold the Practice Piece"
+          },
+          "uk": {
+            "alt": "Зафіксуйте навчальну деталь — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Зафіксуйте навчальну деталь"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-soldering-workshop-04-image",
+        "locales": {
+          "en": {
+            "alt": "Where the Heat Goes — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Where the Heat Goes"
+          },
+          "uk": {
+            "alt": "Куди передається тепло — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Куди передається тепло"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-soldering-workshop-05-image",
+        "locales": {
+          "en": {
+            "alt": "An Inspection, Not a Guess — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "An Inspection, Not a Guess"
+          },
+          "uk": {
+            "alt": "Огляд, а не здогад — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Огляд, а не здогад"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-soldering-workshop-06-image",
+        "locales": {
+          "en": {
+            "alt": "Know When to Pause — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Know When to Pause"
+          },
+          "uk": {
+            "alt": "Знайте, коли зупинитися — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Знайте, коли зупинитися"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-soldering-workshop-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "type": "url",
+        "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/making-a-good-solder-joint"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "d10f262500aa5d8b" },
+            { "difficulty": "standard", "gameplayId": "4f2e3c0e572ec294" },
+            { "difficulty": "expert", "gameplayId": "3a8dedb63e351d80" }
+          ],
+          "missionId": "fpv-soldering-workshop-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "8a9bee11accce4ec" },
+            { "difficulty": "standard", "gameplayId": "074ad9d7b79e9d41" },
+            { "difficulty": "expert", "gameplayId": "603ed911328419a4" }
+          ],
+          "missionId": "fpv-soldering-workshop-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "e26d203548abc7cb" },
+            { "difficulty": "standard", "gameplayId": "2789e50117969d9e" },
+            { "difficulty": "expert", "gameplayId": "96e6238662eaf5bb" }
+          ],
+          "missionId": "fpv-soldering-workshop-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "67fe9ecdd0dfa6a0" },
+            { "difficulty": "standard", "gameplayId": "5285907c329fe5ba" },
+            { "difficulty": "expert", "gameplayId": "cab258c4fc1344d8" }
+          ],
+          "missionId": "fpv-soldering-workshop-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a9b0fe0559032f31" },
+            { "difficulty": "standard", "gameplayId": "d69628326b76da96" },
+            { "difficulty": "expert", "gameplayId": "a15f55a3e80a9798" }
+          ],
+          "missionId": "fpv-soldering-workshop-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "10c4ef306d858abd" },
+            { "difficulty": "standard", "gameplayId": "b0f01bfa7579c5a0" },
+            { "difficulty": "expert", "gameplayId": "a563a13445161f93" }
+          ],
+          "missionId": "fpv-soldering-workshop-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-soldering-workshop", "kind": "campaign" }
+  }
+]

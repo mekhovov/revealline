@@ -120,7 +120,7 @@ function validateReward(source) {
       Number.isSafeInteger(source.bytes) &&
       source.bytes > 0 &&
       source.bytes <= 16 * 1024 * 1024 &&
-      ['image/png', 'image/jpeg'].includes(source.mime) &&
+      ['image/png', 'image/jpeg', 'image/webp'].includes(source.mime) &&
       Number.isSafeInteger(source.width) &&
       source.width > 0 &&
       source.width <= 8192 &&

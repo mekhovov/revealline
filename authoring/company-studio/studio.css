@@ -653,3 +653,10 @@ iframe {
 #reward-missions input {
   width: auto;
 }
+
+.campaign-hero-preview {
+  width: 100%;
+  max-height: 16rem;
+  object-fit: contain;
+  border-radius: 0.8rem;
+}

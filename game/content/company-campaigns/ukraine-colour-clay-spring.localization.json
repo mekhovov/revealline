@@ -1,0 +1,110 @@
+{
+  "campaignId": "ukraine-colour-clay-spring",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "Colour, Clay and Spring", "uk": "Колір, глина і весна" } },
+      "id": "ukraine-colour-clay-spring",
+      "identity": "8ea119de2a2477ee",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Open the painted courtyard and reveal where a living craft can appear. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Відкрийте розписане подвір’я та дізнайтеся, де живе ремесло. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Close the shallow courtyard first or use the paired garden islands to cross into the long painted wing. Read the moving boundary before committing to the next connection.",
+          "uk": "Спершу замкніть неглибоке подвір’я або перейдіть до довгого розписаного крила через парні садові острови. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "A Painted Home", "uk": "Розписана оселя" }
+      },
+      "id": "ukraine-colour-clay-spring-01",
+      "identity": "ae9c4a36372767b7",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the portrait alcove with the study tables and keep both artists’ names visible. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте портретну нішу зі столами етюдів і збережіть імена обох митців. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Take the portrait alcove through its short return or secure the wide study hall before entering the narrow side gallery. Read the moving boundary before committing to the next connection.",
+          "uk": "Захопіть портретну нішу з коротким поверненням або закріпіть широку залу етюдів перед вузькою бічною галереєю. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "The Teacher in the Portrait", "uk": "Учителька на портреті" }
+      },
+      "id": "ukraine-colour-clay-spring-02",
+      "identity": "fd024a064d5f1c27",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Link the three kiln-yard bays and discover the named tradition behind their colours. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Поєднайте три двори біля печі та відкрийте традицію, пов’язану з їхніми кольорами. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Secure the low kiln-yard bay for a short retreat or link the offset display islands to capture the upper gallery. Read the moving boundary before committing to the next connection.",
+          "uk": "Закріпіть нижній двір для короткого відступу або поєднайте зміщені острови вітрин, щоб захопити верхню галерею. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "Clay, Glaze and Place", "uk": "Глина, полива і місце" }
+      },
+      "id": "ukraine-colour-clay-spring-03",
+      "identity": "c644eed14107de3c",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Explore the spacious vase and plate galleries without merging their object records. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Дослідіть просторі галереї вази й тарелі, не змішуючи описи предметів. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Cross the open centre for a broad reveal or follow the outer alcoves to inspect each display separately. Read the moving boundary before committing to the next connection.",
+          "uk": "Перетніть відкритий центр для широкого відкриття або рухайтеся зовнішніми нішами, оглядаючи вітрини окремо. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "Two Objects, Two Makers", "uk": "Два предмети — два автори" }
+      },
+      "id": "ukraine-colour-clay-spring-04",
+      "identity": "b2252510fcdcb891",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the layered colour stations and reveal the idea behind wax-resist decoration. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте станції шарів кольору та відкрийте принцип воскового резерву. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Build two short colour-band captures or use the central foundation to close a larger layered reveal. Read the moving boundary before committing to the next connection.",
+          "uk": "Зробіть два короткі захоплення кольорових смуг або замкніть більше багатошарове відкриття через центральну основу. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "What the Wax Keeps", "uk": "Що зберігає віск" }
+      },
+      "id": "ukraine-colour-clay-spring-05",
+      "identity": "b5b3dc239c1bc5f0",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Bring the painted-home, ceramic and spring galleries into one clearly attributed exhibition. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Поєднайте розписану оселю, кераміку й весняну галерею у виставку з точними підписами. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Secure the three exhibition wings separately or connect the central islands before opening the finale court. Read the moving boundary before committing to the next connection.",
+          "uk": "Закріпіть три крила виставки окремо або поєднайте центральні острови перед відкриттям фінального двору. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "A Gift with a Story", "uk": "Подарунок з історією" }
+      },
+      "id": "ukraine-colour-clay-spring-06",
+      "identity": "15432852b547d9ff",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}
