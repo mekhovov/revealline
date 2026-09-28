@@ -172,6 +172,56 @@ of the regular practice CI command. Formatting/lint and unchanged generated cont
 validation pass; public source eligibility includes 294 admitted assets. The
 arcade core and historical gym source have no changes in this follow-up.
 
+### Final input guard and capacity follow-up
+
+The clean `d22621010` optional packages were built twice and independently admitted.
+The downloaded CI artifact's twelve files match the local bundle byte for byte;
+the same seven installation/recovery checks pass on those frozen bytes. FPV's
+runtime is **50 files / 2,747,465 bytes**, and its complete source is **52 files /
+2,761,859 bytes**, before the subsequent input-guard fix below.
+
+The [default-capacity observation](verification/evidence/default-capacity-d22621010.json)
+records **799,088,673 bytes** for the prepared default payload, including its
+manifest. With both optional runtimes and stable launcher originals, the known
+lower bound is **802,052,737 bytes**. This leaves **147,947,263 bytes** below the
+950 MB hosting cap before company editions, generated pointers/hubs, root metadata
+and retained versions. This is one preparation, not a frozen default archive,
+whole-site admission or permission to raise a cap. Sparse inputs and producers were
+restored from their exact committed blobs; historical dirty work was untouched.
+
+The completed `d22621010` candidate CI passes for all eighteen editions and both
+optional packages. The [verified capacity packet](verification/evidence/company-capacity-d22621010.json)
+puts the same-source known lower bound at **924,295,263 bytes** for the default,
+optional packages and four new editions; **1,049,938,753 bytes** with Coupa All and
+DroneAid NL Community added; or **1,375,885,332 bytes** for all eighteen editions.
+The latter two already exceed the unchanged cap. Four editions leave only
+**25,704,737 bytes** before the omitted components. Larger selections require
+separate configured targets or download-only packages; complete hosted admission
+and release selection are still required.
+
+Live-input fault injection reproduced a queued-animation edge case: after a
+300 ms main-thread block, an old rAF timestamp could admit one ordinary simulation
+tick before the next callback paused. The guard now checks the actual monotonic
+callback-execution gap as well as animation timestamps. It resets both clocks at
+the existing ownership, resume and reset boundaries. Flight-model mathematics,
+accepted transcript rules and renderer timing remain unchanged. A regression
+covers both modes and keyboard/radio ownership, no extra recorded step, neutral
+keyboard resume and radio control pickup. The complete practice suite passes
+**151/151** checks with no skips; the earlier **921/921** company result covers
+unchanged arcade/edition code.
+
+The [input observation](verification/evidence/fpv-input-2026-09-29.json) retains the
+initial failed assertion, the confirmed stale-callback traces and the corrected
+four-case run. Both 300 ms fault placements now add zero simulation/recorded steps
+in both modes and input owners, with explicit recovery preserved. The corrected
+natural windows report p95 callback intervals of 16.7–16.8 ms, maximum 83.4 ms and
+no observed long-task entries; the earlier 250 ms sample is also retained. These
+are first-person field rendering with active ground-yaw inputs, not airborne
+navigation. The synthetic radio is a Gamepad API fixture, and input timing is a
+model-observation proxy, not USB or input-to-photon latency. The evidence pins
+exact fixed runtime bytes from a dirty worktree; it is not frozen-release,
+physical-device or matched 5% regression qualification.
+
 Remaining publication work: fresh candidates for the follow-up code changes,
 complete same-source hosted-target capacity/admission, production promotion and
 real version/public rollback. Desktop frame-pacing/input-stall benchmarking and
