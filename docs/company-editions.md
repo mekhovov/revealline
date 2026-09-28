@@ -278,29 +278,63 @@ site, all retained edition versions, stable launchers, the hub, optional package
 other generated route together. The main-only publisher retains its **950,000,000-byte** cap;
 an edition overlay passing its own check does not qualify the combined target.
 
-A read-only inventory of the already downloaded 18-edition candidate artifact `10962669328`
-(source `a0eefe5780756bf063f5e13af536da0e75010740`, candidate version `v0.142.0`)
-gave the following immutable `site/` totals. They include each runtime manifest itself, but
-exclude stable launcher copies and the hub:
+The small metadata packet from [candidate run 36447088737](https://github.com/mekhovov/revealline/actions/runs/36447088737)
+was validated with `editionCapacityPacket`. It describes the **pre-rebase** source
+`7acf6af53143c75f0ae99e09c25e326c1141c3e8`, tree
+`03f97d6086490c3e60843e0292622c07a2066205`, candidate version `v0.142.0`.
+It does not describe the later `v0.142.1` main merge or subsequent changes.
+Artifact `10982502592` was 577,457 downloaded bytes (1,520,512 bytes of whitelisted metadata).
+The 11,094-byte `capacity-inventory.json` SHA-256 is
+`12e0c8d5f7bb4fa7fb5fcb4879857e3b52b450797ee531182658cf16a4b9cf0c`.
 
-| Edition                   | Immutable site bytes |
-| ------------------------- | -------------------: |
-| `coupa-all`               |           60,350,371 |
-| `droneaid-nl-community`   |           64,817,389 |
-| `social-drone-ua`         |           24,868,930 |
-| `victory-drones`          |           21,323,062 |
-| `ukraine-culture`         |           29,356,178 |
-| `fpv-learning`            |           31,322,130 |
-| Four new editions alone   |          106,870,300 |
-| All six rows              |          232,038,060 |
-| All 18 candidate editions |          555,140,894 |
+| Edition                   | Immutable site bytes | Active launcher bytes | Combined component bytes |
+| ------------------------- | -------------------: | --------------------: | -----------------------: |
+| `coupa-all`               |           60,368,706 |               237,387 |               60,606,093 |
+| `droneaid-nl-community`   |           64,835,724 |                41,829 |               64,877,553 |
+| `social-drone-ua`         |           25,064,550 |                12,721 |               25,077,271 |
+| `victory-drones`          |           21,341,397 |                12,709 |               21,354,106 |
+| `ukraine-culture`         |           39,573,383 |                12,761 |               39,586,144 |
+| `fpv-learning`            |           32,319,419 |                12,685 |               32,332,104 |
+| Four new editions alone   |          118,298,749 |                50,876 |              118,349,625 |
+| All six rows              |          243,503,179 |               330,092 |              243,833,271 |
+| All 18 candidate editions |          566,826,033 |             1,994,753 |              568,820,786 |
 
-The separately selected `v0.142.0` default manifest totals 740,350,558 bytes. Adding the six
-rows already reaches **972,388,618 bytes**, before the missing overhead. Adding the four new
-editions instead reaches **847,220,858 bytes**, leaving 102,779,142 bytes before overhead.
-These are lower-bound planning estimates from older artifacts, not qualification of a current
-or future build. The next merged default can grow when it includes the new content. No subset
-is cleared until the exact future default and selected overlays are measured together.
+Immutable site totals include each runtime manifest. These component sums assume each listed
+edition has one hosted immutable version and an active launcher. They exclude the hub,
+previously retained versions, optional packages and other hosted files; they are not a selector.
+The separately selected older `v0.142.0` default manifest totals 740,350,558 bytes. Adding the six
+candidate components already reaches **984,183,829 bytes**, before the missing overhead.
+Adding the four new editions instead reaches **858,700,183 bytes**. These are dated planning
+estimates, not qualification of a current or future build. The next merged default can grow
+with the new content. No subset is cleared until the exact future default and selected overlays
+are measured together.
+
+A clean committed checkout can inspect its prospective default manifest without writing a
+full expanded site or allocating its STORE ZIP:
+
+```sh
+node scripts/inspect-default-build.mjs --check-inputs
+node scripts/inspect-default-build.mjs --out /tmp/revealline-default-capacity.json
+```
+
+The output path must be new and its parent must exist. Reports inside the checkout must be
+Git-ignored. The preflight rejects missing committed files, including unreferenced originals
+hidden by sparse-checkout flags, and reports the exact missing included-file byte count. It
+never hydrates source. Required transitive producer inputs are subsequently validated by the
+ordinary build preparation; the preflight's include count is not a complete hydration estimate.
+
+`inspectBuildProject` and `buildProject` share one preparation path: reference, localization,
+content, optional/download, soundtrack, snapshot and offline checks still run. The report
+contains the exact prepared manifest, its SHA-256, and the payload byte total including
+`manifest.json`. The wrapper binds the committed source/tree, verifies included originals
+before and after preparation, and streams every available tracked original through its Git
+blob hash, including compiler code and external/optional/soundtrack producer inputs outside
+the runtime include list. Its available-source inventory also counts absent historical files;
+required missing producer inputs remain errors in the normal preparation. It applies the
+existing edition source-eligibility check and returns a hash of the written report. It does not write a ZIP, expanded site, release receipt or selector,
+and makes no reproducibility or complete-hosted-output claim. The final publication inventory
+below is still required. A source-only failure stops the report; no validation is skipped to
+obtain a size.
 
 With reviewed frozen inputs and selectors available, the existing local staging commands are:
 
