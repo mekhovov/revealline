@@ -3,11 +3,9 @@ import { createOfficialDownloads } from './official-downloads.mjs';
 import { downloadFiles } from './download-catalogue.mjs';
 import { resolveJourneyRequest } from './content-design/default-entry.mjs';
 
-/** Gameplay may consume local packages, but only the download UI may authorize
- * their transfer. Readiness is checked against actual files, never onLine or a
- * saved checkbox. The source checkout and immutable v1 editions keep their
- * existing loading contract. */
-export function createOfflineDownloadAccess({
+/** Explicit offline preparation requires complete verified packages. Ordinary
+ * gameplay uses the optional access helper below instead of this consent gate. */
+export function createRequiredOfflineDownloadAccess({
   availability = offlineAvailability(),
   fetch: request = globalThis.fetch,
   store,
@@ -177,4 +175,63 @@ export function createOfflineDownloadAccess({
       for (const group of groups) await this.ensure(group, { signal, prompt });
     },
   });
+}
+
+/** Ordinary play loads its requested assets through the normal verified loaders.
+ * Offline preparation is never an admission requirement. Retain an already
+ * downloaded chapter when possible, using only local metadata and bounded work. */
+export function createOfflineDownloadAccess({
+  availability = offlineAvailability(),
+  caches: cacheStorage = globalThis.caches,
+  store,
+  retentionTimeout = 1000,
+} = {}) {
+  const local = createRequiredOfflineDownloadAccess({
+    availability,
+    store,
+    fetch: async (url) => {
+      for (const name of (await cacheStorage?.keys()) ?? []) {
+        const hit = await (await cacheStorage.open(name)).match(url.href);
+        if (hit) return hit;
+      }
+      throw new Error('No locally prepared catalogue.');
+    },
+  });
+  return Object.freeze(
+    Object.fromEntries(
+      Object.keys(local).map((method) => [
+        method,
+        async (target, options = {}) => {
+          options.signal?.throwIfAborted();
+          if (!options.retain) return;
+          const controller = new AbortController();
+          let finish;
+          const deadline = new Promise((resolve) => {
+            finish = resolve;
+          });
+          const abort = () => {
+            controller.abort(options.signal.reason);
+            finish();
+          };
+          options.signal?.addEventListener('abort', abort, { once: true });
+          const timer = setTimeout(() => {
+            controller.abort();
+            finish();
+          }, retentionTimeout);
+          try {
+            await Promise.race([
+              local[method](target, { ...options, prompt: false, signal: controller.signal }).catch(
+                () => {}, // Missing packages or unavailable storage cannot block online play.
+              ),
+              deadline,
+            ]);
+          } finally {
+            clearTimeout(timer);
+            options.signal?.removeEventListener('abort', abort);
+          }
+          options.signal?.throwIfAborted();
+        },
+      ]),
+    ),
+  );
 }

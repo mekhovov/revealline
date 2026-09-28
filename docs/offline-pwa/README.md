@@ -1,5 +1,10 @@
 # Offline game and optional recordings
 
+Current player policy: **online play never requires offline preparation**.
+Install & offline play is an optional menu action. See
+[online play and optional preparation](../optional-offline-play.md) for the
+updated behavior; the implementation and release details below are historical.
+
 Implementation branch: `codex/offline-pwa`, based on freshly fetched `origin/main`
 `23e6129782e08ed826686f137a0989e5f154732a` (0.131.0 source line). The existing
 `codex/fpv-redesign` checkout and its uncommitted work were preserved.

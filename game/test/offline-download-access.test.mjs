@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createOfflineDownloadAccess } from '../offline-download-access.mjs';
+import { createRequiredOfflineDownloadAccess as createOfflineDownloadAccess } from '../offline-download-access.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 
 const hash = 'a'.repeat(64);
