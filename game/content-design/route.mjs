@@ -37,6 +37,7 @@ import { createBorderCulturalCompletionCandidates } from './border-cultural-comp
 import { createBorderFrontierPocketCandidates } from './border-frontier-pocket-candidates.mjs';
 import { createCulturalTimedBonusPressureCandidates } from './cultural-timed-bonus-pressure-candidates.mjs';
 import { createCulturalPressureTriptychCandidates } from './cultural-pressure-triptych-candidates.mjs';
+import { createCurrentRemixPressureCandidates } from './current-remix-pressure-candidates.mjs';
 import { createUkrainianOrnamentJourney } from './ukrainian-ornament-candidates.mjs';
 import { createUkrainianOrnamentAtlasJourney } from './ukrainian-ornament-atlas.mjs';
 
@@ -84,6 +85,7 @@ export function createAuthoredJourneyRoute(id) {
     createBorderFrontierPocketCandidates,
     createCulturalTimedBonusPressureCandidates,
     createCulturalPressureTriptychCandidates,
+    createCurrentRemixPressureCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   });
