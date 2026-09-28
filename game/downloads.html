@@ -16,14 +16,16 @@
         ><p>JavaScript is required to manage offline downloads.</p>
         <p lang="uk">Для керування офлайн-завантаженнями потрібен JavaScript.</p></noscript
       >
-      <h1>Install &amp; offline play</h1>
-      <p>
+      <h1 data-i18n="interface:installAppGameAndSoundtrackDownloads">Install &amp; offline play</h1>
+      <p data-i18n="interface:downloads.intro">
         Download once, then play without an internet connection. Recorded music is optional; game
         sounds and the procedural score are included.
       </p>
       <section id="destination-recovery" aria-labelledby="destination-title" hidden>
-        <h2 id="destination-title">Prepare the requested mode</h2>
-        <p>
+        <h2 id="destination-title" data-i18n="interface:downloads.prepareRequestedMode">
+          Prepare the requested mode
+        </h2>
+        <p data-i18n="interface:downloads.destinationHelp">
           This bookmark needs game files that are not saved on this device yet. Review the size
           below, then choose Download and open. Connect to the internet if files are missing.
           Soundtracks are not required. Back to game returns to the downloaded Solo menu.
@@ -34,9 +36,11 @@
           Install Reveal Line
         </h2>
         <p id="installation-status" role="status">Checking app installation…</p>
-        <button id="install-native" hidden>Install app</button>
+        <button id="install-native" hidden data-i18n="interface:launcher.install">
+          Install app
+        </button>
         <details id="install-guide" open>
-          <summary>How to install</summary>
+          <summary data-i18n="interface:downloads.installHow">How to install</summary>
           <ol id="install-steps"></ol>
           <p id="install-help"></p>
           <a
@@ -47,7 +51,7 @@
             >Open the app launcher</a
           >
         </details>
-        <p>
+        <p data-i18n="interface:downloads.installIconNote">
           Installing the icon does not download the game. You can also download and keep playing in
           this browser.
         </p>
@@ -56,12 +60,19 @@
         <h2 id="game-title">Game for offline play</h2>
         <p id="game-status" role="status">Checking this edition…</p>
         <label id="starter-choice"
-          ><input type="checkbox" checked disabled /> Solo Starter · opening chapter and essential
-          game sounds</label
+          ><input type="checkbox" checked disabled />
+          <span data-i18n="interface:downloads.soloStarterChoice"
+            >Solo Starter · opening chapter and essential game sounds</span
+          ></label
         >
-        <label><input id="all-game" type="checkbox" /> All current levels and modes</label>
+        <label
+          ><input id="all-game" type="checkbox" />
+          <span data-i18n="interface:downloads.allGameplay"
+            >All current levels and modes</span
+          ></label
+        >
         <p id="game-size"></p>
-        <p>
+        <p data-i18n="interface:downloads.sizeHelp">
           Choose the size that suits your connection; mobile data charges may apply. Keep this app
           open while downloading. Verification and app setup happen automatically.
         </p>
@@ -73,11 +84,13 @@
         <progress id="progress" hidden></progress>
         <p id="operation-status" role="status" aria-live="polite"></p>
         <details id="chapter-choices">
-          <summary>Choose chapters, modes and optional extras</summary>
+          <summary data-i18n="interface:downloads.chooseChaptersAndExtras">
+            Choose chapters, modes and optional extras
+          </summary>
           <div id="chapters"></div>
         </details>
         <details>
-          <summary>Storage and repair</summary>
+          <summary data-i18n="interface:downloads.storageAndRepair">Storage and repair</summary>
           <div class="actions">
             <button id="verify-game" disabled data-i18n="interface:downloads.verifyGame">
               Verify game files
@@ -93,7 +106,7 @@
             Device storage can be cleared by the browser or the operating system. Keep a portable
             backup of your progress.
           </p>
-          <p>
+          <p data-i18n="interface:downloads.removalHelp">
             Removing unplayed chapters can free download space. Chapters you have played retain
             their complete verified game files and artwork to protect saves, replays and earned
             pictures; removing them from your selection does not reclaim those files yet. Shared
@@ -102,7 +115,9 @@
             official chapter references after preparing the matching game downloads.
           </p>
         </details>
-        <button id="activate" hidden>Finish app selection safely</button>
+        <button id="activate" hidden data-i18n="interface:downloads.finishSelection">
+          Finish app selection safely
+        </button>
         <p id="activation-status" role="status"></p>
         <a
           id="transfer-progress"
