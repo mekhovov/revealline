@@ -2695,36 +2695,64 @@ try {
     onReadingChange: () => controllerReading.refresh(),
     getContext: () => {
       const capabilities = arcadeActionCapabilities(run.level),
+        acceptedLevel = structuredClone(run.level),
+        acceptedTheme = structuredClone(theme),
+        coverage = run.level.goal.coverage * 100,
+        stopOnCapture = run.rules.stopOnCapture,
         actions = [],
-        labels = bindingLabels(resolveKeyBindings(library.preferences.keyboardBindings)),
-        buttons = controllerLabels.flight;
-      if (capabilities.manualAbility)
-        actions.push({
-          label: theme.labels.ability,
-          detail: `${labels.ability} / ${buttons.ability}. ${Math.max(0, run.ability.cooldownUntil - run.time).toFixed(1)}s cooldown remaining${run.ability.capacity ? `; ${run.ability.ammo}/${run.ability.capacity} charges` : ''}.`,
+        acceptedKeys = resolveKeyBindings(library.preferences.keyboardBindings),
+        acceptedController = structuredClone(library.preferences.controllerBindings),
+        acceptedDevice = controllerDeviceId,
+        actionKeys = (action) => ({
+          keyboard: bindingLabels(acceptedKeys)[action],
+          controller: controllerBindingLabels(acceptedController, acceptedDevice).flight[action],
         });
+      if (capabilities.manualAbility) {
+        const seconds = Math.max(0, run.ability.cooldownUntil - run.time),
+          ammo = run.ability.ammo,
+          capacity = run.ability.capacity;
+        actions.push({
+          label: () => contentText(acceptedTheme, 'labels.ability'),
+          detail: () =>
+            t('interface:flightDetails.ability', {
+              ...actionKeys('ability'),
+              seconds: formatNumber(seconds, {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 1,
+              }),
+              charges: capacity ? t('interface:flightDetails.charges', { ammo, capacity }) : '',
+            }),
+        });
+      }
       if (manualSupplyAvailable())
         actions.push({
-          label: t('interface:supply'),
-          detail: `${labels.pickup} / ${buttons.pickup}. Collect a nearby supply for this craft.`,
+          label: localizedMessage('interface:supply'),
+          detail: () => t('interface:flightDetails.supply', actionKeys('pickup')),
         });
       if (capabilities.manualBoost)
         actions.push({
-          label: t('common:controls.boost'),
-          detail: `${labels.boost} / ${buttons.boost}. Uses the configured Hold/Toggle control.`,
+          label: localizedMessage('common:controls.boost'),
+          detail: () => t('interface:flightDetails.boost', actionKeys('boost')),
         });
       if (craftSwitchAvailable())
         actions.push({
-          label: t('interface:changeCraft'),
-          detail: `${labels.hangar} / ${buttons.hangar}. Return to a hangar on safe ground.`,
+          label: localizedMessage('interface:changeCraft'),
+          detail: () => t('interface:flightDetails.hangar', actionKeys('hangar')),
         });
       const roles = new Map();
       for (const enemy of run.enemies) roles.set(enemy.type, (roles.get(enemy.type) || 0) + 1);
       return {
-        mission: run.level.name,
-        goal: `Reveal ${(run.level.goal.coverage * 100).toFixed(1)}% of the picture.`,
-        steering: `Release a direction to keep flying.${run.rules.stopOnCapture ? ' ' + t('interface:closingACutStopsYourCraftChooseAFreshDirection') + '' : ''}`,
-        objectiveLabel: theme.labels.objective,
+        mission: () => contentText(acceptedLevel, 'name'),
+        goal: () =>
+          t('interface:flightDetails.reveal', {
+            coverage: formatNumber(coverage, {
+              minimumFractionDigits: 1,
+              maximumFractionDigits: 1,
+            }),
+          }),
+        steering: () =>
+          `${t('interface:flightDetails.steering')}${stopOnCapture ? ' ' + t('interface:closingACutStopsYourCraftChooseAFreshDirection') : ''}`,
+        objectiveLabel: () => contentText(acceptedTheme, 'labels.objective'),
         actorRoles: [...roles].map(([type, count]) => ({ type, count })),
         actions,
       };

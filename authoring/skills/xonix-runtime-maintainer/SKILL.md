@@ -986,6 +986,30 @@ Prompt: “Start an exposed cut in both turning modes, pause, open Field details
 
 Flight Details regression prompt: “Start and pause an exposed cut. Enter Field details and Read. Tab to adjacent Done without clearing Read; Shift+Tab back to the text; activate Done and return to Read. Read again, Tab through Done to Back, close and verify the identical paused checkpoint. Reopen after scrolling and verify the heading starts in view. Test Standard/Large at600×400 and portrait/landscape without reducing text size. Keep the native Read/text/Done/Back order, and omit only the zero-required-objective Details row.”
 
+#### Live language changes in Flight Details
+
+Keep the open visit's accepted information, controls, content identities and
+historical notices. An explicit locale change may re-render explanatory text from
+those captured facts; it must not sample a newer run, refresh notice history,
+reset input, restart the reader or resume flight. Capture keyboard/controller
+configurations and device identity, not already translated button labels. Derive
+role, powerup and encounter copy from typed facts. Keep impact carriers distinct
+from ordinary field hunters; preserve the observed notice text byte for byte.
+Use the shared locale transaction to preserve Read/Done ownership, focus and
+scroll. Unsubscribe on disposal and retire visits on close, suspension or owner
+replacement. Locale catalogs use literal flat keys (`keySeparator: false`);
+regenerate the combined catalog after resolving concurrent translation additions.
+
+Prompt: “Pause an unfinished cut with a pending turn in Immediate and Grid + buffer.
+Enter Flight Details → Read → Done focus. Switch EN → UK → EN. Verify translated
+roles, clocks, objective/action descriptions, generic controller and modifier-key
+names, while accepted notices, checkpoint, owner, scroll and reading state stay
+unchanged. Back stays paused; only explicit Resume moves. Exercise an impact
+carrier, an active multi-relay encounter, changed live preferences and a retired
+visit. Keep controller pulses neutral for the configured Confirm rearm interval;
+do not weaken the runtime echo guard to satisfy a synthetic fixture. Run the
+focused host/model regressions and record physical/public checks separately.”
+
 #### Details lifetime through backup completion
 
 Keep the installed Field details presenter owned by the page, not by a backup transaction. Editing the shared declaration must not accidentally rewrite unrelated `backupBusy = false` assignments in finally blocks. Verify actual app-mounted successful import, Undo and failure, then persisted and terminal pagehide. A presentation reference reset can leave click handlers alive while breaking lifecycle cleanup; testing only whether the dialog opens is insufficient.
