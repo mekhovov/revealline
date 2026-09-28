@@ -537,9 +537,8 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
   const continuationHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
-  const currentReviewPath =
-    'docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json';
-  const currentReviewSHA256 = '0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608';
+  const currentReviewPath = 'docs/verification/audio-style-menu-2026-09-28/review.json';
+  const currentReviewSHA256 = 'bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'audio',
   ]);
@@ -547,9 +546,12 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
     'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json';
   const mainUIReviewSHA256 = '15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867';
   const mainUI = await authenticatedCurrentReview(mainUIReviewPath, mainUIReviewSHA256, ['ui']);
+  const priorAudioReview = JSON.parse(
+    await fs.readFile(new URL('../../' + current.review.priorReviews.audio.path, import.meta.url)),
+  );
   const canonicalReview = JSON.parse(
     await fs.readFile(
-      new URL('../../' + current.review.priorReviews.canonical.path, import.meta.url),
+      new URL('../../' + priorAudioReview.priorReviews.canonical.path, import.meta.url),
     ),
   );
   assert.equal(
@@ -628,6 +630,8 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
       assert.match(asset.provenance.source, /game\/soundtrack-portable\.mjs/);
       assert.match(asset.provenance.source, /game\/content\/soundtrack-catalogue\.mjs/);
       assert.match(asset.provenance.source, /game\/online-soundtrack-catalogue\.mjs/);
+      assert.match(asset.provenance.source, /game\/ui\/quick-music-controls\.mjs/);
+      assert.match(asset.provenance.source, /game\/soundtrack-style-taxonomy\.mjs/);
     }
   }
 });
@@ -1087,7 +1091,7 @@ test('player readiness continuation preserves exact localization14 theme96 and a
       'utf8',
     ),
   );
-  const current = await importThemeBundle(
+  const latest = await importThemeBundle(
     new Blob([
       await fs.readFile(
         new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
@@ -1095,6 +1099,14 @@ test('player readiness continuation preserves exact localization14 theme96 and a
     ]),
     { decodeImage: null },
   );
+  const current = {
+    ...latest,
+    document: structuredClone(latest.document),
+  };
+  current.document.revision = 97;
+  current.document.assets = current.document.assets.slice(0, -8);
+  current.document.themes = current.document.themes.slice(0, -1);
+  current.document.selection.theme = { id: 'fpv', revision: 97 };
   const prior = await reconstructPinnedProduction(oracle, current);
   assert.equal(prior.document.revision, 96);
   assert.equal(prior.document.assets.length, 2574);
@@ -1132,5 +1144,54 @@ test('player readiness continuation preserves exact localization14 theme96 and a
     assert.deepEqual(a.provenance.parent, { id: old.id, revision: 48 });
     assert.deepEqual(a.recipe, old.recipe);
     assert.deepEqual(a.file, old.file);
+  }
+});
+
+test('Audio style-menu continuation preserves exact player-readiness theme97 and appends only eight audio50 successors', async () => {
+  const current = await importThemeBundle(
+    new Blob([
+      await fs.readFile(
+        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+      ),
+    ]),
+    { decodeImage: null },
+  );
+  const priorDocument = structuredClone(current.document);
+  priorDocument.revision = 97;
+  priorDocument.assets = priorDocument.assets.slice(0, -8);
+  priorDocument.themes = priorDocument.themes.slice(0, -1);
+  priorDocument.selection.theme = { id: 'fpv', revision: 97 };
+
+  assert.equal(current.document.revision, 98);
+  assert.equal(current.document.assets.length, 2590);
+  assert.equal(priorDocument.assets.length, 2582);
+  validateThemeBundle(current.document, { previous: priorDocument, expectedRevision: 97 });
+  assert.equal(current.assets.size, 132);
+
+  const before = resolvePresentation(priorDocument);
+  const after = resolvePresentation(current.document);
+  for (const [slot, asset] of Object.entries(before.assets))
+    if (!slot.startsWith('audio.')) assert.deepEqual(after.assets[slot], asset, slot);
+
+  const added = current.document.assets.slice(2582);
+  assert.equal(added.length, 8);
+  for (const asset of added) {
+    assert(asset.id.startsWith('audio.'));
+    assert.equal(asset.revision, 50);
+    assert.equal(asset.quality.stage, 'reviewed');
+    const old = priorDocument.assets
+      .filter((candidate) => candidate.id === asset.id)
+      .sort((a, b) => b.revision - a.revision)[0];
+    assert.equal(old.revision, 49);
+    assert.deepEqual(asset.provenance.parent, { id: old.id, revision: 49 });
+    assert.deepEqual(asset.recipe, old.recipe);
+    assert.deepEqual(asset.file, old.file);
+    assert.ok(
+      asset.quality.evidence.some((entry) =>
+        entry.includes(
+          'docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49',
+        ),
+      ),
+    );
   }
 });
