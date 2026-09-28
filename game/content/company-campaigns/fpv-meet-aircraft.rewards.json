@@ -23,11 +23,11 @@
         "id": "fpv-meet-aircraft-01-image",
         "locales": {
           "en": {
-            "alt": "The Frame — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "The Frame — original mission illustration. Not a documentary photograph or technical plan.",
             "title": "The Frame"
           },
           "uk": {
-            "alt": "Рама — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Рама — оригінальна ілюстрація місії. Не документальне фото й не технічна схема.",
             "title": "Рама"
           }
         },
@@ -278,7 +278,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "fpv-meet-aircraft-01", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -470,6 +470,84 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "fpv-meet-aircraft-02-motion-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The motor supplies rotation. The propeller uses moving blades to interact with surrounding air and produce force. They work together, but they do different jobs. In this original schematic, amber marks the stationary stator and cyan markers identify the moving rotor. The separated propeller icon shares the rotor’s deliberately slow motion.",
+              "Compare the two roles: which part supplies rotation, and which part moves through air? A motor turning without a propeller does not replace the propeller’s aerodynamic role. Watch, pause or use the static description; none of these choices affects your mission result.",
+              "This silent 12-second illustration is a conceptual explanation, not a recording of hardware, an assembly procedure or a simulation of speed, thrust or flight. The positions, eight decorative stator shapes, blade silhouette and motion have no specification meaning. A typical FPV outrunner can have a rotating outer bell; do not interpret “stator” as meaning every outer housing stays fixed. No wiring or correct rotation direction is shown. Sources explain the general roles and do not endorse this fictional model."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Propeller Propulsion",
+                "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+              },
+              {
+                "title": "NASA — Electric Machines",
+                "url": "https://www.nasa.gov/eap-technology/electric-machines/"
+              }
+            ],
+            "title": "Motion Makers · two different roles"
+          },
+          "uk": {
+            "paragraphs": [
+              "Мотор забезпечує обертання. Пропелер своїми рухомими лопатями взаємодіє з навколишнім повітрям і створює силу. Вони працюють разом, але виконують різні завдання. На цій оригінальній схемі бурштиновим позначено нерухомий статор, а бірюзові мітки показують рухомий ротор. Окремий значок пропелера повторює навмисно повільний рух ротора.",
+              "Порівняйте дві ролі: яка частина забезпечує обертання, а яка рухається крізь повітря? Обертання мотора без пропелера не замінює аеродинамічної ролі пропелера. Перегляньте відео, поставте його на паузу або прочитайте статичний опис: ці дії не впливають на результат місії.",
+              "Ця беззвучна 12-секундна ілюстрація пояснює поняття, а не показує запис реального обладнання, порядок складання чи моделювання швидкості, тяги або польоту. Розташування, вісім умовних форм статора, контур лопатей і рух не задають технічних параметрів. У поширеного FPV-мотора із зовнішнім ротором зовнішній дзвін може обертатися; слово «статор» не означає, що будь-який зовнішній корпус нерухомий. Тут немає схеми проводів чи вказівки правильного напрямку обертання. Джерела пояснюють загальні ролі й не схвалюють цю вигадану модель."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Propeller Propulsion",
+                "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+              },
+              {
+                "title": "NASA — Electric Machines",
+                "url": "https://www.nasa.gov/eap-technology/electric-machines/"
+              }
+            ],
+            "title": "Джерела руху · дві різні ролі"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-motion-makers-video",
+          "sha256": "2c6ab067612b4530f729e6c92b49c5ebeb278eb44b4020cd8b3ff34e8e90cc5b"
+        },
+        "captions": {
+          "en": {
+            "assetId": "fpv-motion-makers-captions-en",
+            "sha256": "6f70bfd2bac0003663b660fdc83612a9439b4131f6cc167d1aa83619612e7193"
+          },
+          "uk": {
+            "assetId": "fpv-motion-makers-captions-uk",
+            "sha256": "8dfd9aeb10bfdcaa89faf19b66c68966b08be609b35e028b3db06bf7a6c070cf"
+          }
+        },
+        "id": "fpv-meet-aircraft-02-motion-video",
+        "locales": {
+          "en": { "title": "Motion Makers · two different roles" },
+          "uk": { "title": "Джерела руху · дві різні ролі" }
+        },
+        "poster": {
+          "assetId": "fpv-motion-makers-poster",
+          "sha256": "a78136eb42349fb9f8faeb17b96144bb82217354dc2b86f7a936134b3c753297"
+        },
+        "transcript": {
+          "en": {
+            "assetId": "fpv-motion-makers-transcript-en",
+            "sha256": "f9f4d52645201f655e24d3e47376d90df72ad4e180c33ac53c15bf24aedb9cda"
+          },
+          "uk": {
+            "assetId": "fpv-motion-makers-transcript-uk",
+            "sha256": "afaad10bc2d870f3493ec1549b1a0cde87cb97b433e29f26ec6ca4b0550430f5"
+          }
+        },
+        "type": "video"
       }
     ],
     "requirements": {
@@ -486,7 +564,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "fpv-meet-aircraft-02", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -1459,11 +1537,11 @@
         "id": "fpv-meet-aircraft-01-image",
         "locales": {
           "en": {
-            "alt": "The Frame — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "The Frame — original mission illustration. Not a documentary photograph or technical plan.",
             "title": "The Frame"
           },
           "uk": {
-            "alt": "Рама — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Рама — оригінальна ілюстрація місії. Не документальне фото й не технічна схема.",
             "title": "Рама"
           }
         },
@@ -1624,7 +1702,7 @@
         }
       ]
     },
-    "revision": "5",
+    "revision": "6",
     "scope": { "id": "fpv-meet-aircraft", "kind": "campaign" },
     "teaserImage": {
       "asset": {

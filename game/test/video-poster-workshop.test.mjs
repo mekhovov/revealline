@@ -1,5 +1,6 @@
 import { mountToolReturnLinks } from '../ui/workshop-return.mjs';
 import test from 'node:test';
+import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { readFile, mkdir, mkdtemp, symlink, stat, rm } from 'node:fs/promises';
 import path from 'node:path';
@@ -692,4 +693,52 @@ test('classic video workshop exposes loading immediately after its title', async
   assert.ok(html.indexOf('id="video-poster-back"') < html.indexOf('</h1>'));
   assert.ok(html.indexOf('</h1>') < html.indexOf('id="video-poster-status"'));
   assert.ok(html.indexOf('id="video-poster-status"') < html.indexOf('Inspect your own video'));
+});
+
+test('Picture Workshop prepares exact complete clip plus captured poster and clears both handoff URLs on source change', async (t) => {
+  const original = await readFile(
+    new URL('./fixtures/video/owned-poster-fixture.mp4', import.meta.url),
+  );
+  const sha = (value) => createHash('sha256').update(value).digest('hex');
+  const h = await setup(t, {
+    openSource: async () => ({
+      original: new Blob([original]),
+      info: {
+        mime: 'video/mp4',
+        width: 640,
+        height: 360,
+        durationSeconds: 6,
+        bytes: original.length,
+        sha256: sha(original),
+      },
+      async capture(time) {
+        const p = poster(time);
+        p.asset.sha256 = sha(bytes);
+        p.capture.sourceSha256 = sha(original);
+        return p;
+      },
+      dispose() {},
+    }),
+  });
+  await h.inspect();
+  h.$('time').value = '2';
+  await h.$('capture').onclick();
+  h.$('playback-start').value = '1';
+  h.$('playback-end').value = '3';
+  await h.$('apply-range').onclick();
+  const prepare = h.doc.querySelector('[data-video-export-action="prepare"]');
+  assert.equal(await prepare.onclick(), true);
+  const clip = h.doc.querySelector('[data-video-export-file="video"]'),
+    picture = h.doc.querySelector('[data-video-export-file="poster"]');
+  assert.deepEqual(
+    Buffer.from(await h.urls.get(clip.href).arrayBuffer()),
+    original,
+    'Logical playback range must not be represented as an exported physical trim.',
+  );
+  assert.deepEqual(Buffer.from(await h.urls.get(picture.href).arrayBuffer()), bytes);
+  assert.equal(h.urls.size, 3);
+  await h.inspect();
+  assert.equal(h.urls.size, 0);
+  assert.equal(clip.hidden, true);
+  assert.equal(picture.hidden, true);
 });

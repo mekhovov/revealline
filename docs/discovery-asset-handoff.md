@@ -55,5 +55,6 @@ Focused checks cover unchanged original bytes, all three uses, both Studio sourc
 round trips and selected player compilation, negative ownership/rights and
 payload-type cases, cancellation and twenty download cycles. Actual Picture and
 video-poster handlers are exercised with modeled native decode/download boundaries;
-this is not physical-device or public-release qualification. Complete clip and
-soundtrack reward handoffs remain separate work.
+this is not physical-device or public-release qualification. [Complete clip](discovery-video-handoff.md)
+and [soundtrack original](discovery-audio-handoff.md) handoffs reuse the same selected
+source approval and immutable reward-editing authorities.
