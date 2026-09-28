@@ -9,12 +9,16 @@ import {
   editionRelativePath,
   freezeEdition,
   resolveEditionSelection,
+  resolveEditionAssets,
   validateEditionRuntimeCatalog,
 } from '../../game/editions/model.mjs';
 import {
   validateEditionCampaignProject,
   validateEditionLessonBundle,
+  validateEditionRewardBundle,
 } from '../../game/editions/project.mjs';
+import { validateCompletionRewards } from '../../game/rewards/model.mjs';
+import { mergeEditionProjects } from '../../game/editions/bootstrap.mjs';
 import { hashPresentationBytes } from '../../game/presentation/bundle.mjs';
 import { validateRetainedPresentation } from '../../game/editions/retained-presentation.mjs';
 import { projectEditionThemeSelection } from '../../game/editions/selected-presentation.mjs';
@@ -65,6 +69,7 @@ export function declaredJSONPaths(catalog) {
       ...catalog.campaigns.flatMap((campaign) => [
         campaign.sourcePath,
         ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+        ...(campaign.rewardPath ? [campaign.rewardPath] : []),
       ]),
       ...catalog.editions.flatMap((edition) => [
         ...Object.values(edition.boot ?? {}),
@@ -110,6 +115,29 @@ export function validateStudioData(path, input, catalog, files = new Map()) {
     const project = files.get(lessonCampaign.sourcePath);
     if (project) validateEditionLessonBundle(lessons, project);
     return lessons;
+  }
+  const rewardCampaign = catalog.campaigns.find((entry) => entry.rewardPath === path);
+  if (rewardCampaign) {
+    const rewards = validateCompletionRewards(data);
+    const project = files.get(rewardCampaign.sourcePath);
+    required(project, 'Load the exact campaign before validating its rewards.');
+    for (const edition of catalog.editions.filter((edition) =>
+      edition.campaignIds.includes(rewardCampaign.id),
+    )) {
+      const selection = resolveEditionSelection(catalog, { editionId: edition.id });
+      validateEditionRewardBundle(rewards, project, {
+        descriptor: rewardCampaign,
+        assets: resolveEditionAssets(catalog, { editionId: edition.id }),
+        editionId: edition.id,
+        editionProject: rewards.some((reward) => reward.scope.kind === 'edition')
+          ? mergeEditionProjects(
+              selection,
+              selection.campaigns.map((campaign) => files.get(campaign.sourcePath)),
+            )
+          : undefined,
+      });
+    }
+    return rewards;
   }
   if (catalog.editions.some((edition) => edition.boot?.themes === path)) {
     required(
@@ -182,6 +210,11 @@ export function validateStudioDraft(input) {
       themes: files.get(edition.boot.themes),
       presets: files.get(edition.boot.presets),
     });
+    validateCompletionRewards(
+      catalog.campaigns
+        .filter((campaign) => edition.campaignIds.includes(campaign.id) && campaign.rewardPath)
+        .flatMap((campaign) => files.get(campaign.rewardPath)),
+    );
   }
   return { catalog, files };
 }
@@ -221,6 +254,11 @@ export function validateStudioReport(input) {
         (key) => Number.isSafeInteger(report.summary[key]) && report.summary[key] >= 0,
       ),
     'Invalid compiler summary.',
+  );
+  required(
+    report.summary.rewards === undefined ||
+      (Number.isSafeInteger(report.summary.rewards) && report.summary.rewards >= 0),
+    'Invalid compiler reward summary.',
   );
   required(
     Array.isArray(report.admittedPaths) &&
