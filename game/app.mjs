@@ -7716,7 +7716,9 @@ try {
     if ($('shell-workshop-dialog').open) $('shell-workshop-dialog').close();
     if ($('shell-home').open) $('shell-home').close();
     $('arena-shell').scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
-    (campaignOverview ? $('next-button') : $('start-button')).focus({ preventScroll: true });
+    const target = campaignOverview ? $('next-button') : $('start-button');
+    target.focus({ preventScroll: true });
+    target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
   }
   function currentBriefing() {
     if (courseSession) {
