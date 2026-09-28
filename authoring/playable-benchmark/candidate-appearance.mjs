@@ -8,13 +8,33 @@ import {
 import { decodeOwnedPicture } from '../../game/ui/presentation-image.mjs';
 import { inspectImageDataUrl } from '../../game/content.mjs';
 
-const directory = 'authoring/library/fpv-body-detail-candidates';
-const manifestPath = `${directory}/manifest.json`;
-const sourcePaths = [
-  'game/presentation/rotor-body-detail-art.mjs',
-  'game/presentation/rotor-candidate-art.mjs',
-  'game/presentation/pixel-art.mjs',
-];
+// Named source studies, never a caller-supplied path or a latest-release alias.
+// V3 retains its four-entry manifest; only its Scout images are fetched here.
+export const SCOUT_COMPARISON_COHORTS = freezePresentation({
+  'reference-v3': {
+    directory: 'authoring/library/fpv-body-detail-candidates',
+    format: 'revealline.rotor-body-detail-candidates.v1',
+    assetRevision: 1,
+    roles: ['scout', 'carrier'],
+    sources: [
+      'game/presentation/rotor-body-detail-art.mjs',
+      'game/presentation/rotor-candidate-art.mjs',
+      'game/presentation/pixel-art.mjs',
+    ],
+  },
+  'reference-v4': {
+    directory: 'authoring/library/fpv-body-contrast-candidates',
+    format: 'revealline.rotor-body-detail-candidates.v1',
+    assetRevision: 1,
+    roles: ['scout'],
+    sources: [
+      'game/presentation/rotor-body-contrast-art.mjs',
+      'game/presentation/rotor-body-detail-art.mjs',
+      'game/presentation/rotor-candidate-art.mjs',
+      'game/presentation/pixel-art.mjs',
+    ],
+  },
+});
 const hash = async (bytes) =>
   Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), (byte) =>
     byte.toString(16).padStart(2, '0'),
@@ -59,58 +79,70 @@ async function readBytes(path, limit, request, signal) {
   return bytes;
 }
 
-function scoutAssets(manifest) {
+function scoutAssets(manifest, construction, cohort) {
   required(
-    manifest.format === 'revealline.rotor-body-detail-candidates.v1' &&
+    manifest.format === cohort.format &&
       manifest.status === 'source-candidate-not-runtime-default' &&
-      manifest.construction === 'reference-v3',
-    'Choose the source-only reference-v3 manifest.',
+      manifest.construction === construction,
+    `Choose the source-only ${construction} manifest.`,
   );
   required(
-    equal(Object.keys(manifest.sources ?? {}).sort(), [...sourcePaths].sort()),
+    equal(Object.keys(manifest.sources ?? {}).sort(), [...cohort.sources].sort()),
     'Candidate source fingerprint list differs from the native study.',
   );
-  return ['compact', 'detailed'].map((treatment) => {
-    const slot = `player.scout.${treatment}`;
-    const records = manifest.assets?.filter((record) => record.slot === slot);
-    required(records?.length === 1, `Candidate manifest needs exactly one ${slot}.`);
-    const record = records[0];
-    const asset = validateAssetRevision(record.assetRevision);
-    const side = treatment === 'compact' ? 32 : 64;
-    required(
-      record.id === `candidate.reference-v3.scout.${treatment}` &&
-        asset.id === record.id &&
-        asset.kind === 'image' &&
-        asset.quality.stage === 'produced' &&
-        record.treatment === treatment &&
-        record.path === `${directory}/scout.${treatment}.png`,
-      'Candidate slot identity or source status differs.',
-    );
-    required(
-      record.width === side &&
-        record.height === side &&
-        record.bytes > 0 &&
-        record.bytes <= 16384 &&
-        equal(asset.file, {
-          sha256: record.sha256,
-          bytes: record.bytes,
-          mime: 'image/png',
-          width: side,
-          height: side,
-        }),
-      'Candidate image declaration differs from its native frame.',
-    );
-    required(
-      equal(record.geometry, asset.geometry) &&
-        equal(asset.geometry.frame, { x: 0, y: 0, width: side, height: side }) &&
-        equal(asset.geometry.pivot, FIELD_KIT_CANDIDATE_PIVOT) &&
-        equal(asset.geometry.rotorAnchors, FIELD_KIT_CANDIDATE_RIGS.scout) &&
-        equal(asset.geometry.occupiedBounds, record.inspection?.occupiedBounds) &&
-        asset.geometry.nineSlice === null,
-      'Candidate geometry differs from the retained native frame, pivot or rotor anchors.',
-    );
-    return { record, asset };
-  });
+  const slots = cohort.roles.flatMap((role) =>
+    ['compact', 'detailed'].map((treatment) => `player.${role}.${treatment}`),
+  );
+  required(
+    Array.isArray(manifest.assets) &&
+      manifest.assets.length === slots.length &&
+      equal(manifest.assets.map((record) => record?.slot).sort(), [...slots].sort()),
+    'Candidate manifest entries differ from the named cohort.',
+  );
+  return slots
+    .map((slot) => {
+      const [, role, treatment] = slot.split('.');
+      const records = manifest.assets.filter((record) => record.slot === slot);
+      required(records?.length === 1, `Candidate manifest needs exactly one ${slot}.`);
+      const record = records[0];
+      const asset = validateAssetRevision(record.assetRevision);
+      const side = treatment === 'compact' ? 32 : 64;
+      required(
+        record.id === `candidate.${construction}.${role}.${treatment}` &&
+          asset.id === record.id &&
+          asset.revision === cohort.assetRevision &&
+          asset.kind === 'image' &&
+          asset.quality.stage === 'produced' &&
+          record.treatment === treatment &&
+          record.path === `${cohort.directory}/${role}.${treatment}.png`,
+        'Candidate slot identity or source status differs.',
+      );
+      required(
+        record.width === side &&
+          record.height === side &&
+          record.bytes > 0 &&
+          record.bytes <= 16384 &&
+          equal(asset.file, {
+            sha256: record.sha256,
+            bytes: record.bytes,
+            mime: 'image/png',
+            width: side,
+            height: side,
+          }),
+        'Candidate image declaration differs from its native frame.',
+      );
+      required(
+        equal(record.geometry, asset.geometry) &&
+          equal(asset.geometry.frame, { x: 0, y: 0, width: side, height: side }) &&
+          equal(asset.geometry.pivot, FIELD_KIT_CANDIDATE_PIVOT) &&
+          equal(asset.geometry.rotorAnchors, FIELD_KIT_CANDIDATE_RIGS[role]) &&
+          equal(asset.geometry.occupiedBounds, record.inspection?.occupiedBounds) &&
+          asset.geometry.nineSlice === null,
+        'Candidate geometry differs from the retained native frame, pivot or rotor anchors.',
+      );
+      return { record, asset };
+    })
+    .filter(({ record }) => record.slot.startsWith('player.scout.'));
 }
 
 /** A source-study image override, deliberately without resolved release or pin
@@ -119,6 +151,7 @@ export async function acquireScoutComparison(
   approvedSnapshot,
   {
     signal,
+    construction = 'reference-v3',
     treatment = 'auto',
     fetch: request = globalThis.fetch,
     decodeImage,
@@ -130,6 +163,12 @@ export async function acquireScoutComparison(
     'An approved actor snapshot is required.',
   );
   required(['auto', 'compact', 'detailed'].includes(treatment), 'Unknown candidate treatment.');
+  required(
+    typeof construction === 'string' && Object.hasOwn(SCOUT_COMPARISON_COHORTS, construction),
+    'Unknown candidate construction.',
+  );
+  const cohort = SCOUT_COMPARISON_COHORTS[construction];
+  const manifestPath = `${cohort.directory}/manifest.json`;
   required(timeoutMs > 0 && timeoutMs <= 15000, 'Invalid candidate timeout.');
   const controller = new AbortController();
   const frames = new Map();
@@ -161,8 +200,8 @@ export async function acquireScoutComparison(
         const manifest = boundedJSON(JSON.parse(new TextDecoder().decode(bytes)), {
           maxBytes: 98304,
         });
-        const assets = scoutAssets(manifest);
-        for (const path of sourcePaths) {
+        const assets = scoutAssets(manifest, construction, cohort);
+        for (const path of cohort.sources) {
           const source = await readBytes(path, 262144, request, controller.signal);
           required(
             (await hash(source)) === manifest.sources[path],

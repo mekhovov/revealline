@@ -9,6 +9,7 @@ import {
 import { boardPaintSizeForRun } from '../../game/ui/render.mjs';
 import { attachBenchmarkInput } from './controls.mjs';
 import { createPreviewLifecycle } from '../game-feel-lab/lifecycle.mjs';
+import { createBenchmarkPerformance, candidateMemory } from './performance.mjs';
 
 const $ = (id) => document.getElementById(id);
 const canvases = [$('reference'), $('comparison')];
@@ -33,6 +34,45 @@ let startup = null;
 let lastSummary = '';
 let lastEvents = '';
 let loadingFocus = null;
+const measurements = createBenchmarkPerformance({ capacity: 120 });
+let measuredFrame = null;
+let lastMeasurementOutput = 0;
+let lastMeasurementText = '';
+
+function measurementOutput() {
+  if (disposed) return;
+  const current = selection.current;
+  const text = JSON.stringify(
+    {
+      scope: 'Local two-painter benchmark; frame intervals include both views, not GPU time.',
+      mission: current?.entry.id ?? null,
+      comparison: current?.comparison.body ?? null,
+      comparisonVisible: $('show-comparison').checked,
+      referenceReduced: $('reference-reduced').checked,
+      comparisonReduced: current?.comparison.reduced ?? null,
+      accents: current?.comparison.feedback ?? null,
+      canvasCSSWidths: canvases.map((canvas) => canvas.clientWidth),
+      timing: measurements.snapshot(),
+      candidateMemory: candidateMemory(current?.comparison.provenance ?? null),
+    },
+    null,
+    2,
+  );
+  if (text !== lastMeasurementText) {
+    $('performance-output').textContent = text;
+    lastMeasurementText = text;
+  }
+}
+function endMeasurementSegment() {
+  if (measuredFrame !== null) measurements.excludeGap();
+  measuredFrame = null;
+}
+function resetMeasurements() {
+  measurements.reset();
+  measuredFrame = null;
+  lastMeasurementOutput = 0;
+  measurementOutput();
+}
 
 function status(kind, message) {
   if (disposed) return;
@@ -72,6 +112,9 @@ function comparisonDetails() {
     'v3-auto': 'V3 Scout · automatic native size',
     'v3-compact': 'V3 Scout · native 32 px',
     'v3-detailed': 'V3 Scout · native 64 px',
+    'v4-auto': 'V4 Scout contrast · automatic native size',
+    'v4-compact': 'V4 Scout contrast · native 32 px',
+    'v4-detailed': 'V4 Scout contrast · native 64 px',
   }[comparison.body];
   $('comparison-label').textContent =
     `${body} · ${comparison.reduced ? 'reduced' : 'standard'} effects`;
@@ -114,10 +157,12 @@ function refresh() {
     lastEvents = eventText;
   }
 }
-function paint(dt = 0) {
+function paint(dt = 0, measure = false) {
   const current = selection.current;
   if (!current || disposed) return;
-  current.painters.forEach((painter, index) =>
+  const drawCosts = { referenceMs: null, comparisonMs: null };
+  current.painters.forEach((painter, index) => {
+    const began = measure ? performance.now() : null;
     painter.draw(contexts[index], current.session.run, dt, {
       paused: !current.session.playing,
       reduced: index === 1 ? current.comparison.reduced : $('reference-reduced').checked,
@@ -131,10 +176,14 @@ function paint(dt = 0) {
         snapshot: index === 1 ? current.comparison.snapshot : current.actors.snapshot,
       },
       ...(index === 1 ? { feedbackComparison: current.comparison.feedback } : {}),
-    }),
-  );
+    });
+    if (measure)
+      drawCosts[index === 0 ? 'referenceMs' : 'comparisonMs'] = performance.now() - began;
+  });
+  return drawCosts;
 }
 function hold(message) {
+  endMeasurementSegment();
   readyCue.cancel();
   resultFocus.cancel();
   selection.current?.session.pause();
@@ -143,6 +192,7 @@ function hold(message) {
   if (!disposed) {
     refresh();
     if (message) status('ready', message);
+    measurementOutput();
   }
 }
 const selection = createBenchmarkSelection({
@@ -208,6 +258,7 @@ const selection = createBenchmarkSelection({
     lastEvents = '';
     $('outcome').textContent = '';
     comparisonDetails();
+    resetMeasurements();
     refresh();
     paint();
   },
@@ -254,6 +305,7 @@ async function select(id, opener = null) {
   const entry = catalog?.entries.find((item) => item.id === id);
   if (!entry || disposed) return;
   hold();
+  resetMeasurements();
   selection.current?.comparison.cancel();
   const owner = { opener };
   loadingFocus = owner;
@@ -289,6 +341,7 @@ function retry() {
   const current = selection.current;
   current.session.retry();
   current.resetPresentation();
+  resetMeasurements();
   readyCue.begin(current);
   $('outcome').textContent = 'Ready. The same setup starts in 0.6 seconds. Release held controls.';
   status('ready', 'Preparing the next attempt with the same setup…');
@@ -348,6 +401,7 @@ async function selectComparison(body) {
   const current = selection.current;
   if (!current || selection.pending || disposed) return;
   hold();
+  resetMeasurements();
   $('show-comparison').checked = true;
   showComparison();
   const owner = { opener: $('comparison-body') };
@@ -356,6 +410,7 @@ async function selectComparison(body) {
   if (loadingFocus === owner) loadingFocus = null;
   if (disposed || selection.current !== current) return;
   comparisonDetails();
+  resetMeasurements();
   controls();
   paint();
 }
@@ -364,6 +419,7 @@ $('comparison-reduced').onchange = () => {
   hold('Comparison effects changed. Resume when ready.');
   selection.current?.comparison.setReduced($('comparison-reduced').checked);
   comparisonDetails();
+  resetMeasurements();
   paint();
 };
 for (const id of ['capture-pulse', 'event-flashes'])
@@ -373,6 +429,7 @@ for (const id of ['capture-pulse', 'event-flashes'])
       captureAccent: $('capture-pulse').checked,
       eventAccents: $('event-flashes').checked,
     });
+    resetMeasurements();
     paint();
   };
 $('reference-reduced').onchange = () => {
@@ -380,10 +437,12 @@ $('reference-reduced').onchange = () => {
   $('reference-label').textContent = $('reference-reduced').checked
     ? 'Reference · reduced effects'
     : 'Reference · standard effects';
+  resetMeasurements();
   paint();
 };
 $('show-comparison').onchange = () => {
   showComparison();
+  resetMeasurements();
   paint();
 };
 $('touch-mode').onchange = () => {
@@ -391,6 +450,15 @@ $('touch-mode').onchange = () => {
   $('direction-pad').hidden = $('touch-mode').value !== 'dpad';
 };
 $('load').onclick = () => void select($('mission').value, $('load'));
+$('measure-performance').onchange = () => {
+  resetMeasurements();
+};
+$('reset-performance').onclick = resetMeasurements;
+$('performance-panel').addEventListener('toggle', measurementOutput);
+function resizeMeasurements() {
+  resetMeasurements();
+}
+window.addEventListener('resize', resizeMeasurements);
 function loop(now) {
   const dt = lastTime === null ? 0 : (now - lastTime) / 1000;
   lastTime = now;
@@ -402,10 +470,31 @@ function loop(now) {
   const current = selection.current;
   if (current && !selection.pending) {
     const cueWasActive = readyCue.active;
+    const wasPlaying = current.session.playing;
+    const measuring =
+      $('measure-performance').checked &&
+      current.session.playing &&
+      !current.comparison.pending &&
+      !cueWasActive &&
+      !document.hidden;
+    const previousFrame = measuredFrame;
+    if (measuring) measuredFrame = now;
+    else endMeasurementSegment();
     readyCue.advance(dt, current);
     resultFocus.advance(dt, current);
     if (!cueWasActive) current.session.advance(input.poll(), dt);
-    paint(dt);
+    // Controller pause/disconnect can call hold synchronously inside poll.
+    // Keep only the still-owned active segment; a terminal gameplay frame is valid.
+    const recordFrame = measuring && measuredFrame === now;
+    const drawCosts = paint(dt, recordFrame);
+    if (recordFrame && previousFrame !== null)
+      measurements.record({ frameMs: now - previousFrame, ...drawCosts });
+    if (!current.session.playing) measuredFrame = null;
+    const ended = wasPlaying && !current.session.playing;
+    if (now - lastMeasurementOutput >= 1000 || ended) {
+      if ($('performance-panel').open || ended) measurementOutput();
+      lastMeasurementOutput = now;
+    }
     refresh();
   }
 }
@@ -445,6 +534,7 @@ function pagehide(event) {
     window.removeEventListener('blur', blur);
     window.removeEventListener('pagehide', pagehide);
     window.removeEventListener('pageshow', pageshow);
+    window.removeEventListener('resize', resizeMeasurements);
   }
 }
 function pageshow(event) {

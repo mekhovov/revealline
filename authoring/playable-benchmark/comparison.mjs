@@ -1,12 +1,20 @@
 import { acquireScoutComparison } from './candidate-appearance.mjs';
 import { createBenchmarkSelection } from './session.mjs';
 
-export const COMPARISON_BODIES = Object.freeze([
-  'approved',
-  'v3-auto',
-  'v3-compact',
-  'v3-detailed',
-]);
+const choices = Object.freeze(
+  Object.fromEntries(
+    [
+      ['v3', 'reference-v3'],
+      ['v4', 'reference-v4'],
+    ].flatMap(([prefix, construction]) =>
+      ['auto', 'compact', 'detailed'].map((treatment) => [
+        `${prefix}-${treatment}`,
+        Object.freeze({ construction, treatment }),
+      ]),
+    ),
+  ),
+);
+export const COMPARISON_BODIES = Object.freeze(['approved', ...Object.keys(choices)]);
 
 /** Own only a second-view image override. It cannot replace the core run,
  * original artwork or approved appearance lease. */
@@ -24,7 +32,7 @@ export function createSceneComparison({
       if (!COMPARISON_BODIES.includes(body)) throw new Error('Unknown comparison appearance.');
       if (body === 'approved')
         return { body, snapshot: actors.snapshot, provenance: null, dispose() {} };
-      const candidate = await acquire(actors.snapshot, { signal, treatment: body.slice(3) });
+      const candidate = await acquire(actors.snapshot, { signal, ...choices[body] });
       return {
         body,
         snapshot: candidate.snapshot,

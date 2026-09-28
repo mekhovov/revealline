@@ -84,6 +84,9 @@
     "authoring/library/fpv-body-detail-candidates/manifest.json",
     "authoring/library/fpv-body-detail-candidates/scout.compact.png",
     "authoring/library/fpv-body-detail-candidates/scout.detailed.png",
+    "authoring/library/fpv-body-contrast-candidates/manifest.json",
+    "authoring/library/fpv-body-contrast-candidates/scout.compact.png",
+    "authoring/library/fpv-body-contrast-candidates/scout.detailed.png",
     "authoring/library/real-world-references"
   ],
   "optionalOffline": [
