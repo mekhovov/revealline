@@ -233,15 +233,21 @@ export function createRewardStore({
     let nextEligible = pair.eligible;
     if (persist) {
       const ids = new Set(definitions.map((definition) => definition.id));
-      const promised = {
-        ...createRewardState(editionId),
-        promises: result.state.promises.filter((definition) => ids.has(definition.id)),
-      };
-      nextEligible = reconcileEarnedRewards(
-        definitions,
-        persistenceContext,
-        mergeRewardStates(pair.eligible, promised, { editionId }),
-      ).state;
+      const retainedIds = new Set(pair.eligible.promises.map((definition) => definition.id));
+      const missingPromises = result.state.promises.filter(
+        (definition) => ids.has(definition.id) && !retainedIds.has(definition.id),
+      );
+      const promised = missingPromises.length
+        ? mergeRewardStates(
+            pair.eligible,
+            {
+              ...createRewardState(editionId),
+              promises: missingPromises,
+            },
+            { editionId },
+          )
+        : pair.eligible;
+      nextEligible = reconcileEarnedRewards(definitions, persistenceContext, promised).state;
     }
     return { ...result, eligible: nextEligible };
   };
@@ -371,6 +377,7 @@ export function createRewardStore({
   };
   return {
     snapshot,
+    current: () => state,
     status,
     load() {
       required(!closed, 'Reward store is closed.');

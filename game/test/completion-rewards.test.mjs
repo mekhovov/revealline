@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { rewardContext } from '../rewards/context.mjs';
 import {
   COMPLETION_REWARD_FORMAT,
+  REWARD_STATE_FORMAT,
   acknowledgeReward,
   completionRewardAssetReferences,
   completionRewardIdentity,
@@ -463,4 +464,90 @@ test('media inventories retain exact typed dependencies including captions and t
   assert.throws(() => completionRewardAssetReferences([conflict]), /conflicting revisions/);
   delete definition.payloads[1].transcript;
   assert.throws(() => validateCompletionReward(definition), /object/);
+});
+
+test('only model-owned immutable definitions, receipts and states reuse validation', () => {
+  const raw = reward();
+  const definitions = validateCompletionRewards([raw]);
+  const definition = definitions[0];
+  const result = reconcileEarnedRewards(definitions, context());
+  assert.equal(validateCompletionRewards(definitions), definitions);
+  assert.equal(validateCompletionReward(definition), definition);
+  assert.equal(validateRewardState(result.state), result.state);
+  assert.equal(validateEarnedRewardReceipt(result.granted[0]), result.granted[0]);
+  assert.equal(result.state.promises[0], definition);
+  assert.equal(result.granted[0].definition, definition);
+  assert(Object.isFrozen(result.state.receipts[0].evidence.clears));
+  assert(Object.isFrozen(definition.payloads[0].locales.en.paragraphs));
+  assert.throws(() => definition.payloads[0].locales.en.paragraphs.push('Changed'), TypeError);
+  assert.throws(
+    () => validateRewardState(result.state, { editionId: 'other-edition' }),
+    /another edition/,
+  );
+  assert.throws(
+    () => validateEarnedRewardReceipt(result.granted[0], { editionId: 'other-edition' }),
+    /another edition/,
+  );
+
+  raw.payloads[0].locales.en.paragraphs[0] = 'A revised explanation.';
+  const revised = validateCompletionReward(raw);
+  assert.notEqual(completionRewardIdentity(revised), completionRewardIdentity(definition));
+  assert.notEqual(
+    revised.payloads[0].locales.en.paragraphs[0],
+    definition.payloads[0].locales.en.paragraphs[0],
+  );
+  assert(
+    !Object.isFrozen(raw.payloads[0].locales.en.paragraphs),
+    'Validating must not freeze author-owned data.',
+  );
+  assert.notEqual(validateCompletionReward(Object.freeze(clone(definition))), definition);
+  assert.notEqual(validateRewardState(clone(result.state)), result.state);
+});
+
+test('copied or caller-frozen data cannot inherit model ownership or bypass receipt checks', () => {
+  const result = reconcileEarnedRewards([reward()], context());
+  const changed = clone(result.state);
+  changed.receipts[0].evidence.clears['workshop-1'].gameplayId = 'unaccepted';
+  assert.throws(() => validateRewardState(Object.freeze(changed)), /does not satisfy/);
+  const wrongPromise = clone(result.state);
+  wrongPromise.promises[0].revision = 'r2';
+  assert.throws(() => validateRewardState(wrongPromise), /match its retained promise/);
+  let invoked = false;
+  const getter = Object.freeze(
+    Object.defineProperty({}, 'format', {
+      enumerable: true,
+      get() {
+        invoked = true;
+        return REWARD_STATE_FORMAT;
+      },
+    }),
+  );
+  assert.throws(() => validateRewardState(getter), /accessors/);
+  assert.equal(invoked, false);
+});
+
+test('unchanged projections reuse state while changed evidence and acknowledgements remain exact', () => {
+  const definitions = validateCompletionRewards([reward()]);
+  const ready = reconcileEarnedRewards(definitions, context(0));
+  const partial = reconcileEarnedRewards(definitions, context(5), ready.state);
+  assert.equal(partial.state, ready.state);
+  assert.equal(partial.progress[0].completed, 5);
+  const win = reconcileEarnedRewards(definitions, context(), ready.state);
+  const repeat = reconcileEarnedRewards(definitions, context(), win.state);
+  assert.equal(repeat.state, win.state);
+  assert.equal(repeat.granted.length, 0);
+  assert.equal(mergeRewardStates(win.state, ready.state), win.state);
+  assert.equal(
+    reconcileEarnedRewards(definitions, context(0), win.state).progress[0].eligible,
+    false,
+  );
+  const acknowledged = acknowledgeReward(win.state, definitions[0].id);
+  assert.equal(acknowledgeReward(acknowledged, definitions[0].id), acknowledged);
+  assert.deepEqual(mergeRewardStates(win.state, acknowledged).acknowledged, [definitions[0].id]);
+  const revised = clone(definitions[0]);
+  revised.revision = 'r2';
+  assert.throws(
+    () => mergeImportedRewardStates(win.state, reconcileEarnedRewards([revised], context()).state),
+    RewardImportConflictError,
+  );
 });
