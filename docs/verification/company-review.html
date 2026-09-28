@@ -87,6 +87,14 @@
       <label>Sample label<input id="label" value="Candidate" /></label>
       <label>Player URL<input id="target" value="../../game/index.html?edition=coupa-all" /></label>
       <label
+        >Observed scenario<select id="scenario">
+          <option value="opening-play">Opening play</option>
+          <option value="advanced-encounter">Advanced encounter</option>
+          <option value="picture-reveal">Picture reveal</option>
+          <option value="edition-switch">Edition switch</option>
+        </select></label
+      >
+      <label
         >Viewport width<select id="width">
           <option value="1280">1280 px</option>
           <option value="844">844 px</option>
@@ -106,6 +114,7 @@
         <button id="load">Load sample</button
         ><button id="frames" disabled>Measure 20 seconds of play</button
         ><button id="layout" disabled>Check visible layout</button
+        ><button id="summary">Record session summary</button
         ><button id="export">Export observations</button>
       </div>
       <p id="status" role="status">Choose a baseline or candidate, then load it.</p>
@@ -117,7 +126,10 @@
         process-shared metric; it is not proof of a memory leak or its absence. No result
         automatically approves a release. Current Solo builds measure activation until a running
         flight is observed; historical company builds measure until their explicit start is ready.
-        Those two preparation endpoints must not be compared as the same metric.
+        Those two preparation endpoints must not be compared as the same metric. Choose the scenario
+        that is actually visible before starting a sample. The session summary counts ready target
+        transitions; it does not prove installed-app isolation, preserved storage or physical-device
+        performance.
       </p>
     </header>
     <div id="viewport">

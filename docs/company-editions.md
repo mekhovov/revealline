@@ -135,6 +135,11 @@ The historical company-player backup v2 is retained separately; it is not the So
 
 ## Release sequence and gates
 
+The current shipped-source and promotion batches are tracked in the
+[28 September phase status](company-editions-phase-status-2026-09-28.md). Phases 1–6 are on main;
+phase 7 is active. The public default v0.141.7 release contains the source changes, while the
+standalone company selector remains empty until its separate approval and device gates pass.
+
 The additive edition envelope must coexist with the default release format. Stable launchers
 live at `editions/<id>/app/`; immutable sites live at
 `editions/<id>/releases/<version>/site/`. Each edition has an explicit stable manifest identity,

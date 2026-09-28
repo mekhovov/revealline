@@ -4,6 +4,17 @@ This record distinguishes candidate automation from release qualification. No co
 edition has been promoted or published by this work. Human observations, physical-device
 installation and downloaded/deployed release evidence cannot be inferred from unit tests.
 
+## Published-main reconciliation
+
+PR #615 was merged into the cumulative release and is an ancestor of main. The default v0.141.7
+release is public at main `6fe52474b5`, tree `282cb34616`; standalone company edition selection
+remains empty. Exact post-merge candidate CI, independent rebuild and downloaded-byte evidence are
+recorded in the [current phase status](company-editions-phase-status-2026-09-28.md). All 57
+artifact descriptors, 58 downloaded checksums, 14 current presentation receipts and 26 retained
+presentation receipts match. This supersedes earlier candidate baselines for source integrity; it
+does not satisfy final artwork approval, installed-PWA, device/accessibility, performance or public
+company-edition deployment gates.
+
 ## Main integration and final review preparation
 
 Main through `5cdbe3ab7` is integrated in merge `6fb1bfdf6`. The only merge conflict was
