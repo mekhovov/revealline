@@ -15,7 +15,11 @@ import {
   PRESSURE_DIFFICULTY_CATALOG,
 } from '../game/content-design/catalogs.mjs';
 import { CLASSES } from '../game/core/index.mjs';
-import { REPORT_FORMAT, STUDIO_REPORT_CHECKS } from '../authoring/company-studio/model.mjs';
+import {
+  REPORT_FORMAT,
+  STUDIO_REPORT_CHECKS,
+  validateStudioDraft,
+} from '../authoring/company-studio/model.mjs';
 import { createStarterProject } from '../game/content-design/starter.mjs';
 import { compileContentProject, resolveMission } from '../game/content-design/project.mjs';
 import {
@@ -219,6 +223,7 @@ export function companySourceDraft({ catalog, files }) {
     ...catalog.campaigns.flatMap((campaign) => [
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+      ...(campaign.rewardPath ? [campaign.rewardPath] : []),
     ]),
   ]);
   return {
@@ -264,6 +269,7 @@ export function companyDraftFiles(source) {
     ...catalog.campaigns.flatMap((campaign) => [
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+      ...(campaign.rewardPath ? [campaign.rewardPath] : []),
     ]),
   ]);
   const files = new Map([['game/editions/catalog.json', json(catalog)]]);
@@ -282,6 +288,7 @@ export function companyDraftFiles(source) {
     } else files.set(entry.path, json(entry.data));
   }
   editionPublicationAssets(catalog, files);
+  if (catalog.campaigns.some((campaign) => campaign.rewardPath)) validateStudioDraft(draft);
   return { catalog, files };
 }
 
@@ -340,6 +347,16 @@ export function companyStudioReport(sourceCatalog, result, { previewURL = null }
           sum + (campaign.lessonPath ? decode(result.files.get(campaign.lessonPath)).length : 0),
         0,
       ),
+      ...(selected.campaigns.some((campaign) => campaign.rewardPath)
+        ? {
+            rewards: selected.campaigns.reduce(
+              (sum, campaign) =>
+                sum +
+                (campaign.rewardPath ? decode(result.files.get(campaign.rewardPath)).length : 0),
+              0,
+            ),
+          }
+        : {}),
       assets: assets.length,
       runtimeFiles: result.files.size,
       runtimeBytes: [...result.files.values()].reduce((sum, bytes) => sum + bytes.length, 0),
