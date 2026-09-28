@@ -87,7 +87,11 @@ test('ready actions use a bounded grid instead of shrinking translated labels in
   );
   assert.match(
     surfaceCss,
-    /data-kind='ready'[\s\S]*?>\s*#start-button[\s\S]*?grid-column:\s*1\s*\/\s*-1/,
+    /data-kind='ready'[\s\S]*?>\s*:is\([\s\S]*?#continue-saved[\s\S]*?#start-button[\s\S]*?#overlay-menu[\s\S]*?\)\s*\{[\s\S]*?grid-column:\s*1\s*\/\s*-1/,
+  );
+  assert.doesNotMatch(
+    surfaceCss,
+    /data-kind='ready'[^}]*\.overlay-actions\s*>\s*\.pause-missions-section\s*\{[^}]*grid-column/,
   );
   assert.match(
     surfaceCss,
@@ -99,7 +103,7 @@ test('ready actions use a bounded grid instead of shrinking translated labels in
   );
   assert.match(
     surfaceCss,
-    /max-width:\s*380px[\s\S]*?data-kind='ready'[\s\S]*?pause-mission-info[\s\S]*?>\s*div\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)/,
+    /data-kind='ready'[\s\S]*?pause-mission-info[\s\S]*?>\s*div\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)/,
   );
 });
 
