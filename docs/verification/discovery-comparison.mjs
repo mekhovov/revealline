@@ -140,6 +140,21 @@ export function compareDiscoveryObservations(
       right = after[index];
     for (const key of ['scenario', 'mission', 'durationMs', 'surfaceVisibleWhenArmed'])
       same(left[key], right[key], `Sample ${index + 1} differs in ${key}.`);
+    if ([left, right].some((sample) => typeof sample.surfaceVisibleWhenArmed !== 'boolean'))
+      reasons.push(
+        `Sample ${index + 1} does not distinguish a transition from an already visible surface.`,
+      );
+    if (
+      [left, right].some(
+        (sample) =>
+          typeof sample.mission !== 'string' ||
+          !sample.mission.trim() ||
+          sample.mission.length > 256,
+      )
+    )
+      reasons.push(`Sample ${index + 1} has no bounded observed mission.`);
+    if ([left, right].some((sample) => !['full', 'reduced'].includes(sample.effects)))
+      reasons.push(`Sample ${index + 1} has no explicit observed full/reduced effects.`);
     if (left.durationMs < 20000 || right.durationMs < 20000)
       reasons.push(`Sample ${index + 1} is shorter than 20 seconds.`);
     if (kind === 'baseline-current')
@@ -207,5 +222,61 @@ export function summarizeDiscoverySession(inputs) {
       editions.slice(1).filter((id, index) => id !== editions[index]).length >= 20,
     retainedResourceStabilityVerified: false,
     note: 'Edition transitions are separately observed documents, not proof of same-document cleanup or installation isolation.',
+  };
+}
+
+/** Connected, closed-view counts are useful repeatability diagnostics, not an
+ * assertion about detached owners, JS heap retention or native decoder leaks. */
+export function summarizeDiscoveryLifecycle(input) {
+  const report = validateDiscoveryObservation(input),
+    closed = report.records.filter(
+      (record) =>
+        record.kind === 'checkpoint' &&
+        /^closed result [1-9]\d*$/.test(record.label ?? '') &&
+        record.state?.rewardViewer === false,
+    ),
+    metrics = {};
+  for (const key of [
+    'connectedNodes',
+    'connectedImages',
+    'connectedAudio',
+    'connectedVideo',
+    'connectedBlobMedia',
+    'uniqueConnectedBlobURLs',
+    'rewardDialogs',
+    'rewardShelves',
+    'rewardResults',
+  ]) {
+    const values = closed.map((record) => record.resources?.[key]);
+    metrics[key] =
+      values.length && values.every((value) => Number.isInteger(value) && value >= 0)
+        ? {
+            first: values[0],
+            last: values.at(-1),
+            min: Math.min(...values),
+            max: Math.max(...values),
+            delta: values.at(-1) - values[0],
+          }
+        : null;
+  }
+  let pendingViewer = false,
+    pairs = 0;
+  for (const record of report.records) {
+    if (record.kind !== 'cycle') continue;
+    if (record.surface === 'rewardViewer') pendingViewer = true;
+    else if (record.surface === 'result') {
+      if (pendingViewer) pairs++;
+      pendingViewer = false;
+    }
+  }
+  return {
+    qualified: false,
+    resultViewerPairsObserved: pairs,
+    twentyResultViewerPairsObserved: pairs >= 20,
+    closedCheckpoints: closed.length,
+    connectedMetrics: metrics,
+    retainedResourceStabilityVerified: false,
+    rewardRenderingTaskLimitVerified: false,
+    note: 'Only observed viewer/result exits and connected closed-view counts. Detached owners, outstanding URLs, decoders and isolated reward tasks remain unmeasured.',
   };
 }
