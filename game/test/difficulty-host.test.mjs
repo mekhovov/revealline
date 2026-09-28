@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
-import { suspendSession, saveSession } from '../sessions.mjs';
+import { ACTOR_SESSION_FORMAT, suspendSession, saveSession } from '../sessions.mjs';
+import { ACTOR_APPEARANCE_PIN_FORMAT } from '../presentation/actor-appearance-pin.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 import { createDifficultyContext } from '../campaign-difficulty.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
@@ -167,7 +168,8 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     const second = pauseAndRead(page, standard);
     assert.equal(second.runId, first.runId);
     assert.equal(second.replay.ticks, 42);
-    assert.equal(second.format, 'xonix-session.v4');
+    assert.equal(second.format, ACTOR_SESSION_FORMAT);
+    assert.equal(second.actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
     assert.equal(second.presentationPins.format, 'revealline-flight-pictures.v2');
     assert.ok(
       second.presentationPins.choices.every(
@@ -366,7 +368,8 @@ test('Pause Restart changes difficulty while retaining the released original and
   page.key('ArrowDown', false);
   const original = pauseAndRead(page, previousContext);
   const run = page.rendered.run;
-  assert.equal(original.format, 'xonix-session.v5');
+  assert.equal(original.format, ACTOR_SESSION_FORMAT);
+  assert.equal(original.actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
   assert.ok(original.visualThemePin);
   assert.ok(original.presentationPins.choices.some((choice) => choice.picture.kind === 'still'));
   assert.ok(page.rendered.backdrop?.image, 'The original has an accepted decoded image.');
