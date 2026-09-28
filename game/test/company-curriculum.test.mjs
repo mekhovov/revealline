@@ -15,6 +15,7 @@ import {
   createCompanyThemes,
 } from '../company-campaigns/brands.mjs';
 import { validateTheme } from '../content.mjs';
+import { validateRetainedPresentation } from '../editions/retained-presentation.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { createRewardMissionBindings } from '../rewards/bindings.mjs';
 import {
@@ -45,9 +46,9 @@ const projects = CURRICULUM_CAMPAIGNS.map((definition) => {
   return { definition, source, missionBindings, rewards };
 });
 
-test('six real six-mission curricula preserve shared rules and use 36 distinct authored geometries', () => {
-  assert.equal(CURRICULUM_CAMPAIGNS.length, 6);
-  assert.equal(CURRICULUM_MISSIONS.length, 36);
+test('eighteen real six-mission curricula preserve shared rules and use 108 distinct authored geometries', () => {
+  assert.equal(CURRICULUM_CAMPAIGNS.length, 18);
+  assert.equal(CURRICULUM_MISSIONS.length, 108);
   const geometry = (map) => JSON.stringify([map.walls, map.foundations, map.terrain, map.spawns]);
   const old = new Set(
     ['coupa', 'droneaid', 'droneaid-nl'].flatMap((brandId) =>
@@ -78,7 +79,7 @@ test('six real six-mission curricula preserve shared rules and use 36 distinct a
         'standard',
       ]);
   }
-  assert.equal(current.size, 36);
+  assert.equal(current.size, 108);
 });
 
 test('every new mission has sourced bilingual discovery content and an exact first-win binding', () => {
@@ -93,7 +94,12 @@ test('every new mission has sourced bilingual discovery content and an exact fir
           bindings: missionBindings.find((entry) => entry.levelId === missionId).bindings,
         },
       ]);
-      assert.equal(reward.payloads.filter((entry) => entry.type === 'knowledge').length, 1);
+      assert.equal(
+        reward.payloads.filter(
+          (entry) => entry.id === `${missionId}-knowledge` && entry.type === 'knowledge',
+        ).length,
+        1,
+      );
       for (const locale of ['en', 'uk']) {
         assert.ok(row.locales[locale].brief.length > 25);
         assert.equal(row.locales[locale].paragraphs.length, 2);
@@ -108,7 +114,7 @@ test('every new mission has sourced bilingual discovery content and an exact fir
   }
 });
 
-test('all six finales stay locked with any one required win absent and reject wrong exact gameplay', () => {
+test('all eighteen finales stay locked with any one required win absent and reject wrong exact gameplay', () => {
   for (const { definition, rewards } of projects) {
     const finale = rewards.find((reward) => reward.scope.kind === 'campaign');
     assert.deepEqual(
@@ -146,21 +152,48 @@ test('all six finales stay locked with any one required win absent and reject wr
   }
 });
 
-test('explicit public dependencies include reusable home scenes and only the Ukraine painting comparison', () => {
+test('explicit public dependencies include only selected campaign art and seven source comparison images', () => {
+  const firstMissionPictures = [
+    'social-drone-people-workshop-01',
+    'ukraine-threads-03',
+    'fpv-meet-aircraft-01',
+  ];
+  const distinctMissionIds = new Set(
+    CURRICULUM_MISSIONS.filter((mission) =>
+      artwork.some((asset) => asset.id === `${mission.id}-picture`),
+    ).map((mission) => mission.id),
+  );
+  for (const id of firstMissionPictures) assert.ok(distinctMissionIds.has(id), id);
   for (const { definition, source, rewards, missionBindings } of projects) {
     const descriptor = catalog.campaigns.find((entry) => entry.id === definition.id);
-    // Four homes are four compositions, not twenty-four claimed distinct images.
-    assert.equal(source.assets.length, 1);
-    assert.equal(source.assets[0].id, `${definition.brandId}-home-picture`);
-    assert.ok(
-      source.missions.every(
-        (mission) => mission.presentation.backgroundAssetId === source.assets[0].id,
-      ),
+    // Each admitted composition has its own asset; all other missions explicitly
+    // reuse one campaign scene rather than pretending that aliases are new artwork.
+    const expectedPictures = definition.missionIds.map((id) =>
+      distinctMissionIds.has(id) ? `${id}-picture` : `${definition.id}-key-picture`,
+    );
+    assert.deepEqual(
+      source.assets.map((asset) => asset.id),
+      [...new Set(expectedPictures)],
+    );
+    assert.deepEqual(
+      source.missions.map((mission) => mission.presentation.backgroundAssetId),
+      expectedPictures,
     );
     assert.deepEqual(descriptor.assetIds, [
-      `${definition.brandId}-home`,
+      ...source.assets.map(
+        (picture) => assets.find((asset) => asset.path === 'game/' + picture.path).id,
+      ),
       ...definition.rewardAssetIds,
     ]);
+    const keyPicture = source.assets.find((asset) => asset.id === `${definition.id}-key-picture`);
+    const keyAsset = assets.find((asset) => asset.path === 'game/' + keyPicture.path);
+    assert.equal(descriptor.heroAssetId, keyAsset.id);
+    assert.ok(
+      completionRewardAssetReferences(
+        rewards.filter((reward) => reward.scope.kind === 'campaign'),
+      ).some((ref) => ref.assetId === keyAsset.id && ref.sha256 === keyAsset.sha256),
+      'The campaign finale retains its exact campaign composition.',
+    );
     for (const ref of completionRewardAssetReferences(rewards)) {
       assert.ok(descriptor.assetIds.includes(ref.assetId));
       assert.equal(assets.find((asset) => asset.id === ref.assetId).sha256, ref.sha256);
@@ -179,8 +212,22 @@ test('explicit public dependencies include reusable home scenes and only the Ukr
     );
   }
   assert.deepEqual(
-    CURRICULUM_CAMPAIGNS.filter((entry) => entry.rewardAssetIds.length).map((entry) => entry.id),
-    ['ukraine-threads'],
+    Object.fromEntries(
+      CURRICULUM_CAMPAIGNS.filter((entry) => entry.rewardAssetIds.length).map((entry) => [
+        entry.id,
+        entry.rewardAssetIds,
+      ]),
+    ),
+    {
+      'ukraine-threads': ['met-degas-ukrainian-dress-436157'],
+      'fpv-meet-aircraft': ['reference-fpv-pixhawk-controller', 'reference-fpv-brushless-motor'],
+      'fpv-soldering-workshop': [
+        'reference-fpv-solder-iron',
+        'reference-fpv-solder-spool-label',
+        'reference-fpv-solder-joint',
+      ],
+      'fpv-drone-families': ['reference-fpv-ar-drone-prototype'],
+    },
   );
 });
 
@@ -192,19 +239,107 @@ test('generated new campaign and reward files match their authoring sources', as
   }
 });
 
-test('second community campaigns use canonical frontier and roamer progression with registered distinct presentations', () => {
+test('four edition art upgrades preserve all36 first-discovery missions and exact old rewards', async () => {
+  let missionCount = 0;
+  for (const editionId of [
+    'social-drone-ua',
+    'victory-drones',
+    'ukraine-culture',
+    'fpv-learning',
+  ]) {
+    const edition = catalog.editions.find((entry) => entry.id === editionId);
+    assert.equal(edition.revision, 2);
+    const retained = edition.presentationHistory.find((entry) =>
+      entry.path.endsWith('-first-discoveries.json'),
+    );
+    assert.ok(retained, editionId);
+    const { snapshot } = await validateRetainedPresentation(await json('../../' + retained.path), {
+      edition,
+    });
+    assert.equal(snapshot.catalog.editions[0].revision, 1);
+    for (const descriptor of snapshot.catalog.campaigns) {
+      const oldSource = snapshot.files.find((file) => file.path === descriptor.sourcePath).data;
+      const current = projects.find(({ definition }) => definition.id === descriptor.id);
+      assert.deepEqual(createRewardMissionBindings(oldSource), current.missionBindings);
+      const oldRewards = snapshot.files.find((file) => file.path === descriptor.rewardPath).data;
+      for (const oldReward of oldRewards) {
+        const next = current.rewards.find((reward) => reward.id === oldReward.id);
+        assert.deepEqual(next.requirements, oldReward.requirements);
+        assert.equal(oldReward.revision, '1');
+        assert.equal(next.revision, '2');
+        for (const ref of completionRewardAssetReferences([oldReward]))
+          assert.ok(
+            snapshot.catalog.assets.some(
+              (asset) => asset.id === ref.assetId && asset.sha256 === ref.sha256,
+            ),
+          );
+      }
+      assert.equal(oldSource.packs[0].revision, '1');
+      assert.equal(current.source.packs[0].revision, '2');
+      for (const before of oldSource.missions) {
+        const after = current.source.missions.find((mission) => mission.id === before.id);
+        assert.notEqual(
+          before.presentation.backgroundAssetId,
+          after.presentation.backgroundAssetId,
+        );
+        missionCount++;
+      }
+    }
+  }
+  assert.equal(missionCount, 36);
+});
+
+test('later curricula use canonical progression with registered distinct presentations', () => {
   const advanced = projects.filter(({ definition }) => definition.progression);
   assert.deepEqual(
     advanced.map(({ definition }) => definition.id),
-    ['social-drone-community-connections', 'victory-drones-ideas-understanding'],
+    [
+      'social-drone-community-connections',
+      'victory-drones-ideas-understanding',
+      'ukraine-colour-clay-spring',
+      'ukraine-crimea-ornek',
+      'ukraine-voices-travel',
+      'ukraine-cities-symbols-time',
+      'ukraine-everyday-culture',
+      'fpv-parts-bench',
+      'fpv-soldering-workshop',
+      'fpv-four-controls',
+      'fpv-first-flight',
+      'fpv-drone-families',
+      'fpv-drones-ukraine',
+      'fpv-care-repair',
+    ],
   );
   for (const { definition, source } of advanced) {
-    assert.equal(source.campaigns[0].band, 3);
+    const { stage, band } = definition.progression;
+    assert.equal(source.campaigns[0].band, band);
     for (const [index, mission] of source.missions.entries()) {
       const roles = mission.actors.map((actor) => actor.role);
-      assert.ok(roles.includes('frontier-patrol'));
-      assert.equal(roles.includes('reclaimed-roamer'), index >= 3);
-      assert.equal(mission.design.difficulty.band, index >= 3 ? 4 : 3);
+      if (stage <= 3) {
+        assert.equal(roles.includes('frontier-patrol'), stage === 2 || index >= 3);
+        assert.equal(roles.includes('reclaimed-roamer'), stage === 3 || index >= 3);
+        assert.equal(roles.includes('territory-eroder'), stage === 3);
+      } else {
+        const expectedRole =
+          stage === 4
+            ? index < 2
+              ? 'trail-pursuer'
+              : 'heading-interceptor'
+            : stage === 5
+              ? index < 3
+                ? 'frontier-patrol'
+                : 'lane-emitter'
+              : index < 3
+                ? 'lane-emitter'
+                : 'relay-sentinel';
+        assert.ok(roles.includes(expectedRole), mission.id + ': declared campaign pressure');
+        if (index === 5) {
+          assert.ok(mission.relayLinks.length > 0, mission.id + ': finale connecting returns');
+          if (stage >= 5) assert.equal(source.maps[index].speedZones.length, 2);
+          if (stage === 6) assert.equal(mission.encounter.recipeId, 'shield-relays-v1');
+        }
+      }
+      assert.equal(mission.design.difficulty.band, band + (index >= 3 ? 1 : 0));
       assert.ok(mission.design.introduces.length <= 1);
     }
     const edition = COMPANY_EDITIONS.find((entry) => entry.id === definition.brandId);

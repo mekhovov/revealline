@@ -1,3 +1,6 @@
+import { t } from '../../game/i18n/index.mjs';
+import { mountRewardMedia } from '../../game/ui/reward-media.mjs';
+import { acquireStudioRewardAudio } from '../../game/studio/reward-audio.mjs';
 import { campaignLocalizationSha256 } from '../../game/editions/localization.mjs';
 import { boundedJSON } from '../../game/data-json.mjs';
 import { validateEditionRuntimeCatalog } from '../../game/editions/model.mjs';
@@ -10,13 +13,20 @@ import {
   validateStudioReport,
   studioPreviewURL,
   studioSelection,
+  withStudioCampaignHero,
 } from './model.mjs';
 import { verifyStudioPreview } from './preview.mjs';
 import { readStudioJSON } from './source-reader.mjs';
 import { createStudioReviewContext } from './review-model.mjs';
 import { createStudioReviewPane } from './review-pane.mjs';
-import { createStudioReward, previewStudioReward } from './reward-editor.mjs';
+import {
+  createStudioReward,
+  previewStudioReward,
+  rebindStudioRewardLocalization,
+} from './reward-editor.mjs';
 import { createDiscoveryEditor } from '../../game/studio/discovery-editor.mjs';
+import { createRewardPrintPreview } from '../../game/studio/reward-print-preview.mjs';
+import { mountDiscoveryExploration } from '../../game/ui/discovery-exploration.mjs';
 
 const $ = (id) => document.getElementById(id);
 const labels = [
@@ -74,6 +84,11 @@ let catalog,
   previewController = null,
   missionReview = null;
 const editorBuffers = new Map();
+let rewardPreviewExplorations = [];
+function disposeRewardPreviews() {
+  rewardPreviewExplorations.forEach((viewer) => viewer.dispose());
+  rewardPreviewExplorations = [];
+}
 const selected = () => studioSelection(catalog, editionId);
 const selectedCampaign = () => catalog.campaigns.find((campaign) => campaign.id === campaignId);
 const discoveryEditor = createDiscoveryEditor({
@@ -84,6 +99,52 @@ const discoveryEditor = createDiscoveryEditor({
       .get(selectedCampaign().sourcePath)
       ?.missions.find((item) => item.id === $('discovery-mission').value),
   getRewards: () => files.get(selectedCampaign().rewardPath) ?? [],
+  applyRewards: async (candidate) => {
+    const campaign = selectedCampaign(),
+      previousCatalog = catalog,
+      previousFiles = files,
+      nextFiles = new Map(files),
+      nextCatalog = structuredClone(catalog);
+    for (const path of [campaign.sourcePath, campaign.rewardPath, campaign.localizationPath].filter(
+      Boolean,
+    ))
+      if (editorBuffers.has(path))
+        throw new Error('Apply or discard pending campaign, reward and language edits first.');
+    if (!campaign.rewardPath) throw new Error('Add an explicit reward sidecar first.');
+    nextFiles.set(campaign.sourcePath, candidate.source);
+    nextFiles.set(campaign.rewardPath, candidate.rewards);
+    if (campaign.localizationPath) {
+      const localized = await rebindStudioRewardLocalization({
+        localization: files.get(campaign.localizationPath),
+        source: candidate.source,
+        descriptor: campaign,
+      });
+      nextFiles.set(campaign.localizationPath, localized.localization);
+      nextCatalog.campaigns.find((row) => row.id === campaign.id).localizationSha256 =
+        localized.sha256;
+    }
+    for (const edition of nextCatalog.editions.filter((row) =>
+      row.campaignIds.includes(campaign.id),
+    ))
+      edition.revision++;
+    const checkedCatalog = validateEditionRuntimeCatalog(nextCatalog);
+    validateStudioData(campaign.sourcePath, candidate.source, checkedCatalog, nextFiles);
+    validateStudioData(campaign.rewardPath, candidate.rewards, checkedCatalog, nextFiles);
+    if (
+      catalog !== previousCatalog ||
+      files !== previousFiles ||
+      selectedCampaign().id !== campaign.id
+    )
+      throw new Error('The authoring context changed. Review the atlas again before applying it.');
+    files = nextFiles;
+    catalog = checkedCatalog;
+    changed(
+      'Applied an interactive discovery revision. Completion requirements and gameplay are unchanged.',
+    );
+    renderCatalog();
+    await renderDocuments();
+    return true;
+  },
   apply: (candidate) => {
     const path = selectedCampaign().sourcePath;
     if (editorBuffers.has(path))
@@ -278,6 +339,7 @@ function renderCatalog() {
     `node scripts/company-studio.mjs import-draft --file ${edition.id}-draft.json --workspace .cache/${name}\n\nnode scripts/company-studio.mjs validate --workspace .cache/${name} --edition ${edition.id}\n\nnode scripts/company-studio.mjs preview --workspace .cache/${name} --edition ${edition.id} --out dist/company-previews/${output}\n\n# Import dist/company-previews/${output}.report.json in step 06`;
 }
 async function renderDocuments() {
+  disposeRewardPreviews();
   const ticket = ++loadGeneration,
     { edition } = selected(),
     campaign = selectedCampaign();
@@ -309,6 +371,15 @@ async function renderDocuments() {
     $(`${key}-json`).disabled = !path;
     $(`apply-${key}`).disabled = !path;
   }
+  chooseOptions(
+    $('campaign-hero-asset'),
+    catalog.assets.filter(
+      (asset) => campaign.assetIds.includes(asset.id) && /\.(?:png|jpe?g|webp)$/i.test(asset.path),
+    ),
+    campaign.heroAssetId,
+    true,
+  );
+  renderCampaignHero();
   const project = files.get(campaign.sourcePath);
   chooseOptions(
     $('discovery-mission'),
@@ -355,6 +426,19 @@ async function renderDocuments() {
   $('reward-preview').replaceChildren(
     node('p', 'Preview uses synthetic evidence only; it never earns player progress.'),
   );
+}
+function renderCampaignHero() {
+  const campaign = selectedCampaign(),
+    image = $('campaign-hero-preview');
+  const asset = catalog.assets.find(
+    (item) => item.id === $('campaign-hero-asset').value && campaign.assetIds.includes(item.id),
+  );
+  image.hidden = !asset;
+  image.alt = asset
+    ? t('tools:studio.campaignArtwork.alt', { name: campaign.name, defaultValue: campaign.name })
+    : '';
+  if (asset) image.src = new URL(asset.path, rootURL).href;
+  else image.removeAttribute('src');
 }
 async function applyCatalog(input, message) {
   catalog = validateEditionRuntimeCatalog(input);
@@ -449,6 +533,7 @@ function addRewardDraft() {
   );
 }
 function previewRewardDraft() {
+  disposeRewardPreviews();
   const campaign = selectedCampaign();
   const rewards = validateStudioData(campaign.rewardPath, $('rewards-json').value, catalog, files);
   const reward = rewards.find((item) => item.id === $('reward-preview-select').value) ?? rewards[0];
@@ -464,6 +549,15 @@ function previewRewardDraft() {
   });
   const locale = $('reward-preview-locale').value;
   const panel = $('reward-preview');
+  const previewText = (key, values = {}) =>
+    t(`interface:completionRewards.${key}`, { ...values, lng: locale });
+  const resourceLink = (label, url) => {
+    const link = node('a', label);
+    link.href = url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    return link;
+  };
   panel.replaceChildren(
     node('h3', reward.locales[locale].title),
     node('p', reward.locales[locale].teaser),
@@ -473,13 +567,30 @@ function previewRewardDraft() {
     ),
     node('p', `Missing missions: ${progress.missingMissionIds.join(', ') || 'None'}`),
   );
-  if (progress.eligible)
+  if (progress.eligible) {
+    const printStatus = node('p');
+    printStatus.setAttribute('role', 'status');
+    const printPreview = createRewardPrintPreview({
+      document,
+      getReward: () => reward,
+      getLocale: () => locale,
+      onSaved() {
+        printStatus.textContent = t('tools:studio.discovery.printPreviewSaved', { lng: locale });
+      },
+      onError(error) {
+        printStatus.textContent = error.message;
+      },
+    });
+    rewardPreviewExplorations.push(printPreview);
+    panel.append(printPreview.button, printStatus);
     for (const payload of reward.payloads) {
       panel.append(node('h4', payload.locales[locale].title));
-      if (payload.type === 'knowledge')
+      if (payload.type === 'knowledge') {
         for (const paragraph of payload.locales[locale].paragraphs)
           panel.append(node('p', paragraph));
-      else if (payload.type === 'image') {
+        for (const source of payload.locales[locale].sources ?? [])
+          panel.append(resourceLink(source.title, source.url));
+      } else if (payload.type === 'image') {
         const asset = catalog.assets.find(
           (item) => item.id === payload.asset.assetId && item.sha256 === payload.asset.sha256,
         );
@@ -490,11 +601,57 @@ function previewRewardDraft() {
           image.loading = 'lazy';
           panel.append(image);
         }
+      } else if (['audio', 'video'].includes(payload.type)) {
+        const section = node('section');
+        panel.append(section);
+        const audioOwner = acquireStudioRewardAudio(document);
+        const viewer = mountRewardMedia({
+          container: section,
+          payload,
+          locale,
+          audioMaster: audioOwner.master,
+          musicDucker: { acquire: () => () => {} },
+          provider: {
+            editionId,
+            rootURL,
+            catalog,
+            currentCatalog: catalog,
+            bootstrap: { catalog, selection: selected() },
+          },
+        });
+        rewardPreviewExplorations.push({
+          dispose() {
+            viewer.dispose();
+            audioOwner.release();
+          },
+        });
+      } else if (payload.type === 'exploration') {
+        const section = node('section');
+        panel.append(section);
+        rewardPreviewExplorations.push(
+          mountDiscoveryExploration({ container: section, payload, locale }),
+        );
+      } else if (payload.type === 'url') {
+        panel.append(
+          node('p', payload.url),
+          resourceLink(previewText('openResource'), payload.url),
+        );
+      } else if (payload.type === 'public-code') {
+        panel.append(
+          node('p', payload.issuer),
+          node('code', payload.code),
+          node('p', payload.locales[locale].terms),
+        );
+        if (payload.expiresOn)
+          panel.append(node('p', previewText('expires', { date: payload.expiresOn })));
+        if (payload.termsUrl) panel.append(resourceLink(previewText('terms'), payload.termsUrl));
+        panel.append(node('p', previewText('publicCode')));
       } else
         panel.append(
           node('p', `Payload: ${payload.type}. Review its full fields in the JSON draft.`),
         );
     }
+  }
   panel.append(
     node(
       'p',
@@ -692,6 +849,16 @@ async function main() {
     brand.iconAssetId = $('icon-asset').value || null;
     brand.fontAssetId = $('font-asset').value || null;
     await applyCatalog(draft, 'Artwork roles applied. Media bytes remain pinned by the catalog.');
+  });
+  $('campaign-hero-asset').onchange = renderCampaignHero;
+  $('campaign-art-form').onsubmit = guarded(async (event) => {
+    event.preventDefault();
+    if (editorBuffers.has('catalog'))
+      throw new Error('Apply or discard pending catalog JSON before assigning campaign artwork.');
+    await applyCatalog(
+      withStudioCampaignHero(catalog, selectedCampaign().id, $('campaign-hero-asset').value),
+      t('tools:studio.campaignArtwork.applied'),
+    );
   });
   $('campaign-form').onsubmit = guarded(async (event) => {
     event.preventDefault();
