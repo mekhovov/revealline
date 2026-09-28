@@ -4987,5 +4987,9 @@
   "downloads.offline.prepareFirst": "Prepare offline play first.",
   "downloads.offline.waiting": "Update saved. Close all tabs of this version to use it; your current game continues unchanged.",
   "downloads.offline.ready": "Offline files verified. This version can open without a connection while the browser retains its storage.",
-  "downloads.offline.coreVerified": "Core offline files verified."
+  "downloads.offline.coreVerified": "Core offline files verified.",
+  "profileTransfer.savedFlight": "one saved flight",
+  "profileTransfer.noSavedFlight": "no saved flight",
+  "profileTransfer.legacySuffix": " (legacy)",
+  "profileTransfer.copiedFrom": "Copied from {{version}}."
 }
