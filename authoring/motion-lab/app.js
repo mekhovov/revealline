@@ -24,6 +24,7 @@ import {
 } from './animation.mjs';
 import { paintCharacter, fittedBodySize } from './render-character.mjs';
 import { createRotorEditor, rotorSamplingRecipe } from './rotor-editor.mjs';
+import { createPartsEditor } from './parts-editor.mjs';
 import {
   validateCollection,
   createProfile,
@@ -142,8 +143,10 @@ function mountMotionLab() {
     inspectionAnimation = createAnimationState();
   const recipeOverrides = new Map(),
     rotorOverrides = new Map(),
+    partsOverrides = new Map(),
     rigOverrides = new Map();
-  let rotorEditor = null;
+  let rotorEditor = null,
+    partsEditor = null;
   const storageKey = 'xonix.motion-lab.collection.v1';
   const profileOptions = { mode: 'lab', profileId: 'local-design' };
   let recoveryRaw = null,
@@ -608,7 +611,10 @@ function mountMotionLab() {
     return {
       ...recipe,
       components: recipe.components.map((component) =>
-        component.type === 'rotors' ? { ...component, ...overrides } : component,
+        component.type === 'rotors'
+          ? { ...component, ...overrides }
+          : (partsOverrides.get(characterId)?.find((part) => part.id === component.id) ??
+            component),
       ),
     };
   }
@@ -697,6 +703,7 @@ function mountMotionLab() {
       ),
     );
     rotorEditor?.refresh();
+    partsEditor?.refresh();
   }
 
   function componentName(type) {
@@ -806,6 +813,43 @@ function mountMotionLab() {
   }
 
   function setupCollection() {
+    partsEditor = createPartsEditor({
+      elements: Object.fromEntries(
+        [
+          'root',
+          'component',
+          'anchor',
+          'x',
+          'y',
+          'rate',
+          'limits',
+          'json',
+          'apply',
+          'reset',
+          'export',
+          'status',
+        ].map((key) => [key, $(`parts-editor-${key}`)]),
+      ),
+      getSelection: () => ({ id: inspectedCharacter, recipe: recipeFor(inspectedCharacter) }),
+      apply: (parts) => {
+        if (parts === null) partsOverrides.delete(inspectedCharacter);
+        else partsOverrides.set(inspectedCharacter, parts);
+        updateAnimationControls();
+        render();
+        readouts();
+      },
+      listen,
+      text: (key, values) => t(`tools:motionLab.partsEditor.${key}`, values),
+      componentName,
+      download: (json, name) => {
+        const url = URL.createObjectURL(new Blob([json], { type: 'application/json' })),
+          link = document.createElement('a');
+        link.href = url;
+        link.download = name;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 0);
+      },
+    });
     rotorEditor = createRotorEditor({
       elements: Object.fromEntries(
         [
@@ -944,6 +988,7 @@ function mountMotionLab() {
     listen($('animation-recipe'), 'change', (event) => {
       recipeOverrides.set(inspectedCharacter, event.target.value);
       rotorOverrides.delete(inspectedCharacter);
+      partsOverrides.delete(inspectedCharacter);
       inspectionAnimation = createAnimationState();
       if (inspectedCharacter === selection.character) liveAnimation = createAnimationState();
       updateAnimationControls();
@@ -2245,6 +2290,7 @@ function mountMotionLab() {
     if (!disposed && state) {
       updateReduced();
       rotorEditor?.refresh();
+      partsEditor?.refresh();
     }
   });
   const stopDisplay = display.subscribe((value) => {

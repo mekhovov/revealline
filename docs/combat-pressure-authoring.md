@@ -41,8 +41,9 @@ Studio does not substitute Solo for either mode.
 
 ## Exact Solo practice preview
 
-1. Accept the intended mission edition and its explicit combat setting, then
-   choose **Play exact Solo preview** and **Start mission**.
+1. Accept the intended mission edition and its explicit combat setting. For an
+   enabled Solo edition, leave **Show enemy remains** checked or clear it for the
+   next preview, then choose **Play exact Solo preview** and **Start mission**.
 2. Inspect scout/sentry bodies, locked warning rays, fired projectiles and capture
    cancellation through the actual shared `BoardPainter`. Pause and reduced
    effects preserve the information needed to read live threats.
@@ -58,6 +59,40 @@ behavior or default mission is introduced. The historical held patch in
 `docs/patches/combat-board-e9434d03.patch` remains unchanged; the
 [integration tests](../game/test/combat-board-adapter.test.mjs) now exercise the
 actual checked-out painter as well as retained historical evidence.
+
+### Preview-only remains choice
+
+**Show enemy remains** starts checked. Studio exposes it only when the selected
+mission resolves to valid, explicitly enabled Solo combat. It is hidden and
+disabled for ordinary, disabled, non-Solo, missing or rejected mission editions.
+Changing missions preserves the checkbox's choice within the open Studio page.
+Turning it off hides inert remains; live enemies, locked aim warnings, shots and
+brief sparks remain visible. The option does not change reduced-effects behavior.
+
+Each launch snapshots the choice after validating the mission and before waiting
+for theme or artwork loading. A later checkbox change applies to the next launch.
+Native Retry retains the current child's launch choice. Close, replacement launch
+and page departure retire the pending operation; a late completion cannot revive
+that preview or write its scenario after retirement.
+
+The unchecked choice travels in the child's URL, for example
+`?practice=1&revision=studio-7&preview-remains=hide`. The
+[practice presentation parser](../game/ui/practice-presentation.mjs) accepts it
+only for an actual practice session, excluding course sessions, with exactly one
+`practice=1` and exactly one `preview-remains=hide`. Missing, unknown, malformed or
+duplicate option values retain the usual shown presentation. Ordinary game and
+course sessions ignore this preview option.
+
+A successful launch still uses the existing tab-scoped scenario transport.
+Showing and hiding remains produce byte-identical scenario payloads; the choice
+is not written into the project, scenario, replay or persistent player settings.
+Real optional-combat routes produce identical authoritative checkpoints and
+verified replays for both choices. The
+[host checks](../game/test/practice-presentation-host.test.mjs),
+[query and localized control checks](../game/test/practice-presentation.test.mjs)
+and [Studio lifecycle checks](../game/test/studio-preview-readiness.test.mjs)
+cover these boundaries. This is a Studio practice control, not a global remains
+preference for ordinary or published play; that broader preference remains open.
 
 If a frame fails after startup, the practice child stops simulation and gameplay
 input and displays a persistent failure message. It cannot Resume or Retry that
@@ -82,7 +117,10 @@ current actor catalogue. Through the actual Solo painter, compare absent/off
 commands, exercise pressure and sentry locks together, pause/reduced effects,
 shot travel, legal capture cancellation and exact replay/restoration. Import the
 source in Studio, launch ordinary no-awards practice, make a cut, pause, Close
-and relaunch. Inject a controlled renderer fault only in the host test, with
+and relaunch. Compare Show enemy remains on/off: preserve live threat cues,
+scenario bytes and replay identity; snapshot before media loading, reject
+ambiguous preview-query values and retain the choice across mission selection.
+Inject a controlled renderer fault only in the host test, with
 Confirm held: after release, native Return must work without blur. Retire stale
 loads and ready monitors on pagehide. Inspect complete board/HUD fit at 1280×720,
 390×844 and 844×390; do not call pointer clicks touch certification. Preserve

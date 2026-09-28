@@ -83,6 +83,23 @@ h2 {
   gap: 8px;
   align-items: center;
 }
+.preview-remains-options {
+  flex-basis: 100%;
+}
+.preview-remains-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin: 0;
+}
+.preview-remains-toggle input {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+}
 .toolbar {
   padding: 8px 0 24px;
 }

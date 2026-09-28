@@ -7,6 +7,8 @@ import { observePreviewReadiness } from '../studio/preview-readiness.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { createStarterProject } from '../content-design/starter.mjs';
+import { createCombatCandidates } from '../content-design/combat-candidates.mjs';
+import { freezeDesign } from '../content-design/catalogs.mjs';
 
 function fixture({ watchPractice = false } = {}) {
   let clock = 0,
@@ -191,7 +193,7 @@ test('practice render failure before first readiness is visible without a ready 
 async function studioLifecycle() {
   const source = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
-  const functions = ['launchPreview', 'retirePreview', 'closePreview'];
+  const functions = ['launchPreview', 'retirePreview', 'closePreview', 'inspectBoard'];
   const nodes = tree.body.filter(
     (node) =>
       (node.type === 'FunctionDeclaration' && functions.includes(node.id.name)) ||
@@ -201,37 +203,81 @@ async function studioLifecycle() {
         node.expression.callee.property?.name === 'addEventListener' &&
         node.expression.arguments[0]?.value === 'pagehide'),
   );
-  assert.equal(nodes.length, 4);
-  const theme = JSON.parse(
+  assert.equal(nodes.length, 5);
+  const themes = JSON.parse(
     await readFile(new URL('../content-design/themes.json', import.meta.url)),
-  ).themes.find((candidate) => candidate.id === 'horizon');
+  ).themes;
   const media = [],
     writes = [],
     messages = [],
     timers = new Set(),
     callbacks = [],
     handlers = new Map();
-  let focus = 'outside-preview';
+  let focus = 'outside-preview',
+    draft = createStarterProject();
+  const element = () => ({
+    hidden: false,
+    disabled: false,
+    value: '',
+    options: [],
+    replaceChildren(...options) {
+      this.options = options;
+    },
+  });
   const elements = {
     preview: { src: 'about:blank', contentDocument: null },
     'preview-panel': { hidden: true, scrollIntoView() {} },
     'preview-status': {},
+    'preview-show-remains': { checked: true, disabled: true },
+    'preview-remains-options': { hidden: true },
+    mission: { value: 'nearby-shore' },
+    difficulty: { value: 'standard' },
     play: {
       focus() {
         focus = 'play';
       },
     },
   };
+  const $ = (id) => (elements[id] ??= element());
+  const syncEditor = { sync() {} };
   const context = {
     URL,
     AbortController,
     location: { href: 'https://fixture/game/studio/' },
-    $: (id) => elements[id],
+    $,
+    document: { createElement: element },
     window: { addEventListener: (type, handler) => handlers.set(type, handler) },
+    session: { current: () => draft },
+    freezeDesign,
+    syncStudioDifficulty() {},
+    acceptanceInspector: syncEditor,
+    actorEditor: syncEditor,
+    combatEditor: syncEditor,
+    geometryEditor: syncEditor,
+    bonusEditor: syncEditor,
+    timedBonusEditor: syncEditor,
+    objectiveEditor: syncEditor,
+    relayEditor: syncEditor,
+    directionalEditor: syncEditor,
+    encounterEditor: syncEditor,
+    traceRecovery: syncEditor,
+    setBoardAvailability() {},
+    draw() {},
+    inspectEffectiveGameplay() {},
+    bindStudioPreviewCopy() {},
+    studioGameplayText() {},
+    studioDiagnosticText() {},
+    studioItemCaption() {},
+    t: (key) => key,
     compileContentProject,
     prepareContentPreview,
-    loadPreviewTheme: ({ signal }) =>
-      new Promise((resolve) => media.push({ signal, resolve: () => resolve(theme) })),
+    loadPreviewTheme: ({ signal, themeId }) =>
+      new Promise((resolve) =>
+        media.push({
+          signal,
+          resolve: () => resolve(themes.find((theme) => theme.id === themeId)),
+        }),
+      ),
     sessionStorage: { setItem: (...args) => writes.push(args) },
     localizedMessage: (key) => key,
     localizedText: (node, value) => {
@@ -251,17 +297,17 @@ async function studioLifecycle() {
         cancel: (callback) => timers.delete(callback),
       }),
     stopGameplayTuning() {},
-    gameplayTuning: { dispose() {} },
+    gameplayTuning: { dispose() {}, status: () => ({ overrides: {} }) },
     stopMapLocale() {},
-    imageWorkbench: { dispose() {} },
+    imageWorkbench: { ...syncEditor, dispose() {} },
     clearTimeout() {},
   };
   new Script(
     `'use strict';
      let previewRevision = 0, previewController = null, stopPreviewReadiness = () => {},
-         paintedPreview = null, saveTimer;
+         paintedPreview = null, saveTimer, inspectedTrail = [], tuningRevision = null;
      ${nodes.map((node) => source.slice(node.start, node.end)).join('\n')}
-     globalThis.previewActions = { launchPreview, closePreview };`,
+     globalThis.previewActions = { launchPreview, closePreview, inspectBoard };`,
   ).runInNewContext(context);
   return {
     elements,
@@ -271,7 +317,13 @@ async function studioLifecycle() {
     timers,
     callbacks,
     focus: () => focus,
-    launch: () => context.previewActions.launchPreview(createStarterProject(), 'nearby-shore'),
+    launch: (source = createStarterProject(), missionId = 'nearby-shore') =>
+      context.previewActions.launchPreview(source, missionId),
+    inspect: (source, missionId) => {
+      draft = source;
+      elements.mission.value = missionId;
+      return context.previewActions.inspectBoard();
+    },
     close: () => context.previewActions.closePreview(),
     pagehide: (persisted) => handlers.get('pagehide')({ persisted }),
   };
@@ -334,4 +386,101 @@ test('Studio BFcache retirement stops post-ready monitoring and deliberate relau
   assert.equal(f.elements.preview.src, 'about:blank');
   assert.equal(f.elements['preview-panel'].hidden, true);
   assert.equal(f.focus(), 'play', 'Only deliberate Close returns focus to the opener.');
+});
+
+test('Studio exposes the remains option only for a validated enabled Solo mission and remembers its choice', async () => {
+  const f = await studioLifecycle();
+  const source = createCombatCandidates(),
+    before = JSON.stringify(source),
+    checkbox = f.elements['preview-show-remains'],
+    options = f.elements['preview-remains-options'];
+  assert.equal(checkbox.checked, true);
+  f.inspect(source, 'workshop-sweep');
+  assert.equal(options.hidden, false);
+  assert.equal(checkbox.disabled, false);
+  checkbox.checked = false;
+
+  for (const [project, mission] of [
+    [createStarterProject(), 'nearby-shore'],
+    [source, 'absent-mission'],
+    [
+      {
+        ...structuredClone(source),
+        missions: source.missions.map((m) => ({ ...m, combat: { ...m.combat, enabled: false } })),
+      },
+      'workshop-sweep',
+    ],
+    [
+      {
+        ...structuredClone(source),
+        missions: source.missions.map((m) => ({ ...m, modes: ['versus'] })),
+      },
+      'workshop-sweep',
+    ],
+  ]) {
+    f.inspect(project, mission);
+    assert.equal(options.hidden, true);
+    assert.equal(checkbox.disabled, true);
+    assert.equal(
+      checkbox.checked,
+      false,
+      'Changing eligibility must preserve the document choice.',
+    );
+  }
+  f.inspect(source, 'sentry-detour');
+  assert.equal(options.hidden, false);
+  assert.equal(checkbox.disabled, false);
+  assert.equal(checkbox.checked, false);
+
+  const invalid = structuredClone(source);
+  invalid.missions[0].coverage = 2;
+  assert.throws(() => f.inspect(invalid, 'workshop-sweep'));
+  assert.equal(options.hidden, true, 'Rejected input cannot leave an accepted control exposed.');
+  assert.equal(checkbox.disabled, true);
+  assert.equal(checkbox.checked, false);
+  assert.equal(JSON.stringify(source), before);
+  assert.deepEqual(f.writes, [], 'A display choice or mission inspection writes no scenario.');
+});
+
+test('Studio snapshots remains before media awaits and transports it outside byte-identical scenario data', async () => {
+  const f = await studioLifecycle(),
+    source = createCombatCandidates(),
+    before = JSON.stringify(source),
+    checkbox = f.elements['preview-show-remains'];
+  checkbox.checked = false;
+  const hidden = f.launch(source, 'workshop-sweep');
+  assert.equal(f.media.length, 1);
+  assert.equal(f.writes.length, 0);
+  checkbox.checked = true;
+  f.media[0].resolve();
+  await hidden;
+  assert.equal(new URL(f.elements.preview.src).searchParams.get('preview-remains'), 'hide');
+
+  const shown = f.launch(source, 'workshop-sweep');
+  checkbox.checked = false;
+  f.media[1].resolve();
+  await shown;
+  assert.equal(new URL(f.elements.preview.src).searchParams.has('preview-remains'), false);
+  assert.equal(f.writes.length, 2);
+  assert.equal(f.writes[0][1], f.writes[1][1]);
+  assert.equal(JSON.stringify(source), before);
+  f.close();
+});
+
+test('Studio ignores the remembered hidden-remains choice for ordinary and disabled previews', async () => {
+  const f = await studioLifecycle();
+  f.elements['preview-show-remains'].checked = false;
+  const disabled = createCombatCandidates();
+  disabled.missions[0].combat.enabled = false;
+  for (const [source, missionId] of [
+    [createStarterProject(), 'nearby-shore'],
+    [disabled, 'workshop-sweep'],
+  ]) {
+    const pending = f.launch(source, missionId);
+    f.media.at(-1).resolve();
+    await pending;
+    assert.equal(new URL(f.elements.preview.src).searchParams.has('preview-remains'), false);
+    assert.equal(f.elements['preview-show-remains'].checked, false);
+  }
+  f.close();
 });

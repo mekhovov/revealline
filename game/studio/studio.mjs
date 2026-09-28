@@ -372,6 +372,8 @@ function draw(preview) {
   canvas.setAttribute('aria-describedby', 'geometry capture-summary');
 }
 function inspectBoard(trailCells = []) {
+  $('preview-remains-options').hidden = true;
+  $('preview-show-remains').disabled = true;
   const project = freezeDesign(session.current());
   const mission = project.missions.find((entry) => entry.id === $('mission').value);
   syncStudioDifficulty($('difficulty'), project.difficultyCatalogId, {
@@ -470,6 +472,10 @@ function inspectBoard(trailCells = []) {
     }),
   );
   $('play').disabled = !mission.modes.includes('solo');
+  const optionalSolo =
+    manifest.mode === 'solo' && manifest.level.classic?.combatPatrols?.enabled === true;
+  $('preview-remains-options').hidden = !optionalSolo;
+  $('preview-show-remains').disabled = !optionalSolo;
   $('export-team').hidden = !mission.modes.includes('team');
   $('team-sequence-tools').hidden = !mission.modes.includes('team');
   const selectedTeamCampaign = $('team-test-campaign').value;
@@ -1190,13 +1196,19 @@ async function launchPreview(source, missionId, difficulty) {
   $('preview').src = 'about:blank';
   $('preview-panel').hidden = false;
   localizedText($('preview-status'), localizedMessage('tools:studio.preview.preparing'));
-  let result, previewProject;
+  let result,
+    previewProject,
+    showCombatScrap = true;
   try {
     // Own one immutable edition across asynchronous media loading and reuse its
     // validated projections; never compile the whole library twice per launch.
     const project = compileContentProject(source);
     previewProject = project.source;
     const manifest = prepareContentPreview(project, missionId, { difficulty }).manifest;
+    // Snapshot only a validated optional Solo mission's cosmetic launch choice.
+    // Later control changes apply to the next preview, never the pending one.
+    if (manifest.mode === 'solo' && manifest.level.classic?.combatPatrols?.enabled === true)
+      showCombatScrap = $('preview-show-remains').checked;
     const pin = manifest.background;
     const [theme, artwork] = await Promise.all([
       loadPreviewTheme({ themeId: manifest.presentation.themeId, signal: controller.signal }),
@@ -1217,7 +1229,9 @@ async function launchPreview(source, missionId, difficulty) {
       localizedText($('preview-status'), () => studioPreviewFailureText(error));
     return;
   }
-  const url = new URL(`../?practice=1&revision=studio-${ticket}`, location.href).href;
+  const target = new URL(`../?practice=1&revision=studio-${ticket}`, location.href);
+  if (!showCombatScrap) target.searchParams.set('preview-remains', 'hide');
+  const url = target.href;
   $('preview').src = url;
   localizedText($('preview-status'), () =>
     studioPreviewLoadingText(previewProject, missionId, difficulty),

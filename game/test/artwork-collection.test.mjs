@@ -435,7 +435,7 @@ test('actual panel imports JSON with originals, previews declarations, exports u
     const preview = $('artwork-preview').children[0];
     assert.equal(preview.dataset.medium, 'pixel-art');
     preview.onload();
-    assert.match($('artwork-status').textContent, /Verified source preview/);
+    assert.match($('artwork-status').textContent, /Verified file preview/);
     assert.match(
       $('artwork-provenance').textContent,
       /Reference only; no source pixels incorporated/,
@@ -550,4 +550,274 @@ test('actual panel imports JSON with originals, previews declarations, exports u
     globalThis.fetch = fetch;
     setLocale(originalLocale, { persist: false });
   }
+});
+
+// Mount the actual panel and HTML controls. Decoding and board preparation are
+// injected boundaries: these 1×1 packets exercise ownership, not resized pixels.
+async function preparationPanel(t) {
+  const source = await fixture();
+  const html = await readFile(
+    new URL('../../authoring/asset-studio/index.html', import.meta.url),
+    'utf8',
+  );
+  const document = new Document(),
+    window = new Events(),
+    calls = [],
+    live = new Map();
+  for (const [, tag, id] of html.matchAll(/<(\w+)\b[^>]*\bid="(artwork-[^"]+)"/g)) {
+    const element = document.createElement(tag);
+    element.id = id;
+    document.body.append(element);
+  }
+  const $ = (id) => document.getElementById(id),
+    previousImage = globalThis.Image,
+    previousLocale = getLocale();
+  let serial = 0,
+    nextFailure = null,
+    panel;
+  class ImageFixture {
+    naturalWidth = 1;
+    naturalHeight = 1;
+    set src(value) {
+      if (value) queueMicrotask(() => this.onload?.());
+    }
+    removeAttribute() {}
+  }
+  globalThis.Image = ImageFixture;
+  t.mock.method(URL, 'createObjectURL', (blob) => {
+    const url = `blob:board-panel-${++serial}`;
+    live.set(url, blob);
+    return url;
+  });
+  t.mock.method(URL, 'revokeObjectURL', (url) => live.delete(url));
+  setLocale('en', { persist: false });
+  t.after(() => {
+    try {
+      panel?.dispose();
+      assert.equal(live.size, 0, 'The mounted panel releases every owned preview/download URL.');
+    } finally {
+      globalThis.Image = previousImage;
+      setLocale(previousLocale, { persist: false });
+    }
+  });
+  panel = mountArtworkCollectionPanel({
+    document,
+    window,
+    prepareDerivative(current, parentId, options, { signal }) {
+      if (nextFailure) {
+        const error = nextFailure;
+        nextFailure = null;
+        throw error;
+      }
+      const gate = deferred();
+      calls.push({ current, parentId, options, signal, ...gate });
+      return gate.promise; // Deliberately ignores abort; the host must reject stale adoption.
+    },
+  });
+  const load = async (metadata = source.document) => {
+    $('artwork-files').files = [
+      new File([JSON.stringify(metadata)], 'packet.json'),
+      new File([source.bytes], 'source.png'),
+    ];
+    await $('artwork-files').onchange();
+  };
+  await load();
+  return {
+    $,
+    window,
+    panel,
+    calls,
+    live,
+    source,
+    load,
+    failNext: (error) => {
+      nextFailure = error;
+    },
+    async exported() {
+      await $('artwork-export').onclick();
+      const link = $('artwork-download').querySelector('a');
+      return importArtworkCollection(live.get(link.href), { decodeImage: dimensions });
+    },
+  };
+}
+
+async function injectedBoardPacket(current) {
+  const document = changed(current.document, (next) => {
+    next.revision++;
+    const child = structuredClone(next.artworks[0]);
+    child.id = 'injected-board';
+    child.file.name = 'injected-board.png';
+    child.provenance.origin = 'derivative';
+    child.provenance.prompt = '';
+    child.provenance.derivative = {
+      parent: next.artworks[0].id,
+      changes: 'Injected 1×1 lifecycle fixture; no resizing or pixel-quality claim.',
+    };
+    next.artworks.push(child);
+  });
+  const files = new Map(current.assets);
+  files.set('injected-board.png', files.get('source.png'));
+  return verifyArtworkCollection(document, files, { decodeImage: dimensions });
+}
+
+test('actual board preparation snapshots parent/options and cancelled late work retains accepted preview and export', async (t) => {
+  const f = await preparationPanel(t),
+    { $ } = f,
+    oldPreview = $('artwork-preview').children[0];
+  await f.exported();
+  const oldDownload = $('artwork-download').querySelector('a'),
+    oldURLs = [...f.live.keys()],
+    before = JSON.stringify(f.source.document);
+  $('artwork-board').value = 'classic';
+  $('artwork-fit').value = 'cover';
+  const pending = $('artwork-prepare').onclick(),
+    call = f.calls[0];
+  assert.equal(call.parentId, 'source');
+  assert.deepEqual(call.current.document, f.source.document);
+  assert.deepEqual(call.options, { board: 'classic', fit: 'cover' });
+  for (const id of [
+    'artwork-item',
+    'artwork-board',
+    'artwork-fit',
+    'artwork-treatment',
+    'artwork-prepare',
+    'artwork-export',
+  ])
+    assert.equal($(id).disabled, true, id);
+  assert.equal($('artwork-cancel').disabled, false);
+  // A later control value cannot rewrite the operation's captured arguments.
+  $('artwork-item').value = 'later-selection';
+  $('artwork-board').value = 'wide';
+  $('artwork-fit').value = 'contain';
+  assert.equal(call.parentId, 'source');
+  assert.deepEqual(call.options, { board: 'classic', fit: 'cover' });
+  $('artwork-item').value = 'source';
+  $('artwork-cancel').onclick();
+  assert.equal(call.signal.aborted, true);
+  const cancelled = $('artwork-status').textContent;
+  call.resolve(await injectedBoardPacket(call.current));
+  await pending;
+  assert.equal($('artwork-status').textContent, cancelled);
+  assert.match(cancelled, /Cancelled/);
+  assert.equal($('artwork-preview').children[0], oldPreview);
+  assert.equal($('artwork-download').querySelector('a'), oldDownload);
+  assert.deepEqual([...f.live.keys()], oldURLs);
+  assert.equal($('artwork-item').options.length, 1);
+  assert.equal($('artwork-prepare').disabled, false);
+  assert.deepEqual((await f.exported()).document, f.source.document);
+  assert.equal(JSON.stringify(f.source.document), before);
+});
+
+test('actual board preparation adopts one verified derivative, selects it and exports every unchanged original', async (t) => {
+  const f = await preparationPanel(t),
+    { $ } = f,
+    oldPreview = $('artwork-preview').children[0],
+    oldURL = oldPreview.src;
+  await f.exported();
+  const oldDownloadURL = $('artwork-download').querySelector('a').href;
+  const pending = $('artwork-prepare').onclick(),
+    call = f.calls[0],
+    prepared = await injectedBoardPacket(call.current);
+  call.resolve(prepared);
+  await pending;
+  assert.equal($('artwork-item').value, 'injected-board');
+  assert.deepEqual(
+    $('artwork-item').options.map((option) => option.value),
+    ['source', 'injected-board'],
+  );
+  assert.notEqual($('artwork-preview').children[0], oldPreview);
+  assert.equal(f.live.has(oldURL), false);
+  assert.equal(f.live.has(oldDownloadURL), false);
+  assert.equal(f.live.size, 1);
+  assert.equal($('artwork-download').children.length, 0);
+  assert.equal($('artwork-cancel').disabled, true);
+  assert.equal($('artwork-prepare').disabled, false);
+  assert.equal($('artwork-status').getAttribute('aria-busy'), 'false');
+  assert.match($('artwork-provenance').textContent, /injected-board\.png/);
+  const exported = await f.exported();
+  assert.deepEqual(exported.document, prepared.document);
+  assert.deepEqual(exported.document.artworks[0], f.source.document.artworks[0]);
+  assert.deepEqual(
+    new Uint8Array(await exported.assets.get('source.png').arrayBuffer()),
+    new Uint8Array(f.source.bytes),
+  );
+  assert.deepEqual(
+    call.current.document,
+    f.source.document,
+    'Preparation never changes its accepted parent.',
+  );
+});
+
+test('actual board preparation preflight rejection preserves the accepted draft, preview and usable download', async (t) => {
+  const f = await preparationPanel(t),
+    { $ } = f;
+  await f.exported();
+  const oldPreview = $('artwork-preview').children[0],
+    oldDownload = $('artwork-download').querySelector('a'),
+    oldURLs = [...f.live.keys()];
+  f.failNext(new Error('Keep the larger original; this source would need upscaling.'));
+  await $('artwork-prepare').onclick();
+  assert.match($('artwork-status').textContent, /would need upscaling/);
+  assert.equal($('artwork-preview').children[0], oldPreview);
+  assert.equal($('artwork-download').querySelector('a'), oldDownload);
+  assert.deepEqual([...f.live.keys()], oldURLs);
+  assert.equal($('artwork-item').value, 'source');
+  assert.equal($('artwork-prepare').disabled, false);
+  assert.equal($('artwork-export').disabled, false);
+  assert.deepEqual((await f.exported()).document, f.source.document);
+});
+
+test('actual board preparation cannot replace a newer import or revive a BFCache-retired/disposed panel', async (t) => {
+  const f = await preparationPanel(t),
+    { $ } = f;
+  const pending = $('artwork-prepare').onclick(),
+    oldCall = f.calls[0];
+  const replacement = changed(f.source.document, (next) => {
+    next.id = 'replacement';
+  });
+  await f.load(replacement);
+  assert.equal(oldCall.signal.aborted, true);
+  const replacementPreview = $('artwork-preview').children[0];
+  oldCall.resolve(await injectedBoardPacket(oldCall.current));
+  await pending;
+  assert.equal($('artwork-preview').children[0], replacementPreview);
+  assert.deepEqual((await f.exported()).document, replacement);
+
+  const hiding = $('artwork-prepare').onclick(),
+    hideCall = f.calls[1];
+  f.window.emit('pagehide', { persisted: true });
+  assert.equal(hideCall.signal.aborted, true);
+  assert.equal(f.live.size, 0);
+  f.window.emit('pageshow', { persisted: true });
+  const returned = $('artwork-status').textContent;
+  hideCall.resolve(await injectedBoardPacket(hideCall.current));
+  await hiding;
+  assert.equal($('artwork-status').textContent, returned);
+  assert.equal(f.live.size, 0, 'Returning and completing retired work allocates no preview.');
+  assert.equal($('artwork-preview').children.length, 0);
+  $('artwork-preview-source').onclick();
+  assert.equal(f.live.size, 1);
+  assert.deepEqual((await f.exported()).document, replacement);
+
+  const leaving = $('artwork-prepare').onclick(),
+    lastCall = f.calls[2];
+  f.panel.dispose();
+  assert.equal(lastCall.signal.aborted, true);
+  assert.equal(f.live.size, 0);
+  const finalStatus = $('artwork-status').textContent;
+  lastCall.resolve(await injectedBoardPacket(lastCall.current));
+  await leaving;
+  assert.equal(f.live.size, 0);
+  assert.equal($('artwork-preview').children.length, 0);
+  assert.equal($('artwork-status').textContent, finalStatus);
+  for (const id of [
+    'artwork-prepare',
+    'artwork-export',
+    'artwork-cancel',
+    'artwork-preview-source',
+  ])
+    assert.equal($(id).onclick, null, id);
+  assert.equal($('artwork-files').onchange, null);
+  assert.equal(f.window.listeners.get('pagehide').size, 0);
+  assert.equal(f.window.listeners.get('pageshow').size, 0);
 });

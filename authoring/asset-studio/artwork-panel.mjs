@@ -6,6 +6,7 @@ import {
   verifyArtworkCollection,
 } from './artwork-collection.mjs';
 import { createStudioDownload } from './download.mjs';
+import { prepareArtworkDerivative } from './artwork-derivative.mjs';
 import { t, localizedText, localizedAttribute, formatNumber } from '../../game/i18n/index.mjs';
 
 const copy = (key, values) => t(`tools:studio.artwork.${key}`, values);
@@ -69,7 +70,12 @@ export function createArtworkCollectionDraft() {
 
 /** Mounted inside Asset Studio; neither this packet nor its declarations enter
  * the saved .rltheme workspace, runtime bindings or approval history. */
-export function mountArtworkCollectionPanel({ document, window, urls = URL }) {
+export function mountArtworkCollectionPanel({
+  document,
+  window,
+  urls = URL,
+  prepareDerivative = prepareArtworkDerivative,
+}) {
   const $ = (id) => document.getElementById(id),
     draft = createArtworkCollectionDraft();
   const picker = $('artwork-files'),
@@ -79,6 +85,8 @@ export function mountArtworkCollectionPanel({ document, window, urls = URL }) {
     details = $('artwork-provenance'),
     status = $('artwork-status');
   const download = createStudioDownload({ document, target: $('artwork-download'), urls });
+  $('artwork-board').value = 'wide';
+  $('artwork-fit').value = 'contain';
   let disposed = false,
     suspended = false,
     request = 0,
@@ -105,6 +113,13 @@ export function mountArtworkCollectionPanel({ document, window, urls = URL }) {
     $('artwork-export').disabled = value || !draft.current || suspended;
     $('artwork-preview-source').disabled = value || !draft.current || suspended;
     treatment.disabled = selector.disabled = value || !draft.current || suspended;
+    $('artwork-board').disabled = $('artwork-fit').disabled = value || !draft.current || suspended;
+    $('artwork-prepare').disabled =
+      value ||
+      suspended ||
+      !draft.current?.document.artworks.some(
+        (artwork) => artwork.id === selector.value && artwork.role === 'reveal',
+      );
     status.setAttribute('aria-busy', String(value));
   }
   function showSources(artwork, collection) {
@@ -239,7 +254,10 @@ export function mountArtworkCollectionPanel({ document, window, urls = URL }) {
       if (ticket === request && !disposed) busy(false);
     }
   };
-  selector.onchange = showSelected;
+  selector.onchange = () => {
+    showSelected();
+    busy(false);
+  };
   $('artwork-preview-source').onclick = showSelected;
   treatment.onchange = () => {
     try {
@@ -274,6 +292,29 @@ export function mountArtworkCollectionPanel({ document, window, urls = URL }) {
       if (ticket === request && !disposed) busy(false);
     }
   };
+  $('artwork-prepare').onclick = async () => {
+    const current = draft.current;
+    if (!current || disposed || suspended) return;
+    const parentId = selector.value;
+    const options = { board: $('artwork-board').value, fit: $('artwork-fit').value };
+    const ticket = ++request;
+    busy(true);
+    message('preparingBoard');
+    try {
+      const result = await draft.load((signal) =>
+        prepareDerivative(current, parentId, options, { signal }),
+      );
+      if (result && ticket === request && !disposed && !suspended) {
+        download.dispose();
+        acceptedView(result.document.artworks.at(-1).id);
+        message('boardReady');
+      }
+    } catch (error) {
+      if (ticket === request) message('changeFailed', () => ({ message: errorText(error) }));
+    } finally {
+      if (ticket === request && !disposed) busy(false);
+    }
+  };
   $('artwork-cancel').onclick = () => {
     request++;
     draft.cancel();
@@ -303,7 +344,12 @@ export function mountArtworkCollectionPanel({ document, window, urls = URL }) {
     clearPreview();
     download.dispose();
     for (const id of ['artwork-files', 'artwork-item', 'artwork-treatment']) $(id).onchange = null;
-    for (const id of ['artwork-export', 'artwork-cancel', 'artwork-preview-source'])
+    for (const id of [
+      'artwork-export',
+      'artwork-cancel',
+      'artwork-preview-source',
+      'artwork-prepare',
+    ])
       $(id).onclick = null;
     window.removeEventListener('pagehide', hide);
     window.removeEventListener('pageshow', show);

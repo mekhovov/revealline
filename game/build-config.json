@@ -79,6 +79,7 @@
     "authoring/library/runtime-sprite-candidates-v1/export/atlas-woven-basket-v1-3604eeef2dfbdf02c26f8ae8d86984cb453c52574bfd9dd87d28df015f9c50ac.png",
     "authoring/library/runtime-sprite-candidates-v1/export/manifest.json",
     "authoring/motion-lab/rotor-editor.mjs",
+    "authoring/motion-lab/parts-editor.mjs",
     "authoring/game-feel-lab",
     "authoring/playable-benchmark",
     "authoring/library/fpv-body-detail-candidates/manifest.json",

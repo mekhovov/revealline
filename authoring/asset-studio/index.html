@@ -346,6 +346,40 @@
           Cancel
         </button>
       </div>
+      <details>
+        <summary data-i18n="tools:studio.artwork.prepareTitle">Prepare board image</summary>
+        <p data-i18n="tools:studio.artwork.prepareHelp">
+          Keeps the original and adds a separate PNG candidate. Fit preserves the whole picture with
+          ink borders; centre crop removes outer edges. Pixel art uses nearest-pixel sampling;
+          photographs use smooth sampling. Inspect the result before production approval.
+        </p>
+        <div class="artwork-collection-controls">
+          <label
+            ><span data-i18n="tools:studio.artwork.boardSize">Board image size</span>
+            <select id="artwork-board" disabled>
+              <option value="wide">1152 × 576 · 2:1</option>
+              <option value="classic">768 × 576 · 4:3</option>
+            </select>
+          </label>
+          <label
+            ><span data-i18n="tools:studio.artwork.boardFit">Image fitting</span>
+            <select id="artwork-fit" disabled>
+              <option value="contain" data-i18n="tools:studio.artwork.fitContain">
+                Fit whole picture
+              </option>
+              <option value="cover" data-i18n="tools:studio.artwork.fitCover">Centre crop</option>
+            </select>
+          </label>
+          <button
+            type="button"
+            id="artwork-prepare"
+            disabled
+            data-i18n="tools:studio.artwork.prepareBoard"
+          >
+            Create board candidate
+          </button>
+        </div>
+      </details>
       <p id="artwork-status" role="status" data-i18n="tools:studio.artwork.choosePacket">
         Choose a packet. Reference links are never fetched automatically.
       </p>
