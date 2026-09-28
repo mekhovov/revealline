@@ -1,4 +1,5 @@
 import { rewardMediaReferences, validateRewardMediaAsset } from '../rewards/media-format.mjs';
+import { explorationAssetReferences } from '../rewards/exploration.mjs';
 import { required } from '../data-json.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { validateCompanyLessons } from '../company-campaigns/learning.mjs';
@@ -197,7 +198,7 @@ export function validateEditionRewardBundle(
         payload.type === 'image'
           ? [payload.asset]
           : payload.type === 'exploration'
-            ? payload.recipe.cards.flatMap((card) => (card.asset ? [card.asset] : []))
+            ? explorationAssetReferences(payload.recipe)
             : [];
       for (const image of images) {
         const asset = assets.find((item) => item.id === image.assetId);
