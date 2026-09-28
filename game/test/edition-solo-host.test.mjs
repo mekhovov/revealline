@@ -57,6 +57,10 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
     });
     const recover = page.$('edition-recover-presentation');
     assert.ok(recover, 'The exact registered receipt offers an explicit recovery action.');
+    assert.ok(
+      recover.closest('#shell-home'),
+      'A known saved-flight mismatch stays immediately reachable.',
+    );
     const before = page.win.location.href;
     assert.equal(storage.getItem(key), original);
     await recover.onclick();
@@ -89,6 +93,7 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
       page.$('shell-featured').click();
       await settle(() => page.doc.body.dataset.flightState === 'running');
       page.$('shell-menu').click();
+      page.$('shell-workshop').click();
       const href = page.win.location.href;
       const choice = page.$('edition-presentation-select');
       choice.value = f.descriptor.id;
@@ -131,6 +136,7 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
     assert.deepEqual(resumed.actorAppearancePin, saved.actorAppearancePin);
     assert.deepEqual(resumed.replay, saved.replay);
     page.$('shell-menu').click();
+    page.$('shell-workshop').click();
     const choice = page.$('edition-presentation-select'),
       href = page.win.location.href;
     choice.value = '';
@@ -205,6 +211,7 @@ for (const saving of ['verified', 'quota', 'occupied'])
       };
     }
     page.$('shell-menu').click();
+    page.$('shell-workshop').click();
     const before = authoritativeCheckpoint(page.rendered.run),
       origin = page.win.location.href,
       picker = page.$('edition-select');
@@ -252,6 +259,7 @@ for (const saving of ['verified', 'quota', 'occupied'])
 test('edition switch cancellation retires pending retention and cannot navigate after a late completion', async (t) => {
   const page = await editionSwitchHost(t);
   page.$('shell-menu').click();
+  page.$('shell-workshop').click();
   const origin = page.win.location.href,
     key = 'revealline.suspended.journey-sample-public.v1.solo-v2',
     retained = page.storage.getItem(key),
@@ -289,6 +297,7 @@ test('edition switch permits only declared destinations and does not prompt when
   const page = await editionSwitchHost(t, { start: false }),
     origin = page.win.location.href,
     picker = page.$('edition-select');
+  page.$('shell-workshop').click();
   for (const id of ['sample-public', 'omitted-audience', 'https://foreign.test/']) {
     picker.value = id;
     await picker.onchange();
@@ -861,5 +870,22 @@ test('same-origin installed creator campaign cannot inject missions into a selec
     ['', 'Journey'],
   );
   assert.ok(!page.$('journey-cards').textContent.includes('Unrelated creator campaign'));
+  assert.deepEqual(page.errors, []);
+});
+
+test('edition home keeps play primary while More retains localized world choice and recovery tools', async (t) => {
+  const page = await editionSwitchHost(t, { start: false });
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const picker = page.$('edition-select');
+  assert.ok(picker.closest('#shell-workshop-dialog'));
+  assert.equal(page.$('shell-home').querySelector('.edition-about'), null);
+  assert.match(picker.parentElement.textContent, /Choose a world/);
+  page.$('shell-workshop').click();
+  assert.equal(page.$('shell-workshop-dialog').open, true);
+  setLocale('uk', { persist: false });
+  assert.match(picker.parentElement.textContent, /Оберіть світ/);
+  assert.match(page.$('shell-workshop-dialog').textContent, /Про цей світ і його зображення/);
   assert.deepEqual(page.errors, []);
 });
