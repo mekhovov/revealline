@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import {
   fieldKitRecipeSources,
   verifyFieldKitAudioContinuationReview,
+  verifyFieldKitCanonicalSoundtrackReview,
   verifyFieldKitCompanyAudioContinuationReview,
 } from './produce-field-kit-theme.mjs';
 
@@ -257,5 +258,41 @@ test('company startup audio review and both immutable predecessor byte strings f
     const changed = [current, prior, managed];
     changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
     assert.equal(verifyFieldKitCompanyAudioContinuationReview(...changed), false);
+  }
+});
+
+test('canonical soundtrack review and both reconciled review byte strings fail closed', async () => {
+  const current = await readFile(
+    new URL(
+      '../docs/verification/canonical-soundtrack-main-rebase-2026-09-28/review.json',
+      import.meta.url,
+    ),
+  );
+  const company = await readFile(
+    new URL(
+      '../docs/verification/v0.141.7-company-startup-audio-continuation/review.json',
+      import.meta.url,
+    ),
+  );
+  const external = await readFile(
+    new URL(
+      '../docs/verification/external-soundtrack-delivery-2026-09-27/review.json',
+      import.meta.url,
+    ),
+  );
+  const branchRebase = await readFile(
+    new URL(
+      '../docs/verification/canonical-soundtrack-rebase-audio-continuation-2026-09-27/review.json',
+      import.meta.url,
+    ),
+  );
+  assert.equal(
+    verifyFieldKitCanonicalSoundtrackReview(current, company, branchRebase, external),
+    true,
+  );
+  for (let index = 0; index < 4; index++) {
+    const changed = [current, company, branchRebase, external];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitCanonicalSoundtrackReview(...changed), false);
   }
 });

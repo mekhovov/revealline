@@ -1,6 +1,6 @@
 # RevealLine — consolidated soundtrack master plan
 
-Updated 27 September 2026. This is the durable source of truth for all soundtrack
+Updated 28 September 2026. This is the durable source of truth for all soundtrack
 work. It replaces the separate conversational plans without removing completed,
 blocked, rejected or deferred requirements. The user approved implementation of
 this consolidated plan.
@@ -24,6 +24,52 @@ A track is delivered only after admission, an immutable game release and direct
 public verification. An MP3 preview or a passing transport test is insufficient.
 Keep historical immutable files and failed/partial evidence. Never manufacture
 reviewer names, listening approval or device results.
+
+## Current execution checkpoint — 28 September 2026
+
+The canonical archive is the single active catalogue and Pages player. Its current
+main branch contains **260 exact recordings**: **202 public** entries discovered by
+the game and **58 review-only** entries available only through the archive's
+explicit review URL. Archive intake, metadata, immutable Release-backed objects,
+automatic post-merge Pages publication, hosted-URL intake and shareable filters are
+complete. The two numbered archives remain read-only compatibility origins for
+older immutable game releases; archive them only after the canonical game adapter
+is public, and retain their Pages payloads while those old editions remain
+supported.
+
+Game [PR #716](https://github.com/mekhovov/revealline/pull/716) is the active
+delivery item. It was rebased onto authoritative `main`
+`6fe52474b5b395a5c416bd388555d488db33f287` on 28 September. The reconciled source
+uses the canonical catalogue, supports release-backed and verified external URLs,
+structured unknown rights and multiple collections, excludes review-only entries,
+and recovers to remote, bundled or uploaded music after a failed remote deck. The
+rebase preserves v0.141.7 company startup, offline-build integrity and the complete
+revision-93 Field Kit ledger. Exact-source audio continuation, focused tests,
+required hosted gates and independent review are still required before merge.
+
+Current item order and hands-on estimates:
+
+1. **Finish PR #716:** refresh the audio ledger, run focused and production checks,
+   push the rebased head and pass all required exact-head gates. **0.5–1 working
+   day**, plus CI.
+2. **Release and verify the canonical adapter:** qualify/freeze the actual merge,
+   publish through the immutable release and reviewed Pages selector flow, then
+   verify discovery of all public entries, mixed remote/bundled/uploaded playback,
+   failure recovery and same-tab metadata/source links. **0.5–1 working day**, plus
+   release coordination.
+3. **Legacy archive retirement notices:** freeze intake and point both numbered
+   roots at the canonical site after item 2 passes. **About 0.5 day.** Deletion is
+   blocked by immutable old game URLs and is not part of the safe retirement.
+4. **Device/offline acceptance:** physical iPhone/controller checks and cold
+   offline restart. **About 0.5 day** when devices are available.
+5. **Content expansion:** continue listening-led synthwave/electro, heavier metal
+   and Ukrainian admissions in independently releasable batches. **1–2 days per
+   accepted batch**, excluding user listening and rights review.
+
+The first real external-object acceptance remains blocked until a stable public
+HTTPS MP3 URL with GET/HEAD/Range CORS and recording-specific rights is supplied.
+UA-FPV publication remains blocked recording by recording by permission evidence.
+The rejected AI-original method remains paused at 0/36 approved compositions.
 
 ## Priority delivery — external MP3 URLs first (27 September 2026)
 
