@@ -336,6 +336,16 @@ and makes no reproducibility or complete-hosted-output claim. The final publicat
 below is still required. A source-only failure stops the report; no validation is skipped to
 obtain a size.
 
+The first committed inspection attempt at `a991ac3eacf0557556b7d86552ddcd359d1ee7b2`
+(tree `ec5d0c0f7ae194c4849c311b57d807940e7d7c3c`) stopped at the ordinary reference gate:
+three shared reward editors imported `authoring/company-studio/model.mjs`, which existed in
+source but was absent from the default include list. No manifest report or size qualification
+was produced. The default now admits that one validator module explicitly; it does not admit
+the Company Studio folder or neighboring originals. The version and budgets are unchanged.
+A regression verifies that merely having an authoring dependency on disk is insufficient,
+and that admitting one module does not admit adjacent source files. A new committed inspection
+is required after this repair.
+
 With reviewed frozen inputs and selectors available, the existing local staging commands are:
 
 ```sh
