@@ -529,17 +529,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-community-connections-key-v1",
-          "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+          "assetId": "social-drone-community-connections-05-reveal-v1",
+          "sha256": "8a4068c39e990b909eee4fba4e340c4482e0067ff7f26fca629cce38811d199d"
         },
         "id": "social-drone-community-connections-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
+            "alt": "Original illustrated communications gallery linking a fictional room model’s desk and doorway to a separate blank description card.",
             "title": "Describe the Important Part"
           },
           "uk": {
-            "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима.",
+            "alt": "Оригінальна ілюстрована галерея комунікації, що поєднує стійку й двері вигаданої моделі кімнати з окремою порожньою карткою опису.",
             "title": "Опишіть важливе"
           }
         },
@@ -636,7 +636,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "social-drone-community-connections-05", "kind": "mission" }
   },
   {
@@ -657,17 +657,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-community-connections-key-v1",
-          "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+          "assetId": "social-drone-community-connections-06-reveal-v1",
+          "sha256": "00e3dafc52a05ea3012c7f143548fc32c0d0df35cbd920cec8420cb316123db7"
         },
         "id": "social-drone-community-connections-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
+            "alt": "Original illustrated community noticeboard finale with six discovery pictures and a fresh notice displayed beside an archived earlier notice.",
             "title": "Keep the Story Accurate"
           },
           "uk": {
-            "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима.",
+            "alt": "Оригінальний ілюстрований фінал дошки спільноти із шістьма картинками відкриттів і новим оголошенням поруч з архівованим попереднім.",
             "title": "Збережіть точність історії"
           }
         },
@@ -772,7 +772,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "social-drone-community-connections-06", "kind": "mission" }
   },
   {
@@ -895,17 +895,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-community-connections-key-v1",
-          "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+          "assetId": "social-drone-community-connections-05-reveal-v1",
+          "sha256": "8a4068c39e990b909eee4fba4e340c4482e0067ff7f26fca629cce38811d199d"
         },
         "id": "social-drone-community-connections-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
+            "alt": "Original illustrated communications gallery linking a fictional room model’s desk and doorway to a separate blank description card.",
             "title": "Describe the Important Part"
           },
           "uk": {
-            "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима.",
+            "alt": "Оригінальна ілюстрована галерея комунікації, що поєднує стійку й двері вигаданої моделі кімнати з окремою порожньою карткою опису.",
             "title": "Опишіть важливе"
           }
         },
@@ -913,17 +913,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-community-connections-key-v1",
-          "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+          "assetId": "social-drone-community-connections-06-reveal-v1",
+          "sha256": "00e3dafc52a05ea3012c7f143548fc32c0d0df35cbd920cec8420cb316123db7"
         },
         "id": "social-drone-community-connections-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
+            "alt": "Original illustrated community noticeboard finale with six discovery pictures and a fresh notice displayed beside an archived earlier notice.",
             "title": "Keep the Story Accurate"
           },
           "uk": {
-            "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима.",
+            "alt": "Оригінальний ілюстрований фінал дошки спільноти із шістьма картинками відкриттів і новим оголошенням поруч з архівованим попереднім.",
             "title": "Збережіть точність історії"
           }
         },
@@ -994,7 +994,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "social-drone-community-connections", "kind": "campaign" }
   }
 ]
