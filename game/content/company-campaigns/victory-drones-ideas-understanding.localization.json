@@ -1,0 +1,110 @@
+{
+  "campaignId": "victory-drones-ideas-understanding",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "Ideas into Understanding", "uk": "Від ідей до розуміння" } },
+      "id": "victory-drones-ideas-understanding",
+      "identity": "ee5a6f8564981839",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Reveal the observation terrace and separate what happened from why it happened. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Відкрийте терасу спостережень і розрізніть подію та її пояснення. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Use the small observation islands or capture the broad comparison terrace first. Read the moving boundary before committing to the next connection.",
+          "uk": "Скористайтеся малими островами спостережень або спершу захопіть широку терасу порівняння. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "Observe Before Explaining", "uk": "Спостерігайте перед поясненням" }
+      },
+      "id": "victory-drones-ideas-understanding-01",
+      "identity": "800f2171288b58aa",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect two interacting-object stations without merging their separate roles. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте станції двох взаємодіючих тіл, не змішуючи їхні окремі ролі. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Choose the hand-side return or wall-side return before crossing the interaction court. Read the moving boundary before committing to the next connection.",
+          "uk": "Оберіть повернення з боку руки або стіни перед перетином двору взаємодії. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "Forces Come in Pairs", "uk": "Сили взаємодії" }
+      },
+      "id": "victory-drones-ideas-understanding-02",
+      "identity": "f59ec015a722c88a",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Join the balance stations and distinguish a force from the combined effect. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте станції рівноваги й розрізніть окрему силу та спільну дію. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Connect the two balance islands separately or encircle their central comparison space. Read the moving boundary before committing to the next connection.",
+          "uk": "З’єднайте два острови рівноваги окремо або обійдіть їхній центральний простір порівняння. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "The Net Force", "uk": "Рівнодійна сил" }
+      },
+      "id": "victory-drones-ideas-understanding-03",
+      "identity": "0c00f7bb1e88f77e",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Explore the quiet arrow gallery and compare direction as well as size. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Дослідіть спокійну галерею стрілок і порівняйте напрямок поряд із величиною. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Follow the broad arrow terrace, then choose the shorter vertical link or longer horizontal return. Read the moving boundary before committing to the next connection.",
+          "uk": "Пройдіть широкою терасою стрілок, потім оберіть коротший вертикальний зв’язок або довше горизонтальне повернення. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "Direction Matters", "uk": "Напрямок має значення" }
+      },
+      "id": "victory-drones-ideas-understanding-04",
+      "identity": "b2b036b51bcec695",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Link the paired experiment bays and keep track of what changed. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте парні простори досліду та простежте, що змінилося. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Join the near experiment bay before the distant record shelf or take the outer comparison route. Read the moving boundary before committing to the next connection.",
+          "uk": "З’єднайте ближній простір досліду перед дальньою полицею записів або оберіть зовнішній маршрут порівняння. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "A Fair Comparison", "uk": "Коректне порівняння" }
+      },
+      "id": "victory-drones-ideas-understanding-05",
+      "identity": "74f51f5277472deb",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the whole science exhibit and name what the model can and cannot show. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте всю наукову виставку й назвіть, що модель показує, а чого ні. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Build a return through the central model court or connect the three explanation islands first. Read the moving boundary before committing to the next connection.",
+          "uk": "Побудуйте повернення через центральний двір моделі або спершу з’єднайте три острови пояснень. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "Explain the Model", "uk": "Поясніть модель" }
+      },
+      "id": "victory-drones-ideas-understanding-06",
+      "identity": "ad65e4c406e02cd0",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

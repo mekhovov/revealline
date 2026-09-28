@@ -1,0 +1,787 @@
+[
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-01-discovery",
+    "locales": {
+      "en": { "teaser": "A museum record anchors a garment’s story.", "title": "Read the Cloth" },
+      "uk": {
+        "teaser": "Музейний запис допомагає розповісти історію одягу.",
+        "title": "Прочитайте тканину"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-threads-01-image",
+        "locales": {
+          "en": {
+            "alt": "Read the Cloth — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Read the Cloth"
+          },
+          "uk": {
+            "alt": "Прочитайте тканину — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Прочитайте тканину"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Ivan Honchar Museum records men’s embroidered shirt НДФ-6482 as late nineteenth to early twentieth century, from Hadiach in the Poltava area. Its maker is unknown.",
+              "Begin a label with the documented object, date, place and maker when known. “Unknown” is useful information; a motif is not permission to invent a personal story. This scene is an illustration, not that museum object."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-6482",
+                "url": "https://honchar.org.ua/collections/detail/4181"
+              }
+            ],
+            "title": "Read the Cloth"
+          },
+          "uk": {
+            "paragraphs": [
+              "Музей Івана Гончара датує чоловічу вишиту сорочку НДФ-6482 кінцем XIX — початком XX століття та пов’язує її з Гадячем на Полтавщині. Автор невідомий.",
+              "Починайте підпис із документованих назви речі, дати, місця й автора, якщо він відомий. «Невідомо» — корисна інформація; мотив не дозволяє вигадувати особисту історію. Сцена є ілюстрацією, а не цим музейним предметом."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-6482",
+                "url": "https://honchar.org.ua/collections/detail/4181"
+              }
+            ],
+            "title": "Прочитайте тканину"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a70347fb9c2215f6" },
+            { "difficulty": "standard", "gameplayId": "aae83c4cf5bee1df" },
+            { "difficulty": "expert", "gameplayId": "3c5d1f0ce3e9c745" }
+          ],
+          "missionId": "ukraine-threads-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-threads-01", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A thread and a stitch answer different questions.",
+        "title": "Stitch Paths"
+      },
+      "uk": {
+        "teaser": "Нитка й стібок відповідають на різні запитання.",
+        "title": "Шляхи стібків"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-threads-02-image",
+        "locales": {
+          "en": {
+            "alt": "Stitch Paths — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Stitch Paths"
+          },
+          "uk": {
+            "alt": "Шляхи стібків — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Шляхи стібків"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The record for shirt НДФ-6482 lists cloth materials separately from decorative techniques, including cross-stitch and hemstitch. A material is what a maker uses; a technique describes how the work is made.",
+              "Sort “linen” and “cross-stitch” into material and technique on a fictional label. Check the source rather than assuming all Ukrainian embroidery uses one stitch."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-6482",
+                "url": "https://honchar.org.ua/collections/detail/4181"
+              }
+            ],
+            "title": "Stitch Paths"
+          },
+          "uk": {
+            "paragraphs": [
+              "У записі сорочки НДФ-6482 матеріали тканини відокремлені від технік оздоблення, серед яких хрестик і мережка. Матеріал — те, що використовує майстер, а техніка описує спосіб роботи.",
+              "На вигаданому підписі розподіліть «льон» і «хрестик» між матеріалом та технікою. Перевіряйте джерело, а не припускайте, що вся українська вишивка виконана одним швом."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-6482",
+                "url": "https://honchar.org.ua/collections/detail/4181"
+              }
+            ],
+            "title": "Шляхи стібків"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "aa0d6a41ec5daf99" },
+            { "difficulty": "standard", "gameplayId": "625ecfa012ab59b9" },
+            { "difficulty": "expert", "gameplayId": "7250c61ead7111d6" }
+          ],
+          "missionId": "ukraine-threads-02"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-threads-02", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-03-discovery",
+    "locales": {
+      "en": { "teaser": "Pale thread can make a rich surface.", "title": "White on White" },
+      "uk": {
+        "teaser": "Світла нитка може створювати багату поверхню.",
+        "title": "Білим по білому"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-threads-03-image",
+        "locales": {
+          "en": {
+            "alt": "White on White — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "White on White"
+          },
+          "uk": {
+            "alt": "Білим по білому — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Білим по білому"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Poltava regional source describes Reshetylivka’s white-on-white embroidery tradition. A pale palette carries detail through stitch, relief and openwork rather than strong colour contrast.",
+              "Look for shadows around raised threads in our original illustration. Which detail would disappear in a flat white silhouette? This artistic study does not reproduce a particular historical garment."
+            ],
+            "sources": [
+              {
+                "title": "Kremenchuk district administration — Reshetylivka white-on-white embroidery",
+                "url": "https://kremenchukrda.gov.ua/news/holova-poltavskoyi-oda-prosuvayemo-vyshyvku-bilym-po-bilomu-do-nematerialnoyi-spadshchyny-yunesko"
+              }
+            ],
+            "title": "White on White"
+          },
+          "uk": {
+            "paragraphs": [
+              "Регіональне джерело Полтавщини описує решетилівську традицію вишивки білим по білому. Світла палітра передає деталі через стібки, рельєф і ажур, а не лише сильний кольоровий контраст.",
+              "В оригінальній ілюстрації знайдіть тіні біля піднятих ниток. Яка деталь зникла б у пласкому білому силуеті? Художнє дослідження не відтворює конкретний історичний одяг."
+            ],
+            "sources": [
+              {
+                "title": "Kremenchuk district administration — Reshetylivka white-on-white embroidery",
+                "url": "https://kremenchukrda.gov.ua/news/holova-poltavskoyi-oda-prosuvayemo-vyshyvku-bilym-po-bilomu-do-nematerialnoyi-spadshchyny-yunesko"
+              }
+            ],
+            "title": "Білим по білому"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "b6f1d46cf8e74120" },
+            { "difficulty": "standard", "gameplayId": "c8ebcc05403cb890" },
+            { "difficulty": "expert", "gameplayId": "65c81b8114bab2d3" }
+          ],
+          "missionId": "ukraine-threads-03"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-threads-03", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Two documented garments invite a careful comparison.",
+        "title": "Many Local Voices"
+      },
+      "uk": {
+        "teaser": "Дві документовані сорочки запрошують до уважного порівняння.",
+        "title": "Розмаїття місцевих голосів"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-threads-04-image",
+        "locales": {
+          "en": {
+            "alt": "Many Local Voices — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Many Local Voices"
+          },
+          "uk": {
+            "alt": "Розмаїття місцевих голосів — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Розмаїття місцевих голосів"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The museum records Volyn shirt НДФ-7132 as made by Anastasiia Kravchuk in the first half of the twentieth century. Compare this named maker with the unknown maker in the earlier Poltava record.",
+              "Both records describe specific objects. Their differences invite questions about maker, time, material and place; they do not establish a rule for every garment in either region."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-7132",
+                "url": "https://honchar.org.ua/collections/detail/4182"
+              },
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-6482",
+                "url": "https://honchar.org.ua/collections/detail/4181"
+              }
+            ],
+            "title": "Many Local Voices"
+          },
+          "uk": {
+            "paragraphs": [
+              "Музей пов’язує волинську сорочку НДФ-7132 з Анастасією Кравчук і датує першою половиною XX століття. Порівняйте відоме ім’я майстрині з невідомим автором попереднього полтавського запису.",
+              "Обидва записи описують конкретні речі. Відмінності спонукають запитувати про автора, час, матеріал і місце, але не встановлюють правила для всього одягу регіону."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-7132",
+                "url": "https://honchar.org.ua/collections/detail/4182"
+              },
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-6482",
+                "url": "https://honchar.org.ua/collections/detail/4181"
+              }
+            ],
+            "title": "Розмаїття місцевих голосів"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c7eee40173df478f" },
+            { "difficulty": "standard", "gameplayId": "33261d4abad6548c" },
+            { "difficulty": "expert", "gameplayId": "c8fb6afe0ded9a4c" }
+          ],
+          "missionId": "ukraine-threads-04"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-threads-04", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A rushnyk’s record contains more than its ornament.",
+        "title": "A Rushnyk’s Story"
+      },
+      "uk": {
+        "teaser": "Запис рушника містить більше, ніж опис орнаменту.",
+        "title": "Історія рушника"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-threads-05-image",
+        "locales": {
+          "en": {
+            "alt": "A Rushnyk’s Story — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Rushnyk’s Story"
+          },
+          "uk": {
+            "alt": "Історія рушника — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Історія рушника"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The museum dates rushnyk КН-3081 to the first half of the nineteenth century, with a homespun linen ground and an unknown maker. Its record notes a donation by Petro Honchar in 2001.",
+              "Separate an object’s creation from its later path into a collection. A donation date is not its making date. Ornament alone does not establish the exact ceremony in which it was used."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — rushnyk КН-3081",
+                "url": "https://honchar.org.ua/collections/detail/1591"
+              }
+            ],
+            "title": "A Rushnyk’s Story"
+          },
+          "uk": {
+            "paragraphs": [
+              "Музей датує рушник КН-3081 першою половиною XIX століття; основу описано як доморобне лляне полотно, автор невідомий. Запис зазначає дарунок Петра Гончара 2001 року.",
+              "Відокремлюйте створення предмета від його подальшого шляху до колекції. Дата дарування не є датою виготовлення. Сам орнамент не визначає конкретного обряду використання."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — rushnyk КН-3081",
+                "url": "https://honchar.org.ua/collections/detail/1591"
+              }
+            ],
+            "title": "Історія рушника"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c9561924ef75dfe7" },
+            { "difficulty": "standard", "gameplayId": "38d39bf4da3f5dc1" },
+            { "difficulty": "expert", "gameplayId": "c33f73c7f58f8c96" }
+          ],
+          "missionId": "ukraine-threads-05"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-threads-05", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Bring history, honest labels and new creativity into one gallery.",
+        "title": "Wear It Today"
+      },
+      "uk": {
+        "teaser": "Поєднайте історію, точні підписи й нову творчість в одній галереї.",
+        "title": "Носіть сьогодні"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-threads-06-image",
+        "locales": {
+          "en": {
+            "alt": "Wear It Today — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Wear It Today"
+          },
+          "uk": {
+            "alt": "Носіть сьогодні — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Носіть сьогодні"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "This scene’s designs were created for the game. They respond to colour, rhythm and texture without being presented as historical objects or universal Ukrainian symbols.",
+              "Curate two labels: one for a documented museum object, another for an original contemporary illustration. Keep the source, maker and uncertainty visible. Creativity and careful attribution can share an exhibition."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — clothing collection",
+                "url": "https://honchar.org.ua/collections/view/odag?type=list"
+              }
+            ],
+            "title": "Wear It Today"
+          },
+          "uk": {
+            "paragraphs": [
+              "Дизайни сцени створені для гри. Вони працюють із кольором, ритмом і фактурою, не видаючи себе за історичні предмети чи універсальні українські символи.",
+              "Підготуйте два підписи: для документованого музейного предмета й оригінальної сучасної ілюстрації. Залиште видимими джерело, автора та невизначеність. Творчість і точна атрибуція можуть бути на одній виставці."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — clothing collection",
+                "url": "https://honchar.org.ua/collections/view/odag?type=list"
+              }
+            ],
+            "title": "Носіть сьогодні"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "057f26871e359171" },
+            { "difficulty": "standard", "gameplayId": "1bf56034481c0f2a" },
+            { "difficulty": "expert", "gameplayId": "e0654522adaf24f9" }
+          ],
+          "missionId": "ukraine-threads-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-threads-06", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "An Atlas of Cloth and Evidence"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Атлас тканини й свідчень"
+      }
+    },
+    "payloads": [
+      {
+        "id": "ukraine-threads-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Curate an exhibition using the six discoveries. Give each historical object its museum reference, date, place and maker when known. Label original illustrations separately. Two documented garments show variation; they cannot represent every person or tradition in a region."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — clothing collection",
+                "url": "https://honchar.org.ua/collections/view/odag?type=list"
+              }
+            ],
+            "title": "An Atlas of Cloth and Evidence"
+          },
+          "uk": {
+            "paragraphs": [
+              "Створіть виставку із шести відкриттів. Для історичної речі зазначте музейний запис, дату, місце й автора, якщо вони відомі. Окремо позначайте оригінальні ілюстрації. Дві документовані сорочки показують розмаїття, але не представляють усіх людей чи традицій регіону."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — clothing collection",
+                "url": "https://honchar.org.ua/collections/view/odag?type=list"
+              }
+            ],
+            "title": "Атлас тканини й свідчень"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-threads-01-image",
+        "locales": {
+          "en": {
+            "alt": "Read the Cloth — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Read the Cloth"
+          },
+          "uk": {
+            "alt": "Прочитайте тканину — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Прочитайте тканину"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-threads-02-image",
+        "locales": {
+          "en": {
+            "alt": "Stitch Paths — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Stitch Paths"
+          },
+          "uk": {
+            "alt": "Шляхи стібків — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Шляхи стібків"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-threads-03-image",
+        "locales": {
+          "en": {
+            "alt": "White on White — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "White on White"
+          },
+          "uk": {
+            "alt": "Білим по білому — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Білим по білому"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-threads-04-image",
+        "locales": {
+          "en": {
+            "alt": "Many Local Voices — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Many Local Voices"
+          },
+          "uk": {
+            "alt": "Розмаїття місцевих голосів — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Розмаїття місцевих голосів"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-threads-05-image",
+        "locales": {
+          "en": {
+            "alt": "A Rushnyk’s Story — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Rushnyk’s Story"
+          },
+          "uk": {
+            "alt": "Історія рушника — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Історія рушника"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-threads-06-image",
+        "locales": {
+          "en": {
+            "alt": "Wear It Today — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Wear It Today"
+          },
+          "uk": {
+            "alt": "Носіть сьогодні — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Носіть сьогодні"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "type": "url",
+        "url": "https://honchar.org.ua/collections/view/odag?type=list"
+      },
+      {
+        "asset": {
+          "assetId": "met-degas-ukrainian-dress-436157",
+          "sha256": "4416b3cd2225bef59671d5bd06a4c73633e27d73a06713dd1d8d336ea1257d11"
+        },
+        "id": "ukraine-threads-painting",
+        "locales": {
+          "en": {
+            "alt": "An 1899 pastel of a dancer in Ukrainian dress by Edgar Degas, from The Metropolitan Museum of Art. An artist’s interpretation, not a garment catalogue photograph.",
+            "title": "Dancer in Ukrainian Dress — Edgar Degas"
+          },
+          "uk": {
+            "alt": "Пастель Едгара Дега 1899 року з танцівницею в українському вбранні, з Метрополітен-музею. Авторська інтерпретація, а не фото одягу для каталогу.",
+            "title": "Танцівниця в українському вбранні — Едгар Дега"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-compare-sources",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Met identifies this pastel as Edgar Degas’s Dancer in Ukrainian Dress, dated 1899, accession 29.100.556. Its Open Access image is public domain.",
+              "Compare the expressive movement with the specific garment records linked in your discoveries. A painting and a clothing record answer different questions. An artist’s interpretation is not a complete technical account of regional clothing."
+            ],
+            "sources": [
+              {
+                "title": "The Metropolitan Museum of Art — object 436157",
+                "url": "https://www.metmuseum.org/art/collection/search/436157"
+              },
+              {
+                "title": "The Met — Open Access",
+                "url": "https://www.metmuseum.org/hubs/open-access"
+              }
+            ],
+            "title": "An artwork and an object record"
+          },
+          "uk": {
+            "paragraphs": [
+              "Метрополітен-музей визначає пастель як «Танцівниця в українському вбранні» Едгара Дега, 1899 року, обліковий номер 29.100.556. Зображення Open Access є суспільним надбанням.",
+              "Порівняйте виразний рух із конкретними записами одягу у відкриттях. Картина й опис одягу відповідають на різні запитання. Авторська інтерпретація не є повним технічним описом регіонального вбрання."
+            ],
+            "sources": [
+              {
+                "title": "The Metropolitan Museum of Art — object 436157",
+                "url": "https://www.metmuseum.org/art/collection/search/436157"
+              },
+              {
+                "title": "The Met — Open Access",
+                "url": "https://www.metmuseum.org/hubs/open-access"
+              }
+            ],
+            "title": "Твір мистецтва й запис предмета"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a70347fb9c2215f6" },
+            { "difficulty": "standard", "gameplayId": "aae83c4cf5bee1df" },
+            { "difficulty": "expert", "gameplayId": "3c5d1f0ce3e9c745" }
+          ],
+          "missionId": "ukraine-threads-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "aa0d6a41ec5daf99" },
+            { "difficulty": "standard", "gameplayId": "625ecfa012ab59b9" },
+            { "difficulty": "expert", "gameplayId": "7250c61ead7111d6" }
+          ],
+          "missionId": "ukraine-threads-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "b6f1d46cf8e74120" },
+            { "difficulty": "standard", "gameplayId": "c8ebcc05403cb890" },
+            { "difficulty": "expert", "gameplayId": "65c81b8114bab2d3" }
+          ],
+          "missionId": "ukraine-threads-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c7eee40173df478f" },
+            { "difficulty": "standard", "gameplayId": "33261d4abad6548c" },
+            { "difficulty": "expert", "gameplayId": "c8fb6afe0ded9a4c" }
+          ],
+          "missionId": "ukraine-threads-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c9561924ef75dfe7" },
+            { "difficulty": "standard", "gameplayId": "38d39bf4da3f5dc1" },
+            { "difficulty": "expert", "gameplayId": "c33f73c7f58f8c96" }
+          ],
+          "missionId": "ukraine-threads-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "057f26871e359171" },
+            { "difficulty": "standard", "gameplayId": "1bf56034481c0f2a" },
+            { "difficulty": "expert", "gameplayId": "e0654522adaf24f9" }
+          ],
+          "missionId": "ukraine-threads-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-threads", "kind": "campaign" }
+  }
+]

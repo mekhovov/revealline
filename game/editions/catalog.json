@@ -1202,6 +1202,51 @@
       "path": "game/editions/assets/droneaid-nl/artwork-v3/droneaid-nl-parts-in-motion-03.png",
       "publication": "public",
       "sha256": "adf0812ac70f18b45b716ba1067f56c963ed24205f6a21ca0fccb0f50e1401e2"
+    },
+    {
+      "approved": true,
+      "bytes": 1106859,
+      "dependencies": [],
+      "id": "ukraine-culture-home",
+      "path": "game/editions/assets/discovery/ukraine-culture-home-v1.png",
+      "publication": "public",
+      "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+    },
+    {
+      "approved": true,
+      "bytes": 1043972,
+      "dependencies": [],
+      "id": "social-drone-ua-home",
+      "path": "game/editions/assets/discovery/social-drone-ua-home-v1.png",
+      "publication": "public",
+      "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+    },
+    {
+      "approved": true,
+      "bytes": 1150183,
+      "dependencies": [],
+      "id": "victory-drones-home",
+      "path": "game/editions/assets/discovery/victory-drones-home-v1.png",
+      "publication": "public",
+      "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+    },
+    {
+      "approved": true,
+      "bytes": 1062590,
+      "dependencies": [],
+      "id": "fpv-learning-home",
+      "path": "game/editions/assets/discovery/fpv-learning-home-v1.png",
+      "publication": "public",
+      "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+    },
+    {
+      "approved": true,
+      "bytes": 387825,
+      "dependencies": [],
+      "id": "met-degas-ukrainian-dress-436157",
+      "path": "game/editions/assets/discovery/met-degas-436157.jpg",
+      "publication": "public",
+      "sha256": "4416b3cd2225bef59671d5bd06a4c73633e27d73a06713dd1d8d336ea1257d11"
     }
   ],
   "brands": [
@@ -1330,6 +1375,106 @@
         "droneaid-nl-signals-of-support-theme",
         "droneaid-nl-shared-horizon-theme"
       ]
+    },
+    {
+      "actorSetId": "social-drone-ua-marker",
+      "assetIds": ["social-drone-ua-home"],
+      "description": "People, careful records and shared learning in a fictional community workshop. An independent educational tribute, not an official service.",
+      "fontAssetId": null,
+      "format": "revealline-brand-pack.v1",
+      "heroAssetId": "social-drone-ua-home",
+      "iconAssetId": null,
+      "id": "social-drone-ua",
+      "logoAssetId": null,
+      "name": "Social Drone UA",
+      "publication": "public",
+      "revision": 1,
+      "sources": [
+        {
+          "kind": "official",
+          "title": "Social Drone UA — contextual reference",
+          "url": "https://www.socialdrone.com.ua/"
+        }
+      ],
+      "themeId": "social-drone-ua-home",
+      "themeIds": [
+        "social-drone-ua-home",
+        "social-drone-people-workshop-theme",
+        "social-drone-community-connections-theme"
+      ]
+    },
+    {
+      "actorSetId": "victory-drones-marker",
+      "assetIds": ["victory-drones-home"],
+      "description": "Sources, questions and shared understanding in an imagined learning observatory. Independent educational content; no endorsement implied.",
+      "fontAssetId": null,
+      "format": "revealline-brand-pack.v1",
+      "heroAssetId": "victory-drones-home",
+      "iconAssetId": null,
+      "id": "victory-drones",
+      "logoAssetId": null,
+      "name": "Victory Drones",
+      "publication": "public",
+      "revision": 1,
+      "sources": [
+        {
+          "kind": "official",
+          "title": "Victory Drones — contextual reference",
+          "url": "https://victory-drones.com/"
+        }
+      ],
+      "themeId": "victory-drones-home",
+      "themeIds": [
+        "victory-drones-home",
+        "victory-drones-knowledge-connects-theme",
+        "victory-drones-ideas-understanding-theme"
+      ]
+    },
+    {
+      "actorSetId": "ukraine-culture-marker",
+      "assetIds": ["ukraine-culture-home"],
+      "description": "Explore individual objects, makers and living traditions through a fictional exhibition with source-linked discoveries.",
+      "fontAssetId": null,
+      "format": "revealline-brand-pack.v1",
+      "heroAssetId": "ukraine-culture-home",
+      "iconAssetId": null,
+      "id": "ukraine-culture",
+      "logoAssetId": null,
+      "name": "Ukraine: Living Culture",
+      "publication": "public",
+      "revision": 1,
+      "sources": [
+        {
+          "kind": "official",
+          "title": "Ukraine: Living Culture — contextual reference",
+          "url": "https://honchar.org.ua/"
+        }
+      ],
+      "themeId": "ukraine-culture-home",
+      "themeIds": ["ukraine-culture-home", "ukraine-threads-theme"]
+    },
+    {
+      "actorSetId": "fpv-learning-marker",
+      "assetIds": ["fpv-learning-home"],
+      "description": "Discover the roles of a civilian training aircraft’s components in a fictional science workshop. Arcade routes are not wiring diagrams.",
+      "fontAssetId": null,
+      "format": "revealline-brand-pack.v1",
+      "heroAssetId": "fpv-learning-home",
+      "iconAssetId": null,
+      "id": "fpv-learning",
+      "logoAssetId": null,
+      "name": "FPV Learning",
+      "publication": "public",
+      "revision": 1,
+      "sources": [
+        {
+          "kind": "official",
+          "title": "FPV Learning — contextual reference",
+          "url": "https://www.nasa.gov/aeronautics/"
+        }
+      ],
+      "themeId": "fpv-learning-home",
+      "themeIds": ["fpv-learning-home", "fpv-meet-aircraft-theme"]
     }
   ],
   "campaigns": [
@@ -1539,10 +1684,168 @@
       "publication": "public",
       "revision": "2",
       "sourcePath": "game/content/company-campaigns/droneaid-nl-shared-horizon.json"
+    },
+    {
+      "assetIds": ["social-drone-ua-home"],
+      "brandId": "social-drone-ua",
+      "id": "social-drone-people-workshop",
+      "localizationPath": "game/content/company-campaigns/social-drone-people-workshop.localization.json",
+      "localizationSha256": "7c68e6ed62487d101fb49510ebce851a30bbdc63d32e7670f95619873ab6ba56",
+      "modes": ["solo"],
+      "name": "People Behind the Workshop",
+      "publication": "public",
+      "revision": "1",
+      "rewardPath": "game/content/company-campaigns/social-drone-people-workshop.rewards.json",
+      "sourcePath": "game/content/company-campaigns/social-drone-people-workshop.json"
+    },
+    {
+      "assetIds": ["victory-drones-home"],
+      "brandId": "victory-drones",
+      "id": "victory-drones-knowledge-connects",
+      "localizationPath": "game/content/company-campaigns/victory-drones-knowledge-connects.localization.json",
+      "localizationSha256": "158b16f052aeaf3ca0a8d223732ac224fefe4e142235919b38f13031ce414464",
+      "modes": ["solo"],
+      "name": "Knowledge Connects",
+      "publication": "public",
+      "revision": "1",
+      "rewardPath": "game/content/company-campaigns/victory-drones-knowledge-connects.rewards.json",
+      "sourcePath": "game/content/company-campaigns/victory-drones-knowledge-connects.json"
+    },
+    {
+      "assetIds": ["ukraine-culture-home", "met-degas-ukrainian-dress-436157"],
+      "brandId": "ukraine-culture",
+      "id": "ukraine-threads",
+      "localizationPath": "game/content/company-campaigns/ukraine-threads.localization.json",
+      "localizationSha256": "f6f3466b2e58717570efcf1545a4fc449c09ecbb21f1d3e0db7e98c69a6836fe",
+      "modes": ["solo"],
+      "name": "Threads Across Ukraine",
+      "publication": "public",
+      "revision": "1",
+      "rewardPath": "game/content/company-campaigns/ukraine-threads.rewards.json",
+      "sourcePath": "game/content/company-campaigns/ukraine-threads.json"
+    },
+    {
+      "assetIds": ["fpv-learning-home"],
+      "brandId": "fpv-learning",
+      "id": "fpv-meet-aircraft",
+      "localizationPath": "game/content/company-campaigns/fpv-meet-aircraft.localization.json",
+      "localizationSha256": "cfc83b25c833a7eddeb44cfbb8be99bb77e2ddc7a315f80288c35db7774af5a4",
+      "modes": ["solo"],
+      "name": "Meet the Aircraft",
+      "publication": "public",
+      "revision": "1",
+      "rewardPath": "game/content/company-campaigns/fpv-meet-aircraft.rewards.json",
+      "sourcePath": "game/content/company-campaigns/fpv-meet-aircraft.json"
+    },
+    {
+      "assetIds": ["social-drone-ua-home"],
+      "brandId": "social-drone-ua",
+      "id": "social-drone-community-connections",
+      "localizationPath": "game/content/company-campaigns/social-drone-community-connections.localization.json",
+      "localizationSha256": "81a595e3882f640dec6b5069896f74df2612ee4644f083eaa19f11adc75378c6",
+      "modes": ["solo"],
+      "name": "Community Connections",
+      "publication": "public",
+      "revision": "1",
+      "rewardPath": "game/content/company-campaigns/social-drone-community-connections.rewards.json",
+      "sourcePath": "game/content/company-campaigns/social-drone-community-connections.json"
+    },
+    {
+      "assetIds": ["victory-drones-home"],
+      "brandId": "victory-drones",
+      "id": "victory-drones-ideas-understanding",
+      "localizationPath": "game/content/company-campaigns/victory-drones-ideas-understanding.localization.json",
+      "localizationSha256": "5dc4f5ba74730607916012b6f48e4ccdf6de81512013b3bfd70917a8d1180bd5",
+      "modes": ["solo"],
+      "name": "Ideas into Understanding",
+      "publication": "public",
+      "revision": "1",
+      "rewardPath": "game/content/company-campaigns/victory-drones-ideas-understanding.rewards.json",
+      "sourcePath": "game/content/company-campaigns/victory-drones-ideas-understanding.json"
     }
   ],
   "defaultEditionId": "coupa-all",
   "editions": [
+    {
+      "audience": "learners",
+      "boot": {
+        "archives": "game/content/company-boot/social-drone-ua/archives.json",
+        "campaign": "game/content/company-boot/social-drone-ua/campaign.json",
+        "classes": "game/content/company-boot/social-drone-ua/classes.json",
+        "packs": "game/content/company-boot/social-drone-ua/packs.json",
+        "presets": "game/content/company-boot/social-drone-ua/presets.json",
+        "themes": "game/content/company-boot/social-drone-ua/themes.json"
+      },
+      "brandId": "social-drone-ua",
+      "campaignIds": ["social-drone-people-workshop", "social-drone-community-connections"],
+      "entryCampaignId": "social-drone-people-workshop",
+      "format": "revealline-edition.v1",
+      "id": "social-drone-ua",
+      "modes": ["solo"],
+      "name": "Social Drone UA",
+      "publication": "public",
+      "revision": 1
+    },
+    {
+      "audience": "learners",
+      "boot": {
+        "archives": "game/content/company-boot/victory-drones/archives.json",
+        "campaign": "game/content/company-boot/victory-drones/campaign.json",
+        "classes": "game/content/company-boot/victory-drones/classes.json",
+        "packs": "game/content/company-boot/victory-drones/packs.json",
+        "presets": "game/content/company-boot/victory-drones/presets.json",
+        "themes": "game/content/company-boot/victory-drones/themes.json"
+      },
+      "brandId": "victory-drones",
+      "campaignIds": ["victory-drones-knowledge-connects", "victory-drones-ideas-understanding"],
+      "entryCampaignId": "victory-drones-knowledge-connects",
+      "format": "revealline-edition.v1",
+      "id": "victory-drones",
+      "modes": ["solo"],
+      "name": "Victory Drones",
+      "publication": "public",
+      "revision": 1
+    },
+    {
+      "audience": "learners",
+      "boot": {
+        "archives": "game/content/company-boot/ukraine-culture/archives.json",
+        "campaign": "game/content/company-boot/ukraine-culture/campaign.json",
+        "classes": "game/content/company-boot/ukraine-culture/classes.json",
+        "packs": "game/content/company-boot/ukraine-culture/packs.json",
+        "presets": "game/content/company-boot/ukraine-culture/presets.json",
+        "themes": "game/content/company-boot/ukraine-culture/themes.json"
+      },
+      "brandId": "ukraine-culture",
+      "campaignIds": ["ukraine-threads"],
+      "entryCampaignId": "ukraine-threads",
+      "format": "revealline-edition.v1",
+      "id": "ukraine-culture",
+      "modes": ["solo"],
+      "name": "Ukraine: Living Culture",
+      "publication": "public",
+      "revision": 1
+    },
+    {
+      "audience": "learners",
+      "boot": {
+        "archives": "game/content/company-boot/fpv-learning/archives.json",
+        "campaign": "game/content/company-boot/fpv-learning/campaign.json",
+        "classes": "game/content/company-boot/fpv-learning/classes.json",
+        "packs": "game/content/company-boot/fpv-learning/packs.json",
+        "presets": "game/content/company-boot/fpv-learning/presets.json",
+        "themes": "game/content/company-boot/fpv-learning/themes.json"
+      },
+      "brandId": "fpv-learning",
+      "campaignIds": ["fpv-meet-aircraft"],
+      "entryCampaignId": "fpv-meet-aircraft",
+      "format": "revealline-edition.v1",
+      "id": "fpv-learning",
+      "modes": ["solo"],
+      "name": "FPV Learning",
+      "publication": "public",
+      "revision": 1
+    },
     {
       "audience": "everyone",
       "boot": {
