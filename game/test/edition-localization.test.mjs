@@ -230,3 +230,120 @@ test('actual edition launch switches names and ready briefs between Ukrainian an
   assert.match(page.$('mission-brief-title').textContent, new RegExp(f.source.missions[0].name));
   assert.equal(JSON.stringify(page.rendered.run.level), before);
 });
+
+import raceVM from 'node:vm';
+import { parse as parseRaceSource } from 'acorn';
+import { readFile as readRaceSource } from 'node:fs/promises';
+import { validateStudioData as validateRaceStudioData } from '../../authoring/company-studio/model.mjs';
+import { validateEditionRuntimeCatalog as validateRaceCatalog } from '../editions/model.mjs';
+
+async function localizationApplyHarness() {
+  const f = await fixture();
+  const source = await readRaceSource(
+    new URL('../../authoring/company-studio/studio.mjs', import.meta.url),
+    'utf8',
+  );
+  const ast = parseRaceSource(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const apply = ast.body.find(
+    (entry) => entry.type === 'FunctionDeclaration' && entry.id.name === 'applyFile',
+  );
+  assert.ok(apply, 'Exercise the actual production applyFile callback');
+  const candidate = structuredClone(f.localized);
+  candidate.revision = 'next-localization';
+  candidate.records[0].fields.name.uk = 'Нова назва подорожі';
+  const editor = { value: JSON.stringify(candidate) };
+  const path = f.descriptor.localizationPath;
+  const elements = new Map([['localization-json', editor]]);
+  let finishHash;
+  const hashPending = new Promise((resolve) => {
+    finishHash = resolve;
+  });
+  const context = raceVM.createContext({
+    catalog: validateRaceCatalog(f.catalog),
+    files: new Map(f.files),
+    revision: 4,
+    loadGeneration: 7,
+    editionId: f.catalog.editions[0].id,
+    campaignId: f.descriptor.id,
+    editorBuffers: new Map([[path, editor.value]]),
+    structuredClone,
+    format: (value) => JSON.stringify(value, null, 2),
+    $: (id) => elements.get(id),
+    validateStudioData: validateRaceStudioData,
+    validateEditionRuntimeCatalog: validateRaceCatalog,
+    campaignLocalizationSha256: () => hashPending,
+    renderCatalog() {},
+    renderDocuments: async () => {},
+  });
+  context.selected = () => ({
+    edition: context.catalog.editions.find((item) => item.id === context.editionId),
+  });
+  context.selectedCampaign = () =>
+    context.catalog.campaigns.find((item) => item.id === context.campaignId);
+  context.changed = () => {
+    context.revision++;
+  };
+  context.applyFile = raceVM.runInContext(`(${source.slice(apply.start, apply.end)})`, context);
+  return {
+    context,
+    editor,
+    path,
+    candidate,
+    finish: async () => finishHash(await campaignLocalizationSha256(candidate)),
+  };
+}
+
+test('localization apply retains an identity edit made while its hash is pending', async () => {
+  const h = await localizationApplyHarness();
+  const before = h.context.files.get(h.path);
+  const pending = h.context.applyFile('localization');
+  const newer = structuredClone(h.context.catalog);
+  newer.editions[0].name = 'Newer applied identity';
+  h.context.catalog = validateRaceCatalog(newer);
+  h.context.revision++;
+  await h.finish();
+  await assert.rejects(pending, /changed|stale/i);
+  assert.equal(h.context.catalog.editions[0].name, 'Newer applied identity');
+  assert.equal(h.context.files.get(h.path), before);
+  assert.equal(h.context.editorBuffers.has(h.path), true);
+});
+
+test('localization apply does not erase newer unapplied text during hashing', async () => {
+  const h = await localizationApplyHarness();
+  const beforeCatalog = h.context.catalog;
+  const before = h.context.files.get(h.path);
+  const pending = h.context.applyFile('localization');
+  h.editor.value = h.editor.value.replace('Нова назва подорожі', 'Ще новіша назва');
+  h.context.editorBuffers.set(h.path, h.editor.value);
+  await h.finish();
+  await assert.rejects(pending, /changed|stale/i);
+  assert.equal(h.context.catalog, beforeCatalog);
+  assert.equal(h.context.files.get(h.path), before);
+  assert.equal(h.context.editorBuffers.get(h.path), h.editor.value);
+});
+
+test('localization apply is cancelled when its source files are replaced during hashing', async () => {
+  const h = await localizationApplyHarness();
+  const pending = h.context.applyFile('localization');
+  h.context.files = new Map(h.context.files);
+  const replacement = h.context.files.get(h.path);
+  await h.finish();
+  await assert.rejects(pending, /changed|stale/i);
+  assert.equal(h.context.files.get(h.path), replacement);
+  assert.equal(h.context.editorBuffers.has(h.path), true);
+});
+
+test('unchanged localization apply commits its verified pin and source together', async () => {
+  const h = await localizationApplyHarness();
+  const beforeRevision = h.context.catalog.editions[0].revision;
+  const pending = h.context.applyFile('localization');
+  await h.finish();
+  await pending;
+  assert.deepEqual(h.context.files.get(h.path), h.candidate);
+  assert.equal(
+    h.context.catalog.campaigns.find((item) => item.id === h.context.campaignId).localizationSha256,
+    await campaignLocalizationSha256(h.candidate),
+  );
+  assert.equal(h.context.catalog.editions[0].revision, beforeRevision + 1);
+  assert.equal(h.context.editorBuffers.has(h.path), false);
+});
