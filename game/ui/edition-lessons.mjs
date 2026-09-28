@@ -10,7 +10,6 @@ import { createRun } from '../core/index.mjs';
 import { exportReplay } from '../replay.mjs';
 import { boundedJSON } from '../data-json.mjs';
 import { getLocale, localizedText, render, t } from '../i18n/index.mjs';
-
 import { localizeCompanyLesson } from '../company-campaigns/lesson-localization.mjs';
 
 const localizedIssue = (key) =>

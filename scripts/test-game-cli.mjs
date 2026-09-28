@@ -14,6 +14,7 @@ import {
   crc32,
   createZip,
   generateLevel,
+  inspectBuildProject,
   parseArguments,
   PUBLIC_SECURITY_HEADERS,
   readBuildConfig,
@@ -335,6 +336,44 @@ test('build is byte-reproducible and each manifest checksum covers exact output 
     await fs.readFile(path.join(root, 'game/core.mjs'), 'utf8'),
     'export const value = 3;\n',
   );
+});
+
+test('manifest-only inspection shares exact build preparation without site or ZIP writes', async (t) => {
+  const { root, out, directory } = await fixture(t);
+  const before = await fs.readdir(directory);
+  const sourceRevision = 'a'.repeat(40);
+  const inspection = await inspectBuildProject({ root, sourceRevision, out });
+  assert.deepEqual(await fs.readdir(directory), before);
+  assert.equal(inspection.publicEligible, false);
+  assert.equal(inspection.promotable, false);
+  assert.equal(inspection.completeHostedOutput, false);
+  assert.equal(inspection.sourceRevision, sourceRevision);
+  assert.equal('entries' in inspection, false);
+  await buildProject({ root, out, sourceRevision });
+  const bytes = await fs.readFile(path.join(out, 'manifest.json'));
+  assert.deepEqual(inspection.manifest, JSON.parse(bytes));
+  assert.equal(inspection.manifestDescriptor.sha256, hash(bytes));
+  assert.equal(inspection.manifestDescriptor.bytes, bytes.length);
+  assert.equal(
+    inspection.payloadBytesIncludingManifest,
+    inspection.manifest.totalBytes + bytes.length,
+  );
+  assert.equal(
+    await fs.readFile(path.join(root, 'game/core.mjs'), 'utf8'),
+    'export const value = 3;\n',
+  );
+});
+
+test('manifest-only inspection retains the ordinary reference and malformed-input gates', async (t) => {
+  const { root, directory } = await fixture(t);
+  await fs.writeFile(path.join(root, 'game/app.mjs'), 'import "./missing.mjs";');
+  await assert.rejects(inspectBuildProject({ root }), /Missing distribution references/);
+  await fs.writeFile(path.join(root, 'game/app.mjs'), 'import "unbundled-package";');
+  await assert.rejects(inspectBuildProject({ root }), /bare import/);
+  await fs.writeFile(path.join(root, 'game/app.mjs'), 'export {};');
+  await fs.writeFile(path.join(root, 'game/invalid.json'), '{');
+  await assert.rejects(inspectBuildProject({ root }), SyntaxError);
+  assert.deepEqual(await fs.readdir(directory), ['project']);
 });
 
 test('owned rebuild replaces old outputs and changes checksums when source changes', async (t) => {
@@ -681,6 +720,10 @@ test('packaged offline builds generate scoped metadata, original icons, complete
   const first = await buildProject({ root, out });
   const second = await buildProject({ root, out: path.join(directory, 'second') });
   assert.equal(first.sha256, second.sha256);
+  const inspected = await inspectBuildProject({ root });
+  const actualManifestBytes = await fs.readFile(path.join(out, 'manifest.json'));
+  assert.deepEqual(inspected.manifest, JSON.parse(actualManifestBytes));
+  assert.equal(inspected.manifestDescriptor.sha256, hash(actualManifestBytes));
   const cache = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json'), 'utf8'));
   const manifest = JSON.parse(await fs.readFile(path.join(out, 'manifest.webmanifest'), 'utf8'));
   assert.equal(manifest.start_url, './game/');
