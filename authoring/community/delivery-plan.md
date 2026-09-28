@@ -81,8 +81,10 @@ runtime before this documentation-only status update.
    release allocation and coordinator admission remain.
 2. **Mail-backed account bootstrap and TLS edge — 0.5–1 day plus infrastructure.** Exercise sign-up,
    captured verification delivery, sign-in, trusted proxy addressing and administrator role binding
-   on the selected host. Keep this acceptance/configuration batch separate if host or mail access is
-   unavailable so it does not hold the session-automation release.
+   on the selected host. A separate stacked batch now provides a bounded account-bootstrap runner
+   for exact HTTPS identity/readiness, two captured creator verification journeys and an allowlisted
+   administrator-role check. Live proxy addressing and mailbox deliverability still require the
+   selected host and mail provider, so this batch does not hold the session-automation release.
 3. **Operator cutover and browser moderation — 0.5 day after batch 2.** Rehearse filesystem
    backup/restore against the selected volumes, then run creator publication and administrator
    preview/resolve/unlist through the browser using the exact deployed edition.
