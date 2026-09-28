@@ -13,7 +13,13 @@ const statusKeys = {
 export const musicStatusLabel = (status) => (statusKeys[status] ? t(statusKeys[status]) : status);
 
 /** Passive presentation only: transport, pause and navigation remain host-owned. */
-export function attachMusicCredit({ document: doc, root, pauseButton, prefix }) {
+export function attachMusicCredit({
+  document: doc,
+  root,
+  pauseButton,
+  prefix,
+  showDetails = true,
+}) {
   const details = doc.createElement('section');
   details.id = `${prefix}-music-details`;
   details.className = 'music-credit-details';
@@ -27,7 +33,7 @@ export function attachMusicCredit({ document: doc, root, pauseButton, prefix }) 
   link.setAttribute('rel', 'noopener noreferrer');
   source.append(link);
   details.append(title, artist, file, source);
-  root.append(details);
+  if (showDetails) root.append(details);
   const previousDescription = pauseButton?.getAttribute('aria-description');
   pauseButton?.classList.add('compact-track-pause');
   let disposed = false,

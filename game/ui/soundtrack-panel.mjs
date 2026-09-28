@@ -48,6 +48,10 @@ import {
   fetchVerifiedOnlineSoundtrack,
   onlineSoundtrackRecordingAllowed,
 } from '../online-soundtrack-catalogue.mjs';
+import {
+  ONLINE_SOUNDTRACK_STYLE_CHOICES,
+  onlineSoundtrackMatchesStyle,
+} from '../online-soundtrack-styles.mjs';
 import { soundtrackErrorText } from './soundtrack-error-copy.mjs';
 
 const copy = (value) => structuredClone(value);
@@ -55,18 +59,6 @@ const message = soundtrackErrorText;
 const seconds = (value = 0) =>
   `${Math.floor(value / 60)}:${String(Math.floor(value % 60)).padStart(2, '0')}`;
 const bytes = (value) => `${(value / 1024 / 1024).toFixed(1)} MiB`;
-const ONLINE_STYLE_CHOICES = Object.freeze([
-  ['fpv', localizedMessage('interface:fpvMusic')],
-  ['ua', localizedMessage('interface:uaMusic')],
-  ['synth', localizedMessage('interface:synthElectronic')],
-  ['metal', localizedMessage('interface:metal')],
-  ['ukrainian', localizedMessage('interface:ukrainian')],
-  ['chiptune', localizedMessage('interface:chiptune8Bit')],
-  ['rock', localizedMessage('interface:rock')],
-  ['ambient', localizedMessage('interface:ambient')],
-  ['fusion', localizedMessage('interface:fusion')],
-  ['other', localizedMessage('interface:otherStyles')],
-]);
 
 /** Local music authoring. Draft changes become authoritative only after one verified store commit. */
 export function attachSoundtrackPanel({
@@ -530,7 +522,7 @@ export function attachSoundtrackPanel({
   });
   onlineStyles.append(node('legend', null, localizedMessage('interface:musicStylesChooseAnyMix')));
   const onlineStyleInputs = new Map();
-  for (const [value, label] of ONLINE_STYLE_CHOICES) {
+  for (const [value, label] of ONLINE_SOUNDTRACK_STYLE_CHOICES) {
     const checkbox = node('input', `online-style-${value}`, null, {
       type: 'checkbox',
       value,
@@ -1706,32 +1698,6 @@ export function attachSoundtrackPanel({
   function tracks() {
     return soundtrackTracks(draft);
   }
-  function matchesOnlineStyle(track, style) {
-    const tags = track.tags.map((tag) => tag.toLowerCase()),
-      has = (...values) => values.some((value) => tags.some((tag) => tag.includes(value)));
-    if (style === 'fpv') return has('фпв', 'fpv');
-    if (style === 'ua') return tags.some((tag) => tag === 'ua');
-    if (style === 'ukrainian') return has('ukrain') || tags.some((tag) => tag === 'ua');
-    if (style === 'metal') return has('metal');
-    if (style === 'synth') return has('synth', 'electro', 'tracker', 'fm', 'dance', 'techno');
-    if (style === 'chiptune') return has('chiptune', '8-bit', 'fakebit');
-    if (style === 'rock') return has('rock', 'punk');
-    if (style === 'ambient') return has('ambient', 'atmospher');
-    if (style === 'fusion') {
-      const families = [
-        has('ukrain'),
-        has('metal'),
-        has('synth', 'electro', 'tracker', 'fm', 'dance', 'techno'),
-        has('chiptune', '8-bit', 'fakebit'),
-        has('rock', 'punk'),
-        has('ambient', 'atmospher'),
-      ];
-      return has('fusion') || families.filter(Boolean).length > 1;
-    }
-    return !['ukrainian', 'metal', 'synth', 'chiptune', 'rock', 'ambient', 'fusion'].some(
-      (family) => matchesOnlineStyle(track, family),
-    );
-  }
   function selectedOnlineStyles() {
     return new Set(
       [...onlineStyleInputs].filter(([, checkbox]) => checkbox.checked).map(([style]) => style),
@@ -1755,7 +1721,7 @@ export function attachSoundtrackPanel({
         (!draft.listening?.recordingMode || onlineSoundtrackRecordingAllowed(track)) &&
         (!query || searchable.includes(query)) &&
         (!collection || (track.collections ?? [track.collection]).includes(collection)) &&
-        [...styles].some((style) => matchesOnlineStyle(track, style))
+        [...styles].some((style) => onlineSoundtrackMatchesStyle(track, style))
       );
     });
   }
