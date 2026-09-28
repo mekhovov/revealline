@@ -48,6 +48,52 @@ export function discoverySurfaceState(document) {
   };
 }
 
+/** Read-only diagnostics for public controls. No arbitrary text, URLs, inputs or
+ * player records are collected. Presence alone is not decoded-image readiness. */
+export function discoveryCycleSurface(document) {
+  const control = (element) => {
+    return { present: !!element, visible: visible(element), disabled: element?.disabled === true };
+  };
+  const images = [
+    ...(document.getElementById('completion-reward-dialog')?.querySelectorAll('img') ?? []),
+  ]
+    .slice(0, 32)
+    .map((element) => ({
+      visible: visible(element),
+      complete: element.complete === true,
+      naturalWidth: finite(element.naturalWidth),
+      naturalHeight: finite(element.naturalHeight),
+    }));
+  return {
+    state: discoverySurfaceState(document),
+    pageHidden: document.hidden === true,
+    pageFocused: document.hasFocus?.() ?? null,
+    result: control(document.getElementById('game-overlay')),
+    showResult: control(document.getElementById('show-result')),
+    viewPicture: control(document.getElementById('view-picture')),
+    explore: control(
+      document
+        .getElementById('completion-reward-result')
+        ?.querySelector('[data-reward-surface="result"]'),
+    ),
+    closeViewer: control(
+      [...(document.getElementById('completion-reward-dialog')?.children ?? [])].find(
+        (node) => node.tagName === 'BUTTON',
+      ),
+    ),
+    openDialogIds: [...document.querySelectorAll('dialog[open]')]
+      .slice(0, 8)
+      .map((node) => node.id.slice(0, 128)),
+    viewerImages: images,
+    decodedVisibleImages: images.filter(
+      (image) => image.visible && image.complete && image.naturalWidth > 0,
+    ).length,
+    brokenVisibleImages: images.filter(
+      (image) => image.visible && image.complete && image.naturalWidth === 0,
+    ).length,
+  };
+}
+
 function bindingCopy(input) {
   const value = JSON.parse(JSON.stringify(input ?? {}));
   if (JSON.stringify(value).length > 8192) throw new TypeError('Observation binding is too large.');
@@ -85,7 +131,8 @@ export function observeDiscovery({
     raf = null,
     previous = null,
     sample = null,
-    samples = 0;
+    samples = 0,
+    focused = document.hasFocus?.() !== false;
   const tasks = [],
     cycles = { result: 0, rewardViewer: 0, collection: 0 },
     pendingCycles = new Map();
@@ -208,6 +255,8 @@ export function observeDiscovery({
     last = state;
     if (sample) {
       if (document.hidden) finish('discarded: page hidden');
+      else if (!focused || document.hasFocus?.() === false)
+        finish('discarded: observed page is not focused');
       else if (sample.began === null) {
         if (condition(state, sample.kind)) {
           sample.began = now;
@@ -228,20 +277,51 @@ export function observeDiscovery({
     }
     raf = window.requestAnimationFrame(tick);
   };
+  let pressedControl = null;
+  const knownControl = (target) => {
+    const element = target?.closest?.('button');
+    if (!element) return null;
+    if (element.id === 'view-picture' || element.id === 'show-result') return element.id;
+    if (element.dataset.rewardSurface === 'result' && element.closest('#completion-reward-result'))
+      return 'explore-discovery';
+    return element.parentElement?.id === 'completion-reward-dialog' ? 'close-discovery' : null;
+  };
   const input = (event) => {
+    const control = knownControl(event.target),
+      action = control ?? (event.type === 'pointerup' ? pressedControl : null);
+    if (event.type === 'pointerdown') pressedControl = control;
+    if (action)
+      record({
+        kind: 'public-control',
+        control: action,
+        event: event.type,
+        targetStillMatches: control === action,
+        trusted: event.isTrusted === true,
+        state: discoverySurfaceState(document),
+      });
+    if (event.type === 'pointerup') pressedControl = null;
     if (!sample) return;
+    if (event.type === 'pointerup') return;
     const key = event.isTrusted ? 'trusted' : 'synthetic';
     sample.inputEvents[key]++;
   };
   const visibility = () => {
     if (document.hidden) finish('discarded: page hidden');
   };
-  const blur = () => finish('discarded: focus left the observed page');
+  const blur = () => {
+    focused = false;
+    pressedControl = null;
+    finish('discarded: focus left the observed page');
+  };
+  const focus = () => {
+    focused = true;
+  };
   const pagehide = () => dispose('page navigation');
-  for (const type of ['keydown', 'pointerdown', 'click'])
+  for (const type of ['keydown', 'pointerdown', 'pointerup', 'click'])
     document.addEventListener(type, input, true);
   document.addEventListener('visibilitychange', visibility);
   window.addEventListener('blur', blur);
+  window.addEventListener('focus', focus);
   window.addEventListener('pagehide', pagehide);
   raf = window.requestAnimationFrame(tick);
   checkpoint('observer attached');
@@ -273,15 +353,17 @@ export function observeDiscovery({
     disposed = true;
     window.cancelAnimationFrame(raf);
     taskObserver?.disconnect();
-    for (const type of ['keydown', 'pointerdown', 'click'])
+    for (const type of ['keydown', 'pointerdown', 'pointerup', 'click'])
       document.removeEventListener(type, input, true);
     document.removeEventListener('visibilitychange', visibility);
     window.removeEventListener('blur', blur);
+    window.removeEventListener('focus', focus);
     window.removeEventListener('pagehide', pagehide);
   }
   return {
     checkpoint,
     exportReport,
+    inspectCycleSurface: () => discoveryCycleSurface(document),
     dispose,
     sample({ kind = 'active-play', durationMs = 20000 } = {}) {
       if (disposed || sample || ++samples > 100)

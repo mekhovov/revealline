@@ -18,7 +18,9 @@ remains `qualified: false`. Mocked DOM tests verify its logic only; they are nev
 3. Collect at least 20 seconds per actual surface: `active-play`, `result-reveal`, `reward-viewer`
    or `collection`. Arm before a transition when measuring its entry; a result already visible
    when armed measures the settled result instead. `surfaceVisibleWhenArmed` distinguishes these
-   cases in new observations. The observer rejects hidden, blurred or changed-scenario samples.
+   cases in new observations. Comparisons reject historical observations that omit that field,
+   even when both reports omit it. The observer rejects hidden, already unfocused, blurred or
+   changed-scenario samples.
 4. Export the raw report, including discarded samples. Capture the exact loaded artifact
    descriptors and a contextual screenshot separately. Use a new output name rather than
    overwriting a valid slow sample.
@@ -54,10 +56,21 @@ node scripts/observe-discovery-cycles.mjs review-session binding.json new-result
 
 The runner observes 20 transitions through Results → Explore → Close → Picture, starting with
 one genuinely earned result. This is repeated viewing, not 20 wins, learning outcomes or pacing
-evidence. It checks actual result/viewer transition counts and waits for the exact image element.
+evidence. It checks actual result/viewer transition counts and waits for a visible image with
+successfully decoded pixels; a broken image is a failure. The viewer remains open for two observed
+frames even when the image is cached, so a quick transition cannot disappear between observer
+frames. Results must expose a visible, enabled Explore control before the runner clicks it.
 Failures produce `new-results.json.failed.json` with the failing step and available partial
-observations. A missing transition cannot count as a successful requested cycle. Browser commands
-have a 45-second timeout; phase polling is bounded to 20 seconds.
+observations. Diagnostics include bounded public control names/events, pointer-release target
+matches, modal state, control visibility and image decode state. They do not collect arbitrary
+page text, URLs, player records or user input values. A missing transition cannot count as a
+successful requested cycle. Browser commands have a 45-second timeout; phase polling is bounded
+to 20 seconds and the two-frame wait has its own two-second deadline.
+
+The lifecycle summary reports observed viewer/result exit pairs and first/last/min/max connected
+DOM/media counts at closed-result checkpoints. These counts can expose growth requiring further
+investigation. They do not prove stable detached objects, outstanding object URLs or native
+decoder allocations, so `retainedResourceStabilityVerified` remains false.
 
 For edition navigation, supply an array of two to eight `{url, binding}` targets:
 
@@ -97,6 +110,16 @@ confirms the selectors target the result Explore button and modal, but the avail
 does not establish whether the failure was in automation or the live UI. Later runner changes add
 bounded polling and partial diagnostics; they have unit coverage and were not rerun in a browser.
 The isolated browser was closed when the shared disk exhausted free space.
+
+A subsequent read-only audit reproduced a separate runner race in its mocked public-control
+fixture: a cached image could appear and the viewer could close before the next observer frame,
+so an actual open/close interaction was missing from the sampled cycle count. Waiting for frames
+while the viewer is open fixes that harness race. The same audit found the earlier image check
+accepted an undecoded or broken image. Neither finding establishes the cause of the historical
+modal-open timeout, which occurred earlier. Its post-click surface and input-event diagnostics
+were not retained. New logic has 13 focused tests, including 20 simulated viewing cycles, lost
+pointer targets, failed decode, cleanup and comparison rejection. Those are test fixtures, not
+new desktop measurements; no actual result-cycle rerun is claimed.
 
 Twenty successful result/viewer cycles, first-reveal timing, exact baseline/current comparison,
 the 5% p95 target, isolated reward tasks, and retained-resource stability remain **unverified**.
