@@ -411,17 +411,32 @@ test('online catalogue fetch is direct, credential-free and bounded', async () =
   );
 });
 
-test('online catalogue accepts a valid current-scale payload above the legacy byte limit', async () => {
-  const tracks = Array.from({ length: 260 }, (_, index) => {
+test('online catalogue accepts a valid 512-recording payload above the legacy limits', async () => {
+  const tracks = Array.from({ length: 512 }, (_, index) => {
     const hash = index.toString(16).padStart(64, '0');
+    const credit = `Song ${index} by Creator. ${'Attribution details. '.repeat(32)}`.trim();
     return {
       ...track,
       id: `creator.song-${index}`,
-      credit: `Song ${index} by Creator. ${'Attribution details. '.repeat(72)}`.trim(),
+      credit,
       audio: {
         ...track.audio,
         path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${hash}.mp3`,
         sha256: hash,
+      },
+      rights: {
+        licenseId: 'CC-BY',
+        licenseVersion: '4.0',
+        licenseURL: track.licenseURL,
+        rightsEvidenceURL: track.source,
+        attribution: credit,
+        derivativeChangeNotice: 'Converted from the creator recording to a verified MP3.',
+        shareAlike: {
+          required: false,
+          deliveryLicenseId: null,
+          deliveryLicenseVersion: null,
+          deliveryLicenseURL: null,
+        },
       },
     };
   });
@@ -446,7 +461,45 @@ test('online catalogue accepts a valid current-scale payload above the legacy by
       body: new Response(bytes).body,
     }),
   });
-  assert.equal(resolved.tracks.length, 260);
+  assert.equal(resolved.tracks.length, 512);
+});
+
+test('online catalogue rejects a 513th recording before queue construction', () => {
+  const tracks = Array.from({ length: 513 }, (_, index) => {
+    const hash = index.toString(16).padStart(64, '0');
+    return {
+      ...track,
+      id: `creator.song-${index}`,
+      audio: {
+        ...track.audio,
+        path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${hash}.mp3`,
+        sha256: hash,
+      },
+    };
+  });
+  assert.throws(
+    () =>
+      resolveOnlineSoundtrackCatalogue({
+        ...catalogue,
+        counts: {
+          declaredTracks: tracks.length,
+          uniqueRecordings: tracks.length,
+          duplicateAliases: 0,
+          audioBytes: tracks.reduce((sum, item) => sum + item.audio.bytes, 0),
+        },
+        tracks,
+      }),
+    /item budget|structural budget|list is too large/,
+  );
+});
+
+test('online catalogue retains an independent structural-node ceiling', () => {
+  const oversizedStructure = {
+    ...catalogue,
+    sources: Array.from({ length: 32 }, () => Array.from({ length: 512 }, () => [1, 2, 3, 4])),
+  };
+  assert.ok(JSON.stringify(oversizedStructure).length < 2 * 1024 * 1024);
+  assert.throws(() => resolveOnlineSoundtrackCatalogue(oversizedStructure), /structural budget/);
 });
 
 test('online catalogue stops reading a streamed response at its byte limit', async () => {

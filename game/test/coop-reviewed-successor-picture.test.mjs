@@ -33,7 +33,7 @@ function snapshot(revision) {
   return { resolved: structuredClone(resolvePresentation(document)) };
 }
 function fixture(
-  revision = 93,
+  revision = 94,
   pack = COOP_STARTER_PACK,
   levelId = 'first-connection',
   policy = COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
@@ -71,15 +71,15 @@ function fixture(
   return { current, calls, request, presentation };
 }
 
-test('integrated93 retains complete58–92 historical picture and actor records and original bytes', async () => {
+test('integrated94 retains complete58–93 historical picture and actor records and original bytes', async () => {
   const retained = [
     58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
-    82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92,
+    82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93,
   ];
-  assert.equal(bundle.document.selection.theme.revision, 93);
+  assert.equal(bundle.document.selection.theme.revision, 94);
   assert.deepEqual(
     COOP_SUPPORTED_PICTURE_BINDINGS.map((row) => row.themeRevision),
-    [93, 93, ...retained.flatMap((revision) => [revision, revision])],
+    [94, 94, ...retained.flatMap((revision) => [revision, revision])],
   );
   assert.deepEqual(
     COOP_RETAINED_PICTURE_BINDINGS,
@@ -94,7 +94,7 @@ test('integrated93 retains complete58–92 historical picture and actor records 
       row.collection,
     ]),
     [
-      ['fpv', 93, null],
+      ['fpv', 94, null],
       ['fpv', 58, null],
       ['fpv', 59, null],
       ['fpv', 60, null],
@@ -130,6 +130,7 @@ test('integrated93 retains complete58–92 historical picture and actor records 
       ['fpv', 90, null],
       ['fpv', 91, null],
       ['fpv', 92, null],
+      ['fpv', 93, null],
     ],
   );
   const slots = [
@@ -143,7 +144,7 @@ test('integrated93 retains complete58–92 historical picture and actor records 
   ];
   assert.equal(slots.length, 8);
   // Keep the original complete-record comparison on the retained 58–91 lineage.
-  // Current93 leases are exercised separately below; this does not relabel actor successors.
+  // Current94 leases are exercised separately below; this does not relabel actor successors.
   const old = snapshot(58),
     current = snapshot(91);
   for (const slot of slots) {
@@ -251,7 +252,7 @@ for (const revision of [
   });
 }
 
-test('finite host authority rejects54,57,94, other themes and collections before reads', async () => {
+test('finite host authority rejects54,57,95, other themes and collections before reads', async () => {
   for (const pack of [COOP_STARTER_PACK, imported]) {
     for (const change of [
       (s) => {
@@ -261,7 +262,7 @@ test('finite host authority rejects54,57,94, other themes and collections before
         s.resolved.theme.revision = 57;
       },
       (s) => {
-        s.resolved.theme.revision = 94;
+        s.resolved.theme.revision = 95;
       },
       (s) => {
         s.resolved.theme.id = 'other';
@@ -313,16 +314,16 @@ test('legacy singular policy retains exact59 support and malformed finite lists 
   }
 });
 
-test('historical picture authority remains bounded to thirty-six exact distinct revisions', () => {
+test('historical picture authority remains bounded to thirty-seven exact distinct revisions', () => {
   const policies = [
     58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
-    82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94,
+    82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95,
   ].map((themeRevision) => ({
     ...COOP_RETAINED_HISTORICAL_IMPORT_PICTURE_POLICY,
     themeRevision,
   }));
-  assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.length, 36);
-  assert.equal(COOP_SUPPORTED_PICTURE_BINDINGS.length, 72);
-  assert.equal(policies.length, 37);
-  assert.throws(() => fixture(93, imported, imported.levels[0].id, policies), /item budget/);
+  assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.length, 37);
+  assert.equal(COOP_SUPPORTED_PICTURE_BINDINGS.length, 74);
+  assert.equal(policies.length, 38);
+  assert.throws(() => fixture(94, imported, imported.levels[0].id, policies), /item budget/);
 });

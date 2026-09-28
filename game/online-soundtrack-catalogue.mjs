@@ -70,7 +70,7 @@ function catalogueJSON(source) {
   try {
     return boundedJSON(source, {
       maxBytes: MAX_BYTES,
-      maxNodes: 20000,
+      maxNodes: 65536,
       maxDepth: 8,
       maxArray: 512,
       maxString: 4096,
