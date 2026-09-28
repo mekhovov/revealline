@@ -25,7 +25,7 @@ Current qualification is narrower than implementation:
 
 - Exact artifact `de4cec8ba` completed **20 result/viewer pairs and 20 closed-view checkpoints** after a normal Frame win. Closed connected DOM/media counts stayed constant. The hash-bound local receipt is `.cache/discovery-evidence-20260928/cycles-de4cec8ba/validation-receipt.json`; it does not establish detached-object, outstanding-URL or decoder retention.
 - One accepted baseline/current pair per scenario recorded p95 **16.7→16.8 ms (+0.60%)** for stationary active play and first-win result entry, within the scoped five-percent target. These single-pair observations do not qualify every device, scenario or reward-owned task. [Comparison method and limits](discovery-desktop-observations.md#matched-compiled-artifacts-on-28-september).
-- `31fcf37fe` passed complete eighteen-edition candidate run `36443438023` (including optional practice) and hosted acceptance run `36443438032`. Candidate artifact `10979944451` includes the shared catalogue optimization and explicit hosted-edition subset. This is not production qualification. The subsequent viewer-recovery/capacity batch passes local checks and needs its own final-head CI.
+- `7acf6af53` passed complete eighteen-edition candidate run `36447088737` (including optional practice) and hosted acceptance run `36447088556`. Its separate capacity artifact validates the exact edition and launcher sizes without downloading the roughly 900 MB bulk archive. These receipts precede the rebase onto main `7138e7b61` and do not qualify the rebased head or production publication.
 - The later `61a315090` FPV distribution reproduces twice with unchanged gameplay identity. A matching clean Motion viewer trace improves **56.280 → 8.558 ms** after the shared catalogue optimization. A fresh normal win and twenty result/viewer cycles also pass with constant connected counts and a durable save. These are scoped viewer/lifecycle observations, not all-reward, first-win or retained-memory qualification.
 - Human and physical-device review remains explicitly deferred. Current frozen full-site sizing, complete release admission, rollback verification and downloaded/deployed public-byte evidence remain open.
 
@@ -48,7 +48,7 @@ The checkpoint entries below preserve their original scope and results; earlier 
 
 ## Current engineering evidence
 
-- Main was refreshed to `742e4b142` (the frozen v0.142.0 Pages publication update) for the latest batch. The preceding framework baseline was `813dee5fe`. Pushed framework checkpoint `e73343e69` also preserves the parallel publisher change binding optional-package uploads to the reviewed draft ID; its 32 publisher tests pass. The completed-art checkpoint `33365f037` passes candidate run `36396929270`, including company and optional-practice jobs. The feedback/application/personal-best checkpoint `79db371ef` passes hosted acceptance run `36401307673` and the optional-practice job in `36401307665`; its company candidate failed one 30-second real-host mastery-test timeout under concurrent load. The harness now renders the same 469 simulation ticks at 60 Hz instead of every 120 Hz tick, retains its final checkpoint, and allows 60 seconds under concurrency. Three affected real-host checks pass; a new complete checkpoint remains required. No current frozen artifact is yet qualified for production.
+- Main is now refreshed to `7138e7b61` (the merged v0.142.1 release changes). Both branches’ localization and offline recovery changes are retained; the previous clean integration remains on a recovery branch. The preceding checkpoint used `742e4b142` (the frozen v0.142.0 Pages publication update). The preceding framework baseline was `813dee5fe`. Pushed framework checkpoint `e73343e69` also preserves the parallel publisher change binding optional-package uploads to the reviewed draft ID; its 32 publisher tests pass. The completed-art checkpoint `33365f037` passes candidate run `36396929270`, including company and optional-practice jobs. The feedback/application/personal-best checkpoint `79db371ef` passes hosted acceptance run `36401307673` and the optional-practice job in `36401307665`; its company candidate failed one 30-second real-host mastery-test timeout under concurrent load. The harness now renders the same 469 simulation ticks at 60 Hz instead of every 120 Hz tick, retains its final checkpoint, and allows 60 seconds under concurrency. Three affected real-host checks pass; a new complete checkpoint remains required. No current frozen artifact is yet qualified for production.
 - The completed 108-art batch passes 17 artwork/localization/retained-presentation checks plus nine curriculum checks. A new assertion verifies 108 distinct admitted mission hashes and no key-art fallback. Generated-source validation verifies **184 exports and 278 public assets**. Exact pre-update presentations remain in the retained inventory.
 - The preceding framework integration passed a clean **523-test company/edition suite**. Subsequent title/VM fixes passed 14 focused checks. Cosmetics passed 80 focused checks, goal navigation passed 12 plus three actual mode-controller checks, and the title character passed three lifecycle/reduced-motion checks. These overlapping focused counts do not substitute for current frozen candidate CI.
 - The mastery evidence fix passed 59 runtime/Studio/compiler checks and 54 earned-view/legacy checks. The modern adapter re-verifies historical qualifying runs so a later win cannot remove an unfinished campaign prerequisite.
@@ -175,3 +175,57 @@ Next delivery sequence: complete final-head candidate CI; inspect its small capa
 The preceding `31fcf37fe` candidate completed successfully in run `36443438023`: optional practice passed, and the company job took 26m33s without changing its thirty-minute bound. Its complete 904,964,327-byte artifact is `10979944451`, with GitHub-reported digest `sha256:d02cc24e727b1f1ba64f5f7930ff752f190a4a345506616970027e483a65232e`. Hosted acceptance `36443438032` also passed. These are that exact head's CI results, not final public-byte or subsequent-head qualification.
 
 The recovery/capacity implementation at `d64e775db` then compiled FPV Learning twice from a clean commit, verified original distribution/source members, and emitted a valid five-file **98,801-byte** capacity packet. The [build observation](verification/evidence/discovery-2026-09-28-capacity-build.json) records the 32,417,611-byte distribution (`718171ef18d3e4fe6fa21c3a5fae5457f1c026c99770a1319e6988d63212b89d`). Its exact immutable files use 32,319,419 bytes and its stable launcher another 12,685 bytes. These component counts are not a whole-site fit verdict. The same integration PR now carries this batch; final-head full CI and the remaining phase-seven gates stay open.
+
+
+## Main refresh and explicit-import recovery batch
+
+The integration is rebased onto `7138e7b61`. Main’s localized offline/recovery controls and
+flight-detail changes coexist with the Discovery shell, isolated Studio previews and exact
+reward/learning adapters. No arcade rules, gameplay identities or reward requirements change.
+The old integration head remains recoverable. All 184 generated exports and 293 public assets
+pass source checks; the rebase checkpoint validates 11,333 English/Ukrainian messages and 8,598 references. Three subsequent capacity messages pass catalogue validation.
+The rebase initially exposed a stale home-copy assertion; it now checks the implemented world
+labels while retaining control identity and locale-switch assertions.
+
+The preceding `7acf6af53` candidate and hosted acceptance both passed. Its
+[capacity packet](verification/evidence/discovery-2026-09-28-capacity-packet.json)
+binds source/tree, original artifact and metadata hashes. Four new edition components use
+118,349,625 bytes, the six combined/new editions use 243,833,271 bytes, and all eighteen use
+568,820,786 bytes, including their active launchers. These exclude the default build, retained
+versions, hub and optional packages. Historical default plus six already exceeds the existing
+site cap; no subset is yet qualified for publication.
+
+A shared manifest-only default inspector now reuses normal build preparation and validation.
+It verifies committed included originals, available compiler/producer sources and sparse-input
+completeness, then writes a bounded report without generating an expanded site or ZIP. Its
+35 shared-build/wrapper checks pass independently, including actual manifest-byte parity and
+hidden changed originals. This is candidate sizing, not frozen release or complete-site admission.
+
+Explicit Discovery imports now reject incompatible promised or earned revisions with a
+persistent English/Ukrainian recovery message. The current collection and original backup are
+preserved; compatible imports still merge. New promises cannot race a pending import and produce
+a false failure after the database has committed. Bounded temporary projections preserve locally
+accepted discoveries across repeated refreshes, failed imports and closing without creating a
+second completion authority. Model/storage checks pass 44/44 and player-host checks pass 26/26,
+including the normally initialized host that exposed the original silent omission. The v1 store
+still cannot combine different promised revisions under the same reward ID; use the matching
+release in a separate profile for that recovery path. Two real schema-limit cases also verify
+that a committed import stays successful when later local receipts exceed the collection budget.
+The valid collection remains intact and exportable; bounded local projections stay in memory,
+the pending operation ends, and a bilingual warning explicitly names what Discovery export
+cannot include. Journey and optional-learning backups plus the original file remain recovery
+sources. This fixed collection limit is not a browser disk-space setting.
+
+A native-memory capability probe on the exact older `61a315090` artifact could open DevTools,
+but native inspection returned “Computer Use permissions are not granted”. No heap snapshots,
+new cycles or retaining paths were recorded; its isolated browser closed. Existing connected
+DOM/media counts remain scoped observations, and retained-resource qualification stays open.
+Human and physical-device review remains deferred.
+
+
+The final combined company/edition/build-inspector suite passes **758/758 checks** with four
+workers in 158.2 seconds, with no failures, cancellations or skips. This follows the earlier
+756-pass run and includes both capacity regressions. Changed code passes ESLint, repository
+formatting and whitespace checks. Independent review found no remaining concrete issue in the
+import boundaries or shared inspector. The rebased source still needs its own immutable CI;
+previous-head green runs are not reused as current qualification.

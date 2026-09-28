@@ -159,6 +159,10 @@ export async function mountEditionRewards({
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
   status.setAttribute('aria-atomic', 'true');
+  const importStatus = node('p');
+  importStatus.id = 'completion-reward-import-status';
+  importStatus.setAttribute('role', 'status');
+  importStatus.hidden = true;
   const dataTitle = node('h3'),
     dataNote = node('p'),
     exportButton = button('', download);
@@ -177,7 +181,7 @@ export async function mountEditionRewards({
   upload.type = 'file';
   upload.accept = 'application/json,.json';
   importLabel.append(labelText, upload);
-  data.append(dataTitle, dataNote, exportButton, retrySave, importLabel, status);
+  data.append(dataTitle, dataNote, exportButton, retrySave, importLabel, status, importStatus);
   if (previewSession) {
     exportButton.hidden = true;
     retrySave.hidden = true;
@@ -208,11 +212,22 @@ export async function mountEditionRewards({
   }
   function saveStatus() {
     const saved = store.status();
-    status.textContent = tr(saved.pending ? 'saving' : saved.durable ? 'saved' : 'sessionOnly');
+    status.textContent = tr(
+      saved.deferred
+        ? saved.deferred.importSaved
+          ? 'capacityImported'
+          : 'capacityLocal'
+        : saved.pending
+          ? 'saving'
+          : saved.durable
+            ? 'saved'
+            : 'sessionOnly',
+    );
     status.dataset.durable = String(saved.durable);
     status.dataset.pending = String(saved.pending === true);
     retrySave.textContent = t('interface:retrySave');
     retrySave.disabled = saved.durable || saved.pending;
+    renderImportStatus();
   }
   function download() {
     if (previewSession) return;
@@ -223,10 +238,21 @@ export async function mountEditionRewards({
     anchor.click();
     win.setTimeout(() => win.URL.revokeObjectURL(url), 1000);
   }
-  let importVisit = 0;
+  let importVisit = 0,
+    importIssue = null;
+  function renderImportStatus() {
+    importStatus.hidden = !importIssue;
+    importStatus.textContent = !importIssue
+      ? ''
+      : importIssue.kind === 'conflict'
+        ? tr('importConflict')
+        : `${tr('importFailed')} ${importIssue.message}`;
+  }
   upload.onchange = async () => {
     if (previewSession) return;
     const visit = ++importVisit;
+    importIssue = null;
+    renderImportStatus();
     try {
       const file = upload.files?.[0];
       if (!file) return;
@@ -234,14 +260,19 @@ export async function mountEditionRewards({
       const text = await file.text();
       if (disposed || visit !== importVisit) return;
       await store.restore(JSON.parse(text));
-      if (!disposed) {
+      if (!disposed && visit === importVisit) {
         revision = undefined;
         dirty = true;
         refresh();
       }
     } catch (error) {
-      if (!disposed && visit === importVisit)
-        status.textContent = `${tr('importFailed')} ${error.message}`;
+      if (!disposed && visit === importVisit) {
+        importIssue =
+          error.code === 'REWARD_IMPORT_CONFLICT'
+            ? { kind: 'conflict' }
+            : { kind: 'failure', message: error.message };
+        renderImportStatus();
+      }
     } finally {
       if (!disposed && visit === importVisit) upload.value = '';
     }
@@ -283,7 +314,12 @@ export async function mountEditionRewards({
     );
   }
   function saveNotice() {
-    const note = node('p', tr('sessionOnly'), 'completion-reward-save-note');
+    const deferred = store.status().deferred;
+    const note = node(
+      'p',
+      tr(deferred ? (deferred.importSaved ? 'capacityImported' : 'capacityLocal') : 'sessionOnly'),
+      'completion-reward-save-note',
+    );
     note.setAttribute('role', 'status');
     note.setAttribute('aria-live', 'polite');
     note.setAttribute('aria-atomic', 'true');
@@ -409,7 +445,13 @@ export async function mountEditionRewards({
     shelf.replaceChildren(title, controls);
     if (exhibit)
       shelf.append(
-        node('p', tr('exhibitCollected', { collected: exhibit.collected, total: exhibit.total })),
+        node(
+          'p',
+          tr('exhibitCollected', {
+            collected: exhibit.collected,
+            total: exhibit.total,
+          }),
+        ),
       );
     shelf.append(grid);
     syncShelfSaveNote();
@@ -439,7 +481,11 @@ export async function mountEditionRewards({
   }
   function syncShelfSaveNote() {
     doc.getElementById('completion-reward-exhibit-save-note')?.remove();
-    if (state.receipts.length && !store.status().durable && !store.status().pending) {
+    if (
+      (state.receipts.length || store.status().deferred) &&
+      !store.status().durable &&
+      !store.status().pending
+    ) {
       const notice = saveNotice();
       notice.id = 'completion-reward-exhibit-save-note';
       shelf.append(notice);
@@ -531,7 +577,7 @@ export async function mountEditionRewards({
       if (!saved.durable) {
         const compact = node(
           'p',
-          tr(saved.pending ? 'saving' : 'sessionOnlyShort'),
+          tr(saved.deferred ? 'capacityShort' : saved.pending ? 'saving' : 'sessionOnlyShort'),
           'completion-reward-session-status',
         );
         compact.setAttribute('role', 'status');
