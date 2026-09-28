@@ -1,139 +1,62 @@
 # Discovery rewards implementation status
 
-This is the implementation ledger for **Make every level a discovery and every
-campaign a memorable journey**. It distinguishes implemented candidate code from
-published editions and from the remaining catalogue. Human and physical-device
-evidence is deferred at the user's request, not recorded as passed.
+Implementation ledger for **Make every level a discovery and every campaign a memorable journey**. Candidate code, generated content and engineering checks are distinguished from released artifacts. Human and physical-device evidence remains deferred at the user's request.
 
-## Current delivery batch
+## Current integration batch
 
-The first content batch contains fourteen bilingual reward definitions:
+The original reward pilots cover Coupa **Spend in Motion** and DroneAid Netherlands **Workshop Lights**: twelve first-win discoveries and two six-distinct-win finales. Their existing maps, simulation identities and public artwork remain intact, with exact pre-reward presentations retained.
 
-- **Coupa / Spend in Motion:** six first-win picture-and-knowledge discoveries and
-  **The Connected Village**, a finale requiring six distinct mission wins.
-- **DroneAid Netherlands / Workshop Lights:** six first-win discoveries and
-  **A Workshop Built Together**, another six-win finale.
+The new catalogue currently contains **six campaigns, 36 missions and six finales**:
 
-Each finale collects its campaign's six exact existing pictures, an original
-reflection guide and an explicit link to the official public source. Rewards are
-shareable local discoveries, not coupons, certifications or verified claims of
-real-world impact. English and Ukrainian copy is authored in the sidecars;
-sources remain attached to each knowledge payload.
+| Edition                 | Implemented campaigns                             | Missions | Planned total |
+| ----------------------- | ------------------------------------------------- | -------: | ------------: |
+| Social Drone UA         | People Behind the Workshop; Community Connections |       12 |            12 |
+| Victory Drones          | Knowledge Connects; Ideas into Understanding      |       12 |            12 |
+| Ukraine: Living Culture | Threads Across Ukraine                            |        6 |            36 |
+| FPV Learning            | Meet the Aircraft                                 |        6 |            48 |
 
-The generator adds `rewardPath` only to these two campaign descriptors. Existing
-mission, map, boot and artwork documents are unchanged. Allowed completion
-identities come from the same Solo content execution and pressure tuning as the
-game. A win on mission six cannot replace a missing earlier win. All three
-existing difficulties are eligible.
+Every new mission uses the shared arcade engine, canonical difficulty and enemy behaviours. Each has a distinct geometry, authored pacing beat, route decision and bilingual first-win discovery. Every finale requires its six declared wins. Source-linked reflection prompts are available, but they are not verified learning/application tasks. No assembly or battlefield instruction is provided.
 
-The four affected editions receive new immutable content revisions:
-`coupa-all` 6 → 7, `coupa-adventure` 5 → 6, `droneaid-nl-community` 5 → 6,
-and `droneaid-nl-workshop-lights` 4 → 5. Four exact pre-change presentations
-were captured from the integration base and appended to their retained history;
-existing snapshots and their order are preserved.
-
-The content is shared between each campaign's permitted aggregate and standalone
-edition. Runtime progress and earned receipts remain scoped to the selected
-logical edition. A campaign reward file does not authorize access to another
-edition's content or progress.
+Four illustrated home scenes are original fictional environments. Missions currently reuse their edition's scene: these are **not 36 finished mission illustrations**. A verified Met public-domain object image provides a real collection example in the textile finale. New community identities currently use neutral original markers; official logos and installation icons remain a separate asset task.
 
 ## Phase ledger
 
-| Phase                            | Status in this batch                                                                                                                                                    | Remaining                                                                                                                       |
-| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| 0. Baseline                      | Existing shared engine, Journey, company pipeline, media and reward authorities inspected                                                                               | Maintain compatibility checks against the integration base                                                                      |
-| 1. Reward foundation             | Candidate implementation and the two complete six-mission reward pilots                                                                                                 | End-to-end host, persistence and qualification validation before declaring complete                                             |
-| 2. Game feel and authoring       | Company Studio supports sidecar creation, explicit single/all-mission rule choice, bilingual knowledge authoring, advanced JSON editing and synthetic progress previews | Expedition map, result sequence, complete cross-studio round trips, media-specific adapters and shared player-renderer previews |
-| 3. Four new edition slices       | Not implemented by this batch                                                                                                                                           | Twelve new missions across Social Drone UA, Victory Drones, Ukraine and FPV Learning                                            |
-| 4. First finales and control lab | Not implemented                                                                                                                                                         | Complete the first six-mission campaign in each new edition and simplified flight-control practice                              |
-| 5. Content expansion             | Not implemented                                                                                                                                                         | Remaining 84 missions after the first 24; all 18 new campaign finales                                                           |
-| 6. Flight simulator              | Not implemented                                                                                                                                                         | Separate optional simulator and 12 civilian practice drills                                                                     |
-| 7. Qualification and rollout     | Not complete                                                                                                                                                            | Frozen candidate qualification, rollback, release evidence and authorized publication                                           |
+| Phase                            | Implemented                                                                                                                                                                                                                                                            | Remaining                                                                                                                                                        |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0. Baseline                      | Preserved historical checkout; refreshed integration base; audited shared Journey, edition, media and reward authorities                                                                                                                                               | Continue compatibility checks as main changes                                                                                                                    |
+| 1. Reward foundation             | Exact completion bindings, pinned promises, receipts, Collection, automatic first-win grants and both existing pilot finales; previous candidate CI passed                                                                                                             | Maintain admission and persistence coverage                                                                                                                      |
+| 2. Game feel and authoring       | Expedition map/list on canonical mission selector; immediate Next/Retry; short optional result reveal; reduced motion; shared mission beat/reward metadata; Company and Level/Campaign Studio authoring; isolated whole-game previews; selected EN/UK content sidecars | Rich audio/video/cosmetic reward adapters, all cross-studio media workflows, verified Apply/mastery adapter, full selected-prose localization, benchmark targets |
+| 3. Four playable slices          | First six missions in each of the four new editions, visible reward promises and source-linked discoveries                                                                                                                                                             | Distinct mission art, interactive explorations and corresponding visual review                                                                                   |
+| 4. First finales and control lab | Four first-campaign finales plus two additional community finales; untimed four-controls concept lab with keyboard/touch controls and neutral input transitions                                                                                                        | Rich aircraft/textile atlas interactions, printable finales and verified application tasks                                                                       |
+| 5. Content expansion             | 36 of 108 missions and 6 of 18 new finales; second community campaigns complete                                                                                                                                                                                        | 72 missions, 12 finales and campaign-specific art; subsequent batches remain source reviewed                                                                     |
+| 6. Optional flight practice      | Separate 12-drill civilian practice package in development                                                                                                                                                                                                             | Finish deterministic drill proofs, optional-package admission, isolation, offline installation and capability fallback                                           |
+| 7. Qualification and rollout     | Focused checks, deterministic route proofs and prior pilot candidate CI; one integration PR                                                                                                                                                                            | Current frozen-artifact qualification, performance measurements, rollback/publication evidence and release queue admission                                       |
 
-The future catalogue remains **18 new campaigns / 108 new missions / 12 flight
-practice drills**. These are not counts of work delivered by the pilot:
+The complete requested scope remains **18 new campaigns / 108 new missions / 12 flight-practice drills**. Existing Coupa/DroneAid pilots are additional to those counts. Learning profiles should vary explanations, not simulation rules. Schools/families, beginners and hobbyists are not yet three fully authored versions of every discovery.
 
-| Edition                 | Planned campaigns | Planned missions |
-| ----------------------- | ----------------: | ---------------: |
-| Social Drone UA         |                 2 |               12 |
-| Victory Drones          |                 2 |               12 |
-| Ukraine: Living Culture |                 6 |               36 |
-| FPV Learning            |                 8 |               48 |
+## Current engineering evidence
 
-The two existing pilot campaigns do not consume that new-content count. Future
-missions retain the shared engine and enemy behaviour. Schools/families,
-beginners and hobbyists receive different learning explanations rather than
-company-specific simulation rules.
+- **388 company/edition regression tests passed** for the 36-mission batch. Separate focused authoring, preview-isolation and four-controls tests also passed.
+- **216 deterministic route witnesses** cover all 36 missions, three difficulties and two steering modes. These prove legal objective completion and replay agreement, not human pacing or enjoyment.
+- The company generator verifies **145 files**. Selected localization sidecars participate in compiler pruning and retained presentation dependencies; translations do not change gameplay/replay bytes.
+- A real Studio-preview win, Retry and save attempt left player storage unchanged. Preview sessions use temporary storage, open no player databases and acquire no player writer locks.
+- Reward persistence tests cover timeouts, quota failures, corrupt saves, writer leases, exact-edition transfers and repeated open/close cycles. Finale checks remain locked when any one required win is missing.
+- Expedition tests retain canonical launch buttons and input ownership. Desktop browser inspection confirmed the Ukrainian selector, collapsed filters, six localized mission names, campaign promise and progress. This is engineering inspection, not a human playtest.
+- The previous pilot commit `89623c870` passed the **Company edition candidates** workflow. Its two selected builds were each compiled twice with matching ZIP bytes: Coupa adventure approximately 25.1 MB; DroneAid workshop approximately 25.8 MB. Reproducible local ZIP caches were later removed to recover disk space; manifests and verification records remain. This does not qualify the new batch.
+- Full local repository validation is limited by historical artwork intentionally absent from this sparse checkout (`authoring/library/fpv-role-presentations/originals`). Full-checkout CI remains required; the missing files are not recorded as a passing check.
 
-## Source and visual evidence
+No current evidence establishes the p95 frame-time target, physical-device behaviour, learning effectiveness, full art completion or publication. Tests and implementation counts must not be substituted for those claims.
 
-Public sources checked on 28 September 2026:
+## Source and visual records
 
-- [Coupa culture](https://careers.coupa.com/en/life-at-coupa/) for the village's
-  collaboration, accountability and belonging context.
-- [Coupa purchase-order documentation](https://docs.coupa.com/en/supplier-documentation/coupa-for-suppliers/the-coupa-supplier-portal-or-csp/features-and-processes-in-the-coupa-supplier-portal/purchase-orders/about-purchase-orders)
-  for the distinction between documented supplier communication routes.
-- [Coupa invoicing FAQ](https://docs.coupa.com/en/supplier-documentation/coupa-for-suppliers/the-coupa-supplier-portal-or-csp/features-and-processes-in-the-coupa-supplier-portal/invoices/faq-about-invoicing-for-suppliers)
-  for customer-dependent setup and incomplete payment details.
-- [DroneAid Netherlands](https://drone-aid.nl/en) for its public technical learning
-  and Ukraine-support mission, and [public reports](https://drone-aid.nl/en/reports)
-  for the distinction between illustrated stories and dated evidence.
+See [experience research](discovery-experience-research.md), [curriculum production briefs](discovery-curriculum-production.md) and the public `game/editions/asset-sources.json` inventory for source links, rights and original/generated distinctions.
 
-No employee photographs, new logos or outside media were imported. Existing
-illustrated mission pictures retain their exact public inventory hash and their
-existing review state. Reuse does not turn pending human artwork review into
-approval. The fictional examples are not product policies, assembly instructions
-or deployment claims.
+The imported image is Edgar Degas's **Dancer in Ukrainian Dress** (1899), Met accession **29.100.556**, explicitly marked public domain. It is presented as an artist's interpretation, not evidence for every detail of a historic garment. Honchar collection photographs reviewed during research are **CC BY-NC 4.0**; those photographs were not copied into the edition. Named object facts and source links are kept separately from image redistribution rights.
 
-## Recorded focused checks
+Original scene masters remain outside the repository. Selected raster derivatives carry byte hashes, generation records and review state. Human art approval remains deferred. Community branding and fictional scenes do not imply endorsement or document real facilities, employees or deployments.
 
-- `node --test game/test/company-rewards.test.mjs`: **5 passed**. Covers bilingual
-  payloads, exact admitted pictures, all six required wins, wrong gameplay and
-  brand rejection, absent-asset rejection, generator round trips and the four
-  exact retained pre-reward presentations.
-- `node --test game/test/company-studio-rewards.test.mjs game/test/company-artwork.test.mjs game/test/edition-retained-presentation.test.mjs game/test/company-studio-ui.test.mjs`:
-  **22 passed**. Includes explicit author choices, synthetic preview states,
-  generic company authoring and existing studio/presentation compatibility.
-- `node scripts/produce-company-content.mjs --check`: verifies all **103**
-  generated company files, including the two new reward sidecars.
-- Existing source, boot and artwork files remain byte-identical in the pilot
-  generation diff; catalog changes are limited to the two `rewardPath` fields,
-  four edition revisions and their four exact retained-presentation records.
+## Delivery policy
 
-Additional integration evidence:
+Continue compatible implementation batches in **PR #758** while the queue is occupied. A successful candidate build is not release admission. Existing release coordination owns versions, freezing, promotion and publication; no release slot is bypassed.
 
-- The company/edition regression suite passed **363 tests** after storage
-  and multiple-pack hardening. Subsequent changed-view checks are recorded in
-  the PR alongside that complete suite result.
-- Storage is bounded to 1,500 ms by default. Tests cover stalled opens/transactions,
-  late callbacks, quotas, corrupt saves, write leases, exact-edition imports and
-  20 visits with matching database open/close counts.
-- Existing Solo controls, Continue/Retry, edition switching and all fourteen
-  edition startup paths pass. A reward-enabled controller-practice regression
-  proves startup works without a Journey authority and cannot grant discoveries.
-- Actual pilot builds were each compiled twice. Their complete ZIP bytes matched:
-  Coupa adventure **533 files / approximately 25.1 MB ZIP**; DroneAid workshop
-  **537 files / approximately 25.8 MB ZIP**. These are development compile checks, not
-  published or qualified immutable releases. Both remain under existing budgets.
-- The public source-eligibility check and 103-file content generator check pass.
-  Changed-code lint, formatting and localization checks pass.
-- Desktop browser smoke inspection confirmed the Ukrainian Collection and Company
-  Studio's explicit **5/6 locked** finale preview. This is engineering inspection,
-  not the deferred human learning/pacing study.
-- Full repository `game-cli validate` is blocked by historical artwork omitted
-  from this sparse checkout (`authoring/library/fpv-role-presentations/originals`).
-  Selected edition builds and source checks pass; the full-checkout CI/release
-  gate is still required. No check was waived or recorded as passing.
-
-These checks do not establish physical-device performance, the requested p95
-frame-time target, learning effectiveness, a completed cross-studio workflow or
-public publication. Human and physical-device review remain explicitly deferred.
-
-## Release handling
-
-Combine compatible reviewed work in one integration PR while the release queue
-is occupied. Preserve per-batch validation receipts and immutable artifacts. Do
-not allocate versions or publish directly from this content generator. Existing
-release coordination controls version allocation, promotion and publication.
-Keep the 64 MiB / 2,000-file core offline budget and exact dependency/exclusion
-checks; these pilots add JSON and reuse existing pictures.
+Keep the **64 MiB / 2,000-file core offline budget**, **32 MiB edition-asset limit**, source-eligibility checks and selected dependency closure. Long media and flight practice stay in optional packages. Human/device review is deferred, not waived or replaced by automated statistics.
