@@ -13,15 +13,15 @@ and every already-published reward promise. Human learning, artwork and physical
 radio testing remain explicitly deferred. Passing synthetic inputs is not hardware
 qualification. Release coordination owns versions and production promotion.
 
-| Batch          | Deliverable                                                                        | Current integration state                              |
-| -------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| A / 2          | Shared screen polish, practice discovery, guided lesson and atlas editing          | Implemented                                            |
-| B / 3          | First three polished missions in each of four existing showcase campaigns          | Implemented                                            |
-| C / 4          | Six missions per showcase, different application fixtures, control lab             | Implemented                                            |
-| D / 6          | USB-radio diagnostics, arbitrary channels, calibration, separate response profiles | Implemented; physical devices unverified               |
-| E / 6          | First-person model, Self-level/manual throttle and Acro, representative drills     | Implemented; portable numeric fixtures pass            |
-| F / 6          | Twelve drills, typed practice rewards, notebook and studio round trips             | Implemented                                            |
-| Continuous / 7 | Reproducible archives, portable proofs, lifecycle/performance, admission           | Local evidence recorded; frozen CI/publication pending |
+| Batch          | Deliverable                                                                        | Current integration state                                  |
+| -------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| A / 2          | Shared screen polish, practice discovery, guided lesson and atlas editing          | Implemented                                                |
+| B / 3          | First three polished missions in each of four existing showcase campaigns          | Implemented                                                |
+| C / 4          | Six missions per showcase, different application fixtures, control lab             | Implemented                                                |
+| D / 6          | USB-radio diagnostics, arbitrary channels, calibration, separate response profiles | Implemented; physical devices unverified                   |
+| E / 6          | First-person model, Self-level/manual throttle and Acro, representative drills     | Implemented; portable numeric fixtures pass                |
+| F / 6          | Twelve drills, typed practice rewards, notebook and studio round trips             | Implemented                                                |
+| Continuous / 7 | Reproducible archives, portable proofs, lifecycle/performance, admission           | Frozen baseline verified; follow-up CI/publication pending |
 
 ## Acceptance contracts
 
@@ -117,7 +117,7 @@ or a full retained-memory qualification.
 Focused suites cover reward compatibility, 11/12 locking, corrupt/foreign proofs,
 failed saves, calibration inversion and replacement, background input, Studio
 round trips, boundary mathematics and independent optional-package admission.
-The final combined company run passes **919/919** checks and the complete optional
+The initial priority-batch company run passes **919/919** checks and the complete optional
 practice cohort passes **144/144**, with no skips or cancellations. The earlier
 company run exposed an obsolete positional lesson fixture; it now selects the
 unchanged lesson explicitly. Changed-file formatting/lint and English/Ukrainian
@@ -131,10 +131,51 @@ bytes**. The old gym retains its exact pre-parameterization archive hash. This
 integration exercise uses explicitly synthetic commit/tree bindings and is
 non-promotable; frozen current-commit admission remains required.
 
-Remaining publication work: clean-commit frozen candidate builds and their CI,
-complete hosted-target capacity/admission, production promotion and installed
-rollback. Desktop frame-pacing/input-stall benchmarking and full retained-resource
-qualification are distinct from arithmetic portability and bounded DOM/GPU counts.
+### Follow-up qualification and fixes
+
+The `c1a62377a` [candidate receipt](verification/evidence/discovery-2026-09-28-candidate-c1a62377a.json)
+confirms eighteen double-built editions, both frozen optional packages, exact
+downloaded artifact hashes, original-member admission and committed-input checks.
+All candidate jobs passed. The separate hosted job tests the Community service;
+it is not evidence of optional-PWA publication. Pages is held because PR #758 has
+no immutable release slot; the product build is skipped by that release gate.
+
+The [installation observation](verification/evidence/optional-installation-c1a62377a.json)
+installs both Chrome PWAs, explicitly opens standalone launcher windows, prepares
+and reopens both games offline, rejects a truncated dependency, and preserves a
+verified proof when restoring a previous pointer or uninstalling the other app.
+Seven state transitions pass, and both temporary apps/profile are cleaned up.
+These are exact frozen candidate bytes on one isolated Chrome environment. The
+rollback fixtures use the same payload at alternate local version paths, so they
+do not qualify a real historical-model migration. [Method and limits](optional-installation-observer.md).
+
+The full guided Studio → source/media export/import → compilation → ordinary
+keyboard win → wrong/correct activity → Collection regression exposed two defects.
+Collection now resolves a lesson using the actual composite Journey mission ID
+and exact gameplay binding. Optional activities are also available directly from
+the initial winning result when its earned picture is displayed. Neither fix
+changes arcade simulation, result navigation or earning authority.
+
+The [retention diagnostic](verification/evidence/fpv-retention-2026-09-28.json)
+found that course-button handlers retained the flight scene after disposal. Those
+handlers are now cleared, including after language changes. Two consecutive
+twenty-cycle intervals keep the measured DOM/listener and named object cohorts
+stable; the second interval's total shallow heap change is negative. After disposal,
+the scene, renderer, application frame/paint closures and owned CanvasTextures no
+longer appear in the captured heap. Library scratch/prototype objects remain
+explicitly recorded. This forced-GC diagnostic does not measure exclusive retained
+memory, native allocations, GPU bytes or natural frame pacing.
+
+The follow-up regression run passes **921/921 company checks**, **145/145 optional
+practice checks**, and **5/5 heap-analyzer checks**. The analyzer checks are now part
+of the regular practice CI command. Formatting/lint and unchanged generated content
+validation pass; public source eligibility includes 294 admitted assets. The
+arcade core and historical gym source have no changes in this follow-up.
+
+Remaining publication work: fresh candidates for the follow-up code changes,
+complete same-source hosted-target capacity/admission, production promotion and
+real version/public rollback. Desktop frame-pacing/input-stall benchmarking and
+broader memory/device qualification remain distinct from the bounded observations.
 Human comprehension, pacing, artwork and physical-radio/device evidence stays
 **deferred and unverified**. The proposed macOS/Windows browser/device matrix is a
 qualification target, not a list of proven compatible transmitters.
