@@ -553,12 +553,16 @@ try {
       runtimeContent ? packCatalog : preparePackCatalog(packCatalogSource),
     );
   let editionWriter = null,
-    editionUI = null;
+    editionUI = null,
+    journeyRewardsDurable = false;
   const journeyProfile = journeyEnabled
     ? createJourneyProfileStore({
         profileKey: authoredRoute?.profileKey,
         ...(runtimeContent ? { canWrite: () => editionWriter?.writable === true } : {}),
-        onStatus: (status) => journeySaveNotice.update(status),
+        onStatus: (status) => {
+          journeyRewardsDurable = status.durable;
+          journeySaveNotice.update(status);
+        },
       })
     : null;
   if (journeyProfile) await journeyProfile.load();
@@ -11515,6 +11519,10 @@ try {
         },
         getRun: () => run,
         getRecorder: () => recorder,
+        getJourneyProfile: () => journeyProfile?.snapshot() ?? null,
+        getJourneyRevision: () => journeyProfile?.stateRevision() ?? 0,
+        getJourneyDurable: () => journeyRewardsDurable,
+        getReducedMotion: () => displayPreferences.snapshot().effectiveReducedEffects,
         getPictureVisible: () =>
           run?.status === 'won' && $('game-overlay').hidden && !$('show-result').hidden,
         report: (message) => warning(message),
