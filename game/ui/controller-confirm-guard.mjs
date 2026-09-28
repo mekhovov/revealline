@@ -23,6 +23,7 @@ export function attachControllerConfirmGuard({
     nativeActivation = null,
     activationDepth = 0,
     compatibilityHeld = false,
+    compatibilityActivated = false,
     neutralRequired = false;
 
   const targetId = (target) =>
@@ -148,6 +149,7 @@ export function attachControllerConfirmGuard({
     primaryPointer = null;
     transaction = null;
     compatibilityHeld = false;
+    compatibilityActivated = false;
     neutralRequired = false;
     suppressUntil = -Infinity;
     tailTarget = null;
@@ -183,6 +185,33 @@ export function attachControllerConfirmGuard({
 
   function activate(element) {
     if (!element || typeof element.click !== 'function') return false;
+    // Couch hosts still drive the guard with observe(pressed) and activate() on
+    // the press edge. Keep that finite compatibility path independent from the
+    // release transaction used by Solo, otherwise its first activation would
+    // create a transaction that the legacy host can never finish.
+    if (!transaction && compatibilityHeld) {
+      if (compatibilityActivated) return false;
+      compatibilityActivated = true;
+      const age = now() - (nativeActivation?.at ?? -Infinity),
+        matchingTarget =
+          !nativeActivation?.target ||
+          nativeActivation.target === element ||
+          element.contains?.(nativeActivation.target);
+      tailTarget = element;
+      if (age >= 0 && age <= nativeLeadWindowMs && matchingTarget) {
+        nativeActivation = null;
+        trace('commit-skipped', { targetId: targetId(element), winner: 'native' });
+        return false;
+      }
+      activationDepth++;
+      try {
+        element.click();
+        trace('commit', { targetId: targetId(element), winner: 'gamepad-compatibility' });
+        return true;
+      } finally {
+        activationDepth--;
+      }
+    }
     if (!transaction) begin(element);
     if (transaction.activated || transaction.winner === 'native') {
       trace('commit-skipped', { targetId: targetId(element), winner: transaction.winner });
@@ -207,6 +236,7 @@ export function attachControllerConfirmGuard({
     trace('transaction-finish', { reason, winner });
     transaction = null;
     compatibilityHeld = false;
+    compatibilityActivated = false;
     neutralRequired = false;
     suppressUntil = now() + echoWindowMs;
     if (primaryPointer !== null) primaryPointer.expiresAt = suppressUntil;
@@ -223,6 +253,7 @@ export function attachControllerConfirmGuard({
     if (owned) trace('cancel', { reason });
     transaction = null;
     compatibilityHeld = false;
+    compatibilityActivated = false;
     neutralRequired = false;
     keys.clear();
     primaryPointer = null;
@@ -246,10 +277,12 @@ export function attachControllerConfirmGuard({
         return;
       }
       if (pressed) {
+        if (!compatibilityHeld) compatibilityActivated = false;
         compatibilityHeld = true;
         suppressUntil = Infinity;
       } else if (compatibilityHeld) {
         compatibilityHeld = false;
+        compatibilityActivated = false;
         suppressUntil = now() + echoWindowMs;
       }
     },
@@ -258,6 +291,7 @@ export function attachControllerConfirmGuard({
       primaryPointer = null;
       transaction = null;
       compatibilityHeld = false;
+      compatibilityActivated = false;
       neutralRequired = true;
       suppressUntil = Infinity;
     },
