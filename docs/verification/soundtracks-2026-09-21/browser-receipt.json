@@ -1,0 +1,73 @@
+{
+  "format": "revealline-soundtrack-browser-verification.v1",
+  "sourceRevision": "6664dae9091fc515109271d7ac8a627e3c8abbde",
+  "url": "http://127.0.0.1:18808/game/",
+  "browser": "Codex in-app browser on macOS",
+  "method": "Visible browser controls, native file chooser, accessibility and DOM observations; server stopped and connection refusal verified for cold offline checks.",
+  "backupRestore": {
+    "sourceSha256": "79c53d47c5a3a8c1d407b863951c028c6e8a56aa1432821041d0ea1ad99aafda",
+    "tracks": 5,
+    "playlists": 2,
+    "savedGeneration": 1,
+    "audioDisplay": "23.0 MiB"
+  },
+  "bonusOffload": {
+    "album": "Rock & Metal",
+    "retainedTrackIdentities": 5,
+    "retainedPlaylists": 2,
+    "removedDisplay": "20.3 MiB",
+    "protectedSharedUploadDisplay": "2.6 MiB",
+    "undoVerified": true,
+    "savedGeneration": 2,
+    "completeBackupRefusedWithDownloadAgainInstruction": true,
+    "retainedSharedRecordingPlayed": "Determination"
+  },
+  "redownload": {
+    "verified": true,
+    "playlistEntriesPreserved": true,
+    "savedGeneration": 4,
+    "audioDisplay": "23.0 MiB",
+    "restoredRecordingPlayed": "Silver Bullet"
+  },
+  "coldOffline": {
+    "serverStopped": true,
+    "connectionRefused": true,
+    "freshTab": true,
+    "coreFilesVerified": 318,
+    "coreBytes": 53653364,
+    "coreBuildId": "fcc50f07db84d00ac0ab842f8dd57ff91bf81ac0777bf5298eca0f6165468141",
+    "missing": [],
+    "corrupt": [],
+    "savedGeneration": 4,
+    "firstGestureMenuMusic": "Megasong",
+    "mission": "First Signal",
+    "revealedPercent": 52.2,
+    "points": 8160,
+    "lives": 3,
+    "elapsedSeconds": 3,
+    "medal": "Gold",
+    "naturalProgression": [
+      "Determination",
+      "Silver Bullet"
+    ]
+  },
+  "mp3Import": {
+    "file": "authoring/library/licensed-audio/originals/rock-metal/determination_1.mp3",
+    "verifiedDraftTracks": 6,
+    "auditionStarted": true,
+    "finishPreservedMusicOnlyPause": true,
+    "undoRestoredSavedFiveTracks": true
+  },
+  "creatorExport": {
+    "prepared": true,
+    "downloadRequested": true,
+    "newDiskFileConfirmed": false,
+    "limitation": "Inspection of Codex native UI was rejected by computer-use safety rules; Safari native automation unavailable because computer-use permissions were not granted."
+  },
+  "capturedConsoleErrors": [],
+  "physicalIPhoneQualified": false,
+  "nativeDesktopWrapperQualified": false,
+  "musicalListeningQualified": false,
+  "leftMusicPaused": true,
+  "serverRestartedForReview": true
+}

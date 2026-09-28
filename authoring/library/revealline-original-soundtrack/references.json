@@ -1,0 +1,154 @@
+{
+  "format": "revealline-music-research.v1",
+  "checkedAt": "2026-09-21",
+  "evidenceLimit": "Primary page/text review only. No full reference-album listening or rights to reuse their recordings is claimed. Proposed lessons are our creative inferences.",
+  "sources": [
+    {
+      "id": "horizon",
+      "title": "Barry Leitch: Horizon Chase and game music",
+      "url": "https://barryleitch.bandcamp.com/",
+      "observed": "Composer catalogue identifies the Horizon Chase releases.",
+      "designInference": "Use optimistic melodic motion and clearly articulated digital instruments; this is our direction, not a copied melody."
+    },
+    {
+      "id": "dusk",
+      "title": "Andrew Hulshult: game soundtrack catalogue",
+      "url": "https://andrewhulshult.bandcamp.com/",
+      "observed": "Composer catalogue lists DUSK and other game scores.",
+      "designInference": "Explore tension versus heavy release, distinct lead/rhythm roles and articulated guitar production."
+    },
+    {
+      "id": "doom",
+      "title": "Mick Gordon: DOOM Behind the Music, GDC 2017",
+      "url": "https://www.gdcvault.com/play/1024068/",
+      "observed": "The composer presents creation of a high-energy modern FPS soundtrack and its franchise identity.",
+      "designInference": "Design original timbral experiments and rhythmic contrast; avoid copying signature DOOM riffs."
+    },
+    {
+      "id": "ror",
+      "title": "Chris Christodoulou: Risk of Rain music",
+      "url": "https://chrischristodoulou.bandcamp.com/",
+      "observed": "Composer catalogue identifies the Risk of Rain releases.",
+      "designInference": "Study longer-form emotional development and synth/guitar contrast during the listening phase."
+    },
+    {
+      "id": "meatboy",
+      "title": "Danny Baranowsky: Super Meat Boy soundtrack",
+      "url": "https://dbsoundworks.bandcamp.com/album/super-meat-boy-soundtrack",
+      "observed": "Composer-published soundtrack and credits are available.",
+      "designInference": "Use compact memorable hooks and changing energy; preserve distinct new themes."
+    },
+    {
+      "id": "frozen",
+      "title": "nervous_testpilot: Frozen Synapse",
+      "url": "https://nervoustestpilot.bandcamp.com/track/nightpath",
+      "observed": "Artist page identifies this track as part of the Frozen Synapse soundtrack.",
+      "designInference": "Explore restraint, electronic space and forward pulse for menus and precision maps."
+    },
+    {
+      "id": "celeste",
+      "title": "Lena Raine: Celeste Original Soundtrack",
+      "url": "https://radicaldreamland.bandcamp.com/album/celeste-original-soundtrack",
+      "observed": "Composer page credits writing, performance and mastering and lists contrasting chapter cues.",
+      "designInference": "Separate calm narrative/menu moments from active musical development; test motif family relationships."
+    },
+    {
+      "id": "hades",
+      "title": "Supergiant: Hades Original Soundtrack",
+      "url": "https://supergiantgames.bandcamp.com/album/hades-original-soundtrack",
+      "observed": "Developer-published soundtrack credits Darren Korb.",
+      "designInference": "Consider original acoustic/electric fusion and emotional contrast across repeated play."
+    },
+    {
+      "id": "shovel",
+      "title": "Yacht Club Games soundtrack directory",
+      "url": "https://www.yachtclubgames.com/soundtracks/",
+      "observed": "Developer links its official Shovel Knight releases and arranged tracks.",
+      "designInference": "Treat chip voice constraints as a deliberate composition approach, distinct from FM and analog synth."
+    },
+    {
+      "id": "furi",
+      "title": "The Game Bakers: Furi",
+      "url": "https://www.thegamebakers.com/furi/",
+      "observed": "Official game page provides the developer source for this additional soundtrack reference.",
+      "designInference": "Listening candidate for electronic high-intensity pacing; no detailed musical observation claimed from page inspection."
+    },
+    {
+      "id": "goa",
+      "title": "Go_A: official Eurovision profile",
+      "url": "https://eurovision.tv/participant/go-a-2021",
+      "observed": "Documents traditional vocal technique, Ukrainian winds and deliberate electronic/heavy-guitar combinations.",
+      "designInference": "Give acoustic articulation a real musical role in modern arrangements; do not copy SHUM."
+    },
+    {
+      "id": "onuka",
+      "title": "ONUKA: MOZAЇKA production notes",
+      "url": "https://mozaika.onuka.ua/en/",
+      "observed": "Artist describes original foley rhythms, individual song concepts and electronic memories.",
+      "designInference": "Use our own tactile foley and acoustic/electronic dialogue."
+    },
+    {
+      "id": "dakhabrakha",
+      "title": "DakhaBrakha: artist description",
+      "url": "https://www.dakhabrakha.com.ua/about/",
+      "observed": "The group describes Ukrainian folklore combined with rhythms/instruments from other cultures.",
+      "designInference": "Use as a contemporary fusion reference, not a supposedly pure historical ensemble."
+    },
+    {
+      "id": "instruments",
+      "title": "Authentic Ukraine: instrumental culture",
+      "url": "https://authenticukraine.com.ua/en/blog/fenomen-muzicno-instrumentalnoi-kulturi-ukrainciv",
+      "observed": "Ethnomusicologist-authored article distinguishes instrument functions and regional dance practices.",
+      "designInference": "Select regional instrumentation deliberately; do not label one scale or flute as universal Ukrainian identity."
+    },
+    {
+      "id": "kolomyika",
+      "title": "Encyclopedia of Ukraine: Kolomyika",
+      "url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CK%5CO%5CKolomyikaIT.htm",
+      "observed": "Describes a Hutsul dance in 2/4 and common sung text structure.",
+      "designInference": "Use a two-beat dance foundation for clearly labeled modern adaptations; tempos and motifs in our briefs are new choices."
+    },
+    {
+      "id": "duma",
+      "title": "Encyclopedia of Ukraine: Duma",
+      "url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CD%5CU%5CDuma.htm",
+      "observed": "Describes uneven recitative periods and kobza, bandura or lira accompaniment.",
+      "designInference": "An instrumental metered score may be tradition-informed but is not advertised as an authentic duma."
+    },
+    {
+      "id": "kobza",
+      "title": "UNESCO: kobza and wheel lyre safeguarding",
+      "url": "https://ich.unesco.org/en/BSP/safeguarding-programme-of-kobza-and-wheel-lyre-tradition-02136?Art18=02136",
+      "observed": "Documents living practitioners, guilds and apprenticeship.",
+      "designInference": "Performance knowledge and provenance matter alongside timbre."
+    },
+    {
+      "id": "cossack",
+      "title": "UNESCO: Dnipropetrovsk Cossack songs",
+      "url": "https://ich.unesco.org/en/RL/cossack-s-songs-of-dnipropetrovsk-region-01194",
+      "observed": "Describes lead, upper and supporting voice entries and themes including personal relationships and war tragedy.",
+      "designInference": "Borrow the idea of successive original counterlines, not archive recordings or a blanket heroic-war mood."
+    },
+    {
+      "id": "polyphony",
+      "title": "Polyphony Project",
+      "url": "https://www.polyphonyproject.com/en",
+      "observed": "Field-recording archive documents village repertoire and allows separate listening to vocal lines.",
+      "designInference": "Study texture and provenance; archive access does not grant sample rights."
+    },
+    {
+      "id": "practitioners",
+      "title": "Ukrainian Institute: traditional music",
+      "url": "https://insight.ui.org.ua/programmes-and-projects/traditional-music",
+      "observed": "Directory identifies ShchukaRyba, Syvash Station and US Orchestra with different regional/practice emphases.",
+      "designInference": "Use appropriate living-practitioner references for central, southern and dance directions."
+    },
+    {
+      "id": "spring",
+      "title": "Suspilne: Vilce spring-song recordings",
+      "url": "https://mediateka.suspilne.media/en/media/13641",
+      "observed": "The broadcaster identifies specific villages and collectors for spring-song performances.",
+      "designInference": "Attach equally specific research provenance to a spring-inspired composition; do not copy its recording."
+    }
+  ]
+}

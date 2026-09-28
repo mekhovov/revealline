@@ -1,0 +1,146 @@
+import { FIXED_DT, releaseInputs, stepRun } from './core/index.mjs';
+
+export function createDemoIdle(timeout = 60) {
+  let elapsed = 0;
+  return {
+    activity() {
+      elapsed = 0;
+    },
+    advance(seconds, eligible) {
+      if (!eligible || !Number.isFinite(seconds) || seconds < 0 || seconds > 0.25) {
+        elapsed = 0;
+        return false;
+      }
+      elapsed += seconds;
+      if (elapsed < timeout) return false;
+      elapsed = 0;
+      return true;
+    },
+  };
+}
+
+export function readDemoSettings(storage, key, reduced = false) {
+  const defaults = { auto: !reduced, collect: false };
+  try {
+    const value = JSON.parse(storage.getItem(key));
+    if (
+      value?.version !== 1 ||
+      typeof value.auto !== 'boolean' ||
+      typeof value.collect !== 'boolean' ||
+      Object.keys(value).some((name) => !['version', 'auto', 'collect'].includes(name))
+    )
+      return defaults;
+    return { auto: value.auto, collect: value.collect };
+  } catch {
+    return defaults;
+  }
+}
+
+// This ephemeral session has no persistence, progression, or completion adapter.
+export function createDemoPractice(run) {
+  if (!run || ['won', 'lost'].includes(run.status))
+    throw new Error('Practice needs an unfinished run.');
+  releaseInputs(run);
+  let phase = 'paused',
+    accumulator = 0,
+    direction = null;
+  const report = (events = [], reason = null) => ({ phase, events, tick: run.tick, reason });
+  return {
+    get state() {
+      return run;
+    },
+    get phase() {
+      return phase;
+    },
+    steer(next) {
+      if (!['up', 'right', 'down', 'left'].includes(next) || phase === 'complete') return;
+      direction = next;
+      phase = 'playing';
+    },
+    pause() {
+      if (phase !== 'complete') phase = 'paused';
+      direction = null;
+      accumulator = 0;
+      return report();
+    },
+    advance(seconds, controls = {}) {
+      if (!Number.isFinite(seconds) || seconds < 0) throw new TypeError('Invalid practice frame.');
+      if (seconds > 0.25) {
+        this.pause();
+        return report([], 'frame-gap');
+      }
+      if (phase !== 'playing') return report();
+      accumulator += seconds;
+      const events = [];
+      while (accumulator + 1e-9 >= FIXED_DT && phase === 'playing') {
+        accumulator = Math.max(0, accumulator - FIXED_DT);
+        // Consume one-shot input only when a simulation tick can use it.
+        const input = typeof controls === 'function' ? controls() : controls;
+        stepRun(
+          run,
+          {
+            direction,
+            boost: input.boost === true,
+            action: input.action === true,
+            pickup: input.pickup === true,
+            switchClass: input.switchClass ?? null,
+          },
+          FIXED_DT,
+        );
+        events.push(...run.events.map((event) => structuredClone(event)));
+        if (run.events.some((event) => ['capture.stopped', 'player.failed'].includes(event.type)))
+          direction = null;
+        if (['won', 'lost'].includes(run.status)) {
+          phase = 'complete';
+          accumulator = 0;
+        }
+      }
+      return report(events);
+    },
+  };
+}
+
+export function createDemoCaptions() {
+  let clock = 0,
+    until = 0,
+    key = 'demo:tipStart',
+    pending = null;
+  const seen = new Set();
+  const cues = {
+    'cut.started': 'demo:tipCut',
+    'cut.closed': 'demo:tipClose',
+    'capture.stopped': 'demo:tipStop',
+    'boss.warning': 'demo:tipLane',
+    'pickup.collected': 'demo:tipPickup',
+    'powerup.collected': 'demo:tipPowerup',
+    'ability.used': 'demo:tipAbility',
+    'class.switched': 'demo:tipClass',
+    'player.failed': 'demo:tipFailure',
+    'lineImpact.seeded': 'demo:tipImpact',
+  };
+  return {
+    reset() {
+      clock = 0;
+      until = 6;
+      key = 'demo:tipStart';
+      pending = null;
+      seen.clear();
+    },
+    advance(seconds, events = []) {
+      clock += Math.min(0.25, Math.max(0, seconds));
+      for (const event of events) {
+        const next = cues[event.type];
+        if (next && !seen.has(next)) {
+          pending = next;
+          seen.add(next);
+        }
+      }
+      if (pending && clock >= until) {
+        key = pending;
+        pending = null;
+        until = clock + 6;
+      }
+      return key;
+    },
+  };
+}

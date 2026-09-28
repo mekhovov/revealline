@@ -1,0 +1,87 @@
+{
+  "format": "revealline-licensed-audio-rights-recheck.v1",
+  "checkedAt": "2026-09-20T22:26:53.381222+00:00",
+  "method": "Read the six current creator-published OpenGameArt pages with web open. No audio was downloaded. Compared source, author, posted license and available attribution notices against all 24 manifest entries.",
+  "sources": [
+    {
+      "url": "https://opengameart.org/content/retro-wave-collection",
+      "pageTitle": "Retro Wave (Collection)",
+      "postedAuthor": "Holizna",
+      "postedLicense": "CC0 1.0 Universal",
+      "observation": "Creator page lists CC0 and describes the collection as public domain. Attribution in the registered credits identifies Holizna.",
+      "trackIds": [
+        "holizna.drama",
+        "holizna.retro-soundtrack",
+        "holizna.cyber-anxiety",
+        "holizna.lost-in-the-jungle",
+        "holizna.night-life",
+        "holizna.day-dreams",
+        "holizna.fires-uptown",
+        "holizna.mutant-club",
+        "holizna.we-used-to-dance",
+        "holizna.machines-with-feelings",
+        "holizna.retro-synths",
+        "holizna.50-over-the-speed-limit",
+        "holizna.dear-mr-super-computer"
+      ]
+    },
+    {
+      "url": "https://opengameart.org/content/megasong",
+      "pageTitle": "Megasong",
+      "postedAuthor": "Emma_MA",
+      "postedLicense": "CC0 1.0 Universal",
+      "observation": "Creator page lists CC0. Its attribution notice states public-domain release in January 2017; the registered credit identifies Emma_MA.",
+      "trackIds": ["emma-ma.megasong"]
+    },
+    {
+      "url": "https://opengameart.org/content/determination-anime-style-music",
+      "pageTitle": "Determination - Anime Style Music",
+      "postedAuthor": "HydroGene",
+      "postedLicense": "CC0 1.0 Universal",
+      "observation": "Creator page lists CC0 and says credit is optional. Registered artist and track credit match.",
+      "trackIds": ["hydrogene.determination"]
+    },
+    {
+      "url": "https://opengameart.org/content/silver-bullet",
+      "pageTitle": "Silver Bullet",
+      "postedAuthor": "vitalezzz",
+      "postedLicense": "CC0 1.0 Universal",
+      "observation": "Creator page lists CC0. Its attribution notice names Vitalezzz and Silver Bullet, matching registered credits.",
+      "trackIds": ["vitalezzz.silver-bullet"]
+    },
+    {
+      "url": "https://opengameart.org/content/devoted-guard",
+      "pageTitle": "Devoted Guard",
+      "postedAuthor": "vitalezzz",
+      "postedLicense": "CC0 1.0 Universal",
+      "observation": "Creator page lists CC0. Its attribution notice names Vitalezzz and Devoted Guard, matching registered credits.",
+      "trackIds": ["vitalezzz.devoted-guard"]
+    },
+    {
+      "url": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+      "pageTitle": "7 Pop-Punk Chiptune tracks",
+      "postedAuthor": "3xBlast",
+      "postedLicense": "CC0 1.0 Universal",
+      "observation": "Creator page lists CC0 and explicitly permits commercial use of the seven looping instrumental versions. Credit is optional and retained in our manifest; local OGG masters and MP3 derivative provenance remain registered.",
+      "trackIds": [
+        "3xblast.a-band-of-jellyfish",
+        "3xblast.babe-you-look-poggers-tonight",
+        "3xblast.if-you-re-thinking-about-giving-up-think-again-beause-i-believe-in-you",
+        "3xblast.let-s-go-olive-boy",
+        "3xblast.now-this-is-a-waterpark",
+        "3xblast.thanks-for-listening",
+        "3xblast.the-best-move-is-to-keep-going"
+      ]
+    }
+  ],
+  "summary": {
+    "sourcePagesChecked": 6,
+    "registeredTracksCovered": 24,
+    "creditOrLicenseExceptions": []
+  },
+  "limitations": [
+    "This recheck verifies current creator-page license statements and retained attribution, not independently proven copyright ownership.",
+    "Source-page attachment identities were not re-downloaded; runtime hash matching is recorded separately in decode-receipt.json.",
+    "Commercial-use and adaptation allowance follows CC0; see https://creativecommons.org/publicdomain/zero/1.0/."
+  ]
+}

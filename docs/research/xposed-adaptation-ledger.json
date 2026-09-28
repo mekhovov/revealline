@@ -1,0 +1,2379 @@
+{
+  "schema": "reveal-line.reference-adaptation-ledger",
+  "schemaVersion": 1,
+  "reviewDate": "2026-09-16",
+  "status": "design-proposal",
+  "scope": {
+    "suppliedFiles": 64,
+    "numberedMissionReferences": 48,
+    "screenFeedbackReferences": 16,
+    "futureMissionBudget": 132,
+    "mappedFPVMissions": 48,
+    "otherEditionMissionsUnchanged": 84,
+    "sourceBytes": 393404508
+  },
+  "authority": "This is design/research metadata, not a runtime schema, art approval or phase acceptance. Supplied source-game attribution is retained; exact mechanics and timing are not established by still images.",
+  "evidenceLimits": [
+    "Black concealed regions, especially 0–2% reveal frames, do not establish absent artwork.",
+    "Full-frame inspection establishes visible layout and silhouettes, not native gameplay-size sprite quality, animation timing, AI, collision ownership, shooting or capture algorithms.",
+    "The three AVIF originals were converted locally by sips to PNG only for viewing after view_image rejected AVIF. Source hashes below always identify originals.",
+    "Numbered references retain their supplied pack/level order. Working titles and adaptations are proposals, not existing content identities.",
+    "Original artwork and authored geometry must be produced and reviewed. Reference images stay research material and are not included as runtime assets.",
+    "These 48 proposals occupy the four already planned FPV campaigns. UI and extra gameplay specimens add no missions. The remaining 84 missions and both Team variants remain separately planned.",
+    "Reuse of an approved body requires approval for any new semantic role; matching colour or a still screenshot does not prove cross-mode parity."
+  ],
+  "campaignMapping": [
+    {
+      "sourcePack": 1,
+      "phase": "P11-A",
+      "campaign": "First Contact",
+      "missionOrdinals": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    },
+    {
+      "sourcePack": 2,
+      "phase": "P11-B",
+      "campaign": "Crossing Lines",
+      "missionOrdinals": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    },
+    {
+      "sourcePack": 3,
+      "phase": "P11-C",
+      "campaign": "Signal Pressure",
+      "missionOrdinals": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    },
+    {
+      "sourcePack": 4,
+      "phase": "P11-D",
+      "campaign": "Last Relay",
+      "missionOrdinals": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    }
+  ],
+  "acceptanceDefinitions": {
+    "map-authoring": "Author actual orthogonal geometry in the current supported schema, validate reachability, terrain meaning, starting safety and readable alternate approaches; decoration cannot imply collision.",
+    "map-art": "Create original approved composition and validated derivatives, exact content/edition/revision binding, preview/reveal/results/Retry parity and preserved pinned originals. Determine compatible modes explicitly; Team variants remain separate existing arenas.",
+    "map-play": "Play-review the authored mission at Gentle/Standard/Hard with encounters on/off where supported. Check the stated learning goal and alternatives; qualify replay/checkpoint determinism and the relevant native input/layout journeys. A design row is not a completed mission.",
+    "map-encounters": "Use only approved deterministic roles and limits after P09. No new attacks or homing; no shooters in the first three positions and at most two shooter missions per campaign. Encounters-off remains a complete challenge.",
+    "map-release": "Finish the twelve-mission campaign with exact-source gates, production readiness, compatible-mode inventory, immutable release and public/offline evidence. Record the actual IDs, version and receipts after adoption.",
+    "ui-navigation": "Qualify actual keyboard-only, touch-only and supported controller-only journeys, current binding prompts, focus return, >=44 CSS-pixel controls, responsive layouts and interrupted intent. Keep modeled, native, visual and physical evidence separate.",
+    "ui-feedback": "Use original registered components/effects; inspect relevant normal/loading/error/disabled/pause/return states, light/dark art, muted sound and reduced effects. Preserve simulation timing and explicit input ownership.",
+    "ui-release": "Qualify the final integrated source and relevant public/offline journeys before phase acceptance; existing candidate receipts do not qualify new composition."
+  },
+  "references": [
+    {
+      "designKey": "xposed-pack-1-level-01",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-1_level-1.png",
+        "file": "pack-1_level-1.png",
+        "sha256": "583f0442ebe33ac3782d49952c1e9cc4ed0b91e0a2cc2500eddc5c557357e705",
+        "bytes": 1284339,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Empty rectangular interior; one magenta orb with tapered particle trail; small yellow marker at bottom centre; thin blue border.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-A",
+        "campaign": "First Contact",
+        "missionOrdinal": 1,
+        "workingTitle": "First Lift",
+        "adaptation": "Original dawn field artwork, amber scout and one coral drifter.",
+        "learningGoal": "Teach: leave the perimeter, close a short cut and see the picture emerge.",
+        "intentionalDeviation": "Provide generous time and a broad, clearly marked first return route; keep instructional text outside artwork.",
+        "lessonType": "teach"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-1-level-02",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-1_level-2.png",
+        "file": "pack-1_level-2.png",
+        "sha256": "7c678dffdfe334d07b24735cef0c7599fa74e6da20e69a3257aa384ae14add5f",
+        "bytes": 1978478,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Full-height cyan centre stripe; two magenta orbs on each side; cyan star on top edge.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-A",
+        "campaign": "First Contact",
+        "missionOrdinal": 2,
+        "workingTitle": "Two Fields",
+        "adaptation": "Orchard halves separated by a traversable farm lane.",
+        "learningGoal": "Explore: choose which half to reduce first and use a reliable intermediate return boundary.",
+        "intentionalDeviation": "Start with one interior threat per half; introduce the boundary patrol separately rather than presenting all five source silhouettes together.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-1-level-03",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-1_level-3.png",
+        "file": "pack-1_level-3.png",
+        "sha256": "18570bd7f54e52fed4f704223d4ad790f1359c03a3d0160f4875bab2d05e3646",
+        "bytes": 2107130,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Central cross-shaped revealed island containing yellow marker; four small revealed corner islands; twelve cyan stars distributed on island outlines and outer border.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-A",
+        "campaign": "First Contact",
+        "missionOrdinal": 3,
+        "workingTitle": "Relay Islands",
+        "adaptation": "A central operations pad and four orchard equipment pads.",
+        "learningGoal": "Teach: shorten exposure by connecting to existing safe ground.",
+        "intentionalDeviation": "Strongly reduce simultaneous patrols; retain spacious connections and an immediately reachable first pad. The source density is unsuitable for an introductory third mission.",
+        "lessonType": "teach"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-1-level-04",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-1_level-4.png",
+        "file": "pack-1_level-4.png",
+        "sha256": "589500cc71cd8888d3a5d79c3a58495aa62005a2495cd141fd3a892b3b90aa09",
+        "bytes": 2180732,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Two long revealed horizontal rectangles separated by a centre gap; two large magenta diamonds; cyan stars on top and left boundary.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-A",
+        "campaign": "First Contact",
+        "missionOrdinal": 4,
+        "workingTitle": "Shelter Gap",
+        "adaptation": "Two original hangar strips across an open yard, with distinctive hunter silhouettes.",
+        "learningGoal": "Teach: recognise warning, committed movement and recovery; choose the central or outer approach accordingly.",
+        "intentionalDeviation": "Introduce one hunter with the existing clear warning state; widen the gap for phone-scale steering and preserve two viable approaches.",
+        "lessonType": "teach"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-1-level-05",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-1_level-5.png",
+        "file": "pack-1_level-5.png",
+        "sha256": "d13314917e1961950221a182597551dbbd6241d6f9bd15818597c80865ad67e9",
+        "bytes": 7943989,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Large central blue-symbol rectangle; cyan broken outer strips and inner rectangular bars; four magenta orbs; two outer cyan stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-A",
+        "campaign": "First Contact",
+        "missionOrdinal": 5,
+        "workingTitle": "Equipment Court",
+        "adaptation": "An equipment compound with a broken rectangular safe lane and clearly patterned blocked beds.",
+        "learningGoal": "Teach: distinguish blocking walls from safe return ground before committing a cut; only pre-existing safe ground closes it.",
+        "intentionalDeviation": "Use fewer, larger terrain groups instead of dense repeated microglyphs; avoid simultaneous introduction of several terrain rules.",
+        "lessonType": "teach"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-1-level-06",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-1_level-6.png",
+        "file": "pack-1_level-6.png",
+        "sha256": "6c0bd13cb62c43d32ce9b310642bda359ce38189ddd662328fbc083aa3d4978a",
+        "bytes": 3832486,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Four corner square enclosures and one wider central enclosure; cyan perimeters with darker breaks; one magenta orb in each; four outer cyan stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-A",
+        "campaign": "First Contact",
+        "missionOrdinal": 6,
+        "workingTitle": "Five Bays",
+        "adaptation": "Four service bays surrounding a central workshop apron.",
+        "learningGoal": "Combine: select the next enclosure based on exposure and accessible return points.",
+        "intentionalDeviation": "Keep broad connections and modest threat count; avoid requiring repetitive clearance of every tiny bay when coverage already meets the mission target.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-1-level-07",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-1_level-7.png",
+        "file": "pack-1_level-7.png",
+        "sha256": "4b31b6e97b6fca6d8dd869d47771f13937162214953d220dcf53a7dc9d4b3c0a",
+        "bytes": 3923070,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Red crossed tiles spell ‘DON’T TOUCH’; two magenta ringed actors; numerous cyan stars on a slightly notched outer boundary.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-A",
+        "campaign": "First Contact",
+        "missionOrdinal": 7,
+        "workingTitle": "Marked Ground",
+        "adaptation": "Two horizontal rows of separated equipment clusters and a notched outer boundary preserve the reference motif over original field art. Sparse lethal terrain has distinct glyphs and broad bypasses.",
+        "learningGoal": "Teach: distinguish lethal terrain from a blocking wall and route around it using a clear bypass.",
+        "intentionalDeviation": "Do not reproduce English words as collision geometry. Preserve the two-row/notched-boundary concept with localization-independent equipment shapes and reduce boundary pressure during this lesson.",
+        "lessonType": "teach"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-1-level-08",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-1_level-8.png",
+        "file": "pack-1_level-8.png",
+        "sha256": "71f346499982b59ef3a7d80735267425ce67d02d9ca10badfa9daeb73c46fffe",
+        "bytes": 4713300,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Symmetrical vertical red and blue-symbol columns; two interrupted cyan columns; central stepped revealed ring containing a diamond; four yellow round actors and two cyan boundary stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-A",
+        "campaign": "First Contact",
+        "missionOrdinal": 8,
+        "workingTitle": "Between the Rows",
+        "adaptation": "Orchard rows frame an operations clearing with a guarded centre.",
+        "learningGoal": "Combine: cross alternating lanes using safe return segments rather than one long exposed cut.",
+        "intentionalDeviation": "Reduce simultaneous actor types; preserve an unobstructed outer route. Give amber player and coral threats unmistakably different silhouettes.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-1-level-09",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-1_level-9.png",
+        "file": "pack-1_level-9.png",
+        "sha256": "2d2ba36ba397d18b5155689a6431093de71d40f077c7ad1ace0ad210ad4223a5",
+        "bytes": 5889013,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Red horizontal and vertical bars form a symmetric corridor layout; broken cyan perimeter; two large yellow rings and two cyan boundary stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-A",
+        "campaign": "First Contact",
+        "missionOrdinal": 9,
+        "workingTitle": "Headland Turns",
+        "adaptation": "Crop strips and broad headlands offer centre or perimeter routes.",
+        "learningGoal": "Explore: trade a shorter interior crossing against a longer, more forgiving route.",
+        "intentionalDeviation": "Make every mandatory turn readable at the smallest supported board size; remove narrow source-like chokes that require precision beyond the existing steering model.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-1-level-10",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-1_level-10.png",
+        "file": "pack-1_level-10.png",
+        "sha256": "5126f0915ba48cc034452fe17ea1be000d6cc303e8969461d4fdc8f1b14abb11",
+        "bytes": 5391557,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Alternating blue-symbol and red-crossed inner perimeter; five red crosses in the open centre; three small yellow actors; two boundary stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-A",
+        "campaign": "First Contact",
+        "missionOrdinal": 10,
+        "workingTitle": "Five Beacons",
+        "adaptation": "Five clearly blocked equipment islands inside a roomy field boundary.",
+        "learningGoal": "Combine: divide the open centre while retaining a safe way around the islands.",
+        "intentionalDeviation": "Keep centre obstacles compact and widely spaced; separate decorative beacons from actual pickups and objectives so their appearance promises the correct behaviour.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-1-level-11",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-1_level-11.png",
+        "file": "pack-1_level-11.png",
+        "sha256": "ec4582900f6aec92fc9cc8338d0ab2fc6adfabf42eeb6cac73eb4cb73eed2e35",
+        "bytes": 5728684,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Paired full-height blue-symbol columns near each side; offset cyan vertical strips; stepped central revealed ring with patterned interior and a diamond; four pink orbs and two stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-A",
+        "campaign": "First Contact",
+        "missionOrdinal": 11,
+        "workingTitle": "Offset Approach",
+        "adaptation": "Offset safe lanes around a central radio shelter.",
+        "learningGoal": "Combine: reposition before cutting so the intended return boundary is reachable.",
+        "intentionalDeviation": "Fewer repetitive vertical strips and fewer simultaneous threats; ensure the middle can be approached from both directions without concealed dead ends.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-1-level-12",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-1_level-12.png",
+        "file": "pack-1_level-12.png",
+        "sha256": "053db9f3908a9041a0c101ec3ac2508ae497a633b9ee95e687ac1892fb3e6dd4",
+        "bytes": 6665481,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Blue-symbol inner perimeter; alternating red and blue vertical structures and red corner brackets; central cyan-framed revealed enclosure with a diamond; four ringed actors and outer stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-A",
+        "campaign": "First Contact",
+        "missionOrdinal": 12,
+        "workingTitle": "First Relay",
+        "adaptation": "An original relay compound combining open yard, staged safe lanes and a guarded central area.",
+        "learningGoal": "Mastery: apply short cuts, terrain reading and repositioning without new rules.",
+        "intentionalDeviation": "Use a controlled selection of previously taught threats instead of every source pattern. Completion should immediately offer Crossing Lines plus Retry and Campaigns.",
+        "lessonType": "mastery"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-2-level-01",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-2_level-1.png",
+        "file": "pack-2_level-1.png",
+        "sha256": "a66bc59d10e8a3310aabf1d8f74ba5b1fd281241f14fce6112137c16a2673302",
+        "bytes": 6798777,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Broken cyan perimeter; offset blue-symbol bars and red pillars; tall central red block bordered by revealed picture fragments; central diamond, two pink orbs and boundary stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-B",
+        "campaign": "Crossing Lines",
+        "missionOrdinal": 1,
+        "workingTitle": "Offset Signals",
+        "adaptation": "Staggered warehouse rows around a visible radio-yard focal point.",
+        "learningGoal": "Explore: recognize that a visually symmetric map can favour different approach sequences.",
+        "intentionalDeviation": "Begin the new campaign with a forgiving refresher lane and restrained pressure; do not assume every player arrived directly from the prior finale.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-2-level-02",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-2_level-2.png",
+        "file": "pack-2_level-2.png",
+        "sha256": "568f8c212933a65a777140089e6ff16d66e0c0d7d3945d6e2f669c18b87bcd50",
+        "bytes": 3026312,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Cyan horizontal and vertical stripes form four quadrants; diamonds in upper-left and lower-right; pairs of small yellow orbs in the other quadrants; four outer stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-B",
+        "campaign": "Crossing Lines",
+        "missionOrdinal": 2,
+        "workingTitle": "Four-Way Exchange",
+        "adaptation": "A cross-shaped service road divides contrasting field plots.",
+        "learningGoal": "Combine: choose quadrant order by threat role, then use the crossroads to reposition.",
+        "intentionalDeviation": "Keep the centre crossroads spacious and legible; differentiate hunter versus drifter with body shape, not colour alone.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-2-level-03",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-2_level-3.png",
+        "file": "pack-2_level-3.png",
+        "sha256": "2460175da44c0e0200a8cba8574b52e5d4134dbece0f0627b36077f7352a433f",
+        "bytes": 4421733,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Six small red heart shapes flank a much larger split cyan and revealed heart containing a red heart; eight pink orbs and two boundary stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-B",
+        "campaign": "Crossing Lines",
+        "missionOrdinal": 3,
+        "workingTitle": "Community Lifeline",
+        "adaptation": "Heart-inspired planted beds frame an original community workshop mural.",
+        "learningGoal": "Explore: use curved and stepped island silhouettes to plan a cut across otherwise open space.",
+        "intentionalDeviation": "Preserve the generous silhouette motif but use broad orthogonal geometry; substantially reduce the eight-actor crowd and avoid tiny decorative collision notches.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-2-level-04",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-2_level-4.png",
+        "file": "pack-2_level-4.png",
+        "sha256": "ed545a7f591282643307eaee2e70dc3b27f6e612c8896b5a8e921278466bdcd6",
+        "bytes": 8232009,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Four rough quadrants divided by stepped cyan branches; many scattered red L, bar and block shapes; six magenta orbs; cyan stars near top boundary.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-B",
+        "campaign": "Crossing Lines",
+        "missionOrdinal": 4,
+        "workingTitle": "Broken Yard",
+        "adaptation": "Four industrial work zones connected by offset service lanes.",
+        "learningGoal": "Combine: plan through irregular obstacles and choose a different sector when the current approach is crowded.",
+        "intentionalDeviation": "Replace the dense scatter with a small number of recognizable structures; guarantee two readable approaches per sector rather than maze-like microgaps.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-2-level-05",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-2_level-5.png",
+        "file": "pack-2_level-5.png",
+        "sha256": "f8ea81bc939f4aa479f0b3ff844e15c2dbb80e94e584eb9eb04cf13c1ec34917",
+        "bytes": 5257548,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Repeated red arrow and cross forms point in varied directions; short cyan dashes form intersecting horizontal and vertical lines; four yellow actors and four boundary stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-B",
+        "campaign": "Crossing Lines",
+        "missionOrdinal": 5,
+        "workingTitle": "Survey Markers",
+        "adaptation": "Original survey-field patterns surround broken safe-lane segments.",
+        "learningGoal": "Teach: evaluate the next landing segment before crossing between interrupted boundaries.",
+        "intentionalDeviation": "Arrow-shaped obstacles must not misleadingly imply a movement command. Use neutral equipment silhouettes or explicit decoration; allow generous spacing between segments.",
+        "lessonType": "teach"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-2-level-06",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-2_level-6.png",
+        "file": "pack-2_level-6.png",
+        "sha256": "cb0e7e97d3a82b32951c0dfce48b2b852e765f85d3f921e7f8d99da3759ffb4b",
+        "bytes": 5179133,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Three large symmetric rounded-rectangle cyan labyrinth forms with nested U-shaped bars and centre connections; several yellow round actors; cyan stars along top edge.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-B",
+        "campaign": "Crossing Lines",
+        "missionOrdinal": 6,
+        "workingTitle": "Three Compounds",
+        "adaptation": "Three radio-service yards with nested access lanes.",
+        "learningGoal": "Explore: find a useful shortcut through a compound instead of following its entire perimeter.",
+        "intentionalDeviation": "Flatten unnecessary nested corridors; preserve conspicuous exits and a route around each compound. Do not require memorising a visually repetitive maze.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-2-level-07",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-2_level-7.png",
+        "file": "pack-2_level-7.png",
+        "sha256": "0906681328bddc38dd98960bf932af2554a09fc17f34e465807fe130503db684",
+        "bytes": 7309228,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Three rows of repeated compartments, each with a red cross; cyan dividing bars contain staggered gaps; ringed yellow actors cluster in opposing corners; boundary stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-B",
+        "campaign": "Crossing Lines",
+        "missionOrdinal": 7,
+        "workingTitle": "Orchard Blocks",
+        "adaptation": "A regular orchard grid with staggered service openings and grouped equipment.",
+        "learningGoal": "Combine: select the next row and isolate a manageable section before crossing farther.",
+        "intentionalDeviation": "Preserve three compartment rows and staggered openings; reduce columns and internal clutter first for phone readability. Avoid concentrated threat spawns beside the initial route.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-2-level-08",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-2_level-8.png",
+        "file": "pack-2_level-8.png",
+        "sha256": "02d061c76ea119817add62b0c3014202456133a2d26620d6c8e90099baa7a0af",
+        "bytes": 6728689,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Dense symmetric red nested corners and isolated dots; cyan stepped divider descends from upper-left-of-centre, crosses the middle and continues lower-right; six pink round actors and four stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-B",
+        "campaign": "Crossing Lines",
+        "missionOrdinal": 8,
+        "workingTitle": "Dogleg Corridor",
+        "adaptation": "A stepped service boundary cuts across two storage districts.",
+        "learningGoal": "Explore: exploit a dogleg safe route to approach either district from more than one side.",
+        "intentionalDeviation": "Simplify tiny red islands into larger authored structures; keep the route’s bends readable and avoid a single mandatory congested crossing.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-2-level-09",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-2_level-9.png",
+        "file": "pack-2_level-9.png",
+        "sha256": "b07287b27c6500220158378bbda0686c997ba7dd283da7b1e0395bc96c9b7c59",
+        "bytes": 7983084,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Two large nested red angular spirals separated by a central spine; four pink round actors; stars on the left and right boundary.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-B",
+        "campaign": "Crossing Lines",
+        "missionOrdinal": 9,
+        "workingTitle": "Spiral Stores",
+        "adaptation": "Paired storage yards open toward a broad central access lane.",
+        "learningGoal": "Mastery: recognize when to leave a winding route and create a shorter safe partition.",
+        "intentionalDeviation": "Open several connections in each spiral and make central access unmistakable; retain the motif without forcing long, repetitive corridor travel.",
+        "lessonType": "mastery"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-2-level-10",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-2_level-10.png",
+        "file": "pack-2_level-10.png",
+        "sha256": "10b63acdc78f67eeda1f5d2092209ac9a47dd22778329e13804a0b3deb62b672",
+        "bytes": 7791584,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Dense mirrored combination of red blocks, cyan short bars, cyan crosses and vertical strips; six small yellow actors; three visible boundary stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-B",
+        "campaign": "Crossing Lines",
+        "missionOrdinal": 10,
+        "workingTitle": "Switchyard",
+        "adaptation": "Recognizable equipment islands and lane segments form an original radio-switchyard composition.",
+        "learningGoal": "Combine: separate safe segments, blocked machinery and moving threats during one route decision.",
+        "intentionalDeviation": "Limit the scene to established terrain meanings; reduce visual density and maintain silhouette outlines over bright revealed artwork.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-2-level-11",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-2_level-11.png",
+        "file": "pack-2_level-11.png",
+        "sha256": "43fe783a0efe1841f90acbdeeb1d5960d009d0ae7fabc0c54731f07600e89c72",
+        "bytes": 5741618,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Repeated red pinwheel and arrow-cross shapes and hollow square motifs across the field; four pink orbs and two boundary stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-B",
+        "campaign": "Crossing Lines",
+        "missionOrdinal": 11,
+        "workingTitle": "Windbreak Weave",
+        "adaptation": "Scattered windbreak and utility islands create several intersecting approaches.",
+        "learningGoal": "Explore: adapt cut direction to obstacle spacing instead of repeating the same straight partition.",
+        "intentionalDeviation": "Unevenly space a smaller number of clear clusters to create meaningful route choices; do not fill the board with nearly identical distractions.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-2-level-12",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-2_level-12.png",
+        "file": "pack-2_level-12.png",
+        "sha256": "ca75d85305b7b4eb5cf684a1ae20a371c475947395deae06b73ec04878d78f97",
+        "bytes": 8509023,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Three full-width blue-symbol horizontal bands interleaved with red zigzags and diamonds; stepped red zigzags at top and bottom; central-left diamond, four pink round actors and boundary stars.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-B",
+        "campaign": "Crossing Lines",
+        "missionOrdinal": 12,
+        "workingTitle": "Crossing Complete",
+        "adaptation": "Three terraces across an original dusk field-and-radio scene.",
+        "learningGoal": "Mastery: choose where to cross each band, reuse completed boundaries and manage established threat roles.",
+        "intentionalDeviation": "Broaden crossing windows and avoid razor-thin zigzag routes. Add no new mechanic in the finale; results must clearly offer Signal Pressure or another campaign.",
+        "lessonType": "mastery"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-3-level-01",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-3_level-1.png",
+        "file": "pack-3_level-1.png",
+        "sha256": "5b55e34edb9d9e0a4d5c59c02717250defd7a9fdb6b8f0273cfd068bdff67be8",
+        "bytes": 7649104,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Three cyan-framed boxes crossed by a continuous blue-marked band; each box contains four red-marked quadrants. Pink diamond and gold ring actors are visible.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-C",
+        "campaign": "Signal Pressure",
+        "missionOrdinal": 1,
+        "workingTitle": "Three Relay Bays",
+        "adaptation": "Three equipment bays share a clearly marked slow crossing, separate from safe return strips; capture bay mouths before committing through the common crossing.",
+        "learningGoal": "Teach: compare a short clear cut with a longer slow-terrain crossing, then return to the separately marked safe road.",
+        "intentionalDeviation": "Keep generous clear approaches and breaks in hazardous quadrants; do not reproduce dense glow or copy actor timing.",
+        "lessonType": "teach"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-3-level-02",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-3_level-2.png",
+        "file": "pack-3_level-2.png",
+        "sha256": "e1ce8ad471779e778c58707679f41addb79d481dda71550406282a10e30e3caa",
+        "bytes": 10170189,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "A cyan horizontal spine and three cyan vertical dividers form eight chambers. Each chamber contains a narrow blue/red patterned strip; corner openings connect lanes.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-C",
+        "campaign": "Signal Pressure",
+        "missionOrdinal": 2,
+        "workingTitle": "Sorting Yard",
+        "adaptation": "Radio-yard sorting lanes offer alternating clear approaches beside hazard ribbons.",
+        "learningGoal": "Explore: use a captured horizontal spine to choose the next chamber.",
+        "intentionalDeviation": "Widen entrances for immediate and buffered steering; replace busy alternating texture with sparse, distinct terrain glyphs.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-3-level-03",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-3_level-3.png",
+        "file": "pack-3_level-3.png",
+        "sha256": "e4dcd72c6140856b63b564c25bab3c04a738ed8fec02cb846948592801b49cee",
+        "bytes": 8447228,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Blue-edged red vertical strips cross a horizontal red/blue strip; a square opening interrupts the center. Pink circular and cyan spiked actors are visible.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-C",
+        "campaign": "Signal Pressure",
+        "missionOrdinal": 3,
+        "workingTitle": "Dead Band",
+        "adaptation": "A crossed interference field leaves a readable center refuge and multiple bypass lanes.",
+        "learningGoal": "Combine: plan the route back to safety before crossing a long slow section.",
+        "intentionalDeviation": "Separate slow crossings from lethal obstacle bands; provide safe return breaks before each slow crossing and a clear bypass around lethal terrain.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-3-level-04",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-3_level-4.png",
+        "file": "pack-3_level-4.png",
+        "sha256": "ff43270bef4f400880c9026eb499a7d654a7eb0626ee84373253242552ce2344",
+        "bytes": 8542427,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "A large symmetric blue/red hourglass motif is flanked by smaller diamonds and a red diagonal outer diamond. Several pink circular and cyan boundary actors appear.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-C",
+        "campaign": "Signal Pressure",
+        "missionOrdinal": 4,
+        "workingTitle": "Compass Array",
+        "adaptation": "A stepped antenna-array layout offers four diagonal-looking but cardinally navigable approaches.",
+        "learningGoal": "Explore: choose between outer clear loops and a shorter central crossing.",
+        "intentionalDeviation": "Use chunky orthogonal steps and reduce hazard density; artwork remains radio equipment rather than implying diagonal movement.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-3-level-05",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-3_level-5.png",
+        "file": "pack-3_level-5.png",
+        "sha256": "319caec507a62c65f7b2e37639282200c3f568d94a6428548caccf23a44df635",
+        "bytes": 11874106,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Four blue/red corner blocks flank a symmetric central motif; cyan horizontal bars divide the outer halves but stop before the center. Gold circular actors and cyan edge stars are visible.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-C",
+        "campaign": "Signal Pressure",
+        "missionOrdinal": 5,
+        "workingTitle": "Split Junction",
+        "adaptation": "Four switchyard compounds surround an open radio junction; choose which outer compartment to bank before crossing the center.",
+        "learningGoal": "Combine: combine compartment capture with a route that avoids the patterned center.",
+        "intentionalDeviation": "Leave two clear junction routes; terrain symbols carry function and the central ornament is simplified.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-3-level-06",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-3_level-6.png",
+        "file": "pack-3_level-6.png",
+        "sha256": "0747553645c672608721e7a43ad45ce1d8008256d20da5acfc3556fc97c0b753",
+        "bytes": 10263021,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Four tall lanes divided by cyan strips; side lanes have red angular segments and the two center lanes contain large blue/red patterns. Gaps connect lanes at different heights.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-C",
+        "campaign": "Signal Pressure",
+        "missionOrdinal": 6,
+        "workingTitle": "Folded Circuit",
+        "adaptation": "Staggered equipment rows create a long route and a shorter cross-lane route with visible threat exposure.",
+        "learningGoal": "Explore: replan between upper and lower connections as the safe contour changes.",
+        "intentionalDeviation": "Remove decorative dead ends and guarantee a legible retreat route; do not copy projectile-like trails as a new attack.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-3-level-07",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-3_level-7.png",
+        "file": "pack-3_level-7.png",
+        "sha256": "f9af6c1f31e0a826afd607fbc13cc4ed4285b2a6ef4fbec72cfdf531000c3b3b",
+        "bytes": 9328221,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Repeated red horizontal strips flank a broad blue-marked central band; cyan vertical tile segments interrupt the middle. Many gold ring actors are visible.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-C",
+        "campaign": "Signal Pressure",
+        "missionOrdinal": 7,
+        "workingTitle": "Pressure Ladder",
+        "adaptation": "A ladder of parallel service corridors surrounds a slow central road; successful captures create additional safe return edges.",
+        "learningGoal": "Combine: chain short captures rather than attempting a single long exposed run.",
+        "intentionalDeviation": "Use fewer simultaneous actors and wider corridor mouths; optional encounters are added only after their qualified slice.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-3-level-08",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-3_level-8.png",
+        "file": "pack-3_level-8.png",
+        "sha256": "15ffe26e3c317d8b53bbafe7899d49c128f90fa1cd21101c7bd33f22e795bebc",
+        "bytes": 7669916,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Separated square blue/red motifs are arranged around a central square, with red open motifs above and below. Wide black gaps separate these groups; gold circles and cyan boundary stars appear.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-C",
+        "campaign": "Signal Pressure",
+        "missionOrdinal": 8,
+        "workingTitle": "Antenna Islands",
+        "adaptation": "A central square landmark and surrounding separated interference groups offer perimeter loops and central captures, with an original workshop panorama beneath.",
+        "learningGoal": "Explore: select a safe island order and keep an alternate exit.",
+        "intentionalDeviation": "Keep the central square and separated groups with distinct landmarks. Optional P09 shooter configuration only after qualification, using the bounded non-homing projectile contract; retain a complete encounter-free configuration and count this against the campaign maximum of two shooter missions.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-3-level-09",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-3_level-9.png",
+        "file": "pack-3_level-9.png",
+        "sha256": "b5d014a6bc23a4de4ae80843c3f2cce3800088dd3c9735c5d9dcdad3c37e431a",
+        "bytes": 9358680,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Five cyan plus-shaped islands occupy a dense blue/red center, with scattered red clusters in the open side areas. Gold rings crowd the center and cyan stars sit on the boundary.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-C",
+        "campaign": "Signal Pressure",
+        "missionOrdinal": 9,
+        "workingTitle": "Five Masts",
+        "adaptation": "Five pre-existing safe mast platforms surround separately marked blocked foundations; platform corners shorten successive cuts. Preserve the five plus-shaped landmarks.",
+        "learningGoal": "Combine: use safe platform corners to shorten successive cuts while leaving room to reposition; blocked foundations never close a cut.",
+        "intentionalDeviation": "Keep lower threat density and remove small decorative hazards that do not produce a distinct route decision.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-3-level-10",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-3_level-10.png",
+        "file": "pack-3_level-10.png",
+        "sha256": "6915c97b610ecafc32610cb584de4f69afb6e6f274f91d04253a302857ea1003",
+        "bytes": 11600426,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "A broad blue/red patterned mass is broken by winding black channels and stepped openings; pink ring actors and cyan edge stars appear.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-C",
+        "campaign": "Signal Pressure",
+        "missionOrdinal": 10,
+        "workingTitle": "Signal Channels",
+        "adaptation": "Two winding clear channels cut through an interference field over a radio workshop panorama.",
+        "learningGoal": "Explore: switch channels when the current approach is pressured instead of repeating an unsafe route.",
+        "intentionalDeviation": "Provide clear cross-connections and visible escape space; avoid unreadable one-cell labyrinths.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-3-level-11",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-3_level-11.png",
+        "file": "pack-3_level-11.png",
+        "sha256": "a3c0cbdaa38a8a961aec720b8f78eb451f4a9d141b47887e419a0a1d88aad0f9",
+        "bytes": 10429538,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Nested red rectangular bands, bordered by blue symbols, contain repeated black rectangular openings. Pink round and diamond actors occupy different parts; cyan stars sit on the lower edge.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-C",
+        "campaign": "Signal Pressure",
+        "missionOrdinal": 11,
+        "workingTitle": "Nested Relays",
+        "adaptation": "A nested relay yard offers sequential inner and outer partitions with recognizable equipment landmarks.",
+        "learningGoal": "Combine: combine contour access, threat observation and cut timing across several rings.",
+        "intentionalDeviation": "Break rings at wide, asymmetric gateways so progression does not depend on memorizing repeated ornament.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-3-level-12",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-3_level-12.png",
+        "file": "pack-3_level-12.png",
+        "sha256": "3a823061228684fe2b8bbf22f883a911fca8d21502dfb9a8544acc1a5228534f",
+        "bytes": 8872617,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Repeated cyan T-like enclosures along the upper and lower halves contain blue/red patterns; red cross clusters separate them. Wide top/bottom lanes and a central crossing remain open.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-C",
+        "campaign": "Signal Pressure",
+        "missionOrdinal": 12,
+        "workingTitle": "Final Broadcast",
+        "adaptation": "A bank of antenna yards combines three crossing opportunities with upper and lower return lanes.",
+        "learningGoal": "Mastery: apply the campaign's route-choice and staged-capture lessons without introducing a new role.",
+        "intentionalDeviation": "Keep a readable outer alternative; completion directly offers Last Relay, Retry and Campaigns.",
+        "lessonType": "mastery"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-4-level-01",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-4_level-1.png",
+        "file": "pack-4_level-1.png",
+        "sha256": "8a5a7123f8bdf17129df65bec5b67c01bd520d3104a2101661607e6bb38c3b11",
+        "bytes": 8258562,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "A full cyan center divider splits mirrored red/blue stepped patterns; cyan boundary segments occupy the lower-left and upper-right edges. Yellow round actors and cyan boundary stars appear.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-D",
+        "campaign": "Last Relay",
+        "missionOrdinal": 1,
+        "workingTitle": "Divided Station",
+        "adaptation": "Two radio districts share a central access boundary and contrasting entry positions.",
+        "learningGoal": "Explore: re-establish short-cut discipline when arriving at the final campaign.",
+        "intentionalDeviation": "Provide a forgiving opening in each district and broad transition routes; no new enemy role in the opener.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-4-level-02",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-4_level-2.png",
+        "file": "pack-4_level-2.png",
+        "sha256": "b69fc3e5ed57d23c198331b53d36ef7dc897cac6b7678598fed05d70f96a4082",
+        "bytes": 11386103,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "A large blue-marked rectangle contains red bands and three interrupted ring-shaped revealed islands. Cyan stars cluster around the islands, with yellow round actors nearby.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-D",
+        "campaign": "Last Relay",
+        "missionOrdinal": 2,
+        "workingTitle": "Three Receiver Rings",
+        "adaptation": "Three receiver compounds provide pre-existing safe segments within an interference field.",
+        "learningGoal": "Combine: move between safe islands while checking boundary and field threats separately.",
+        "intentionalDeviation": "Reduce simultaneous contour traffic, enlarge ring openings and clearly distinguish safe ground from merely visible artwork.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-4-level-03",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-4_level-3.png",
+        "file": "pack-4_level-3.png",
+        "sha256": "6d8e034649cce11b59c4644c3e0a7e2c72a1b03f7b2bc2d01a40724a2dc7b474",
+        "bytes": 9343188,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Two mirrored mask-like blue/red figures are divided by a full cyan center stripe. One large pink diamond appears in each half and two cyan stars at the top.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-D",
+        "campaign": "Last Relay",
+        "missionOrdinal": 3,
+        "workingTitle": "Twin Receivers",
+        "adaptation": "A pair of receiver yards contrasts mirrored geometry with different established threat positions.",
+        "learningGoal": "Explore: adapt a successful route from one half instead of copying it blindly into the other.",
+        "intentionalDeviation": "Replace face-like hazard art with functional equipment silhouettes; preserve readable safe pockets.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-4-level-04",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-4_level-4.png",
+        "file": "pack-4_level-4.png",
+        "sha256": "e27c7751eb9d672df9f348fc712aef87481822cfa055160be672921921e8c4ed",
+        "bytes": 10090448,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Four blue/red patterned quarters surround a small central patterned opening; cyan horizontal and vertical bars separate their approaches. Several pink round actors are visible.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-D",
+        "campaign": "Last Relay",
+        "missionOrdinal": 4,
+        "workingTitle": "Crossbar Depot",
+        "adaptation": "A depot uses four large machinery groups and short linking lanes around a center junction.",
+        "learningGoal": "Combine: choose when a central crossing is worth more exposure than an outer loop.",
+        "intentionalDeviation": "Widen the center and remove incidental decorative collisions; provide two valid routes at every required junction.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-4-level-05",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-4_level-5.png",
+        "file": "pack-4_level-5.png",
+        "sha256": "58cbfb9ae6577d59c65e632ded2cf34930b2e3a8753bd1df9eccf771072b6743",
+        "bytes": 8639531,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Two stepped cyan enclosure boundaries create an S-like division. Repeated red corner shapes fill the chambers; blue bands occupy the top-right and bottom-left pockets.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-D",
+        "campaign": "Last Relay",
+        "missionOrdinal": 5,
+        "workingTitle": "Dogleg Transfer",
+        "adaptation": "A dogleg access road connects two equipment depots and offers long clear lanes beside slower pockets.",
+        "learningGoal": "Explore: read where a safe boundary changes height before committing across a depot.",
+        "intentionalDeviation": "Reduce repeated corner clutter and make the two transitions visually distinct with original art landmarks.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-4-level-06",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-4_level-6.png",
+        "file": "pack-4_level-6.png",
+        "sha256": "6c2f4e28b3275e12802b4e01d09dbedf7bf102d1fc80e41dc6e5bace3de86816",
+        "bytes": 7398618,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Red angular segments surround a broken cyan horizontal divider and short top/bottom center posts. No blue-symbol field is visible; pink circular actors occupy the open channels.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-D",
+        "campaign": "Last Relay",
+        "missionOrdinal": 6,
+        "workingTitle": "Clear Frequency",
+        "adaptation": "An open relay court removes slow terrain and tests precise route selection around a few large obstacles.",
+        "learningGoal": "Explore: apply learned path planning with fewer visual categories and more open choices.",
+        "intentionalDeviation": "Use this as a deliberate clarity break between dense maps, with threat pressure bounded by difficulty rather than maximal speed.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-4-level-07",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-4_level-7.png",
+        "file": "pack-4_level-7.png",
+        "sha256": "ee7b4d70a69a1bb75f03d1299fd1b902f7b8bdaac72a2e147b4606fb54eacba4",
+        "bytes": 12288586,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "A blue/red patterned perimeter surrounds three clearer middle lanes split by cyan posts. Short red bars occupy portions of those lanes; a pink diamond and smaller pink actors appear.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-D",
+        "campaign": "Last Relay",
+        "missionOrdinal": 7,
+        "workingTitle": "Outer Loop",
+        "adaptation": "A slow outer route and three inner lanes offer different exposure lengths around an operations center.",
+        "learningGoal": "Combine: compare perimeter repositioning with a shorter central capture.",
+        "intentionalDeviation": "Keep clear waiting areas before each lane and avoid forcing travel through a long slow perimeter.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-4-level-08",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-4_level-8.png",
+        "file": "pack-4_level-8.png",
+        "sha256": "55547bb264f1c3e5e1d3cd9fd8beb42d56660609a7042dc5cc9206dcdd8f7995",
+        "bytes": 8036369,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Eleven separated rounded blue/red clusters form staggered rows; small red arrow-like marks line the outer gaps. Pink round actors and cyan edge stars are visible.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-D",
+        "campaign": "Last Relay",
+        "missionOrdinal": 8,
+        "workingTitle": "Orchard Constellation",
+        "adaptation": "Staggered orchard/equipment islands create several equivalent capture sequences beneath a coherent evening panorama.",
+        "learningGoal": "Explore: choose a new partition direction when a planned gap becomes crowded.",
+        "intentionalDeviation": "Simplify to fewer large clusters if the smallest supported board loses clearance; do not require every island to be cleared.",
+        "lessonType": "explore"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-4-level-09",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-4_level-9.png",
+        "file": "pack-4_level-9.png",
+        "sha256": "a94d0648b3487f40bda16ce7e281be7741c2c21530f325806b4a322cc899e92d",
+        "bytes": 9782941,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Cyan horizontal and vertical dividers form eight compartments, each holding a symmetric blue/red motif. Pink round actors appear in some cells.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-D",
+        "campaign": "Last Relay",
+        "missionOrdinal": 9,
+        "workingTitle": "Eight Watchposts",
+        "adaptation": "Eight watchpost compounds provide ordered and alternate capture routes along a shared service boundary.",
+        "learningGoal": "Combine: choose a useful next compartment from current safety instead of following a fixed sweep.",
+        "intentionalDeviation": "Retain fewer large internal obstacles per compartment and avoid repetitive mandatory cleanup after the target is reached.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-4-level-10",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-4_level-10.png",
+        "file": "pack-4_level-10.png",
+        "sha256": "5dd6dff8c9a3ab7fb4c862eb1a1d18c6f684cb12dc6dad381e98f7cf7ed74272",
+        "bytes": 8873204,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Blue vertical strips alternate with red hourglass-like outlines and open diamond-shaped spaces. Pink rings, one diamond and cyan edge stars are visible.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-D",
+        "campaign": "Last Relay",
+        "missionOrdinal": 10,
+        "workingTitle": "Long Wave",
+        "adaptation": "Long orchard lanes offer risky straight crossings and broad stepped detours between interference strips.",
+        "learningGoal": "Combine: match crossing length to an observed threat opening and keep a recovery route.",
+        "intentionalDeviation": "Use cardinal steps with clear clearance; never require diagonal movement or collisions with decorative zigzags.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-4-level-11",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-4_level-11.png",
+        "file": "pack-4_level-11.png",
+        "sha256": "65ac71225ccd6aae10390ac9757642e645f467a118629b58bf87e4c7caea2e71",
+        "bytes": 9210302,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "A blue/red rectangular outer frame encloses two open vertical corridors and a patterned central rectangle. Numerous small pink actors and a lower pink diamond appear.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-D",
+        "campaign": "Last Relay",
+        "missionOrdinal": 11,
+        "workingTitle": "Relay Perimeter",
+        "adaptation": "A relay perimeter and two interior passages create a final rehearsal of outer versus inner route decisions.",
+        "learningGoal": "Combine: combine boundary awareness, staged capture and optional equipment while preserving a known safe return.",
+        "intentionalDeviation": "Bound simultaneous threat types and retain a clear center landmark; optional encounter-free play remains a complete challenge.",
+        "lessonType": "combine"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pack-4-level-12",
+      "kind": "mission-layout-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pack-4_level-12.png",
+        "file": "pack-4_level-12.png",
+        "sha256": "495044def153a8fb9bd9bf64d47bfe2f2dc044b5a89ac46103b44e321eb130bd",
+        "bytes": 6764901,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Large blue/red X motifs flank a central four-armed motif, surrounded by small red cross clusters. Several pink ring actors and two cyan edge stars are visible.",
+      "proposal": {
+        "edition": "FPV",
+        "phase": "P11-D",
+        "campaign": "Last Relay",
+        "missionOrdinal": 12,
+        "workingTitle": "Home Signal",
+        "adaptation": "Three antenna fields frame the final original homeward panorama; outer and center routes reward different learned techniques.",
+        "learningGoal": "Mastery: demonstrate mastery through route selection, without introducing an unfamiliar mechanic in the finale.",
+        "intentionalDeviation": "Simplify scattered hazards; finish with explicit FPV completion, Collection, Retry and Browse campaigns rather than an automatic wrap or silent download.",
+        "lessonType": "mastery"
+      },
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "artworkBinding": null,
+        "playEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-landing-page-v1",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/landing-page-v1.png",
+        "file": "landing-page-v1.png",
+        "sha256": "3e3478e30f32d98fc04b916145446114a573f27d739821f5b70f10add5b040b2",
+        "bytes": 4436783,
+        "width": 6144,
+        "height": 2502
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Large logo and two left-aligned actions, Start and Settings; a magenta diamond marks Start. A red atmospheric illustration fills the right side.",
+      "proposal": {
+        "surface": "Title",
+        "phases": ["P03", "P05"],
+        "adaptation": "Original FPV hangar title with Start/Continue destination, clear mode choices and shared focus marker.",
+        "intentionalDeviation": "Keep readable UI type and quick Sound; do not import the illustration, logo or scanlines over text."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-landing-page-v2",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/landing-page-v2.png",
+        "file": "landing-page-v2.png",
+        "sha256": "d45aad713bc480fd4c1e068ebef1805a4e2178dbfc5af49d1e83d70053bf8777",
+        "bytes": 4458886,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Same two-action layout and diamond focus marker with a dark blue masked figure as the atmospheric background.",
+      "proposal": {
+        "surface": "Title",
+        "phases": ["P03", "P05", "P04"],
+        "adaptation": "Keep layout stable when a presentation collection changes the original background.",
+        "intentionalDeviation": "Themes change presentation without changing navigation, input meanings or saved-flight ownership."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-level-and-pack-selection-menu1",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/level-and-pack-selection-menu1.png",
+        "file": "level-and-pack-selection-menu1.png",
+        "sha256": "2c80273b5b2c44d68808e75ac5f4a019b70a9ce9d51fb8b8e2e33f28a6f960cb",
+        "bytes": 5016740,
+        "width": 6144,
+        "height": 2502
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Six image-led cards in a three-by-two grid; pack name and shoulder prompt above; stars and high scores below; cyan corner brackets identify selection. Back, hold-to-preview and Play hints appear along the bottom.",
+      "proposal": {
+        "surface": "Revealed mission gallery",
+        "phases": ["P06", "P07"],
+        "adaptation": "One unified campaign browser with mission thumbnails, progress, current selection and previous/next campaign actions.",
+        "intentionalDeviation": "Provide explicit Preview on touch and keyboard without requiring a hold; use actual input bindings and include compatible downloads in the same experience."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-level-and-pack-selection-menu2",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/level-and-pack-selection-menu2.png",
+        "file": "level-and-pack-selection-menu2.png",
+        "sha256": "73922fbc2028581fa0cf7ca7b68fa23db79aa586528514cf2353f5748d69970b",
+        "bytes": 2210399,
+        "width": 6144,
+        "height": 2502
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Same six-card grid with question marks, empty stars and zero scores; Pack6 label and previous-pack shoulder prompt; Back and Play remain visible.",
+      "proposal": {
+        "surface": "Unrevealed mission gallery",
+        "phases": ["P06", "P16"],
+        "adaptation": "Use a stable unrevealed-card appearance while keeping mission and campaign navigation available.",
+        "intentionalDeviation": "Distinguish unrevealed, unavailable, downloading and incompatible using text plus icons; do not infer these question marks mean missing files or purchase locks."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-level-and-pack-selection-menu3",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/level-and-pack-selection-menu3.png",
+        "file": "level-and-pack-selection-menu3.png",
+        "sha256": "24b43b5594b7fe73073831e96c5914c989dbd896c38048becf61a66b4836047a",
+        "bytes": 3986647,
+        "width": 6144,
+        "height": 2502
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Six cards under Pack3, with previous/next shoulder prompts. Three show pictures and three question marks; cyan brackets mark Level1. Visible artwork, scores and stars do not all vary together.",
+      "proposal": {
+        "surface": "Mixed-progress mission gallery",
+        "phases": ["P06", "P07", "P16"],
+        "adaptation": "Keep installed, unrevealed and completed missions together in one stable ordered gallery, with independent artwork ownership and progress fields.",
+        "intentionalDeviation": "Do not equate a visible picture with completed progress or a nonzero score; show compatibility and installation status explicitly."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-settings-menu",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/settings-menu.png",
+        "file": "settings-menu.png",
+        "sha256": "fb90cd9ffc1ee6f0af9a3c5b8763d343c539b8f28b5543498a7fa8b4b696db4a",
+        "bytes": 1758761,
+        "width": 6144,
+        "height": 2502
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Yellow Settings heading, Music and Sound OFF/ON choices, magenta diamond focus, brightness/gamma sliders with a visual preview and How to Play below.",
+      "proposal": {
+        "surface": "Settings",
+        "phases": ["P02", "P05", "P16"],
+        "adaptation": "Compact settings categories with live relevant previews, readable selectors, quick master sound, text size, Plain style and reduced effects.",
+        "intentionalDeviation": "Expose only controls backed by actual capabilities; do not copy unsupported brightness/gamma controls or create a long mixed settings form."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-pause",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/pause.png",
+        "file": "pause.png",
+        "sha256": "7363e96c389c30532add0902eab43e4370828099b842ec3239a873c08c1a9166",
+        "bytes": 939385,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Darkened gameplay and HUD remain behind a centered Pause heading with Resume, Restart and Menu; the diamond marks Resume.",
+      "proposal": {
+        "surface": "Pause",
+        "phases": ["P03", "P05", "P07"],
+        "adaptation": "Use a consistent compact pause panel with Resume primary, Retry and Missions; keep optional Help/Settings reachable.",
+        "intentionalDeviation": "Restore the correct opener and explicit pause owner; Back from a child screen must not silently resume either Couch player."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-level-complete",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/level-complete.jpg",
+        "file": "level-complete.jpg",
+        "sha256": "30b00a2047bddeacfa6e7e4752b49d68d12fbfccc2be1740ae03271f3b710068",
+        "bytes": 52429,
+        "width": 1440,
+        "height": 810
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Level1 Complete, three magenta stars, conditions for completion/lives/time, score and new-high-score label; Menu, Restart and Play Next command hints below.",
+      "proposal": {
+        "surface": "Results",
+        "phases": ["P07", "P08-B", "P16"],
+        "adaptation": "Prioritize earned artwork and clear awards, with named Next primary and Retry/Browse always available.",
+        "intentionalDeviation": "Do not require perfect stars for progression; final campaign results name the successor. A still does not establish tally or transition timing."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-lost-life",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/lost-life.png",
+        "file": "lost-life.png",
+        "sha256": "893cc21b57b49645294e404a1e18fb9092d5104eef19b127d7faeca939b0ca8d",
+        "bytes": 6296653,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Partially revealed neon street picture, remaining concealed area and stable HUD; a large pink skull with a ring of square particles appears near a round pink actor.",
+      "proposal": {
+        "surface": "Life loss feedback",
+        "phases": ["P08-B"],
+        "adaptation": "Create an original compact broken-link/drone-loss emblem and pixel debris around the authoritative loss location, followed by clear recovery feedback.",
+        "intentionalDeviation": "Keep hit location, cause and safe re-entry readable; do not copy the skull or assume duration, actor responsibility or camera behavior. Reduced effects retain a static cue."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-you-lost",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/you-lost.png",
+        "file": "you-lost.png",
+        "sha256": "ad0fe4ebfd9746739ca7e7ec539f13b0b04700c1020488270ccef939418b8933",
+        "bytes": 1609652,
+        "width": 6144,
+        "height": 2502
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Black screen with Level1, a large red pixel skull, You Lost and two bottom actions: Menu and Restart.",
+      "proposal": {
+        "surface": "Attempt lost",
+        "phases": ["P07", "P08-B"],
+        "adaptation": "Compact loss result with Retry selected, the actual failure reason, difficulty shortcut and Missions; preserve attempted setup.",
+        "intentionalDeviation": "No mandatory long failure animation or extra confirmation on ordinary Retry. Use edition-appropriate original imagery and no effect that overwrites original artwork."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-start-countdown-1",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/start-countdown-1.png",
+        "file": "start-countdown-1.png",
+        "sha256": "f23c7702092f52b23e7480357bb82b16daaddc5c7757f068bb875c31dd63f49f",
+        "bytes": 2014326,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "A centered layered hexagonal number1 with a soft pixel-pattern halo, while the arena border and Lives/Progress/Score/Time HUD stay visible.",
+      "proposal": {
+        "surface": "Countdown",
+        "phases": ["P01", "P08-B"],
+        "adaptation": "FPV arming cue with legible count and short optional sound, preserving arena context and neutral-input protection.",
+        "intentionalDeviation": "One frame does not prove full sequence or duration. Countdown cannot run while required artwork is still preparing or silently replace explicit Resume."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-start-countdown-go",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/start-countdown-go.png",
+        "file": "start-countdown-go.png",
+        "sha256": "460c1d0501e963730e3d01e786359f6e04d0b23e3ed494102580b0b22c081167",
+        "bytes": 2105919,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Centered GO! in a hexagonal badge with a horizontal magenta pixel band across the arena; HUD remains visible.",
+      "proposal": {
+        "surface": "Start signal",
+        "phases": ["P08-B"],
+        "adaptation": "Brief original launch signal that clears promptly when controls become active; reduced-effects variant uses static text and an outline.",
+        "intentionalDeviation": "Avoid a full-width effect covering live hazards, time penalties before control is available or a second launch confirmation."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-moving-viaualization",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/moving-viaualization.png",
+        "file": "moving-viaualization.png",
+        "sha256": "a0146d9778f819dafbccebcbe08dfbe09c1332361cc45547f40465121739f703",
+        "bytes": 5360686,
+        "width": 6144,
+        "height": 2560
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "A thick right-angle cut line changes from blue near the edge to yellow at its bright endpoint. A separate yellow round actor has a thin pink particle trail; a blue snowflake hexagon sits elsewhere. Half the scene is revealed.",
+      "proposal": {
+        "surface": "Cut and actor trails",
+        "phases": ["P08-A", "P08-B"],
+        "adaptation": "Distinct active-cut endpoint, committed cut and actor motion trails, with terrain/actor silhouettes visible over both concealed and revealed regions.",
+        "intentionalDeviation": "Preserve the supplied misspelled filename. Do not infer exact trail duration, actor behavior or pickup effect from the still; use existing authoritative state and bounded cosmetic trails."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-level-example1",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/level-example1.avif",
+        "file": "level-example1.avif",
+        "sha256": "b4129af81bb53d552a013ea677699732b5b139a449ae10b187a30a21edfc2369",
+        "bytes": 98808,
+        "width": 1440,
+        "height": 810
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review-via-local-sips-png",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "A blue patterned perimeter, red bars and corner patterns surround a partly revealed central region. Several yellow round actors, cyan spiked actors and a pink diamond appear with a large skull/particle effect.",
+      "proposal": {
+        "surface": "Dense arena and loss state",
+        "phases": ["P08-A", "P08-B", "P11-D"],
+        "adaptation": "Use this as a later-campaign mixed-state readability specimen: distinguish enemy roles, active loss cue, terrain and capture boundary over the artwork.",
+        "intentionalDeviation": "Do not add a new mission count or copy the dense layout wholesale. Actor identities, collision ownership and elapsed animation timing remain unverified."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-level-example2",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/level-example2.avif",
+        "file": "level-example2.avif",
+        "sha256": "dea55d58eedd9c46257e80423112842257cbf275f7155f54b327d73e41905e71",
+        "bytes": 108139,
+        "width": 1440,
+        "height": 810
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review-via-local-sips-png",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Two red patterned inward-turning formations, narrow routes and separate partially revealed regions over space-themed artwork; pink actors, a cyan spiked actor, a green chevron badge and a lower skull effect are visible.",
+      "proposal": {
+        "surface": "Corridors and partial reveal",
+        "phases": ["P08-A", "P08-B", "P11-C", "P11-D"],
+        "adaptation": "Use as a route-clearance and effect-layering comparison for advanced Signal Pressure/Last Relay corridor missions, keeping original composition and readable exits.",
+        "intentionalDeviation": "Do not infer speed boost, defeated actor ownership or area-capture semantics from icons alone. Widen cramped approaches where needed on the actual board."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    },
+    {
+      "designKey": "xposed-level-example3",
+      "kind": "screen-feedback-reference",
+      "status": "design-proposal",
+      "source": {
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/level-example3.avif",
+        "file": "level-example3.avif",
+        "sha256": "399df9cd961bb8ac12bcfbde1de9faf0ce4d91363d5f0f03fa2341d39a2607dd",
+        "bytes": 55072,
+        "width": 1440,
+        "height": 810
+      },
+      "inspection": {
+        "method": "direct-full-frame-image-review-via-local-sips-png",
+        "nativeSpriteQualification": false,
+        "animationTimingVerified": false
+      },
+      "observation": "Red crossed-tile patterns form the words DON'T TOUCH, beneath a long blue-to-yellow cut. Cyan spiked actors appear along the stepped boundary and yellow round actors have thin trails. Artwork is partially revealed.",
+      "proposal": {
+        "surface": "Active long cut and patterned hazards",
+        "phases": ["P08-A", "P08-B", "P11-A"],
+        "adaptation": "Review a long active cut and border traffic over semantic warning patches in the existing Marked Ground reference adaptation.",
+        "intentionalDeviation": "Replace English-word collision geometry with original field markers, maintain localizable warning text and offer short safe alternatives. This is a comparison specimen, not an extra mission."
+      },
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
+      "implementation": {
+        "runtimeIdentity": null,
+        "assetBindings": [],
+        "interactionEvidence": [],
+        "releaseEvidence": []
+      }
+    }
+  ],
+  "authoringConstraints": [
+    {
+      "id": "ground-semantics",
+      "rule": "Safe ground, blocked walls, slow terrain and lethal terrain are different authored cell roles. Walls never close cuts; artwork and equipment names do not establish cell ownership. Return segments must be explicitly safe in the selected schema.",
+      "source": "https://github.com/mekhovov/revealline/blob/c93019a344f6f4c6ac03940c77ea09c81122d911/game/core/README.md"
+    },
+    {
+      "id": "mode-specific-roles",
+      "rule": "Solo drifter means an existing ordinary bouncer. Solo warned hunter uses an existing qualified Classic enemy-pressure policy on a bouncer, not a new type: hunter. Select a supported new authored level identity; do not copy Team chase semantics into Solo. Team retains its own read-only actor adapter.",
+      "source": "https://github.com/mekhovov/revealline/blob/c93019a344f6f4c6ac03940c77ea09c81122d911/docs/enemy-pressure.md"
+    },
+    {
+      "id": "geometry-before-picture",
+      "rule": "Turn each reference concept into validated geometry and actual legal-input routes before final picture composition. Keep recognizable layout motifs while simplifying density and preserving cardinal steering and alternate safe approaches."
+    },
+    {
+      "id": "new-role-gate",
+      "rule": "References do not authorize new mechanics. P09 qualification is required before adding optional auxiliary patrol/carrier/shooter configurations. Freeze/contact/capture ordering, limits and difficulty remain in the approved encounter contract."
+    }
+  ],
+  "reviewCorrections": [
+    "Separated safe return edges from walls in Five Masts and clarified lethal versus slow terrain.",
+    "Removed inferred wall mechanics from three visual observations and temporary ownership from Pressure Ladder.",
+    "Made hunter, blocking-wall and lethal-terrain lessons distinct in First Contact.",
+    "Preserved specific row, opening and central-landmark motifs while lowering source density.",
+    "Bound proposed actor names to existing mode-specific engines and the qualified P09 encounter contract.",
+    "All 48 learning goals now have explicit categories; categories do not prove playability or a completed campaign arc."
+  ]
+}
