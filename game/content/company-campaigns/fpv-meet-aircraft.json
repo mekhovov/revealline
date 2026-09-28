@@ -85,7 +85,16 @@
       "band": 1,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "fpv-meet-aircraft-finale", "revision": "4" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Another component comes into focus."],
+            "uk": ["Ще один компонент став зрозумілішим."]
+          },
+          "revision": "feedback-2a2fae92c069753a",
+          "victoryMotif": "bright-return-v1"
+        },
+        "finaleRewardRef": { "id": "fpv-meet-aircraft-finale", "revision": "5" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-meet-aircraft",
@@ -243,7 +252,7 @@
         "memorableMoment": "An original civilian learning workshop with an exploded carbon frame on a cyan display, no connected battery and no mounted props.",
         "pacingBeat": "discover",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-01-discovery", "revision": "3" },
+        "rewardRef": { "id": "fpv-meet-aircraft-01-discovery", "revision": "4" },
         "routeDecision": "Take short returns to the central frame island or a wider capture around its open west side."
       },
       "format": "MissionDesignV1",
@@ -293,7 +302,7 @@
         "memorableMoment": "Four civilian display stations with separated motors and unmounted props, illustrative cyan airflow ribbons and orange accents.",
         "pacingBeat": "choose",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-02-discovery", "revision": "4" },
+        "rewardRef": { "id": "fpv-meet-aircraft-02-discovery", "revision": "5" },
         "routeDecision": "Choose adjacent workstations for short cuts or opposing stations for a broader capture."
       },
       "format": "MissionDesignV1",
@@ -351,7 +360,7 @@
         "memorableMoment": "An original civilian ESC exhibit separating conceptual command and energy ribbons, without pin labels or wiring instructions.",
         "pacingBeat": "combine",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-03-discovery", "revision": "4" },
+        "rewardRef": { "id": "fpv-meet-aircraft-03-discovery", "revision": "5" },
         "routeDecision": "Use either offset electronics return before crossing the central power aisle."
       },
       "format": "MissionDesignV1",
@@ -409,7 +418,7 @@
         "memorableMoment": "An original cyan controller pavilion with sensor, interpretation and command display layers around a quiet nested court.",
         "pacingBeat": "breathe",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-04-discovery", "revision": "4" },
+        "rewardRef": { "id": "fpv-meet-aircraft-04-discovery", "revision": "5" },
         "routeDecision": "Build a return through the outer court before linking the smaller sensor gallery."
       },
       "format": "MissionDesignV1",
@@ -467,7 +476,7 @@
         "memorableMoment": "Twin civilian FPV exhibit bays, one with a handheld controller and RX concept, another with a camera and goggles, with separate information paths.",
         "pacingBeat": "mastery",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-05-discovery", "revision": "4" },
+        "rewardRef": { "id": "fpv-meet-aircraft-05-discovery", "revision": "5" },
         "routeDecision": "Secure the control bay or video bay first, using their crossing as a safe return."
       },
       "format": "MissionDesignV1",
@@ -533,7 +542,7 @@
         "memorableMoment": "An original civilian aircraft component atlas with a disconnected battery, separately displayed props and distinct support, energy and information layers.",
         "pacingBeat": "resolve",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-06-discovery", "revision": "4" },
+        "rewardRef": { "id": "fpv-meet-aircraft-06-discovery", "revision": "5" },
         "routeDecision": "Join the support hub first or link the energy and information islands before the final broad cut."
       },
       "format": "MissionDesignV1",
@@ -558,9 +567,9 @@
       "format": "PackDesignV1",
       "id": "fpv-meet-aircraft-pack",
       "name": "Meet the Aircraft",
-      "revision": "4"
+      "revision": "5"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "4"
+  "revision": "5"
 }

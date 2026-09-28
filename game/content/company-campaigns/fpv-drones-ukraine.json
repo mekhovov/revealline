@@ -85,7 +85,16 @@
       "band": 6,
       "discovery": {
         "exhibitLayout": "mosaic",
-        "finaleRewardRef": { "id": "fpv-drones-ukraine-finale", "revision": "3" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Another source-linked story is ready to inspect."],
+            "uk": ["Ще одна історія з джерелами готова до перегляду."]
+          },
+          "revision": "feedback-926aeb4150fbb2be",
+          "victoryMotif": "bright-return-v1"
+        },
+        "finaleRewardRef": { "id": "fpv-drones-ukraine-finale", "revision": "4" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-drones-ukraine",
@@ -269,7 +278,7 @@
           "travelling-trail-impact",
           "trail-pursuer"
         ],
-        "rewardRef": { "id": "fpv-drones-ukraine-01-discovery", "revision": "3" },
+        "rewardRef": { "id": "fpv-drones-ukraine-01-discovery", "revision": "4" },
         "routeDecision": "Capture the two archive wings separately or join the shared source desk first. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -336,7 +345,7 @@
           "travelling-trail-impact",
           "trail-pursuer"
         ],
-        "rewardRef": { "id": "fpv-drones-ukraine-02-discovery", "revision": "3" },
+        "rewardRef": { "id": "fpv-drones-ukraine-02-discovery", "revision": "4" },
         "routeDecision": "Use the expert-review island or the longer document-gallery return. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -403,7 +412,7 @@
           "travelling-trail-impact",
           "heading-interceptor"
         ],
-        "rewardRef": { "id": "fpv-drones-ukraine-03-discovery", "revision": "3" },
+        "rewardRef": { "id": "fpv-drones-ukraine-03-discovery", "revision": "4" },
         "routeDecision": "Compare the two evidence shelves through the centre or clear the separate question alcove. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -479,7 +488,7 @@
           "heading-interceptor",
           "lane-emitter"
         ],
-        "rewardRef": { "id": "fpv-drones-ukraine-04-discovery", "revision": "3" },
+        "rewardRef": { "id": "fpv-drones-ukraine-04-discovery", "revision": "4" },
         "routeDecision": "Explore the broad reading terrace or link the two smaller contribution desks. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -555,7 +564,7 @@
           "heading-interceptor",
           "lane-emitter"
         ],
-        "rewardRef": { "id": "fpv-drones-ukraine-05-discovery", "revision": "3" },
+        "rewardRef": { "id": "fpv-drones-ukraine-05-discovery", "revision": "4" },
         "routeDecision": "Join the date and issuer islands before the wide context capture. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -632,7 +641,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-drones-ukraine-06-discovery", "revision": "3" },
+        "rewardRef": { "id": "fpv-drones-ukraine-06-discovery", "revision": "4" },
         "routeDecision": "Connect the six exhibit plinths by safe interior returns or close the archive’s outer court. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV2",
@@ -661,9 +670,9 @@
       "format": "PackDesignV1",
       "id": "fpv-drones-ukraine-pack",
       "name": "Drones in Ukraine",
-      "revision": "3"
+      "revision": "4"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "3"
+  "revision": "4"
 }

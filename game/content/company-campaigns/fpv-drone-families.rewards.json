@@ -182,8 +182,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-drone-families-01", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-drone-families-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drone-families-key-v1",
+        "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -310,8 +324,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-drone-families-02", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-drone-families-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drone-families-key-v1",
+        "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -446,8 +474,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-drone-families-03", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-drone-families-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drone-families-key-v1",
+        "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -568,8 +610,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-drone-families-04", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-drone-families-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drone-families-key-v1",
+        "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -696,8 +752,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-drone-families-05", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-drone-families-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drone-families-key-v1",
+        "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -832,8 +902,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-drone-families-06", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-drone-families-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drone-families-key-v1",
+        "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -1054,7 +1138,21 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-drone-families", "kind": "campaign" }
+    "revision": "4",
+    "scope": { "id": "fpv-drone-families", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drone-families-key-v1",
+        "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження."
+        }
+      }
+    }
   }
 ]

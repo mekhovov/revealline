@@ -150,17 +150,56 @@ const discoveryEditor = createDiscoveryEditor({
     await renderDocuments();
     return true;
   },
-  apply: (candidate) => {
-    const path = selectedCampaign().sourcePath;
-    if (editorBuffers.has(path))
-      throw new Error(
-        'Apply or discard the campaign JSON edits before changing its discovery design.',
-      );
-    files.set(path, validateStudioData(path, candidate, catalog, files));
-    $('campaign-json').value = format(files.get(path));
+  apply: async (candidate) => {
+    const campaign = selectedCampaign(),
+      previousCatalog = catalog,
+      previousFiles = files,
+      previousRevision = revision,
+      previousLoadGeneration = loadGeneration,
+      previousEditionId = editionId,
+      nextFiles = new Map(files),
+      nextCatalog = structuredClone(catalog),
+      path = campaign.sourcePath;
+    const changedPaths = ['catalog', path, campaign.localizationPath].filter(Boolean);
+    for (const file of changedPaths)
+      if (editorBuffers.has(file))
+        throw new Error(
+          'Apply or discard pending campaign and language JSON before editing discovery design.',
+        );
+    nextFiles.set(path, candidate);
+    if (campaign.localizationPath) {
+      const rebound = await rebindStudioRewardLocalization({
+        localization: files.get(campaign.localizationPath),
+        source: candidate,
+        descriptor: campaign,
+      });
+      nextFiles.set(campaign.localizationPath, rebound.localization);
+      nextCatalog.campaigns.find((item) => item.id === campaign.id).localizationSha256 =
+        rebound.sha256;
+    }
+    for (const edition of nextCatalog.editions.filter((item) =>
+      item.campaignIds.includes(campaign.id),
+    ))
+      edition.revision++;
+    const checked = validateEditionRuntimeCatalog(nextCatalog);
+    validateStudioData(path, candidate, checked, nextFiles);
+    if (
+      catalog !== previousCatalog ||
+      files !== previousFiles ||
+      revision !== previousRevision ||
+      loadGeneration !== previousLoadGeneration ||
+      editionId !== previousEditionId ||
+      changedPaths.some((file) => editorBuffers.has(file)) ||
+      selectedCampaign().id !== campaign.id
+    )
+      throw new Error('The authoring context changed. Review discovery design before applying it.');
+    files = nextFiles;
+    catalog = checked;
+    $('campaign-json').value = format(candidate);
     changed(
       'Applied discovery design. Export the project and reward sidecar together in the source draft.',
     );
+    renderCatalog();
     return true;
   },
 });
