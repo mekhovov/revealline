@@ -127,3 +127,11 @@ Fresh-profile normal-win checks at 1280×633, 390×844 and 844×390 confirm the 
 A normal keyboard-earned Motion Makers reward was inspected in the actual player: the original clip decoded at 960×540, lasted 12 seconds, stayed muted and displayed English captions after explicit Play. This is local desktop playback evidence; physical-device review remains deferred.
 
 Remaining delivery work is current candidate verification, matched compiled-artifact desktop measurements, optional content depth where desired, and the existing release-admission/freeze/rollback/publication sequence. No release selector or version has been allocated to this batch.
+
+## Desktop comparison and candidate finalization
+
+The matched exact-artifact desktop observations for `a0eefe578` versus `de4cec8ba` pass the scoped five-percent p95 target in both first accepted twenty-second cases: 16.7→16.8 ms (+0.60%) for stationary active play and normal first-win result entry. [The method and raw reports](discovery-desktop-observations.md#matched-compiled-artifacts-on-28-september) preserve rejected attempts and long stalls. Reward-owned task attribution and complete retained-resource qualification remain open.
+
+At `de4cec8ba`, hosted acceptance passed run `36436438853` and optional practice passed. Run `36436438740` completed every candidate step, including double compilation and uploading artifact `10977111817`, but the job ultimately **cancelled** with the explicit twenty-minute timeout annotation. It is not a green candidate receipt. The prior run took 15m12s; this run took 21m12s, with tests and compilation both approximately 1.42 times slower. The candidate job now has a bounded thirty-minute allowance for the complete eighteen-edition workload. No check, second build, admission rule or package-size limit is removed; the new head must rerun successfully.
+
+The final native video check on the exact compiled candidate earned Motion Makers normally, decoded its twelve-second clip, and verified that a pointer click on Back closes the dialog, removes all native media and returns focus to Explore. An earlier named-locator automation click missed the sticky control; that did not reproduce a player dismissal defect.
