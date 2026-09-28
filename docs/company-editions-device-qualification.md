@@ -206,6 +206,12 @@ deferred; the following instructions are a protocol, not evidence that these cas
    import, then open the discovery. As a separate check in a fresh destination, importing only
    the Discovery backup must not manufacture a Journey win or score. A foreign audience/edition
    import must show a rejection and leave that destination's prior exports unchanged.
+   Also try an older backup after the destination has registered a newer promise for the same
+   discovery. The v1 store cannot retain two different promises under one reward ID: it must
+   reject the import explicitly, keep both the current collection and original backup, and
+   offer recovery with the matching release in a separate profile. A success message with
+   missing old receipts is a failure. This is distinct from updating an existing installation,
+   which retains its earlier promises.
 
 3. **Keep A's promise after updating to B.** Follow the existing A → B activation steps,
    leaving the other edition on A. Reopen the earned discovery and export its backup again.
