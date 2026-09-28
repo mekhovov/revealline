@@ -35,6 +35,15 @@ plus two legacy arenas; difficulty variants are not extra missions. Nine Classic
 Lab practice demonstrations remain separately accounted for. Custom content is
 device-specific and must not be deduplicated by names or map geometry.
 
+Ordinary **Current** browsing shows one playable Classic rules edition for each
+compatible mission. When a verified Current-rules projection exists, its
+authenticated Original-rules edition remains available under **Archive** and
+through exact historical handoffs instead of appearing as a second, visually
+indistinguishable card in the default gallery. Original-only missions remain in
+Current. This presentation rule does not combine owners, rewrite identities,
+change artwork ownership or remove content: the complete Current + Archive
+inventory remains 188 Classic missions and 327 Solo/Versus library identities.
+
 ## Delivery and evidence
 
 The earlier 7–11-hour B estimate is a target from implementation start, not a
@@ -161,20 +170,20 @@ Updated after the native input repairs and catalogue qualification. “Pushed”
 draft PR268, **not released or publicly accepted**. Earlier checkpoint prose below
 records the evidence at that time, not the current remaining list.
 
-| Work                                                                          | Current state                                                                   | Remaining effort estimate                          |
-| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------- |
-| Shared registry, trusted110-mission index, tags and exact owner identity      | Pushed; final33-case reconciliation passes all110 retained identities           | Repeat against frozen release                      |
-| Solo host, native setup, exact launches and authored Next                     | Pushed;42 affected Solo cases pass; native exact launch and return pass         | Combined affected/full release gates               |
-| Versus host and supported Classic/Custom/optional launches                    | All visible entries consolidated; retained18 and default/degraded16 pass       | Final native/frozen repeat                         |
-| Team host,12 Journey +2 Classic +visit-local Custom                           | Pushed;153 tests passed together                                                | Cross-mode/native work below                       |
-| Solo↔Versus Journey modes without duplicate identities                       | Pushed;7 adapter +32 actual-host cases passed                                   | Cross-mode public verification                     |
-| Team↔Solo/Versus catalogue and exact handoffs                                | Pushed; pinned native source-return and saved-flight round trips pass           | Final downloaded/Custom cross-mode qualification   |
-| Trusted bundled/archive Versus downloads                                      | Implemented;53 installer +actual-host tests pass together                       | Native/public verification                         |
-| Paired-original downloads/readiness across hosts                              | Implemented; real optional/paired remote5-case recovery cohort passes           | Release-aware native/public verification           |
-| Installed Custom metadata/readiness without eager artwork decoding            | Team and Versus integrations reviewed; local host regressions pass              | Native qualification and failure-matrix completion |
-| Compact library and selector return                                           | Final6e native repeat preserves490 scroll, visible focused card, both Versus openers and saved Solo flight | Frozen/public repeat; physical-device limits remain explicit |
-| Full navigation, failure, storage and accessibility/performance qualification | Final6e cohort314/315; startup fixture repaired and targeted3/3 pass, runtime unchanged | Document optional-test waiver or rerun; build/integrity/public gates remain |
-| Release B promotion                                                           | Waits only for accepted A and B technical gates; local work continues           | 2–4h after qualification, CI/Pages queues variable |
+| Work                                                                          | Current state                                                                                              | Remaining effort estimate                                                   |
+| ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Shared registry, trusted110-mission index, tags and exact owner identity      | Pushed; final33-case reconciliation passes all110 retained identities                                      | Repeat against frozen release                                               |
+| Solo host, native setup, exact launches and authored Next                     | Pushed;42 affected Solo cases pass; native exact launch and return pass                                    | Combined affected/full release gates                                        |
+| Versus host and supported Classic/Custom/optional launches                    | All visible entries consolidated; retained18 and default/degraded16 pass                                   | Final native/frozen repeat                                                  |
+| Team host,12 Journey +2 Classic +visit-local Custom                           | Pushed;153 tests passed together                                                                           | Cross-mode/native work below                                                |
+| Solo↔Versus Journey modes without duplicate identities                       | Pushed;7 adapter +32 actual-host cases passed                                                              | Cross-mode public verification                                              |
+| Team↔Solo/Versus catalogue and exact handoffs                                | Pushed; pinned native source-return and saved-flight round trips pass                                      | Final downloaded/Custom cross-mode qualification                            |
+| Trusted bundled/archive Versus downloads                                      | Implemented;53 installer +actual-host tests pass together                                                  | Native/public verification                                                  |
+| Paired-original downloads/readiness across hosts                              | Implemented; real optional/paired remote5-case recovery cohort passes                                      | Release-aware native/public verification                                    |
+| Installed Custom metadata/readiness without eager artwork decoding            | Team and Versus integrations reviewed; local host regressions pass                                         | Native qualification and failure-matrix completion                          |
+| Compact library and selector return                                           | Final6e native repeat preserves490 scroll, visible focused card, both Versus openers and saved Solo flight | Frozen/public repeat; physical-device limits remain explicit                |
+| Full navigation, failure, storage and accessibility/performance qualification | Final6e cohort314/315; startup fixture repaired and targeted3/3 pass, runtime unchanged                    | Document optional-test waiver or rerun; build/integrity/public gates remain |
+| Release B promotion                                                           | Waits only for accepted A and B technical gates; local work continues                                      | 2–4h after qualification, CI/Pages queues variable                          |
 
 Estimates are remaining engineering ranges, not guaranteed release times or
 permission to skip gates. Parallel work overlaps; provisional B delivery range is

@@ -204,7 +204,7 @@ test('published Solo boots only the starter, browses metadata, and keeps its fli
   ]);
   const card = await selectedCard(h.page);
   assert(card, 'Unloaded current missions remain visible.');
-  assert.equal(h.$('journey-cards').children.length, 252);
+  assert.equal(h.$('journey-cards').children.length, 186);
   assert.equal(h.runtimeReads.length, 2, 'Browsing must not materialize other modes or chapters.');
   const previous = h.page.rendered.run;
   const cancelled = activateMissionCard(card);
