@@ -3,6 +3,14 @@ import {
   CURRICULUM_LISTENING_ASSET_IDS,
 } from './curriculum-listening.mjs';
 import { createCurriculumMissionExplorations } from './curriculum-mission-explorations.mjs';
+import {
+  createCurriculumMotionMakersContent,
+  CURRICULUM_MOTION_MAKERS_ASSET_IDS,
+} from './curriculum-motion-makers.mjs';
+import {
+  createCurriculumTextileLighting,
+  CURRICULUM_TEXTILE_LIGHTING_ASSET_IDS,
+} from './curriculum-textile-lighting.mjs';
 import { createCurriculumApplicationRewards } from './curriculum-application-rewards.mjs';
 import { CURRICULUM_LEARNING_PROFILES } from './curriculum-profiles.mjs';
 import {
@@ -128,6 +136,8 @@ export function createCurriculumRewards({
         knowledge(row.id + '-knowledge', row.locales, row.refs),
         ...curriculumReferencePayloads(row.id, assets),
         ...createCurriculumMissionExplorations(row.id, assets),
+        ...createCurriculumTextileLighting(row.id, assets),
+        ...createCurriculumMotionMakersContent(row.id, assets),
       ],
     ),
   );
@@ -152,6 +162,8 @@ export function createCurriculumRewards({
     const asset = assets.find((entry) => entry.id === assetId);
     required(asset?.sha256, 'Missing declared curriculum reward asset: ' + assetId);
     if (CURRICULUM_LISTENING_ASSET_IDS.includes(assetId)) continue;
+    if (CURRICULUM_TEXTILE_LIGHTING_ASSET_IDS.includes(assetId)) continue;
+    if (CURRICULUM_MOTION_MAKERS_ASSET_IDS.includes(assetId)) continue;
     if (assetId === 'met-degas-ukrainian-dress-436157')
       finalePayloads.push(...museumComparison(definition.id, asset));
     else

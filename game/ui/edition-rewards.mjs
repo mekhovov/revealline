@@ -22,6 +22,7 @@ import { mountRewardQr } from './reward-qr.mjs';
 import { projectRewardExhibits } from '../rewards/exhibit.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { EMPTY_MASTERY_EVIDENCE } from './edition-mastery.mjs';
+import { createEarnedResultLayout } from './earned-result-layout.mjs';
 
 const EMPTY_LEARNING = Object.freeze({
   revision: 0,
@@ -132,7 +133,12 @@ export async function mountEditionRewards({
   const result = node('section', undefined, 'completion-reward-result');
   result.id = 'completion-reward-result';
   result.hidden = true;
-  doc.getElementById('overlay-reading').append(result);
+  const resultReading = doc.getElementById('overlay-reading');
+  const resultDetails = node('section', undefined, 'completion-reward-result-details');
+  resultDetails.id = 'completion-reward-result-details';
+  resultDetails.hidden = true;
+  resultReading.append(result, resultDetails);
+  const resultLayout = createEarnedResultLayout({ document: doc, reading: resultReading, result });
   const shelf = node('section', undefined, 'completion-reward-shelf');
   shelf.id = 'completion-reward-shelf';
   const pictureCollection = doc.getElementById('journey-pictures');
@@ -202,10 +208,11 @@ export async function mountEditionRewards({
   }
   function saveStatus() {
     const saved = store.status();
-    status.textContent = tr(saved.durable ? 'saved' : 'sessionOnly');
+    status.textContent = tr(saved.pending ? 'saving' : saved.durable ? 'saved' : 'sessionOnly');
     status.dataset.durable = String(saved.durable);
+    status.dataset.pending = String(saved.pending === true);
     retrySave.textContent = t('interface:retrySave');
-    retrySave.disabled = saved.durable;
+    retrySave.disabled = saved.durable || saved.pending;
   }
   function download() {
     if (previewSession) return;
@@ -432,7 +439,7 @@ export async function mountEditionRewards({
   }
   function syncShelfSaveNote() {
     doc.getElementById('completion-reward-exhibit-save-note')?.remove();
-    if (state.receipts.length && !store.status().durable) {
+    if (state.receipts.length && !store.status().durable && !store.status().pending) {
       const notice = saveNotice();
       notice.id = 'completion-reward-exhibit-save-note';
       shelf.append(notice);
@@ -460,6 +467,8 @@ export async function mountEditionRewards({
       (item) => item.scope.kind === 'mission' && item.scope.id === run?.levelId,
     );
     result.hidden = !definition || !['ready', 'won', 'campaign-complete'].includes(kind);
+    resultDetails.hidden = true;
+    resultDetails.replaceChildren();
     if (result.hidden) {
       result.replaceChildren();
       return;
@@ -467,6 +476,14 @@ export async function mountEditionRewards({
     const receipt = earned(definition.id),
       copy = localized(definition);
     const won = run?.status === 'won' && !!receipt;
+    result.dataset.placement = won ? 'summary' : 'reading';
+    // Earned actions stay outside variable-length result prose. Ready promises
+    // retain the existing reading surface and optional teaser-image controls.
+    const resultParent = won ? resultReading.parentElement : resultReading;
+    if (result.parentElement !== resultParent) {
+      if (won) resultReading.after(result);
+      else resultReading.append(result);
+    }
     if (animate && won && !getReducedMotion()) result.classList.add('completion-reward-arrive');
     else if (!won || getReducedMotion() || lastRun !== run)
       result.classList.remove('completion-reward-arrive');
@@ -477,9 +494,16 @@ export async function mountEditionRewards({
     const discovery = won
       ? receipt.definition.payloads.find((item) => item.type === 'knowledge')
       : null;
-    result.replaceChildren(title, content);
+    const summary = node('div', undefined, 'completion-reward-result-copy');
+    const actions = node('div', undefined, 'completion-reward-result-actions');
+    if (won) {
+      summary.append(title, content);
+      result.replaceChildren(summary, actions);
+    } else result.replaceChildren(title, content);
     if (!won || firstWin)
-      result.append(node('p', discovery ? localized(discovery).paragraphs[0] : copy.teaser));
+      (won ? resultDetails : result).append(
+        node('p', discovery ? localized(discovery).paragraphs[0] : copy.teaser),
+      );
     if (!won && kind === 'ready' && definition.teaserImage) {
       const target = node('div', undefined, 'completion-reward-exhibit-picture');
       const preview = button(tr('previewTeaser'), () => {
@@ -502,15 +526,26 @@ export async function mountEditionRewards({
       result.append(preview, target);
     }
     if (won) {
-      result.append(exploreButton(receipt, 'result'));
-      if (!store.status().durable) result.append(saveNotice());
+      actions.append(exploreButton(receipt, 'result'));
+      const saved = store.status();
+      if (!saved.durable) {
+        const compact = node(
+          'p',
+          tr(saved.pending ? 'saving' : 'sessionOnlyShort'),
+          'completion-reward-session-status',
+        );
+        compact.setAttribute('role', 'status');
+        compact.dataset.pending = String(saved.pending === true);
+        summary.append(compact);
+        if (!saved.pending) result.append(saveNotice());
+      }
     }
     const finale = availableDefinitions().find(
       (item) => item.campaignId === definition.campaignId && item.scope.kind === 'campaign',
     );
     if (finale) {
       const finaleReceipt = earned(finale.id);
-      result.append(
+      (won ? resultDetails : result).append(
         node(
           'p',
           `${localized(finale).title} · ${finaleReceipt ? tr('collected') : count(finale)}`,
@@ -518,9 +553,10 @@ export async function mountEditionRewards({
         ),
       );
       if (finaleReceipt && won) {
-        result.append(exploreButton(finaleReceipt, 'result-finale', 'exhibit'));
+        actions.append(exploreButton(finaleReceipt, 'result-finale', 'exhibit'));
       }
     }
+    resultDetails.hidden = resultDetails.children.length === 0;
     restoreFocus(focused);
   }
   async function loadImage(
@@ -843,6 +879,7 @@ export async function mountEditionRewards({
     }
     if (dirty || lastRun !== run || lastKind !== kind || lastMotion !== getReducedMotion())
       renderResult(animate);
+    resultLayout.sync(!result.hidden && result.dataset.placement === 'summary', run);
     lastRun = run;
     lastKind = kind;
     lastMotion = getReducedMotion();
@@ -860,6 +897,7 @@ export async function mountEditionRewards({
     // than newly published conditions, remain the player's finish line.
     snapshot: () => ({ state, progress }),
     cosmeticBodies: () => cosmeticProjection.available.map((item) => item.recipeId),
+    closeResultDetails: () => resultLayout.close(),
     dispose() {
       disposed = true;
       importVisit++;
@@ -869,11 +907,13 @@ export async function mountEditionRewards({
       shelfObserver?.disconnect();
       collectionDialog.removeEventListener('close', closeShelf);
       stopLocale();
+      resultLayout.dispose();
       result.removeEventListener('animationend', stopReveal);
       result.removeEventListener('click', stopReveal);
       dialog.removeEventListener('close', onClose);
       dialog.remove();
       result.remove();
+      resultDetails.remove();
       shelf.remove();
       data.remove();
       void store.close();
