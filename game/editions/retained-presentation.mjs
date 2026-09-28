@@ -19,6 +19,7 @@ const pathsFor = (catalog) =>
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
       ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+      ...(campaign.localizationPath ? [campaign.localizationPath] : []),
     ]),
   ]);
 
@@ -36,6 +37,7 @@ export async function editionPresentationSha256(bootstrap) {
     presets: bootstrap.boot.presets,
     // Preserve historical identities when no reward sidecar was authored.
     ...(bootstrap.rewards ? { rewards: bootstrap.rewards } : {}),
+    ...(bootstrap.localizations ? { localizations: bootstrap.localizations } : {}),
     assets: resolveEditionAssets(bootstrap.catalog, {
       editionId: bootstrap.selection.edition.id,
     })
@@ -68,6 +70,8 @@ export async function captureEditionPresentation(bootstrap) {
     files.set(campaign.sourcePath, bootstrap.sources[index]);
     if (campaign.lessonPath) files.set(campaign.lessonPath, bootstrap.lessons[campaign.id]);
     if (campaign.rewardPath) files.set(campaign.rewardPath, bootstrap.rewards[campaign.id]);
+    if (campaign.localizationPath)
+      files.set(campaign.localizationPath, bootstrap.localizations[campaign.id]);
   });
   for (const [name, path] of Object.entries(edition.boot))
     files.set(path, name === 'themes' ? projected.themes : bootstrap.boot[name]);

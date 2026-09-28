@@ -1,0 +1,121 @@
+{
+  "themes": [
+    {
+      "actorRecipes": {
+        "border-patrol": "missing-cloud",
+        "bouncer": "missing-cloud",
+        "claimed-rover": "missing-cloud",
+        "contour-patrol": "missing-cloud",
+        "eroder": "missing-cloud",
+        "lane-boss": "missing-cloud",
+        "relay-sentinel": "missing-cloud"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "ukraine-culture-marker",
+        "carrier": "ukraine-culture-marker",
+        "fiber": "ukraine-culture-marker",
+        "impact": "ukraine-culture-marker",
+        "interceptor": "ukraine-culture-marker",
+        "scout": "ukraine-culture-marker",
+        "trapper": "ukraine-culture-marker"
+      },
+      "coverColor": "#28212C",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "ukraine-culture-home",
+      "labels": {
+        "ability": "Support",
+        "boss": "Missing context",
+        "currency": "Connections",
+        "enemy": "Missing context",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "Ukraine: Living Culture",
+      "palette": {
+        "accent": "#F4CC83",
+        "danger": "#FFAA99",
+        "field": "#28212C",
+        "grid": "#4A3747",
+        "ink": "#28212C",
+        "land": "#865D65",
+        "muted": "#D4C8BF",
+        "paper": "#FFF9ED",
+        "safe": "#A1DFC8",
+        "sky": "#F2E7D7"
+      },
+      "patrolShape": "spark",
+      "player": "ukraine-culture-marker",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "ambient",
+        "id": "ukraine-culture-discovery",
+        "name": "Ukraine: Living Culture",
+        "root": 65,
+        "scale": "dorian",
+        "tempo": 76
+      },
+      "subtitle": "Explore, connect and discover something worth keeping."
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "missing-cloud",
+        "bouncer": "missing-cloud",
+        "claimed-rover": "missing-cloud",
+        "contour-patrol": "missing-cloud",
+        "eroder": "missing-cloud",
+        "lane-boss": "missing-cloud",
+        "relay-sentinel": "missing-cloud"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "ukraine-culture-marker",
+        "carrier": "ukraine-culture-marker",
+        "fiber": "ukraine-culture-marker",
+        "impact": "ukraine-culture-marker",
+        "interceptor": "ukraine-culture-marker",
+        "scout": "ukraine-culture-marker",
+        "trapper": "ukraine-culture-marker"
+      },
+      "coverColor": "#28212C",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "ukraine-threads-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Missing context",
+        "currency": "Connections",
+        "enemy": "Missing context",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "Ukraine: Living Culture",
+      "palette": {
+        "accent": "#F4CC83",
+        "danger": "#FFAA99",
+        "field": "#28212C",
+        "grid": "#4A3747",
+        "ink": "#28212C",
+        "land": "#865D65",
+        "muted": "#D4C8BF",
+        "paper": "#FFF9ED",
+        "safe": "#A1DFC8",
+        "sky": "#F2E7D7"
+      },
+      "patrolShape": "spark",
+      "player": "ukraine-culture-marker",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "ambient",
+        "id": "ukraine-culture-discovery",
+        "name": "Ukraine: Living Culture",
+        "root": 65,
+        "scale": "dorian",
+        "tempo": 76
+      },
+      "subtitle": "Explore, connect and discover something worth keeping."
+    }
+  ],
+  "version": "xonix-themes.v1"
+}
