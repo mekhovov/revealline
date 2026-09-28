@@ -11,6 +11,7 @@ import { authoritativeCheckpoint, createRecorder, recordInput } from '../replay.
 import { Document } from './helpers/couch-dom.mjs';
 import { memoryStorage } from './helpers/solo-dom.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 async function learningDialogFixture(
   t,
@@ -78,8 +79,83 @@ async function learningDialogFixture(
     },
   });
   const file = (text) => ({ size: text.length, text: async () => text });
-  return { doc, view, settings, upload, status, storage, reports, emptyBackup, file };
+  return { doc, view, settings, upload, status, storage, reports, emptyBackup, file, lesson };
 }
+
+test('bonus backup labels and pending status change language without replacing focused input or importing twice', async (t) => {
+  const original = getLocale();
+  t.after(() => setLocale(original, { persist: false }));
+  setLocale('en', { persist: false });
+  const h = await learningDialogFixture(t);
+  const heading = h.doc.querySelector('.edition-learning-data').querySelector('h3');
+  h.upload.focus();
+  let finish;
+  h.upload.files = [
+    {
+      size: 20,
+      text: () =>
+        new Promise((resolve) => {
+          finish = resolve;
+        }),
+    },
+  ];
+  const importing = h.upload.onchange();
+  assert.equal(h.status.textContent, 'Checking learning records…');
+  setLocale('uk', { persist: false });
+  assert.equal(h.doc.activeElement, h.upload);
+  assert.equal(h.doc.querySelector('.edition-learning-data').querySelector('input'), h.upload);
+  assert.equal(heading.textContent, 'Записи додаткових вправ');
+  assert.equal(h.status.textContent, 'Перевіряємо записи вправ…');
+  assert.deepEqual(h.storage.writes, []);
+  finish(JSON.stringify({ format: 'revealline-edition-learning-backup.v1', editionId: 'foreign' }));
+  await importing;
+  assert.equal(h.status.textContent, 'Ця резервна копія вправ належить іншому виданню.');
+  const reports = [...h.reports];
+  setLocale('en', { persist: false });
+  assert.equal(h.status.textContent, 'This learning backup belongs to another edition.');
+  assert.equal(h.doc.activeElement, h.upload);
+  assert.deepEqual(h.reports, reports, 'Language changes do not replay host announcements.');
+  assert.deepEqual(h.storage.writes, []);
+  h.view.dispose();
+  const detachedStatus = h.status.textContent;
+  setLocale('uk', { persist: false });
+  assert.equal(h.status.textContent, detachedStatus, 'Disposed host has no locale subscription.');
+});
+
+test('bonus and Collection captions translate while workbench choices and focus retain their owner', async (t) => {
+  const original = getLocale();
+  t.after(() => setLocale(original, { persist: false }));
+  setLocale('en', { persist: false });
+  const h = await learningDialogFixture(t);
+  h.settings.close();
+  const revisit = h.view.pictureReady({
+    editionId: 'sample-public',
+    missionId: h.lesson.missionId,
+  });
+  h.doc.body.append(revisit);
+  revisit.click();
+  const field = h.lesson.fields[0],
+    control = () => h.doc.querySelector(`[data-control="field-${field.id}"]`);
+  control().value = field.options[0].value;
+  control().emit('change');
+  control().focus();
+  const before = h.view.rewardEvidence();
+  setLocale('uk', { persist: false });
+  assert.equal(
+    h.doc.getElementById('edition-lesson-open').textContent,
+    'Додаткова вправа · дослідіть цей зв’язок',
+  );
+  assert.equal(revisit.textContent, 'Додаткова вправа · поверніться до цього зв’язку');
+  assert.equal(control().value, field.options[0].value);
+  assert.equal(h.doc.activeElement, control());
+  assert.deepEqual(h.view.rewardEvidence(), before);
+  assert.deepEqual(h.storage.writes, []);
+  h.doc.getElementById('edition-lesson-dialog').close();
+  assert.equal(h.doc.activeElement, revisit);
+  setLocale('en', { persist: false });
+  assert.equal(revisit.textContent, 'Optional bonus · revisit this connection');
+  assert.equal(h.doc.activeElement, revisit);
+});
 
 test('learning import failures stay in the open Settings live region and leave stored records intact', async (t) => {
   const h = await learningDialogFixture(t, {

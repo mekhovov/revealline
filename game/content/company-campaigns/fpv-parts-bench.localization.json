@@ -8,14 +8,30 @@
         "name": { "en": "From Parts to a Bench Model", "uk": "Від деталей до настільної моделі" }
       },
       "id": "fpv-parts-bench",
-      "identity": "99a286207029de68",
+      "identity": "a1532d5c44d3c0ed",
       "kind": "campaign"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
         "design.lesson": {
           "en": "Connect the inventory trays of an unpowered civilian display model. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
           "uk": "З’єднайте лотки деталей цивільної виставкової моделі без живлення. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original warm workshop illustration: exploded inert component cards on an oversized tray, magnified labels and a clear unpowered-model placard.",
+          "uk": "Оригінальна тепла ілюстрація майстерні: рознесені картки знеструмлених компонентів на великій таці, збільшені підписи й чітка табличка моделі без живлення."
         },
         "design.routeDecision": {
           "en": "Choose the long inventory shelf or the two short tray returns. Read the moving boundary before committing to the next connection.",
@@ -24,14 +40,30 @@
         "name": { "en": "A Tray of Questions", "uk": "Лоток запитань" }
       },
       "id": "fpv-parts-bench-01",
-      "identity": "d5dd9f5781238e00",
+      "identity": "e6c592d502824bb9",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
         "design.lesson": {
           "en": "Join the orientation plinths and compare a model’s nose with its display arrow. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
           "uk": "З’єднайте стенди орієнтації та порівняйте ніс моделі зі стрілкою експозиції. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original cutaway display model on a rotating plinth, blue nose marker and independent compass rose, no wiring pinouts.",
+          "uk": "Оригінальна демонстраційна модель у розрізі на обертовому постаменті, синя позначка носа й окрема роза компаса; без схем контактів."
         },
         "design.routeDecision": {
           "en": "Secure the nose-side alcove or loop behind the orientation spine. Read the moving boundary before committing to the next connection.",
@@ -40,14 +72,30 @@
         "name": { "en": "Which Way Is Forward?", "uk": "Де передня частина?" }
       },
       "id": "fpv-parts-bench-02",
-      "identity": "86e285890a1ecda8",
+      "identity": "204a47dea914f737",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
         "design.lesson": {
           "en": "Connect the role stations without treating the arcade route as wiring. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
           "uk": "З’єднайте станції ролей, не сприймаючи аркадний маршрут як проводку. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original museum role atlas with three fabric ribbons and inert frame, battery, receiver and ESC silhouettes; no connection instructions.",
+          "uk": "Оригінальний музейний атлас ролей із трьома тканинними стрічками та силуетами знеструмлених рами, акумулятора, приймача й ESC; без інструкцій з підключення."
         },
         "design.routeDecision": {
           "en": "Join the middle role island first or link the outer pair before crossing. Read the moving boundary before committing to the next connection.",
@@ -56,14 +104,30 @@
         "name": { "en": "Three Coloured Paths", "uk": "Три кольорові шляхи" }
       },
       "id": "fpv-parts-bench-03",
-      "identity": "36f1ffaba3d01115",
+      "identity": "c5952a768643c464",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. A dormant backlog knot wakes only after you reclaim its whole body; leave its warning area before using the new ground.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Сплячий вузол прокидається лише після захоплення всього його тіла; залиште зону попередження, перш ніж користуватися новою територією."
+        },
         "design.lesson": {
           "en": "Open the comparison court and check the fictional labels before choosing. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
           "uk": "Відкрийте двір порівняння й перевірте вигадані написи перед вибором. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original spacious comparison table with two deliberately fictional connector cards and a large open manual, no real pin mappings.",
+          "uk": "Оригінальний просторий стіл порівняння з двома явно вигаданими картками роз’ємів і великим відкритим посібником; без реального призначення контактів."
         },
         "design.routeDecision": {
           "en": "Use the broad comparison terrace or the quiet label alcove first. Read the moving boundary before committing to the next connection.",
@@ -72,14 +136,30 @@
         "name": { "en": "Same Shape, Different Label", "uk": "Схожа форма, інший напис" }
       },
       "id": "fpv-parts-bench-04",
-      "identity": "2cd33061d77fa76d",
+      "identity": "41b6d993edbddc2e",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. A dormant backlog knot wakes only after you reclaim its whole body; leave its warning area before using the new ground.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Сплячий вузол прокидається лише після захоплення всього його тіла; залиште зону попередження, перш ніж користуватися новою територією."
+        },
         "design.lesson": {
           "en": "Connect inspection windows around the stationary, unpowered model. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
           "uk": "З’єднайте вікна огляду довкола нерухомої моделі без живлення. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original inspection lightbox with magnified cardboard model details, readable observation cards and no powered tools.",
+          "uk": "Оригінальний стенд огляду з підсвічуванням, збільшеними деталями картонної моделі й читабельними картками спостережень; без увімкнених інструментів."
         },
         "design.routeDecision": {
           "en": "Reach the isolated inspection island or clear the paired windows first. Read the moving boundary before committing to the next connection.",
@@ -88,14 +168,30 @@
         "name": { "en": "Look Before the Next Step", "uk": "Огляд перед наступним кроком" }
       },
       "id": "fpv-parts-bench-05",
-      "identity": "dd47fffba6c780cb",
+      "identity": "4587ad283a3ab8e8",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. A dormant backlog knot wakes only after you reclaim its whole body; leave its warning area before using the new ground.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Сплячий вузол прокидається лише після захоплення всього його тіла; залиште зону попередження, перш ніж користуватися новою територією."
+        },
         "design.lesson": {
           "en": "Unite the workshop stations into a clear handoff for the next learner. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
           "uk": "Об’єднайте станції майстерні для зрозумілої передачі наступному учаснику. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original finished unpowered civilian museum model surrounded by six evidence cards and one intentionally unresolved question card.",
+          "uk": "Оригінальна завершена цивільна музейна модель без живлення оточена шістьма картками доказів та однією навмисно нерозв’язаною карткою запитання."
         },
         "design.routeDecision": {
           "en": "Build a chain through the handoff islands or enclose the wide workshop bay. Read the moving boundary before committing to the next connection.",
@@ -104,7 +200,7 @@
         "name": { "en": "The Model Handoff", "uk": "Передача моделі" }
       },
       "id": "fpv-parts-bench-06",
-      "identity": "480d0e29a7935f14",
+      "identity": "700f39afb518a9bb",
       "kind": "mission"
     }
   ],
