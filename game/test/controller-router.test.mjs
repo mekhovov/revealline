@@ -206,6 +206,23 @@ test('overlapping South and West aliases form one menu Confirm gesture', () => {
   assert.equal(f.sample().ui.confirm, true, 'a new neutral-to-pressed gesture remains usable');
 });
 
+test('menu frames expose exact Confirm indexes and the Gamepad timestamp', () => {
+  const f = fixture({ navigationAliases: true });
+  f.join();
+  f.first.timestamp = 41.5;
+  f.first.buttons[0].pressed = true;
+  f.first.buttons[2].pressed = true;
+  const frame = f.sample();
+  assert.deepEqual(frame.confirmButtons, [0, 2]);
+  assert.equal(frame.confirmHeld, true);
+  assert.equal(frame.gamepadTimestamp, 41.5);
+  f.first.timestamp = 52;
+  f.first.buttons[0].pressed = false;
+  const westOnly = f.sample();
+  assert.deepEqual(westOnly.confirmButtons, [2]);
+  assert.equal(westOnly.gamepadTimestamp, 52);
+});
+
 test('UI repeat uses elapsed time, resets on reversal, and produces no catch-up burst', () => {
   const f = fixture();
   f.join();

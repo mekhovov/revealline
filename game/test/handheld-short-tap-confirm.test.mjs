@@ -27,17 +27,20 @@ test('actual host: a Steam Deck short-tap release pulse toggles Home Sound exact
   pad.buttons[0].value = 1;
   page.frame(8);
   const afterPress = sound.getAttribute('aria-pressed');
-  assert.notEqual(afterPress, before, 'the initial A press activates Sound');
+  assert.equal(afterPress, before, 'A-down only shows pressed feedback');
+  assert.equal(sound.getAttribute('data-controller-pressed'), 'true');
 
   pad.buttons[0].pressed = false;
   pad.buttons[0].value = 0;
   page.frame(8);
+  const afterRelease = sound.getAttribute('aria-pressed');
+  assert.notEqual(afterRelease, before, 'A-up commits Sound exactly once');
   pad.buttons[2].pressed = true;
   pad.buttons[2].value = 1;
   page.frame(8);
   assert.equal(
     sound.getAttribute('aria-pressed'),
-    afterPress,
+    afterRelease,
     'the release-side Confirm pulse cannot undo Sound',
   );
 
@@ -46,15 +49,19 @@ test('actual host: a Steam Deck short-tap release pulse toggles Home Sound exact
   page.frame(8);
   await new Promise((resolve) => setTimeout(resolve, 130));
   page.frame(0);
-  assert.equal(sound.getAttribute('aria-pressed'), afterPress);
+  assert.equal(sound.getAttribute('aria-pressed'), afterRelease);
 
   pad.buttons[0].pressed = true;
   pad.buttons[0].value = 1;
   page.frame(8);
+  assert.equal(sound.getAttribute('aria-pressed'), afterRelease);
+  pad.buttons[0].pressed = false;
+  pad.buttons[0].value = 0;
+  page.frame(8);
   assert.equal(
     sound.getAttribute('aria-pressed'),
     before,
-    'a separate press after stable neutral remains usable',
+    'a separate release after neutral remains usable',
   );
   assert.deepEqual(page.errors, []);
 });

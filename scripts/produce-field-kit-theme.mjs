@@ -169,8 +169,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   ui: {
-    sha256: 'c7ebea5695fe1fbd7c17eafdd0035dcd4d1651b5d3ec91893c6575334da38d3a',
+    sha256: '2530c099cf3b9fc0d5d3dbd865a083b76368f51b95b357ece7209111434a3360',
     evidence: [
+      'Scoped v0.141.8 Steam Deck Confirm continuation: docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json sha256:15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867; exact seven-input UI fingerprint sha256:2530c099cf3b9fc0d5d3dbd865a083b76368f51b95b357ece7209111434a3360. Only field-kit-components.css changes, adding bounded pressed feedback through existing Field Kit tokens while preserving all 24 UI recipe identities, DOM ownership and payloads.',
       'v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact UI fingerprint sha256:c7ebea5695fe1fbd7c17eafdd0035dcd4d1651b5d3ec91893c6575334da38d3a. Maintained copy and operation status are locale-bound while the24 UI recipes, Field Kit tokens and DOM ownership contracts remain unchanged.',
       'Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.',
       'The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.',
@@ -178,8 +179,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: 'f6f89072a29833af077a92f2e2a0eb4174e78edc0f03be1eb04f71daf467967c',
+    sha256: 'b4af6423e29eded7ef998d4b8c1713b28e1f7f9dcd9a288a6777a651a6202825',
     evidence: [
+      'Scoped v0.141.8 Steam Deck Confirm continuation: docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json sha256:15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867; exact26 inputs sha256:b4af6423e29eded7ef998d4b8c1713b28e1f7f9dcd9a288a6777a651a6202825. Only game/app.mjs changes, wiring the release-committed controller Confirm transaction and opt-in local trace while preserving all eight procedural recipes, audio routing and payloads. Immutable predecessors retained; frozen/public/listening/device acceptance remains separate.',
       'Scoped company-startup continuation: docs/verification/v0.141.7-company-startup-audio-continuation/review.json sha256:1d3660001a2ebe7d4d2daf5e68ab745e9e902d5c2f1757a398439de3caedccad; exact26 inputs sha256:f6f89072a29833af077a92f2e2a0eb4174e78edc0f03be1eb04f71daf467967c. Eight existing procedural recipes only; company package admission changes startup timing and consent, not recipe identities, audio routing or payloads. Immutable predecessors retained; final frozen/public/listening/device acceptance remains separate.',
       'Scoped cumulative continuation: docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json sha256:067305195ea075c35f14402d970fb5d2819044720875374b157c9431d9c5d820; exact26 ordered audio inputs sha256:86e0d8771d9ea29e9628e1fd5f779d2d997d54799d71340f7a27319cd6e7b554. Eight existing procedural recipes only; retained records/payloads unchanged. Exact source and child receipts are scoped in the record; final hosted, frozen/public and listening/device acceptance remain separate.',
       'v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.',
@@ -238,6 +240,23 @@ export function verifyFieldKitCompanyAudioContinuationReview(
   );
 }
 
+export function verifyFieldKitSteamDeckPresentationContinuationReview(
+  currentBytes,
+  actorOnlyBytes,
+  localizationBytes,
+  companyBytes,
+  priorBytes,
+  managedBytes,
+) {
+  return (
+    hash(currentBytes) === '15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867' &&
+    hash(actorOnlyBytes) === 'dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73' &&
+    hash(localizationBytes) ===
+      '92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445' &&
+    verifyFieldKitCompanyAudioContinuationReview(companyBytes, priorBytes, managedBytes)
+  );
+}
+
 /** Explicit dependency fingerprints; a helper change must reopen its review group. */
 export async function fieldKitRecipeSources(read) {
   return Object.fromEntries(
@@ -257,13 +276,20 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   const recipeSources = await fieldKitRecipeSources(read);
   const bulkContinuationReviewBytes = await readBulkPresentationContinuation(read);
   if (
-    !verifyFieldKitCompanyAudioContinuationReview(
+    !verifyFieldKitSteamDeckPresentationContinuationReview(
+      await read(
+        'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json',
+      ),
+      await read('docs/verification/actor-only-ui-continuation-2026-09-24/review.json'),
+      await read('docs/verification/v0.131.0-localization-presentation-continuation/review.json'),
       await read('docs/verification/v0.141.7-company-startup-audio-continuation/review.json'),
       await read('docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json'),
       await read('docs/verification/v0.141.0-managed-media-audio-continuation/review.json'),
     )
   )
-    throw new Error('Audio continuation review bytes changed; production approval must reopen.');
+    throw new Error(
+      'Steam Deck presentation continuation review bytes changed; production approval must reopen.',
+    );
   const assets = [],
     bindings = {},
     bytes = new Map();

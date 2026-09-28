@@ -37,6 +37,7 @@ export function attachControllerNavigation({
     localeReading = null,
     nativeScroll = null,
     readingInvalidated = false,
+    confirmTransaction = null,
     destroyed = false,
     focusing = false;
   const listeners = [];
@@ -94,6 +95,12 @@ export function attachControllerNavigation({
     editing.preview.remove();
     editing = null;
     if (message) hint(message);
+  }
+  function cancelConfirm() {
+    if (!confirmTransaction) return false;
+    confirmTransaction.element?.removeAttribute?.('data-controller-pressed');
+    confirmTransaction = null;
+    return true;
   }
   const readingState = () =>
     reading ? { regionId: reading.regionId, label: reading.label } : null;
@@ -281,6 +288,7 @@ export function attachControllerNavigation({
     return !!reading;
   }
   function relinquish() {
+    cancelConfirm();
     cancelEdit(t('interface:controllerEditCancelled'));
     cancelReading({ invalidated: true });
     engaged = false;
@@ -442,6 +450,7 @@ export function attachControllerNavigation({
       nextRoot = getRoot();
     if (scope !== nextScope || root !== nextRoot) {
       invalidated = scope !== null;
+      cancelConfirm();
       cancelEdit();
       cancelReading();
       scope = nextScope;
@@ -646,6 +655,38 @@ export function attachControllerNavigation({
     )
       return hint(t('interface:useKeyboardOrTouchForTextDatesAndFilePickers'));
     activateControl(element);
+  }
+  function beginConfirm() {
+    if (sync() || scope === 'flight') return null;
+    engaged = true;
+    const element = reading?.region || editing?.element || ensureFocus();
+    if (!element || !visible(element)) return null;
+    cancelConfirm();
+    confirmTransaction = { element, scope, root, reading, editing };
+    element.setAttribute('data-controller-pressed', 'true');
+    return element;
+  }
+  function commitConfirm() {
+    const transaction = confirmTransaction;
+    if (!transaction) return null;
+    transaction.element?.removeAttribute?.('data-controller-pressed');
+    confirmTransaction = null;
+    if (
+      scope !== getScope() ||
+      root !== getRoot() ||
+      transaction.scope !== scope ||
+      transaction.root !== root ||
+      !visible(transaction.element)
+    )
+      return null;
+    if (transaction.reading) {
+      if (reading !== transaction.reading || !readingCurrent(transaction.reading)) return null;
+      endReading();
+    } else if (transaction.editing) {
+      if (editing !== transaction.editing) return null;
+      commitEdit();
+    } else activate(transaction.element);
+    return transaction.element;
   }
   function readDirection(direction) {
     const owner = reading;
@@ -869,6 +910,12 @@ export function attachControllerNavigation({
   }
   function handle(command = {}) {
     if (destroyed) return;
+    if (command.confirmCancel) {
+      cancelConfirm();
+      return;
+    }
+    if (command.confirmStart) return beginConfirm();
+    if (command.confirmCommit) return commitConfirm();
     if (sync()) return;
     if (scope === 'flight') return;
     if (!command.confirm && !command.back && !command.menu && !DIRECTIONS.has(command.direction))
@@ -894,6 +941,9 @@ export function attachControllerNavigation({
   }
   return {
     handle,
+    beginConfirm,
+    commitConfirm,
+    cancelConfirm,
     sync,
     beginReading,
     endReading,
