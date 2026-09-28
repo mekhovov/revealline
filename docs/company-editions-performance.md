@@ -1,5 +1,12 @@
 # Company edition performance observations
 
+The review page now records one explicit scenario for every timing sample: opening play, advanced
+encounter, picture reveal or edition switch. It also summarizes ready same-origin targets and
+target transitions in the current review session. Scenario labels are bounded reviewer input;
+target transitions establish only that two ready pages were observed. They do not establish
+installed-app isolation, preserved storage or physical-device performance. Exported observations
+remain `qualified:false`.
+
 Use the existing [review page](verification/company-review.html) to compare two exact compiled
 editions on the same desktop browser. This is a bounded engineering observation, not a phone,
 OS-installed app or full-scene performance qualification. Final observations and exact artifact
@@ -45,3 +52,9 @@ in-game company switching. Record before/after input conditions and any unavaila
 Do not replace a missing device result with responsive viewport emulation or an automated
 route proof. The installed-app and update/recovery matrix is in
 [device qualification](company-editions-device-qualification.md).
+
+Use separate 20-second records for at least one late Coupa encounter, one late Netherlands
+encounter and one actual picture reveal. Then alternate the exact Coupa and Netherlands targets
+at least twice and export the session summary. Preserve every valid slow sample. These desktop
+records can close the previously ambiguous scene-labeling gap, while the same scenarios on target
+physical devices remain a separate gate.
