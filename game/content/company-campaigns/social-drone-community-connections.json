@@ -85,7 +85,16 @@
       "band": 3,
       "discovery": {
         "exhibitLayout": "mosaic",
-        "finaleRewardRef": { "id": "social-drone-community-connections-finale", "revision": "4" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Your route brings another corner of the community into view."],
+            "uk": ["Ваш маршрут відкриває ще один куточок спільноти."]
+          },
+          "revision": "feedback-dd88546f89c900ab",
+          "victoryMotif": "shared-spark-v1"
+        },
+        "finaleRewardRef": { "id": "social-drone-community-connections-finale", "revision": "5" }
       },
       "format": "CampaignDesignV1",
       "id": "social-drone-community-connections",
@@ -270,7 +279,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "social-drone-community-connections-01-discovery", "revision": "3" },
+        "rewardRef": { "id": "social-drone-community-connections-01-discovery", "revision": "4" },
         "routeDecision": "Take the near briefing island first or build a return around the long welcome terrace. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -342,7 +351,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "social-drone-community-connections-02-discovery", "revision": "3" },
+        "rewardRef": { "id": "social-drone-community-connections-02-discovery", "revision": "4" },
         "routeDecision": "Choose the upper booklet bay or the lower count desk, then join them through the middle shelf. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -414,7 +423,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "social-drone-community-connections-03-discovery", "revision": "3" },
+        "rewardRef": { "id": "social-drone-community-connections-03-discovery", "revision": "4" },
         "routeDecision": "Join the small source alcove before crossing between the two larger handoff desks. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -495,7 +504,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "social-drone-community-connections-04-discovery", "revision": "3" },
+        "rewardRef": { "id": "social-drone-community-connections-04-discovery", "revision": "4" },
         "routeDecision": "Use the wide reading terrace to divide the invitation court into two manageable captures. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -577,7 +586,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "social-drone-community-connections-05-discovery", "revision": "4" },
+        "rewardRef": { "id": "social-drone-community-connections-05-discovery", "revision": "5" },
         "routeDecision": "Connect the text island before the image bay or take the longer lower route around both. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -659,7 +668,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "social-drone-community-connections-06-discovery", "revision": "4" },
+        "rewardRef": { "id": "social-drone-community-connections-06-discovery", "revision": "5" },
         "routeDecision": "Choose the central noticeboard first or connect the three update stations before the final crossing. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -687,9 +696,9 @@
       "format": "PackDesignV1",
       "id": "social-drone-community-connections-pack",
       "name": "Community Connections",
-      "revision": "4"
+      "revision": "5"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "4"
+  "revision": "5"
 }

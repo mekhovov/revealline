@@ -59,6 +59,24 @@ function locales(value, keys, requiredKeys = keys) {
   }
 }
 
+/** A separate, localized image that is safe to show before earning a reward. */
+export function validateRewardTeaserImage(input) {
+  const value = boundedJSON(input, { maxBytes: 8192, maxNodes: 32, maxArray: 8 });
+  exactKeys(value, ['asset', 'locales'], 'reward teaser image');
+  asset(value.asset);
+  locales(value.locales, ['alt']);
+  return freeze(value);
+}
+
+const payloadAssetReferences = (item) =>
+  [
+    item.asset,
+    item.poster,
+    ...Object.values(item.transcript ?? {}),
+    ...Object.values(item.captions ?? {}),
+    ...(item.type === 'exploration' ? explorationAssetReferences(item.recipe) : []),
+  ].filter(Boolean);
+
 function source(value) {
   exactKeys(value, ['title', 'url'], 'reward source');
   required(text(value.title), 'Missing reward source title.');
@@ -192,6 +210,7 @@ export function validateCompletionReward(input) {
       'locales',
       'requirements',
       'payloads',
+      'teaserImage',
     ],
     'completion reward',
   );
@@ -252,6 +271,18 @@ export function validateCompletionReward(input) {
   array(value.payloads, 16, 'reward payloads', 1);
   value.payloads.forEach(payload);
   required(unique(value.payloads.map((item) => item.id)), 'Duplicate reward payload.');
+  if (value.teaserImage !== undefined) {
+    validateRewardTeaserImage(value.teaserImage);
+    const teaser = value.teaserImage.asset;
+    required(
+      value.payloads
+        .flatMap(payloadAssetReferences)
+        .every(
+          (reference) => reference.assetId !== teaser.assetId && reference.sha256 !== teaser.sha256,
+        ),
+      'Reward teaser artwork must be separate from earned payload media.',
+    );
+  }
   return freeze(value);
 }
 
@@ -270,21 +301,16 @@ export function completionRewardIdentity(input) {
 export function completionRewardAssetReferences(input) {
   const references = new Map();
   for (const definition of validateCompletionRewards(input)) {
-    for (const item of definition.payloads) {
-      for (const reference of [
-        item.asset,
-        item.poster,
-        ...Object.values(item.transcript ?? {}),
-        ...Object.values(item.captions ?? {}),
-        ...(item.type === 'exploration' ? explorationAssetReferences(item.recipe) : []),
-      ].filter(Boolean)) {
-        required(
-          !references.has(reference.assetId) ||
-            references.get(reference.assetId).sha256 === reference.sha256,
-          'A reward asset ID has conflicting revisions.',
-        );
-        references.set(reference.assetId, reference);
-      }
+    for (const reference of [
+      ...(definition.teaserImage ? [definition.teaserImage.asset] : []),
+      ...definition.payloads.flatMap(payloadAssetReferences),
+    ]) {
+      required(
+        !references.has(reference.assetId) ||
+          references.get(reference.assetId).sha256 === reference.sha256,
+        'A reward asset ID has conflicting revisions.',
+      );
+      references.set(reference.assetId, reference);
     }
   }
   return freeze([...references.values()]);

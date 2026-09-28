@@ -6,14 +6,30 @@
     {
       "fields": { "name": { "en": "Soldering Workshop", "uk": "Майстерня паяння" } },
       "id": "fpv-soldering-workshop",
-      "identity": "14f025ea1e3ec7e7",
+      "identity": "fc26ef3964c28567",
       "kind": "campaign"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "A capture may wake a roamer and gives an eroder more reclaimed edge. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплення може пробудити блукача й відкрити руйнівнику більше краю захопленої території. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
         "design.lesson": {
           "en": "Connect the fictional practice stations; real hot-tool work needs trained supervision and fume control. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
           "uk": "З’єднайте навчальні станції; реальна робота гарячим інструментом потребує навченого нагляду й контролю випарів. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original copper-and-plum beginner workshop with cold iron in stand, extraction hood and eye-protection icon; no aircraft electronics.",
+          "uk": "Оригінальна мідно-сливова майстерня для початківців із холодним паяльником у підставці, витяжкою та значком захисту очей; без електроніки літального апарата."
         },
         "design.routeDecision": {
           "en": "Join the stand-side island or capture the open preparation mat first. Keep another return available when capture wakes a knot or rework erodes the edge.",
@@ -22,14 +38,30 @@
         "name": { "en": "A Place for the Iron", "uk": "Місце для паяльника" }
       },
       "id": "fpv-soldering-workshop-01",
-      "identity": "96993aaa3c305e97",
+      "identity": "e51fb52aab1ba74c",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "A capture may wake a roamer and gives an eroder more reclaimed edge. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплення може пробудити блукача й відкрити руйнівнику більше краю захопленої території. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
         "design.lesson": {
           "en": "Compare material labels in the twin supply bays before selecting a practice card. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
           "uk": "Порівняйте позначення матеріалів у двох зонах перед вибором навчальної картки. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original giant spool-label gallery with clearly fictional material cards, neutral symbols and a separate unidentified tray.",
+          "uk": "Оригінальна галерея великих етикеток котушок із явно вигаданими картками матеріалів, нейтральними символами й окремою тацею невизначених зразків."
         },
         "design.routeDecision": {
           "en": "Choose the labelled supply bay or return through the question-card shelf. Keep another return available when capture wakes a knot or rework erodes the edge.",
@@ -38,14 +70,30 @@
         "name": { "en": "Read the Spool", "uk": "Прочитайте котушку" }
       },
       "id": "fpv-soldering-workshop-02",
-      "identity": "77070e5b324105bd",
+      "identity": "bf86e33dd59162aa",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "A capture may wake a roamer and gives an eroder more reclaimed edge. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплення може пробудити блукача й відкрити руйнівнику більше краю захопленої території. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
         "design.lesson": {
           "en": "Connect the support points of a battery-free beginner practice board. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
           "uk": "З’єднайте точки опори навчальної плати без акумулятора. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original magnified unpowered practice pad and wire lead in a bench holder; illustrated access space without numerical tool settings.",
+          "uk": "Оригінальний збільшений знеструмлений тренувальний майданчик і вивід дроту в настільному тримачі; показано вільний доступ без числових налаштувань інструментів."
         },
         "design.routeDecision": {
           "en": "Link both holder islands before the middle capture or work from one stable side. Keep another return available when capture wakes a knot or rework erodes the edge.",
@@ -54,14 +102,30 @@
         "name": { "en": "Hold the Practice Piece", "uk": "Зафіксуйте навчальну деталь" }
       },
       "id": "fpv-soldering-workshop-03",
-      "identity": "a7662a1ac5962ab1",
+      "identity": "fd0d658a2ef5d65e",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "A capture may wake a roamer and gives an eroder more reclaimed edge. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплення може пробудити блукача й відкрити руйнівнику більше краю захопленої території. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
         "design.lesson": {
           "en": "Reveal the quiet demonstration court and follow the joint’s two contact surfaces. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
           "uk": "Відкрийте спокійний двір демонстрації та простежте дві контактні поверхні з’єднання. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original calm sectional illustration of a generic practice pad and lead, copper surfaces and amber heat-flow arrows, no branded copied diagram.",
+          "uk": "Оригінальний спокійний розріз узагальненого тренувального майданчика й виводу: мідні поверхні та бурштинові стрілки теплового потоку; без копіювання фірмової схеми."
         },
         "design.routeDecision": {
           "en": "Open the broad heat-transfer terrace or use the narrow cutaway return. Keep another return available when capture wakes a knot or rework erodes the edge.",
@@ -70,14 +134,30 @@
         "name": { "en": "Where the Heat Goes", "uk": "Куди передається тепло" }
       },
       "id": "fpv-soldering-workshop-04",
-      "identity": "c8ef50f9ae1a79b7",
+      "identity": "091181d6df6e8730",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "A capture may wake a roamer and gives an eroder more reclaimed edge. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплення може пробудити блукача й відкрити руйнівнику більше краю захопленої території. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
         "design.lesson": {
           "en": "Connect the inspection lenses and describe the visible evidence on practice cards. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
           "uk": "З’єднайте оглядові лінзи й опишіть видиме на навчальних картках. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original triptych of oversized fictional practice joints with distinct observation labels and a magnifying lens; no repair directions.",
+          "uk": "Оригінальний триптих великих вигаданих тренувальних з’єднань з окремими підписами спостережень і лупою; без вказівок щодо ремонту."
         },
         "design.routeDecision": {
           "en": "Inspect the three small lenses separately or join the paired upper lenses first. Keep another return available when capture wakes a knot or rework erodes the edge.",
@@ -86,14 +166,30 @@
         "name": { "en": "An Inspection, Not a Guess", "uk": "Огляд, а не здогад" }
       },
       "id": "fpv-soldering-workshop-05",
-      "identity": "f6102c4214af1cc9",
+      "identity": "df912660fabe6d24",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "A capture may wake a roamer and gives an eroder more reclaimed edge. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплення може пробудити блукача й відкрити руйнівнику більше краю захопленої території. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
         "design.lesson": {
           "en": "Bring the practice cards to the review desk before choosing the next supervised step. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
           "uk": "Зберіть навчальні картки на столі перевірки перед наступним кроком під наглядом. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original finished practice-board exhibit with six inspection cards and a pause marker, soft copper light, tools resting safely.",
+          "uk": "Оригінальна виставка завершеної тренувальної плати із шістьма картками огляду та позначкою паузи; м’яке мідне світло, інструменти безпечно відкладені."
         },
         "design.routeDecision": {
           "en": "Use the central review desk as a return or connect the outside evidence chain. Keep another return available when capture wakes a knot or rework erodes the edge.",
@@ -102,7 +198,7 @@
         "name": { "en": "Know When to Pause", "uk": "Знайте, коли зупинитися" }
       },
       "id": "fpv-soldering-workshop-06",
-      "identity": "d7f94af1bc3e2737",
+      "identity": "76e44248c2c7ecca",
       "kind": "mission"
     }
   ],

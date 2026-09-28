@@ -1,3 +1,4 @@
+import { campaignResultLine } from './campaign-feedback.mjs';
 /** Original, non-blocking personality copy. No simulated facts, gameplay rules,
  * scores, requests to keep playing, or rewards are derived from these captions. */
 export const JOURNEY_REACTIONS = Object.freeze({
@@ -30,7 +31,7 @@ export const JOURNEY_REACTIONS = Object.freeze({
 
 /** Host-owned result context only. Never infer ownership from titles or URLs.
  * A finished race without a successful board is not a completion reaction. */
-export function journeyResultReaction(context) {
+export function journeyResultReaction(context, locale = 'en') {
   if (
     !context ||
     context.owned !== true ||
@@ -42,6 +43,8 @@ export function journeyResultReaction(context) {
     context.missionId.length > 512
   )
     return null;
+  const authored = campaignResultLine(context, locale);
+  if (authored) return Object.freeze(authored);
   const speaker =
     context.mode === 'versus'
       ? 'rival'

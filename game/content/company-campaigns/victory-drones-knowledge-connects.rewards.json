@@ -118,8 +118,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "victory-drones-knowledge-connects-01", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "victory-drones-knowledge-connects-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-knowledge-connects-key-v1",
+        "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас."
+        }
+      }
+    }
   },
   {
     "brandId": "victory-drones",
@@ -234,8 +248,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "victory-drones-knowledge-connects-02", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "victory-drones-knowledge-connects-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-knowledge-connects-key-v1",
+        "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас."
+        }
+      }
+    }
   },
   {
     "brandId": "victory-drones",
@@ -356,8 +384,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "victory-drones-knowledge-connects-03", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "victory-drones-knowledge-connects-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-knowledge-connects-key-v1",
+        "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас."
+        }
+      }
+    }
   },
   {
     "brandId": "victory-drones",
@@ -478,8 +520,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "victory-drones-knowledge-connects-04", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "victory-drones-knowledge-connects-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-knowledge-connects-key-v1",
+        "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас."
+        }
+      }
+    }
   },
   {
     "brandId": "victory-drones",
@@ -600,8 +656,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "victory-drones-knowledge-connects-05", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "victory-drones-knowledge-connects-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-knowledge-connects-key-v1",
+        "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас."
+        }
+      }
+    }
   },
   {
     "brandId": "victory-drones",
@@ -722,8 +792,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "victory-drones-knowledge-connects-06", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "victory-drones-knowledge-connects-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-knowledge-connects-key-v1",
+        "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас."
+        }
+      }
+    }
   },
   {
     "brandId": "victory-drones",
@@ -938,7 +1022,21 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "victory-drones-knowledge-connects", "kind": "campaign" }
+    "revision": "5",
+    "scope": { "id": "victory-drones-knowledge-connects", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-knowledge-connects-key-v1",
+        "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас."
+        }
+      }
+    }
   }
 ]

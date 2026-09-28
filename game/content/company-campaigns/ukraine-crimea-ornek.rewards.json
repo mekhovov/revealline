@@ -124,8 +124,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "ukraine-crimea-ornek-01", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "ukraine-crimea-ornek-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-crimea-ornek-key-v1",
+        "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -260,8 +274,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-crimea-ornek-02", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-crimea-ornek-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-crimea-ornek-key-v1",
+        "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -388,8 +416,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-crimea-ornek-03", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-crimea-ornek-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-crimea-ornek-key-v1",
+        "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -516,8 +558,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-crimea-ornek-04", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-crimea-ornek-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-crimea-ornek-key-v1",
+        "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -644,8 +700,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-crimea-ornek-05", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-crimea-ornek-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-crimea-ornek-key-v1",
+        "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -772,8 +842,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-crimea-ornek-06", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-crimea-ornek-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-crimea-ornek-key-v1",
+        "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -994,7 +1078,21 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-crimea-ornek", "kind": "campaign" }
+    "revision": "4",
+    "scope": { "id": "ukraine-crimea-ornek", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-crimea-ornek-key-v1",
+        "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій."
+        }
+      }
+    }
   }
 ]

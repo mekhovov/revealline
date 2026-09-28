@@ -8972,6 +8972,110 @@
         }
       ],
       "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "reward-fpv-discovery-courier-v1",
+      "path": "game/editions/assets/discovery/reward-fpv-discovery-courier-v1.png",
+      "sha256": "06c674cbf50463df5e75c5f657f9b0279023b96edec244f56de0ae06ce641efe",
+      "bytes": 65737,
+      "revision": 1,
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; human and device review deferred",
+      "prompt": "Use case: stylized-concept. Asset type: transparent game character sprite for an educational civilian FPV discovery game. Create one original friendly tiny workshop camera quadcopter, viewed precisely from directly overhead, centered, facing the top edge. It is a fictional toy-like aircraft with four short rounded arms and four enclosed rounded turquoise propeller guards, a small warm amber central camera module and subtle navy hardware details. Beautiful crisp painterly 3D game illustration, bold readable silhouette, all small interior surfaces opaque, visually clear at 40 pixels. No motion blur, no floor, no cast shadow outside the body, no environment. Full character fits within middle 76 percent of a square canvas. Real transparent alpha outside its silhouette and within open gaps. No text, no symbols, no logos, no flags, no weapons, no photorealism. This is one static sprite, not a sprite sheet or badge.",
+      "locales": {
+        "en": {
+          "title": "Workshop camera courier",
+          "alt": "Original fictional overhead camera quad character with four turquoise propeller guards and an amber camera."
+        },
+        "uk": {
+          "title": "Кур’єр із камерою для майстерні",
+          "alt": "Оригінальний вигаданий персонаж-квадрокоптер згори з чотирма бірюзовими захистами пропелерів і бурштиновою камерою."
+        }
+      },
+      "publicationContext": {
+        "en": "An original fictional civilian cosmetic. It is not a real aircraft model, an organisation logo, a wiring diagram or a practical qualification.",
+        "uk": "Оригінальне вигадане цивільне оформлення. Це не модель реального апарата, не логотип організації, не схема підключення й не підтвердження практичної кваліфікації."
+      },
+      "original": {
+        "sha256": "383ea1690f1cb6de7755fd752b4f2d263e53fd9955774f0af451b345a88f1312",
+        "bytes": 1218316,
+        "width": 1254,
+        "height": 1254,
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-a2f3-7290-927a-06dce78afc5a/exec-281c8d08-0a01-46d0-9eb9-c0eae6dd06b2.png"
+      },
+      "derivation": {
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "09e42903dd9bb329dcc27b309b4fc3108784345068e5c4045e895611635f7880",
+        "hasAlpha": true,
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "crop": false,
+        "pivot": [0.5, 0.5],
+        "transformation": "Existing authoring/sprites compiler; exact full-frame nearest-center sampling of all RGBA channels, deterministic stored-deflate PNG, no crop, threshold, recolour or generative alteration."
+      },
+      "visualReview": {
+        "masterViewed": true,
+        "derivativeViewed": true,
+        "derivativeDimensionsVerified": true,
+        "exactRegenerationVerified": true,
+        "humanReview": "deferred",
+        "deviceReview": "deferred",
+        "notes": "Four turquoise guarded rotors and amber camera remain readable at128px. Most filled pixels have alpha253 from the generated original; those samples are preserved, not silently forced opaque. Static baked propellers are part of this one body; no separately animated rotor-layer claim."
+      }
+    },
+    {
+      "id": "reward-textile-discovery-shuttle-v1",
+      "path": "game/editions/assets/discovery/reward-textile-discovery-shuttle-v1.png",
+      "sha256": "d7075034d3b53761fa0ee5e696af619eb950af29c9af028fe0f73a5ada06b604",
+      "bytes": 65737,
+      "revision": 1,
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; human and device review deferred",
+      "prompt": "Use case: stylized-concept. Asset type: transparent game character sprite for Ukraine textile discovery gallery. Create one original whimsical weaver's shuttle character, viewed precisely from directly overhead, centered, facing the top edge. A compact smoothly tapered wooden weaving shuttle with an ivory spool and vivid blue and warm gold woven thread detail, two tiny expressive dark eyes toward the front. Contemporary playful fictional gallery guide; do not copy or claim a traditional ethnic symbol. Beautiful crisp painterly 3D game illustration, bold readable silhouette, all small interior surfaces opaque, visually clear at 40 pixels. No motion blur, no floor, no cast shadow outside the body, no environment. Full character fits within middle 76 percent of a square canvas. Real transparent alpha outside the silhouette. No text, no logos, no watermark. One static sprite, not a sprite sheet or badge.",
+      "locales": {
+        "en": {
+          "title": "Gallery weaving shuttle",
+          "alt": "Original fictional wooden weaving-shuttle character with small eyes, an ivory spool and blue-and-gold thread."
+        },
+        "uk": {
+          "title": "Ткацький човник галереї",
+          "alt": "Оригінальний вигаданий персонаж — дерев’яний ткацький човник з очима, світлою котушкою та синьо-золотою ниткою."
+        }
+      },
+      "publicationContext": {
+        "en": "An original contemporary gallery character. The blue-and-gold decoration is a creative design, not an attributed historical object or universal ethnic symbol.",
+        "uk": "Оригінальний сучасний персонаж галереї. Синьо-золоте оздоблення — творчий дизайн, а не атрибутований історичний предмет або універсальний етнічний символ."
+      },
+      "original": {
+        "sha256": "6c840457e123c936843fd74d93bdb560a49624778377a534f5764df7ed4eb01d",
+        "bytes": 722993,
+        "width": 1254,
+        "height": 1254,
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-a2f3-7290-927a-06dce78afc5a/exec-3da6eef2-9e81-4033-8e10-205591f46a28.png"
+      },
+      "derivation": {
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "272e51d56bf94c53026cf11bab0bac7228c8f377d8a060b549c50ea898a50ff7",
+        "hasAlpha": true,
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "crop": false,
+        "pivot": [0.5, 0.5],
+        "transformation": "Existing authoring/sprites compiler; exact full-frame nearest-center sampling of all RGBA channels, deterministic stored-deflate PNG, no crop, threshold, recolour or generative alteration."
+      },
+      "visualReview": {
+        "masterViewed": true,
+        "derivativeViewed": true,
+        "derivativeDimensionsVerified": true,
+        "exactRegenerationVerified": true,
+        "humanReview": "deferred",
+        "deviceReview": "deferred",
+        "notes": "Tall narrow character; alpha>=32 silhouette spans x44–83,y8–118 on128px frame. Keep square canvas/pivot; choose a readable cosmetic size without changing collisions. Most filled pixels have alpha253 from the generated original; those samples are preserved, not silently forced opaque. Decorative diamonds are original design, not a claimed cultural symbol."
+      }
     }
   ]
 }

@@ -1,3 +1,4 @@
+import { pngBytes as teaserBytes } from './helpers/media-fixtures.mjs';
 import { rewardAudioFixture } from './helpers/reward-audio-fixture.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import test from 'node:test';
@@ -32,6 +33,7 @@ async function fixture(
   {
     storage = managedIndexedDB(),
     image = false,
+    teaser = false,
     reducedMotion = false,
     durable = true,
     exploration = false,
@@ -97,6 +99,12 @@ async function fixture(
         ),
       }
     : null;
+  const teaserImage = teaser
+    ? {
+        asset: audioRef('separate-preview', 'png', teaserBytes()),
+        locales: locales({ alt: 'A closed preview exhibit' }),
+      }
+    : null;
   const selection = resolveEditionSelection(catalog);
   const lesson = learning
     ? {
@@ -130,6 +138,7 @@ async function fixture(
     ],
   });
   const rewards = bindings.map(missionReward);
+  if (teaserImage) rewards[0].teaserImage = teaserImage;
   if (exploration) rewards[0].payloads.push(createExplorationExample());
   if (audio) rewards[0].payloads.push(audioPayload);
   rewards[0].payloads.push({
@@ -172,6 +181,7 @@ async function fixture(
       },
     ],
   });
+  delete rewards.at(-1).teaserImage;
   const provider = {
     editionId: selection.edition.id,
     selection,
@@ -812,4 +822,75 @@ test('the earned viewer persists the historic qualified attempt only when its ex
   );
   assert.equal(receipt.evidence.clears['mission-1'].runId, historic.runId);
   assert.deepEqual(receipt.evidence.mastery, [verified]);
+});
+
+test('locked ready and Collection previews request separate art only after explicit actions', async (t) => {
+  const f = await fixture(t, { image: true, teaser: true, reducedMotion: true });
+  await f.settle();
+  assert.equal(f.requests.length, 0);
+  const state = JSON.stringify(f.view.snapshot().state);
+  f.doc.getElementById('completion-reward-preview-teaser').click();
+  await waitFor(() => f.doc.getElementById('completion-reward-result').querySelector('img'));
+  assert.equal(f.requests.length, 1);
+  assert(f.requests[0].url.endsWith('separate-preview.png'));
+  assert.equal(
+    f.doc.getElementById('completion-reward-result').querySelector('img').alt,
+    'A closed preview exhibit',
+  );
+  f.overlay.dataset.kind = 'playing';
+  f.setRun({ levelId: 'mission-1', status: 'playing' });
+  f.view.refresh();
+  assert.deepEqual(
+    f.revoked,
+    f.created.map((item) => item.url),
+  );
+  f.collection.showModal();
+  f.doc.getElementById('completion-reward-exhibit-pictures').click();
+  await waitFor(() => f.doc.getElementById('completion-reward-shelf').querySelector('img'));
+  assert.equal(f.requests.length, 2);
+  assert(f.requests.every((item) => item.url.endsWith('separate-preview.png')));
+  assert.equal(JSON.stringify(f.view.snapshot().state), state);
+  assert.equal(f.externalClicks.length, 0);
+  f.collection.close();
+  await f.settle();
+  assert.deepEqual(
+    f.revoked,
+    f.created.map((item) => item.url),
+  );
+});
+
+test('unavailable teaser never substitutes an earned picture and pending ready previews cancel on play', async (t) => {
+  const f = await fixture(t, { image: true, teaser: true });
+  await f.settle();
+  const teaser = f.provider.catalog.assets.find((item) => item.id === 'separate-preview');
+  teaser.sha256 = 'f'.repeat(64);
+  f.doc.getElementById('completion-reward-preview-teaser').click();
+  await f.settle();
+  assert.equal(f.requests.length, 0);
+  assert.equal(f.created.length, 0);
+  assert.equal(f.doc.getElementById('completion-reward-result').querySelector('img'), null);
+  assert.equal(f.view.snapshot().state.receipts.length, 0);
+});
+
+test('leaving the ready card during a delayed teaser download prevents late images', async (t) => {
+  const f = await fixture(t, { image: true, teaser: true });
+  await f.settle();
+  let finish;
+  t.mock.method(
+    globalThis,
+    'fetch',
+    () =>
+      new Promise((resolve) => {
+        finish = resolve;
+      }),
+  );
+  f.doc.getElementById('completion-reward-preview-teaser').click();
+  await waitFor(() => finish);
+  f.overlay.dataset.kind = 'playing';
+  f.setRun({ levelId: 'mission-1', status: 'playing' });
+  f.view.refresh();
+  finish(new Response(teaserBytes()));
+  await f.settle();
+  assert.equal(f.created.length, 0);
+  assert.equal(f.doc.getElementById('completion-reward-result').querySelector('img'), null);
 });

@@ -45,5 +45,7 @@ Validation includes immutable author edits, source-packet round trips, selected
 raster admission and negative pins/MIME, twenty renderer lifetime cycles,
 reduced-motion and cancelled decodes, and a real shared Solo keyboard win that
 unlocks the native picker while retaining identical authoritative checkpoints.
-No public campaign receives a cosmetic reward automatically. Human visual and
-physical-device qualification remains separate.
+Only explicitly authored cosmetic rewards can be earned. The aircraft and textile
+application bonuses grant their character automatically after all declared wins and
+the verified fixture are complete; equipping it remains an explicit player action.
+Human visual and physical-device qualification remains separate.

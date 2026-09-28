@@ -12,6 +12,7 @@ import {
   createCompanyPresets,
 } from '../game/company-campaigns/brands.mjs';
 import { COMPANY_CAMPAIGNS } from '../game/company-campaigns/catalog.mjs';
+import { CURRICULUM_LESSONS } from '../game/company-campaigns/curriculum-lessons.mjs';
 import { COMPANY_LESSONS } from '../game/company-campaigns/lessons.mjs';
 import { createCompanyProject } from '../game/company-campaigns/content.mjs';
 import { selectCurrentCompanyArtwork } from '../game/company-campaigns/artwork.mjs';
@@ -79,7 +80,7 @@ export async function produceCompanyContent({
       const project = compileContentProject(source);
       projects.set(definition.id, project);
       files.set(definition.sourcePath, bytes(source));
-      const selectedLessons = COMPANY_LESSONS.filter((lesson) =>
+      const selectedLessons = [...COMPANY_LESSONS, ...CURRICULUM_LESSONS].filter((lesson) =>
         definition.missionIds.includes(lesson.missionId),
       );
       const lessonPath = selectedLessons.length
