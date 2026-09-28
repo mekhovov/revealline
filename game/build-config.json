@@ -80,6 +80,7 @@
     "authoring/library/runtime-sprite-candidates-v1/export/manifest.json",
     "authoring/motion-lab/rotor-editor.mjs",
     "authoring/motion-lab/parts-editor.mjs",
+    "authoring/motion-lab/inspection-travel.mjs",
     "authoring/game-feel-lab",
     "authoring/playable-benchmark",
     "authoring/library/fpv-body-detail-candidates/manifest.json",

@@ -538,6 +538,160 @@ function freezeView(h) {
   };
 }
 
+function characterPaintTrace(h, id) {
+  return h.$(id).context.calls.map((call) =>
+    call.args
+      ? {
+          ...call,
+          args: call.args.map((value) => (typeof value === 'object' ? value?.src : value)),
+        }
+      : { ...call },
+  );
+}
+
+test('Inspection responses change real wing paint without changing paired arena traces or recipe exports', async (t) => {
+  let baseline;
+  const poses = new Map();
+  for (const response of ['follow', 'idle', 'cruise', 'boost', 'slow'])
+    await t.test(response, async (t) => {
+      const h = await harness(t);
+      await h.ready();
+      h.change('character', 'ukrainian-bird');
+      for (const image of h.images) image.onload?.();
+      h.$('show-particles').checked = false;
+      h.$('show-particles').emit('change');
+      h.tick(0);
+      h.tick(100);
+      h.$('parts-editor-export').click();
+      const before = await h.objectURLs.at(-1).blob.text(),
+        frame = [...h.frames.keys()];
+      h.$('inspection-travel').focus();
+      h.change('inspection-travel', response);
+      assert.deepEqual([...h.frames.keys()], frame, 'Selection keeps the existing frame owner');
+      assert.equal(h.doc.activeElement, h.$('inspection-travel'));
+      h.$('arena').context.calls.length = 0;
+      h.$('inspection').context.calls.length = 0;
+      h.tick(200);
+      const actual = {
+        arena: characterPaintTrace(h, 'arena'),
+        speed: h.$('speed-value').textContent,
+        heading: h.$('heading-value').textContent,
+        mode: h.$('state-label').textContent,
+        recipe: h.$('parts-editor-json').value,
+      };
+      if (response === 'follow') baseline = actual;
+      else assert.deepEqual(actual, baseline, 'Only the enlarged inspection changes');
+      poses.set(response, characterPaintTrace(h, 'inspection'));
+      h.$('parts-editor-export').click();
+      assert.equal(await h.objectURLs.at(-1).blob.text(), before);
+      assert.deepEqual(h.writes, []);
+    });
+  assert.notDeepEqual(poses.get('idle'), poses.get('cruise'));
+  assert.notDeepEqual(poses.get('cruise'), poses.get('boost'));
+  assert.notDeepEqual(poses.get('slow'), poses.get('cruise'));
+});
+
+for (const reduced of [false, true])
+  test(`Inspection response retains paused phase, drafts and lifetime ownership with reduced=${reduced}`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    h.change('character', 'ukrainian-bird');
+    for (const image of h.images) image.onload?.();
+    h.tick(0);
+    h.tick(100);
+    h.host.emit('blur');
+    h.cap(reduced);
+    h.$('parts-editor-json').value = '{pending';
+    const before = freezeView(h),
+      paint = () => {
+        h.$('inspection').context.calls.length = 0;
+        h.$('rotor-editor-guides').emit('change');
+        return characterPaintTrace(h, 'inspection');
+      },
+      original = paint();
+    h.$('inspection-travel').focus();
+    for (const response of ['boost', 'idle', 'slow', 'cruise', 'follow']) {
+      h.change('inspection-travel', response);
+      assert.deepEqual(paint(), original, 'Wing phase does not reset or advance during pause');
+      assert.equal(h.$('parts-editor-json').value, '{pending');
+      assert.equal(h.doc.activeElement, h.$('inspection-travel'));
+      assert.equal(h.frames.size, 0);
+    }
+    assert.deepEqual(freezeView(h), before);
+    h.host.emit('pagehide', { persisted: true });
+    h.host.emit('pageshow', { persisted: true });
+    assert.equal(h.frames.size, 0, 'Returning still requires explicit Play');
+    h.host.emit('pagehide', { persisted: false });
+    h.$('inspection').context.calls.length = 0;
+    h.change('inspection-travel', 'boost');
+    assert.deepEqual(
+      h.$('inspection').context.calls,
+      [],
+      'Disposed selection listeners are removed',
+    );
+    assert.deepEqual(h.writes, []);
+  });
+
+for (const reduced of [false, true])
+  test(`Inspection exhaust responds to selected speed at a frozen time with reduced=${reduced}`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    h.change('character', 'retro-craft');
+    for (const image of h.images) image.onload?.();
+    h.tick(0);
+    h.tick(100);
+    h.host.emit('blur');
+    h.cap(reduced);
+    const paint = (response) => {
+      h.$('inspection').context.calls.length = 0;
+      h.change('inspection-travel', response);
+      return characterPaintTrace(h, 'inspection');
+    };
+    const idle = paint('idle'),
+      cruise = paint('cruise'),
+      boost = paint('boost');
+    assert.notDeepEqual(idle, cruise, 'Actual thruster geometry responds even when time is frozen');
+    assert.notDeepEqual(cruise, boost);
+    assert.deepEqual(paint('idle'), idle, 'Changing speed does not rephase the flicker clock');
+    assert.equal(h.frames.size, 0);
+    assert.equal(h.$('play-pause').textContent, 'Play');
+    assert.deepEqual(h.writes, []);
+  });
+
+test('Inspection response native select retains EN/UK labels, focus and paused intent', async (t) => {
+  const { setLocale, translateDOM } = await import('../i18n/index.mjs'),
+    previous = getLocale(),
+    h = await harness(t);
+  try {
+    await h.ready();
+    h.host.emit('blur');
+    const select = h.$('inspection-travel'),
+      label = select.parentElement,
+      options = select.children;
+    assert.equal(select.tagName, 'SELECT');
+    assert.equal(select.value, 'follow');
+    assert.equal(options.length, 5);
+    assert.equal(select.getAttribute('aria-describedby'), 'inspection-travel-hint');
+    select.focus();
+    h.change('inspection-travel', 'boost');
+    for (const [locale, title, option] of [
+      ['en', 'Inspection travel response', 'Boost'],
+      ['uk', 'Реакція огляду на рух', 'Прискорення'],
+    ]) {
+      setLocale(locale, { persist: false });
+      translateDOM(label);
+      assert.equal(label.children[0].textContent, title);
+      assert.equal(options.find((node) => node.value === 'boost').textContent, option);
+      assert.equal(select.value, 'boost');
+      assert.equal(h.doc.activeElement, select);
+      assert.equal(h.frames.size, 0);
+      assert.deepEqual(h.writes, []);
+    }
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
+
 for (const reduced of [false, true])
   test(`Motion attachments edit actual wing paint while retaining paused clocks and reduced=${reduced}`, async (t) => {
     const h = await harness(t);

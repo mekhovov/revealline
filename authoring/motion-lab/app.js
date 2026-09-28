@@ -25,6 +25,7 @@ import {
 import { paintCharacter, fittedBodySize } from './render-character.mjs';
 import { createRotorEditor, rotorSamplingRecipe } from './rotor-editor.mjs';
 import { createPartsEditor } from './parts-editor.mjs';
+import { inspectionTravelRatio } from './inspection-travel.mjs';
 import {
   validateCollection,
   createProfile,
@@ -1014,6 +1015,7 @@ function mountMotionLab() {
       inspectionAnimation = createAnimationState();
       render();
     });
+    listen($('inspection-travel'), 'change', () => render());
     listen($('apply-family-look'), 'click', () => {
       selection.terrainLayer = presets.familyLooks[selection.theme].terrainLayer;
       $('terrain-layer').value = selection.terrainLayer;
@@ -1596,7 +1598,7 @@ function mountMotionLab() {
       recipe: recipeFor(inspectedCharacter),
       animation: inspectionAnimation,
       colors,
-      speedRatio: state.visualSpeed / motion.cruiseSpeed,
+      speedRatio: inspectionTravelRatio($('inspection-travel').value, state, motion),
       reducedMotion,
       showRotors,
       pixel: 1 / 155,
@@ -2135,7 +2137,10 @@ function mountMotionLab() {
     inspectionAnimation = advanceAnimation(
       inspectionAnimation,
       rotorSamplingRecipe(bodyFor(inspectedCharacter), recipeFor(inspectedCharacter)),
-      travel,
+      {
+        visualSpeed: inspectionTravelRatio($('inspection-travel').value, state, motion),
+        cruiseSpeed: 1,
+      },
       dt,
       { paused, reducedMotion, inspectionSlow: $('inspection-slow').checked },
     );
