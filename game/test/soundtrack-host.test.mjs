@@ -593,13 +593,15 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     return pending;
   };
   try {
-    // The prior Confirm opened backup tools; rearm its real 120 ms release lifecycle.
-    sample([], 121);
     sample([0]);
+    assert.equal(controllerPreparationCalls, 0, 'Prepare waits for Confirm release.');
+    sample([0], 1200);
+    assert.equal(controllerPreparationCalls, 0, 'Held Confirm cannot prepare a backup.');
+    sample([]);
     assert.equal(
       controllerPreparationCalls,
       1,
-      'Controller Confirm invokes the existing Prepare action exactly once.',
+      'Controller Confirm release invokes the existing Prepare action exactly once.',
     );
     assert.ok(controllerPreparation, 'Controller Confirm returns the real preparation operation.');
     assert.equal(
@@ -626,16 +628,16 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     Buffer.from(await recovered.assets[0].blob.arrayBuffer()),
     Buffer.from(await original.blob.arrayBuffer()),
   );
+  sample([]);
+  assert.equal(requested, 0, 'The Prepare release cannot activate its newly focused link.');
+  sample([0]);
+  assert.equal(requested, 0, 'A separate Download Confirm also waits for release.');
   sample([0], 1200);
   assert.equal(requested, 0, 'Held Confirm cannot activate the newly focused action.');
   sample([]);
-  sample([], 121); // A separate Confirm follows the real neutral-release interval.
-  sample([0]);
-  assert.equal(requested, 1);
-  sample([0], 1200);
-  assert.equal(requested, 1, 'Held Confirm does not request duplicate downloads.');
-  sample([]);
-  sample([], 121); // Observe release before measuring the separate native-echo window.
+  assert.equal(requested, 1, 'The separate Confirm release requests exactly one download.');
+  sample([], 121);
+  assert.equal(requested, 1, 'Further neutral samples cannot repeat the download.');
   const echoed = link.emit('keydown', { code: 'Enter', key: 'Enter', repeat: false });
   assert.equal(
     echoed.defaultPrevented,
