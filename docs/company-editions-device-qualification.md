@@ -4,7 +4,9 @@ This is the executable check list for the remaining installation, offline and re
 It does not reopen formative playtesting: the user reported that complete on 26 September 2026. It does not certify artwork, hardware or a public release. Record an observed result
 for the exact artifact; leave an unrun case pending.
 
-The exact maintenance baseline is now v0.141.7 commit `c5885a1556`, tree `39bf58fda8`.
+The historical maintenance checkpoint below is v0.141.7 commit `c5885a1556`, tree `39bf58fda8`.
+See the [current phase ledger](discovery-rewards-phase-status.md) for later source revisions
+and scoped candidate results; they do not retroactively qualify these device scenarios.
 [Candidate CI 36368498099](https://github.com/mekhovov/revealline/actions/runs/36368498099)
 passed on that exact main commit and uploaded Actions artifact `10948975755`, named
 `company-candidate-c5885a15561a88331c5566c5312392c4e5d8daf5`, with GitHub-reported size
@@ -26,7 +28,7 @@ will produce no `edition-review.json` while any required scenario remains incomp
 
 ## Evidence available
 
-The last independently checked candidate is commit
+The following independently checked historical candidate is commit
 `6eff662a638bf26cfe13c0bdc433b12a3fde4954`, tree
 `0e210fe8915b5ee49fda1ae202504f19ef197740`, candidate version `v0.141.6`.
 [Candidate CI 36273633044](https://github.com/mekhovov/revealline/actions/runs/36273633044)
