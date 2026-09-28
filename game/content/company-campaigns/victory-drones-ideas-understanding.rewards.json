@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-ideas-understanding-key-v1",
-          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+          "assetId": "victory-drones-ideas-understanding-01-reveal-v1",
+          "sha256": "9352d919d1f6f0d5d989241982cd5bdd836544c76c3822196bdf203936489045"
         },
         "id": "victory-drones-ideas-understanding-01-image",
         "locales": {
           "en": {
-            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
+            "alt": "Original illustrated civilian cart exhibit with two differently textured tracks, separate observation cards and a third blank explanation card.",
             "title": "Observe Before Explaining"
           },
           "uk": {
-            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
+            "alt": "Оригінальна ілюстрована цивільна виставка візків із двома різними поверхнями, окремими картками спостереження та третьою порожньою карткою пояснення.",
             "title": "Спостерігайте перед поясненням"
           }
         },
@@ -126,7 +126,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "victory-drones-ideas-understanding-01", "kind": "mission" }
   },
   {
@@ -147,17 +147,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-ideas-understanding-key-v1",
-          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+          "assetId": "victory-drones-ideas-understanding-02-reveal-v1",
+          "sha256": "d2532d7bd90b41393a2b97c2dbc10780bbca85ed7d03bcfb8ac6b7d7378abdbd"
         },
         "id": "victory-drones-ideas-understanding-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
+            "alt": "Original illustrated interaction exhibit with a hand sculpture and wall on separate plinths, each bearing an oppositely directed gold arrow.",
             "title": "Forces Come in Pairs"
           },
           "uk": {
-            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
+            "alt": "Оригінальна ілюстрована виставка взаємодії зі скульптурою руки й стіною на окремих п’єдесталах, кожен зі своєю протилежно спрямованою золотою стрілкою.",
             "title": "Сили взаємодії"
           }
         },
@@ -254,7 +254,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "victory-drones-ideas-understanding-02", "kind": "mission" }
   },
   {
@@ -275,17 +275,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-ideas-understanding-key-v1",
-          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+          "assetId": "victory-drones-ideas-understanding-03-reveal-v1",
+          "sha256": "027c9cccb10195e5ca22fa62ddeac9f873eb599e3561c550cc53e58600564f3e"
         },
         "id": "victory-drones-ideas-understanding-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
+            "alt": "Original illustrated mechanics hall with one classroom cart and matching left- and right-pointing gold arrows attached to its shared display.",
             "title": "The Net Force"
           },
           "uk": {
-            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
+            "alt": "Оригінальна ілюстрована зала механіки з одним навчальним візком і однаковими золотими стрілками ліворуч та праворуч на його спільній виставковій основі.",
             "title": "Рівнодійна сил"
           }
         },
@@ -382,7 +382,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "victory-drones-ideas-understanding-03", "kind": "mission" }
   },
   {
@@ -403,17 +403,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-ideas-understanding-key-v1",
-          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+          "assetId": "victory-drones-ideas-understanding-04-reveal-v1",
+          "sha256": "7b42d7f7991f3334ea8dece380d0fd7c094c098e695e4e8b4a8a91840f7b95a7"
         },
         "id": "victory-drones-ideas-understanding-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
+            "alt": "Original illustrated vector garden with separate gold arrow sculptures pointing left and upward beside a quiet forum.",
             "title": "Direction Matters"
           },
           "uk": {
-            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
+            "alt": "Оригінальний ілюстрований сад векторів з окремими золотими скульптурами стрілок ліворуч і вгору біля спокійного простору обговорення.",
             "title": "Напрямок має значення"
           }
         },
@@ -510,7 +510,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "victory-drones-ideas-understanding-04", "kind": "mission" }
   },
   {
@@ -531,17 +531,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-ideas-understanding-key-v1",
-          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+          "assetId": "victory-drones-ideas-understanding-05-reveal-v1",
+          "sha256": "2567a823b10e581274fd58c6efd57444f0fd51c58358133230d63f9d5aef9b97"
         },
         "id": "victory-drones-ideas-understanding-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
+            "alt": "Original illustrated comparison room with matched cart bays, different removable surface tiles, paired blank record cards and a separate uncertainty board.",
             "title": "A Fair Comparison"
           },
           "uk": {
-            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
+            "alt": "Оригінальна ілюстрована кімната порівняння з однаковими просторами візків, різними змінними поверхнями, парними порожніми картками записів і окремою дошкою невизначеності.",
             "title": "Коректне порівняння"
           }
         },
@@ -638,7 +638,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "victory-drones-ideas-understanding-05", "kind": "mission" }
   },
   {
@@ -659,17 +659,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-ideas-understanding-key-v1",
-          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+          "assetId": "victory-drones-ideas-understanding-06-reveal-v1",
+          "sha256": "fad28290f3eb9e0bf2848b70fb9b6b4d77bc5c2fc968ee44da8faa7a901e0cbd"
         },
         "id": "victory-drones-ideas-understanding-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
+            "alt": "Original illustrated science-courtyard finale joining six conceptual exhibits around an everyday book-on-table example and blank assumptions cards.",
             "title": "Explain the Model"
           },
           "uk": {
-            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
+            "alt": "Оригінальний ілюстрований фінал наукового двору, що поєднує шість концептуальних експозицій довкола прикладу книжки на столі та порожніх карток припущень.",
             "title": "Поясніть модель"
           }
         },
@@ -774,7 +774,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "victory-drones-ideas-understanding-06", "kind": "mission" }
   },
   {
@@ -819,17 +819,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-ideas-understanding-key-v1",
-          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+          "assetId": "victory-drones-ideas-understanding-01-reveal-v1",
+          "sha256": "9352d919d1f6f0d5d989241982cd5bdd836544c76c3822196bdf203936489045"
         },
         "id": "victory-drones-ideas-understanding-01-image",
         "locales": {
           "en": {
-            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
+            "alt": "Original illustrated civilian cart exhibit with two differently textured tracks, separate observation cards and a third blank explanation card.",
             "title": "Observe Before Explaining"
           },
           "uk": {
-            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
+            "alt": "Оригінальна ілюстрована цивільна виставка візків із двома різними поверхнями, окремими картками спостереження та третьою порожньою карткою пояснення.",
             "title": "Спостерігайте перед поясненням"
           }
         },
@@ -837,17 +837,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-ideas-understanding-key-v1",
-          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+          "assetId": "victory-drones-ideas-understanding-02-reveal-v1",
+          "sha256": "d2532d7bd90b41393a2b97c2dbc10780bbca85ed7d03bcfb8ac6b7d7378abdbd"
         },
         "id": "victory-drones-ideas-understanding-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
+            "alt": "Original illustrated interaction exhibit with a hand sculpture and wall on separate plinths, each bearing an oppositely directed gold arrow.",
             "title": "Forces Come in Pairs"
           },
           "uk": {
-            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
+            "alt": "Оригінальна ілюстрована виставка взаємодії зі скульптурою руки й стіною на окремих п’єдесталах, кожен зі своєю протилежно спрямованою золотою стрілкою.",
             "title": "Сили взаємодії"
           }
         },
@@ -855,17 +855,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-ideas-understanding-key-v1",
-          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+          "assetId": "victory-drones-ideas-understanding-03-reveal-v1",
+          "sha256": "027c9cccb10195e5ca22fa62ddeac9f873eb599e3561c550cc53e58600564f3e"
         },
         "id": "victory-drones-ideas-understanding-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
+            "alt": "Original illustrated mechanics hall with one classroom cart and matching left- and right-pointing gold arrows attached to its shared display.",
             "title": "The Net Force"
           },
           "uk": {
-            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
+            "alt": "Оригінальна ілюстрована зала механіки з одним навчальним візком і однаковими золотими стрілками ліворуч та праворуч на його спільній виставковій основі.",
             "title": "Рівнодійна сил"
           }
         },
@@ -873,17 +873,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-ideas-understanding-key-v1",
-          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+          "assetId": "victory-drones-ideas-understanding-04-reveal-v1",
+          "sha256": "7b42d7f7991f3334ea8dece380d0fd7c094c098e695e4e8b4a8a91840f7b95a7"
         },
         "id": "victory-drones-ideas-understanding-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
+            "alt": "Original illustrated vector garden with separate gold arrow sculptures pointing left and upward beside a quiet forum.",
             "title": "Direction Matters"
           },
           "uk": {
-            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
+            "alt": "Оригінальний ілюстрований сад векторів з окремими золотими скульптурами стрілок ліворуч і вгору біля спокійного простору обговорення.",
             "title": "Напрямок має значення"
           }
         },
@@ -891,17 +891,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-ideas-understanding-key-v1",
-          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+          "assetId": "victory-drones-ideas-understanding-05-reveal-v1",
+          "sha256": "2567a823b10e581274fd58c6efd57444f0fd51c58358133230d63f9d5aef9b97"
         },
         "id": "victory-drones-ideas-understanding-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
+            "alt": "Original illustrated comparison room with matched cart bays, different removable surface tiles, paired blank record cards and a separate uncertainty board.",
             "title": "A Fair Comparison"
           },
           "uk": {
-            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
+            "alt": "Оригінальна ілюстрована кімната порівняння з однаковими просторами візків, різними змінними поверхнями, парними порожніми картками записів і окремою дошкою невизначеності.",
             "title": "Коректне порівняння"
           }
         },
@@ -909,17 +909,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-ideas-understanding-key-v1",
-          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+          "assetId": "victory-drones-ideas-understanding-06-reveal-v1",
+          "sha256": "fad28290f3eb9e0bf2848b70fb9b6b4d77bc5c2fc968ee44da8faa7a901e0cbd"
         },
         "id": "victory-drones-ideas-understanding-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
+            "alt": "Original illustrated science-courtyard finale joining six conceptual exhibits around an everyday book-on-table example and blank assumptions cards.",
             "title": "Explain the Model"
           },
           "uk": {
-            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
+            "alt": "Оригінальний ілюстрований фінал наукового двору, що поєднує шість концептуальних експозицій довкола прикладу книжки на столі та порожніх карток припущень.",
             "title": "Поясніть модель"
           }
         },
@@ -990,7 +990,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "victory-drones-ideas-understanding", "kind": "campaign" }
   }
 ]
