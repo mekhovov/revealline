@@ -58,6 +58,7 @@ export function mountFlightApp({
     setup = null,
     frameId = null,
     lastTime = null,
+    lastExecutionTime = null,
     accumulator = 0,
     lastHUD = -Infinity,
     terminalHandled = false,
@@ -105,6 +106,7 @@ export function mountFlightApp({
       input.enable(false);
       accumulator = 0;
       lastTime = null;
+      lastExecutionTime = null;
       message = reason;
     },
     onReset() {
@@ -134,6 +136,7 @@ export function mountFlightApp({
     input.enable(false);
     accumulator = 0;
     lastTime = null;
+    lastExecutionTime = null;
     replay = null;
     terminalHandled = false;
     message = null;
@@ -162,6 +165,7 @@ export function mountFlightApp({
     radio.freeze(reason);
     accumulator = 0;
     lastTime = null;
+    lastExecutionTime = null;
     message = reason === 'focus-lost' ? 'focusLost' : c()[reason] ? reason : 'paused';
     paint(true);
   }
@@ -180,6 +184,7 @@ export function mountFlightApp({
       replay.flight.arm();
       accumulator = 0;
       lastTime = null;
+      lastExecutionTime = null;
       message = null;
       paint(true);
       return true;
@@ -197,6 +202,7 @@ export function mountFlightApp({
     flight.arm();
     accumulator = 0;
     lastTime = null;
+    lastExecutionTime = null;
     message = null;
     $('viewport').focus();
     paint(true);
@@ -298,6 +304,7 @@ export function mountFlightApp({
     message = null;
     accumulator = 0;
     lastTime = null;
+    lastExecutionTime = null;
     renderer.setCourse?.(courses[index], mode);
     renderer.setPath?.(checked.path);
     paint(true);
@@ -433,9 +440,14 @@ export function mountFlightApp({
   }
   function frame(now) {
     if (disposed) return;
-    const delta = lastTime === null ? 0 : now - lastTime;
+    const delta = lastTime === null ? 0 : now - lastTime,
+      executedAt = win.performance?.now?.() ?? now,
+      executionDelta = lastExecutionTime === null ? 0 : executedAt - lastExecutionTime;
     lastTime = now;
-    if (delta > 250) pause('focusLost');
+    lastExecutionTime = executedAt;
+    // A queued rAF can carry a pre-stall timestamp. Check the actual callback
+    // gap too, before accepting another input or advancing the fixed-step model.
+    if (delta > 250 || executionDelta > 250) pause('focusLost');
     if (!reviewAbort && inputAvailable() && !modalOpen() && renderer.available && !graphicsLost) {
       let radioInput = neutralFlightInput();
       if (!replay && input.owner() === 'radio') {
