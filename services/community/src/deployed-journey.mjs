@@ -28,6 +28,10 @@ import {
   decodeAcceptanceImage,
   inspectAcceptanceImage,
 } from './acceptance-fixture.mjs';
+import {
+  resolveDeployedAcceptanceAccount,
+  validateDeployedAcceptanceAccount,
+} from './deployed-acceptance-auth.mjs';
 
 export const DEPLOYED_ACCEPTANCE_FORMAT = 'revealline-community-deployed-acceptance.v1';
 export const DESTRUCTIVE_OPT_IN = 'I_UNDERSTAND_THIS_PUBLISHES_AND_UNLISTS_TEST_CONTENT';
@@ -43,21 +47,6 @@ const themesPromise = readFile(
 
 const required = (condition, message) => {
   if (!condition) throw new Error(message);
-};
-
-const exactAuth = (value, name) => {
-  required(value && typeof value === 'object' && !Array.isArray(value), `${name} is required.`);
-  const entries = Object.entries(value);
-  required(entries.length > 0 && entries.length <= 8, `${name} is invalid.`);
-  for (const [key, header] of entries)
-    required(
-      /^[a-z0-9-]{1,64}$/iu.test(key) &&
-        typeof header === 'string' &&
-        header.length <= 8192 &&
-        !/[\u0000-\u001f\u007f]/u.test(header),
-      `${name} is invalid.`,
-    );
-  return Object.freeze(Object.fromEntries(entries));
 };
 
 const boundedInteger = (value, name, minimum, maximum) => {
@@ -103,9 +92,9 @@ export function validateDeployedJourneyConfig(input = {}) {
       sourceRevision: input.expectedRelease.sourceRevision,
     }),
     auth: Object.freeze({
-      creatorA: exactAuth(input.auth?.creatorA, 'Creator A authentication'),
-      creatorB: exactAuth(input.auth?.creatorB, 'Creator B authentication'),
-      admin: exactAuth(input.auth?.admin, 'Administrator authentication'),
+      creatorA: validateDeployedAcceptanceAccount(input.auth?.creatorA, 'Creator A authentication'),
+      creatorB: validateDeployedAcceptanceAccount(input.auth?.creatorB, 'Creator B authentication'),
+      admin: validateDeployedAcceptanceAccount(input.auth?.admin, 'Administrator authentication'),
     }),
     requestTimeoutMs: boundedInteger(
       input.requestTimeoutMs ?? 15_000,
@@ -339,10 +328,8 @@ async function adminPost({ fetchImpl, baseURL, auth, path, body, action }) {
  * resulting edition through the administrator boundary. */
 export async function runDeployedCommunityJourney(input, adapters = {}) {
   const config = validateDeployedJourneyConfig(input);
-  const fetchImpl = createBoundedFetch(
-    adapters.fetchImpl ?? globalThis.fetch,
-    config.requestTimeoutMs,
-  );
+  const rawFetch = adapters.fetchImpl ?? globalThis.fetch;
+  const fetchImpl = createBoundedFetch(rawFetch, config.requestTimeoutMs);
   const now = adapters.now ?? (() => Date.now());
   const sleep =
     adapters.sleep ??
@@ -360,6 +347,7 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
   };
   let stage = 'identity';
   let editionId = null;
+  let auth = null;
   const creatorStore = adapters.creatorStore ?? createMemoryCreatorAcceptanceStore();
   const stateStore = adapters.stateStore ?? createMemoryCommunityStateStore();
   const downloadStore = adapters.downloadStore ?? createMemoryCommunityDownloadStore();
@@ -369,7 +357,7 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
       await adminPost({
         fetchImpl,
         baseURL: config.baseURL,
-        auth: config.auth.admin,
+        auth: auth.admin,
         path: `v1/admin/catalog/${editionId}/unlist`,
         body: { reason: `Acceptance cleanup ${config.namespace}/${runId}.` },
         action: 'Acceptance cleanup',
@@ -411,8 +399,31 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
     required(readiness?.status === 'ready', 'Deployment readiness check did not pass.');
     receipt.readiness = { status: 'ready' };
 
+    stage = 'authentication';
+    auth = Object.freeze({
+      creatorA: await resolveDeployedAcceptanceAccount(config.auth.creatorA, {
+        baseURL: config.baseURL,
+        fetchImpl: rawFetch,
+        timeoutMs: config.requestTimeoutMs,
+      }),
+      creatorB: await resolveDeployedAcceptanceAccount(config.auth.creatorB, {
+        baseURL: config.baseURL,
+        fetchImpl: rawFetch,
+        timeoutMs: config.requestTimeoutMs,
+      }),
+      admin: await resolveDeployedAcceptanceAccount(config.auth.admin, {
+        baseURL: config.baseURL,
+        fetchImpl: rawFetch,
+        timeoutMs: config.requestTimeoutMs,
+      }),
+    });
+
     stage = 'package';
-    const blob = await acceptancePackage({ namespace: config.namespace, runId });
+    const blob = await (adapters.createPackage ?? acceptancePackage)({
+      namespace: config.namespace,
+      runId,
+    });
+    required(blob instanceof Blob, 'Acceptance package builder returned invalid bytes.');
     const packageSha256 = await creatorSHA256(await blob.arrayBuffer());
     const title = `Acceptance ${config.namespace} ${runId}`;
     const slug = `acceptance-${config.namespace}-${runId}`;
@@ -428,13 +439,13 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
     const creatorA = createCommunityClient({
       baseURL: config.baseURL,
       fetchImpl,
-      authHeaders: authProvider(config.auth.creatorA),
+      authHeaders: authProvider(auth.creatorA),
       resumableUpload: tusUpload,
     });
     const creatorB = createCommunityClient({
       baseURL: config.baseURL,
       fetchImpl,
-      authHeaders: authProvider(config.auth.creatorB),
+      authHeaders: authProvider(auth.creatorB),
       resumableUpload: tusUpload,
     });
     const trackedCreatorA = Object.freeze({
@@ -466,7 +477,7 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
 
     stage = 'ownership';
     const isolated = await fetchImpl(new URL(`v1/submissions/${queued.id}`, config.baseURL), {
-      headers: config.auth.creatorB,
+      headers: auth.creatorB,
       cache: 'no-store',
     });
     const isolationBody = await isolated.text();
@@ -600,7 +611,7 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
     const queuedReport = await findAdminReport({
       fetchImpl,
       baseURL: config.baseURL,
-      auth: config.auth.admin,
+      auth: auth.admin,
       reportId,
     });
     required(
@@ -613,7 +624,7 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
     const unlisted = await adminPost({
       fetchImpl,
       baseURL: config.baseURL,
-      auth: config.auth.admin,
+      auth: auth.admin,
       path: `v1/admin/catalog/${editionId}/unlist`,
       body: { reason },
       action: 'Administrator unlisting',
@@ -625,7 +636,7 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
     const resolved = await adminPost({
       fetchImpl,
       baseURL: config.baseURL,
-      auth: config.auth.admin,
+      auth: auth.admin,
       path: `v1/admin/reports/${reportId}/resolve`,
       body: { resolution: reason },
       action: 'Report resolution',

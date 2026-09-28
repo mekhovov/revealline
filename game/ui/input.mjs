@@ -395,6 +395,7 @@ export function attachInput({
   }
   if (getTouchSettings) {
     touchSteering = attachTouchSteering({
+      window,
       arena,
       pad: document.querySelector('.direction-controls'),
       surface: document.querySelector('#touch-surface'),

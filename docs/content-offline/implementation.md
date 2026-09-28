@@ -1,5 +1,9 @@
 # Implementation evidence and remaining gates
 
+For the current main/release baseline and remaining batches, see
+[the 28 September status](STATUS-2026-09-28.md). Counts below describe the earlier
+implementation revision, not the latest published game.
+
 This is a staged implementation of the approved unique-content/offline plan. It
 does **not** certify unique current artwork or physical-device offline support.
 

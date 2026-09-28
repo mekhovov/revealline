@@ -14,7 +14,41 @@ import {
   geometrySignature,
   duplicateGroups,
   contentInventoryHTML,
+  loadInventoryTeamRoute,
 } from '../../scripts/content-inventory.mjs';
+import { createTeamCulturalSpecialistOriginalCandidates } from '../content-design/team-cultural-specialist-originals.mjs';
+import { createTeamCulturalSpecialistV2OriginalCandidates } from '../content-design/team-cultural-specialist-v2-originals.mjs';
+
+test('inventory resolves every registered Team route, including the current default and its predecessor', async () => {
+  const routes = new Map();
+  for (const { id } of TEAM_CONTENT_ROUTES) {
+    const route = await loadInventoryTeamRoute(id);
+    routes.set(id, route);
+    assert.equal(route.id, id);
+    const resolved = resolveContentJourney(route.source, { mode: 'team' });
+    assert.ok(resolved.campaigns.length);
+    assert.ok(resolved.campaigns.every((campaign) => campaign.manifests.length));
+  }
+  assert.deepEqual(
+    routes.get('team-cultural-specialist-originals-1').source,
+    createTeamCulturalSpecialistOriginalCandidates(),
+  );
+  assert.deepEqual(
+    routes.get('team-cultural-specialist-originals-2').source,
+    createTeamCulturalSpecialistV2OriginalCandidates(),
+  );
+  assert.equal(routes.get('team-originals').profileKey, 'journey');
+  assert.equal(routes.get('team-timed-originals').profileKey, 'team-shared-windows-originals');
+  assert.equal(
+    routes.get('team-cultural-specialist-originals-2').profileKey,
+    'team-cultural-specialist-originals-2',
+  );
+  await assert.rejects(
+    loadInventoryTeamRoute('unknown-route'),
+    /missing from the content inventory/,
+  );
+  await assert.rejects(loadInventoryTeamRoute('constructor'), /missing from the content inventory/);
+});
 
 test('archival changes discovery without changing historical project, execution or slots', async () => {
   const previous = createAuthoredJourneyRoute('opening');

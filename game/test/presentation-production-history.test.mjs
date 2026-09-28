@@ -471,14 +471,22 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
     review.effects.currentFingerprintSHA256,
     'e23e228b4bf4ee68bb7cbbd231aaebe66d6e3da8965fbeae9b2c4acc90f9e053',
   );
-  const currentReviewPath =
-    'docs/verification/bulk-integration-presentation-continuation-2026-09-27/review.json';
-  const currentReviewSHA256 = 'ad469766d926795fddca108b77042b226282cc17b3a130429ad2b548b5e2edf5';
+  const currentReviewPath = 'docs/verification/bulk-queue-audio-effects-2026-09-28/review.json';
+  const currentReviewSHA256 = '5ec246c93cf5dfe6d5a3f6538788d618575037a11d2c1890d88d0257f2e7d0b3';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'effects',
   ]);
+  const previousEffects = JSON.parse(
+    await fs.readFile(
+      new URL('../../' + current.review.priorReviews.bulkPresentation.path, import.meta.url),
+    ),
+  );
   assert.equal(
     current.review.fingerprints.effects.priorSHA256,
+    '732ee9b5a46bbfe1bce8ee74f29aace278cd4da67ae59871a2771f0c197b5e3f',
+  );
+  assert.equal(
+    previousEffects.fingerprints.effects.priorSHA256,
     'b33868fdd4f6aa898a885043116b939509f4d5b14d4412adb7d71e6e90ed6bbe',
   );
   const slots = [
@@ -530,26 +538,49 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
   const currentReviewPath =
-    'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json';
-  const currentReviewSHA256 = '15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867';
+    'docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json';
+  const currentReviewSHA256 = 'afcfcca1612109e117595c424e03ac002271165ccb1a4082697011e16c4c5a75';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
-    'ui',
     'audio',
   ]);
-  const companyReviewPath =
-    'docs/verification/v0.141.7-company-startup-audio-continuation/review.json';
-  assert.equal(current.review.priorReviews.companyStartup.path, companyReviewPath);
+  const mainUIReviewPath =
+    'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json';
+  const mainUIReviewSHA256 = '15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867';
+  const mainUI = await authenticatedCurrentReview(mainUIReviewPath, mainUIReviewSHA256, ['ui']);
+  const canonicalReview = JSON.parse(
+    await fs.readFile(
+      new URL('../../' + current.review.priorReviews.canonical.path, import.meta.url),
+    ),
+  );
   assert.equal(
-    current.review.priorReviews.companyStartup.sha256,
+    canonicalReview.priorReviews.acceptedMain.path,
+    'docs/verification/v0.141.7-company-startup-audio-continuation/review.json',
+  );
+  assert.equal(
+    canonicalReview.priorReviews.acceptedMain.sha256,
     '1d3660001a2ebe7d4d2daf5e68ab745e9e902d5c2f1757a398439de3caedccad',
   );
-  const previousReview = JSON.parse(
-    await fs.readFile(new URL('../../' + companyReviewPath, import.meta.url)),
-  );
-  assert.equal(previousReview.priorReviews.managedMedia.path, continuationPath);
-  assert.equal(previousReview.priorReviews.managedMedia.sha256, continuationHash);
   assert.equal(
-    previousReview.priorReviews.managedMedia.fingerprintSHA256,
+    canonicalReview.priorReviews.branchRebase.sha256,
+    '697c094ae2c1cc0a83b77ad0e647c0967a9c3219b3ed10ba4d42f8691b9d54e7',
+  );
+  assert.equal(
+    canonicalReview.priorReviews.externalDelivery.path,
+    'docs/verification/external-soundtrack-delivery-2026-09-27/review.json',
+  );
+  assert.equal(
+    canonicalReview.priorReviews.externalDelivery.sha256,
+    '2b36f81f1afd641bac82334e051f6dc3bac0887329327eb47a10944a8a6d39c6',
+  );
+  const companyReview = JSON.parse(
+    await fs.readFile(
+      new URL('../../' + canonicalReview.priorReviews.acceptedMain.path, import.meta.url),
+    ),
+  );
+  assert.equal(companyReview.priorReviews.managedMedia.path, continuationPath);
+  assert.equal(companyReview.priorReviews.managedMedia.sha256, continuationHash);
+  assert.equal(
+    companyReview.priorReviews.managedMedia.fingerprintSHA256,
     '77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79',
   );
   const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
@@ -558,7 +589,13 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
     const asset = resolved.assets[slot.id];
     if (slot.group === 'ui') {
       assert.equal(asset.quality.stage, 'reviewed', slot.id);
-      assert.equal(asset.provenance.source, current.sources.ui, slot.id);
+      assert.equal(asset.provenance.source, mainUI.sources.ui, slot.id);
+      assert.ok(
+        asset.quality.evidence.some((entry) =>
+          entry.includes(mainUIReviewPath + ' sha256:' + mainUIReviewSHA256),
+        ),
+        slot.id,
+      );
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.css/);
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.mjs/);
       assert.match(asset.provenance.source, /game\/presentation\/dom-ownership\.mjs/);
@@ -570,12 +607,6 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
             entry.includes(`${uiReviewPath} sha256:${uiReviewHash}`),
         ),
         true,
-      );
-      assert.ok(
-        asset.quality.evidence.some((entry) =>
-          entry.includes(currentReviewPath + ' sha256:' + currentReviewSHA256),
-        ),
-        slot.id,
       );
     } else {
       assert.equal(asset.quality.stage, 'reviewed', slot.id);
@@ -932,4 +963,56 @@ test('the whole production collection has capacity for immutable review successo
     reexport.size >= portable.size,
     'collection history is retained within existing bounds',
   );
+});
+
+test('bulk continuation preserves every exact merged main320 record and original payload', async () => {
+  const oracle = JSON.parse(
+    await fs.readFile(new URL('./fixtures/production-main320-fpv94.json', import.meta.url), 'utf8'),
+  );
+  const current = await importThemeBundle(
+    new Blob([
+      await fs.readFile(
+        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+      ),
+    ]),
+    { decodeImage: null },
+  );
+  const prior = await reconstructPinnedProduction(oracle, current);
+  assert.equal(prior.document.revision, 94);
+  assert.equal(prior.document.assets.length, 2548);
+  assert.equal(prior.assets.size, 132);
+  assert.equal(current.document.revision, 95);
+  validateThemeBundle(current.document, { previous: prior.document, expectedRevision: 94 });
+  for (const group of Object.keys(oracle.groups))
+    assert.deepEqual(
+      current.document[group].slice(0, oracle.groups[group].count),
+      prior.document[group],
+      group,
+    );
+  let payloadBytes = 0;
+  for (const [id, body] of prior.assets) {
+    const before = Buffer.from(await body.arrayBuffer());
+    payloadBytes += before.length;
+    assert.deepEqual(Buffer.from(await current.assets.get(id).arrayBuffer()), before, id);
+  }
+  assert.equal(payloadBytes, 4009342);
+  assert.equal(current.assets.size, 132);
+  const before = resolvePresentation(prior.document),
+    after = resolvePresentation(current.document);
+  const ui = prior.document.slots.filter((slot) => slot.group === 'ui');
+  assert.equal(ui.length, 24);
+  for (const slot of ui) assert.deepEqual(after.assets[slot.id], before.assets[slot.id], slot.id);
+  const added = current.document.assets.slice(2548);
+  assert.equal(added.length, 18);
+  assert.equal(added.filter((a) => a.id.startsWith('audio.')).length, 8);
+  for (const asset of added) {
+    assert.equal(asset.quality.stage, 'reviewed');
+    const old = prior.document.assets
+      .filter((a) => a.id === asset.id)
+      .sort((a, b) => b.revision - a.revision)[0];
+    assert.equal(asset.revision, old.revision + 1);
+    assert.deepEqual(asset.provenance.parent, { id: old.id, revision: old.revision });
+    assert.deepEqual(asset.recipe, old.recipe);
+    assert.deepEqual(asset.file, old.file);
+  }
 });

@@ -542,12 +542,12 @@ finds the report, unlists the disposable edition, resolves the report, and verif
 retrieval is gone. The validation worker must be running before this command starts.
 
 This test writes to the deployment. It refuses to run without an explicit opt-in and a unique
-lowercase namespace. Supply three short-lived actor authorization values through
-the environment. In development-token mode these are `Bearer ...` values. A production operator
-may instead set the corresponding `COMMUNITY_ACCEPTANCE_CREATOR_A_COOKIE`,
-`COMMUNITY_ACCEPTANCE_CREATOR_B_COOKIE`, and `COMMUNITY_ACCEPTANCE_ADMIN_COOKIE` values from three
-short-lived same-origin test sessions. Set exactly one authorization or cookie variable per actor,
-and do not put credentials in the URL.
+lowercase namespace. Supply three short-lived actors through the environment. In development-token
+mode these are `Bearer ...` values. For production, set each actor's `_EMAIL` and `_PASSWORD`; the
+runner signs in only after the exact version, health and readiness gates pass, retains the resulting
+HttpOnly session cookie in memory, and never writes the password or cookie to its receipt. Existing
+short-lived sessions remain supported through the corresponding `_COOKIE` variables. Set exactly
+one authorization, cookie, or email/password form per actor, and do not put credentials in the URL.
 
 ```sh
 cd services/community
@@ -556,9 +556,12 @@ export COMMUNITY_ACCEPTANCE_NAMESPACE='staging-20260926-a'
 export COMMUNITY_ACCEPTANCE_ALLOW_DESTRUCTIVE='I_UNDERSTAND_THIS_PUBLISHES_AND_UNLISTS_TEST_CONTENT'
 export COMMUNITY_ACCEPTANCE_EXPECTED_VERSION='v0.141.2'
 export COMMUNITY_ACCEPTANCE_EXPECTED_SOURCE_REVISION='12978e5fd3fe0ce70bbee96aa543f569f64622d4'
-export COMMUNITY_ACCEPTANCE_CREATOR_A_AUTHORIZATION='Bearer short-lived-creator-a-token'
-export COMMUNITY_ACCEPTANCE_CREATOR_B_AUTHORIZATION='Bearer short-lived-creator-b-token'
-export COMMUNITY_ACCEPTANCE_ADMIN_AUTHORIZATION='Bearer short-lived-admin-token'
+export COMMUNITY_ACCEPTANCE_CREATOR_A_EMAIL='verified-creator-a@example.test'
+export COMMUNITY_ACCEPTANCE_CREATOR_A_PASSWORD='replace-in-owner-only-environment'
+export COMMUNITY_ACCEPTANCE_CREATOR_B_EMAIL='verified-creator-b@example.test'
+export COMMUNITY_ACCEPTANCE_CREATOR_B_PASSWORD='replace-in-owner-only-environment'
+export COMMUNITY_ACCEPTANCE_ADMIN_EMAIL='verified-admin@example.test'
+export COMMUNITY_ACCEPTANCE_ADMIN_PASSWORD='replace-in-owner-only-environment'
 export COMMUNITY_ACCEPTANCE_RECEIPT='/secure/acceptance/community-staging-20260926-a.json'
 npm run acceptance:deployed
 ```
@@ -566,7 +569,8 @@ npm run acceptance:deployed
 Before it creates any content, the runner requires `/version` to match those exact expected values,
 then requires both `/health` and the full `/ready` dependency probe to pass. A stale service or a
 deployment with unavailable schema, storage, tus storage, or `ffprobe` therefore cannot produce a
-successful journey receipt.
+successful journey receipt. Email/password actors must already be verified, and the administrator's
+Better Auth user ID must be present in the deployment's `COMMUNITY_ADMIN_SUBJECTS` allowlist.
 
 The runner bounds every HTTP request to 15 seconds, polls validation for at most two minutes, and
 uses at most ten administrator report pages. Override those time limits only with bounded numeric

@@ -494,7 +494,7 @@ try {
     : createOfflineDownloadAccess({
         requestPackage: (request) => {
           if (!installOfflinePanel)
-            throw new Error('Open Install & offline play to prepare this chapter.');
+            throw new Error(t('interface:downloads.openInstallToPrepareChapter'));
           return installOfflinePanel.requestPackage(request);
         },
       });
@@ -2132,9 +2132,7 @@ try {
   ) {
     if (pin === null) {
       if (runtimeContent && candidateHost?.owns(entry))
-        throw new Error(
-          'This earlier flight has no exact company artwork receipt. Open its original release; the save is preserved for recovery.',
-        );
+        throw new Error(t('interface:replay.missingCompanyArtworkReceipt'));
       return null;
     }
     if (runtimeContent && candidateHost?.owns(entry) && pin === undefined) style = 'campaign';
@@ -10259,7 +10257,7 @@ try {
       localizedText($('replay-appearance-note'), () =>
         recorded
           ? actorPin?.authoredPresentationSha256
-            ? 'This recording pins the exact company actors and palette. Replay Theater requires the matching edition artwork; original pictures, music and interface are not restored.'
+            ? t('interface:replay.companyRecordingPinned')
             : t('interface:recordedFpvActorsArePinnedForReplayTheaterThisDoes')
           : t('interface:thisRecordingUsesTheOriginalSimulationOnlyFormatReplayTheater'),
       );

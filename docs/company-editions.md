@@ -189,6 +189,21 @@ two installed PWAs, update/rollback, storage/backup recovery and same-device per
 Receipt structure and hashes provide traceability; they cannot establish the truth of a human
 observation. Review these receipts through the repository's normal review process.
 
+The qualification recorder exports one bounded record rather than a collection of manually
+assembled gate files. After every edition gate is complete, compile that record into the existing
+promotion schema and copy its exact bytes into the frozen bundle:
+
+```sh
+node docs/verification/compile-company-qualification.mjs \
+  --bundle .cache/company-candidate \
+  --qualification .cache/review-company-qualification-vX.Y.Z.json \
+  --review .cache/edition-review.json
+```
+
+The command refuses incomplete coverage, changed envelope identity and existing outputs. It does
+not allocate a version, upload an asset, alter a release or change the public selector. Deferred
+human or device gates therefore remain a hard promotion boundary rather than an implicit waiver.
+
 After those gates pass, `publish-editions.mjs verify` validates the exact bundle and evidence.
 `upload-draft` additionally requires `--repository mekhovov/revealline`, an existing draft
 release whose tag resolves to the bundle's engine commit and tree, and never replaces an asset.
@@ -331,6 +346,12 @@ endpoints, recorded in each observation, so do not compare them as identical tim
 It reports buffered resource entries, animation callback
 intervals and approximate shared heap, not complete network traffic, renderer timings or a
 memory-leak verdict. Every observation remains unqualified until reviewed.
+
+The [qualification recorder](verification/company-qualification.html) captures the separate
+human and device evidence against one immutable candidate. It validates exact envelope, source
+and downloaded-artifact identity, all nine promotion gates per edition, actual-device constraints
+and bounded scenario coverage. It starts with no passes and never edits the game, release metadata
+or public selector.
 
 ## Sources and asset boundaries
 
