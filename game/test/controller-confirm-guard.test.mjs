@@ -140,6 +140,20 @@ test('rapid deliberate transactions each activate once', (t) => {
   assert.equal(h.programmaticActivations, 2);
 });
 
+test('legacy observed hosts activate once per press without opening a release transaction', (t) => {
+  const h = setup(t);
+  h.guard.observe(true);
+  assert.equal(h.guard.activate(h.target), true);
+  assert.equal(h.guard.activate(h.target), false);
+  assert.equal(h.guard.active(), false);
+  h.guard.observe(false);
+  h.setTime(1400);
+  h.guard.observe(true);
+  assert.equal(h.guard.activate(h.target), true);
+  assert.equal(h.guard.active(), false);
+  assert.equal(h.programmaticActivations, 2);
+});
+
 test('synchronous host input cleanup cannot split a committed release transaction', (t) => {
   const events = [];
   let guard;
