@@ -21,6 +21,8 @@ export const EDITION_RUNTIME_RESOURCES = Object.freeze({
   'game/company-entry.mjs': ['game/index.html'],
   'game/index.html': EDITION_RUNTIME_PAGES,
   'game/app.mjs': ['game/content/scenarios/line-impact-demo.json'],
+  'game/ui/soundtrack-panel.mjs': ['game/ui/soundtrack-panel.css'],
+  'game/ui/install-offline-panel.mjs': ['game/ui/install-offline-panel.css'],
   'game/vendor/qrcodegen-1.8.0.mjs': [
     'game/vendor/QRCODEGEN-LICENSE.txt',
     'game/vendor/qrcodegen-1.8.0.json',
