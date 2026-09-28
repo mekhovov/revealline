@@ -1,20 +1,20 @@
 {
   "format": "revealline-package-measurement.v1",
-  "version": "0.132.1",
-  "sourceRevision": null,
-  "buildId": "757fd1ac920697fb0bc55ddef275173591f036c3d920855a0297044d141af6b8",
-  "distributionSHA256": "0db98ab66ad7501f39356f6ca9f3cd3c0a496e74bab52715e664c3718b697d57",
-  "distributionPayloadBytes": 620464966,
+  "version": "v0.141.7",
+  "sourceRevision": "efbb3882b4edd447c8e9f60ed60c536a956d78f3",
+  "buildId": "d33419007107875684452bea03dd553107d6eb10dc7b5316b0e3d92abbc0bc3c",
+  "distributionSHA256": "ce653828fa11497567fcb39e370b744bd97d0c78ccb9d173fc7fc8edb7fcdacd",
+  "distributionPayloadBytes": 739546095,
   "units": "Decoded file bytes. MiB = 1,048,576 bytes. HTTP compression and protocol overhead are not measured.",
   "ownership": "Runtime URL copies, official hashes and stable launcher URLs are separate owners. Matching bytes are not assumed reusable across owners.",
   "packages": {
     "starter": {
       "owners": {
         "editionRuntime": {
-          "files": 726,
-          "uniqueHashes": 686,
-          "decodedTransferBytes": 34329718,
-          "storedPayloadBytes": 36171592
+          "files": 898,
+          "uniqueHashes": 788,
+          "decodedTransferBytes": 40929894,
+          "storedPayloadBytes": 43028185
         },
         "officialContent": {
           "files": 9,
@@ -23,70 +23,70 @@
           "storedPayloadBytes": 23424857
         },
         "installedLauncher": {
-          "files": 8,
-          "uniqueHashes": 8,
-          "decodedTransferBytes": 24762,
-          "storedPayloadBytes": 24762
+          "files": 15,
+          "uniqueHashes": 15,
+          "decodedTransferBytes": 98456,
+          "storedPayloadBytes": 98456
         }
       },
-      "decodedTransferBytes": 57779337,
-      "maximumDecodedTransferBytes": 59621211,
-      "storedPayloadBytes": 59621211,
-      "crossOwnerDuplicateBytes": 24762,
-      "largestFileBytes": 3057489
+      "decodedTransferBytes": 64453207,
+      "maximumDecodedTransferBytes": 66551498,
+      "storedPayloadBytes": 66551498,
+      "crossOwnerDuplicateBytes": 98456,
+      "largestFileBytes": 6498740
     },
     "allCurrent": {
       "owners": {
         "editionRuntime": {
-          "files": 726,
-          "uniqueHashes": 686,
-          "decodedTransferBytes": 34329718,
-          "storedPayloadBytes": 36171592
+          "files": 898,
+          "uniqueHashes": 788,
+          "decodedTransferBytes": 40929894,
+          "storedPayloadBytes": 43028185
         },
         "officialContent": {
-          "files": 264,
-          "uniqueHashes": 264,
-          "decodedTransferBytes": 484154654,
-          "storedPayloadBytes": 484154654
+          "files": 368,
+          "uniqueHashes": 368,
+          "decodedTransferBytes": 551828071,
+          "storedPayloadBytes": 551828071
         },
         "installedLauncher": {
-          "files": 8,
-          "uniqueHashes": 8,
-          "decodedTransferBytes": 24762,
-          "storedPayloadBytes": 24762
+          "files": 15,
+          "uniqueHashes": 15,
+          "decodedTransferBytes": 98456,
+          "storedPayloadBytes": 98456
         }
       },
-      "decodedTransferBytes": 518509134,
-      "maximumDecodedTransferBytes": 520351008,
-      "storedPayloadBytes": 520351008,
-      "crossOwnerDuplicateBytes": 24762,
+      "decodedTransferBytes": 592856421,
+      "maximumDecodedTransferBytes": 594954712,
+      "storedPayloadBytes": 594954712,
+      "crossOwnerDuplicateBytes": 98456,
       "largestFileBytes": 12358446
     },
     "allGameplayArchivesAndTools": {
       "owners": {
         "editionRuntime": {
-          "files": 726,
-          "uniqueHashes": 686,
-          "decodedTransferBytes": 34329718,
-          "storedPayloadBytes": 36171592
+          "files": 898,
+          "uniqueHashes": 788,
+          "decodedTransferBytes": 40929894,
+          "storedPayloadBytes": 43028185
         },
         "officialContent": {
-          "files": 617,
-          "uniqueHashes": 617,
-          "decodedTransferBytes": 570855731,
-          "storedPayloadBytes": 570855731
+          "files": 834,
+          "uniqueHashes": 834,
+          "decodedTransferBytes": 681087096,
+          "storedPayloadBytes": 681087096
         },
         "installedLauncher": {
-          "files": 8,
-          "uniqueHashes": 8,
-          "decodedTransferBytes": 24762,
-          "storedPayloadBytes": 24762
+          "files": 15,
+          "uniqueHashes": 15,
+          "decodedTransferBytes": 98456,
+          "storedPayloadBytes": 98456
         }
       },
-      "decodedTransferBytes": 605210211,
-      "maximumDecodedTransferBytes": 607052085,
-      "storedPayloadBytes": 607052085,
-      "crossOwnerDuplicateBytes": 24762,
+      "decodedTransferBytes": 722115446,
+      "maximumDecodedTransferBytes": 724213737,
+      "storedPayloadBytes": 724213737,
+      "crossOwnerDuplicateBytes": 98456,
       "largestFileBytes": 12358446
     },
     "soundtracks": {
@@ -194,20 +194,20 @@
     "coreModeEntries": [],
     "currentMetadataSnapshots": [
       {
-        "path": "game/content-design/runtime/navigation-whole-spatial-v11.json",
-        "bytes": 935267,
-        "sha256": "ab468f4a63d012c522d4c67c9731494af480328521b45dde668782a2b98dfc11"
+        "path": "game/content-design/runtime/navigation-whole-spatial-v25.json",
+        "bytes": 1363574,
+        "sha256": "c5fcd45e0335297b0788b87299f63952c2e58dbdd9cb5f6338908a1d9ad7caf8"
       }
     ]
   },
   "sharedRuntime": {
     "storedBytesByExtension": {
       ".png": 17885127,
-      ".json": 10183273,
-      ".mjs": 5195844,
-      ".js": 1427112,
-      ".html": 560904,
-      ".css": 331852,
+      ".json": 16460252,
+      ".mjs": 5677205,
+      ".js": 1471650,
+      ".html": 590829,
+      ".css": 355642,
       ".woff2": 309704,
       ".ttf": 211284,
       ".txt": 40980,
@@ -219,8 +219,8 @@
     "largestFiles": [
       {
         "path": "offline-content.json",
-        "bytes": 3057489,
-        "sha256": "a3ee608c8d288674d7d308a158323542eb54db3dcc59cc702cd76ec684666aea"
+        "bytes": 6498740,
+        "sha256": "21a358ec8a4be591b89ad888951097e0934db62d810319617c4b2cf0660f12d4"
       },
       {
         "path": "game/vendor/phaser-4.2.1.min.js",
@@ -228,9 +228,14 @@
         "sha256": "66348b1b5141e49b7d5ebbe688cddcb502eab1cb00f21c538686a5b2c5abe4de"
       },
       {
+        "path": "game/content-design/runtime/navigation-whole-spatial-v25.json",
+        "bytes": 1363574,
+        "sha256": "c5fcd45e0335297b0788b87299f63952c2e58dbdd9cb5f6338908a1d9ad7caf8"
+      },
+      {
         "path": "game/presentation/compiled/runtime.json",
-        "bytes": 1101532,
-        "sha256": "e6872d0b51a12ab028e30bd4fac6ac9f6c4b9cd338c0339c6ea1df3b9fe681ee"
+        "bytes": 1152803,
+        "sha256": "7c314e8756c89b82731b0782139633bb813cebc877842e88c9c28731a9cac3d0"
       },
       {
         "path": "game/presentation/compiled/runtime.b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f.json",
@@ -258,9 +263,9 @@
         "sha256": "91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace"
       },
       {
-        "path": "game/content-design/runtime/navigation-whole-spatial-v11.json",
-        "bytes": 935267,
-        "sha256": "ab468f4a63d012c522d4c67c9731494af480328521b45dde668782a2b98dfc11"
+        "path": "game/i18n/catalogs.mjs",
+        "bytes": 963847,
+        "sha256": "17ee6bf5fb1144492bfe668bea234bcff4e78b3a23030cd8b4c92fc08f5b5248"
       },
       {
         "path": "authoring/library/fpv-role-presentations/originals/bomber.png",
@@ -278,11 +283,6 @@
         "sha256": "bc77fb42b3fd233a3d4391bc23e093d6d93d202d0482934f79091a310f8c01e6"
       },
       {
-        "path": "game/i18n/catalogs.mjs",
-        "bytes": 874007,
-        "sha256": "cb6301cad39f306817648ce8283550d97e2eae55bb8799649e87cfd158a02c6c"
-      },
-      {
         "path": "game/presentation/compiled/assets/57744cbfe744bd50d932b1dba963539c11dbb176dc1e3171de46c34ea74d48a0.png",
         "bytes": 866080,
         "sha256": "57744cbfe744bd50d932b1dba963539c11dbb176dc1e3171de46c34ea74d48a0"
@@ -293,6 +293,20 @@
         "sha256": "57744cbfe744bd50d932b1dba963539c11dbb176dc1e3171de46c34ea74d48a0"
       }
     ]
+  },
+  "currentGameplay": {
+    "officialBytesByExtension": {
+      ".png": 321169402,
+      ".rlmedia": 122263147,
+      ".json": 106986535,
+      ".mjs": 1035792,
+      ".ttf": 160316,
+      ".html": 148439,
+      ".css": 53857,
+      ".js": 6199,
+      ".txt": 4384
+    },
+    "mp3Files": 0
   },
   "groups": [
     {
@@ -337,6 +351,174 @@
       "additionalAfterAllCurrentBytes": 0
     },
     {
+      "id": "company:coupa-all",
+      "title": "Coupa Village",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [],
+      "ownBytes": 42390939,
+      "closureBytes": 42390939,
+      "additionalAfterStarterBytes": 42390939,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:coupa-adventure",
+      "title": "Spend in Motion",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [],
+      "ownBytes": 8779435,
+      "closureBytes": 8779435,
+      "additionalAfterStarterBytes": 8779435,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:coupa-culture",
+      "title": "Inside the Village",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [],
+      "ownBytes": 7537945,
+      "closureBytes": 7537945,
+      "additionalAfterStarterBytes": 7537945,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:coupa-foundations",
+      "title": "From Need to Value",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [],
+      "ownBytes": 9895582,
+      "closureBytes": 9895582,
+      "additionalAfterStarterBytes": 9895582,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:coupa-operations",
+      "title": "A Day in Coupa",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [],
+      "ownBytes": 9006630,
+      "closureBytes": 9006630,
+      "additionalAfterStarterBytes": 9006630,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:coupa-developers",
+      "title": "Connect the Network",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [],
+      "ownBytes": 10619247,
+      "closureBytes": 10619247,
+      "additionalAfterStarterBytes": 10619247,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:droneaid-community",
+      "title": "Community Relay",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [],
+      "ownBytes": 8487126,
+      "closureBytes": 8487126,
+      "additionalAfterStarterBytes": 8487126,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:droneaid-nl-community",
+      "title": "DroneAid Netherlands",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [],
+      "ownBytes": 13008318,
+      "closureBytes": 13008318,
+      "additionalAfterStarterBytes": 13008318,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:droneaid-nl-workshop-lights",
+      "title": "Workshop Lights",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [],
+      "ownBytes": 2282962,
+      "closureBytes": 2282962,
+      "additionalAfterStarterBytes": 2282962,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:droneaid-nl-parts-in-motion",
+      "title": "Parts in Motion",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [],
+      "ownBytes": 2700781,
+      "closureBytes": 2700781,
+      "additionalAfterStarterBytes": 2700781,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:droneaid-nl-makers-together",
+      "title": "Makers Together",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [],
+      "ownBytes": 2559154,
+      "closureBytes": 2559154,
+      "additionalAfterStarterBytes": 2559154,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:droneaid-nl-careful-handoff",
+      "title": "The Careful Handoff",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [],
+      "ownBytes": 2542137,
+      "closureBytes": 2542137,
+      "additionalAfterStarterBytes": 2542137,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:droneaid-nl-signals-of-support",
+      "title": "Signals of Support",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [],
+      "ownBytes": 2523733,
+      "closureBytes": 2523733,
+      "additionalAfterStarterBytes": 2523733,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:droneaid-nl-shared-horizon",
+      "title": "Shared Horizon",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [],
+      "ownBytes": 2593856,
+      "closureBytes": 2593856,
+      "additionalAfterStarterBytes": 2593856,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
       "id": "solo:border",
       "title": "Solo · Border Bloom",
       "kind": "gameplay",
@@ -345,9 +527,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 16785289,
-      "closureBytes": 16785289,
-      "additionalAfterStarterBytes": 16785289,
+      "ownBytes": 16786698,
+      "closureBytes": 16786698,
+      "additionalAfterStarterBytes": 16786698,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -359,9 +541,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 14653448,
-      "closureBytes": 14653448,
-      "additionalAfterStarterBytes": 14653448,
+      "ownBytes": 14654653,
+      "closureBytes": 14654653,
+      "additionalAfterStarterBytes": 14654653,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -373,9 +555,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 15044543,
-      "closureBytes": 15044543,
-      "additionalAfterStarterBytes": 15044543,
+      "ownBytes": 15046396,
+      "closureBytes": 15046396,
+      "additionalAfterStarterBytes": 15046396,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -387,9 +569,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 14387280,
-      "closureBytes": 14387280,
-      "additionalAfterStarterBytes": 14387280,
+      "ownBytes": 14388499,
+      "closureBytes": 14388499,
+      "additionalAfterStarterBytes": 14388499,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -401,9 +583,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 15631983,
-      "closureBytes": 15631983,
-      "additionalAfterStarterBytes": 15631983,
+      "ownBytes": 15632989,
+      "closureBytes": 15632989,
+      "additionalAfterStarterBytes": 15632989,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -415,9 +597,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 13019321,
-      "closureBytes": 13019321,
-      "additionalAfterStarterBytes": 13019321,
+      "ownBytes": 13020555,
+      "closureBytes": 13020555,
+      "additionalAfterStarterBytes": 13020555,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -429,9 +611,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 14828428,
-      "closureBytes": 14828428,
-      "additionalAfterStarterBytes": 14828428,
+      "ownBytes": 14829425,
+      "closureBytes": 14829425,
+      "additionalAfterStarterBytes": 14829425,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -443,9 +625,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 14969948,
-      "closureBytes": 14969948,
-      "additionalAfterStarterBytes": 14969948,
+      "ownBytes": 14972000,
+      "closureBytes": 14972000,
+      "additionalAfterStarterBytes": 14972000,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -457,9 +639,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 16185871,
-      "closureBytes": 16185871,
-      "additionalAfterStarterBytes": 16185871,
+      "ownBytes": 16187817,
+      "closureBytes": 16187817,
+      "additionalAfterStarterBytes": 16187817,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -471,9 +653,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 10667378,
-      "closureBytes": 10667378,
-      "additionalAfterStarterBytes": 10667378,
+      "ownBytes": 10668595,
+      "closureBytes": 10668595,
+      "additionalAfterStarterBytes": 10668595,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -485,9 +667,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 9649471,
-      "closureBytes": 9649471,
-      "additionalAfterStarterBytes": 9649471,
+      "ownBytes": 9650105,
+      "closureBytes": 9650105,
+      "additionalAfterStarterBytes": 9650105,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -499,9 +681,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 2441008,
-      "closureBytes": 2441008,
-      "additionalAfterStarterBytes": 2441008,
+      "ownBytes": 2441012,
+      "closureBytes": 2441012,
+      "additionalAfterStarterBytes": 2441012,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -513,9 +695,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 2653878,
-      "closureBytes": 2653878,
-      "additionalAfterStarterBytes": 2653878,
+      "ownBytes": 2654187,
+      "closureBytes": 2654187,
+      "additionalAfterStarterBytes": 2654187,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -527,9 +709,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 2440722,
-      "closureBytes": 2440722,
-      "additionalAfterStarterBytes": 2440722,
+      "ownBytes": 2441065,
+      "closureBytes": 2441065,
+      "additionalAfterStarterBytes": 2441065,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -541,9 +723,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 2420228,
-      "closureBytes": 2420228,
-      "additionalAfterStarterBytes": 2420228,
+      "ownBytes": 2420555,
+      "closureBytes": 2420555,
+      "additionalAfterStarterBytes": 2420555,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -555,9 +737,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 2393150,
-      "closureBytes": 2393150,
-      "additionalAfterStarterBytes": 2393150,
+      "ownBytes": 2393779,
+      "closureBytes": 2393779,
+      "additionalAfterStarterBytes": 2393779,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -569,9 +751,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 2407817,
-      "closureBytes": 2407817,
-      "additionalAfterStarterBytes": 2407817,
+      "ownBytes": 2408316,
+      "closureBytes": 2408316,
+      "additionalAfterStarterBytes": 2408316,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -583,9 +765,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 2170342,
-      "closureBytes": 2170342,
-      "additionalAfterStarterBytes": 2170342,
+      "ownBytes": 2170346,
+      "closureBytes": 2170346,
+      "additionalAfterStarterBytes": 2170346,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -597,9 +779,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 2440303,
-      "closureBytes": 2440303,
-      "additionalAfterStarterBytes": 2440303,
+      "ownBytes": 2440307,
+      "closureBytes": 2440307,
+      "additionalAfterStarterBytes": 2440307,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -611,9 +793,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 2274807,
-      "closureBytes": 2274807,
-      "additionalAfterStarterBytes": 2274807,
+      "ownBytes": 2274811,
+      "closureBytes": 2274811,
+      "additionalAfterStarterBytes": 2274811,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -625,9 +807,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 2736514,
-      "closureBytes": 2736514,
-      "additionalAfterStarterBytes": 2736514,
+      "ownBytes": 2736518,
+      "closureBytes": 2736518,
+      "additionalAfterStarterBytes": 2736518,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -639,9 +821,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 2326089,
-      "closureBytes": 2326089,
-      "additionalAfterStarterBytes": 2326089,
+      "ownBytes": 2326093,
+      "closureBytes": 2326093,
+      "additionalAfterStarterBytes": 2326093,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -653,9 +835,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 2617078,
-      "closureBytes": 2617078,
-      "additionalAfterStarterBytes": 2617078,
+      "ownBytes": 2617082,
+      "closureBytes": 2617082,
+      "additionalAfterStarterBytes": 2617082,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -667,9 +849,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 8432504,
-      "closureBytes": 8432504,
-      "additionalAfterStarterBytes": 8432504,
+      "ownBytes": 8432508,
+      "closureBytes": 8432508,
+      "additionalAfterStarterBytes": 8432508,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -681,9 +863,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 7603396,
-      "closureBytes": 7603396,
-      "additionalAfterStarterBytes": 7603396,
+      "ownBytes": 7603400,
+      "closureBytes": 7603400,
+      "additionalAfterStarterBytes": 7603400,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -697,8 +879,8 @@
         "runtime:versus"
       ],
       "ownBytes": 23424857,
-      "closureBytes": 25269633,
-      "additionalAfterStarterBytes": 1844776,
+      "closureBytes": 29204452,
+      "additionalAfterStarterBytes": 5779595,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -711,9 +893,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 16785289,
-      "closureBytes": 18630065,
-      "additionalAfterStarterBytes": 18630065,
+      "ownBytes": 16786698,
+      "closureBytes": 22566293,
+      "additionalAfterStarterBytes": 22566293,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -726,9 +908,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 14653448,
-      "closureBytes": 16498224,
-      "additionalAfterStarterBytes": 16498224,
+      "ownBytes": 14654653,
+      "closureBytes": 20434248,
+      "additionalAfterStarterBytes": 20434248,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -741,9 +923,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 15044543,
-      "closureBytes": 16889319,
-      "additionalAfterStarterBytes": 16889319,
+      "ownBytes": 15046396,
+      "closureBytes": 20825991,
+      "additionalAfterStarterBytes": 20825991,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -756,9 +938,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 14387280,
-      "closureBytes": 16232056,
-      "additionalAfterStarterBytes": 16232056,
+      "ownBytes": 14388499,
+      "closureBytes": 20168094,
+      "additionalAfterStarterBytes": 20168094,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -771,9 +953,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 15631983,
-      "closureBytes": 17476759,
-      "additionalAfterStarterBytes": 17476759,
+      "ownBytes": 15632989,
+      "closureBytes": 21412584,
+      "additionalAfterStarterBytes": 21412584,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -786,9 +968,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 13019321,
-      "closureBytes": 14864097,
-      "additionalAfterStarterBytes": 14864097,
+      "ownBytes": 13020555,
+      "closureBytes": 18800150,
+      "additionalAfterStarterBytes": 18800150,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -801,9 +983,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 14828428,
-      "closureBytes": 16673204,
-      "additionalAfterStarterBytes": 16673204,
+      "ownBytes": 14829425,
+      "closureBytes": 20609020,
+      "additionalAfterStarterBytes": 20609020,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -816,9 +998,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 14969948,
-      "closureBytes": 16814724,
-      "additionalAfterStarterBytes": 16814724,
+      "ownBytes": 14972000,
+      "closureBytes": 20751595,
+      "additionalAfterStarterBytes": 20751595,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -831,9 +1013,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 16185871,
-      "closureBytes": 18030647,
-      "additionalAfterStarterBytes": 18030647,
+      "ownBytes": 16187817,
+      "closureBytes": 21967412,
+      "additionalAfterStarterBytes": 21967412,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -846,9 +1028,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 10667378,
-      "closureBytes": 12512154,
-      "additionalAfterStarterBytes": 12512154,
+      "ownBytes": 10668595,
+      "closureBytes": 16448190,
+      "additionalAfterStarterBytes": 16448190,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -861,9 +1043,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 9649471,
-      "closureBytes": 11494247,
-      "additionalAfterStarterBytes": 11494247,
+      "ownBytes": 9650105,
+      "closureBytes": 15429700,
+      "additionalAfterStarterBytes": 15429700,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -876,9 +1058,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 2441008,
-      "closureBytes": 4285784,
-      "additionalAfterStarterBytes": 4285784,
+      "ownBytes": 2441012,
+      "closureBytes": 8220607,
+      "additionalAfterStarterBytes": 8220607,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -891,9 +1073,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 2653878,
-      "closureBytes": 4498654,
-      "additionalAfterStarterBytes": 4498654,
+      "ownBytes": 2654187,
+      "closureBytes": 8433782,
+      "additionalAfterStarterBytes": 8433782,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -906,9 +1088,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 2440722,
-      "closureBytes": 4285498,
-      "additionalAfterStarterBytes": 4285498,
+      "ownBytes": 2441065,
+      "closureBytes": 8220660,
+      "additionalAfterStarterBytes": 8220660,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -921,9 +1103,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 2420228,
-      "closureBytes": 4265004,
-      "additionalAfterStarterBytes": 4265004,
+      "ownBytes": 2420555,
+      "closureBytes": 8200150,
+      "additionalAfterStarterBytes": 8200150,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -936,9 +1118,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 2393150,
-      "closureBytes": 4237926,
-      "additionalAfterStarterBytes": 4237926,
+      "ownBytes": 2393779,
+      "closureBytes": 8173374,
+      "additionalAfterStarterBytes": 8173374,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -951,9 +1133,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 2407817,
-      "closureBytes": 4252593,
-      "additionalAfterStarterBytes": 4252593,
+      "ownBytes": 2408316,
+      "closureBytes": 8187911,
+      "additionalAfterStarterBytes": 8187911,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -966,9 +1148,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 2170342,
-      "closureBytes": 4015118,
-      "additionalAfterStarterBytes": 4015118,
+      "ownBytes": 2170346,
+      "closureBytes": 7949941,
+      "additionalAfterStarterBytes": 7949941,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -981,9 +1163,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 2440303,
-      "closureBytes": 4285079,
-      "additionalAfterStarterBytes": 4285079,
+      "ownBytes": 2440307,
+      "closureBytes": 8219902,
+      "additionalAfterStarterBytes": 8219902,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -996,9 +1178,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 2274807,
-      "closureBytes": 4119583,
-      "additionalAfterStarterBytes": 4119583,
+      "ownBytes": 2274811,
+      "closureBytes": 8054406,
+      "additionalAfterStarterBytes": 8054406,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1011,9 +1193,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 2736514,
-      "closureBytes": 4581290,
-      "additionalAfterStarterBytes": 4581290,
+      "ownBytes": 2736518,
+      "closureBytes": 8516113,
+      "additionalAfterStarterBytes": 8516113,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1026,9 +1208,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 2326089,
-      "closureBytes": 4170865,
-      "additionalAfterStarterBytes": 4170865,
+      "ownBytes": 2326093,
+      "closureBytes": 8105688,
+      "additionalAfterStarterBytes": 8105688,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1041,9 +1223,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 2617078,
-      "closureBytes": 4461854,
-      "additionalAfterStarterBytes": 4461854,
+      "ownBytes": 2617082,
+      "closureBytes": 8396677,
+      "additionalAfterStarterBytes": 8396677,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1056,9 +1238,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 8432504,
-      "closureBytes": 10277280,
-      "additionalAfterStarterBytes": 10277280,
+      "ownBytes": 8432508,
+      "closureBytes": 14212103,
+      "additionalAfterStarterBytes": 14212103,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1071,9 +1253,9 @@
         "shared",
         "runtime:versus"
       ],
-      "ownBytes": 7603396,
-      "closureBytes": 9448172,
-      "additionalAfterStarterBytes": 9448172,
+      "ownBytes": 7603400,
+      "closureBytes": 13382995,
+      "additionalAfterStarterBytes": 13382995,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1087,8 +1269,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 1844776,
-      "additionalAfterStarterBytes": 1844776,
+      "closureBytes": 5779595,
+      "additionalAfterStarterBytes": 5779595,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1102,8 +1284,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 13552952,
-      "additionalAfterStarterBytes": 13552952,
+      "closureBytes": 17487771,
+      "additionalAfterStarterBytes": 17487771,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1117,8 +1299,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 13222030,
-      "additionalAfterStarterBytes": 13222030,
+      "closureBytes": 17156849,
+      "additionalAfterStarterBytes": 17156849,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1132,8 +1314,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 1853624,
-      "additionalAfterStarterBytes": 1853624,
+      "closureBytes": 5788443,
+      "additionalAfterStarterBytes": 5788443,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1147,8 +1329,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 1853932,
-      "additionalAfterStarterBytes": 1853932,
+      "closureBytes": 5788751,
+      "additionalAfterStarterBytes": 5788751,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1162,8 +1344,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 1859980,
-      "additionalAfterStarterBytes": 1859980,
+      "closureBytes": 5794799,
+      "additionalAfterStarterBytes": 5794799,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1177,8 +1359,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 13216625,
-      "additionalAfterStarterBytes": 13216625,
+      "closureBytes": 17151444,
+      "additionalAfterStarterBytes": 17151444,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1192,8 +1374,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 12971800,
-      "additionalAfterStarterBytes": 12971800,
+      "closureBytes": 16906619,
+      "additionalAfterStarterBytes": 16906619,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1207,8 +1389,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 1856192,
-      "additionalAfterStarterBytes": 1856192,
+      "closureBytes": 5791011,
+      "additionalAfterStarterBytes": 5791011,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1222,8 +1404,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 13551882,
-      "additionalAfterStarterBytes": 13551882,
+      "closureBytes": 17486701,
+      "additionalAfterStarterBytes": 17486701,
       "additionalAfterAllCurrentBytes": 11707106
     },
     {
@@ -1237,8 +1419,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 13551189,
-      "additionalAfterStarterBytes": 13551189,
+      "closureBytes": 17486008,
+      "additionalAfterStarterBytes": 17486008,
       "additionalAfterAllCurrentBytes": 11706413
     },
     {
@@ -1252,8 +1434,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 13550836,
-      "additionalAfterStarterBytes": 13550836,
+      "closureBytes": 17485655,
+      "additionalAfterStarterBytes": 17485655,
       "additionalAfterAllCurrentBytes": 11706060
     },
     {
@@ -1267,8 +1449,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 13546744,
-      "additionalAfterStarterBytes": 13546744,
+      "closureBytes": 17481563,
+      "additionalAfterStarterBytes": 17481563,
       "additionalAfterAllCurrentBytes": 11701968
     },
     {
@@ -1282,8 +1464,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 12564735,
-      "additionalAfterStarterBytes": 12564735,
+      "closureBytes": 16499554,
+      "additionalAfterStarterBytes": 16499554,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1297,8 +1479,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 14203222,
-      "additionalAfterStarterBytes": 14203222,
+      "closureBytes": 18138041,
+      "additionalAfterStarterBytes": 18138041,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1312,8 +1494,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 12174433,
-      "additionalAfterStarterBytes": 12174433,
+      "closureBytes": 16109252,
+      "additionalAfterStarterBytes": 16109252,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1327,8 +1509,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 12911978,
-      "additionalAfterStarterBytes": 12911978,
+      "closureBytes": 16846797,
+      "additionalAfterStarterBytes": 16846797,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1342,8 +1524,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 13794556,
-      "additionalAfterStarterBytes": 13794556,
+      "closureBytes": 17729375,
+      "additionalAfterStarterBytes": 17729375,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1357,8 +1539,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 9891565,
-      "additionalAfterStarterBytes": 9891565,
+      "closureBytes": 13826384,
+      "additionalAfterStarterBytes": 13826384,
       "additionalAfterAllCurrentBytes": 8046789
     },
     {
@@ -1372,8 +1554,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 10679068,
-      "additionalAfterStarterBytes": 10679068,
+      "closureBytes": 14613887,
+      "additionalAfterStarterBytes": 14613887,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1387,8 +1569,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 9442716,
-      "additionalAfterStarterBytes": 9442716,
+      "closureBytes": 13377535,
+      "additionalAfterStarterBytes": 13377535,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1402,8 +1584,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 10134086,
-      "additionalAfterStarterBytes": 10134086,
+      "closureBytes": 14068905,
+      "additionalAfterStarterBytes": 14068905,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1417,8 +1599,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 10450072,
-      "additionalAfterStarterBytes": 10450072,
+      "closureBytes": 14384891,
+      "additionalAfterStarterBytes": 14384891,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1432,8 +1614,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 10029840,
-      "additionalAfterStarterBytes": 10029840,
+      "closureBytes": 13964659,
+      "additionalAfterStarterBytes": 13964659,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1447,8 +1629,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 9407266,
-      "additionalAfterStarterBytes": 9407266,
+      "closureBytes": 13342085,
+      "additionalAfterStarterBytes": 13342085,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1462,8 +1644,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 9270524,
-      "additionalAfterStarterBytes": 9270524,
+      "closureBytes": 13205343,
+      "additionalAfterStarterBytes": 13205343,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1477,8 +1659,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 10523794,
-      "additionalAfterStarterBytes": 10523794,
+      "closureBytes": 14458613,
+      "additionalAfterStarterBytes": 14458613,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1492,8 +1674,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 10588195,
-      "additionalAfterStarterBytes": 10588195,
+      "closureBytes": 14523014,
+      "additionalAfterStarterBytes": 14523014,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1507,8 +1689,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 9821244,
-      "additionalAfterStarterBytes": 9821244,
+      "closureBytes": 13756063,
+      "additionalAfterStarterBytes": 13756063,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1522,8 +1704,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 10573039,
-      "additionalAfterStarterBytes": 10573039,
+      "closureBytes": 14507858,
+      "additionalAfterStarterBytes": 14507858,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1537,8 +1719,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 8923075,
-      "additionalAfterStarterBytes": 8923075,
+      "closureBytes": 12857894,
+      "additionalAfterStarterBytes": 12857894,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1552,8 +1734,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 10365828,
-      "additionalAfterStarterBytes": 10365828,
+      "closureBytes": 14300647,
+      "additionalAfterStarterBytes": 14300647,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1567,8 +1749,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 9478448,
-      "additionalAfterStarterBytes": 9478448,
+      "closureBytes": 13413267,
+      "additionalAfterStarterBytes": 13413267,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1582,8 +1764,8 @@
         "runtime:versus"
       ],
       "ownBytes": 0,
-      "closureBytes": 10380411,
-      "additionalAfterStarterBytes": 10380411,
+      "closureBytes": 14315230,
+      "additionalAfterStarterBytes": 14315230,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1595,14 +1777,14 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 1844776,
-      "closureBytes": 1844776,
-      "additionalAfterStarterBytes": 1844776,
+      "ownBytes": 5779595,
+      "closureBytes": 5779595,
+      "additionalAfterStarterBytes": 5779595,
       "additionalAfterAllCurrentBytes": 0
     },
     {
       "id": "team:journey-team-opening",
-      "title": "Team · Horizon partners",
+      "title": "Team · Foundation specialists",
       "kind": "gameplay",
       "category": "chapter",
       "current": true,
@@ -1611,13 +1793,13 @@
         "runtime:team"
       ],
       "ownBytes": 2559323,
-      "closureBytes": 4107587,
-      "additionalAfterStarterBytes": 4107587,
+      "closureBytes": 7994161,
+      "additionalAfterStarterBytes": 7994161,
       "additionalAfterAllCurrentBytes": 0
     },
     {
       "id": "team:journey-team-foundation-practice",
-      "title": "Team · Shared returns",
+      "title": "Team · Stepping partner specialists · Divided chamber specialists · Switchback partner specialists",
       "kind": "gameplay",
       "category": "chapter",
       "current": true,
@@ -1626,13 +1808,13 @@
         "runtime:team"
       ],
       "ownBytes": 8108418,
-      "closureBytes": 9656682,
-      "additionalAfterStarterBytes": 9656682,
+      "closureBytes": 13543256,
+      "additionalAfterStarterBytes": 13543256,
       "additionalAfterAllCurrentBytes": 0
     },
     {
       "id": "team:journey-team-signal",
-      "title": "Team · Signal partners",
+      "title": "Team · Detour specialists",
       "kind": "gameplay",
       "category": "chapter",
       "current": true,
@@ -1641,13 +1823,13 @@
         "runtime:team"
       ],
       "ownBytes": 2817145,
-      "closureBytes": 4365409,
-      "additionalAfterStarterBytes": 4365409,
+      "closureBytes": 8251983,
+      "additionalAfterStarterBytes": 8251983,
       "additionalAfterAllCurrentBytes": 0
     },
     {
       "id": "team:journey-team-material-practice",
-      "title": "Team · Shared material routes",
+      "title": "Team · Material partner specialists · Material partner routes",
       "kind": "gameplay",
       "category": "chapter",
       "current": true,
@@ -1656,13 +1838,13 @@
         "runtime:team"
       ],
       "ownBytes": 8941024,
-      "closureBytes": 10489288,
-      "additionalAfterStarterBytes": 10489288,
+      "closureBytes": 14375862,
+      "additionalAfterStarterBytes": 14375862,
       "additionalAfterAllCurrentBytes": 0
     },
     {
       "id": "team:journey-team-changing-ground",
-      "title": "Team · Changing common ground",
+      "title": "Team · Partner-built returns · Complementary specialists",
       "kind": "gameplay",
       "category": "chapter",
       "current": true,
@@ -1671,8 +1853,8 @@
         "runtime:team"
       ],
       "ownBytes": 10828378,
-      "closureBytes": 12376642,
-      "additionalAfterStarterBytes": 12376642,
+      "closureBytes": 16263216,
+      "additionalAfterStarterBytes": 16263216,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -2090,9 +2272,9 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 1548264,
-      "closureBytes": 1548264,
-      "additionalAfterStarterBytes": 1548264,
+      "ownBytes": 5434838,
+      "closureBytes": 5434838,
+      "additionalAfterStarterBytes": 5434838,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -2288,6 +2470,318 @@
       "additionalAfterAllCurrentBytes": 8641768
     },
     {
+      "id": "company:coupa-all:ecb87b6208f6f55322188ab34d8d9aa63b94064dd346f400bbe2bbbcc9d7870b",
+      "title": "Coupa Village · ecb87b6208f6",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 13039450,
+      "closureBytes": 13039450,
+      "additionalAfterStarterBytes": 13039450,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:coupa-all:d9deabcadfd9bdc7622da65ebbcc91bdd752db02234009edc3fe09f85812f842",
+      "title": "Coupa Village · d9deabcadfd9",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 22127434,
+      "closureBytes": 22127434,
+      "additionalAfterStarterBytes": 22127434,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:coupa-adventure:82527f475e9cb0ddbc6bf9701e495e49e08dd635a0e89578c107268373426a05",
+      "title": "Spend in Motion · 82527f475e9c",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 3996753,
+      "closureBytes": 3996753,
+      "additionalAfterStarterBytes": 3996753,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:coupa-culture:ed8d7747ad136a06243a2cf8c90dacdc5cf42dc71f5c6448174bde48ea241ae8",
+      "title": "Inside the Village · ed8d7747ad13",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 2859123,
+      "closureBytes": 2859123,
+      "additionalAfterStarterBytes": 2859123,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:coupa-foundations:57dd4d5b7e0f8c27662349a8af870862657d700682ac758ad51721a61fdd59aa",
+      "title": "From Need to Value · 57dd4d5b7e0f",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 2883625,
+      "closureBytes": 2883625,
+      "additionalAfterStarterBytes": 2883625,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:coupa-foundations:176ab6d261ed0e4366b570dd14df270d6b27a761404baf17921dc1f974898bd6",
+      "title": "From Need to Value · 176ab6d261ed",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 6092747,
+      "closureBytes": 6092747,
+      "additionalAfterStarterBytes": 6092747,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:coupa-operations:99254aaf116f5b68881ef51f36c7b5b9ebfbcf6cce371de90c8234c07862a43d",
+      "title": "A Day in Coupa · 99254aaf116f",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 2967203,
+      "closureBytes": 2967203,
+      "additionalAfterStarterBytes": 2967203,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:coupa-operations:681f63d8afef4e5a89e3d62ac1a2ddaa775cf6d03ad2c3897c64bc2dfb84b922",
+      "title": "A Day in Coupa · 681f63d8afef",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 5665231,
+      "closureBytes": 5665231,
+      "additionalAfterStarterBytes": 5665231,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:coupa-developers:72ede618c25678c324d39389b9789130c66bb05f461e900d367e9c3f2a878224",
+      "title": "Connect the Network · 72ede618c256",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 3780646,
+      "closureBytes": 3780646,
+      "additionalAfterStarterBytes": 3780646,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:coupa-developers:ab769c5bd0c8e9cfeb09c20c9363a6012d482b911aec1577c6665d264490127a",
+      "title": "Connect the Network · ab769c5bd0c8",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 6961480,
+      "closureBytes": 6961480,
+      "additionalAfterStarterBytes": 6961480,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "company:droneaid-nl-community:13bf4f80b1b055d9fb5abdc137dfc93b94fe4ba55072104e697fb29615374679",
+      "title": "DroneAid Netherlands · 13bf4f80b1b0",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 2980046,
+      "closureBytes": 2980046,
+      "additionalAfterStarterBytes": 2980046,
+      "additionalAfterAllCurrentBytes": 2911943
+    },
+    {
+      "id": "company:droneaid-nl-community:3445135910a80ceb5b5fdb862c431ead7db00a09631ede2ec28426119d907f67",
+      "title": "DroneAid Netherlands · 3445135910a8",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 33847736,
+      "closureBytes": 33847736,
+      "additionalAfterStarterBytes": 33847736,
+      "additionalAfterAllCurrentBytes": 33779633
+    },
+    {
+      "id": "company:droneaid-nl-community:389459b2b3b2a5b330a053b9eaf11918878a8f19688e035cd19b641744f98c85",
+      "title": "DroneAid Netherlands · 389459b2b3b2",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 13002247,
+      "closureBytes": 13002247,
+      "additionalAfterStarterBytes": 13002247,
+      "additionalAfterAllCurrentBytes": 348333
+    },
+    {
+      "id": "company:droneaid-nl-workshop-lights:4e9e2e8ebc38f4bf6ae0b5a06144c103947cb90704b6646800bec534bcbf5c14",
+      "title": "Workshop Lights · 4e9e2e8ebc38",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 2980046,
+      "closureBytes": 2980046,
+      "additionalAfterStarterBytes": 2980046,
+      "additionalAfterAllCurrentBytes": 2911943
+    },
+    {
+      "id": "company:droneaid-nl-workshop-lights:115d034320ff3efb161abd00b5886485bd92c7a161d405e5f8cb384263480b70",
+      "title": "Workshop Lights · 115d034320ff",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 7229825,
+      "closureBytes": 7229825,
+      "additionalAfterStarterBytes": 7229825,
+      "additionalAfterAllCurrentBytes": 7161722
+    },
+    {
+      "id": "company:droneaid-nl-parts-in-motion:0b402f348a0d84f534c5db803d731394f7120160d7fd9c538887a4361a20ae40",
+      "title": "Parts in Motion · 0b402f348a0d",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 2980046,
+      "closureBytes": 2980046,
+      "additionalAfterStarterBytes": 2980046,
+      "additionalAfterAllCurrentBytes": 2911943
+    },
+    {
+      "id": "company:droneaid-nl-parts-in-motion:e8c32e78d0ef5bf6f09a08cbe2ccaf244ec4917c877bce69c2fdf9cb3f38673b",
+      "title": "Parts in Motion · e8c32e78d0ef",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 8168290,
+      "closureBytes": 8168290,
+      "additionalAfterStarterBytes": 8168290,
+      "additionalAfterAllCurrentBytes": 8100187
+    },
+    {
+      "id": "company:droneaid-nl-parts-in-motion:375300b9464b5a567c7cc8888e9a46f6f3e00cb01de0a25bf5cf2eff3c3b5f01",
+      "title": "Parts in Motion · 375300b9464b",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 2694710,
+      "closureBytes": 2694710,
+      "additionalAfterStarterBytes": 2694710,
+      "additionalAfterAllCurrentBytes": 348333
+    },
+    {
+      "id": "company:droneaid-nl-makers-together:609db6d6c7ea54120531b53b2b5c54b26d1484306195a426c39bd40d5236b478",
+      "title": "Makers Together · 609db6d6c7ea",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 2980046,
+      "closureBytes": 2980046,
+      "additionalAfterStarterBytes": 2980046,
+      "additionalAfterAllCurrentBytes": 2911943
+    },
+    {
+      "id": "company:droneaid-nl-makers-together:8c7d12be0f28ca874e88bbb453ab06fc947245681e8a4fc851b0c70a88314488",
+      "title": "Makers Together · 8c7d12be0f28",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 8185043,
+      "closureBytes": 8185043,
+      "additionalAfterStarterBytes": 8185043,
+      "additionalAfterAllCurrentBytes": 8116940
+    },
+    {
+      "id": "company:droneaid-nl-careful-handoff:fb9dafae437c37905dcdd07cec0f67b53ead801a8894c2bf2070309dfd16a913",
+      "title": "The Careful Handoff · fb9dafae437c",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 2980046,
+      "closureBytes": 2980046,
+      "additionalAfterStarterBytes": 2980046,
+      "additionalAfterAllCurrentBytes": 2911943
+    },
+    {
+      "id": "company:droneaid-nl-careful-handoff:2cb54a68ee115af048b210d130af7418d44307adbeb69ab54dbc4fc0418cacd7",
+      "title": "The Careful Handoff · 2cb54a68ee11",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 8330115,
+      "closureBytes": 8330115,
+      "additionalAfterStarterBytes": 8330115,
+      "additionalAfterAllCurrentBytes": 8262012
+    },
+    {
+      "id": "company:droneaid-nl-signals-of-support:013849c9507447451ca1f9a58d845da2d44436dbf776b231162ab8715cc61863",
+      "title": "Signals of Support · 013849c95074",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 2980046,
+      "closureBytes": 2980046,
+      "additionalAfterStarterBytes": 2980046,
+      "additionalAfterAllCurrentBytes": 2911943
+    },
+    {
+      "id": "company:droneaid-nl-signals-of-support:048f59ae3ab8452c1e2f387a15dc10baad8d88c921663e2c576e7ad2fffa2b44",
+      "title": "Signals of Support · 048f59ae3ab8",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 8359462,
+      "closureBytes": 8359462,
+      "additionalAfterStarterBytes": 8359462,
+      "additionalAfterAllCurrentBytes": 8291359
+    },
+    {
+      "id": "company:droneaid-nl-shared-horizon:1c5fc1701fb224c9a548d1540b19e2f8c893b43c6bc81d2b91a0bb65d3bcf0a6",
+      "title": "Shared Horizon · 1c5fc1701fb2",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 2980046,
+      "closureBytes": 2980046,
+      "additionalAfterStarterBytes": 2980046,
+      "additionalAfterAllCurrentBytes": 2911943
+    },
+    {
+      "id": "company:droneaid-nl-shared-horizon:fb225362d153cdd9af4d0421e7e7905521bb0d926cab7557985d40982924e429",
+      "title": "Shared Horizon · fb225362d153",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [],
+      "ownBytes": 8475231,
+      "closureBytes": 8475231,
+      "additionalAfterStarterBytes": 8475231,
+      "additionalAfterAllCurrentBytes": 8407128
+    },
+    {
       "id": "archive:journey:opening",
       "title": "Journey · Opening Journey · Archive",
       "kind": "gameplay",
@@ -2298,8 +2792,8 @@
         "runtime:versus"
       ],
       "ownBytes": 25883341,
-      "closureBytes": 27728117,
-      "additionalAfterStarterBytes": 4303260,
+      "closureBytes": 31662936,
+      "additionalAfterStarterBytes": 8238079,
       "additionalAfterAllCurrentBytes": 20768
     },
     {
@@ -2313,8 +2807,8 @@
         "runtime:versus"
       ],
       "ownBytes": 45320151,
-      "closureBytes": 47164927,
-      "additionalAfterStarterBytes": 23740070,
+      "closureBytes": 51099746,
+      "additionalAfterStarterBytes": 27674889,
       "additionalAfterAllCurrentBytes": 37368
     },
     {
@@ -2328,8 +2822,8 @@
         "runtime:versus"
       ],
       "ownBytes": 208569661,
-      "closureBytes": 210414437,
-      "additionalAfterStarterBytes": 186989580,
+      "closureBytes": 214349256,
+      "additionalAfterStarterBytes": 190924399,
       "additionalAfterAllCurrentBytes": 223521
     },
     {
@@ -2343,8 +2837,8 @@
         "runtime:versus"
       ],
       "ownBytes": 208569688,
-      "closureBytes": 210414464,
-      "additionalAfterStarterBytes": 186989607,
+      "closureBytes": 214349283,
+      "additionalAfterStarterBytes": 190924426,
       "additionalAfterAllCurrentBytes": 223548
     },
     {
@@ -2358,8 +2852,8 @@
         "runtime:versus"
       ],
       "ownBytes": 208570824,
-      "closureBytes": 210415600,
-      "additionalAfterStarterBytes": 186990743,
+      "closureBytes": 214350419,
+      "additionalAfterStarterBytes": 190925562,
       "additionalAfterAllCurrentBytes": 224684
     },
     {
@@ -2373,8 +2867,8 @@
         "runtime:versus"
       ],
       "ownBytes": 208572844,
-      "closureBytes": 210417620,
-      "additionalAfterStarterBytes": 186992763,
+      "closureBytes": 214352439,
+      "additionalAfterStarterBytes": 190927582,
       "additionalAfterAllCurrentBytes": 226704
     },
     {
@@ -2388,8 +2882,8 @@
         "runtime:versus"
       ],
       "ownBytes": 208575017,
-      "closureBytes": 210419793,
-      "additionalAfterStarterBytes": 186994936,
+      "closureBytes": 214354612,
+      "additionalAfterStarterBytes": 190929755,
       "additionalAfterAllCurrentBytes": 228877
     },
     {
@@ -2403,8 +2897,8 @@
         "runtime:versus"
       ],
       "ownBytes": 208575536,
-      "closureBytes": 210420312,
-      "additionalAfterStarterBytes": 186995455,
+      "closureBytes": 214355131,
+      "additionalAfterStarterBytes": 190930274,
       "additionalAfterAllCurrentBytes": 229396
     },
     {
@@ -2418,8 +2912,8 @@
         "runtime:versus"
       ],
       "ownBytes": 208576468,
-      "closureBytes": 210421244,
-      "additionalAfterStarterBytes": 186996387,
+      "closureBytes": 214356063,
+      "additionalAfterStarterBytes": 190931206,
       "additionalAfterAllCurrentBytes": 230328
     },
     {
@@ -2433,8 +2927,8 @@
         "runtime:versus"
       ],
       "ownBytes": 224610244,
-      "closureBytes": 226455020,
-      "additionalAfterStarterBytes": 203030163,
+      "closureBytes": 230389839,
+      "additionalAfterStarterBytes": 206964982,
       "additionalAfterAllCurrentBytes": 252113
     },
     {
@@ -2448,8 +2942,8 @@
         "runtime:versus"
       ],
       "ownBytes": 224610508,
-      "closureBytes": 226455284,
-      "additionalAfterStarterBytes": 203030427,
+      "closureBytes": 230390103,
+      "additionalAfterStarterBytes": 206965246,
       "additionalAfterAllCurrentBytes": 252377
     },
     {
@@ -2463,8 +2957,8 @@
         "runtime:versus"
       ],
       "ownBytes": 224612912,
-      "closureBytes": 226457688,
-      "additionalAfterStarterBytes": 203032831,
+      "closureBytes": 230392507,
+      "additionalAfterStarterBytes": 206967650,
       "additionalAfterAllCurrentBytes": 254781
     },
     {
@@ -2478,8 +2972,8 @@
         "runtime:versus"
       ],
       "ownBytes": 224613741,
-      "closureBytes": 226458517,
-      "additionalAfterStarterBytes": 203033660,
+      "closureBytes": 230393336,
+      "additionalAfterStarterBytes": 206968479,
       "additionalAfterAllCurrentBytes": 255610
     },
     {
@@ -2493,8 +2987,8 @@
         "runtime:versus"
       ],
       "ownBytes": 224615554,
-      "closureBytes": 226460330,
-      "additionalAfterStarterBytes": 203035473,
+      "closureBytes": 230395149,
+      "additionalAfterStarterBytes": 206970292,
       "additionalAfterAllCurrentBytes": 257423
     },
     {
@@ -2508,8 +3002,8 @@
         "runtime:versus"
       ],
       "ownBytes": 224615909,
-      "closureBytes": 226202907,
-      "additionalAfterStarterBytes": 202778050,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -2523,9 +3017,339 @@
         "runtime:versus"
       ],
       "ownBytes": 224616914,
-      "closureBytes": 226202907,
-      "additionalAfterStarterBytes": 202778050,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
       "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v11",
+      "title": "Journey · Whole Journey Horizon cultural joins · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224617706,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v12",
+      "title": "Journey · Whole Journey Border cultural routes · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224618737,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v13",
+      "title": "Journey · Whole Journey Border and Signal cultural routes · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224619670,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v14",
+      "title": "Journey · Whole Journey early Ukrainian cultural routes · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224620776,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v15",
+      "title": "Journey · Whole Journey Signal Ukrainian cultural routes · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224621728,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v16",
+      "title": "Journey · Whole Journey Neon Ukrainian cultural routes · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224622316,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v17",
+      "title": "Journey · Whole Journey Neon Ukrainian cultural routes finale · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224623913,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v18",
+      "title": "Journey · Whole Journey Rover Ukrainian cultural routes · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224625736,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v19",
+      "title": "Journey · Whole Journey Fractured Grid Ukrainian cultural routes · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224627257,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v20",
+      "title": "Journey · Whole Journey Phaseworks Ukrainian cultural routes · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224628483,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v21",
+      "title": "Journey · Whole Journey Livewire Ukrainian cultural routes · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224629468,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v22",
+      "title": "Journey · Whole Journey Relay Ukrainian cultural routes · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224631504,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v23",
+      "title": "Journey · Whole Journey Crosswind Ukrainian cultural routes · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224633462,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v24",
+      "title": "Journey · Whole Journey Sentinel Ukrainian cultural routes · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224634671,
+      "closureBytes": 230137726,
+      "additionalAfterStarterBytes": 206712869,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v26",
+      "title": "Journey · Whole Journey Relay Ukrainian cultural completion · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224637345,
+      "closureBytes": 230416940,
+      "additionalAfterStarterBytes": 206992083,
+      "additionalAfterAllCurrentBytes": 279214
+    },
+    {
+      "id": "archive:journey:whole-spatial-v27",
+      "title": "Journey · Whole Journey Crosswind Ukrainian cultural completion · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224638751,
+      "closureBytes": 230418346,
+      "additionalAfterStarterBytes": 206993489,
+      "additionalAfterAllCurrentBytes": 280620
+    },
+    {
+      "id": "archive:journey:whole-spatial-v28",
+      "title": "Journey · Whole Journey Fracture and Apex Ukrainian cultural completion · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224640440,
+      "closureBytes": 230420035,
+      "additionalAfterStarterBytes": 206995178,
+      "additionalAfterAllCurrentBytes": 282309
+    },
+    {
+      "id": "archive:journey:whole-spatial-v29",
+      "title": "Journey · Whole Journey Neon Ukrainian cultural completion · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224641535,
+      "closureBytes": 230421130,
+      "additionalAfterStarterBytes": 206996273,
+      "additionalAfterAllCurrentBytes": 283404
+    },
+    {
+      "id": "archive:journey:whole-spatial-v30",
+      "title": "Journey · Whole Journey Rover Ukrainian and FPV spatial completion · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224643107,
+      "closureBytes": 230422702,
+      "additionalAfterStarterBytes": 206997845,
+      "additionalAfterAllCurrentBytes": 284976
+    },
+    {
+      "id": "archive:journey:whole-spatial-v31",
+      "title": "Journey · Whole Journey Border Ukrainian cultural completion · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224643923,
+      "closureBytes": 230423518,
+      "additionalAfterStarterBytes": 206998661,
+      "additionalAfterAllCurrentBytes": 285792
+    },
+    {
+      "id": "archive:journey:whole-spatial-v32",
+      "title": "Journey · Whole Journey Border frontier and pocket completion · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224644916,
+      "closureBytes": 230424511,
+      "additionalAfterStarterBytes": 206999654,
+      "additionalAfterAllCurrentBytes": 286785
+    },
+    {
+      "id": "archive:journey:whole-spatial-v33",
+      "title": "Journey · Whole Journey Cultural timed opportunity pressure · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224646265,
+      "closureBytes": 230425860,
+      "additionalAfterStarterBytes": 207001003,
+      "additionalAfterAllCurrentBytes": 288134
     },
     {
       "id": "archive:journey:whole-ornament-v1",
@@ -2538,8 +3362,8 @@
         "runtime:versus"
       ],
       "ownBytes": 224618796,
-      "closureBytes": 226463572,
-      "additionalAfterStarterBytes": 203038715,
+      "closureBytes": 230398391,
+      "additionalAfterStarterBytes": 206973534,
       "additionalAfterAllCurrentBytes": 260665
     },
     {
@@ -2553,8 +3377,8 @@
         "runtime:versus"
       ],
       "ownBytes": 224624445,
-      "closureBytes": 226469221,
-      "additionalAfterStarterBytes": 203044364,
+      "closureBytes": 230404040,
+      "additionalAfterStarterBytes": 206979183,
       "additionalAfterAllCurrentBytes": 266314
     },
     {
@@ -2568,8 +3392,8 @@
         "runtime:team"
       ],
       "ownBytes": 33254288,
-      "closureBytes": 34802552,
-      "additionalAfterStarterBytes": 34802552,
+      "closureBytes": 38689126,
+      "additionalAfterStarterBytes": 38689126,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -2583,8 +3407,8 @@
         "runtime:team"
       ],
       "ownBytes": 33254288,
-      "closureBytes": 34802552,
-      "additionalAfterStarterBytes": 34802552,
+      "closureBytes": 38689126,
+      "additionalAfterStarterBytes": 38689126,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -2598,8 +3422,38 @@
         "runtime:team"
       ],
       "ownBytes": 33254288,
-      "closureBytes": 34802552,
-      "additionalAfterStarterBytes": 34802552,
+      "closureBytes": 38689126,
+      "additionalAfterStarterBytes": 38689126,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:team:team-trail-impact-originals-1",
+      "title": "Team · Team Journey · owned travelling impacts · balance review pending · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 33254288,
+      "closureBytes": 38689126,
+      "additionalAfterStarterBytes": 38689126,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:team:team-cultural-specialist-originals-1",
+      "title": "Team · Team Journey · Ukrainian spatial specialists · balance review pending · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 33254288,
+      "closureBytes": 38689126,
+      "additionalAfterStarterBytes": 38689126,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -2613,8 +3467,8 @@
         "runtime:team"
       ],
       "ownBytes": 7282747,
-      "closureBytes": 8831011,
-      "additionalAfterStarterBytes": 8831011,
+      "closureBytes": 12717585,
+      "additionalAfterStarterBytes": 12717585,
       "additionalAfterAllCurrentBytes": 7282747
     },
     {
@@ -2628,8 +3482,8 @@
         "runtime:team"
       ],
       "ownBytes": 7282747,
-      "closureBytes": 8831011,
-      "additionalAfterStarterBytes": 8831011,
+      "closureBytes": 12717585,
+      "additionalAfterStarterBytes": 12717585,
       "additionalAfterAllCurrentBytes": 7282747
     },
     {
@@ -2703,6 +3557,18 @@
       "additionalAfterAllCurrentBytes": 8046789
     },
     {
+      "id": "tooling:company-artwork",
+      "title": "Company artwork reference originals",
+      "kind": "gameplay",
+      "category": "tooling",
+      "current": false,
+      "requires": [],
+      "ownBytes": 4055217,
+      "closureBytes": 4055217,
+      "additionalAfterStarterBytes": 4055217,
+      "additionalAfterAllCurrentBytes": 4055217
+    },
+    {
       "id": "tooling:team:team-specialist-originals-1",
       "title": "Team · Team Journey · complementary specialists · balance review pending · Studio",
       "kind": "gameplay",
@@ -2713,8 +3579,8 @@
         "runtime:team"
       ],
       "ownBytes": 33254288,
-      "closureBytes": 34802552,
-      "additionalAfterStarterBytes": 34802552,
+      "closureBytes": 38689126,
+      "additionalAfterStarterBytes": 38689126,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -2728,8 +3594,8 @@
         "runtime:team"
       ],
       "ownBytes": 33254288,
-      "closureBytes": 34802552,
-      "additionalAfterStarterBytes": 34802552,
+      "closureBytes": 38689126,
+      "additionalAfterStarterBytes": 38689126,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -2743,8 +3609,8 @@
         "runtime:team"
       ],
       "ownBytes": 7282747,
-      "closureBytes": 8831011,
-      "additionalAfterStarterBytes": 8831011,
+      "closureBytes": 12717585,
+      "additionalAfterStarterBytes": 12717585,
       "additionalAfterAllCurrentBytes": 7282747
     },
     {
@@ -2756,10 +3622,10 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 12891114,
-      "closureBytes": 12891114,
-      "additionalAfterStarterBytes": 12891114,
-      "additionalAfterAllCurrentBytes": 12891114
+      "ownBytes": 14994645,
+      "closureBytes": 14994645,
+      "additionalAfterStarterBytes": 14994645,
+      "additionalAfterAllCurrentBytes": 14994645
     },
     {
       "id": "tooling:artwork",
@@ -2775,11 +3641,34 @@
     }
   ],
   "limitations": [
-    "This is a development build measurement, not a frozen release or physical-device certification.",
-    "The starter has nine Horizon original pictures and no recorded music. Full current navigation metadata remains available.",
+    "These are manifest-declared payload sizes, not physical-device certification or measurements of browser cache overhead.",
+    "Starter counts describe the selected base group. Full current navigation metadata remains available; a displayed chapter is not evidence that its assets have been downloaded.",
     "Solo uses navigation metadata and one opening-chapter runtime. Other executable chapters, Versus/Team host entry points and historical route sources are separate packages; shared compiler, replay, controller and presentation helpers remain in core.",
     "Versus and Team runtimes still include complete route sources needed by their existing browsers. Further mode-internal chapter splitting remains unqualified.",
     "Original PNG bytes are unchanged. These numbers do not assume new artwork or promise a final optimized image budget.",
     "Browser cache overhead, temporary verification buffers, imports, saves and retained previous editions require additional space beyond stored payload bytes."
-  ]
+  ],
+  "evidence": {
+    "kind": "published-metadata",
+    "baseURL": "https://mekhovov.github.io/revealline/releases/v0.141.7/site/",
+    "manifestSha256": "76c13bd3027b0e0e3ee443c35a338914c03f7ae1b98fbdf487cfdf8a6206ee5f",
+    "verifiedFiles": [
+      {
+        "path": "offline-content.json",
+        "bytes": 6498740,
+        "sha256": "21a358ec8a4be591b89ad888951097e0934db62d810319617c4b2cf0660f12d4"
+      },
+      {
+        "path": "offline-cache.json",
+        "bytes": 391774,
+        "sha256": "e7faefc89d0be7fce5be01e157a692f766a595c8a85f7de40340760ed5c5d13e"
+      },
+      {
+        "path": "app/service-worker.js",
+        "bytes": 5211,
+        "sha256": "c5bf7d950d37486e7e5476b002cb002113d600590b2802f899a01cc4cdb518e8"
+      }
+    ],
+    "scope": "The three published metadata files match the frozen manifest. Package sizes are declared payload bytes; individual gameplay assets, the archive and installed-device storage were not re-downloaded or verified by this report."
+  }
 }

@@ -1,23 +1,25 @@
 # Offline package measurements
 
-Generated from the built distribution, version 0.132.1, build ID `757fd1ac920697fb0bc55ddef275173591f036c3d920855a0297044d141af6b8`. Source revision: not frozen (development build). Distribution SHA-256: `0db98ab66ad7501f39356f6ca9f3cd3c0a496e74bab52715e664c3718b697d57`.
+Generated from the built distribution, version v0.141.7, build ID `d33419007107875684452bea03dd553107d6eb10dc7b5316b0e3d92abbc0bc3c`. Source revision: efbb3882b4edd447c8e9f60ed60c536a956d78f3. Distribution SHA-256: `ce653828fa11497567fcb39e370b744bd97d0c78ccb9d173fc7fc8edb7fcdacd`.
 
-Reproduce after building with:
+The three published metadata files match the frozen manifest. Package sizes are declared payload bytes; individual gameplay assets, the archive and installed-device storage were not re-downloaded or verified by this report.
+
+Reproduce with:
 
 ```sh
-node scripts/report-offline-packages.mjs --site .cache/offline-package-lazy --out docs/content-offline/packages
+node scripts/report-published-offline-packages.mjs --version v0.141.7 --out docs/content-offline/packages
 ```
 
 Decoded file bytes. MiB = 1,048,576 bytes. HTTP compression and protocol overhead are not measured.
 
 | Selection | Decoded transfer by owner | Conservative transfer upper bound | Stored payload |
 | --- | ---: | ---: | ---: |
-| starter | 55.10 MiB | 56.86 MiB | 56.86 MiB |
-| allCurrent | 494.49 MiB | 496.25 MiB | 496.25 MiB |
-| allGameplayArchivesAndTools | 577.17 MiB | 578.93 MiB | 578.93 MiB |
+| starter | 61.47 MiB | 63.47 MiB | 63.47 MiB |
+| allCurrent | 565.39 MiB | 567.39 MiB | 567.39 MiB |
+| allGameplayArchivesAndTools | 688.66 MiB | 690.66 MiB | 690.66 MiB |
 | soundtracks | 346.78 MiB | 346.78 MiB | 346.78 MiB |
 
-All gameplay selections include the edition runtime and the stable installed launcher. Soundtracks are an independent additional download. Archive and tooling packages are excluded from all-current. The complete shipped distribution payload is 591.72 MiB; this is not the starter download.
+All gameplay selections include the edition runtime and the stable installed launcher. Soundtracks are an independent additional download. Archive and tooling packages are excluded from all-current. The complete shipped distribution payload is 705.29 MiB; this is not the starter download.
 
 ## Starter composition
 
@@ -25,24 +27,40 @@ The Solo Horizon starter contains 9 core missions, 9 original PNG pictures, the 
 
 | Owner | Decoded transfer | Stored payload |
 | --- | ---: | ---: |
-| editionRuntime | 32.74 MiB | 34.50 MiB |
+| editionRuntime | 39.03 MiB | 41.03 MiB |
 | officialContent | 22.34 MiB | 22.34 MiB |
-| installedLauncher | 0.02 MiB | 0.02 MiB |
+| installedLauncher | 0.09 MiB | 0.09 MiB |
 
-Runtime URL copies, official hashes and stable launcher URLs are separate owners. Matching bytes are not assumed reusable across owners. Runtime deduplication saves transfer when identical files exist at multiple URLs; these URLs still occupy separate cache entries. The conservative UI estimate counts those copies. The launcher owns 24,762 additional bytes. These figures describe a fresh cache; already verified files reduce subsequent downloads.
+Runtime URL copies, official hashes and stable launcher URLs are separate owners. Matching bytes are not assumed reusable across owners. Runtime deduplication saves transfer when identical files exist at multiple URLs; these URLs still occupy separate cache entries. The conservative UI estimate counts those copies. The launcher owns 98,456 additional bytes. These figures describe a fresh cache; already verified files reduce subsequent downloads.
 
-1 standalone chapter snapshots are in core. Current navigation metadata is 935,267 bytes; keeping it allows future chapters and existing progress to remain visible.
+1 standalone chapter snapshots are in core. Current navigation metadata is 1,363,574 bytes; keeping it allows future chapters and existing progress to remain visible.
+
+## Current gameplay official payload
+
+This excludes the separately counted runtime and launcher above. All current gameplay lists 0 MP3 files. Optional soundtrack downloads remain independent.
+
+| File type | Stored payload |
+| --- | ---: |
+| .png | 306.29 MiB |
+| .rlmedia | 116.60 MiB |
+| .json | 102.03 MiB |
+| .mjs | 0.99 MiB |
+| .ttf | 0.15 MiB |
+| .html | 0.14 MiB |
+| .css | 0.05 MiB |
+| .js | 0.01 MiB |
+| .txt | 0.00 MiB |
 
 ## Shared runtime composition
 
 | File type | Stored payload |
 | --- | ---: |
 | .png | 17.06 MiB |
-| .json | 9.71 MiB |
-| .mjs | 4.96 MiB |
-| .js | 1.36 MiB |
-| .html | 0.53 MiB |
-| .css | 0.32 MiB |
+| .json | 15.70 MiB |
+| .mjs | 5.41 MiB |
+| .js | 1.40 MiB |
+| .html | 0.56 MiB |
+| .css | 0.34 MiB |
 | .woff2 | 0.30 MiB |
 | .ttf | 0.20 MiB |
 | .txt | 0.04 MiB |
@@ -53,8 +71,8 @@ Runtime URL copies, official hashes and stable launcher URLs are separate owners
 
 ## Remaining work and interpretation
 
-- This is a development build measurement, not a frozen release or physical-device certification.
-- The starter has nine Horizon original pictures and no recorded music. Full current navigation metadata remains available.
+- These are manifest-declared payload sizes, not physical-device certification or measurements of browser cache overhead.
+- Starter counts describe the selected base group. Full current navigation metadata remains available; a displayed chapter is not evidence that its assets have been downloaded.
 - Solo uses navigation metadata and one opening-chapter runtime. Other executable chapters, Versus/Team host entry points and historical route sources are separate packages; shared compiler, replay, controller and presentation helpers remain in core.
 - Versus and Team runtimes still include complete route sources needed by their existing browsers. Further mode-internal chapter splitting remains unqualified.
 - Original PNG bytes are unchanged. These numbers do not assume new artwork or promise a final optimized image budget.
