@@ -6,7 +6,7 @@
     {
       "fields": { "name": { "en": "Community Connections", "uk": "Зв’язки спільноти" } },
       "id": "social-drone-community-connections",
-      "identity": "74ff60969cb39e89",
+      "identity": "0cb1b71f9563771a",
       "kind": "campaign"
     },
     {
@@ -86,7 +86,7 @@
         "name": { "en": "Describe the Important Part", "uk": "Опишіть важливе" }
       },
       "id": "social-drone-community-connections-05",
-      "identity": "e0fae0ed884975fa",
+      "identity": "b2ca3aa99b2bcdb1",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "Keep the Story Accurate", "uk": "Збережіть точність історії" }
       },
       "id": "social-drone-community-connections-06",
-      "identity": "94afd451859d525b",
+      "identity": "2637e8dc6c83e8a9",
       "kind": "mission"
     }
   ],
