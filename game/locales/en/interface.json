@@ -1770,6 +1770,7 @@
   "cancelNextArena": "Cancel next arena",
   "resumeTogether": "Resume together",
   "retrySameArena": "Retry same arena",
+  "changeDifficulty": "Change difficulty",
   "changeSetup": "Change setup",
   "otherGameModes": "Other game modes",
   "returnToSolo3": "Return to Solo",
