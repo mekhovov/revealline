@@ -17,8 +17,8 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-ua-home",
-          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+          "assetId": "social-drone-people-workshop-01-art-v1",
+          "sha256": "1a23739d451d250b8622edd8d5dd6c0d82d2125143dcf16c46df1f8b8e326319"
         },
         "id": "social-drone-people-workshop-01-image",
         "locales": {
@@ -80,7 +80,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "social-drone-people-workshop-01", "kind": "mission" }
   },
   {
@@ -548,8 +548,8 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-ua-home",
-          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+          "assetId": "social-drone-people-workshop-01-art-v1",
+          "sha256": "1a23739d451d250b8622edd8d5dd6c0d82d2125143dcf16c46df1f8b8e326319"
         },
         "id": "social-drone-people-workshop-01-image",
         "locales": {
@@ -718,7 +718,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "social-drone-people-workshop", "kind": "campaign" }
   }
 ]

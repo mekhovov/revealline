@@ -188,6 +188,21 @@
           <div class="panel">
             <label>Campaign to edit<select id="campaign-select"></select></label>
             <p id="campaign-path" class="path"></p>
+            <form id="campaign-art-form" class="form-grid">
+              <label
+                ><span data-i18n="tools:studio.campaignArtwork.label">Campaign key picture</span
+                ><select id="campaign-hero-asset"></select
+              ></label>
+              <button type="submit" data-i18n="tools:studio.campaignArtwork.apply">
+                Apply campaign picture
+              </button>
+              <p class="small wide" data-i18n="tools:studio.campaignArtwork.help">
+                A public campaign preview, separate from its locked finale. Choose a raster image
+                already registered to this campaign.
+              </p>
+              <img id="campaign-hero-preview" class="campaign-hero-preview wide" alt="" hidden />
+            </form>
+
             <label
               >Campaign project JSON<textarea
                 id="campaign-json"
@@ -375,10 +390,11 @@
             </label>
             <button id="apply-rewards">Validate &amp; apply rewards</button>
             <p id="rewards-summary" class="small"></p>
-            <p class="small">
-              The JSON editor preserves sources, exact image references and English/Ukrainian copy.
-              This batch supports knowledge, images, HTTPS links and public codes. Media playback
-              and cosmetic rewards need later shared adapters.
+            <p class="small" data-i18n="tools:studio.discovery.rewardCapabilities">
+              The JSON editor preserves sources, exact media references and English/Ukrainian copy.
+              Rewards support knowledge, images, interactive atlases, HTTPS links, public codes,
+              audio and video with transcripts and captions. Cosmetic rewards need a later shared
+              adapter.
             </p>
             <div class="reward-preview-controls">
               <label>Reward preview<select id="reward-preview-select"></select></label>

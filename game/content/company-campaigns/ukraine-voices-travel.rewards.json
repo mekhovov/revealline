@@ -1,0 +1,735 @@
+[
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-voices-travel",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-voices-travel-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Kobza and wheel-lyre traditions include voices and a shared practice.",
+        "title": "An Instrument and a Voice"
+      },
+      "uk": {
+        "teaser": "Кобзарська та лірницька традиції поєднують голоси й спільну практику.",
+        "title": "Інструмент і голос"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-voices-travel-01-image",
+        "locales": {
+          "en": {
+            "alt": "An Instrument and a Voice — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "An Instrument and a Voice"
+          },
+          "uk": {
+            "alt": "Інструмент і голос — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Інструмент і голос"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-voices-travel-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNESCO’s kobza and wheel-lyre record describes travelling singers and instrumentalists, historically including people with visual impairments. A safeguarding programme for this tradition entered the Register of Good Safeguarding Practices in 2024.",
+              "Our exhibit has an instrument card and a performer card. Keep them connected: the shape of an instrument does not tell the whole story of a person’s practice. When opening the source, look for who is speaking and how the knowledge is learned."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Safeguarding programme of kobza and wheel lyre tradition",
+                "url": "https://ich.unesco.org/en/BSP/safeguarding-programme-of-kobza-and-wheel-lyre-tradition-02136"
+              }
+            ],
+            "title": "An Instrument and a Voice"
+          },
+          "uk": {
+            "paragraphs": [
+              "Запис ЮНЕСКО про кобзарську та лірницьку традицію описує мандрівних співців та інструменталістів, історично зокрема людей із порушеннями зору. Програму охорони традиції внесено до Реєстру належних практик охорони 2024 року.",
+              "У нашій виставці є картка інструмента й картка виконавця. Збережіть їхній зв’язок: форма інструмента не розповідає всього про практику людини. Відкриваючи джерело, зверніть увагу, хто говорить і як передаються знання."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Safeguarding programme of kobza and wheel lyre tradition",
+                "url": "https://ich.unesco.org/en/BSP/safeguarding-programme-of-kobza-and-wheel-lyre-tradition-02136"
+              }
+            ],
+            "title": "Інструмент і голос"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "19f1c5268875c84c" },
+            { "difficulty": "standard", "gameplayId": "ac3e9d707864ad21" },
+            { "difficulty": "expert", "gameplayId": "f0449ad9bc3cb253" }
+          ],
+          "missionId": "ukraine-voices-travel-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-voices-travel-01", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-voices-travel",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-voices-travel-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A musical guild is also a way people support a tradition.",
+        "title": "A Practice Kept Together"
+      },
+      "uk": {
+        "teaser": "Музичний цех також допомагає людям підтримувати традицію.",
+        "title": "Практика, яку бережуть разом"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-voices-travel-02-image",
+        "locales": {
+          "en": {
+            "alt": "A Practice Kept Together — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Practice Kept Together"
+          },
+          "uk": {
+            "alt": "Практика, яку бережуть разом — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Практика, яку бережуть разом"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-voices-travel-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNESCO describes kobzar guilds, or tsekhs, as organizations that regulated practice and protected performers’ rights. Its safeguarding account also describes present-day work with people with visual impairments.",
+              "In a fictional learning room, place “people,” “skills” and “opportunities to perform” on three cards. Removing any one changes the picture. A museum can keep an instrument, while a community also needs ways to keep using and teaching the practice."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Safeguarding programme of kobza and wheel lyre tradition",
+                "url": "https://ich.unesco.org/en/BSP/safeguarding-programme-of-kobza-and-wheel-lyre-tradition-02136"
+              }
+            ],
+            "title": "A Practice Kept Together"
+          },
+          "uk": {
+            "paragraphs": [
+              "ЮНЕСКО описує кобзарські цехи як об’єднання, що впорядковували практику та захищали права виконавців. Розповідь про охорону також описує сучасну роботу з людьми з порушеннями зору.",
+              "У вигаданій навчальній кімнаті розмістіть три картки: «люди», «навички» й «можливості виступати». Вилучення будь-якої змінює картину. Музей може зберегти інструмент, а спільноті також потрібні способи продовжувати практику та навчати її."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Safeguarding programme of kobza and wheel lyre tradition",
+                "url": "https://ich.unesco.org/en/BSP/safeguarding-programme-of-kobza-and-wheel-lyre-tradition-02136"
+              }
+            ],
+            "title": "Практика, яку бережуть разом"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a8355a81e146ed09" },
+            { "difficulty": "standard", "gameplayId": "5d56a5e1e64edb10" },
+            { "difficulty": "expert", "gameplayId": "77d891b22f9095e8" }
+          ],
+          "missionId": "ukraine-voices-travel-02"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-voices-travel-02", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-voices-travel",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-voices-travel-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A regional inscription is precise about the community it describes.",
+        "title": "A Region Has Many Voices"
+      },
+      "uk": {
+        "teaser": "Регіональний запис точно називає спільноту, про яку йдеться.",
+        "title": "Регіон має багато голосів"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-voices-travel-03-image",
+        "locales": {
+          "en": {
+            "alt": "A Region Has Many Voices — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Region Has Many Voices"
+          },
+          "uk": {
+            "alt": "Регіон має багато голосів — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Регіон має багато голосів"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-voices-travel-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Cossack’s songs of Dnipropetrovsk Region entered UNESCO’s Urgent Safeguarding List in 2016. The record concerns singing communities in that region, with songs that include personal relationships and the tragedy of war.",
+              "Give our fictional archive card the region’s name instead of labelling it “every Ukrainian song.” Place and performance context help a listener understand a recording. A specific tradition can be important without representing every singer or every part of the country."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Cossack’s songs of Dnipropetrovsk Region",
+                "url": "https://ich.unesco.org/en/USL/cossacks-songs-of-dnipropetrovsk-region-01194"
+              }
+            ],
+            "title": "A Region Has Many Voices"
+          },
+          "uk": {
+            "paragraphs": [
+              "Козацькі пісні Дніпропетровщини внесено до Списку ЮНЕСКО, що потребує термінової охорони, 2016 року. Запис стосується співочих спільнот регіону; серед тем пісень — особисті стосунки й трагедія війни.",
+              "Зазначте на вигаданій архівній картці регіон замість підпису «вся українська пісня». Місце й обставини виконання допомагають зрозуміти запис. Конкретна традиція може бути важливою, не представляючи всіх співаків чи всі частини країни."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Cossack’s songs of Dnipropetrovsk Region",
+                "url": "https://ich.unesco.org/en/USL/cossacks-songs-of-dnipropetrovsk-region-01194"
+              }
+            ],
+            "title": "Регіон має багато голосів"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "cce71b88024ec80d" },
+            { "difficulty": "standard", "gameplayId": "a5427666c173cb2e" },
+            { "difficulty": "expert", "gameplayId": "6b693216a4914e38" }
+          ],
+          "missionId": "ukraine-voices-travel-03"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-voices-travel-03", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-voices-travel",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-voices-travel-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A 1922 concert gives a familiar melody a named journey.",
+        "title": "Shchedryk Crosses an Ocean"
+      },
+      "uk": {
+        "teaser": "Концерт 1922 року додає знайомій мелодії конкретну історію подорожі.",
+        "title": "«Щедрик» перетинає океан"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-voices-travel-04-image",
+        "locales": {
+          "en": {
+            "alt": "Shchedryk Crosses an Ocean — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Shchedryk Crosses an Ocean"
+          },
+          "uk": {
+            "alt": "«Щедрик» перетинає океан — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "«Щедрик» перетинає океан"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-voices-travel-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Ukrainian Institute records a Carnegie Hall performance of Mykola Leontovych’s Shchedryk on 5 October 1922, during the Ukrainian Republic Capella’s tour conducted by Oleksandr Koshyts.",
+              "Arrange three labels: composition, performers and concert. A work can travel while each performance has its own people and date. Explore the linked concert history, then explain which label names the work and which names a particular event. No song lyrics are needed for this comparison."
+            ],
+            "sources": [
+              {
+                "title": "Ukrainian Institute — Shchedryk at Carnegie Hall",
+                "url": "https://ui.org.ua/en/sectors-en/carol-of-the-bells-at-carnegie-hall/"
+              }
+            ],
+            "title": "Shchedryk Crosses an Ocean"
+          },
+          "uk": {
+            "paragraphs": [
+              "Український інститут описує виконання «Щедрика» Миколи Леонтовича в Карнеґі-холі 5 жовтня 1922 року під час гастролей Української республіканської капели під керівництвом Олександра Кошиця.",
+              "Розташуйте три підписи: твір, виконавці та концерт. Твір подорожує, а кожне виконання має своїх людей і дату. Дослідіть історію концерту за посиланням і поясніть, який підпис називає твір, а який — конкретну подію. Для порівняння текст пісні не потрібен."
+            ],
+            "sources": [
+              {
+                "title": "Ukrainian Institute — Shchedryk at Carnegie Hall",
+                "url": "https://ui.org.ua/en/sectors-en/carol-of-the-bells-at-carnegie-hall/"
+              }
+            ],
+            "title": "«Щедрик» перетинає океан"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "69b1a3222340cad7" },
+            { "difficulty": "standard", "gameplayId": "47a2f8f599e9cdf5" },
+            { "difficulty": "expert", "gameplayId": "47acb40a506e48ef" }
+          ],
+          "missionId": "ukraine-voices-travel-04"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-voices-travel-04", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-voices-travel",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-voices-travel-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "The Polyphony archive gives separate voices their own channels.",
+        "title": "One Voice, Then the Group"
+      },
+      "uk": {
+        "teaser": "Архів «Поліфонія» надає окремим голосам власні канали.",
+        "title": "Один голос, потім гурт"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-voices-travel-05-image",
+        "locales": {
+          "en": {
+            "alt": "One Voice, Then the Group — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "One Voice, Then the Group"
+          },
+          "uk": {
+            "alt": "Один голос, потім гурт — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Один голос, потім гурт"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-voices-travel-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Polyphony Project records Ukrainian village singing with separate microphones and offers a multitrack player. Its archive also keeps descriptions of performers, places and performance contexts.",
+              "If you choose to open a recording, listen to one available part and then the group at a comfortable volume. What becomes easier to notice? Describe an observation, not a ranking of whose voice matters most. The game’s text remains available without opening or playing external media."
+            ],
+            "sources": [
+              {
+                "title": "Polyphony Project — Ukrainian village song archive",
+                "url": "https://www.polyphonyproject.com/en"
+              },
+              {
+                "title": "Ivan Honchar Museum — Polyphony Project",
+                "url": "https://honchar.org.ua/en/projects/polyphony-project-i68"
+              }
+            ],
+            "title": "One Voice, Then the Group"
+          },
+          "uk": {
+            "paragraphs": [
+              "Проєкт «Поліфонія» записує український сільський спів окремими мікрофонами та пропонує багатоканальний програвач. Архів також зберігає описи виконавців, місць та обставин виконання.",
+              "Якщо вирішите відкрити запис, послухайте доступну окрему партію, а потім гурт на комфортній гучності. Що легше помітити? Опишіть спостереження, не визначаючи, чий голос важливіший. Ігровий текст доступний без відкриття чи відтворення зовнішніх медіа."
+            ],
+            "sources": [
+              {
+                "title": "Polyphony Project — Ukrainian village song archive",
+                "url": "https://www.polyphonyproject.com/en"
+              },
+              {
+                "title": "Ivan Honchar Museum — Polyphony Project",
+                "url": "https://honchar.org.ua/en/projects/polyphony-project-i68"
+              }
+            ],
+            "title": "Один голос, потім гурт"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6dc85b3e5cc13b93" },
+            { "difficulty": "standard", "gameplayId": "43673aecf44987b6" },
+            { "difficulty": "expert", "gameplayId": "301430b3c88d2641" }
+          ],
+          "missionId": "ukraine-voices-travel-05"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-voices-travel-05", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-voices-travel",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-voices-travel-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A recording becomes more useful when its context travels too.",
+        "title": "Carry the Context"
+      },
+      "uk": {
+        "teaser": "Запис стає кориснішим, коли його контекст подорожує разом із ним.",
+        "title": "Передайте контекст"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-voices-travel-06-image",
+        "locales": {
+          "en": {
+            "alt": "Carry the Context — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Carry the Context"
+          },
+          "uk": {
+            "alt": "Передайте контекст — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Передайте контекст"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-voices-travel-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Polyphony archive groups related song variants and provides song descriptions and text. Different recorded versions can be compared without declaring one performance the only valid form.",
+              "Prepare a fictional listening recommendation with a title, performer or group, place, source link and one question to explore. Keep the recording’s own rights and attribution attached. Your six-card finale now offers a route back to the people and records behind the discoveries."
+            ],
+            "sources": [
+              {
+                "title": "Polyphony Project — Ukrainian village song archive",
+                "url": "https://www.polyphonyproject.com/en"
+              }
+            ],
+            "title": "Carry the Context"
+          },
+          "uk": {
+            "paragraphs": [
+              "Архів «Поліфонія» поєднує споріднені варіанти пісень і подає описи та тексти. Різні записи можна порівнювати, не оголошуючи одне виконання єдиною правильною формою.",
+              "Підготуйте вигадану рекомендацію для слухання: назва, виконавець або гурт, місце, посилання та одне запитання для дослідження. Збережіть права й атрибуцію самого запису. Фінал із шести карток повертає до людей і записів, що стоять за відкриттями."
+            ],
+            "sources": [
+              {
+                "title": "Polyphony Project — Ukrainian village song archive",
+                "url": "https://www.polyphonyproject.com/en"
+              }
+            ],
+            "title": "Передайте контекст"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "9ec17d056df9ca39" },
+            { "difficulty": "standard", "gameplayId": "557df9778c7513e3" },
+            { "difficulty": "expert", "gameplayId": "6daa2ac692432ae5" }
+          ],
+          "missionId": "ukraine-voices-travel-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-voices-travel-06", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-voices-travel",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-voices-travel-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "A Listening Trail with Names"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Маршрут слухання з іменами"
+      }
+    },
+    "payloads": [
+      {
+        "id": "ukraine-voices-travel-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Follow the six cards from a musical practice to its bearers, from a travelling composition to documented village recordings. Keep performer, place, source and recording context together. The finale is a source-linked listening trail: choose an external recording when you want to explore, with no automatic audio playback."
+            ],
+            "sources": [
+              {
+                "title": "Polyphony Project — Ukrainian village song archive",
+                "url": "https://www.polyphonyproject.com/en"
+              }
+            ],
+            "title": "A Listening Trail with Names"
+          },
+          "uk": {
+            "paragraphs": [
+              "Пройдіть шість карток від музичної практики до її носіїв, від мандрівного твору до документованих сільських записів. Зберігайте разом виконавця, місце, джерело й обставини запису. Фінал — маршрут слухання з посиланнями: обирайте зовнішній запис для дослідження без автоматичного відтворення."
+            ],
+            "sources": [
+              {
+                "title": "Polyphony Project — Ukrainian village song archive",
+                "url": "https://www.polyphonyproject.com/en"
+              }
+            ],
+            "title": "Маршрут слухання з іменами"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-voices-travel-01-image",
+        "locales": {
+          "en": {
+            "alt": "An Instrument and a Voice — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "An Instrument and a Voice"
+          },
+          "uk": {
+            "alt": "Інструмент і голос — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Інструмент і голос"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-voices-travel-02-image",
+        "locales": {
+          "en": {
+            "alt": "A Practice Kept Together — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Practice Kept Together"
+          },
+          "uk": {
+            "alt": "Практика, яку бережуть разом — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Практика, яку бережуть разом"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-voices-travel-03-image",
+        "locales": {
+          "en": {
+            "alt": "A Region Has Many Voices — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Region Has Many Voices"
+          },
+          "uk": {
+            "alt": "Регіон має багато голосів — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Регіон має багато голосів"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-voices-travel-04-image",
+        "locales": {
+          "en": {
+            "alt": "Shchedryk Crosses an Ocean — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Shchedryk Crosses an Ocean"
+          },
+          "uk": {
+            "alt": "«Щедрик» перетинає океан — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "«Щедрик» перетинає океан"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-voices-travel-05-image",
+        "locales": {
+          "en": {
+            "alt": "One Voice, Then the Group — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "One Voice, Then the Group"
+          },
+          "uk": {
+            "alt": "Один голос, потім гурт — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Один голос, потім гурт"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-voices-travel-06-image",
+        "locales": {
+          "en": {
+            "alt": "Carry the Context — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Carry the Context"
+          },
+          "uk": {
+            "alt": "Передайте контекст — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Передайте контекст"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-voices-travel-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "type": "url",
+        "url": "https://www.polyphonyproject.com/en"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "19f1c5268875c84c" },
+            { "difficulty": "standard", "gameplayId": "ac3e9d707864ad21" },
+            { "difficulty": "expert", "gameplayId": "f0449ad9bc3cb253" }
+          ],
+          "missionId": "ukraine-voices-travel-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a8355a81e146ed09" },
+            { "difficulty": "standard", "gameplayId": "5d56a5e1e64edb10" },
+            { "difficulty": "expert", "gameplayId": "77d891b22f9095e8" }
+          ],
+          "missionId": "ukraine-voices-travel-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "cce71b88024ec80d" },
+            { "difficulty": "standard", "gameplayId": "a5427666c173cb2e" },
+            { "difficulty": "expert", "gameplayId": "6b693216a4914e38" }
+          ],
+          "missionId": "ukraine-voices-travel-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "69b1a3222340cad7" },
+            { "difficulty": "standard", "gameplayId": "47a2f8f599e9cdf5" },
+            { "difficulty": "expert", "gameplayId": "47acb40a506e48ef" }
+          ],
+          "missionId": "ukraine-voices-travel-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6dc85b3e5cc13b93" },
+            { "difficulty": "standard", "gameplayId": "43673aecf44987b6" },
+            { "difficulty": "expert", "gameplayId": "301430b3c88d2641" }
+          ],
+          "missionId": "ukraine-voices-travel-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "9ec17d056df9ca39" },
+            { "difficulty": "standard", "gameplayId": "557df9778c7513e3" },
+            { "difficulty": "expert", "gameplayId": "6daa2ac692432ae5" }
+          ],
+          "missionId": "ukraine-voices-travel-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-voices-travel", "kind": "campaign" }
+  }
+]
