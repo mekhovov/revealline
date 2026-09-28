@@ -215,29 +215,29 @@ test('edition chrome and retained-artwork recovery switch locale without remount
     artwork = page.$('edition-presentation-select'),
     actorNote = page.$('menu-actor-note'),
     authoredOptions = [...picker.options].map((option) => option.textContent);
-  assert.match(picker.parentNode.textContent, /Company & campaign edition/);
-  assert.match(artwork.parentNode.textContent, /Artwork snapshot/);
+  assert.match(picker.parentNode.textContent, /Choose a world/);
+  assert.match(artwork.parentNode.textContent, /Artwork version/);
   assert.equal(artwork.options[0].textContent, 'Current artwork');
-  assert.match(artwork.options[1].textContent, /^Retained original · /);
-  assert.match(actorNote.textContent, /campaign artwork/);
+  assert.match(artwork.options[1].textContent, /^Saved original · /);
+  assert.match(actorNote.textContent, /shared Solo rules/);
   assert.ok(
     page.doc
       .querySelectorAll('summary')
-      .some((summary) => summary.textContent === 'About this edition & artwork'),
+      .some((summary) => summary.textContent === 'About this world & its artwork'),
   );
 
   setLocale('uk', { persist: false });
   assert.equal(page.$('edition-select'), picker);
   assert.equal(page.$('edition-presentation-select'), artwork);
-  assert.match(picker.parentNode.textContent, /Видання компанії та кампанії/);
-  assert.match(artwork.parentNode.textContent, /Знімок оформлення/);
-  assert.equal(artwork.options[0].textContent, 'Поточне оформлення');
+  assert.match(picker.parentNode.textContent, /Оберіть світ/);
+  assert.match(artwork.parentNode.textContent, /Версія зображень/);
+  assert.equal(artwork.options[0].textContent, 'Поточні зображення');
   assert.match(artwork.options[1].textContent, /^Збережений оригінал · /);
-  assert.match(actorNote.textContent, /оформлення своєї кампанії/);
+  assert.match(actorNote.textContent, /спільним правилам Соло/);
   assert.ok(
     page.doc
       .querySelectorAll('summary')
-      .some((summary) => summary.textContent === 'Про це видання й оформлення'),
+      .some((summary) => summary.textContent === 'Про цей світ і його зображення'),
   );
   assert.deepEqual(
     [...picker.options].map((option) => option.textContent),

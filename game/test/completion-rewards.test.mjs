@@ -8,6 +8,8 @@ import {
   completionRewardIdentity,
   createRewardState,
   mergeRewardStates,
+  mergeImportedRewardStates,
+  RewardImportConflictError,
   projectRewardProgress,
   reconcileEarnedRewards,
   validateCompletionReward,
@@ -321,6 +323,38 @@ test('campaign expansion cannot move a promised finish line and earned reference
   const missingCurrentAssets = reconcileEarnedRewards([], context(0), serialized);
   assert.deepEqual(missingCurrentAssets.state.receipts, result.state.receipts);
   assert.equal(missingCurrentAssets.granted.length, 0);
+});
+
+test('explicit import rejects exact promise conflicts instead of silently dropping earned revisions', () => {
+  const original = reward();
+  const incoming = reconcileEarnedRewards([original], context()).state;
+  for (const change of [
+    (definition) => {
+      definition.revision = 'r2';
+    },
+    (definition) => {
+      definition.payloads[0].locales.en.paragraphs = ['A changed exact payload.'];
+    },
+  ]) {
+    const changed = clone(original);
+    change(changed);
+    for (const wins of [0, 6]) {
+      const current = reconcileEarnedRewards([changed], context(wins)).state;
+      const before = JSON.stringify(current);
+      assert.throws(
+        () => mergeImportedRewardStates(current, incoming),
+        (error) =>
+          error instanceof RewardImportConflictError &&
+          error.code === 'REWARD_IMPORT_CONFLICT' &&
+          JSON.stringify(error.rewardIds) === JSON.stringify([original.id]),
+      );
+      assert.equal(JSON.stringify(current), before);
+      assert.deepEqual(mergeRewardStates(current, incoming).promises, current.promises);
+    }
+  }
+  const compatible = reconcileEarnedRewards([original], context(0)).state;
+  assert.deepEqual(mergeImportedRewardStates(compatible, incoming), incoming);
+  assert.deepEqual(mergeImportedRewardStates(incoming, incoming), incoming);
 });
 
 test('receipt import recomputes requirements and rejects changed pins or foreign edition', () => {

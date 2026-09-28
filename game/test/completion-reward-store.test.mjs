@@ -1,7 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRewardBackend, createRewardStore } from '../rewards/store.mjs';
-import { createRewardState } from '../rewards/model.mjs';
+import {
+  createRewardState,
+  validateRewardState,
+  reconcileEarnedRewards,
+  RewardImportConflictError,
+} from '../rewards/model.mjs';
 import { JOURNEY_PROFILE_DATABASE } from '../journey/profile.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 
@@ -337,7 +342,7 @@ test('write-lease loss leaves rewards in memory without writing an arcade profil
   assert.equal(store.status().durable, true);
 });
 
-test('restoring a later reward revision does not replace a session promise or persist its unverified win', async () => {
+test('restoring a conflicting revision rejects without replacing a session promise or persisting its unverified win', async () => {
   const memory = managedIndexedDB();
   const store = createRewardStore({ editionId, backend: backendFor(memory) });
   await store.load();
@@ -347,13 +352,483 @@ test('restoring a later reward revision does not replace a session promise or pe
   revisionTwo.revision = 'r2';
   imported.reconcile([revisionTwo], context());
   await imported.settled();
-  await store.restore(imported.export());
+  const before = store.export();
+  await assert.rejects(store.restore(imported.export()), RewardImportConflictError);
+  assert.equal(store.export(), before);
   assert.equal(store.snapshot().promises[0].revision, 'r1');
   assert.equal(store.snapshot().receipts[0].definition.revision, 'r1');
   const stored = await backendFor(memory).read();
-  assert.equal(stored.promises[0].revision, 'r1');
+  assert.equal(stored.promises.length, 0);
   assert.equal(stored.receipts.length, 0);
   assert.equal(store.status().durable, false);
+});
+
+test('an initialized destination rejects old exact imports atomically while compatible imports still merge', async () => {
+  const source = createRewardStore({
+    editionId,
+    backend: backendFor(managedIndexedDB()),
+  });
+  await source.load();
+  source.reconcile([definition(), definition('second', 'mission-2')], context());
+  await source.settled();
+  const backup = source.export();
+  for (const alreadyWon of [false, true]) {
+    const memory = managedIndexedDB(),
+      backend = backendFor(memory);
+    const destination = createRewardStore({ editionId, backend });
+    await destination.load();
+    const current = definition();
+    current.revision = 'r2';
+    destination.reconcile([current], context(alreadyWon ? ['mission-1'] : []));
+    await destination.settled();
+    const before = destination.export(),
+      disk = await backend.read(),
+      puts = memory.allPuts.length;
+    await assert.rejects(destination.restore(backup), RewardImportConflictError);
+    assert.equal(destination.export(), before);
+    assert.deepEqual(await backend.read(), disk);
+    assert.equal(memory.allPuts.length, puts);
+    assert.equal(
+      destination.snapshot().promises.some((p) => p.id === 'second'),
+      false,
+    );
+    await destination.close();
+  }
+  const compatible = createRewardStore({
+    editionId,
+    backend: backendFor(managedIndexedDB()),
+  });
+  await compatible.load();
+  compatible.reconcile([definition()], context([]));
+  await compatible.settled();
+  assert.deepEqual(await compatible.restore(backup), {
+    durable: true,
+    pending: false,
+    error: null,
+  });
+  assert.deepEqual(compatible.snapshot(), source.snapshot());
+  assert.equal(source.export(), backup);
+  await compatible.close();
+  await source.close();
+});
+
+test('a concurrent durable promise is checked inside the import transaction and does not poison later saves', async () => {
+  const memory = managedIndexedDB(),
+    backend = backendFor(memory);
+  const destination = createRewardStore({ editionId, backend });
+  const other = createRewardStore({ editionId, backend: backendFor(memory) });
+  const source = createRewardStore({
+    editionId,
+    backend: backendFor(managedIndexedDB()),
+  });
+  await Promise.all([destination.load(), other.load(), source.load()]);
+  source.reconcile([definition()], context());
+  await source.settled();
+  const current = definition();
+  current.revision = 'r2';
+  other.reconcile([current], context([]));
+  await other.settled();
+  const before = destination.export(),
+    disk = await backend.read(),
+    puts = memory.allPuts.length;
+  await assert.rejects(destination.restore(source.export()), RewardImportConflictError);
+  assert.equal(destination.export(), before);
+  assert.deepEqual(await backend.read(), disk);
+  assert.equal(memory.allPuts.length, puts);
+  assert.equal(destination.status().pending, false);
+  await destination.flush();
+  assert.equal(destination.status().durable, true);
+  assert.deepEqual(destination.snapshot(), disk);
+  await Promise.all([destination.close(), other.close(), source.close()]);
+});
+
+test('an import queued behind a save reserves new conflicting promises while unrelated saving continues', async () => {
+  const memory = managedIndexedDB(),
+    backend = backendFor(memory);
+  let release, began;
+  const started = new Promise((resolve) => {
+    began = resolve;
+  });
+  const held = new Promise((resolve) => {
+    release = resolve;
+  });
+  let updates = 0;
+  const destination = createRewardStore({
+    editionId,
+    backend: {
+      ...backend,
+      async update(change, options) {
+        if (++updates === 1) {
+          began();
+          await held;
+        }
+        return backend.update(change, options);
+      },
+    },
+  });
+  const source = createRewardStore({
+    editionId,
+    backend: backendFor(managedIndexedDB()),
+  });
+  await Promise.all([destination.load(), source.load()]);
+  source.reconcile([definition()], context());
+  await source.settled();
+  destination.reconcile([definition('second', 'mission-2')], context(['mission-2']));
+  await started;
+  const importing = destination.restore(source.export());
+  const current = definition();
+  current.revision = 'r2';
+  destination.reconcile([current], context([]));
+  release();
+  await importing;
+  await destination.settled();
+  assert.equal(destination.snapshot().promises.find((p) => p.id === 'first').revision, 'r1');
+  assert.deepEqual(
+    destination
+      .snapshot()
+      .receipts.map((r) => r.definition.id)
+      .sort(),
+    ['first', 'second'],
+  );
+  assert.deepEqual(await backend.read(), destination.snapshot());
+  await Promise.all([destination.close(), source.close()]);
+});
+
+test('a failed durable import leaves the existing session and backup unchanged for retry', async () => {
+  const source = createRewardStore({
+    editionId,
+    backend: backendFor(managedIndexedDB()),
+  });
+  await source.load();
+  source.reconcile([definition()], context());
+  await source.settled();
+  const backup = source.export();
+  const memory = managedIndexedDB(),
+    backend = backendFor(memory);
+  const destination = createRewardStore({ editionId, backend });
+  await destination.load();
+  const before = destination.export();
+  memory.failAnyPutAt = 1;
+  await assert.rejects(destination.restore(backup), /storage write failure/);
+  assert.equal(destination.export(), before);
+  assert.equal((await backend.read()).receipts.length, 0);
+  assert.equal(source.export(), backup);
+  memory.failAnyPutAt = null;
+  await destination.restore(backup);
+  assert.deepEqual(destination.snapshot(), source.snapshot());
+  await Promise.all([destination.close(), source.close()]);
+});
+
+test('a refresh after durable import commit cannot reject committed data or block an unrelated discovery', async () => {
+  const source = createRewardStore({ editionId, backend: backendFor(managedIndexedDB()) });
+  source.reconcile([definition()], context());
+  await source.settled();
+  const memory = managedIndexedDB(),
+    backend = backendFor(memory),
+    notices = [];
+  const destination = createRewardStore({
+    editionId,
+    backend,
+    onStatus: (value) => notices.push(value),
+  });
+  await destination.load();
+  const current = definition();
+  current.revision = 'r2';
+  let refreshed = false;
+  memory.afterAnyCommit = () => {
+    if (refreshed) return;
+    refreshed = true;
+    const result = destination.reconcile([current, definition('second', 'mission-2')], context(), {
+      persist: false,
+    });
+    assert.deepEqual(
+      result.granted.map((receipt) => receipt.definition.id),
+      ['second'],
+    );
+    assert.equal(
+      destination.snapshot().promises.some((promise) => promise.id === 'first'),
+      false,
+    );
+  };
+  await destination.restore(source.export());
+  assert.equal(refreshed, true);
+  assert.deepEqual(
+    destination
+      .snapshot()
+      .receipts.map((receipt) => [receipt.definition.id, receipt.definition.revision])
+      .sort(),
+    [
+      ['first', 'r1'],
+      ['second', 'r1'],
+    ],
+  );
+  assert.deepEqual(
+    (await backend.read()).receipts.map((receipt) => receipt.definition.id),
+    ['first'],
+  );
+  assert.equal(notices.at(-1).pending, false);
+  assert.equal(notices.at(-1).error, null);
+  await Promise.all([source.close(), destination.close()]);
+});
+
+test('reserved imports retain accepted evidence once across repeated frames and compatible imports, including close', async () => {
+  const source = createRewardStore({ editionId, backend: backendFor(managedIndexedDB()) });
+  source.reconcile([definition()], context([]));
+  await source.settled();
+  let saved = createRewardState(editionId),
+    release,
+    began,
+    writes = 0,
+    closes = 0;
+  const started = new Promise((resolve) => {
+    began = resolve;
+  });
+  const held = new Promise((resolve) => {
+    release = resolve;
+  });
+  const notices = [];
+  const destination = createRewardStore({
+    editionId,
+    onStatus: (value) => notices.push(value),
+    backend: {
+      read: async () => saved,
+      async update(change) {
+        if (++writes === 1) {
+          began();
+          await held;
+        }
+        saved = change(saved);
+        return saved;
+      },
+      close() {
+        closes++;
+      },
+    },
+  });
+  await destination.load();
+  const first = destination.restore(source.export()),
+    second = destination.restore(source.export());
+  await started;
+  const current = definition();
+  current.revision = 'r2';
+  for (let frame = 0; frame < 40; frame++) {
+    const result = destination.reconcile([current], context(frame === 0 ? ['mission-1'] : []));
+    assert.equal(result.granted.length, 0);
+  }
+  assert.equal(destination.snapshot().promises.length, 0);
+  const conflicting = JSON.parse(source.export());
+  conflicting.promises[0].revision = 'r3';
+  await assert.rejects(destination.restore(conflicting), RewardImportConflictError);
+  const closing = destination.close();
+  release();
+  await Promise.all([first, second, closing]);
+  assert.equal(saved.receipts.length, 1);
+  assert.equal(saved.receipts[0].definition.revision, 'r1');
+  assert.equal(saved.receipts[0].evidence.clears['mission-1'].runId, 'mission-1-run');
+  assert.deepEqual(destination.snapshot(), saved);
+  assert.equal(writes, 3, 'Two imports and one deferred durable grant, not one write per frame.');
+  assert.equal(closes, 1);
+  assert.equal(destination.status().pending, false);
+  assert.equal(destination.status().durable, true);
+  assert.equal(source.snapshot().receipts.length, 0, 'The original unearned backup is unchanged.');
+  await source.close();
+});
+
+test('failed import releases only local accepted discoveries and preserves session-only evidence', async () => {
+  for (const persist of [false, true]) {
+    const source = createRewardStore({ editionId, backend: backendFor(managedIndexedDB()) });
+    source.reconcile([definition(), definition('backup-only', 'mission-2')], context());
+    await source.settled();
+    const backup = source.export();
+    let saved = createRewardState(editionId),
+      destination,
+      writes = 0;
+    const current = definition();
+    current.revision = 'r2';
+    const notices = [];
+    destination = createRewardStore({
+      editionId,
+      onStatus: (value) => notices.push(value),
+      backend: {
+        read: async () => saved,
+        async update(change) {
+          if (++writes === 1) {
+            destination.reconcile([current], context(['mission-1']), { persist });
+            throw new DOMException('Import quota failure', 'QuotaExceededError');
+          }
+          saved = change(saved);
+          return saved;
+        },
+      },
+    });
+    await destination.load();
+    await assert.rejects(destination.restore(backup), /Import quota failure/);
+    await destination.settled();
+    assert.deepEqual(
+      destination
+        .snapshot()
+        .receipts.map((receipt) => [receipt.definition.id, receipt.definition.revision]),
+      [['first', 'r2']],
+    );
+    assert.deepEqual(
+      saved.receipts.map((receipt) => receipt.definition.id),
+      persist ? ['first'] : [],
+    );
+    assert.equal(source.export(), backup);
+    assert.equal(notices.at(-1).pending, false);
+    assert.equal(
+      destination.snapshot().promises.some((promise) => promise.id === 'backup-only'),
+      false,
+    );
+    await Promise.all([source.close(), destination.close()]);
+  }
+});
+
+test('a timed-out import releases accepted local work without allowing its late updater to commit', async () => {
+  const source = createRewardStore({ editionId, backend: backendFor(managedIndexedDB()) });
+  source.reconcile([definition()], context());
+  await source.settled();
+  let saved = createRewardState(editionId),
+    late,
+    writes = 0,
+    destination;
+  const current = definition();
+  current.revision = 'r2';
+  destination = createRewardStore({
+    editionId,
+    operationTimeoutMs: 10,
+    backend: {
+      read: async () => saved,
+      update(change) {
+        if (++writes === 1) {
+          late = change;
+          destination.reconcile([current], context());
+          return new Promise(() => {});
+        }
+        saved = change(saved);
+        return Promise.resolve(saved);
+      },
+    },
+  });
+  await destination.load();
+  await assert.rejects(destination.restore(source.export()), /timed out/);
+  assert.throws(() => late(saved), /timed out/);
+  assert.equal(saved.receipts[0].definition.revision, 'r2');
+  assert.deepEqual(destination.snapshot(), saved);
+  assert.equal(destination.status().pending, false);
+  await Promise.all([source.close(), destination.close()]);
+});
+
+test('a valid imported collection stays atomic and recoverable when deferred earned receipts exceed its budget', async () => {
+  const missions = Array.from({ length: 128 }, (_, index) => `mission-${index}`);
+  const definitions = Array.from({ length: 128 }, (_, index) => {
+    const value = definition(`budget-${index}`);
+    value.scope = { kind: 'campaign', id: 'workshop' };
+    value.requirements.missions = missions.map((missionId) => ({
+      missionId,
+      bindings: [{ gameplayId: `${missionId}-gameplay`, difficulty: 'normal' }],
+    }));
+    for (const locale of ['en', 'uk'])
+      value.payloads[0].locales[locale].paragraphs = Array(12).fill('x'.repeat(1950));
+    return value;
+  });
+  const original = validateRewardState({ ...createRewardState(editionId), promises: definitions });
+  const incoming = JSON.stringify(original);
+  const current = structuredClone(definitions);
+  for (const value of current) value.revision = 'r2';
+  let saved = createRewardState(editionId),
+    writes = 0,
+    closes = 0,
+    store;
+  const notices = [];
+  store = createRewardStore({
+    editionId,
+    operationTimeoutMs: 10000,
+    onStatus: (value) => notices.push(value),
+    backend: {
+      read: async () => saved,
+      async update(change) {
+        const next = change(saved);
+        if (++writes === 1) store.reconcile(current, context(missions));
+        saved = next;
+        return saved;
+      },
+      close() {
+        closes++;
+      },
+    },
+  });
+  await store.load();
+  const imported = await store.restore(incoming);
+  assert.deepEqual(imported.deferred, { count: 128, importSaved: true });
+  assert.equal(imported.pending, false);
+  assert.equal(imported.durable, false);
+  assert.match(imported.error, /budget|large|limit/i);
+  assert.equal(store.export(), incoming, 'No subset of local receipts was partially installed.');
+  assert.deepEqual(validateRewardState(store.export()), original);
+  assert.deepEqual(saved, original, 'The exact valid import did commit.');
+  assert.equal(writes, 1);
+  await store.load();
+  assert.deepEqual(store.status().deferred, imported.deferred);
+  assert.equal(store.status().durable, false);
+  store.reconcile(current, context(missions));
+  await store.settled();
+  assert.equal(writes, 1, 'Unchanged evidence does not enqueue repeated capacity retries.');
+  await store.flush();
+  assert.equal(
+    writes,
+    2,
+    'Explicit retry preserves the valid collection while deferred data cannot fit.',
+  );
+  assert.deepEqual(store.status().deferred, imported.deferred);
+  assert.equal(store.status().pending, false);
+  assert.equal(store.export(), incoming);
+  await store.close();
+  assert.equal(closes, 1);
+  assert.equal(notices.at(-1).pending, false);
+});
+
+test('post-commit unrelated local receipts use the same recoverable capacity path', async () => {
+  const missions = Array.from({ length: 128 }, (_, index) => `mission-${index}`);
+  const definitions = Array.from({ length: 128 }, (_, index) => {
+    const value = definition(`budget-${index}`);
+    value.scope = { kind: 'campaign', id: 'workshop' };
+    value.requirements.missions = missions.map((missionId) => ({
+      missionId,
+      bindings: [{ gameplayId: `${missionId}-gameplay`, difficulty: 'normal' }],
+    }));
+    for (const locale of ['en', 'uk'])
+      value.payloads[0].locales[locale].paragraphs = Array(12).fill('x'.repeat(1950));
+    return value;
+  });
+  const original = reconcileEarnedRewards(definitions.slice(0, 64), context(missions)).state;
+  let saved = createRewardState(editionId),
+    store,
+    writes = 0;
+  store = createRewardStore({
+    editionId,
+    operationTimeoutMs: 10000,
+    backend: {
+      read: async () => saved,
+      async update(change) {
+        const next = change(saved);
+        if (++writes === 1)
+          store.reconcile(definitions.slice(64), context(missions), { persist: false });
+        saved = next;
+        return saved;
+      },
+    },
+  });
+  await store.load();
+  const imported = await store.restore(original);
+  assert.deepEqual(imported.deferred, { count: 64, importSaved: true });
+  assert.equal(imported.pending, false);
+  assert.equal(imported.durable, false);
+  assert.deepEqual(store.snapshot(), original);
+  assert.deepEqual(saved, original);
+  assert.equal(validateRewardState(store.export()).receipts.length, 64);
+  await store.close();
+  assert.equal(store.status().pending, false);
 });
 
 test('blocked open retries and closes a late successful connection from the rejected attempt', async () => {
