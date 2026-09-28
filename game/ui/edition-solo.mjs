@@ -30,6 +30,10 @@ export async function mountEditionSoloUI({
   getReducedMotion,
   audioMaster,
   musicDucker,
+  motionPreferences,
+  onCosmeticBodiesChange,
+  onChooseCosmetic,
+  onRecoverCosmetic,
   report,
   onMissions,
   onEditionChange,
@@ -276,6 +280,10 @@ export async function mountEditionSoloUI({
     getJourneyDurable,
     getLearningEvidence: lessons.rewardEvidence,
     getMasteryEvidence: mastery.rewardEvidence,
+    motionPreferences,
+    onCosmeticBodiesChange,
+    onChooseCosmetic,
+    onRecoverCosmetic,
     getReducedMotion,
     audioMaster,
     musicDucker,
@@ -390,6 +398,7 @@ export async function mountEditionSoloUI({
       expedition.refresh();
     },
     pictureReady: lessons.pictureReady,
+    cosmeticBodies: rewards.cosmeticBodies,
     dispose() {
       disposed = true;
       stopLearningRewards();
