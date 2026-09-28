@@ -1,0 +1,110 @@
+{
+  "campaignId": "fpv-drone-families",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "Drone Families", "uk": "Родини дронів" } },
+      "id": "fpv-drone-families",
+      "identity": "9c5d5b11e6da9b11",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Reveal the viewing gallery and separate FPV from airframe type. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "Відкрийте галерею спостереження й відокремте FPV від типу конструкції. Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.routeDecision": {
+          "en": "Open the wide viewing bay or connect the camera and airframe alcoves separately. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Відкрийте широку зону огляду або окремо з’єднайте ніші камери й конструкції. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "A View, Not a Shape", "uk": "Спосіб бачити, а не форма" }
+      },
+      "id": "fpv-drone-families-01",
+      "identity": "e0f81549bab1c7a7",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the rotor-family plinths and count before comparing. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "З’єднайте стенди роторних родин і порахуйте перед порівнянням. Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.routeDecision": {
+          "en": "Collect the small-count plinths first or reach the broad comparison island. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Спершу зберіть менші стенди або досягніть широкого острова порівняння. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "More Than Four Rotors", "uk": "Не лише чотири ротори" }
+      },
+      "id": "fpv-drone-families-02",
+      "identity": "a07d56f06c356d17",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Join wing and rotor galleries without turning a silhouette into a performance claim. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "З’єднайте галереї крил і роторів без висновків про характеристики за силуетом. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.routeDecision": {
+          "en": "Cross between the wing gallery and rotor terrace or secure both outer returns. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Перейдіть між галереєю крила й терасою роторів або закріпіть зовнішні повернення. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "Wings Tell Another Story", "uk": "Крила розповідають інакше" }
+      },
+      "id": "fpv-drone-families-03",
+      "identity": "71d7b3219915bcb7",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Open the spacious race exhibit and distinguish a public sport from unrestricted flying. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Відкрийте простору спортивну експозицію та відрізніть змагання від необмеженого польоту. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.routeDecision": {
+          "en": "Use the wide spectator-side return or capture the quiet course-map terrace. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Оберіть широке повернення біля глядацької зони або тиху терасу плану траси. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "A Sport Has a Setting", "uk": "Спорт має свої умови" }
+      },
+      "id": "fpv-drone-families-04",
+      "identity": "11da88294eebe82f",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the civilian task cards and choose evidence before claiming a best design. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "З’єднайте картки цивільних завдань і оберіть докази перед оцінкою конструкції. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.routeDecision": {
+          "en": "Join the three purpose islands one at a time or capture the paired research bays. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Приєднайте три острови мети по черзі або захопіть парні дослідницькі зони. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "Purpose Changes the Questions", "uk": "Мета змінює запитання" }
+      },
+      "id": "fpv-drone-families-05",
+      "identity": "81a24682d54499c8",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Complete the comparison hall using separate columns for view, structure and purpose. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Завершіть зал порівняння з окремими графами огляду, конструкції та мети. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.routeDecision": {
+          "en": "Connect the four atlas columns through short returns or enclose the outer comparison court. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Поєднайте чотири графи короткими поверненнями або охопіть зовнішній двір порівняння. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "Curate the Family Atlas", "uk": "Упорядкуйте атлас родин" }
+      },
+      "id": "fpv-drone-families-06",
+      "identity": "acf12fe781c53213",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}
