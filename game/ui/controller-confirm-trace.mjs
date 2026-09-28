@@ -1,7 +1,34 @@
 import { t, localizedText } from '../i18n/index.mjs';
 
 const safeText = (value, limit = 80) =>
-  typeof value === 'string' ? value.replace(/[\r\n\t]/g, ' ').slice(0, limit) : value;
+  typeof value === 'string' ? value.replace(/[\r\n\t]/g, ' ').slice(0, limit) : undefined;
+const number = (value) => (Number.isFinite(value) ? Math.round(value) : null);
+const indexes = (value) =>
+  Array.isArray(value)
+    ? value.filter((index) => Number.isInteger(index) && index >= 0 && index < 64).slice(0, 16)
+    : [];
+const pad = (value = {}) => ({
+  index: number(value.index),
+  id: safeText(value.id),
+  timestamp: number(value.timestamp),
+  mapping: safeText(value.mapping, 24),
+  connected: value.connected === true,
+  buttonCount:
+    Number.isInteger(value.buttonCount) && value.buttonCount >= 0
+      ? Math.min(value.buttonCount, 64)
+      : null,
+  buttons: indexes(value.buttons),
+});
+const frameSignature = (entry) =>
+  JSON.stringify({
+    ...entry,
+    t: undefined,
+    gp: undefined,
+    interval: undefined,
+    since: undefined,
+    samples: undefined,
+    raw: entry.raw.map((value) => ({ ...value, timestamp: undefined })),
+  });
 
 /** Opt-in, memory-only diagnostics for physical controller acceptance. */
 export function attachControllerConfirmTrace({
@@ -9,12 +36,18 @@ export function attachControllerConfirmTrace({
   enabled = false,
   version = 'dev',
   limit = 160,
+  getHost = () => doc?.body,
+  now = () => globalThis.performance?.now?.() ?? Date.now(),
 } = {}) {
   if (!Number.isInteger(limit) || limit < 16 || limit > 1000)
     throw new RangeError(t('errors:controller.confirmTrace.limit'));
-  const entries = [];
+  const entries = [],
+    listeners = [];
   let panel = null,
-    output = null;
+    output = null,
+    active = false,
+    destroyed = false,
+    lastFrameSignature = null;
 
   const renderOutput = () => {
     if (!output) return;
@@ -24,56 +57,153 @@ export function attachControllerConfirmTrace({
             .slice(-24)
             .map(
               (item) =>
-                `${item.t ?? '-'} gp:${item.gp ?? '-'} [${item.buttons.join(',') || '-'}] ${item.phase || '-'} ${item.event || '-'}${item.native ? ` native:${item.native}` : ''}${item.target ? ` target:${item.target}` : ''}${item.winner ? ` winner:${item.winner}` : ''}${item.reason ? ` reason:${item.reason}` : ''}`,
+                `${item.t ?? '-'} gp:${item.gp ?? '-'} [${item.buttons.join(',') || '-'}] ${item.phase || '-'} ${item.event || '-'}${item.source ? ` from:${item.source}` : ''}${item.native ? ` native:${item.native}` : ''}${item.pointer ? ` pointer:${item.pointer}` : ''}${item.target ? ` target:${item.target}` : ''}${item.winner ? ` winner:${item.winner}` : ''}${item.reason ? ` reason:${item.reason}` : ''}${item.selected !== null ? ` selected:${item.selected}/${item.generation ?? '-'}` : ''}${item.raw.length ? ` pads:${item.raw.map((value) => `${value.index}:${value.buttons.join(',') || '-'}`).join(';')}` : ''}${item.interval !== null ? ` dt:${item.interval}` : ''}${item.focus ? ` focus:${item.focus}` : ''}${item.samples > 1 ? ` ×${item.samples}` : ''}`,
             )
             .join('\n')
         : t('interface:controller.confirmTrace.waiting'),
     );
+    output.scrollTop = output.scrollHeight;
   };
 
-  if (enabled && doc?.body) {
-    panel = doc.createElement('details');
-    panel.id = 'controller-confirm-trace';
-    panel.className = 'controller-confirm-trace';
-    panel.open = true;
-    const summary = doc.createElement('summary');
-    localizedText(summary, () => t('interface:controller.confirmTrace.title', { version }));
-    output = doc.createElement('pre');
-    output.setAttribute('aria-live', 'polite');
-    renderOutput();
-    panel.append(summary, output);
-    doc.body.append(panel);
+  function syncHost(host = getHost()) {
+    if (!panel) return;
+    // Modal dialogs occupy the browser top layer and make body siblings inert.
+    // Follow the host's active modal without opening a new focusable overlay.
+    const parent = host?.append ? host : doc?.body;
+    if (parent && panel.parentElement !== parent) parent.append(panel);
   }
 
   function record(value = {}) {
-    if (!enabled) return;
+    if (!active) return;
     const entry = {
-      t: Number.isFinite(value.time) ? Math.round(value.time) : null,
-      gp: Number.isFinite(value.gamepadTimestamp) ? Math.round(value.gamepadTimestamp) : null,
+      t: number(value.time),
+      gp: number(value.gamepadTimestamp),
       event: safeText(value.event),
       phase: safeText(value.phase),
-      buttons: Array.isArray(value.buttons)
-        ? value.buttons.filter(Number.isInteger).slice(0, 8)
-        : [],
+      buttons: indexes(value.buttons),
       native: safeText(value.nativeEventType),
       target: safeText(value.targetId),
       winner: safeText(value.winner),
       reason: safeText(value.reason),
+      transaction: number(value.transactionId),
+      selected: number(value.selectedGamepadIndex),
+      identity: safeText(value.selectedGamepadIdentity),
+      generation: number(value.selectedGamepadGeneration),
+      source: safeText(value.sampleSource, 24),
+      raw: Array.isArray(value.rawGamepads) ? value.rawGamepads.slice(0, 32).map(pad) : [],
+      interval: number(value.pollIntervalMs),
+      focus: safeText(value.focusTargetId),
+      visibility: safeText(value.visibilityState, 16),
+      hasFocus: typeof value.hasFocus === 'boolean' ? value.hasFocus : undefined,
+      fullscreen: typeof value.fullscreen === 'boolean' ? value.fullscreen : undefined,
+      pointer: safeText(value.pointerType, 16),
+      trusted: typeof value.isTrusted === 'boolean' ? value.isTrusted : undefined,
+      button: number(value.button),
+      prevented: typeof value.defaultPrevented === 'boolean' ? value.defaultPrevented : undefined,
+      since: number(value.time),
+      samples: 1,
     };
-    entries.push(entry);
-    if (entries.length > limit) entries.splice(0, entries.length - limit);
+    const sampled = entry.event === 'frame' || entry.event === 'confirm-sample';
+    const signature = sampled ? frameSignature(entry) : null;
+    const previous = entries.at(-1);
+    if (signature && signature === lastFrameSignature && previous?.event === entry.event) {
+      entry.since = previous.since;
+      entry.samples = previous.samples + 1;
+      entries[entries.length - 1] = entry;
+    } else {
+      entries.push(entry);
+      if (entries.length > limit) entries.splice(0, entries.length - limit);
+    }
+    lastFrameSignature = signature;
+    syncHost();
     renderOutput();
   }
 
-  return {
-    enabled,
-    record,
-    snapshot: () => entries.map((entry) => ({ ...entry, buttons: [...entry.buttons] })),
-    destroy() {
+  function observe(event) {
+    if (
+      event.type.startsWith('key') &&
+      !['Enter', 'NumpadEnter', 'Space'].includes(event.code) &&
+      !['Enter', ' '].includes(event.key)
+    )
+      return;
+    record({
+      time: now(),
+      event: 'native-observed',
+      nativeEventType: event.type,
+      targetId: event.target?.id,
+      focusTargetId: doc?.activeElement?.id,
+      visibilityState: doc?.visibilityState,
+      hasFocus: doc?.hasFocus?.(),
+      fullscreen: Boolean(doc?.fullscreenElement),
+      pointerType: event.pointerType,
+      isTrusted: event.isTrusted,
+      button: event.button,
+      defaultPrevented: event.defaultPrevented,
+    });
+  }
+
+  function setEnabled(value) {
+    if (destroyed || active === Boolean(value)) return;
+    active = Boolean(value);
+    if (!active) {
+      for (const remove of listeners.splice(0)) remove();
       entries.length = 0;
+      lastFrameSignature = null;
       panel?.remove();
-      panel = null;
-      output = null;
+      panel = output = null;
+      return;
+    }
+    if (doc?.body) {
+      panel = doc.createElement('aside');
+      panel.id = 'controller-confirm-trace';
+      panel.className = 'controller-confirm-trace';
+      panel.setAttribute('data-controller-diagnostic', '');
+      panel.setAttribute('aria-live', 'off');
+      const title = doc.createElement('div');
+      localizedText(title, () => t('interface:controller.confirmTrace.title', { version }));
+      output = doc.createElement('pre');
+      panel.append(title, output);
+      syncHost();
+      renderOutput();
+    }
+    if (doc?.addEventListener) {
+      for (const type of [
+        'pointerdown',
+        'pointerup',
+        'pointercancel',
+        'mousedown',
+        'mouseup',
+        'click',
+        'keydown',
+        'keyup',
+        'focusin',
+        'visibilitychange',
+      ]) {
+        doc.addEventListener(type, observe, true);
+        listeners.push(() => doc.removeEventListener(type, observe, true));
+      }
+      doc.defaultView?.addEventListener?.('blur', observe, true);
+      listeners.push(() => doc.defaultView?.removeEventListener?.('blur', observe, true));
+    }
+  }
+
+  setEnabled(enabled);
+  return {
+    get enabled() {
+      return active;
+    },
+    setEnabled,
+    syncHost,
+    record,
+    snapshot: () =>
+      entries.map((entry) => ({
+        ...entry,
+        buttons: [...entry.buttons],
+        raw: entry.raw.map((value) => ({ ...value, buttons: [...value.buttons] })),
+      })),
+    destroy() {
+      setEnabled(false);
+      destroyed = true;
     },
   };
 }

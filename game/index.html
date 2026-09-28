@@ -1660,6 +1660,23 @@
           <p id="controller-navigation-help"></p>
           <p id="controller-connection-hint" class="micro-note" role="status"></p>
         </details>
+        <label class="field">
+          <input
+            id="controller-trace-enabled"
+            type="checkbox"
+            aria-describedby="controller-trace-session-help"
+          />
+          <span data-i18n="interface:controller.confirmTrace.toggle">
+            Show temporary controller diagnostics
+          </span>
+        </label>
+        <p
+          id="controller-trace-session-help"
+          class="micro-note"
+          data-i18n="interface:controller.confirmTrace.sessionOnly"
+        >
+          Shown only for this session. No input is saved or sent.
+        </p>
         <section
           id="controller-boost-setting"
           class="controller-boost-settings"

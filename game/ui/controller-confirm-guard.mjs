@@ -9,6 +9,7 @@ import { t } from '../i18n/index.mjs';
 export function attachControllerConfirmGuard({
   document: doc = globalThis.document,
   confirmPressed = () => false,
+  beforeNativeActivation = () => {},
   now = () => globalThis.performance?.now?.() ?? Date.now(),
   echoWindowMs = 1250,
   nativeLeadWindowMs = 250,
@@ -96,6 +97,7 @@ export function attachControllerConfirmGuard({
 
   const consumeConfirmKey = (event) => {
     if (!confirmKey(event)) return;
+    beforeNativeActivation(event);
     if (!keys.has(event.key) && !ownsGesture()) return;
     keys.add(event.key);
     trace('native-consumed', { nativeEventType: event.type, targetId: targetId(event.target) });
@@ -104,6 +106,7 @@ export function attachControllerConfirmGuard({
   listen('keydown', consumeConfirmKey);
   listen('keypress', consumeConfirmKey);
   listen('keyup', (event) => {
+    if (confirmKey(event)) beforeNativeActivation(event);
     const owned = keys.delete(event.key);
     if (owned || (confirmKey(event) && ownsGesture())) {
       trace('native-consumed', { nativeEventType: event.type, targetId: targetId(event.target) });
@@ -111,12 +114,14 @@ export function attachControllerConfirmGuard({
     }
   });
   listen('pointerdown', (event) => {
+    if (isPrimaryActivation(event)) beforeNativeActivation(event);
     if (!isPrimaryActivation(event) || !ownsPointerEvent(event)) return;
     primaryPointer = { id: pointerId(event), expiresAt: Infinity };
     trace('native-consumed', { nativeEventType: event.type, targetId: targetId(event.target) });
     consume(event);
   });
   listen('pointerup', (event) => {
+    if (isPrimaryActivation(event)) beforeNativeActivation(event);
     if (!isPrimaryActivation(event) || (!ownsPointer(event) && !ownsPointerEvent(event))) return;
     primaryPointer = { id: pointerId(event), expiresAt: now() + echoWindowMs };
     trace('native-consumed', { nativeEventType: event.type, targetId: targetId(event.target) });
@@ -124,12 +129,15 @@ export function attachControllerConfirmGuard({
   });
   for (const type of ['mousedown', 'mouseup'])
     listen(type, (event) => {
+      if (isPrimaryActivation(event)) beforeNativeActivation(event);
       if (!isPrimaryActivation(event) || (!hasActivePointer() && !ownsPointerEvent(event))) return;
       trace('native-consumed', { nativeEventType: event.type, targetId: targetId(event.target) });
       consume(event);
     });
   listen('click', (event) => {
     if (activationDepth > 0) return;
+    if (!isPrimaryActivation(event)) return;
+    beforeNativeActivation(event);
     if (hasActivePointer() || ownsPointerEvent(event)) {
       primaryPointer = null;
       trace('native-consumed', { nativeEventType: event.type, targetId: targetId(event.target) });
@@ -139,6 +147,7 @@ export function attachControllerConfirmGuard({
     recordNativeActivation(event);
   });
   listen('pointercancel', (event) => {
+    if (isPrimaryActivation(event)) beforeNativeActivation(event);
     if (!ownsPointer(event)) return;
     primaryPointer = null;
     trace('native-consumed', { nativeEventType: event.type, targetId: targetId(event.target) });
@@ -298,6 +307,7 @@ export function attachControllerConfirmGuard({
       suppressUntil = Infinity;
     },
     active: () => !!transaction,
+    owned: ownsGesture,
     destroy() {
       reset('destroy');
       listeners.forEach((remove) => remove());
