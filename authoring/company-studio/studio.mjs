@@ -1,3 +1,4 @@
+import { campaignLocalizationSha256 } from '../../game/editions/localization.mjs';
 import { boundedJSON } from '../../game/data-json.mjs';
 import { validateEditionRuntimeCatalog } from '../../game/editions/model.mjs';
 import {
@@ -15,6 +16,7 @@ import { readStudioJSON } from './source-reader.mjs';
 import { createStudioReviewContext } from './review-model.mjs';
 import { createStudioReviewPane } from './review-pane.mjs';
 import { createStudioReward, previewStudioReward } from './reward-editor.mjs';
+import { createDiscoveryEditor } from '../../game/studio/discovery-editor.mjs';
 
 const $ = (id) => document.getElementById(id);
 const labels = [
@@ -74,6 +76,28 @@ let catalog,
 const editorBuffers = new Map();
 const selected = () => studioSelection(catalog, editionId);
 const selectedCampaign = () => catalog.campaigns.find((campaign) => campaign.id === campaignId);
+const discoveryEditor = createDiscoveryEditor({
+  document,
+  getSource: () => files.get(selectedCampaign().sourcePath),
+  getMission: () =>
+    files
+      .get(selectedCampaign().sourcePath)
+      ?.missions.find((item) => item.id === $('discovery-mission').value),
+  getRewards: () => files.get(selectedCampaign().rewardPath) ?? [],
+  apply: (candidate) => {
+    const path = selectedCampaign().sourcePath;
+    if (editorBuffers.has(path))
+      throw new Error(
+        'Apply or discard the campaign JSON edits before changing its discovery design.',
+      );
+    files.set(path, validateStudioData(path, candidate, catalog, files));
+    $('campaign-json').value = format(files.get(path));
+    changed(
+      'Applied discovery design. Export the project and reward sidecar together in the source draft.',
+    );
+    return true;
+  },
+});
 function invalidatePreview() {
   missionReview?.invalidate();
   previewController?.abort();
@@ -263,6 +287,7 @@ async function renderDocuments() {
     campaign.sourcePath,
     ...(campaign.lessonPath ? [campaign.lessonPath] : []),
     ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+    ...(campaign.localizationPath ? [campaign.localizationPath] : []),
   ].filter(Boolean);
   await Promise.all(paths.map((path) => readSource(path)));
   if (ticket !== loadGeneration) return;
@@ -272,6 +297,7 @@ async function renderDocuments() {
     ['campaign', campaign.sourcePath],
     ['learning', campaign.lessonPath],
     ['rewards', campaign.rewardPath],
+    ['localization', campaign.localizationPath],
   ]) {
     $(`${key}-path`).textContent =
       path ??
@@ -284,6 +310,14 @@ async function renderDocuments() {
     $(`apply-${key}`).disabled = !path;
   }
   const project = files.get(campaign.sourcePath);
+  chooseOptions(
+    $('discovery-mission'),
+    project.missions ?? [],
+    project.missions.some((item) => item.id === $('discovery-mission').value)
+      ? $('discovery-mission').value
+      : project.missions[0]?.id,
+  );
+  discoveryEditor.sync();
   $('campaign-summary').textContent =
     `${project.missions?.length ?? 0} missions · ${project.maps?.length ?? 0} authored maps. Compiling validates rules; route proof is a separate check.`;
   const lessons = campaign.lessonPath ? files.get(campaign.lessonPath) : [];
@@ -295,6 +329,17 @@ async function renderDocuments() {
   chooseOptions($('reward-mission'), project.missions ?? [], '', 'Choose a mission…');
   $('reward-rule').value = '';
   $('reward-mission').disabled = true;
+  $('reward-missions').replaceChildren(
+    ...project.missions.map((mission) => {
+      const label = node('label');
+      const input = node('input');
+      input.type = 'checkbox';
+      input.value = mission.id;
+      label.append(input, node('span', mission.name));
+      return label;
+    }),
+  );
+  $('reward-missions').disabled = true;
   const rewards = campaign.rewardPath ? files.get(campaign.rewardPath) : [];
   $('rewards-summary').textContent =
     `${rewards.length} declared rewards. Requirements are explicit; preview grants no progress.`;
@@ -328,8 +373,21 @@ async function applyFile(key) {
     campaign: campaign.sourcePath,
     learning: campaign.lessonPath,
     rewards: campaign.rewardPath,
+    localization: campaign.localizationPath,
   }[key];
   const data = validateStudioData(path, $(`${key}-json`).value, catalog, files);
+  if (key === 'localization') {
+    const previous = files.get(path);
+    if (previous && format(previous) !== format(data) && previous.revision === data.revision)
+      throw new Error('Give changed localization a new revision before applying it.');
+    const draft = structuredClone(catalog);
+    draft.campaigns.find((item) => item.id === campaign.id).localizationSha256 =
+      await campaignLocalizationSha256(data);
+    for (const edition of draft.editions.filter((item) => item.campaignIds.includes(campaign.id)))
+      edition.revision++;
+    catalog = validateEditionRuntimeCatalog(draft);
+    renderCatalog();
+  }
   files.set(path, data);
   editorBuffers.delete(path);
   changed(`Applied and validated ${path}. Compile the draft to review it in the whole game.`);
@@ -362,6 +420,9 @@ function addRewardDraft() {
     source: files.get(campaign.sourcePath),
     rule: $('reward-rule').value,
     missionId: $('reward-mission').value,
+    missionIds: [...$('reward-missions').querySelectorAll('input')]
+      .filter((item) => item.checked)
+      .map((item) => item.value),
     id: `${campaign.id}-reward-${ordinal}`,
     locales: Object.fromEntries(
       ['en', 'uk'].map((locale) => [
@@ -525,6 +586,7 @@ async function openPreview() {
         campaign.sourcePath,
         ...(campaign.lessonPath ? [campaign.lessonPath] : []),
         ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+        ...(campaign.localizationPath ? [campaign.localizationPath] : []),
       ]),
     ]),
   ];
@@ -652,7 +714,7 @@ async function main() {
     editorBuffers.set('catalog', $('catalog-json').value);
     $('draft-state').textContent = 'Unapplied JSON edits';
   };
-  for (const key of ['theme', 'presets', 'campaign', 'learning', 'rewards'])
+  for (const key of ['theme', 'presets', 'campaign', 'learning', 'rewards', 'localization'])
     $(`${key}-json`).oninput = () => {
       missionReview?.invalidate();
       previewController?.abort();
@@ -660,14 +722,33 @@ async function main() {
       if (editor.dataset.sourcePath) editorBuffers.set(editor.dataset.sourcePath, editor.value);
       $('draft-state').textContent = 'Unapplied JSON edits';
     };
-  for (const key of ['theme', 'presets', 'campaign', 'learning', 'rewards'])
+  for (const key of ['theme', 'presets', 'campaign', 'learning', 'rewards', 'localization'])
     $(`apply-${key}`).onclick = guarded(() => applyFile(key));
+  $('preview-localization').onclick = guarded(() => {
+    const campaign = selectedCampaign();
+    if (!campaign.localizationPath) return;
+    const data = validateStudioData(
+      campaign.localizationPath,
+      $('localization-json').value,
+      catalog,
+      files,
+    );
+    $('localization-preview').textContent = data.records
+      .map((row) =>
+        Object.entries(row.fields)
+          .map(([field, locales]) => `${row.id} · ${field}\nEN: ${locales.en}\nUK: ${locales.uk}`)
+          .join('\n\n'),
+      )
+      .join('\n\n');
+  });
   $('create-rewards').onclick = guarded(createRewardSidecar);
   $('add-reward').onclick = guarded(addRewardDraft);
   $('preview-reward').onclick = guarded(previewRewardDraft);
   $('reward-rule').onchange = () => {
     $('reward-mission').disabled = $('reward-rule').value !== 'mission-win';
+    $('reward-missions').disabled = $('reward-rule').value !== 'selected-missions';
   };
+  $('discovery-mission').onchange = () => discoveryEditor.sync();
   $('export-draft').onclick = guarded(exportDraft);
   $('export-draft-bottom').onclick = guarded(exportDraft);
   $('open-preview').onclick = guarded(openPreview);
