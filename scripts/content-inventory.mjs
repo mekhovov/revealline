@@ -121,6 +121,14 @@ const TEAM_FACTORIES = {
     'team-complete-specialist-originals',
     'createTeamCompleteSpecialistOriginalCandidates',
   ],
+  'team-cultural-specialist-originals-1': [
+    'team-cultural-specialist-originals',
+    'createTeamCulturalSpecialistOriginalCandidates',
+  ],
+  'team-cultural-specialist-originals-2': [
+    'team-cultural-specialist-v2-originals',
+    'createTeamCulturalSpecialistV2OriginalCandidates',
+  ],
   'team-timed-originals': ['team-timed-originals', 'createTeamTimedOriginalCandidates'],
   'team-window-spatial-1': [
     'team-window-spatial-candidates',
@@ -133,6 +141,21 @@ const TEAM_FACTORIES = {
     { artwork: true },
   ],
 };
+
+/** Shared inventory adapter. Unknown defaults fail visibly instead of borrowing
+ * an older Team edition with the same mission labels. */
+export async function loadInventoryTeamRoute(id) {
+  const factory = TEAM_FACTORIES[id];
+  if (!factory) throw new Error(`No inventory factory for Team route: ${id}`);
+  const [module, name, options] = factory;
+  const source = (await import(`../game/content-design/${module}.mjs`))[name](options);
+  const profileKey = ['team-greybox', 'team-originals'].includes(id)
+    ? 'journey'
+    : id === 'team-timed-originals'
+      ? 'team-shared-windows-originals'
+      : id;
+  return { id, source, profileKey };
+}
 
 function sceneSnapshot(theme, level, seed = 0) {
   const commands = [];
@@ -428,14 +451,7 @@ export async function buildContentInventory({
   }
   for (const { id } of TEAM_CONTENT_ROUTES) {
     onProgress(`Compiling Team ${id}`);
-    const [module, name, options] = TEAM_FACTORIES[id];
-    const source = (await import(`../game/content-design/${module}.mjs`))[name](options);
-    const profileKey = ['team-greybox', 'team-originals'].includes(id)
-      ? 'journey'
-      : id === 'team-timed-originals'
-        ? 'team-shared-windows-originals'
-        : id;
-    await addRoute({ id, source, profileKey }, 'team', ['team']);
+    await addRoute(await loadInventoryTeamRoute(id), 'team', ['team']);
   }
   rows.sort(ordered);
   routes.sort(ordered);
