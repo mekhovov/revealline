@@ -59,6 +59,17 @@ test('Journey restore merges missing progress for every mode while current recei
   );
 });
 
+test('restore keeps the current receipt identity and the highest recorded star result', () => {
+  const current = emptyJourneyProfile();
+  current.clears.solo.shared = { ...receipt('current-run'), bestStars: 1 };
+  const incoming = backup();
+  incoming.profile.clears.solo.shared.bestStars = 3;
+  const merged = mergeJourneyBackup(current, incoming);
+  assert.equal(merged.clears.solo.shared.runId, 'current-run');
+  assert.equal(merged.clears.solo.shared.bestStars, 3);
+  assert.deepEqual(mergeJourneyBackup(merged, incoming), merged);
+});
+
 test('malformed, oversized, prototype and invented receipt backups cannot modify state', () => {
   const badReceipt = backup();
   badReceipt.profile.clears.solo.shared.difficulty = 'impossible';
