@@ -154,7 +154,7 @@ export function validateCampaignDescriptor(source) {
     value,
     ['id', 'revision', 'name', 'brandId', 'publication', 'sourcePath', 'assetIds', 'modes'],
     'Campaign descriptor',
-    ['lessonPath', 'rewardPath'],
+    ['lessonPath', 'rewardPath', 'localizationPath', 'localizationSha256'],
   );
   required(
     stableId(value.id) &&
@@ -177,6 +177,13 @@ export function validateCampaignDescriptor(source) {
     required(
       editionRelativePath(value.rewardPath) && value.rewardPath.endsWith('.json'),
       'Completion rewards require a bounded JSON path.',
+    );
+  if (value.localizationPath !== undefined || value.localizationSha256 !== undefined)
+    required(
+      editionRelativePath(value.localizationPath) &&
+        value.localizationPath.endsWith('.json') &&
+        /^[a-f0-9]{64}$/.test(value.localizationSha256),
+      'Campaign localization requires a local JSON path and SHA-256 pin.',
     );
   list(value.assetIds, EDITION_LIMITS.assets, 'campaign assets');
   modeList(value.modes);
