@@ -471,14 +471,22 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
     review.effects.currentFingerprintSHA256,
     'e23e228b4bf4ee68bb7cbbd231aaebe66d6e3da8965fbeae9b2c4acc90f9e053',
   );
-  const currentReviewPath =
-    'docs/verification/bulk-integration-presentation-continuation-2026-09-27/review.json';
-  const currentReviewSHA256 = 'ad469766d926795fddca108b77042b226282cc17b3a130429ad2b548b5e2edf5';
+  const currentReviewPath = 'docs/verification/bulk-queue-audio-effects-2026-09-28/review.json';
+  const currentReviewSHA256 = '5ec246c93cf5dfe6d5a3f6538788d618575037a11d2c1890d88d0257f2e7d0b3';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'effects',
   ]);
+  const previousEffects = JSON.parse(
+    await fs.readFile(
+      new URL('../../' + current.review.priorReviews.bulkPresentation.path, import.meta.url),
+    ),
+  );
   assert.equal(
     current.review.fingerprints.effects.priorSHA256,
+    '732ee9b5a46bbfe1bce8ee74f29aace278cd4da67ae59871a2771f0c197b5e3f',
+  );
+  assert.equal(
+    previousEffects.fingerprints.effects.priorSHA256,
     'b33868fdd4f6aa898a885043116b939509f4d5b14d4412adb7d71e6e90ed6bbe',
   );
   const slots = [
@@ -529,35 +537,39 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
   const continuationHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
-  const currentReviewPath =
-    'docs/verification/canonical-soundtrack-main-rebase-2026-09-28/review.json';
-  const currentReviewSHA256 = '243ab86179b9bc9d2b2094cd6bacd4f1423659d032b99aec4715f4ebd4d9051f';
+  const currentReviewPath = 'docs/verification/bulk-queue-audio-effects-2026-09-28/review.json';
+  const currentReviewSHA256 = '5ec246c93cf5dfe6d5a3f6538788d618575037a11d2c1890d88d0257f2e7d0b3';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'audio',
   ]);
+  const canonicalReview = JSON.parse(
+    await fs.readFile(
+      new URL('../../' + current.review.priorReviews.canonical.path, import.meta.url),
+    ),
+  );
   assert.equal(
-    current.review.priorReviews.acceptedMain.path,
+    canonicalReview.priorReviews.acceptedMain.path,
     'docs/verification/v0.141.7-company-startup-audio-continuation/review.json',
   );
   assert.equal(
-    current.review.priorReviews.acceptedMain.sha256,
+    canonicalReview.priorReviews.acceptedMain.sha256,
     '1d3660001a2ebe7d4d2daf5e68ab745e9e902d5c2f1757a398439de3caedccad',
   );
   assert.equal(
-    current.review.priorReviews.branchRebase.sha256,
+    canonicalReview.priorReviews.branchRebase.sha256,
     '697c094ae2c1cc0a83b77ad0e647c0967a9c3219b3ed10ba4d42f8691b9d54e7',
   );
   assert.equal(
-    current.review.priorReviews.externalDelivery.path,
+    canonicalReview.priorReviews.externalDelivery.path,
     'docs/verification/external-soundtrack-delivery-2026-09-27/review.json',
   );
   assert.equal(
-    current.review.priorReviews.externalDelivery.sha256,
+    canonicalReview.priorReviews.externalDelivery.sha256,
     '2b36f81f1afd641bac82334e051f6dc3bac0887329327eb47a10944a8a6d39c6',
   );
   const companyReview = JSON.parse(
     await fs.readFile(
-      new URL('../../' + current.review.priorReviews.acceptedMain.path, import.meta.url),
+      new URL('../../' + canonicalReview.priorReviews.acceptedMain.path, import.meta.url),
     ),
   );
   assert.equal(companyReview.priorReviews.managedMedia.path, continuationPath);

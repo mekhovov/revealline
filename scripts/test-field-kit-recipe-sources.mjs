@@ -5,6 +5,7 @@ import {
   fieldKitRecipeSources,
   verifyFieldKitAudioContinuationReview,
   verifyFieldKitCanonicalSoundtrackReview,
+  verifyFieldKitBulkQueueReview,
   verifyFieldKitCompanyAudioContinuationReview,
 } from './produce-field-kit-theme.mjs';
 
@@ -295,4 +296,36 @@ test('canonical soundtrack review and both reconciled review byte strings fail c
     changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
     assert.equal(verifyFieldKitCanonicalSoundtrackReview(...changed), false);
   }
+});
+
+test('bulk queue continuation binds current review and all six immutable predecessors', async () => {
+  const current = await readFile(
+    new URL(
+      '../docs/verification/bulk-queue-audio-effects-2026-09-28/review.json',
+      import.meta.url,
+    ),
+  );
+  const paths = [
+    'docs/verification/canonical-soundtrack-main-rebase-2026-09-28/review.json',
+    'docs/verification/fpv-family-effects-continuation-2026-09-28/review.json',
+    'docs/verification/bulk-integration-presentation-continuation-2026-09-27/review.json',
+    'docs/verification/v0.141.7-company-startup-audio-continuation/review.json',
+    'docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json',
+    'docs/verification/v0.141.0-managed-media-audio-continuation/review.json',
+  ];
+  const prior = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitBulkQueueReview(current, prior), true);
+  assert.equal(
+    verifyFieldKitBulkQueueReview(Buffer.concat([current, Buffer.from(' ')]), prior),
+    false,
+  );
+  assert.equal(verifyFieldKitBulkQueueReview(current, prior.slice(1)), false);
+  for (let i = 0; i < prior.length; i++) {
+    const changed = [...prior];
+    changed[i] = Buffer.concat([changed[i], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitBulkQueueReview(current, changed), false);
+  }
+  assert.equal(verifyFieldKitBulkQueueReview(current, [...prior].reverse()), false);
 });
