@@ -620,3 +620,10 @@ test('company packaging and boot admission always select company and startup reg
       assert.ok(startup.args.includes(required), required);
   }
 });
+
+test('neutral pilot recording changes select real engine replay and source parity checks', () => {
+  const plan = focusedTestPlan(['game/content-design/neutral-pilot-session.mjs'], manifest);
+  assert.deepEqual(plan.categories, ['neutral-pilot-evidence']);
+  assert.deepEqual(plan.unknownRuntime, []);
+  assert.ok(plan.commands[0].args.includes('game/test/neutral-pilot-session.test.mjs'));
+});

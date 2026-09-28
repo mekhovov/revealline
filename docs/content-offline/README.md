@@ -14,7 +14,7 @@ Comparison includes complete Standard physics after the host's versioned gamepla
 
 ## Pilot
 
-[Play the neutral pilot](pilot-player.html) using the real Solo, Versus and Team engines. Start the repository's static server and open this page through that server; browser modules do not run from a `file:` URL. The player resolves real Gentle/Standard/Expert presets and has keyboard and touch controls, pause/reset, elapsed time, coverage, failures, win state and local observation export. It does not write profiles or claim approval.
+[Play the neutral pilot](pilot-player.html) using the real Solo, Versus and Team engines. Start the repository's static server and open this page through that server; browser modules do not run from a `file:` URL. The player resolves real Gentle/Standard/Expert presets and has keyboard and touch controls, pause/reset, elapsed time, coverage, failures, win state and local observation export. It does not write profiles or claim approval. [Pilot batch status](PILOT-STATUS-2026-09-28.md) and [replay-checkable observations](PILOT-OBSERVATIONS.md) now use the same public-input session code as the player and support all three modes.
 
 [Review the designs and probes](pilot.html). Four Orchard-family successors and a distinct Horizon Versus course use new tooling-only identities; current Solo, Team and Pressure Lines controls remain available for comparison. The [Horizon project](pilot-horizon-project.json) is also importable in the existing content-design tooling.
 
