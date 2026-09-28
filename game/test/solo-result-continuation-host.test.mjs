@@ -223,10 +223,14 @@ for (const policy of ['immediate', 'grid-center'])
     ticks(p, 30);
     kept(p, before);
     assert.equal(p.$('game-overlay').dataset.kind, 'won');
-    assert.equal(p.$('next-button').disabled, true);
-    assert.equal(p.$('flight-preparation-cancel').hidden, false);
-    assert.equal(p.doc.activeElement.id, 'flight-preparation-cancel');
-    assert.match(p.$('flight-preparation-status').textContent, /next-cut/);
+    assert.equal(p.$('next-button').disabled, false);
+    assert.equal(p.$('next-button').getAttribute('aria-disabled'), 'true');
+    assert.equal(p.$('flight-preparation-cancel').hidden, true);
+    assert.equal(p.doc.activeElement.id, 'next-button');
+    assert.match(
+      p.$('flight-preparation-status').textContent,
+      /Opening this flight’s original picture|next-cut/,
+    );
     gate.resolve();
     await running(p, 'next-cut');
     assert.notEqual(p.rendered.run, before.run);

@@ -1240,6 +1240,21 @@ try {
   const preparationFeedback = createOperationStatus($('flight-preparation-status'));
   const themeFeedback = createOperationStatus($('theme-preparation-status'));
   let preparationOperation = null;
+  function preparationButtonBusy(button, busy) {
+    if (!button) return;
+    // Keep the originating command focusable so keyboard/controller users never
+    // fall onto a temporary Cancel control while its asynchronous work runs.
+    button.disabled = false;
+    if (busy) {
+      button.setAttribute('aria-disabled', 'true');
+      button.setAttribute('aria-busy', 'true');
+      button.dataset.busy = 'true';
+    } else {
+      button.removeAttribute('aria-disabled');
+      button.removeAttribute('aria-busy');
+      delete button.dataset.busy;
+    }
+  }
   function clearPreparation() {
     preparationOperation = null;
     preparationFeedback.clear();
@@ -1248,7 +1263,9 @@ try {
   function beginPreparation(message, cancel, stage = 'preparing', result = false) {
     const operation = { status: preparationFeedback.begin({ message, stage }), cancel, result };
     preparationOperation = operation;
-    $('flight-preparation-cancel').hidden = !cancel;
+    // Cancellation belongs to Back/Escape and navigation invalidation. Keep the
+    // legacy hook non-visual for programmatic routing without adding a command.
+    $('flight-preparation-cancel').hidden = true;
     return {
       update(status) {
         if (preparationOperation !== operation || status.status !== 'preparing') return;
@@ -5401,7 +5418,7 @@ try {
       announce ? t('interface:solo.skipCancelledCurrentFlightKept') : '',
       'cancelled',
     );
-    operation.button.disabled = false;
+    preparationButtonBusy(operation.button, false);
     clearSkipConfirmation();
     if (restoreFocus && skipSnapshotCurrent(operation.snapshot) && !operation.button.hidden)
       operation.button.focus({ preventScroll: true });
@@ -5423,8 +5440,7 @@ try {
       'preparing',
       true,
     );
-    operation.button.disabled = true;
-    $('flight-preparation-cancel').focus({ preventScroll: true });
+    preparationButtonBusy(operation.button, true);
     try {
       const host = await getUnifiedMissionLibrary();
       if (librarySkipResolution !== operation || !skipSnapshotCurrent(operation.snapshot)) {
@@ -5441,7 +5457,7 @@ try {
       if (!next) throw new Error(t('interface:solo.noOtherNormalMission'));
       librarySkipResolution = null;
       operation.feedback.finish();
-      operation.button.disabled = false;
+      preparationButtonBusy(operation.button, false);
       armSkip({
         type: 'library',
         host,
@@ -5458,7 +5474,7 @@ try {
           localizedMessage('interface:solo.skipUnavailable', { error: error.message }),
           'error',
         );
-        operation.button.disabled = false;
+        preparationButtonBusy(operation.button, false);
         clearSkipConfirmation();
         operation.button.focus({ preventScroll: true });
       }
@@ -6428,7 +6444,7 @@ try {
       savedRaw: null,
     };
     titleFlight = ticket;
-    $('shell-flight-cancel').hidden = false;
+    $('shell-flight-cancel').hidden = true;
     // The original activation unlocks audio; the persisted master gate is unchanged.
     void activateAudio().catch(() => {});
     try {
@@ -8046,7 +8062,7 @@ try {
     if (resultAttempt !== ticket) return;
     resultAttempt = null;
     const epoch = ++resultAttemptEpoch;
-    ticket.button.disabled = false;
+    preparationButtonBusy(ticket.button, false);
     ticket.feedback?.finish(message, state);
     ticket.controller.abort();
     ticket.pictures?.dispose();
@@ -8119,7 +8135,7 @@ try {
       libraryNextOperation = null;
       detach();
       controller.abort();
-      button.disabled = false;
+      preparationButtonBusy(button, false);
       feedback?.finish(
         t('interface:preparationCancelledYourResultIsKeptChooseNextToRetry'),
         'cancelled',
@@ -8149,8 +8165,8 @@ try {
         'preparing',
         true,
       );
-      button.disabled = true;
-      cancelButton.focus({ preventScroll: true });
+      preparationButtonBusy(button, true);
+      button.focus({ preventScroll: true });
       document.addEventListener('focusin', changedFocus);
       document.addEventListener('visibilitychange', lostForeground);
       window.addEventListener('blur', windowBlur);
@@ -8194,7 +8210,7 @@ try {
           transferred = true;
           detach();
           libraryNextOperation = null;
-          button.disabled = false;
+          preparationButtonBusy(button, false);
           feedback.finish();
           button.focus({ preventScroll: true });
           return activation.isCurrent();
@@ -8214,7 +8230,7 @@ try {
     } finally {
       detach();
       if (libraryNextOperation === operation) libraryNextOperation = null;
-      if (!libraryNextOperation && !resultAttempt) button.disabled = false;
+      if (!libraryNextOperation && !resultAttempt) preparationButtonBusy(button, false);
       if (
         run === previous &&
         document.activeElement === cancelButton &&
@@ -8259,7 +8275,7 @@ try {
       libraryNextOperation = null;
       detach();
       controller.abort();
-      button.disabled = false;
+      preparationButtonBusy(button, false);
       feedback?.finish(t('interface:solo.skipCancelledRetry'), 'cancelled');
       const canRestore = skipSnapshotCurrent(destination.snapshot);
       clearSkipConfirmation();
@@ -8281,8 +8297,8 @@ try {
         'preparing',
         true,
       );
-      button.disabled = true;
-      cancelButton.focus({ preventScroll: true });
+      preparationButtonBusy(button, true);
+      button.focus({ preventScroll: true });
       document.addEventListener('focusin', changedFocus);
       document.addEventListener('visibilitychange', lostForeground);
       window.addEventListener('blur', lostForeground);
@@ -8309,7 +8325,7 @@ try {
           transferred = true;
           detach();
           libraryNextOperation = null;
-          button.disabled = false;
+          preparationButtonBusy(button, false);
           feedback.finish();
           clearSkipConfirmation();
           return activation.isCurrent();
@@ -8342,7 +8358,7 @@ try {
     } finally {
       detach();
       if (libraryNextOperation === operation) libraryNextOperation = null;
-      if (!libraryNextOperation && !resultAttempt) button.disabled = false;
+      if (!libraryNextOperation && !resultAttempt) preparationButtonBusy(button, false);
       if (
         !transferred &&
         skipSnapshotCurrent(destination.snapshot) &&
@@ -8466,8 +8482,8 @@ try {
         message: () =>
           t('interface:solo.preparingMission', { mission: contentText(level, 'name') }),
       });
-      ticket.button.disabled = true;
-      if (ownedFocus) $('flight-preparation-cancel').focus({ preventScroll: true });
+      preparationButtonBusy(ticket.button, true);
+      if (ownedFocus) ticket.button.focus({ preventScroll: true });
       if (!resultAttemptCurrent(ticket))
         throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
       let candidateAttempt = null;
@@ -8726,7 +8742,7 @@ try {
       } else {
         resultAttempt = null;
         ticket.adoptionEpoch = ++resultAttemptEpoch;
-        ticket.button.disabled = false;
+        preparationButtonBusy(ticket.button, false);
       }
       previousPictures = flightPictures;
       adoptedPictures = ticket.pictures;

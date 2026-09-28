@@ -49,9 +49,10 @@ function beginBoundaryNext(p) {
     p.$('flight-preparation-status').textContent,
     /Finding the next mission.*Your result is kept/,
   );
-  assert.equal(p.$('next-button').disabled, true);
-  assert.equal(p.$('flight-preparation-cancel').hidden, false);
-  assert.equal(p.doc.activeElement, p.$('flight-preparation-cancel'));
+  assert.equal(p.$('next-button').disabled, false);
+  assert.equal(p.$('next-button').getAttribute('aria-disabled'), 'true');
+  assert.equal(p.$('flight-preparation-cancel').hidden, true);
+  assert.equal(p.doc.activeElement, p.$('next-button'));
   p.frame(0);
   assert.equal(p.rendered.run, result);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
