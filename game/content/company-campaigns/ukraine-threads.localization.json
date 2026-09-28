@@ -6,7 +6,7 @@
     {
       "fields": { "name": { "en": "Threads Across Ukraine", "uk": "Нитки України" } },
       "id": "ukraine-threads",
-      "identity": "e405ea1506ee9cdd",
+      "identity": "5ba9edcff27a1054",
       "kind": "campaign"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "White on White", "uk": "Білим по білому" }
       },
       "id": "ukraine-threads-03",
-      "identity": "d1e246dd6c366067",
+      "identity": "33f00980a7937104",
       "kind": "mission"
     },
     {

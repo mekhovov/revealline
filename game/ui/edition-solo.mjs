@@ -399,6 +399,7 @@ export async function mountEditionSoloUI({
     },
     pictureReady: lessons.pictureReady,
     cosmeticBodies: rewards.cosmeticBodies,
+    closeResultDetails: rewards.closeResultDetails,
     dispose() {
       disposed = true;
       stopLearningRewards();

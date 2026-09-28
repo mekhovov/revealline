@@ -184,8 +184,20 @@ test('the Social Drone listening update preserves its exact old promise and six 
   assert.equal(bytes.length, historical.bytes);
   assert.equal(createHash('sha256').update(bytes).digest('hex'), expectedHash);
   const { snapshot } = await validateRetainedPresentation(bytes.toString('utf8'), { edition });
+  const afterBytes = await readFile(
+    new URL('game/editions/retained/social-drone-ua-before-mission-alt.json', root),
+  );
+  assert.equal(
+    createHash('sha256').update(afterBytes).digest('hex'),
+    '13d119e2e5aa67bd6636a2d83d9e1374d792a05edc33c462654f19d965efe409',
+    'The exact listening batch remains fixed independently of later caption corrections.',
+  );
+  const { snapshot: afterSnapshot } = await validateRetainedPresentation(
+    afterBytes.toString('utf8'),
+    { edition },
+  );
   assert.equal(snapshot.catalog.editions[0].revision, 5);
-  assert.equal(edition.revision, 6);
+  assert.equal(afterSnapshot.catalog.editions[0].revision, 6);
   for (const id of CURRICULUM_LISTENING_ASSET_IDS)
     assert.equal(
       snapshot.catalog.assets.some((asset) => asset.id === id),
@@ -194,13 +206,13 @@ test('the Social Drone listening update preserves its exact old promise and six 
   let beforeFinale, afterFinale;
   for (const descriptor of snapshot.catalog.campaigns) {
     const beforeSource = snapshot.files.find((row) => row.path === descriptor.sourcePath).data;
-    const afterSource = await json(descriptor.sourcePath);
+    const afterSource = afterSnapshot.files.find((row) => row.path === descriptor.sourcePath).data;
     assert.deepEqual(
       createRewardMissionBindings(afterSource),
       createRewardMissionBindings(beforeSource),
     );
     const beforeRewards = snapshot.files.find((row) => row.path === descriptor.rewardPath).data;
-    const afterRewards = await json(descriptor.rewardPath);
+    const afterRewards = afterSnapshot.files.find((row) => row.path === descriptor.rewardPath).data;
     assert.deepEqual(
       afterRewards.map((row) => row.id),
       beforeRewards.map((row) => row.id),
@@ -226,6 +238,10 @@ test('the Social Drone listening update preserves its exact old promise and six 
   }
   assert.ok(beforeFinale);
   assert.ok(afterFinale);
+  const currentFinale = (
+    await json(catalog.campaigns.find((row) => row.id === CURRICULUM_LISTENING_CAMPAIGN).rewardPath)
+  ).find((row) => row.id === afterFinale.id);
+  assert.deepEqual(currentFinale.requirements, afterFinale.requirements);
   assert.deepEqual(afterFinale.requirements.learning, []);
   assert.deepEqual(afterFinale.requirements.mastery, []);
   assert.deepEqual(
@@ -244,7 +260,7 @@ test('the Social Drone listening update preserves its exact old promise and six 
   assert.deepEqual(promise.promises, [beforeFinale]);
   assert.equal(promise.receipts.length, 0);
   const upgrade = reconcileEarnedRewards(
-    [afterFinale],
+    [currentFinale],
     context,
     validateRewardState(JSON.parse(JSON.stringify(promise)), { editionId: edition.id }),
   );
@@ -265,17 +281,17 @@ test('the Social Drone listening update preserves its exact old promise and six 
   };
   assert.equal(projectRewardProgress(afterFinale, lastOnly).eligible, false);
   assert.equal(projectRewardProgress(afterFinale, context).eligible, true);
-  const earned = reconcileEarnedRewards([afterFinale], context, upgrade.state);
+  const earned = reconcileEarnedRewards([currentFinale], context, upgrade.state);
   assert.equal(earned.granted.length, 1);
   assert.deepEqual(earned.granted[0].definition, beforeFinale);
   const restored = validateRewardState(JSON.parse(JSON.stringify(earned.state)), {
     editionId: edition.id,
   });
-  assert.deepEqual(reconcileEarnedRewards([afterFinale], context, restored).state, restored);
-  assert.equal(reconcileEarnedRewards([afterFinale], context, restored).granted.length, 0);
-  const newPlayer = reconcileEarnedRewards([afterFinale], context);
+  assert.deepEqual(reconcileEarnedRewards([currentFinale], context, restored).state, restored);
+  assert.equal(reconcileEarnedRewards([currentFinale], context, restored).granted.length, 0);
+  const newPlayer = reconcileEarnedRewards([currentFinale], context);
   assert.equal(newPlayer.granted.length, 1);
-  assert.deepEqual(newPlayer.granted[0].definition, afterFinale);
+  assert.deepEqual(newPlayer.granted[0].definition, currentFinale);
   assert.deepEqual(newPlayer.granted[0].definition.audioGroups[0].payloadIds, [
     'social-community-listening-jellyfish',
     'social-community-listening-thanks',
