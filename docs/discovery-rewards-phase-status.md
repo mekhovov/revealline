@@ -27,6 +27,7 @@ Current qualification is narrower than implementation:
 - One accepted baseline/current pair per scenario recorded p95 **16.7→16.8 ms (+0.60%)** for stationary active play and first-win result entry, within the scoped five-percent target. These single-pair observations do not qualify every device, scenario or reward-owned task. [Comparison method and limits](discovery-desktop-observations.md#matched-compiled-artifacts-on-28-september).
 - `7acf6af53` passed complete eighteen-edition candidate run `36447088737` (including optional practice) and hosted acceptance run `36447088556`. Its separate capacity artifact validates the exact edition and launcher sizes without downloading the roughly 900 MB bulk archive. These receipts precede the rebase onto main `7138e7b61` and do not qualify the rebased head or production publication.
 - The later `61a315090` FPV distribution reproduces twice with unchanged gameplay identity. A matching clean Motion viewer trace improves **56.280 → 8.558 ms** after the shared catalogue optimization. A fresh normal win and twenty result/viewer cycles also pass with constant connected counts and a durable save. These are scoped viewer/lifecycle observations, not all-reward, first-win or retained-memory qualification.
+- Default preparation at `8104e7bb0` passes normal build gates and yields **795,373,867 bytes** including its manifest. Combining this with the older four-edition packet yields a **913,723,492-byte planning subtotal**; the six-edition subtotal is **1,039,207,138 bytes**, already above the 950,000,000-byte cap. These cross-revision sums omit retained versions, hub and optional output and do not qualify a hosted selection. [Exact default inspection](verification/evidence/discovery-2026-09-28-default-capacity.json).
 - Human and physical-device review remains explicitly deferred. Current frozen full-site sizing, complete release admission, rollback verification and downloaded/deployed public-byte evidence remain open.
 
 ## Phase ledger
@@ -244,3 +245,19 @@ tracked soundtrack producer in the sparse checkout. It wrote no report and estab
 default size. Exact required producer inputs are being restored from the committed source;
 normal validation remains mandatory. The device runbook now labels its old v0.141.6/v0.141.7
 receipts as historical and links this current ledger.
+
+The clean `8104e7bb0` retry passes the ordinary default build gates after restoring four exact
+tracked soundtrack producer/metadata files (73,370 bytes). Direct soundtrack preparation first
+verified all 71 tracks against the canonical catalogue and runtime module. The complete inspector
+then bound 2,014 included originals and verified the 5,078 available tracked source files before
+and after preparation. Its 2,150 prepared manifest entries plus `manifest.json` total
+**795,373,867 bytes**. The [compact evidence](verification/evidence/discovery-2026-09-28-default-capacity.json)
+pins source/tree, source inventory, full report and manifest hashes. No ZIP, expanded site or
+promotion receipt was written, and this single preparation is not a reproducibility claim.
+
+Using the earlier `7acf6af53` edition packet only for planning gives **913,723,492 bytes** for
+the default plus four new editions, leaving 36,276,508 bytes before uncounted routes, retained
+versions, hub, optional packages and later changes. Default plus six is **1,039,207,138 bytes**
+and cannot fit the existing 950,000,000-byte cap even before that overhead. The existing hosted
+subset/ZIP-download path remains appropriate; no production selection is made by this arithmetic.
+Exact current edition candidates and the complete future hosted tree still need validation.
