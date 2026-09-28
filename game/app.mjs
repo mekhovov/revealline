@@ -2,6 +2,7 @@ import { loadCompanyStartup } from './ui/company-startup.mjs';
 import { createStudioPreviewSession } from './studio-preview-session.mjs';
 import { editionDepartureDestinationAllowed } from './editions/departure-destination.mjs';
 import { mountEditionSoloUI } from './ui/edition-solo.mjs';
+import { mountTitleCharacter } from './ui/title-character.mjs';
 import { createEditionPracticeScenario } from './ui/edition-controller-practice.mjs';
 import { projectEditionGuideScenario } from './editions/selected-presentation.mjs';
 import { installedPresentation, invalidateInstalledMigration } from './installed-app.mjs';
@@ -2022,6 +2023,16 @@ try {
       show('asset-warning', !!copy);
     },
   });
+  const titleCharacter = mountTitleCharacter({
+    container: $('shell-home')?.querySelector('.home-content'),
+    getCharacter: () => ({
+      body: painter.body,
+      recipe: painter.recipe,
+      image: painter.image,
+      bodyColor: painter.theme?.palette.player ?? '#80CAE8',
+      accentColor: painter.theme?.palette.accent ?? '#FFFFFF',
+    }),
+  });
   // Published presentation is a separate cosmetic release. Loading it never
   // opens the local Asset Studio database or changes a flight's picture pins.
   let presentationHost = null,
@@ -2906,6 +2917,7 @@ try {
     if (!event.persisted) {
       stopLocaleView();
       editionUI?.dispose();
+      titleCharacter?.dispose();
       touchPreferences.destroy();
       flightDetails.dispose();
       flightInformation.dispose();
@@ -4972,7 +4984,10 @@ try {
   }
   function availableBodies() {
     if (candidateHost?.owns(activeEntry))
-      return new Set(activeEntry.themes.map((item) => item.player));
+      return new Set([
+        ...activeEntry.themes.map((item) => item.player),
+        ...(editionUI?.cosmeticBodies?.() ?? []),
+      ]);
     return characterPresentations.availableBodies(
       difficultyNavigation.bodies(activeEntry, library.campaigns, progress),
     );
@@ -10497,6 +10512,11 @@ try {
       const dt = clamp(delta / 1000, 0, 1);
       update(dt);
       editionUI?.refresh();
+      titleCharacter?.update(dt, {
+        visible:
+          !document.hidden && document.hasFocus() && controllerDialog() === $('shell-home'),
+        reduced: displayPreferences.snapshot().effectiveReducedEffects,
+      });
       const { width, height } = boardPaintSizeForRun(run);
       if (width !== this.boardSize.width || height !== this.boardSize.height) {
         this.boardTexture.setSize(width, height);
@@ -10980,6 +11000,10 @@ try {
       unifiedChooser = attachJourneyChooser({
         library: result.library,
         profile,
+        goalPreferenceOptions: {
+          editionId: runtimeContent?.editionId ?? 'default',
+          getStorage: profileStorage,
+        },
         ...(runtimeContent
           ? {
               supportedModes: runtimeContent.selection.edition.modes,
@@ -11580,6 +11604,20 @@ try {
         getJourneyRevision: () => journeyProfile?.stateRevision() ?? 0,
         getJourneyDurable: () => journeyRewardsDurable,
         getReducedMotion: () => displayPreferences.snapshot().effectiveReducedEffects,
+        motionPreferences: displayPreferences,
+        onCosmeticBodiesChange: () => updateBodies(),
+        onChooseCosmetic: () => focusAppearance(),
+        onRecoverCosmetic: () => {
+          if ($('collection-dialog').open) $('collection-dialog').close();
+          gameShell?.openHome();
+          gameShell?.openWorkshop();
+          const choice = $('edition-presentation-select');
+          if (choice) {
+            choice.closest('details').open = true;
+            choice.focus({ preventScroll: true });
+            choice.scrollIntoView({ block: 'center' });
+          }
+        },
         getPictureVisible: () =>
           run?.status === 'won' && $('game-overlay').hidden && !$('show-result').hidden,
         report: (message) => warning(message),
@@ -11607,6 +11645,17 @@ try {
           }),
       })
     : null;
+  if (editionUI) {
+    if (
+      !library.preferences.matchClassAppearance &&
+      library.preferences.bodyId !== bodyId &&
+      availableBodies().has(library.preferences.bodyId)
+    ) {
+      bodyId = library.preferences.bodyId;
+      painter.setLook(theme, bodyId, painterVisuals());
+    }
+    updateBodies();
+  }
   attachFullscreen($('shell-fullscreen'));
   void initializeSoundtrack();
   if (autoplayPackLaunch)
