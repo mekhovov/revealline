@@ -38,6 +38,35 @@ test('published size reports select metadata integrity and cache-owner measureme
   assert.ok(command.args.includes('scripts/test-report-offline-packages.mjs'));
 });
 
+test('official download changes require ownership recovery and gameplay-admission checks', () => {
+  for (const file of ['game/official-downloads.mjs', 'game/test/official-downloads.test.mjs']) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'official-download-retention');
+    assert.ok(command);
+    for (const required of [
+      'game/test/official-downloads.test.mjs',
+      'game/test/offline-download-access.test.mjs',
+      'game/test/offline-team-retention-host.test.mjs',
+    ])
+      assert.ok(command.args.includes(required));
+  }
+});
+
+test('online play changes retain optional-offline and published host coverage', () => {
+  for (const file of [
+    'game/offline-download-access.mjs',
+    'game/offline/service-worker.template.js',
+    'game/ui/company-startup.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    const command = plan.commands.find(({ id }) => id === 'optional-offline-play');
+    assert.ok(command);
+    assert.ok(command.args.includes('game/test/published-solo-entry-host.test.mjs'));
+    assert.ok(command.args.includes('game/test/optional-offline-access.test.mjs'));
+  }
+});
+
 test('localization and offline paths select only their bounded gates', () => {
   const plan = focusedTestPlan(['game/localization/en.json', 'game/offline/install.mjs'], manifest);
   assert.deepEqual(plan.categories, ['localization', 'offline']);

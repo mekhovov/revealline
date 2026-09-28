@@ -34,6 +34,7 @@ import {
   verifyEditionOffline,
   selectPreparedEdition,
 } from './editions/offline-client.mjs';
+import { localizedAttribute, localizedText, t } from './i18n/index.mjs';
 
 const $ = (id) => document.getElementById(id);
 const BACKUP_LIMITS = Object.freeze({
@@ -50,7 +51,7 @@ const node = (tag, text, className) => {
   return result;
 };
 const report = (message, error = false) => {
-  $('notice').textContent = message;
+  const rendered = localizedText($('notice'), message);
   $('notice').dataset.error = String(error);
   const dialog = document.querySelector('dialog[open]');
   if (dialog) {
@@ -61,9 +62,10 @@ const report = (message, error = false) => {
       status.setAttribute('aria-live', 'polite');
       dialog.append(status);
     }
-    status.textContent = message;
+    localizedText(status, message);
     status.dataset.error = String(error);
   }
+  return rendered;
 };
 const guard =
   (fn) =>
@@ -109,7 +111,7 @@ async function main() {
   let version = 'DEV';
   if (standalone) {
     const response = await fetch(new URL('build-info.json', location.href));
-    if (!response.ok) throw new Error('This edition is missing its build identity.');
+    if (!response.ok) throw new Error(t('errors:companyPlayer.missingBuildIdentity'));
     version = (await response.json()).version;
   }
   const context = resolveEditionContext({ editionId: selection.edition.id, version });
@@ -129,15 +131,14 @@ async function main() {
     profileKey: route.profileKey,
     canWrite: () => writer.writable && !storage.readError,
     onStatus: (status) => {
-      if (status.error)
-        report('Your progress is available in this tab. Export a backup before leaving.', true);
+      if (status.error) report(() => t('interface:companyPlayer.progressAvailableInTab'), true);
     },
   });
   await profile.load();
   const localLearning = new Map(),
     localClears = new Set();
   const theme = boot.boot.themes.themes.find((entry) => entry.id === selection.brand.themeId);
-  if (!theme) throw new Error('This edition is missing its selected company presentation.');
+  if (!theme) throw new Error(t('errors:companyPlayer.missingPresentation'));
   const brandAsset = (id) => catalog.assets.find((a) => a.id === id);
   const assetURL = (id) => {
     const asset = brandAsset(id);
@@ -162,7 +163,9 @@ async function main() {
   $('brand-name').textContent = selection.brand.name;
   $('brand-description').textContent = selection.brand.description;
   $('home-title').textContent = selection.edition.name;
-  $('footer-brand').textContent = `${selection.brand.name} · Reveal / Line`;
+  localizedText($('footer-brand'), () =>
+    t('interface:companyPlayer.footerBrand', { brand: selection.brand.name }),
+  );
   if (selection.brand.logoAssetId) {
     $('brand-logo').src = assetURL(selection.brand.logoAssetId);
     $('brand-logo').hidden = false;
@@ -170,8 +173,13 @@ async function main() {
   }
   if (selection.brand.heroAssetId) $('home-art').src = assetURL(selection.brand.heroAssetId);
   $('about-copy').textContent = selection.brand.description;
-  $('build-identity').textContent =
-    `${selection.edition.name} · content revision ${selection.edition.revision} · engine ${version}`;
+  localizedText($('build-identity'), () =>
+    t('interface:companyPlayer.buildIdentity', {
+      edition: selection.edition.name,
+      revision: selection.edition.revision,
+      version,
+    }),
+  );
   if (standalone) $('all-worlds')?.remove();
   for (const source of new Map(
     [...(selection.brand.sources ?? []), ...lessons.flatMap((l) => l.sources)].map((s) => [
@@ -239,7 +247,7 @@ async function main() {
     });
   const canvas = $('board'),
     ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('This browser cannot create the game board.');
+  if (!ctx) throw new Error(t('errors:companyPlayer.boardUnavailable'));
   let painter = new BoardPainter(boot.boot.presets, {
     onAsset: (message) => {
       if (message) report(message, true);
@@ -362,10 +370,7 @@ async function main() {
         difficulty: current.selection.difficulty,
       });
     } catch (error) {
-      report(
-        `Your connection is complete in this tab. Export a backup before leaving: ${error.message}`,
-        true,
-      );
+      report(() => t('interface:companyPlayer.completedInTab', { error: error.message }), true);
     }
   }
   function save() {
@@ -386,10 +391,7 @@ async function main() {
       $('continue-button').hidden = false;
       return true;
     } catch (error) {
-      report(
-        `Saving needs attention: ${error.message} Export a backup to keep this attempt.`,
-        true,
-      );
+      report(() => t('interface:companyPlayer.saveNeedsAttention', { error: error.message }), true);
       return false;
     }
   }
@@ -425,13 +427,13 @@ async function main() {
   }
   async function start(id, { saved = null } = {}) {
     if (!saved && !unlocked(id))
-      throw new Error('Complete the preceding connection and its assignment first.');
+      throw new Error(t('errors:companyPlayer.precedingConnectionIncomplete'));
     const mission = missionFor(id);
-    if (!mission) throw new Error('This mission is not part of the selected edition.');
+    if (!mission) throw new Error(t('errors:companyPlayer.missionOutsideEdition'));
     pause({ persist: !saved });
     const ticket = ++generation;
     preparing = true;
-    report('Preparing the exact mission and its artwork…');
+    report(() => t('interface:companyPlayer.preparingMission'));
     let attempt, staged;
     try {
       let restored;
@@ -480,14 +482,16 @@ async function main() {
         staged.enemyBodies.clear();
         return;
       }
-      let learningNotice = '';
+      let learningNotice = null;
       if (learning?.status === 'complete') {
         try {
           if (!(await proveLearning(learning, run, recorder)))
-            learningNotice =
-              'Your verified assignment is kept in this tab. Export a backup to keep its replay proof.';
+            learningNotice = () => t('interface:companyPlayer.verifiedAssignmentInTab');
         } catch (error) {
-          learningNotice = `The saved attempt is verified, but historical mastery needs attention: ${error.message}`;
+          learningNotice = () =>
+            t('interface:companyPlayer.historicalMasteryNeedsAttention', {
+              error: error.message,
+            });
         }
       }
       if (ticket !== generation) {
@@ -529,7 +533,7 @@ async function main() {
       $('workbench-button').hidden = !lesson;
       report(
         learningNotice ||
-          (writer.writable ? 'Ready. Your progress stays with this edition.' : writer.reason),
+          (writer.writable ? () => t('interface:companyPlayer.readyForEdition') : writer.reason),
         !!learningNotice || !writer.writable,
       );
       save();
@@ -558,13 +562,17 @@ async function main() {
       image.loading = 'lazy';
       card.append(image);
       const content = node('div', undefined, 'campaign-card-content');
-      content.append(
-        node('span', `JOURNEY ${String(index + 1).padStart(2, '0')}`, 'campaign-number'),
-        node('h3', campaign.name),
-        node('p', first.design.lesson),
+      const number = node('span', undefined, 'campaign-number');
+      localizedText(number, () =>
+        t('interface:companyPlayer.journeyNumber', {
+          number: String(index + 1).padStart(2, '0'),
+        }),
       );
+      content.append(number, node('h3', campaign.name), node('p', first.design.lesson));
       const select = node('select');
-      select.setAttribute('aria-label', `Mission in ${campaign.name}`);
+      localizedAttribute(select, 'aria-label', () =>
+        t('interface:companyPlayer.missionInCampaign', { campaign: campaign.name }),
+      );
       campaign.missionIds.forEach((id, i) => {
         const m = source.missions.find((m) => m.id === id),
           option = node('option', `${i + 1}. ${m.name}${completed(id) ? ' ✓' : ''}`);
@@ -574,20 +582,28 @@ async function main() {
       });
       select.value =
         campaign.missionIds.find((id) => !completed(id) && unlocked(id)) ?? campaign.missionIds[0];
-      const button = node('button', 'Enter journey →', 'primary');
-      button.setAttribute('aria-label', `Enter journey: ${campaign.name}`);
+      const button = node('button', undefined, 'primary');
+      localizedText(button, () => t('interface:companyPlayer.enterJourney'));
+      localizedAttribute(button, 'aria-label', () =>
+        t('interface:companyPlayer.enterJourneyNamed', { campaign: campaign.name }),
+      );
       button.onclick = guard(() => start(select.value));
       const footer = node('div', undefined, 'campaign-footer');
-      footer.append(
-        node(
-          'span',
-          `${campaign.missionIds.filter(completed).length} / ${campaign.missionIds.length} connected`,
-        ),
-        node(
-          'span',
-          lessons.some((l) => l.campaignId === campaign.id) ? 'PLAY + PRACTICE' : 'ADVENTURE',
-        ),
+      const connected = node('span'),
+        kind = node('span'),
+        connectedCount = campaign.missionIds.filter(completed).length;
+      localizedText(connected, () =>
+        t('interface:companyPlayer.connected', {
+          count: connectedCount,
+          total: campaign.missionIds.length,
+        }),
       );
+      localizedText(kind, () =>
+        lessons.some((lesson) => lesson.campaignId === campaign.id)
+          ? t('interface:companyPlayer.playPractice')
+          : t('interface:companyPlayer.adventure'),
+      );
+      footer.append(connected, kind);
       content.append(select, button, footer);
       card.append(content);
       $('campaigns').append(card);
@@ -603,6 +619,10 @@ async function main() {
     // Preserve focused nodes and avoid rebuilding unchanged text every frame.
     const put = (id, property, value) => {
       const target = $(id);
+      if (property === 'textContent') {
+        localizedText(target, value);
+        return;
+      }
       if (target[property] !== value) target[property] = value;
     };
     put('coverage', 'textContent', `${(run.coverage * 100).toFixed(1)}%`);
@@ -618,52 +638,48 @@ async function main() {
     put('resume-button', 'hidden', ended);
     put('retry-button', 'hidden', !ended);
     put('next-button', 'hidden', !won || !learned);
-    put('pause-button', 'textContent', paused ? 'Resume' : 'Pause');
-    put('pause-button', 'disabled', ended);
-    put(
-      'play-state',
-      'textContent',
-      won
-        ? learned
-          ? 'Connection complete.'
-          : 'Picture connected. Assignment waiting.'
-        : run.status === 'lost'
-          ? 'Another route is waiting.'
-          : run.tick === 0
-            ? 'Ready to connect.'
-            : 'Take your time.',
+    put('pause-button', 'textContent', () =>
+      paused ? t('common:actions.resume') : t('common:actions.pause'),
     );
-    put(
-      'play-detail',
-      'textContent',
+    put('pause-button', 'disabled', ended);
+    put('play-state', 'textContent', () =>
       won
         ? learned
-          ? 'This connection is complete.'
-          : 'Open the workbench to complete this connection.'
+          ? t('interface:companyPlayer.connectionComplete')
+          : t('interface:companyPlayer.assignmentWaiting')
         : run.status === 'lost'
-          ? 'Watch the paper tangles and try a shorter return.'
+          ? t('interface:companyPlayer.anotherRouteWaiting')
+          : run.tick === 0
+            ? t('interface:companyPlayer.readyToConnect')
+            : t('interface:companyPlayer.takeYourTime'),
+    );
+    put('play-detail', 'textContent', () =>
+      won
+        ? learned
+          ? t('interface:companyPlayer.connectionCompleteDetail')
+          : t('interface:companyPlayer.openWorkbenchToComplete')
+        : run.status === 'lost'
+          ? t('interface:companyPlayer.shorterReturnHint')
           : current.manifest.design.routeDecision,
     );
-    put('resume-button', 'textContent', run.tick === 0 ? 'Start mission' : 'Return to play');
-    put(
-      'learning-status',
-      'textContent',
+    put('resume-button', 'textContent', () =>
+      run.tick === 0 ? t('interface:startMission') : t('interface:companyPlayer.returnToPlay'),
+    );
+    put('learning-status', 'textContent', () =>
       currentLesson()
         ? !safe
-          ? 'Return to safe ground before opening the workbench.'
+          ? t('interface:companyPlayer.returnToSafeGround')
           : learned
-            ? 'Assignment complete.'
-            : 'Inspect → Configure → Commit. The game pauses while you work.'
-        : 'An adventure mission. Follow your own route.',
+            ? t('interface:companyPlayer.assignmentComplete')
+            : t('interface:companyPlayer.workbenchInstructions')
+        : t('interface:companyPlayer.adventureMission'),
     );
-    put(
-      'workbench-button',
-      'textContent',
+    put('workbench-button', 'textContent', () =>
       current.learning?.status === 'complete'
-        ? 'Review workbench'
+        ? t('interface:companyPlayer.reviewWorkbench')
         : learned
-          ? 'Practice again'
-          : 'Open workbench',
+          ? t('interface:companyPlayer.practiceAgain')
+          : t('interface:companyPlayer.openWorkbench'),
     );
     put('workbench-button', 'disabled', !safe);
   }
@@ -689,10 +705,7 @@ async function main() {
       maxDepth: 30,
     });
     const m = host.catalog.find(saved.missionId);
-    if (!m)
-      throw new Error(
-        'The saved mission belongs to an unavailable campaign. Its data has been kept.',
-      );
+    if (!m) throw new Error(t('errors:companyPlayer.savedMissionUnavailable'));
     return start(m.levelId, { saved });
   });
   $('pause-button').onclick = () => (paused ? resume() : pause());
@@ -709,7 +722,7 @@ async function main() {
     const editionId = $('edition-select').value;
     $('edition-select').disabled = true;
     try {
-      report('Checking the selected company and its artwork…');
+      report(() => t('interface:companyPlayer.checkingSelectedCompany'));
       const candidate = await loadEditionBootstrap({
         catalogURL,
         contentBaseURL: rootURL.href,
@@ -761,13 +774,15 @@ async function main() {
       $('gallery').append(card);
     }
     if (!$('gallery').children.length)
-      $('gallery').append(node('p', 'Your completed connections will appear here.'));
+      localizedText($('gallery').appendChild(node('p')), () =>
+        t('interface:companyPlayer.galleryEmpty'),
+      );
     openDialog('gallery-dialog');
   };
   $('workbench-button').onclick = guard(() => {
     const lesson = currentLesson();
     if (!lesson) return;
-    if (!canOpenWorkbench()) throw new Error('Return to safe ground before opening the workbench.');
+    if (!canOpenWorkbench()) throw new Error(t('errors:companyPlayer.workbenchUnsafe'));
     pause();
     workbench?.destroy();
     workbench = mountCompanyWorkbench($('workbench-content'), {
@@ -788,10 +803,7 @@ async function main() {
           attempt.status === 'complete' &&
           !(await proveLearning(attempt, active.run, active.recorder))
         )
-          report(
-            'Your verified assignment is kept in this tab. Export a backup to keep its replay proof.',
-            true,
-          );
+          report(() => t('interface:companyPlayer.verifiedAssignmentInTab'), true);
         refresh();
       }),
       onClose: () => {
@@ -809,8 +821,11 @@ async function main() {
       await sound.enable();
       audioPreferences.setMuted(false);
     } else audioPreferences.setMuted(!audioMaster.snapshot().muted);
-    $('sound-button').textContent =
-      sound.enabled && !audioMaster.snapshot().muted ? 'Mute sound' : 'Enable sound';
+    localizedText($('sound-button'), () =>
+      sound.enabled && !audioMaster.snapshot().muted
+        ? t('interface:muteSound')
+        : t('interface:enableSound'),
+    );
   });
   $('export-backup').onclick = guard(() => {
     pause();
@@ -852,16 +867,16 @@ async function main() {
     if (!file) return;
     if (!writer.writable) throw new Error(writer.reason);
     if (file.size > BACKUP_LIMITS.maxBytes)
-      throw new Error('This backup exceeds the import budget.');
+      throw new Error(t('interface:thisBackupExceedsTheImportBudget'));
     const backup = boundedJSON(await file.text(), BACKUP_LIMITS);
     if (
       !['revealline-company-backup.v1', 'revealline-company-backup.v2'].includes(backup.format) ||
       backup.editionId !== context.editionId
     )
-      throw new Error('Choose a backup for this exact audience edition.');
+      throw new Error(t('errors:companyPlayer.wrongEditionBackup'));
     profile.inspectBackup(backup.profile);
     if (!Array.isArray(backup.learning) || backup.learning.length > lessons.length)
-      throw new Error('Invalid learning backup.');
+      throw new Error(t('errors:companyPlayer.invalidLearningBackup'));
     const seen = new Set();
     const proofs = await learningProofs.inspectProofs(backup.learningProofs ?? []);
     const recoverySource = backup.learningRecovery ?? {
@@ -871,7 +886,7 @@ async function main() {
     };
     if (backup.legacyLearning !== undefined && backup.legacyLearning !== null) {
       if (typeof backup.legacyLearning !== 'string' || backup.legacyLearning.length > 1024 * 1024)
-        throw new Error('Invalid legacy learning recovery record.');
+        throw new Error(t('errors:companyPlayer.invalidLegacyLearning'));
       recoverySource.sources.push(backup.legacyLearning);
     }
     const recovery = learningProofs.inspectRecovery(recoverySource);
@@ -883,20 +898,15 @@ async function main() {
         !verifyLearningAttempt(lesson, attempt).valid ||
         !learningIdentities.get(attempt.missionId)?.has(attempt.simulationIdentity)
       )
-        throw new Error(
-          'A learning transcript is duplicated or does not match this edition’s simulations.',
-        );
+        throw new Error(t('errors:companyPlayer.learningTranscriptMismatch'));
       seen.add(attempt.missionId);
       if (
         attempt.status === 'complete' &&
         !proofs.some((proof) => canonicalJSON(proof.attempt) === canonicalJSON(attempt))
       )
-        throw new Error(
-          'Completed learning needs its matching replay proof. Open the backup in its matching earlier release.',
-        );
+        throw new Error(t('errors:companyPlayer.missingLearningReplayProof'));
     }
-    if (preparing)
-      throw new Error('Wait for the mission to finish preparing before importing progress.');
+    if (preparing) throw new Error(t('errors:companyPlayer.importWhilePreparing'));
     pause({ persist: false });
     if (backup.session) {
       const prepared = await restoreCompanySession(backup.session, {
@@ -911,10 +921,7 @@ async function main() {
     profile.restore(backup.profile);
     let durable = await profile.flush();
     if (!writer.writable) {
-      report(
-        'The saving lease changed during import. Progress is kept in this tab; keep the original backup and reload before saving.',
-        true,
-      );
+      report(() => t('interface:companyPlayer.importLeaseChanged'), true);
       return;
     }
     if (!learningProofs.importRecovery(recovery)) durable = false;
@@ -939,16 +946,17 @@ async function main() {
     renderCampaigns();
     report(
       durable
-        ? 'Matching edition progress imported. Choose Continue when you are ready.'
-        : 'Progress is imported in this tab, but storage could not keep every record. Keep your backup and export again before leaving.',
+        ? () => t('interface:companyPlayer.progressImported')
+        : () => t('interface:companyPlayer.progressImportedInTab'),
       !durable,
     );
     $('import-backup').value = '';
   });
   if (standalone) {
     $('prepare-offline').hidden = false;
-    $('offline-status').textContent = 'Download and verify this edition for offline play.';
-    const install = node('button', 'Use this edition in the installed app');
+    localizedText($('offline-status'), () => t('interface:editionSolo.downloadVerifyOffline'));
+    const install = node('button');
+    localizedText(install, () => t('interface:downloads.useEdition'));
     install.disabled = true;
     $('prepare-offline').onclick = guard(async () => {
       $('prepare-offline').disabled = true;
@@ -958,22 +966,24 @@ async function main() {
           editionId: context.editionId,
           version,
           onStatus: (value) => {
-            $('offline-status').textContent =
+            localizedText($('offline-status'), () =>
               value.status === 'downloading'
-                ? 'Downloading and checking this edition…'
-                : 'Verifying the saved files…';
+                ? t('interface:editionSolo.downloading')
+                : t('interface:editionSolo.verifying'),
+            );
           },
         });
         if (prepared.status === 'waiting') {
-          $('offline-status').textContent =
-            'The checked update is waiting. Close this edition’s open tabs and reopen it before selecting the installed version.';
+          localizedText($('offline-status'), () =>
+            t('interface:editionSolo.activateCheckedUpdate'),
+          );
           return;
         }
         await verifyEditionOffline({ editionId: context.editionId, version });
-        $('offline-status').textContent = 'This edition is verified for offline play.';
+        localizedText($('offline-status'), () => t('interface:editionSolo.offlineVerified'));
         install.disabled = false;
       } catch (error) {
-        $('offline-status').textContent = error.message;
+        localizedText($('offline-status'), error.message);
         throw error;
       } finally {
         $('prepare-offline').disabled = false;
@@ -982,10 +992,9 @@ async function main() {
     install.onclick = guard(async () => {
       try {
         await selectPreparedEdition({ editionId: context.editionId, version });
-        $('offline-status').textContent =
-          'Your installed launcher will open this edition. The previous release is kept.';
+        localizedText($('offline-status'), () => t('interface:downloads.activationReady'));
       } catch (error) {
-        $('offline-status').textContent = error.message;
+        localizedText($('offline-status'), error.message);
         throw error;
       }
     });
@@ -1001,10 +1010,7 @@ async function main() {
         while (accumulator >= FIXED_DT && ['running', 'respawning'].includes(current.run.status)) {
           if (current.recorder.ticks >= MAX_REPLAY_TICKS) {
             pause();
-            report(
-              'This attempt reached its recording limit. Export it or start a new mission.',
-              true,
-            );
+            report(() => t('interface:companyPlayer.recordingLimit'), true);
             break;
           }
           if (current.run.status === 'respawning')
@@ -1064,11 +1070,14 @@ async function main() {
   $('start-campaign').disabled = false;
   report(
     storage.readError
-      ? 'Saved progress could not be read. Play is session-only; export a backup before leaving.'
+      ? () => t('interface:companyPlayer.savedProgressUnreadable')
       : proofHydration.rejected
-        ? 'Some earlier learning records need their matching lesson revision. Their original data is retained for backup.'
+        ? () => t('interface:companyPlayer.learningRevisionMismatch')
         : writer.writable
-          ? `${source.missions.length} connections to discover. Choose your journey.`
+          ? () =>
+              t('interface:companyPlayer.connectionsToDiscover', {
+                count: source.missions.length,
+              })
           : writer.reason,
     !writer.writable || !!storage.readError,
   );
@@ -1093,6 +1102,6 @@ main().catch((error) => {
   startupWriter?.release();
   startupWriter = null;
   document.documentElement.dataset.companyState = 'failed';
-  report(`Could not open this edition: ${error.message}`, true);
+  report(() => t('errors:companyPlayer.openFailed', { error: error.message }), true);
   $('start-campaign').disabled = true;
 });

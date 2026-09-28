@@ -1,18 +1,141 @@
 <!doctype html>
 <html lang="en">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Reveal Line neutral pilot playtest</title>
-<style>
-body{font:16px/1.5 system-ui;background:#111722;color:#e8eef8;max-width:1200px;margin:auto;padding:1rem}button,select,textarea{font:inherit;color:inherit;background:#263347;border:1px solid #89a0ba;border-radius:5px;padding:.6rem}button{cursor:pointer;touch-action:none}button:focus-visible,select:focus-visible{outline:3px solid #9de8ff}a{color:#9de8ff}.bar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}.boards{display:flex;gap:1rem}.boards canvas{width:100%;height:auto;min-width:0;border:1px solid #65768b}.pads{display:flex;gap:2rem;margin:1rem 0;flex-wrap:wrap}.pad{display:grid;grid-template-columns:repeat(3,3.5rem);gap:.3rem}.pad strong{grid-column:1/4}textarea{display:block;width:min(95%,45rem);height:6rem}#status{font-variant-numeric:tabular-nums}canvas{image-rendering:pixelated}@media(max-width:650px){.boards{flex-direction:column}}
-</style>
-<h1>Neutral mission playtest</h1>
-<p>Review-only greyboxes using the real game engines. No replacement artwork or approval is implied. This tool does not write game progress or save slots. <a href="pilot.html">Design briefs and evidence</a></p>
-<div class="bar"><label for="mission">Mission</label><select id="mission"></select><label for="difficulty">Difficulty</label><select id="difficulty"><option value="gentle">Gentle</option><option value="standard" selected>Standard</option><option value="expert">Expert</option></select><button id="play">Play</button><button id="reset">Reset</button><button id="export">Export observations</button></div>
-<p id="brief"></p><p>Player 1: arrow keys. Player 2: WASD. Escape pauses. Use direction buttons on touch screens. Release and press again after banking. Cyan/magenta mark players; red marks threats; yellow marks objectives; green marks optional pickups. Original pressure warnings and travelling-impact cues remain visible.</p>
-<p id="status" role="status" aria-live="polite">Loading pilot…</p>
-<div id="boards" class="boards"></div><div id="pads" class="pads"></div>
-<p>Exported v2 observations contain both players’ inputs, the initial mission configuration and replay-checkable results. Verify the file with <code>node scripts/verify-pilot-observations.mjs observations.json</code>. A verified partial run is not a clear; recordings do not grant design approval. <a href="PILOT-OBSERVATIONS.md">Recording and review guide</a>.</p>
-<label for="notes">Playtest observations: route choice, confusing moment, failure cause, difficulty</label><textarea id="notes" maxlength="8000"></textarea>
-<script type="module" src="../../game/content-design/uniqueness-pilot-player.mjs"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="tools:neutralPilot.title">Reveal Line neutral pilot playtest</title>
+  <link rel="stylesheet" href="../../game/i18n/style.css" />
+  <style>
+    body {
+      font: 16px/1.5 system-ui;
+      background: #111722;
+      color: #e8eef8;
+      max-width: 1200px;
+      margin: auto;
+      padding: 1rem;
+    }
+    button,
+    select,
+    textarea {
+      font: inherit;
+      color: inherit;
+      background: #263347;
+      border: 1px solid #89a0ba;
+      border-radius: 5px;
+      padding: 0.6rem;
+    }
+    button {
+      cursor: pointer;
+      touch-action: none;
+    }
+    button:focus-visible,
+    select:focus-visible {
+      outline: 3px solid #9de8ff;
+    }
+    a {
+      color: #9de8ff;
+    }
+    .bar {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .boards {
+      display: flex;
+      gap: 1rem;
+    }
+    .boards canvas {
+      width: 100%;
+      height: auto;
+      min-width: 0;
+      border: 1px solid #65768b;
+    }
+    .pads {
+      display: flex;
+      gap: 2rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+    .pad {
+      display: grid;
+      grid-template-columns: repeat(3, 3.5rem);
+      gap: 0.3rem;
+    }
+    .pad strong {
+      grid-column: 1/4;
+    }
+    textarea {
+      display: block;
+      width: min(95%, 45rem);
+      height: 6rem;
+    }
+    #status {
+      font-variant-numeric: tabular-nums;
+    }
+    canvas {
+      image-rendering: pixelated;
+    }
+    @media (max-width: 650px) {
+      .boards {
+        flex-direction: column;
+      }
+    }
+  </style>
+  <div data-language-control></div>
+  <noscript
+    ><p>JavaScript is required to run this playtest and switch languages.</p>
+    <p lang="uk">Для запуску цього тестування та перемикання мов потрібен JavaScript.</p></noscript
+  >
+  <h1 data-i18n="tools:neutralPilot.heading">Neutral mission playtest</h1>
+  <p data-i18n-rich="tools:neutralPilot.intro">
+    Review-only greyboxes using the real game engines. No replacement artwork or approval is
+    implied. This tool does not write game progress or save slots.
+    <a
+      data-i18n-slot="guide"
+      data-i18n="tools:neutralPilot.designBriefsAndEvidence"
+      href="pilot.html"
+      >Design briefs and evidence</a
+    >
+  </p>
+  <div class="bar">
+    <label for="mission" data-i18n="interface:mission">Mission</label
+    ><select id="mission"></select
+    ><label for="difficulty" data-i18n="interface:difficulty">Difficulty</label
+    ><select id="difficulty">
+      <option value="gentle" data-i18n="interface:gentle">Gentle</option>
+      <option value="standard" selected data-i18n="interface:standard">Standard</option>
+      <option value="expert" data-i18n="interface:expert">Expert</option></select
+    ><button id="play" data-i18n="common:actions.play">Play</button
+    ><button id="reset" data-i18n="common:actions.reset">Reset</button
+    ><button id="export" data-i18n="tools:neutralPilot.exportObservations">
+      Export observations
+    </button>
+  </div>
+  <p id="brief"></p>
+  <p data-i18n="tools:neutralPilot.controls">
+    Player 1: arrow keys. Player 2: WASD. Escape pauses. Use direction buttons on touch screens.
+    Release and press again after banking. Cyan/magenta mark players; red marks threats; yellow
+    marks objectives; green marks optional pickups. Original pressure warnings and travelling-impact
+    cues remain visible.
+  </p>
+  <p id="status" role="status" aria-live="polite">Loading pilot…</p>
+  <div id="boards" class="boards"></div>
+  <div id="pads" class="pads"></div>
+  <p data-i18n-rich="tools:neutralPilot.exportHelp">
+    Exported v2 observations contain both players’ inputs, the initial mission configuration and
+    replay-checkable results. Verify the file with
+    <code data-i18n-slot="command"
+      >node scripts/verify-pilot-observations.mjs observations.json</code
+    >. A verified partial run is not a clear; recordings do not grant design approval.
+    <a
+      data-i18n-slot="guide"
+      data-i18n="tools:neutralPilot.recordingReviewGuide"
+      href="PILOT-OBSERVATIONS.md"
+      >Recording and review guide</a
+    >.
+  </p>
+  <label for="notes" data-i18n="tools:neutralPilot.notes"
+    >Playtest observations: route choice, confusing moment, failure cause, difficulty</label
+  ><textarea id="notes" maxlength="8000"></textarea>
+  <script type="module" src="../../game/content-design/uniqueness-pilot-player.mjs"></script>
 </html>

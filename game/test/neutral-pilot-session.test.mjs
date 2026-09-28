@@ -11,8 +11,16 @@ import {
   pilotSessionEnded,
   MAX_PILOT_TICKS,
   MAX_PILOT_OBSERVATION_BYTES,
+  neutralPilotEntries,
 } from '../content-design/neutral-pilot-session.mjs';
 import { verifyPilotFile } from '../../scripts/verify-pilot-observations.mjs';
+import {
+  neutralPilotDirectionLabel,
+  neutralPilotEntryDecision,
+  neutralPilotEntryLabel,
+  neutralPilotStatusText,
+} from '../content-design/uniqueness-pilot-player.mjs';
+import { setLocale } from '../i18n/index.mjs';
 
 for (const [mission, mode, directions] of [
   ['control-solo', 'solo', ['down']],
@@ -157,4 +165,36 @@ test('difficulty/source identity and bounded recording cannot be bypassed by sup
   assert.throws(() => exportPilotObservations(session, 'x'.repeat(8001)), /notes/);
   session.ticks = MAX_PILOT_TICKS;
   assert.throws(() => advanceNeutralPilotSession(session, [null]), /tick limit/);
+});
+
+test('neutral pilot owned copy and live status switch between English and Ukrainian', async () => {
+  const page = await fs.readFile(
+    new URL('../../docs/content-offline/pilot-player.html', import.meta.url),
+    'utf8',
+  );
+  assert.match(page, /data-language-control/u);
+  assert.match(page, /data-i18n="tools:neutralPilot\.heading"/u);
+  const orchard = neutralPilotEntries()[0];
+  const state = {
+    paused: false,
+    difficulty: 'standard',
+    entry: orchard,
+    runs: [{ time: 3.5, coverage: 0.125, status: 'running' }],
+    failures: 2,
+  };
+  try {
+    setLocale('uk', { persist: false });
+    assert.equal(neutralPilotEntryLabel(orchard), 'Зворотні смуги саду');
+    assert.match(neutralPilotEntryDecision(orchard), /обов’язкового маркера/u);
+    assert.equal(neutralPilotDirectionLabel(2, 'left'), 'Гравець 2: ліворуч');
+    assert.match(neutralPilotStatusText(state), /Триває гра.*2 невдачі/u);
+    assert.throws(
+      () => createNeutralPilotSession({ mission: 'control-solo', difficulty: 'impossible' }),
+      /Неприпустима складність/u,
+    );
+  } finally {
+    setLocale('en', { persist: false });
+  }
+  assert.equal(neutralPilotEntryLabel(orchard), 'Orchard return lanes');
+  assert.match(neutralPilotStatusText(state), /Playing.*2 failures/u);
 });
