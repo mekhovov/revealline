@@ -11542,14 +11542,22 @@ try {
           requestModeDeparture('catalogue', { preventDefault() {} }, opener, {
             origin: 'solo-title',
             editionId,
-            isCurrent: () => $('shell-home').open && $('shell-home').contains(opener),
+            isCurrent: () =>
+              $('shell-home').open &&
+              ['shell-home', 'shell-workshop-dialog'].some(
+                (id) => $(id).open && $(id).contains(opener),
+              ),
           }),
         getSavedPresentation: () => savedAttempt()?.actorAppearancePin?.authoredPresentationSha256,
         onPresentationChange: (presentationId, opener) =>
           requestModeDeparture('catalogue', { preventDefault() {} }, opener, {
             origin: 'solo-title',
             presentationId,
-            isCurrent: () => $('shell-home').open && $('shell-home').contains(opener),
+            isCurrent: () =>
+              $('shell-home').open &&
+              ['shell-home', 'shell-workshop-dialog'].some(
+                (id) => $(id).open && $(id).contains(opener),
+              ),
           }),
       })
     : null;

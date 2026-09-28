@@ -683,13 +683,21 @@ export async function mountEditionRewards({
       !state
     ) {
       const profile = getJourneyProfile();
-      context = rewardContext(provider, bindings, profile, learning.learning, mastery.mastery);
+      context = rewardContext(
+        provider,
+        bindings,
+        profile,
+        learning.learning,
+        mastery.mastery,
+        mastery.historicalClears,
+      );
       const persistenceContext = rewardContext(
         provider,
         bindings,
         profile,
         learning.durableLearning,
         mastery.durableMastery,
+        mastery.durableHistoricalClears,
       );
       const update = store.reconcile(provider.rewards, context, {
         persist: nextDurable,

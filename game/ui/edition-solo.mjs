@@ -44,6 +44,11 @@ export async function mountEditionSoloUI({
     if (text !== undefined) value.textContent = text;
     return value;
   };
+  const copy = (tag, key, values) => {
+    const element = node(tag);
+    localizedText(element, () => t('interface:editionShell.' + key, values));
+    return element;
+  };
   const root = doc.documentElement;
   doc.body.dataset.brandId = selection.brand.id;
   doc.body.dataset.editionId = provider.editionId;
@@ -68,6 +73,10 @@ export async function mountEditionSoloUI({
   for (const id of ['shell-title-edition', 'shell-edition'])
     if (doc.getElementById(id)) localizedText(doc.getElementById(id), () => selection.brand.name);
   const home = doc.getElementById('shell-home');
+  const homeContent = home.querySelector('.home-content') ?? home;
+  const editionMenu = doc.getElementById('shell-workshop-dialog') ?? homeContent;
+  const titleEdition = doc.getElementById('shell-title-edition');
+  if (titleEdition && selection.edition.name === selection.brand.name) titleEdition.hidden = true;
   const previewNotice = previewSession ? node('p') : null;
   if (previewNotice) {
     previewNotice.id = 'edition-studio-preview';
@@ -99,7 +108,8 @@ export async function mountEditionSoloUI({
     logo.alt = selection.brand.name;
     (home.querySelector('.home-content') ?? home).prepend(logo);
   }
-  const picker = node('label', 'Company & campaign edition'),
+  const picker = node('label'),
+    pickerTitle = copy('span', 'chooseEdition'),
     select = node('select');
   picker.className = 'field edition-switcher';
   select.id = 'edition-select';
@@ -111,8 +121,9 @@ export async function mountEditionSoloUI({
   }
   select.value = provider.editionId;
   select.disabled = availableEditions.length === 1;
-  picker.append(select);
-  (home.querySelector('.home-content') ?? home).append(picker);
+  picker.append(pickerTitle, select);
+  picker.hidden = availableEditions.length === 1;
+  editionMenu.append(picker);
   select.onchange = () => {
     const requested = select.value;
     // This remains the active edition until the shared host has retained the
@@ -121,18 +132,21 @@ export async function mountEditionSoloUI({
     if (requested === provider.editionId) return false;
     return onEditionChange(requested, select);
   };
+  let retainedPanel;
   if (provider.presentationHistory?.length) {
     const retained = node('details'),
-      title = node('summary', 'Original artwork & saved-flight recovery'),
+      title = copy('summary', 'originalArt'),
       choice = node('select'),
-      label = node('label', 'Artwork snapshot');
+      label = node('label');
+    label.append(copy('span', 'snapshot'));
     retained.className = 'edition-about';
+    retainedPanel = retained;
     choice.id = 'edition-presentation-select';
-    const current = node('option', 'Current artwork');
+    const current = copy('option', 'currentArt');
     current.value = '';
     choice.append(current);
     for (const record of provider.presentationHistory) {
-      const option = node('option', `Retained original · ${record.id.slice(0, 12)}`);
+      const option = copy('option', 'retainedOriginal', { revision: record.id.slice(0, 12) });
       option.value = record.id;
       choice.append(option);
     }
@@ -143,20 +157,13 @@ export async function mountEditionSoloUI({
       return onPresentationChange(requested, choice);
     };
     label.append(choice);
-    retained.append(
-      title,
-      node(
-        'p',
-        'Older flights and imports need their exact original campaign and artwork. Opening a retained snapshot keeps the same game and progress; it does not rewrite a save or substitute newer images.',
-      ),
-      label,
-    );
+    retained.append(title, copy('p', 'recoveryExplanation'), label);
     const saved = getSavedPresentation();
     if (
       saved !== provider.authoredPresentationSha256 &&
       provider.presentationHistory.some((item) => item.id === saved)
     ) {
-      const recover = node('button', 'Open artwork matching saved flight');
+      const recover = copy('button', 'recoverSaved');
       recover.type = 'button';
       recover.id = 'edition-recover-presentation';
       recover.className = 'button secondary';
@@ -166,24 +173,17 @@ export async function mountEditionSoloUI({
     }
     if (provider.retainedPresentationId)
       retained.append(
-        node(
-          'p',
-          `This page uses retained original ${provider.retainedPresentationId.slice(0, 12)}. New flights here also use that snapshot. Choose Current artwork to return to the latest campaign presentation.`,
-        ),
+        copy('p', 'retainedExplanation', {
+          revision: provider.retainedPresentationId.slice(0, 12),
+        }),
       );
-    (home.querySelector('.home-content') ?? home).append(retained);
+    // A known saved-flight mismatch stays immediately reachable at home.
+    (retained.open ? homeContent : editionMenu).append(retained);
   }
   const about = node('details'),
-    aboutTitle = node('summary', 'About this edition & artwork');
+    aboutTitle = copy('summary', 'about');
   about.className = 'edition-about';
-  about.append(
-    aboutTitle,
-    node('p', selection.brand.description),
-    node(
-      'p',
-      'Optional learning uses fictional records. It does not connect to company accounts or award a professional qualification.',
-    ),
-  );
+  about.append(aboutTitle, node('p', selection.brand.description), copy('p', 'learningContext'));
   for (const source of new Map(
     [
       ...(selection.brand.sources ?? []),
@@ -198,7 +198,7 @@ export async function mountEditionSoloUI({
     p.append(link);
     about.append(p);
   }
-  (home.querySelector('.home-content') ?? home).append(about);
+  editionMenu.append(about);
   // Mode controls stay on the common template, but this delivery contains only
   // Solo. The mission library itself derives availability from selected sources.
   for (const id of [
@@ -216,10 +216,8 @@ export async function mountEditionSoloUI({
     for (const option of actorStyle.options) option.disabled = option.value !== 'campaign';
   }
   if (doc.getElementById('menu-actor-note'))
-    localizedText(
-      doc.getElementById('menu-actor-note'),
-      () =>
-        'This edition uses its campaign artwork. Gameplay and enemy behavior follow the shared Solo rules.',
+    localizedText(doc.getElementById('menu-actor-note'), () =>
+      t('interface:editionShell.sharedRules'),
     );
   const worlds = doc.getElementById('shell-worlds');
   if (worlds) {
@@ -403,6 +401,7 @@ export async function mountEditionSoloUI({
       typeof layout === 'function' ? layout() : layout.disconnect?.();
       picker.remove();
       about.remove();
+      retainedPanel?.remove();
       offline.remove();
       legacy.remove();
       previewNotice?.remove();
