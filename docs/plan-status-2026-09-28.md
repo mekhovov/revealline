@@ -1,13 +1,13 @@
 # RevealLine — current completion and remaining delivery plan
 
-Status checked **28 September 2026** against current `main`, GitHub releases, open pull
+Status checked **28 September 2026, 03:55 UTC** against current `main`, GitHub releases, open pull
 requests, the Pages publication record and retained verification. This document
 supersedes dated queue/version claims in the 27 September status while preserving that
 file as historical evidence.
 
 ## Current boundary
 
-- Current `main`: `c5885a15561a88331c5566c5312392c4e5d8daf5`.
+- Current `main`: `bb9b3640270dc26633d37cfdf4a306aecda277b6` (includes PR #750).
 - Published release: `v0.141.7`, frozen game source
   `efbb3882b4edd447c8e9f60ed60c536a956d78f3`.
 - GitHub release and Pages publication completed; the complete current public audit
@@ -17,9 +17,16 @@ file as historical evidence.
 - v0.141.7 integrates the fifty previously queued source PR inputs. Their older
   v0.141.8–v0.143.0 labels are therefore no longer authoritative implementation
   boundaries; remaining work is acceptance, correction and successor behavior.
-- PR #716, canonical/external soundtrack streaming, remains a separate conflicted
-  successor under its existing owner. It is being reconciled independently and is not
-  part of this gameplay batch.
+- PR #751 prepares **v0.141.8**, the Steam Deck Confirm-on-release correction. It
+  is not merged or published at this checkpoint. Its exact-head focused/build rerun
+  is active; the cancelled preceding run is not a pass.
+- PR #746 is the next cumulative integration, not a delivered release. Its remote
+  head `1267bf01305016a5301c1beeea193f8511638b00` conflicts with newer main; its
+  owner is reconciling reviewed inputs. Do not publish competing source snapshots.
+- Normal Solo and Versus entry selects **`whole-spatial-v25`**, while Team selects
+  **`team-cultural-specialist-originals-2`**. Later spatial editions through v33
+  are available as opt-ins in the published source line. Prepared v34–v37 are not
+  public. Availability of a candidate does not mean it became the default.
 
 ## Completed or available in the published cumulative line
 
@@ -38,17 +45,46 @@ file as historical evidence.
 
 ## Active batches
 
-| Order | Batch                                                     | State                                                                                                                                                   | Remaining gate                                                                                                                                              |                                       Focused effort |
-| ----: | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------: |
-|     1 | v0.141.7 public acceptance                                | Published and byte-audited                                                                                                                              | Finish bounded Solo package-choice/download, launch, clear/Next and offline-return checks on the frozen public build                                        | 2–6 hours after the pending interaction is available |
-|     2 | Player corrections, drafts #722 and #724                  | Failure feedback and outside-release touch recovery have focused passing checks                                                                         | Reconcile together or separately, exact-head qualification, release and public input/failure journeys                                                       |                        0.5–1.5 engineering days each |
-|     3 | Installed/offline inputs, PRs #726, #727 and #729         | Inventory, localization and frozen-package measurements are under qualification                                                                         | Related-hunk reconciliation, interruption/offline journeys, immutable release and public offline check                                                      |                    2–4 engineering days plus devices |
-|     4 | Canonical/external soundtrack successor, PR #716          | Separate owner is rebasing and correcting catalogue/player capacity                                                                                     | Exact-head review, focused qualification, immutable release and public streaming/offline/fallback checks                                                    |   1–2 engineering days plus listening/network checks |
-|     5 | Company/community/device inputs, PR #723                  | Company phase evidence #725 and Steam Deck validation #721 are merged; production-session work remains queued                                           | Keep evidence scopes distinct; complete the available hosted environment gate before any acceptance claim                                                   |     0.5–2 engineering days per available environment |
-|     6 | Ukrainian cultural pressure triptych, draft PR #728 / v34 | 126 focused tests, format, lint and validation pass locally; candidate CI passes; exact head is intentionally pinned before the test-only PR #721 merge | When its release slot is allocated, rebase onto current `main`, rerun exact-head gates, merge, release and verify public mission launch; then human balance |          0.5–1.5 engineering days plus release queue |
-|     7 | Finite Remix pressure pair, stacked draft PR #730 / v35   | Rebased on the current v34 candidate; 89 exact rebased-head tests pass locally, with format, lint and validation retained                               | Admit v34, rebase onto accepted `main`, exact-head release gates, release and public Remix launch; then human balance                                       |             0.5–1 engineering day plus release queue |
-|     8 | Contested Ukrainian wall triptych, draft PR #733 / v36    | Candidate CI passes and the stacked merge state is clean for Side-door bays, Staggered reserve and Crossbar depot                                       | Admit only after v34/v35 without displacing serialized acceptance work; then release and human balance                                                      |          0.5–1.5 engineering days plus release queue |
-|     9 | Ukrainian pressure corridor triptych, draft PR #735 / v37 | Implemented and pushed on v36 for Pressure ladder, Cooling loop and Relay Remix; exact-head candidate CI passes and the stacked merge state is clean    | Admit only after v34–v36 and current release-owned work; then run release and bounded public checks                                                         |          0.5–1.5 engineering days plus release queue |
+Effort below starts when the owner can work on an admitted exact source. It excludes
+serialized release queue time, hosting delays and human/device availability; it is
+not a promised publication time. Review it again after the next public delivery.
+
+| Order | Batch                                        | Completed/prepared                                                                                                                                                                      | Remaining gate                                                                                                                                                             |                                           Focused effort |
+| ----: | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------: |
+|     1 | v0.141.8 / PR #751                           | Steam Deck Confirm release-edge correction; candidate and earlier build pass                                                                                                            | Current exact-head focused/build result, reviewed merge, immutable release, Pages and bounded public input check                                                           |                          2–6 hours if current gates pass |
+|     2 | PR #746 cumulative integration               | Eight source inputs: #716, #722, #723, #724, #726, #727, #728, #729; old candidate/evidence passed for the old head only                                                                | Reconcile newer main and bounded reviewed follow-ups, exact-head gates, one frozen release and scoped public acceptance                                                    |                                 0.5–1.5 engineering days |
+|     3 | PR #752 one-action downloadable Couch starts | Updated candidate `dd3c85786d2dc4f914c6303859077b919db0f53a` passes candidate CI; owner reports 23 focused and 63 regression checks                                                     | Include as the final related player-flow input, review the integrated source, then public download → selected mission and failure/retry flows                              |                          2–6 hours plus integration slot |
+|     4 | Finite Remix pair / PR #730 / v35            | Prepared on v34; 89 prior focused checks and candidate CI pass                                                                                                                          | After admission of #728/v34, rebase without losing accepted source; verify actual current-speed routes, release and public launch                                          |                         0.5–1 engineering day plus queue |
+|     5 | Contested wall triptych / PR #733 / v36      | Side-door bays, Staggered reserve, Crossbar depot; candidate CI passes                                                                                                                  | Exact admitted-source gates, current-speed route evidence, release and public review links                                                                                 |                      0.5–1.5 engineering days plus queue |
+|     6 | Pressure corridor triptych / PR #735 / v37   | Pressure ladder, Cooling loop, and Relay Remix (displayed as Switchback exchange); 85 focused checks pass, including 72 effective-speed first returns and current-edition audit support | Complete strategic-route evidence, exact admitted-source gates, release and public checks; first returns alone do not close balance qualification                          | 4–8 hours route qualification, then 0.5–1 day plus queue |
+|     7 | Remaining cumulative/public acceptance       | v0.141.7 public byte audit passed; PR #750 source merged only                                                                                                                           | Complete bounded clear/Next, retained input/results, install/offline and device journeys; preserve observed failures rather than reopening unrelated completed byte audits |                        1–3 engineering days plus devices |
+
+The spatial dependency order is **v34 → v35 → v36 → v37**, not four concurrent
+publications. Freeze the release scope before each promotion. Prepare verification
+in parallel; do not keep adding unrelated features to the active integration.
+
+## Original programme: implementation versus completion
+
+The original P00–P15 plan is **not complete**. These are the remaining acceptance
+boundaries, not a proposal to rebuild already implemented engines.
+
+| Phase   | Implemented                                                                                                                              | Still to complete                                                                                                                                                          |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P00     | 110-mission/64-reference inventory, 48 numbered crosswalks, direct flow and progress; current-edition audit repaired in prepared PR #735 | Final dispositions for all 48 references; human capture understanding; publication of the audit repair                                                                     |
+| P01–P03 | Foundations, opening/Border/Signal campaigns, Studio CRUD/image authoring, terrain and actor catalogs                                    | Meaningful return choices, timed-bonus/pacing review, authoring recovery, audiovisual and device qualification                                                             |
+| P04–P07 | Neon/Rover/Fracture/Phaseworks, Remixes, erosion and pressure routes                                                                     | Frontier/escape decisions, repair usefulness, moving-threat route evidence and cleanup/short-clear review                                                                  |
+| P08–P12 | Livewire/Relay/Crosswind/Sentinel/Apex mechanics and campaign editions                                                                   | Recheck current editions for unused shortcuts, inactive threats, mastery misses, warning overlap and quota tails; do not copy old defects forward without reproducing them |
+| P13     | 71 core missions, 12 Remixes, 8 optional studies; library and uninterrupted progression                                                  | Whole-Journey pacing/cuts, adjacent-mission distinction, current-edition multiseed routes and a reviewed default successor                                                 |
+| P14     | Twelve pictured Team missions, owned impacts, specialists and cultural successors                                                        | Complementary complete routes, rescue/support clarity, two-player and device balance                                                                                       |
+| P15     | Compatibility, evidence and rollback infrastructure                                                                                      | Human sessions, cumulative accessibility/performance/offline acceptance, Legacy transition and exercised rollback                                                          |
+
+The six FPV increments also have broad implementations: capture stop/default FPV
+actors; travelling impacts and preserved Original rules; pursuit/interception and
+erosion roles; directional actor/trail presentation; two skins/Tiny5; Team specialists.
+Their remaining work is public/physical held-input verification, current-rule versus
+Original continuity, Team front/rescue/disconnect isolation, actual-size role-state
+readability, complete UI accessibility and human two-player balance. Modeled tests do
+not reproduce the original physical-input report or prove fun.
 
 ## Remaining product phases
 
@@ -77,8 +113,17 @@ file as historical evidence.
    review; deterministic tests do not establish them.
 5. Disk space remains constrained. Do not duplicate release archives or delete unpushed
    work, user media, historical releases or another task's caches.
-6. PR #716 and current production history/Team bindings have active owners; unrelated
-   batches must not edit those surfaces until their exact candidate is stable.
+6. The integration, Couch-download, Steam Deck and production history/Team bindings
+   have active owners; unrelated batches must not edit those surfaces or reset their
+   branches. New source in `main` requires a fresh integration review, not a blind
+   claim that previous green evidence still covers it.
+7. The older spatial idle checks use authored speeds. New route evidence must apply
+   the gameplay preparation path once, record its tuning revision and separate
+   first-return feasibility from full clears, signature-mechanic use and human balance.
+8. The reference audit historically stopped at v6. PR #735 repairs registered-edition
+   support with identical historical report hashes; local v33 and v37 audits cover
+   all 48 references but still establish zero final dispositions. Source coverage
+   does not close human or release acceptance.
 
 ## Batch rule
 

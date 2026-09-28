@@ -17,6 +17,7 @@ import {
   authoredJourneyUsesActorMaterials,
 } from '../content-design/mode-href.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 
 const IDS = PRESSURE_CORRIDOR_TRIPTYCH_SELECTIONS.map((item) => item.id);
 const PRESETS = ['gentle', 'standard', 'expert'];
@@ -86,7 +87,7 @@ for (const artwork of [false, true])
     }
   });
 
-test('three wall fields remain communicating and preserve effective pressure across presets', () => {
+test('three wall fields remain communicating and preserve authored pressure across presets', () => {
   for (const id of IDS) {
     const previous = map(beforeProject, id);
     const current = map(project, id);
@@ -113,10 +114,11 @@ test('three wall fields remain communicating and preserve effective pressure acr
   }
 });
 
-test('all presets give the stationary opening a safe readable window', () => {
+test('all presets give the effective-speed stationary opening a no-loss window', () => {
   for (const id of IDS)
     for (const difficulty of PRESETS) {
-      const { level } = resolveMission(project, id, { difficulty, mode: 'solo' });
+      const authored = resolveMission(project, id, { difficulty, mode: 'solo' });
+      const level = applyGameplayTuning(authored.level, resolveGameplayTuning(difficulty));
       const run = createRun(level, { seed: 1, turnPolicy: 'immediate' });
       for (let tick = 0; tick < 180; tick++) stepRun(run, { direction: null }, FIXED_DT);
       assert.equal(run.status, 'running', `${id}/${difficulty}`);
