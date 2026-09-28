@@ -665,3 +665,56 @@ test('native media is absent while locked; earned viewer uses shared sound owner
   assert.equal(f.doc.querySelector('[data-reward-media]'), null);
   assert.deepEqual((await f.exportState()).receipts, before.receipts);
 });
+
+test('campaign exhibit never requests a locked image and releases exact earned thumbnails on close', async (t) => {
+  const f = await fixture(t, { image: true });
+  f.collection.showModal();
+  const pictures = () => f.doc.getElementById('completion-reward-exhibit-pictures');
+  pictures().click();
+  await f.settle();
+  assert.equal(f.requests.length, 0);
+  assert.equal(pictures().getAttribute('aria-pressed'), 'true');
+  f.accepted(1);
+  f.view.refresh();
+  await f.settle();
+  await waitFor(() =>
+    f.doc.querySelector('.completion-reward-exhibit-picture')?.querySelector('img'),
+  );
+  const image =
+    f.doc.querySelector('.completion-reward-exhibit-picture')?.querySelector('img') ?? null;
+  assert.equal(image.alt, 'The exact earned illustration');
+  assert.equal(f.requests.length, 1);
+  assert.equal(f.doc.activeElement, pictures());
+  f.collection.close();
+  assert.equal(pictures().getAttribute('aria-pressed'), 'false');
+  assert.equal(
+    f.doc.querySelector('.completion-reward-exhibit-picture')?.querySelector('img') ?? null,
+    null,
+  );
+  assert.deepEqual(f.created.map((entry) => entry.url).sort(), [...f.revoked].sort());
+});
+
+test('twenty exhibit picture cycles keep accepted progress and release all owned URLs', async (t) => {
+  const f = await fixture(t, { image: true });
+  f.accepted(1);
+  f.view.refresh();
+  await f.settle();
+  const generation = f.profile.generation;
+  const receipts = JSON.stringify(f.view.snapshot().state.receipts);
+  for (let index = 0; index < 20; index++) {
+    f.doc.getElementById('completion-reward-exhibit-pictures').click();
+    await waitFor(() =>
+      f.doc.querySelector('.completion-reward-exhibit-picture')?.querySelector('img'),
+    );
+    f.doc.getElementById('completion-reward-exhibit-pictures').click();
+    assert.equal(
+      f.doc.querySelector('.completion-reward-exhibit-picture')?.querySelector('img') ?? null,
+      null,
+    );
+  }
+  assert.equal(f.profile.generation, generation);
+  assert.equal(JSON.stringify(f.view.snapshot().state.receipts), receipts);
+  assert.equal(f.created.length, 20);
+  assert.equal(new Set(f.revoked).size, 20);
+  assert.deepEqual(f.created.map((entry) => entry.url).sort(), [...f.revoked].sort());
+});

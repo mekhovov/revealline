@@ -11,6 +11,8 @@ import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay } from '../replay.mjs';
 import { companySimulationIdentity } from '../company-session.mjs';
 import { completionLearningReference } from '../rewards/learning.mjs';
+import { canonicalJSON } from '../data-json.mjs';
+import { createHash } from 'node:crypto';
 
 const lesson = COMPANY_LESSONS.find((entry) => entry.missionId === 'coupa-source-to-pay-01');
 const row = JSON.parse(
@@ -81,6 +83,27 @@ test('historical mastery retains independently replayed proof across retries, re
   const proof = await store.prove(f);
   assert.equal(store.rewardEvidence(), initial, 'Verification alone does not adopt completion.');
   assert.equal(store.saveVerified(proof), true);
+  assert.equal(store.key, 'revealline.company-learning-proofs.coupa-foundations.v1');
+  assert.equal(store.recoveryKey, store.key + '.recovery');
+  const originalBody = {
+    format: 'revealline-learning-proof.v1',
+    editionId: f.config.editionId,
+    attempt: f.attempt,
+    replay: f.replay,
+  };
+  const originalProof = {
+    ...originalBody,
+    proofId: createHash('sha256').update(canonicalJSON(originalBody)).digest('hex'),
+  };
+  assert.equal(
+    f.data.get(store.key),
+    JSON.stringify({
+      format: 'revealline-learning-proof-store.v1',
+      editionId: f.config.editionId,
+      proofs: [originalProof],
+    }),
+    'The shared evidence lifecycle preserves the original learning wire bytes and keys.',
+  );
   assert.equal(changes, 1);
   assert.deepEqual(store.rewardEvidence().learning, [
     { ...completionLearningReference(lesson), attemptId: f.attempt.id },
