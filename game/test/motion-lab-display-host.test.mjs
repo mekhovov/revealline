@@ -1539,6 +1539,106 @@ test('Motion recipe replacement refreshes the rotor value text after a manual ra
   assert.equal(h.doc.activeElement, h.$('animation-recipe'));
 });
 
+for (const reduced of [false, true])
+  test(`Motion hub edits and JSON round trip preserve paused clocks and reduced=${reduced}`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    h.images.find((image) => image.src.startsWith('https:')).onload();
+    h.tick(0);
+    h.tick(100);
+    h.host.emit('blur');
+    h.cap(reduced);
+    const before = freezeView(h),
+      writes = h.writes.length,
+      source = JSON.parse(h.$('rotor-editor-json').value),
+      drawRotations = () => {
+        const calls = h.$('inspection').context.calls;
+        calls.length = 0;
+        h.$('rotor-editor-guides').emit('change');
+        return calls.filter((call) => call.op === 'rotate').map((call) => call.args[0]);
+      },
+      originalPose = drawRotations();
+    assert.ok(originalPose.length > 4, 'Loaded body paints the actual rotor layer');
+    h.$('rotor-editor-phase').focus();
+    h.change('rotor-editor-direction', '-1');
+    h.change('rotor-editor-phase', '45.5');
+    const edited = JSON.parse(h.$('rotor-editor-json').value);
+    assert.equal(edited[0].direction, -1);
+    assert.equal(edited[0].phaseDegrees, 45.5);
+    assert.notDeepEqual(drawRotations(), originalPose);
+    assert.match(h.$('rotor-editor-summary').textContent, /Counterclockwise/);
+    h.$('rotor-editor-json').value = '[invalid';
+    h.$('rotor-editor-apply').click();
+    assert.match(h.$('rotor-editor-status').textContent, /rejected/);
+    h.$('rotor-editor-json').value = JSON.stringify(edited);
+    h.$('rotor-editor-apply').click();
+    assert.match(h.$('rotor-editor-status').textContent, /applied/);
+    h.$('rotor-editor-reset').click();
+    assert.deepEqual(JSON.parse(h.$('rotor-editor-json').value), source);
+    assert.deepEqual(
+      drawRotations(),
+      originalPose,
+      'Editing and reset never reset or advance paused animation clocks',
+    );
+    assert.deepEqual(freezeView(h), before);
+    assert.equal(h.$('play-pause').textContent, 'Play');
+    assert.equal(h.frames.size, 0);
+    assert.equal(h.doc.body.dataset.effects, reduced ? 'reduced' : 'full');
+    assert.equal(
+      h.writes.length,
+      writes,
+      'Rotor drafts never write preferences, collection or game state',
+    );
+    assert.equal(h.doc.activeElement, h.$('rotor-editor-phase'), 'Review never moves focus');
+  });
+
+test('Motion rotor editor preserves a running frame and per-character drafts while non-rotor recipes stay gated', async (t) => {
+  const h = await harness(t, { holdBoot: true });
+  await h.start();
+  await h.entered.promise;
+  assert.equal(
+    h.$('rotor-editor-root').hidden,
+    true,
+    'Rotor controls stay hidden during held startup',
+  );
+  h.boot.resolve();
+  await h.ready();
+  h.images.find((image) => image.src.startsWith('https:')).onload();
+  if (h.$('play-pause').textContent === 'Play') h.$('play-pause').click();
+  h.key('KeyD');
+  h.tick(0);
+  h.tick(100);
+  const before = freezeView(h),
+    frames = [...h.frames.keys()],
+    writes = h.writes.length,
+    source = JSON.parse(h.$('rotor-editor-json').value);
+  h.$('rotor-editor-phase').focus();
+  h.change('rotor-editor-phase', '91');
+  h.$('rotor-editor-json').value = '[invalid';
+  h.external({ textFace: 'plain', textSize: 'large', reducedEffects: true });
+  assert.equal(
+    h.$('rotor-editor-json').value,
+    '[invalid',
+    'Reading changes preserve an unsubmitted rig draft',
+  );
+  assert.equal(h.$('play-pause').textContent, 'Pause');
+  assert.deepEqual([...h.frames.keys()], frames, 'Editing never cancels or adds a preview frame');
+  assert.deepEqual(freezeView(h), before);
+  assert.equal(h.doc.activeElement, h.$('rotor-editor-phase'));
+  h.change('animation-recipe', 'swallow-flight');
+  assert.equal(h.$('rotor-editor-root').hidden, true);
+  h.change('animation-recipe', before.recipe);
+  assert.equal(h.$('rotor-editor-root').hidden, false);
+  assert.equal(h.$('rotor-editor-phase').value, '91', 'Recipe changes retain the body rig draft');
+  h.$('rotor-editor-reset').click();
+  assert.deepEqual(JSON.parse(h.$('rotor-editor-json').value), source);
+  h.external({ reducedEffects: false });
+  h.tick(200);
+  assert.equal(h.frames.size, 1);
+  assert.equal(h.$('play-pause').textContent, 'Pause');
+  assert.equal(h.writes.length, writes);
+});
+
 function rotationGeometry(h) {
   h.host.innerWidth = h.doc.documentElement.clientWidth = 844;
   h.host.innerHeight = h.doc.documentElement.clientHeight = 390;
@@ -1557,6 +1657,57 @@ function rotationGeometry(h) {
   target._rect = { x: 624, y: 390, width: 180, height: 30 };
   return { controls, target, field };
 }
+
+test('Motion rotor labels resolve in EN and UK through the HTML-selected catalog/bootstrap and actual host', async (t) => {
+  const { setLocale, translateDOM } = await import('../i18n/index.mjs'),
+    previous = getLocale(),
+    h = await harness(t),
+    classic = createContext({ navigator: { languages: ['en'] }, Intl });
+  // Execute the actual classic resources selected by Motion HTML, independently
+  // of the ESM import cache used by the application harness.
+  const scripts = h.scripts.filter((script) =>
+    /\/(?:i18next-26\.4\.2\.min\.js|catalogs\.mjs|bootstrap\.mjs)$/.test(script.attrs.src || ''),
+  );
+  assert.equal(scripts.length, 3);
+  for (const script of scripts) {
+    const url = new NativeURL(script.attrs.src, route);
+    new Script(await readFile(url, 'utf8'), { filename: url.pathname }).runInContext(classic);
+  }
+  try {
+    await h.ready();
+    const labels = h.doc
+      .querySelectorAll('[data-i18n]')
+      .filter((node) => node.getAttribute('data-i18n').startsWith('tools:motionLab.rotorEditor.'));
+    assert.equal(labels.length, 11);
+    for (const [locale, hubLabel] of [
+      ['en', 'Motor hub'],
+      ['uk', 'Маточина двигуна'],
+    ]) {
+      setLocale(locale, { persist: false });
+      translateDOM(h.$('rotor-editor-root'));
+      classic.RevealLineI18n.setLocale(locale, { persist: false });
+      assert.equal(classic.RevealLineI18n.t('tools:motionLab.rotorEditor.hub'), hubLabel);
+      for (const label of labels) {
+        const key = label.getAttribute('data-i18n');
+        assert.equal(label.textContent, classic.RevealLineI18n.t(key));
+        assert.doesNotMatch(label.textContent, /motionLab\.rotorEditor\./);
+      }
+      h.change('rotor-editor-phase', '42');
+      assert.equal(
+        h.$('rotor-editor-status').textContent,
+        classic.RevealLineI18n.t('tools:motionLab.rotorEditor.applied'),
+      );
+      assert.doesNotMatch(h.$('rotor-editor-summary').textContent, /motionLab\.rotorEditor\./);
+      assert.match(h.$('rotor-editor-summary').textContent, /42/);
+      assert.match(
+        h.$('rotor-editor-hub').children[0].textContent,
+        locale === 'uk' ? /Маточина/ : /Hub/,
+      );
+    }
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
 
 test('Motion rotation reveals the currently focused rotor field without changing its paused study', async (t) => {
   const h = await harness(t);

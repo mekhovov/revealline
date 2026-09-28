@@ -497,6 +497,81 @@
                   />
                 </div>
               </div>
+              <div id="rotor-editor-root" class="rotor-editor full-width" hidden>
+                <label class="field full-width"
+                  ><span data-i18n="tools:motionLab.rotorEditor.hub">Motor hub</span>
+                  <select id="rotor-editor-hub"></select
+                ></label>
+                <label class="field"
+                  ><span data-i18n="tools:motionLab.rotorEditor.direction">Hub direction</span>
+                  <select id="rotor-editor-direction">
+                    <option value="1" data-i18n="tools:motionLab.rotorEditor.cw">Clockwise</option>
+                    <option value="-1" data-i18n="tools:motionLab.rotorEditor.ccw">
+                      Counterclockwise
+                    </option>
+                  </select></label
+                >
+                <label class="field"
+                  ><span data-i18n="tools:motionLab.rotorEditor.phase">Hub phase (degrees)</span>
+                  <input
+                    id="rotor-editor-phase"
+                    type="number"
+                    min="-360"
+                    max="360"
+                    step="any"
+                    value="0"
+                /></label>
+                <label class="check full-width"
+                  ><input id="rotor-editor-guides" type="checkbox" />
+                  <span data-i18n="tools:motionLab.rotorEditor.guides"
+                    >Show selected hub and sweep</span
+                  ></label
+                >
+                <p id="rotor-editor-summary" class="setting-note full-width"></p>
+                <details class="full-width">
+                  <summary data-i18n="tools:motionLab.rotorEditor.jsonTitle">
+                    Rig JSON import and export
+                  </summary>
+                  <label class="field"
+                    ><span data-i18n="tools:motionLab.rotorEditor.jsonLabel"
+                      >Selected body's rotors array</span
+                    >
+                    <textarea
+                      id="rotor-editor-json"
+                      rows="7"
+                      spellcheck="false"
+                      aria-describedby="rotor-editor-status"
+                    ></textarea>
+                  </label>
+                  <div class="rotor-editor-actions">
+                    <button
+                      id="rotor-editor-apply"
+                      class="button"
+                      type="button"
+                      data-i18n="tools:motionLab.rotorEditor.apply"
+                    >
+                      Apply JSON
+                    </button>
+                    <button
+                      id="rotor-editor-export"
+                      class="button"
+                      type="button"
+                      data-i18n="tools:motionLab.rotorEditor.export"
+                    >
+                      Export applied rig
+                    </button>
+                    <button
+                      id="rotor-editor-reset"
+                      class="button"
+                      type="button"
+                      data-i18n="tools:motionLab.rotorEditor.restore"
+                    >
+                      Restore source rig
+                    </button>
+                  </div>
+                </details>
+                <p id="rotor-editor-status" class="setting-note full-width" role="status"></p>
+              </div>
               <p
                 id="animation-status"
                 class="setting-note full-width"

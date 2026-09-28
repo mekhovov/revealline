@@ -24,6 +24,7 @@ import { prepareTeamAnchors, drawTeamAnchor } from './coop-anchor-presentation.m
 import { canvasTextFonts } from '../text-face.mjs';
 import { drawTrailImpactFront } from '../ui/actor-presentation.mjs';
 import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
+import { drawPreparedPilotContact } from './coop-pilot-cues.mjs';
 import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
 import {
   createCoopCaptureFeedback,
@@ -627,23 +628,31 @@ export function createCoopPainter(canvas) {
           ctx.fill();
           ctx.globalAlpha = 1;
         }
-        ctx.fillStyle = '#172c34';
-        ctx.lineWidth = 0.12;
-        ctx.beginPath();
-        if (player.id === 0) ctx.arc(0, 0, 0.58, 0, Math.PI * 2);
-        else {
-          ctx.moveTo(0, -0.72);
-          ctx.lineTo(0.67, 0);
-          ctx.lineTo(0, 0.72);
-          ctx.lineTo(-0.67, 0);
-          ctx.closePath();
+        if (!pilotBody) {
+          ctx.fillStyle = '#172c34';
+          ctx.lineWidth = 0.12;
+          ctx.beginPath();
+          if (player.id === 0) ctx.arc(0, 0, 0.58, 0, Math.PI * 2);
+          else {
+            ctx.moveTo(0, -0.72);
+            ctx.lineTo(0.67, 0);
+            ctx.lineTo(0, 0.72);
+            ctx.lineTo(-0.67, 0);
+            ctx.closePath();
+          }
+          ctx.fill();
+          ctx.stroke();
         }
-        if (!pilotBody) ctx.fill();
-        ctx.stroke();
-        ctx.fillStyle = colors[player.id];
-        ctx.beginPath();
-        ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
-        ctx.fill();
+        if (pilotBody) {
+          // Preserve exact contact geometry without filling over battery/camera
+          // artwork. The adjacent badge carries number + circle/diamond identity.
+          drawPreparedPilotContact(ctx, player.radius, colors[player.id], cssCell);
+        } else {
+          ctx.beginPath();
+          ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
+          ctx.fillStyle = colors[player.id];
+          ctx.fill();
+        }
         ctx.restore();
         pilotBadge(player, pilotBody);
       }

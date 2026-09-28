@@ -77,7 +77,10 @@
     "authoring/library/runtime-sprite-candidates-v1/export/atlas-weaver-shuttle-v3-39c737ed85d1df0c61bb05fce6424d36ea93f452ca19c7542253f37442e914aa.png",
     "authoring/library/runtime-sprite-candidates-v1/export/atlas-bell-warden-v1-aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce.png",
     "authoring/library/runtime-sprite-candidates-v1/export/atlas-woven-basket-v1-3604eeef2dfbdf02c26f8ae8d86984cb453c52574bfd9dd87d28df015f9c50ac.png",
-    "authoring/library/runtime-sprite-candidates-v1/export/manifest.json"
+    "authoring/library/runtime-sprite-candidates-v1/export/manifest.json",
+    "authoring/motion-lab/rotor-editor.mjs",
+    "authoring/game-feel-lab",
+    "authoring/library/real-world-references"
   ],
   "optionalOffline": [
     "game/content/packs/fpv-arcade-r3.json",
