@@ -800,5 +800,7 @@
   "library.recoveryFiles": "Too many recovery files.",
   "library.backupLock": "A backup import acquired the library lock. Local progress is kept in this tab.",
   "library.changedWhileSaving": "The library changed again while saving. Your local progress is kept in this tab; retry saving or export it before reloading.",
-  "library.saveFailure": "Library remains available in this session; export a backup. {{message}}"
+  "library.saveFailure": "Library remains available in this session; export a backup. {{message}}",
+  "studio.source.unknownEdition": "This Journey edition is not registered. Choose a listed edition; your draft is unchanged.",
+  "studio.image.bundledFailed": "The bundled reference could not be verified. Your existing picture and map are unchanged. Try again or upload a local image."
 }
