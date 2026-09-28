@@ -139,7 +139,7 @@ test('temporary toggle follows active modal without adding navigation controls o
   assert.equal(panel.tagName, 'aside');
   assert.deepEqual(
     panel.children.map((node) => node.tagName),
-    ['div', 'pre'],
+    ['div', 'div', 'pre'],
   );
   assert.equal(panel.children[0].textContent, 'Controller trace · v1');
   const focus = document.activeElement;
@@ -201,7 +201,7 @@ test('trace UI follows live locale changes without clearing diagnostics', () => 
   const previousLocale = getLocale();
   setLocale('en', { persist: false });
   const trace = attachControllerConfirmTrace({ document, enabled: true, version: 'v1' });
-  const [title, output] = document.body.children[0].children;
+  const [title, , output] = document.body.children[0].children;
   assert.equal(title.textContent, 'Controller trace · v1');
   assert.equal(output.textContent, 'Waiting for Confirm input…');
   setLocale('uk', { persist: false });
@@ -214,4 +214,52 @@ test('trace UI follows live locale changes without clearing diagnostics', () => 
   assert.equal(trace.snapshot().length, 1);
   trace.destroy();
   setLocale(previousLocale, { persist: false });
+});
+
+test('visible context preserves device identity and browser state across later native observations', () => {
+  const { document } = fixture();
+  const trace = attachControllerConfirmTrace({ document, enabled: true });
+  trace.record({
+    event: 'confirm-sample',
+    selectedGamepadIndex: 4,
+    selectedGamepadIdentity: '4:Steam Deck',
+    selectedGamepadGeneration: 3,
+    rawGamepads: [
+      { index: 4, id: 'Steam Deck Controller', mapping: 'standard', buttonCount: 17, buttons: [0] },
+    ],
+    focusTargetId: 'sound',
+    visibilityState: 'visible',
+    hasFocus: true,
+    fullscreen: true,
+  });
+  trace.record({
+    event: 'native-observed',
+    nativeEventType: 'click',
+    isTrusted: true,
+    defaultPrevented: false,
+  });
+  const [, context, output] = document.body.children[0].children;
+  assert.match(context.textContent, /selected:4 identity:4:Steam Deck generation:3/);
+  assert.match(context.textContent, /focus:sound hasFocus:true visibility:visible fullscreen:true/);
+  assert.match(context.textContent, /4 Steam Deck Controller mapping:standard buttons:17/);
+  assert.match(output.textContent, /native:click trusted:true prevented:false/);
+  trace.record({
+    event: 'native-consumed',
+    nativeEventType: 'click',
+    isTrusted: false,
+    defaultPrevented: true,
+  });
+  assert.match(output.textContent, /native:click trusted:false prevented:true/);
+  trace.record({
+    event: 'confirm-sample',
+    selectedGamepadIndex: null,
+    selectedGamepadIdentity: null,
+    rawGamepads: [],
+    hasFocus: false,
+    fullscreen: false,
+  });
+  assert.match(context.textContent, /selected:- identity:-/);
+  assert.match(context.textContent, /hasFocus:false visibility:visible fullscreen:false/);
+  assert.match(context.textContent, /devices:-$/);
+  trace.destroy();
 });

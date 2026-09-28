@@ -196,6 +196,8 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
 }
 .game-shell .controller-confirm-trace {
   position: fixed;
+  display: flex;
+  flex-direction: column;
   pointer-events: none;
   inset: auto 12px 12px 12px;
   z-index: 10000;
@@ -210,10 +212,19 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
     monospace;
 }
 .game-shell .controller-confirm-trace pre {
+  flex: 1 1 auto;
+  min-height: 0;
   margin: 8px 0 0;
-  max-height: calc(32vh - 40px);
   overflow: hidden;
   white-space: pre-wrap;
+}
+.game-shell .controller-confirm-trace > div {
+  flex: 0 0 auto;
+}
+.game-shell #controller-confirm-trace-context {
+  max-height: 12vh;
+  overflow: hidden;
+  overflow-wrap: anywhere;
 }
 .game-shell .shell-bar .shell-edition {
   flex: 1;
