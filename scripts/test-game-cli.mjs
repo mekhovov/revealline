@@ -8,7 +8,8 @@ import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { generatePackCatalogs } from './generate-pack-catalogs.mjs';
-import { buildOfflineInventory } from './offline-content.mjs';
+import { buildOfflineContent, buildOfflineInventory } from './offline-content.mjs';
+import { downloadFiles } from '../game/download-catalogue.mjs';
 import { LAUNCHER_CATALOG_KEYS } from './offline-launcher.mjs';
 import {
   buildProject,
@@ -830,7 +831,7 @@ test('offline source sentinel requires its template and does not silently emit a
   await assert.rejects(buildProject({ root, out }), /ENOENT/);
 });
 
-test('compact offline inventory retains every derived record and exact manifest integrity', async (t) => {
+test('compact offline catalogue and inventory preserve reader results, source text and integrity', async (t) => {
   const { root, out } = await fixture(t);
   const sources = {
     'game/offline.mjs': 'export {};',
@@ -860,7 +861,8 @@ test('compact offline inventory retains every derived record and exact manifest 
   await buildProject({ root, out });
   const manifest = JSON.parse(await fs.readFile(path.join(out, 'manifest.json')));
   const inventoryBytes = await fs.readFile(path.join(out, 'offline-inventory.json'));
-  const catalogue = JSON.parse(await fs.readFile(path.join(out, 'offline-content.json')));
+  const catalogueBytes = await fs.readFile(path.join(out, 'offline-content.json'));
+  const catalogue = JSON.parse(catalogueBytes);
   const cache = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json')));
   const entries = await Promise.all(
     manifest.files
@@ -871,6 +873,30 @@ test('compact offline inventory retains every derived record and exact manifest 
       })),
   );
   const expected = buildOfflineInventory(entries, catalogue, cache.files);
+  const expectedCatalogue = await buildOfflineContent(entries, new Set(), manifest.version);
+  assert.deepEqual(catalogue, expectedCatalogue);
+  assert.ok(
+    catalogueBytes.length < Buffer.byteLength(`${JSON.stringify(expectedCatalogue, null, 2)}\n`),
+  );
+  const selectedGroups = catalogue.groups.map((group) => group.id);
+  assert.ok(selectedGroups.length > 0);
+  assert.deepEqual(
+    downloadFiles(catalogue, selectedGroups),
+    downloadFiles(expectedCatalogue, selectedGroups),
+  );
+  const catalogueDescriptor = {
+    path: 'offline-content.json',
+    bytes: catalogueBytes.length,
+    sha256: hash(catalogueBytes),
+  };
+  assert.deepEqual(
+    manifest.files.find((file) => file.path === catalogueDescriptor.path),
+    catalogueDescriptor,
+  );
+  assert.deepEqual(
+    cache.files.find((file) => file.path === catalogueDescriptor.path),
+    catalogueDescriptor,
+  );
   const inventory = JSON.parse(inventoryBytes);
   // The build sorts output only after inventory generation. Its record order
   // remains immaterial, while every descriptor, group and size must survive.
@@ -886,6 +912,7 @@ test('compact offline inventory retains every derived record and exact manifest 
   );
   for (const [name, source] of Object.entries(sources)) {
     if (name.startsWith('game/offline/')) continue;
+    assert.equal(await fs.readFile(path.join(out, name), 'utf8'), source, name);
     const record = inventory.files.find((file) => file.path === name);
     assert.equal(record?.bytes, Buffer.byteLength(source), name);
     assert.equal(record?.sha256, hash(Buffer.from(source)), name);

@@ -4,7 +4,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
-import { updatePreferences, emptyLibrary, saveLibrary } from '../library.mjs';
+import {
+  campaignKey,
+  loadLibrary,
+  updatePreferences,
+  emptyLibrary,
+  saveLibrary,
+} from '../library.mjs';
+import { challengeCampaign } from '../challenges.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 
@@ -345,3 +352,160 @@ for (const background of ['hidden', 'unfocused'])
     assert.equal(verifyReplay(JSON.parse(page.storage.getItem(sessionKey)).replay).match, true);
     assert.deepEqual(page.errors, []);
   });
+
+test('saved compiled flights refresh and restore without rereading authored geometry', async (t) => {
+  const source = structuredClone(campaign);
+  const page = await soloPage(t, {
+    fetchResponse(path) {
+      if (path === 'content/campaign.json') return { ok: true, json: async () => source };
+    },
+  });
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('ArrowDown');
+  ticks(page, 10);
+  page.key('ArrowDown', false);
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  page.$('pause-button').click();
+  const saved = JSON.parse(page.storage.getItem(sessionKey));
+  const levels = source.levels;
+  let authoredReads = 0;
+  // Observe the caller-owned source after the host has compiled an immutable
+  // execution catalog. Repainting a saved preview needs only that owned catalog.
+  source.levels = new Proxy(levels, {
+    get(target, property, receiver) {
+      if (property === 'map') authoredReads++;
+      return Reflect.get(target, property, receiver);
+    },
+  });
+  let savedReads = 0;
+  const read = page.storage.getItem;
+  page.storage.getItem = (key) => {
+    if (key === sessionKey) savedReads++;
+    return read(key);
+  };
+  for (let cycle = 0; cycle < 20; cycle++) {
+    page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
+    page.$('pause-button').click();
+  }
+  assert.ok(savedReads >= 20, 'The actual overlay repeatedly reads the saved-flight preview.');
+  assert.equal(authoredReads, 0, 'Known saved keys must not normalize caller-owned maps again.');
+  // Full restoration deliberately validates authored presentation inputs too.
+  // Remove the observation proxy before exercising that separate boundary.
+  source.levels = levels;
+  page.$('continue-saved').click();
+  await settle(() => !page.$('continue-saved').disabled);
+  page.frame(0);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual(
+    JSON.parse(page.storage.getItem(sessionKey)).presentationPins,
+    saved.presentationPins,
+  );
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.match(page.$('run-message').textContent, /Saved flight verified.*Press Resume/);
+  assert.equal(verifyReplay(saved.replay).match, true);
+  assert.deepEqual(page.errors, []);
+});
+
+test('dynamic saved routes follow current mutable inputs and a replacement selection', async (t) => {
+  const currentClasses = structuredClone(classes);
+  const page = await soloPage(t, {
+    campaign,
+    fetchResponse(path) {
+      if (path === 'content/classes.json') return { ok: true, json: async () => currentClasses };
+    },
+  });
+  const firstDate = '2026-09-12';
+  page.$('library-button').click();
+  page.doc.querySelector('[data-library-panel="challenges"]').click();
+  page.$('challenge-date').value = firstDate;
+  page.$('challenge-kind').value = 'calm';
+  await page.$('launch-challenge').onclick();
+  await settle(() => page.doc.body.dataset.pictureState === 'ready');
+  page.frame(0);
+  const firstKey = campaignKey(challengeCampaign(firstDate, 'calm', currentClasses));
+  assert.equal(page.$('campaign-select').value, firstKey);
+  assert.equal(
+    Object.hasOwn(
+      loadLibrary(page.storage, 'revealline.library.dev.v1').library.campaigns,
+      firstKey,
+    ),
+    false,
+    'An uncompleted selected route is absent from the historical campaign registry.',
+  );
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  ticks(page, 8);
+  page.$('pause-button').click();
+  const first = JSON.parse(page.storage.getItem(sessionKey));
+  const firstCheckpoint = authoritativeCheckpoint(page.rendered.run);
+  assert.equal(first.campaignKey, firstKey);
+  page.$('continue-saved').click();
+  await settle(() => !page.$('continue-saved').disabled);
+  page.frame(0);
+  assert.match(page.$('run-message').textContent, /Saved flight verified/);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), firstCheckpoint);
+
+  page.change('campaign-select', campaignKey(campaign));
+  await settle(
+    () => page.$('mission-replace-dialog').open && !page.$('mission-replace-confirm').disabled,
+  );
+  await page.$('mission-replace-confirm').onclick();
+  await settle(() => page.doc.body.dataset.pictureState === 'ready');
+  page.frame(0);
+  const replacement = page.rendered.run;
+  assert.equal(replacement.levelId, campaign.levels[0].id);
+  const originalRevision = currentClasses[0].revision;
+  currentClasses[0].revision = 'dynamic-changed';
+  page.$('continue-saved').click();
+  await settle(() => !page.$('continue-saved').disabled);
+  page.frame(0);
+  assert.equal(
+    page.rendered.run,
+    replacement,
+    'A stale dynamic key cannot restore against changed equipment.',
+  );
+  assert.match(page.$('run-message').textContent, /not loaded.*matching campaign pack/);
+  assert.equal(JSON.parse(page.storage.getItem(sessionKey)).campaignKey, firstKey);
+  currentClasses[0].revision = originalRevision;
+  page.$('continue-saved').click();
+  await settle(() => !page.$('continue-saved').disabled);
+  page.frame(0);
+  assert.match(page.$('run-message').textContent, /Saved flight verified/);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), firstCheckpoint);
+  assert.deepEqual(
+    JSON.parse(page.storage.getItem(sessionKey)).presentationPins,
+    first.presentationPins,
+  );
+
+  const secondDate = '2026-09-13';
+  page.$('library-button').click();
+  page.doc.querySelector('[data-library-panel="challenges"]').click();
+  page.$('challenge-date').value = secondDate;
+  page.$('challenge-kind').value = 'daily';
+  await page.$('launch-challenge').onclick();
+  await settle(
+    () => page.$('mission-replace-dialog').open && !page.$('mission-replace-confirm').disabled,
+  );
+  await page.$('mission-replace-confirm').onclick();
+  await settle(() => page.doc.body.dataset.pictureState === 'ready');
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  ticks(page, 8);
+  page.$('pause-button').click();
+  const second = JSON.parse(page.storage.getItem(sessionKey));
+  assert.notEqual(second.campaignKey, firstKey);
+  assert.equal(
+    second.campaignKey,
+    campaignKey(challengeCampaign(secondDate, 'daily', currentClasses)),
+  );
+  page.$('continue-saved').click();
+  await settle(() => !page.$('continue-saved').disabled);
+  page.frame(0);
+  assert.equal(page.rendered.run.levelId, `route-${secondDate}-daily`);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), second.replay.checkpoint);
+  assert.equal(verifyReplay(first.replay).match, true);
+  assert.equal(verifyReplay(second.replay).match, true);
+  assert.deepEqual(page.errors, []);
+});

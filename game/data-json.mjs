@@ -21,7 +21,17 @@ export function boundedJSON(
   } = {},
 ) {
   const encoder = new TextEncoder();
-  const encodedBytes = (value) => encoder.encode(JSON.stringify(value)).byteLength;
+  // Repeated field names and short text have identical encoded lengths. Keep
+  // this scalar-only cache bounded and local to one call: every external graph
+  // still receives the full descriptor, structure and byte-budget traversal.
+  const stringBytes = new Map();
+  const encodedBytes = (value) => {
+    const known = stringBytes.get(value);
+    if (known !== undefined) return known;
+    const length = encoder.encode(JSON.stringify(value)).byteLength;
+    if (value.length <= 512 && stringBytes.size < 512) stringBytes.set(value, length);
+    return length;
+  };
   if (typeof source === 'string') {
     if (source.length > maxBytes || encoder.encode(source).byteLength > maxBytes)
       throw new TypeError(t('errors:dataJson.fileByteBudget'));
