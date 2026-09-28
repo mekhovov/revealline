@@ -5329,5 +5329,16 @@
   "journeyMastery.retry": "Retry saving verified mastery",
   "journeyMastery.tooLarge": "The mastery backup exceeds its size limit.",
   "journeyMastery.wrongEdition": "This mastery backup belongs to another edition.",
-  "journeyMastery.imported": "Matching mastery evidence verified and imported."
+  "journeyMastery.imported": "Matching mastery evidence verified and imported.",
+  "editionShell.chooseEdition": "Choose a world",
+  "editionShell.originalArt": "Original artwork & saved-flight recovery",
+  "editionShell.snapshot": "Artwork version",
+  "editionShell.currentArt": "Current artwork",
+  "editionShell.retainedOriginal": "Saved original · {revision}",
+  "editionShell.recoveryExplanation": "Older flights and imports use their original campaign and artwork. Open that version to continue with its exact pictures and your existing progress.",
+  "editionShell.recoverSaved": "Open artwork for saved flight",
+  "editionShell.retainedExplanation": "You are using saved original {revision}. New flights here use the same version. Choose Current artwork to return to the latest presentation.",
+  "editionShell.about": "About this world & its artwork",
+  "editionShell.learningContext": "Discoveries include source-linked explanations and fictional learning examples. They do not connect to external accounts or award a professional qualification.",
+  "editionShell.sharedRules": "Campaign artwork changes the look. Movement, enemies and difficulty follow the shared Solo rules."
 }

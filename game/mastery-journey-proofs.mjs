@@ -1,5 +1,6 @@
 import { required, canonicalJSON } from './data-json.mjs';
 import { createReplayProofStore } from './replay-proof-store.mjs';
+import { freezeDesign } from './content-design/catalogs.mjs';
 import {
   resolveJourneyMasteryRequirement,
   resolveJourneyMasteryClear,
@@ -19,8 +20,12 @@ export function createJourneyMasteryProofStore({
   requirements,
   bindings,
   acceptClear,
+  acceptOwnedClear = acceptClear,
 }) {
-  required(typeof acceptClear === 'function', 'Journey mastery needs an accepted-clear authority.');
+  required(
+    typeof acceptClear === 'function' && typeof acceptOwnedClear === 'function',
+    'Journey mastery needs an accepted-clear authority.',
+  );
   required(
     Array.isArray(requirements) && requirements.length <= 4096,
     'Journey mastery requirements exceed their budget.',
@@ -38,7 +43,10 @@ export function createJourneyMasteryProofStore({
       'Journey mastery requires a selected authored requirement.',
     );
     const clear = resolveJourneyMasteryClear(source.clear, requirement, bindings);
-    required(acceptClear(clear) === true, 'Journey mastery needs its exact accepted winning run.');
+    required(
+      acceptOwnedClear(clear) === true,
+      'Journey mastery needs an owned accepted winning run.',
+    );
     return { requirement, clear };
   };
   const store = createReplayProofStore({
@@ -56,7 +64,11 @@ export function createJourneyMasteryProofStore({
       payloadKeys: ['requirement', 'clear', 'replay'],
       recordKey: (source) => keyFor(source?.requirement ?? {}),
       loadedRecord: (source) => source,
-      rewardRow: (source) => ({ ...source.requirement, runId: source.clear.runId }),
+      rewardRow: (source) => ({
+        ...source.requirement,
+        runId: source.clear.runId,
+        acceptedClear: source.clear,
+      }),
       inspect,
       async verify(source, { signal }) {
         const result = await verifyJourneyMasteryRun({ ...source, bindings }, { signal });
@@ -77,11 +89,37 @@ export function createJourneyMasteryProofStore({
     for (const entry of entries) inspect(entry);
     return store.importVerified(entries);
   };
+  // Keep historical accepted clears beside the verified rule evidence. The
+  // persisted proof format stays byte-compatible; session and durable maps in
+  // the shared authority retain their own exact winning attempt independently.
+  let projected;
+  const rewardEvidence = () => {
+    const source = store.rewardEvidence();
+    if (projected?.revision === source.revision) return projected;
+    const rows = (entries) => entries.map(({ acceptedClear, ...record }) => record);
+    projected = freezeDesign({
+      revision: source.revision,
+      mastery: rows(source.mastery),
+      durableMastery: rows(source.durableMastery),
+      historicalClears: source.mastery.map((record) => record.acceptedClear),
+      durableHistoricalClears: source.durableMastery.map((record) => record.acceptedClear),
+    });
+    return projected;
+  };
   return Object.freeze({
     ...store,
+    rewardEvidence,
     load: (requirement) => store.load(keyFor(resolveJourneyMasteryRequirement(requirement))),
-    prove: ({ requirement, clear, replay, signal }) =>
-      store.prove({ requirement, clear, replay }, { signal }),
+    async prove({ requirement, clear, replay, signal }) {
+      // Creation must observe the exact accepted transition. Only already
+      // recorded proofs can retain that attempt after a later mission replay.
+      const accepted = resolveJourneyMasteryClear(clear, requirement, bindings);
+      required(
+        acceptClear(accepted) === true,
+        'Journey mastery needs its exact accepted winning run.',
+      );
+      return store.prove({ requirement, clear: accepted, replay }, { signal });
+    },
     importVerified,
     saveVerified: (entry) => importVerified([entry]),
     matchesRequirement: (source) =>
