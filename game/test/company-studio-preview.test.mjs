@@ -231,7 +231,11 @@ test('focused community previews accept canonical theme projection but reject se
       ...(edition.presentationHistory ?? []).map((record) => record.path),
       ...catalog.campaigns
         .filter((row) => edition.campaignIds.includes(row.id))
-        .flatMap((row) => [row.sourcePath, ...(row.lessonPath ? [row.lessonPath] : [])]),
+        .flatMap((row) => [
+          row.sourcePath,
+          ...(row.lessonPath ? [row.lessonPath] : []),
+          ...(row.rewardPath ? [row.rewardPath] : []),
+        ]),
     ];
     for (const path of paths) {
       const text = await readFile(new URL(`../../${path}`, import.meta.url), 'utf8');
