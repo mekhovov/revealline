@@ -201,6 +201,12 @@ const retainedPresentations = Object.freeze({
   ],
   'social-drone-ua': [
     {
+      id: 'b082d3766168bd305e235adad284813b2a8578de5de009f8ca985aaf1a2e5bd6',
+      path: 'game/editions/retained/social-drone-ua-before-listening-room.json',
+      sha256: 'd1637bf018f2197a6e10e6df5a13fe2e8cff807d4c19165258bff331ccc30528',
+      bytes: 170542,
+    },
+    {
       id: '9ae68b77e05e8b2a0dc934510e080af89ee5223a3304a0197c3b53a2e61af1b0',
       path: 'game/editions/retained/social-drone-ua-before-discovery-feedback.json',
       sha256: 'edf36f70669fae75d00038bdba4339ecbdd5e03e7647972f64922ee51e7a879b',
@@ -539,16 +545,18 @@ export const COMPANY_EDITIONS = Object.freeze(
                   ? 4
                   : id === 'fpv-learning'
                     ? 7
-                    : id === 'ukraine-culture'
+                    : id === 'social-drone-ua'
                       ? 6
-                      : [
-                            'social-drone-ua',
-                            'victory-drones',
-                            'ukraine-culture',
-                            'fpv-learning',
-                          ].includes(id)
-                        ? 5
-                        : 1,
+                      : id === 'ukraine-culture'
+                        ? 6
+                        : [
+                              'social-drone-ua',
+                              'victory-drones',
+                              'ukraine-culture',
+                              'fpv-learning',
+                            ].includes(id)
+                          ? 5
+                          : 1,
     name,
     brandId,
     audience,
