@@ -24,6 +24,7 @@ export async function mountEditionLessons({
   document: doc,
   window: win,
   writer,
+  previewSession = null,
   getRun,
   getRecorder,
   getPictureVisible,
@@ -90,7 +91,7 @@ export async function mountEditionLessons({
     simulations.set(lesson.missionId, identities);
   }
   const storage = createCompanyStorage({
-    getStorage: () => win.localStorage ?? globalThis.localStorage,
+    getStorage: () => previewSession?.storage ?? win.localStorage ?? globalThis.localStorage,
     onError: (error) => storageReport(error.message),
   });
   const proofs = createCompanyLearningProofStore({

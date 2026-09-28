@@ -233,6 +233,7 @@ export function editionPublicationAssets(catalog, files) {
             item.sourcePath,
             ...(item.lessonPath ? [item.lessonPath] : []),
             ...(item.rewardPath ? [item.rewardPath] : []),
+            ...(item.localizationPath ? [item.localizationPath] : []),
           ]),
         ]),
         inline = new Map();
