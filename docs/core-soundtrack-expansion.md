@@ -100,6 +100,31 @@ HTTPS MP3 URL with GET/HEAD/Range CORS and recording-specific rights is supplied
 UA-FPV publication remains blocked recording by recording by permission evidence.
 The rejected AI-original method remains paused at 0/36 approved compositions.
 
+### Release batches after the 28 September queue review
+
+The public game remains immutable v0.141.7. Authoritative `main` is
+`c5885a15561a88331c5566c5312392c4e5d8daf5`; its changes after the v0.141.7
+publisher are company evidence and a Steam Deck test correction, not a soundtrack
+runtime release. The canonical soundtrack archive itself is current and clean at
+`e7c11aac61b1359c609029fc93871ea17e020444`, with 260 exact recordings: 202 public
+and 58 review-only. It has no open pull requests.
+
+Ship the remaining soundtrack work in these independently reviewable batches:
+
+| Batch | Included work | Completed evidence | Remaining gate | Hands-on estimate |
+| --- | --- | --- | --- | --- |
+| **S1 — canonical game adapter** | Canonical catalogue discovery, structured rights, external URLs, 512-recording capacity and remote failure recovery | Local reviewed candidate `66eff728617786a650fa12ce39cca5cbbb485f9d`; production revision 94; focused capacity/recovery evidence retained | Correct the misleading online offline-download success message, integrate with PR #716's ancestry, requalify exact merged source and publish once through the bulk release lane | **0.5–1 working day**, plus shared CI/release queue |
+| **S2 — compact Audio player** | Current title/artist/source, Previous, Play/Pause, Next, game/upload and archive source toggles, all ten archive styles, ordered/shuffled mixed playback and one advanced-library disclosure | Local feature `435da8de428a854484f9b8d751ef48b24418241d`; 215/215 focused tests; lint/localization/validation/formatting pass; local browser loaded 202 public tracks and switched streamed → bundled playback | Rebase/cherry-pick only after S1's actual merge, append a scoped Field Kit review successor, run hosted build because local packaging hit `ENOSPC`, then independently review and release | **0.5–1 working day after S1**, plus CI |
+| **S3 — device and offline closure** | Physical B/N and touch/controller controls, Shchedryk startup and transitions, iPhone/desktop qualification and cold offline restart | Desktop streamed/bundled recovery and existing public quick controls are already delivered | Requires physical targets and a release containing S1/S2; record device and listening evidence separately | **0.5–1 working day**, depending on device access |
+| **S4 — reviewed music admissions** | Small accepted synthwave/electro, heavier-metal and Ukrainian collections | Archive already publishes the audition pool and exact source/licence metadata; rejected and backup decisions are retained | Full-track listening, transitions, warning audibility and Ukrainian cultural review; admission must use accepted subsets only | **1–2 working days per accepted batch**, excluding reviewer response |
+| **S5 — rights-blocked/deferred work** | UA-FPV public redistribution, first external S3 object, 36 originals | Private UA-FPV intake and external-URL machinery exist; original brief and rejected candidates are retained | Recording-specific redistribution evidence, a stable CORS/Range URL, and an accepted production method respectively | **No reliable release date until each external dependency is supplied** |
+
+S1 and S2 are code releases and must not be combined while S1 is still under
+frozen review. S4 archive research can continue without entering the game release
+queue, but another public audition dump is lower priority than listening and
+admitting a small accepted subset. A green technical check never changes an
+audition into approved game music.
+
 ## Priority delivery — external MP3 URLs first (27 September 2026)
 
 This is the active soundtrack transport priority. The canonical soundtrack
