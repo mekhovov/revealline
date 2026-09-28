@@ -1,6 +1,7 @@
 import { localizedText, t } from '../i18n/index.mjs';
 import { mountEditionNavigation } from './edition-navigation.mjs';
 import { mountEditionLessons } from './edition-lessons.mjs';
+import { mountEditionRewards } from './edition-rewards.mjs';
 import { mountEditionPlayLayout } from './edition-play-layout.mjs';
 import {
   prepareEditionOffline,
@@ -20,6 +21,10 @@ export async function mountEditionSoloUI({
   getRun,
   getRecorder,
   getPictureVisible,
+  getJourneyProfile,
+  getJourneyRevision,
+  getJourneyDurable,
+  getReducedMotion,
   report,
   onMissions,
   onEditionChange,
@@ -233,6 +238,18 @@ export async function mountEditionSoloUI({
     getPictureVisible,
     report,
   });
+  const rewards = await mountEditionRewards({
+    provider,
+    document: doc,
+    window: win,
+    writer,
+    pause,
+    getRun,
+    getJourneyProfile,
+    getJourneyRevision,
+    getJourneyDurable,
+    getReducedMotion,
+  });
   const legacy = node('section');
   try {
     const raw = (win.localStorage ?? globalThis.localStorage).getItem(provider.legacySessionKey);
@@ -320,11 +337,15 @@ export async function mountEditionSoloUI({
     doc.getElementById('settings-panel-data').append(offline);
   }
   return {
-    refresh: lessons.refresh,
+    refresh() {
+      lessons.refresh();
+      rewards.refresh();
+    },
     pictureReady: lessons.pictureReady,
     dispose() {
       disposed = true;
       lessons.dispose();
+      rewards.dispose();
       typeof layout === 'function' ? layout() : layout.disconnect?.();
       picker.remove();
       about.remove();
