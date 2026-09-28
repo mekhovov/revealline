@@ -1,0 +1,735 @@
+[
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-cities-symbols-time",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-cities-symbols-time-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A heritage record can connect several places without making them the same building.",
+        "title": "Kyiv in Layers"
+      },
+      "uk": {
+        "teaser": "Опис спадщини поєднує кілька місць, не перетворюючи їх на одну будівлю.",
+        "title": "Київ шарами"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-cities-symbols-time-01-image",
+        "locales": {
+          "en": {
+            "alt": "Kyiv in Layers — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Kyiv in Layers"
+          },
+          "uk": {
+            "alt": "Київ шарами — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Київ шарами"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-cities-symbols-time-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNESCO’s Kyiv property brings Saint-Sophia Cathedral and related monastic buildings together with Kyiv-Pechersk Lavra. Its description discusses architectural and artistic layers, including Saint-Sophia’s mosaics and frescoes.",
+              "Our imaginary exhibition uses separate cards for building, artwork and wider complex. Connect the cards without collapsing them into one date or place. The game’s courts are an arcade interpretation; consult the official record for the actual sites and their boundaries."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Kyiv: Saint-Sophia and Kyiv-Pechersk Lavra",
+                "url": "https://whc.unesco.org/en/list/527/"
+              }
+            ],
+            "title": "Kyiv in Layers"
+          },
+          "uk": {
+            "paragraphs": [
+              "Об’єкт ЮНЕСКО в Києві поєднує Софійський собор із прилеглими монастирськими спорудами та Києво-Печерську лавру. Опис розглядає архітектурні й мистецькі шари, зокрема софійські мозаїки та фрески.",
+              "В уявній виставці є окремі картки будівлі, твору та ширшого комплексу. Поєднайте їх, не зводячи до однієї дати чи місця. Ігрові подвір’я — аркадна інтерпретація; справжні об’єкти та їхні межі описані в офіційному записі."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Kyiv: Saint-Sophia and Kyiv-Pechersk Lavra",
+                "url": "https://whc.unesco.org/en/list/527/"
+              }
+            ],
+            "title": "Київ шарами"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "97519dcde5323802" },
+            { "difficulty": "standard", "gameplayId": "957bc90c488a94dc" },
+            { "difficulty": "expert", "gameplayId": "b8361dddc250c673" }
+          ],
+          "missionId": "ukraine-cities-symbols-time-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-cities-symbols-time-01", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-cities-symbols-time",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-cities-symbols-time-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "An urban ensemble holds relationships between buildings and communities.",
+        "title": "Lviv: Streets and Encounters"
+      },
+      "uk": {
+        "teaser": "Міський ансамбль зберігає зв’язки між будівлями та спільнотами.",
+        "title": "Львів: вулиці й зустрічі"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-cities-symbols-time-02-image",
+        "locales": {
+          "en": {
+            "alt": "Lviv: Streets and Encounters — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Lviv: Streets and Encounters"
+          },
+          "uk": {
+            "alt": "Львів: вулиці й зустрічі — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Львів: вулиці й зустрічі"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-cities-symbols-time-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNESCO describes Lviv’s historic centre as an ensemble shaped by different cultural and religious communities and by exchanges among architectural traditions. The record treats the urban setting as part of its significance.",
+              "Compare a fictional isolated façade card with a wider street-scene card. What becomes visible only when neighbouring buildings appear? Record an observation about relationships, rather than assuming every building has the same origin or that one photograph explains the entire city."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Lviv: the Ensemble of the Historic Centre",
+                "url": "https://whc.unesco.org/en/list/865/"
+              }
+            ],
+            "title": "Lviv: Streets and Encounters"
+          },
+          "uk": {
+            "paragraphs": [
+              "ЮНЕСКО описує історичний центр Львова як ансамбль, сформований різними культурними й релігійними спільнотами та обміном архітектурних традицій. Міське середовище є частиною його значення.",
+              "Порівняйте вигадану картку окремого фасаду з ширшим видом вулиці. Що стає видимим лише поряд із сусідніми будівлями? Опишіть зв’язки, не припускаючи однакового походження всіх споруд чи того, що одна світлина пояснює ціле місто."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Lviv: the Ensemble of the Historic Centre",
+                "url": "https://whc.unesco.org/en/list/865/"
+              }
+            ],
+            "title": "Львів: вулиці й зустрічі"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "8804190a936fc788" },
+            { "difficulty": "standard", "gameplayId": "81ebdf9a1eac674c" },
+            { "difficulty": "expert", "gameplayId": "010b507bc053a173" }
+          ],
+          "missionId": "ukraine-cities-symbols-time-02"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-cities-symbols-time-02", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-cities-symbols-time",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-cities-symbols-time-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A historic centre’s story includes exchange and urban design.",
+        "title": "Odesa: A Port City Record"
+      },
+      "uk": {
+        "teaser": "Історія центру міста поєднує обмін і міське планування.",
+        "title": "Одеса: опис портового міста"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-cities-symbols-time-03-image",
+        "locales": {
+          "en": {
+            "alt": "Odesa: A Port City Record — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Odesa: A Port City Record"
+          },
+          "uk": {
+            "alt": "Одеса: опис портового міста — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Одеса: опис портового міста"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-cities-symbols-time-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Historic Centre of Odesa entered the World Heritage List in 2023. UNESCO’s account describes a port city whose architecture and urban development reflect exchanges among diverse communities.",
+              "In our fictional model, the harbour, public square and street grid have separate labels. Ask what each can show and what remains outside the model. A heritage designation identifies a particular property; it does not mean every building across a modern city belongs to that property."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — The Historic Centre of Odesa",
+                "url": "https://whc.unesco.org/en/list/1703/"
+              }
+            ],
+            "title": "Odesa: A Port City Record"
+          },
+          "uk": {
+            "paragraphs": [
+              "Історичний центр Одеси внесено до Списку всесвітньої спадщини 2023 року. ЮНЕСКО описує портове місто, архітектура й розвиток якого відображають обмін між різними спільнотами.",
+              "У вигаданій моделі гавань, громадська площа й мережа вулиць мають окремі підписи. Запитайте, що вони показують і що лишається поза моделлю. Статус спадщини визначає конкретний об’єкт, а не всі будівлі сучасного міста."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — The Historic Centre of Odesa",
+                "url": "https://whc.unesco.org/en/list/1703/"
+              }
+            ],
+            "title": "Одеса: опис портового міста"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a6f0e9f44b03d314" },
+            { "difficulty": "standard", "gameplayId": "28bcde5e759451c9" },
+            { "difficulty": "expert", "gameplayId": "01ac80bcc6d1fe42" }
+          ],
+          "missionId": "ukraine-cities-symbols-time-03"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-cities-symbols-time-03", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-cities-symbols-time",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-cities-symbols-time-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A primary document anchors one part of a symbol’s history.",
+        "title": "The Trident and a Date"
+      },
+      "uk": {
+        "teaser": "Первинний документ закріплює одну частину історії символу.",
+        "title": "Тризуб і дата"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-cities-symbols-time-04-image",
+        "locales": {
+          "en": {
+            "alt": "The Trident and a Date — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Trident and a Date"
+          },
+          "uk": {
+            "alt": "Тризуб і дата — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Тризуб і дата"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-cities-symbols-time-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Verkhovna Rada’s resolution of 19 February 1992 approved the trident as Ukraine’s small coat of arms. Article 20 of the Constitution connects the small coat of arms with the sign of Volodymyr the Great’s princely state.",
+              "Keep two timeline labels: a historical association and a modern legal adoption. They answer different questions. Our exhibit asks you to distinguish those claims rather than invent a single undisputed meaning for every line of the symbol."
+            ],
+            "sources": [
+              {
+                "title": "Verkhovna Rada — State coat of arms resolution, 19 February 1992",
+                "url": "https://zakon.rada.gov.ua/laws/show/2137-12"
+              },
+              {
+                "title": "Constitution of Ukraine — Chapter I, Article 20",
+                "url": "https://www.president.gov.ua/documents/constitution/konstituciya-ukrayini-rozdil-i"
+              }
+            ],
+            "title": "The Trident and a Date"
+          },
+          "uk": {
+            "paragraphs": [
+              "Постанова Верховної Ради від 19 лютого 1992 року затвердила тризуб як малий герб України. Стаття 20 Конституції пов’язує малий герб зі знаком княжої держави Володимира Великого.",
+              "Збережіть два підписи часової шкали: історичний зв’язок і сучасне юридичне затвердження. Вони відповідають на різні запитання. Виставка пропонує розрізнити ці твердження, а не вигадувати єдине беззаперечне значення кожної лінії символу."
+            ],
+            "sources": [
+              {
+                "title": "Verkhovna Rada — State coat of arms resolution, 19 February 1992",
+                "url": "https://zakon.rada.gov.ua/laws/show/2137-12"
+              },
+              {
+                "title": "Constitution of Ukraine — Chapter I, Article 20",
+                "url": "https://www.president.gov.ua/documents/constitution/konstituciya-ukrayini-rozdil-i"
+              }
+            ],
+            "title": "Тризуб і дата"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "10f06f7ea56f02ff" },
+            { "difficulty": "standard", "gameplayId": "b03cac4530a54b79" },
+            { "difficulty": "expert", "gameplayId": "53a388d3dd64a589" }
+          ],
+          "missionId": "ukraine-cities-symbols-time-04"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-cities-symbols-time-04", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-cities-symbols-time",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-cities-symbols-time-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "The flag’s description is precise about two equal horizontal bands.",
+        "title": "Blue and Yellow, Clearly Seen"
+      },
+      "uk": {
+        "teaser": "Опис прапора точно називає дві рівновеликі горизонтальні смуги.",
+        "title": "Синій і жовтий: бачити чітко"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-cities-symbols-time-05-image",
+        "locales": {
+          "en": {
+            "alt": "Blue and Yellow, Clearly Seen — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Blue and Yellow, Clearly Seen"
+          },
+          "uk": {
+            "alt": "Синій і жовтий: бачити чітко — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Синій і жовтий: бачити чітко"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-cities-symbols-time-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Article 20 of Ukraine’s Constitution describes the state flag as two equal horizontal bands of blue and yellow. The same article names the flag, coat of arms and anthem as state symbols.",
+              "Our design comparison shows a clear labelled flag card beside an abstract blue-and-yellow artwork. The artwork may use the colours freely, but a caption should identify which image presents the flag. Keep labels readable without relying on colour alone."
+            ],
+            "sources": [
+              {
+                "title": "Constitution of Ukraine — Chapter I, Article 20",
+                "url": "https://www.president.gov.ua/documents/constitution/konstituciya-ukrayini-rozdil-i"
+              }
+            ],
+            "title": "Blue and Yellow, Clearly Seen"
+          },
+          "uk": {
+            "paragraphs": [
+              "Стаття 20 Конституції України описує державний прапор як дві рівновеликі горизонтальні смуги синього й жовтого кольорів. Та сама стаття називає прапор, герб і гімн державними символами.",
+              "Наше порівняння ставить чітко підписану картку прапора поруч з абстрактним синьо-жовтим твором. Твір може вільно використовувати кольори, але підпис має визначати, де саме представлено прапор. Зробіть підписи читабельними без покладання лише на колір."
+            ],
+            "sources": [
+              {
+                "title": "Constitution of Ukraine — Chapter I, Article 20",
+                "url": "https://www.president.gov.ua/documents/constitution/konstituciya-ukrayini-rozdil-i"
+              }
+            ],
+            "title": "Синій і жовтий: бачити чітко"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "90de1c589f6d0d31" },
+            { "difficulty": "standard", "gameplayId": "2689d5b3d6e5b1c6" },
+            { "difficulty": "expert", "gameplayId": "d40be6e78f451c45" }
+          ],
+          "missionId": "ukraine-cities-symbols-time-05"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-cities-symbols-time-05", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-cities-symbols-time",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-cities-symbols-time-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Places, dates and sources turn a collage into an explainable map.",
+        "title": "A Map with More Than One Story"
+      },
+      "uk": {
+        "teaser": "Місця, дати й джерела перетворюють колаж на зрозумілу мапу.",
+        "title": "Мапа з багатьма історіями"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-cities-symbols-time-06-image",
+        "locales": {
+          "en": {
+            "alt": "A Map with More Than One Story — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Map with More Than One Story"
+          },
+          "uk": {
+            "alt": "Мапа з багатьма історіями — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Мапа з багатьма історіями"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-cities-symbols-time-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNESCO’s Ukraine page lists separate World Heritage properties with their own records and inscription years. Looking at the national list and then an individual record answers different levels of questions.",
+              "Curate our six discoveries with one sentence each: name the place or symbol, the specific fact and its source. Keep missing details visible. The finished map connects several stories without ranking cities, treating an inscription as a measure of cultural worth, or replacing real geographical maps."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO World Heritage — Ukraine",
+                "url": "https://whc.unesco.org/en/statesparties/ua/"
+              }
+            ],
+            "title": "A Map with More Than One Story"
+          },
+          "uk": {
+            "paragraphs": [
+              "Сторінка ЮНЕСКО про Україну перелічує окремі об’єкти всесвітньої спадщини з власними описами й роками внесення. Національний перелік та окремий запис відповідають на запитання різного масштабу.",
+              "Підпишіть шість відкриттів одним реченням кожне: назвіть місце чи символ, конкретний факт і джерело. Залиште невідомі деталі видимими. Мапа поєднує історії без рейтингу міст, оцінювання культурної цінності за статусом чи заміни справжніх географічних карт."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO World Heritage — Ukraine",
+                "url": "https://whc.unesco.org/en/statesparties/ua/"
+              }
+            ],
+            "title": "Мапа з багатьма історіями"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "d454cc540fd6ed77" },
+            { "difficulty": "standard", "gameplayId": "57bafc31ae9656d9" },
+            { "difficulty": "expert", "gameplayId": "ed404fdb3119a4f0" }
+          ],
+          "missionId": "ukraine-cities-symbols-time-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-cities-symbols-time-06", "kind": "mission" }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-cities-symbols-time",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-cities-symbols-time-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "A Map of Places and Evidence"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Мапа місць і свідчень"
+      }
+    },
+    "payloads": [
+      {
+        "id": "ukraine-cities-symbols-time-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Build an annotated imaginary exhibition map with Kyiv, Lviv and Odesa, then add the trident and flag records on a separate timeline. A place, a date and a source help explain each connection. This collection is a cultural reading map; the arcade geometry is not a map for navigating real streets."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO World Heritage — Ukraine",
+                "url": "https://whc.unesco.org/en/statesparties/ua/"
+              }
+            ],
+            "title": "A Map of Places and Evidence"
+          },
+          "uk": {
+            "paragraphs": [
+              "Створіть мапу уявної виставки з Києвом, Львовом та Одесою, а записи про тризуб і прапор додайте на окрему часову шкалу. Місце, дата та джерело пояснюють кожен зв’язок. Колекція — культурний маршрут читання; ігрова геометрія не є мапою справжніх вулиць."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO World Heritage — Ukraine",
+                "url": "https://whc.unesco.org/en/statesparties/ua/"
+              }
+            ],
+            "title": "Мапа місць і свідчень"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-cities-symbols-time-01-image",
+        "locales": {
+          "en": {
+            "alt": "Kyiv in Layers — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Kyiv in Layers"
+          },
+          "uk": {
+            "alt": "Київ шарами — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Київ шарами"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-cities-symbols-time-02-image",
+        "locales": {
+          "en": {
+            "alt": "Lviv: Streets and Encounters — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Lviv: Streets and Encounters"
+          },
+          "uk": {
+            "alt": "Львів: вулиці й зустрічі — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Львів: вулиці й зустрічі"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-cities-symbols-time-03-image",
+        "locales": {
+          "en": {
+            "alt": "Odesa: A Port City Record — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Odesa: A Port City Record"
+          },
+          "uk": {
+            "alt": "Одеса: опис портового міста — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Одеса: опис портового міста"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-cities-symbols-time-04-image",
+        "locales": {
+          "en": {
+            "alt": "The Trident and a Date — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Trident and a Date"
+          },
+          "uk": {
+            "alt": "Тризуб і дата — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Тризуб і дата"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-cities-symbols-time-05-image",
+        "locales": {
+          "en": {
+            "alt": "Blue and Yellow, Clearly Seen — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Blue and Yellow, Clearly Seen"
+          },
+          "uk": {
+            "alt": "Синій і жовтий: бачити чітко — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Синій і жовтий: бачити чітко"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-culture-home",
+          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+        },
+        "id": "ukraine-cities-symbols-time-06-image",
+        "locales": {
+          "en": {
+            "alt": "A Map with More Than One Story — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Map with More Than One Story"
+          },
+          "uk": {
+            "alt": "Мапа з багатьма історіями — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Мапа з багатьма історіями"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-cities-symbols-time-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "type": "url",
+        "url": "https://whc.unesco.org/en/statesparties/ua/"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "97519dcde5323802" },
+            { "difficulty": "standard", "gameplayId": "957bc90c488a94dc" },
+            { "difficulty": "expert", "gameplayId": "b8361dddc250c673" }
+          ],
+          "missionId": "ukraine-cities-symbols-time-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "8804190a936fc788" },
+            { "difficulty": "standard", "gameplayId": "81ebdf9a1eac674c" },
+            { "difficulty": "expert", "gameplayId": "010b507bc053a173" }
+          ],
+          "missionId": "ukraine-cities-symbols-time-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a6f0e9f44b03d314" },
+            { "difficulty": "standard", "gameplayId": "28bcde5e759451c9" },
+            { "difficulty": "expert", "gameplayId": "01ac80bcc6d1fe42" }
+          ],
+          "missionId": "ukraine-cities-symbols-time-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "10f06f7ea56f02ff" },
+            { "difficulty": "standard", "gameplayId": "b03cac4530a54b79" },
+            { "difficulty": "expert", "gameplayId": "53a388d3dd64a589" }
+          ],
+          "missionId": "ukraine-cities-symbols-time-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "90de1c589f6d0d31" },
+            { "difficulty": "standard", "gameplayId": "2689d5b3d6e5b1c6" },
+            { "difficulty": "expert", "gameplayId": "d40be6e78f451c45" }
+          ],
+          "missionId": "ukraine-cities-symbols-time-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "d454cc540fd6ed77" },
+            { "difficulty": "standard", "gameplayId": "57bafc31ae9656d9" },
+            { "difficulty": "expert", "gameplayId": "ed404fdb3119a4f0" }
+          ],
+          "missionId": "ukraine-cities-symbols-time-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-cities-symbols-time", "kind": "campaign" }
+  }
+]

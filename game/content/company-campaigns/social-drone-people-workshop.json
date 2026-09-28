@@ -2,6 +2,19 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
+      "alt": "An original fictional community workshop with six unpowered model-frame stations around a welcoming table; not a photograph of an actual organization.",
+      "bytes": 270761,
+      "format": "AssetRevisionV1",
+      "height": 640,
+      "id": "social-drone-people-workshop-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/social-drone-people-workshop-01-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "1a23739d451d250b8622edd8d5dd6c0d82d2125143dcf16c46df1f8b8e326319",
+      "width": 960
+    },
+    {
       "alt": "An original fictional community workshop with notebooks, unpowered hobby quad frames and warm evening light.",
       "bytes": 1043972,
       "format": "AssetRevisionV1",
@@ -20,7 +33,7 @@
       "band": 1,
       "discovery": {
         "exhibitLayout": "mosaic",
-        "finaleRewardRef": { "id": "social-drone-people-workshop-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "social-drone-people-workshop-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "social-drone-people-workshop",
@@ -173,7 +186,7 @@
         "memorableMoment": "An original cobalt-blue welcome hall around a community table and civilian learning models.",
         "pacingBeat": "discover",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "social-drone-people-workshop-01-discovery", "revision": "2" },
         "routeDecision": "Use the wide welcome island for short returns, or capture the open west court first."
       },
       "format": "MissionDesignV1",
@@ -183,7 +196,7 @@
       "name": "Welcome to the Network",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 14.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "social-drone-ua-home-picture",
+        "backgroundAssetId": "social-drone-people-workshop-01-picture",
         "themeId": "social-drone-people-workshop-theme"
       },
       "revision": "1",
@@ -488,9 +501,9 @@
       "format": "PackDesignV1",
       "id": "social-drone-people-workshop-pack",
       "name": "People Behind the Workshop",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }

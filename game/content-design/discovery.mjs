@@ -2,7 +2,40 @@ import { boundedJSON, dataIdentity, exactKeys, required } from '../data-json.mjs
 import { compileContentProject } from './project.mjs';
 import { validateCompletionRewards } from '../rewards/model.mjs';
 import { validateDiscoveryRewardBindings } from './discovery-schema.mjs';
+import { validateExplorationPayload } from '../rewards/exploration.mjs';
 export { DISCOVERY_PACING_BEATS, DISCOVERY_EXHIBIT_LAYOUTS } from './discovery-schema.mjs';
+
+/** Editing an exhibit never edits its promised requirements. New immutable
+ * payload revisions rebind only references to the exact old authored reward. */
+export function editDiscoveryExploration(source, rewardSource, rewardId, input) {
+  const project = structuredClone(compileContentProject(source).source),
+    rewards = structuredClone(validateCompletionRewards(rewardSource)),
+    reward = rewards.find((item) => item.id === rewardId),
+    payload = validateExplorationPayload(input);
+  required(reward, 'Choose an authored reward before editing its exploration.');
+  const previousRevision = reward.revision,
+    index = reward.payloads.findIndex((item) => item.id === payload.id);
+  required(
+    index < 0 || reward.payloads[index].type === 'exploration',
+    'Exploration cannot replace another reward payload type.',
+  );
+  if (index < 0) reward.payloads.push(payload);
+  else reward.payloads[index] = payload;
+  const { revision: _revision, ...content } = reward;
+  reward.revision = `explore-${dataIdentity(content)}`;
+  const rebind = (reference) => {
+    if (reference?.id === reward.id && reference.revision === previousRevision)
+      reference.revision = reward.revision;
+  };
+  for (const mission of project.missions) rebind(mission.design?.rewardRef);
+  for (const campaign of project.campaigns) rebind(campaign.discovery?.finaleRewardRef);
+  project.revision = `draft-${dataIdentity(project)}`;
+  const checked = compileContentProject(project).source,
+    definitions = validateCompletionRewards(rewards);
+  for (const campaign of checked.campaigns)
+    validateDiscoveryRewardBindings(checked, definitions, campaign.id);
+  return { source: structuredClone(checked), rewards: structuredClone(definitions) };
+}
 
 /** Presentation-only authoring. Gameplay revision and completion bindings stay intact. */
 export function editContentDiscovery(source, missionId, input, rewardSource = []) {
