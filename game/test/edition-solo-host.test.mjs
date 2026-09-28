@@ -610,6 +610,8 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
         journeyIndexedDB: managedIndexedDB().indexedDB,
         fetchResponse: f.fetcher,
       });
+    assert.equal(page.$('continue-saved').hidden, true);
+    assert.equal(page.$('continue-saved-note').textContent, '');
     page.$('shell-featured').click();
     await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
@@ -627,9 +629,18 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
         journeyIndexedDB: managedIndexedDB().indexedDB,
         fetchResponse: f.fetcher,
       });
+    assert.ok(
+      page.$('continue-saved-note').textContent.includes(JSON.parse(saved).replay.level.name),
+      'The preview resolves the exact saved candidate mission from its owned execution key.',
+    );
+    const beforeContinue = storage.getItem(key);
     page.$('shell-continue').click();
     await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
+    assert.deepEqual(
+      authoritativeCheckpoint(page.rendered.run),
+      JSON.parse(beforeContinue).replay.checkpoint,
+    );
     page.$('pause-button').click();
     page.$('save-attempt-button').click();
     assert.deepEqual(

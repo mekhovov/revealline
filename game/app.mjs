@@ -5951,19 +5951,28 @@ try {
   }
   function refreshSavedFlight() {
     const saved = savedAttempt();
-    const entries = executionEntries();
-    const savedEntry = entries.find((entry) => campaignKey(entry.campaign) === saved?.campaignKey);
-    const metadata = !savedEntry && candidateHost?.executionMetadata?.(saved?.campaignKey);
+    // No stored attempt (and no practice attempt) can produce this preview.
+    const entries = saved && !practice ? executionEntries() : [];
+    const keyedEntries = entries.map((entry) => ({
+      entry,
+      campaign: entry.campaign,
+      key:
+        candidateHost?.owns(entry) || executionCatalog.find(entry.executionKey) === entry
+          ? entry.executionKey
+          : campaignKey(entry.campaign),
+    }));
+    const savedEntry = keyedEntries.find((row) => row.key === saved?.campaignKey)?.entry;
+    const metadata =
+      saved && !practice && !savedEntry
+        ? candidateHost?.executionMetadata?.(saved.campaignKey)
+        : null;
     const savedMode = metadata
       ? gameplayDifficultyLabel(metadata.difficulty)
       : difficultyLabel(savedEntry);
     const preview = practice
       ? null
       : savedFlightPreview(saved, [
-          ...entries.map((entry) => ({
-            key: campaignKey(entry.campaign),
-            campaign: entry.campaign,
-          })),
+          ...keyedEntries.map(({ key, campaign }) => ({ key, campaign })),
           ...(metadata ? [metadata] : []),
         ]);
     const atReady = !started && !practice;
