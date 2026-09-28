@@ -8,13 +8,18 @@ import { compileContentProject } from '../game/content-design/project.mjs';
 import {
   validateEditionCampaignProject,
   validateEditionLessonBundle,
+  validateEditionRewardBundle,
 } from '../game/editions/project.mjs';
 import {
   createEditionRuntimeCatalog,
   editionRelativePath,
   validateEditionRuntimeCatalog,
   validateEditionAsset,
+  resolveEditionAssets,
+  resolveEditionSelection,
 } from '../game/editions/model.mjs';
+import { mergeEditionProjects } from '../game/editions/bootstrap.mjs';
+import { validateCompletionRewards } from '../game/rewards/model.mjs';
 import { validateEditionId, resolveEditionContext } from '../game/edition-context.mjs';
 import {
   validateEditionSourceInventory,
@@ -126,6 +131,7 @@ export async function collectEditionSelectedFiles({ catalog, editionIds, read })
     ...selected.campaigns.flatMap((campaign) => [
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+      ...(campaign.rewardPath ? [campaign.rewardPath] : []),
     ]),
     ...selected.editions.flatMap((edition) => [
       ...Object.values(edition.boot ?? {}),
@@ -406,6 +412,7 @@ export async function compileEdition({
     runtimeCatalog.campaigns.flatMap((campaign) => [
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+      ...(campaign.rewardPath ? [campaign.rewardPath] : []),
     ]),
   );
   for (const edition of runtimeCatalog.editions) {
@@ -439,6 +446,7 @@ export async function compileEdition({
       .flatMap((campaign) => [
         campaign.sourcePath,
         ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+        ...(campaign.rewardPath ? [campaign.rewardPath] : []),
       ])
       .filter((file) => !selectedData.has(file)),
     ...catalog.assets.map((asset) => asset.path).filter((file) => !selectedMedia.has(file)),
@@ -452,7 +460,7 @@ export async function compileEdition({
   for (const file of enginePaths) {
     required(!excluded.has(file), 'The engine inventory includes omitted edition content.');
     required(
-      !/^(?:game\/company-campaigns\/(?:content|catalog|brands|lessons|artwork)\.mjs|game\/editions\/(?:catalog|assets)\.json)$/.test(
+      !/^(?:game\/company-campaigns\/(?:content|catalog|brands|lessons|rewards|artwork)\.mjs|game\/editions\/(?:catalog|assets)\.json)$/.test(
         file,
       ),
       'Build-time company registries cannot enter a player edition.',
@@ -646,6 +654,34 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
       validateEditionLessonBundle(readJSON(files.get(descriptor.lessonPath)), project);
   }
   for (const edition of runtimeCatalog.editions) {
+    const rewards = [];
+    const rewardSelection = resolveEditionSelection(runtimeCatalog, { editionId: edition.id });
+    const selectedCampaigns = rewardSelection.campaigns;
+    const editionRewards = selectedCampaigns.flatMap((descriptor) =>
+      descriptor.rewardPath ? readJSON(files.get(descriptor.rewardPath)) : [],
+    );
+    const editionProject = editionRewards.some((reward) => reward?.scope?.kind === 'edition')
+      ? mergeEditionProjects(
+          rewardSelection,
+          selectedCampaigns.map((descriptor) => readJSON(files.get(descriptor.sourcePath))),
+        )
+      : undefined;
+    for (const descriptor of runtimeCatalog.campaigns.filter(
+      (campaign) => edition.campaignIds.includes(campaign.id) && campaign.rewardPath,
+    ))
+      rewards.push(
+        ...validateEditionRewardBundle(
+          readJSON(files.get(descriptor.rewardPath)),
+          readJSON(files.get(descriptor.sourcePath)),
+          {
+            descriptor,
+            editionId: edition.id,
+            editionProject,
+            assets: resolveEditionAssets(runtimeCatalog, { editionId: edition.id }),
+          },
+        ),
+      );
+    validateCompletionRewards(rewards);
     Object.values(edition.boot).forEach((file) => readJSON(files.get(file)));
     validateEditionPresentation({
       catalog: runtimeCatalog,
