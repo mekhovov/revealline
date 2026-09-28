@@ -21,6 +21,16 @@ const version = /^v\d+\.\d+\.\d+$/;
 const text = (value) => typeof value === 'string' && value.trim().length > 0 && value.length <= 500;
 const parse = (bytes) => JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
 
+/** Shared exact stable pointer bytes; capacity reports never invent a parallel recipe. */
+export function editionLauncherCurrentBytes({ editionId, version: releaseVersion, entry }) {
+  validateEditionId(editionId);
+  if (!version.test(releaseVersion) || entry !== 'game/company.html')
+    fail('Invalid edition launcher identity.');
+  return Buffer.from(
+    `${JSON.stringify({ editionId, version: releaseVersion, scope: `../releases/${releaseVersion}/site/`, entry })}\n`,
+  );
+}
+
 export async function verifyEditionReview(envelopeBytes, review, { read } = {}) {
   const envelope = parse(envelopeBytes);
   const admission = await validateEditionAdmission(envelope, { read });
@@ -307,9 +317,11 @@ export async function frozenEditionOverlay(
           if (name.startsWith('app/') && name !== 'app/current.json') put(`${base}${name}`, bytes);
         put(
           `${base}app/current.json`,
-          Buffer.from(
-            `${JSON.stringify({ editionId: id, version: release.version, scope: `../releases/${release.version}/site/`, entry: manifest.entry })}\n`,
-          ),
+          editionLauncherCurrentBytes({
+            editionId: id,
+            version: release.version,
+            entry: manifest.entry,
+          }),
         );
         launches.push({ id, name: app.name, href: `${id}/app/`, version: release.version });
       }
