@@ -133,6 +133,7 @@ export async function loadEditionBootstrap({
               descriptor: campaign,
               editionId: selection.edition.id,
               editionProject: source,
+              lessons: Object.values(lessons).flat(),
               assets: resolveEditionAssets(catalog, { editionId: selection.edition.id }),
             },
           ),

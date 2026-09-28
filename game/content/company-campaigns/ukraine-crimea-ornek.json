@@ -2,16 +2,29 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original fictional textile gallery with suspended linen, separate embroidered samples and warm natural light.",
-      "bytes": 1106859,
+      "alt": "Original illustrated heritage entrance with turquoise accents, blank source panels and separate plain textile, ceramic and thread displays.",
+      "bytes": 178150,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "ukraine-culture-home-picture",
+      "height": 480,
+      "id": "ukraine-crimea-ornek-01-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/ukraine-culture-home-v1.png",
+      "path": "editions/assets/discovery/ukraine-crimea-ornek-01-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144",
+      "sha256": "dc7fad1a463982a631b34151834fe71cd934972f65ffebe86e894b98edc02ae3",
+      "width": 960
+    },
+    {
+      "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
+      "bytes": 297277,
+      "format": "AssetRevisionV1",
+      "height": 640,
+      "id": "ukraine-crimea-ornek-key-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-crimea-ornek-key-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b",
       "width": 960
     }
   ],
@@ -219,7 +232,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-crimea-ornek-01-picture",
         "themeId": "ukraine-crimea-ornek-theme"
       },
       "revision": "2",
@@ -294,7 +307,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-crimea-ornek-key-picture",
         "themeId": "ukraine-crimea-ornek-theme"
       },
       "revision": "2",
@@ -369,7 +382,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-crimea-ornek-key-picture",
         "themeId": "ukraine-crimea-ornek-theme"
       },
       "revision": "2",
@@ -452,7 +465,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-crimea-ornek-key-picture",
         "themeId": "ukraine-crimea-ornek-theme"
       },
       "revision": "2",
@@ -535,7 +548,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-crimea-ornek-key-picture",
         "themeId": "ukraine-crimea-ornek-theme"
       },
       "revision": "2",
@@ -618,7 +631,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-crimea-ornek-key-picture",
         "themeId": "ukraine-crimea-ornek-theme"
       },
       "revision": "2",

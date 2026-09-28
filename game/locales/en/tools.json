@@ -2524,5 +2524,22 @@
   "studio.campaignArtwork.help": "A public campaign preview, separate from its locked finale. Choose a raster image already registered to this campaign.",
   "studio.campaignArtwork.alt": "Campaign artwork: {{name}}",
   "studio.campaignArtwork.applied": "Campaign picture applied. Gameplay and rewards are unchanged; containing editions have a new revision.",
-  "studio.discovery.rewardCapabilities": "The JSON editor preserves sources, exact media references and English/Ukrainian copy. Rewards support knowledge, images, interactive atlases, HTTPS links, public codes, audio and video with transcripts and captions. Cosmetic rewards need a later shared adapter."
+  "studio.discovery.rewardCapabilities": "The JSON editor preserves sources, exact media references and English/Ukrainian copy. Rewards support knowledge, images, interactive atlases, HTTPS links, public codes, audio and video with transcripts and captions. Cosmetic rewards need a later shared adapter.",
+  "studio.resource.title": "Resource and QR rewards",
+  "studio.resource.help": "Add a public HTTPS resource to an explicitly authored reward. A QR code is generated locally when requested; opening the destination always requires an action. Applying creates a new payload revision and preserves the required wins.",
+  "studio.resource.reward": "Reward",
+  "studio.resource.payload": "Resource",
+  "studio.resource.new": "New resource…",
+  "studio.resource.id": "Resource ID",
+  "studio.resource.address": "HTTPS address",
+  "studio.resource.en": "Title in English",
+  "studio.resource.uk": "Title in Ukrainian",
+  "studio.resource.qr": "Offer an offline QR code (up to 256 address bytes)",
+  "studio.resource.preview": "Preview resource",
+  "studio.resource.apply": "Apply resource",
+  "studio.resource.previewOnly": "Author preview only. No progress is earned.",
+  "studio.resource.applied": "Resource saved to the reward sidecar with a new revision.",
+  "studio.discovery.requiredLearning": "Optional required learning assignments",
+  "studio.discovery.learningRequirementsHelp": "Optionally require named, verified learning assignments as well as their explicitly selected mission wins. A bonus never gates Next or arcade progress.",
+  "studio.discovery.missingLearning": "Missing learning: {{lessons}}"
 }

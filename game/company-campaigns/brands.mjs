@@ -206,6 +206,12 @@ const retainedPresentations = Object.freeze({
   ],
   'coupa-all': [
     {
+      id: '13e5c4ff2313ebd3714e6d6461e2468857be6e4997fede8da24542880951df13',
+      path: 'game/editions/retained/coupa-all-before-learning-bonus.json',
+      sha256: 'de8370665d5c99e953326e1861f0817afb3dfc511f0629cdec6f50c6d4b5c709',
+      bytes: 191970,
+    },
+    {
       id: 'ecb87b6208f6f55322188ab34d8d9aa63b94064dd346f400bbe2bbbcc9d7870b',
       path: 'game/editions/retained/coupa-all.json',
       sha256: 'a48dc47e3e788046de0094c7d34bd74eda0c8776f271131254e26f5ec12e5706',
@@ -247,6 +253,12 @@ const retainedPresentations = Object.freeze({
     },
   ],
   'coupa-foundations': [
+    {
+      id: 'bb5393ff4a73f30346496334ac6004d84766dfbd958dbdfb62d2b3554e20d429',
+      path: 'game/editions/retained/coupa-foundations-before-learning-bonus.json',
+      sha256: '0ee0079828321ec31cfc6f0683f76ec5a8e90d7065008626793e33195f6a1187',
+      bytes: 50235,
+    },
     {
       id: '57dd4d5b7e0f8c27662349a8af870862657d700682ac758ad51721a61fdd59aa',
       path: 'game/editions/retained/coupa-foundations.json',
@@ -418,26 +430,30 @@ export const COMPANY_EDITIONS = Object.freeze(
     id,
     revision:
       id === 'coupa-all'
-        ? 7
-        : [
-              'coupa-adventure',
-              'droneaid-nl-community',
-              'coupa-foundations',
-              'coupa-operations',
-              'coupa-developers',
-            ].includes(id)
-          ? 6
-          : brandId === 'coupa'
-            ? 5
-            : ['droneaid-nl-workshop-lights', 'droneaid-nl-parts-in-motion'].includes(id)
+        ? 8
+        : id === 'coupa-foundations'
+          ? 7
+          : [
+                'coupa-adventure',
+                'droneaid-nl-community',
+                'coupa-operations',
+                'coupa-developers',
+              ].includes(id)
+            ? 6
+            : brandId === 'coupa'
               ? 5
-              : brandId === 'droneaid-nl'
-                ? 4
-                : ['social-drone-ua', 'victory-drones', 'ukraine-culture', 'fpv-learning'].includes(
-                      id,
-                    )
-                  ? 2
-                  : 1,
+              : ['droneaid-nl-workshop-lights', 'droneaid-nl-parts-in-motion'].includes(id)
+                ? 5
+                : brandId === 'droneaid-nl'
+                  ? 4
+                  : [
+                        'social-drone-ua',
+                        'victory-drones',
+                        'ukraine-culture',
+                        'fpv-learning',
+                      ].includes(id)
+                    ? 2
+                    : 1,
     name,
     brandId,
     audience,

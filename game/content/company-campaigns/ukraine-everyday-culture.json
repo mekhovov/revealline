@@ -2,16 +2,16 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original fictional textile gallery with suspended linen, separate embroidered samples and warm natural light.",
-      "bytes": 1106859,
+      "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest.",
+      "bytes": 290344,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "ukraine-culture-home-picture",
+      "id": "ukraine-everyday-culture-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/ukraine-culture-home-v1.png",
+      "path": "editions/assets/discovery/ukraine-everyday-culture-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144",
+      "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f",
       "width": 960
     }
   ],
@@ -240,7 +240,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-everyday-culture-key-picture",
         "themeId": "ukraine-everyday-culture-theme"
       },
       "relayLinks": [],
@@ -309,7 +309,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-everyday-culture-key-picture",
         "themeId": "ukraine-everyday-culture-theme"
       },
       "relayLinks": [],
@@ -378,7 +378,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-everyday-culture-key-picture",
         "themeId": "ukraine-everyday-culture-theme"
       },
       "relayLinks": [],
@@ -436,7 +436,7 @@
         { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-everyday-culture-key-picture",
         "themeId": "ukraine-everyday-culture-theme"
       },
       "relayLinks": [],
@@ -496,7 +496,7 @@
         { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-everyday-culture-key-picture",
         "themeId": "ukraine-everyday-culture-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -570,7 +570,7 @@
         { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-everyday-culture-key-picture",
         "themeId": "ukraine-everyday-culture-theme"
       },
       "relayLinks": [

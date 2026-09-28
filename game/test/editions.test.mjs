@@ -326,6 +326,38 @@ test('whole-source eligibility includes registered historical-only originals bef
   await assert.rejects(checkEditionSourceEligibility(root), /no public eligibility/);
 });
 
+test('source admission retains an earlier campaign subset after expansion but rejects removed or duplicate permissions', async () => {
+  const f = await retainedFixture();
+  const originalEdition = f.catalog.editions.find((item) => item.id === 'coupa-public');
+  const added = {
+    ...f.catalog.campaigns.find((item) => item.id === originalEdition.campaignIds[0]),
+    id: 'coupa-later-campaign',
+  };
+  const catalog = structuredClone(f.catalog);
+  catalog.campaigns.push(added);
+  const edition = catalog.editions.find((item) => item.id === 'coupa-public');
+  edition.campaignIds.push(added.id);
+  const selected = structuredClone(catalog);
+  assert(
+    editionPublicationAssets(selected, f.files).some((asset) => asset.path === f.original.path),
+  );
+  const removed = structuredClone(selected);
+  removed.editions[0].campaignIds = [added.id];
+  assert.throws(() => editionPublicationAssets(removed, f.files), /audience/);
+  const descriptor = edition.presentationHistory[0];
+  const snapshot = JSON.parse(f.files.get(descriptor.path));
+  snapshot.catalog.editions[0].campaignIds.push(snapshot.catalog.editions[0].campaignIds[0]);
+  const value = bytes(snapshot);
+  Object.assign(selected.editions[0].presentationHistory[0], {
+    bytes: value.length,
+    sha256: digest(value),
+  });
+  assert.throws(
+    () => editionPublicationAssets(selected, new Map([...f.files, [descriptor.path, value]])),
+    /audience/,
+  );
+});
+
 test('sparse publisher rejects retained foreign branding, private JSON, unselected art and path conflicts', async () => {
   const f = await retainedFixture(),
     base = JSON.parse(f.files.get(f.catalog.editions[0].presentationHistory[0].path));
