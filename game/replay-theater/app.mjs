@@ -17,6 +17,7 @@ import { BoardPainter, boardPaintSizeForRun } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { attachReplayNavigation } from './navigation.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
+import { createEncounterDisplayPreferences } from '../encounter-display-preferences.mjs';
 import { mountReplayDisplay } from './display.mjs';
 
 const $ = (id) => document.getElementById(id);
@@ -24,6 +25,10 @@ globalThis.RevealLineToolLaunch?.attached();
 let theaterDisposed = false;
 let disposeRecording = () => {};
 const replayDisplay = mountReplayDisplay();
+const encounterDisplay = createEncounterDisplayPreferences({
+  window,
+  getStorage: () => localStorage,
+});
 const bootStatus = createOperationStatus($('boot-status'));
 const bootDisplay = bootStatus.begin({
   message: t('interface:preparingTheTheater'),
@@ -38,6 +43,7 @@ const closeTheater = (event = {}) => {
   theaterDisposed = true;
   disposeRecording();
   replayDisplay.dispose();
+  encounterDisplay.dispose();
   bootStatus.dispose();
   presentationFeedback.dispose();
   presentationPage?.close();
@@ -636,6 +642,7 @@ try {
         painter.draw(context, player.state, Math.min(dt, 0.1), {
           paused: player.phase !== 'playing',
           reduced: display.effectiveReducedEffects,
+          showCombatScrap: encounterDisplay.snapshot().showRemains,
           textFace: display.textFace,
           showGrid: $('grid').checked,
           fullReveal: player.phase === 'complete' && player.state.status === 'won',

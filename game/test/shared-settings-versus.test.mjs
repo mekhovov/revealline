@@ -42,12 +42,16 @@ test('Versus Settings uses native categories, consumes tab keys once and returns
   for (const id of [
     'race-journey-reactions-retry',
     'race-journey-reactions-enabled',
+    'race-enemy-remains-retry',
+    'race-enemy-remains',
     'race-reduced',
   ]) {
     press(f, 'Tab', { shiftKey: true });
     assert.equal(f.doc.activeElement.id, id);
   }
   for (const id of [
+    'race-enemy-remains',
+    'race-enemy-remains-retry',
     'race-journey-reactions-enabled',
     'race-journey-reactions-retry',
     'race-options-back',

@@ -2,7 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { parse } from 'parse5';
-import { readPracticePresentation } from '../ui/practice-presentation.mjs';
+import {
+  readPracticePresentation,
+  readPracticeRemainsOverride,
+} from '../ui/practice-presentation.mjs';
 import { getLocale, setLocale, translateDOM } from '../i18n/index.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 
@@ -110,4 +113,26 @@ test('actual Studio remains control has a native label and translates through th
   } finally {
     setLocale(locale, { persist: false });
   }
+});
+
+test('only explicit owned preview choices override global remains', () => {
+  assert.equal(
+    readPracticeRemainsOverride('?practice=1&preview-remains=hide', { practice: true }),
+    false,
+  );
+  assert.equal(
+    readPracticeRemainsOverride('?practice=1&preview-remains=show', { practice: true }),
+    true,
+  );
+  for (const search of [
+    '',
+    '?practice=1',
+    '?practice=1&preview-remains=',
+    '?practice=1&preview-remains=show&preview-remains=hide',
+  ])
+    assert.equal(readPracticeRemainsOverride(search, { practice: true }), null);
+  assert.equal(
+    readPracticeRemainsOverride('?practice=1&preview-remains=show', { practice: false }),
+    null,
+  );
 });

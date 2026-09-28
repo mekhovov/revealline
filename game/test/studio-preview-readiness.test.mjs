@@ -460,7 +460,7 @@ test('Studio snapshots remains before media awaits and transports it outside byt
   checkbox.checked = false;
   f.media[1].resolve();
   await shown;
-  assert.equal(new URL(f.elements.preview.src).searchParams.has('preview-remains'), false);
+  assert.equal(new URL(f.elements.preview.src).searchParams.get('preview-remains'), 'show');
   assert.equal(f.writes.length, 2);
   assert.equal(f.writes[0][1], f.writes[1][1]);
   assert.equal(JSON.stringify(source), before);
