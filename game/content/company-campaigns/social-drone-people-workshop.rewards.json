@@ -1,0 +1,724 @@
+[
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-people-workshop",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-people-workshop-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A first connection reveals who this community supports.",
+        "title": "Welcome to the Network"
+      },
+      "uk": {
+        "teaser": "Перше з’єднання відкриє, кого підтримує ця спільнота.",
+        "title": "Вітаємо у спільноті"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-people-workshop-01-image",
+        "locales": {
+          "en": {
+            "alt": "Welcome to the Network — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Welcome to the Network"
+          },
+          "uk": {
+            "alt": "Вітаємо у спільноті — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Вітаємо у спільноті"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "social-drone-people-workshop-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Social Drone UA describes a volunteer community supporting Ukraine’s military with drones. This fictional gallery presents its public purpose without depicting real participants or operations.",
+              "Imagine welcoming someone to the illustrated workshop. Which sentence explains the purpose, and which detail makes the room feel welcoming? Keep factual claims and artistic atmosphere distinct."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Welcome to the Network"
+          },
+          "uk": {
+            "paragraphs": [
+              "Social Drone UA описує волонтерську спільноту, що підтримує українське військо дронами. Ця вигадана галерея представляє її публічну мету без зображення реальних учасників чи операцій.",
+              "Уявіть, що вітаєте когось в ілюстрованій майстерні. Яке речення пояснює мету, а яка деталь створює гостинну атмосферу? Розрізняйте фактичні твердження та художній настрій."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Вітаємо у спільноті"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "11aaf52aeaea6dce" },
+            { "difficulty": "standard", "gameplayId": "9e483ff86281903f" },
+            { "difficulty": "expert", "gameplayId": "a43f65e5bfeedaa3" }
+          ],
+          "missionId": "social-drone-people-workshop-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-people-workshop-01", "kind": "mission" }
+  },
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-people-workshop",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-people-workshop-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Discover how different contributions support one purpose.",
+        "title": "Many Ways to Contribute"
+      },
+      "uk": {
+        "teaser": "Дізнайтеся, як різні внески підтримують спільну мету.",
+        "title": "Різні способи долучитися"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-people-workshop-02-image",
+        "locales": {
+          "en": {
+            "alt": "Many Ways to Contribute — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Many Ways to Contribute"
+          },
+          "uk": {
+            "alt": "Різні способи долучитися — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Різні способи долучитися"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "social-drone-people-workshop-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The public Social Drone page invites technical participants and donors. These are different ways to contribute, not a ranking of people’s worth.",
+              "Our fictional room also needs clear labels and a useful welcome. Choose two contributions that depend on each other and explain their connection without assuming everyone has the same time or skills."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Many Ways to Contribute"
+          },
+          "uk": {
+            "paragraphs": [
+              "Публічна сторінка Social Drone запрошує технічних учасників і донорів. Це різні способи долучитися, а не оцінка цінності людей.",
+              "Нашій вигаданій кімнаті також потрібні зрозумілі позначки й привітання. Оберіть два взаємозалежні внески та поясніть їхній зв’язок, не припускаючи, що всі мають однакові час і навички."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Різні способи долучитися"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "e3e9216d74919600" },
+            { "difficulty": "standard", "gameplayId": "7863b95246d020b5" },
+            { "difficulty": "expert", "gameplayId": "56afaa61bb4966dc" }
+          ],
+          "missionId": "social-drone-people-workshop-02"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-people-workshop-02", "kind": "mission" }
+  },
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-people-workshop",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-people-workshop-03-discovery",
+    "locales": {
+      "en": { "teaser": "A useful story keeps its source attached.", "title": "Find the Source" },
+      "uk": {
+        "teaser": "Корисна розповідь зберігає зв’язок із джерелом.",
+        "title": "Знайдіть джерело"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-people-workshop-03-image",
+        "locales": {
+          "en": {
+            "alt": "Find the Source — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Find the Source"
+          },
+          "uk": {
+            "alt": "Знайдіть джерело — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Знайдіть джерело"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "social-drone-people-workshop-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "An organization’s public page can support a claim about its stated purpose. An original game illustration cannot prove who attended a real workshop or what happened there.",
+              "The fictional caption “A community learning room” describes this artwork. “A real workshop last Tuesday” would need separate evidence. Choose the caption the image can honestly support."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Find the Source"
+          },
+          "uk": {
+            "paragraphs": [
+              "Публічна сторінка організації може підтвердити її заявлену мету. Оригінальна ілюстрація гри не доводить, хто був на справжньому занятті або що там відбулося.",
+              "Вигаданий підпис «Навчальна кімната спільноти» описує ілюстрацію. «Справжнє заняття минулого вівторка» потребувало б окремих доказів. Оберіть підпис, який зображення справді підтверджує."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Знайдіть джерело"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "5a408888b6328d54" },
+            { "difficulty": "standard", "gameplayId": "e21708febf2c5768" },
+            { "difficulty": "expert", "gameplayId": "e478a94f1856ef7a" }
+          ],
+          "missionId": "social-drone-people-workshop-03"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-people-workshop-03", "kind": "mission" }
+  },
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-people-workshop",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-people-workshop-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Turn uncertainty into a clear question.",
+        "title": "Ask a Useful Question"
+      },
+      "uk": {
+        "teaser": "Перетворіть невпевненість на зрозуміле запитання.",
+        "title": "Поставте корисне запитання"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-people-workshop-04-image",
+        "locales": {
+          "en": {
+            "alt": "Ask a Useful Question — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Ask a Useful Question"
+          },
+          "uk": {
+            "alt": "Поставте корисне запитання — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Поставте корисне запитання"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "social-drone-people-workshop-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Social Drone FAQ distinguishes assembly training from flight training. Check a provider’s stated scope before assuming one course covers every skill.",
+              "At our fictional civilian model table, “I do not understand this label; what is its purpose?” identifies an uncertainty. This game offers no enrolment or practical qualification."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Ask a Useful Question"
+          },
+          "uk": {
+            "paragraphs": [
+              "У FAQ Social Drone розрізняє навчання складання та навчання польотів. Перевіряйте заявлений обсяг курсу, перш ніж припускати, що він охоплює всі навички.",
+              "За вигаданим столом цивільних моделей запитання «Я не розумію позначки; яке її призначення?» визначає невідоме. Гра не надає запису на курси чи практичної кваліфікації."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Поставте корисне запитання"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "2613d18b83a8dec0" },
+            { "difficulty": "standard", "gameplayId": "7af5750834bc8613" },
+            { "difficulty": "expert", "gameplayId": "a2ce1179f51ddfc1" }
+          ],
+          "missionId": "social-drone-people-workshop-04"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-people-workshop-04", "kind": "mission" }
+  },
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-people-workshop",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-people-workshop-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Discover a habit that makes a fictional handoff clearer.",
+        "title": "Care Before Certainty"
+      },
+      "uk": {
+        "teaser": "Відкрийте звичку, що робить вигадану передачу справ зрозумілішою.",
+        "title": "Уважність перед упевненістю"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-people-workshop-05-image",
+        "locales": {
+          "en": {
+            "alt": "Care Before Certainty — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Care Before Certainty"
+          },
+          "uk": {
+            "alt": "Уважність перед упевненістю — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Уважність перед упевненістю"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "social-drone-people-workshop-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "In this fictional exercise, one card says “checked.” Another records “label compared with inventory; reviewer: Iryna; unresolved: one missing description.” The second explains what was examined.",
+              "Name the evidence and remaining uncertainty before calling a task complete. This general teamwork example does not describe Social Drone’s internal process or certify any aircraft."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Care Before Certainty"
+          },
+          "uk": {
+            "paragraphs": [
+              "У вигаданій вправі одна картка каже «перевірено». Інша: «позначку звірено з переліком; перевіряла Ірина; невирішене: один відсутній опис». Другий запис пояснює, що саме перевірили.",
+              "Перед завершенням справи назвіть докази й невідоме. Цей загальний приклад співпраці не описує внутрішній процес Social Drone й не засвідчує придатність дрона."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Уважність перед упевненістю"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "1ced5c76a0f1720f" },
+            { "difficulty": "standard", "gameplayId": "92bf05796637e45c" },
+            { "difficulty": "expert", "gameplayId": "549778158adaff38" }
+          ],
+          "missionId": "social-drone-people-workshop-05"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-people-workshop-05", "kind": "mission" }
+  },
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-people-workshop",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-people-workshop-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Complete a guide to clear community connections.",
+        "title": "The Community Mosaic"
+      },
+      "uk": {
+        "teaser": "Завершіть путівник зрозумілими зв’язками спільноти.",
+        "title": "Мозаїка спільноти"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-people-workshop-06-image",
+        "locales": {
+          "en": {
+            "alt": "The Community Mosaic — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Community Mosaic"
+          },
+          "uk": {
+            "alt": "Мозаїка спільноти — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Мозаїка спільноти"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "social-drone-people-workshop-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The gallery’s learning thread is purpose, different contributions, sources, useful questions and clear handoffs. Its scenes are original illustrations, not records of real events.",
+              "Apply those ideas to a new fictional task: preparing a library display. Who needs what information next, and which claim still needs a source? Community learning can travel to another setting."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "The Community Mosaic"
+          },
+          "uk": {
+            "paragraphs": [
+              "Навчальна нитка галереї — мета, різні внески, джерела, корисні запитання та зрозуміла передача справ. Сцени є оригінальними ілюстраціями, а не записами реальних подій.",
+              "Застосуйте ці думки до нової вигаданої справи: бібліотечної виставки. Кому яка інформація потрібна далі та якому твердженню бракує джерела? Досвід співпраці можна перенести в інше середовище."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Мозаїка спільноти"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6626f144a6305f08" },
+            { "difficulty": "standard", "gameplayId": "49e08fa76cea3db2" },
+            { "difficulty": "expert", "gameplayId": "b258ea42a5251132" }
+          ],
+          "missionId": "social-drone-people-workshop-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-people-workshop-06", "kind": "mission" }
+  },
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-people-workshop",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-people-workshop-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "A Community in Six Connections"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Спільнота у шести зв’язках"
+      }
+    },
+    "payloads": [
+      {
+        "id": "social-drone-people-workshop-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Arrange the six discoveries into a welcome: purpose, roles, sources, questions, careful work and clear handoffs. Explain which details come from a public source and which belong to our fictional workshop. No arcade result certifies a practical skill."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "A Community in Six Connections"
+          },
+          "uk": {
+            "paragraphs": [
+              "Складіть із шести відкриттів привітання: мета, ролі, джерела, запитання, уважна робота та зрозуміла передача справ. Поясніть, які деталі походять із публічного джерела, а які належать вигаданій майстерні. Результат гри не засвідчує практичних навичок."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              }
+            ],
+            "title": "Спільнота у шести зв’язках"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-people-workshop-01-image",
+        "locales": {
+          "en": {
+            "alt": "Welcome to the Network — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Welcome to the Network"
+          },
+          "uk": {
+            "alt": "Вітаємо у спільноті — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Вітаємо у спільноті"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-people-workshop-02-image",
+        "locales": {
+          "en": {
+            "alt": "Many Ways to Contribute — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Many Ways to Contribute"
+          },
+          "uk": {
+            "alt": "Різні способи долучитися — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Різні способи долучитися"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-people-workshop-03-image",
+        "locales": {
+          "en": {
+            "alt": "Find the Source — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Find the Source"
+          },
+          "uk": {
+            "alt": "Знайдіть джерело — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Знайдіть джерело"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-people-workshop-04-image",
+        "locales": {
+          "en": {
+            "alt": "Ask a Useful Question — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Ask a Useful Question"
+          },
+          "uk": {
+            "alt": "Поставте корисне запитання — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Поставте корисне запитання"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-people-workshop-05-image",
+        "locales": {
+          "en": {
+            "alt": "Care Before Certainty — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Care Before Certainty"
+          },
+          "uk": {
+            "alt": "Уважність перед упевненістю — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Уважність перед упевненістю"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "social-drone-ua-home",
+          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+        },
+        "id": "social-drone-people-workshop-06-image",
+        "locales": {
+          "en": {
+            "alt": "The Community Mosaic — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Community Mosaic"
+          },
+          "uk": {
+            "alt": "Мозаїка спільноти — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Мозаїка спільноти"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "social-drone-people-workshop-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "type": "url",
+        "url": "https://www.socialdrone.com.ua/"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "11aaf52aeaea6dce" },
+            { "difficulty": "standard", "gameplayId": "9e483ff86281903f" },
+            { "difficulty": "expert", "gameplayId": "a43f65e5bfeedaa3" }
+          ],
+          "missionId": "social-drone-people-workshop-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "e3e9216d74919600" },
+            { "difficulty": "standard", "gameplayId": "7863b95246d020b5" },
+            { "difficulty": "expert", "gameplayId": "56afaa61bb4966dc" }
+          ],
+          "missionId": "social-drone-people-workshop-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "5a408888b6328d54" },
+            { "difficulty": "standard", "gameplayId": "e21708febf2c5768" },
+            { "difficulty": "expert", "gameplayId": "e478a94f1856ef7a" }
+          ],
+          "missionId": "social-drone-people-workshop-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "2613d18b83a8dec0" },
+            { "difficulty": "standard", "gameplayId": "7af5750834bc8613" },
+            { "difficulty": "expert", "gameplayId": "a2ce1179f51ddfc1" }
+          ],
+          "missionId": "social-drone-people-workshop-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "1ced5c76a0f1720f" },
+            { "difficulty": "standard", "gameplayId": "92bf05796637e45c" },
+            { "difficulty": "expert", "gameplayId": "549778158adaff38" }
+          ],
+          "missionId": "social-drone-people-workshop-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6626f144a6305f08" },
+            { "difficulty": "standard", "gameplayId": "49e08fa76cea3db2" },
+            { "difficulty": "expert", "gameplayId": "b258ea42a5251132" }
+          ],
+          "missionId": "social-drone-people-workshop-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-people-workshop", "kind": "campaign" }
+  }
+]

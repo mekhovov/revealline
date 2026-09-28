@@ -1,0 +1,775 @@
+[
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-meet-aircraft",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-meet-aircraft-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Discover what holds the aircraft’s parts in relation to each other.",
+        "title": "The Frame"
+      },
+      "uk": {
+        "teaser": "Дізнайтеся, що утримує деталі дрона одна відносно одної.",
+        "title": "Рама"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-meet-aircraft-01-image",
+        "locales": {
+          "en": {
+            "alt": "The Frame — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Frame"
+          },
+          "uk": {
+            "alt": "Рама — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Рама"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-meet-aircraft-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "A quadcopter frame is its supporting structure. It holds components in an arrangement; it does not itself sense motion or create motor commands.",
+              "Find the arms and centre in the civilian model illustration. Compare a frame with a bookshelf: both support other things with their own jobs. The arcade map is a metaphor, not a wiring diagram."
+            ],
+            "sources": [
+              {
+                "title": "NASA — The Science Behind Quadcopters",
+                "url": "https://www.nasa.gov/stem-content/the-science-behind-quadcopters/"
+              },
+              {
+                "title": "Betaflight — Safety",
+                "url": "https://betaflight.com/docs/wiki/guides/current/Safety"
+              }
+            ],
+            "title": "The Frame"
+          },
+          "uk": {
+            "paragraphs": [
+              "Рама квадрокоптера — його опорна конструкція. Вона утримує компоненти в певному розташуванні, але сама не вимірює рух і не створює команд двигунам.",
+              "Знайдіть промені та центр на ілюстрації цивільної моделі. Порівняйте раму з полицею: обидві тримають інші речі з власними функціями. Ігрова карта — метафора, а не електрична схема."
+            ],
+            "sources": [
+              {
+                "title": "NASA — The Science Behind Quadcopters",
+                "url": "https://www.nasa.gov/stem-content/the-science-behind-quadcopters/"
+              },
+              {
+                "title": "Betaflight — Safety",
+                "url": "https://betaflight.com/docs/wiki/guides/current/Safety"
+              }
+            ],
+            "title": "Рама"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "77730f31e0bcc4c2" },
+            { "difficulty": "standard", "gameplayId": "7feffc97157784af" },
+            { "difficulty": "expert", "gameplayId": "54d3cbffdcc8d294" }
+          ],
+          "missionId": "fpv-meet-aircraft-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-meet-aircraft-01", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-meet-aircraft",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-meet-aircraft-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Discover the difference between rotation and moving air.",
+        "title": "Motion Makers"
+      },
+      "uk": {
+        "teaser": "Дізнайтеся про різницю між обертанням і рухом повітря.",
+        "title": "Джерела руху"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-meet-aircraft-02-image",
+        "locales": {
+          "en": {
+            "alt": "Motion Makers — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Motion Makers"
+          },
+          "uk": {
+            "alt": "Джерела руху — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Джерела руху"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-meet-aircraft-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "A motor produces rotation. A propeller uses rotation to move air and produce thrust. NASA’s quadcopter learning material connects rotor forces with movement and torque.",
+              "Point to the part that turns and the separate part that pushes air. A motor alone and one with a propeller have different effects. An arcade win never authorizes a physical powered test."
+            ],
+            "sources": [
+              {
+                "title": "NASA — The Science Behind Quadcopters",
+                "url": "https://www.nasa.gov/stem-content/the-science-behind-quadcopters/"
+              },
+              {
+                "title": "Betaflight — Safety",
+                "url": "https://betaflight.com/docs/wiki/guides/current/Safety"
+              }
+            ],
+            "title": "Motion Makers"
+          },
+          "uk": {
+            "paragraphs": [
+              "Двигун створює обертання. Пропелер завдяки обертанню рухає повітря й створює тягу. Матеріал NASA пов’язує сили роторів із рухом і крутним моментом.",
+              "Вкажіть деталь, що обертає, та окрему деталь, що рухає повітря. Двигун сам по собі й двигун із пропелером діють по-різному. Перемога в грі не дозволяє фізичного випробування під живленням."
+            ],
+            "sources": [
+              {
+                "title": "NASA — The Science Behind Quadcopters",
+                "url": "https://www.nasa.gov/stem-content/the-science-behind-quadcopters/"
+              },
+              {
+                "title": "Betaflight — Safety",
+                "url": "https://betaflight.com/docs/wiki/guides/current/Safety"
+              }
+            ],
+            "title": "Джерела руху"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6dea20c4da7016bf" },
+            { "difficulty": "standard", "gameplayId": "7ca6f37cdf9a1043" },
+            { "difficulty": "expert", "gameplayId": "296f7dfe12b48ba4" }
+          ],
+          "missionId": "fpv-meet-aircraft-02"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-meet-aircraft-02", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-meet-aircraft",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-meet-aircraft-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Discover how motor commands relate to electrical power.",
+        "title": "The ESC"
+      },
+      "uk": {
+        "teaser": "Дізнайтеся, як команди двигуна пов’язані з електричною енергією.",
+        "title": "Регулятор ESC"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-meet-aircraft-03-image",
+        "locales": {
+          "en": {
+            "alt": "The ESC — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The ESC"
+          },
+          "uk": {
+            "alt": "Регулятор ESC — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Регулятор ESC"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-meet-aircraft-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "ESC means electronic speed controller. It receives motor commands from the flight controller and controls electrical power delivered to a motor.",
+              "Separate instruction from energy: a command describes the requested behaviour; the electrical supply provides energy. This conceptual illustration omits wiring, ratings and configuration, which depend on actual components."
+            ],
+            "sources": [
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              }
+            ],
+            "title": "The ESC"
+          },
+          "uk": {
+            "paragraphs": [
+              "ESC означає електронний регулятор швидкості. Він отримує команди від польотного контролера й керує електричною енергією, що надходить до двигуна.",
+              "Відокремте вказівку від енергії: команда задає потрібну поведінку, а живлення забезпечує енергію. Концептуальна ілюстрація не показує проводку, номінали й налаштування, які залежать від конкретних деталей."
+            ],
+            "sources": [
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              }
+            ],
+            "title": "Регулятор ESC"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "753871b2d41a5e63" },
+            { "difficulty": "standard", "gameplayId": "c25ddf14b88d5cdf" },
+            { "difficulty": "expert", "gameplayId": "a427b47a6b0e8b2a" }
+          ],
+          "missionId": "fpv-meet-aircraft-03"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-meet-aircraft-03", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-meet-aircraft",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-meet-aircraft-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Sense, interpret, command: discover the controller’s role.",
+        "title": "The Flight Controller"
+      },
+      "uk": {
+        "teaser": "Виміряти, опрацювати, керувати: відкрийте роль контролера.",
+        "title": "Польотний контролер"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-meet-aircraft-04-image",
+        "locales": {
+          "en": {
+            "alt": "The Flight Controller — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Flight Controller"
+          },
+          "uk": {
+            "alt": "Польотний контролер — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Польотний контролер"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-meet-aircraft-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "A flight controller uses sensor information and control inputs to calculate motor commands. “Sense → interpret → command” describes information flow, not physical wiring.",
+              "A sensor reading and requested movement are different inputs. Explain why the controller needs information about the aircraft as well as an operator’s request. This civilian example does not choose firmware settings."
+            ],
+            "sources": [
+              {
+                "title": "Betaflight — Getting started",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              }
+            ],
+            "title": "The Flight Controller"
+          },
+          "uk": {
+            "paragraphs": [
+              "Польотний контролер використовує дані датчиків і входи керування для обчислення команд двигунам. «Виміряти → опрацювати → керувати» описує потік інформації, а не фізичну проводку.",
+              "Показ датчика й бажаний рух — різні входи. Поясніть, чому контролеру потрібні дані про дрон поряд із запитом оператора. Цей цивільний приклад не добирає налаштувань прошивки."
+            ],
+            "sources": [
+              {
+                "title": "Betaflight — Getting started",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              }
+            ],
+            "title": "Польотний контролер"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "52eccf9e0acaf49f" },
+            { "difficulty": "standard", "gameplayId": "b0f28af20bd210d1" },
+            { "difficulty": "expert", "gameplayId": "26f493faf5213868" }
+          ],
+          "missionId": "fpv-meet-aircraft-04"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-meet-aircraft-04", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-meet-aircraft",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-meet-aircraft-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Seeing a picture and receiving controls are different jobs.",
+        "title": "Two Different Links"
+      },
+      "uk": {
+        "teaser": "Зображення й приймання команд — різні завдання.",
+        "title": "Два різні канали"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-meet-aircraft-05-image",
+        "locales": {
+          "en": {
+            "alt": "Two Different Links — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Two Different Links"
+          },
+          "uk": {
+            "alt": "Два різні канали — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Два різні канали"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-meet-aircraft-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "RX names the control-link receiver. The camera captures a view, while VTX sends video toward the viewing system. Control and video links carry different information.",
+              "In a fictional civilian comparison, the picture is visible but control input is unconfirmed. Does a picture prove both links work? No: evidence about one does not establish the other. This is a reasoning exercise, not field troubleshooting."
+            ],
+            "sources": [
+              {
+                "title": "Betaflight — Getting started",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — Video transmitters",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/vtx"
+              }
+            ],
+            "title": "Two Different Links"
+          },
+          "uk": {
+            "paragraphs": [
+              "RX позначає приймач каналу керування. Камера отримує зображення, а VTX передає відео до системи перегляду. Канали керування та відео несуть різну інформацію.",
+              "У вигаданому цивільному порівнянні зображення видно, але приймання команд не підтверджене. Чи доводить картинка роботу обох каналів? Ні: доказ про один не підтверджує інший. Це вправа на міркування, а не польова діагностика."
+            ],
+            "sources": [
+              {
+                "title": "Betaflight — Getting started",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — Video transmitters",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/vtx"
+              }
+            ],
+            "title": "Два різні канали"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "77b5971d130517de" },
+            { "difficulty": "standard", "gameplayId": "8d080836da749019" },
+            { "difficulty": "expert", "gameplayId": "3846a289955023f2" }
+          ],
+          "missionId": "fpv-meet-aircraft-05"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-meet-aircraft-05", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-meet-aircraft",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-meet-aircraft-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Complete an atlas of structure, energy and information.",
+        "title": "The Whole Aircraft"
+      },
+      "uk": {
+        "teaser": "Завершіть атлас конструкції, енергії та інформації.",
+        "title": "Цілий дрон"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-meet-aircraft-06-image",
+        "locales": {
+          "en": {
+            "alt": "The Whole Aircraft — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Whole Aircraft"
+          },
+          "uk": {
+            "alt": "Цілий дрон — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Цілий дрон"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-meet-aircraft-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "A battery is an energy source, not a control command or a video link. Together with the earlier parts, it completes three different relationships: support, energy and information.",
+              "Explain the civilian model through those relationships using your six discoveries. Real equipment requires its own instructions and safe battery handling; this conceptual atlas is not a wiring recipe or a practical qualification."
+            ],
+            "sources": [
+              {
+                "title": "Betaflight — Safety",
+                "url": "https://betaflight.com/docs/wiki/guides/current/Safety"
+              },
+              {
+                "title": "Betaflight — Getting started",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              },
+              {
+                "title": "Betaflight — Video transmitters",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/vtx"
+              }
+            ],
+            "title": "The Whole Aircraft"
+          },
+          "uk": {
+            "paragraphs": [
+              "Акумулятор — джерело енергії, а не команда керування чи відеоканал. Разом із попередніми деталями він доповнює три різні зв’язки: опору, енергію та інформацію.",
+              "За шістьма відкриттями поясніть цивільну модель через ці зв’язки. Реальне обладнання потребує власних інструкцій і безпечного поводження з акумулятором; концептуальний атлас не є схемою підключення чи практичною кваліфікацією."
+            ],
+            "sources": [
+              {
+                "title": "Betaflight — Safety",
+                "url": "https://betaflight.com/docs/wiki/guides/current/Safety"
+              },
+              {
+                "title": "Betaflight — Getting started",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              },
+              {
+                "title": "Betaflight — Video transmitters",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/vtx"
+              }
+            ],
+            "title": "Цілий дрон"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "92883f2555ed2fcc" },
+            { "difficulty": "standard", "gameplayId": "adbfba396e0b00b4" },
+            { "difficulty": "expert", "gameplayId": "1845994cd790fd5d" }
+          ],
+          "missionId": "fpv-meet-aircraft-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-meet-aircraft-06", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-meet-aircraft",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-meet-aircraft-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "The Whole Aircraft Atlas"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Атлас цілого дрона"
+      }
+    },
+    "payloads": [
+      {
+        "id": "fpv-meet-aircraft-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Follow three relationships through the six cards: structure supports parts, energy reaches motors, and information travels through control and video links. Explain each component’s role using the discoveries. This civilian role atlas is a conceptual illustration, not a wiring diagram or assembly procedure."
+            ],
+            "sources": [
+              {
+                "title": "NASA — The Science Behind Quadcopters",
+                "url": "https://www.nasa.gov/stem-content/the-science-behind-quadcopters/"
+              }
+            ],
+            "title": "The Whole Aircraft Atlas"
+          },
+          "uk": {
+            "paragraphs": [
+              "Простежте три зв’язки на шести картках: конструкція тримає деталі, енергія надходить до двигунів, а інформація передається каналами керування та відео. За відкриттями поясніть роль кожного компонента. Цей цивільний атлас — концептуальна ілюстрація, а не електрична схема чи інструкція зі складання."
+            ],
+            "sources": [
+              {
+                "title": "NASA — The Science Behind Quadcopters",
+                "url": "https://www.nasa.gov/stem-content/the-science-behind-quadcopters/"
+              }
+            ],
+            "title": "Атлас цілого дрона"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-meet-aircraft-01-image",
+        "locales": {
+          "en": {
+            "alt": "The Frame — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Frame"
+          },
+          "uk": {
+            "alt": "Рама — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Рама"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-meet-aircraft-02-image",
+        "locales": {
+          "en": {
+            "alt": "Motion Makers — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Motion Makers"
+          },
+          "uk": {
+            "alt": "Джерела руху — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Джерела руху"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-meet-aircraft-03-image",
+        "locales": {
+          "en": {
+            "alt": "The ESC — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The ESC"
+          },
+          "uk": {
+            "alt": "Регулятор ESC — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Регулятор ESC"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-meet-aircraft-04-image",
+        "locales": {
+          "en": {
+            "alt": "The Flight Controller — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Flight Controller"
+          },
+          "uk": {
+            "alt": "Польотний контролер — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Польотний контролер"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-meet-aircraft-05-image",
+        "locales": {
+          "en": {
+            "alt": "Two Different Links — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Two Different Links"
+          },
+          "uk": {
+            "alt": "Два різні канали — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Два різні канали"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-meet-aircraft-06-image",
+        "locales": {
+          "en": {
+            "alt": "The Whole Aircraft — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Whole Aircraft"
+          },
+          "uk": {
+            "alt": "Цілий дрон — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Цілий дрон"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-meet-aircraft-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "type": "url",
+        "url": "https://www.nasa.gov/stem-content/the-science-behind-quadcopters/"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "77730f31e0bcc4c2" },
+            { "difficulty": "standard", "gameplayId": "7feffc97157784af" },
+            { "difficulty": "expert", "gameplayId": "54d3cbffdcc8d294" }
+          ],
+          "missionId": "fpv-meet-aircraft-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6dea20c4da7016bf" },
+            { "difficulty": "standard", "gameplayId": "7ca6f37cdf9a1043" },
+            { "difficulty": "expert", "gameplayId": "296f7dfe12b48ba4" }
+          ],
+          "missionId": "fpv-meet-aircraft-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "753871b2d41a5e63" },
+            { "difficulty": "standard", "gameplayId": "c25ddf14b88d5cdf" },
+            { "difficulty": "expert", "gameplayId": "a427b47a6b0e8b2a" }
+          ],
+          "missionId": "fpv-meet-aircraft-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "52eccf9e0acaf49f" },
+            { "difficulty": "standard", "gameplayId": "b0f28af20bd210d1" },
+            { "difficulty": "expert", "gameplayId": "26f493faf5213868" }
+          ],
+          "missionId": "fpv-meet-aircraft-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "77b5971d130517de" },
+            { "difficulty": "standard", "gameplayId": "8d080836da749019" },
+            { "difficulty": "expert", "gameplayId": "3846a289955023f2" }
+          ],
+          "missionId": "fpv-meet-aircraft-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "92883f2555ed2fcc" },
+            { "difficulty": "standard", "gameplayId": "adbfba396e0b00b4" },
+            { "difficulty": "expert", "gameplayId": "1845994cd790fd5d" }
+          ],
+          "missionId": "fpv-meet-aircraft-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-meet-aircraft", "kind": "campaign" }
+  }
+]
