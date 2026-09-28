@@ -351,6 +351,15 @@
                 <label
                   >Mission for a single-mission reward<select id="reward-mission"></select
                 ></label>
+                <fieldset
+                  id="reward-learning"
+                  aria-label="Optional required learning assignments"
+                  data-i18n-aria-label="tools:studio.discovery.requiredLearning"
+                ></fieldset>
+                <p class="small" data-i18n="tools:studio.discovery.learningRequirementsHelp">
+                  Optionally require named, verified learning assignments as well as their
+                  explicitly selected mission wins. A bonus never gates Next or arcade progress.
+                </p>
                 <div class="reward-copy-grid">
                   <fieldset
                     id="reward-missions"
@@ -402,7 +411,7 @@
                 >State<select id="reward-preview-state">
                   <option value="locked">Locked</option>
                   <option value="partial">One required mission missing</option>
-                  <option value="eligible">All mission requirements complete</option>
+                  <option value="eligible">All requirements complete</option>
                 </select></label
               >
               <label

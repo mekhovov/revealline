@@ -1,4 +1,5 @@
 import { mountLocalRewardMediaPreview } from './reward-media-preview.mjs';
+import { mountRewardQr } from '../ui/reward-qr.mjs';
 import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
 import { boundedJSON, dataIdentity, required } from '../data-json.mjs';
 import { validateCompletionRewards } from '../rewards/model.mjs';
@@ -11,6 +12,7 @@ import {
 import { showEditorFailure } from './editor-copy.mjs';
 import { createRewardPrintPreview } from './reward-print-preview.mjs';
 import { createExplorationEditor } from './exploration-editor.mjs';
+import { createResourceRewardEditor } from './resource-reward-editor.mjs';
 
 /** Shared Level/Campaign and Company Studio controls. Import/preview never touch
  * Journey, reward receipts or storage; the supplied apply owns draft persistence. */
@@ -44,39 +46,48 @@ export function createDiscoveryEditor({
             window,
           }),
         );
+      else if (payload.type === 'url' && payload.qr)
+        mediaPreviews.push(
+          mountRewardQr({ container, payload, locale: $('locale').value || 'en' }),
+        );
     return container;
   }
   let imported = [],
     key = null;
   const rewards = () => (getRewards ? getRewards() : imported);
-  const exploration = createExplorationEditor({
+  const applyRewardCandidate = async (candidate) => {
+    if (getRewards) {
+      required(applyRewards, 'This host does not support editing its reward sidecar.');
+      if ((await applyRewards(candidate)) === false) return false;
+    } else {
+      const previous = imported;
+      imported = candidate.rewards;
+      try {
+        if ((await apply(candidate.source)) === false) {
+          imported = previous;
+          return false;
+        }
+      } catch (error) {
+        imported = previous;
+        throw error;
+      }
+    }
+    key = null;
+    sync();
+    return true;
+  };
+  const sharedEditorOptions = {
     container: $('tools'),
     getSource,
     getRewards: rewards,
-    window,
     getLocale: () => $('locale').value || 'en',
-    apply: async (candidate) => {
-      if (getRewards) {
-        required(applyRewards, 'This host does not support editing its reward sidecar.');
-        if ((await applyRewards(candidate)) === false) return false;
-      } else {
-        const previous = imported;
-        imported = candidate.rewards;
-        try {
-          if ((await apply(candidate.source)) === false) {
-            imported = previous;
-            return false;
-          }
-        } catch (error) {
-          imported = previous;
-          throw error;
-        }
-      }
-      key = null;
-      sync();
-      return true;
-    },
+    apply: applyRewardCandidate,
+  };
+  const exploration = createExplorationEditor({
+    ...sharedEditorOptions,
+    window,
   });
+  const resources = createResourceRewardEditor(sharedEditorOptions);
   const context = () =>
     dataIdentity({ source: getSource(), missionId: getMission()?.id, rewards: rewards() });
   const refValue = (ref) => (ref ? JSON.stringify({ id: ref.id, revision: ref.revision }) : '');
@@ -160,6 +171,7 @@ export function createDiscoveryEditor({
     rewardOptions($('reward'), 'mission', mission?.id, mission?.design.rewardRef);
     selectCampaign();
     exploration.sync();
+    resources.sync();
   }
   function command() {
     const finaleRewardRef = readRef($('finale'));
@@ -274,6 +286,7 @@ export function createDiscoveryEditor({
     dispose() {
       disposeMediaPreviews();
       exploration.dispose();
+      resources.dispose();
     },
   };
 }

@@ -22,7 +22,7 @@
         "name": { "en": "A View, Not a Shape", "uk": "Спосіб бачити, а не форма" }
       },
       "id": "fpv-drone-families-01",
-      "identity": "e0f81549bab1c7a7",
+      "identity": "2c437901b8616dd6",
       "kind": "mission"
     },
     {
@@ -38,7 +38,7 @@
         "name": { "en": "More Than Four Rotors", "uk": "Не лише чотири ротори" }
       },
       "id": "fpv-drone-families-02",
-      "identity": "a07d56f06c356d17",
+      "identity": "00dac6a19c308126",
       "kind": "mission"
     },
     {
@@ -54,7 +54,7 @@
         "name": { "en": "Wings Tell Another Story", "uk": "Крила розповідають інакше" }
       },
       "id": "fpv-drone-families-03",
-      "identity": "71d7b3219915bcb7",
+      "identity": "6b1fe99665297746",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "A Sport Has a Setting", "uk": "Спорт має свої умови" }
       },
       "id": "fpv-drone-families-04",
-      "identity": "11da88294eebe82f",
+      "identity": "1db9b361cd319aae",
       "kind": "mission"
     },
     {
@@ -86,7 +86,7 @@
         "name": { "en": "Purpose Changes the Questions", "uk": "Мета змінює запитання" }
       },
       "id": "fpv-drone-families-05",
-      "identity": "81a24682d54499c8",
+      "identity": "1cf9fcb81cf0be4b",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "Curate the Family Atlas", "uk": "Упорядкуйте атлас родин" }
       },
       "id": "fpv-drone-families-06",
-      "identity": "acf12fe781c53213",
+      "identity": "a2487e1d7d47fe9a",
       "kind": "mission"
     }
   ],

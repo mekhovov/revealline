@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-soldering-workshop-key-v1",
+          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
         },
         "id": "fpv-soldering-workshop-01-image",
         "locales": {
           "en": {
-            "alt": "A Place for the Iron — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
             "title": "A Place for the Iron"
           },
           "uk": {
-            "alt": "Місце для паяльника — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
             "title": "Місце для паяльника"
           }
         },
@@ -164,17 +164,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-soldering-workshop-key-v1",
+          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
         },
         "id": "fpv-soldering-workshop-02-image",
         "locales": {
           "en": {
-            "alt": "Read the Spool — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
             "title": "Read the Spool"
           },
           "uk": {
-            "alt": "Прочитайте котушку — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
             "title": "Прочитайте котушку"
           }
         },
@@ -314,17 +314,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-soldering-workshop-key-v1",
+          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
         },
         "id": "fpv-soldering-workshop-03-image",
         "locales": {
           "en": {
-            "alt": "Hold the Practice Piece — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
             "title": "Hold the Practice Piece"
           },
           "uk": {
-            "alt": "Зафіксуйте навчальну деталь — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
             "title": "Зафіксуйте навчальну деталь"
           }
         },
@@ -398,17 +398,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-soldering-workshop-key-v1",
+          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
         },
         "id": "fpv-soldering-workshop-04-image",
         "locales": {
           "en": {
-            "alt": "Where the Heat Goes — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
             "title": "Where the Heat Goes"
           },
           "uk": {
-            "alt": "Куди передається тепло — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
             "title": "Куди передається тепло"
           }
         },
@@ -482,17 +482,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-soldering-workshop-key-v1",
+          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
         },
         "id": "fpv-soldering-workshop-05-image",
         "locales": {
           "en": {
-            "alt": "An Inspection, Not a Guess — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
             "title": "An Inspection, Not a Guess"
           },
           "uk": {
-            "alt": "Огляд, а не здогад — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
             "title": "Огляд, а не здогад"
           }
         },
@@ -624,17 +624,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-soldering-workshop-key-v1",
+          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
         },
         "id": "fpv-soldering-workshop-06-image",
         "locales": {
           "en": {
-            "alt": "Know When to Pause — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
             "title": "Know When to Pause"
           },
           "uk": {
-            "alt": "Знайте, коли зупинитися — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
             "title": "Знайте, коли зупинитися"
           }
         },
@@ -738,17 +738,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-soldering-workshop-key-v1",
+          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
         },
         "id": "fpv-soldering-workshop-01-image",
         "locales": {
           "en": {
-            "alt": "A Place for the Iron — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
             "title": "A Place for the Iron"
           },
           "uk": {
-            "alt": "Місце для паяльника — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
             "title": "Місце для паяльника"
           }
         },
@@ -756,17 +756,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-soldering-workshop-key-v1",
+          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
         },
         "id": "fpv-soldering-workshop-02-image",
         "locales": {
           "en": {
-            "alt": "Read the Spool — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
             "title": "Read the Spool"
           },
           "uk": {
-            "alt": "Прочитайте котушку — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
             "title": "Прочитайте котушку"
           }
         },
@@ -774,17 +774,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-soldering-workshop-key-v1",
+          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
         },
         "id": "fpv-soldering-workshop-03-image",
         "locales": {
           "en": {
-            "alt": "Hold the Practice Piece — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
             "title": "Hold the Practice Piece"
           },
           "uk": {
-            "alt": "Зафіксуйте навчальну деталь — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
             "title": "Зафіксуйте навчальну деталь"
           }
         },
@@ -792,17 +792,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-soldering-workshop-key-v1",
+          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
         },
         "id": "fpv-soldering-workshop-04-image",
         "locales": {
           "en": {
-            "alt": "Where the Heat Goes — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
             "title": "Where the Heat Goes"
           },
           "uk": {
-            "alt": "Куди передається тепло — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
             "title": "Куди передається тепло"
           }
         },
@@ -810,17 +810,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-soldering-workshop-key-v1",
+          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
         },
         "id": "fpv-soldering-workshop-05-image",
         "locales": {
           "en": {
-            "alt": "An Inspection, Not a Guess — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
             "title": "An Inspection, Not a Guess"
           },
           "uk": {
-            "alt": "Огляд, а не здогад — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
             "title": "Огляд, а не здогад"
           }
         },
@@ -828,17 +828,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-soldering-workshop-key-v1",
+          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
         },
         "id": "fpv-soldering-workshop-06-image",
         "locales": {
           "en": {
-            "alt": "Know When to Pause — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
             "title": "Know When to Pause"
           },
           "uk": {
-            "alt": "Знайте, коли зупинитися — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
             "title": "Знайте, коли зупинитися"
           }
         },
@@ -850,6 +850,7 @@
           "en": { "title": "Explore the official source" },
           "uk": { "title": "Відкрити офіційне джерело" }
         },
+        "qr": true,
         "type": "url",
         "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/making-a-good-solder-joint"
       }

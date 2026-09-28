@@ -2,16 +2,16 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original fictional textile gallery with suspended linen, separate embroidered samples and warm natural light.",
-      "bytes": 1106859,
+      "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
+      "bytes": 248004,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "ukraine-culture-home-picture",
+      "id": "ukraine-voices-travel-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/ukraine-culture-home-v1.png",
+      "path": "editions/assets/discovery/ukraine-voices-travel-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144",
+      "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea",
       "width": 960
     }
   ],
@@ -215,7 +215,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-voices-travel-key-picture",
         "themeId": "ukraine-voices-travel-theme"
       },
       "relayLinks": [],
@@ -282,7 +282,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-voices-travel-key-picture",
         "themeId": "ukraine-voices-travel-theme"
       },
       "relayLinks": [],
@@ -349,7 +349,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-voices-travel-key-picture",
         "themeId": "ukraine-voices-travel-theme"
       },
       "relayLinks": [],
@@ -425,7 +425,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-voices-travel-key-picture",
         "themeId": "ukraine-voices-travel-theme"
       },
       "relayLinks": [],
@@ -501,7 +501,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-voices-travel-key-picture",
         "themeId": "ukraine-voices-travel-theme"
       },
       "relayLinks": [],
@@ -578,7 +578,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-voices-travel-key-picture",
         "themeId": "ukraine-voices-travel-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
