@@ -22,7 +22,7 @@
         "name": { "en": "Read the Cloth", "uk": "Прочитайте тканину" }
       },
       "id": "ukraine-threads-01",
-      "identity": "a3b8e1c90407c916",
+      "identity": "a497e219b9d97bec",
       "kind": "mission"
     },
     {
@@ -38,7 +38,7 @@
         "name": { "en": "Stitch Paths", "uk": "Шляхи стібків" }
       },
       "id": "ukraine-threads-02",
-      "identity": "371265188b358f4f",
+      "identity": "c65b94ca19d150c0",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "Many Local Voices", "uk": "Розмаїття місцевих голосів" }
       },
       "id": "ukraine-threads-04",
-      "identity": "4dfcdbf65a790d7d",
+      "identity": "a26e783b0d5da908",
       "kind": "mission"
     },
     {
@@ -86,7 +86,7 @@
         "name": { "en": "A Rushnyk’s Story", "uk": "Історія рушника" }
       },
       "id": "ukraine-threads-05",
-      "identity": "d0ca657ad54d3da6",
+      "identity": "5a46848c93299d42",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "Wear It Today", "uk": "Носіть сьогодні" }
       },
       "id": "ukraine-threads-06",
-      "identity": "2eeb8b633efe2a02",
+      "identity": "4f975774bae84b95",
       "kind": "mission"
     }
   ],

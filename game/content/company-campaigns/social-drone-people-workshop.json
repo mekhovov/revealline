@@ -15,16 +15,16 @@
       "width": 960
     },
     {
-      "alt": "An original fictional community workshop with notebooks, unpowered hobby quad frames and warm evening light.",
-      "bytes": 1043972,
+      "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
+      "bytes": 282921,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "social-drone-ua-home-picture",
+      "id": "social-drone-people-workshop-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/social-drone-ua-home-v1.png",
+      "path": "editions/assets/discovery/social-drone-people-workshop-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185",
+      "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782",
       "width": 960
     }
   ],
@@ -236,7 +236,7 @@
         "memorableMoment": "Two blue workshop bays with a central meeting alcove and distinct contribution boards.",
         "pacingBeat": "choose",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "social-drone-people-workshop-02-discovery", "revision": "2" },
         "routeDecision": "Choose the upper meeting alcove or lower workbench as your first safe return."
       },
       "format": "MissionDesignV1",
@@ -246,7 +246,7 @@
       "name": "Many Ways to Contribute",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 15.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "social-drone-ua-home-picture",
+        "backgroundAssetId": "social-drone-people-workshop-key-picture",
         "themeId": "social-drone-people-workshop-theme"
       },
       "revision": "1",
@@ -294,7 +294,7 @@
         "memorableMoment": "An original source library with open blank cards, connected cobalt shelves and a bright evidence desk.",
         "pacingBeat": "combine",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "social-drone-people-workshop-03-discovery", "revision": "2" },
         "routeDecision": "Return through the offset archive islands before attempting the long east aisle."
       },
       "format": "MissionDesignV1",
@@ -304,7 +304,7 @@
       "name": "Find the Source",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 16.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "social-drone-ua-home-picture",
+        "backgroundAssetId": "social-drone-people-workshop-key-picture",
         "themeId": "social-drone-people-workshop-theme"
       },
       "revision": "1",
@@ -352,7 +352,7 @@
         "memorableMoment": "A spacious blue discussion courtyard with a long bench, warm lamps and civilian model cases.",
         "pacingBeat": "breathe",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "social-drone-people-workshop-04-discovery", "revision": "2" },
         "routeDecision": "Follow the wide inner bench while the patrol passes the exposed outer edge."
       },
       "format": "MissionDesignV1",
@@ -362,7 +362,7 @@
       "name": "Ask a Useful Question",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 17.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "social-drone-ua-home-picture",
+        "backgroundAssetId": "social-drone-people-workshop-key-picture",
         "themeId": "social-drone-people-workshop-theme"
       },
       "revision": "1",
@@ -410,7 +410,7 @@
         "memorableMoment": "A fictional evidence workshop with orderly inventory cards and three separated blue review benches.",
         "pacingBeat": "mastery",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "social-drone-people-workshop-05-discovery", "revision": "2" },
         "routeDecision": "Link the staggered desks using the lower return to avoid the slow aisle."
       },
       "format": "MissionDesignV1",
@@ -420,7 +420,7 @@
       "name": "Care Before Certainty",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 18.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "social-drone-ua-home-picture",
+        "backgroundAssetId": "social-drone-people-workshop-key-picture",
         "themeId": "social-drone-people-workshop-theme"
       },
       "revision": "1",
@@ -476,7 +476,7 @@
         "memorableMoment": "An original completed community mosaic joining the welcome hall, source shelves and discussion tables.",
         "pacingBeat": "resolve",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "social-drone-people-workshop-06-discovery", "revision": "2" },
         "routeDecision": "Join the central mosaic first or connect the small archive and welcome islands before the broad crossing."
       },
       "format": "MissionDesignV1",
@@ -486,7 +486,7 @@
       "name": "The Community Mosaic",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 19.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "social-drone-ua-home-picture",
+        "backgroundAssetId": "social-drone-people-workshop-key-picture",
         "themeId": "social-drone-people-workshop-theme"
       },
       "revision": "1",
