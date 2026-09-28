@@ -8,6 +8,7 @@ import {
   createEditionRuntimeCatalog,
   validateEditionRuntimeCatalog,
   resolveEditionSelection,
+  resolveEditionAssets,
 } from '../editions/model.mjs';
 import { loadEditionBootstrap, mergeEditionProjects } from '../editions/bootstrap.mjs';
 import {
@@ -432,6 +433,93 @@ test('catalog validates generic brands, immutable selections and strict allowlis
   });
   assert.throws(() => validateEditionRuntimeCatalog(bad), /accessors/);
   assert.equal(invoked, false);
+});
+
+test('repeated asset reads reuse only fully validated immutable edition closures', () => {
+  const { catalog } = fixture();
+  assert.equal(validateEditionRuntimeCatalog(catalog), catalog);
+  const first = resolveEditionAssets(catalog);
+  assert.equal(resolveEditionAssets(catalog, { editionId: 'coupa-public' }), first);
+  assert.deepEqual(
+    first.map((asset) => asset.id),
+    ['coupa-hero'],
+  );
+  const other = resolveEditionAssets(catalog, { editionId: 'droneaid-public' });
+  assert.deepEqual(
+    other.map((asset) => asset.id),
+    ['droneaid-hero'],
+  );
+  assert.notEqual(other, first);
+  assert.throws(() => first.push(other[0]), TypeError);
+  assert.throws(() => first[0].dependencies.push('droneaid-hero'), TypeError);
+  assert.throws(() => {
+    first[0].approved = false;
+  }, TypeError);
+  assert.throws(() => resolveEditionAssets(catalog, { editionId: 'omitted' }), /not included/);
+});
+
+test('mutable imports, copied catalogues and caller-frozen data cannot inherit admission', () => {
+  const { catalog } = fixture();
+  const imported = structuredClone(catalog);
+  const admitted = validateEditionRuntimeCatalog(imported);
+  resolveEditionAssets(imported);
+  imported.assets[0].approved = false;
+  assert.throws(() => resolveEditionAssets(imported), /publication approval/);
+  assert.equal(resolveEditionAssets(admitted)[0].approved, true, 'Admitted snapshot stays exact.');
+
+  const shallowFrozen = Object.freeze(structuredClone(catalog));
+  resolveEditionAssets(shallowFrozen);
+  shallowFrozen.assets[0].dependencies.push('undeclared');
+  assert.throws(() => resolveEditionAssets(shallowFrozen), /dependency is missing/);
+
+  const rejected = structuredClone(catalog);
+  rejected.assets[0].publication = 'restricted';
+  Object.freeze(rejected.assets[0]);
+  Object.freeze(rejected.assets);
+  Object.freeze(rejected);
+  assert.throws(() => validateEditionRuntimeCatalog(rejected), /publication approval/);
+  const changed = structuredClone(catalog);
+  changed.assets[0].sha256 = 'd'.repeat(64);
+  const replacement = validateEditionRuntimeCatalog(changed);
+  assert.equal(resolveEditionAssets(replacement)[0].sha256, 'd'.repeat(64));
+  assert.notEqual(
+    resolveEditionAssets(replacement)[0].sha256,
+    resolveEditionAssets(catalog)[0].sha256,
+  );
+});
+
+test('shared-brand audience editions retain separate cached asset permissions', () => {
+  const source = structuredClone(fixture().catalog);
+  source.assets.push({
+    ...source.assets[0],
+    id: 'coupa-extended-picture',
+    path: 'game/editions/assets/coupa-extended.png',
+  });
+  source.campaigns.push({
+    ...source.campaigns[0],
+    id: 'coupa-extended-campaign',
+    sourcePath: 'game/content/coupa-extended.json',
+    assetIds: ['coupa-extended-picture'],
+  });
+  source.editions.push({
+    ...source.editions[0],
+    id: 'coupa-extended-audience',
+    audience: 'extended-learning',
+    campaignIds: ['coupa-adventure', 'coupa-extended-campaign'],
+  });
+  const catalog = validateEditionRuntimeCatalog(source);
+  const extended = resolveEditionAssets(catalog, { editionId: 'coupa-extended-audience' });
+  const basic = resolveEditionAssets(catalog, { editionId: 'coupa-public' });
+  assert.deepEqual(
+    extended.map((asset) => asset.id),
+    ['coupa-hero', 'coupa-extended-picture'],
+  );
+  assert.deepEqual(
+    basic.map((asset) => asset.id),
+    ['coupa-hero'],
+  );
+  assert.equal(resolveEditionAssets(catalog, { editionId: 'coupa-public' }), basic);
+  assert.equal(resolveEditionAssets(catalog, { editionId: 'coupa-extended-audience' }), extended);
 });
 
 test('dependency closure rejects cycles, undeclared assets and cross-brand campaigns', () => {
