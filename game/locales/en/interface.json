@@ -5185,5 +5185,7 @@
   "team.previewPictureButton": "Preview {{mission}}",
   "team.picturePreviewTitle": "{{mission}} · Picture preview",
   "downloads.ownershipUnreadable": "Download ownership could not be read. Nothing was removed; existing game files and saves are kept.",
+  "controller.confirmTrace.toggle": "Show temporary controller diagnostics",
+  "controller.confirmTrace.sessionOnly": "Shown only for this session. No input is saved or sent.",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }

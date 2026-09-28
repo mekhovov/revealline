@@ -81,6 +81,7 @@ export function createControllerRouter({
   repeatIntervalMs = 120,
   autoJoin = false,
   navigationAliases = false,
+  diagnostics = false,
 } = {}) {
   if (typeof readPads !== 'function' || typeof now !== 'function')
     throw new TypeError(t('interface:controllerReadersMustBeFunctions'));
@@ -118,6 +119,8 @@ export function createControllerRouter({
     menuConfirmActive = false,
     menuConfirmButtons = [],
     menuGamepadTimestamp = 0,
+    sampledConfirmPad = null,
+    sampledRawGamepads = undefined,
     destroyed = false;
 
   const confirmIndexes = (buttons) =>
@@ -130,6 +133,91 @@ export function createControllerRouter({
       .filter((index) => buttons.has(index))
       .sort((a, b) => a - b);
   const confirms = (buttons) => confirmIndexes(buttons).length > 0;
+  const assignedIdentity = () =>
+    assigned
+      ? {
+          index: assigned.index,
+          id: assigned.id,
+          mapping: assigned.mapping,
+          generation: assigned.generation,
+        }
+      : null;
+  const diagnosticsEnabled = () =>
+    (typeof diagnostics === 'function' ? diagnostics() : diagnostics) === true;
+  function describePads(pads) {
+    const devices = [],
+      count = Number.isInteger(pads?.length) ? Math.max(0, Math.min(32, pads.length)) : 0;
+    for (let index = 0; index < count; index++) {
+      const device = pads[index];
+      if (!device) continue;
+      const buttonCount = Number.isInteger(device.buttons?.length)
+        ? Math.max(0, Math.min(1024, device.buttons.length))
+        : 0;
+      devices.push({
+        index: Number.isInteger(device.index) && device.index >= 0 ? device.index : index,
+        id: typeof device.id === 'string' ? device.id.slice(0, 512) : '',
+        mapping: typeof device.mapping === 'string' ? device.mapping.slice(0, 32) : '',
+        connected: device.connected === true,
+        timestamp: Number.isFinite(device.timestamp) ? device.timestamp : 0,
+        buttonCount,
+        buttons: Array.from({ length: Math.min(64, buttonCount) }, (_, index) => index).filter(
+          (index) => pressed(device.buttons[index]),
+        ),
+      });
+    }
+    return devices;
+  }
+  function confirmSnapshot(pad, scope, failure = null, rawGamepads) {
+    const live = !!assigned && pad?.signature === assigned.signature,
+      buttons = live ? confirmIndexes(pad.buttons) : [];
+    const reason = destroyed
+      ? 'disposed'
+      : failure ||
+        (!assigned
+          ? 'unassigned'
+          : !live
+            ? 'assignment-lost'
+            : scope !== lastScope
+              ? 'scope-change'
+              : scope === 'flight'
+                ? 'flight'
+                : blocked
+                  ? 'waiting-neutral'
+                  : 'ready');
+    return {
+      assigned: live ? assignedIdentity() : null,
+      buttons,
+      timestamp: live ? pad.timestamp : 0,
+      held: buttons.length > 0,
+      neutral: live ? pad.neutral : false,
+      eligible: reason === 'ready',
+      blocked,
+      reason,
+      scope,
+      routerScope: lastScope,
+      ...(rawGamepads ? { rawGamepads } : {}),
+    };
+  }
+  function readMenuConfirm({ scope = lastScope } = {}) {
+    // Native events may precede an animation frame. Observe only the current
+    // assignment: adopting a pad or sampling the router here would consume
+    // unrelated direction, Back, Menu, and flight edges before their host.
+    const diagnostics = diagnosticsEnabled();
+    if (destroyed || (!assigned && !diagnostics)) return confirmSnapshot(null, scope);
+    try {
+      const pads = readPads(),
+        rawGamepads = diagnostics ? describePads(pads) : undefined,
+        count = Number.isInteger(pads?.length) ? Math.max(0, Math.min(32, pads.length)) : 0;
+      if (!assigned) return confirmSnapshot(null, scope, null, rawGamepads);
+      for (let index = 0; index < count; index++) {
+        if ((pads[index]?.index ?? index) !== assigned.index) continue;
+        return confirmSnapshot(snapshot(pads[index], index), scope, null, rawGamepads);
+      }
+      return confirmSnapshot(null, scope, null, rawGamepads);
+    } catch {
+      return confirmSnapshot(null, scope, 'unavailable', diagnostics ? [] : undefined);
+    }
+  }
   function menuConfirmPressed(capturedPads = null) {
     if (destroyed || !assigned || (lastScope === 'flight' && !menuConfirmActive)) return false;
     // Native events may arrive before the next animation frame. This read-only
@@ -280,21 +368,22 @@ export function createControllerRouter({
     flight,
     ui,
     status: { code, message },
-    assigned: assigned
-      ? {
-          index: assigned.index,
-          id: assigned.id,
-          mapping: assigned.mapping,
-          generation: assigned.generation,
-        }
-      : null,
+    assigned: assignedIdentity(),
     confirmHeld: menuConfirmActive,
     confirmButtons: [...menuConfirmButtons],
     gamepadTimestamp: menuGamepadTimestamp,
+    confirmSnapshot: confirmSnapshot(
+      sampledConfirmPad,
+      lastScope,
+      code === 'unavailable' ? 'unavailable' : null,
+      sampledRawGamepads,
+    ),
     disconnected,
   });
 
   function sample({ scope, timeMs, toggleBoostEligible = true } = {}) {
+    sampledConfirmPad = null;
+    sampledRawGamepads = undefined;
     if (destroyed) return result('disposed', t('interface:controllerInputIsStopped'));
     if (typeof scope !== 'string' || !scope || scope.length > 160)
       throw new TypeError(t('interface:controllerScopeMustBeAStableNonemptyString'));
@@ -311,6 +400,7 @@ export function createControllerRouter({
     let raw;
     try {
       raw = readPads();
+      if (diagnosticsEnabled()) sampledRawGamepads = describePads(raw);
     } catch {
       invalidate();
       const disconnected = pendingDisconnect;
@@ -378,6 +468,7 @@ export function createControllerRouter({
           menuConfirmButtons = confirmIndexes(pad.buttons);
           menuGamepadTimestamp = pad.timestamp;
           assigned = candidate;
+          sampledConfirmPad = pad;
           clear();
           if (autoJoin) blocked = false;
           return result(
@@ -405,6 +496,7 @@ export function createControllerRouter({
       invalidate();
       return sampleLoss();
     }
+    sampledConfirmPad = pad;
     menuConfirmActive = confirms(pad.buttons) && (scope !== 'flight' || menuConfirmActive);
     menuConfirmButtons = menuConfirmActive ? confirmIndexes(pad.buttons) : [];
     menuGamepadTimestamp = pad.timestamp;
@@ -490,6 +582,7 @@ export function createControllerRouter({
   }
   return {
     sample,
+    readMenuConfirm,
     menuConfirmPressed,
     setBindings,
     setBoostMode,
