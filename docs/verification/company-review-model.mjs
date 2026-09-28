@@ -21,6 +21,54 @@ export function reviewViewport(width, height) {
   return { width: values[0], height: values[1] };
 }
 
+const REVIEW_SCENARIOS = new Set([
+  'opening-play',
+  'advanced-encounter',
+  'picture-reveal',
+  'edition-switch',
+]);
+
+export function reviewScenario(value) {
+  if (!REVIEW_SCENARIOS.has(value))
+    throw new TypeError('Choose a supported company review scenario.');
+  return value;
+}
+
+/** Summarize only observations already made by the passive review page. A
+ * navigation transition is evidence of two ready same-origin targets in this
+ * session; it is not proof of installed-app isolation or preserved storage. */
+export function reviewSessionSummary(records) {
+  if (!Array.isArray(records) || records.length > 100)
+    throw new TypeError('Review summaries accept at most 100 observation records.');
+  const loads = records.filter(
+      (record) =>
+        record?.action === 'Load to company menu' &&
+        Number.isFinite(record.ms) &&
+        typeof record.target === 'string',
+    ),
+    targets = loads.map((record) => record.target),
+    transitions = targets.slice(1).filter((target, index) => target !== targets[index]).length,
+    frameSamples = records.filter(
+      (record) =>
+        record?.action === 'Frame intervals' &&
+        Number.isFinite(record.frames) &&
+        REVIEW_SCENARIOS.has(record.scenario),
+    ),
+    frameSamplesByScenario = Object.fromEntries(
+      [...REVIEW_SCENARIOS].map((scenario) => [
+        scenario,
+        frameSamples.filter((record) => record.scenario === scenario).length,
+      ]),
+    );
+  return {
+    readyLoads: loads.length,
+    distinctTargets: new Set(targets).size,
+    targetTransitions: transitions,
+    frameSamples: frameSamples.length,
+    frameSamplesByScenario,
+  };
+}
+
 /** Viewport overflow is a review hint, not proof of inaccessible content. A
  * visible native scroll port can make an offscreen control reachable. Fixed
  * descendants are not bounded by arbitrary DOM ancestors such as the arena. */
