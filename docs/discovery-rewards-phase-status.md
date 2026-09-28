@@ -24,7 +24,7 @@ The planned content count is implemented: **108 missions, 18 standard campaign f
 Current qualification is narrower than implementation:
 
 - The latest completed candidate at `76ea5b31b` passed all eighteen edition builds in run `36454587128`, optional practice and hosted acceptance `36454587277`. The small [capacity packet](verification/evidence/discovery-2026-09-28-capacity-packet-76ea5b31b.json) verifies 118,539,041 bytes for the four new edition components and 244,117,395 bytes for the six practical components, including launchers. These omit default, retained versions, hub and optional output.
-- A genuine first Frame win on the exact `76ea5b31b` player exposed **seven tasks over 50 ms containing reward work**, from 55.052 to 496.522 ms. Earlier frame-interval and earned-viewer observations did not reveal this grant/save cost. The shared model now reuses only its own immutable validated data; external and imported data retain full boundary validation. The browser follow-up on a newly compiled candidate is pending.
+- A genuine first Frame win on the exact `76ea5b31b` player exposed **seven tasks over 50 ms containing reward work**, from 55.052 to 496.522 ms. Earlier frame-interval and earned-viewer observations did not reveal this grant/save cost. The shared model now reuses only its own immutable validated data; external and imported data retain full boundary validation. The `923454e7f` follow-up reduces this to one 323.001 ms task; sampled reward processing is a small fraction of the remaining task. Shared mission-catalogue refresh work is the next measured target.
 - The same browser profile survives **76ea → 61a → 76ea** with byte-identical Journey and discovery backups, the same accepted clear, exact earned payload and usable Frame atlas. This is a same-origin browser check of an unchanged pack, not installed-app, cross-gameplay-revision or public-release qualification.
 
 - Exact artifact `de4cec8ba` completed **20 result/viewer pairs and 20 closed-view checkpoints** after a normal Frame win. Closed connected DOM/media counts stayed constant. The hash-bound local receipt is `.cache/discovery-evidence-20260928/cycles-de4cec8ba/validation-receipt.json`; it does not establish detached-object, outstanding-URL or decoder retention.
@@ -32,7 +32,7 @@ Current qualification is narrower than implementation:
 - `7acf6af53` passed complete eighteen-edition candidate run `36447088737` (including optional practice) and hosted acceptance run `36447088556`. Its separate capacity artifact validates the exact edition and launcher sizes without downloading the roughly 900 MB bulk archive. These receipts precede the rebase onto main `7138e7b61` and do not qualify the rebased head or production publication.
 - The later `61a315090` FPV distribution reproduces twice with unchanged gameplay identity. A matching clean Motion viewer trace improves **56.280 → 8.558 ms** after the shared catalogue optimization. A fresh normal win and twenty result/viewer cycles also pass with constant connected counts and a durable save. These are scoped viewer/lifecycle observations, not all-reward, first-win or retained-memory qualification.
 - Default preparation at `8104e7bb0` passes normal build gates and yields **795,373,867 bytes** including its manifest. Combining this with the older four-edition packet yields a **913,723,492-byte planning subtotal**; the six-edition subtotal is **1,039,207,138 bytes**, already above the 950,000,000-byte cap. These cross-revision sums omit retained versions, hub and optional output and do not qualify a hosted selection. [Exact default inspection](verification/evidence/discovery-2026-09-28-default-capacity.json).
-- Human and physical-device review remains explicitly deferred. Current frozen full-site sizing, complete release admission, rollback verification and downloaded/deployed public-byte evidence remain open.
+- Human and physical-device review remains explicitly deferred. Current frozen full-site sizing, complete release admission, installed/public rollback and downloaded/deployed public-byte evidence remain open.
 
 ## Phase ledger
 
@@ -305,3 +305,42 @@ This batch remains in integration PR #758. No release version, deployment select
 admission gate is changed. Next: compile and measure the optimized first-win path,
 then refresh final-head candidate CI and use the existing release coordination for
 same-frozen-output sizing, admission and publication. Human/device evidence stays deferred.
+
+## Shared mission-catalogue and edition-resource follow-up
+
+The exact local `923454e7f` FPV candidate compiles twice identically, passes archive,
+source and offline admission, and grants a genuine first Frame discovery in a fresh
+browser profile. Its [follow-up receipt](verification/evidence/discovery-2026-09-28-first-win-923454e7f.json)
+retains the remaining 323.001 ms task and all twenty viewing cycles. CPU sampling
+points to repeated campaign/level normalization in saved-flight and mission-thumbnail
+refreshes; reward ancestors account for approximately 15.49 ms of nearest-sample
+support, not exclusive measured cost. Different legal routes were used, so these
+observations are not a matched-input p95 comparison. The 50 ms gate remains open.
+
+The next shared optimization reuses precomputed keys only for factory-owned frozen
+difficulty campaigns, uses exact owned execution keys for saved-flight previews,
+and avoids that lookup when no save can be previewed. Picture-identity catalogues
+are reused only for exact immutable execution-entry arrays with no supplied recovery
+metadata. Mutable imports, caller-frozen copies, replacement catalogues and historical
+media still receive fresh validation. This preserves simulation, identities, Continue
+checkpoints and missing-media recovery.
+
+The real packaged-browser run also exposed missing soundtrack and installation-panel
+stylesheets. Their existing shared runtime resource inventory now declares both local
+CSS dependencies, so source/player archives and offline manifests include the same
+bytes. No authoring tree or unrelated asset family is included to repair those edges.
+
+Two continuous-host assertions still expected session v4 on exact pre-optimization
+`923454e7f`, although the host already saved actor-pinned v6. An in-memory baseline
+source check reproduced both failures. The assertions now name the existing
+`ACTOR_SESSION_FORMAT` and verify its actor pin; their unchanged checkpoint, replay,
+Pause/Continue and input-neutrality checks remain required. This updates stale test
+expectations and does not migrate or change the save format.
+
+The combined shared-UI/resource batch passes **892/892** company-suite checks with
+zero failures or skips in 113.4 seconds, including all twelve continuous-host checks.
+It also passes focused lint/format checks and independent ownership/compatibility
+review. The release pipeline now runs the added campaign identity, thumbnail,
+library and Continue regressions as part of its existing company job. The next
+exact clean candidate must still be compiled and measured; this test result alone
+does not close the first-win timing gate.
