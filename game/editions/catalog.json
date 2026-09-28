@@ -2534,6 +2534,87 @@
       "path": "game/editions/assets/discovery/audio/3xblast-thanks-uk-v1.txt",
       "publication": "public",
       "sha256": "269063c609e595b1482573ceb11233d5f5364457aaf4c8a79bdc01325e865237"
+    },
+    {
+      "approved": true,
+      "bytes": 3333938,
+      "dependencies": [],
+      "id": "textile-light-diffuse-v1",
+      "path": "game/editions/assets/discovery/textile-light-diffuse-v1.png",
+      "publication": "public",
+      "sha256": "eabcef992854e71c481a7e4fdb17fcaf86894375e2950644b940886a7ea1c7e1"
+    },
+    {
+      "approved": true,
+      "bytes": 3145957,
+      "dependencies": [],
+      "id": "textile-light-left-v1",
+      "path": "game/editions/assets/discovery/textile-light-left-v1.png",
+      "publication": "public",
+      "sha256": "09ff0b2d7811b9ae6076db4ab2708688250ac66d4f683c0fba6e2de92dea4607"
+    },
+    {
+      "approved": true,
+      "bytes": 3114152,
+      "dependencies": [],
+      "id": "textile-light-right-v1",
+      "path": "game/editions/assets/discovery/textile-light-right-v1.png",
+      "publication": "public",
+      "sha256": "53fe2601e7dfff5ea54f63fea9481c29c1cf7acdea3025f6967bacfdcc88259d"
+    },
+    {
+      "approved": true,
+      "bytes": 188873,
+      "dependencies": [],
+      "id": "fpv-motion-makers-video",
+      "path": "game/editions/assets/discovery/motion-makers/motion-makers-v1.mp4",
+      "publication": "public",
+      "sha256": "2c6ab067612b4530f729e6c92b49c5ebeb278eb44b4020cd8b3ff34e8e90cc5b"
+    },
+    {
+      "approved": true,
+      "bytes": 42073,
+      "dependencies": [],
+      "id": "fpv-motion-makers-poster",
+      "path": "game/editions/assets/discovery/motion-makers/motion-makers-poster-v1.png",
+      "publication": "public",
+      "sha256": "a78136eb42349fb9f8faeb17b96144bb82217354dc2b86f7a936134b3c753297"
+    },
+    {
+      "approved": true,
+      "bytes": 2154,
+      "dependencies": [],
+      "id": "fpv-motion-makers-transcript-en",
+      "path": "game/editions/assets/discovery/motion-makers/motion-makers-en-v1.txt",
+      "publication": "public",
+      "sha256": "f9f4d52645201f655e24d3e47376d90df72ad4e180c33ac53c15bf24aedb9cda"
+    },
+    {
+      "approved": true,
+      "bytes": 3846,
+      "dependencies": [],
+      "id": "fpv-motion-makers-transcript-uk",
+      "path": "game/editions/assets/discovery/motion-makers/motion-makers-uk-v1.txt",
+      "publication": "public",
+      "sha256": "afaad10bc2d870f3493ec1549b1a0cde87cb97b433e29f26ec6ca4b0550430f5"
+    },
+    {
+      "approved": true,
+      "bytes": 455,
+      "dependencies": [],
+      "id": "fpv-motion-makers-captions-en",
+      "path": "game/editions/assets/discovery/motion-makers/motion-makers-en-v1.vtt",
+      "publication": "public",
+      "sha256": "6f70bfd2bac0003663b660fdc83612a9439b4131f6cc167d1aa83619612e7193"
+    },
+    {
+      "approved": true,
+      "bytes": 709,
+      "dependencies": [],
+      "id": "fpv-motion-makers-captions-uk",
+      "path": "game/editions/assets/discovery/motion-makers/motion-makers-uk-v1.vtt",
+      "publication": "public",
+      "sha256": "8dfd9aeb10bfdcaa89faf19b66c68966b08be609b35e028b3db06bf7a6c070cf"
     }
   ],
   "brands": [
@@ -3005,7 +3086,7 @@
       "heroAssetId": "social-drone-people-workshop-key-v1",
       "id": "social-drone-people-workshop",
       "localizationPath": "game/content/company-campaigns/social-drone-people-workshop.localization.json",
-      "localizationSha256": "66c8ef1a642d3cf5560395d2f9a7e28341b6bea5ea7308d263f50e8166fa2b1a",
+      "localizationSha256": "b631f8f7e026c184244ce2ad3f6ce6ea1e22eca1515852fe7d7d91a3a50eb3d9",
       "modes": ["solo"],
       "name": "People Behind the Workshop",
       "publication": "public",
@@ -3044,6 +3125,9 @@
         "ukraine-threads-05-reveal-v1",
         "ukraine-threads-06-reveal-v1",
         "ukraine-threads-key-v1",
+        "textile-light-diffuse-v1",
+        "textile-light-left-v1",
+        "textile-light-right-v1",
         "met-degas-ukrainian-dress-436157",
         "reference-ukraine-met-shirt-fragment"
       ],
@@ -3052,7 +3136,7 @@
       "id": "ukraine-threads",
       "lessonPath": "game/content/company-campaigns/ukraine-threads.lessons.json",
       "localizationPath": "game/content/company-campaigns/ukraine-threads.localization.json",
-      "localizationSha256": "7c42351961b0c18b5c2e445658c22bb2d2ef4f74705d963db63d36c3e0abc6fe",
+      "localizationSha256": "4379b7e3a4d4820f3fd6404da0a458542aaf44cd87f575f740723f31d6563006",
       "modes": ["solo"],
       "name": "Threads Across Ukraine",
       "publication": "public",
@@ -3069,6 +3153,12 @@
         "fpv-meet-aircraft-05-reveal-v1",
         "fpv-meet-aircraft-06-reveal-v1",
         "fpv-meet-aircraft-key-v1",
+        "fpv-motion-makers-video",
+        "fpv-motion-makers-poster",
+        "fpv-motion-makers-transcript-en",
+        "fpv-motion-makers-transcript-uk",
+        "fpv-motion-makers-captions-en",
+        "fpv-motion-makers-captions-uk",
         "reference-fpv-pixhawk-controller",
         "reference-fpv-brushless-motor"
       ],
@@ -3077,7 +3167,7 @@
       "id": "fpv-meet-aircraft",
       "lessonPath": "game/content/company-campaigns/fpv-meet-aircraft.lessons.json",
       "localizationPath": "game/content/company-campaigns/fpv-meet-aircraft.localization.json",
-      "localizationSha256": "3776b5fc5ba9af1c30921e27d80ad1d2f55e4a89297b3d6b5356d46e28d4f71c",
+      "localizationSha256": "04040fb32db189319212053c9ab551b7c1cf85e1e3fb97fa40351aabd8e73702",
       "modes": ["solo"],
       "name": "Meet the Aircraft",
       "publication": "public",
@@ -3427,6 +3517,12 @@
       "name": "Social Drone UA",
       "presentationHistory": [
         {
+          "bytes": 176563,
+          "id": "985d7722d69526a98abc1d7026c2279ace2a64443362dcc861aab6cd92fb608b",
+          "path": "game/editions/retained/social-drone-ua-before-mission-alt.json",
+          "sha256": "13d119e2e5aa67bd6636a2d83d9e1374d792a05edc33c462654f19d965efe409"
+        },
+        {
           "bytes": 170542,
           "id": "b082d3766168bd305e235adad284813b2a8578de5de009f8ca985aaf1a2e5bd6",
           "path": "game/editions/retained/social-drone-ua-before-listening-room.json",
@@ -3458,7 +3554,7 @@
         }
       ],
       "publication": "public",
-      "revision": 6
+      "revision": 7
     },
     {
       "audience": "learners",
@@ -3532,6 +3628,12 @@
       "name": "Ukraine: Living Culture",
       "presentationHistory": [
         {
+          "bytes": 587410,
+          "id": "430cb1cb0c5231f9c42dc9fd9d2b0e55b35a49c676e09c0df8effa17f9a396b2",
+          "path": "game/editions/retained/ukraine-culture-before-textile-and-motion.json",
+          "sha256": "c7122ae0c8f17932986df03fc636c02900d83a30c235529789f0a90f253c7555"
+        },
+        {
           "bytes": 574139,
           "id": "95915f9348a50bb93f6c5d234624f85fc1a758f59d1db2bb4f804876257a3c25",
           "path": "game/editions/retained/ukraine-culture-before-visual-atlas.json",
@@ -3563,7 +3665,7 @@
         }
       ],
       "publication": "public",
-      "revision": 6
+      "revision": 7
     },
     {
       "audience": "learners",
@@ -3592,6 +3694,12 @@
       "modes": ["solo"],
       "name": "FPV Learning",
       "presentationHistory": [
+        {
+          "bytes": 727944,
+          "id": "a34183de94677f3e2d20a88062a3643778723a34b53a57c606eb667740e9d70c",
+          "path": "game/editions/retained/fpv-learning-before-textile-and-motion.json",
+          "sha256": "e50b6a3c0197f4944756942af314e31a76a2db559b505a23d310185e834a0289"
+        },
         {
           "bytes": 719041,
           "id": "2ccf3e4f9b9066359219e3fdcd2dad32366f9ea3e2cf12d1b16c0de09d36c604",
@@ -3630,7 +3738,7 @@
         }
       ],
       "publication": "public",
-      "revision": 7
+      "revision": 8
     },
     {
       "audience": "everyone",

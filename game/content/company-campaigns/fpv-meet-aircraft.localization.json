@@ -6,7 +6,7 @@
     {
       "fields": { "name": { "en": "Meet the Aircraft", "uk": "Знайомство з дроном" } },
       "id": "fpv-meet-aircraft",
-      "identity": "8d7671c8cdb271c8",
+      "identity": "d81a8078a0f68155",
       "kind": "campaign"
     },
     {
@@ -38,7 +38,7 @@
         "name": { "en": "The Frame", "uk": "Рама" }
       },
       "id": "fpv-meet-aircraft-01",
-      "identity": "eee5e1d31b8e952a",
+      "identity": "1ed8ab5cc4995317",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "Motion Makers", "uk": "Джерела руху" }
       },
       "id": "fpv-meet-aircraft-02",
-      "identity": "7c0989114645a94a",
+      "identity": "813002b735c0ac91",
       "kind": "mission"
     },
     {

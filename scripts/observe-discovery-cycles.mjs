@@ -113,6 +113,17 @@ export async function runDiscoveryCycles({
         step = `result ${index + 1}: show result`;
         await command(['click', '#show-result']);
         await frames();
+        // Use the driver's public scrolling operation if a supported layout
+        // needs it. The passive observer never scrolls or changes player state.
+        if (
+          !(await evaluate('return discoveryObservation.inspectCycleSurface().explore.visible;'))
+        ) {
+          await command([
+            'scrollintoview',
+            '#completion-reward-result [data-reward-surface="result"]',
+          ]);
+          await frames();
+        }
         await waitFor(
           'discoveryObservation.inspectCycleSurface().explore.visible && !discoveryObservation.inspectCycleSurface().explore.disabled && discoveryObservation.inspectCycleSurface().openDialogIds.length === 0',
           'visible result Explore control',

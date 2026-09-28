@@ -94,7 +94,7 @@
           "revision": "feedback-632383eb608b101b",
           "victoryMotif": "shared-spark-v1"
         },
-        "finaleRewardRef": { "id": "social-drone-people-workshop-finale", "revision": "4" }
+        "finaleRewardRef": { "id": "social-drone-people-workshop-finale", "revision": "5" }
       },
       "format": "CampaignDesignV1",
       "id": "social-drone-people-workshop",
@@ -247,7 +247,7 @@
         "memorableMoment": "An original cobalt-blue welcome hall around a community table and civilian learning models.",
         "pacingBeat": "discover",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-01-discovery", "revision": "4" },
+        "rewardRef": { "id": "social-drone-people-workshop-01-discovery", "revision": "5" },
         "routeDecision": "Use the wide welcome island for short returns, or capture the open west court first."
       },
       "format": "MissionDesignV1",
@@ -562,9 +562,9 @@
       "format": "PackDesignV1",
       "id": "social-drone-people-workshop-pack",
       "name": "People Behind the Workshop",
-      "revision": "4"
+      "revision": "5"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "4"
+  "revision": "5"
 }
