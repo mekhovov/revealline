@@ -54,16 +54,29 @@
       "width": 960
     },
     {
-      "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
-      "bytes": 318557,
+      "alt": "Original illustrated communications gallery linking a fictional room model’s desk and doorway to a separate blank description card.",
+      "bytes": 135605,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "social-drone-community-connections-key-picture",
+      "height": 480,
+      "id": "social-drone-community-connections-05-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/social-drone-community-connections-key-v1.jpg",
+      "path": "editions/assets/discovery/social-drone-community-connections-05-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb",
+      "sha256": "8a4068c39e990b909eee4fba4e340c4482e0067ff7f26fca629cce38811d199d",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated community noticeboard finale with six discovery pictures and a fresh notice displayed beside an archived earlier notice.",
+      "bytes": 206693,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "social-drone-community-connections-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/social-drone-community-connections-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "00e3dafc52a05ea3012c7f143548fc32c0d0df35cbd920cec8420cb316123db7",
       "width": 960
     }
   ],
@@ -72,7 +85,7 @@
       "band": 3,
       "discovery": {
         "exhibitLayout": "mosaic",
-        "finaleRewardRef": { "id": "social-drone-community-connections-finale", "revision": "3" }
+        "finaleRewardRef": { "id": "social-drone-community-connections-finale", "revision": "4" }
       },
       "format": "CampaignDesignV1",
       "id": "social-drone-community-connections",
@@ -564,7 +577,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "social-drone-community-connections-05-discovery", "revision": "3" },
+        "rewardRef": { "id": "social-drone-community-connections-05-discovery", "revision": "4" },
         "routeDecision": "Connect the text island before the image bay or take the longer lower route around both. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -577,7 +590,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "social-drone-community-connections-key-picture",
+        "backgroundAssetId": "social-drone-community-connections-05-picture",
         "themeId": "social-drone-community-connections-theme"
       },
       "revision": "2",
@@ -646,7 +659,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "social-drone-community-connections-06-discovery", "revision": "3" },
+        "rewardRef": { "id": "social-drone-community-connections-06-discovery", "revision": "4" },
         "routeDecision": "Choose the central noticeboard first or connect the three update stations before the final crossing. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -659,7 +672,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "social-drone-community-connections-key-picture",
+        "backgroundAssetId": "social-drone-community-connections-06-picture",
         "themeId": "social-drone-community-connections-theme"
       },
       "revision": "2",
@@ -674,9 +687,9 @@
       "format": "PackDesignV1",
       "id": "social-drone-community-connections-pack",
       "name": "Community Connections",
-      "revision": "3"
+      "revision": "4"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "3"
+  "revision": "4"
 }
