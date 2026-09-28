@@ -165,25 +165,25 @@ test('all eighteen finales stay locked with any one required win absent and reje
   }
 });
 
-test('explicit public dependencies include only selected campaign art and seven source comparison images', () => {
-  const firstMissionPictures = [
-    'social-drone-people-workshop-01',
-    'ukraine-threads-03',
-    'fpv-meet-aircraft-01',
-  ];
+test('all 108 missions have distinct admitted art and selected public dependencies', () => {
   const distinctMissionIds = new Set(
     CURRICULUM_MISSIONS.filter((mission) =>
       artwork.some((asset) => asset.id === `${mission.id}-picture`),
     ).map((mission) => mission.id),
   );
-  for (const id of firstMissionPictures) assert.ok(distinctMissionIds.has(id), id);
+  assert.equal(distinctMissionIds.size, 108);
+  const pictures = selectCurrentCompanyArtwork(artwork);
+  const missionHashes = CURRICULUM_MISSIONS.map((mission) => {
+    const picture = pictures.find((entry) => entry.id === `${mission.id}-picture`);
+    assert.ok(picture, mission.id);
+    const admitted = assets.find((entry) => entry.path === `game/${picture.path}`);
+    assert.ok(admitted?.sha256, mission.id);
+    return admitted.sha256;
+  });
+  assert.equal(new Set(missionHashes).size, 108, 'Every mission composition has distinct bytes.');
   for (const { definition, source, rewards, missionBindings } of projects) {
     const descriptor = catalog.campaigns.find((entry) => entry.id === definition.id);
-    // Each admitted composition has its own asset; all other missions explicitly
-    // reuse one campaign scene rather than pretending that aliases are new artwork.
-    const expectedPictures = definition.missionIds.map((id) =>
-      distinctMissionIds.has(id) ? `${id}-picture` : `${definition.id}-key-picture`,
-    );
+    const expectedPictures = definition.missionIds.map((id) => `${id}-picture`);
     assert.deepEqual(
       source.assets.map((asset) => asset.id),
       [...new Set(expectedPictures)],
