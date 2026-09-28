@@ -6,7 +6,7 @@
     {
       "fields": { "name": { "en": "Ideas into Understanding", "uk": "Від ідей до розуміння" } },
       "id": "victory-drones-ideas-understanding",
-      "identity": "a0a7d8d9598fdc9f",
+      "identity": "6689f9487f921616",
       "kind": "campaign"
     },
     {
@@ -22,7 +22,7 @@
         "name": { "en": "Observe Before Explaining", "uk": "Спостерігайте перед поясненням" }
       },
       "id": "victory-drones-ideas-understanding-01",
-      "identity": "9a80cf1a28f5e010",
+      "identity": "21a9991e3d38beb7",
       "kind": "mission"
     },
     {
@@ -38,7 +38,7 @@
         "name": { "en": "Forces Come in Pairs", "uk": "Сили взаємодії" }
       },
       "id": "victory-drones-ideas-understanding-02",
-      "identity": "12bce8c8a0502c60",
+      "identity": "058e7a30131238a2",
       "kind": "mission"
     },
     {
@@ -54,7 +54,7 @@
         "name": { "en": "The Net Force", "uk": "Рівнодійна сил" }
       },
       "id": "victory-drones-ideas-understanding-03",
-      "identity": "d42d32897ac1ce80",
+      "identity": "0120eefe2217dda9",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "Direction Matters", "uk": "Напрямок має значення" }
       },
       "id": "victory-drones-ideas-understanding-04",
-      "identity": "86a7a1a30f40de69",
+      "identity": "f795065c9ee7c05d",
       "kind": "mission"
     },
     {
@@ -86,7 +86,7 @@
         "name": { "en": "A Fair Comparison", "uk": "Коректне порівняння" }
       },
       "id": "victory-drones-ideas-understanding-05",
-      "identity": "4655e90369929aeb",
+      "identity": "60dc77d4f5f6fc8a",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "Explain the Model", "uk": "Поясніть модель" }
       },
       "id": "victory-drones-ideas-understanding-06",
-      "identity": "dad0c2e414bff49e",
+      "identity": "f0763555a6eb8896",
       "kind": "mission"
     }
   ],

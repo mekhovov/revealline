@@ -7668,6 +7668,1310 @@
         }
       ],
       "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-drone-families-01-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drone-families-01-v1.jpg",
+      "sha256": "43b5eb213c9e6aea5565587f3cb45bb592175982b7140de666b6ac049e5a2b7d",
+      "bytes": 138884,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A View, Not a Shape",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian science-game reveal, very wide full-bleed2:1, stylized3D museum illustration with pale lavender walls, warm cream stone, brass rails, sea-green accents and elegant daylight. Fictional educational exhibit, never documentary or manufacturer advertising. All aircraft are inert museum sculptures on stands, unarmed, with no motors running, propeller blades, payloads, wires or batteries. No real logos, lettering, digits, specifications, interface, borders or watermark. Keep focal comparisons complete and readable in central80%. Localized explanatory text remains separate.\nScene: A grand bright museum entrance. In foreground a large elegant abstract FPV viewing-goggles sculpture and a separate small camera icon sit on one lavender pedestal. Behind, three clearly separated warm-cream display bays each contain a different inert aircraft silhouette: a simple four-arm quadcopter with four circular rotor discs, a small civilian fixed-wing glider shape, and a six-arm multirotor with six circular discs. Spacious columns and visitor-scale benches establish a classification hall. The goggles are not physically connected to one aircraft, and no live video or cockpit appears.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-649c4e72-f0ec-474c-add7-5b4561223e47.png",
+        "sha256": "dfcfaf7cd17f8776d753c1d7510ab5c7a34d31b59173c727567c8092a920887d",
+        "bytes": 2023650,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A viewing-goggles sculpture stands apart from three different inert aircraft shapes in a museum hall.",
+          "context": "Original fictional civilian aircraft-classification exhibit. Shapes illustrate selected structural distinctions, not exact manufactured designs, performance rankings, permissions or endorsements."
+        },
+        "uk": {
+          "alt": "Скульптура окулярів перегляду стоїть окремо від трьох різних неактивних форм літальних апаратів у музейній залі.",
+          "context": "Оригінальна вигадана виставка класифікації цивільних апаратів. Форми ілюструють окремі конструктивні відмінності, а не точні вироби, рейтинги характеристик, дозволи чи підтримку."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.easa.europa.eu/en/light/topics/drone-racing-and-flying-drone-goggles-first-person-view-fpv",
+          "role": "Primary context for the separately authored classification lesson; no source photograph or manufacturer design copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred",
+      "correctiveGeneration": {
+        "prompt": "Edit only the rightmost aircraft sculpture in this fictional museum scene. Preserve every other element, lighting, goggles, camera, architecture and wide2:1 composition. The rightmost aircraft currently appears to have five rotor discs. Replace it with an unmistakable inert six-arm hexacopter sculpture with EXACTLY SIX circular rotor discs fully visible, arranged symmetrically as three on the left and three on the right of the body. Use a near-overhead slight tilt to separate all six discs with no overlap, six spokes attached to one central body, no seventh disc, no propeller blades, no letters or numbers. Keep it on the existing display stand. This is a civilian static museum sculpture, not operating equipment.",
+        "reason": "Initial rightmost aircraft had five visible rotor positions despite the six-arm concept. Corrected to a countable six-position museum model.",
+        "input": {
+          "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-f085a92d-e762-481e-8542-cdef2c73fe4f.png",
+          "sha256": "7d6a68109b25e8a4d073b76639b097809e7e7eadece7e7064708e3dd7f4cf6f0",
+          "bytes": 2131031
+        }
+      }
+    },
+    {
+      "id": "fpv-drone-families-02-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drone-families-02-v1.jpg",
+      "sha256": "d6c316fe11726eecc47d18894e0a880da2b33f5b68d22bb1f39801e2661df385",
+      "bytes": 147129,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "More Than Four Rotors",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian science-game reveal, very wide full-bleed2:1, stylized3D museum illustration with pale lavender walls, warm cream stone, brass rails, sea-green accents and elegant daylight. Fictional educational exhibit, never documentary or manufacturer advertising. All aircraft are inert museum sculptures on stands, unarmed, with no motors running, propeller blades, payloads, wires or batteries. No real logos, lettering, digits, specifications, interface, borders or watermark. Keep focal comparisons complete and readable in central80%. Localized explanatory text remains separate.\nScene: A clean near-overhead museum comparison of EXACTLY THREE inert pale-silver multicopter silhouette sculptures on separate lavender plinths from left to right. Left sculpture has exactly FOUR evenly spaced arms ending in FOUR circular flat discs. Middle has exactly SIX evenly spaced arms ending in SIX discs. Right has exactly EIGHT evenly spaced arms ending in EIGHT discs. Each has a small central body and no extra discs, markings or blades. Plenty of separation ensures every arm is countable. The plinths have square, hexagonal and octagonal outlines respectively. Similar visual prominence, no winner, ranking, trophy or performance implication.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-863fe2e8-85a1-4a41-995b-3805c95e8103.png",
+        "sha256": "ccbf48bf85cea6f9e749b772a99bd84762f15555f1bc5ee3cbec71066f95e359",
+        "bytes": 2366571,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Three museum silhouettes compare four, six and eight rotor positions without ranking their performance.",
+          "context": "Original fictional civilian aircraft-classification exhibit. Shapes illustrate selected structural distinctions, not exact manufactured designs, performance rankings, permissions or endorsements."
+        },
+        "uk": {
+          "alt": "Три музейні силуети порівнюють чотири, шість і вісім позицій роторів без оцінювання їхніх характеристик.",
+          "context": "Оригінальна вигадана виставка класифікації цивільних апаратів. Форми ілюструють окремі конструктивні відмінності, а не точні вироби, рейтинги характеристик, дозволи чи підтримку."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://docs.px4.io/main/en/airframes/",
+          "role": "Primary context for the separately authored classification lesson; no source photograph or manufacturer design copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-drone-families-03-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drone-families-03-v1.jpg",
+      "sha256": "802bbc7a54eeb0a538832d06bb411be02b8e7bc4cc9a5f8a5c98c8b76e2eb180",
+      "bytes": 140472,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Wings Tell Another Story",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian science-game reveal, very wide full-bleed2:1, stylized3D museum illustration with pale lavender walls, warm cream stone, brass rails, sea-green accents and elegant daylight. Fictional educational exhibit, never documentary or manufacturer advertising. All aircraft are inert museum sculptures on stands, unarmed, with no motors running, propeller blades, payloads, wires or batteries. No real logos, lettering, digits, specifications, interface, borders or watermark. Keep focal comparisons complete and readable in central80%. Localized explanatory text remains separate.\nScene: An expansive twin-pedestal museum gallery from a low three-quarter angle. Left: a beautiful cream civilian glider sculpture with one long broad fixed wing, slender body and simple tail, no weapons or jet details. Right: a sea-green four-arm multicopter sculpture with exactly four circular flat rotor discs, on a low stand. Warm light glides across the fixed wing surface, while four separate discs remain visible on the other exhibit. Between them a small open blank comparison book. Equal dignity and scale of presentation, no speed trails or performance numbers.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-318dffdf-b278-4ee8-b4c7-aadd1304770b.png",
+        "sha256": "d96a1a8d95df1a484ab200f427acd359de52d95b764896da402e31185bce0342",
+        "bytes": 2105539,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A broad-winged civilian glider and a four-disc multicopter form a structural comparison.",
+          "context": "Original fictional civilian aircraft-classification exhibit. Shapes illustrate selected structural distinctions, not exact manufactured designs, performance rankings, permissions or endorsements."
+        },
+        "uk": {
+          "alt": "Цивільний планер із широким крилом і мультикоптер із чотирма дисками утворюють порівняння конструкцій.",
+          "context": "Оригінальна вигадана виставка класифікації цивільних апаратів. Форми ілюструють окремі конструктивні відмінності, а не точні вироби, рейтинги характеристик, дозволи чи підтримку."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/airplane-parts-function/",
+          "role": "Primary context for the separately authored classification lesson; no source photograph or manufacturer design copied."
+        },
+        {
+          "url": "https://docs.px4.io/main/en/airframes/",
+          "role": "Primary context for the separately authored classification lesson; no source photograph or manufacturer design copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-drone-families-04-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drone-families-04-v1.jpg",
+      "sha256": "db4151cdb72326a815a779f1b8bf8684e9899d036088d981fcfb0828d35a7649",
+      "bytes": 165281,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Sport Has a Setting",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian science-game reveal, very wide full-bleed2:1, stylized3D museum illustration with pale lavender walls, warm cream stone, brass rails, sea-green accents and elegant daylight. Fictional educational exhibit, never documentary or manufacturer advertising. All aircraft are inert museum sculptures on stands, unarmed, with no motors running, propeller blades, payloads, wires or batteries. No real logos, lettering, digits, specifications, interface, borders or watermark. Keep focal comparisons complete and readable in central80%. Localized explanatory text remains separate.\nScene: A fictional civilian drone-sport museum exhibition rather than an active race. Three softly glowing rounded gates stand inside a small separated demonstration court with a wide empty lane. A raised lavender viewing gallery and brass barrier clearly distinguish spectator space. At foreground a large cream pause-symbol sculpture and an inert four-disc model in a transparent case anchor the scene. Warm orange cushions, daylight, gentle excitement, no racing aircraft in air, crowds crossing lanes, real event signage or instructions.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-f23d933a-d6a4-4a3f-805f-9fa05ac18ef6.png",
+        "sha256": "ba5b002a1981f6bc726cda5fc5c745805c828e6ec1312e5f151463047c61427d",
+        "bytes": 2486850,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "An exhibition combines a demonstration court, separate viewing gallery and prominent pause symbol.",
+          "context": "Original fictional civilian aircraft-classification exhibit. Shapes illustrate selected structural distinctions, not exact manufactured designs, performance rankings, permissions or endorsements."
+        },
+        "uk": {
+          "alt": "Виставка поєднує демонстраційний майданчик, окрему глядацьку галерею й помітний символ паузи.",
+          "context": "Оригінальна вигадана виставка класифікації цивільних апаратів. Форми ілюструють окремі конструктивні відмінності, а не точні вироби, рейтинги характеристик, дозволи чи підтримку."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.fai.org/event/fai-drone-racing-world-cup",
+          "role": "Primary context for the separately authored classification lesson; no source photograph or manufacturer design copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-drone-families-05-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drone-families-05-v1.jpg",
+      "sha256": "96fd3b75b810745a1c87ebed3d4055162d4789e0a436c9d0177ebcc05aa88676",
+      "bytes": 140216,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Purpose Changes the Questions",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian science-game reveal, very wide full-bleed2:1, stylized3D museum illustration with pale lavender walls, warm cream stone, brass rails, sea-green accents and elegant daylight. Fictional educational exhibit, never documentary or manufacturer advertising. All aircraft are inert museum sculptures on stands, unarmed, with no motors running, propeller blades, payloads, wires or batteries. No real logos, lettering, digits, specifications, interface, borders or watermark. Keep focal comparisons complete and readable in central80%. Localized explanatory text remains separate.\nScene: An imaginative three-bay museum alcove with tactile objects at human scale. Left bay: an inert cardboard classroom aircraft model and blank learning cards. Centre bay: an elegant museum camera sculpture aimed only at a pottery still life. Right bay: a tiny fictional parcel-study table with two closed cardboard boxes and an abstract study notebook, no drone carrying cargo, delivery route, map or real logistics. Each bay has its own blank evidence plaque and a small brass question-mark sculpture. Lavender arches and warm cream surfaces, three very different civilian purposes rather than product ranking.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-e73aba95-c8af-4523-a228-46ba7fd11b9e.png",
+        "sha256": "bac01e693935d94a04776413fab3a20399d029ead5f67e132582085307877e75",
+        "bytes": 2188863,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Three separate alcoves present a classroom model, a still-life camera and a fictional parcel-study desk.",
+          "context": "Original fictional civilian aircraft-classification exhibit. Shapes illustrate selected structural distinctions, not exact manufactured designs, performance rankings, permissions or endorsements."
+        },
+        "uk": {
+          "alt": "Три окремі ніші представляють навчальну модель, камеру натюрморту й стіл вигаданого дослідження посилок.",
+          "context": "Оригінальна вигадана виставка класифікації цивільних апаратів. Форми ілюструють окремі конструктивні відмінності, а не точні вироби, рейтинги характеристик, дозволи чи підтримку."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.nasa.gov/aeronautics/drones/delivering-closer-to-reality/",
+          "role": "Primary context for the separately authored classification lesson; no source photograph or manufacturer design copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-drone-families-06-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drone-families-06-v1.jpg",
+      "sha256": "879ae84c35afadd6a8f220656dd311ec279ccf6e162af8b6b642b5969dfdc358",
+      "bytes": 152692,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Curate the Family Atlas",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian science-game reveal, very wide full-bleed2:1, stylized3D museum illustration with pale lavender walls, warm cream stone, brass rails, sea-green accents and elegant daylight. Fictional educational exhibit, never documentary or manufacturer advertising. All aircraft are inert museum sculptures on stands, unarmed, with no motors running, propeller blades, payloads, wires or batteries. No real logos, lettering, digits, specifications, interface, borders or watermark. Keep focal comparisons complete and readable in central80%. Localized explanatory text remains separate.\nScene: An exquisite open oversized classification atlas on a cream museum table in a lavender hall. Its pages hold four visually separated columns of removable illustration tiles: aircraft silhouettes, camera/goggles icons, abstract assistance-question symbols and civilian purpose pictures. Some slots are intentionally empty, with one small brass question-mark token beside them. A curator's pencil and neat unused blank cards sit at the edge. Background sculptures are softly out of focus. No text, ticks, ratings or misleading filled-in data. Focus on beautiful orderly evidence and acknowledged unknowns.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-673f4f6d-8904-4b02-b124-3d6b676f41d6.png",
+        "sha256": "538fe9d0d0fe9d85dbed718e75fd2d97d457c34cdee54968459e9b2ace3ce99a",
+        "bytes": 2155847,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "An illustrated family atlas has separate classification columns and intentionally empty fields.",
+          "context": "Original fictional civilian aircraft-classification exhibit. Shapes illustrate selected structural distinctions, not exact manufactured designs, performance rankings, permissions or endorsements."
+        },
+        "uk": {
+          "alt": "Ілюстрований атлас родин має окремі стовпці класифікації та навмисно порожні поля.",
+          "context": "Оригінальна вигадана виставка класифікації цивільних апаратів. Форми ілюструють окремі конструктивні відмінності, а не точні вироби, рейтинги характеристик, дозволи чи підтримку."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://docs.px4.io/main/en/airframes/",
+          "role": "Primary context for the separately authored classification lesson; no source photograph or manufacturer design copied."
+        },
+        {
+          "url": "https://www.easa.europa.eu/en/light/topics/drone-racing-and-flying-drone-goggles-first-person-view-fpv",
+          "role": "Primary context for the separately authored classification lesson; no source photograph or manufacturer design copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred",
+      "correctiveGeneration": {
+        "prompt": "Correct the subject matter of this beautiful lavender museum atlas while preserving its composition, wide2:1 format, paper, lighting and four-column structure. It must be a CIVILIAN DRONE FAMILY atlas, not an airline or piloted-aircraft atlas. Replace first-column aircraft cards with simple unbranded inert drone silhouettes: one four-arm quadcopter, one six-arm hexacopter, one eight-arm octocopter, and one small uncrewed fixed-wing glider without cockpit windows. Use distinct clean symbolic line silhouettes; no commercial airliner, passenger windows or piloted helicopter. Replace the background's large passenger airliner and helicopter displays with indistinct soft-focus small quadcopter sculptures on stands. The second column should show a camera, viewing goggles, a camera again, then an EMPTY slot: no binoculars. The third column should contain only small abstract question marks and empty slots, no leaves or terrain icons falsely labelling assistance. Keep fourth-column civilian scene cards and some intentionally empty bottom slots, blank cards at right, and the brass question token. No readable text, exact product designs, military subjects, wiring or flight instructions.",
+        "reason": "Initial atlas substituted piloted aircraft and a passenger airliner for the intended civilian drone classification, with unrelated assistance symbols. Correct the topical scope and preserve unknown fields.",
+        "input": {
+          "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-51288421-2918-4ea4-8cce-8ad0f4c010c1.png",
+          "sha256": "c342bdf910a403df3d197de2b9c1bf60cad838fa374402f3f78582a5609ab79b",
+          "bytes": 2271948
+        }
+      }
+    },
+    {
+      "id": "fpv-drones-ukraine-01-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drones-ukraine-01-v1.jpg",
+      "sha256": "59a72f4aa8ed8529b8b9babf4a94e873d404e3bdcf7084f6c57084316c88c50f",
+      "bytes": 174451,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Map for Recovery",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide2:1 composition. Sophisticated stylized3D Ukrainian civic museum storybook art: deep blue, warm golden light, pale natural wood, white plaster and quiet human warmth. Clearly fictional illustrated archive, not a photograph, historical facsimile or evidence of a real event. No readable text, digits, real logos, badges, ranks, political posters, weapons, troops, tactical maps, hazard objects, detection methods, flight routes, equipment wiring, interface or watermark. Generous clear central focal space, subtle tactile paper and polished wood. Source-linked factual context is in separate localized text. No real organization's facility or people depicted.\nScene: A beautiful wooden archive desk beside tall windows. Two side-by-side framed ORIGINAL drawings show the SAME invented small community hall: left in bright clear weather with intact roof, right after a storm with a few visibly displaced roof tiles and a fallen tree branch away from the entrance. No people or dangerous debris. Beneath are separate blank date card and source card held in brass clips. A small generic four-arm drone silhouette embossed into a navy book cover suggests aerial records, without any flight map. An open notebook and warm lamp invite careful comparison, not a structural-safety verdict.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-25223300-21af-4097-8fd0-01c7a76534ad.png",
+        "sha256": "450b71b1227ecbdae96d2c0389d52d7cede86cb1c4fd02dbeadd999ddf637dcc",
+        "bytes": 2399130,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Two invented community-hall drawings sit beside separate date and source cards in a recovery archive.",
+          "context": "Original fictional civic archive for contextual evidence reading. The illustration documents no real Ukrainian site, person, project outcome or organization; it supplies no operational defence, survey or clearance guidance."
+        },
+        "uk": {
+          "alt": "Два вигадані малюнки громадської зали лежать поряд з окремими картками дати й джерела в архіві відбудови.",
+          "context": "Оригінальний вигаданий громадський архів для читання доказів у контексті. Ілюстрація не документує реального українського місця, людини, результату проєкту чи організації та не надає практичних оборонних вказівок, методів обстеження чи очищення."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.undp.org/ukraine/press-releases/latvia-targets-2-million-euro-reconstruction-efforts-chernihiv-oblast",
+          "role": "Contextual primary source for the separately dated and bounded lesson; no source media, document layout or operational detail copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-drones-ukraine-02-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drones-ukraine-02-v1.jpg",
+      "sha256": "f8d0b39849e0e56431327a28f606bf8a1bf3d0ca6b43c7977b32c9dbbef4c2cf",
+      "bytes": 110577,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Survey Is Not Clearance",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide2:1 composition. Sophisticated stylized3D Ukrainian civic museum storybook art: deep blue, warm golden light, pale natural wood, white plaster and quiet human warmth. Clearly fictional illustrated archive, not a photograph, historical facsimile or evidence of a real event. No readable text, digits, real logos, badges, ranks, political posters, weapons, troops, tactical maps, hazard objects, detection methods, flight routes, equipment wiring, interface or watermark. Generous clear central focal space, subtle tactile paper and polished wood. Source-linked factual context is in separate localized text. No real organization's facility or people depicted.\nScene: A calm museum document exhibit viewed close and slightly from above. Three large distinct cream cards on separate blue plinths show only original simple sculptures: an eye-like observation lens, a human head silhouette beside a magnifying glass representing specialist review, and a closed folder with a blank record tab representing a recorded decision. A broad empty gap before the final folder makes the stages visually distinct. A small brass handoff token sits between the first two plinths. No checkmarks, green safe signal, terrain, minefield, equipment or aircraft. Beautiful pools of golden light and a quiet empty chair in background.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-804fc775-7171-4e1b-aa05-ae132c23ffa3.png",
+        "sha256": "80854b75902ab2845ccff687902df4c9ba5a3f04a104b9b1c3954cdfbfaaa541",
+        "bytes": 1892250,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Separate observation, specialist-review and recorded-decision exhibits make the document stages visible.",
+          "context": "Original fictional civic archive for contextual evidence reading. The illustration documents no real Ukrainian site, person, project outcome or organization; it supplies no operational defence, survey or clearance guidance."
+        },
+        "uk": {
+          "alt": "Окремі експонати спостереження, фахового розгляду й зафіксованого рішення роблять етапи документа видимими.",
+          "context": "Оригінальний вигаданий громадський архів для читання доказів у контексті. Ілюстрація не документує реального українського місця, людини, результату проєкту чи організації та не надає практичних оборонних вказівок, методів обстеження чи очищення."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.undp.org/ukraine/press-releases/undp-equips-sesu-cutting-edge-ukrainian-aerial-detection-technology-accelerate-humanitarian-demining-operations",
+          "role": "Contextual primary source for the separately dated and bounded lesson; no source media, document layout or operational detail copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-drones-ukraine-03-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drones-ukraine-03-v1.jpg",
+      "sha256": "8a6ec57c23eaaf34200510a0733bc24a3464a19fd711b273d62895aca6b4b8b9",
+      "bytes": 98917,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Pilot Study Has Limits",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide2:1 composition. Sophisticated stylized3D Ukrainian civic museum storybook art: deep blue, warm golden light, pale natural wood, white plaster and quiet human warmth. Clearly fictional illustrated archive, not a photograph, historical facsimile or evidence of a real event. No readable text, digits, real logos, badges, ranks, political posters, weapons, troops, tactical maps, hazard objects, detection methods, flight routes, equipment wiring, interface or watermark. Generous clear central focal space, subtle tactile paper and polished wood. Source-linked factual context is in separate localized text. No real organization's facility or people depicted.\nScene: A striking research-gallery wall of abstract blue-and-gold geometric sample tiles. One small collection of nine tiles sits inside a clearly bounded brass square frame; beyond that frame the wall is spacious and mostly blank with two small elegant question-mark sculptures. A separate cream claim card on a lectern contains only the same tiny bounded square icon, no writing. The abstract tiles depict circles, stripes and triangles only, absolutely no aerial imagery, hazardous objects, labels or detected targets. A narrow pool of warm light emphasizes a limited evidence set within a much larger unknown space.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-9606e89b-9348-4e85-b28f-86b0951592f1.png",
+        "sha256": "162e0d325da99001da30bc53d1810ef9cc50cef6b18f3ceb7c268dd048ab9e70",
+        "bytes": 2012861,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A bounded group of abstract research tiles is surrounded by open space and question marks.",
+          "context": "Original fictional civic archive for contextual evidence reading. The illustration documents no real Ukrainian site, person, project outcome or organization; it supplies no operational defence, survey or clearance guidance."
+        },
+        "uk": {
+          "alt": "Обмежена група абстрактних дослідницьких плиток оточена вільним простором і знаками запитання.",
+          "context": "Оригінальний вигаданий громадський архів для читання доказів у контексті. Ілюстрація не документує реального українського місця, людини, результату проєкту чи організації та не надає практичних оборонних вказівок, методів обстеження чи очищення."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.undp.org/ukraine/press-releases/ai-demining-ukrainian-innovators-train-algorithms-detect-explosives-drone-images",
+          "role": "Contextual primary source for the separately dated and bounded lesson; no source media, document layout or operational detail copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "social-drone-community-connections-05-reveal-v1",
+      "path": "game/editions/assets/discovery/social-drone-community-connections-05-v1.jpg",
+      "sha256": "8a4068c39e990b909eee4fba4e340c4482e0067ff7f26fca629cce38811d199d",
+      "bytes": 135605,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Describe the Important Part — image and text gallery",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Build two facing exhibition stations in a spacious community communications gallery. On the left is a small original architectural model: a main reception desk beside a reading room, with a broad doorway visible. On the right is a large completely blank ivory description card held in a brass frame. A short mint ribbon links the model’s doorway and desk to the blank description card, highlighting useful information rather than decorative plants. A magnifying glass rests beside the model; the far wall contains small quiet decorative plants and books deliberately less prominent. Long amber-lit lower gallery, teal display islands and warm daylight. The model is fictional and makes no claim about a real building or geographic direction. Deep petrol teal and cobalt library architecture, warm ivory paper, honey-yellow lamps, mint accents, tactile painted 3D materials, inviting daylight, strong focal reveal and rich depth. All important objects inside central 80 percent. No writing, letters, numbers, logos, UI, watermarks, border or real people. No aircraft, weapons or operating equipment. Fictional civilian communication scene, no actual event, organisational internal process, endorsement or certification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-149b6cec-a9a9-484b-9776-3246553b7192.png",
+        "sha256": "9d11d6bc393a9788883efcf2a6abab4826f1a5d1e0ce8b05dd575b03aa35a6a1",
+        "bytes": 2131396,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated communications gallery linking a fictional room model’s desk and doorway to a separate blank description card.",
+          "context": "Original generated fictional civilian community-learning scene. It does not depict a real Social Drone UA event, participant or internal process and does not imply endorsement or practical certification. The organisation’s actual stated purpose is described separately with a public source."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована галерея комунікації, що поєднує стійку й двері вигаданої моделі кімнати з окремою порожньою карткою опису.",
+          "context": "Оригінальна згенерована вигадана сцена цивільного навчання спільноти. Вона не зображує справжню подію Social Drone UA, учасника чи внутрішній процес і не означає схвалення або практичної кваліфікації. Заявлену мету організації описано окремо з публічним джерелом."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.w3.org/WAI/tutorials/images/informative/",
+          "role": "Context for the separately sourced lesson; no page layout, source image or operational procedure is reproduced."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "social-drone-community-connections-06-reveal-v1",
+      "path": "game/editions/assets/discovery/social-drone-community-connections-06-v1.jpg",
+      "sha256": "00e3dafc52a05ea3012c7f143548fc32c0d0df35cbd920cec8420cb316123db7",
+      "bytes": 206693,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Keep the Story Accurate — completed community board",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Create a beautiful broad community noticeboard plaza arranged around one large teal-framed board with six distinct original small picture cards and no written captions: welcome table, booklet stack, two linked source cards, open-book doorway, model beside a blank description card and a final updated blank notice. In front, an older blank notice lies flat in an open archive tray, while a fresh blank notice is securely clipped upright on its own amber stand. Make the orderly visible replacement the focal discovery, without error crosses or score icons. Six short broad mint paths connect little library preparation alcoves around the board. Evening sunlight, honey wood, flowering plants and hanging lamps create a satisfying complete community science-day exhibit, not a real organisation event. Deep petrol teal and cobalt library architecture, warm ivory paper, honey-yellow lamps, mint accents, tactile painted 3D materials, inviting daylight, strong focal reveal and rich depth. All important objects inside central 80 percent. No writing, letters, numbers, logos, UI, watermarks, border or real people. No aircraft, weapons or operating equipment. Fictional civilian communication scene, no actual event, organisational internal process, endorsement or certification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-e9094c0a-43d2-4e3e-aa79-826fff3dcdad.png",
+        "sha256": "b1c9946118e0a1110c295b15d0bf1503bd9080ba1df8630d4849378fefc2fb49",
+        "bytes": 2505708,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated community noticeboard finale with six discovery pictures and a fresh notice displayed beside an archived earlier notice.",
+          "context": "Original generated fictional civilian community-learning scene. It does not depict a real Social Drone UA event, participant or internal process and does not imply endorsement or practical certification. The organisation’s actual stated purpose is described separately with a public source."
+        },
+        "uk": {
+          "alt": "Оригінальний ілюстрований фінал дошки спільноти із шістьма картинками відкриттів і новим оголошенням поруч з архівованим попереднім.",
+          "context": "Оригінальна згенерована вигадана сцена цивільного навчання спільноти. Вона не зображує справжню подію Social Drone UA, учасника чи внутрішній процес і не означає схвалення або практичної кваліфікації. Заявлену мету організації описано окремо з публічним джерелом."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.w3.org/WAI/tips/writing/",
+          "role": "Context for the separately sourced lesson; no page layout, source image or operational procedure is reproduced."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "victory-drones-knowledge-connects-01-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-01-v1.jpg",
+      "sha256": "614c9a38f9c9233c01a649f4b59e9f638e5b9dd712cda0bb04b2bc2a25a184a7",
+      "bytes": 170521,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Learning Compass — question observatory",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Create an inspiring open-air science-learning observatory with a very large elegant yellow compass-inspired floor inlay that has four plain spokes and no cardinal letters or geographic map. At its centre, an ivory desk displays one small ordinary wooden wheel model beside one wholly blank focused-question card. Three open question stations sit around the circular court, each with an empty chair and a single blank board. A curved charcoal library wall opens toward sunlit hills; steel-blue columns, yellow walkways and restrained mint plants define a new visual world distinct from teal community workshops. The memorable idea is choosing one clear destination for learning, not learning everything at once. No actual navigation equipment, flight controls or target symbols. Distinctive charcoal and steel-blue observatory architecture, warm yellow #F5CE61 paths and task lights, ivory paper, restrained mint detail, premium tactile painted 3D game materials. Dramatic but welcoming science-museum atmosphere, large coherent focal reveal, depth and all important objects inside central 80 percent. No text, numbers, letters, labels, logos, UI, watermarks, border or real people. No weapons, combat, tactical displays, camouflage, wiring or build instructions. Fictional civilian science-learning space, not a real Victory Drones event or official qualification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-1f8283d5-1dd7-449a-8c2f-0eaa995d9c8e.png",
+        "sha256": "bafd335f0f99a184a121a940e158f5dd06468ba8885bed1d23718b30ffb06a97",
+        "bytes": 2350778,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated learning observatory with a yellow compass-inspired floor, a simple wheel model and a single blank question card.",
+          "context": "Original generated fictional civilian learning observatory. It does not depict a real Victory Drones participant, event or internal process and does not imply endorsement or qualification. Public organisational context is separately sourced."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована навчальна обсерваторія з жовтою підлогою, натхненною компасом, простою моделлю колеса та порожньою карткою запитання.",
+          "context": "Оригінальна згенерована вигадана обсерваторія цивільного навчання. Вона не зображує справжніх учасників, події чи внутрішні процеси Victory Drones і не означає схвалення чи кваліфікації. Публічний контекст організації має окремі джерела."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://victory-drones.com/",
+          "role": "Context for the separately sourced lesson; no page layout, source image or operational procedure is reproduced."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "victory-drones-knowledge-connects-02-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-02-v1.jpg",
+      "sha256": "794cca9930fae791df22caef7e2caa3a5379557396974585c17986609a1140de",
+      "bytes": 196661,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Two Ways to Explain — twin learning pavilions",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Create two separate steel-blue learning pavilions connected by one broad warm-yellow bridge across a shallow decorative water court. The left pavilion holds a large ivory board with a very simple original line drawing of a wooden shelf and three plain book shapes, no labels, arrows, dimensions or writing. The right pavilion holds the corresponding physical miniature bookshelf supporting three blank books, beside a wholly blank story card. A shared ivory discussion table at the bridge midpoint gives equal space to both formats. Show the matching everyday relationship clearly while keeping it an illustrative comparison, not a structural engineering specification. Charcoal arches and yellow lamps frame a scenic observatory landscape. No aircraft or real photographs. Distinctive charcoal and steel-blue observatory architecture, warm yellow #F5CE61 paths and task lights, ivory paper, restrained mint detail, premium tactile painted 3D game materials. Dramatic but welcoming science-museum atmosphere, large coherent focal reveal, depth and all important objects inside central 80 percent. No text, numbers, letters, labels, logos, UI, watermarks, border or real people. No weapons, combat, tactical displays, camouflage, wiring or build instructions. Fictional civilian science-learning space, not a real Victory Drones event or official qualification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-3a54612a-d310-414f-90c2-5736c3332bd5.png",
+        "sha256": "c8cd29acbadfa229e27bb55664744d2f303a14f2fcd5091d1ea78f3ee9c9c3c5",
+        "bytes": 2664554,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated twin learning pavilions comparing a simple bookshelf drawing with a small physical bookshelf, joined by a yellow bridge.",
+          "context": "Original generated fictional civilian learning observatory. It does not depict a real Victory Drones participant, event or internal process and does not imply endorsement or qualification. Public organisational context is separately sourced."
+        },
+        "uk": {
+          "alt": "Оригінальні ілюстровані навчальні павільйони, з’єднані жовтим містком, зіставляють простий малюнок книжкової полиці та невелику фізичну модель.",
+          "context": "Оригінальна згенерована вигадана обсерваторія цивільного навчання. Вона не зображує справжніх учасників, події чи внутрішні процеси Victory Drones і не означає схвалення чи кваліфікації. Публічний контекст організації має окремі джерела."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://victory-drones.com/",
+          "role": "Context for the separately sourced lesson; no page layout, source image or operational procedure is reproduced."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "victory-drones-knowledge-connects-03-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-03-v1.jpg",
+      "sha256": "3be987f6c3072b1de39b9cdfb7c38c95a3808e4657765fea1cfbd3bf4990287e",
+      "bytes": 170273,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Ask and Verify — three evidence pedestals",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. An asymmetric charcoal-and-steel-blue research hall containing three luminous ivory evidence pedestals at different depths. The first displays a simple fictional tabletop demonstration model: a plain wooden wheel on a stand, motionless, no mechanism details. The second holds an open blank source notebook with a brass clip and yellow index ribbon visibly connecting back to the model. The third contains an empty recessed card holder lit by a warm yellow lamp, representing a limit not yet explained. Arrange them as model, record, remaining question without written labels, completion ticks, scores or certification. Tall quiet library walls, warm yellow floor paths and clear ivory negative space make three distinct stations memorable. No real course certificates, participant names or outcome claims. Distinctive charcoal and steel-blue observatory architecture, warm yellow #F5CE61 paths and task lights, ivory paper, restrained mint detail, premium tactile painted 3D game materials. Dramatic but welcoming science-museum atmosphere, large coherent focal reveal, depth and all important objects inside central 80 percent. No text, numbers, letters, labels, logos, UI, watermarks, border or real people. No weapons, combat, tactical displays, camouflage, wiring or build instructions. Fictional civilian science-learning space, not a real Victory Drones event or official qualification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-5c0beb7b-a419-496a-8db6-c618a208f73e.png",
+        "sha256": "9b91986d76a7cd62ae5420057c5487b6597330aa18258b63d06253f095c4417f",
+        "bytes": 2443217,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated research hall with a still wheel model, a linked blank source notebook and an empty card holder for an unresolved question.",
+          "context": "Original generated fictional civilian learning observatory. It does not depict a real Victory Drones participant, event or internal process and does not imply endorsement or qualification. Public organisational context is separately sourced."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована дослідницька зала з нерухомою моделлю колеса, пов’язаним порожнім джерельним зошитом і порожнім місцем для невирішеного запитання.",
+          "context": "Оригінальна згенерована вигадана обсерваторія цивільного навчання. Вона не зображує справжніх учасників, події чи внутрішні процеси Victory Drones і не означає схвалення чи кваліфікації. Публічний контекст організації має окремі джерела."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://victory-drones.com/",
+          "role": "Context for the separately sourced lesson; no page layout, source image or operational procedure is reproduced."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "victory-drones-knowledge-connects-04-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-04-v1.jpg",
+      "sha256": "fcf58c0d74e131fa7a9163285512cf77c66ffc2d7c793dc013f714bde27368b6",
+      "bytes": 173623,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Room for Questions — quiet learning court",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. A serene open-air learning court in an original science observatory. Broad yellow seating islands surround a spacious ivory inner court. A low central table holds three separate smooth wooden geometric parts beside a fourth empty outline-shaped recess, indicating a relationship still being considered; no real machine or assembly instructions. One wholly blank illuminated question wall faces two empty chairs angled toward each other. Add an open book with blank pages, a pencil laid down and a gentle small fabric canopy; these suggest time to pause and ask. No clock, timer, progress bar or score. Steel-blue arches, charcoal shelves, softly moving-looking grasses and mellow afternoon light create a deliberately breathable composition after busier evidence scenes. Distinctive charcoal and steel-blue observatory architecture, warm yellow #F5CE61 paths and task lights, ivory paper, restrained mint detail, premium tactile painted 3D game materials. Dramatic but welcoming science-museum atmosphere, large coherent focal reveal, depth and all important objects inside central 80 percent. No text, numbers, letters, labels, logos, UI, watermarks, border or real people. No weapons, combat, tactical displays, camouflage, wiring or build instructions. Fictional civilian science-learning space, not a real Victory Drones event or official qualification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-3dc0c8be-84d7-4d47-abaa-4024adeeabce.png",
+        "sha256": "99ba3030248d2c833b52c03092359fe3c192213cd4ad40b3f4796156f64314c7",
+        "bytes": 2429603,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated quiet learning courtyard with yellow seating, blank question wall and separate geometric study pieces on a low table.",
+          "context": "Original generated fictional civilian learning observatory. It does not depict a real Victory Drones participant, event or internal process and does not imply endorsement or qualification. Public organisational context is separately sourced."
+        },
+        "uk": {
+          "alt": "Оригінальний ілюстрований спокійний навчальний двір із жовтими сидіннями, порожньою стіною запитань та окремими геометричними навчальними формами на низькому столі.",
+          "context": "Оригінальна згенерована вигадана обсерваторія цивільного навчання. Вона не зображує справжніх учасників, події чи внутрішні процеси Victory Drones і не означає схвалення чи кваліфікації. Публічний контекст організації має окремі джерела."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://victory-drones.com/",
+          "role": "Context for the separately sourced lesson; no page layout, source image or operational procedure is reproduced."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-drones-ukraine-04-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drones-ukraine-04-v1.jpg",
+      "sha256": "a85aa3515935cdae8f983c0376d3da03178f6310287ed9266cf364b2923e3d98",
+      "bytes": 186265,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Learning Has Many Roles",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide2:1 composition. Sophisticated stylized3D Ukrainian civic museum storybook art: deep blue, warm golden light, pale natural wood, white plaster and quiet human warmth. Clearly fictional illustrated archive, not a photograph, historical facsimile or evidence of a real event. No readable text, digits, real logos, badges, ranks, political posters, weapons, troops, tactical maps, hazard objects, detection methods, flight routes, equipment wiring, interface or watermark. Generous clear central focal space, subtle tactile paper and polished wood. Source-linked factual context is in separate localized text. No real organization's facility or people depicted.\nScene: A warm Ukrainian community library imagined from scratch, empty of people, with four distinct learning stations around a generous wooden table. One station has a host's open notebook, one a simple original four-arm model-role drawing, one a stack of source books with blank bookmarks and a magnifier, and one a learner's question cards. A blue bench and golden lamps, potted plants and big windows make it welcoming. No organizational logos, uniforms, real volunteer likenesses or certificates. The visible handoff objects connect contributions without depicting live aircraft assembly.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-27937add-b83f-40a5-9b36-a91c36b29aca.png",
+        "sha256": "752588e6c6e5dad9a4a9473963482a12294e6f844bf0d7d4cd325c52a3dd0034",
+        "bytes": 2418994,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Four empty library stations suggest hosting, drawing, checking sources and asking questions.",
+          "context": "Original fictional civic archive for contextual evidence reading. The illustration documents no real Ukrainian site, person, project outcome or organization; it supplies no operational defence, survey or clearance guidance."
+        },
+        "uk": {
+          "alt": "Чотири порожні бібліотечні місця пропонують ведення заняття, малювання, перевірку джерел і запитання.",
+          "context": "Оригінальний вигаданий громадський архів для читання доказів у контексті. Ілюстрація не документує реального українського місця, людини, результату проєкту чи організації та не надає практичних оборонних вказівок, методів обстеження чи очищення."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.socialdrone.com.ua/",
+          "role": "Contextual primary source for the separately dated and bounded lesson; no source media, document layout or operational detail copied."
+        },
+        {
+          "url": "https://victory-drones.com/",
+          "role": "Contextual primary source for the separately dated and bounded lesson; no source media, document layout or operational detail copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-drones-ukraine-05-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drones-ukraine-05-v1.jpg",
+      "sha256": "92ec7e8bcce3fe937565eaba83d4ed7a930d6e64d74f9335583f49e51bd866fb",
+      "bytes": 128946,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Read the Historical Caption",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide2:1 composition. Sophisticated stylized3D Ukrainian civic museum storybook art: deep blue, warm golden light, pale natural wood, white plaster and quiet human warmth. Clearly fictional illustrated archive, not a photograph, historical facsimile or evidence of a real event. No readable text, digits, real logos, badges, ranks, political posters, weapons, troops, tactical maps, hazard objects, detection methods, flight routes, equipment wiring, interface or watermark. Generous clear central focal space, subtle tactile paper and polished wood. Source-linked factual context is in separate localized text. No real organization's facility or people depicted.\nScene: A sober beautiful historical reading room with a navy-covered ORIGINAL fictional archive folder on an oak desk. Three empty brass-framed annotation slots lie beside it: a calendar-shaped icon, a fountain-pen issuer icon, and a simple purpose card. Behind, two distinct shelves separate older closed archive boxes from a contemporary blank notebook on a fresh shelf, with no dates or writing. One subtle generic drone silhouette on a small museum card gives subject context. All objects are invented, no copied official document, military photography, aircraft details, flags or propaganda. Quiet golden evening light invites careful dated-source reading.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-ad5ef221-6649-4765-b691-505f01b9083d.png",
+        "sha256": "1e2aeb966b19eb3ed257a9c7b736ff9728b46a5a2b98d69572d1b6b02f9f773b",
+        "bytes": 1971699,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "An invented archive folder and separate calendar, issuer and purpose markers invite careful historical reading.",
+          "context": "Original fictional civic archive for contextual evidence reading. The illustration documents no real Ukrainian site, person, project outcome or organization; it supplies no operational defence, survey or clearance guidance."
+        },
+        "uk": {
+          "alt": "Вигадана архівна папка й окремі позначки календаря, автора та мети запрошують до уважного історичного читання.",
+          "context": "Оригінальний вигаданий громадський архів для читання доказів у контексті. Ілюстрація не документує реального українського місця, людини, результату проєкту чи організації та не надає практичних оборонних вказівок, методів обстеження чи очищення."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://u24.gov.ua/news/army_of_drones",
+          "role": "Contextual primary source for the separately dated and bounded lesson; no source media, document layout or operational detail copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred",
+      "correctiveGeneration": {
+        "prompt": "Edit this fictional archive still life. Preserve its lighting, desk, navy folder, three annotation cards, shelves and 2:1 framing. Remove ALL heraldic emblems, trident-like marks, wreaths, coats of arms and seal impressions from the folder and round clasp. The folder must be completely plain navy fabric; clasp must be plain undecorated brass. Replace the left foreground map sheets under the magnifier with blank cream archival papers containing only a few empty rectangular annotation boxes, no maps or geographic features. Replace the aircraft silhouette card at right with one tiny simple abstract FOUR-ARM model icon viewed from directly above: a central circle joined diagonally to four plain circles, no wings, weapon shape, camera or aircraft details. Keep the separate calendar, pen-nib and purpose icons. No added text, logos or official-document styling. The result is visibly invented civilian archive furniture, not a real state document.",
+        "reason": "Initial image added an invented official-looking emblem and map papers. Remove misleading identity details and operational-looking imagery from the fictional archive.",
+        "input": {
+          "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-77a8f107-36e6-47c0-87fa-82da077ee98d.png",
+          "sha256": "ea8a4d8b96000841c40338d9a2adf6258fcb045afd74f8c2edd61395af9840f7",
+          "bytes": 2096065
+        }
+      }
+    },
+    {
+      "id": "fpv-drones-ukraine-06-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drones-ukraine-06-v1.jpg",
+      "sha256": "82feb4086bcf33a5a80d4a98fa7d50cace3bff9de95336562f53ca394b68341f",
+      "bytes": 180611,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "An Exhibit with Boundaries",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide2:1 composition. Sophisticated stylized3D Ukrainian civic museum storybook art: deep blue, warm golden light, pale natural wood, white plaster and quiet human warmth. Clearly fictional illustrated archive, not a photograph, historical facsimile or evidence of a real event. No readable text, digits, real logos, badges, ranks, political posters, weapons, troops, tactical maps, hazard objects, detection methods, flight routes, equipment wiring, interface or watermark. Generous clear central focal space, subtle tactile paper and polished wood. Source-linked factual context is in separate localized text. No real organization's facility or people depicted.\nScene: A completed civic evidence gallery in deep blue and warm gold. Five framed original miniature scenes line a gently curved wall: invented community hall, separated document cards, abstract bounded tiles, quiet library and closed archive folder. Every frame has two small BLANK source/date tabs, no text. In foreground an open source bookshelf and a clearly separate cream safety-information lectern with a simple raised stop-hand icon, never a trophy or certificate. A central empty bench offers a calm place to read. No real locations, dangerous objects, mine imagery, detection equipment or invitation to enter land. A beautiful lasting exhibit celebrating careful limits and responsible questions.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-8be41be8-24c5-45e0-9de1-4fdc9595d501.png",
+        "sha256": "4fd4ced1a6254d9d2eaa3e24b3e407dc699b65ec020b072d48748a9c64dcc511",
+        "bytes": 2402410,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Five fictional evidence scenes, source tabs and a separate safety-information lectern complete the gallery.",
+          "context": "Original fictional civic archive for contextual evidence reading. The illustration documents no real Ukrainian site, person, project outcome or organization; it supplies no operational defence, survey or clearance guidance."
+        },
+        "uk": {
+          "alt": "П’ять вигаданих сцен із доказами, позначки джерел і окремий пюпітр інформації безпеки завершують галерею.",
+          "context": "Оригінальний вигаданий громадський архів для читання доказів у контексті. Ілюстрація не документує реального українського місця, людини, результату проєкту чи організації та не надає практичних оборонних вказівок, методів обстеження чи очищення."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.unicef.org/ukraine/en/stories/fostering-culture-safety-among-children-and-youth-making-mine-safety-rules-known-children",
+          "role": "Contextual primary source for the separately dated and bounded lesson; no source media, document layout or operational detail copied."
+        },
+        {
+          "url": "https://www.undp.org/ukraine/press-releases/latvia-targets-2-million-euro-reconstruction-efforts-chernihiv-oblast",
+          "role": "Contextual primary source for the separately dated and bounded lesson; no source media, document layout or operational detail copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-care-repair-01-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-care-repair-01-v1.jpg",
+      "sha256": "7f570a43475e304a926228a28bbc98e1ec0a76ee1df54fbe77deb36a67f3d601",
+      "bytes": 121480,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Describe the Symptom",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide2:1 landscape. Beautiful tactile stylized3D museum workshop with calm deep-teal cabinets, pale maple desks, cream paper, soft orange accents and warm daylight. Clearly fictional educational still life, not a photograph, real repair procedure or product advertisement. Everything is inert and unpowered. No connected battery, physical damaged battery, live circuit, soldering, spinning props, wiring, tools opening devices, real logos, readable text, numbers, interface, border or watermark. Keep primary objects complete within central80%. Actual explanations remain separately localized. Show evidence and decisions, not operational repairs.\nScene: A beautiful open observation notebook on a tidy maple desk beside an inert small cardboard four-arm classroom model with exactly four plain circular end discs. A loose paper label hangs slightly askew from the model's display stand, its edge curling visibly. In foreground two separate cream cards stand upright: one contains only a simple eye icon, the other a modest orange question mark. A small brass clock-shaped token and blank identifier tab sit beside the notebook. No arrows asserting why the label moved. Warm side light reveals paper texture and invites careful description.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-1569dcb9-99d2-4969-8899-fa163a772827.png",
+        "sha256": "3fa802bed715365186aba096c82e0a78f93b19e3d6ae88337f7ce282b39b6742",
+        "bytes": 1994717,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A loose paper label on an inert model sits beside separate observation and question cards.",
+          "context": "Original fictional unpowered museum exercise about observation and decision boundaries. The image is not a real electrical diagnosis, repair, battery-handling or disposal procedure; actual guidance remains specific to equipment and local specialist services."
+        },
+        "uk": {
+          "alt": "Послаблена паперова етикетка на неактивній моделі розміщена поряд з окремими картками спостереження й запитання.",
+          "context": "Оригінальна вигадана музейна вправа без живлення про спостереження й межі рішень. Зображення не є реальною електричною діагностикою, ремонтом, поводженням з акумулятором чи утилізацією; вказівки залежать від обладнання й місцевих фахових служб."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html",
+          "role": "Primary context for the separately authored observation or decision lesson; no source image or hands-on procedure copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-care-repair-02-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-care-repair-02-v1.jpg",
+      "sha256": "5aeb3ea85a03e23f7999282b8648d66322ef0f18a0a1a580d8f7ec287259917e",
+      "bytes": 118110,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "An Unpowered Inspection",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide2:1 landscape. Beautiful tactile stylized3D museum workshop with calm deep-teal cabinets, pale maple desks, cream paper, soft orange accents and warm daylight. Clearly fictional educational still life, not a photograph, real repair procedure or product advertisement. Everything is inert and unpowered. No connected battery, physical damaged battery, live circuit, soldering, spinning props, wiring, tools opening devices, real logos, readable text, numbers, interface, border or watermark. Keep primary objects complete within central80%. Actual explanations remain separately localized. Show evidence and decisions, not operational repairs.\nScene: Three original inert display samples arranged diagonally on individual cream trays. First a cardboard model bracket with an obvious broken corner; second a paper identifier whose ink is smeared and unreadable; third a smooth closed teal cover, fully intact-looking from outside and never opened. A large freestanding magnifying glass enlarges only the broken cardboard edge. Three blank observation cards sit separately below each tray, with a question token near the closed cover rather than a green tick. Calm science-library background, no batteries, circuit testing or hands handling equipment.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-17c3016b-645d-45b5-be49-5c8d9763560e.png",
+        "sha256": "371bfc574c3253b22d8c05c9a466f8840a36dd1725d54165e5d496a8adea3746",
+        "bytes": 1999239,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A magnifier compares a broken display bracket, unreadable identifier and closed cover with separate observation cards.",
+          "context": "Original fictional unpowered museum exercise about observation and decision boundaries. The image is not a real electrical diagnosis, repair, battery-handling or disposal procedure; actual guidance remains specific to equipment and local specialist services."
+        },
+        "uk": {
+          "alt": "Лупа порівнює зламаний кронштейн експоната, нечитабельний ідентифікатор і закриту кришку з окремими картками спостережень.",
+          "context": "Оригінальна вигадана музейна вправа без живлення про спостереження й межі рішень. Зображення не є реальною електричною діагностикою, ремонтом, поводженням з акумулятором чи утилізацією; вказівки залежать від обладнання й місцевих фахових служб."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.ifixit.com/Info/Device_Safety",
+          "role": "Primary context for the separately authored observation or decision lesson; no source image or hands-on procedure copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-care-repair-03-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-care-repair-03-v1.jpg",
+      "sha256": "e95ecd746401b8ac04f9e440147b4b5f1fdcf3459f59498bd694a48422b9d87c",
+      "bytes": 93933,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Change One Question",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide2:1 landscape. Beautiful tactile stylized3D museum workshop with calm deep-teal cabinets, pale maple desks, cream paper, soft orange accents and warm daylight. Clearly fictional educational still life, not a photograph, real repair procedure or product advertisement. Everything is inert and unpowered. No connected battery, physical damaged battery, live circuit, soldering, spinning props, wiring, tools opening devices, real logos, readable text, numbers, interface, border or watermark. Keep primary objects complete within central80%. Actual explanations remain separately localized. Show evidence and decisions, not operational repairs.\nScene: A precise and beautiful paired comparison desk viewed nearly head-on. Two IDENTICAL cream paper labels with the same simple abstract dark square-and-circle marks sit at exactly matching distances on identical stands. Above each is the SAME desk-lamp shape in the SAME position, but the left emits soft dim light and the right clear brighter light. No change to paper, marks, stand or camera angle between the two setups. A small central open notebook has two empty observation boxes. Teal cabinets behind, ample quiet space, no technical electronics. Illustrate illumination as the only changed factor, no readability test text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-9936af58-14cd-4f19-87e1-e498bf102933.png",
+        "sha256": "247bc76a3165a4ea8cef76236bbdacc4422cf318584b9cc8b4c63717f9799ceb",
+        "bytes": 1733061,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Two matching paper-label displays differ only in the brightness of their lamps.",
+          "context": "Original fictional unpowered museum exercise about observation and decision boundaries. The image is not a real electrical diagnosis, repair, battery-handling or disposal procedure; actual guidance remains specific to equipment and local specialist services."
+        },
+        "uk": {
+          "alt": "Два однакові експонати паперових етикеток відрізняються лише яскравістю ламп.",
+          "context": "Оригінальна вигадана музейна вправа без живлення про спостереження й межі рішень. Зображення не є реальною електричною діагностикою, ремонтом, поводженням з акумулятором чи утилізацією; вказівки залежать від обладнання й місцевих фахових служб."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html",
+          "role": "Primary context for the separately authored observation or decision lesson; no source image or hands-on procedure copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "victory-drones-knowledge-connects-05-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-05-v1.jpg",
+      "sha256": "04e343285fbad88d8c4e32ad365652c29c51aa1927b6be4ba7f751c126fbd4e6",
+      "bytes": 168765,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Compare Before Concluding — paired reference shelves",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Create a stepped comparison library with two equally prominent ivory display frames on adjacent steel-blue plinths. Left frame shows a simplified line drawing of an ordinary bicycle wheel attached to a simple frame fragment, without dimensions or labels. Right frame contains a more painterly original still-life picture of the same kind of bicycle wheel and frame fragment in soft natural light, clearly an illustration not a real sourced photograph. A third small completely blank question card sits equidistant between the two. The matching subjects should invite asking both pictures one question; neither image receives a winning glow or tick. A broad yellow reading terrace wraps the plinths, with charcoal shelves, warm lamps and an empty discussion seat. Keep no readable text, circuits or practical bicycle-building instructions. Distinctive charcoal and steel-blue observatory architecture, warm yellow #F5CE61 paths and task lights, ivory paper, restrained mint detail, premium tactile painted 3D game materials. Dramatic but welcoming science-museum atmosphere, large coherent focal reveal, depth and all important objects inside central 80 percent. No text, numbers, letters, labels, logos, UI, watermarks, border or real people. No weapons, combat, tactical displays, camouflage, wiring or build instructions. Fictional civilian science-learning space, not a real Victory Drones event or official qualification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-ea4e8554-b2a5-45f2-a14e-6e3e19bd75dd.png",
+        "sha256": "aa6c6d792615ba58f32b142dd31a02f755f5ab3b0512c1dcc2f08a71a525dc30",
+        "bytes": 2254526,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated comparison library with a simple bicycle-wheel drawing, a more detailed original wheel illustration and one shared blank question card.",
+          "context": "Original generated fictional civilian learning observatory. It does not depict a real Victory Drones participant, event or internal process and does not imply endorsement or qualification. Public organisational context is separately sourced."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована бібліотека порівнянь із простим малюнком велосипедного колеса, детальнішою оригінальною ілюстрацією та спільною порожньою карткою запитання.",
+          "context": "Оригінальна згенерована вигадана обсерваторія цивільного навчання. Вона не зображує справжніх учасників, події чи внутрішні процеси Victory Drones і не означає схвалення чи кваліфікації. Публічний контекст організації має окремі джерела."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://victory-drones.com/",
+          "role": "Context for the separately sourced lesson; no page layout, source image or operational procedure is reproduced."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "victory-drones-knowledge-connects-06-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-06-v1.jpg",
+      "sha256": "494447b8b5ba6af10d8eaa4dcc7497ac480cb754104f6f36ac1d7d76885aa350",
+      "bytes": 227648,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Teach It Forward — connected learning forum",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Create an original completed learning network as a beautiful open miniature science observatory with six connected spaces, seen at a scenic elevated angle. A central ivory forum contains one simple ordinary bicycle display on a stand and two empty chairs. Around it, a compass-inspired floor court, twin explanation pavilions, three evidence pedestals, a calm question alcove and paired comparison frames are joined by broad golden-yellow bridges. Small entirely blank source cards are attached to the bicycle exhibit, and one deliberately empty card holder welcomes a new question. Steel-blue domes, charcoal bookshelves, amber lighting and a calm distant landscape give a triumphant warm finale. This is an original architectural metaphor for sharing an explanation, not an engineering diagram or route map. No mechanical detail close-up or assembly sequence. Distinctive charcoal and steel-blue observatory architecture, warm yellow #F5CE61 paths and task lights, ivory paper, restrained mint detail, premium tactile painted 3D game materials. Dramatic but welcoming science-museum atmosphere, large coherent focal reveal, depth and all important objects inside central 80 percent. No text, numbers, letters, labels, logos, UI, watermarks, border or real people. No weapons, combat, tactical displays, camouflage, wiring or build instructions. Fictional civilian science-learning space, not a real Victory Drones event or official qualification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-d6b7c591-a33e-4541-98da-d5b80a31309a.png",
+        "sha256": "ef1cf9802cfe3b6729d6ca81b0bb0c90b5ec518e155f48a7c380c55e3d94865d",
+        "bytes": 2838216,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated learning-network finale with a bicycle display, empty discussion seats and yellow bridges connecting earlier discovery spaces.",
+          "context": "Original generated fictional civilian learning observatory. It does not depict a real Victory Drones participant, event or internal process and does not imply endorsement or qualification. Public organisational context is separately sourced."
+        },
+        "uk": {
+          "alt": "Оригінальний ілюстрований фінал навчальної мережі з моделлю велосипеда, вільними місцями для обговорення та жовтими містками між попередніми просторами відкриттів.",
+          "context": "Оригінальна згенерована вигадана обсерваторія цивільного навчання. Вона не зображує справжніх учасників, події чи внутрішні процеси Victory Drones і не означає схвалення чи кваліфікації. Публічний контекст організації має окремі джерела."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://victory-drones.com/",
+          "role": "Context for the separately sourced lesson; no page layout, source image or operational procedure is reproduced."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "victory-drones-ideas-understanding-01-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-01-v1.jpg",
+      "sha256": "9352d919d1f6f0d5d989241982cd5bdd836544c76c3822196bdf203936489045",
+      "bytes": 148956,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Observe Before Explaining — cart terrace",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Create an original civilian science museum observation terrace containing two short broad parallel tabletop tracks made of different visibly textured surfaces, one smooth ivory and one softly pebbled charcoal. On each is a matching small plain wooden classroom cart with four wheels; one rests farther along its track than the other. A blank observation card stands beside each track, with an additional separate blank explanation card on a central yellow shelf. No readable A or B labels, no measurements, speed lines, motors or claims of a completed real experiment. Let the visual separation of observation cards from the explanation card be the core reveal. Steel-blue architecture, yellow route accents, tall sunlit windows and uncluttered plinths create an inviting fictional science scene. The two positions are illustrative invented outcomes; they do not prove why the difference occurred. Distinctive charcoal and steel-blue observatory architecture, warm yellow #F5CE61 paths and task lights, ivory paper, restrained mint detail, premium tactile painted 3D game materials. Dramatic but welcoming science-museum atmosphere, large coherent focal reveal, depth and all important objects inside central 80 percent. No text, numbers, letters, labels, logos, UI, watermarks, border or real people. No weapons, combat, tactical displays, camouflage, wiring or build instructions. Fictional civilian science-learning space, not a real Victory Drones event or official qualification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-2cf4bb91-7290-4c40-bf27-f36f158a548f.png",
+        "sha256": "c95b0a75ca85f0048762a4630824bf81ce14ce2ef4b729d58986459d91e57f9f",
+        "bytes": 2064322,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated civilian cart exhibit with two differently textured tracks, separate observation cards and a third blank explanation card.",
+          "context": "Original generated fictional civilian learning observatory. It does not depict a real Victory Drones participant, event or internal process and does not imply endorsement or qualification. Public organisational context is separately sourced."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована цивільна виставка візків із двома різними поверхнями, окремими картками спостереження та третьою порожньою карткою пояснення.",
+          "context": "Оригінальна згенерована вигадана обсерваторія цивільного навчання. Вона не зображує справжніх учасників, події чи внутрішні процеси Victory Drones і не означає схвалення чи кваліфікації. Публічний контекст організації має окремі джерела."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html",
+          "role": "The separately sourced lesson distinguishes observations and testable explanations. The original cart positions are fictional examples, not measured experimental results."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-care-repair-04-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-care-repair-04-v1.jpg",
+      "sha256": "1592f632fbce43aacc121cfac72476303bb3145fff3ebced154857a29a262aa5",
+      "bytes": 108518,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Battery Stop Card",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide2:1 landscape. Beautiful tactile stylized3D museum workshop with calm deep-teal cabinets, pale maple desks, cream paper, soft orange accents and warm daylight. Clearly fictional educational still life, not a photograph, real repair procedure or product advertisement. Everything is inert and unpowered. No connected battery, physical damaged battery, live circuit, soldering, spinning props, wiring, tools opening devices, real logos, readable text, numbers, interface, border or watermark. Keep primary objects complete within central80%. Actual explanations remain separately localized. Show evidence and decisions, not operational repairs.\nScene: A calm safety-reference desk whose central subject is a FLAT printed cream card standing upright on a maple holder. The card contains only an abstract flat outlined battery pictogram and a small orange warning triangle; it is absolutely not a physical battery or three-dimensional cell. Beside it a separate tall orange stop-hand sculpture and an untouched closed notebook with a simple person-and-question icon represent qualified help. A teal chair sits empty in warm light. No tools, actual battery, damaged cell, flames, handling, storage container or procedure. Serious but reassuring, no threat spectacle.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-5647f262-261c-4ce9-ae73-8c8c8833ba4e.png",
+        "sha256": "d54adbd6373042e3ad9030a81ab7ee8b7448ea60aad0bee643819df919cd82b6",
+        "bytes": 1941713,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A flat battery-warning pictogram, separate stop symbol and help notebook form a calm reference desk.",
+          "context": "Original fictional unpowered museum exercise about observation and decision boundaries. The image is not a real electrical diagnosis, repair, battery-handling or disposal procedure; actual guidance remains specific to equipment and local specialist services."
+        },
+        "uk": {
+          "alt": "Пласка піктограма попередження про акумулятор, окремий символ зупинки й зошит допомоги утворюють спокійний довідковий стіл.",
+          "context": "Оригінальна вигадана музейна вправа без живлення про спостереження й межі рішень. Зображення не є реальною електричною діагностикою, ремонтом, поводженням з акумулятором чи утилізацією; вказівки залежать від обладнання й місцевих фахових служб."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.ifixit.com/Wiki/What_to_do_with_a_swollen_battery",
+          "role": "Primary context for the separately authored observation or decision lesson; no source image or hands-on procedure copied."
+        },
+        {
+          "url": "https://www.ifixit.com/Info/Device_Safety",
+          "role": "Primary context for the separately authored observation or decision lesson; no source image or hands-on procedure copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-care-repair-05-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-care-repair-05-v1.jpg",
+      "sha256": "b1426ba3ebb1598179c6ab6b8ec34d052a024d321776aae61276b73bbc39c0bd",
+      "bytes": 109921,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Repair, Replace, Ask",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide2:1 landscape. Beautiful tactile stylized3D museum workshop with calm deep-teal cabinets, pale maple desks, cream paper, soft orange accents and warm daylight. Clearly fictional educational still life, not a photograph, real repair procedure or product advertisement. Everything is inert and unpowered. No connected battery, physical damaged battery, live circuit, soldering, spinning props, wiring, tools opening devices, real logos, readable text, numbers, interface, border or watermark. Keep primary objects complete within central80%. Actual explanations remain separately localized. Show evidence and decisions, not operational repairs.\nScene: A compelling three-way museum decision exhibit on a wide curved cream table. Left: a torn PAPER label alongside a fresh blank replacement paper label and a small swap-arrow token. Centre: a flat generic circuit-board SILHOUETTE printed on a card, with a brass question mark and blank identity tab; no physical electronic board. Right: a flat battery-warning card paired with a large orange stop-hand icon, never a real battery. Three clearly separated spaces and warm light emphasize different decision boundaries. No common tool stretching between them, no checkmark approval, repair or powered diagnosis.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-dcb803fc-c18d-4caf-be88-72471c429a47.png",
+        "sha256": "edb410cd625dbf906189473abaf67b4fc79a9c7d49ca3d776a7632052b85c0f8",
+        "bytes": 1667731,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Paper-label replacement, an unidentified-board question and a battery-warning stop card occupy separate decision spaces.",
+          "context": "Original fictional unpowered museum exercise about observation and decision boundaries. The image is not a real electrical diagnosis, repair, battery-handling or disposal procedure; actual guidance remains specific to equipment and local specialist services."
+        },
+        "uk": {
+          "alt": "Заміна паперової етикетки, запитання про невідому плату й картка зупинки через акумулятор займають окремі простори рішень.",
+          "context": "Оригінальна вигадана музейна вправа без живлення про спостереження й межі рішень. Зображення не є реальною електричною діагностикою, ремонтом, поводженням з акумулятором чи утилізацією; вказівки залежать від обладнання й місцевих фахових служб."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.ifixit.com/Wiki/What_to_do_with_a_swollen_battery",
+          "role": "Primary context for the separately authored observation or decision lesson; no source image or hands-on procedure copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred",
+      "correctiveGeneration": {
+        "prompt": "Edit only lettering in this original educational museum illustration. Preserve the full2:1 composition, three decision areas, paper-label samples, abstract board card, warning battery pictogram, stop-hand symbol, colours and lighting. REMOVE EVERY readable word and letter from the three upright signboards, the wall poster at upper right and the curved front edge of the table. Fill those word areas with matching blank cream or teal surfaces. Keep existing simple icons (leaf, magnifying glass, warning triangle, question mark, swap arrows, stop hand). Do not replace text with new text, pseudo letters, numbers or labels. The picture must be language-neutral because the game separately supplies English and Ukrainian explanations. Do not alter or add any equipment, wiring or procedures.",
+        "reason": "Initial generation added English labels despite the language-neutral brief. Remove all lettering so the same art serves EN/UK without conflicting embedded text.",
+        "input": {
+          "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-b47efc14-bf68-46e0-9c6d-9fc2ce60b953.png",
+          "sha256": "dba066d0736c6effd0f3cd0532e7b30e7da2b8d2420931f5d10569aa0ef0d0d7",
+          "bytes": 1833104
+        }
+      }
+    },
+    {
+      "id": "fpv-care-repair-06-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-care-repair-06-v1.jpg",
+      "sha256": "d3c9b3b8d2acd2fa94a63aa66ef471094c2142badf9700ef6e4afe5d97e54bdb",
+      "bytes": 116476,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Responsible Last Step",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide2:1 landscape. Beautiful tactile stylized3D museum workshop with calm deep-teal cabinets, pale maple desks, cream paper, soft orange accents and warm daylight. Clearly fictional educational still life, not a photograph, real repair procedure or product advertisement. Everything is inert and unpowered. No connected battery, physical damaged battery, live circuit, soldering, spinning props, wiring, tools opening devices, real logos, readable text, numbers, interface, border or watermark. Keep primary objects complete within central80%. Actual explanations remain separately localized. Show evidence and decisions, not operational repairs.\nScene: A beautiful completed care notebook lies open on a maple reading desk. Six neat evidence tabs protrude from its side, while FOUR distinct blank record fields occupy the open page, represented by small simple icons for identifier tag, eye observation, decision folder and person contact. Beside it a separate blank local-contact card sits in a teal holder with a modest question token, and an abstract collection-service building icon on its own stand suggests a specialist destination without any address or shipping label. No actual batteries, packages for shipping, disposal bins, transport equipment or invented procedure. Gentle completion light, careful handoff rather than trophy.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-9a82e5b3-d6af-4b77-9d84-b712b0f8f143.png",
+        "sha256": "55401e809092bbd72f2a5d00750b761596a09e0a55d77ae5bf5139e266cf4a1a",
+        "bytes": 1955235,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A care notebook with evidence tabs, record fields and an unresolved local-specialist contact completes the handoff.",
+          "context": "Original fictional unpowered museum exercise about observation and decision boundaries. The image is not a real electrical diagnosis, repair, battery-handling or disposal procedure; actual guidance remains specific to equipment and local specialist services."
+        },
+        "uk": {
+          "alt": "Зошит догляду з вкладками доказів, полями запису й невизначеним місцевим фаховим контактом завершує передачу справ.",
+          "context": "Оригінальна вигадана музейна вправа без живлення про спостереження й межі рішень. Зображення не є реальною електричною діагностикою, ремонтом, поводженням з акумулятором чи утилізацією; вказівки залежать від обладнання й місцевих фахових служб."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.epa.gov/system/files/documents/2023-09/Lithium-Ion-Batteries-Fact-Sheet-8-2023.pdf",
+          "role": "Primary context for the separately authored observation or decision lesson; no source image or hands-on procedure copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "victory-drones-ideas-understanding-02-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-02-v1.jpg",
+      "sha256": "d2532d7bd90b41393a2b97c2dbc10780bbca85ed7d03bcfb8ac6b7d7378abdbd",
+      "bytes": 139105,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Forces Come in Pairs — two-object sculpture",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Build a clear original conceptual force-pair exhibition with TWO separate steel-blue object plinths side by side. On the left plinth is an ivory sculptural hand and short wrist on a stand, reaching toward the right with its open palm contacting a simple smooth wall slab on the right plinth. This is a plaster educational hand sculpture, not a real person. Place one large golden horizontal arrow sculpture immediately below the hand, pointing LEFT, physically attached to the LEFT hand plinth. Place another golden horizontal arrow sculpture of the same physical length immediately below the wall, pointing RIGHT, physically attached to the RIGHT wall plinth. The two arrows point AWAY from each other and are unmistakably assigned to different object plinths. No other arrows. They illustrate interaction directions only; no exact numeric force scale or labels. An ivory inset gap between the two plinth bases makes the two-body distinction clear. Spacious yellow-lit science hall, simple charcoal walls, quiet benches and minimal background detail so the hand, wall and paired arrows dominate. Distinctive charcoal and steel-blue observatory architecture, warm yellow #F5CE61 paths and task lights, ivory paper, restrained mint detail, premium tactile painted 3D game materials. Dramatic but welcoming science-museum atmosphere, large coherent focal reveal, depth and all important objects inside central 80 percent. No text, numbers, letters, labels, logos, UI, watermarks, border or real people. No weapons, combat, tactical displays, camouflage, wiring or build instructions. Fictional civilian science-learning space, not a real Victory Drones event or official qualification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-c235e01b-41b9-4c74-af21-8b170e13df8e.png",
+        "sha256": "bfc4ad59e1527e2daecf10a55c694336a1c3ad323fd3e5df4afd3583494c5be1",
+        "bytes": 2156570,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated interaction exhibit with a hand sculpture and wall on separate plinths, each bearing an oppositely directed gold arrow.",
+          "context": "Original generated fictional civilian learning observatory. It does not depict a real Victory Drones participant, event or internal process and does not imply endorsement or qualification. Public organisational context is separately sourced. Arrow sculptures are conceptual illustration; source-linked localized explanations, not generated geometry, state the physical assumptions and units."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована виставка взаємодії зі скульптурою руки й стіною на окремих п’єдесталах, кожен зі своєю протилежно спрямованою золотою стрілкою.",
+          "context": "Оригінальна згенерована вигадана обсерваторія цивільного навчання. Вона не зображує справжніх учасників, події чи внутрішні процеси Victory Drones і не означає схвалення чи кваліфікації. Публічний контекст організації має окремі джерела. Скульптури стрілок є концептуальною ілюстрацією; фізичні припущення й одиниці визначають локалізовані пояснення з джерелами, а не згенерована геометрія."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/",
+          "role": "Primary science context for the separate lesson. This original spatial illustration copies no source diagram and supplies no numeric measurement or practical operating instruction."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "victory-drones-ideas-understanding-03-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-03-v1.jpg",
+      "sha256": "027c9cccb10195e5ca22fa62ddeac9f873eb599e3561c550cc53e58600564f3e",
+      "bytes": 164462,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "The Net Force — one-object comparison",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Create an original civilian mechanics hall with ONE plain wooden classroom cart on ONE broad ivory central plinth. The cart has a simple box body and four clearly unpowered wheels. Two large matching golden horizontal arrow sculptures are positioned at the cart’s opposite sides at the same height and have the same physical length: left arrow points LEFT, right arrow points RIGHT. Each arrow’s inner tail is visibly linked to the SAME central cart display with a fine brass support, showing both belong to the one-object comparison. No second cart or interacting wall. These arrows are conceptual horizontal-force illustrations, not a complete measured free-body diagram; no labels, equations, motion streaks, stop signs, velocities or numeric scale. Keep open blank note cards below the display for assumptions that the localized lesson supplies. Two calm steel-blue reading terraces surround this single focal model, with yellow floor bands and generous diffuse light. Distinctive charcoal and steel-blue observatory architecture, warm yellow #F5CE61 paths and task lights, ivory paper, restrained mint detail, premium tactile painted 3D game materials. Dramatic but welcoming science-museum atmosphere, large coherent focal reveal, depth and all important objects inside central 80 percent. No text, numbers, letters, labels, logos, UI, watermarks, border or real people. No weapons, combat, tactical displays, camouflage, wiring or build instructions. Fictional civilian science-learning space, not a real Victory Drones event or official qualification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-a6af09fb-9f19-4243-a298-8712941b9886.png",
+        "sha256": "73d57ce6780686ca502fd720917a338e61620adf0336ffa622edf9e9a5880b36",
+        "bytes": 2206994,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated mechanics hall with one classroom cart and matching left- and right-pointing gold arrows attached to its shared display.",
+          "context": "Original generated fictional civilian learning observatory. It does not depict a real Victory Drones participant, event or internal process and does not imply endorsement or qualification. Public organisational context is separately sourced. Arrow sculptures are conceptual illustration; source-linked localized explanations, not generated geometry, state the physical assumptions and units."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована зала механіки з одним навчальним візком і однаковими золотими стрілками ліворуч та праворуч на його спільній виставковій основі.",
+          "context": "Оригінальна згенерована вигадана обсерваторія цивільного навчання. Вона не зображує справжніх учасників, події чи внутрішні процеси Victory Drones і не означає схвалення чи кваліфікації. Публічний контекст організації має окремі джерела. Скульптури стрілок є концептуальною ілюстрацією; фізичні припущення й одиниці визначають локалізовані пояснення з джерелами, а не згенерована геометрія."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/equilibrium/",
+          "role": "Primary science context for the separate lesson. This original spatial illustration copies no source diagram and supplies no numeric measurement or practical operating instruction."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "victory-drones-ideas-understanding-04-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-04-v1.jpg",
+      "sha256": "7b42d7f7991f3334ea8dece380d0fd7c094c098e695e4e8b4a8a91840f7b95a7",
+      "bytes": 164122,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Direction Matters — quiet vector garden",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Create an original spacious sculpture garden in a civilian science observatory. Display exactly TWO matching golden arrow sculptures on separate low charcoal stands: one horizontal arrow points LEFT, the other vertical arrow points UP. The arrows use the same shape and physical length, but perspective is clearly artistic and no measurement accuracy is claimed. Separate the stands widely across a broad ivory terrace so each direction is immediately legible. Behind them, a quiet circular forum has two empty chairs and one wholly blank explanatory card. Steel-blue terraced walls, warm-yellow garden paths, soft grasses and mellow afternoon sun create a breathable discovery scene. No compass letters, geographic map, flight-control diagram, numbers, measurement ticks or other arrows. The memorable reveal is that equal-looking arrow forms can point in different directions; the localized text carries the stated example and units. Distinctive charcoal and steel-blue observatory architecture, warm yellow #F5CE61 paths and task lights, ivory paper, restrained mint detail, premium tactile painted 3D game materials. Dramatic but welcoming science-museum atmosphere, large coherent focal reveal, depth and all important objects inside central 80 percent. No text, numbers, letters, labels, logos, UI, watermarks, border or real people. No weapons, combat, tactical displays, camouflage, wiring or build instructions. Fictional civilian science-learning space, not a real Victory Drones event or official qualification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-582a4b23-0a8b-46bf-bd2e-76097f3fa7fd.png",
+        "sha256": "01b2d976898366e97414ff52d7b72d6698e8708d7f86dae0c42d6861f1e73b24",
+        "bytes": 2291699,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated vector garden with separate gold arrow sculptures pointing left and upward beside a quiet forum.",
+          "context": "Original generated fictional civilian learning observatory. It does not depict a real Victory Drones participant, event or internal process and does not imply endorsement or qualification. Public organisational context is separately sourced. Arrow sculptures are conceptual illustration; source-linked localized explanations, not generated geometry, state the physical assumptions and units."
+        },
+        "uk": {
+          "alt": "Оригінальний ілюстрований сад векторів з окремими золотими скульптурами стрілок ліворуч і вгору біля спокійного простору обговорення.",
+          "context": "Оригінальна згенерована вигадана обсерваторія цивільного навчання. Вона не зображує справжніх учасників, події чи внутрішні процеси Victory Drones і не означає схвалення чи кваліфікації. Публічний контекст організації має окремі джерела. Скульптури стрілок є концептуальною ілюстрацією; фізичні припущення й одиниці визначають локалізовані пояснення з джерелами, а не згенерована геометрія."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.grc.nasa.gov/WWW/K-12/BGP/vectpart.html",
+          "role": "Primary science context for the separate lesson. This original spatial illustration copies no source diagram and supplies no numeric measurement or practical operating instruction."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "victory-drones-ideas-understanding-05-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-05-v1.jpg",
+      "sha256": "2567a823b10e581274fd58c6efd57444f0fd51c58358133230d63f9d5aef9b97",
+      "bytes": 149490,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Fair Comparison — matched cart bays",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Create an original civilian science room with two beautifully matched cart-display bays, equal-sized and lit equally. Each bay has one identical plain wooden classroom cart parked at the same clearly visible starting edge on a short horizontal tabletop. The left tabletop has a smooth ivory removable surface tile; the right tabletop has a pebbled dark removable surface tile. No motion trails or outcome claimed, this exhibit is prepared for comparison rather than showing a successful result. A matching plain brass starting-edge bar is visible at both bays, with no force gauge or numeric scale. Between them is a broad amber record shelf holding two blank cards side by side; farther behind it, a separate smaller blank uncertainty board is left available. The memorable idea is changing one visible surface while keeping the cart setup alike. Steel-blue shelves, charcoal window frames, wide yellow walkway and soft daylight; no aircraft or operating machinery. Exact experimental controls and limitations remain in localized explanation, not generated picture measurements. Distinctive charcoal and steel-blue observatory architecture, warm yellow #F5CE61 paths and task lights, ivory paper, restrained mint detail, premium tactile painted 3D game materials. Dramatic but welcoming science-museum atmosphere, large coherent focal reveal, depth and all important objects inside central 80 percent. No text, numbers, letters, labels, logos, UI, watermarks, border or real people. No weapons, combat, tactical displays, camouflage, wiring or build instructions. Fictional civilian science-learning space, not a real Victory Drones event or official qualification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-c6d00802-6bc6-47e8-ada0-b7cbd50a0c8a.png",
+        "sha256": "e470490159670e6d936859663e006ba62f0758fa225f0a6ec804bcc4df42ece0",
+        "bytes": 2105850,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated comparison room with matched cart bays, different removable surface tiles, paired blank record cards and a separate uncertainty board.",
+          "context": "Original generated fictional civilian learning observatory. It does not depict a real Victory Drones participant, event or internal process and does not imply endorsement or qualification. Public organisational context is separately sourced. Conceptual models are illustrative; no actual experiment, quantitative diagram or technical validation is claimed."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована кімната порівняння з однаковими просторами візків, різними змінними поверхнями, парними порожніми картками записів і окремою дошкою невизначеності.",
+          "context": "Оригінальна згенерована вигадана обсерваторія цивільного навчання. Вона не зображує справжніх учасників, події чи внутрішні процеси Victory Drones і не означає схвалення чи кваліфікації. Публічний контекст організації має окремі джерела. Концептуальні моделі є ілюстративними; не заявлено справжнього досліду, кількісної схеми чи технічної перевірки."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html",
+          "role": "Primary context for the separate lesson about comparison or model limits. This original exhibit copies no source artwork and depicts no actual measured experiment."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "victory-drones-ideas-understanding-06-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-06-v1.jpg",
+      "sha256": "fad28290f3eb9e0bf2848b70fb9b6b4d77bc5c2fc968ee44da8faa7a901e0cbd",
+      "bytes": 172086,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Explain the Model — complete science courtyard",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Create a memorable original final science-exhibit courtyard in a steel-blue and charcoal observatory. Six distinct miniature display islands form an open crescent linked by broad golden-yellow paths around one large ivory discussion table. Central foreground focus: an ordinary closed blank book resting on a simple wooden table inside a low clear museum case, with two entirely blank nearby cards for assumptions and limits. Surrounding islands visually recall earlier discoveries: paired cart observation trays; separate sculptural hand and wall objects; a single cart comparison plinth; leftward and upward gold arrow sculptures; matched surface-comparison bays; and an open blank explanation notebook. Treat these as distant conceptual reminders, without arrows assigned to bodies at this miniature scale, no equations or technical measurements. An empty visitor seat at the central table invites someone to explain a new everyday example. Warm sunset through the observatory, restrained plants and balanced spacious composition give a satisfying finale. This is a fictional learning exhibition, not a real experiment or engineering certification. Distinctive charcoal and steel-blue observatory architecture, warm yellow #F5CE61 paths and task lights, ivory paper, restrained mint detail, premium tactile painted 3D game materials. Dramatic but welcoming science-museum atmosphere, large coherent focal reveal, depth and all important objects inside central 80 percent. No text, numbers, letters, labels, logos, UI, watermarks, border or real people. No weapons, combat, tactical displays, camouflage, wiring or build instructions. Fictional civilian science-learning space, not a real Victory Drones event or official qualification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-21521d21-ab62-47c0-940c-0cd5a36851f4.png",
+        "sha256": "148a463bbda2dbeafd69c7b04fd0377bcaa74a0b92885128142189d6b66c12d5",
+        "bytes": 2328344,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated science-courtyard finale joining six conceptual exhibits around an everyday book-on-table example and blank assumptions cards.",
+          "context": "Original generated fictional civilian learning observatory. It does not depict a real Victory Drones participant, event or internal process and does not imply endorsement or qualification. Public organisational context is separately sourced. Conceptual models are illustrative; no actual experiment, quantitative diagram or technical validation is claimed."
+        },
+        "uk": {
+          "alt": "Оригінальний ілюстрований фінал наукового двору, що поєднує шість концептуальних експозицій довкола прикладу книжки на столі та порожніх карток припущень.",
+          "context": "Оригінальна згенерована вигадана обсерваторія цивільного навчання. Вона не зображує справжніх учасників, події чи внутрішні процеси Victory Drones і не означає схвалення чи кваліфікації. Публічний контекст організації має окремі джерела. Концептуальні моделі є ілюстративними; не заявлено справжнього досліду, кількісної схеми чи технічної перевірки."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://public.ksc.nasa.gov/mns/faq/",
+          "role": "Primary context for the separate lesson about comparison or model limits. This original exhibit copies no source artwork and depicts no actual measured experiment."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
     }
   ]
 }
