@@ -44,7 +44,8 @@ import {
   fetchSoundtrackAlbumCatalog,
 } from '../soundtrack-album-download.mjs';
 import {
-  fetchOnlineSoundtrackCatalogues,
+  fetchOnlineSoundtrackCatalogue,
+  fetchVerifiedOnlineSoundtrack,
   onlineSoundtrackRecordingAllowed,
 } from '../online-soundtrack-catalogue.mjs';
 import { soundtrackErrorText } from './soundtrack-error-copy.mjs';
@@ -55,6 +56,8 @@ const seconds = (value = 0) =>
   `${Math.floor(value / 60)}:${String(Math.floor(value % 60)).padStart(2, '0')}`;
 const bytes = (value) => `${(value / 1024 / 1024).toFixed(1)} MiB`;
 const ONLINE_STYLE_CHOICES = Object.freeze([
+  ['fpv', localizedMessage('interface:fpvMusic')],
+  ['ua', localizedMessage('interface:uaMusic')],
   ['synth', localizedMessage('interface:synthElectronic')],
   ['metal', localizedMessage('interface:metal')],
   ['ukrainian', localizedMessage('interface:ukrainian')],
@@ -1445,7 +1448,7 @@ export function attachSoundtrackPanel({
       class: 'micro-note',
     }),
     node('a', 'licensed-previews', localizedMessage('interface:openThePublicArchiveWebsite'), {
-      href: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+      href: 'https://mekhovov.github.io/revealline-soundtracks/',
       target: '_blank',
       rel: 'noopener noreferrer',
       class: 'button secondary',
@@ -1706,7 +1709,9 @@ export function attachSoundtrackPanel({
   function matchesOnlineStyle(track, style) {
     const tags = track.tags.map((tag) => tag.toLowerCase()),
       has = (...values) => values.some((value) => tags.some((tag) => tag.includes(value)));
-    if (style === 'ukrainian') return has('ukrain');
+    if (style === 'fpv') return has('фпв', 'fpv');
+    if (style === 'ua') return tags.some((tag) => tag === 'ua');
+    if (style === 'ukrainian') return has('ukrain') || tags.some((tag) => tag === 'ua');
     if (style === 'metal') return has('metal');
     if (style === 'synth') return has('synth', 'electro', 'tracker', 'fm', 'dance', 'techno');
     if (style === 'chiptune') return has('chiptune', '8-bit', 'fakebit');
@@ -1740,7 +1745,7 @@ export function attachSoundtrackPanel({
       const searchable = [
         track.title,
         track.artist,
-        track.collection,
+        ...(track.collections ?? [track.collection]),
         track.fileName,
         ...track.tags,
       ]
@@ -1749,7 +1754,7 @@ export function attachSoundtrackPanel({
       return (
         (!draft.listening?.recordingMode || onlineSoundtrackRecordingAllowed(track)) &&
         (!query || searchable.includes(query)) &&
-        (!collection || track.collection === collection) &&
+        (!collection || (track.collections ?? [track.collection]).includes(collection)) &&
         [...styles].some((style) => matchesOnlineStyle(track, style))
       );
     });
@@ -1788,7 +1793,11 @@ export function attachSoundtrackPanel({
         details.append(
           node('strong', null, track.title),
           node('span', null, track.artist),
-          node('small', null, `${track.collection} · ${track.tags.join(' · ')}`),
+          node(
+            'small',
+            null,
+            `${(track.collections ?? [track.collection]).join(' · ')} · ${track.tags.join(' · ')}`,
+          ),
         );
         const source = node('a', null, localizedMessage('interface:source'), {
           href: track.websites[0].url,
@@ -1796,8 +1805,16 @@ export function attachSoundtrackPanel({
           rel: 'noopener noreferrer',
           class: 'soundtrack-online-source',
         });
+        const install =
+          track.delivery?.type === 'external-url'
+            ? button(
+                `online-install-${track.sha256}`,
+                localizedMessage('interface:downloadForOffline'),
+                () => installOnlineRecording(track),
+              )
+            : null;
         const item = node('article', null, null, { class: 'soundtrack-online-track' });
-        item.append(play, details, source);
+        item.append(play, details, source, ...(install ? [install] : []));
         return item;
       }),
     );
@@ -1832,6 +1849,55 @@ export function attachSoundtrackPanel({
         return `${shown}${recording}${unavailable}${limited} ${t('interface:soundtrack.publicPlaybackHint')}`;
       });
   }
+  async function installOnlineRecording(track) {
+    return task(t('interface:verifyingTheAudioOriginal'), async (signal) => {
+      if (!saved) throw new Error(t('interface:loadTheLocalLibraryBeforeImporting'));
+      if (assets.some((asset) => asset.sha256 === track.sha256)) {
+        setStatus(
+          saved.assets.some((asset) => asset.sha256 === track.sha256)
+            ? localizedMessage('interface:recordingsSavedOfflinePreferencesUnchanged')
+            : localizedMessage('interface:soundtrack.filesImported', { count: 1 }),
+        );
+        return;
+      }
+      if (draft.tracks.length + BUILTIN_SOUNDTRACK_TRACKS.length >= SOUNDTRACK_LIMITS.tracks)
+        throw new Error(t('interface:thisBatchWouldExceedThe128TrackLibraryLimitIncluding'));
+      const blob = await fetchVerifiedOnlineSoundtrack(track, {
+        ...onlineCatalogueDownload,
+        signal,
+      });
+      const imported = await prepareMP3Import(
+        blob,
+        {
+          id: makeId('track'),
+          fileName: track.fileName,
+          title: track.title,
+          artist: track.artist,
+          rights: {
+            kind: track.rights.kind,
+            credit: track.rights.credit,
+            license: track.rights.license,
+            source: track.rights.source,
+          },
+        },
+        { signal, probeMedia, catalogue: catalogue ?? undefined },
+      );
+      const next = copy(draft);
+      next.tracks.push(imported.track);
+      const nextAssets = [...assets, { sha256: imported.track.asset.sha256, blob: imported.blob }];
+      if (
+        nextAssets.reduce((total, asset) => total + asset.blob.size, 0) >
+        SOUNDTRACK_LIMITS.managedBytes
+      )
+        throw new Error(t('interface:thisDraftExceedsThe256MibAudioBudgetImportFewer'));
+      draft = resolveSoundtrackLibrary(next);
+      assets = nextAssets;
+      dirty = true;
+      invalidateBackup();
+      render({ trackId: imported.track.id });
+      setStatus(localizedMessage('interface:soundtrack.filesImported', { count: 1 }));
+    });
+  }
   async function loadOnlineCatalogue(force = false) {
     if (disposed || (onlineCatalogueController && !force)) return;
     onlineCatalogueController?.abort();
@@ -1841,7 +1907,7 @@ export function attachSoundtrackPanel({
     reloadOnline.disabled = true;
     localizedText(onlineStatus, () => t('interface:loadingThePublicSoundtrackCatalogue'));
     try {
-      const loaded = await fetchOnlineSoundtrackCatalogues({
+      const loaded = await fetchOnlineSoundtrackCatalogue({
         ...onlineCatalogueDownload,
         signal: current.signal,
       });
@@ -1849,7 +1915,7 @@ export function attachSoundtrackPanel({
       onlineCatalogue = loaded;
       options(onlineCollection.element, [
         ['', t('interface:allCollections')],
-        ...[...new Set(loaded.tracks.map((track) => track.collection))]
+        ...[...new Set(loaded.tracks.flatMap((track) => track.collections ?? [track.collection]))]
           .sort((a, b) => a.localeCompare(b))
           .map((collection) => [collection, collection]),
       ]);

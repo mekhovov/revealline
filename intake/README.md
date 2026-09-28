@@ -1,14 +1,14 @@
 # Soundtrack intake from the game repository
 
-`add-music.mjs` is a launcher for the intake tool maintained in the separate
-[RevealLine Soundtracks 02](https://github.com/mekhovov/revealline-soundtracks-02)
+`add-music.mjs` is a launcher for the intake tool maintained in the canonical
+[RevealLine Soundtracks](https://github.com/mekhovov/revealline-soundtracks)
 repository. It lets a contributor start in this game checkout while catalogue,
 rights evidence, immutable MP3 paths and the archive pull request remain owned
 by the archive repository.
 
 ```sh
 node intake/add-music.mjs "/path/to/cleared-mp3-or-folder" \
-  --archive-root "/path/to/revealline-soundtracks-02" \
+  --archive-root "/path/to/revealline-soundtracks" \
   --artist "Creator name" \
   --source "https://creator.example/album" \
   --rights-evidence "https://creator.example/album#license" \
@@ -20,7 +20,7 @@ node intake/add-music.mjs "/path/to/cleared-mp3-or-folder" \
 
 The archive checkout must be clean. The launcher also checks the
 `REVEALLINE_SOUNDTRACK_ARCHIVE` environment variable, a sibling
-`revealline-soundtracks-02` clone and the standard Codex worktree location. Use
+`revealline-soundtracks` clone and the standard Codex worktree location. Use
 `--archive-root` for an unambiguous checkout. Add `--open-pr` only after the
 generated batch has been reviewed.
 
@@ -38,10 +38,11 @@ node intake/add-music.mjs "/absolute/path/to/docs/research/dah-soundtracks" \
   --private-output "/absolute/path/to/new-empty-private-directory"
 ```
 
-`--license unknown` is private-only. It cannot be combined with `--open-pr`,
-`--confirm-rights`, `--archive-root` or public catalogue metadata such as
-`--source`, `--artist`, `--description` and `--styles`. It never writes to
-either public soundtrack archive. The equivalent direct builder command is:
+`--license unknown` can be sent to the canonical public archive when
+`--confirm-rights` records explicit public redistribution and browser-playback
+permission. Add `--private-output` to keep unknown-rights audio local instead;
+that private form cannot be combined with `--open-pr` or public metadata. The
+equivalent direct private builder command is:
 
 ```sh
 node scripts/ua-fpv-local-pack.mjs \

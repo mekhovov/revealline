@@ -2,21 +2,15 @@ import { boundedJSON, exactKeys } from './data-json.mjs';
 import { throwIfSoundtrackAborted } from './mp3.mjs';
 
 export const ONLINE_SOUNDTRACK_CATALOGUE_URL =
-  'https://mekhovov.github.io/revealline-soundtracks-01/catalogue.json';
-export const ONLINE_SOUNDTRACK_DIRECTORY_URL =
-  'https://mekhovov.github.io/revealline-soundtracks-01/archive-directory.json';
-const PRIMARY_ARCHIVE = Object.freeze({
-  id: 'revealline-soundtracks-01',
-  url: ONLINE_SOUNDTRACK_CATALOGUE_URL,
-  baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
-  required: true,
-});
+  'https://mekhovov.github.io/revealline-soundtracks/catalogue.json';
+const BASE_URL = 'https://mekhovov.github.io/revealline-soundtracks/';
+const BASE = new URL(BASE_URL);
 const FORMAT = 'revealline-public-soundtrack-catalogue.v1';
-const DIRECTORY_FORMAT = 'revealline-public-soundtrack-directory.v1';
-const MAX_BYTES = 512 * 1024;
-const MAX_DIRECTORY_BYTES = 64 * 1024;
+// The canonical catalogue currently averages a little over 2 KiB per entry.
+// Keep the 512-recording schema ceiling usable while retaining a hard response
+// budget that is small enough to parse before any media request is attempted.
+const MAX_BYTES = 2 * 1024 * 1024;
 const HASH = /^[a-f0-9]{64}$/;
-const ARCHIVE_ID = /^revealline-soundtracks-([0-9]{2})$/;
 const LICENSES = new Set([
   'https://creativecommons.org/publicdomain/zero/1.0/',
   'https://creativecommons.org/licenses/by/3.0/',
@@ -47,6 +41,8 @@ const LICENSE_IDENTITIES = new Map([
   ],
 ]);
 const AUDIO_PATH = /^(?:objects|batches\/[a-z0-9][a-z0-9-]{0,63}\/objects)\/[a-f0-9]{64}\.mp3$/;
+const RELEASE_AUDIO =
+  /^https:\/\/github\.com\/mekhovov\/revealline-soundtracks\/releases\/download\/audio-[a-z0-9-]+\/([a-f0-9]{64})\.mp3$/;
 const RESOLVED_TRACKS = new WeakSet();
 
 function catalogueFailure(key, message, values = Object.create(null), cause = null) {
@@ -74,7 +70,7 @@ function catalogueJSON(source) {
   try {
     return boundedJSON(source, {
       maxBytes: MAX_BYTES,
-      maxNodes: 20000,
+      maxNodes: 65536,
       maxDepth: 8,
       maxArray: 512,
       maxString: 4096,
@@ -95,22 +91,79 @@ export function onlineSoundtrackRecordingAllowed(value) {
 export function onlineSoundtrackRecordingURL(value, sha256) {
   try {
     const url = new URL(value),
-      match = /^\/revealline-soundtracks-([0-9]{2})\/(.+)$/.exec(url.pathname),
-      path = match?.[2] ?? '';
+      prefix = BASE.pathname,
+      path = url.pathname.startsWith(prefix) ? url.pathname.slice(prefix.length) : '';
+    const release = RELEASE_AUDIO.exec(url.href);
     return (
       HASH.test(sha256) &&
-      url.origin === 'https://mekhovov.github.io' &&
       !url.username &&
       !url.password &&
       !url.search &&
       !url.hash &&
-      path.length > 0 &&
-      AUDIO_PATH.test(path) &&
-      path.endsWith(`/${sha256}.mp3`)
+      ((url.origin === BASE.origin &&
+        path.length > 0 &&
+        AUDIO_PATH.test(path) &&
+        path.endsWith(`/${sha256}.mp3`)) ||
+        release?.[1] === sha256)
     );
   } catch {
     return false;
   }
+}
+
+const EXPIRING_AUDIO_PARAMETERS = new Set([
+  'x-amz-signature',
+  'x-amz-expires',
+  'x-amz-credential',
+  'x-amz-security-token',
+  'signature',
+  'expires',
+  'access_token',
+  'download_token',
+  'token',
+]);
+
+function externalRecordingURL(value) {
+  try {
+    const url = new URL(value),
+      host = url.hostname.toLowerCase().replace(/^\[|\]$/g, '');
+    if (
+      url.protocol !== 'https:' ||
+      url.username ||
+      url.password ||
+      url.hash ||
+      host === 'localhost' ||
+      host.endsWith('.localhost') ||
+      host.endsWith('.local') ||
+      /^(?:0|10|127|169\.254|192\.168)\./.test(host) ||
+      /^172\.(?:1[6-9]|2\d|3[01])\./.test(host) ||
+      host === '::1'
+    )
+      return false;
+    return [...url.searchParams.keys()].every(
+      (key) => !EXPIRING_AUDIO_PARAMETERS.has(key.toLowerCase()),
+    );
+  } catch {
+    return false;
+  }
+}
+
+function externalDelivery(value, url) {
+  catalogueExactKeys(
+    value,
+    ['type', 'verifiedAt', 'rangeRequests', 'cors'],
+    'online soundtrack external delivery',
+  );
+  catalogueRequired(
+    value?.type === 'external-url' &&
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/.test(value.verifiedAt) &&
+      value.rangeRequests === true &&
+      value.cors === true &&
+      externalRecordingURL(url),
+    'audioDeliveryInvalid',
+    'Online soundtrack external delivery evidence is invalid.',
+  );
+  return Object.freeze({ ...value });
 }
 
 function secureURL(value) {
@@ -120,76 +173,6 @@ function secureURL(value) {
   } catch {
     return false;
   }
-}
-
-function directoryJSON(source) {
-  try {
-    return boundedJSON(source, {
-      maxBytes: MAX_DIRECTORY_BYTES,
-      maxNodes: 128,
-      maxDepth: 4,
-      maxArray: 8,
-      maxString: 2048,
-    });
-  } catch (error) {
-    throw catalogueFailure('directoryInvalidData', error.message, undefined, error);
-  }
-}
-function directoryExactKeys(value, allowed, label) {
-  try {
-    exactKeys(value, allowed, label);
-  } catch (error) {
-    throw catalogueFailure('directoryInvalidShape', error.message, undefined, error);
-  }
-}
-function archiveDescriptor(value) {
-  directoryExactKeys(
-    value,
-    ['id', 'url', 'baseURL', 'required'],
-    'online soundtrack archive directory entry',
-  );
-  const match = typeof value.id === 'string' ? ARCHIVE_ID.exec(value.id) : null,
-    baseURL = match ? `https://mekhovov.github.io/revealline-soundtracks-${match[1]}/` : '';
-  catalogueRequired(
-    match &&
-      value.baseURL === baseURL &&
-      value.url === `${baseURL}catalogue.json` &&
-      typeof value.required === 'boolean',
-    'directoryEntryInvalid',
-    'Online soundtrack archive directory entry is invalid.',
-  );
-  return Object.freeze({ ...value });
-}
-export function resolveOnlineSoundtrackDirectory(source) {
-  const value = directoryJSON(source);
-  directoryExactKeys(value, ['format', 'catalogues'], 'online soundtrack archive directory');
-  catalogueRequired(
-    value.format === DIRECTORY_FORMAT &&
-      Array.isArray(value.catalogues) &&
-      value.catalogues.length >= 1 &&
-      value.catalogues.length <= 8,
-    'directoryUnsupported',
-    'Unsupported online soundtrack archive directory.',
-  );
-  const ids = new Set(),
-    urls = new Set(),
-    catalogues = value.catalogues.map((entry) => {
-      const archive = archiveDescriptor(entry);
-      catalogueRequired(
-        !ids.has(archive.id) && !urls.has(archive.url),
-        'directoryDuplicate',
-        'Online soundtrack archive directory entries must be unique.',
-      );
-      ids.add(archive.id);
-      urls.add(archive.url);
-      return archive;
-    });
-  catalogueRequired(
-    catalogues[0].id === PRIMARY_ARCHIVE.id && catalogues[0].required === true,
-    'directoryPrimaryRequired',
-    'The primary online soundtrack archive must remain required and first.',
-  );
-  return Object.freeze({ format: DIRECTORY_FORMAT, catalogues: Object.freeze(catalogues) });
 }
 
 function text(value, label, maximum = 2048) {
@@ -205,8 +188,72 @@ function text(value, label, maximum = 2048) {
   return value;
 }
 
+function normalizedText(value, label, maximum = 2048) {
+  return text(typeof value === 'string' ? value.trim() : value, label, maximum);
+}
+
+function originalFileName(value) {
+  catalogueRequired(
+    typeof value === 'string' &&
+      value.trim().length >= 1 &&
+      value.length <= 300 &&
+      !/[\u0000-\u001f\u007f]/.test(value),
+    'invalidField',
+    'Online soundtrack filename is invalid.',
+    { field: 'filename' },
+  );
+  return value;
+}
+
 function structuredRights(value, legacy, id) {
   const identity = LICENSE_IDENTITIES.get(legacy.licenseURL);
+  if (legacy.licenseURL === null) {
+    catalogueExactKeys(
+      value,
+      [
+        'licenseId',
+        'licenseVersion',
+        'licenseURL',
+        'rightsEvidenceURL',
+        'attribution',
+        'derivativeChangeNotice',
+        'permissionBasis',
+        'shareAlike',
+      ],
+      'online soundtrack uploader-confirmed rights',
+    );
+    catalogueExactKeys(
+      value?.shareAlike,
+      ['required', 'deliveryLicenseId', 'deliveryLicenseVersion', 'deliveryLicenseURL'],
+      'online soundtrack uploader-confirmed share-alike rights',
+    );
+    const evidence = normalizedText(value?.rightsEvidenceURL, 'rights evidence URL');
+    const attribution = normalizedText(value?.attribution, 'rights attribution');
+    catalogueRequired(
+      value &&
+        value.licenseId === 'UNKNOWN' &&
+        value.licenseVersion === null &&
+        value.licenseURL === null &&
+        evidence === legacy.source &&
+        attribution === legacy.credit &&
+        value.permissionBasis === 'uploader-confirmed-public-redistribution-and-web-playback' &&
+        value.shareAlike?.required === null &&
+        secureURL(evidence),
+      'rightsMismatch',
+      `Online soundtrack uploader-confirmed rights differ from trusted metadata: ${id}.`,
+      { id },
+    );
+    return Object.freeze({
+      licenseId: 'UNKNOWN',
+      licenseVersion: null,
+      licenseURL: null,
+      evidence,
+      attribution: legacy.credit,
+      derivativeChangeNotice: text(value.derivativeChangeNotice, 'derivative change notice', 2048),
+      permissionBasis: value.permissionBasis,
+      shareAlike: Object.freeze({ ...value.shareAlike }),
+    });
+  }
   catalogueRequired(
     identity,
     'rightsLicenceUnsupported',
@@ -232,16 +279,19 @@ function structuredRights(value, legacy, id) {
       'attribution',
       'derivativeChangeNotice',
       'shareAlike',
+      'permissionBasis',
     ],
     'online soundtrack rights',
   );
+  const evidence = normalizedText(value.rightsEvidenceURL, 'rights evidence URL');
+  const attribution = normalizedText(value.attribution, 'rights attribution');
   catalogueRequired(
     value.licenseId === identity.id &&
       value.licenseVersion === identity.version &&
       value.licenseURL === legacy.licenseURL &&
-      value.rightsEvidenceURL === legacy.source &&
-      value.attribution === legacy.credit &&
-      secureURL(value.rightsEvidenceURL),
+      evidence === legacy.source &&
+      attribution === legacy.credit &&
+      secureURL(evidence),
     'rightsMismatch',
     `Online soundtrack rights differ from the trusted recording metadata: ${id}.`,
     { id },
@@ -274,14 +324,14 @@ function structuredRights(value, legacy, id) {
     licenseId: identity.id,
     licenseVersion: identity.version,
     licenseURL: legacy.licenseURL,
-    evidence: value.rightsEvidenceURL,
+    evidence,
     attribution: legacy.credit,
     derivativeChangeNotice,
     shareAlike: Object.freeze({ ...shareAlike }),
   });
 }
 
-function track(value, ids, hashes, archive) {
+function track(value, ids, hashes) {
   catalogueExactKeys(
     value,
     [
@@ -297,6 +347,7 @@ function track(value, ids, hashes, archive) {
       'fileName',
       'archiveId',
       'collection',
+      'collections',
       'status',
       'listeningApproval',
       'gameCatalogueAdmission',
@@ -306,6 +357,7 @@ function track(value, ids, hashes, archive) {
       'audio',
       'aliases',
       'rights',
+      ...(Object.hasOwn(value, 'visibility') ? ['visibility'] : []),
     ],
     'online soundtrack track',
   );
@@ -333,21 +385,24 @@ function track(value, ids, hashes, archive) {
     `Online soundtrack tags are invalid: ${id}.`,
     { id },
   );
+  const source = normalizedText(value.source, 'source');
   catalogueRequired(
-    secureURL(value.source),
+    secureURL(source),
     'sourceInvalid',
     `Online soundtrack source is invalid: ${id}.`,
     { id },
   );
   catalogueRequired(
-    LICENSES.has(value.licenseURL),
+    value.licenseURL === null || LICENSES.has(value.licenseURL),
     'licenceUnsupported',
     `Online soundtrack licence is unsupported: ${id}.`,
     { id },
   );
   const licenseIdentity = LICENSE_IDENTITIES.get(value.licenseURL);
   catalogueRequired(
-    value.license === licenseIdentity.label,
+    value.licenseURL === null
+      ? value.license === 'Unknown — uploader-confirmed rights'
+      : value.license === licenseIdentity.label,
     'licenceInvalid',
     `Online soundtrack licence is invalid: ${id}.`,
     { id },
@@ -374,11 +429,22 @@ function track(value, ids, hashes, archive) {
     `Online soundtrack default policy is invalid: ${id}.`,
     { id },
   );
-  catalogueExactKeys(value.audio, ['path', 'bytes', 'sha256'], 'online soundtrack audio');
+  catalogueExactKeys(
+    value.audio,
+    ['path', 'bytes', 'sha256', ...(Object.hasOwn(value.audio, 'delivery') ? ['delivery'] : [])],
+    'online soundtrack audio',
+  );
+  const delivery = value.audio.delivery
+    ? externalDelivery(value.audio.delivery, value.audio.path)
+    : null;
   catalogueRequired(
     HASH.test(value.audio.sha256) &&
-      AUDIO_PATH.test(value.audio.path) &&
-      value.audio.path.endsWith(`/${value.audio.sha256}.mp3`) &&
+      (delivery
+        ? externalRecordingURL(value.audio.path)
+        : onlineSoundtrackRecordingURL(
+            new URL(value.audio.path, BASE_URL).href,
+            value.audio.sha256,
+          )) &&
       Number.isSafeInteger(value.audio.bytes) &&
       value.audio.bytes > 0 &&
       value.audio.bytes <= 100_000_000 &&
@@ -394,10 +460,34 @@ function track(value, ids, hashes, archive) {
     `Online aliases are invalid: ${id}.`,
     { id },
   );
-  const credit = text(value.credit, 'credit');
+  const credit = normalizedText(value.credit, 'credit');
+  const collection = text(value.collection, 'collection', 200);
+  const collections = value.collections ?? [collection];
+  catalogueRequired(
+    Array.isArray(collections) &&
+      collections.length >= 1 &&
+      collections.length <= 16 &&
+      new Set(collections).size === collections.length &&
+      collections.every(
+        (item) =>
+          typeof item === 'string' &&
+          item.trim() === item &&
+          item.length >= 1 &&
+          item.length <= 200,
+      ),
+    'collectionsInvalid',
+    `Online soundtrack collections are invalid: ${id}.`,
+    { id },
+  );
+  catalogueRequired(
+    value.visibility === undefined || value.visibility === 'review-only',
+    'visibilityInvalid',
+    `Online soundtrack visibility is invalid: ${id}.`,
+    { id },
+  );
   const rightsEvidence = structuredRights(
     value.rights,
-    { licenseURL: value.licenseURL, source: value.source, credit },
+    { licenseURL: value.licenseURL, source, credit },
     id,
   );
   const resolved = Object.freeze({
@@ -408,31 +498,34 @@ function track(value, ids, hashes, archive) {
     artist: text(value.artist, 'artist', 200),
     durationSeconds: value.durationSeconds,
     tags: Object.freeze([...value.tags]),
-    collection: text(value.collection, 'collection', 200),
-    fileName: text(value.fileName, 'filename', 300),
-    url: new URL(value.audio.path, archive.baseURL).href,
+    collection,
+    collections: Object.freeze([...collections]),
+    fileName: originalFileName(value.fileName),
+    url: new URL(value.audio.path, BASE_URL).href,
     bytes: value.audio.bytes,
     sha256: value.audio.sha256,
+    delivery,
     contentId: value.contentId,
     recordingModeEligible: value.recordingModeEligible,
     websites: Object.freeze([
-      Object.freeze({ label: 'Creator source', url: value.source }),
-      Object.freeze({ label: value.license ?? 'Recording licence', url: value.licenseURL }),
+      Object.freeze({ label: 'Creator source', url: source }),
+      ...(value.licenseURL
+        ? [Object.freeze({ label: value.license ?? 'Recording licence', url: value.licenseURL })]
+        : []),
     ]),
     rights: Object.freeze({
       kind: 'licensed',
       credit,
       license: value.license,
-      source: value.source,
+      source,
       evidence: rightsEvidence,
     }),
   });
   RESOLVED_TRACKS.add(resolved);
-  return resolved;
+  return { resolved, visibility: value.visibility };
 }
 
-export function resolveOnlineSoundtrackCatalogue(source, { archive = PRIMARY_ARCHIVE } = {}) {
-  const descriptor = archiveDescriptor(archive);
+export function resolveOnlineSoundtrackCatalogue(source) {
   const value = catalogueJSON(source);
   catalogueExactKeys(
     value,
@@ -446,9 +539,9 @@ export function resolveOnlineSoundtrackCatalogue(source, { archive = PRIMARY_ARC
   );
   catalogueExactKeys(value.archive, ['id', 'baseURL'], 'online soundtrack archive');
   catalogueRequired(
-    value.archive.id === descriptor.id && value.archive.baseURL === descriptor.baseURL,
+    value.archive.id === 'revealline-soundtracks' && value.archive.baseURL === BASE_URL,
     'archiveInvalid',
-    'Online soundtrack catalogue must use its declared project archive.',
+    'Online soundtrack catalogue must use the project archive.',
   );
   catalogueRequired(
     Array.isArray(value.sources) && value.sources.length <= 32,
@@ -461,44 +554,41 @@ export function resolveOnlineSoundtrackCatalogue(source, { archive = PRIMARY_ARC
     'online soundtrack counts',
   );
   catalogueRequired(
-    Array.isArray(value.tracks) && value.tracks.length <= 256,
+    Array.isArray(value.tracks) && value.tracks.length <= 512,
     'listTooLarge',
     'Online soundtrack list is too large.',
   );
   const ids = new Set(),
     hashes = new Set(),
-    tracks = value.tracks.map((entry) => track(entry, ids, hashes, descriptor));
+    parsedTracks = value.tracks.map((entry) => track(entry, ids, hashes));
   catalogueRequired(
-    value.counts.uniqueRecordings === tracks.length &&
-      value.counts.declaredTracks >= tracks.length &&
-      value.counts.duplicateAliases === value.counts.declaredTracks - tracks.length &&
-      value.counts.audioBytes === tracks.reduce((sum, item) => sum + item.bytes, 0),
+    value.counts.uniqueRecordings === parsedTracks.length &&
+      value.counts.declaredTracks >= parsedTracks.length &&
+      value.counts.duplicateAliases === value.counts.declaredTracks - parsedTracks.length &&
+      value.counts.audioBytes === parsedTracks.reduce((sum, item) => sum + item.resolved.bytes, 0),
     'countsMismatch',
     'Online soundtrack counts differ from the recording list.',
   );
+  const tracks = parsedTracks
+    .filter(({ visibility }) => visibility !== 'review-only')
+    .map(({ resolved }) => resolved);
   return Object.freeze({
     format: FORMAT,
-    archive: descriptor,
     tracks: Object.freeze(tracks),
     counts: Object.freeze({ ...value.counts }),
   });
 }
 
-async function fetchBoundedText({ request, signal, url, maximum, label, kind = 'catalogue' }) {
-  const keys =
-    kind === 'directory'
-      ? {
-          direct: 'directoryDirectResponseRequired',
-          bytes: 'directoryByteLimit',
-          unreadable: 'directoryResponseUnreadable',
-          invalid: 'directoryResponseInvalid',
-        }
-      : {
-          direct: 'directResponseRequired',
-          bytes: 'byteLimit',
-          unreadable: 'responseUnreadable',
-          invalid: 'responseInvalid',
-        };
+export async function fetchOnlineSoundtrackCatalogue({
+  fetch: request = globalThis.fetch,
+  signal,
+  url = ONLINE_SOUNDTRACK_CATALOGUE_URL,
+} = {}) {
+  catalogueRequired(
+    url === ONLINE_SOUNDTRACK_CATALOGUE_URL,
+    'urlInvalid',
+    'Online soundtracks require the project catalogue URL.',
+  );
   throwIfSoundtrackAborted(signal);
   const response = await request(url, {
     signal,
@@ -509,17 +599,21 @@ async function fetchBoundedText({ request, signal, url, maximum, label, kind = '
   });
   catalogueRequired(
     response?.status === 200 && !response.redirected && response.url === url,
-    keys.direct,
-    `${label} needs a direct HTTP 200 response.`,
+    'directResponseRequired',
+    'Online soundtrack catalogue needs a direct HTTP 200 response.',
   );
   const length = response.headers.get('content-length');
   catalogueRequired(
-    length === null || (/^[0-9]+$/.test(length) && Number(length) <= maximum),
-    keys.bytes,
-    `${label} exceeds its byte limit.`,
+    length === null || (/^[0-9]+$/.test(length) && Number(length) <= MAX_BYTES),
+    'byteLimit',
+    'Online soundtrack catalogue exceeds its byte limit.',
   );
   const reader = response.body?.getReader?.();
-  catalogueRequired(reader, keys.unreadable, `${label} response cannot be read safely.`);
+  catalogueRequired(
+    reader,
+    'responseUnreadable',
+    'Online soundtrack catalogue response cannot be read safely.',
+  );
   const chunks = [];
   let size = 0;
   try {
@@ -527,13 +621,19 @@ async function fetchBoundedText({ request, signal, url, maximum, label, kind = '
       throwIfSoundtrackAborted(signal);
       const { done, value } = await reader.read();
       if (done) break;
-      catalogueRequired(value instanceof Uint8Array, keys.invalid, `${label} response is invalid.`);
+      catalogueRequired(
+        value instanceof Uint8Array,
+        'responseInvalid',
+        'Online soundtrack catalogue response is invalid.',
+      );
       size += value.byteLength;
-      if (size > maximum) {
+      if (size > MAX_BYTES) {
         try {
-          await reader.cancel(`${label} exceeds its byte limit.`);
-        } catch {}
-        throw catalogueFailure(keys.bytes, `${label} exceeds its byte limit.`);
+          await reader.cancel('Online soundtrack catalogue exceeds its byte limit.');
+        } catch {
+          // The byte limit remains authoritative even if the network cannot be cancelled cleanly.
+        }
+        throw catalogueFailure('byteLimit', 'Online soundtrack catalogue exceeds its byte limit.');
       }
       chunks.push(value);
     }
@@ -547,121 +647,109 @@ async function fetchBoundedText({ request, signal, url, maximum, label, kind = '
     bytes.set(chunk, offset);
     offset += chunk.byteLength;
   }
+  let source;
   try {
-    return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+    source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
   } catch (error) {
-    throw catalogueFailure(keys.invalid, `${label} response is invalid.`, undefined, error);
+    throw catalogueFailure(
+      'responseInvalid',
+      'Online soundtrack catalogue response is invalid.',
+      undefined,
+      error,
+    );
   }
+  return resolveOnlineSoundtrackCatalogue(source);
 }
 
-export async function fetchOnlineSoundtrackCatalogue({
-  fetch: request = globalThis.fetch,
-  signal,
-  archive = PRIMARY_ARCHIVE,
-  url = archive.url,
-} = {}) {
-  const descriptor = archiveDescriptor(archive);
+export async function fetchVerifiedOnlineSoundtrack(
+  track,
+  { fetch: request = globalThis.fetch, signal } = {},
+) {
   catalogueRequired(
-    url === descriptor.url,
-    'urlInvalid',
-    'Online soundtracks require the declared project catalogue URL.',
+    isResolvedOnlineSoundtrackTrack(track) && track.delivery?.type === 'external-url',
+    'audioDeliveryInvalid',
+    'Only a verified external soundtrack recording can be installed directly.',
   );
-  return resolveOnlineSoundtrackCatalogue(
-    await fetchBoundedText({
-      request,
-      signal,
-      url,
-      maximum: MAX_BYTES,
-      label: 'Online soundtrack catalogue',
-    }),
-    { archive: descriptor },
-  );
-}
-
-export async function fetchOnlineSoundtrackDirectory({
-  fetch: request = globalThis.fetch,
-  signal,
-  url = ONLINE_SOUNDTRACK_DIRECTORY_URL,
-} = {}) {
-  catalogueRequired(
-    url === ONLINE_SOUNDTRACK_DIRECTORY_URL,
-    'directoryURLInvalid',
-    'Online soundtracks require the project directory URL.',
-  );
-  return resolveOnlineSoundtrackDirectory(
-    await fetchBoundedText({
-      request,
-      signal,
-      url,
-      maximum: MAX_DIRECTORY_BYTES,
-      label: 'Online soundtrack archive directory',
-      kind: 'directory',
-    }),
-  );
-}
-
-export async function fetchOnlineSoundtrackCatalogues(options = {}) {
-  let directory,
-    directoryError = null;
+  throwIfSoundtrackAborted(signal);
+  let response;
   try {
-    directory = await fetchOnlineSoundtrackDirectory(options);
-  } catch (error) {
-    throwIfSoundtrackAborted(options.signal);
-    directoryError = error;
-    directory = Object.freeze({
-      format: DIRECTORY_FORMAT,
-      catalogues: Object.freeze([PRIMARY_ARCHIVE]),
+    response = await request(track.url, {
+      signal,
+      redirect: 'error',
+      credentials: 'omit',
+      mode: 'cors',
+      cache: 'no-store',
+      headers: { Range: `bytes=0-${track.bytes - 1}` },
     });
+  } catch (error) {
+    throw catalogueFailure(
+      'responseUnreadable',
+      'This recording is stream-only because its host no longer permits verified browser fetching.',
+      undefined,
+      error,
+    );
   }
-  const tracks = [],
-    ids = new Set(),
-    hashes = new Set(),
-    unavailable = directoryError
-      ? [Object.freeze({ id: 'archive-directory', error: directoryError })]
-      : [];
-  let declaredTracks = 0,
-    duplicateAliases = 0,
-    audioBytes = 0;
-  for (const archive of directory.catalogues) {
-    try {
-      const catalogue = await fetchOnlineSoundtrackCatalogue({
-          ...options,
-          archive,
-          url: archive.url,
-        }),
-        stagedIds = [],
-        stagedHashes = [];
-      for (const entry of catalogue.tracks) {
-        catalogueRequired(
-          !ids.has(entry.archiveTrackId) && !hashes.has(entry.sha256),
-          'duplicateRecording',
-          `Online soundtrack archives contain a duplicate recording: ${entry.archiveTrackId}.`,
-          { id: entry.archiveTrackId, archive: archive.id },
-        );
-        stagedIds.push(entry.archiveTrackId);
-        stagedHashes.push(entry.sha256);
+  catalogueRequired(
+    [200, 206].includes(response?.status) && !response.redirected && response.url === track.url,
+    'directResponseRequired',
+    'External soundtrack installation needs a direct stable response.',
+  );
+  const declared = response.headers.get('content-length');
+  catalogueRequired(
+    declared === null || (/^[0-9]+$/.test(declared) && Number(declared) === track.bytes),
+    'countsMismatch',
+    'External soundtrack byte count changed.',
+  );
+  const reader = response.body?.getReader?.();
+  catalogueRequired(
+    reader,
+    'responseUnreadable',
+    'External soundtrack response cannot be read safely.',
+  );
+  const chunks = [];
+  let size = 0;
+  try {
+    while (true) {
+      throwIfSoundtrackAborted(signal);
+      const { done, value } = await reader.read();
+      if (done) break;
+      catalogueRequired(
+        value instanceof Uint8Array,
+        'responseInvalid',
+        'External soundtrack response is invalid.',
+      );
+      size += value.byteLength;
+      if (size > track.bytes) {
+        try {
+          await reader.cancel('External soundtrack exceeds its verified byte count.');
+        } catch {}
+        throw catalogueFailure('countsMismatch', 'External soundtrack byte count changed.');
       }
-      for (const id of stagedIds) ids.add(id);
-      for (const hash of stagedHashes) hashes.add(hash);
-      tracks.push(...catalogue.tracks);
-      declaredTracks += catalogue.counts.declaredTracks;
-      duplicateAliases += catalogue.counts.duplicateAliases;
-      audioBytes += catalogue.counts.audioBytes;
-    } catch (error) {
-      throwIfSoundtrackAborted(options.signal);
-      if (archive.required) throw error;
-      unavailable.push(Object.freeze({ id: archive.id, error }));
+      chunks.push(value);
     }
+  } finally {
+    reader.releaseLock?.();
   }
-  return Object.freeze({
-    format: FORMAT,
-    tracks: Object.freeze(tracks),
-    counts: Object.freeze({
-      declaredTracks,
-      uniqueRecordings: tracks.length,
-      duplicateAliases,
-      audioBytes,
-    }),
-    unavailable: Object.freeze(unavailable),
-  });
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  throwIfSoundtrackAborted(signal);
+  catalogueRequired(
+    bytes.byteLength === track.bytes,
+    'countsMismatch',
+    'External soundtrack download was truncated.',
+  );
+  const actual = [...new Uint8Array(await globalThis.crypto.subtle.digest('SHA-256', bytes))]
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+  throwIfSoundtrackAborted(signal);
+  catalogueRequired(
+    actual === track.sha256,
+    'audioIdentityInvalid',
+    'External soundtrack SHA-256 changed.',
+  );
+  return new Blob([bytes], { type: 'audio/mpeg' });
 }

@@ -179,9 +179,12 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: 'b4af6423e29eded7ef998d4b8c1713b28e1f7f9dcd9a288a6777a651a6202825',
+    sha256: 'd10dcf448002347b200f9886d0a5f3a23789a7f4fb928bccb4884224359cd575',
     evidence: [
+      'Scoped main/bulk audio continuation: docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json sha256:afcfcca1612109e117595c424e03ac002271165ccb1a4082697011e16c4c5a75; exact26 inputs sha256:d10dcf448002347b200f9886d0a5f3a23789a7f4fb928bccb4884224359cd575. Fresh canonical-main successors only; all main records and payloads retained, divergent unpublished branch identities preserved as immutable Git evidence without relabelling. Existing recipes only; final production, candidate, hosted, frozen/public and listening/device gates remain separate.',
       'Scoped v0.141.8 Steam Deck Confirm continuation: docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json sha256:15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867; exact26 inputs sha256:b4af6423e29eded7ef998d4b8c1713b28e1f7f9dcd9a288a6777a651a6202825. Only game/app.mjs changes, wiring the release-committed controller Confirm transaction and opt-in local trace while preserving all eight procedural recipes, audio routing and payloads. Immutable predecessors retained; frozen/public/listening/device acceptance remains separate.',
+      'Scoped bulk queue audio continuation: docs/verification/bulk-queue-audio-effects-2026-09-28/review.json sha256:5ec246c93cf5dfe6d5a3f6538788d618575037a11d2c1890d88d0257f2e7d0b3; exact inputs sha256:5537720994b355021ba876a5122231a0304cdadc6eb861b3a5091556858e7071. Only existing recipes and payloads; immutable reviews and production history retained. Final source, frozen/public, listening/device and human acceptance remain separate.',
+      'Scoped canonical soundtrack main-rebase continuation: docs/verification/canonical-soundtrack-main-rebase-2026-09-28/review.json sha256:243ab86179b9bc9d2b2094cd6bacd4f1423659d032b99aec4715f4ebd4d9051f; exact26 inputs sha256:2bf54d1cf0ee90e36284f3782273a0cb62d49a75954b6d9b50b17b5203cdfc87. Four soundtrack catalogue, panel and transport inputs change; the canonical 260-entry catalogue and complete bounded 512-recording playback queue fit their explicit ceilings, and all eight existing procedural recipes and payloads remain unchanged. Exact-head tests, frozen/public, listening and physical-device acceptance remain separate.',
       'Scoped company-startup continuation: docs/verification/v0.141.7-company-startup-audio-continuation/review.json sha256:1d3660001a2ebe7d4d2daf5e68ab745e9e902d5c2f1757a398439de3caedccad; exact26 inputs sha256:f6f89072a29833af077a92f2e2a0eb4174e78edc0f03be1eb04f71daf467967c. Eight existing procedural recipes only; company package admission changes startup timing and consent, not recipe identities, audio routing or payloads. Immutable predecessors retained; final frozen/public/listening/device acceptance remains separate.',
       'Scoped cumulative continuation: docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json sha256:067305195ea075c35f14402d970fb5d2819044720875374b157c9431d9c5d820; exact26 ordered audio inputs sha256:86e0d8771d9ea29e9628e1fd5f779d2d997d54799d71340f7a27319cd6e7b554. Eight existing procedural recipes only; retained records/payloads unchanged. Exact source and child receipts are scoped in the record; final hosted, frozen/public and listening/device acceptance remain separate.',
       'v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.',
@@ -201,8 +204,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   effects: {
-    sha256: '732ee9b5a46bbfe1bce8ee74f29aace278cd4da67ae59871a2771f0c197b5e3f',
+    sha256: 'b7aa3a6b9bc2302df0309e90acddf899766a9b9406f93bd266a94b685940a5eb',
     evidence: [
+      'Scoped bulk queue effects continuation: docs/verification/bulk-queue-audio-effects-2026-09-28/review.json sha256:5ec246c93cf5dfe6d5a3f6538788d618575037a11d2c1890d88d0257f2e7d0b3; exact inputs sha256:b7aa3a6b9bc2302df0309e90acddf899766a9b9406f93bd266a94b685940a5eb. Only existing recipes and payloads; immutable reviews and production history retained. Final source, frozen/public, listening/device and human acceptance remain separate.',
       `Scoped current effects functional continuation: ${BULK_PRESENTATION_REVIEW_PATH} sha256:${BULK_PRESENTATION_REVIEW_SHA256}; exact source closure and preserved immutable predecessors. Fresh aggregate hosted, frozen/public, device and human acceptance remain separate.`,
       'v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact effects fingerprint sha256:b33868fdd4f6aa898a885043116b939509f4d5b14d4412adb7d71e6e90ed6bbe. Locale-bound descriptions and mechanically formatted renderers preserve actor geometry, trail cells, collision footprints, sprite construction and effect recipe IDs.',
       'Scoped trail, impact and wreck continuation: docs/verification/couch-craft-v01120/review.json sha256:fa2120613abf06bc578ba8388ba33af415392583e19e83c2297638af8010c305; ten ordered effects inputs sha256:e23e228b4bf4ee68bb7cbbd231aaebe66d6e3da8965fbeae9b2c4acc90f9e053. The active cutting head and authoritative travelling fronts gain bounded readable shapes, prepared player bodies suppress duplicate blades, and FPV failure debris uses compact solid fragments.',
@@ -240,6 +244,68 @@ export function verifyFieldKitCompanyAudioContinuationReview(
   );
 }
 
+export function verifyFieldKitCanonicalSoundtrackReview(
+  currentBytes,
+  companyBytes,
+  branchRebaseBytes,
+  externalBytes,
+) {
+  return (
+    hash(currentBytes) === '243ab86179b9bc9d2b2094cd6bacd4f1423659d032b99aec4715f4ebd4d9051f' &&
+    hash(companyBytes) === '1d3660001a2ebe7d4d2daf5e68ab745e9e902d5c2f1757a398439de3caedccad' &&
+    hash(branchRebaseBytes) ===
+      '697c094ae2c1cc0a83b77ad0e647c0967a9c3219b3ed10ba4d42f8691b9d54e7' &&
+    hash(externalBytes) === '2b36f81f1afd641bac82334e051f6dc3bac0887329327eb47a10944a8a6d39c6'
+  );
+}
+
+export function verifyFieldKitBulkQueueReview(currentBytes, predecessors) {
+  const expected = {
+    canonical: {
+      path: 'docs/verification/canonical-soundtrack-main-rebase-2026-09-28/review.json',
+      gitBlob: '45b17c09dc1b3e7ecb57329e741c5becc955ca79',
+      bytes: 12374,
+      sha256: '243ab86179b9bc9d2b2094cd6bacd4f1423659d032b99aec4715f4ebd4d9051f',
+    },
+    effects: {
+      path: 'docs/verification/fpv-family-effects-continuation-2026-09-28/review.json',
+      gitBlob: '750801335ed95f52c0fa803f23d4931830e8e872',
+      bytes: 9012,
+      sha256: '1a72688bfca58ddd75f18b7719f5021972fb1ed88a1c6e043e63abef2e848ba9',
+    },
+    bulkPresentation: {
+      path: 'docs/verification/bulk-integration-presentation-continuation-2026-09-27/review.json',
+      gitBlob: '59df49b5f92a28da4d614b1b6a33825b5f73b888',
+      bytes: 32234,
+      sha256: 'ad469766d926795fddca108b77042b226282cc17b3a130429ad2b548b5e2edf5',
+    },
+    company: {
+      path: 'docs/verification/v0.141.7-company-startup-audio-continuation/review.json',
+      gitBlob: 'd0842999eabb1ae09f721fcf925ed43753be25fc',
+      bytes: 10565,
+      sha256: '1d3660001a2ebe7d4d2daf5e68ab745e9e902d5c2f1757a398439de3caedccad',
+    },
+    bulkAudio: {
+      path: 'docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json',
+      gitBlob: '7d05300f80f912fa266dbab303852bbac6657331',
+      bytes: 13271,
+      sha256: '067305195ea075c35f14402d970fb5d2819044720875374b157c9431d9c5d820',
+    },
+    managedMedia: {
+      path: 'docs/verification/v0.141.0-managed-media-audio-continuation/review.json',
+      gitBlob: '5477de5ae94aeb8476b36f693fb4d64f25dca558',
+      bytes: 6622,
+      sha256: '16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998',
+    },
+  };
+  return (
+    hash(currentBytes) === '5ec246c93cf5dfe6d5a3f6538788d618575037a11d2c1890d88d0257f2e7d0b3' &&
+    Array.isArray(predecessors) &&
+    predecessors.length === Object.keys(expected).length &&
+    Object.values(expected).every((pin, index) => hash(predecessors[index]) === pin.sha256)
+  );
+}
+
 export function verifyFieldKitSteamDeckPresentationContinuationReview(
   currentBytes,
   actorOnlyBytes,
@@ -254,6 +320,14 @@ export function verifyFieldKitSteamDeckPresentationContinuationReview(
     hash(localizationBytes) ===
       '92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445' &&
     verifyFieldKitCompanyAudioContinuationReview(companyBytes, priorBytes, managedBytes)
+  );
+}
+
+export function verifyFieldKitMainBulkAudioReview(currentBytes, mainBytes, bulkBytes) {
+  return (
+    hash(currentBytes) === 'afcfcca1612109e117595c424e03ac002271165ccb1a4082697011e16c4c5a75' &&
+    hash(mainBytes) === '15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867' &&
+    hash(bulkBytes) === '5ec246c93cf5dfe6d5a3f6538788d618575037a11d2c1890d88d0257f2e7d0b3'
   );
 }
 
@@ -275,6 +349,52 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   const baseline = createDefaultThemeBundle();
   const recipeSources = await fieldKitRecipeSources(read);
   const bulkContinuationReviewBytes = await readBulkPresentationContinuation(read);
+  const companyAudioReviewBytes = await read(
+    'docs/verification/v0.141.7-company-startup-audio-continuation/review.json',
+  );
+  const externalAudioReviewBytes = await read(
+    'docs/verification/external-soundtrack-delivery-2026-09-27/review.json',
+  );
+  const branchRebaseAudioReviewBytes = await read(
+    'docs/verification/canonical-soundtrack-rebase-audio-continuation-2026-09-27/review.json',
+  );
+  if (
+    !verifyFieldKitCompanyAudioContinuationReview(
+      companyAudioReviewBytes,
+      await read('docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json'),
+      await read('docs/verification/v0.141.0-managed-media-audio-continuation/review.json'),
+    )
+  )
+    throw new Error('Audio continuation review bytes changed; production approval must reopen.');
+  if (
+    !verifyFieldKitCanonicalSoundtrackReview(
+      await read('docs/verification/canonical-soundtrack-main-rebase-2026-09-28/review.json'),
+      companyAudioReviewBytes,
+      branchRebaseAudioReviewBytes,
+      externalAudioReviewBytes,
+    )
+  )
+    throw new Error(
+      'Canonical soundtrack continuation review bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitBulkQueueReview(
+      await read('docs/verification/bulk-queue-audio-effects-2026-09-28/review.json'),
+      await Promise.all(
+        [
+          'docs/verification/canonical-soundtrack-main-rebase-2026-09-28/review.json',
+          'docs/verification/fpv-family-effects-continuation-2026-09-28/review.json',
+          'docs/verification/bulk-integration-presentation-continuation-2026-09-27/review.json',
+          'docs/verification/v0.141.7-company-startup-audio-continuation/review.json',
+          'docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json',
+          'docs/verification/v0.141.0-managed-media-audio-continuation/review.json',
+        ].map(read),
+      ),
+    )
+  )
+    throw new Error(
+      'Bulk queue continuation review bytes changed; production approval must reopen.',
+    );
   if (
     !verifyFieldKitSteamDeckPresentationContinuationReview(
       await read(
@@ -289,6 +409,18 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   )
     throw new Error(
       'Steam Deck presentation continuation review bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitMainBulkAudioReview(
+      await read('docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json'),
+      await read(
+        'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json',
+      ),
+      await read('docs/verification/bulk-queue-audio-effects-2026-09-28/review.json'),
+    )
+  )
+    throw new Error(
+      'Main/bulk audio continuation review bytes changed; production approval must reopen.',
     );
   const assets = [],
     bindings = {},

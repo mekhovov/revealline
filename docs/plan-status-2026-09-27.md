@@ -1,5 +1,11 @@
 # RevealLine — current completion and remaining delivery plan
 
+> **Superseded status:** use the
+> [28 September completion and remaining delivery plan](plan-status-2026-09-28.md)
+> for v0.141.7 deployment, remaining player acceptance, current owners and batch
+> order. The dated tables below are preserved history; their draft PR states,
+> future version allocations and estimates are not the current release queue.
+
 Status checked **27 September 2026** against GitHub releases, merged source,
 open pull requests, the Pages marker, and retained public-acceptance evidence.
 This is the current status summary. Older dated plans remain useful design and
