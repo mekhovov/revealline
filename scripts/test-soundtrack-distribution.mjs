@@ -164,6 +164,7 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
   for (const name of [
     'scripts/game-cli.mjs',
     'scripts/offline-content.mjs',
+    'scripts/offline-finalize.mjs',
     'scripts/offline-launcher.mjs',
     'scripts/pack-indexes.mjs',
     'scripts/soundtrack-distribution.mjs',
