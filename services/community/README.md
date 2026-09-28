@@ -641,6 +641,34 @@ prints the supplied authorization values. After an edition identity is received,
 unlisting attempt and records only whether cleanup succeeded. Inspect a `cleanup: failed` receipt
 and remove the uniquely named edition before reusing that deployment.
 
+### Browser moderation cutover
+
+Set `COMMUNITY_ACCEPTANCE_MODERATION_MODE=browser` to stop the deployed journey after it publishes,
+plays and reports the disposable edition. The resulting receipt has `status: awaiting-browser` and
+binds one report and edition to the exact release and service origin. The edition intentionally
+remains public until the operator completes the next step.
+
+Open `/game/community/moderation.html` on that same origin with the allowlisted administrator
+account. Find the exact report identity from the seed receipt, explicitly load its preview, choose
+**Unlist and resolve**, and record a bounded resolution. Then verify the result without copying a
+session cookie:
+
+```sh
+export COMMUNITY_BROWSER_MODERATION_BASE_URL="$COMMUNITY_ACCEPTANCE_BASE_URL"
+export COMMUNITY_BROWSER_MODERATION_EXPECTED_VERSION="$COMMUNITY_ACCEPTANCE_EXPECTED_VERSION"
+export COMMUNITY_BROWSER_MODERATION_EXPECTED_SOURCE_REVISION="$COMMUNITY_ACCEPTANCE_EXPECTED_SOURCE_REVISION"
+export COMMUNITY_BROWSER_MODERATION_ADMIN_EMAIL="$COMMUNITY_ACCEPTANCE_ADMIN_EMAIL"
+export COMMUNITY_BROWSER_MODERATION_ADMIN_PASSWORD="$COMMUNITY_ACCEPTANCE_ADMIN_PASSWORD"
+export COMMUNITY_BROWSER_MODERATION_SEED_RECEIPT="$COMMUNITY_ACCEPTANCE_RECEIPT"
+export COMMUNITY_BROWSER_MODERATION_RECEIPT='/secure/acceptance/community-browser-moderation.json'
+npm run acceptance:browser-moderation
+```
+
+The verifier rejects a seed from another origin or release, an open report, a still-public edition,
+and a resolved report for a different edition. Its owner-only receipt omits account credentials,
+sessions, report text and media. An abandoned seed must be unlisted and resolved through the same
+administrator page before the namespace is discarded.
+
 ## Limits and operational work still required
 
 The default package ceiling is 256 MiB and catalog pages are capped at 50 entries. A reverse proxy
