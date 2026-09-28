@@ -2,7 +2,18 @@
 
 Implementation ledger for **Make every level a discovery and every campaign a memorable journey**. Candidate code, generated content and engineering checks are distinguished from released artifacts. Human and physical-device evidence remains deferred at the user's request.
 
-## Current implementation snapshot
+## Revised priority batches: current work
+
+The new [polished journeys and real-radio delivery ledger](polished-flight-delivery.md)
+tracks the user-approved **2 → 3 → 4 → 6** revision. The original 108-mission
+catalogue remains; the historical 12-drill overhead gym is **not** the immersive
+FPV simulator. This batch adds a separate `civilian-fpv` implementation, guided
+showcase authoring, additional learning fixtures, calibrated USB-radio input,
+two flight modes and typed practice rewards. Current validation and outstanding
+qualification are recorded there. Earlier snapshots below remain historical
+observations, not evidence for new code or a claim of completed publication.
+
+## Pre-revision implementation snapshot (historical)
 
 The original reward pilots cover Coupa **Spend in Motion** and DroneAid Netherlands **Workshop Lights**: twelve first-win discoveries and two six-distinct-win finales. Their existing maps, simulation identities and public artwork remain intact, with exact pre-reward presentations retained.
 

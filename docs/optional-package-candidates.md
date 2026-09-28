@@ -1,6 +1,6 @@
 # Optional package candidates
 
-The civilian flight practice app remains a separate opt-in package. Its candidate
+Flight practice apps remain separate opt-in packages. Their candidate
 format is `revealline-optional-packages.v1`; it is not an arcade edition and is
 never added to the default core or an edition asset inventory.
 
@@ -9,6 +9,21 @@ After committing the reviewed source, run:
 ```sh
 node scripts/bundle-optional-practice.mjs --out .cache/optional-candidate-VERSION --base-path /revealline/
 ```
+
+Omitting the selection preserves the historical `civilian-flight` assisted gym.
+To include the independently registered `civilian-fpv` first-person package, select
+the exact package IDs explicitly:
+
+```sh
+node scripts/bundle-optional-practice.mjs --out .cache/optional-flight-candidate-VERSION --base-path /revealline/ --packages civilian-flight,civilian-fpv
+```
+
+Empty, repeated or unregistered IDs fail before compilation. Each selected package
+is built twice independently, with its own exact manifest, source archive, worker,
+installation ID and review gates. Adding a package cannot change the historical
+gym's artifact bytes at the same source revision. The package builder also accepts
+`--package civilian-fpv` after its output directory for a development-only build;
+this does not satisfy frozen-source or release qualification.
 
 The output directory must be new and either outside the checkout or Git-ignored.
 The command must execute the builder from that same checkout. It requires a clean
@@ -27,6 +42,29 @@ not enter the archive. Generated worker, launcher and icon dependencies are list
 i18next includes its exact version and license descriptor. The existing separate
 64-file/8-MiB package limits, 64-MiB/2,000-file core limit and 32-MiB edition asset
 limit are unchanged.
+
+The FPV policy admits only Three.js 0.186.1 `three.core.js`, `three.module.js` and
+the MIT license from the [official npm distribution](https://registry.npmjs.org/three/0.186.1).
+The upstream tarball's SHA-512 integrity was verified before selecting these
+2,121,966 bytes. Exact file lengths and SHA-256 pins are checked before parsing
+and again at archive admission; the selected source inventory retains the license,
+version and upstream integrity reference. Only these byte-pinned vendor modules
+are exempt from the application's ban on network loader calls, because the official
+Three.js build contains unused native loader implementations. No loaders are invoked
+by that exemption; application imports remain explicitly relative, and application
+network calls still fail compilation. The full upstream package is not included.
+
+The new scope-owned worker uses `revealline.optional.package.v1:<scope>:` caches.
+The historical gym's worker and its existing cache namespace remain unchanged.
+Package selection does not install a worker or migrate another package's state.
+The integration tests build the actual FPV runtime twice and verify its complete
+runtime/source archives, alongside synthetic dependency-tampering fixtures. Those
+tests deliberately use synthetic source bindings and cannot replace the clean
+committed-input verification performed by the frozen CLI. Neither packaging test
+establishes simulator correctness or physical-radio compatibility. The shared
+numeric portability helper separately verifies all 24 demonstration replays and
+two 3,000-tick stress sequences, with complete-state checkpoints every 250 stress
+ticks; its Node result alone does not establish browser agreement.
 
 `optional-package-review.json` starts with every gate pending. The verifier binds
 approved evidence bytes to the exact envelope and rejects missing, pending,

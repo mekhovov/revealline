@@ -6,6 +6,7 @@ import {
   loadOptionalPracticeCatalog,
 } from '../optional-practice-catalog.mjs';
 import { mountOptionalPracticePanel } from '../ui/optional-practice-panel.mjs';
+import { optionalPracticeSourcePreviews } from '../optional-practice-preview.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 const catalog = {
@@ -27,6 +28,10 @@ test('optional navigation resolves source and frozen default/edition hosts witho
     'game/index.html',
     'releases/v1.2.3/site/game/index.html',
     'editions/coupa-all/releases/v1.2.3/site/game/company.html',
+    'game/controller-lab/',
+    'game/controller-lab/index.html',
+    'releases/v1.2.3/site/game/controller-lab/',
+    'editions/fpv-learning/releases/v1.2.3/site/game/controller-lab/index.html',
   ])
     assert.equal(
       optionalPracticeCatalogURL(
@@ -36,6 +41,39 @@ test('optional navigation resolves source and frozen default/edition hosts witho
     );
   assert.equal(optionalPracticeCatalogURL('file:///tmp/game/index.html'), null);
   assert.equal(optionalPracticeCatalogURL('https://example.test/unknown/'), null);
+});
+
+test('unqualified source previews are limited to the loopback source entry', () => {
+  for (const host of ['localhost', '127.0.0.1', '[::1]']) {
+    const previews = optionalPracticeSourcePreviews(
+      `http://${host}:8768/game/index.html?edition=fpv-learning`,
+    );
+    assert.deepEqual(previews, [
+      {
+        id: 'civilian-flight',
+        titleKey: 'assistedSourcePreview',
+        url: `http://${host}:8768/optional-practice/civilian-flight/`,
+      },
+      {
+        id: 'civilian-fpv',
+        titleKey: 'fpvSourcePreview',
+        url: `http://${host}:8768/optional-practice/civilian-fpv/`,
+      },
+    ]);
+  }
+  for (const href of [
+    'https://example.test/game/index.html',
+    'http://localhost.evil.test/game/index.html',
+    'http://user@localhost/game/index.html',
+    'http://localhost/current-abc/game/index.html',
+    'http://localhost/editions/fpv-learning/releases/v1.2.3/site/game/index.html',
+    'http://localhost/releases/v1.2.3/site/game/index.html',
+    'http://localhost/game/controller-lab/',
+    'http://localhost/game/company.html',
+    'file:///game/index.html',
+    'invalid',
+  ])
+    assert.deepEqual(optionalPracticeSourcePreviews(href), [], href);
 });
 
 test('launcher catalog rejects external links, encoded paths, duplicates and oversized responses', async () => {
@@ -159,7 +197,89 @@ test('a stalled optional catalog times out and leaves an explicit retry availabl
   t.after(() => panel.dispose());
   doc.getElementById('shell-optional-practice').click();
   const dialog = doc.getElementById('optional-practice-dialog');
-  await waitFor(() => !dialog.querySelector('button').disabled);
+  await waitFor(() => !doc.getElementById('optional-practice-refresh').disabled);
   assert.equal(dialog.open, true);
   assert.equal(dialog.querySelector('a'), null);
+});
+
+test('Home and More share one public loader and restore the actual opener without resuming play', async (t) => {
+  const doc = new Document(),
+    container = doc.createElement('nav'),
+    home = doc.createElement('button');
+  doc.body.append(container, home);
+  let pauses = 0,
+    requests = 0;
+  const panel = mountOptionalPracticePanel({
+    document: doc,
+    container,
+    href: 'https://example.test/game/index.html',
+    pause() {
+      pauses++;
+    },
+    fetcher: async () => {
+      requests++;
+      return new Response(JSON.stringify(catalog));
+    },
+  });
+  t.after(() => panel.dispose());
+  panel.open(home);
+  panel.open(home);
+  await waitFor(() => doc.getElementById('optional-practice-dialog').querySelector('a'));
+  assert.equal(pauses, 1);
+  assert.equal(requests, 1);
+  assert.equal(doc.activeElement.id, 'optional-practice-close');
+  doc.getElementById('optional-practice-close').click();
+  assert.equal(doc.activeElement, home);
+  const more = doc.getElementById('shell-optional-practice');
+  more.click();
+  doc.getElementById('optional-practice-close').click();
+  assert.equal(doc.activeElement, more);
+  assert.equal(pauses, 2);
+  panel.open(home);
+  home.remove();
+  doc.body.focus();
+  panel.close({ restoreFocus: false });
+  assert.equal(doc.activeElement, doc.body);
+  doc.body.append(home);
+  panel.open(home);
+  doc.body.focus();
+  doc.focused = false;
+  panel.close();
+  assert.equal(doc.activeElement, doc.body, 'Background closing cannot steal focus');
+});
+
+test('local gym and FPV previews stay separate and usable while the public catalog is unavailable', async (t) => {
+  const doc = new Document(),
+    container = doc.createElement('nav');
+  doc.body.append(container);
+  let requests = 0;
+  const panel = mountOptionalPracticePanel({
+    document: doc,
+    container,
+    href: 'http://127.0.0.1:8768/game/index.html?edition=fpv-learning',
+    pause() {},
+    fetcher: async () => {
+      requests++;
+      return new Response('', { status: 404 });
+    },
+  });
+  t.after(() => panel.dispose());
+  assert.equal(requests, 0);
+  panel.open();
+  const dialog = doc.getElementById('optional-practice-dialog');
+  const preview = dialog.querySelector('[data-practice-source-preview]');
+  assert.equal(preview.href, 'http://127.0.0.1:8768/optional-practice/civilian-flight/');
+  assert.equal(preview.target, '_blank');
+  assert.equal(preview.rel, 'noopener noreferrer');
+  await waitFor(() => !doc.getElementById('optional-practice-refresh').disabled);
+  assert.equal(requests, 1);
+  assert.equal(dialog.querySelectorAll('a').length, 2);
+  const fpv = dialog.querySelectorAll('[data-practice-source-preview]')[1];
+  assert.equal(fpv.href, 'http://127.0.0.1:8768/optional-practice/civilian-fpv/');
+  assert.equal(fpv.target, '_blank');
+  assert.equal(fpv.rel, 'noopener noreferrer');
+  assert.match(fpv.textContent, /source preview · unqualified/);
+  panel.close();
+  panel.open();
+  assert.equal(dialog.querySelectorAll('[data-practice-source-preview]').length, 2);
 });

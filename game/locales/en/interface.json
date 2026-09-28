@@ -5427,5 +5427,10 @@
   "completionRewards.importConflict": "This backup contains different discovery revisions. Nothing was imported; your current collection and original backup are unchanged. Use the backup’s matching release in a separate profile to recover it.",
   "completionRewards.capacityShort": "Some new discoveries await collection space.",
   "completionRewards.capacityImported": "Your imported backup was saved. Some newly earned discoveries remain only in this tab and are not in the Discovery export because the collection limit was reached. Keep Journey and optional-learning backups, and the original imported file.",
-  "completionRewards.capacityLocal": "The current collection is intact. Some newly earned discoveries remain only in this tab and are not in the Discovery export because the collection limit was reached. Keep Journey and optional-learning backups, and the original backup file."
+  "completionRewards.capacityLocal": "The current collection is intact. Some newly earned discoveries remain only in this tab and are not in the Discovery export because the collection limit was reached. Keep Journey and optional-learning backups, and the original backup file.",
+  "optionalPractice.homeAction": "Flight practice",
+  "optionalPractice.sourcePreviews": "Local testing",
+  "optionalPractice.sourcePreviewNote": "Unqualified source preview. Opens separately; no campaign progress is awarded.",
+  "optionalPractice.assistedSourcePreview": "Assisted orientation gym · source preview · unqualified",
+  "optionalPractice.fpvSourcePreview": "FPV Flight Studio · source preview · unqualified"
 }
