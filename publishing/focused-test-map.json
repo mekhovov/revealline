@@ -2,6 +2,25 @@
   "format": "revealline-focused-test-map.v1",
   "categories": [
     {
+      "id": "official-download-retention",
+      "pathPatterns": [
+        "^game/official-downloads\\.mjs$",
+        "^game/test/official-downloads\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "official-download-retention",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/official-downloads.test.mjs",
+            "game/test/offline-download-access.test.mjs",
+            "game/test/offline-team-retention-host.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
       "id": "content-artwork-preparation",
       "pathPatterns": [
         "^game/content-design/(assets|attempt|limits|picture)\\.mjs$",
