@@ -2,7 +2,13 @@ import { completionLearningReference } from './learning.mjs';
 
 /** Translate only selected authored missions from the Journey authority. Skips,
  * practice results and unknown mission IDs never become reward evidence. */
-export function rewardContext(provider, bindings, profile, acceptedLearning = []) {
+export function rewardContext(
+  provider,
+  bindings,
+  profile,
+  acceptedLearning = [],
+  acceptedMastery = [],
+) {
   const clears = {};
   const clearAlternatives = {};
   for (const mission of bindings) {
@@ -57,6 +63,19 @@ export function rewardContext(provider, bindings, profile, acceptedLearning = []
     clears,
     ...(Object.keys(clearAlternatives).length ? { clearAlternatives } : {}),
     learning,
-    mastery: [],
+    mastery: acceptedMastery.filter(
+      (record) =>
+        (provider.rewards ?? []).some((reward) =>
+          reward.requirements.mastery.some(
+            (requirement) =>
+              requirement.id === record.id &&
+              requirement.revision === record.revision &&
+              requirement.missionId === record.missionId,
+          ),
+        ) &&
+        [clears[record.missionId], ...(clearAlternatives[record.missionId] ?? [])].some(
+          (clear) => clear?.runId === record.runId,
+        ),
+    ),
   };
 }

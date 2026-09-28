@@ -2,16 +2,81 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
-      "bytes": 207668,
+      "alt": "A parked model, pause and reset sculptures welcome visitors to a fictional practice gym.",
+      "bytes": 141896,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "fpv-first-flight-key-picture",
+      "height": 480,
+      "id": "fpv-first-flight-01-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-first-flight-key-v1.jpg",
+      "path": "editions/assets/discovery/fpv-first-flight-01-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757",
+      "sha256": "991e2ba9d123625894bbb124ed92373179650f01affd65f0fcba78f7ee448376",
+      "width": 960
+    },
+    {
+      "alt": "Two display models share one floor position at different heights beside overhead and side-view cards.",
+      "bytes": 121938,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-first-flight-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-first-flight-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "b08cfe7d0d4d25c55b958ffeadec3477092836606ab102e37442288f6c3ef493",
+      "width": 960
+    },
+    {
+      "alt": "A coral floor arrow and a turquoise model nose point in different directions in a spacious gym.",
+      "bytes": 120040,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-first-flight-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-first-flight-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "00a382113a9346f8e3e664ea480a57eb98866449ff92b300ba0e8a6538194638",
+      "width": 960
+    },
+    {
+      "alt": "Two cards keep the same window view while a model silhouette appears at different sideways positions.",
+      "bytes": 150717,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-first-flight-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-first-flight-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "0d22e3cbbf1693ef8cd4bec21003480c50b720ae9b730fae911a542be4eba827",
+      "width": 960
+    },
+    {
+      "alt": "A square floor ribbon, a separate turning arc and nose-marker tokens compare travel and heading.",
+      "bytes": 117319,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-first-flight-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-first-flight-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "ae257751d93ebe8c3c8cfedfd98a70656baf9ba4f854fc6f4f2134b4808b0bba",
+      "width": 960
+    },
+    {
+      "alt": "Six picture cards, separate height and heading markers, and a resting model complete a practice notebook.",
+      "bytes": 135472,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-first-flight-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-first-flight-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "3c2fdd8a8c038ad1c2e50d18e833cb7cf2e141b02ffc7b3402af77c3f679a8b2",
       "width": 960
     }
   ],
@@ -20,7 +85,7 @@
       "band": 6,
       "discovery": {
         "exhibitLayout": "route",
-        "finaleRewardRef": { "id": "fpv-first-flight-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "fpv-first-flight-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-first-flight",
@@ -202,7 +267,7 @@
           "travelling-trail-impact",
           "trail-pursuer"
         ],
-        "rewardRef": { "id": "fpv-first-flight-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-first-flight-01-discovery", "revision": "2" },
         "routeDecision": "Establish the pause island early or connect the start terrace by a shorter return. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -215,7 +280,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-first-flight-key-picture",
+        "backgroundAssetId": "fpv-first-flight-01-picture",
         "themeId": "fpv-first-flight-theme"
       },
       "relayLinks": [],
@@ -269,7 +334,7 @@
           "travelling-trail-impact",
           "trail-pursuer"
         ],
-        "rewardRef": { "id": "fpv-first-flight-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-first-flight-02-discovery", "revision": "2" },
         "routeDecision": "Climb the arcade’s marker chain or capture the wider observation bay first. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -282,7 +347,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-first-flight-key-picture",
+        "backgroundAssetId": "fpv-first-flight-02-picture",
         "themeId": "fpv-first-flight-theme"
       },
       "relayLinks": [],
@@ -336,7 +401,7 @@
           "travelling-trail-impact",
           "heading-interceptor"
         ],
-        "rewardRef": { "id": "fpv-first-flight-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-first-flight-03-discovery", "revision": "2" },
         "routeDecision": "Use the long straight island as a return or connect the two viewpoint alcoves. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -349,7 +414,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 26.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-first-flight-key-picture",
+        "backgroundAssetId": "fpv-first-flight-03-picture",
         "themeId": "fpv-first-flight-theme"
       },
       "relayLinks": [],
@@ -412,7 +477,7 @@
           "heading-interceptor",
           "lane-emitter"
         ],
-        "rewardRef": { "id": "fpv-first-flight-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-first-flight-04-discovery", "revision": "2" },
         "routeDecision": "Take the broad window terrace or make two short captures from the side mat. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -425,7 +490,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 22.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-first-flight-key-picture",
+        "backgroundAssetId": "fpv-first-flight-04-picture",
         "themeId": "fpv-first-flight-theme"
       },
       "relayLinks": [],
@@ -488,7 +553,7 @@
           "heading-interceptor",
           "lane-emitter"
         ],
-        "rewardRef": { "id": "fpv-first-flight-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-first-flight-05-discovery", "revision": "2" },
         "routeDecision": "Secure opposite corner islands or follow neighbouring corners around the board. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -501,7 +566,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-first-flight-key-picture",
+        "backgroundAssetId": "fpv-first-flight-05-picture",
         "themeId": "fpv-first-flight-theme"
       },
       "relayLinks": [],
@@ -565,7 +630,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-first-flight-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-first-flight-06-discovery", "revision": "2" },
         "routeDecision": "Join the three landmark returns first or close the route’s outer envelope. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV2",
@@ -578,7 +643,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 27.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-first-flight-key-picture",
+        "backgroundAssetId": "fpv-first-flight-06-picture",
         "themeId": "fpv-first-flight-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -594,9 +659,9 @@
       "format": "PackDesignV1",
       "id": "fpv-first-flight-pack",
       "name": "First Flight Patterns",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }
