@@ -2,16 +2,81 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
-      "bytes": 207785,
+      "alt": "A loose paper label on an inert model sits beside separate observation and question cards.",
+      "bytes": 121480,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "fpv-care-repair-key-picture",
+      "height": 480,
+      "id": "fpv-care-repair-01-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-care-repair-key-v1.jpg",
+      "path": "editions/assets/discovery/fpv-care-repair-01-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90",
+      "sha256": "7f570a43475e304a926228a28bbc98e1ec0a76ee1df54fbe77deb36a67f3d601",
+      "width": 960
+    },
+    {
+      "alt": "A magnifier compares a broken display bracket, unreadable identifier and closed cover with separate observation cards.",
+      "bytes": 118110,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-care-repair-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-care-repair-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "5aeb3ea85a03e23f7999282b8648d66322ef0f18a0a1a580d8f7ec287259917e",
+      "width": 960
+    },
+    {
+      "alt": "Two matching paper-label displays differ only in the brightness of their lamps.",
+      "bytes": 93933,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-care-repair-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-care-repair-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "e95ecd746401b8ac04f9e440147b4b5f1fdcf3459f59498bd694a48422b9d87c",
+      "width": 960
+    },
+    {
+      "alt": "A flat battery-warning pictogram, separate stop symbol and help notebook form a calm reference desk.",
+      "bytes": 108518,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-care-repair-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-care-repair-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "1592f632fbce43aacc121cfac72476303bb3145fff3ebced154857a29a262aa5",
+      "width": 960
+    },
+    {
+      "alt": "Paper-label replacement, an unidentified-board question and a battery-warning stop card occupy separate decision spaces.",
+      "bytes": 109921,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-care-repair-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-care-repair-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "b1426ba3ebb1598179c6ab6b8ec34d052a024d321776aae61276b73bbc39c0bd",
+      "width": 960
+    },
+    {
+      "alt": "A care notebook with evidence tabs, record fields and an unresolved local-specialist contact completes the handoff.",
+      "bytes": 116476,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-care-repair-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-care-repair-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "d3c9b3b8d2acd2fa94a63aa66ef471094c2142badf9700ef6e4afe5d97e54bdb",
       "width": 960
     }
   ],
@@ -20,7 +85,7 @@
       "band": 7,
       "discovery": {
         "exhibitLayout": "route",
-        "finaleRewardRef": { "id": "fpv-care-repair-finale", "revision": "2" }
+        "finaleRewardRef": { "id": "fpv-care-repair-finale", "revision": "3" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-care-repair",
@@ -233,7 +298,7 @@
           "frontier-patrol",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-care-repair-01-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-care-repair-01-discovery", "revision": "3" },
         "routeDecision": "Capture the observation shelf before the cause shelf or connect both through the central return. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -246,7 +311,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-care-repair-key-picture",
+        "backgroundAssetId": "fpv-care-repair-01-picture",
         "themeId": "fpv-care-repair-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -308,7 +373,7 @@
           "frontier-patrol",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-care-repair-02-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-care-repair-02-discovery", "revision": "3" },
         "routeDecision": "Use each small inspection alcove or reach the long well-lit return first. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -321,7 +386,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-care-repair-key-picture",
+        "backgroundAssetId": "fpv-care-repair-02-picture",
         "themeId": "fpv-care-repair-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -383,7 +448,7 @@
           "frontier-patrol",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-care-repair-03-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-care-repair-03-discovery", "revision": "3" },
         "routeDecision": "Join adjacent comparison islands or cross to the unchanged-reference island first. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -396,7 +461,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-care-repair-key-picture",
+        "backgroundAssetId": "fpv-care-repair-03-picture",
         "themeId": "fpv-care-repair-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -459,7 +524,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-care-repair-04-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-care-repair-04-discovery", "revision": "3" },
         "routeDecision": "Take the broad quiet safety terrace or connect the small guidance desk first. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -472,7 +537,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-care-repair-key-picture",
+        "backgroundAssetId": "fpv-care-repair-04-picture",
         "themeId": "fpv-care-repair-theme"
       },
       "relayLinks": [
@@ -538,7 +603,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-care-repair-05-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-care-repair-05-discovery", "revision": "3" },
         "routeDecision": "Compare the three decision bays using interior returns or join the evidence spine first. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -551,7 +616,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 52.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-care-repair-key-picture",
+        "backgroundAssetId": "fpv-care-repair-05-picture",
         "themeId": "fpv-care-repair-theme"
       },
       "relayLinks": [
@@ -618,7 +683,7 @@
           "relay-gates",
           "directional-fields"
         ],
-        "rewardRef": { "id": "fpv-care-repair-06-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-care-repair-06-discovery", "revision": "3" },
         "routeDecision": "Complete the handoff chain from the centre or join the final two collection desks first. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -631,7 +696,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-care-repair-key-picture",
+        "backgroundAssetId": "fpv-care-repair-06-picture",
         "themeId": "fpv-care-repair-theme"
       },
       "relayLinks": [
@@ -650,9 +715,9 @@
       "format": "PackDesignV1",
       "id": "fpv-care-repair-pack",
       "name": "Care, Diagnosis and Repair Decisions",
-      "revision": "2"
+      "revision": "3"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "2"
+  "revision": "3"
 }
