@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Playable comparison — Reveal Line</title>
+    <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="./workshop.css" />
+  </head>
+  <body>
+    <main>
+      <div id="play-viewport">
+        <header class="heading">
+          <h1>Playable comparison</h1>
+          <nav><a href="../game-feel-lab/">Feedback sequence</a><a href="../../game/">Game</a></nav>
+        </header>
+        <section class="controls" aria-label="Benchmark controls">
+          <button id="start" type="button" disabled>Start</button>
+          <button id="pause" type="button" disabled>Pause</button>
+          <button id="retry" type="button" disabled>Retry same setup</button>
+          <button id="cancel" type="button" hidden>Cancel loading</button>
+          <label><input id="show-comparison" type="checkbox" checked /> Second view</label>
+        </section>
+        <p id="loading" role="status">Loading the current Journey source…</p>
+        <div class="telemetry">
+          <p id="summary">No mission ready.</p>
+        </div>
+        <p id="outcome" role="status" aria-atomic="true"></p>
+        <div class="play-stage">
+          <section
+            id="arena"
+            tabindex="0"
+            aria-label="Playable mission, keyboard and touch controls"
+            aria-describedby="instructions"
+          >
+            <div id="panes" class="panes">
+              <figure>
+                <figcaption id="reference-label">Reference · standard effects</figcaption>
+                <canvas
+                  id="reference"
+                  width="1152"
+                  height="576"
+                  aria-label="Reference view of the real mission"
+                ></canvas>
+              </figure>
+              <figure id="comparison-pane">
+                <figcaption>Comparison · reduced effects</figcaption>
+                <canvas
+                  id="comparison"
+                  width="1152"
+                  height="576"
+                  aria-label="Reduced-effects view of the same live mission"
+                ></canvas>
+              </figure>
+            </div>
+          </section>
+          <div class="pad" aria-label="Steering controls">
+            <div id="direction-pad" class="direction-controls">
+              <button type="button" data-move="up" aria-label="Steer up">↑</button
+              ><button type="button" data-move="left" aria-label="Steer left">←</button
+              ><button type="button" data-move="down" aria-label="Steer down">↓</button
+              ><button type="button" data-move="right" aria-label="Steer right">→</button>
+            </div>
+            <button type="button" id="boost-button" aria-pressed="false">Boost</button>
+          </div>
+        </div>
+      </div>
+      <details data-game-reading>
+        <summary>Mission setup, controls and comparison</summary>
+        <div class="controls" aria-label="Mission selection">
+          <label for="mission"
+            >Mission
+            <select id="mission" disabled></select
+          ></label>
+          <button id="load" type="button" disabled>Load selected</button>
+        </div>
+        <p id="instructions">Arrows/WASD · Shift boost · Esc pause</p>
+        <p id="purpose"></p>
+        <label
+          >Touch steering
+          <select id="touch-mode">
+            <option value="dpad">Direction pad</option>
+            <option value="swipe">Swipe on first board</option>
+          </select></label
+        >
+        <p>
+          One real run is drawn twice. The second view uses reduced effects. Arrow keys, WASD, the
+          direction pad or the selected swipe mode steer continuously. Shift boosts; Escape pauses.
+          The existing basic gamepad reader supports steering and flight actions; controller menu
+          navigation is outside this tool.
+        </p>
+        <label
+          ><input id="reference-reduced" type="checkbox" /> Reduced effects in reference too</label
+        >
+        <p>
+          Retry keeps the exact setup, shows a 600 ms ready cue without advancing simulation, then
+          begins. Release held controls and choose a fresh direction. Terminal results wait for a
+          deliberate Retry; ordinary life loss remains part of the current attempt.
+        </p>
+        <p class="note">
+          Standard difficulty · Scout · immediate turns · seed 1. No attempt, progress, award or
+          replay is saved. Existing original artwork and the approved FPV actor release remain
+          separate identities. This tool does not change either binding.
+        </p>
+        <p class="note">
+          Workshop, Poltava and Synevyr artwork proposals remain separate future candidates. Source
+          artwork review labels remain unchanged. Audio, full product UX and physical-device
+          acceptance remain outside this benchmark. <a href="./README.md">Method and limits</a>
+        </p>
+      </details>
+      <p id="input-status" role="status"></p>
+      <details data-game-reading>
+        <summary>Recent simulation events</summary>
+        <ol id="events"></ol>
+      </details>
+      <details data-game-reading>
+        <summary>Exact source, artwork and actor appearance</summary>
+        <pre id="identity">Waiting for source verification.</pre>
+      </details>
+      <noscript>This playable benchmark requires JavaScript.</noscript>
+    </main>
+    <script type="module" src="./app.mjs"></script>
+  </body>
+</html>

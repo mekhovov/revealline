@@ -18,6 +18,7 @@ import {
   rotorHubReview,
   rotorSamplingRecipe,
   createRotorEditor,
+  validateRotorEnvelope,
 } from '../../authoring/motion-lab/rotor-editor.mjs';
 
 const presets = freezeMotionPresets(
@@ -65,14 +66,28 @@ test('review composes actual recipe signs, offsets and per-hub blade counts with
   const body = { rotors: [{ x: 0.1, y: -0.2, direction: -1, phaseDegrees: 31, bladeCount: 4 }] },
     recipe = {
       components: [
-        { id: 'backward', type: 'rotors', direction: -1, phaseDegrees: -23, bladeCount: 2 },
-        { id: 'forward', type: 'rotors', direction: 1, phaseDegrees: 17, bladeCount: 3 },
+        {
+          id: 'backward',
+          type: 'rotors',
+          direction: -1,
+          phaseDegrees: -23,
+          bladeCount: 2,
+          radius: 0.16,
+        },
+        {
+          id: 'forward',
+          type: 'rotors',
+          direction: 1,
+          phaseDegrees: 17,
+          bladeCount: 3,
+          radius: 0.12,
+        },
         { id: 'light', type: 'blink' },
       ],
     };
   assert.deepEqual(rotorHubReview(body, recipe)[0].components, [
-    { id: 'backward', direction: 1, phaseDegrees: 8, bladeCount: 4 },
-    { id: 'forward', direction: -1, phaseDegrees: 48, bladeCount: 4 },
+    { id: 'backward', direction: 1, phaseDegrees: 8, bladeCount: 4, radius: 0.16 },
+    { id: 'forward', direction: -1, phaseDegrees: 48, bladeCount: 4, radius: 0.12 },
   ]);
 });
 
@@ -95,12 +110,12 @@ test('malformed, unknown and out-of-bounds rotor edits fail before any accepted 
     [{ ...valid, radiusScale: 0 }],
     [{ y: 0 }],
   ])
-    assert.throws(() => validateRotorRig(invalid), /invalid/);
+    assert.throws(() => validateRotorRig(invalid), /invalid|missingRadius/);
   const body = { rotors: [valid] },
     draft = createRotorDraft('sample', body);
   for (const raw of ['{bad', ' '.repeat(16385), '[{"__proto__":{},"x":0,"y":0}]'])
     assert.throws(() => readRotorDraft(draft, raw, 'sample', body), /invalid/);
-  assert.throws(() => editRotorHub(body.rotors, 0, { x: 0.2 }), /invalid/);
+  assert.throws(() => editRotorHub(body.rotors, 0, { radius: 0.2 }), /invalid/);
   assert.deepEqual(body.rotors, [valid]);
 });
 
@@ -142,6 +157,11 @@ function editorFixture() {
         'hub',
         'direction',
         'phase',
+        'x',
+        'y',
+        'radius',
+        'envelope',
+        'limits',
         'json',
         'apply',
         'reset',
@@ -157,16 +177,26 @@ function editorFixture() {
       ],
     }),
     recipe = {
-      components: [{ type: 'rotors', id: 'motors', direction: 1, phaseDegrees: 17, bladeCount: 3 }],
+      components: [
+        {
+          type: 'rotors',
+          id: 'motors',
+          direction: 1,
+          phaseDegrees: 17,
+          bladeCount: 3,
+          radius: 0.16,
+        },
+      ],
     },
     downloads = [];
   let body = original,
+    image = { naturalWidth: 64, naturalHeight: 64 },
     id = 'sample',
     changes = 0,
     reviews = 0;
   const editor = createRotorEditor({
     elements,
-    getSelection: () => ({ id, body, recipe }),
+    getSelection: () => ({ id, body, recipe, image }),
     apply: (rotors) => {
       body = rotors === null ? original : { ...body, rotors };
       changes++;
@@ -194,6 +224,9 @@ function editorFixture() {
     },
     select(next) {
       id = next;
+    },
+    setImage(next) {
+      image = next;
     },
     change(key, value) {
       elements[key].value = value;
@@ -249,4 +282,134 @@ test('editor rejects a stale selection and hides rotor-only controls for non-rot
   h.recipe.components = [{ id: 'wings', type: 'wings' }];
   h.editor.refresh();
   assert.equal(h.elements.root.hidden, true);
+});
+
+test('production geometry checks the full circular sweep in square, wide and tall source rectangles', () => {
+  const recipe = { components: [{ type: 'rotors', radius: 0.125, bladeCount: 3 }] },
+    body = { rotors: [{ x: 0.25, y: 0.25 }] };
+  assert.deepEqual(validateRotorEnvelope(body, recipe, { width: 64, height: 64 }), body.rotors);
+  assert.deepEqual(
+    validateRotorEnvelope(body, recipe, { width: 128, height: 64 }),
+    body.rotors,
+    'A width-relative radius of 0.125 occupies 0.25 of a wide image height and touches its bottom edge',
+  );
+  assert.throws(
+    () =>
+      validateRotorEnvelope({ rotors: [{ x: 0.25, y: 0.251 }] }, recipe, {
+        width: 128,
+        height: 64,
+      }),
+    /envelope/,
+  );
+  const larger = { components: [{ type: 'rotors', radius: 0.25, bladeCount: 3 }] };
+  assert.deepEqual(
+    validateRotorEnvelope({ rotors: [{ x: 0, y: 0.3 }] }, larger, { width: 64, height: 128 }),
+    [{ x: 0, y: 0.3 }],
+    'A tall image must not inherit a false square-frame rejection',
+  );
+  assert.throws(
+    () => validateRotorEnvelope({ rotors: [{ x: 0.3, y: 0 }] }, larger, { width: 64, height: 128 }),
+    /envelope/,
+  );
+  assert.throws(() => validateRotorEnvelope(body, recipe, null), /dimensions/);
+});
+
+test('envelope validation respects the painted source pivot, every rotor component and duplicate hubs', () => {
+  const image = { width: 64, height: 64 },
+    recipe = { components: [{ type: 'rotors', radius: 0.125, bladeCount: 3 }] },
+    body = { rotors: [{ x: -0.25, y: 0.25 }], presentationPivot: { x: 0.375, y: 0.625 } };
+  assert.deepEqual(validateRotorEnvelope(body, recipe, image), body.rotors);
+  assert.throws(
+    () => validateRotorEnvelope({ ...body, presentationPivot: { x: 0.25, y: 0.5 } }, recipe, image),
+    /envelope/,
+  );
+  assert.throws(
+    () =>
+      validateRotorEnvelope(
+        body,
+        { components: [...recipe.components, { type: 'rotors', radius: 0.3, bladeCount: 4 }] },
+        image,
+      ),
+    /envelope/,
+  );
+  assert.throws(
+    () => validateRotorEnvelope({ rotors: [[0, 0, 0.16], { x: 0, y: 0 }] }, recipe, image),
+    /envelope/,
+  );
+});
+
+test('hub envelope edits preserve accepted JSON bytes on rejection and export/import the same existing recipe fragment', () => {
+  const h = editorFixture();
+  h.change('x', '-0.25');
+  h.change('y', '-0.25');
+  h.change('radius', '0.2');
+  assert.deepEqual(h.body.rotors[0], {
+    x: -0.25,
+    y: -0.25,
+    radiusScale: 1.25,
+    direction: 1,
+    phaseDegrees: 0,
+  });
+  const accepted = h.elements.json.value,
+    changes = h.changes;
+  h.change('x', '-0.49');
+  assert.match(h.elements.status.textContent, /envelope/);
+  assert.equal(h.elements.json.value, accepted);
+  assert.equal(h.changes, changes);
+  h.change('radius', '0.4');
+  assert.match(h.elements.status.textContent, /radiusRejected/);
+  assert.equal(h.elements.json.value, accepted);
+  h.elements.json.value = JSON.stringify([{ x: 0.49, y: 0, radiusScale: 1 }]);
+  h.elements.apply.click();
+  assert.match(h.elements.status.textContent, /envelope/);
+  assert.equal(h.changes, changes);
+  h.elements.export.click();
+  assert.equal(h.downloads[0].text, accepted, 'Rejected JSON never reaches export');
+  h.elements.json.value = h.downloads[0].text;
+  h.elements.apply.click();
+  assert.equal(h.elements.json.value, accepted);
+  h.elements.reset.click();
+  assert.equal(h.body, h.original);
+  assert.equal(h.elements.json.value, rotorRigJSON(h.original.rotors));
+});
+
+test('historical out-of-frame rigs remain readable and resettable without automatic correction', () => {
+  const h = editorFixture();
+  h.recipe.components[0].radius = 0.3;
+  h.editor.refresh();
+  assert.match(h.elements.envelope.textContent, /historicalEnvelope/);
+  assert.match(h.elements.limits.textContent, /legacyRadius/);
+  const bytes = h.elements.json.value;
+  h.elements.export.click();
+  assert.equal(h.downloads[0].text, bytes);
+  assert.equal(h.changes, 0);
+  h.elements.reset.click();
+  assert.equal(h.body, h.original);
+  assert.equal(h.elements.json.value, bytes);
+  h.elements.json.value = '[[0,0]]';
+  h.elements.apply.click();
+  assert.match(h.elements.status.textContent, /missingRadius/);
+  assert.equal(h.body, h.original);
+});
+
+test('envelope edits are gated by actual image dimensions and reject stale recipe or image context', () => {
+  const h = editorFixture();
+  h.setImage(null);
+  h.editor.refresh();
+  assert.equal(h.elements.x.disabled, true);
+  assert.equal(h.elements.y.disabled, true);
+  assert.equal(h.elements.radius.disabled, true);
+  assert.match(h.elements.envelope.textContent, /dimensions/);
+  h.setImage({ width: 64, height: 64 });
+  h.change('x', '0');
+  assert.match(h.elements.status.textContent, /stale/);
+  assert.equal(h.changes, 0);
+  h.editor.refresh();
+  assert.equal(h.elements.x.disabled, false);
+  h.recipe.components[0].radius = 0.2;
+  h.change('radius', '0.2');
+  assert.match(h.elements.status.textContent, /stale/);
+  assert.equal(h.changes, 0);
+  h.elements.apply.click();
+  assert.match(h.elements.status.textContent, /stale/);
 });

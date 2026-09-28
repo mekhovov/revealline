@@ -80,6 +80,7 @@
     "authoring/library/runtime-sprite-candidates-v1/export/manifest.json",
     "authoring/motion-lab/rotor-editor.mjs",
     "authoring/game-feel-lab",
+    "authoring/playable-benchmark",
     "authoring/library/real-world-references"
   ],
   "optionalOffline": [
