@@ -73,6 +73,28 @@ Current item order and hands-on estimates:
    and Ukrainian admissions in independently releasable batches. **1–2 days per
    accepted batch**, excluding user listening and rights review.
 
+### Compact Audio player candidate
+
+The next soundtrack UI batch is preserved separately at local commit
+`435da8de428a854484f9b8d751ef48b24418241d`. It adds one compact player to the
+main Audio settings page with current title/artist/source, Previous, Play/Pause
+and Next, explicit game/upload and public-archive source choices, ordered or
+shuffled playback, and all ten canonical archive style groups: FPV, UA, synth,
+metal, Ukrainian, chiptune, rock, ambient, fusion and other. The full music
+library remains the disclosed advanced path for song search, custom playlists,
+downloads, backups and editing.
+
+Browser evidence on the local build loaded all 202 public recordings, streamed an
+archive recording in the existing game transport, then switched to a bundled
+recording without losing playback ownership. The focused player, panel, transport,
+host and quick-control cohort passes **215/215**; lint, localization, validation
+and formatting pass. The source also records one honest non-source failure: the
+distribution build reached packaging and stopped with `ENOSPC` when the host fell
+to approximately 1 GiB free. The production-history test passes 10/13 and
+correctly requires a new scoped Field Kit review revision for the changed Audio UI
+inputs. Finish that ledger review and the hosted build after the active #716
+release train; do not fold this later UI batch into its frozen candidate.
+
 The first real external-object acceptance remains blocked until a stable public
 HTTPS MP3 URL with GET/HEAD/Range CORS and recording-specific rights is supplied.
 UA-FPV publication remains blocked recording by recording by permission evidence.
