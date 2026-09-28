@@ -6,6 +6,7 @@ import { reviewTarget } from '../docs/verification/company-review-model.mjs';
 import {
   validateDiscoveryObservation,
   summarizeDiscoverySession,
+  summarizeDiscoveryLifecycle,
 } from '../docs/verification/discovery-comparison.mjs';
 
 const runFile = promisify(execFile);
@@ -52,7 +53,7 @@ export async function runDiscoveryCycles({
   };
   const frames = () =>
     evaluate(
-      'await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))); return true;',
+      `await new Promise((resolve,reject)=>{let first,second; const timer=setTimeout(()=>{cancelAnimationFrame(first);cancelAnimationFrame(second);reject(new Error('Visible-frame observation timed out.'));},2000); first=requestAnimationFrame(()=>{second=requestAnimationFrame(()=>{clearTimeout(timer);resolve();});});}); return true;`,
     );
   const attach = (value) =>
     evaluate(
@@ -99,7 +100,7 @@ export async function runDiscoveryCycles({
       };
     } else {
       const ready = await evaluate(
-        'return document.getElementById("game-overlay")?.dataset.kind === "won" && !!document.querySelector("#completion-reward-result [data-reward-surface=result]");',
+        'return document.getElementById("game-overlay")?.dataset.kind === "won" && !!document.getElementById("completion-reward-result")?.querySelector("[data-reward-surface=result]");',
       );
       if (!ready)
         throw new Error('Earn a normal mission win with a discovery before running result cycles.');
@@ -112,6 +113,10 @@ export async function runDiscoveryCycles({
         step = `result ${index + 1}: show result`;
         await command(['click', '#show-result']);
         await frames();
+        await waitFor(
+          'discoveryObservation.inspectCycleSurface().explore.visible && !discoveryObservation.inspectCycleSurface().explore.disabled && discoveryObservation.inspectCycleSurface().openDialogIds.length === 0',
+          'visible result Explore control',
+        );
         step = `result ${index + 1}: open discovery`;
         await command(['click', '#completion-reward-result [data-reward-surface="result"]']);
         await waitFor(
@@ -120,14 +125,21 @@ export async function runDiscoveryCycles({
         );
         step = `result ${index + 1}: load exact image`;
         await waitFor(
-          '!!document.querySelector("#completion-reward-dialog img")',
-          'exact reward image',
+          `(()=>{const view=discoveryObservation.inspectCycleSurface(); if(view.brokenVisibleImages) throw new Error('Reward image completed without decoded pixels.'); return view.decodedVisibleImages>0;})()`,
+          'decoded exact reward image',
         );
+        // Even a cached image may arrive between two observer frames. Observe
+        // the open phase before closing, rather than relying on driver latency.
+        await frames();
         await evaluate(
           `discoveryObservation.checkpoint('reward viewer ${index + 1}'); return true;`,
         );
         step = `result ${index + 1}: close discovery and result`;
         await command(['click', '#completion-reward-dialog > button']);
+        await waitFor(
+          'document.getElementById("completion-reward-dialog")?.open === false',
+          'closed reward viewer',
+        );
         await frames();
         await command(['click', '#view-picture']);
         await frames();
@@ -147,6 +159,7 @@ export async function runDiscoveryCycles({
         kind: 'earned-result',
         qualified: false,
         observation,
+        lifecycle: summarizeDiscoveryLifecycle(observation),
         note: 'Repeated viewing of one genuinely earned result, not twenty new wins or pacing evidence.',
       };
     }
@@ -158,6 +171,8 @@ export async function runDiscoveryCycles({
       diagnostic =
         await evaluate(`const observer=globalThis.discoveryObservation; observer?.dispose('cycle runner failed'); return {
         report: observer?.exportReport() ?? null,
+        surface: observer?.inspectCycleSurface() ?? null,
+        recentControlEvents: (observer?.exportReport().records ?? []).filter(record=>record.kind==='public-control').slice(-24),
         state: { boot: document.documentElement.dataset.bootState ?? null,
           edition: document.body.dataset.editionId ?? null,
           overlay: document.getElementById('game-overlay')?.dataset.kind ?? null,
