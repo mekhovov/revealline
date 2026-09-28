@@ -64,7 +64,7 @@ export function attachControllerConfirmTrace({
             .slice(-24)
             .map(
               (item) =>
-                `${item.t ?? '-'} gp:${item.gp ?? '-'} [${item.buttons.join(',') || '-'}] ${item.phase || '-'} ${item.event || '-'}${item.source ? ` from:${item.source}` : ''}${item.native ? ` native:${item.native}` : ''}${item.trusted !== undefined ? ` trusted:${item.trusted}` : ''}${item.prevented !== undefined ? ` prevented:${item.prevented}` : ''}${item.pointer ? ` pointer:${item.pointer}` : ''}${item.target ? ` target:${item.target}` : ''}${item.winner ? ` winner:${item.winner}` : ''}${item.reason ? ` reason:${item.reason}` : ''}${item.selected !== null ? ` selected:${item.selected}/${item.generation ?? '-'}` : ''}${item.raw.length ? ` pads:${item.raw.map((value) => `${value.index}:${value.buttons.join(',') || '-'}`).join(';')}` : ''}${item.interval !== null ? ` dt:${item.interval}` : ''}${item.focus ? ` focus:${item.focus}` : ''}${item.samples > 1 ? ` ×${item.samples}` : ''}`,
+                `${item.t ?? '-'} gp:${item.gp ?? '-'} [${item.buttons.join(',') || '-'}] ${item.phase || '-'} ${item.event || '-'}${item.source ? ` from:${item.source}` : ''}${item.native ? ` native:${item.native}` : ''}${item.trusted !== undefined ? ` trusted:${item.trusted}` : ''}${item.prevented !== undefined ? ` prevented:${item.prevented}` : ''}${item.pointer ? ` pointer:${item.pointer}` : ''}${item.pointerId !== null ? ` pointerId:${item.pointerId}` : ''}${item.primary !== undefined ? ` primary:${item.primary}` : ''}${item.button !== null ? ` button:${item.button}` : ''}${item.target ? ` target:${item.target}` : ''}${item.winner ? ` winner:${item.winner}` : ''}${item.reason ? ` reason:${item.reason}` : ''}${item.selected !== null ? ` selected:${item.selected}/${item.generation ?? '-'}` : ''}${item.raw.length ? ` pads:${item.raw.map((value) => `${value.index}:${value.buttons.join(',') || '-'}`).join(';')}` : ''}${item.interval !== null ? ` dt:${item.interval}` : ''}${item.focus ? ` focus:${item.focus}` : ''}${item.samples > 1 ? ` ×${item.samples}` : ''}`,
             )
             .join('\n')
         : t('interface:controller.confirmTrace.waiting'),
@@ -104,6 +104,8 @@ export function attachControllerConfirmTrace({
       hasFocus: typeof value.hasFocus === 'boolean' ? value.hasFocus : undefined,
       fullscreen: typeof value.fullscreen === 'boolean' ? value.fullscreen : undefined,
       pointer: safeText(value.pointerType, 16),
+      pointerId: number(value.pointerId),
+      primary: typeof value.isPrimary === 'boolean' ? value.isPrimary : undefined,
       trusted: typeof value.isTrusted === 'boolean' ? value.isTrusted : undefined,
       button: number(value.button),
       prevented: typeof value.defaultPrevented === 'boolean' ? value.defaultPrevented : undefined,
@@ -154,6 +156,8 @@ export function attachControllerConfirmTrace({
       hasFocus: doc?.hasFocus?.(),
       fullscreen: Boolean(doc?.fullscreenElement),
       pointerType: event.pointerType,
+      pointerId: event.pointerId,
+      isPrimary: event.isPrimary,
       isTrusted: event.isTrusted,
       button: event.button,
       defaultPrevented: event.defaultPrevented,

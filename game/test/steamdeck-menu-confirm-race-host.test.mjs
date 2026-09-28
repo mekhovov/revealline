@@ -132,11 +132,11 @@ test('Steam Deck native events before RAF capture short Confirm taps without pre
     target.emit('mouseup', { ...event, buttons: 0 });
     // Steam Input can deliver a separate click even when the pointer default
     // was cancelled. It must not be the first/second uncontrolled activation.
-    target.emit('click', { ...event, buttons: 0 });
+    target.emit('click', { ...event, buttons: 0, isPrimary: false });
     frame();
     const after = target.getAttribute('aria-pressed');
     assert.notEqual(after, before, `${pointerType} tap between frames commits once`);
-    target.emit('click', { ...event, buttons: 0 });
+    target.emit('click', { ...event, buttons: 0, isPrimary: false });
     frame();
     assert.equal(
       target.getAttribute('aria-pressed'),

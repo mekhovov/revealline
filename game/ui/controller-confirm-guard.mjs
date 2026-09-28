@@ -57,7 +57,9 @@ export function attachControllerConfirmGuard({
     !event.shiftKey;
   const isPrimaryActivation = (event) =>
     (event.button == null || event.button === 0 || event.button === -1) &&
-    event.isPrimary !== false;
+    // click is a device-independent activation. Pointer Events specifies its
+    // isPrimary default as false, even after a primary pointerdown/pointerup.
+    (event.type === 'click' || event.isPrimary !== false);
   const pointerId = (event) =>
     Number.isInteger(event.pointerId) && event.pointerId >= 0 ? event.pointerId : null;
   const tailActive = () => now() <= suppressUntil;
