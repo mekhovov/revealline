@@ -85,7 +85,16 @@
       "band": 1,
       "discovery": {
         "exhibitLayout": "mosaic",
-        "finaleRewardRef": { "id": "social-drone-people-workshop-finale", "revision": "3" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Another window lights up in the workshop."],
+            "uk": ["У майстерні засвітилося ще одне вікно."]
+          },
+          "revision": "feedback-632383eb608b101b",
+          "victoryMotif": "shared-spark-v1"
+        },
+        "finaleRewardRef": { "id": "social-drone-people-workshop-finale", "revision": "4" }
       },
       "format": "CampaignDesignV1",
       "id": "social-drone-people-workshop",
@@ -238,7 +247,7 @@
         "memorableMoment": "An original cobalt-blue welcome hall around a community table and civilian learning models.",
         "pacingBeat": "discover",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-01-discovery", "revision": "3" },
+        "rewardRef": { "id": "social-drone-people-workshop-01-discovery", "revision": "4" },
         "routeDecision": "Use the wide welcome island for short returns, or capture the open west court first."
       },
       "format": "MissionDesignV1",
@@ -288,7 +297,7 @@
         "memorableMoment": "Two blue workshop bays with a central meeting alcove and distinct contribution boards.",
         "pacingBeat": "choose",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-02-discovery", "revision": "3" },
+        "rewardRef": { "id": "social-drone-people-workshop-02-discovery", "revision": "4" },
         "routeDecision": "Choose the upper meeting alcove or lower workbench as your first safe return."
       },
       "format": "MissionDesignV1",
@@ -346,7 +355,7 @@
         "memorableMoment": "An original source library with open blank cards, connected cobalt shelves and a bright evidence desk.",
         "pacingBeat": "combine",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-03-discovery", "revision": "3" },
+        "rewardRef": { "id": "social-drone-people-workshop-03-discovery", "revision": "4" },
         "routeDecision": "Return through the offset archive islands before attempting the long east aisle."
       },
       "format": "MissionDesignV1",
@@ -404,7 +413,7 @@
         "memorableMoment": "A spacious blue discussion courtyard with a long bench, warm lamps and civilian model cases.",
         "pacingBeat": "breathe",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-04-discovery", "revision": "3" },
+        "rewardRef": { "id": "social-drone-people-workshop-04-discovery", "revision": "4" },
         "routeDecision": "Follow the wide inner bench while the patrol passes the exposed outer edge."
       },
       "format": "MissionDesignV1",
@@ -462,7 +471,7 @@
         "memorableMoment": "A fictional evidence workshop with orderly inventory cards and three separated blue review benches.",
         "pacingBeat": "mastery",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-05-discovery", "revision": "3" },
+        "rewardRef": { "id": "social-drone-people-workshop-05-discovery", "revision": "4" },
         "routeDecision": "Link the staggered desks using the lower return to avoid the slow aisle."
       },
       "format": "MissionDesignV1",
@@ -528,7 +537,7 @@
         "memorableMoment": "An original completed community mosaic joining the welcome hall, source shelves and discussion tables.",
         "pacingBeat": "resolve",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "social-drone-people-workshop-06-discovery", "revision": "3" },
+        "rewardRef": { "id": "social-drone-people-workshop-06-discovery", "revision": "4" },
         "routeDecision": "Join the central mosaic first or connect the small archive and welcome islands before the broad crossing."
       },
       "format": "MissionDesignV1",
@@ -553,9 +562,9 @@
       "format": "PackDesignV1",
       "id": "social-drone-people-workshop-pack",
       "name": "People Behind the Workshop",
-      "revision": "3"
+      "revision": "4"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "3"
+  "revision": "4"
 }

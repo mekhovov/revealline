@@ -432,24 +432,26 @@ export async function compileEdition({
   const verifyRewardMedia = (definitions, assets, presets, themes) => {
     const registry = createRewardCosmeticRegistry({ presets, themes, assets });
     for (const reward of definitions)
-      for (const payload of reward.payloads)
-        for (const { role, reference } of [
+      for (const { role, reference } of [
+        ...(reward.teaserImage ? [{ role: 'poster', reference: reward.teaserImage.asset }] : []),
+        ...reward.payloads.flatMap((payload) => [
           ...rewardMediaReferences(payload),
           ...(payload.type === 'cosmetic' && resolveRewardCosmetic(registry, payload).image
             ? [{ role: 'poster', reference: resolveRewardCosmetic(registry, payload).image }]
             : []),
-        ]) {
-          const asset = assets.find(
-            (item) => item.id === reference.assetId && item.sha256 === reference.sha256,
-          );
-          required(asset, 'Reward media differs from its selected asset pin.');
-          const bytes = sourceFiles.get(asset.path);
-          required(
-            bytes instanceof Uint8Array && hash(bytes) === asset.sha256,
-            'Reward media differs from its exact SHA-256.',
-          );
-          inspectRewardMediaBytes(asset, role, bytes);
-        }
+        ]),
+      ]) {
+        const asset = assets.find(
+          (item) => item.id === reference.assetId && item.sha256 === reference.sha256,
+        );
+        required(asset, 'Reward media differs from its selected asset pin.');
+        const bytes = sourceFiles.get(asset.path);
+        required(
+          bytes instanceof Uint8Array && hash(bytes) === asset.sha256,
+          'Reward media differs from its exact SHA-256.',
+        );
+        inspectRewardMediaBytes(asset, role, bytes);
+      }
   };
   const catalog = validateEditionRuntimeCatalog(source);
   let runtimeCatalog = selectEditionClosure(catalog, editionIds);

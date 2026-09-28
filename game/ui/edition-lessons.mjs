@@ -9,6 +9,22 @@ import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.m
 import { createRun } from '../core/index.mjs';
 import { exportReplay } from '../replay.mjs';
 import { boundedJSON, required } from '../data-json.mjs';
+import { getLocale, onLocaleChange, t } from '../i18n/index.mjs';
+import { localizeCompanyLesson } from '../company-campaigns/lesson-localization.mjs';
+
+const STATUS_KEYS = [
+  'earlierRevision',
+  'checkingBonus',
+  'sessionComplete',
+  'saved',
+  'checkingRecords',
+  'tooLarge',
+  'foreignEdition',
+  'sessionOnly',
+  'cannotWrite',
+  'imported',
+  'importedSession',
+];
 
 /** A result-only bonus. This module cannot select a mission, award an arcade
  * clear, change a run, or control the availability of Next. */
@@ -33,6 +49,20 @@ export async function mountEditionLessons({
       },
       dispose() {},
     };
+  const tr = (key, values) => t('interface:learningBonus.' + key, values);
+  // Only this host's known messages are translated. External storage/proof
+  // diagnostics retain their exact information and never enter saved evidence.
+  const localizeStatus = (message) => {
+    const key = STATUS_KEYS.find((entry) =>
+      ['en', 'uk'].some((lng) => tr(entry, { lng }) === message),
+    );
+    return key ? tr(key) : message;
+  };
+  const statusMessages = new Map();
+  const showStatus = (element, message) => {
+    statusMessages.set(element, message);
+    element.textContent = localizeStatus(message);
+  };
   const node = (tag, text) => {
     const value = doc.createElement(tag);
     if (text !== undefined) value.textContent = text;
@@ -54,8 +84,8 @@ export async function mountEditionLessons({
     importRequest = null;
   const reportData = (message) => {
     if (disposed) return;
-    dataStatus.textContent = message;
-    report(message);
+    showStatus(dataStatus, message);
+    report(localizeStatus(message));
   };
   // Storage operations are synchronous, but their owning replay/import may
   // finish later. Keep storage failures on that operation's live surface.
@@ -106,7 +136,7 @@ export async function mountEditionLessons({
     reportData(
       'Earlier learning records need their matching revision. They remain available in the learning backup.',
     );
-  const button = node('button', 'Optional bonus · explore this connection');
+  const button = node('button', tr('open'));
   button.id = 'edition-lesson-open';
   button.type = 'button';
   button.className = 'button secondary';
@@ -134,15 +164,18 @@ export async function mountEditionLessons({
   function openLesson(lesson, run = null) {
     if (disposed) return;
     const visit = ++lessonVisit;
-    lessonStatus.textContent = '';
+    showStatus(lessonStatus, '');
     const current = () => !disposed && lessonVisit === visit && dialog.open;
     const reportLesson = (message) => {
       if (disposed) return;
       const visible = current();
-      if (visible) lessonStatus.textContent = message;
+      if (visible) showStatus(lessonStatus, message);
       // The proof still owns a real saved result after its dialog closes. Keep
       // recovery warnings, naming that lesson without replacing a newer modal.
-      report(visible ? message : `${lesson.title}: ${message}`);
+      const rendered = localizeStatus(message);
+      report(
+        visible ? rendered : `${localizeCompanyLesson(lesson, getLocale()).title}: ${rendered}`,
+      );
     };
     const recorder = run ? getRecorder() : null;
     const identity = run ? companySimulationIdentity(run) : null;
@@ -170,7 +203,7 @@ export async function mountEditionLessons({
       onChange: (next) => {
         if (run) attempts.set(run, next);
         if (next.status !== 'complete' || !replay) return;
-        if (current()) lessonStatus.textContent = 'Checking this completed bonus before saving…';
+        if (current()) showStatus(lessonStatus, tr('checkingBonus'));
         // Each completed lesson owns its captured replay. Opening or finishing
         // another bonus cannot revoke an earlier independently verified result.
         void proofs
@@ -182,7 +215,7 @@ export async function mountEditionLessons({
               reportLesson(
                 'The optional bonus is complete in this tab. Export learning records before leaving.',
               );
-            else if (current()) lessonStatus.textContent = 'Optional learning record saved.';
+            else if (current()) showStatus(lessonStatus, tr('saved'));
           })
           .catch((error) => {
             reportLesson(error.message);
@@ -204,18 +237,18 @@ export async function mountEditionLessons({
   };
   const section = node('section');
   section.className = 'edition-learning-data';
-  section.append(
-    node('h3', 'Optional learning records'),
-    node('p', 'Learning is a separate bonus. Missions and pictures never depend on completing it.'),
-  );
-  const download = node('button', 'Export optional learning'),
+  const heading = node('h3', tr('recordsTitle')),
+    note = node('p', tr('recordsNote'));
+  section.append(heading, note);
+  const download = node('button', tr('export')),
     upload = node('input');
   download.type = 'button';
   download.className = 'button secondary';
-  const label = node('label', 'Import matching learning records');
+  const label = node('label'),
+    labelText = node('span', tr('import'));
   upload.type = 'file';
   upload.accept = 'application/json,.json';
-  label.append(upload);
+  label.append(labelText, upload);
   section.append(download, label, dataStatus);
   doc.getElementById('settings-panel-data').append(section);
   download.onclick = () => {
@@ -245,10 +278,10 @@ export async function mountEditionLessons({
     importRequest = request;
     const current = () => !disposed && importRequest === request && !request.signal.aborted;
     try {
-      dataStatus.textContent = '';
+      showStatus(dataStatus, '');
       const file = upload.files?.[0];
       if (!file) return;
-      dataStatus.textContent = 'Checking learning records…';
+      showStatus(dataStatus, tr('checkingRecords'));
       required(file.size <= 48 * 1024 * 1024, 'Learning backup is too large.');
       const text = await file.text();
       if (!current()) return;
@@ -286,6 +319,19 @@ export async function mountEditionLessons({
       }
     }
   };
+  const stopLocale = onLocaleChange(() => {
+    if (disposed) return;
+    // Update existing nodes in place: focused controls, pending file reads and
+    // the workbench's canonical attempt remain owned by their existing hosts.
+    button.textContent = tr('open');
+    heading.textContent = tr('recordsTitle');
+    note.textContent = tr('recordsNote');
+    download.textContent = tr('export');
+    labelText.textContent = tr('import');
+    for (const revisit of doc.querySelectorAll('[data-edition-learning-revisit]'))
+      revisit.textContent = tr('revisit');
+    for (const [element, message] of statusMessages) element.textContent = localizeStatus(message);
+  });
   return {
     rewardEvidence: proofs.rewardEvidence,
     onRewardEvidenceChange: proofs.onRewardEvidenceChange,
@@ -293,7 +339,8 @@ export async function mountEditionLessons({
       if (disposed || record.editionId !== provider.editionId) return null;
       const lesson = provider.lessons.find((entry) => entry.missionId === record.missionId);
       if (!lesson) return null;
-      const revisit = node('button', 'Optional bonus · revisit this connection');
+      const revisit = node('button', tr('revisit'));
+      revisit.setAttribute('data-edition-learning-revisit', '');
       revisit.type = 'button';
       revisit.className = 'button secondary';
       revisit.onclick = () => {
@@ -314,6 +361,8 @@ export async function mountEditionLessons({
     },
     dispose() {
       disposed = true;
+      stopLocale();
+      statusMessages.clear();
       lifetime.abort();
       importRequest?.abort();
       workbench?.destroy();
