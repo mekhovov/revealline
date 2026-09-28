@@ -128,6 +128,13 @@ test('actual Studio game launch, accepted win, reward reveal and Retry never ope
   page.$('pause-button').click();
   page.$('save-attempt-button').click();
   await new Promise((resolve) => setImmediate(resolve));
+  page.$('choose-mission').click();
+  await settle(() => page.$('journey-chooser')?.open);
+  const pin = page.$('journey-goal-pin');
+  assert.equal(pin.disabled, false);
+  pin.click();
+  assert.equal(page.$('journey-goal-find').disabled, false);
+  page.$('journey-back').click();
   assert.deepEqual([...storage.map], before);
   assert.deepEqual(storage.writes, []);
   assert.equal(databaseOpens, 0);
