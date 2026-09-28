@@ -1,6 +1,7 @@
 import { t } from '../i18n/index.mjs';
 import { actionForKey, keyCodeForEvent, resolveKeyBindings } from '../key-bindings.mjs';
 import { attachTouchSteering } from './touch-steering.mjs';
+import { attachPlayfieldContextMenu } from './playfield-context-menu.mjs';
 const neutral = () => ({ direction: null, boost: false, action: false, pickup: false });
 export function gamepadCommand(pad) {
   if (!pad?.connected) return { ...neutral(), pause: false };
@@ -57,6 +58,7 @@ export function attachInput({
     localDirectionPending = false,
     lastPadDirection = null,
     destroyed = false;
+  const detachPlayfieldContextMenu = attachPlayfieldContextMenu({ roots: [arena], active });
   const continuous = () => continuousSteering() === true;
   const listen = (target, type, fn, options) => {
     if (target) {
@@ -538,6 +540,7 @@ export function attachInput({
       destroyed = true;
       clearTimeout(boostClickTimer);
       touchSteering?.destroy();
+      detachPlayfieldContextMenu();
       for (const remove of listeners) remove();
     },
   };
