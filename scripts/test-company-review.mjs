@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import {
   reviewTarget,
   reviewViewport,
+  reviewScenario,
+  reviewSessionSummary,
   frameSummary,
   resourceSummary,
 } from '../docs/verification/company-review-model.mjs';
@@ -39,6 +41,47 @@ test('review viewport has independent bounded width and height', () => {
     [390, 844.5],
   ])
     assert.throws(() => reviewViewport(...pair));
+});
+test('review scenarios are bounded and session summaries distinguish navigation from qualification', () => {
+  assert.equal(reviewScenario('advanced-encounter'), 'advanced-encounter');
+  assert.throws(() => reviewScenario('approved'));
+  assert.deepEqual(
+    reviewSessionSummary([
+      {
+        action: 'Load to company menu',
+        ms: 100,
+        target: 'http://localhost/game/index.html?edition=coupa-all',
+      },
+      {
+        action: 'Frame intervals',
+        scenario: 'advanced-encounter',
+        frames: 100,
+      },
+      {
+        action: 'Load to company menu',
+        target: 'http://localhost/game/index.html?edition=timed-out',
+        outcome: 'Timed out; no readiness timing observation',
+      },
+      {
+        action: 'Load to company menu',
+        ms: 120,
+        target: 'http://localhost/game/index.html?edition=droneaid-nl-community',
+      },
+    ]),
+    {
+      readyLoads: 2,
+      distinctTargets: 2,
+      targetTransitions: 1,
+      frameSamples: 1,
+      frameSamplesByScenario: {
+        'opening-play': 0,
+        'advanced-encounter': 1,
+        'picture-reveal': 0,
+        'edition-switch': 0,
+      },
+    },
+  );
+  assert.throws(() => reviewSessionSummary(Array.from({ length: 101 }, () => ({}))));
 });
 test('frame summaries retain slow frames, reject invalid samples and do not fabricate empty measurements', () => {
   assert.equal(frameSummary([]), null);
@@ -119,11 +162,13 @@ function reviewHarness() {
   for (const id of [
     'label',
     'target',
+    'scenario',
     'width',
     'height',
     'load',
     'frames',
     'layout',
+    'summary',
     'game',
     'log',
     'status',
@@ -132,6 +177,7 @@ function reviewHarness() {
     ui.set(id, new Element(id));
   ui.get('label').value = 'Frozen baseline';
   ui.get('target').value = '../../game/company.html?edition=coupa-all';
+  ui.get('scenario').value = 'opening-play';
   ui.get('width').value = '1280';
   ui.get('height').value = '800';
   ui.get('frames').disabled = ui.get('layout').disabled = true;
@@ -340,17 +386,41 @@ test('20-second observations retain the original label and identify animation ca
     p = h.load();
   h.ready(p);
   p.play();
+  h.ui.get('scenario').value = 'advanced-encounter';
   h.ui.get('frames').onclick();
   assert.equal(h.ui.get('frames').disabled, true);
   h.ui.get('label').value = 'Changed label during sample';
+  h.ui.get('scenario').value = 'picture-reveal';
   for (let i = 0; i < 1250; i++) h.tick(16);
   const result = h.records().at(-1);
   assert.equal(result.sample, 'Frozen baseline');
+  assert.equal(result.scenario, 'advanced-encounter');
   assert.equal(result.frames, 1249);
   assert.equal(result.elapsedMs, 20000);
   assert.match(result.metric, /not render duration/);
   assert.equal(result.qualified, false);
   assert.equal(h.ui.get('frames').disabled, false);
+  h.dispose();
+});
+
+test('session coverage records ready target transitions without claiming installed-app isolation', () => {
+  const h = reviewHarness(),
+    first = h.load(h.page('http://localhost:8775/game/index.html?edition=coupa-all'));
+  h.ready(first);
+  first.win.emit('pagehide');
+  h.ui.get('scenario').value = 'edition-switch';
+  const second = h.page('http://localhost:8775/game/index.html?edition=droneaid-nl-community');
+  h.navigate(second);
+  h.ready(second);
+  h.ui.get('summary').onclick();
+  const result = h.records().at(-1);
+  assert.equal(result.action, 'Session coverage');
+  assert.equal(result.scenario, 'edition-switch');
+  assert.equal(result.coverage.readyLoads, 2);
+  assert.equal(result.coverage.distinctTargets, 2);
+  assert.equal(result.coverage.targetTransitions, 1);
+  assert.match(result.limitation, /no installed-app/);
+  assert.equal(result.qualified, false);
   h.dispose();
 });
 
