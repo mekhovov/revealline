@@ -1835,7 +1835,7 @@
   "studio.diagnostic.disconnected": "Disconnected foundations.",
   "studio.diagnostic.remoteChamber": "No starting return surface touches this chamber; inspect enemy retention and remote fill.",
   "studio.diagnostic.singleDeparture": "Spawn {{id}} has only one departure into the field.",
-  "studio.diagnostic.combat": "Optional combat authoring is a test candidate. Live actor/projectile presentation, player preferences and human qualification are pending.",
+  "studio.diagnostic.combat": "Optional encounters can be tested in Solo practice. Production presentation, player preferences and human qualification are pending.",
   "studio.diagnostic.greybox": "Greybox background; artwork is not assigned.",
   "studio.diagnostic.art": "Candidate artwork has not passed visual qualification.",
   "studio.diagnostic.combatRemoval": "These optional actors start in an unretained region and may disappear at the next unrelated closure. They never retain field; confirm this is intentional.",
@@ -1921,7 +1921,7 @@
   "studio.timed.applied": "Applied to the local draft; all presets and modes validated. Undo is available. Test with every bonus missed before publishing.",
   "studio.combat.teamUnavailable": "Optional combat is not qualified for Team, including disabled descriptors.",
   "studio.combat.notPrepared": "Combat authoring is not prepared for this mission. Prepare a local catalogue-v8 edition first; no actors are inserted.",
-  "studio.combat.applyFirst": "Apply changes explicitly. Undo is available; nothing is published. Enabled gameplay preview awaits qualified actor/projectile presentation.",
+  "studio.combat.applyFirst": "Apply changes explicitly. Undo is available; nothing is published. Solo practice can preview enabled encounters; this does not qualify a public mission.",
   "studio.combat.applied": "Combat edition applied to the local draft. All supported modes and presets compiled. Undo is available; no publication.",
   "studio.combat.unapplied": "Unapplied combat selection. Apply to create a new draft edition.",
   "studio.objective.remove": "Remove selected objective",
@@ -2460,5 +2460,6 @@
   "studio.artwork.exportReady": "Portable artwork packet prepared with unchanged original bytes and structured provenance.",
   "studio.artwork.exportFailed": "Export failed: {{message}}",
   "studio.artwork.cancelled": "Cancelled. Previous accepted collection retained.",
-  "studio.artwork.returned": "Preview released while away. Select an artwork to reopen the accepted source."
+  "studio.artwork.returned": "Preview released while away. Select an artwork to reopen the accepted source.",
+  "studio.preview.combatCandidate": "Optional encounters are enabled in this Solo practice. No campaign rewards."
 }

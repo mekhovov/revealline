@@ -12,6 +12,10 @@ const explanations = () => ({
     t('interface:anEnemyReachedYourCharacter'),
     t('interface:keepAGapFromEnemiesIncludingPatrolsOnSafeGround'),
   ],
+  'combat-projectile': [
+    t('interface:failure.combatProjectile'),
+    t('interface:failure.combatProjectileTip'),
+  ],
   'boss-lane': [
     t('interface:anActiveMarkedLaneCaughtYourCharacterOrUnfinishedLine'),
     t('interface:keepBothOutsideTheMarkedLaneWhileItIsActive'),

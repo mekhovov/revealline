@@ -488,7 +488,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
               severity: 'warning',
               code: 'candidate-combat-not-presentation-qualified',
               message:
-                'Optional combat authoring is a test candidate. Live actor/projectile presentation, player preferences and human qualification are pending.',
+                'Optional encounters can be tested in Solo practice. Production presentation, player preferences and human qualification are pending.',
             },
           ]
         : []),

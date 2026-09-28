@@ -8,6 +8,7 @@ test('event advice matches existing Retry reason and tip without its consequence
     'self-contact',
     'enemy-trail',
     'enemy-player',
+    'combat-projectile',
     'boss-lane',
     'cut-timeout',
     'cable-limit',
@@ -168,4 +169,26 @@ test('an explicit practice choice must be an owned boolean without running optio
     retryExplanation(run, ownNullPrototype),
     retryExplanation(run, { practice: true }),
   );
+});
+
+test('optional sentry shot has specific localized loss advice without changing practice ownership', async () => {
+  const previous = getLocale();
+  try {
+    for (const locale of ['en', 'uk']) {
+      await setLocale(locale, { persist: false });
+      const run = Object.freeze({ status: 'lost', failureCause: 'combat-projectile' });
+      const before = JSON.stringify(run);
+      const advice = failureExplanation('combat-projectile');
+      assert.equal(advice.cause, 'combat-projectile');
+      assert.notEqual(advice.reason, failureExplanation('unknown').reason);
+      assert.match(advice.reason, locale === 'uk' ? /Снаряд вартового/ : /sentry shot/);
+      assert.match(advice.tip, locale === 'uk' ? /безпечну територію/ : /safe ground/);
+      const { footnote, ...practice } = retryExplanation(run, { practice: true });
+      assert.deepEqual(practice, advice);
+      assert.equal(typeof footnote, 'string');
+      assert.equal(JSON.stringify(run), before);
+    }
+  } finally {
+    await setLocale(previous, { persist: false });
+  }
 });

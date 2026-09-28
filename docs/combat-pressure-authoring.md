@@ -34,29 +34,56 @@ tuning, and are not added to the current Journey or benchmark missions.
 
 The [Studio control tests](../game/test/studio-combat-authoring.test.mjs) cover
 preparation, explicit enable, retained pressure timing and rejection of controls
-left stale by a catalogue change. The enabled-combat gameplay-preview guard is
-still enforced: static inspection and validated export are available, while
-readable live presentation must be qualified separately. Team combat, human
-fairness, full-mission clears and production adoption remain outside this slice.
+left stale by a catalogue change. **Play exact Solo preview** now accepts an
+explicitly enabled combat edition. Static inspection and validated export remain
+available. Team combat and paired-race Studio launches remain unsupported; the
+Studio does not substitute Solo for either mode.
 
-## Next dependency: actual Solo preview presentation
+## Exact Solo practice preview
 
-Enabling the practice preview requires an additive combat layer in the actual
-`game/ui/render.mjs` painter. The held adapter in
-`docs/patches/combat-board-e9434d03.patch` and its temporary patched-module tests
-are design/evidence inputs, not proof that the shipped painter already draws
-these actors or projectiles. Preserve its source history when adopting it.
+1. Accept the intended mission edition and its explicit combat setting, then
+   choose **Play exact Solo preview** and **Start mission**.
+2. Inspect scout/sentry bodies, locked warning rays, fired projectiles and capture
+   cancellation through the actual shared `BoardPainter`. Pause and reduced
+   effects preserve the information needed to read live threats.
+3. Close the preview to return to the accepted project. Practice preserves the
+   authored scenario and bypasses ordinary fresh-attempt gameplay tuning. It
+   writes no mission awards or campaign progress.
 
-The practice host also needs a latched failure path after startup: stop
-simulation and input, show a visible child-frame error, and retain Close and
-fresh Relaunch. `RevealLineBoot.fail()` ignores post-ready failures; forwarding
-an exception there alone cannot recover a later malformed combat frame.
-Only after both paths pass should the scenario, Play button and explanatory-copy
-guards be removed together for Solo. Team remains unsupported. Practice already
-retains the exact authored scenario and bypasses ordinary fresh-attempt tuning;
-keep that identity and no-awards behavior.
+The live presentation is additive. Absent or disabled combat preserves the
+existing drawing commands. Bodies and warnings sit below exposed trails and
+ordinary keepers; fired projectiles remain above keepers and below the craft.
+Optional scrap is cosmetic and does not alter the original picture bytes. No new
+behavior or default mission is introduced. The historical held patch in
+`docs/patches/combat-board-e9434d03.patch` remains unchanged; the
+[integration tests](../game/test/combat-board-adapter.test.mjs) now exercise the
+actual checked-out painter as well as retained historical evidence.
 
-This is a C4 technical dependency, not a reason to wait for the deferred C2
-human pilot. Qualify combined warning/commit/projectile/capture states through
-the real painter, post-ready failure and clean relaunch, pause/reduced effects,
-small layouts and retained original artwork before admitting the preview.
+If a frame fails after startup, the practice child stops simulation and gameplay
+input and displays a persistent failure message. It cannot Resume or Retry that
+failed instance. Use **Close preview** or the child Return action, correct the
+draft if necessary, then choose **Play exact Solo preview** again to launch a fresh child. The failure latch is separate
+from boot recovery, survives a cached-page return and does not change normal
+awarding-game error behavior. The parent retains the project and launch context.
+See the [mounted failure checks](../game/test/practice-render-failure-host.test.mjs).
+
+This is delivered source capability, not public-release acceptance. Explicit
+effects provenance now includes the combat adapters and their consumed geometry
+helpers, so production review must reopen before adoption. Exact production
+reapproval, frozen/public bytes, ordinary public play, broader counterplay and
+full-mission qualification remain required. Human fairness and physical-device
+checks are separate evidence. C3/C4/C5/C6 implementation continues in parallel;
+the deferred C2 pilot does not block these independent changes.
+
+## Maintenance prompt
+
+“Compile explicit optional-on and optional-off editions without downgrading the
+current actor catalogue. Through the actual Solo painter, compare absent/off
+commands, exercise pressure and sentry locks together, pause/reduced effects,
+shot travel, legal capture cancellation and exact replay/restoration. Import the
+source in Studio, launch ordinary no-awards practice, make a cut, pause, Close
+and relaunch. Inject a controlled renderer fault only in the host test, with
+Confirm held: after release, native Return must work without blur. Retire stale
+loads and ready monitors on pagehide. Inspect complete board/HUD fit at 1280×720,
+390×844 and 844×390; do not call pointer clicks touch certification. Preserve
+failing baseline evidence and require exact production reapproval before release.”
