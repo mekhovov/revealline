@@ -111,6 +111,12 @@ const retainedPresentations = Object.freeze({'droneaid-nl-community': [
       sha256: '24c8cdff37378db2fdd5e405e650a0512ae5fa308188b3ce76b68b02ab71a8fa',
       bytes: 148331,
     },
+    {
+      id: '8b53a415ac9b76ebd25aca2ac7b67464f026e43e39185970c59501e6f918e3cb',
+      path: 'game/editions/retained/droneaid-nl-community-before-discovery-rewards.json',
+      sha256: '3fc0e4773277c7a126195cbe68a37c5182871d93e29f82c50c9a0064eedd5d58',
+      bytes: 148338,
+    },
   ],
 'droneaid-nl-workshop-lights': [
     {
@@ -124,6 +130,12 @@ const retainedPresentations = Object.freeze({'droneaid-nl-community': [
       path: 'game/editions/retained/droneaid-nl-workshop-lights-475bccde4.json',
       sha256: '4099c606f57300678a6874695da6fc1c0af8b1ec2402e1cb1277cd339694f0ca',
       bytes: 33575,
+    },
+    {
+      id: 'f4882beacf8fc6bb07aaee36b818541df42b08c0e64ffcc461a2744f6503d302',
+      path: 'game/editions/retained/droneaid-nl-workshop-lights-before-discovery-rewards.json',
+      sha256: 'b3246af4f642600a818e9f9e0ba496aaef5c720a5be9d4651c90672ee247a7bc',
+      bytes: 34100,
     },
   ],
 'droneaid-nl-parts-in-motion': [
@@ -207,15 +219,14 @@ export const COMPANY_EDITIONS = Object.freeze(
   choices.map(([id, brandId, name, audience, campaignIds]) => ({
     format: 'revealline-edition.v1',
     id,
-    revision: [].includes(
-      id,
-    )
-      ? 6
-      : ['droneaid-nl-community', 'droneaid-nl-parts-in-motion'].includes(id)
-          ? 5
-          : brandId === 'droneaid-nl'
-            ? 4
-            : 1,
+    revision:
+      ['droneaid-nl-community'].includes(id)
+          ? 6
+          : ['droneaid-nl-workshop-lights', 'droneaid-nl-parts-in-motion'].includes(id)
+              ? 5
+              : brandId === 'droneaid-nl'
+                ? 4
+                : 1,
     name,
     brandId,
     audience,

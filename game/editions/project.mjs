@@ -1,6 +1,9 @@
 import { required } from '../data-json.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { validateCompanyLessons } from '../company-campaigns/learning.mjs';
+import { validateCompletionRewards, completionRewardAssetReferences } from '../rewards/model.mjs';
+import { createRewardMissionBindings } from '../rewards/bindings.mjs';
+import { COMPLETION_REWARD_PAYLOAD_TYPES } from '../rewards/capabilities.mjs';
 
 /** Exact player campaign projection: invisible missions, archived maps and
  * unreferenced media are source material, not runtime dependencies. */
@@ -65,4 +68,90 @@ export function validateEditionLessonBundle(lessons, project) {
     'Lesson bundle contains conflicting identities.',
   );
   return lessons;
+}
+
+/** Rewards may describe only this exact selected campaign. Owning the sidecar
+ * does not authorize a completion: accepted Journey clears remain the authority. */
+export function validateEditionRewardBundle(
+  source,
+  project,
+  { descriptor, assets = [], editionId, editionProject = project } = {},
+) {
+  const rewards = validateCompletionRewards(source);
+  const compiled = compileContentProject(project);
+  required(
+    descriptor && compiled.campaigns.some((campaign) => campaign.id === descriptor.id),
+    'Reward campaign is not selected.',
+  );
+  const bindings = new Map(
+    createRewardMissionBindings(compiled).map((row) => [row.missionId, row]),
+  );
+  const editionBindings = rewards.some((reward) => reward.scope.kind === 'edition')
+    ? new Map(createRewardMissionBindings(editionProject).map((row) => [row.missionId, row]))
+    : bindings;
+  for (const reward of rewards) {
+    required(
+      reward.brandId === descriptor.brandId && reward.campaignId === descriptor.id,
+      'Reward belongs to another campaign or brand.',
+    );
+    required(
+      reward.scope.kind === 'mission'
+        ? bindings.has(reward.scope.id)
+        : reward.scope.kind === 'campaign'
+          ? reward.scope.id === descriptor.id
+          : reward.scope.id === editionId,
+      'Reward scope is outside the selected edition campaign.',
+    );
+    for (const requirement of reward.requirements.missions) {
+      const allowed = (reward.scope.kind === 'edition' ? editionBindings : bindings).get(
+        requirement.missionId,
+      );
+      required(
+        allowed && (reward.scope.kind === 'edition' || allowed.campaignId === descriptor.id),
+        'Reward requires an omitted mission.',
+      );
+      required(
+        requirement.bindings.every((binding) =>
+          allowed.bindings.some(
+            (known) =>
+              known.difficulty === binding.difficulty && known.gameplayId === binding.gameplayId,
+          ),
+        ),
+        'Reward gameplay binding differs from the selected mission.',
+      );
+    }
+    required(
+      reward.requirements.learning.length === 0,
+      'Completion reward learning requires a registered player evidence adapter before export.',
+    );
+    required(
+      reward.requirements.mastery.length === 0,
+      'Completion reward mastery requires a registered player evidence adapter before export.',
+    );
+    for (const payload of reward.payloads) {
+      required(
+        COMPLETION_REWARD_PAYLOAD_TYPES.includes(payload.type),
+        `Completion reward ${payload.type} needs a registered player viewer before export.`,
+      );
+      if (payload.type === 'image') {
+        const asset = assets.find((item) => item.id === payload.asset.assetId);
+        required(
+          asset && /\.(?:png|jpe?g|webp)$/i.test(asset.path),
+          'Completion reward images require a supported raster image.',
+        );
+      }
+    }
+  }
+  for (const reference of completionRewardAssetReferences(rewards)) {
+    const asset = assets.find((item) => item.id === reference.assetId);
+    required(
+      asset && asset.sha256 === reference.sha256 && asset.approved,
+      'Reward media differs from the selected approved asset closure.',
+    );
+    required(
+      descriptor.publication !== 'public' || asset.publication === 'public',
+      'Reward media is not public.',
+    );
+  }
+  return rewards;
 }

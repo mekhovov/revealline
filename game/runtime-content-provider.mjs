@@ -175,6 +175,7 @@ export async function loadRuntimeContentProvider({
     rootURL: rootURL.href,
     themes: projected.themes.themes,
     lessons: Object.values(bootstrap.lessons).flat(),
+    rewards: Object.values(bootstrap.rewards ?? {}).flat(),
     // The canonical host owns and augments its boot data; the immutable source
     // registry must remain untouched for session/presentation identities.
     boot: ['campaign', 'themes', 'presets', 'classes', 'packs', 'archives'].map((name) =>
