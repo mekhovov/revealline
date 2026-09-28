@@ -1581,3 +1581,27 @@ it on cancellation, filtering, close and offscreen movement. Test second-write
 rollback, session export/retry, conflict rejection and strict older backup readers.
 Backup v3 contains references, not image bytes. Solo admission does not establish
 Versus/Team completion; those hosts remain UX1-A2 qualification work.
+
+## Live language changes in input settings and save recovery
+
+Keyboard remapping must keep captured binding configuration and event-time action,
+key, result and diagnostic facts, but resolve visible key names and status through
+the live locale producer. Do not cancel capture, refocus, reread preferences,
+rewrite bindings or resume gameplay merely to refresh language. Preserve browser
+shortcut/composition guards and exact external warnings. Test EN/UA/EN idle and
+active capture, cancellation, preset/reset, session-only writes and thrown errors.
+
+Earlier-release transfer summaries translate labels from the already-reviewed
+snapshot. Preserve source version, counts, missing-pack IDs, saved-flight facts,
+source selection and copy fingerprint; do not rediscover or recopy on locale change.
+Retain exact unknown diagnostics, busy/cancel state and Undo availability. Capture
+result facts before deferring copy-completion text. Regenerate catalogs from source
+JSON and merge concurrent keys before rebuilding.
+
+Prompt: “Pause a real off-center grid turn; open keyboard settings, start capture,
+switch EN/UA/EN and check focus, instructions, aria labels and unchanged save bytes.
+Assign one fresh key, Back and explicitly Resume. Review an earlier saved flight,
+switch language during review/cancel and after copy; prove no repeated I/O, exact
+reviewed facts, retained destination safety and Undo. Preserve baseline red proof
+and report finite host tests separately from browser, hardware and public release
+evidence. Follow docs/plan-status-2026-09-28-settings.md for this batch’s boundary.”

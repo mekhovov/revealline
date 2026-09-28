@@ -5092,5 +5092,9 @@
   "downloads.offline.waiting": "Оновлення збережено. Закрийте всі вкладки цього випуску, щоб скористатися ним; поточна гра залишиться без змін.",
   "downloads.offline.ready": "Офлайн-файли перевірено. Цей випуск може відкриватися без мережі, доки браузер зберігає його дані.",
   "downloads.offline.coreVerified": "Основні офлайн-файли перевірено.",
+  "profileTransfer.savedFlight": "один збережений політ",
+  "profileTransfer.noSavedFlight": "немає збереженого польоту",
+  "profileTransfer.legacySuffix": " (застаріла версія)",
+  "profileTransfer.copiedFrom": "Скопійовано з {{version}}.",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }
