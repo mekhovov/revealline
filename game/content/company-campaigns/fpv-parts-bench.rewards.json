@@ -1,0 +1,724 @@
+[
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-parts-bench",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-parts-bench-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A labelled parts tray turns guessing into useful questions.",
+        "title": "A Tray of Questions"
+      },
+      "uk": {
+        "teaser": "Підписаний лоток перетворює здогадки на корисні запитання.",
+        "title": "Лоток запитань"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-parts-bench-01-image",
+        "locales": {
+          "en": {
+            "alt": "A Tray of Questions — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Tray of Questions"
+          },
+          "uk": {
+            "alt": "Лоток запитань — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Лоток запитань"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-parts-bench-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "PX4’s assembly guide presents components alongside board-specific examples. It is not a universal instruction sheet for every FPV kit.",
+              "Our museum model uses inert component cards. Sort each into structure, energy, sensing or communication, then put an unknown connector card in “manual needed”. No batteries, soldering or spinning propellers are part of this exercise."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Assembling a Multicopter (manufacturer-specific examples)",
+                "url": "https://docs.px4.io/main/en/assembly/"
+              }
+            ],
+            "title": "A Tray of Questions"
+          },
+          "uk": {
+            "paragraphs": [
+              "Посібник PX4 подає компоненти разом із прикладами для конкретних плат. Це не універсальна інструкція для кожного FPV-набору.",
+              "У музейній моделі використано неактивні картки деталей. Розподіліть їх за структурою, енергією, вимірюванням і зв’язком; невідомий роз’єм відкладіть до «потрібна інструкція». Вправа не передбачає акумуляторів, паяння чи обертання пропелерів."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Assembling a Multicopter (manufacturer-specific examples)",
+                "url": "https://docs.px4.io/main/en/assembly/"
+              }
+            ],
+            "title": "Лоток запитань"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "339cac23a2748b3e" },
+            { "difficulty": "standard", "gameplayId": "7562e5bb8f031843" },
+            { "difficulty": "expert", "gameplayId": "679a91073bebffcb" }
+          ],
+          "missionId": "fpv-parts-bench-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-parts-bench-01", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-parts-bench",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-parts-bench-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "One small arrow changes how a diagram is read.",
+        "title": "Which Way Is Forward?"
+      },
+      "uk": { "teaser": "Одна мала стрілка змінює читання схеми.", "title": "Де передня частина?" }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-parts-bench-02-image",
+        "locales": {
+          "en": {
+            "alt": "Which Way Is Forward? — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Which Way Is Forward?"
+          },
+          "uk": {
+            "alt": "Де передня частина? — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Де передня частина?"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-parts-bench-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Pixhawk 4 guide identifies an orientation mark on that particular controller. Real board mounting follows its own manufacturer documentation.",
+              "Our cardboard model has a blue nose and a separate map-north arrow. Rotate the model card: the nose moves, but north on the page does not. Label both before describing a component’s position."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Pixhawk 4 Wiring Quick Start (specific board only)",
+                "url": "https://docs.px4.io/main/en/assembly/quick_start_pixhawk4"
+              }
+            ],
+            "title": "Which Way Is Forward?"
+          },
+          "uk": {
+            "paragraphs": [
+              "Посібник Pixhawk 4 позначає орієнтир саме цього контролера. Монтаж реальної плати визначає документація її виробника.",
+              "Картонна модель має синій ніс і окрему стрілку півночі на карті. Поверніть картку моделі: ніс змінить напрямок, але північ сторінки — ні. Підпишіть обидва орієнтири перед описом розташування деталі."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Pixhawk 4 Wiring Quick Start (specific board only)",
+                "url": "https://docs.px4.io/main/en/assembly/quick_start_pixhawk4"
+              }
+            ],
+            "title": "Де передня частина?"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "348212774a4ce769" },
+            { "difficulty": "standard", "gameplayId": "a577f2b3cccaa3fd" },
+            { "difficulty": "expert", "gameplayId": "4c8056d6be0073a2" }
+          ],
+          "missionId": "fpv-parts-bench-02"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-parts-bench-02", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-parts-bench",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-parts-bench-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Follow structure, energy and information through one display.",
+        "title": "Three Coloured Paths"
+      },
+      "uk": {
+        "teaser": "Простежте структуру, енергію та інформацію в одній експозиції.",
+        "title": "Три кольорові шляхи"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-parts-bench-03-image",
+        "locales": {
+          "en": {
+            "alt": "Three Coloured Paths — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Three Coloured Paths"
+          },
+          "uk": {
+            "alt": "Три кольорові шляхи — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Три кольорові шляхи"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-parts-bench-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Our original model uses three removable ribbons: grey for support, amber for energy and blue for information. These explain roles, not physical connectors or voltage compatibility.",
+              "Place the frame under support, the battery card under stored energy and the receiver under incoming commands. Explain why an ESC card relates both to a command and to motor energy. The source guide is further reading for real component distinctions."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Assembling a Multicopter (manufacturer-specific examples)",
+                "url": "https://docs.px4.io/main/en/assembly/"
+              }
+            ],
+            "title": "Three Coloured Paths"
+          },
+          "uk": {
+            "paragraphs": [
+              "Оригінальна модель має три знімні стрічки: сіру для опори, бурштинову для енергії та синю для інформації. Вони пояснюють ролі, а не роз’єми чи сумісність напруг.",
+              "Розмістіть раму біля опори, картку акумулятора біля запасеної енергії, а приймач — біля вхідних команд. Поясніть, чому ESC пов’язаний і з командою, і з енергією двигуна. Посібник є додатковим джерелом про реальні компоненти."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Assembling a Multicopter (manufacturer-specific examples)",
+                "url": "https://docs.px4.io/main/en/assembly/"
+              }
+            ],
+            "title": "Три кольорові шляхи"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "220acbcac771f084" },
+            { "difficulty": "standard", "gameplayId": "3d609eb0ab8bb5a4" },
+            { "difficulty": "expert", "gameplayId": "7b2065a30c2c0980" }
+          ],
+          "missionId": "fpv-parts-bench-03"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-parts-bench-03", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-parts-bench",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-parts-bench-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A matching outline is not the same as matching requirements.",
+        "title": "Same Shape, Different Label"
+      },
+      "uk": {
+        "teaser": "Однаковий контур не означає однакові вимоги.",
+        "title": "Схожа форма, інший напис"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-parts-bench-04-image",
+        "locales": {
+          "en": {
+            "alt": "Same Shape, Different Label — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Same Shape, Different Label"
+          },
+          "uk": {
+            "alt": "Схожа форма, інший напис — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Схожа форма, інший напис"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-parts-bench-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "In our invented display, two connectors share an outline but have different role labels. A visual match alone cannot answer the compatibility question.",
+              "Choose “check the exact manual” rather than forcing a match. Add the board revision and connector label to the question card. The linked Pixhawk example illustrates why documentation is specific to hardware; its pinout is not copied into this model."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Pixhawk 4 Wiring Quick Start (specific board only)",
+                "url": "https://docs.px4.io/main/en/assembly/quick_start_pixhawk4"
+              }
+            ],
+            "title": "Same Shape, Different Label"
+          },
+          "uk": {
+            "paragraphs": [
+              "У вигаданій експозиції два роз’єми мають однаковий контур, але різні позначення ролей. Самої схожості недостатньо для висновку про сумісність.",
+              "Оберіть «перевірити точну інструкцію», а не примусове поєднання. Додайте ревізію плати й напис на роз’ємі до картки запитання. Приклад Pixhawk пояснює прив’язку документації до обладнання; його розпіновку в модель не перенесено."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Pixhawk 4 Wiring Quick Start (specific board only)",
+                "url": "https://docs.px4.io/main/en/assembly/quick_start_pixhawk4"
+              }
+            ],
+            "title": "Схожа форма, інший напис"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "773edcac348ccfdc" },
+            { "difficulty": "standard", "gameplayId": "1b3bafa8d2442cb2" },
+            { "difficulty": "expert", "gameplayId": "600fe0f427064e5b" }
+          ],
+          "missionId": "fpv-parts-bench-04"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-parts-bench-04", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-parts-bench",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-parts-bench-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A careful observation is more useful than “looks fine”.",
+        "title": "Look Before the Next Step"
+      },
+      "uk": {
+        "teaser": "Точне спостереження корисніше за «наче добре».",
+        "title": "Огляд перед наступним кроком"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-parts-bench-05-image",
+        "locales": {
+          "en": {
+            "alt": "Look Before the Next Step — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Look Before the Next Step"
+          },
+          "uk": {
+            "alt": "Огляд перед наступним кроком — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Огляд перед наступним кроком"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-parts-bench-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "iFixit’s safety guidance says to follow device-specific instructions and seek help when unsure. Our display inspection is intentionally non-invasive.",
+              "The fixture shows a cracked cardboard arm, a loose label and an unreadable part ID. Record the visible observation for each, then choose replace the display piece, relabel, or ask for identification. Do not infer that a real aircraft is safe from a picture."
+            ],
+            "sources": [
+              {
+                "title": "iFixit — Device Safety",
+                "url": "https://www.ifixit.com/Info/Device_Safety"
+              }
+            ],
+            "title": "Look Before the Next Step"
+          },
+          "uk": {
+            "paragraphs": [
+              "Поради iFixit закликають дотримуватися інструкцій конкретного пристрою та звертатися по допомогу за невпевненості. Огляд експозиції навмисно не потребує втручання.",
+              "На зображенні є тріснута картонна балка, відклеєний напис і нечитаний номер деталі. Зафіксуйте спостереження та оберіть заміну макета, новий напис або запит на ідентифікацію. Фото не доводить безпечність реального дрона."
+            ],
+            "sources": [
+              {
+                "title": "iFixit — Device Safety",
+                "url": "https://www.ifixit.com/Info/Device_Safety"
+              }
+            ],
+            "title": "Огляд перед наступним кроком"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a49c5b6fff697771" },
+            { "difficulty": "standard", "gameplayId": "aad4edff347cc675" },
+            { "difficulty": "expert", "gameplayId": "2661f60c6691e8d2" }
+          ],
+          "missionId": "fpv-parts-bench-05"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-parts-bench-05", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-parts-bench",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-parts-bench-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Complete a display that says what is known and what is still missing.",
+        "title": "The Model Handoff"
+      },
+      "uk": {
+        "teaser": "Завершіть експозицію, де видно відоме й невідоме.",
+        "title": "Передача моделі"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-parts-bench-06-image",
+        "locales": {
+          "en": {
+            "alt": "The Model Handoff — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Model Handoff"
+          },
+          "uk": {
+            "alt": "Передача моделі — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Передача моделі"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-parts-bench-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Our final museum label has four fields: purpose, identified parts, open questions and next responsible person. “Display complete” is deliberately different from “aircraft ready”.",
+              "Use earlier cards to explain the receiver’s role and the model’s forward direction. Leave one fictional unreadable identifier unresolved, with an explicit handoff to an instructor. Good documentation preserves uncertainty rather than hiding it."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Assembling a Multicopter (manufacturer-specific examples)",
+                "url": "https://docs.px4.io/main/en/assembly/"
+              }
+            ],
+            "title": "The Model Handoff"
+          },
+          "uk": {
+            "paragraphs": [
+              "Підсумковий музейний напис має чотири поля: мета, визначені деталі, відкриті запитання та наступна відповідальна особа. «Експозицію завершено» відрізняється від «дрон готовий».",
+              "За попередніми картками поясніть роль приймача та напрямок передньої частини. Залиште один вигаданий нечитаний номер невизначеним із явною передачею наставнику. Добрий запис зберігає невизначеність, а не приховує її."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Assembling a Multicopter (manufacturer-specific examples)",
+                "url": "https://docs.px4.io/main/en/assembly/"
+              }
+            ],
+            "title": "Передача моделі"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c5388a3db9da5487" },
+            { "difficulty": "standard", "gameplayId": "1ca01a87b49b9f69" },
+            { "difficulty": "expert", "gameplayId": "6bb3f38baaaea141" }
+          ],
+          "missionId": "fpv-parts-bench-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-parts-bench-06", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-parts-bench",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-parts-bench-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "The Unpowered Workshop Atlas"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Атлас майстерні без живлення"
+      }
+    },
+    "payloads": [
+      {
+        "id": "fpv-parts-bench-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Arrange six evidence cards around an unpowered civilian display model: inventory, orientation, component roles, compatibility questions, inspection and handoff. The exhibit deliberately omits live wiring, firmware setup and flight authorization. Identify which answers require the exact manufacturer manual before any real workshop activity."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Assembling a Multicopter (manufacturer-specific examples)",
+                "url": "https://docs.px4.io/main/en/assembly/"
+              }
+            ],
+            "title": "The Unpowered Workshop Atlas"
+          },
+          "uk": {
+            "paragraphs": [
+              "Розмістіть шість карток довкола цивільної виставкової моделі без живлення: перелік деталей, орієнтація, ролі, питання сумісності, огляд і передача справ. Виставка навмисно не містить підключення живлення, налаштування прошивки чи дозволу на політ. Визначте, які відповіді потребують інструкції саме вашого виробника перед реальною роботою."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Assembling a Multicopter (manufacturer-specific examples)",
+                "url": "https://docs.px4.io/main/en/assembly/"
+              }
+            ],
+            "title": "Атлас майстерні без живлення"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-parts-bench-01-image",
+        "locales": {
+          "en": {
+            "alt": "A Tray of Questions — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Tray of Questions"
+          },
+          "uk": {
+            "alt": "Лоток запитань — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Лоток запитань"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-parts-bench-02-image",
+        "locales": {
+          "en": {
+            "alt": "Which Way Is Forward? — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Which Way Is Forward?"
+          },
+          "uk": {
+            "alt": "Де передня частина? — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Де передня частина?"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-parts-bench-03-image",
+        "locales": {
+          "en": {
+            "alt": "Three Coloured Paths — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Three Coloured Paths"
+          },
+          "uk": {
+            "alt": "Три кольорові шляхи — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Три кольорові шляхи"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-parts-bench-04-image",
+        "locales": {
+          "en": {
+            "alt": "Same Shape, Different Label — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Same Shape, Different Label"
+          },
+          "uk": {
+            "alt": "Схожа форма, інший напис — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Схожа форма, інший напис"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-parts-bench-05-image",
+        "locales": {
+          "en": {
+            "alt": "Look Before the Next Step — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Look Before the Next Step"
+          },
+          "uk": {
+            "alt": "Огляд перед наступним кроком — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Огляд перед наступним кроком"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-parts-bench-06-image",
+        "locales": {
+          "en": {
+            "alt": "The Model Handoff — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "The Model Handoff"
+          },
+          "uk": {
+            "alt": "Передача моделі — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Передача моделі"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-parts-bench-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "type": "url",
+        "url": "https://docs.px4.io/main/en/assembly/"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "339cac23a2748b3e" },
+            { "difficulty": "standard", "gameplayId": "7562e5bb8f031843" },
+            { "difficulty": "expert", "gameplayId": "679a91073bebffcb" }
+          ],
+          "missionId": "fpv-parts-bench-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "348212774a4ce769" },
+            { "difficulty": "standard", "gameplayId": "a577f2b3cccaa3fd" },
+            { "difficulty": "expert", "gameplayId": "4c8056d6be0073a2" }
+          ],
+          "missionId": "fpv-parts-bench-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "220acbcac771f084" },
+            { "difficulty": "standard", "gameplayId": "3d609eb0ab8bb5a4" },
+            { "difficulty": "expert", "gameplayId": "7b2065a30c2c0980" }
+          ],
+          "missionId": "fpv-parts-bench-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "773edcac348ccfdc" },
+            { "difficulty": "standard", "gameplayId": "1b3bafa8d2442cb2" },
+            { "difficulty": "expert", "gameplayId": "600fe0f427064e5b" }
+          ],
+          "missionId": "fpv-parts-bench-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a49c5b6fff697771" },
+            { "difficulty": "standard", "gameplayId": "aad4edff347cc675" },
+            { "difficulty": "expert", "gameplayId": "2661f60c6691e8d2" }
+          ],
+          "missionId": "fpv-parts-bench-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c5388a3db9da5487" },
+            { "difficulty": "standard", "gameplayId": "1ca01a87b49b9f69" },
+            { "difficulty": "expert", "gameplayId": "6bb3f38baaaea141" }
+          ],
+          "missionId": "fpv-parts-bench-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-parts-bench", "kind": "campaign" }
+  }
+]

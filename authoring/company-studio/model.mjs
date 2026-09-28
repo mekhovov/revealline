@@ -387,3 +387,19 @@ export function assertMatchingStudioSelection(draft, built, editionId, files = n
     );
   return b;
 }
+
+/** Presentation-only catalog edit. Omission preserves legacy descriptor output;
+ * all editions containing this campaign receive an explicit new pack revision. */
+export function withStudioCampaignHero(source, campaignId, heroAssetId) {
+  const catalog = structuredClone(validateEditionRuntimeCatalog(source));
+  const campaign = catalog.campaigns.find((item) => item.id === campaignId);
+  required(campaign, 'Choose a registered campaign for artwork.');
+  if (heroAssetId === undefined || heroAssetId === null || heroAssetId === '')
+    delete campaign.heroAssetId;
+  else campaign.heroAssetId = heroAssetId;
+  const checked = validateEditionRuntimeCatalog(catalog);
+  if (canonicalJSON(checked) === canonicalJSON(source)) return checked;
+  for (const edition of catalog.editions.filter((item) => item.campaignIds.includes(campaignId)))
+    edition.revision++;
+  return validateEditionRuntimeCatalog(catalog);
+}

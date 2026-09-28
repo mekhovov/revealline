@@ -1,6 +1,26 @@
-import { required } from '../../game/data-json.mjs';
+import { required, dataIdentity } from '../../game/data-json.mjs';
 import { createRewardMissionBindings } from '../../game/rewards/bindings.mjs';
 import { projectRewardProgress, validateCompletionReward } from '../../game/rewards/model.mjs';
+import {
+  validateCampaignLocalization,
+  campaignLocalizationSha256,
+} from '../../game/editions/localization.mjs';
+
+/** Rebase exact translation records after presentation-only author edits. The
+ * normal validator still rejects changed English or any missing/foreign record. */
+export async function rebindStudioRewardLocalization({ localization, source, descriptor }) {
+  const candidate = structuredClone(localization);
+  for (const row of candidate.records) {
+    const record = (row.kind === 'campaign' ? source.campaigns : source.missions).find(
+      (item) => item.id === row.id,
+    );
+    required(record, 'Localization record disappeared while editing its reward.');
+    row.identity = dataIdentity(record);
+  }
+  candidate.revision = `reward-${dataIdentity(candidate)}`;
+  const value = validateCampaignLocalization(candidate, source, descriptor);
+  return { localization: value, sha256: await campaignLocalizationSha256(value) };
+}
 
 /** Creates a draft only after an author explicitly chooses its completion rule.
  * Preview evidence never reaches a profile, reward receipt or persistence API. */

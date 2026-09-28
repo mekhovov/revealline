@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { webcrypto, createHash } from 'node:crypto';
 import {
   compileAssetRevision,
+  assetRevisionMime,
   loadPreviewArtwork,
   verifiedPreviewBackground,
 } from '../content-design/assets.mjs';
@@ -12,10 +13,64 @@ import { CONTENT_ARTWORK_LOAD_TIMEOUT_MS } from '../content-design/limits.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
+import { canonicalJSON, dataIdentity } from '../data-json.mjs';
+import { acquireCandidatePicture } from '../content-design/picture.mjs';
+import { rasterFixtures } from './helpers/raster-fixtures.mjs';
 const asset = HORIZON_ART_CANDIDATES[0];
 const bytes = await readFile(new URL(`../${asset.path}`, import.meta.url));
 const fetchAsset = async () => new Response(bytes);
 const digest = (value) => webcrypto.subtle.digest('SHA-256', value);
+
+test('PNG, JPEG and WebP asset pins retain exact bytes, MIME and gameplay-independent identities', async () => {
+  for (const { extension, mime, bytes: original } of rasterFixtures()) {
+    const pin = {
+      ...asset,
+      path: `content-design/assets/fixture/compact.${extension}`,
+      sha256: createHash('sha256').update(original).digest('hex'),
+      bytes: original.length,
+      width: 1,
+      height: 1,
+    };
+    assert.equal(canonicalJSON(compileAssetRevision(pin)), canonicalJSON(pin));
+    assert.equal(dataIdentity(compileAssetRevision(pin)), dataIdentity(pin));
+    assert.equal(assetRevisionMime(pin), mime);
+    if (extension === 'jpg')
+      assert.equal(assetRevisionMime({ ...pin, path: pin.path.replace('.jpg', '.jpeg') }), mime);
+    const loadArtwork = (value) =>
+      loadPreviewArtwork(value, { fetchAsset: async () => new Response(original), digest });
+    const media = await loadArtwork(pin);
+    assert.equal(media.dataUrl, `data:${mime};base64,${original.toString('base64')}`);
+    assert.equal(verifiedPreviewBackground(pin, media).dataUrl, media.dataUrl);
+    let closed = 0;
+    const picture = await acquireCandidatePicture(pin, {
+      loadArtwork,
+      decodeImage: async (url) => {
+        assert.equal(url, media.dataUrl);
+        return { width: 1, height: 1, close: () => closed++ };
+      },
+    });
+    assert.equal(picture.officialProgressEligible, false);
+    picture.release();
+    assert.equal(closed, 1);
+    await assert.rejects(
+      acquireCandidatePicture(pin, {
+        loadArtwork,
+        decodeImage: async () => {
+          throw new Error('Complete decoding failed');
+        },
+      }),
+      /Complete decoding failed/,
+    );
+    await assert.rejects(
+      loadArtwork({
+        ...pin,
+        path: `content-design/assets/fixture/wrong.${extension === 'png' ? 'webp' : 'png'}`,
+      }),
+      /raster header/,
+    );
+  }
+  assert.equal(canonicalJSON(compileAssetRevision(asset)), canonicalJSON(asset));
+});
 
 test('every authored picture has unique original bytes and leaves every mission rule unchanged', async () => {
   const grey = compileContentProject(createOpeningCandidates());

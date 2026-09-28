@@ -36,7 +36,7 @@ function pictureIdentity(picture) {
       digest(picture.sha256) &&
       revision(picture.bytes) &&
       picture.bytes <= LIMITS.assetBytes &&
-      ['image/png', 'image/jpeg'].includes(picture.mime) &&
+      ['image/png', 'image/jpeg', 'image/webp'].includes(picture.mime) &&
       picture.width === 1152 &&
       picture.height === 576,
     t('interface:teamPictureRequiresABoundedComplete1152576PngJpeg'),
