@@ -14,6 +14,7 @@ import {
 import { COMPANY_CAMPAIGNS } from '../game/company-campaigns/catalog.mjs';
 import { COMPANY_LESSONS } from '../game/company-campaigns/lessons.mjs';
 import { createCompanyProject } from '../game/company-campaigns/content.mjs';
+import { selectCurrentCompanyArtwork } from '../game/company-campaigns/artwork.mjs';
 import { CURRICULUM_CAMPAIGNS } from '../game/company-campaigns/curriculum.mjs';
 import { createCurriculumProject } from '../game/company-campaigns/curriculum-content.mjs';
 import { createCurriculumRewards } from '../game/company-campaigns/curriculum-rewards.mjs';
@@ -82,6 +83,19 @@ export async function produceCompanyContent({ assets, artwork = [], classes = []
         required(descriptor, `Campaign artwork has no exact public inventory entry: ${asset.id}.`);
         return descriptor.id;
       });
+      const keyPicture = selectCurrentCompanyArtwork(artwork).find(
+        (asset) => asset.id === `${definition.id}-key-picture`,
+      );
+      const heroAsset =
+        keyPicture &&
+        assets.find(
+          (asset) =>
+            asset.path === `game/${keyPicture.path}` &&
+            asset.sha256 === keyPicture.sha256 &&
+            asset.bytes === keyPicture.bytes,
+        );
+      required(!keyPicture || heroAsset, 'Campaign key art has no exact inventory entry.');
+      if (heroAsset && !assetIds.includes(heroAsset.id)) assetIds.push(heroAsset.id);
       for (const assetId of definition.rewardAssetIds ?? []) {
         required(
           assets.some((asset) => asset.id === assetId),
@@ -121,6 +135,7 @@ export async function produceCompanyContent({ assets, artwork = [], classes = []
         publication: definition.publication,
         sourcePath: definition.sourcePath,
         assetIds: [...new Set(assetIds)],
+        ...(heroAsset ? { heroAssetId: heroAsset.id } : {}),
         modes: definition.modes,
         ...(lessonPath ? { lessonPath } : {}),
         ...(rewardPath ? { rewardPath } : {}),

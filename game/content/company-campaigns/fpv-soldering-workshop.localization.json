@@ -1,0 +1,110 @@
+{
+  "campaignId": "fpv-soldering-workshop",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "Soldering Workshop", "uk": "Майстерня паяння" } },
+      "id": "fpv-soldering-workshop",
+      "identity": "108da10f3d83739e",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the fictional practice stations; real hot-tool work needs trained supervision and fume control. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "З’єднайте навчальні станції; реальна робота гарячим інструментом потребує навченого нагляду й контролю випарів. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
+        "design.routeDecision": {
+          "en": "Join the stand-side island or capture the open preparation mat first. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Спершу приєднайте острів підставки або захопіть відкритий килимок підготовки. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "A Place for the Iron", "uk": "Місце для паяльника" }
+      },
+      "id": "fpv-soldering-workshop-01",
+      "identity": "3da65b982889a5af",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Compare material labels in the twin supply bays before selecting a practice card. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "Порівняйте позначення матеріалів у двох зонах перед вибором навчальної картки. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
+        "design.routeDecision": {
+          "en": "Choose the labelled supply bay or return through the question-card shelf. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Оберіть зону підписаних матеріалів або повернення через полицю запитань. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "Read the Spool", "uk": "Прочитайте котушку" }
+      },
+      "id": "fpv-soldering-workshop-02",
+      "identity": "707ce7165271b282",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the support points of a battery-free beginner practice board. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "З’єднайте точки опори навчальної плати без акумулятора. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
+        "design.routeDecision": {
+          "en": "Link both holder islands before the middle capture or work from one stable side. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "З’єднайте обидва острови тримача перед серединою або почніть з однієї стійкої сторони. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "Hold the Practice Piece", "uk": "Зафіксуйте навчальну деталь" }
+      },
+      "id": "fpv-soldering-workshop-03",
+      "identity": "4b2ddcb2563ae50f",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Reveal the quiet demonstration court and follow the joint’s two contact surfaces. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Відкрийте спокійний двір демонстрації та простежте дві контактні поверхні з’єднання. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Open the broad heat-transfer terrace or use the narrow cutaway return. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Відкрийте широку терасу теплопередачі або вузьке повернення розрізу. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "Where the Heat Goes", "uk": "Куди передається тепло" }
+      },
+      "id": "fpv-soldering-workshop-04",
+      "identity": "db6cf4334aa46912",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the inspection lenses and describe the visible evidence on practice cards. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте оглядові лінзи й опишіть видиме на навчальних картках. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Inspect the three small lenses separately or join the paired upper lenses first. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Огляньте три малі лінзи окремо або спершу з’єднайте верхню пару. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "An Inspection, Not a Guess", "uk": "Огляд, а не здогад" }
+      },
+      "id": "fpv-soldering-workshop-05",
+      "identity": "5af80847331eb78b",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Bring the practice cards to the review desk before choosing the next supervised step. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Зберіть навчальні картки на столі перевірки перед наступним кроком під наглядом. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Use the central review desk as a return or connect the outside evidence chain. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Поверніться до центрального столу перевірки або з’єднайте зовнішній ланцюг доказів. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "Know When to Pause", "uk": "Знайте, коли зупинитися" }
+      },
+      "id": "fpv-soldering-workshop-06",
+      "identity": "1cd319a7e19f9d8e",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

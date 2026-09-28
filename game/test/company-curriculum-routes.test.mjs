@@ -34,9 +34,9 @@ const evidence = JSON.parse(
   readFileSync(new URL('fixtures/curriculum-campaign-routes.json', import.meta.url), 'utf8'),
 );
 
-test('216 pinned routes win with actual default Journey tuning, objectives and no life loss across both steering policies', () => {
+test('648 pinned routes win with actual default Journey tuning, objectives and no life loss across both steering policies', () => {
   assert.equal(evidence.format, COMPANY_ROUTE_EVIDENCE_FORMAT);
-  assert.equal(evidence.rows.length, 216);
+  assert.equal(evidence.rows.length, 648);
   assert.deepEqual(Object.keys(evidence.checkpointRuntime).sort(), [
     'arch',
     'node',
@@ -107,5 +107,5 @@ test('216 pinned routes win with actual default Journey tuning, objectives and n
     assert.equal(replay.match, true, label);
     assert.deepEqual(replay.actual.checkpoint, checkpoint, `${label}: exact independent replay`);
   }
-  assert.equal(combinations.size, 216);
+  assert.equal(combinations.size, 648);
 });

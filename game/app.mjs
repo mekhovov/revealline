@@ -10209,6 +10209,7 @@ try {
   $('collection-button').onclick = () => {
     if (courseSession || courseEntry) return;
     const opener = document.activeElement;
+    storyDialog.close();
     pause(true);
     prepareCollectionProgress();
     libraryPanel.populateGallery();
@@ -11545,7 +11546,12 @@ try {
         writer,
         version: isRelease ? buildVersion : 'DEV',
         previewSession,
+        audioMaster,
+        musicDucker: {
+          acquire: (factor) => soundtrackPlayer?.acquireGain({ factor }).release ?? (() => {}),
+        },
         pause: () => {
+          storyDialog.close();
           pause(true);
           clearInput();
         },

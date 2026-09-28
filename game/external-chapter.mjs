@@ -111,7 +111,7 @@ export function validateExternalChapter(candidate) {
         hash(o.sha256) &&
         !hashes.has(o.sha256) &&
         integer(o.bytes, 4 * 1024 * 1024) &&
-        ['image/png', 'image/jpeg'].includes(o.mime) &&
+        ['image/png', 'image/jpeg', 'image/webp'].includes(o.mime) &&
         integer(o.width, 1920) &&
         integer(o.height, 1080),
       'Invalid original facts.',
