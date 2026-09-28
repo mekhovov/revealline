@@ -38,6 +38,7 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
     ['game/enemy-catalog.mjs', ['effects', 'team']],
     ['game/presentation/journey-actor-materials.mjs', ['motion', 'team']],
     ['game/ui/actor-presentation.mjs', ['motion', 'team']],
+    ['game/ui/rotor-presentation.mjs', ['motion', 'team']],
     ['game/ui/actor-recipes.mjs', ['effects', 'motion', 'team']],
     ['game/ui/fpv-body-recipes.mjs', ['effects', 'motion', 'team']],
     ['game/ui/body-backing.mjs', ['effects', 'motion', 'team']],
