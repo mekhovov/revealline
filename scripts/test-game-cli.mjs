@@ -376,6 +376,39 @@ test('manifest-only inspection retains the ordinary reference and malformed-inpu
   assert.deepEqual(await fs.readdir(directory), ['project']);
 });
 
+test('an existing authoring dependency must be explicitly admitted without its neighboring originals', async (t) => {
+  const { root, out } = await fixture(t);
+  const model = 'authoring/company-studio/model.mjs';
+  await fs.mkdir(path.join(root, 'authoring/company-studio'), { recursive: true });
+  await fs.writeFile(path.join(root, model), 'export const draft = {};\n');
+  await fs.writeFile(
+    path.join(root, 'authoring/company-studio/unselected-original.txt'),
+    'Not admitted',
+  );
+  await fs.writeFile(
+    path.join(root, 'game/app.mjs'),
+    'import { draft } from "../authoring/company-studio/model.mjs"; export { draft };\n',
+  );
+  await assert.rejects(inspectBuildProject({ root }), /Missing distribution references/);
+  await assert.rejects(buildProject({ root, out }), /Missing distribution references/);
+  const config = await readBuildConfig(root);
+  config.include.push(model);
+  await fs.writeFile(path.join(root, 'game/build-config.json'), JSON.stringify(config));
+  const inspected = await inspectBuildProject({ root });
+  await buildProject({ root, out });
+  const actual = JSON.parse(await fs.readFile(path.join(out, 'manifest.json'), 'utf8'));
+  assert.deepEqual(inspected.manifest, actual);
+  assert.ok(actual.files.some((entry) => entry.path === model));
+  assert.equal(
+    actual.files.some((entry) => entry.path.endsWith('unselected-original.txt')),
+    false,
+  );
+  await assert.rejects(
+    fs.access(path.join(out, 'authoring/company-studio/unselected-original.txt')),
+    /ENOENT/,
+  );
+});
+
 test('owned rebuild replaces old outputs and changes checksums when source changes', async (t) => {
   const { root, out } = await fixture(t);
   const first = await buildProject({ root, out });
