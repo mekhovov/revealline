@@ -2,16 +2,16 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original fictional component museum with a propeller-free X frame, separate motors and a camera display.",
-      "bytes": 1062590,
+      "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
+      "bytes": 207785,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "fpv-learning-home-picture",
+      "id": "fpv-care-repair-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-learning-home-v1.png",
+      "path": "editions/assets/discovery/fpv-care-repair-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8",
+      "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90",
       "width": 960
     }
   ],
@@ -246,7 +246,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-care-repair-key-picture",
         "themeId": "fpv-care-repair-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -321,7 +321,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-care-repair-key-picture",
         "themeId": "fpv-care-repair-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -396,7 +396,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-care-repair-key-picture",
         "themeId": "fpv-care-repair-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -472,7 +472,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-care-repair-key-picture",
         "themeId": "fpv-care-repair-theme"
       },
       "relayLinks": [
@@ -551,7 +551,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 52.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-care-repair-key-picture",
         "themeId": "fpv-care-repair-theme"
       },
       "relayLinks": [
@@ -631,7 +631,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-care-repair-key-picture",
         "themeId": "fpv-care-repair-theme"
       },
       "relayLinks": [

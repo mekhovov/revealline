@@ -6,7 +6,7 @@
     {
       "fields": { "name": { "en": "Knowledge Connects", "uk": "Знання єднають" } },
       "id": "victory-drones-knowledge-connects",
-      "identity": "5d2d90a94a3be139",
+      "identity": "bd19bdcbf2b32642",
       "kind": "campaign"
     },
     {
@@ -22,7 +22,7 @@
         "name": { "en": "A Learning Compass", "uk": "Навчальний компас" }
       },
       "id": "victory-drones-knowledge-connects-01",
-      "identity": "82fd0735322e968d",
+      "identity": "d1a5ec0dca83548d",
       "kind": "mission"
     },
     {
@@ -38,7 +38,7 @@
         "name": { "en": "Two Ways to Explain", "uk": "Два способи пояснити" }
       },
       "id": "victory-drones-knowledge-connects-02",
-      "identity": "b0e28b8fb9e125ba",
+      "identity": "24f5557c832963c8",
       "kind": "mission"
     },
     {
@@ -54,7 +54,7 @@
         "name": { "en": "Ask and Verify", "uk": "Запитайте й перевірте" }
       },
       "id": "victory-drones-knowledge-connects-03",
-      "identity": "00c9a3d5f124118f",
+      "identity": "09c20d23c18ba3bf",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "Room for Questions", "uk": "Місце для запитань" }
       },
       "id": "victory-drones-knowledge-connects-04",
-      "identity": "078fe61f7ccb26db",
+      "identity": "f0d8bf8e2488722f",
       "kind": "mission"
     },
     {
@@ -86,7 +86,7 @@
         "name": { "en": "Compare Before Concluding", "uk": "Порівняйте перед висновком" }
       },
       "id": "victory-drones-knowledge-connects-05",
-      "identity": "061b59c16306cc68",
+      "identity": "8e113e971ebf385a",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "Teach It Forward", "uk": "Поясніть наступному" }
       },
       "id": "victory-drones-knowledge-connects-06",
-      "identity": "0c3345ccbb4f7207",
+      "identity": "842ff50d345fb261",
       "kind": "mission"
     }
   ],
