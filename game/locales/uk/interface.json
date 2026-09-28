@@ -5093,5 +5093,7 @@
   "downloads.offline.prepareFirst": "Спочатку підготуйте офлайн-гру.",
   "downloads.offline.waiting": "Оновлення збережено. Закрийте всі вкладки цього випуску, щоб скористатися ним; поточна гра залишиться без змін.",
   "downloads.offline.ready": "Офлайн-файли перевірено. Цей випуск може відкриватися без мережі, доки браузер зберігає його дані.",
-  "downloads.offline.coreVerified": "Основні офлайн-файли перевірено."
+  "downloads.offline.coreVerified": "Основні офлайн-файли перевірено.",
+  "controller.confirmTrace.title": "Трасування контролера · {{version}}",
+  "controller.confirmTrace.waiting": "Очікуємо натискання «Підтвердити»…"
 }
