@@ -124,8 +124,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-four-controls-01", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-four-controls-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-four-controls-key-v1",
+        "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal."
+        },
+        "uk": {
+          "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -252,8 +266,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-four-controls-02", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-four-controls-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-four-controls-key-v1",
+        "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal."
+        },
+        "uk": {
+          "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -380,8 +408,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-four-controls-03", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-four-controls-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-four-controls-key-v1",
+        "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal."
+        },
+        "uk": {
+          "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -508,8 +550,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-four-controls-04", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-four-controls-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-four-controls-key-v1",
+        "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal."
+        },
+        "uk": {
+          "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -644,8 +700,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-four-controls-05", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-four-controls-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-four-controls-key-v1",
+        "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal."
+        },
+        "uk": {
+          "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -772,8 +842,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-four-controls-06", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-four-controls-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-four-controls-key-v1",
+        "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal."
+        },
+        "uk": {
+          "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -994,7 +1078,21 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-four-controls", "kind": "campaign" }
+    "revision": "3",
+    "scope": { "id": "fpv-four-controls", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-four-controls-key-v1",
+        "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal."
+        },
+        "uk": {
+          "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті."
+        }
+      }
+    }
   }
 ]

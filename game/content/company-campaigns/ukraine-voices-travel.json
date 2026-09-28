@@ -85,7 +85,16 @@
       "band": 7,
       "discovery": {
         "exhibitLayout": "route",
-        "finaleRewardRef": { "id": "ukraine-voices-travel-finale", "revision": "3" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Another voice finds a place in your collection."],
+            "uk": ["Ще один голос знайшов місце у вашій колекції."]
+          },
+          "revision": "feedback-ae9664c7251fdff2",
+          "victoryMotif": "open-horizon-v1"
+        },
+        "finaleRewardRef": { "id": "ukraine-voices-travel-finale", "revision": "4" }
       },
       "format": "CampaignDesignV1",
       "id": "ukraine-voices-travel",
@@ -267,7 +276,7 @@
           "travelling-trail-impact",
           "trail-pursuer"
         ],
-        "rewardRef": { "id": "ukraine-voices-travel-01-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-voices-travel-01-discovery", "revision": "4" },
         "routeDecision": "Secure the instrument alcove first or connect two listening islands before taking the long audience court. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -334,7 +343,7 @@
           "travelling-trail-impact",
           "trail-pursuer"
         ],
-        "rewardRef": { "id": "ukraine-voices-travel-02-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-voices-travel-02-discovery", "revision": "4" },
         "routeDecision": "Join the nearby teaching tables for short captures or use the outer gallery to connect all three rooms. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -401,7 +410,7 @@
           "travelling-trail-impact",
           "heading-interceptor"
         ],
-        "rewardRef": { "id": "ukraine-voices-travel-03-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-voices-travel-03-discovery", "revision": "4" },
         "routeDecision": "Read the warning from the narrow source aisle or cross the wider regional court with a nearer return prepared. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -477,7 +486,7 @@
           "heading-interceptor",
           "lane-emitter"
         ],
-        "rewardRef": { "id": "ukraine-voices-travel-04-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-voices-travel-04-discovery", "revision": "4" },
         "routeDecision": "Take the open foyer in a wide loop or reveal the two programme alcoves before approaching the marked lane. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -553,7 +562,7 @@
           "heading-interceptor",
           "lane-emitter"
         ],
-        "rewardRef": { "id": "ukraine-voices-travel-05-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-voices-travel-05-discovery", "revision": "4" },
         "routeDecision": "Secure the lower listening station for a quick return or connect the upper pair around the warning lane. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -630,7 +639,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "ukraine-voices-travel-06-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-voices-travel-06-discovery", "revision": "4" },
         "routeDecision": "Open the numbered source connector first or secure the wide archive wing before returning to the final listening island. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV2",
@@ -659,9 +668,9 @@
       "format": "PackDesignV1",
       "id": "ukraine-voices-travel-pack",
       "name": "Voices That Travel",
-      "revision": "3"
+      "revision": "4"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "3"
+  "revision": "4"
 }

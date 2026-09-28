@@ -1,3 +1,4 @@
+import { loadRewardImage } from './reward-image.mjs';
 import { getLocale, onLocaleChange, t } from '../i18n/index.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { journeyMissionId } from '../journey/catalog.mjs';
@@ -105,17 +106,33 @@ export function mountEditionExpedition({
     locale = null,
     nextTarget = null;
 
+  let teaserRequest = null,
+    teaserVisit = 0,
+    teaserTarget = null;
+  const teaserURLs = new Set();
+  function releaseTeaser() {
+    teaserVisit++;
+    teaserRequest?.abort();
+    teaserRequest = null;
+    for (const url of teaserURLs) win.URL.revokeObjectURL(url);
+    teaserURLs.clear();
+    teaserTarget?.replaceChildren();
+    teaserTarget = null;
+  }
   function bind() {
     const found = doc.getElementById('journey-chooser');
     const foundCards = doc.getElementById('journey-cards');
     if (!found || !foundCards || !found.contains(foundCards)) return false;
     if (dialog !== found || cards !== foundCards) {
+      releaseTeaser();
+      dialog?.removeEventListener('close', releaseTeaser);
       dialog?.classList.remove(
         'edition-expedition',
         'edition-expedition-map',
         'edition-expedition-list',
       );
       dialog = found;
+      dialog.addEventListener('close', releaseTeaser);
       cards = foundCards;
       dialog.classList.add('edition-expedition');
       const filters = doc.getElementById('journey-filter-details');
@@ -173,7 +190,11 @@ export function mountEditionExpedition({
     });
   }
   function refresh(force = false) {
-    if (disposed || !bind() || !dialog.open) return;
+    if (disposed || !bind()) return;
+    if (!dialog.open) {
+      releaseTeaser();
+      return;
+    }
     const currentCards = [...cards.children];
     const currentRevision = getJourneyRevision(),
       currentSnapshot = getRewards(),
@@ -190,6 +211,7 @@ export function mountEditionExpedition({
       locale === currentLocale
     )
       return;
+    releaseTeaser();
     last = { signature, nodes: currentCards };
     revision = currentRevision;
     snapshot = currentSnapshot?.state;
@@ -322,6 +344,37 @@ export function mountEditionExpedition({
               ),
               element('p', 'edition-expedition-teaser', copy.teaser),
             );
+            if (!received && finale.teaserImage) {
+              const preview = element(
+                'button',
+                'button secondary',
+                t('interface:completionRewards.previewTeaser'),
+              );
+              const target = element('div', 'completion-reward-exhibit-picture');
+              preview.type = 'button';
+              preview.setAttribute('data-expedition-teaser', finale.id);
+              preview.onclick = () => {
+                if (disposed || !dialog?.open) return;
+                releaseTeaser();
+                teaserTarget = target;
+                const controller = new AbortController(),
+                  visit = teaserVisit;
+                teaserRequest = controller;
+                void loadRewardImage({
+                  container: target,
+                  image: finale.teaserImage,
+                  locale: getLocale(),
+                  provider,
+                  signal: controller.signal,
+                  isCurrent: () => !disposed && dialog.open && visit === teaserVisit,
+                  urls: teaserURLs,
+                  URLImpl: win.URL,
+                  inspect: true,
+                  missingLabel: t('interface:completionRewards.missingTeaser'),
+                });
+              };
+              section.append(preview, target);
+            }
             if (!received && status)
               section.append(
                 element(
@@ -375,6 +428,8 @@ export function mountEditionExpedition({
     refresh,
     dispose() {
       disposed = true;
+      releaseTeaser();
+      dialog?.removeEventListener('close', releaseTeaser);
       observer?.disconnect();
       chooserObserver?.disconnect();
       stopLocale();
