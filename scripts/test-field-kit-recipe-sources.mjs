@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   fieldKitRecipeSources,
+  verifyFieldKitAudioStyleMenuReview,
   verifyFieldKitSteamDeckPresentationContinuationReview,
   verifyFieldKitMainBulkAudioReview,
   verifyFieldKitAudioContinuationReview,
@@ -366,5 +367,21 @@ test('main and bulk continuation rejects every altered immutable review byte str
     const changed = [...bytes];
     changed[i] = Buffer.concat([changed[i], Buffer.from(' ')]);
     assert.equal(verifyFieldKitMainBulkAudioReview(...changed), false);
+  }
+});
+
+test('Audio style-menu continuation and its immutable predecessor fail closed', async () => {
+  const paths = [
+    'docs/verification/audio-style-menu-2026-09-28/review.json',
+    'docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitAudioStyleMenuReview(...bytes), true);
+  for (let index = 0; index < bytes.length; index++) {
+    const changed = [...bytes];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitAudioStyleMenuReview(...changed), false);
   }
 });

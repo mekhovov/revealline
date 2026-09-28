@@ -233,6 +233,39 @@
   font-weight: 900;
   box-shadow: 3px 3px 0 #8e5624;
 }
+.soundtrack-settings-style-card {
+  padding: 14px;
+  margin: 12px 0;
+  border: 1px solid var(--fk-border-strong, #3f7592);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--fk-panel, #0c1424) 88%, #17385a);
+}
+.soundtrack-settings-style-card > h3 {
+  margin: 0 0 8px;
+}
+.soundtrack-settings-styles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid var(--fk-border, #3b4868);
+}
+.soundtrack-settings-styles legend {
+  padding: 0 5px;
+}
+.soundtrack-settings-style-card .soundtrack-primary-action {
+  color: #07121b;
+  border-color: #f4c552;
+  background: #f4c552;
+  font-weight: 900;
+  box-shadow: 3px 3px 0 #8e5624;
+}
+.soundtrack-settings-style-card .soundtrack-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 .soundtrack-advanced {
   min-width: 0;
   margin: 0;

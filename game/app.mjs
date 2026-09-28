@@ -1788,6 +1788,10 @@ try {
           soundtrackMenuGesture = true;
           soundtrackPlayer.pause();
         },
+        previous: () => {
+          soundtrackMenuGesture = true;
+          return soundtrackPlayer.previous();
+        },
         next: () => {
           soundtrackMenuGesture = true;
           return soundtrackPlayer.next();
@@ -1840,6 +1844,7 @@ try {
             return soundtrackPlayer.wake();
           }
         },
+        settingsRoot: $('settings-panel-audio'),
       });
       // The studio owns persisted playlist selection. Keep the legacy genre selector
       // only for browsers that cannot attach the file-audio transport.
