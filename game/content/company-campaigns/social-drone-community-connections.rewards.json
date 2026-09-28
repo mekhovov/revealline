@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-community-connections-key-v1",
-          "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+          "assetId": "social-drone-community-connections-01-reveal-v1",
+          "sha256": "792d40af92d286850cd10688398440c6d444e32463f19d2b37d7dc486b46bd16"
         },
         "id": "social-drone-community-connections-01-image",
         "locales": {
           "en": {
-            "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
+            "alt": "Original illustrated library science-day hall with a teal welcome desk, blank purpose board and three everyday mechanism display models.",
             "title": "One Shared Brief"
           },
           "uk": {
-            "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима.",
+            "alt": "Оригінальна ілюстрована зала бібліотечного дня науки з бірюзовою вітальною стійкою, порожньою дошкою мети та трьома демонстраційними моделями повсякденних механізмів.",
             "title": "Спільний задум"
           }
         },
@@ -63,6 +63,50 @@
             "title": "Спільний задум"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Underline the audience, purpose and result in the useful brief. Add a question where a necessary detail is missing."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Підкресліть аудиторію, мету й результат у корисному описі. Додайте запитання там, де бракує потрібної деталі."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Describe the library event to someone who has not seen the room. Can they name its audience and purpose?"
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Опишіть бібліотечну подію людині, яка не бачила кімнати. Чи може вона назвати аудиторію й мету?"
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Rewrite the same brief for a different fictional audience. Preserve its purpose and distinguish an agreed responsibility from an assumption."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перепишіть опис для іншої вигаданої аудиторії. Збережіть мету й розрізніть узгоджену відповідальність та припущення."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -80,7 +124,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-community-connections-01", "kind": "mission" }
   },
   {
@@ -101,17 +145,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-community-connections-key-v1",
-          "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+          "assetId": "social-drone-community-connections-02-reveal-v1",
+          "sha256": "8c5cba7cbc015357ceedc5c2adc6d3d3eb63f2fbd64b6b8e64babc8efe7c2ca2"
         },
         "id": "social-drone-community-connections-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
+            "alt": "Original illustrated library preparation room with an open box, separate booklet stacks and a reserved empty area beside blank count cards.",
             "title": "Count What Is Here"
           },
           "uk": {
-            "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима.",
+            "alt": "Оригінальна ілюстрована кімната підготовки бібліотеки з відкритою коробкою, окремими стосами буклетів і залишеним порожнім місцем біля чистих карток підрахунку.",
             "title": "Порахуйте наявне"
           }
         },
@@ -147,6 +191,50 @@
             "title": "Порахуйте наявне"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep expected and received counts separate. Explain why receiving two more changes both the received and missing counts."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Ведіть очікувану й отриману кількість окремо. Поясніть, чому ще два буклети змінюють і отриману кількість, і нестачу."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Use twelve paper marks for expected booklets. Circle eight received, then two more. How many are still missing?"
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Позначте на папері дванадцять очікуваних буклетів. Обведіть вісім отриманих, потім ще два. Скількох бракує?"
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Propose a small record that another volunteer can reconcile after a later delivery. Retain the observation behind each update."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Запропонуйте короткий запис, який інший волонтер зможе звірити після наступної доставки. Збережіть спостереження, що обґрунтовує кожне оновлення."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -164,7 +252,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-community-connections-02", "kind": "mission" }
   },
   {
@@ -185,17 +273,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-community-connections-key-v1",
-          "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+          "assetId": "social-drone-community-connections-03-reveal-v1",
+          "sha256": "38bf49eb62dd8e9d07f830f0d06289acf5e98d691bf83f9826cb915333ffe741"
         },
         "id": "social-drone-community-connections-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
+            "alt": "Original illustrated handoff gallery with three blank label frames, two attached source cards and a third empty clip awaiting its source.",
             "title": "The Next Reader"
           },
           "uk": {
-            "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима.",
+            "alt": "Оригінальна ілюстрована галерея передачі справ із трьома порожніми рамками підписів, двома прикріпленими картками джерел і третім порожнім затискачем.",
             "title": "Наступний читач"
           }
         },
@@ -231,6 +319,50 @@
             "title": "Наступний читач"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Separate “someone is proposed” from “someone agreed.” Add the remaining item and next action to the handoff."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть «когось запропоновано» та «людина погодилася». Додайте до передачі незавершений пункт і наступну дію."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Read the unfinished-label note aloud. What does the next helper need to know before starting?"
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Прочитайте вголос нотатку про незавершений підпис. Що має знати наступний помічник?"
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Inspect the handoff for hidden assumptions about ownership and evidence. Rewrite it so a new reader can continue without guessing."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перевірте передачу справ на приховані припущення про відповідальність і докази. Перепишіть її так, щоб новий читач продовжив без здогадок."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -248,7 +380,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-community-connections-03", "kind": "mission" }
   },
   {
@@ -269,17 +401,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-community-connections-key-v1",
-          "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+          "assetId": "social-drone-community-connections-04-reveal-v1",
+          "sha256": "ef616a08e49258ca9e8a2a8105a3965e3729d99d12516c777e282072f1d2ab88"
         },
         "id": "social-drone-community-connections-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
+            "alt": "Original illustrated library courtyard with a broad level route and matching open-book reliefs connecting reception and the reading-room doorway.",
             "title": "An Invitation That Helps"
           },
           "uk": {
-            "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима.",
+            "alt": "Оригінальний ілюстрований бібліотечний двір із широким рівним шляхом та однаковими рельєфами відкритої книжки біля стійки й дверей читальні.",
             "title": "Корисне запрошення"
           }
         },
@@ -315,6 +447,50 @@
             "title": "Корисне запрошення"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Arrange the invitation under Where, When and What to expect. Keep colour as extra information, not the only direction."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розподіліть запрошення за рубриками «Де», «Коли», «Чого очікувати». Залиште колір додатковою, а не єдиною підказкою."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Give directions without naming a colour. Could a partner find the fictional reading room from your words?"
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Поясніть шлях без назви кольору. Чи знайде партнер вигадану читальню за вашими словами?"
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Review a fictional invitation for dependence on sight, assumed local knowledge and ambiguous instructions. Propose one concrete improvement for each."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перевірте вигадане запрошення на залежність від зору, знання місцевості та нечітких вказівок. Запропонуйте конкретне поліпшення для кожного випадку."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -332,7 +508,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-community-connections-04", "kind": "mission" }
   },
   {
@@ -399,6 +575,50 @@
             "title": "Опишіть важливе"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Compare “nice picture” with a description that locates the reading room. Explain what useful information the second gives."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте «гарний малюнок» з описом розташування читальні. Поясніть, яку корисну інформацію дає другий варіант."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Ask a partner what they need from the room map. Describe the feature that answers that question before decorative details."
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Запитайте партнера, що йому потрібно дізнатися з плану кімнати. Спершу опишіть доречну ознаку, а вже потім прикраси."
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Write two text alternatives for the same fictional image in two different contexts. Explain why the essential information changes."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Напишіть два текстові описи одного вигаданого зображення для різних контекстів. Поясніть, чому змінюється суттєва інформація."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -416,7 +636,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-community-connections-05", "kind": "mission" }
   },
   {
@@ -491,6 +711,50 @@
             "title": "Збережіть точність історії"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep “available now” separate from “expected later.” Identify where the old notice must be replaced so the correction is useful."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розділіть «доступно зараз» і «очікується пізніше». Визначте, де слід замінити старе оголошення, щоб виправлення допомогло."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "The notice promised twelve, but ten booklets are ready. Together, write a correction that a newcomer can understand."
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оголошення обіцяло дванадцять буклетів, але готові десять. Разом напишіть зрозуміле новачкові виправлення."
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Audit the six-card communication chain from a newcomer’s perspective. Locate one unsupported promise and trace the correction to its evidence."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перевірте послідовність шести карток очима новачка. Знайдіть необґрунтовану обіцянку й пов’яжіть виправлення з доказом."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -508,7 +772,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-community-connections-06", "kind": "mission" }
   },
   {
@@ -559,17 +823,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-community-connections-key-v1",
-          "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+          "assetId": "social-drone-community-connections-01-reveal-v1",
+          "sha256": "792d40af92d286850cd10688398440c6d444e32463f19d2b37d7dc486b46bd16"
         },
         "id": "social-drone-community-connections-01-image",
         "locales": {
           "en": {
-            "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
+            "alt": "Original illustrated library science-day hall with a teal welcome desk, blank purpose board and three everyday mechanism display models.",
             "title": "One Shared Brief"
           },
           "uk": {
-            "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима.",
+            "alt": "Оригінальна ілюстрована зала бібліотечного дня науки з бірюзовою вітальною стійкою, порожньою дошкою мети та трьома демонстраційними моделями повсякденних механізмів.",
             "title": "Спільний задум"
           }
         },
@@ -577,17 +841,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-community-connections-key-v1",
-          "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+          "assetId": "social-drone-community-connections-02-reveal-v1",
+          "sha256": "8c5cba7cbc015357ceedc5c2adc6d3d3eb63f2fbd64b6b8e64babc8efe7c2ca2"
         },
         "id": "social-drone-community-connections-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
+            "alt": "Original illustrated library preparation room with an open box, separate booklet stacks and a reserved empty area beside blank count cards.",
             "title": "Count What Is Here"
           },
           "uk": {
-            "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима.",
+            "alt": "Оригінальна ілюстрована кімната підготовки бібліотеки з відкритою коробкою, окремими стосами буклетів і залишеним порожнім місцем біля чистих карток підрахунку.",
             "title": "Порахуйте наявне"
           }
         },
@@ -595,17 +859,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-community-connections-key-v1",
-          "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+          "assetId": "social-drone-community-connections-03-reveal-v1",
+          "sha256": "38bf49eb62dd8e9d07f830f0d06289acf5e98d691bf83f9826cb915333ffe741"
         },
         "id": "social-drone-community-connections-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
+            "alt": "Original illustrated handoff gallery with three blank label frames, two attached source cards and a third empty clip awaiting its source.",
             "title": "The Next Reader"
           },
           "uk": {
-            "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима.",
+            "alt": "Оригінальна ілюстрована галерея передачі справ із трьома порожніми рамками підписів, двома прикріпленими картками джерел і третім порожнім затискачем.",
             "title": "Наступний читач"
           }
         },
@@ -613,17 +877,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-community-connections-key-v1",
-          "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+          "assetId": "social-drone-community-connections-04-reveal-v1",
+          "sha256": "ef616a08e49258ca9e8a2a8105a3965e3729d99d12516c777e282072f1d2ab88"
         },
         "id": "social-drone-community-connections-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
+            "alt": "Original illustrated library courtyard with a broad level route and matching open-book reliefs connecting reception and the reading-room doorway.",
             "title": "An Invitation That Helps"
           },
           "uk": {
-            "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима.",
+            "alt": "Оригінальний ілюстрований бібліотечний двір із широким рівним шляхом та однаковими рельєфами відкритої книжки біля стійки й дверей читальні.",
             "title": "Корисне запрошення"
           }
         },
@@ -730,7 +994,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-community-connections", "kind": "campaign" }
   }
 ]

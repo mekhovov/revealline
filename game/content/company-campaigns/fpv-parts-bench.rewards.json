@@ -63,6 +63,50 @@
             "title": "Лоток запитань"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Choose structure, energy, sensing or communication for each known card. Explain why an unknown connector belongs under manual needed."
+              ],
+              "title": "Make the distinction: A Tray of Questions"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть конструкцію, енергію, вимірювання чи зв’язок для кожної відомої картки. Чому невідомий роз’єм потребує інструкції?"
+              ],
+              "title": "Розрізніть поняття: Лоток запитань"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Take turns sorting inert component cards by their jobs. Give the unknown connector its own question card rather than guessing together."
+              ],
+              "title": "Explore together: A Tray of Questions"
+            },
+            "uk": {
+              "paragraphs": [
+                "По черзі сортуйте картки неактивних деталей за ролями. Для невідомого роз’єму створіть окреме запитання замість спільного здогаду."
+              ],
+              "title": "Дослідіть разом: Лоток запитань"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Another fictional kit includes an unfamiliar combined module. Separate known roles from missing identification; do not infer compatibility from the kit description."
+              ],
+              "title": "Apply and question: A Tray of Questions"
+            },
+            "uk": {
+              "paragraphs": [
+                "В іншому вигаданому наборі є незнайомий комбінований модуль. Відокремте відомі ролі від відсутньої ідентифікації; опис набору не доводить сумісності."
+              ],
+              "title": "Застосуйте й запитайте: Лоток запитань"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -80,7 +124,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-parts-bench-01", "kind": "mission" }
   },
   {
@@ -144,6 +188,50 @@
             "title": "Де передня частина?"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Name the model’s blue nose before describing left or right. Keep page north separate from the aircraft’s forward direction."
+              ],
+              "title": "Make the distinction: Which Way Is Forward?"
+            },
+            "uk": {
+              "paragraphs": [
+                "Назвіть синій ніс моделі, перш ніж описувати ліворуч чи праворуч. Відокремте північ сторінки від переднього напрямку апарата."
+              ],
+              "title": "Розрізніть поняття: Де передня частина?"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Turn a paper drawing together. Which marker turns with the model, and which page arrow stays where it was?"
+              ],
+              "title": "Explore together: Which Way Is Forward?"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом поверніть паперовий малюнок. Яка позначка повертається з моделлю, а яка стрілка сторінки залишається на місці?"
+              ],
+              "title": "Дослідіть разом: Де передня частина?"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A different fictional controller drawing lacks an orientation mark. State what the illustration cannot establish and which exact documentation would be needed."
+              ],
+              "title": "Apply and question: Which Way Is Forward?"
+            },
+            "uk": {
+              "paragraphs": [
+                "На іншому вигаданому зображенні контролера немає позначки орієнтації. Що не можна встановити за малюнком і яка точна документація потрібна?"
+              ],
+              "title": "Застосуйте й запитайте: Де передня частина?"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -161,7 +249,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-parts-bench-02", "kind": "mission" }
   },
   {
@@ -228,6 +316,50 @@
             "title": "Три кольорові шляхи"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Place frame, battery and receiver cards by their roles. Explain why the ESC connects the command story with the motor-energy story."
+              ],
+              "title": "Make the distinction: Three Coloured Paths"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розмістіть картки рами, акумулятора й приймача за ролями. Чому ESC поєднує історію команд з історією енергії двигуна?"
+              ],
+              "title": "Розрізніть поняття: Три кольорові шляхи"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Follow one ribbon each: support, energy or information. Find a card that belongs to more than one conversation."
+              ],
+              "title": "Explore together: Three Coloured Paths"
+            },
+            "uk": {
+              "paragraphs": [
+                "Простежте по одній стрічці: опору, енергію чи інформацію. Знайдіть картку, що стосується більш ніж однієї розмови."
+              ],
+              "title": "Дослідіть разом: Три кольорові шляхи"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Redraw the same roles for an unfamiliar inert display. What can the ribbons explain, and why can they not establish physical wiring?"
+              ],
+              "title": "Apply and question: Three Coloured Paths"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перемалюйте ті самі ролі для незнайомого неактивного експоната. Що пояснюють стрічки й чому вони не визначають фізичну проводку?"
+              ],
+              "title": "Застосуйте й запитайте: Три кольорові шляхи"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -245,7 +377,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-parts-bench-03", "kind": "mission" }
   },
   {
@@ -312,6 +444,50 @@
             "title": "Схожа форма, інший напис"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Add the fictional board revision and connector label to a question card. Choose the exact manual instead of a visual match."
+              ],
+              "title": "Make the distinction: Same Shape, Different Label"
+            },
+            "uk": {
+              "paragraphs": [
+                "Додайте вигадану версію плати й назву роз’єму до картки запитання. Оберіть точну інструкцію замість візуального збігу."
+              ],
+              "title": "Розрізніть поняття: Схожа форма, інший напис"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Two cards have the same outline but different names. Together, explain why looking alike is not enough to join them."
+              ],
+              "title": "Explore together: Same Shape, Different Label"
+            },
+            "uk": {
+              "paragraphs": [
+                "Дві картки мають однаковий контур, але різні назви. Разом поясніть, чому схожого вигляду недостатньо, щоб їх поєднати."
+              ],
+              "title": "Дослідіть разом: Схожа форма, інший напис"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A second fixture offers two manuals for different revisions. Describe the evidence needed to select one, without copying either pinout into the model."
+              ],
+              "title": "Apply and question: Same Shape, Different Label"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інший приклад має дві інструкції для різних версій. Які дані потрібні для вибору, без перенесення розпіновки в модель?"
+              ],
+              "title": "Застосуйте й запитайте: Схожа форма, інший напис"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -329,7 +505,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-parts-bench-04", "kind": "mission" }
   },
   {
@@ -396,6 +572,50 @@
             "title": "Огляд перед наступним кроком"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Separate a cracked display piece from an unreadable identifier. Which needs a display replacement, and which needs identification?"
+              ],
+              "title": "Make the distinction: Look Before the Next Step"
+            },
+            "uk": {
+              "paragraphs": [
+                "Відокремте тріснуту деталь експоната від нечитабельного ідентифікатора. Що потребує заміни в експонаті, а що — встановлення назви?"
+              ],
+              "title": "Розрізніть поняття: Огляд перед наступним кроком"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Look together at the cardboard arm, label and identifier. Say only what is visible before suggesting who could help."
+              ],
+              "title": "Explore together: Look Before the Next Step"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом огляньте картонний промінь, етикетку й ідентифікатор. Спершу назвіть лише видиме, а тоді — хто може допомогти."
+              ],
+              "title": "Дослідіть разом: Огляд перед наступним кроком"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare a clear photograph with a blurred one of another inert model. Keep observation confidence separate from any claim about internal condition."
+              ],
+              "title": "Apply and question: Look Before the Next Step"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте чітке й розмите фото іншої неактивної моделі. Відокремте впевненість у спостереженні від висновків про внутрішній стан."
+              ],
+              "title": "Застосуйте й запитайте: Огляд перед наступним кроком"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -413,7 +633,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-parts-bench-05", "kind": "mission" }
   },
   {
@@ -480,6 +700,50 @@
             "title": "Передача моделі"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Fill purpose, identified parts, open questions and next responsible person. Explain why display complete does not mean aircraft ready."
+              ],
+              "title": "Make the distinction: The Model Handoff"
+            },
+            "uk": {
+              "paragraphs": [
+                "Заповніть мету, визначені деталі, відкриті питання й відповідальну людину. Чому готовий експонат не означає готовий до польоту апарат?"
+              ],
+              "title": "Розрізніть поняття: Передача моделі"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Tell another person what the model is for and one question still open. A careful handoff can include an honest unknown."
+              ],
+              "title": "Explore together: The Model Handoff"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розкажіть іншій людині, для чого модель і яке питання відкрите. Уважна передача справ може містити чесне «невідомо»."
+              ],
+              "title": "Дослідіть разом: Передача моделі"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Review a new fictional handoff that hides an unreadable identifier. Rewrite it to preserve the uncertainty and assign a clear next contact."
+              ],
+              "title": "Apply and question: The Model Handoff"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перегляньте іншу вигадану передачу справ, де приховано нечитабельний ідентифікатор. Збережіть невизначеність і вкажіть чіткий наступний контакт."
+              ],
+              "title": "Застосуйте й запитайте: Передача моделі"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -497,7 +761,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-parts-bench-06", "kind": "mission" }
   },
   {
@@ -719,7 +983,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-parts-bench", "kind": "campaign" }
   }
 ]

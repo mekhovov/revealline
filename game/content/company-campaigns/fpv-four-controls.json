@@ -2,16 +2,81 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
-      "bytes": 246308,
+      "alt": "A two-stick museum control sculpture sits among four separate blank command cards.",
+      "bytes": 148286,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "fpv-four-controls-key-picture",
+      "height": 480,
+      "id": "fpv-four-controls-01-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-four-controls-key-v1.jpg",
+      "path": "editions/assets/discovery/fpv-four-controls-01-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03",
+      "sha256": "06376321a870bb8edbb1bff457fe27295d26b06f9a8a481634d578e831d838b7",
+      "width": 960
+    },
+    {
+      "alt": "Two inert side-view models compare a level attitude with a downward nose tilt around a display hinge.",
+      "bytes": 114622,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-four-controls-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-four-controls-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "affba1dd04bb175292c7179ad667687ec1982977ea388686d352d0d1dfe300bf",
+      "width": 960
+    },
+    {
+      "alt": "A front-view inert model tilts one side lower, with a blue arm marker and a separate level comparison.",
+      "bytes": 147937,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-four-controls-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-four-controls-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "2adebfe28917b39bc2686a5b8e30f4243df0fb94eb1a19fa742e8f8ffb281fbd",
+      "width": 960
+    },
+    {
+      "alt": "An overhead exhibit shows one four-arm model at a fixed centre, a blue nose marker and a separate compared heading.",
+      "bytes": 133484,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-four-controls-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-four-controls-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "8604abd20aced15a333d238d4f041f074508a6adab3a4367bb39d637e951a97d",
+      "width": 960
+    },
+    {
+      "alt": "Paired display cases keep separate model-response studies and assumption cards beside identical stick sculptures.",
+      "bytes": 139478,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-four-controls-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-four-controls-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "3a5b9e4f021f5cf7dfa81cbc71a00856487b25ac96a8ff77be0ffef3c14eb992",
+      "width": 960
+    },
+    {
+      "alt": "A completed conceptual atlas surrounds a two-stick sculpture with separate side, front and overhead model views.",
+      "bytes": 166812,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-four-controls-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-four-controls-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "6293ecce59eea58dbe6c6d065d18f54c71f4631ec30455f169dce9db2c7cb825",
       "width": 960
     }
   ],
@@ -20,7 +85,7 @@
       "band": 4,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "fpv-four-controls-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "fpv-four-controls-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-four-controls",
@@ -207,7 +272,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "fpv-four-controls-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-four-controls-01-discovery", "revision": "2" },
         "routeDecision": "Link the left command pair first or establish a return at the right pair. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -220,7 +285,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-four-controls-key-picture",
+        "backgroundAssetId": "fpv-four-controls-01-picture",
         "themeId": "fpv-four-controls-theme"
       },
       "revision": "2",
@@ -282,7 +347,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "fpv-four-controls-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-four-controls-02-discovery", "revision": "2" },
         "routeDecision": "Choose the long side-view aisle or the short nose-marker alcove. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -295,7 +360,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-four-controls-key-picture",
+        "backgroundAssetId": "fpv-four-controls-02-picture",
         "themeId": "fpv-four-controls-theme"
       },
       "revision": "2",
@@ -357,7 +422,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "fpv-four-controls-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-four-controls-03-discovery", "revision": "2" },
         "routeDecision": "Use the centre axis island to compare both sides or secure the far-side pair. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -370,7 +435,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-four-controls-key-picture",
+        "backgroundAssetId": "fpv-four-controls-03-picture",
         "themeId": "fpv-four-controls-theme"
       },
       "revision": "2",
@@ -440,7 +505,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-four-controls-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-four-controls-04-discovery", "revision": "2" },
         "routeDecision": "Circle the heading island or take the wide quiet door-side capture. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -453,7 +518,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-four-controls-key-picture",
+        "backgroundAssetId": "fpv-four-controls-04-picture",
         "themeId": "fpv-four-controls-theme"
       },
       "revision": "2",
@@ -523,7 +588,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-four-controls-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-four-controls-05-discovery", "revision": "2" },
         "routeDecision": "Collect the separate mode islands before crossing or group the paired response cards. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -536,7 +601,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-four-controls-key-picture",
+        "backgroundAssetId": "fpv-four-controls-05-picture",
         "themeId": "fpv-four-controls-theme"
       },
       "revision": "2",
@@ -606,7 +671,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-four-controls-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-four-controls-06-discovery", "revision": "2" },
         "routeDecision": "Join the four command islands through the centre or complete the outer atlas loop. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -619,7 +684,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-four-controls-key-picture",
+        "backgroundAssetId": "fpv-four-controls-06-picture",
         "themeId": "fpv-four-controls-theme"
       },
       "revision": "2",
@@ -634,9 +699,9 @@
       "format": "PackDesignV1",
       "id": "fpv-four-controls-pack",
       "name": "Understand the Four Controls",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }
