@@ -11703,7 +11703,11 @@ try {
           }
         },
         getPictureVisible: () =>
-          run?.status === 'won' && $('game-overlay').hidden && !$('show-result').hidden,
+          run?.status === 'won' &&
+          ((!$('game-overlay').hidden &&
+            $('game-overlay').dataset.kind === 'won' &&
+            !$('result-picture').hidden) ||
+            ($('game-overlay').hidden && !$('show-result').hidden)),
         report: (message) => warning(message),
         onMissions: (opener) => openUnifiedMissions(opener),
         onEditionChange: (editionId, opener) =>

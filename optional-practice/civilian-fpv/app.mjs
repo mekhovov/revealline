@@ -74,7 +74,8 @@ export function mountFlightApp({
     studio = null,
     pendingAttempt = Promise.resolve(),
     pendingReview = Promise.resolve(),
-    reviewAbort = null;
+    reviewAbort = null,
+    courseButtons = [];
   const cancelReview = () => {
     reviewAbort?.abort();
     reviewAbort = null;
@@ -306,23 +307,23 @@ export function mountFlightApp({
     $('language').value = locale;
     for (const node of doc.querySelectorAll('[data-copy]'))
       if (c()[node.dataset.copy]) node.textContent = c()[node.dataset.copy];
-    $('course-list').replaceChildren(
-      ...courses.map((course, index) => {
-        const button = doc.createElement('button'),
-          title = doc.createElement('strong'),
-          brief = doc.createElement('span');
-        title.textContent = `${String(index + 1).padStart(2, '0')} · ${course.locales[locale].title}`;
-        brief.textContent = course.locales[locale].brief;
-        button.type = 'button';
-        button.setAttribute('data-course', course.id);
-        button.append(title, brief);
-        button.onclick = () => {
-          reset(index, mode, null);
-          closeDialog('course-dialog');
-        };
-        return button;
-      }),
-    );
+    for (const button of courseButtons) button.onclick = null;
+    courseButtons = courses.map((course, index) => {
+      const button = doc.createElement('button'),
+        title = doc.createElement('strong'),
+        brief = doc.createElement('span');
+      title.textContent = `${String(index + 1).padStart(2, '0')} · ${course.locales[locale].title}`;
+      brief.textContent = course.locales[locale].brief;
+      button.type = 'button';
+      button.setAttribute('data-course', course.id);
+      button.append(title, brief);
+      button.onclick = () => {
+        reset(index, mode, null);
+        closeDialog('course-dialog');
+      };
+      return button;
+    });
+    $('course-list').replaceChildren(...courseButtons);
     $('fallback').textContent = c()[graphicsLost ? 'contextLost' : 'fallback'];
     $('viewport').setAttribute('aria-label', c().title);
     $('sticks').setAttribute('aria-label', c().inputLabel);
@@ -669,6 +670,11 @@ export function mountFlightApp({
       input.dispose();
       renderer.dispose();
       for (const remove of listeners) remove();
+      for (const button of courseButtons) {
+        button.onclick = null;
+        button.remove();
+      }
+      courseButtons = [];
     },
   };
   listen(win, 'pagehide', () => api.dispose());

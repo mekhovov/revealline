@@ -611,3 +611,21 @@ test('actual renderer detects unavailable WebGL without allocating a running fal
   assert.equal(result.available, false);
   result.dispose();
 });
+
+test('disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains', (t) => {
+  const f = fixture(t),
+    old = f.$('course-list').children[1];
+  let hostClicks = 0;
+  const host = f.doc.createElement('button');
+  host.onclick = () => hostClicks++;
+  f.$('course-list').append(host);
+  const before = f.view.exportAttempt();
+  f.view.dispose();
+  assert.equal(old.onclick, null);
+  old.click();
+  assert.deepEqual(f.view.exportAttempt(), before);
+  assert.equal(f.$('course-list').children.length, 1);
+  assert.equal(f.$('course-list').children[0], host);
+  host.click();
+  assert.equal(hostClicks, 1);
+});

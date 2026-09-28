@@ -5,13 +5,28 @@ import { mountEditionLessons } from '../ui/edition-lessons.mjs';
 import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
 import { createCompanyProject } from '../company-campaigns/content.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
-import { applyGameplayTuning } from '../gameplay-tuning.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint, createRecorder, recordInput } from '../replay.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 import { memoryStorage } from './helpers/solo-dom.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
+import { createRewardMissionBindings } from '../rewards/bindings.mjs';
+
+function earnedPictureReference(source, lesson, editionId) {
+  const row = createRewardMissionBindings(source).find(
+    (entry) => entry.missionId === lesson.missionId,
+  );
+  const binding = row.bindings.find((entry) => entry.difficulty === 'standard');
+  return {
+    editionId,
+    mode: 'solo',
+    missionId: row.journeyMissionIds[0],
+    levelId: lesson.missionId,
+    ...binding,
+  };
+}
 
 async function learningDialogFixture(
   t,
@@ -49,7 +64,11 @@ async function learningDialogFixture(
   const picture = doc.createElement('button');
   picture.id = 'view-picture';
   doc.body.append(picture, settings);
-  const lesson = { ...structuredClone(COMPANY_LESSONS[0]), missionId: f.source.missions[0].id };
+  const lesson = {
+    ...structuredClone(COMPANY_LESSONS[0]),
+    missionId: f.source.missions[0].id,
+    campaignId: f.source.campaigns[0].id,
+  };
   const view = await mountEditionLessons({
     provider: {
       editionId: 'sample-public',
@@ -79,7 +98,20 @@ async function learningDialogFixture(
     },
   });
   const file = (text) => ({ size: text.length, text: async () => text });
-  return { doc, view, settings, upload, status, storage, reports, emptyBackup, file, lesson };
+  return {
+    doc,
+    view,
+    settings,
+    upload,
+    status,
+    storage,
+    reports,
+    emptyBackup,
+    file,
+    lesson,
+    source: source ?? f.source,
+    picture: earnedPictureReference(source ?? f.source, lessons?.[0] ?? lesson, 'sample-public'),
+  };
 }
 
 test('optional learning controls and completed imports switch locale without remounting', async (t) => {
@@ -110,10 +142,7 @@ test('optional learning controls and completed imports switch locale without rem
   setLocale('en', { persist: false });
   assert.equal(h.status.textContent, 'Optional learning records imported.');
 
-  const revisit = h.view.pictureReady({
-    editionId: 'sample-public',
-    missionId: h.lesson.missionId,
-  });
+  const revisit = h.view.pictureReady(h.picture);
   h.doc.body.append(revisit);
   assert.equal(revisit.textContent, 'Optional bonus · revisit this connection');
   setLocale('uk', { persist: false });
@@ -176,10 +205,7 @@ test('bonus and Collection captions translate while workbench choices and focus 
   setLocale('en', { persist: false });
   const h = await learningDialogFixture(t);
   h.settings.close();
-  const revisit = h.view.pictureReady({
-    editionId: 'sample-public',
-    missionId: h.lesson.missionId,
-  });
+  const revisit = h.view.pictureReady(h.picture);
   h.doc.body.append(revisit);
   revisit.click();
   const field = h.lesson.fields[0],
@@ -203,6 +229,23 @@ test('bonus and Collection captions translate while workbench choices and focus 
   setLocale('en', { persist: false });
   assert.equal(revisit.textContent, 'Optional bonus · revisit this connection');
   assert.equal(h.doc.activeElement, revisit);
+});
+
+test('Collection practice follows the mounted exact source, including a retained presentation, rather than a matching level name', async (t) => {
+  const retained = await learningDialogFixture(t);
+  const changedSource = structuredClone(retained.source);
+  changedSource.missions[0].coverage = 0.7;
+  const current = await learningDialogFixture(t, {
+    source: changedSource,
+    lessons: [retained.lesson],
+  });
+  assert.notEqual(current.picture.gameplayId, retained.picture.gameplayId);
+  assert.ok(retained.view.pictureReady(retained.picture));
+  assert.equal(current.view.pictureReady(retained.picture), null);
+  assert.ok(current.view.pictureReady(current.picture));
+  assert.equal(retained.view.pictureReady(current.picture), null);
+  assert.deepEqual(retained.storage.writes, []);
+  assert.deepEqual(current.storage.writes, []);
 });
 
 test('learning import failures stay in the open Settings live region and leave stored records intact', async (t) => {
@@ -385,8 +428,18 @@ test('optional bonus waits for won picture, cannot change progression, and reope
     node.id = id;
     doc.body.append(node);
   }
-  const lesson = { ...structuredClone(COMPANY_LESSONS[0]), missionId: f.source.missions[0].id };
-  let run = { status: 'running', levelId: lesson.missionId },
+  const lesson = {
+    ...structuredClone(COMPANY_LESSONS[0]),
+    missionId: f.source.missions[0].id,
+    campaignId: f.source.campaigns[0].id,
+  };
+  const validRun = createRun(
+    applyGameplayTuning(
+      resolveMission(compileContentProject(f.source), lesson.missionId).level,
+      resolveGameplayTuning('standard'),
+    ),
+  );
+  let run = validRun,
     pictureVisible = false;
   const provider = { editionId: 'sample-public', route: { source: f.source }, lessons: [lesson] };
   const view = await mountEditionLessons({
@@ -408,13 +461,29 @@ test('optional bonus waits for won picture, cannot change progression, and reope
   view.refresh();
   assert.equal(button.hidden, true);
   pictureVisible = true;
+  const won = run;
+  run = { ...won, level: { ...won.level, revision: 'foreign-revision' } };
+  view.refresh();
+  assert.equal(button.hidden, true, 'A foreign simulation cannot expose the activity.');
+  run = won;
   view.refresh();
   assert.equal(button.hidden, false);
   // A Collection callback has already verified and displayed its earned image.
   assert.equal(view.pictureReady({ editionId: 'foreign', missionId: lesson.missionId }), null);
-  const revisit = view.pictureReady({ editionId: provider.editionId, missionId: lesson.missionId });
+  const picture = earnedPictureReference(f.source, lesson, provider.editionId);
+  for (const changed of [
+    { editionId: 'foreign' },
+    { mode: 'versus' },
+    { missionId: lesson.missionId },
+    { missionId: picture.missionId.replace('candidate/', 'imported/') },
+    { levelId: 'foreign' },
+    { gameplayId: '0000000000000000' },
+    { difficulty: 'invalid' },
+  ])
+    assert.equal(view.pictureReady({ ...picture, ...changed }), null);
+  const revisit = view.pictureReady(picture);
   doc.body.append(revisit);
-  const before = structuredClone(run);
+  const before = authoritativeCheckpoint(run);
   revisit.click();
   assert.equal(doc.getElementById('edition-lesson-dialog').open, true);
   const inspect = doc
@@ -422,7 +491,7 @@ test('optional bonus waits for won picture, cannot change progression, and reope
     .filter((node) => node.dataset.control.startsWith('inspect-'));
   assert.equal(inspect.length, lesson.records.length);
   assert.ok(inspect.every((node) => !node.disabled));
-  assert.deepEqual(run, before);
+  assert.deepEqual(authoritativeCheckpoint(run), before);
   assert.deepEqual(storage.writes, []);
   doc.getElementById('edition-lesson-dialog').close();
   run = { status: 'running', levelId: lesson.missionId };
@@ -537,10 +606,9 @@ test('independent completed bonuses both persist when replay proofs finish out o
   complete(lessons[1], runs[1]);
   await waitFor(1);
   assert.equal(saved()[0].attempt.missionId, lessons[1].missionId);
-  const revisit = view.pictureReady({
-    editionId: 'coupa-foundations',
-    missionId: lessons[1].missionId,
-  });
+  const revisit = view.pictureReady(
+    earnedPictureReference(source, lessons[1], 'coupa-foundations'),
+  );
   doc.body.append(revisit);
   revisit.click();
   const status = doc.getElementById('edition-lesson-status');
