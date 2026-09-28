@@ -261,11 +261,13 @@ export async function mountEditionSoloUI({
     getJourneyProfile,
     getJourneyRevision,
     getJourneyDurable,
+    getLearningEvidence: lessons.rewardEvidence,
     getReducedMotion,
     audioMaster,
     musicDucker,
     previewSession,
   });
+  const stopLearningRewards = lessons.onRewardEvidenceChange(() => rewards.refresh());
   const expedition = mountEditionExpedition({
     provider,
     document: doc,
@@ -371,6 +373,7 @@ export async function mountEditionSoloUI({
     pictureReady: lessons.pictureReady,
     dispose() {
       disposed = true;
+      stopLearningRewards();
       lessons.dispose();
       rewards.dispose();
       expedition.dispose();

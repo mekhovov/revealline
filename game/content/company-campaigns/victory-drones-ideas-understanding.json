@@ -2,16 +2,16 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original imaginary learning observatory with library islands, glass walkways and an educational aircraft exhibit.",
-      "bytes": 1150183,
+      "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
+      "bytes": 292281,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "victory-drones-home-picture",
+      "id": "victory-drones-ideas-understanding-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/victory-drones-home-v1.png",
+      "path": "editions/assets/discovery/victory-drones-ideas-understanding-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3",
+      "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb",
       "width": 960
     }
   ],
@@ -20,7 +20,7 @@
       "band": 3,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "victory-drones-ideas-understanding-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "victory-drones-ideas-understanding-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "victory-drones-ideas-understanding",
@@ -203,7 +203,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "victory-drones-ideas-understanding-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "victory-drones-ideas-understanding-01-discovery", "revision": "2" },
         "routeDecision": "Use the small observation islands or capture the broad comparison terrace first. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -215,7 +215,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "victory-drones-home-picture",
+        "backgroundAssetId": "victory-drones-ideas-understanding-key-picture",
         "themeId": "victory-drones-ideas-understanding-theme"
       },
       "revision": "2",
@@ -275,7 +275,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "victory-drones-ideas-understanding-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "victory-drones-ideas-understanding-02-discovery", "revision": "2" },
         "routeDecision": "Choose the hand-side return or wall-side return before crossing the interaction court. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -287,7 +287,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "victory-drones-home-picture",
+        "backgroundAssetId": "victory-drones-ideas-understanding-key-picture",
         "themeId": "victory-drones-ideas-understanding-theme"
       },
       "revision": "2",
@@ -347,7 +347,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "victory-drones-ideas-understanding-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "victory-drones-ideas-understanding-03-discovery", "revision": "2" },
         "routeDecision": "Connect the two balance islands separately or encircle their central comparison space. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -359,7 +359,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "victory-drones-home-picture",
+        "backgroundAssetId": "victory-drones-ideas-understanding-key-picture",
         "themeId": "victory-drones-ideas-understanding-theme"
       },
       "revision": "2",
@@ -428,7 +428,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "victory-drones-ideas-understanding-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "victory-drones-ideas-understanding-04-discovery", "revision": "2" },
         "routeDecision": "Follow the broad arrow terrace, then choose the shorter vertical link or longer horizontal return. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -441,7 +441,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "victory-drones-home-picture",
+        "backgroundAssetId": "victory-drones-ideas-understanding-key-picture",
         "themeId": "victory-drones-ideas-understanding-theme"
       },
       "revision": "2",
@@ -510,7 +510,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "victory-drones-ideas-understanding-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "victory-drones-ideas-understanding-05-discovery", "revision": "2" },
         "routeDecision": "Join the near experiment bay before the distant record shelf or take the outer comparison route. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -523,7 +523,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "victory-drones-home-picture",
+        "backgroundAssetId": "victory-drones-ideas-understanding-key-picture",
         "themeId": "victory-drones-ideas-understanding-theme"
       },
       "revision": "2",
@@ -592,7 +592,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "victory-drones-ideas-understanding-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "victory-drones-ideas-understanding-06-discovery", "revision": "2" },
         "routeDecision": "Build a return through the central model court or connect the three explanation islands first. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -605,7 +605,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "victory-drones-home-picture",
+        "backgroundAssetId": "victory-drones-ideas-understanding-key-picture",
         "themeId": "victory-drones-ideas-understanding-theme"
       },
       "revision": "2",
@@ -620,9 +620,9 @@
       "format": "PackDesignV1",
       "id": "victory-drones-ideas-understanding-pack",
       "name": "Ideas into Understanding",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }

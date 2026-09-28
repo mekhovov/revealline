@@ -2,16 +2,16 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original fictional component museum with a propeller-free X frame, separate motors and a camera display.",
-      "bytes": 1062590,
+      "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
+      "bytes": 236903,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "fpv-learning-home-picture",
+      "id": "fpv-soldering-workshop-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-learning-home-v1.png",
+      "path": "editions/assets/discovery/fpv-soldering-workshop-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8",
+      "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939",
       "width": 960
     }
   ],
@@ -220,7 +220,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-soldering-workshop-key-picture",
         "themeId": "fpv-soldering-workshop-theme"
       },
       "revision": "2",
@@ -295,7 +295,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-soldering-workshop-key-picture",
         "themeId": "fpv-soldering-workshop-theme"
       },
       "revision": "2",
@@ -370,7 +370,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-soldering-workshop-key-picture",
         "themeId": "fpv-soldering-workshop-theme"
       },
       "revision": "2",
@@ -453,7 +453,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-soldering-workshop-key-picture",
         "themeId": "fpv-soldering-workshop-theme"
       },
       "revision": "2",
@@ -536,7 +536,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-soldering-workshop-key-picture",
         "themeId": "fpv-soldering-workshop-theme"
       },
       "revision": "2",
@@ -619,7 +619,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-soldering-workshop-key-picture",
         "themeId": "fpv-soldering-workshop-theme"
       },
       "revision": "2",

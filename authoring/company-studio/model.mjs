@@ -140,6 +140,9 @@ export function validateStudioData(path, input, catalog, files = new Map()) {
         descriptor: rewardCampaign,
         assets: resolveEditionAssets(catalog, { editionId: edition.id }),
         editionId: edition.id,
+        lessons: selection.campaigns.flatMap((campaign) =>
+          campaign.lessonPath ? (files.get(campaign.lessonPath) ?? []) : [],
+        ),
         editionProject: rewards.some((reward) => reward.scope.kind === 'edition')
           ? mergeEditionProjects(
               selection,

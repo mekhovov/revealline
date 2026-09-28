@@ -73,7 +73,7 @@ function payload(value) {
   const fields = {
     knowledge: [],
     image: ['asset'],
-    url: ['url'],
+    url: ['url', 'qr'],
     'public-code': ['code', 'issuer', 'termsUrl', 'expiresOn'],
     audio: ['asset', 'transcript'],
     video: ['asset', 'poster', 'captions', 'transcript'],
@@ -99,7 +99,17 @@ function payload(value) {
   else if (value.type === 'public-code') locales(value.locales, ['title', 'terms']);
   else locales(value.locales, ['title']);
   if (['image', 'audio', 'video'].includes(value.type)) asset(value.asset);
-  if (value.type === 'url') https(value.url);
+  if (value.type === 'url') {
+    https(value.url);
+    if (value.qr !== undefined) {
+      required(typeof value.qr === 'boolean', 'QR presentation must be a boolean.');
+      if (value.qr)
+        required(
+          new TextEncoder().encode(new URL(value.url).href).length <= 256,
+          'A QR reward URL must fit within 256 encoded bytes; use its direct resource address.',
+        );
+    }
+  }
   if (value.type === 'public-code') {
     required(
       text(value.code, 256) && text(value.issuer, 256),

@@ -2,16 +2,16 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original fictional textile gallery with suspended linen, separate embroidered samples and warm natural light.",
-      "bytes": 1106859,
+      "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
+      "bytes": 294985,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "ukraine-culture-home-picture",
+      "id": "ukraine-cities-symbols-time-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/ukraine-culture-home-v1.png",
+      "path": "editions/assets/discovery/ukraine-cities-symbols-time-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144",
+      "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4",
       "width": 960
     }
   ],
@@ -243,7 +243,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-cities-symbols-time-key-picture",
         "themeId": "ukraine-cities-symbols-time-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -318,7 +318,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 26.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-cities-symbols-time-key-picture",
         "themeId": "ukraine-cities-symbols-time-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -393,7 +393,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-cities-symbols-time-key-picture",
         "themeId": "ukraine-cities-symbols-time-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -469,7 +469,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-cities-symbols-time-key-picture",
         "themeId": "ukraine-cities-symbols-time-theme"
       },
       "relayLinks": [
@@ -548,7 +548,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-cities-symbols-time-key-picture",
         "themeId": "ukraine-cities-symbols-time-theme"
       },
       "relayLinks": [
@@ -628,7 +628,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-cities-symbols-time-key-picture",
         "themeId": "ukraine-cities-symbols-time-theme"
       },
       "relayLinks": [

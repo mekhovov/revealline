@@ -15,16 +15,16 @@
       "width": 960
     },
     {
-      "alt": "An original fictional component museum with a propeller-free X frame, separate motors and a camera display.",
-      "bytes": 1062590,
+      "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
+      "bytes": 279176,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "fpv-learning-home-picture",
+      "id": "fpv-meet-aircraft-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-learning-home-v1.png",
+      "path": "editions/assets/discovery/fpv-meet-aircraft-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8",
+      "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0",
       "width": 960
     }
   ],
@@ -251,7 +251,7 @@
       "name": "Motion Makers",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 15.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-meet-aircraft-key-picture",
         "themeId": "fpv-meet-aircraft-theme"
       },
       "revision": "1",
@@ -299,7 +299,7 @@
         "memorableMoment": "An original civilian ESC exhibit separating conceptual command and energy ribbons, without pin labels or wiring instructions.",
         "pacingBeat": "combine",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-meet-aircraft-03-discovery", "revision": "2" },
         "routeDecision": "Use either offset electronics return before crossing the central power aisle."
       },
       "format": "MissionDesignV1",
@@ -309,7 +309,7 @@
       "name": "The ESC",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 16.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-meet-aircraft-key-picture",
         "themeId": "fpv-meet-aircraft-theme"
       },
       "revision": "1",
@@ -367,7 +367,7 @@
       "name": "The Flight Controller",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 17.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-meet-aircraft-key-picture",
         "themeId": "fpv-meet-aircraft-theme"
       },
       "revision": "1",
@@ -415,7 +415,7 @@
         "memorableMoment": "Twin civilian FPV exhibit bays, one with a handheld controller and RX concept, another with a camera and goggles, with separate information paths.",
         "pacingBeat": "mastery",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-meet-aircraft-05-discovery", "revision": "2" },
         "routeDecision": "Secure the control bay or video bay first, using their crossing as a safe return."
       },
       "format": "MissionDesignV1",
@@ -425,7 +425,7 @@
       "name": "Two Different Links",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 18.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-meet-aircraft-key-picture",
         "themeId": "fpv-meet-aircraft-theme"
       },
       "revision": "1",
@@ -481,7 +481,7 @@
         "memorableMoment": "An original civilian aircraft component atlas with a disconnected battery, separately displayed props and distinct support, energy and information layers.",
         "pacingBeat": "resolve",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-meet-aircraft-06-discovery", "revision": "2" },
         "routeDecision": "Join the support hub first or link the energy and information islands before the final broad cut."
       },
       "format": "MissionDesignV1",
@@ -491,7 +491,7 @@
       "name": "The Whole Aircraft",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 19.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-meet-aircraft-key-picture",
         "themeId": "fpv-meet-aircraft-theme"
       },
       "revision": "1",
