@@ -14,6 +14,10 @@ import {
   selectRetainedOptionalPackageRelease,
 } from '../publishing/optional-package-promotion.mjs';
 import { editionHash } from '../publishing/edition-zip.mjs';
+import {
+  deliverOptionalPackageDraft,
+  sameOptionalDeliveryReceipt,
+} from '../publishing/optional-package-delivery.mjs';
 
 const [command, ...args] = process.argv.slice(2),
   options = {};
@@ -33,6 +37,7 @@ for (let index = 0; index < args.length; index += 2) {
       '--base-path',
       '--version',
       '--packages',
+      '--release-id',
     ].includes(args[index]) ||
     !args[index + 1] ||
     options[args[index]]
@@ -40,6 +45,13 @@ for (let index = 0; index < args.length; index += 2) {
     throw new Error('Invalid optional publication option.');
   options[args[index]] = args[index + 1];
 }
+const releaseId = Number(options['--release-id']);
+if (
+  command === 'upload-draft'
+    ? !/^[1-9]\d*$/.test(options['--release-id'] ?? '') || !Number.isSafeInteger(releaseId)
+    : options['--release-id'] !== undefined
+)
+  throw new Error('Only upload-draft requires an explicit positive --release-id.');
 const parse = (bytes) => JSON.parse(Buffer.from(bytes).toString('utf8'));
 const readJSON = async (file, limit = 1024 * 1024) => {
   const stat = await fs.lstat(file);
@@ -210,73 +222,63 @@ if (command === 'sync-selector') {
   );
   process.exit(0);
 }
-const commit = api(`commits/tags/${envelope.version}`);
-if (commit.sha !== envelope.sourceRevision || commit.commit?.tree?.sha !== envelope.sourceTree)
-  throw new Error('Optional artifacts differ from the immutable release tag.');
-let release = api(`releases/tags/${envelope.version}`);
-if (!release.draft || release.tag_name !== envelope.version)
-  throw new Error('Optional upload requires an existing matching draft release.');
 const temporary = await fs.mkdtemp(path.join(os.tmpdir(), 'optional-upload-'));
 try {
-  for (const name of [...frozen.keys()]
-    .filter((name) => name !== 'optional-packages.json')
-    .concat('optional-packages.json')) {
-    release = api(`releases/tags/${envelope.version}`);
-    if (!release.draft || release.tag_name !== envelope.version)
-      throw new Error('Optional release changed during upload.');
-    const bytes = frozen.get(name);
-    if (!release.assets.some((row) => row.name === name)) {
+  const receipt = await deliverOptionalPackageDraft({
+    repository,
+    releaseId,
+    envelope,
+    envelopeBytes,
+    reviewBytes,
+    files: frozen,
+    readRelease: (id) => api(`releases/${id}`),
+    readTagRelease: (version) => api(`releases/tags/${version}`),
+    readTagIdentity: (version) => {
+      const commit = api(`commits/tags/${version}`);
+      return { sourceRevision: commit.sha, sourceTree: commit.commit?.tree?.sha };
+    },
+    readAsset: (id, limit) =>
+      gh(
+        [
+          'api',
+          '-H',
+          'Accept: application/octet-stream',
+          `repos/${repository}/releases/assets/${id}`,
+        ],
+        { binary: true, limit },
+      ),
+    uploadAsset: async (url, name, bytes) => {
       const file = path.join(temporary, name);
       await fs.writeFile(file, bytes, { flag: 'wx' });
-      gh(['release', 'upload', envelope.version, file, '--repo', repository]);
-      release = api(`releases/tags/${envelope.version}`);
-    }
-    const rows = release.assets.filter((row) => row.name === name);
-    if (
-      rows.length !== 1 ||
-      rows[0].state !== 'uploaded' ||
-      rows[0].size !== bytes.length ||
-      !Number.isSafeInteger(rows[0].id) ||
-      rows[0].id <= 0
-    )
-      throw new Error('Optional release asset differs; overwrite is forbidden.');
-    const downloaded = gh(
-      [
-        'api',
-        '-H',
-        'Accept: application/octet-stream',
-        `repos/${repository}/releases/assets/${rows[0].id}`,
-      ],
-      { binary: true, limit: bytes.length },
-    );
-    if (editionHash(downloaded) !== editionHash(bytes))
-      throw new Error('Downloaded optional artifact differs.');
-  }
-  release = api(`releases/tags/${envelope.version}`);
-  const finalCommit = api(`commits/tags/${envelope.version}`);
-  if (
-    !release.draft ||
-    release.tag_name !== envelope.version ||
-    finalCommit.sha !== envelope.sourceRevision ||
-    finalCommit.commit?.tree?.sha !== envelope.sourceTree
-  )
-    throw new Error('Optional release identity changed during delivery.');
-  const receipt = {
-    format: 'revealline-optional-package-delivery.v1',
-    repository,
-    version: envelope.version,
-    sourceRevision: envelope.sourceRevision,
-    sourceTree: envelope.sourceTree,
-    envelopeSha256: editionHash(envelopeBytes),
-    reviewSha256: editionHash(reviewBytes),
-    status: 'draft-assets-downloaded-and-verified',
-  };
+      return parse(
+        gh([
+          'api',
+          '--method',
+          'POST',
+          '-H',
+          'Content-Type: application/octet-stream',
+          url,
+          '--input',
+          file,
+        ]),
+      );
+    },
+    record: (event) =>
+      fs.appendFile(
+        path.join(directory, 'optional-package-delivery-attempts.jsonl'),
+        JSON.stringify({ at: new Date().toISOString(), ...event }) + '\n',
+      ),
+  });
   const receiptPath = path.join(directory, 'optional-package-delivery.json'),
     receiptBytes = Buffer.from(JSON.stringify(receipt, null, 2) + '\n');
   try {
     await fs.writeFile(receiptPath, receiptBytes, { flag: 'wx' });
   } catch (error) {
-    if (error.code !== 'EEXIST' || !(await readJSON(receiptPath)).equals(receiptBytes)) throw error;
+    if (
+      error.code !== 'EEXIST' ||
+      !sameOptionalDeliveryReceipt(parse(await readJSON(receiptPath)), receipt)
+    )
+      throw error;
   }
   console.log(JSON.stringify(receipt));
 } finally {
