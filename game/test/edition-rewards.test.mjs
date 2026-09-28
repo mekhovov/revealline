@@ -1154,3 +1154,26 @@ test('a queued discovery save shows neutral pending feedback and never claims ta
   assert.equal(status.dataset.durable, 'true');
   assert.equal(result.querySelector('.completion-reward-session-status'), null);
 });
+
+test('custom provider replacements and mutable authored arrays are revalidated on host refresh', async (t) => {
+  const f = await fixture(t);
+  const replacement = copy(f.provider.rewards[0]);
+  replacement.id = 'replacement-discovery';
+  replacement.revision = 'custom-2';
+  replacement.payloads[0].locales.en.paragraphs = ['A replacement source explanation.'];
+  f.provider.rewards = [replacement];
+  f.accepted(1);
+  f.view.refresh();
+  const accepted = f.view.snapshot().state;
+  assert(accepted.receipts.some((receipt) => receipt.definition.id === replacement.id));
+  assert(!Object.isFrozen(replacement.payloads[0].locales.en.paragraphs));
+  replacement.payloads[0].type = 'unapproved';
+  f.accepted(2);
+  assert.throws(() => f.view.refresh(), /Unknown reward payload/);
+  assert.equal(f.view.snapshot().state, accepted);
+  assert.equal(
+    accepted.receipts.find((receipt) => receipt.definition.id === replacement.id).definition
+      .payloads[0].type,
+    'knowledge',
+  );
+});
