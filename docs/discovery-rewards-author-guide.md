@@ -205,9 +205,34 @@ single-campaign edition—have separate progress even if they share content.
 Discovery import rejects a different edition ID. Across origins, export/import
 is explicit and still requires the matching logical edition.
 
+Discovery imports also require compatible exact promises for overlapping reward IDs. If the
+destination already registered a different revision, import reports a conflict and leaves both
+collections unchanged; it never reports success after dropping the backup's earned picture.
+The check also runs inside the durable transaction, so a concurrent tab cannot silently change
+the result. Failed durable imports leave the existing session intact; keep the original backup
+and retry when saving is available.
+
+For a conflicting cross-version transfer, preserve both backups and open the backup's matching
+frozen release on a separate disposable profile/origin. Import its Discovery and Journey backups
+there, then follow the supported update path with the registered retained presentation. Do not
+clear an existing collection or edit a backup to force the merge. The `v1` format label alone is
+not a promise that every older executable understands later optional payload features; use a
+reader that supports the backup. Unsupported old readers must not substitute newer artwork or
+overwrite their unreadable stored collection.
+
 If saving is unavailable, the game identifies discoveries as available in the
 current tab and offers export. A session-only discovery is not proof that the
 underlying Journey win was saved; preserve both backups before leaving.
+
+A collection-capacity warning is different from unavailable browser storage. A valid import can
+be saved while newly earned local receipts would exceed the fixed collection-format limit. The
+reader preserves the committed collection and keeps those exact local receipts for retry in the
+current tab, without adding a partial subset to the collection. They are **not included in the
+Discovery export** until they fit. Preserve Journey and optional-learning backups, along with the
+original imported file, before leaving. These are separate accepted-evidence authorities; a
+Journey backup alone cannot reconstruct every learning reward. Use a compatible reader and
+the exact required evidence and presentations for recovery. Deleting browser files does not increase this format limit. Explicit Retry
+save rechecks the bounded collection; unchanged gameplay refreshes do not repeatedly retry it.
 
 Image viewers verify the earned asset ID and hash. When that exact artwork is
 missing, the reward and its text remain retained and a recovery message appears.
