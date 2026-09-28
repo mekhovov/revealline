@@ -4,6 +4,7 @@ import { validateCompanyLessons } from '../company-campaigns/learning.mjs';
 import { validateCompletionRewards, completionRewardAssetReferences } from '../rewards/model.mjs';
 import { createRewardMissionBindings } from '../rewards/bindings.mjs';
 import { COMPLETION_REWARD_PAYLOAD_TYPES } from '../rewards/capabilities.mjs';
+import { validateDiscoveryRewardBindings } from '../content-design/discovery-schema.mjs';
 
 /** Exact player campaign projection: invisible missions, archived maps and
  * unreferenced media are source material, not runtime dependencies. */
@@ -16,6 +17,7 @@ export function validateEditionCampaignProject(source, descriptor) {
       value.campaigns[0].revision === descriptor.revision,
     'Campaign source differs from its selected identity.',
   );
+  if (!descriptor.rewardPath) validateDiscoveryRewardBindings(value, [], descriptor.id);
   const missionIds = new Set(value.campaigns[0].missionIds);
   required(
     value.missions.length === missionIds.size &&
@@ -83,6 +85,7 @@ export function validateEditionRewardBundle(
     descriptor && compiled.campaigns.some((campaign) => campaign.id === descriptor.id),
     'Reward campaign is not selected.',
   );
+  validateDiscoveryRewardBindings(compiled.source, rewards, descriptor.id);
   const bindings = new Map(
     createRewardMissionBindings(compiled).map((row) => [row.missionId, row]),
   );
