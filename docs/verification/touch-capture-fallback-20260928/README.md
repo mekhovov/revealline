@@ -1,6 +1,7 @@
 # Shared touch capture fallback — 28 September 2026
 
-Base: `6fe52474b5b395a5c416bd388555d488db33f287` (current main at preparation).
+Historical reproduction base: `6fe52474b5b395a5c416bd388555d488db33f287`
+(the accepted main revision when this evidence was prepared).
 This is focused source/input-adapter evidence, not browser, physical phone,
 controller, complete phase, or public-release acceptance.
 
@@ -40,6 +41,10 @@ node --test game/test/touch-steering.test.mjs game/test/couch-shared-touch.test.
 The red run used the first three modules before changing runtime code. Original
 TAP output and its byte/hash inventory are retained in `red.tap`, `green.tap` and
 `evidence.json`. The added teardown test is only in the final green run.
+Node's original failure diagnostics contain whitespace-only lines in `red.tap`.
+The path-specific `.gitattributes` rule exempts that immutable raw evidence from
+whitespace diagnostics, so the repository diff check can still cover every
+changed path without rewriting the recorded output.
 
 Full suite, ordinary build, frozen-source qualification and actual public checks
 were **not run here**. The coordinator owns final version allocation and release
