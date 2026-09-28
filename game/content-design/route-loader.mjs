@@ -12,7 +12,9 @@ export async function loadAuthoredJourneyRoute(id, options = {}) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   if (SHIPPED_ROUTE_SNAPSHOT?.id === id) return loadRouteSnapshot(SHIPPED_ROUTE_SNAPSHOT, options);
   let factories;
-  if (id === 'whole-spatial-v34') {
+  if (id === 'whole-spatial-v35') {
+    factories = await import('./current-remix-pressure-candidates.mjs');
+  } else if (id === 'whole-spatial-v34') {
     factories = await import('./cultural-pressure-triptych-candidates.mjs');
   } else if (id === 'whole-spatial-v33') {
     factories = await import('./cultural-timed-bonus-pressure-candidates.mjs');
