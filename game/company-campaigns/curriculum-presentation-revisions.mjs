@@ -29,10 +29,10 @@ export const CURRICULUM_PRESENTATION_REVISIONS = freezeDesign({
     },
   },
   'ukraine-threads': {
-    pack: '4',
+    pack: '5',
     finale: '4',
     missionRewards: {
-      'ukraine-threads-01': '4',
+      'ukraine-threads-01': '5',
       'ukraine-threads-02': '4',
       'ukraine-threads-03': '4',
       'ukraine-threads-04': '4',
@@ -41,10 +41,10 @@ export const CURRICULUM_PRESENTATION_REVISIONS = freezeDesign({
     },
   },
   'fpv-meet-aircraft': {
-    pack: '5',
+    pack: '6',
     finale: '5',
     missionRewards: {
-      'fpv-meet-aircraft-01': '4',
+      'fpv-meet-aircraft-01': '5',
       'fpv-meet-aircraft-02': '5',
       'fpv-meet-aircraft-03': '5',
       'fpv-meet-aircraft-04': '5',

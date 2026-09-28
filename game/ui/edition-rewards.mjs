@@ -1,3 +1,5 @@
+import { rewardPresentationItems } from '../rewards/audio-groups.mjs';
+import { mountRewardAudioGroup } from './reward-audio-group.mjs';
 import { loadRewardImage } from './reward-image.mjs';
 import { mountRewardCosmetic } from './reward-cosmetic.mjs';
 import {
@@ -626,11 +628,27 @@ export async function mountEditionRewards({
     printable.id = 'completion-reward-printable';
     reading.append(printable, printableStatus);
     closeButton.textContent = tr('back');
-    for (const payload of definition.payloads) {
+    for (const item of rewardPresentationItems(definition)) {
+      const payload = item.kind === 'audio-group' ? item.group : item.payload;
       const text = localized(payload),
         section = node('section');
       section.append(node('h3', text.title));
-      if (payload.type === 'knowledge') {
+      if (item.kind === 'audio-group') {
+        explorations.add(
+          mountRewardAudioGroup({
+            container: section,
+            group: item.group,
+            payloads: item.payloads,
+            provider,
+            locale: getLocale(),
+            audioMaster,
+            musicDucker,
+            document: doc,
+            window: win,
+            signal: mediaRequest.signal,
+          }),
+        );
+      } else if (payload.type === 'knowledge') {
         explorations.add(
           mountRewardKnowledge({
             container: section,
