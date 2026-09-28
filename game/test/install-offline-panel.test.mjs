@@ -177,6 +177,7 @@ test('cold menu reports saved metadata without treating it as verified readiness
               edition: 'https://game.example/revealline/releases/v2.0.0/site/',
               group: 'gameplay',
               complete: true,
+              hashes: ['a'.repeat(64)],
             }),
           ),
       }),

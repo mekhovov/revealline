@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createOfflineDownloadAccess } from '../offline-download-access.mjs';
 import { memoryCaches } from './helpers/official-caches.mjs';
+import { ensureVersusEntryPackage } from '../couch/versus-package-readiness.mjs';
 
 const availability = {
   available: true,
@@ -46,6 +47,57 @@ test('all modes play without a prepared package, including passive previews and 
   await access.ensureClassic('unprepared');
   await access.ensureURL('https://game.test/site/authoring/');
   await access.ensureDestination('https://game.test/site/game/couch/');
+});
+
+test('no gameplay entry point requests a package even when a legacy host supplies a prompt callback', async () => {
+  const caches = memoryCaches();
+  await (
+    await caches.open('core')
+  ).put(`${availability.scope}offline-content.json`, Response.json(catalogue));
+  const requests = [];
+  const access = createOfflineDownloadAccess({
+    availability,
+    caches,
+    store: { inspect: async () => ({ ready: false }) },
+    fetch: async () => {
+      requests.push('catalogue network fetch');
+      return Response.json(catalogue);
+    },
+    requestPackage: async () => requests.push('download popup'),
+  });
+  for (const retain of [false, true]) {
+    const options = { prompt: true, retain };
+    await access.ensure('chapter', options);
+    await access.ensureClassic('unprepared', options);
+    for (const mode of ['solo', 'versus', 'team'])
+      await access.ensureMission({ routeId: 'current', missionId: mode, mode }, options);
+    await access.ensureURL('https://game.test/site/authoring/studio/', options);
+    for (const path of ['game/', 'game/couch/', 'game/couch/relay-rescue.html'])
+      await access.ensureDestination(`https://game.test/site/${path}`, options);
+  }
+  // Assert outside the best-effort helper: an assertion thrown by a callback
+  // could otherwise be swallowed as a storage failure.
+  assert.deepEqual(requests, []);
+});
+
+test('Versus current, shipped, imported and Creator entries need no offline package', async () => {
+  const entry = { level: { id: 'versus' } },
+    creatorOwner = {},
+    pack = { id: 'unprepared' };
+  const downloads = await fixture();
+  for (const kind of ['current', 'shipped', 'official-import', 'user-import', 'creator']) {
+    await ensureVersusEntryPackage(entry, {
+      options: { retain: true, signal: new AbortController().signal },
+      packageConsent: true,
+      creatorOwnerFor: () => (kind === 'creator' ? creatorOwner : null),
+      candidateJourney: { owns: () => kind === 'current' },
+      authoredRouteId: 'current',
+      shippedMaps: kind === 'shipped' ? [entry] : [],
+      downloads,
+      reader: { presentationOwner: () => ({ pack }) },
+      isOfficialPack: () => kind === 'official-import',
+    });
+  }
 });
 
 test('prepared chapters retain exact dependencies without new transfers or dialogs', async () => {
