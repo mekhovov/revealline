@@ -53,8 +53,8 @@ export const CURRICULUM_PRESENTATION_REVISIONS = freezeDesign({
     },
   },
   'social-drone-community-connections': {
-    pack: '5',
-    finale: '5',
+    pack: '6',
+    finale: '6',
     missionRewards: {
       'social-drone-community-connections-01': '4',
       'social-drone-community-connections-02': '4',
