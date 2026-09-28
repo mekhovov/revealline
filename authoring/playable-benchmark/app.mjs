@@ -10,6 +10,7 @@ import { boardPaintSizeForRun } from '../../game/ui/render.mjs';
 import { attachBenchmarkInput } from './controls.mjs';
 import { createPreviewLifecycle } from '../game-feel-lab/lifecycle.mjs';
 import { createBenchmarkPerformance, candidateMemory } from './performance.mjs';
+import { outcomeMessage } from './outcome.mjs';
 
 const $ = (id) => document.getElementById(id);
 const canvases = [$('reference'), $('comparison')];
@@ -96,7 +97,7 @@ function controls() {
   $('mission').disabled = !catalog;
   $('load').disabled = !catalog || pending;
   $('comparison-body').disabled = !current || selection.pending;
-  for (const id of ['comparison-reduced', 'capture-pulse', 'event-flashes'])
+  for (const id of ['comparison-reduced', 'capture-pulse', 'event-flashes', 'contact-style'])
     $(id).disabled = !current || pending;
 }
 function comparisonDetails() {
@@ -107,6 +108,7 @@ function comparisonDetails() {
   $('comparison-reduced').checked = comparison.reduced;
   $('capture-pulse').checked = comparison.feedback.captureAccent;
   $('event-flashes').checked = comparison.feedback.eventAccents;
+  $('contact-style').value = comparison.feedback.contactStyle;
   const body = {
     approved: 'Approved FPV',
     'v3-auto': 'V3 Scout · automatic native size',
@@ -120,7 +122,7 @@ function comparisonDetails() {
     'v5-detailed': 'V5 Scout optical body · native 64 px',
   }[comparison.body];
   $('comparison-label').textContent =
-    `${body} · ${comparison.reduced ? 'reduced' : 'standard'} effects`;
+    `${body} · ${comparison.reduced ? 'reduced' : 'standard'} effects${comparison.feedback.contactStyle === 'fine-outline' ? ' · fine contact study' : ''}`;
   $('comparison-identity').textContent = comparison.provenance
     ? JSON.stringify(comparison.provenance, null, 2)
     : 'Approved FPV actor lease. No source-candidate images are loaded in this view.';
@@ -135,7 +137,7 @@ function refresh() {
   const state = ['won', 'lost'].includes(summary.status)
     ? summary.status === 'won'
       ? 'Won'
-      : `Lost · ${summary.failureCause}`
+      : 'Lost'
     : session.playing
       ? summary.status === 'respawning'
         ? 'Recovering'
@@ -206,19 +208,17 @@ const selection = createBenchmarkSelection({
       signal,
       onComparisonStatus: status,
       onStep(events, run) {
+        const message = outcomeMessage(events, run);
+        if (message !== null && $('outcome').textContent !== message)
+          $('outcome').textContent = message;
         if (events.some((event) => ['player.failed', 'player.respawned'].includes(event.type)))
           input.clear();
         if (events.some((event) => event.type === 'run.completed')) {
           input.clear();
-          status('complete', run.status === 'won' ? 'Mission complete.' : 'Attempt ended.');
-          $('outcome').textContent =
-            run.status === 'won'
-              ? 'Mission won. Choose Retry for the same setup.'
-              : `Attempt lost: ${run.failureCause}. Choose Retry for the same setup.`;
+          // Outcome owns the terminal live announcement; retire loading copy
+          // without announcing the same result through a second live region.
+          status('complete', '');
           resultFocus.begin(selection.current);
-        } else if (events.some((event) => event.type === 'player.failed')) {
-          $('outcome').textContent =
-            `Life lost: ${run.failureCause}. ${run.lives} lives remain; recovery continues in this attempt.`;
         }
       },
     }),
@@ -425,13 +425,15 @@ $('comparison-reduced').onchange = () => {
   resetMeasurements();
   paint();
 };
-for (const id of ['capture-pulse', 'event-flashes'])
+for (const id of ['capture-pulse', 'event-flashes', 'contact-style'])
   $(id).onchange = () => {
-    hold('Comparison accents changed. Resume when ready.');
+    hold('Comparison feedback changed. Resume when ready.');
     selection.current?.comparison.setFeedback({
       captureAccent: $('capture-pulse').checked,
       eventAccents: $('event-flashes').checked,
+      contactStyle: $('contact-style').value,
     });
+    comparisonDetails();
     resetMeasurements();
     paint();
   };

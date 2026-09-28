@@ -8,6 +8,7 @@ import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { createBenchmarkSelection } from '../../authoring/playable-benchmark/session.mjs';
 import { createSceneComparison } from '../../authoring/playable-benchmark/comparison.mjs';
+import { outcomeMessage } from '../../authoring/playable-benchmark/outcome.mjs';
 import {
   createReadyCue,
   createResultFocusCue,
@@ -150,8 +151,9 @@ async function harness(t) {
       comparison,
       painters: [0, 1].map(() => ({
         draws: 0,
-        draw() {
+        draw(_context, _run, _dt, options) {
           this.draws++;
+          this.lastOptions = options;
         },
       })),
       resetPresentation() {},
@@ -180,6 +182,7 @@ async function harness(t) {
     createPreviewLifecycle,
     createBenchmarkPerformance,
     candidateMemory,
+    outcomeMessage,
   };
   for (const item of imports)
     for (const specifier of item.specifiers)
@@ -480,4 +483,88 @@ test('Retry cue and background return begin new measurement segments without sam
   h.frame(2032);
   assert.equal(h.metrics().timing.totalSamples, 2);
   assert.equal(h.metrics().timing.frameInterval.worstMs, 16);
+});
+
+test('contact study pauses and clears input, resets measurements and only changes the second painter', async (t) => {
+  const h = await harness(t);
+  await h.accept();
+  const scene = h.scenes[0];
+  h.$('measure-performance').checked = true;
+  h.$('measure-performance').emit('change');
+  h.$('start').click();
+  h.frame(1000);
+  h.frame(1016);
+  assert.equal(h.metrics().timing.totalSamples, 1);
+  const advances = scene.session.advances;
+  const clears = h.input.clears;
+  h.setup.open = true;
+  h.$('contact-style').focus();
+  h.$('contact-style').value = 'fine-outline';
+  h.$('contact-style').emit('change');
+  assert.equal(scene.session.playing, false);
+  assert.equal(scene.session.advances, advances);
+  assert.ok(h.input.clears > clears);
+  assert.equal(h.document.activeElement, h.$('contact-style'));
+  assert.equal(h.metrics().timing.totalSamples, 0);
+  assert.equal(h.metrics().accents.contactStyle, 'fine-outline');
+  assert.equal(scene.painters[0].lastOptions.feedbackComparison, undefined);
+  assert.equal(scene.painters[1].lastOptions.feedbackComparison.contactStyle, 'fine-outline');
+  assert.match(h.$('comparison-label').textContent, /fine contact study/);
+  h.$('retry').emit('pointerdown', { button: 0, pointerId: 3, isPrimary: true });
+  h.$('retry').emit('pointerup', { pointerId: 3 });
+  h.$('retry').emit('click', { detail: 1 });
+  assert.equal(
+    scene.comparison.feedback.contactStyle,
+    'fine-outline',
+    'Retry retains accepted study',
+  );
+  h.$('pause').click();
+  h.$('contact-style').value = 'hide-contact';
+  h.$('contact-style').emit('change');
+  assert.equal(h.$('contact-style').value, 'standard');
+  assert.equal(scene.painters[1].lastOptions.feedbackComparison.contactStyle, 'standard');
+});
+
+test('actual event handler replaces stale loss feedback without stealing focus or repeating status', async (t) => {
+  const h = await harness(t);
+  await h.accept();
+  h.setup.open = true;
+  h.$('mission').focus();
+  const run = h.scenes[0].session.run;
+  const onStep = h.requests[0].options.onStep;
+  let text = h.$('outcome').textContent,
+    writes = 0;
+  Object.defineProperty(h.$('outcome'), 'textContent', {
+    configurable: true,
+    get: () => text,
+    set: (value) => {
+      text = value;
+      writes++;
+    },
+  });
+  Object.assign(run, { status: 'respawning', failureCause: 'self-contact', lives: 2 });
+  onStep([{ type: 'player.failed', cause: 'self-contact', lives: 2 }], run);
+  assert.match(text, /unfinished line crossed itself/i);
+  assert.doesNotMatch(text, /self-contact/);
+  assert.equal(writes, 1);
+  onStep([], run);
+  onStep([{ type: 'cut.started' }], run);
+  assert.equal(writes, 1);
+  run.status = 'running';
+  onStep([{ type: 'player.respawned' }], run);
+  assert.doesNotMatch(text, /crossed itself|recovery continues/i);
+  assert.equal(writes, 2);
+  onStep([{ type: 'cells.claimed', indices: [1, 2], coverage: 0.21 }], run);
+  assert.equal(writes, 3);
+  const beforeWin = text;
+  run.status = 'won';
+  onStep([{ type: 'cells.claimed', coverage: 0.31 }, { type: 'run.completed' }], run);
+  assert.notEqual(text, beforeWin);
+  assert.match(text, /won|complete/i);
+  assert.doesNotMatch(text, /crossed itself|self-contact/i);
+  assert.equal(writes, 4);
+  assert.equal(h.$('loading').textContent, '', 'Terminal narration uses only the outcome region');
+  assert.equal(h.document.activeElement, h.$('mission'), 'Status never takes setup focus');
+  onStep([], run);
+  assert.equal(writes, 4);
 });

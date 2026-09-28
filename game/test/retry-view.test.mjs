@@ -1,6 +1,67 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { retryExplanation } from '../ui/retry-view.mjs';
+import { failureExplanation, retryExplanation } from '../ui/retry-view.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
+
+test('event advice matches existing Retry reason and tip without its consequence note', () => {
+  for (const cause of [
+    'self-contact',
+    'enemy-trail',
+    'enemy-player',
+    'boss-lane',
+    'cut-timeout',
+    'cable-limit',
+    'lethal-terrain',
+    'mission-timeout',
+    'unrecognized',
+  ]) {
+    const { footnote, ...expected } = retryExplanation({ status: 'lost', failureCause: cause });
+    assert.deepEqual(failureExplanation(cause), expected);
+    assert.equal(typeof footnote, 'string');
+    assert.deepEqual(Object.keys(failureExplanation(cause)), ['cause', 'reason', 'tip']);
+  }
+  assert.deepEqual(failureExplanation('self-contact'), {
+    cause: 'self-contact',
+    reason: 'Your unfinished line crossed itself.',
+    tip: 'Rejoin safe ground without crossing the line you are drawing.',
+  });
+});
+
+test('event advice does not coerce unknown causes or share mutable output', () => {
+  const untrusted = {
+    toString() {
+      throw new Error('Cause must not be coerced');
+    },
+  };
+  const generic = failureExplanation(undefined);
+  for (const cause of [untrusted, null, 42, 'constructor', '<img src=x onerror=x>'])
+    assert.deepEqual(failureExplanation(cause), generic);
+  const edited = failureExplanation('enemy-player');
+  edited.reason = 'caller edit';
+  assert.notEqual(failureExplanation('enemy-player').reason, edited.reason);
+});
+
+test('event advice resolves the current locale on each call', async () => {
+  const previous = getLocale();
+  try {
+    await setLocale('en', { persist: false });
+    const english = failureExplanation('enemy-trail');
+    await setLocale('uk', { persist: false });
+    const ukrainian = failureExplanation('enemy-trail');
+    assert.equal(ukrainian.cause, english.cause);
+    assert.notEqual(ukrainian.reason, english.reason);
+    assert.notEqual(ukrainian.tip, english.tip);
+    assert.match(ukrainian.reason, /[А-Яа-яІіЇїЄє]/);
+    const { footnote, ...retryAdvice } = retryExplanation({
+      status: 'lost',
+      failureCause: 'enemy-trail',
+    });
+    assert.deepEqual(ukrainian, retryAdvice);
+    assert.equal(typeof footnote, 'string');
+  } finally {
+    await setLocale(previous, { persist: false });
+  }
+});
 
 test('a retained failure cause never explains a running, recovering or won attempt', () => {
   for (const status of ['running', 'respawning', 'won', 'ready', undefined, null, 0]) {

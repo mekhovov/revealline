@@ -58,19 +58,21 @@ function practiceOption(options) {
   return descriptor.value;
 }
 
-/** Display-only advice; an existing cause may survive recovery and a later win. */
-export function retryExplanation(run, options = {}) {
-  const practice = practiceOption(options);
-  if (ownValue(run, 'status') !== 'lost') return null;
-  const failureCause = ownValue(run, 'failureCause');
+/** Fixed display advice for an event-time cause, without reading simulation state. */
+export function failureExplanation(failureCause) {
   const messages = explanations();
   const cause =
     typeof failureCause === 'string' && Object.hasOwn(messages, failureCause) ? failureCause : null;
   const [reason, tip] = cause ? messages[cause] : fallback();
+  return { cause, reason, tip };
+}
+
+/** Display-only advice; an existing cause may survive recovery and a later win. */
+export function retryExplanation(run, options = {}) {
+  const practice = practiceOption(options);
+  if (ownValue(run, 'status') !== 'lost') return null;
   return {
-    cause,
-    reason,
-    tip,
+    ...failureExplanation(ownValue(run, 'failureCause')),
     footnote: practice
       ? t('interface:retryStartsThisPracticeAgainThisRevealResetsPracticeGrants')
       : t('interface:retryStartsThisMissionAgainThisRevealResetsCollectedPictures'),
