@@ -1,6 +1,8 @@
 import { required, dataIdentity } from '../../game/data-json.mjs';
 import { createRewardMissionBindings } from '../../game/rewards/bindings.mjs';
 import { projectRewardProgress, validateCompletionReward } from '../../game/rewards/model.mjs';
+import { completionLearningReference } from '../../game/rewards/learning.mjs';
+import { validateCompanyLessons } from '../../game/company-campaigns/learning.mjs';
 import {
   validateCampaignLocalization,
   campaignLocalizationSha256,
@@ -24,7 +26,17 @@ export async function rebindStudioRewardLocalization({ localization, source, des
 
 /** Creates a draft only after an author explicitly chooses its completion rule.
  * Preview evidence never reaches a profile, reward receipt or persistence API. */
-export function createStudioReward({ campaign, source, rule, missionId, missionIds, id, locales }) {
+export function createStudioReward({
+  campaign,
+  source,
+  rule,
+  missionId,
+  missionIds,
+  id,
+  locales,
+  lessons = [],
+  learningIds = [],
+}) {
   required(
     ['mission-win', 'all-missions', 'selected-missions'].includes(rule),
     'Choose a completion rule explicitly.',
@@ -47,6 +59,22 @@ export function createStudioReward({ campaign, source, rule, missionId, missionI
           rule === 'mission-win' ? entry.levelId === missionId : missionIds.includes(entry.levelId),
         );
   required(selected.length > 0, 'Choose a mission in this campaign.');
+  const selectedLessons = validateCompanyLessons(lessons).filter(
+    (lesson) => lesson.campaignId === campaign.id,
+  );
+  required(
+    Array.isArray(learningIds) &&
+      new Set(learningIds).size === learningIds.length &&
+      learningIds.every((id) => selectedLessons.some((lesson) => lesson.id === id)),
+    'Choose distinct learning assignments in this campaign.',
+  );
+  const learning = learningIds.map((id) =>
+    completionLearningReference(selectedLessons.find((lesson) => lesson.id === id)),
+  );
+  required(
+    learning.every((lesson) => selected.some((entry) => entry.levelId === lesson.missionId)),
+    'Each learning requirement also needs its mission selected explicitly.',
+  );
   return validateCompletionReward({
     format: 'revealline-completion-reward.v1',
     id,
@@ -68,7 +96,7 @@ export function createStudioReward({ campaign, source, rule, missionId, missionI
     ),
     requirements: {
       missions: selected.map((entry) => ({ missionId: entry.levelId, bindings: entry.bindings })),
-      learning: [],
+      learning,
       mastery: [],
     },
     payloads: [
@@ -112,7 +140,13 @@ export function previewStudioReward(reward, { edition, state }) {
         },
       ]),
     ),
-    learning: [],
+    learning:
+      state === 'eligible'
+        ? definition.requirements.learning.map((requirement, index) => ({
+            ...requirement,
+            attemptId: `studio-learning-${index}`,
+          }))
+        : [],
     mastery: [],
   });
 }

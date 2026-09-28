@@ -2,16 +2,16 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original fictional component museum with a propeller-free X frame, separate motors and a camera display.",
-      "bytes": 1062590,
+      "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
+      "bytes": 270366,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "fpv-learning-home-picture",
+      "id": "fpv-drones-ukraine-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-learning-home-v1.png",
+      "path": "editions/assets/discovery/fpv-drones-ukraine-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8",
+      "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931",
       "width": 960
     }
   ],
@@ -217,7 +217,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-drones-ukraine-key-picture",
         "themeId": "fpv-drones-ukraine-theme"
       },
       "relayLinks": [],
@@ -284,7 +284,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-drones-ukraine-key-picture",
         "themeId": "fpv-drones-ukraine-theme"
       },
       "relayLinks": [],
@@ -351,7 +351,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-drones-ukraine-key-picture",
         "themeId": "fpv-drones-ukraine-theme"
       },
       "relayLinks": [],
@@ -427,7 +427,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-drones-ukraine-key-picture",
         "themeId": "fpv-drones-ukraine-theme"
       },
       "relayLinks": [],
@@ -503,7 +503,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-drones-ukraine-key-picture",
         "themeId": "fpv-drones-ukraine-theme"
       },
       "relayLinks": [],
@@ -580,7 +580,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-drones-ukraine-key-picture",
         "themeId": "fpv-drones-ukraine-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
