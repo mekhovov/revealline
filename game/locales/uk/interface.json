@@ -5284,5 +5284,6 @@
   "controller.confirmTrace.title": "Трасування контролера · {{version}}",
   "controller.confirmTrace.waiting": "Очікуємо натискання «Підтвердити»…",
   "team.previewPictureButton": "Переглянути «{{mission}}»",
-  "team.picturePreviewTitle": "{{mission}} · Перегляд зображення"
+  "team.picturePreviewTitle": "{{mission}} · Перегляд зображення",
+  "downloads.ownershipUnreadable": "Не вдалося прочитати дані про належність завантажень. Нічого не видалено; наявні файли гри та збереження залишено."
 }

@@ -5174,5 +5174,6 @@
   "controller.confirmTrace.title": "Controller trace · {{version}}",
   "controller.confirmTrace.waiting": "Waiting for Confirm input…",
   "team.previewPictureButton": "Preview {{mission}}",
-  "team.picturePreviewTitle": "{{mission}} · Picture preview"
+  "team.picturePreviewTitle": "{{mission}} · Picture preview",
+  "downloads.ownershipUnreadable": "Download ownership could not be read. Nothing was removed; existing game files and saves are kept."
 }
