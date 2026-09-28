@@ -42,12 +42,20 @@ checking the release tag's commit/tree:
 
 ```sh
 node scripts/publish-optional-packages.mjs verify --bundle BUNDLE --review REVIEW
-node scripts/publish-optional-packages.mjs upload-draft --bundle BUNDLE --review REVIEW --repository mekhovov/revealline
+node scripts/publish-optional-packages.mjs upload-draft --bundle BUNDLE --review REVIEW --repository mekhovov/revealline --release-id REVIEWED_DRAFT_ID
 node scripts/publish-optional-packages.mjs sync-selector --bundle BUNDLE --review REVIEW --repository mekhovov/revealline --selector publishing/pages-controller/optional-packages.json --base-path /revealline/
 ```
 
 No command allocates a version, creates a tag, publishes a draft or rebuilds a
-qualified artifact. Interrupted draft uploads resume without replacing existing bytes, and a successful delivery rereads each artifact before writing its receipt. The sole Pages publisher reads the separately pinned optional
+qualified artifact. `upload-draft` requires the explicitly reviewed numeric draft
+ID and uses that ID's upload endpoint, never a tag-resolved upload. It rechecks
+the draft, tag, source and exact asset inventory before and after each POST.
+The append-only `optional-package-delivery-attempts.jsonl` records each started
+operation and verified or unresolved outcome. An ambiguous interruption requires
+fresh draft/asset inspection and explicit recovery review before another POST;
+there is no automatic retry. A deliberately resumed command verifies matching
+originals without replacing them and retains the first delivery receipt unchanged.
+The sole Pages publisher reads the separately pinned optional
 selector and copies the exact reviewed bytes into `practice/<id>/releases/<version>/site/`.
 A stable `practice/<id>/app/` launcher and explicit manifest ID keep installations
 stable across updates. Its local pointers use package identity plus installation
