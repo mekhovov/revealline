@@ -15,6 +15,11 @@ import {
 } from '../publishing/edition-candidate.mjs';
 import { validateEditionAdmission } from '../publishing/edition-admission.mjs';
 import { editionHash } from '../publishing/edition-zip.mjs';
+import {
+  createEditionCapacityReport,
+  editionCapacityPacket,
+  EDITION_CAPACITY_REPORT,
+} from '../publishing/edition-capacity.mjs';
 
 import {
   sourceGit as git,
@@ -158,6 +163,7 @@ export async function bundleEditions({ root = process.cwd(), editionIds, out, ba
       ],
     }),
   );
+  files.set(EDITION_CAPACITY_REPORT, editionJSON(createEditionCapacityReport(files)));
   files.set(
     'checksums.json',
     editionJSON({
@@ -167,6 +173,7 @@ export async function bundleEditions({ root = process.cwd(), editionIds, out, ba
         .sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0)),
     }),
   );
+  const capacityPacket = editionCapacityPacket(files);
   if (JSON.stringify(frozenSource(root)) !== JSON.stringify(binding))
     throw new Error('Source changed while building the candidate.');
   await fs.mkdir(path.dirname(output), { recursive: true });
@@ -190,6 +197,11 @@ export async function bundleEditions({ root = process.cwd(), editionIds, out, ba
     zipMembersVerified: true,
     reproducibleBuilds: 2,
     verifiedPresentationReceipts: presentationReceipts.length,
+    capacityMetadataFiles: capacityPacket.size,
+    capacityMetadataBytes: [...capacityPacket.values()].reduce(
+      (total, bytes) => total + bytes.length,
+      0,
+    ),
     publicEligible: false,
   };
 }

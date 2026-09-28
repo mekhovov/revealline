@@ -18,6 +18,8 @@ import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { createExplorationExample } from '../studio/exploration-example.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
+import { LEARNING_PROFILE_IDS } from '../rewards/learning-profiles.mjs';
 
 const copy = (value) => structuredClone(value);
 const locales = (value) => ({ en: copy(value), uk: copy(value) });
@@ -37,6 +39,7 @@ async function fixture(
     reducedMotion = false,
     durable = true,
     exploration = false,
+    profiles = false,
     audio = false,
     playlist = false,
     learning = false,
@@ -140,6 +143,10 @@ async function fixture(
     ],
   });
   const rewards = bindings.map(missionReward);
+  if (profiles)
+    rewards[0].payloads[0].profiles = Object.fromEntries(
+      LEARNING_PROFILE_IDS.map((id) => [id, locales({ title: id, paragraphs: [`For ${id}.`] })]),
+    );
   if (teaserImage) rewards[0].teaserImage = teaserImage;
   if (exploration) rewards[0].payloads.push(createExplorationExample());
   if (audio || playlist) rewards[0].payloads.push(audioPayload);
@@ -397,6 +404,73 @@ async function fixture(
     },
   };
 }
+
+test('changing language retains earned reader focus without playing media or changing progress', async (t) => {
+  const initialLocale = getLocale();
+  t.after(() => setLocale(initialLocale, { persist: false }));
+  const f = await fixture(t, { exploration: true, audio: true, profiles: true });
+  f.accepted(1);
+  f.view.refresh();
+  await f.settle();
+  f.collection.showModal();
+  f.cards[0].querySelector('button').click();
+  const dialog = f.doc.getElementById('completion-reward-dialog');
+  const before = copy(f.view.snapshot().state);
+  const changeLanguage = () => setLocale(getLocale() === 'en' ? 'uk' : 'en', { persist: false });
+  const profile = dialog.querySelector('[data-learning-profile]');
+  profile.value = 'hobbyists';
+  profile.emit('change');
+  for (const selector of [
+    '#completion-reward-printable',
+    '[data-learning-profile]',
+    '[data-card-id="camera"]',
+    '[data-prediction-id="missing-role"][data-choice-id="observation"]',
+    '[data-reward-media-action="play"]',
+    'summary',
+  ]) {
+    const previous = dialog.querySelector(selector);
+    assert.ok(previous, selector);
+    previous.focus();
+    changeLanguage();
+    const current = dialog.querySelector(selector);
+    assert.notEqual(current, previous);
+    assert.equal(f.doc.activeElement, current, selector);
+    assert.equal(current.isConnected, true);
+  }
+  const resource = dialog
+    .querySelectorAll('a')
+    .find((a) => a.href === 'https://example.org/earned-resource');
+  resource.focus();
+  changeLanguage();
+  assert.equal(f.doc.activeElement.href, resource.href);
+  assert.notEqual(f.doc.activeElement, resource);
+  const hotspot = f.doc.createElement('button');
+  hotspot.setAttribute('data-diagram-card', 'camera');
+  dialog.querySelector('[data-card-id="camera"]').closest('[data-reward-item]').append(hotspot);
+  hotspot.focus();
+  changeLanguage();
+  assert.equal(f.doc.activeElement, dialog.querySelector('[data-card-id="camera"]'));
+  const temporary = f.doc.createElement('button');
+  dialog.querySelector('[data-game-reading]').append(temporary);
+  temporary.focus();
+  changeLanguage();
+  assert.equal(f.doc.activeElement, dialog.querySelector('[data-game-reading]'));
+  const back = dialog.children.at(-1);
+  back.focus();
+  changeLanguage();
+  assert.equal(f.doc.activeElement, back);
+  await f.settle();
+  assert.equal(f.audioElements.length, 0);
+  assert.equal(f.audioLeases, 0);
+  assert.equal(dialog.querySelector('[data-learning-profile]').value, 'hobbyists');
+  assert.deepEqual(f.externalClicks, []);
+  assert.deepEqual(f.view.snapshot().state, before);
+  dialog.close();
+  const external = f.doc.getElementById('next-button');
+  external.focus();
+  changeLanguage();
+  assert.equal(f.doc.activeElement, external);
+});
 
 test('learning-only evidence changes refresh rewards without changing arcade progress or persisting an unsaved proof', async (t) => {
   let evidence = { revision: 0, learning: [], durableLearning: [] };
