@@ -1,7 +1,7 @@
 {
   "format": "revealline-audio-style-menu-continuation.v1",
-  "reviewedAt": "2026-09-28T15:37:03.620074Z",
-  "status": "Bounded existing-recipe audio UI and taxonomy continuation. Exact-source CI, frozen/public, listening and physical-device acceptance remain pending.",
+  "reviewedAt": "2026-09-28T16:05:47.845145Z",
+  "status": "Rebased bounded existing-recipe Audio UI and taxonomy continuation on accepted v0.142.1 source. Exact-source CI, frozen/public, listening and physical-device acceptance remain pending.",
   "scope": [
     "audio.focus.field-kit",
     "audio.confirm.field-kit",
@@ -14,26 +14,26 @@
   ],
   "priorReviews": {
     "audio": {
-      "path": "docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json",
-      "bytes": 15425,
-      "sha256": "afcfcca1612109e117595c424e03ac002271165ccb1a4082697011e16c4c5a75"
+      "path": "docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json",
+      "bytes": 12057,
+      "sha256": "0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608"
     }
   },
   "fingerprints": {
     "audio": {
       "group": "audio",
       "orderedInputs": 28,
-      "bytes": 1069103,
-      "priorSHA256": "d10dcf448002347b200f9886d0a5f3a23789a7f4fb928bccb4884224359cd575",
-      "currentSHA256": "001974ea95a5b3f79046fb232eb1b267cfe3c7579e7eee638f2053a69126d700",
+      "bytes": 1071487,
+      "priorSHA256": "124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34",
+      "currentSHA256": "9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344",
       "algorithm": "SHA256 concatenation of the ordered original source bytes declared by the producer",
       "paths": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs",
       "inputs": [
         {
           "path": "game/app.mjs",
-          "gitBlob": "c56e631e2fa7eccc4f7ebd602d184ee222f9fbf8",
-          "bytes": 459718,
-          "sha256": "44c9dd09480237f093845932642829f439907350bc151c6fd880260f8e132828"
+          "gitBlob": "ae0afd4e83a7e55568dbd752f4ad9b5179a9f497",
+          "bytes": 460738,
+          "sha256": "c99a2f2e81553d03fe4f73399ec1ae0df94e43c10821b291ad6590dbed839259"
         },
         {
           "path": "game/couch/couch-music-host.mjs",
@@ -157,9 +157,9 @@
         },
         {
           "path": "game/official-downloads.mjs",
-          "gitBlob": "ffa10310a79553b94501795c018c27bac12c64ec",
-          "bytes": 16393,
-          "sha256": "d4948adf9031a33bbdcfd7f51ab4ecb1c0a424ea010c15c79d47ebb0a79649a9"
+          "gitBlob": "d96f55d136ddd7246f58e07429b52f45f17f7380",
+          "bytes": 17757,
+          "sha256": "fae1a94813c7e2173280f7b0100298c8de267d64b31600dde09e6d347a638d43"
         },
         {
           "path": "game/soundtrack-download-volumes.mjs",
@@ -214,6 +214,6 @@
     "behavior": "Audio settings now expose Previous, Play/Pause and Next first, followed by one-click multi-style selection. Matching public archive recordings join matching built-in and uploaded music automatically.",
     "taxonomy": "Player-facing families are Synth, Metal, Chiptune & 8-bit, Rock, Electronic, Ambient, Fusion, Other, Ukrainian · UA and ФПВ. UA aliases Ukrainian; only exact Cyrillic ФПВ enters that family; Latin FPV does not.",
     "dependencyClosure": "The audio fingerprint now explicitly includes quick-music-controls.mjs and soundtrack-style-taxonomy.mjs. No procedural recipe, encoded recording, catalogue identity, rights policy or game mechanic changes.",
-    "verification": "Focused audio/style/panel/player tests passed 196/196. Localized Audio settings were inspected in the real browser at the current source. Hosted CI, frozen/public, subjective listening and physical-device qualification remain separate."
+    "verification": "Focused audio/style/panel/player tests passed 196/196 before the v0.142.1 rebase. Fresh exact-source checks, hosted CI, frozen/public, subjective listening and physical-device qualification remain separate."
   }
 }

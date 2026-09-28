@@ -37,39 +37,64 @@ older immutable game releases; archive them only after the canonical game adapte
 is public, and retain their Pages payloads while those old editions remain
 supported.
 
-Game [PR #716](https://github.com/mekhovov/revealline/pull/716) is the active
-delivery item. It was rebased onto authoritative `main`
-`6fe52474b5b395a5c416bd388555d488db33f287` on 28 September. The reconciled source
-uses the canonical catalogue, supports release-backed and verified external URLs,
-structured unknown rights and multiple collections, excludes review-only entries,
-and recovers to remote, bundled or uploaded music after a failed remote deck. The
-rebase preserves v0.141.7 company startup, offline-build integrity and the complete
-revision-93 Field Kit ledger. Exact-source audio continuation, focused tests,
-required hosted gates and independent review are still required before merge.
+Canonical game integration from PR #716 is already present in accepted releases:
+the game discovers the current public catalogue without a game-code change, supports
+release-backed and verified external URLs, excludes review-only entries, and recovers
+to remote, bundled or uploaded music after a failed remote deck. Canonical archive
+[PR #56](https://github.com/mekhovov/revealline-soundtracks/pull/56) and
+[PR #57](https://github.com/mekhovov/revealline-soundtracks/pull/57) are public at
+`54690c6` and `01f55ec`; Pages run 36445928906 exposes the player-first order
+**Synth, Metal, Chiptune & 8-bit, Rock, Electronic, Ambient, Fusion, Other,
+Ukrainian · UA, ФПВ**. UA and Ukrainian share one family, while only exact Cyrillic
+`ФПВ` enters the FPV family; the public catalogue contains no Latin `FPV` raw tag.
+
+Accepted game `main` is now `7138e7b6187bf69991d50313c3f9ac1620427778`, the
+merge of v0.142.1 source PR #768. The sole release publisher is qualifying that exact
+merge in run 36447642608; the v0.142.1 tag/release/Pages selector do not yet exist,
+so v0.142.1 must not be reported as public.
+
+Game [PR #770](https://github.com/mekhovov/revealline/pull/770) is the next soundtrack
+delivery batch. Its source has been rebased onto that accepted v0.142.1 merge. It
+places Previous, Play/Pause and Next at the top of Audio settings, exposes the full
+canonical style order directly in Audio settings, automatically mixes matching
+public, bundled and uploaded recordings, and removes the recurring archive opt-in
+step. The rebase appends Field Kit revision 98/audio revision 50 with an exact
+28-input fingerprint, preserving v0.142.1 revision 97 and all predecessors. Local
+focused tests pass 227/227; production/history tests pass 30/30; validation,
+localization and production reproducibility pass. Fresh exact-head hosted gates and
+public/device acceptance remain required.
 
 Current item order and hands-on estimates:
 
-1. **Finish PR #716:** refresh the audio ledger, run focused and production checks,
-   push the rebased head and pass all required exact-head gates. **0.5–1 working
-   day**, plus CI.
-2. **Release and verify the canonical adapter:** qualify/freeze the actual merge,
-   publish through the immutable release and reviewed Pages selector flow, then
-   verify discovery of all public entries, mixed remote/bundled/uploaded playback,
-   failure recovery and same-tab metadata/source links. **0.5–1 working day**, plus
-   release coordination.
-3. **Legacy archive retirement notices:** freeze intake and point both numbered
-   roots at the canonical site after item 2 passes. **About 0.5 day.** Deletion is
-   blocked by immutable old game URLs and is not part of the safe retirement.
-4. **Device/offline acceptance:** physical iPhone/controller checks and cold
-   offline restart. **About 0.5 day** when devices are available.
-5. **Content expansion:** continue listening-led synthwave/electro, heavier metal
-   and Ukrainian admissions in independently releasable batches. **1–2 days per
-   accepted batch**, excluding user listening and rights review.
+1. **Finish v0.142.1 publication:** the release owner must complete the already
+   running merged-source qualification, freeze/inspection, immutable release and
+   Pages selector. **Publisher hands-on: about 0.5 day, plus hosted queues.** This is
+   a sequencing dependency; soundtrack work must not duplicate or retag it.
+2. **Release PR #770:** push the rebased exact head, pass required hosted source
+   gates, merge after v0.142.1 is public, qualify/freeze the actual merge, publish a
+   new immutable version and verify the top-level controls and style queues against
+   the live 260-entry archive. **0.5–1 working day, plus CI/release queues.**
+3. **Device/offline acceptance:** verify streamed playback and switching on physical
+   iPhone, keyboard/controller focus, and a cold offline restart with bundled and
+   installed music. **About 0.5 day when devices are available.**
+4. **Content expansion:** continue listening-led synthwave/electro, heavier metal
+   and Ukrainian admissions in independent archive batches. **1–2 days per accepted
+   batch**, excluding user listening and rights review.
+5. **Real external-object proof:** ingest one stable rights-cleared S3-style URL and
+   verify automatic game discovery, Range/CORS streaming, failure recovery and exact
+   offline installation. **1–2 hours after a valid URL exists; currently blocked on
+   that URL and its recording-specific rights.**
+6. **Legacy archive retirement notices:** freeze intake and point both numbered roots
+   at the canonical site after the current game integration is public. **About 0.5
+   day.** Preserve compatibility payloads for old immutable releases; deletion is
+   not a safe completion condition.
 
 The first real external-object acceptance remains blocked until a stable public
 HTTPS MP3 URL with GET/HEAD/Range CORS and recording-specific rights is supplied.
-UA-FPV publication remains blocked recording by recording by permission evidence.
-The rejected AI-original method remains paused at 0/36 approved compositions.
+Per the user's latest prioritization, **UA-FPV is removed from the active delivery
+plan**; keep its historical/private evidence only and do not spend release capacity
+on public admission. The rejected AI-original method remains paused at 0/36 approved
+compositions.
 
 ## Priority delivery — external MP3 URLs first (27 September 2026)
 
@@ -1989,7 +2014,12 @@ Slipstream and Distance. Ukrainian cultural references include Authentic Ukraine
 Polyphony Project, Go_A, DakhaBrakha and ONUKA. Preserve source links in research
 records. These establish musical properties, not redistribution permission.
 
-## M7 — complete UA-FPV collection and private route
+## M7 — complete UA-FPV collection and private route (inactive)
+
+Status: **removed from the active plan by user direction on 28 September 2026.**
+Preserve the inventory, aliases, private packs and rights findings below as historical
+evidence. Do not schedule public admission, archive publication or game-release work
+for this item unless the user explicitly restores it.
 
 - Preserve all **80 source MP3 filenames / 77 unique recordings**, exact uploaded
   bytes and three duplicate aliases. Standard playlist lists each unique song once.
