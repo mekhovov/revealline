@@ -469,7 +469,7 @@ function inspectBoard(trailCells = []) {
       return li;
     }),
   );
-  $('play').disabled = !mission.modes.includes('solo') || !!mission.combat?.enabled;
+  $('play').disabled = !mission.modes.includes('solo');
   $('export-team').hidden = !mission.modes.includes('team');
   $('team-sequence-tools').hidden = !mission.modes.includes('team');
   const selectedTeamCampaign = $('team-test-campaign').value;
@@ -1225,6 +1225,7 @@ async function launchPreview(source, missionId, difficulty) {
   $('preview-panel').scrollIntoView({ block: 'start' });
   stopPreviewReadiness = observePreviewReadiness({
     expectedURL: url,
+    watchPractice: true,
     readDocument: () => $('preview').contentDocument,
     isCurrent: () => ticket === previewRevision,
     notify: (state) => {
@@ -1241,12 +1242,17 @@ async function launchPreview(source, missionId, difficulty) {
     },
   });
 }
-function closePreview() {
+function retirePreview() {
+  // Invalidate before aborting: a late or reentrant asset completion cannot
+  // revive an iframe retired by Close or by entry into the back/forward cache.
   previewRevision++;
   previewController?.abort();
   stopPreviewReadiness();
   $('preview').src = 'about:blank';
   $('preview-panel').hidden = true;
+}
+function closePreview() {
+  retirePreview();
   $('play').focus();
 }
 $('close-preview').onclick = closePreview;
@@ -1258,6 +1264,9 @@ window.addEventListener('beforeunload', (event) => {
   }
 });
 window.addEventListener('pagehide', (event) => {
+  // A restored Studio keeps its draft, but needs a deliberate new preview.
+  // Retiring here also keeps post-ready monitoring finite without moving focus.
+  retirePreview();
   if (!event.persisted) {
     stopGameplayTuning();
     gameplayTuning.dispose();
@@ -1265,9 +1274,7 @@ window.addEventListener('pagehide', (event) => {
     paintedPreview = null;
   }
   imageWorkbench.dispose();
-  previewController?.abort();
   clearTimeout(saveTimer);
-  stopPreviewReadiness();
 });
 async function boot() {
   let saved = null,

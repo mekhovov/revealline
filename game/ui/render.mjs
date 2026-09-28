@@ -15,6 +15,13 @@ import {
   drawLineImpacts,
   drawEnemyPressure,
 } from './classic-view.mjs';
+import { combatView } from './combat-view.mjs';
+import {
+  createCombatPresentation,
+  drawCombatScrap,
+  drawCombatWarnings,
+  drawCombatProjectiles,
+} from './combat-presentation.mjs';
 import { foundationCompatibleView as classicView } from './foundation-view.mjs';
 import { drawRelayGates, drawRelayTriggers, relayView } from './relay-view.mjs';
 import { drawDirectionalFields, directionalView } from './directional-view.mjs';
@@ -118,6 +125,7 @@ export class BoardPainter {
     this.enemyBodies = createEnemyBodyAssets({ changed: () => this.reportAssets() });
     this.animation = createAnimationState();
     this.actorPresentation = createActorPresentation();
+    this.combatPresentation = createCombatPresentation();
     this.heading = 0;
     this.time = 0;
     this.effects = [];
@@ -148,6 +156,7 @@ export class BoardPainter {
     this.background = this.makeArt(theme);
     this.animation = createAnimationState();
     this.actorPresentation.reset();
+    this.combatPresentation.reset();
     const knownBody = Object.hasOwn(this.presets.characters, bodyId)
         ? this.presets.characters[bodyId]
         : null,
@@ -239,6 +248,7 @@ export class BoardPainter {
     this.speedRatio = 0;
     this.time = 0;
     this.actorPresentation.reset();
+    this.combatPresentation.reset();
   }
   startCelebration({
     levelId = this.levelInfo.id || '',
@@ -308,6 +318,7 @@ export class BoardPainter {
       showGrid = false,
       debug = false,
       fullReveal = false,
+      showCombatScrap = true,
       celebrationPaused = false,
       defeatEffectsRunning = false,
       actorScale = 1,
@@ -321,6 +332,10 @@ export class BoardPainter {
     } = {},
   ) {
     if (!this.theme || !state) return;
+    const combat = combatView(state);
+    if (combat && !combat.valid) {
+      throw new Error(`Cannot render optional combat: ${combat.error}`);
+    }
     // Developer comparison only: omit these flags for the accepted presentation.
     // Hide only additive decoration; functional cues and all effect clocks stay.
     const captureAccent = feedbackComparison?.captureAccent !== false,
@@ -371,6 +386,13 @@ export class BoardPainter {
         : Number.isFinite(ctx.canvas?.clientWidth) && ctx.canvas.clientWidth > 0
           ? ctx.canvas.clientWidth
           : W;
+    const combatOptions = {
+      reduced,
+      screenScale: canvasCSSWidth / W,
+      canvasCSSWidth,
+      scale: actorScale,
+      showScrap: showCombatScrap,
+    };
     const images = { ...this.images, presentationSprites: {} };
     const enemySprites = {};
     if (presentation) {
@@ -520,6 +542,7 @@ export class BoardPainter {
       ctx.globalAlpha = 1;
     }
     drawClassicTerrain(ctx, classic, p, images);
+    if (combat) drawCombatScrap(ctx, combat, p, combatOptions);
     // Reveal decoration belongs below current hazards, actors and live cuts.
     // An old capture pulse must never wash over a newly opened live line.
     if (!fullReveal && captureAccent)
@@ -771,11 +794,13 @@ export class BoardPainter {
         ctx.globalAlpha = 1;
         drawEncounterCore(ctx, state, e, p, reduced);
       }
+      if (combat) this.combatPresentation.drawActors(ctx, combat, p, combatOptions);
       drawEnemyPressure(ctx, classic, p, {
         screenScale: canvasCSSWidth / W,
         frames: actorFrames,
         fonts,
       });
+      if (combat) drawCombatWarnings(ctx, combat, p, combatOptions);
       drawActiveTrail(ctx, state.trailSegments, state.trail, state.player, p, {
         time: this.time,
         reduced,
@@ -844,6 +869,7 @@ export class BoardPainter {
           ctx.strokeRect(e.x * CELL - 13, e.y * CELL - 13, 26, 26);
         }
       }
+      if (combat) drawCombatProjectiles(ctx, combat, p, combatOptions);
       drawClassicStatus(ctx, classic, p, {
         screenScale: canvasCSSWidth / W,
         canvasCSSWidth,

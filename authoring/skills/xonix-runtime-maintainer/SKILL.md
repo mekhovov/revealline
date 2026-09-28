@@ -1493,6 +1493,21 @@ Use the [reviewed successor prompt](../../prompts/team-reviewed-successor.md). E
 
 The current Team discovery contract permits an explicit full picture preview; it supersedes the older card-teaser and locked enlarged-teaser rule. Keep the passive lobby on a meaningful broad-border concealed teaser while unified mission-library cards remain metadata-only and artwork-lazy. Reuse the authenticated original and existing transient preview owner; full viewing is not gameplay, completion or an earned-picture receipt. Preserve accepted attempts, progress/profile bytes and independent image leases. Exercise cancellation, foreground loss, newer visits, decode failure and shared chooser Back returning directly to its exact game opener. Assert actual full-detail centre versus concealed lobby pixels, plus no simulation/start/award/write side effects. Keep native layout and visual recognition separate from finite Canvas tests; no renderer, recipe fingerprint or production-art change is implied.
 
+## Optional encounter practice and render recovery
+
+Follow [the optional encounter maintenance contract](../../../docs/combat-pressure-authoring.md).
+Enabled Solo practice uses the actual additive BoardPainter; absent/disabled
+combat must preserve historical draw commands and exact simulation identity.
+Validate before mutating drawing state. Keep Team and paired-race Studio admission
+closed until their own qualification passes. A post-startup practice failure is
+terminal for that child: stop ticks/drawing/input/audio, destroy held-Confirm
+suppression, expose the failure in the scrollable reading area and retain native
+Return/parent Close. Do not count blur as proof that released Confirm can recover.
+Retire pending loads, monitoring and the iframe on pagehide without stealing
+focus; a deliberate launch gets a fresh owner. Bound the frame to the viewport.
+Reopen exact recipe provenance when a consumed rendering helper changes; never
+rewrite old approvals or claim candidate practice as production/public proof.
+
 ## Bounded presentation metadata and immutable history
 
 Keep serialized metadata, expanded logical history and original-payload budgets separate. See [the metadata contract](../../../docs/presentation-metadata.md) and [bounded-history prompt](../../prompts/bounded-theme-history.md). Preserve fitting historical bytes and every retained logical record. Decode compact metadata before semantic validation; do not treat reconstructed objects as trusted. Require encodability before an edit or atomic save is accepted.

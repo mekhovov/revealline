@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { createStarterProject } from '../content-design/starter.mjs';
 import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
@@ -92,7 +93,7 @@ test('optional preparation preserves current pressure catalogue and every unrela
   }
 });
 
-test('v9 optional scout/sentry edits keep pressure recipes, independent populations and explicit on/off identities', () => {
+test('v9 optional scout/sentry edits keep pressure recipes, independent populations and explicit on/off identities', async () => {
   const source = fixture(),
     original = structuredClone(source);
   const prepared = prepareCombatAuthoring(source, missionId);
@@ -141,10 +142,14 @@ test('v9 optional scout/sentry edits keep pressure recipes, independent populati
   assert.deepEqual(off, before);
   for (const catalog of ['journey-actors-v7', 'journey-actors-v99'])
     assert.throws(() => compileContentProject({ ...off, actorCatalogId: catalog }));
-  assert.throws(
-    () => prepareContentPreview(on, missionId, { theme: { id: 'horizon' } }),
-    /qualified actor\/projectile presentation/,
+  const themes = JSON.parse(
+    await readFile(new URL('../content-design/themes.json', import.meta.url)),
   );
+  const theme = themes.themes.find((candidate) => candidate.id === 'horizon');
+  const preview = prepareContentPreview(on, missionId, { theme });
+  assert.deepEqual(preview.scenario.level, manifest(on, missionId).level);
+  assert.equal(preview.scenario.level.classic.combatPatrols.enabled, true);
+  assert.match(preview.scenario.metadata.description, /No campaign awards/);
   for (const enabled of [false, true]) {
     const team = createTeamOpeningCandidates();
     team.actorCatalogId = 'journey-actors-v9';
