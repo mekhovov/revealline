@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { importCompanyArt } from '../../scripts/import-company-art.mjs';
 import { COMPANY_MISSIONS, COMPANY_CAMPAIGNS } from '../company-campaigns/catalog.mjs';
-import { CURRICULUM_CAMPAIGNS } from '../company-campaigns/curriculum.mjs';
+import { CURRICULUM_CAMPAIGNS, CURRICULUM_MISSIONS } from '../company-campaigns/curriculum.mjs';
 import { createCompanyProject } from '../company-campaigns/content.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { validateRetainedPresentation } from '../editions/retained-presentation.mjs';
@@ -34,11 +34,43 @@ test('every current and historical mission has a distinct pinned picture with co
     ...new Set(CURRICULUM_CAMPAIGNS.map((campaign) => `${campaign.brandId}-home-picture`)),
   ];
   assert.equal(homeIds.length, 4);
-  const legacyArtwork = artwork.filter((asset) => !homeIds.includes(asset.id));
+  const initialDiscoveryPictures = [
+    'social-drone-people-workshop-01-picture',
+    'ukraine-threads-03-picture',
+    'fpv-meet-aircraft-01-picture',
+  ];
+  const distinctDiscoveryPictures = CURRICULUM_MISSIONS.map(
+    (mission) => `${mission.id}-picture`,
+  ).filter((id) => artwork.some((asset) => asset.id === id));
+  for (const id of initialDiscoveryPictures) assert.ok(distinctDiscoveryPictures.includes(id), id);
+  const campaignKeyIds = CURRICULUM_CAMPAIGNS.map((campaign) => `${campaign.id}-key-picture`);
+  assert.equal(campaignKeyIds.length, 18);
+  const legacyArtwork = artwork.filter(
+    (asset) =>
+      !homeIds.includes(asset.id) &&
+      !distinctDiscoveryPictures.includes(asset.id) &&
+      !campaignKeyIds.includes(asset.id),
+  );
   assert.equal(legacyArtwork.length, 106);
   assert.equal(new Set(legacyArtwork.map((asset) => asset.sha256)).size, 106);
-  assert.equal(artwork.length, 110);
-  assert.equal(new Set(artwork.map((asset) => asset.sha256)).size, 110);
+  const totalPictures =
+    106 + homeIds.length + campaignKeyIds.length + distinctDiscoveryPictures.length;
+  assert.equal(artwork.length, totalPictures);
+  assert.equal(new Set(artwork.map((asset) => asset.sha256)).size, totalPictures);
+  assert.deepEqual(
+    artwork
+      .filter((asset) => campaignKeyIds.includes(asset.id))
+      .map((asset) => asset.id)
+      .sort(),
+    campaignKeyIds.sort(),
+  );
+  assert.deepEqual(
+    artwork
+      .filter((asset) => distinctDiscoveryPictures.includes(asset.id))
+      .map((asset) => asset.id)
+      .sort(),
+    distinctDiscoveryPictures.sort(),
+  );
   assert.equal(selectCurrentCompanyArtwork(legacyArtwork).length, 69);
   assert.deepEqual(
     artwork

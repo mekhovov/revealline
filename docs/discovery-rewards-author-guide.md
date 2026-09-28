@@ -115,13 +115,18 @@ Keep the locked teaser independent of the reward image. Locked player cards show
 the authored teaser without fetching or revealing the image or final link.
 Maintain meaningful Ukrainian and English alternative text.
 
-**Not delivered in this batch:** QR generation, audio/video reward playback,
-caption/transcript reward adapters, cosmetic reward application, reward-specific
-controls in Asset Studio/Picture Workshop/Soundtrack Studio, interactive diagram
-payloads, retrieval-practice predicates and simulator rewards. Some versioned
-model shapes reserve future media types, but the player/compiler capability gate
-rejects their export today. Existing game media, characters and soundtracks keep
-their current independent authoring paths.
+Audio/video rewards use the shared native media adapter, exact asset hashes,
+localized captions/transcripts and explicit Play. See [media authoring](discovery-media-rewards.md).
+The registered inspect/compare atlas supplies untimed cards and prediction feedback;
+see [exploration authoring](discovery-exploration.md). Earned discoveries can be
+saved as static printable HTML with exact available pictures, transcripts and sources.
+Author previews are clearly marked and cannot serve as player completion evidence.
+
+**Still pending:** generated QR codes, cosmetic reward application, dedicated
+reward controls throughout Asset Studio/Picture Workshop/Soundtrack Studio,
+verified retrieval-practice predicates and simulator rewards. The player/compiler
+gate rejects unsupported payloads and learning/mastery requirements. Existing
+game media, characters and soundtracks retain their independent authoring paths.
 
 ## 3. Preview, export and whole-game checks
 
@@ -133,9 +138,10 @@ In **05 / Learning & rewards**, choose a reward, language and preview state:
 - **All mission requirements complete** supplies synthetic matching wins.
 
 Choose **Preview current JSON**. This validates the draft and projects counts;
-the eligible state shows knowledge and available images. Other supported payloads
-are identified for JSON review. This authoring preview is not the final player
-renderer. It never writes a Journey profile, earned receipt or Collection entry.
+the eligible state shows knowledge, source/resource links, code terms, available
+images and the shared interactive/native media viewers. A printable text preview
+is available in both authoring surfaces. Missing exact assets stay explicitly
+unavailable. It never writes a Journey profile, earned receipt or Collection entry.
 
 Then apply the JSON and export the source draft. From the repository root, a
 Coupa Adventure example is:

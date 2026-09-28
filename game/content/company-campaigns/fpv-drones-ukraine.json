@@ -1,0 +1,604 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [
+    {
+      "alt": "An original fictional component museum with a propeller-free X frame, separate motors and a camera display.",
+      "bytes": 1062590,
+      "format": "AssetRevisionV1",
+      "height": 640,
+      "id": "fpv-learning-home-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-learning-home-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8",
+      "width": 960
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 6,
+      "discovery": {
+        "exhibitLayout": "mosaic",
+        "finaleRewardRef": { "id": "fpv-drones-ukraine-finale", "revision": "1" }
+      },
+      "format": "CampaignDesignV1",
+      "id": "fpv-drones-ukraine",
+      "missionIds": [
+        "fpv-drones-ukraine-01",
+        "fpv-drones-ukraine-02",
+        "fpv-drones-ukraine-03",
+        "fpv-drones-ukraine-04",
+        "fpv-drones-ukraine-05",
+        "fpv-drones-ukraine-06"
+      ],
+      "name": "Drones in Ukraine",
+      "revision": "1"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "fpv-drones-ukraine",
+  "maps": [
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 5, "w": 13, "x": 12, "y": 12 },
+        { "h": 4, "w": 11, "x": 30, "y": 18 },
+        { "h": 5, "w": 12, "x": 48, "y": 10 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-drones-ukraine-01-map",
+      "name": "A Map for Recovery",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 19.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 7, "w": 3, "x": 33, "y": 8 },
+        { "h": 5, "w": 3, "x": 33, "y": 25 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 4, "w": 10, "x": 11, "y": 8 },
+        { "h": 7, "w": 10, "x": 34, "y": 13 },
+        { "h": 4, "w": 14, "x": 48, "y": 25 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-drones-ukraine-02-map",
+      "name": "Survey Is Not Clearance",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 16.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [{ "h": 13, "w": 3, "x": 23, "y": 14 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 4, "w": 17, "x": 11, "y": 10 },
+        { "h": 4, "w": 15, "x": 45, "y": 10 },
+        { "h": 5, "w": 8, "x": 37, "y": 24 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-drones-ukraine-03-map",
+      "name": "A Pilot Study Has Limits",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 19.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 10, "w": 2, "x": 36, "y": 10 },
+        { "h": 2, "w": 14, "x": 16, "y": 24 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 7, "w": 22, "x": 25, "y": 12 },
+        { "h": 4, "w": 10, "x": 10, "y": 25 },
+        { "h": 4, "w": 8, "x": 54, "y": 10 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-drones-ukraine-04-map",
+      "name": "Learning Has Many Roles",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 13, "w": 2, "x": 13, "y": 8 },
+        { "h": 2, "w": 10, "x": 52, "y": 25 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 5, "w": 9, "x": 13, "y": 9 },
+        { "h": 5, "w": 10, "x": 35, "y": 10 },
+        { "h": 4, "w": 17, "x": 30, "y": 26 },
+        { "h": 4, "w": 6, "x": 49, "y": 23 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-drones-ukraine-05-map",
+      "name": "Read the Historical Caption",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 17.5, "y": 0.5 }],
+      "terrain": [{ "h": 3, "id": "slow-1", "kind": "slow", "w": 12, "x": 10, "y": 23 }],
+      "walls": [{ "h": 13, "w": 2, "x": 28, "y": 9 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 4, "w": 8, "x": 11, "y": 9 },
+        { "h": 4, "w": 9, "x": 29, "y": 6 },
+        { "h": 4, "w": 9, "x": 52, "y": 9 },
+        { "h": 4, "w": 10, "x": 51, "y": 24 },
+        { "h": 4, "w": 9, "x": 30, "y": 27 },
+        { "h": 4, "w": 10, "x": 10, "y": 24 },
+        { "h": 7, "w": 15, "x": 28, "y": 14 }
+      ],
+      "gates": [{ "h": 4, "id": "return-1", "w": 1, "x": 33, "y": 10 }],
+      "height": 36,
+      "id": "fpv-drones-ukraine-06-map",
+      "name": "An Exhibit with Boundaries",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 16.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "trail-pursuer",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.5780000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "difficulty": {
+          "band": 6,
+          "coordination": 0,
+          "execution": 5,
+          "mechanicLoad": 6,
+          "planning": 6,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["trail-pursuer"],
+        "lesson": "Connect the fictional archive rooms and distinguish a source image from a recovery decision. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original blue-and-gold civilian recovery archive with fictional community-hall before-and-after drawings, source/date cards, no real damaged site imagery.",
+        "pacingBeat": "discover",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "trail-pursuer"
+        ],
+        "rewardRef": { "id": "fpv-drones-ukraine-01-discovery", "revision": "1" },
+        "routeDecision": "Capture the two archive wings separately or join the shared source desk first. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-drones-ukraine-01",
+      "map": { "id": "fpv-drones-ukraine-01-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A Map for Recovery",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-learning-home-picture",
+        "themeId": "fpv-drones-ukraine-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 62.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "trail-pursuer",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6280000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "difficulty": {
+          "band": 6,
+          "coordination": 0,
+          "execution": 5,
+          "mechanicLoad": 6,
+          "planning": 6,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Connect the humanitarian exhibit; never approach suspicious debris or attempt a real survey. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original humanitarian museum document exhibit with trained-specialist symbol and separate observation/review/decision cards, no minefield or detection equipment diagram.",
+        "pacingBeat": "choose",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "trail-pursuer"
+        ],
+        "rewardRef": { "id": "fpv-drones-ukraine-02-discovery", "revision": "1" },
+        "routeDecision": "Use the expert-review island or the longer document-gallery return. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-drones-ukraine-02",
+      "map": { "id": "fpv-drones-ukraine-02-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Survey Is Not Clearance",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 7.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-learning-home-picture",
+        "themeId": "fpv-drones-ukraine-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6580000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "difficulty": {
+          "band": 6,
+          "coordination": 0,
+          "execution": 5,
+          "mechanicLoad": 6,
+          "planning": 6,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["heading-interceptor"],
+        "lesson": "Connect the research panels and keep a reported experiment separate from a guaranteed result. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original research-gallery panels with abstract dataset tiles, bounded claim cards and clear question marks, no operational aerial imagery.",
+        "pacingBeat": "combine",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor"
+        ],
+        "rewardRef": { "id": "fpv-drones-ukraine-03-discovery", "revision": "1" },
+        "routeDecision": "Compare the two evidence shelves through the centre or clear the separate question alcove. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-drones-ukraine-03",
+      "map": { "id": "fpv-drones-ukraine-03-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A Pilot Study Has Limits",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-learning-home-picture",
+        "themeId": "fpv-drones-ukraine-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 29.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 25.5, "y": 12.5 }],
+      "coverage": 0.5980000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+        "difficulty": {
+          "band": 7,
+          "coordination": 0,
+          "execution": 5,
+          "mechanicLoad": 7,
+          "planning": 7,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["lane-emitter"],
+        "lesson": "Open the quiet community-library exhibit and connect complementary learning roles. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original warm Ukrainian community library with fictional empty learning stations, diagram boards and open books; no employee or volunteer likenesses.",
+        "pacingBeat": "breathe",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter"
+        ],
+        "rewardRef": { "id": "fpv-drones-ukraine-04-discovery", "revision": "1" },
+        "routeDecision": "Explore the broad reading terrace or link the two smaller contribution desks. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-drones-ukraine-04",
+      "map": { "id": "fpv-drones-ukraine-04-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Learning Has Many Roles",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-learning-home-picture",
+        "themeId": "fpv-drones-ukraine-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "axis": "vertical",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 13.5, "y": 9.5 }],
+      "coverage": 0.6980000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+        "difficulty": {
+          "band": 7,
+          "coordination": 0,
+          "execution": 5,
+          "mechanicLoad": 7,
+          "planning": 7,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Connect dated public records without adding tactical details or turning them into instructions. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original sober historical reading room with dated document facsimile-style cards created from scratch, no weapons, unit locations or battlefield imagery.",
+        "pacingBeat": "mastery",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter"
+        ],
+        "rewardRef": { "id": "fpv-drones-ukraine-05-discovery", "revision": "1" },
+        "routeDecision": "Join the date and issuer islands before the wide context capture. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-drones-ukraine-05",
+      "map": { "id": "fpv-drones-ukraine-05-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Read the Historical Caption",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-learning-home-picture",
+        "themeId": "fpv-drones-ukraine-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 28.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 28.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 11.5, "y": 9.5 }],
+      "coverage": 0.7380000000000001,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter", "relay-gates"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 7,
+          "coordination": 0,
+          "execution": 5,
+          "mechanicLoad": 7,
+          "planning": 7,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["relay-gates"],
+        "lesson": "Complete the exhibit. Do not approach or touch suspicious debris; in Ukraine contact SESU on 101 from safety. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original completed blue-and-gold civilian evidence museum with dated cards, source bookshelf and visible safety information, no dangerous objects depicted.",
+        "pacingBeat": "resolve",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter",
+          "relay-gates"
+        ],
+        "rewardRef": { "id": "fpv-drones-ukraine-06-discovery", "revision": "1" },
+        "routeDecision": "Connect the six exhibit plinths by safe interior returns or close the archive’s outer court. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-drones-ukraine-06",
+      "map": { "id": "fpv-drones-ukraine-06-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "An Exhibit with Boundaries",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-learning-home-picture",
+        "themeId": "fpv-drones-ukraine-theme"
+      },
+      "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Drones in Ukraine",
+  "packs": [
+    {
+      "campaignIds": ["fpv-drones-ukraine"],
+      "format": "PackDesignV1",
+      "id": "fpv-drones-ukraine-pack",
+      "name": "Drones in Ukraine",
+      "revision": "1"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "1"
+}

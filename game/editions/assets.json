@@ -1246,5 +1246,212 @@
     "publication": "public",
     "approved": true,
     "dependencies": []
+  },
+  {
+    "id": "fpv-meet-aircraft-01-art-v1",
+    "path": "game/editions/assets/discovery/fpv-meet-aircraft-01-v1.jpg",
+    "sha256": "8b79d705bb064333eefece3c6acdd0f9f0a4a9079cab8ab2939401ae47689fe8",
+    "bytes": 193494,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-threads-03-art-v1",
+    "path": "game/editions/assets/discovery/ukraine-threads-03-v1.jpg",
+    "sha256": "16b7fcca255f5915b14cadf0bddb3d543df5a214bb881144eff9f8024d6dce70",
+    "bytes": 263606,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-people-workshop-01-art-v1",
+    "path": "game/editions/assets/discovery/social-drone-people-workshop-01-v1.jpg",
+    "sha256": "1a23739d451d250b8622edd8d5dd6c0d82d2125143dcf16c46df1f8b8e326319",
+    "bytes": 270761,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reference-fpv-ar-drone-prototype",
+    "path": "game/editions/assets/discovery/reference-fpv-ar-drone-prototype.jpg",
+    "sha256": "9b990e53725e07fdf08f93f99aaeeb2eae0746db4bc696c3146ea570fb13abdf",
+    "bytes": 135252,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reference-fpv-solder-iron",
+    "path": "game/editions/assets/discovery/reference-fpv-solder-iron.jpg",
+    "sha256": "4c657713640d71b4b43cadd125c3420304d3a8458609cee4f833b20c28efdf49",
+    "bytes": 95391,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reference-fpv-pixhawk-controller",
+    "path": "game/editions/assets/discovery/reference-fpv-pixhawk-controller.png",
+    "sha256": "bfd4dc1a46b9c8dd0680590ea277c5ada26caaed34ab436635d22c55a4c10bf6",
+    "bytes": 82439,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reference-fpv-brushless-motor",
+    "path": "game/editions/assets/discovery/reference-fpv-brushless-motor.jpg",
+    "sha256": "c1ada93c62901ed4e724e0c0f3ba7207b3da1d44bb079813c457c71d11d23a94",
+    "bytes": 129226,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reference-fpv-solder-spool-label",
+    "path": "game/editions/assets/discovery/reference-fpv-solder-spool-label.jpg",
+    "sha256": "5245e5a65b8bd0d7f735c7dca8adab46b32d31d549709afbedf93cbbafa45095",
+    "bytes": 205957,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reference-fpv-solder-joint",
+    "path": "game/editions/assets/discovery/reference-fpv-solder-joint.jpg",
+    "sha256": "b0971f7e55c5c93308415698bc7af50038bb583672323adace25eb8f485dde0c",
+    "bytes": 278304,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-threads-key-v1",
+    "path": "game/editions/assets/discovery/ukraine-threads-key-v1.jpg",
+    "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a",
+    "bytes": 336268,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-colour-clay-spring-key-v1",
+    "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-key-v1.jpg",
+    "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4",
+    "bytes": 263191,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-crimea-ornek-key-v1",
+    "path": "game/editions/assets/discovery/ukraine-crimea-ornek-key-v1.jpg",
+    "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b",
+    "bytes": 297277,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-voices-travel-key-v1",
+    "path": "game/editions/assets/discovery/ukraine-voices-travel-key-v1.jpg",
+    "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea",
+    "bytes": 248004,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-cities-symbols-time-key-v1",
+    "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-key-v1.jpg",
+    "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4",
+    "bytes": 294985,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-everyday-culture-key-v1",
+    "path": "game/editions/assets/discovery/ukraine-everyday-culture-key-v1.jpg",
+    "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f",
+    "bytes": 290344,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-meet-aircraft-key-v1",
+    "path": "game/editions/assets/discovery/fpv-meet-aircraft-key-v1.jpg",
+    "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0",
+    "bytes": 279176,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-parts-bench-key-v1",
+    "path": "game/editions/assets/discovery/fpv-parts-bench-key-v1.jpg",
+    "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265",
+    "bytes": 227588,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-soldering-workshop-key-v1",
+    "path": "game/editions/assets/discovery/fpv-soldering-workshop-key-v1.jpg",
+    "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939",
+    "bytes": 236903,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-four-controls-key-v1",
+    "path": "game/editions/assets/discovery/fpv-four-controls-key-v1.jpg",
+    "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03",
+    "bytes": 246308,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-first-flight-key-v1",
+    "path": "game/editions/assets/discovery/fpv-first-flight-key-v1.jpg",
+    "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757",
+    "bytes": 207668,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drone-families-key-v1",
+    "path": "game/editions/assets/discovery/fpv-drone-families-key-v1.jpg",
+    "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1",
+    "bytes": 249553,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drones-ukraine-key-v1",
+    "path": "game/editions/assets/discovery/fpv-drones-ukraine-key-v1.jpg",
+    "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931",
+    "bytes": 270366,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-care-repair-key-v1",
+    "path": "game/editions/assets/discovery/fpv-care-repair-key-v1.jpg",
+    "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90",
+    "bytes": 207785,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
   }
 ]

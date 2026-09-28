@@ -272,6 +272,29 @@ export function mountEditionExpedition({
           const section = element('article', 'edition-expedition-campaign');
           section.dataset.campaignId = entry.campaign.id;
           section.dataset.exhibitLayout = exhibitLayout(entry.campaign);
+          const descriptor = provider.selection.campaigns?.find(
+            (item) => item.id === entry.campaign.id,
+          );
+          const hero = descriptor?.heroAssetId;
+          if (
+            hero &&
+            descriptor.assetIds.includes(hero) &&
+            typeof provider.assetURL === 'function'
+          ) {
+            const image = element('img', 'edition-expedition-campaign-art');
+            image.src = provider.assetURL(hero);
+            image.alt = tr('campaignArtwork', {
+              name: contentText(entry.campaign, 'name'),
+              defaultValue: contentText(entry.campaign, 'name'),
+            });
+            image.loading = 'lazy';
+            image.decoding = 'async';
+            image.setAttribute('data-campaign-hero', hero);
+            image.onerror = () => {
+              image.hidden = true;
+            };
+            section.append(image);
+          }
           const count = entry.missions.filter((mission) =>
             cleared(mission, profile, missionReward(mission, definitions, pinned)),
           ).length;

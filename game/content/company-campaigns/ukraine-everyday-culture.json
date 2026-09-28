@@ -1,0 +1,597 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [
+    {
+      "alt": "An original fictional textile gallery with suspended linen, separate embroidered samples and warm natural light.",
+      "bytes": 1106859,
+      "format": "AssetRevisionV1",
+      "height": 640,
+      "id": "ukraine-culture-home-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-culture-home-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144",
+      "width": 960
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 11,
+      "discovery": {
+        "exhibitLayout": "mosaic",
+        "finaleRewardRef": { "id": "ukraine-everyday-culture-finale", "revision": "1" }
+      },
+      "format": "CampaignDesignV1",
+      "id": "ukraine-everyday-culture",
+      "missionIds": [
+        "ukraine-everyday-culture-01",
+        "ukraine-everyday-culture-02",
+        "ukraine-everyday-culture-03",
+        "ukraine-everyday-culture-04",
+        "ukraine-everyday-culture-05",
+        "ukraine-everyday-culture-06"
+      ],
+      "name": "Words, Tables and Everyday Culture",
+      "revision": "1"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "ukraine-everyday-culture",
+  "maps": [
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 5, "w": 12, "x": 15, "y": 12 },
+        { "h": 4, "w": 15, "x": 30, "y": 24 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "ukraine-everyday-culture-01-map",
+      "name": "A Door Opens with Words",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 20.5, "y": 0.5 }],
+      "speedZones": [
+        { "direction": "down", "h": 7, "id": "outbound-flow", "w": 3, "x": 24, "y": 5 },
+        { "direction": "right", "h": 3, "id": "return-flow", "w": 7, "x": 41, "y": 21 }
+      ],
+      "terrain": [],
+      "walls": [{ "h": 11, "w": 3, "x": 46, "y": 9 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 5, "w": 10, "x": 12, "y": 14 },
+        { "h": 5, "w": 12, "x": 46, "y": 11 },
+        { "h": 4, "w": 10, "x": 27, "y": 23 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "ukraine-everyday-culture-02-map",
+      "name": "Look Closely at Ї",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 16.5, "y": 0.5 }],
+      "speedZones": [
+        { "direction": "down", "h": 7, "id": "outbound-flow", "w": 3, "x": 24, "y": 8 },
+        { "direction": "right", "h": 3, "id": "return-flow", "w": 7, "x": 41, "y": 21 }
+      ],
+      "terrain": [],
+      "walls": [
+        { "h": 9, "w": 3, "x": 28, "y": 9 },
+        { "h": 7, "w": 3, "x": 41, "y": 24 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 5, "w": 11, "x": 29, "y": 11 },
+        { "h": 4, "w": 10, "x": 10, "y": 24 },
+        { "h": 4, "w": 11, "x": 52, "y": 8 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "ukraine-everyday-culture-03-map",
+      "name": "A Dish and Its People",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 34.5, "y": 0.5 }],
+      "speedZones": [
+        { "direction": "down", "h": 7, "id": "outbound-flow", "w": 3, "x": 24, "y": 8 },
+        { "direction": "right", "h": 3, "id": "return-flow", "w": 7, "x": 39, "y": 24 }
+      ],
+      "terrain": [],
+      "walls": [
+        { "h": 13, "w": 2, "x": 21, "y": 8 },
+        { "h": 11, "w": 2, "x": 46, "y": 19 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 7, "w": 19, "x": 26, "y": 13 },
+        { "h": 5, "w": 10, "x": 10, "y": 23 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "ukraine-everyday-culture-04-map",
+      "name": "A Bowl with a Record",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "speedZones": [],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 11, "x": 12, "y": 8 },
+        { "h": 2, "w": 16, "x": 43, "y": 27 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 5, "w": 12, "x": 12, "y": 14 },
+        { "h": 4, "w": 12, "x": 44, "y": 22 },
+        { "h": 4, "w": 10, "x": 30, "y": 18 }
+      ],
+      "gates": [{ "h": 9, "id": "return-1", "w": 1, "x": 50, "y": 26 }],
+      "height": 36,
+      "id": "ukraine-everyday-culture-05-map",
+      "name": "Two Recipe Cards",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 17.5, "y": 0.5 }],
+      "speedZones": [],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 13, "x": 29, "y": 8 },
+        { "h": 2, "w": 13, "x": 30, "y": 27 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 5, "w": 11, "x": 29, "y": 11 },
+        { "h": 4, "w": 11, "x": 34, "y": 25 },
+        { "h": 4, "w": 9, "x": 10, "y": 25 },
+        { "h": 4, "w": 8, "x": 57, "y": 8 }
+      ],
+      "gates": [
+        { "h": 6, "id": "return-1", "w": 1, "x": 14, "y": 29 },
+        { "h": 6, "id": "return-2", "w": 1, "x": 39, "y": 29 }
+      ],
+      "height": 36,
+      "id": "ukraine-everyday-culture-06-map",
+      "name": "Make Room for Another Story",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 34.5, "y": 0.5 }],
+      "speedZones": [
+        { "direction": "down", "h": 7, "id": "outbound-flow", "w": 3, "x": 24, "y": 8 },
+        { "direction": "right", "h": 3, "id": "return-flow", "w": 7, "x": 41, "y": 22 }
+      ],
+      "terrain": [],
+      "walls": [
+        { "h": 12, "w": 2, "x": 21, "y": 11 },
+        { "h": 7, "w": 2, "x": 49, "y": 22 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6020000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Plan a complete return around the lane warning before committing to the marked flow. Arrows speed travel with the flow and slow opposite travel in unclaimed field. Capture neutralizes them.",
+        "difficulty": {
+          "band": 11,
+          "coordination": 0,
+          "execution": 10,
+          "mechanicLoad": 11,
+          "planning": 11,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": ["directional-fields"],
+        "lesson": "Connect the welcome desk to the reading tables and discover two useful Ukrainian expressions. Plan a complete return around the lane warning before committing to the marked flow.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original welcoming Ukrainian library with two editable greeting caption panels, warm coral lamps and cream reading tables; language labels rendered by the localized interface, not baked into decorative art.",
+        "pacingBeat": "discover",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "lane-emitter",
+          "directional-fields"
+        ],
+        "rewardRef": { "id": "ukraine-everyday-culture-01-discovery", "revision": "1" },
+        "routeDecision": "Take the welcome alcove first or use the marked flow only when it leads to your prepared reading-room return. Choose the flow direction that reaches a return before the next lane pulse."
+      },
+      "encounter": null,
+      "format": "MissionDesignV4",
+      "id": "ukraine-everyday-culture-01",
+      "map": { "id": "ukraine-everyday-culture-01-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A Door Opens with Words",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-culture-home-picture",
+        "themeId": "ukraine-everyday-culture-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "axis": "vertical",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6520000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Plan a complete return around the lane warning before committing to the marked flow. Arrows speed travel with the flow and slow opposite travel in unclaimed field. Capture neutralizes them.",
+        "difficulty": {
+          "band": 11,
+          "coordination": 0,
+          "execution": 10,
+          "mechanicLoad": 11,
+          "planning": 11,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Reveal the letter-study stations and keep small visual differences readable. Plan a complete return around the lane warning before committing to the marked flow.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original typographic reading room with oversized native-text placeholders for І, Ї and Україна, clear high-contrast cards and quiet fabric textures; preserve real glyphs through the interface.",
+        "pacingBeat": "choose",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "lane-emitter",
+          "directional-fields"
+        ],
+        "rewardRef": { "id": "ukraine-everyday-culture-02-discovery", "revision": "1" },
+        "routeDecision": "Connect the near letter islands for shorter closures or cross the vertical flow after checking its return lane. Choose the flow direction that reaches a return before the next lane pulse."
+      },
+      "encounter": null,
+      "format": "MissionDesignV4",
+      "id": "ukraine-everyday-culture-02",
+      "map": { "id": "ukraine-everyday-culture-02-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Look Closely at Ї",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-culture-home-picture",
+        "themeId": "ukraine-everyday-culture-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6820000000000002,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Plan a complete return around the lane warning before committing to the marked flow. Arrows speed travel with the flow and slow opposite travel in unclaimed field. Capture neutralizes them.",
+        "difficulty": {
+          "band": 11,
+          "coordination": 0,
+          "execution": 10,
+          "mechanicLoad": 11,
+          "planning": 11,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Connect the kitchen-story tables and discover why a cooking practice includes more than ingredients. Plan a complete return around the lane warning before committing to the marked flow.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original civilian kitchen-story exhibition with ingredient silhouettes, a steaming illustrated bowl and blank family-recipe cards; no single claimed authentic recipe or documentary family photograph.",
+        "pacingBeat": "combine",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "lane-emitter",
+          "directional-fields"
+        ],
+        "rewardRef": { "id": "ukraine-everyday-culture-03-discovery", "revision": "1" },
+        "routeDecision": "Secure the shorter kitchen-story bay or use the flow to reach the far table while keeping a complete return outside the warning lane. Choose the flow direction that reaches a return before the next lane pulse."
+      },
+      "encounter": null,
+      "format": "MissionDesignV4",
+      "id": "ukraine-everyday-culture-03",
+      "map": { "id": "ukraine-everyday-culture-03-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A Dish and Its People",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-culture-home-picture",
+        "themeId": "ukraine-everyday-culture-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        { "id": "shared-core", "role": "relay-sentinel", "tier": "measured", "x": 55.5, "y": 17.5 }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 26.5, "y": 13.5 }],
+      "coverage": 0.82,
+      "design": {
+        "captureConsequence": "Shield capture advances the shared core encounter; only its release secures the remaining picture. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["shield-relay-sentinel"],
+        "counterplay": "Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field.",
+        "difficulty": {
+          "band": 12,
+          "coordination": 0,
+          "execution": 10,
+          "mechanicLoad": 12,
+          "planning": 12,
+          "threatDensity": 1,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": ["shield-relay-sentinel"],
+        "lesson": "Open the quieter vessel court and connect its labels before revealing the central cabinet. Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original spacious ceramics reading room with a generic bowl silhouette, measurement lines and enlarged source card; no facsimile of the Novoarkhanhelsk photograph or invented maker portrait.",
+        "pacingBeat": "breathe",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "shield-relay-sentinel"
+        ],
+        "rewardRef": { "id": "ukraine-everyday-culture-04-discovery", "revision": "1" },
+        "routeDecision": "Connect the source objective from the broad display foundation or take the outer alcove before approaching the central encounter. Connect the shield relays before committing to the exposed shared core."
+      },
+      "encounter": {
+        "coreObjectiveId": "core",
+        "enemyId": "shared-core",
+        "recipeId": "shield-relays-v1",
+        "shieldObjectiveIds": ["connection"]
+      },
+      "format": "MissionDesignV4",
+      "id": "ukraine-everyday-culture-04",
+      "map": { "id": "ukraine-everyday-culture-04-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A Bowl with a Record",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 7.5 },
+        { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-culture-home-picture",
+        "themeId": "ukraine-everyday-culture-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        { "id": "shared-core", "role": "relay-sentinel", "tier": "measured", "x": 55.5, "y": 17.5 }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 12.5, "y": 14.5 }],
+      "coverage": 0.82,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. Shield capture advances the shared core encounter; only its release secures the remaining picture. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["shield-relay-sentinel", "relay-gates"],
+        "counterplay": "Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 12,
+          "coordination": 0,
+          "execution": 10,
+          "mechanicLoad": 12,
+          "planning": 12,
+          "threatDensity": 1,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Connect two recipe-story stations and compare their contexts without choosing a single winning household. Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original two-table recipe exhibit with contrasting weekday and celebration settings, coral and cream cards and clear source labels; original fictional examples, no documentary family claim or prescriptive authentic recipe.",
+        "pacingBeat": "mastery",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "shield-relay-sentinel",
+          "relay-gates"
+        ],
+        "rewardRef": { "id": "ukraine-everyday-culture-05-discovery", "revision": "1" },
+        "routeDecision": "Open the numbered recipe return before the second station or connect both source objectives from separate safe islands. Connect the shield relays before committing to the exposed shared core."
+      },
+      "encounter": {
+        "coreObjectiveId": "core",
+        "enemyId": "shared-core",
+        "recipeId": "shield-relays-v1",
+        "shieldObjectiveIds": ["connection", "handoff"]
+      },
+      "format": "MissionDesignV4",
+      "id": "ukraine-everyday-culture-05",
+      "map": { "id": "ukraine-everyday-culture-05-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Two Recipe Cards",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 47.5, "y": 27.5 },
+        { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-culture-home-picture",
+        "themeId": "ukraine-everyday-culture-theme"
+      },
+      "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        { "id": "shared-core", "role": "relay-sentinel", "tier": "measured", "x": 55.5, "y": 17.5 },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 28, "y": 11 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 11.5 }],
+      "coverage": 0.82,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. Shield capture advances the shared core encounter; only its release secures the remaining picture. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [
+          "shield-relay-sentinel",
+          "frontier-patrol",
+          "relay-gates",
+          "directional-fields"
+        ],
+        "counterplay": "Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field. Frontier patrols follow the changed boundary after capture; check the return edge before departing. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill. Arrows speed travel with the flow and slow opposite travel in unclaimed field. Capture neutralizes them.",
+        "difficulty": {
+          "band": 12,
+          "coordination": 0,
+          "execution": 10,
+          "mechanicLoad": 12,
+          "planning": 12,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Complete the welcome book and leave space for the next person’s voice. Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original welcoming six-section cultural reading room with an open blank contribution card and a completed source-linked book; warm coral light, spacious tables, no claim to represent all Ukrainian homes.",
+        "pacingBeat": "resolve",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "shield-relay-sentinel",
+          "frontier-patrol",
+          "relay-gates",
+          "directional-fields"
+        ],
+        "rewardRef": { "id": "ukraine-everyday-culture-06-discovery", "revision": "1" },
+        "routeDecision": "Open both numbered returns and follow a safe flow to the final source or keep the longer outer circuit for the closing encounter. Connect the shield relays before committing to the exposed shared core."
+      },
+      "encounter": {
+        "coreObjectiveId": "core",
+        "enemyId": "shared-core",
+        "recipeId": "shield-relays-v1",
+        "shieldObjectiveIds": ["connection", "handoff"]
+      },
+      "format": "MissionDesignV4",
+      "id": "ukraine-everyday-culture-06",
+      "map": { "id": "ukraine-everyday-culture-06-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Make Room for Another Story",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 47.5, "y": 27.5 },
+        { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-culture-home-picture",
+        "themeId": "ukraine-everyday-culture-theme"
+      },
+      "relayLinks": [
+        { "gateId": "return-1", "objectiveId": "connection" },
+        { "gateId": "return-2", "objectiveId": "handoff" }
+      ],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Words, Tables and Everyday Culture",
+  "packs": [
+    {
+      "campaignIds": ["ukraine-everyday-culture"],
+      "format": "PackDesignV1",
+      "id": "ukraine-everyday-culture-pack",
+      "name": "Words, Tables and Everyday Culture",
+      "revision": "1"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "1"
+}

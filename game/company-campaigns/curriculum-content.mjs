@@ -9,12 +9,19 @@ import { required } from '../data-json.mjs';
 import { selectCurrentCompanyArtwork } from './artwork.mjs';
 import { CURRICULUM_CAMPAIGNS, CURRICULUM_MISSIONS } from './curriculum.mjs';
 import { COMMUNITY_LAYOUTS } from './curriculum-community-layouts.mjs';
+import { CULTURE_LAYOUTS } from './curriculum-culture-layouts.mjs';
+import { CULTURE_JOURNEY_LAYOUTS } from './curriculum-culture-journey-layouts.mjs';
+import { FPV_LAYOUTS } from './curriculum-fpv-layouts.mjs';
+import { curriculumPresentationRevision } from './curriculum-presentation-revisions.mjs';
 import { authorCompanyProgression } from './progression.mjs';
 
 // Authored geometry, not image tracing. Each tuple is walls, safe foundations,
 // slow terrain, top-edge opening. No six-map template is reused across brands.
 const layouts = {
   ...COMMUNITY_LAYOUTS,
+  ...CULTURE_LAYOUTS,
+  ...CULTURE_JOURNEY_LAYOUTS,
+  ...FPV_LAYOUTS,
   'social-drone-people-workshop': [
     [[], [[25, 13, 17, 5]], [], 31],
     [
@@ -298,13 +305,14 @@ export function createCurriculumProject({ campaignId, brandId, artwork = false }
     (entry) => entry.id === campaignId && (!brandId || brandId === entry.brandId),
   );
   required(definition, 'Choose a declared curriculum campaign.');
+  const presentationRevision = curriculumPresentationRevision(campaignId);
   required(
     artwork === false || Array.isArray(artwork),
     'Supply explicit curriculum artwork revisions.',
   );
   const project = createStarterProject(campaignId);
   Object.assign(project, {
-    revision: definition.revision,
+    revision: presentationRevision.pack,
     name: definition.name,
     policyId: TRAIL_IMPACT_JOURNEY_POLICY.id,
     actorCatalogId: CURRENT_PRESSURE_ACTOR_CATALOG.id,
@@ -335,6 +343,7 @@ export function createCurriculumProject({ campaignId, brandId, artwork = false }
       project.maps.push(map);
       const picture =
         available.find((asset) => asset.id === `${entry.id}-picture`) ??
+        available.find((asset) => asset.id === `${entry.campaignId}-key-picture`) ??
         available.find((asset) => asset.id === `${entry.brandId}-home-picture`);
       if (artwork !== false) required(picture, `Missing admitted curriculum artwork: ${entry.id}.`);
       if (picture && !project.assets.some((asset) => asset.id === picture.id))
@@ -422,7 +431,10 @@ export function createCurriculumProject({ campaignId, brandId, artwork = false }
             coordination: 0,
           },
           pacingBeat: DISCOVERY_PACING_BEATS[entry.ordinal - 1],
-          rewardRef: { id: `${entry.id}-discovery`, revision: '1' },
+          rewardRef: {
+            id: `${entry.id}-discovery`,
+            revision: presentationRevision.missionRewards[entry.id] ?? '1',
+          },
         },
       };
       return definition.progression
@@ -440,7 +452,7 @@ export function createCurriculumProject({ campaignId, brandId, artwork = false }
       missionIds: [...definition.missionIds],
       discovery: {
         exhibitLayout: definition.exhibitLayout,
-        finaleRewardRef: { id: `${campaignId}-finale`, revision: '1' },
+        finaleRewardRef: { id: `${campaignId}-finale`, revision: presentationRevision.finale },
       },
     },
   ];
@@ -448,7 +460,7 @@ export function createCurriculumProject({ campaignId, brandId, artwork = false }
     {
       format: 'PackDesignV1',
       id: `${campaignId}-pack`,
-      revision: definition.revision,
+      revision: presentationRevision.pack,
       name: definition.name,
       campaignIds: [campaignId],
     },
