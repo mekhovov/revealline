@@ -800,5 +800,9 @@
   "library.recoveryFiles": "Too many recovery files.",
   "library.backupLock": "A backup import acquired the library lock. Local progress is kept in this tab.",
   "library.changedWhileSaving": "The library changed again while saving. Your local progress is kept in this tab; retry saving or export it before reloading.",
-  "library.saveFailure": "Library remains available in this session; export a backup. {{message}}"
+  "library.saveFailure": "Library remains available in this session; export a backup. {{message}}",
+  "editionLearning.backupTooLarge": "Learning backup is too large.",
+  "editionLearning.otherEdition": "This learning backup belongs to another edition.",
+  "editionLearning.cannotWriteRecords": "This tab cannot write learning records.",
+  "editionLearning.keptInTab": "Optional learning is kept in this tab only."
 }
