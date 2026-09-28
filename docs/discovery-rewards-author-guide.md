@@ -61,7 +61,7 @@ already complete. Skipping a mission and viewing a replay do not supply a win.
 Advanced authors can restrict a mission to a subset of the already valid
 difficulty bindings. The compiler rejects invented identities and missions
 outside the selected content. Keep the difficulty promise explicit in the
-teaser. `requirements.learning` can require exact selected lessons, fixtures and content identities; use the explicit assignment checklist or the same JSON references. A required lesson’s mission must also be explicitly selected. `requirements.mastery` remains empty until its verified shared adapter is admitted. See [verified learning rewards](discovery-learning-rewards.md).
+teaser. `requirements.learning` can require exact selected lessons, fixtures and content identities; use the explicit assignment checklist or the same JSON references. A required lesson’s mission must also be explicitly selected. `requirements.mastery` supports the registered `journey-no-loss-win@1` predicate through its explicit mission checklist; it requires an accepted replay-verified no-life-lost attempt and does not certify real-world skill. See [verified learning rewards](discovery-learning-rewards.md).
 
 The catalogue and compiler understand broader versioned reward structures; that
 does not make every planned predicate or viewer available. The authoring controls cover single-mission wins, selected mission sets, all-mission finales and optional exact learning requirements.
@@ -123,7 +123,7 @@ Author previews are clearly marked and cannot serve as player completion evidenc
 **Still pending:** cosmetic reward application, dedicated
 reward controls throughout Asset Studio/Picture Workshop/Soundtrack Studio,
 verified retrieval-practice predicates and simulator rewards. The player/compiler
-gate rejects unsupported payloads and mastery requirements. Existing
+gate rejects unsupported payloads and unregistered mastery requirements. Existing
 game media, characters and soundtracks retain their independent authoring paths.
 
 ## 3. Preview, export and whole-game checks
@@ -253,3 +253,6 @@ Preview uses the same native reader as Collection and never records a win. Apply
 ## Local timing observations
 
 Open `docs/verification/journey-performance.html` from the development server, choose an edition, and load the review game. After reaching the intended menu, play or result scene, select **Observe 30 seconds**. Keep the same scene and viewport for the baseline and candidate. The JSON log includes p95 frame intervals, supported long-task counters and optional heap snapshots. Hidden pages and interrupted samples are discarded. The observer never drives gameplay and is omitted from release output. These measurements are local observations; use matched repeated samples plus browser traces before asserting the 5% regression or 50 ms reward-rendering targets.
+
+
+The game home keeps the primary play, Campaigns, Collection and Settings actions clear. **More → Choose a world** changes the selected edition through the existing save/leave handoff. More also contains original-artwork recovery and source attribution. If a saved flight already needs a registered older presentation, its recovery action appears directly on home. These paths use the same pause, input and save protections as other Solo navigation.

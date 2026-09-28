@@ -762,3 +762,54 @@ test('twenty exhibit picture cycles keep accepted progress and release all owned
   assert.equal(new Set(f.revoked).size, 20);
   assert.deepEqual(f.created.map((entry) => entry.url).sort(), [...f.revoked].sort());
 });
+
+test('the earned viewer persists the historic qualified attempt only when its exact proof is durable', async (t) => {
+  let evidence = {
+    revision: 0,
+    mastery: [],
+    durableMastery: [],
+    historicalClears: [],
+    durableHistoricalClears: [],
+  };
+  const f = await fixture(t, { mastery: true, getMasteryEvidence: () => evidence });
+  f.accepted(1);
+  const historic = {
+    missionId: 'mission-1',
+    ...f.profile.clears.solo[f.bindings[0].journeyMissionIds[0]],
+  };
+  const verified = { ...f.provider.rewards[0].requirements.mastery[0], runId: historic.runId };
+  f.accepted(1, { runId: 'later-loss-win', difficulty: 'gentle' });
+  f.view.refresh();
+  await f.settle();
+  assert.equal(f.view.snapshot().state.receipts.length, 0);
+  evidence = { ...evidence, revision: 1, mastery: [verified], historicalClears: [historic] };
+  f.view.refresh();
+  await f.settle();
+  assert.equal(
+    f.view.snapshot().state.receipts[0].evidence.clears['mission-1'].runId,
+    historic.runId,
+  );
+  assert.equal((await f.backend.read()).receipts.length, 0);
+  f.accepted(2);
+  f.view.refresh();
+  await f.settle();
+  assert.equal(
+    (await f.backend.read()).receipts.some(
+      (receipt) => receipt.definition.id === f.provider.rewards[0].id,
+    ),
+    false,
+  );
+  evidence = {
+    ...evidence,
+    revision: 2,
+    durableMastery: [verified],
+    durableHistoricalClears: [historic],
+  };
+  f.view.refresh();
+  await f.settle();
+  const receipt = (await f.backend.read()).receipts.find(
+    (item) => item.definition.id === f.provider.rewards[0].id,
+  );
+  assert.equal(receipt.evidence.clears['mission-1'].runId, historic.runId);
+  assert.deepEqual(receipt.evidence.mastery, [verified]);
+});
