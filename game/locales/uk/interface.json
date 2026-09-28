@@ -4327,6 +4327,8 @@
   "team.playMission": "Грати: {{mission}}",
   "team.playMissionLabel": "Грати в місію «{{mission}}» · {{campaign}} · {{source}}",
   "team.previewMissionLabel": "Переглянути місію «{{mission}}» · {{campaign}} · {{source}}",
+  "team.previewPictureButton": "Переглянути «{{mission}}»",
+  "team.picturePreviewTitle": "{{mission}} · Перегляд зображення",
   "team.lockedPreviewTitle": "{{mission}} · Заблокований перегляд",
   "team.filteredMissions_one": "Показано {{count}} з {{total}} командної місії. Запускайте її безпосередньо; поточна спроба залишається доступною.",
   "team.filteredMissions_few": "Показано {{count}} з {{total}} командних місій. Запускайте їх безпосередньо; поточна спроба залишається доступною.",

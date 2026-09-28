@@ -4269,6 +4269,8 @@
   "team.playMission": "Play {{mission}}",
   "team.playMissionLabel": "Play {{mission}} · {{campaign}} · {{source}}",
   "team.previewMissionLabel": "Preview {{mission}} · {{campaign}} · {{source}}",
+  "team.previewPictureButton": "Preview {{mission}}",
+  "team.picturePreviewTitle": "{{mission}} · Picture preview",
   "team.lockedPreviewTitle": "{{mission}} · Locked preview",
   "team.filteredMissions_one": "{{count}} of {{total}} Team mission. Play directly; your current attempt stays available.",
   "team.filteredMissions_other": "{{count}} of {{total}} Team missions. Play directly; your current attempt stays available.",
