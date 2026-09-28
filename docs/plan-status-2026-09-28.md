@@ -19,6 +19,8 @@ a heartbeat or another observer’s completed download; no repeat is authorized 
 
 ## Retained UX report from PR #724
 
+<!-- prettier-ignore-start -->
+
 # RevealLine — current completion and remaining delivery plan
 
 Status checked **28 September 2026** against the current main and frozen source,
@@ -198,7 +200,11 @@ frozen by the coordinator. Paused Flight Details still contains English-only
 guidance and strings resolved only when the dialog opens; this is a concrete
 next P05 correction after this patch is handed off, not closed by the bulk merge.
 
+<!-- prettier-ignore-end -->
+
 ## Retained Levels report from PR #728
+
+<!-- prettier-ignore-start -->
 
 # RevealLine — current completion and remaining delivery plan
 
@@ -286,3 +292,5 @@ public player check → status update.**
 
 A branch, green test, merged PR or uploaded release is intermediate. Human/device/
 external-service gates remain explicitly open until directly observed.
+
+<!-- prettier-ignore-end -->
