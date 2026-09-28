@@ -1100,3 +1100,30 @@ test('IndexedDB timeout aborts the transaction and a late read callback cannot w
   assert.equal(writes, 0);
   backend.close();
 });
+
+test('current exposes only immutable model output while snapshots and mutable providers stay isolated', async () => {
+  const store = createRewardStore({ editionId, backend: backendFor(managedIndexedDB()) });
+  await store.load();
+  const definitions = [definition()];
+  const first = store.reconcile(definitions, context(), { persist: false });
+  assert.equal(store.current(), first.state);
+  assert(Object.isFrozen(store.current().promises[0].payloads[0].locales.en.paragraphs));
+  const backup = store.snapshot();
+  backup.promises[0].payloads[0].locales.en.paragraphs[0] = 'Changed copy';
+  assert.notEqual(
+    backup.promises[0].payloads[0].locales.en.paragraphs[0],
+    store.current().promises[0].payloads[0].locales.en.paragraphs[0],
+  );
+  definitions[0].payloads[0].type = 'unapproved';
+  assert.throws(() => store.reconcile(definitions, context()), /Unknown reward payload/);
+  const replacement = [definition('second', 'mission-2')];
+  store.reconcile(replacement, context(), { persist: false });
+  assert.deepEqual(
+    store.current().receipts.map((item) => item.definition.id),
+    ['first', 'second'],
+  );
+  const final = store.current();
+  await store.close();
+  assert.equal(store.current(), final);
+  assert.deepEqual(JSON.parse(store.export()), final);
+});
