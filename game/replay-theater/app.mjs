@@ -318,9 +318,10 @@ try {
     pending = true;
     player?.pause();
     updateControls();
-    const current = () => !disposed && ticket === epoch && !nextController.signal.aborted;
+    const current = () => !disposed && ticket === epoch && !nextController.signal.aborted,
+      loadLabel = () => clipped(typeof label === 'function' ? label() : label);
     const display = importStatus.begin({
-      message: () => t('gameplay:reading2', { value1: clipped(label) }),
+      message: () => t('gameplay:reading2', { value1: loadLabel() }),
       stage: 'reading',
       isCurrent: current,
     });
@@ -452,7 +453,7 @@ try {
           : t('interface:rawReplayPreviewActorsAndSceneNoRecordedAppearanceIs'),
       );
       display.finish({
-        message: () => t('gameplay:verifiedAndLoadedReadyToWatch', { value1: clipped(label) }),
+        message: () => t('gameplay:verifiedAndLoadedReadyToWatch', { value1: loadLabel() }),
       });
       localizedText($('transport-status'), () =>
         player.phase === 'complete'
@@ -527,13 +528,16 @@ try {
   }
   $('load-example').addEventListener(
     'click',
-    () => void load(fetchExample, t('interface:fieldcraftExample')),
+    () => void load(fetchExample, () => t('interface:fieldcraftExample')),
   );
   $('example').addEventListener('change', exampleBrief);
   $('cancel-load').addEventListener('click', cancelLoad);
   $('load-text').addEventListener('click', () => {
     const text = $('replay-text').value;
-    return load(async () => text, t('interface:pastedReplay'));
+    return load(
+      async () => text,
+      () => t('interface:pastedReplay'),
+    );
   });
   $('replay-file').addEventListener('change', () => {
     const file = $('replay-file').files?.[0];
@@ -646,7 +650,7 @@ try {
   document.querySelector('main').removeAttribute('aria-busy');
   bootDisplay.clear();
   frameId = requestAnimationFrame(frame);
-  if (!runtimeContent) void load(fetchExample, t('interface:copperCrossingExample'));
+  if (!runtimeContent) void load(fetchExample, () => t('interface:copperCrossingExample'));
 } catch (error) {
   if (!theaterDisposed)
     bootDisplay.finish({

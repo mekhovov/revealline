@@ -75,7 +75,18 @@ Use the candidate host, or its frozen release **after publication**:
   or **Switchback exchange** (the displayed name of `relay-remix`).
 - Previous edition: substitute `whole-spatial-v36` in the same host path.
 
-The ordinary Solo/Versus default remains v25. Studio's current edition selector
-and curated prior-edition cards do not yet expose all of v35–v37. These direct
-review paths do not imply that the candidate is already public, default, or fully
-balance-qualified.
+The ordinary Solo/Versus default remains v25. In Content Studio, the **Combined
+Journey edition** selector exposes registered v26–v37 editions, including v35–v37.
+Selecting an edition reveals its exact Solo and Versus review links. **Inspect
+selected combined Journey edition · balance pending** loads a detached source
+for inspection; applying it to the working project remains a separate action.
+
+In an opted-in v37 game, **Choose mission → Archive** includes curated changed
+missions from prior editions through v36, including the v35 and v36 predecessors.
+These cards launch their exact earlier editions manually; they do not become
+automatic Next missions or change the ordinary v25 default. Direct links still
+open the complete selected edition.
+
+This candidate access does not imply that v37 is already public, default, or fully
+balance-qualified. The historical first-return evidence and its limits above
+remain unchanged.

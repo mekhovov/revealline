@@ -6,6 +6,7 @@ import { setImmediate, setTimeout as delay } from 'node:timers/promises';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay, authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
+import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 
@@ -273,6 +274,78 @@ function modelDisabledControlFocus(h, node) {
     },
   });
 }
+
+test('Replay Theater refreshes code-owned controller and example labels in both locale directions', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  const h = await harness(t),
+    { $, doc, pad, press, tick } = h;
+  try {
+    pad();
+    press(0);
+    pad();
+    $('load-example').focus();
+    const focus = doc.activeElement,
+      checkpoint = tick().checkpoint;
+    assert.equal(
+      $('navigation-status').textContent,
+      translate('interface:dPadMovesFocusSouthConfirmsEastGoesBackMenu'),
+    );
+    assert.match(
+      $('import-status').textContent,
+      new RegExp(translate('interface:copperCrossingExample')),
+    );
+
+    setLocale('uk', { persist: false });
+    assert.equal(
+      $('navigation-status').textContent,
+      translate('interface:dPadMovesFocusSouthConfirmsEastGoesBackMenu'),
+    );
+    assert.match(
+      $('import-status').textContent,
+      new RegExp(translate('interface:copperCrossingExample')),
+    );
+    assert.equal(doc.activeElement, focus);
+    assert.deepEqual(tick().checkpoint, checkpoint);
+
+    setLocale('en', { persist: false });
+    assert.equal(
+      $('navigation-status').textContent,
+      translate('interface:dPadMovesFocusSouthConfirmsEastGoesBackMenu'),
+    );
+    assert.match(
+      $('import-status').textContent,
+      new RegExp(translate('interface:copperCrossingExample')),
+    );
+    assert.equal(doc.activeElement, focus);
+    assert.deepEqual(tick().checkpoint, checkpoint);
+
+    const authoredLabel = 'Авторський запис.json';
+    $('replay-file').files = [
+      {
+        name: authoredLabel,
+        size: 100,
+        text: async () => JSON.stringify(h.source),
+      },
+    ];
+    $('replay-file').emit('change');
+    await until(
+      () =>
+        $('import-status').dataset.state === 'ready' &&
+        $('import-status').textContent.includes(authoredLabel),
+      'user-labelled replay loaded',
+    );
+    const authoredCheckpoint = tick().checkpoint;
+    setLocale('uk', { persist: false });
+    assert.match($('import-status').textContent, new RegExp(authoredLabel));
+    assert.deepEqual(tick().checkpoint, authoredCheckpoint);
+    setLocale('en', { persist: false });
+    assert.match($('import-status').textContent, new RegExp(authoredLabel));
+    assert.deepEqual(tick().checkpoint, authoredCheckpoint);
+  } finally {
+    setLocale(priorLocale, { persist: false });
+  }
+});
 
 test('native fragment Jump hands off to playback and the next Tab reaches Restart without changing the recording', async (t) => {
   const h = await harness(t),
