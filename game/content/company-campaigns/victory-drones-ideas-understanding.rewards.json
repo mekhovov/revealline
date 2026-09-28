@@ -126,8 +126,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "victory-drones-ideas-understanding-01", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "victory-drones-ideas-understanding-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-ideas-understanding-key-v1",
+        "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table."
+        },
+        "uk": {
+          "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень."
+        }
+      }
+    }
   },
   {
     "brandId": "victory-drones",
@@ -254,8 +268,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "victory-drones-ideas-understanding-02", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "victory-drones-ideas-understanding-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-ideas-understanding-key-v1",
+        "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table."
+        },
+        "uk": {
+          "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень."
+        }
+      }
+    }
   },
   {
     "brandId": "victory-drones",
@@ -382,8 +410,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "victory-drones-ideas-understanding-03", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "victory-drones-ideas-understanding-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-ideas-understanding-key-v1",
+        "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table."
+        },
+        "uk": {
+          "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень."
+        }
+      }
+    }
   },
   {
     "brandId": "victory-drones",
@@ -510,8 +552,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "victory-drones-ideas-understanding-04", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "victory-drones-ideas-understanding-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-ideas-understanding-key-v1",
+        "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table."
+        },
+        "uk": {
+          "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень."
+        }
+      }
+    }
   },
   {
     "brandId": "victory-drones",
@@ -638,8 +694,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "victory-drones-ideas-understanding-05", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "victory-drones-ideas-understanding-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-ideas-understanding-key-v1",
+        "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table."
+        },
+        "uk": {
+          "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень."
+        }
+      }
+    }
   },
   {
     "brandId": "victory-drones",
@@ -774,8 +844,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "victory-drones-ideas-understanding-06", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "victory-drones-ideas-understanding-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-ideas-understanding-key-v1",
+        "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table."
+        },
+        "uk": {
+          "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень."
+        }
+      }
+    }
   },
   {
     "brandId": "victory-drones",
@@ -990,7 +1074,21 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "victory-drones-ideas-understanding", "kind": "campaign" }
+    "revision": "5",
+    "scope": { "id": "victory-drones-ideas-understanding", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-ideas-understanding-key-v1",
+        "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table."
+        },
+        "uk": {
+          "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень."
+        }
+      }
+    }
   }
 ]

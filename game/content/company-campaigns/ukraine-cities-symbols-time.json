@@ -85,7 +85,16 @@
       "band": 9,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "ukraine-cities-symbols-time-finale", "revision": "3" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Your city atlas opens another page."],
+            "uk": ["Ваш атлас міст відкриває ще одну сторінку."]
+          },
+          "revision": "feedback-7ca04c7474057e0c",
+          "victoryMotif": "open-horizon-v1"
+        },
+        "finaleRewardRef": { "id": "ukraine-cities-symbols-time-finale", "revision": "4" }
       },
       "format": "CampaignDesignV1",
       "id": "ukraine-cities-symbols-time",
@@ -295,7 +304,7 @@
           "frontier-patrol",
           "relay-gates"
         ],
-        "rewardRef": { "id": "ukraine-cities-symbols-time-01-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-cities-symbols-time-01-discovery", "revision": "4" },
         "routeDecision": "Open the short numbered return into the mosaic wing or take the outer court first while keeping two retreat choices. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -370,7 +379,7 @@
           "frontier-patrol",
           "relay-gates"
         ],
-        "rewardRef": { "id": "ukraine-cities-symbols-time-02-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-cities-symbols-time-02-discovery", "revision": "4" },
         "routeDecision": "Secure the nearby market islands or activate the connector that opens a longer safe route behind the side galleries. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -445,7 +454,7 @@
           "frontier-patrol",
           "relay-gates"
         ],
-        "rewardRef": { "id": "ukraine-cities-symbols-time-03-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-cities-symbols-time-03-discovery", "revision": "4" },
         "routeDecision": "Take the lower harbour bay for a short closure or connect the upper squares through the numbered return. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -521,7 +530,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "ukraine-cities-symbols-time-04-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-cities-symbols-time-04-discovery", "revision": "4" },
         "routeDecision": "Use the broad central foundation for a calmer approach or unlock the side return before entering the marked lane. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -600,7 +609,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "ukraine-cities-symbols-time-05-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-cities-symbols-time-05-discovery", "revision": "4" },
         "routeDecision": "Open the nearest numbered connection first or secure both colour islands before crossing the warning lane. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -680,7 +689,7 @@
           "relay-gates",
           "directional-fields"
         ],
-        "rewardRef": { "id": "ukraine-cities-symbols-time-06-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-cities-symbols-time-06-discovery", "revision": "4" },
         "routeDecision": "Activate the two source returns before following the directional fields or take a longer loop around the flow. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -712,9 +721,9 @@
       "format": "PackDesignV1",
       "id": "ukraine-cities-symbols-time-pack",
       "name": "Cities, Symbols and Time",
-      "revision": "3"
+      "revision": "4"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "3"
+  "revision": "4"
 }

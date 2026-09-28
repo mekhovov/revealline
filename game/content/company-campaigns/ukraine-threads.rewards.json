@@ -121,8 +121,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-threads-01", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-threads-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-threads-key-v1",
+        "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+      },
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -249,8 +263,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-threads-02", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-threads-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-threads-key-v1",
+        "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+      },
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -374,8 +402,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-threads-03", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-threads-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-threads-key-v1",
+        "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+      },
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -510,8 +552,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-threads-04", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-threads-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-threads-key-v1",
+        "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+      },
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -638,8 +694,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-threads-05", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-threads-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-threads-key-v1",
+        "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+      },
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -766,8 +836,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-threads-06", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-threads-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-threads-key-v1",
+        "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+      },
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -1219,7 +1303,155 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
+    "scope": { "id": "ukraine-threads", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-threads-key-v1",
+        "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+      },
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-application-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Optional: complete the six discoveries and curate the evidence labels to earn an annotated source card.",
+        "title": "Textile atlas: curator annotations"
+      },
+      "uk": {
+        "teaser": "Додатково: завершіть шість відкриттів і впорядкуйте підписи доказів, щоб отримати картку джерел із примітками.",
+        "title": "Текстильний атлас: примітки куратора"
+      }
+    },
+    "payloads": [
+      {
+        "id": "ukraine-threads-curator-character",
+        "locales": {
+          "en": { "title": "Gallery weaving shuttle" },
+          "uk": { "title": "Ткацький човник галереї" }
+        },
+        "recipeId": "reward-textile-discovery-shuttle-v1",
+        "recipeRevision": "character-v1-8e201e4f9cc4aa80",
+        "type": "cosmetic"
+      },
+      {
+        "id": "ukraine-threads-application-annotations",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "A museum record and an original illustration support different claims. A dated artwork can tell us about that particular work and its interpretation. A fictional festival scene can invite curiosity but cannot document a real historic garment.",
+              "For a new object label, separate what the record states from what you infer. Keep the maker, medium, date and place tied to the specific source; write “not established by this source” when a detail is missing.",
+              "These annotations recognise the verified evidence exercise. They do not score cultural identity or belonging. Return to the textile atlas in Collection to compare the individually attributed sources."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Dancer in Ukrainian Dress, object 436157",
+                "url": "https://www.metmuseum.org/art/collection/search/436157"
+              },
+              {
+                "title": "The Met — Open Access",
+                "url": "https://www.metmuseum.org/hubs/open-access"
+              }
+            ],
+            "title": "Textile atlas: curator annotations"
+          },
+          "uk": {
+            "paragraphs": [
+              "Музейний запис і оригінальна ілюстрація підтверджують різні твердження. Датований твір розповідає про конкретну роботу та її інтерпретацію. Вигадана фестивальна сцена може зацікавити, але не документує реальний історичний одяг.",
+              "Для нового підпису предмета відокремлюйте дані запису від власних висновків. Пов’язуйте автора, матеріал, дату й місце з конкретним джерелом; якщо відомостей бракує, зазначайте: «Це джерело не встановлює цієї деталі».",
+              "Ці примітки відзначають перевірену вправу з доказами. Вони не оцінюють культурну ідентичність чи належність. Поверніться до текстильного атласу в Колекції, щоб порівняти джерела з окремими атрибуціями."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Dancer in Ukrainian Dress, object 436157",
+                "url": "https://www.metmuseum.org/art/collection/search/436157"
+              },
+              {
+                "title": "The Met — Open Access",
+                "url": "https://www.metmuseum.org/hubs/open-access"
+              }
+            ],
+            "title": "Текстильний атлас: примітки куратора"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [
+        {
+          "fixtureRevision": "1",
+          "lessonId": "ukraine-threads-06-lesson",
+          "lessonIdentity": "f0131eac25994042",
+          "lessonRevision": "1",
+          "missionId": "ukraine-threads-06"
+        }
+      ],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a70347fb9c2215f6" },
+            { "difficulty": "standard", "gameplayId": "aae83c4cf5bee1df" },
+            { "difficulty": "expert", "gameplayId": "3c5d1f0ce3e9c745" }
+          ],
+          "missionId": "ukraine-threads-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "aa0d6a41ec5daf99" },
+            { "difficulty": "standard", "gameplayId": "625ecfa012ab59b9" },
+            { "difficulty": "expert", "gameplayId": "7250c61ead7111d6" }
+          ],
+          "missionId": "ukraine-threads-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "b6f1d46cf8e74120" },
+            { "difficulty": "standard", "gameplayId": "c8ebcc05403cb890" },
+            { "difficulty": "expert", "gameplayId": "65c81b8114bab2d3" }
+          ],
+          "missionId": "ukraine-threads-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c7eee40173df478f" },
+            { "difficulty": "standard", "gameplayId": "33261d4abad6548c" },
+            { "difficulty": "expert", "gameplayId": "c8fb6afe0ded9a4c" }
+          ],
+          "missionId": "ukraine-threads-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c9561924ef75dfe7" },
+            { "difficulty": "standard", "gameplayId": "38d39bf4da3f5dc1" },
+            { "difficulty": "expert", "gameplayId": "c33f73c7f58f8c96" }
+          ],
+          "missionId": "ukraine-threads-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "057f26871e359171" },
+            { "difficulty": "standard", "gameplayId": "1bf56034481c0f2a" },
+            { "difficulty": "expert", "gameplayId": "e0654522adaf24f9" }
+          ],
+          "missionId": "ukraine-threads-06"
+        }
+      ]
+    },
+    "revision": "1",
     "scope": { "id": "ukraine-threads", "kind": "campaign" }
   }
 ]
