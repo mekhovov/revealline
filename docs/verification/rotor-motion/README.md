@@ -34,3 +34,17 @@ Rerun relevant files and `scripts/test-actor-coverage.mjs`, required lint/format
 ## Copyable maintainer prompt
 
 > Improve one declared moving-part rig using the shared rotor primitive. Preserve exact original PNGs, pivots, collision radius and accepted picture bindings. Confirm whether the bitmap has baked blades before adding a layer. Use frame-local radius and motor hubs; blades begin at the hub and remain inside their envelope. Bound phase advance for the densest repeating blade pattern, preserve counter-rotation and pause/downed/reduced state. Compare actual decoded render frames at 20/24/32 CSS pixels over bright and dark pictures, four headings and 4/30/60/120 Hz. Register every new renderer source in the consuming provenance groups and retain historical approvals. Report source, raster, whole-game and device evidence separately.
+
+## Independent review
+
+A second agent inspected the final source and the saved browser raster. It found
+no additional runtime blocker and confirmed attached hubs, bounded phases, held
+states and original-image precedence. It identified a pre-existing C3 concern:
+Team's center/contact and nose cues obscure more of a small craft's body than
+Solo's. Keep functional contact information, but review that overlay hierarchy
+during C3 instead of broadening this rotor correction.
+
+The review fixture now reuses one small raster per entry and yields between
+cohorts. Its fresh keyboard-activated rerun reproduced all 1,344 changed and
+2,688 held pixel comparisons. This corrects review-tool resource churn and keeps
+the check responsive; it is not a measured whole-game performance improvement.
