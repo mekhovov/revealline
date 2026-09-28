@@ -224,6 +224,7 @@ export function companySourceDraft({ catalog, files }) {
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
       ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+      ...(campaign.localizationPath ? [campaign.localizationPath] : []),
     ]),
   ]);
   return {
@@ -270,6 +271,7 @@ export function companyDraftFiles(source) {
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
       ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+      ...(campaign.localizationPath ? [campaign.localizationPath] : []),
     ]),
   ]);
   const files = new Map([['game/editions/catalog.json', json(catalog)]]);
@@ -288,7 +290,8 @@ export function companyDraftFiles(source) {
     } else files.set(entry.path, json(entry.data));
   }
   editionPublicationAssets(catalog, files);
-  if (catalog.campaigns.some((campaign) => campaign.rewardPath)) validateStudioDraft(draft);
+  if (catalog.campaigns.some((campaign) => campaign.rewardPath || campaign.localizationPath))
+    validateStudioDraft(draft);
   return { catalog, files };
 }
 
