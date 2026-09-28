@@ -40,6 +40,51 @@ function callback(node, context) {
   return vm.runInNewContext(`(${source.slice(node.start, node.end)})`, context);
 }
 
+test('company notices retain a live message producer in the page and open dialog', () => {
+  const notice = { dataset: {} },
+    dialog = {
+      status: null,
+      querySelector() {
+        return this.status;
+      },
+      append(value) {
+        this.status = value;
+      },
+    },
+    localizedText = (element, message) => {
+      element.binding = message;
+      element.textContent = typeof message === 'function' ? message() : message;
+      return element.textContent;
+    },
+    context = {
+      $: (id) => {
+        assert.equal(id, 'notice');
+        return notice;
+      },
+      document: { querySelector: () => dialog },
+      localizedText,
+      node: () => ({
+        dataset: {},
+        attributes: new Map(),
+        setAttribute(name, value) {
+          this.attributes.set(name, value);
+        },
+      }),
+    },
+    report = callback(
+      find(tree, (node) => node.type === 'VariableDeclarator' && node.id?.name === 'report').init,
+      context,
+    ),
+    message = () => 'Localized status';
+  assert.equal(report(message, true), 'Localized status');
+  assert.equal(notice.binding, message);
+  assert.equal(dialog.status.binding, message);
+  assert.equal(notice.dataset.error, 'true');
+  assert.equal(dialog.status.dataset.error, 'true');
+  assert.equal(dialog.status.attributes.get('role'), 'status');
+  assert.equal(dialog.status.attributes.get('aria-live'), 'polite');
+});
+
 test('the company host keeps multiple read-only wins in exported progress without writing another tab’s store', async () => {
   const disk = managedIndexedDB(),
     backend = createJourneyBackend({
