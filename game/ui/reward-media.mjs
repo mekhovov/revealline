@@ -243,9 +243,9 @@ export function mountRewardMedia({
     if (poster) poster.hidden = !posterReady;
     if (alive()) status.textContent = tr('unavailable');
   }
-  function metadata() {
+  function metadata(element) {
     const duration =
-      payload.type === 'video' ? inspectVideoMetadata(media).durationSeconds : media.duration;
+      payload.type === 'video' ? inspectVideoMetadata(element).durationSeconds : element.duration;
     required(
       Number.isFinite(duration) && duration > 0 && duration <= REWARD_MEDIA_LIMITS.durationSeconds,
       'Reward media must have a finite duration of at most 120 seconds.',
@@ -269,6 +269,16 @@ export function mountRewardMedia({
     captionsEnd = captions?.endSeconds ?? 0;
     clearMedia();
     media = createMedia(payload.type);
+    const currentMedia = media;
+    let rejectMetadata = null;
+    const failCurrent = () => {
+      if (media !== currentMedia) return;
+      fail();
+      // A track error does not bubble to its video. Reject a pending decode
+      // before clearing it so later metadata cannot revive failed captions.
+      rejectMetadata?.();
+      clearMedia();
+    };
     media.autoplay = false;
     media.controls = false;
     media.loop = false;
@@ -289,7 +299,7 @@ export function mountRewardMedia({
       track.default = true;
       track.src = objectURL(new Blob([captions.text], { type: 'text/vtt' }));
       mediaURLs.add(track.src);
-      listenMedia(track, 'error', fail);
+      listenMedia(track, 'error', failCurrent);
       media.append(track);
     }
     root.append(media);
@@ -307,13 +317,13 @@ export function mountRewardMedia({
       if (desired) pause();
     });
     listenMedia(media, 'ended', pause);
-    listenMedia(media, 'error', fail);
+    listenMedia(media, 'error', failCurrent);
     listenMedia(media, 'durationchange', () => {
       if (prepared) {
         try {
-          metadata();
+          metadata(currentMedia);
         } catch {
-          fail();
+          failCurrent();
         }
       }
     });
@@ -321,13 +331,14 @@ export function mountRewardMedia({
       let timer;
       const cleanup = () => {
         clearTimeout(timer);
-        media.removeEventListener('loadedmetadata', ready);
-        media.removeEventListener('error', error);
+        currentMedia.removeEventListener('loadedmetadata', ready);
+        currentMedia.removeEventListener('error', error);
         controller.signal.removeEventListener('abort', cancel);
+        rejectMetadata = null;
       };
       const ready = () => {
         try {
-          metadata();
+          metadata(currentMedia);
           cleanup();
           resolve();
         } catch (reason) {
@@ -343,15 +354,19 @@ export function mountRewardMedia({
         cleanup();
         reject(new DOMException('Reward media cancelled.', 'AbortError'));
       };
-      media.addEventListener('loadedmetadata', ready);
-      media.addEventListener('error', error);
+      rejectMetadata = error;
+      currentMedia.addEventListener('loadedmetadata', ready);
+      currentMedia.addEventListener('error', error);
       controller.signal.addEventListener('abort', cancel, { once: true });
       timer = setTimeout(error, timeoutMs);
       sourceURL = objectURL(source.blob);
       media.src = sourceURL;
       media.load();
+    }).catch((error) => {
+      if (media === currentMedia) clearMedia();
+      throw error;
     });
-    if (!alive()) return;
+    if (!alive() || media !== currentMedia) return;
     prepared = true;
     media.controls = true;
     media.hidden = false;
