@@ -186,6 +186,7 @@
   "finalCheckpointMatchesNoProgressAwarded": "Кінцева контрольна точка збігається · {{value1}} · Прогрес не нараховано.",
   "sourceVerifiedExactInputTicksFinalCheckpointCheckedAgainAt": "Джерело перевірено · точні такти керування: {{value1}} · Кінцеву контрольну точку буде перевірено знову наприкінці.",
   "tick2": "Такт {{value1}} · {{value2}}{{value3}}{{value4}}{{value5}}{{value6}}",
+  "interferenceResisted": " · перешкоду подолано",
   "reading2": "Читання {{value1}}…",
   "verifyingTicks": "Перевірка {{value1}} / {{value2}} тактів…",
   "verifiedAndLoadedReadyToWatch": "{{value1}} перевірено й завантажено. Готово до перегляду.",
