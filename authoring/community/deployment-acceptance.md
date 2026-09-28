@@ -86,7 +86,10 @@ Run these checks in the selected production-like environment before claiming ava
    production mailbox path.
 8. Run `npm run acceptance:deployed` with Creator A, Creator B and administrator sessions. Preserve
    its redacted receipt. Require the receipt's release/source identity to match the deployed
-   immutable artifact, then exercise immutable update in the browser.
+   immutable artifact. Repeat with `COMMUNITY_ACCEPTANCE_MODERATION_MODE=browser`, explicitly load
+   the seeded preview and choose **Unlist and resolve** in the shipped administrator page, then run
+   `npm run acceptance:browser-moderation` against the seed receipt. Preserve the passing verifier
+   receipt, then exercise immutable update in the browser.
 9. Stop writers and run `npm run recovery:rehearse` against a confirmed empty target. Retain the
    redacted receipt and repeat exact download plus offline ownership checks against the restored
    service.
