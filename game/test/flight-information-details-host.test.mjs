@@ -383,7 +383,8 @@ test('mounted controller navigates Pause to Details and reading; held Back canno
     buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
   };
   const p = await soloPage(t, { campaign, readPads: () => [pad] });
-  let now = 1000;
+  // Continue from the host's sampled clock; a backwards fixture clock stalls rearming.
+  let now = performance.now();
   t.mock.method(performance, 'now', () => now);
   const frame = () => {
     now += 30;
@@ -394,7 +395,8 @@ test('mounted controller navigates Pause to Details and reading; held Back canno
     set(n, true);
     frame();
     set(n, false);
-    frame();
+    // A second Confirm is a fresh gesture only after the 120 ms neutral gate.
+    for (let neutral = 0; neutral < 5; neutral++) frame();
   };
   frame();
   await start(p);

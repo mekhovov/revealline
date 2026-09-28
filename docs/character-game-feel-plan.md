@@ -87,6 +87,34 @@ failure explanations and core events, replacing stale internal-code feedback.
 Terminal narration has one live-region owner. See [batch 6](verification/actor-batch-6/README.md)
 for exact checks, corrected fixture failures and remaining adoption limits.
 
+## Seventh batch: benchmark parity and combined threat guidance
+
+The next review found that the comparison tool created a run from its authored
+level without the ordinary fresh-attempt Standard tuning. It now applies the
+shared pure tuning recipe once, retains the owned effective level for Retry,
+and displays authored and effective runtime identities separately. Player
+preferences, originals, actor pins and simulation rules remain unchanged.
+Earlier batch 1–6 benchmark outcomes remain **untuned authored-level evidence**,
+not public Standard balance proof; their visual checks keep their original scope.
+
+Independent tests compare all three benchmark missions with the ordinary source
+attempt preparer: initial state, 240 ticks each (720 total), and retained Retry.
+Paired effective routes establish locked targets, 90-tick warning, bounded
+commitment, capture cancellation and the consequence of extending a cut. Enemy
+cooldown does not clear a travelling line impact. Human readability and fairness
+still need player sessions.
+
+Field details now compose pursuit/interception state with trail-impact capability
+for explicitly combined actors. Current v1 benchmark missions do not set that
+explicit carrier flag; their pressure text is preserved. This is a narrow
+information correction for supported combined actors, not a new enemy behavior
+or a claim that every role description is finished. Slow benchmark decoding
+also keeps its loading message until preparation actually finishes.
+
+**65/65 benchmark tests and 20/20 mounted Details/combined-threat tests pass.** See [batch 7 evidence](verification/actor-batch-7/README.md) for exact checks,
+retained failures and native-browser observations. This is another bounded
+checkpoint in the same PR761, with no extra release or version allocation.
+
 ## Remaining delivery order
 
 | Order          | Remaining work                                                                                                                     | Acceptance                                                                                                                                                                          | Effort range after start                             |

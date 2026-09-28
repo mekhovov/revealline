@@ -12,3 +12,9 @@ docs/verification/actor-batch-6/raster-calibration-failure.txt -whitespace
 docs/verification/actor-batch-6/raster-team-geometry-failure.txt -whitespace
 docs/verification/actor-batch-6/raster-team-width-failure.txt -whitespace
 docs/verification/actor-batch-6/team-overlay-original-failure.tap -whitespace
+
+# Retain exact batch-7 tuning/controller failure TAP rather than trimming evidence.
+docs/verification/actor-batch-7/initial-tuning-regressions.tap -whitespace
+docs/verification/actor-batch-7/pressure-details-baseline-controller-fail.tap -whitespace
+docs/verification/actor-batch-7/pressure-details-current-controller-fail.tap -whitespace
+docs/verification/actor-batch-7/lint.txt -whitespace

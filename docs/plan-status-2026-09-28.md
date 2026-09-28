@@ -13,7 +13,7 @@ selects **v0.142.0**, source
 `813dee5feff5d42c54ef91292f6dd434d39d311a`. This checkpoint read the live
 `release.json`, GitHub `main` and draft PR761 directly. Main is now
 `7138e7b6187bf69991d50313c3f9ac1620427778`, including merged player-readiness
-PR768. Its publishing revision is separate from the immutable game source.
+PR768. Its publishing revision is separate from the immutable game source. The publisher has now published v0.142.1 as GitHub Latest; the ordinary Pages selector is still v0.142.0 at this check.
 
 The publisher has recorded a successful hosted audit of **2,229 files /
 758,963,460 bytes** for v0.142.0. That is the publisher's byte evidence, not a
@@ -27,8 +27,7 @@ checkpoint. This actor branch does not allocate its version or start another pub
 
 **Draft [PR761](https://github.com/mekhovov/revealline/pull/761)** contains the
 character, reference and authoring work. Five earlier implementation batches and cancellation corrections were pushed through
-`92fa98912eb5b5509f30f12a200e91afb48fe851`. This sixth compatible checkpoint adds
-the foreground-contact study and useful loss/recovery feedback described below. PR761 is not merged or publicly released and needs reconciliation against
+`92fa98912eb5b5509f30f12a200e91afb48fe851`. The sixth checkpoint adds the foreground-contact study and useful loss/recovery feedback; the seventh corrects effective gameplay parity and combined threat guidance, as described below. PR761 is not merged or publicly released and needs reconciliation against
 newer main. Compatible
 implementation continues in the same draft while the release queue is occupied.
 
@@ -186,9 +185,36 @@ These are source/browser results, not public acceptance or a six-player pilot.
 Final source verification is **202/202 focused checks**, repository/scoped lint,
 formatting/native formatting, validation and Motion Lab syntax. Both-pilot native
 raster results and their exact scope are retained with the batch. The release
-queue snapshot at 17:34 UTC had **16 open PRs / 12 drafts**; the publisher is
-preparing v0.142.1 publication while independent reconciliations continue.
+queue snapshot at 17:34 UTC had **16 open PRs / 12 drafts**; the publisher is completing v0.142.1 Pages admission while independent reconciliations continue.
 Queue time is separate from the effort ranges below and is not a fixed ETA.
+
+## Seventh batch: benchmark parity and combined threat guidance
+
+The next review found that the comparison tool created a run from its authored
+level without the ordinary fresh-attempt Standard tuning. It now applies the
+shared pure tuning recipe once, retains the owned effective level for Retry,
+and displays authored and effective runtime identities separately. Player
+preferences, originals, actor pins and simulation rules remain unchanged.
+Earlier batch 1–6 benchmark outcomes remain **untuned authored-level evidence**,
+not public Standard balance proof; their visual checks keep their original scope.
+
+Independent tests compare all three benchmark missions with the ordinary source
+attempt preparer: initial state, 240 ticks each (720 total), and retained Retry.
+Paired effective routes establish locked targets, 90-tick warning, bounded
+commitment, capture cancellation and the consequence of extending a cut. Enemy
+cooldown does not clear a travelling line impact. Human readability and fairness
+still need player sessions.
+
+Field details now compose pursuit/interception state with trail-impact capability
+for explicitly combined actors. Current v1 benchmark missions do not set that
+explicit carrier flag; their pressure text is preserved. This is a narrow
+information correction for supported combined actors, not a new enemy behavior
+or a claim that every role description is finished. Slow benchmark decoding
+also keeps its loading message until preparation actually finishes.
+
+**65/65 benchmark tests and 20/20 mounted Details/combined-threat tests pass**, along with local lint, formatting, validation and syntax checks. See [batch 7 evidence](verification/actor-batch-7/README.md) for exact checks,
+retained failures and native-browser observations. This is another bounded
+checkpoint in the same PR761, with no extra release or version allocation.
 
 ## Remaining order and estimates
 

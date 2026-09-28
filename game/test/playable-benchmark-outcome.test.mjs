@@ -155,7 +155,7 @@ test('a real failure, recovery and nonterminal capture produce three messages wi
   );
   assert.ok(messages[0].message.includes(failureExplanation('self-contact').reason));
   assert.equal(messages[1].message, 'Recovered. 2 lives remain. Continue this attempt.');
-  assert.equal(messages[2].message, 'Captured 30 cells. 1.3% revealed.');
+  assert.equal(messages[2].message, 'Captured 20 cells. 0.8% revealed.');
   assert.equal(session.run.status, 'running');
   assert.equal(
     session.run.failureCause,
@@ -191,7 +191,7 @@ test('a real win after recovery replaces the retained failure cause and the same
   assert.equal(session.run.failureCause, 'self-contact');
   assert.deepEqual(
     messages.map((entry) => entry.tick),
-    [61, 138, 675],
+    [61, 138, 730],
   );
   const terminal = messages.at(-1);
   assert.ok(terminal.events.includes('cells.claimed'));
