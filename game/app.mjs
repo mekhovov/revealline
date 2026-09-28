@@ -33,6 +33,7 @@ import {
   prepareFreshSoloVisualTheme,
 } from './presentation/fresh-visual-theme.mjs';
 import { attachMusicCredit } from './ui/music-credit.mjs';
+import { attachSoundtrackSettingsPlayer } from './ui/soundtrack-settings-player.mjs';
 import { soundtrackErrorText } from './ui/soundtrack-error-copy.mjs';
 import { createTouchPreferences } from './touch-preferences.mjs';
 import { createCharacterPresentations } from './character-presentations.mjs';
@@ -1107,6 +1108,7 @@ try {
     root: $('settings-panel-audio'),
     pauseButton: $('pause-button'),
     prefix: 'solo',
+    showDetails: false,
   });
   let musicPreviewState = null,
     musicPreviewRequest = 0;
@@ -1185,6 +1187,7 @@ try {
   let guideMusicWasPlaying = false;
   let soundtrackPlayer = null,
     quickMusicControls = null,
+    soundtrackSettingsPlayer = null,
     soundtrackPanel = null,
     soundtrackStore = null;
   let soundtrackAssets = new Map(),
@@ -1747,6 +1750,7 @@ try {
         onChange: (state) => {
           soundtrackPanel?.update(state);
           quickMusicControls?.render();
+          soundtrackSettingsPlayer?.update(state);
           musicPreviewState = state;
           renderMusicPreview();
           if (soundtrackLoading) return;
@@ -1793,6 +1797,25 @@ try {
       soundtrackPlayer.setContext(soundtrackContext());
       publishedAudio.setPlayer(soundtrackPlayer);
       if (soundtrackSuspended) soundtrackPlayer.suspend();
+      soundtrackSettingsPlayer = attachSoundtrackSettingsPlayer({
+        document,
+        root: $('settings-music-player'),
+        player: soundtrackPlayer,
+        getLibrary: () => soundtrackLibrary,
+        getMaster: () => audioMaster.snapshot(),
+        activate: () => {
+          soundtrackMenuGesture = true;
+          const waking = soundtrackPlayer.wake();
+          const playing = activateAudio({ explicit: true });
+          return Promise.all([waking, playing]).then(([, result]) => result);
+        },
+        beforeSelection: () => {
+          soundtrackMenuGesture = true;
+          return soundtrackPlayer.wake();
+        },
+        openLibrary: () => soundtrackPanel?.open(),
+        onError: (error) => soundtrackStatus(() => soundtrackErrorText(error)),
+      });
       soundtrackPanel = attachSoundtrackPanel({
         audioMaster,
         onMasterMuted: setMasterMuted,
@@ -1809,6 +1832,7 @@ try {
           soundtrackGeneration = snapshot.generation;
           soundtrackLibrary = _library;
           soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
+          soundtrackSettingsPlayer?.update();
         },
         onError: (error) => soundtrackStatus(() => soundtrackErrorText(error)),
         onOpen: () => {
@@ -1820,7 +1844,7 @@ try {
           clearInput();
           $('settings-dialog').showModal();
           void storageRetention.refresh();
-          $('soundtrack-open').focus();
+          (document.getElementById('settings-music-advanced') ?? $('soundtrack-open')).focus();
         },
         onVolume: (value) => {
           $('music-volume').value = value;
@@ -1839,7 +1863,8 @@ try {
       // The studio owns persisted playlist selection. Keep the legacy genre selector
       // only for browsers that cannot attach the file-audio transport.
       $('music-select').closest('label').hidden = true;
-      localizedText($('music-preview'), () => t('interface:playSelectedPlaylist'));
+      $('music-preview').hidden = true;
+      $('soundtrack-open').hidden = true;
       $('soundtrack-open').disabled = false;
       $('soundtrack-open').onclick = () => soundtrackPanel.open();
       try {
@@ -1889,6 +1914,8 @@ try {
       soundtrackLoading = false;
       quickMusicControls?.dispose();
       quickMusicControls = null;
+      soundtrackSettingsPlayer?.dispose();
+      soundtrackSettingsPlayer = null;
       soundtrackPanel?.dispose();
       soundtrackPlayer?.dispose();
       soundtrackStore?.close();
@@ -1897,6 +1924,8 @@ try {
       soundtrackPanel = null;
       sound.resumeMusic();
       $('soundtrack-open').disabled = true;
+      $('soundtrack-open').hidden = false;
+      $('music-preview').hidden = false;
       $('music-select').closest('label').hidden = false;
       if (!soundtrackDisposed) soundtrackStatus(() => soundtrackErrorText(error));
     }
@@ -2807,6 +2836,7 @@ try {
       soundtrackDisposed = true;
       soundtrackLoad.abort();
       quickMusicControls?.dispose();
+      soundtrackSettingsPlayer?.dispose();
       enemyGuide.dispose();
       optionalWorlds?.dispose();
       soundtrackPlayer?.dispose();

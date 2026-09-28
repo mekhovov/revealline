@@ -751,16 +751,24 @@ for (const [intent, initiallyEnabled] of [
     assert.deepEqual(page.errors, []);
   });
 
-test('Solo Audio exposes full current credits while compact Pause remains an ordinary Pause owner', async (t) => {
+test('Solo Audio exposes compact current credits while Pause remains an ordinary Pause owner', async (t) => {
   const { page, original } = await setup(t);
   await openStudio(page);
   await playStudio(page);
   leaveStudio(page);
   page.$('settings-button').click();
   page.$('settings-tab-audio').click();
-  const details = page.$('solo-music-details');
+  const details = page.$('settings-music-now');
+  assert.match(details.textContent, new RegExp(original.track.title));
   assert.match(details.textContent, /RevealLine tests/);
-  assert.match(details.textContent, /File:/);
+  const sourceURL = original.track.websites?.[0]?.url ?? original.track.rights.source;
+  if (sourceURL) assert.equal(page.$('settings-music-source').getAttribute('href'), sourceURL);
+  else assert.equal(page.$('settings-music-source').hidden, true);
+  assert.equal(
+    page.$('solo-music-details'),
+    null,
+    'advanced file metadata stays out of simple Audio',
+  );
   assert.ok(
     page.$('pause-button').getAttribute('data-track-caption').includes(original.track.title),
   );
