@@ -216,6 +216,44 @@ test('trace UI follows live locale changes without clearing diagnostics', () => 
   setLocale(previousLocale, { persist: false });
 });
 
+test('visible native trace preserves primary pointer edges and nonprimary click defaults', () => {
+  const { document, listeners } = fixture();
+  const trace = attachControllerConfirmTrace({ document, enabled: true, now: () => 42 });
+  for (const [type, isPrimary] of [
+    ['pointerdown', true],
+    ['pointerup', true],
+    ['click', false],
+  ])
+    listeners.get(type)({
+      type,
+      pointerType: 'mouse',
+      pointerId: 1,
+      isPrimary,
+      button: 0,
+      isTrusted: true,
+      target: { id: 'sound' },
+    });
+  const entries = trace.snapshot();
+  assert.deepEqual(
+    entries.map(({ native, pointerId, primary, button }) => [native, pointerId, primary, button]),
+    [
+      ['pointerdown', 1, true, 0],
+      ['pointerup', 1, true, 0],
+      ['click', 1, false, 0],
+    ],
+  );
+  const output = document.body.children[0].children[2].textContent;
+  assert.match(
+    output,
+    /native:pointerdown trusted:true pointer:mouse pointerId:1 primary:true button:0/,
+  );
+  assert.match(
+    output,
+    /native:click trusted:true pointer:mouse pointerId:1 primary:false button:0/,
+  );
+  trace.destroy();
+});
+
 test('visible context preserves device identity and browser state across later native observations', () => {
   const { document } = fixture();
   const trace = attachControllerConfirmTrace({ document, enabled: true });

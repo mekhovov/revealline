@@ -3,7 +3,7 @@
 /* global location, window, document */
 import http from 'node:http';
 import path from 'node:path';
-import { readFile, stat } from 'node:fs/promises';
+import { open, readFile, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 function browserFixture() {
@@ -139,7 +139,7 @@ function browserFixture() {
     event.type.startsWith('key')
       ? ['Enter', ' '].includes(event.key)
       : (event.button == null || event.button === 0 || event.button === -1) &&
-        event.isPrimary !== false;
+        (event.type === 'click' || event.isPrimary !== false);
   const describe = (event) => ({
     type: event.type,
     isTrusted: event.isTrusted,
@@ -147,7 +147,12 @@ function browserFixture() {
     targetId: event.target?.id || '',
     ...(event.type.startsWith('key')
       ? { key: event.key, repeat: !!event.repeat }
-      : { pointerType: event.pointerType || '', button: event.button }),
+      : {
+          pointerType: event.pointerType || '',
+          pointerId: event.pointerId,
+          isPrimary: event.isPrimary,
+          button: event.button,
+        }),
   });
   for (const type of [
     'keydown',
@@ -207,6 +212,92 @@ function browserFixture() {
   setInterval(publish, 100);
 }
 
+// Release distribution.zip uses STORE entries. Read only the requested member,
+// avoiding a second 700+ MiB extracted site on constrained acceptance machines.
+async function storedArchive(file) {
+  const handle = await open(file, 'r'),
+    { size } = await handle.stat();
+  const read = async (length, position) => {
+    if (position < 0 || length < 0 || position + length > size)
+      throw new Error('Archive member is outside the file.');
+    const bytes = Buffer.alloc(length);
+    let offset = 0;
+    while (offset < length) {
+      const result = await handle.read(bytes, offset, length - offset, position + offset);
+      if (!result.bytesRead) throw new Error('Truncated archive.');
+      offset += result.bytesRead;
+    }
+    return bytes;
+  };
+  const tail = await read(Math.min(size, 65557), Math.max(0, size - 65557));
+  let end = tail.length - 22;
+  while (
+    end >= 0 &&
+    (tail.readUInt32LE(end) !== 0x06054b50 ||
+      end + 22 + tail.readUInt16LE(end + 20) !== tail.length)
+  )
+    end--;
+  if (end < 0 || tail.readUInt32LE(end + 4) !== 0)
+    throw new Error('Expected a single-disk ZIP archive.');
+  const count = tail.readUInt16LE(end + 10),
+    directorySize = tail.readUInt32LE(end + 12),
+    directoryOffset = tail.readUInt32LE(end + 16);
+  if (
+    count === 65535 ||
+    count !== tail.readUInt16LE(end + 8) ||
+    directorySize > 32 * 1024 * 1024 ||
+    directoryOffset + directorySize !== size - tail.length + end
+  )
+    throw new Error('Unsupported ZIP directory.');
+  const directory = await read(directorySize, directoryOffset),
+    entries = new Map();
+  let cursor = 0;
+  for (let index = 0; index < count; index++) {
+    if (cursor + 46 > directory.length || directory.readUInt32LE(cursor) !== 0x02014b50)
+      throw new Error('Invalid ZIP member.');
+    const flags = directory.readUInt16LE(cursor + 8),
+      method = directory.readUInt16LE(cursor + 10),
+      compressed = directory.readUInt32LE(cursor + 20),
+      length = directory.readUInt32LE(cursor + 24),
+      nameLength = directory.readUInt16LE(cursor + 28),
+      extraLength = directory.readUInt16LE(cursor + 30),
+      commentLength = directory.readUInt16LE(cursor + 32),
+      offset = directory.readUInt32LE(cursor + 42),
+      next = cursor + 46 + nameLength + extraLength + commentLength,
+      name = directory.subarray(cursor + 46, cursor + 46 + nameLength).toString('utf8');
+    if (
+      flags & 1 ||
+      method !== 0 ||
+      compressed !== length ||
+      next > directory.length ||
+      name.startsWith('/') ||
+      name.includes('\\') ||
+      name.split('/').includes('..') ||
+      entries.has(name)
+    )
+      throw new Error('Expected unique unencrypted STORE entries.');
+    entries.set(name, { offset, length });
+    cursor = next;
+  }
+  if (cursor !== directory.length) throw new Error('Unexpected ZIP directory bytes.');
+  return async (name) => {
+    const entry = entries.get(name);
+    if (!entry) throw Object.assign(new Error('Not found'), { code: 'ENOENT' });
+    const header = await read(30, entry.offset);
+    if (header.readUInt32LE(0) !== 0x04034b50 || header.readUInt16LE(8) !== 0)
+      throw new Error('Invalid ZIP local header.');
+    const nameLength = header.readUInt16LE(26),
+      extraLength = header.readUInt16LE(28),
+      dataOffset = entry.offset + 30 + nameLength + extraLength;
+    if (
+      (await read(nameLength, entry.offset + 30)).toString('utf8') !== name ||
+      dataOffset + entry.length > directoryOffset
+    )
+      throw new Error('ZIP member does not match directory.');
+    return read(entry.length, dataOffset);
+  };
+}
+
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'),
   args = process.argv.slice(2),
   option = (name, fallback) => {
@@ -214,6 +305,7 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
     return index < 0 ? fallback : args[index + 1];
   },
   root = path.resolve(projectRoot, option('--root', 'dist')),
+  archive = option('--archive', null),
   port = Number(option('--port', '8879')),
   types = {
     '.html': 'text/html; charset=utf-8',
@@ -239,7 +331,9 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
     '.txt': 'text/plain; charset=utf-8',
   };
 if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('Invalid fixture port.');
-await stat(path.join(root, 'game/index.html'));
+const readArchive = archive ? await storedArchive(path.resolve(archive)) : null;
+if (readArchive) await readArchive('game/index.html');
+else await stat(path.join(root, 'game/index.html'));
 const injection = `<script id="deck-fixture-bootstrap">(${browserFixture.toString()})();</script>`;
 http
   .createServer(async (request, response) => {
@@ -256,7 +350,7 @@ http
         response.writeHead(403).end();
         return;
       }
-      let body = await readFile(file);
+      let body = readArchive ? await readArchive(relative.slice(1)) : await readFile(file);
       if (relative === '/game/index.html')
         body = Buffer.from(
           body.toString('utf8').replace(/<head\b[^>]*>/u, (head) => `${head}\n${injection}`),
@@ -278,6 +372,6 @@ http
     }
   })
   .listen(port, '127.0.0.1', () => {
-    console.log(`Controller fixture serving ${root}`);
+    console.log(`Controller fixture serving ${archive ? path.resolve(archive) : root}`);
     console.log(`http://127.0.0.1:${port}/game/?fixture=native-events&controllerTrace=1`);
   });
