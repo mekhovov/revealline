@@ -811,5 +811,9 @@
   "companyPlayer.learningTranscriptMismatch": "A learning transcript is duplicated or does not match this edition’s simulations.",
   "companyPlayer.missingLearningReplayProof": "Completed learning needs its matching replay proof. Open the backup in its matching earlier release.",
   "companyPlayer.importWhilePreparing": "Wait for the mission to finish preparing before importing progress.",
-  "companyPlayer.openFailed": "Could not open this edition: {{error}}"
+  "companyPlayer.openFailed": "Could not open this edition: {{error}}",
+  "companyPlayer.precedingConnectionIncomplete": "Complete the preceding connection and its assignment first.",
+  "companyPlayer.missionOutsideEdition": "This mission is not part of the selected edition.",
+  "companyPlayer.savedMissionUnavailable": "The saved mission belongs to an unavailable campaign. Its data has been kept.",
+  "companyPlayer.workbenchUnsafe": "Return to safe ground before opening the workbench."
 }

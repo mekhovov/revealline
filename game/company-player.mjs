@@ -34,7 +34,7 @@ import {
   verifyEditionOffline,
   selectPreparedEdition,
 } from './editions/offline-client.mjs';
-import { localizedText, t } from './i18n/index.mjs';
+import { localizedAttribute, localizedText, t } from './i18n/index.mjs';
 
 const $ = (id) => document.getElementById(id);
 const BACKUP_LIMITS = Object.freeze({
@@ -163,7 +163,9 @@ async function main() {
   $('brand-name').textContent = selection.brand.name;
   $('brand-description').textContent = selection.brand.description;
   $('home-title').textContent = selection.edition.name;
-  $('footer-brand').textContent = `${selection.brand.name} · Reveal / Line`;
+  localizedText($('footer-brand'), () =>
+    t('interface:companyPlayer.footerBrand', { brand: selection.brand.name }),
+  );
   if (selection.brand.logoAssetId) {
     $('brand-logo').src = assetURL(selection.brand.logoAssetId);
     $('brand-logo').hidden = false;
@@ -425,13 +427,13 @@ async function main() {
   }
   async function start(id, { saved = null } = {}) {
     if (!saved && !unlocked(id))
-      throw new Error('Complete the preceding connection and its assignment first.');
+      throw new Error(t('errors:companyPlayer.precedingConnectionIncomplete'));
     const mission = missionFor(id);
-    if (!mission) throw new Error('This mission is not part of the selected edition.');
+    if (!mission) throw new Error(t('errors:companyPlayer.missionOutsideEdition'));
     pause({ persist: !saved });
     const ticket = ++generation;
     preparing = true;
-    report('Preparing the exact mission and its artwork…');
+    report(() => t('interface:companyPlayer.preparingMission'));
     let attempt, staged;
     try {
       let restored;
@@ -480,14 +482,16 @@ async function main() {
         staged.enemyBodies.clear();
         return;
       }
-      let learningNotice = '';
+      let learningNotice = null;
       if (learning?.status === 'complete') {
         try {
           if (!(await proveLearning(learning, run, recorder)))
-            learningNotice =
-              'Your verified assignment is kept in this tab. Export a backup to keep its replay proof.';
+            learningNotice = () => t('interface:companyPlayer.verifiedAssignmentInTab');
         } catch (error) {
-          learningNotice = `The saved attempt is verified, but historical mastery needs attention: ${error.message}`;
+          learningNotice = () =>
+            t('interface:companyPlayer.historicalMasteryNeedsAttention', {
+              error: error.message,
+            });
         }
       }
       if (ticket !== generation) {
@@ -529,7 +533,7 @@ async function main() {
       $('workbench-button').hidden = !lesson;
       report(
         learningNotice ||
-          (writer.writable ? 'Ready. Your progress stays with this edition.' : writer.reason),
+          (writer.writable ? () => t('interface:companyPlayer.readyForEdition') : writer.reason),
         !!learningNotice || !writer.writable,
       );
       save();
@@ -558,13 +562,17 @@ async function main() {
       image.loading = 'lazy';
       card.append(image);
       const content = node('div', undefined, 'campaign-card-content');
-      content.append(
-        node('span', `JOURNEY ${String(index + 1).padStart(2, '0')}`, 'campaign-number'),
-        node('h3', campaign.name),
-        node('p', first.design.lesson),
+      const number = node('span', undefined, 'campaign-number');
+      localizedText(number, () =>
+        t('interface:companyPlayer.journeyNumber', {
+          number: String(index + 1).padStart(2, '0'),
+        }),
       );
+      content.append(number, node('h3', campaign.name), node('p', first.design.lesson));
       const select = node('select');
-      select.setAttribute('aria-label', `Mission in ${campaign.name}`);
+      localizedAttribute(select, 'aria-label', () =>
+        t('interface:companyPlayer.missionInCampaign', { campaign: campaign.name }),
+      );
       campaign.missionIds.forEach((id, i) => {
         const m = source.missions.find((m) => m.id === id),
           option = node('option', `${i + 1}. ${m.name}${completed(id) ? ' ✓' : ''}`);
@@ -574,20 +582,28 @@ async function main() {
       });
       select.value =
         campaign.missionIds.find((id) => !completed(id) && unlocked(id)) ?? campaign.missionIds[0];
-      const button = node('button', 'Enter journey →', 'primary');
-      button.setAttribute('aria-label', `Enter journey: ${campaign.name}`);
+      const button = node('button', undefined, 'primary');
+      localizedText(button, () => t('interface:companyPlayer.enterJourney'));
+      localizedAttribute(button, 'aria-label', () =>
+        t('interface:companyPlayer.enterJourneyNamed', { campaign: campaign.name }),
+      );
       button.onclick = guard(() => start(select.value));
       const footer = node('div', undefined, 'campaign-footer');
-      footer.append(
-        node(
-          'span',
-          `${campaign.missionIds.filter(completed).length} / ${campaign.missionIds.length} connected`,
-        ),
-        node(
-          'span',
-          lessons.some((l) => l.campaignId === campaign.id) ? 'PLAY + PRACTICE' : 'ADVENTURE',
-        ),
+      const connected = node('span'),
+        kind = node('span'),
+        connectedCount = campaign.missionIds.filter(completed).length;
+      localizedText(connected, () =>
+        t('interface:companyPlayer.connected', {
+          count: connectedCount,
+          total: campaign.missionIds.length,
+        }),
       );
+      localizedText(kind, () =>
+        lessons.some((lesson) => lesson.campaignId === campaign.id)
+          ? t('interface:companyPlayer.playPractice')
+          : t('interface:companyPlayer.adventure'),
+      );
+      footer.append(connected, kind);
       content.append(select, button, footer);
       card.append(content);
       $('campaigns').append(card);
@@ -603,6 +619,10 @@ async function main() {
     // Preserve focused nodes and avoid rebuilding unchanged text every frame.
     const put = (id, property, value) => {
       const target = $(id);
+      if (property === 'textContent') {
+        localizedText(target, value);
+        return;
+      }
       if (target[property] !== value) target[property] = value;
     };
     put('coverage', 'textContent', `${(run.coverage * 100).toFixed(1)}%`);
@@ -618,52 +638,48 @@ async function main() {
     put('resume-button', 'hidden', ended);
     put('retry-button', 'hidden', !ended);
     put('next-button', 'hidden', !won || !learned);
-    put('pause-button', 'textContent', paused ? 'Resume' : 'Pause');
-    put('pause-button', 'disabled', ended);
-    put(
-      'play-state',
-      'textContent',
-      won
-        ? learned
-          ? 'Connection complete.'
-          : 'Picture connected. Assignment waiting.'
-        : run.status === 'lost'
-          ? 'Another route is waiting.'
-          : run.tick === 0
-            ? 'Ready to connect.'
-            : 'Take your time.',
+    put('pause-button', 'textContent', () =>
+      paused ? t('common:actions.resume') : t('common:actions.pause'),
     );
-    put(
-      'play-detail',
-      'textContent',
+    put('pause-button', 'disabled', ended);
+    put('play-state', 'textContent', () =>
       won
         ? learned
-          ? 'This connection is complete.'
-          : 'Open the workbench to complete this connection.'
+          ? t('interface:companyPlayer.connectionComplete')
+          : t('interface:companyPlayer.assignmentWaiting')
         : run.status === 'lost'
-          ? 'Watch the paper tangles and try a shorter return.'
+          ? t('interface:companyPlayer.anotherRouteWaiting')
+          : run.tick === 0
+            ? t('interface:companyPlayer.readyToConnect')
+            : t('interface:companyPlayer.takeYourTime'),
+    );
+    put('play-detail', 'textContent', () =>
+      won
+        ? learned
+          ? t('interface:companyPlayer.connectionCompleteDetail')
+          : t('interface:companyPlayer.openWorkbenchToComplete')
+        : run.status === 'lost'
+          ? t('interface:companyPlayer.shorterReturnHint')
           : current.manifest.design.routeDecision,
     );
-    put('resume-button', 'textContent', run.tick === 0 ? 'Start mission' : 'Return to play');
-    put(
-      'learning-status',
-      'textContent',
+    put('resume-button', 'textContent', () =>
+      run.tick === 0 ? t('interface:startMission') : t('interface:companyPlayer.returnToPlay'),
+    );
+    put('learning-status', 'textContent', () =>
       currentLesson()
         ? !safe
-          ? 'Return to safe ground before opening the workbench.'
+          ? t('interface:companyPlayer.returnToSafeGround')
           : learned
-            ? 'Assignment complete.'
-            : 'Inspect → Configure → Commit. The game pauses while you work.'
-        : 'An adventure mission. Follow your own route.',
+            ? t('interface:companyPlayer.assignmentComplete')
+            : t('interface:companyPlayer.workbenchInstructions')
+        : t('interface:companyPlayer.adventureMission'),
     );
-    put(
-      'workbench-button',
-      'textContent',
+    put('workbench-button', 'textContent', () =>
       current.learning?.status === 'complete'
-        ? 'Review workbench'
+        ? t('interface:companyPlayer.reviewWorkbench')
         : learned
-          ? 'Practice again'
-          : 'Open workbench',
+          ? t('interface:companyPlayer.practiceAgain')
+          : t('interface:companyPlayer.openWorkbench'),
     );
     put('workbench-button', 'disabled', !safe);
   }
@@ -689,10 +705,7 @@ async function main() {
       maxDepth: 30,
     });
     const m = host.catalog.find(saved.missionId);
-    if (!m)
-      throw new Error(
-        'The saved mission belongs to an unavailable campaign. Its data has been kept.',
-      );
+    if (!m) throw new Error(t('errors:companyPlayer.savedMissionUnavailable'));
     return start(m.levelId, { saved });
   });
   $('pause-button').onclick = () => (paused ? resume() : pause());
@@ -709,7 +722,7 @@ async function main() {
     const editionId = $('edition-select').value;
     $('edition-select').disabled = true;
     try {
-      report('Checking the selected company and its artwork…');
+      report(() => t('interface:companyPlayer.checkingSelectedCompany'));
       const candidate = await loadEditionBootstrap({
         catalogURL,
         contentBaseURL: rootURL.href,
@@ -761,13 +774,15 @@ async function main() {
       $('gallery').append(card);
     }
     if (!$('gallery').children.length)
-      $('gallery').append(node('p', 'Your completed connections will appear here.'));
+      localizedText($('gallery').appendChild(node('p')), () =>
+        t('interface:companyPlayer.galleryEmpty'),
+      );
     openDialog('gallery-dialog');
   };
   $('workbench-button').onclick = guard(() => {
     const lesson = currentLesson();
     if (!lesson) return;
-    if (!canOpenWorkbench()) throw new Error('Return to safe ground before opening the workbench.');
+    if (!canOpenWorkbench()) throw new Error(t('errors:companyPlayer.workbenchUnsafe'));
     pause();
     workbench?.destroy();
     workbench = mountCompanyWorkbench($('workbench-content'), {
@@ -788,10 +803,7 @@ async function main() {
           attempt.status === 'complete' &&
           !(await proveLearning(attempt, active.run, active.recorder))
         )
-          report(
-            'Your verified assignment is kept in this tab. Export a backup to keep its replay proof.',
-            true,
-          );
+          report(() => t('interface:companyPlayer.verifiedAssignmentInTab'), true);
         refresh();
       }),
       onClose: () => {
@@ -809,8 +821,11 @@ async function main() {
       await sound.enable();
       audioPreferences.setMuted(false);
     } else audioPreferences.setMuted(!audioMaster.snapshot().muted);
-    $('sound-button').textContent =
-      sound.enabled && !audioMaster.snapshot().muted ? 'Mute sound' : 'Enable sound';
+    localizedText($('sound-button'), () =>
+      sound.enabled && !audioMaster.snapshot().muted
+        ? t('interface:muteSound')
+        : t('interface:enableSound'),
+    );
   });
   $('export-backup').onclick = guard(() => {
     pause();
