@@ -4,11 +4,25 @@ This is the executable check list for the remaining installation, offline and re
 It does not reopen formative playtesting: the user reported that complete on 26 September 2026. It does not certify artwork, hardware or a public release. Record an observed result
 for the exact artifact; leave an unrun case pending.
 
-The exact post-merge main baseline is now v0.141.7 commit `6fe52474b5`, tree `282cb34616`.
-[Candidate CI 36363707594](https://github.com/mekhovov/revealline/actions/runs/36363707594)
-and the independent downloaded-byte comparison are recorded in the
-[current phase status](company-editions-phase-status-2026-09-28.md). The artifact remains a
-candidate and does not retroactively populate the physical-device rows below.
+The exact maintenance baseline is now v0.141.7 commit `c5885a1556`, tree `39bf58fda8`.
+[Candidate CI 36368498099](https://github.com/mekhovov/revealline/actions/runs/36368498099)
+passed on that exact main commit and uploaded Actions artifact `10948975755`, named
+`company-candidate-c5885a15561a88331c5566c5312392c4e5d8daf5`, with GitHub-reported size
+725,315,743 bytes. The artifact remains a candidate and does not retroactively populate the
+physical-device rows below. A reviewer must download it and record its independently computed
+SHA-256 before using it for device evidence.
+
+Use the [qualification recorder](verification/company-qualification.html) to bind observations
+to the frozen `editions.json`, the complete downloaded artifact and its exact main source. The
+recorder starts every gate pending, requires actual non-emulated device details for device claims,
+requires both primary editions for cross-edition checks, and exports a public-review candidate.
+It does not approve or publish anything. The final product release will have a different immutable
+version/envelope, so observations must either be repeated against that envelope or explicitly
+remain preliminary.
+
+Human and physical-device observations are intentionally deferred. Leave their recorder rows
+pending until that work resumes. Technical preparation may continue, but the promotion compiler
+will produce no `edition-review.json` while any required scenario remains incomplete.
 
 ## Evidence available
 
