@@ -11,6 +11,7 @@ const headerCss = [
   .map((path) => readFileSync(new URL(path, import.meta.url), 'utf8'))
   .join('\n');
 const surfaceCss = readFileSync(new URL('../ui/field-kit-surfaces.css', import.meta.url), 'utf8');
+const appSource = readFileSync(new URL('../app.mjs', import.meta.url), 'utf8');
 const declarations = (selector) => {
   const start = css.indexOf(`${selector} {`);
   assert.notEqual(start, -1, `Missing pause-specific rule: ${selector}`);
@@ -74,6 +75,10 @@ test('gameplay header CSS no longer reserves or hides space for fullscreen', () 
 test('ready actions use a bounded grid instead of shrinking translated labels into columns', () => {
   assert.match(
     surfaceCss,
+    /data-kind='ready'[^}]*\.overlay-card\s*\{[\s\S]*?overflow-y:\s*auto[\s\S]*?scroll-padding-block:\s*12px/,
+  );
+  assert.match(
+    surfaceCss,
     /data-kind='ready'[^}]*\.overlay-actions\s*\{[\s\S]*?display:\s*grid[\s\S]*?repeat\(2,\s*minmax\(0,\s*1fr\)\)/,
   );
   assert.match(
@@ -87,6 +92,17 @@ test('ready actions use a bounded grid instead of shrinking translated labels in
   assert.match(
     headerCss,
     /not\(\[data-kind='pause'\]\) \.pause-secondary-groups[\s\S]*?display:\s*none/,
+  );
+  assert.match(
+    surfaceCss,
+    /max-width:\s*380px[\s\S]*?data-kind='ready'[\s\S]*?pause-mission-info[\s\S]*?>\s*div\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)/,
+  );
+});
+
+test('ready primary focus is revealed inside a shallow scrollport', () => {
+  assert.match(
+    appSource,
+    /const target = campaignOverview \? \$\('next-button'\) : \$\('start-button'\);[\s\S]*?target\.focus\(\{ preventScroll: true \}\);[\s\S]*?target\.scrollIntoView\(\{ block: 'nearest', inline: 'nearest', behavior: 'auto' \}\);/,
   );
 });
 
