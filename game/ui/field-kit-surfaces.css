@@ -541,8 +541,10 @@ body.field-kit[data-field-kit-page]
 .field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-actions > * {
   min-width: 0;
 }
-.field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-actions > #start-button,
-.field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-actions > .pause-missions-section {
+.field-kit.game-shell
+  .game-overlay[data-kind='ready']
+  .overlay-actions
+  > :is(#flight-preparation-cancel, #continue-saved, #start-button, #next-button, #overlay-menu) {
   grid-column: 1 / -1;
 }
 .field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-actions .button {
@@ -558,7 +560,7 @@ body.field-kit[data-field-kit-page]
   .pause-missions-section
   .pause-mission-info
   > div {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
 }
 
 /* Pause is a compact command deck: one dominant continuation, labeled rows of
@@ -642,13 +644,6 @@ body.field-kit[data-field-kit-page]
 
 @media (max-width: 380px) {
   .field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-actions {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .field-kit.game-shell
-    .game-overlay[data-kind='ready']
-    .pause-missions-section
-    .pause-mission-info
-    > div {
     grid-template-columns: minmax(0, 1fr);
   }
   .field-kit.game-shell .game-overlay[data-kind='pause'] .pause-menu-section {
