@@ -1,3 +1,7 @@
+import { createAssetRewardEditor } from './asset-reward-editor.mjs';
+import { createTeaserRewardEditor } from './teaser-reward-editor.mjs';
+import { mountLocalRewardTeaserPreview } from './reward-teaser-preview.mjs';
+import { createCampaignFeedbackEditor } from './campaign-feedback-editor.mjs';
 import { mountRewardKnowledge } from '../ui/reward-knowledge.mjs';
 import { createLearningProfileEditor } from './learning-profile-editor.mjs';
 import { mountLocalRewardMediaPreview } from './reward-media-preview.mjs';
@@ -41,6 +45,15 @@ export function createDiscoveryEditor({
     const reward = rewards().find(
       (item) => item.id === reference.id && item.revision === reference.revision,
     );
+    if (reward?.teaserImage)
+      mediaPreviews.push(
+        mountLocalRewardTeaserPreview({
+          container,
+          teaserImage: reward.teaserImage,
+          locale: $('locale').value || 'en',
+          window,
+        }),
+      );
     for (const payload of reward?.payloads ?? [])
       if (payload.type === 'knowledge' && payload.profiles)
         mediaPreviews.push(
@@ -105,11 +118,25 @@ export function createDiscoveryEditor({
     window,
   });
   const resources = createResourceRewardEditor(sharedEditorOptions);
+  const teasers = createTeaserRewardEditor({ ...sharedEditorOptions, window });
   const mastery = createMasteryRewardEditor(sharedEditorOptions);
   const profiles = createLearningProfileEditor(sharedEditorOptions);
   const cosmetics = createCosmeticRewardEditor({
     ...sharedEditorOptions,
     getCosmeticSource,
+    window,
+  });
+  const assetHandoff = createAssetRewardEditor({
+    ...sharedEditorOptions,
+    getCosmeticSource,
+    window,
+  });
+  const feedback = createCampaignFeedbackEditor({
+    container: $('tools'),
+    getSource,
+    getCampaignId: () => $('campaign').value,
+    getLocale: () => $('locale').value || 'en',
+    apply,
     window,
   });
   const context = () =>
@@ -150,6 +177,7 @@ export function createDiscoveryEditor({
     localizedText($('result'), localizedMessage('tools:studio.discovery.prompt'));
     disposeMediaPreviews();
     $('preview').replaceChildren();
+    feedback.sync();
   }
   function printPreview(reference) {
     const viewer = createRewardPrintPreview({
@@ -196,30 +224,39 @@ export function createDiscoveryEditor({
     selectCampaign();
     exploration.sync();
     resources.sync();
+    teasers.sync();
     mastery.sync();
     profiles.sync();
     cosmetics.sync();
+    assetHandoff.sync();
   }
   function command() {
-    const finaleRewardRef = readRef($('finale'));
+    const finaleRewardRef = readRef($('finale')),
+      existingFeedback = getSource().campaigns.find((item) => item.id === $('campaign').value)
+        ?.discovery?.feedback;
     required(!finaleRewardRef || $('layout').value, 'Choose an exhibit layout for the finale.');
     return {
       campaignId: $('campaign').value,
       pacingBeat: $('beat').value || null,
       rewardRef: readRef($('reward')),
-      discovery: $('layout').value
-        ? { exhibitLayout: $('layout').value, ...(finaleRewardRef ? { finaleRewardRef } : {}) }
-        : null,
+      discovery:
+        $('layout').value || existingFeedback
+          ? {
+              exhibitLayout: $('layout').value || 'route',
+              ...(finaleRewardRef ? { finaleRewardRef } : {}),
+              ...(existingFeedback ? { feedback: existingFeedback } : {}),
+            }
+          : null,
     };
   }
   function draft() {
     required(key === context(), 'The draft changed. Refresh the discovery controls.');
     return editContentDiscovery(getSource(), getMission()?.id, command(), rewards());
   }
-  $('form').onsubmit = (event) => {
+  $('form').onsubmit = async (event) => {
     event.preventDefault();
     try {
-      if (apply(draft()) === false) return;
+      if ((await apply(draft())) === false) return;
       key = null;
       sync();
       localizedText($('result'), localizedMessage('tools:studio.discovery.applied'));
@@ -314,9 +351,12 @@ export function createDiscoveryEditor({
       disposeMediaPreviews();
       exploration.dispose();
       resources.dispose();
+      teasers.dispose();
       mastery.dispose();
       profiles.dispose();
       cosmetics.dispose();
+      assetHandoff.dispose();
+      feedback.dispose();
     },
   };
 }

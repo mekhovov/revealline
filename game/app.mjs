@@ -42,6 +42,8 @@ import { journeyFromPackCatalog, journeyMissionId } from './journey/catalog.mjs'
 import { createJourneyAuthority } from './journey/authority.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
 import { attachJourneySaveNotice } from './ui/journey-save-notice.mjs';
+import { createSoloPerformanceBinding } from './journey/performance-binding.mjs';
+import { journeyPerformanceText } from './ui/journey-performance.mjs';
 import { createJourneyPreferences } from './journey/preferences.mjs';
 import { loadAuthoredJourneyRoute } from './content-design/route-loader.mjs';
 import { DEFAULT_JOURNEY_ROUTES, resolveJourneyRequest } from './content-design/default-entry.mjs';
@@ -584,6 +586,14 @@ try {
   const journeyProfile = journeyEnabled
     ? createJourneyProfileStore({
         profileKey: authoredRoute?.profileKey,
+        ...(candidateHost
+          ? {
+              acceptPerformanceBinding: createSoloPerformanceBinding({
+                host: candidateHost,
+                provider: runtimeContent,
+              }),
+            }
+          : {}),
         ...(runtimeContent ? { canWrite: () => editionWriter?.writable === true } : {}),
         ...(previewSession?.journeyOptions(authoredRoute?.profileKey) ?? {}),
         onStatus: (status) => {
@@ -995,6 +1005,8 @@ try {
     replayDownload = null,
     completionWarning = '',
     appearanceRewardIds = [],
+    journeyBestResult = null,
+    journeyPerformanceActive = true,
     celebrationActive = false,
     defeatActive = false,
     defeatPaused = false,
@@ -7656,6 +7668,26 @@ try {
       }),
     );
   }
+  const journeyBestLine = document.createElement('p');
+  journeyBestLine.id = 'journey-best';
+  journeyBestLine.className = 'micro-note';
+  journeyBestLine.hidden = true;
+  $('overlay-copy').after(journeyBestLine);
+  function refreshJourneyBest() {
+    const visible = $('game-overlay').dataset.kind === 'won' && journeyBestResult?.runId === runId;
+    journeyBestLine.hidden = !visible;
+    journeyBestLine.dataset.state = !visible
+      ? 'hidden'
+      : journeyBestResult.result.error && !Object.hasOwn(journeyBestResult.result, 'comparison')
+        ? 'unavailable'
+        : journeyBestResult.result.comparison
+          ? 'comparison'
+          : 'first';
+    journeyBestLine.dataset.durable = String(visible && journeyBestResult.result.durable === true);
+    localizedText(journeyBestLine, () =>
+      visible ? journeyPerformanceText(journeyBestResult.result) : '',
+    );
+  }
   function overlay(kind, { preserveFocus = false } = {}) {
     // Repeated suspension may repaint Pause, but does not own a new focus
     // choice. An inactive child must not pull focus back from its parent.
@@ -7664,6 +7696,7 @@ try {
     const preservePauseFocus = preserveFocus || repeatedPause;
     drawResultPicture($('result-picture'), { kind, run, theme, seed, painter, flightPictures });
     $('game-overlay').dataset.kind = kind;
+    refreshJourneyBest();
     show('pause-label', kind === 'pause');
     show('overlay-reading', kind !== 'pause');
     show('overlay-footnote', kind !== 'pause');
@@ -8559,6 +8592,7 @@ try {
     legacyPictureButton.hidden = true;
     completionWarning = '';
     appearanceRewardIds = [];
+    journeyBestResult = null;
     celebrationActive = false;
     journeySkipArmed = null;
     localizedText($('journey-skip'), () => t('interface:skipMission'));
@@ -9007,6 +9041,7 @@ try {
       mode: 'solo',
       outcome: run?.status,
       missionId: reactionMission?.id,
+      ...(candidateHost?.owns(activeEntry) ? { feedback: activeEntry.campaignFeedback } : {}),
       encounter: !!run?.level.encounter,
       relays: !!run?.level.relayGates?.gates?.length,
     });
@@ -9203,7 +9238,19 @@ try {
     try {
       for (const [index, event] of events.entries()) {
         flightInformation.observeEvent(ticket, index, () => {
-          sound.event(event);
+          sound.event(
+            event,
+            {},
+            event.type === 'run.completed' && candidateHost?.owns(activeEntry)
+              ? {
+                  owned: !!journeySkipMission(),
+                  mode: 'solo',
+                  outcome: run?.status,
+                  missionId: journeySkipMission()?.id,
+                  feedback: activeEntry.campaignFeedback,
+                }
+              : null,
+          );
           if (event.type === 'class.switched') {
             updateLoadout();
             setTheme();
@@ -9371,6 +9418,10 @@ try {
   }
   const gameWakeLock = createGameWakeLock();
   window.addEventListener('pagehide', (event) => {
+    if (!event.persisted) {
+      journeyPerformanceActive = false;
+      journeyProfile?.performance.dispose();
+    }
     if (event.persisted) gameWakeLock.setActive(false);
     else gameWakeLock.dispose();
   });
@@ -9667,6 +9718,44 @@ try {
                   error: error.message,
                 },
               );
+            }
+          }
+          if (
+            candidateHost?.owns(activeEntry) &&
+            recorder &&
+            !recordingStopped &&
+            !recoverGameplayTuning(run.level)?.adminOverride
+          ) {
+            const acceptedMission = journeyMission();
+            const acceptedRun = run,
+              acceptedRunId = runId;
+            const acceptedClear =
+              acceptedMission && journeyProfile?.snapshot().clears.solo[acceptedMission.id];
+            if (acceptedClear?.runId === acceptedRunId) {
+              try {
+                const replay = exportReplay(recorder, acceptedRun);
+                void journeyProfile.performance
+                  .capture({
+                    mode: 'solo',
+                    missionId: acceptedMission.id,
+                    ...acceptedClear,
+                    replay,
+                  })
+                  .then((result) => {
+                    if (!journeyPerformanceActive || run !== acceptedRun || runId !== acceptedRunId)
+                      return;
+                    journeyBestResult = { runId: acceptedRunId, result };
+                    refreshJourneyBest();
+                  })
+                  .catch(() => {
+                    if (!journeyPerformanceActive || run !== acceptedRun || runId !== acceptedRunId)
+                      return;
+                    journeyBestResult = { runId: acceptedRunId, result: { error: 'unavailable' } };
+                    refreshJourneyBest();
+                  });
+              } catch {
+                /* Comparison is optional; the accepted clear and Next remain available. */
+              }
             }
           }
           if (!candidateHost?.owns(activeEntry)) {
@@ -10513,8 +10602,7 @@ try {
       update(dt);
       editionUI?.refresh();
       titleCharacter?.update(dt, {
-        visible:
-          !document.hidden && document.hasFocus() && controllerDialog() === $('shell-home'),
+        visible: !document.hidden && document.hasFocus() && controllerDialog() === $('shell-home'),
         reduced: displayPreferences.snapshot().effectiveReducedEffects,
       });
       const { width, height } = boardPaintSizeForRun(run);

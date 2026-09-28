@@ -38,6 +38,7 @@ export function createCandidateTeamHost(source, { corePackIds } = {}) {
       const row = freezeDesign({
         key: `${mission.id}/${entry.difficulty}`,
         mission,
+        ...(entry.campaignFeedback ? { campaignFeedback: entry.campaignFeedback } : {}),
         difficulty: entry.difficulty,
         pack: entry.campaign,
         level: entry.campaign.levels[index],

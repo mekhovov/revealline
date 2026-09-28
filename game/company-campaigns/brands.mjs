@@ -1,3 +1,4 @@
+import { curriculumRewardCharacters } from './curriculum-cosmetics.mjs';
 import { COMPANY_CAMPAIGNS } from './catalog.mjs';
 import {
   CURRICULUM_BRANDS,
@@ -174,6 +175,12 @@ const choices = [
 const retainedPresentations = Object.freeze({
   'victory-drones': [
     {
+      id: 'abcba1ea9574640497faf043f8caf26a039f1355d34df68f3e2f8546690439b4',
+      path: 'game/editions/retained/victory-drones-before-discovery-feedback.json',
+      sha256: '6b382368da6a6eed020ac00fa1703910992ca38a2205b8904ce23a23d68b5dec',
+      bytes: 142313,
+    },
+    {
       id: 'afeb4333ec165a3ecbaa01bce74822744e2f56238f7608701284bcbd436638b3',
       path: 'game/editions/retained/victory-drones-before-mission-art-4.json',
       sha256: 'c011e7dab14bcc0eb5dd5fcb697c8affc6e5f72cd4dffe63b20c3971b3c7a12a',
@@ -193,6 +200,12 @@ const retainedPresentations = Object.freeze({
     },
   ],
   'social-drone-ua': [
+    {
+      id: '9ae68b77e05e8b2a0dc934510e080af89ee5223a3304a0197c3b53a2e61af1b0',
+      path: 'game/editions/retained/social-drone-ua-before-discovery-feedback.json',
+      sha256: 'edf36f70669fae75d00038bdba4339ecbdd5e03e7647972f64922ee51e7a879b',
+      bytes: 143061,
+    },
     {
       id: '943441d44205dfced2e89cf47738d2fd6cc22e886cbd0fbea5bb24d77177e0de',
       path: 'game/editions/retained/social-drone-ua-before-mission-art-4.json',
@@ -214,6 +227,12 @@ const retainedPresentations = Object.freeze({
   ],
   'ukraine-culture': [
     {
+      id: '004d6874394bf5d37967eb841fa0004c4980d40169f7154b425ab3fcdea83e58',
+      path: 'game/editions/retained/ukraine-culture-before-discovery-feedback.json',
+      sha256: 'ce5fbde12003892ad63b17b71ee03ff897ba1a81d021271dfe613b44260adcc0',
+      bytes: 462558,
+    },
+    {
       id: 'b056de12bcb25f16bc3ed5324b5a0e1a7e30f2614a37eb244675ef02a8c2a805',
       path: 'game/editions/retained/ukraine-culture-before-profiles-art-3.json',
       sha256: '3940adef9e74a5f5cd83615c26cce573442dfc5685d6855998864772dbc14623',
@@ -233,6 +252,12 @@ const retainedPresentations = Object.freeze({
     },
   ],
   'fpv-learning': [
+    {
+      id: '089b0801b048970f1920e76b03ceda92f389e256c5e38e45c5e25abeebe04f0d',
+      path: 'game/editions/retained/fpv-learning-before-discovery-feedback.json',
+      sha256: 'ea7a462be267c911997c876c73a92b458a56932ab317e7a70dec6eadc5655d6c',
+      bytes: 583333,
+    },
     {
       id: '5c23ab5e0b883f17e9de0df3a5b8b41010a86da1c495969c6e0efcc96658bdea',
       path: 'game/editions/retained/fpv-learning-before-mission-art-4.json',
@@ -501,14 +526,14 @@ export const COMPANY_EDITIONS = Object.freeze(
                 : brandId === 'droneaid-nl'
                   ? 4
                   : id === 'fpv-learning'
-                    ? 5
+                    ? 6
                     : [
                           'social-drone-ua',
                           'victory-drones',
                           'ukraine-culture',
                           'fpv-learning',
                         ].includes(id)
-                      ? 4
+                      ? 5
                       : 1,
     name,
     brandId,
@@ -665,6 +690,7 @@ export function createCompanyTheme(brandId) {
 
 export function createCompanyPresets(brandId) {
   const theme = createCompanyTheme(brandId);
+  const rewardCharacters = curriculumRewardCharacters(brandId);
   const neutral = {
     label: 'Community marker',
     src: null,
@@ -678,7 +704,9 @@ export function createCompanyPresets(brandId) {
   };
   return {
     version: '1.0.0',
+    ...(rewardCharacters ? { rewardCharacters: rewardCharacters.rewardCharacters } : {}),
     characters: {
+      ...rewardCharacters?.characters,
       'neutral-marker': { ...neutral },
       [theme.player]: {
         ...neutral,

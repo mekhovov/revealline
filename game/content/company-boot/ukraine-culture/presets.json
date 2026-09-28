@@ -12,6 +12,18 @@
       "src": null,
       "widthCells": 1.5
     },
+    "reward-textile-discovery-shuttle-v1": {
+      "animationRecipe": "still",
+      "bodyMotion": { "kind": "rigid-spin", "radiansPerSecond": 0.35, "travelGain": 0 },
+      "headingOffsetDegrees": 0,
+      "heightCells": 2.5,
+      "label": "Gallery weaving shuttle",
+      "rotors": [],
+      "sampling": "linear",
+      "sourceStatus": "Original fictional generated character; optional appearance only",
+      "src": "../../game/editions/assets/discovery/reward-textile-discovery-shuttle-v1.png",
+      "widthCells": 2.5
+    },
     "ukraine-culture-marker": {
       "animationRecipe": "still",
       "headingOffsetDegrees": 0,
@@ -24,5 +36,6 @@
       "widthCells": 1.5
     }
   },
+  "rewardCharacters": ["reward-textile-discovery-shuttle-v1"],
   "version": "1.0.0"
 }

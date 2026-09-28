@@ -85,7 +85,16 @@
       "band": 4,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "fpv-four-controls-finale", "revision": "2" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Your route opens another control concept."],
+            "uk": ["Ваш маршрут відкриває ще одне поняття керування."]
+          },
+          "revision": "feedback-baeda06ce27ee3a5",
+          "victoryMotif": "bright-return-v1"
+        },
+        "finaleRewardRef": { "id": "fpv-four-controls-finale", "revision": "3" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-four-controls",
@@ -272,7 +281,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "fpv-four-controls-01-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-four-controls-01-discovery", "revision": "3" },
         "routeDecision": "Link the left command pair first or establish a return at the right pair. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -347,7 +356,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "fpv-four-controls-02-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-four-controls-02-discovery", "revision": "3" },
         "routeDecision": "Choose the long side-view aisle or the short nose-marker alcove. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -422,7 +431,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "fpv-four-controls-03-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-four-controls-03-discovery", "revision": "3" },
         "routeDecision": "Use the centre axis island to compare both sides or secure the far-side pair. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -505,7 +514,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-four-controls-04-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-four-controls-04-discovery", "revision": "3" },
         "routeDecision": "Circle the heading island or take the wide quiet door-side capture. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -588,7 +597,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-four-controls-05-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-four-controls-05-discovery", "revision": "3" },
         "routeDecision": "Collect the separate mode islands before crossing or group the paired response cards. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -671,7 +680,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-four-controls-06-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-four-controls-06-discovery", "revision": "3" },
         "routeDecision": "Join the four command islands through the centre or complete the outer atlas loop. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -699,9 +708,9 @@
       "format": "PackDesignV1",
       "id": "fpv-four-controls-pack",
       "name": "Understand the Four Controls",
-      "revision": "2"
+      "revision": "3"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "2"
+  "revision": "3"
 }

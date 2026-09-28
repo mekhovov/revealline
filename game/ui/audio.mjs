@@ -1,3 +1,4 @@
+import { campaignVictoryMotif } from '../journey/campaign-feedback.mjs';
 import { t } from '../i18n/index.mjs';
 import { createPublishedCues } from './published-audio.mjs';
 import {
@@ -558,7 +559,7 @@ export class Soundscape {
       (this.context?.currentTime || 0) + offset,
     );
   }
-  event(value, details = {}) {
+  event(value, details = {}, resultContext = null) {
     const event = typeof value === 'string' ? { ...details, type: value } : value;
     if (
       !event ||
@@ -612,11 +613,12 @@ export class Soundscape {
         this.play({ kind: 'snare', volume: 0.07, duration: 0.22 }, now + 0.02);
       } else {
         const phrase =
-          this.themeFamily === 'atlas'
+          campaignVictoryMotif(resultContext) ??
+          (this.themeFamily === 'atlas'
             ? [0, 5, 7, 12, 14, 12]
             : this.themeFamily === 'navi'
               ? [0, 4, 9, 7, 12, 16]
-              : [0, 4, 7, 12, 7, 12];
+              : [0, 4, 7, 12, 7, 12]);
         cue(phrase, this.themeFamily === 'retro' ? 'chip' : 'bell', 0.13, 0.4);
         for (const n of [0, 4, 7])
           this.play(
