@@ -1,3 +1,5 @@
+import { CURRICULUM_TEXTILE_LIGHTING_ASSET_IDS } from './curriculum-textile-lighting.mjs';
+import { CURRICULUM_MOTION_MAKERS_ASSET_IDS } from './curriculum-motion-makers.mjs';
 import {
   CURRICULUM_LISTENING_CAMPAIGN,
   CURRICULUM_LISTENING_ASSET_IDS,
@@ -855,6 +857,8 @@ export const CURRICULUM_CAMPAIGNS = freezeDesign(
       assetIds: [],
       rewardAssetIds: [
         ...(id === CURRICULUM_LISTENING_CAMPAIGN ? CURRICULUM_LISTENING_ASSET_IDS : []),
+        ...(id === 'ukraine-threads' ? CURRICULUM_TEXTILE_LIGHTING_ASSET_IDS : []),
+        ...(id === 'fpv-meet-aircraft' ? CURRICULUM_MOTION_MAKERS_ASSET_IDS : []),
         ...(id === 'ukraine-threads' ? ['met-degas-ukrainian-dress-436157'] : []),
         ...curriculumReferenceAssetIds(id),
       ],
@@ -905,8 +909,8 @@ export const CURRICULUM_MISSIONS = freezeDesign(
             routeDecision: row.routes[languageIndex],
             alt:
               languageIndex === 0
-                ? `${row.names[0]} — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.`
-                : `${row.names[1]} — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.`,
+                ? `${row.names[0]} — original mission illustration. Not a documentary photograph or technical plan.`
+                : `${row.names[1]} — оригінальна ілюстрація місії. Не документальне фото й не технічна схема.`,
           },
         ]),
       ),

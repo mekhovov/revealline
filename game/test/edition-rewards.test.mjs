@@ -221,7 +221,16 @@ async function fixture(
   overlay.dataset.kind = 'ready';
   const reading = doc.createElement('div');
   reading.id = 'overlay-reading';
-  overlay.append(reading);
+  const card = doc.createElement('div');
+  card.id = 'overlay-reading-unit';
+  card.className = 'overlay-card';
+  const resultActions = doc.createElement('div');
+  resultActions.className = 'overlay-actions';
+  const nextAction = doc.createElement('button');
+  nextAction.id = 'next-button';
+  resultActions.append(nextAction);
+  card.append(reading, resultActions);
+  overlay.append(card);
   const collection = doc.createElement('dialog');
   collection.id = 'collection-dialog';
   const settings = doc.createElement('section');
@@ -606,7 +615,13 @@ test('unavailable storage keeps earned discoveries available with a session-only
   const result = f.doc.getElementById('completion-reward-result');
   assert.equal(result.dataset.reducedMotion, 'true');
   assert.equal(result.classList.contains('completion-reward-arrive'), false);
-  assert.equal(result.querySelector('.completion-reward-save-note').getAttribute('role'), 'status');
+  assert.equal(
+    f.doc
+      .getElementById('earned-result-more')
+      .querySelector('.completion-reward-save-note')
+      .getAttribute('role'),
+    'status',
+  );
   assert.equal(
     f.doc
       .getElementById('completion-reward-shelf')
@@ -721,7 +736,10 @@ test('native media is absent while locked; earned viewer uses shared sound owner
   f.cards[0].querySelector('button').click();
   assert(f.doc.querySelector('[data-reward-media="audio"]'));
   await waitFor(() =>
-    f.doc.querySelector('details')?.textContent.includes('An exact diagnostic transcript.'),
+    f.doc
+      .getElementById('completion-reward-dialog')
+      .querySelector('details')
+      ?.textContent.includes('An exact diagnostic transcript.'),
   );
   assert.equal(f.audioElements.length, 0);
   assert(!f.requests.some(({ url }) => url.endsWith('.wav')));
@@ -731,7 +749,11 @@ test('native media is absent while locked; earned viewer uses shared sound owner
   assert.equal(f.audioLeases, 1);
   f.master.setMuted(true);
   assert.equal(f.audioElements[0].muted, true);
-  f.doc.getElementById('completion-reward-dialog').close();
+  const rewardDialog = f.doc.getElementById('completion-reward-dialog'),
+    back = [...rewardDialog.children].find((node) => node.tagName === 'BUTTON');
+  assert.equal(back.textContent, 'Back to game');
+  back.click();
+  assert.equal(rewardDialog.open, false);
   assert.equal(f.audioLeases, 0);
   assert.equal(f.audioElements[0].paused, true);
   assert.equal(f.doc.querySelector('[data-reward-media]'), null);
@@ -945,4 +967,64 @@ test('earned playlist stays locked until its accepted win and switching never ch
   f.doc.getElementById('completion-reward-dialog').close();
   assert.equal(f.doc.querySelector('[data-reward-audio-group]'), null);
   assert.deepEqual((await f.exportState()).receipts, before.receipts);
+});
+
+test('earned result discovery actions leave the scroll pane while long details remain readable and Next stays enabled', async (t) => {
+  const f = await fixture(t),
+    card = f.doc.getElementById('overlay-reading-unit'),
+    reading = f.doc.getElementById('overlay-reading'),
+    next = f.doc.getElementById('next-button');
+  const longDetails = f.doc.createElement('p');
+  longDetails.textContent = 'Long result recap. '.repeat(100);
+  reading.append(longDetails);
+  const result = f.doc.getElementById('completion-reward-result');
+  assert.equal(
+    result.parentElement,
+    reading,
+    'Ready reward promises use ordinary untimed reading.',
+  );
+  f.accepted(1);
+  f.overlay.dataset.kind = 'won';
+  f.setRun({ levelId: 'mission-1', status: 'won' });
+  f.view.refresh();
+  assert.equal(result.parentElement, card);
+  assert.equal(result.dataset.placement, 'summary');
+  assert.equal(reading.contains(result.querySelector('[data-reward-surface="result"]')), false);
+  assert.equal(f.doc.getElementById('completion-reward-result-details').parentElement, reading);
+  assert.equal(next.disabled, false);
+  await f.settle();
+  assert.equal(
+    result.parentElement,
+    card,
+    'Persistence refresh cannot put the action back below prose.',
+  );
+  f.overlay.dataset.kind = 'ready';
+  f.setRun({ levelId: 'mission-1', status: 'ready' });
+  f.view.refresh();
+  assert.equal(result.parentElement, reading);
+  assert.equal(next.disabled, false);
+  f.view.dispose();
+  assert.equal(f.doc.getElementById('completion-reward-result-details'), null);
+});
+
+test('a queued discovery save shows neutral pending feedback and never claims tab-only failure before settlement', async (t) => {
+  const f = await fixture(t);
+  f.accepted(1);
+  f.overlay.dataset.kind = 'won';
+  f.setRun({ levelId: 'mission-1', status: 'won' });
+  f.view.refresh();
+  const status = f.doc.getElementById('completion-reward-save-status'),
+    result = f.doc.getElementById('completion-reward-result');
+  assert.equal(status.dataset.pending, 'true');
+  assert.equal(status.dataset.durable, 'false');
+  assert.equal(result.querySelector('.completion-reward-session-status').dataset.pending, 'true');
+  assert.equal(
+    f.doc.getElementById('earned-result-more').querySelector('.completion-reward-save-note'),
+    null,
+  );
+  assert.equal(f.doc.getElementById('next-button').disabled, false);
+  await f.settle();
+  assert.equal(status.dataset.pending, 'false');
+  assert.equal(status.dataset.durable, 'true');
+  assert.equal(result.querySelector('.completion-reward-session-status'), null);
 });
