@@ -132,6 +132,8 @@ export async function loadEditionBootstrap({
             {
               descriptor: campaign,
               editionId: selection.edition.id,
+              presets: boot?.presets,
+              themes: boot?.themes?.themes ?? [],
               editionProject: source,
               lessons: Object.values(lessons).flat(),
               assets: resolveEditionAssets(catalog, { editionId: selection.edition.id }),
