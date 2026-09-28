@@ -85,7 +85,16 @@
       "band": 5,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "fpv-drone-families-finale", "revision": "3" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Another aircraft family enters the gallery."],
+            "uk": ["Ще одна родина апаратів з’явилася в галереї."]
+          },
+          "revision": "feedback-195727e7c68fe467",
+          "victoryMotif": "bright-return-v1"
+        },
+        "finaleRewardRef": { "id": "fpv-drone-families-finale", "revision": "4" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-drone-families",
@@ -266,7 +275,7 @@
           "travelling-trail-impact",
           "trail-pursuer"
         ],
-        "rewardRef": { "id": "fpv-drone-families-01-discovery", "revision": "3" },
+        "rewardRef": { "id": "fpv-drone-families-01-discovery", "revision": "4" },
         "routeDecision": "Open the wide viewing bay or connect the camera and airframe alcoves separately. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -333,7 +342,7 @@
           "travelling-trail-impact",
           "trail-pursuer"
         ],
-        "rewardRef": { "id": "fpv-drone-families-02-discovery", "revision": "3" },
+        "rewardRef": { "id": "fpv-drone-families-02-discovery", "revision": "4" },
         "routeDecision": "Collect the small-count plinths first or reach the broad comparison island. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -400,7 +409,7 @@
           "travelling-trail-impact",
           "heading-interceptor"
         ],
-        "rewardRef": { "id": "fpv-drone-families-03-discovery", "revision": "3" },
+        "rewardRef": { "id": "fpv-drone-families-03-discovery", "revision": "4" },
         "routeDecision": "Cross between the wing gallery and rotor terrace or secure both outer returns. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -476,7 +485,7 @@
           "heading-interceptor",
           "lane-emitter"
         ],
-        "rewardRef": { "id": "fpv-drone-families-04-discovery", "revision": "3" },
+        "rewardRef": { "id": "fpv-drone-families-04-discovery", "revision": "4" },
         "routeDecision": "Use the wide spectator-side return or capture the quiet course-map terrace. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -552,7 +561,7 @@
           "heading-interceptor",
           "lane-emitter"
         ],
-        "rewardRef": { "id": "fpv-drone-families-05-discovery", "revision": "3" },
+        "rewardRef": { "id": "fpv-drone-families-05-discovery", "revision": "4" },
         "routeDecision": "Join the three purpose islands one at a time or capture the paired research bays. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -629,7 +638,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-drone-families-06-discovery", "revision": "3" },
+        "rewardRef": { "id": "fpv-drone-families-06-discovery", "revision": "4" },
         "routeDecision": "Connect the four atlas columns through short returns or enclose the outer comparison court. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV2",
@@ -658,9 +667,9 @@
       "format": "PackDesignV1",
       "id": "fpv-drone-families-pack",
       "name": "Drone Families",
-      "revision": "3"
+      "revision": "4"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "3"
+  "revision": "4"
 }
