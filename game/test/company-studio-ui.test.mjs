@@ -171,7 +171,7 @@ test('compiler report preserves review-required checks and only opens local comp
   );
   assert.equal(
     studioPreviewURL(checked, 'http://localhost:8768/authoring/company-studio/').href,
-    'http://localhost:8768/dist/company-previews/acme/game/company.html',
+    'http://localhost:8768/dist/company-previews/acme/game/company.html?studio-preview=1',
   );
   for (const path of [
     'https://unrelated.test/game/company.html',

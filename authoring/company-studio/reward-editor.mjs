@@ -4,13 +4,28 @@ import { projectRewardProgress, validateCompletionReward } from '../../game/rewa
 
 /** Creates a draft only after an author explicitly chooses its completion rule.
  * Preview evidence never reaches a profile, reward receipt or persistence API. */
-export function createStudioReward({ campaign, source, rule, missionId, id, locales }) {
-  required(['mission-win', 'all-missions'].includes(rule), 'Choose a completion rule explicitly.');
+export function createStudioReward({ campaign, source, rule, missionId, missionIds, id, locales }) {
+  required(
+    ['mission-win', 'all-missions', 'selected-missions'].includes(rule),
+    'Choose a completion rule explicitly.',
+  );
   const all = createRewardMissionBindings(source).filter(
     (entry) => entry.campaignId === campaign.id,
   );
+  if (rule === 'selected-missions')
+    required(
+      Array.isArray(missionIds) &&
+        missionIds.length > 0 &&
+        new Set(missionIds).size === missionIds.length &&
+        missionIds.every((id) => all.some((entry) => entry.levelId === id)),
+      'Choose distinct missions in this campaign.',
+    );
   const selected =
-    rule === 'all-missions' ? all : all.filter((entry) => entry.levelId === missionId);
+    rule === 'all-missions'
+      ? all
+      : all.filter((entry) =>
+          rule === 'mission-win' ? entry.levelId === missionId : missionIds.includes(entry.levelId),
+        );
   required(selected.length > 0, 'Choose a mission in this campaign.');
   return validateCompletionReward({
     format: 'revealline-completion-reward.v1',
@@ -19,8 +34,8 @@ export function createStudioReward({ campaign, source, rule, missionId, id, loca
     brandId: campaign.brandId,
     campaignId: campaign.id,
     scope: {
-      kind: rule === 'all-missions' ? 'campaign' : 'mission',
-      id: rule === 'all-missions' ? campaign.id : missionId,
+      kind: rule === 'mission-win' ? 'mission' : 'campaign',
+      id: rule === 'mission-win' ? missionId : campaign.id,
     },
     locales: Object.fromEntries(
       ['en', 'uk'].map((locale) => [

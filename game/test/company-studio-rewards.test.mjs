@@ -67,6 +67,21 @@ test('all-mission authoring includes every actual campaign mission and preserves
   );
 });
 
+test('an explicit mission checklist creates a bounded campaign promise without inferring the last level', () => {
+  const missionIds = [source.missions[1].id, source.missions[4].id];
+  const reward = create({ rule: 'selected-missions', missionIds });
+  assert.equal(reward.scope.kind, 'campaign');
+  assert.deepEqual(
+    reward.requirements.missions.map((item) => item.missionId),
+    missionIds,
+  );
+  for (const invalid of [undefined, [], [missionIds[0], missionIds[0]], ['foreign-mission']])
+    assert.throws(
+      () => create({ rule: 'selected-missions', missionIds: invalid }),
+      /distinct missions/,
+    );
+});
+
 test('locked, partial and eligible previews project synthetic evidence without changing definitions', () => {
   const reward = create({ rule: 'all-missions' });
   const before = JSON.stringify({ reward, edition });
