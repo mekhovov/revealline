@@ -508,16 +508,55 @@ body.field-kit[data-field-kit-page]
   background-color: var(--fk-amber);
   border-color: var(--fk-amber);
 }
-/* Recovery adds a complete explanation and actions outside the reading pane.
-   Keep them reachable when that pane gives up its remaining space. */
-.field-kit.game-shell .overlay-card:has(#flight-preparation-status:not([hidden])) {
-  overflow-y: auto;
+
+/* Briefing, Pause and Title share one non-reflowing progress rail. Preparation
+   remains cancellable with Back/Escape, so an extra temporary command never
+   appears in the action hierarchy or steals controller focus. */
+.field-kit.game-shell .preparation-cancel-hook {
+  display: none !important;
 }
-.field-kit.game-shell #flight-preparation-status {
-  flex-shrink: 0;
-  margin-block: 8px;
-  font-size: var(--fk-text-control);
-  line-height: 1.5;
+.field-kit.game-shell .menu-progress-status:not([hidden]) {
+  position: fixed;
+  z-index: 120;
+  inset-inline-start: 50%;
+  inset-block-end: max(10px, var(--safe-bottom, 0px));
+  translate: -50% 0;
+  display: flex;
+  width: min(640px, calc(100vw - var(--safe-left, 0px) - var(--safe-right, 0px) - 20px));
+  min-height: 38px;
+  max-height: min(30dvh, 160px);
+  margin: 0;
+  padding: 7px 10px;
+  overflow: auto;
+  color: var(--fk-text);
+  background: #07101ef5;
+  border: 1px solid #3f6486;
+  box-shadow:
+    0 0 0 1px #02040a,
+    0 10px 30px #000a;
+  font-size: 14px;
+  line-height: 1.3;
+  pointer-events: none;
+}
+.field-kit.game-shell .menu-progress-status .operation-status-label {
+  min-width: 0;
+}
+.field-kit.game-shell .menu-progress-status .operation-status-progress {
+  flex-basis: 90px;
+  max-width: 160px;
+}
+
+/* Ready and Pause are two states of the same command deck. The content changes,
+   but the panel surface, edge, width and command sizing do not. */
+.field-kit.game-shell .game-overlay:is([data-kind='ready'], [data-kind='pause']) .overlay-card {
+  width: min(680px, 100%);
+  max-width: 680px;
+  padding: clamp(10px, 2vw, 16px);
+  background: #050a14fa;
+  border-color: #30496d;
+  box-shadow:
+    0 0 0 1px #02040a,
+    0 20px 60px #000c;
 }
 
 /* Ready owns a real command grid. The legacy flex row gave every direct child
@@ -550,10 +589,15 @@ body.field-kit[data-field-kit-page]
 .field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-actions .button {
   width: 100%;
   min-width: 0;
+  min-height: 44px;
   flex: none;
   white-space: normal;
   word-break: normal;
   overflow-wrap: break-word;
+}
+.field-kit.game-shell .game-overlay[data-kind='ready'] #start-button {
+  min-height: 48px;
+  font-size: 17px;
 }
 .field-kit.game-shell
   .game-overlay[data-kind='ready']
@@ -568,11 +612,6 @@ body.field-kit[data-field-kit-page]
    consuming another line on phones or shallow landscape screens. */
 .field-kit.game-shell .game-overlay[data-kind='pause'] .overlay-card {
   gap: 6px;
-  width: min(680px, 100%);
-  max-width: 680px;
-  padding: clamp(10px, 2vw, 16px);
-  background: #050a14fa;
-  border-color: #30496d;
 }
 .field-kit.game-shell .game-overlay[data-kind='pause'] .pause-label {
   align-self: stretch;
@@ -681,18 +720,15 @@ body.field-kit[data-field-kit-page]
   }
 }
 @media (max-height: 500px) and (orientation: landscape) {
-  .field-kit.game-shell .game-overlay:has(#flight-preparation-status:not([hidden])) {
-    padding: 12px;
-  }
-  .field-kit.game-shell .overlay-card:has(#flight-preparation-status:not([hidden])) {
-    width: min(960px, 100%);
-    max-width: 960px;
-  }
-  .field-kit.game-shell
-    .overlay-card:has(#flight-preparation-status:not([hidden]))
-    .reading-toolbar {
-    margin-block: 6px;
-    padding: 6px;
+  .field-kit.game-shell .menu-progress-status:not([hidden]) {
+    inset-inline-start: auto;
+    inset-inline-end: max(6px, var(--safe-right, 0px));
+    inset-block-end: max(6px, var(--safe-bottom, 0px));
+    translate: 0 0;
+    width: min(420px, calc(100vw - var(--safe-left, 0px) - var(--safe-right, 0px) - 12px));
+    max-height: 72px;
+    padding: 5px 8px;
+    font-size: 12px;
   }
 }
 @media (max-width: 600px) {
