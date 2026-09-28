@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-voices-travel-key-v1",
-          "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+          "assetId": "ukraine-voices-travel-01-reveal-v1",
+          "sha256": "efb920278d7961fbffd8f13ec2cab5b81d6ec99353f3da24eef5f1b639ccffca"
         },
         "id": "ukraine-voices-travel-01-image",
         "locales": {
           "en": {
-            "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
+            "alt": "Original illustrated evening listening room with an abstract wooden string-instrument silhouette, separate empty performer seat and blank cards connected by warm light.",
             "title": "An Instrument and a Voice"
           },
           "uk": {
-            "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою.",
+            "alt": "Оригінальна ілюстрована вечірня зала слухання з абстрактним силуетом дерев’яного струнного інструмента, окремим порожнім місцем виконавця та картками, поєднаними теплим світлом.",
             "title": "Інструмент і голос"
           }
         },
@@ -80,7 +80,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-voices-travel-01", "kind": "mission" }
   },
   {
@@ -101,17 +101,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-voices-travel-key-v1",
-          "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+          "assetId": "ukraine-voices-travel-02-reveal-v1",
+          "sha256": "656e823c9d7f3189a68fa68f0473f06a8d2a2607a89d4b5aed013a06248eb888"
         },
         "id": "ukraine-voices-travel-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
+            "alt": "Original illustrated rehearsal library with three open connected rooms, empty seats, learning shelves and a small performance platform linked by warm light.",
             "title": "A Practice Kept Together"
           },
           "uk": {
-            "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою.",
+            "alt": "Оригінальна ілюстрована репетиційна бібліотека з трьома відкритими поєднаними кімнатами, порожніми місцями, навчальними полицями та малою сценою, зв’язаними теплим світлом.",
             "title": "Практика, яку бережуть разом"
           }
         },
@@ -164,7 +164,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-voices-travel-02", "kind": "mission" }
   },
   {
@@ -185,17 +185,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-voices-travel-key-v1",
-          "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+          "assetId": "ukraine-voices-travel-03-reveal-v1",
+          "sha256": "cc9dd354676ea8bfa74670b61a4a77eb8c20050f18f5ff8c9840f2805c629fa5"
         },
         "id": "ukraine-voices-travel-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
+            "alt": "Original illustrated song-archive courtyard with three separate blank group cards and equal abstract sound ribbons, beside an invented river landscape.",
             "title": "A Region Has Many Voices"
           },
           "uk": {
-            "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою.",
+            "alt": "Оригінальний ілюстрований двір пісенного архіву з трьома окремими порожніми картками гуртів та рівноправними абстрактними звуковими стрічками біля вигаданого річкового краєвиду.",
             "title": "Регіон має багато голосів"
           }
         },
@@ -248,7 +248,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-voices-travel-03", "kind": "mission" }
   },
   {
@@ -269,17 +269,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-voices-travel-key-v1",
-          "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+          "assetId": "ukraine-voices-travel-04-reveal-v1",
+          "sha256": "ba6a6aadc7859ace1865c0889b9215f1b8d264e85484e22a10a327568f0702e8"
         },
         "id": "ukraine-voices-travel-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
+            "alt": "Original illustrated spacious concert foyer with an ocean-blue window, a distant imagined ship and three separate blank programme cards.",
             "title": "Shchedryk Crosses an Ocean"
           },
           "uk": {
-            "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою.",
+            "alt": "Оригінальне ілюстроване просторе концертне фоє з океанським синім вікном, далеким вигаданим кораблем і трьома окремими порожніми картками програм.",
             "title": "«Щедрик» перетинає океан"
           }
         },
@@ -332,7 +332,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-voices-travel-04", "kind": "mission" }
   },
   {
@@ -353,17 +353,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-voices-travel-key-v1",
-          "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+          "assetId": "ukraine-voices-travel-05-reveal-v1",
+          "sha256": "919797b57a3374258d94292efca7cf835d45ebf34b404368ab3995993e013534"
         },
         "id": "ukraine-voices-travel-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
+            "alt": "Original illustrated listening gallery with three separate headphones stations and equal illuminated sound ribbons leading together toward an arch.",
             "title": "One Voice, Then the Group"
           },
           "uk": {
-            "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою.",
+            "alt": "Оригінальна ілюстрована галерея слухання з трьома окремими станціями навушників і рівноправними світловими звуковими стрічками, що разом ведуть до арки.",
             "title": "Один голос, потім гурт"
           }
         },
@@ -424,7 +424,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-voices-travel-05", "kind": "mission" }
   },
   {
@@ -445,17 +445,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-voices-travel-key-v1",
-          "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+          "assetId": "ukraine-voices-travel-06-reveal-v1",
+          "sha256": "62c3833fc32c79df5ddac7f113b57e4ce33ded59c1b1b4d3c161ec5621f0237a"
         },
         "id": "ukraine-voices-travel-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
+            "alt": "Original illustrated listening-library finale with six separate discovery-card islands, abstract sound ribbons and a bright open source-index cabinet.",
             "title": "Carry the Context"
           },
           "uk": {
-            "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою.",
+            "alt": "Оригінальний ілюстрований фінал бібліотеки слухання з шістьма окремими островами карток, абстрактними звуковими стрічками та світлою відкритою картотекою джерел.",
             "title": "Передайте контекст"
           }
         },
@@ -508,7 +508,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-voices-travel-06", "kind": "mission" }
   },
   {
@@ -559,17 +559,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-voices-travel-key-v1",
-          "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+          "assetId": "ukraine-voices-travel-01-reveal-v1",
+          "sha256": "efb920278d7961fbffd8f13ec2cab5b81d6ec99353f3da24eef5f1b639ccffca"
         },
         "id": "ukraine-voices-travel-01-image",
         "locales": {
           "en": {
-            "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
+            "alt": "Original illustrated evening listening room with an abstract wooden string-instrument silhouette, separate empty performer seat and blank cards connected by warm light.",
             "title": "An Instrument and a Voice"
           },
           "uk": {
-            "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою.",
+            "alt": "Оригінальна ілюстрована вечірня зала слухання з абстрактним силуетом дерев’яного струнного інструмента, окремим порожнім місцем виконавця та картками, поєднаними теплим світлом.",
             "title": "Інструмент і голос"
           }
         },
@@ -577,17 +577,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-voices-travel-key-v1",
-          "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+          "assetId": "ukraine-voices-travel-02-reveal-v1",
+          "sha256": "656e823c9d7f3189a68fa68f0473f06a8d2a2607a89d4b5aed013a06248eb888"
         },
         "id": "ukraine-voices-travel-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
+            "alt": "Original illustrated rehearsal library with three open connected rooms, empty seats, learning shelves and a small performance platform linked by warm light.",
             "title": "A Practice Kept Together"
           },
           "uk": {
-            "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою.",
+            "alt": "Оригінальна ілюстрована репетиційна бібліотека з трьома відкритими поєднаними кімнатами, порожніми місцями, навчальними полицями та малою сценою, зв’язаними теплим світлом.",
             "title": "Практика, яку бережуть разом"
           }
         },
@@ -595,17 +595,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-voices-travel-key-v1",
-          "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+          "assetId": "ukraine-voices-travel-03-reveal-v1",
+          "sha256": "cc9dd354676ea8bfa74670b61a4a77eb8c20050f18f5ff8c9840f2805c629fa5"
         },
         "id": "ukraine-voices-travel-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
+            "alt": "Original illustrated song-archive courtyard with three separate blank group cards and equal abstract sound ribbons, beside an invented river landscape.",
             "title": "A Region Has Many Voices"
           },
           "uk": {
-            "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою.",
+            "alt": "Оригінальний ілюстрований двір пісенного архіву з трьома окремими порожніми картками гуртів та рівноправними абстрактними звуковими стрічками біля вигаданого річкового краєвиду.",
             "title": "Регіон має багато голосів"
           }
         },
@@ -613,17 +613,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-voices-travel-key-v1",
-          "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+          "assetId": "ukraine-voices-travel-04-reveal-v1",
+          "sha256": "ba6a6aadc7859ace1865c0889b9215f1b8d264e85484e22a10a327568f0702e8"
         },
         "id": "ukraine-voices-travel-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
+            "alt": "Original illustrated spacious concert foyer with an ocean-blue window, a distant imagined ship and three separate blank programme cards.",
             "title": "Shchedryk Crosses an Ocean"
           },
           "uk": {
-            "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою.",
+            "alt": "Оригінальне ілюстроване просторе концертне фоє з океанським синім вікном, далеким вигаданим кораблем і трьома окремими порожніми картками програм.",
             "title": "«Щедрик» перетинає океан"
           }
         },
@@ -631,17 +631,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-voices-travel-key-v1",
-          "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+          "assetId": "ukraine-voices-travel-05-reveal-v1",
+          "sha256": "919797b57a3374258d94292efca7cf835d45ebf34b404368ab3995993e013534"
         },
         "id": "ukraine-voices-travel-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
+            "alt": "Original illustrated listening gallery with three separate headphones stations and equal illuminated sound ribbons leading together toward an arch.",
             "title": "One Voice, Then the Group"
           },
           "uk": {
-            "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою.",
+            "alt": "Оригінальна ілюстрована галерея слухання з трьома окремими станціями навушників і рівноправними світловими звуковими стрічками, що разом ведуть до арки.",
             "title": "Один голос, потім гурт"
           }
         },
@@ -649,17 +649,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-voices-travel-key-v1",
-          "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+          "assetId": "ukraine-voices-travel-06-reveal-v1",
+          "sha256": "62c3833fc32c79df5ddac7f113b57e4ce33ded59c1b1b4d3c161ec5621f0237a"
         },
         "id": "ukraine-voices-travel-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
+            "alt": "Original illustrated listening-library finale with six separate discovery-card islands, abstract sound ribbons and a bright open source-index cabinet.",
             "title": "Carry the Context"
           },
           "uk": {
-            "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою.",
+            "alt": "Оригінальний ілюстрований фінал бібліотеки слухання з шістьма окремими островами карток, абстрактними звуковими стрічками та світлою відкритою картотекою джерел.",
             "title": "Передайте контекст"
           }
         },
@@ -730,7 +730,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-voices-travel", "kind": "campaign" }
   }
 ]
