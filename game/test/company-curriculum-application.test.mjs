@@ -24,12 +24,19 @@ const json = async (file) => JSON.parse(await readFile(new URL(file, root), 'utf
 const catalog = await json('game/editions/catalog.json');
 const routes = await json('game/test/fixtures/curriculum-campaign-routes.json');
 
-for (const lesson of CURRICULUM_LESSONS) {
+for (const lesson of CURRICULUM_LESSONS.filter(
+  (entry) =>
+    ['fpv-meet-aircraft', 'ukraine-threads'].includes(entry.campaignId) &&
+    entry.missionId.endsWith('-06'),
+)) {
   test(`${lesson.campaignId}: exact optional application requires all six wins and a verified corrected transcript`, async () => {
     const descriptor = catalog.campaigns.find((entry) => entry.id === lesson.campaignId);
     const source = await json(descriptor.sourcePath);
     const lessons = await json(descriptor.lessonPath);
-    assert.deepEqual(lessons, [lesson]);
+    assert.deepEqual(
+      lessons,
+      CURRICULUM_LESSONS.filter((entry) => entry.campaignId === lesson.campaignId),
+    );
     const rewards = await json(descriptor.rewardPath);
     const bonus = rewards.find(
       (entry) => entry.id === `${lesson.campaignId}-application-discovery`,
@@ -153,6 +160,11 @@ for (const lesson of CURRICULUM_LESSONS) {
 
 test('all four exact pre-feedback editions retain prior promises and unchanged gameplay identities', async () => {
   const recordedAfter = {
+    'victory-drones': {
+      path: 'game/editions/retained/victory-drones-before-showcase-learning.json',
+      sha256: '490ed135f5d9e8cb55172dc584a671f6d385afb62c360545b848edfaa1521b2b',
+      revision: 5,
+    },
     'social-drone-ua': {
       path: 'game/editions/retained/social-drone-ua-before-mission-alt.json',
       sha256: '13d119e2e5aa67bd6636a2d83d9e1374d792a05edc33c462654f19d965efe409',

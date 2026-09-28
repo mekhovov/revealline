@@ -78,7 +78,18 @@ function correctedIllustrationCaption(payload) {
 for (const fixture of originals)
   test(`${fixture.editionId}: exact old rewards survive optional discovery media and caption corrections`, async () => {
     const edition = catalog.editions.find((item) => item.id === fixture.editionId);
-    assert.equal(edition.revision, fixture.oldEditionRevision + 1);
+    const afterDescriptor = edition.presentationHistory.find((entry) =>
+      entry.path.endsWith(`${edition.id}-before-showcase-learning.json`),
+    );
+    assert.ok(afterDescriptor);
+    const afterRaw = await readFile(new URL(afterDescriptor.path, root));
+    assert.equal(createHash('sha256').update(afterRaw).digest('hex'), afterDescriptor.sha256);
+    const { snapshot: afterSnapshot } = await validateRetainedPresentation(
+      afterRaw.toString('utf8'),
+      { edition },
+    );
+    assert.equal(afterSnapshot.catalog.editions[0].revision, fixture.oldEditionRevision + 1);
+    const afterFiles = new Map(afterSnapshot.files.map((file) => [file.path, file.data]));
     const retained = edition.presentationHistory.find(
       (item) => item.path === `game/editions/retained/${edition.id}-${fixture.snapshotSuffix}.json`,
     );
@@ -92,14 +103,14 @@ for (const fixture of originals)
     const changedPayloads = [];
     for (const descriptor of snapshot.catalog.campaigns) {
       const beforeSource = snapshot.files.find((file) => file.path === descriptor.sourcePath).data;
-      const afterSource = await json(descriptor.sourcePath);
+      const afterSource = afterFiles.get(descriptor.sourcePath);
       assert.deepEqual(
         createRewardMissionBindings(afterSource),
         createRewardMissionBindings(beforeSource),
         `${descriptor.id}: every authored route and difficulty keeps its exact gameplay identity.`,
       );
       const oldRewards = snapshot.files.find((file) => file.path === descriptor.rewardPath).data;
-      const currentRewards = await json(descriptor.rewardPath);
+      const currentRewards = afterFiles.get(descriptor.rewardPath);
       assert.deepEqual(
         currentRewards.map((item) => item.id),
         oldRewards.map((item) => item.id),
@@ -122,18 +133,20 @@ for (const fixture of originals)
             additions.map(({ id, type }) => ({ id, type })),
             fixture.addedPayloads,
           );
-          assert.deepEqual(additions, fixture.createAdditions(catalog.assets));
+          assert.deepEqual(additions, fixture.createAdditions(afterSnapshot.catalog.assets));
           changedPayloads.push(...additions.map((item) => item.id));
           const addedRefs = additions.length
             ? completionRewardAssetReferences([{ ...after, payloads: additions }])
             : [];
-          const currentDescriptor = catalog.campaigns.find((item) => item.id === descriptor.id);
+          const currentDescriptor = afterSnapshot.catalog.campaigns.find(
+            (item) => item.id === descriptor.id,
+          );
           for (const ref of addedRefs) {
             assert(
               currentDescriptor.assetIds.includes(ref.assetId),
               'Added media is explicitly selected.',
             );
-            const asset = catalog.assets.find((item) => item.id === ref.assetId);
+            const asset = afterSnapshot.catalog.assets.find((item) => item.id === ref.assetId);
             assert.equal(asset?.sha256, ref.sha256);
             assert.equal(asset?.approved, true);
             assert.equal(asset?.publication, 'public');
@@ -162,9 +175,9 @@ for (const fixture of originals)
     const oldDefinitions = snapshot.files
       .find((file) => file.path === descriptor.rewardPath)
       .data.filter((item) => rewardIds.includes(item.id));
-    const currentDefinitions = (await json(descriptor.rewardPath)).filter((item) =>
-      rewardIds.includes(item.id),
-    );
+    const currentDefinitions = afterFiles
+      .get(descriptor.rewardPath)
+      .filter((item) => rewardIds.includes(item.id));
     const context = {
       editionId: edition.id,
       brandId: edition.brandId,

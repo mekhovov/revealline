@@ -1,7 +1,12 @@
-import { JOURNEY_PROFILE_DATABASE } from '../journey/profile.mjs';
+import {
+  createProfileRecordBackend,
+  boundedOperation,
+  validateTimeout,
+} from '../profile-storage.mjs';
 import { canonicalJSON, required, stableId } from '../data-json.mjs';
 import {
   createRewardState,
+  rewardStateFormatFor,
   validateRewardState,
   validateCompletionRewards,
   mergeRewardStates,
@@ -9,190 +14,14 @@ import {
   reconcileEarnedRewards,
 } from './model.mjs';
 
-function validateTimeout(value) {
-  required(
-    Number.isFinite(value) && value > 0,
-    'Reward storage needs a positive operation timeout.',
-  );
-}
-
-function boundedOperation(start, milliseconds, { signal, onAbort } = {}) {
-  return new Promise((resolve, reject) => {
-    const controller = new AbortController();
-    let settled = false,
-      timer;
-    const clean = () => {
-      clearTimeout(timer);
-      signal?.removeEventListener('abort', cancelled);
-    };
-    const fail = (error) => {
-      if (settled) return;
-      settled = true;
-      clean();
-      controller.abort(error);
-      try {
-        onAbort?.(error);
-      } catch {
-        /* A failed cancellation cannot hold up recovery. */
-      }
-      reject(error);
-    };
-    const cancelled = () => fail(signal.reason ?? new Error('Reward storage was cancelled.'));
-    if (signal?.aborted) {
-      cancelled();
-      return;
-    }
-    signal?.addEventListener('abort', cancelled, { once: true });
-    timer = setTimeout(() => fail(new Error('Reward storage operation timed out.')), milliseconds);
-    Promise.resolve()
-      .then(() => {
-        controller.signal.throwIfAborted();
-        return start(controller.signal);
-      })
-      .then((value) => {
-        if (settled) return;
-        settled = true;
-        clean();
-        resolve(value);
-      }, fail);
-  });
-}
-
-/** A versioned sidecar in the existing Journey database. The profile and its
- * historical backup formats remain unchanged; this never writes arcade clears. */
-export function createRewardBackend({
-  editionId,
-  indexedDB = globalThis.indexedDB,
-  canWrite = () => true,
-  operationTimeoutMs = 1500,
-} = {}) {
+export function createRewardBackend({ editionId, ...options } = {}) {
   required(stableId(editionId), 'Rewards require a logical edition identity.');
-  const key = `journey-${editionId}:rewards.v1`;
-  required(typeof canWrite === 'function', 'Rewards require a write guard.');
-  validateTimeout(operationTimeoutMs);
-  let opening = null,
-    connection = null,
-    closed = false;
-  const open = () => {
-    required(!closed, 'Reward storage is closed.');
-    required(indexedDB, 'Reward storage is unavailable.');
-    if (connection) return Promise.resolve(connection);
-    if (opening) return opening.promise;
-    const attempt = { promise: null, failed: false, cancel: null };
-    opening = attempt;
-    attempt.promise = new Promise((resolve, reject) => {
-      const fail = (error) => {
-        attempt.failed = true;
-        if (opening === attempt) opening = null;
-        reject(error ?? new Error('Reward storage could not be opened.'));
-      };
-      attempt.cancel = fail;
-      let request;
-      try {
-        request = indexedDB.open(JOURNEY_PROFILE_DATABASE, 1);
-      } catch (error) {
-        fail(error);
-        return;
-      }
-      request.onupgradeneeded = () => {
-        if (closed || attempt.failed) {
-          request.transaction?.abort();
-          return;
-        }
-        if (!request.result.objectStoreNames.contains('profiles'))
-          request.result.createObjectStore('profiles');
-      };
-      request.onsuccess = () => {
-        const db = request.result;
-        if (attempt.failed || closed) {
-          db.close();
-          return;
-        }
-        connection = db;
-        if (opening === attempt) opening = null;
-        db.onversionchange = () => {
-          db.close();
-          if (connection === db) connection = null;
-        };
-        resolve(db);
-      };
-      request.onerror = () => fail(request.error);
-      request.onblocked = () => fail(new Error('Reward storage is busy in another tab.'));
-    });
-    return attempt.promise;
-  };
-  function transaction(update, { signal } = {}) {
-    let tx, pendingOpen;
-    return boundedOperation(
-      async (boundedSignal) => {
-        if (update) required(canWrite(), 'This tab does not own the saving lease.');
-        const openingPromise = open();
-        pendingOpen = opening;
-        const db = await openingPromise;
-        pendingOpen = null;
-        boundedSignal.throwIfAborted();
-        required(!closed, 'Reward storage is closed.');
-        if (update) required(canWrite(), 'This tab does not own the saving lease.');
-        return new Promise((resolve, reject) => {
-          tx = db.transaction('profiles', update ? 'readwrite' : 'readonly');
-          const store = tx.objectStore('profiles'),
-            request = store.get(key);
-          let state, failure;
-          request.onsuccess = () => {
-            try {
-              boundedSignal.throwIfAborted();
-              state =
-                request.result === undefined
-                  ? createRewardState(editionId)
-                  : validateRewardState(request.result, { editionId });
-              if (update) {
-                required(canWrite(), 'This tab does not own the saving lease.');
-                state = validateRewardState(update(state), { editionId });
-                boundedSignal.throwIfAborted();
-                store.put(state, key);
-              }
-            } catch (error) {
-              failure = error;
-              try {
-                tx.abort();
-              } catch {
-                /* A timed-out transaction is already inactive. */
-              }
-            }
-          };
-          tx.oncomplete = () => resolve(state);
-          tx.onerror = tx.onabort = () =>
-            reject(failure ?? tx.error ?? new Error('Rewards could not be saved.'));
-        });
-      },
-      operationTimeoutMs,
-      {
-        signal,
-        onAbort(error) {
-          if (pendingOpen && opening === pendingOpen) pendingOpen.cancel(error);
-          if (tx) {
-            try {
-              tx.abort();
-            } catch {
-              /* The transaction may already have completed. */
-            }
-          }
-        },
-      },
-    );
-  }
-  return {
-    key,
-    read: (options) => transaction(null, options),
-    update: transaction,
-    close() {
-      if (closed) return;
-      closed = true;
-      opening?.cancel(new Error('Reward storage is closed.'));
-      connection?.close();
-      connection = null;
-    },
-  };
+  return createProfileRecordBackend({
+    ...options,
+    key: `journey-${editionId}:rewards.v1`,
+    empty: () => createRewardState(editionId),
+    validate: (state) => validateRewardState(state, { editionId }),
+  });
 }
 
 /** Local collectible access only. Eligibility always comes from the host's
@@ -224,6 +53,13 @@ export function createRewardStore({
       .flatMap((pair) => pair.state.promises)
       .filter((definition) => !reservations.has(definition.id)),
   ];
+  const fragment = ({ promises = [], receipts = [], acknowledged = [] }) => ({
+    ...createRewardState(editionId),
+    format: rewardStateFormatFor(promises),
+    promises,
+    receipts,
+    acknowledged,
+  });
   const emptyPair = () => ({
     state: createRewardState(editionId),
     eligible: createRewardState(editionId),
@@ -238,14 +74,7 @@ export function createRewardStore({
         (definition) => ids.has(definition.id) && !retainedIds.has(definition.id),
       );
       const promised = missingPromises.length
-        ? mergeRewardStates(
-            pair.eligible,
-            {
-              ...createRewardState(editionId),
-              promises: missingPromises,
-            },
-            { editionId },
-          )
+        ? mergeRewardStates(pair.eligible, fragment({ promises: missingPromises }), { editionId })
         : pair.eligible;
       nextEligible = reconcileEarnedRewards(definitions, persistenceContext, promised).state;
     }
@@ -310,12 +139,12 @@ export function createRewardStore({
   };
   const applyDeferred = () => {
     if (!deferredReleases.size) return false;
-    const combined = (field) => ({
-      ...createRewardState(editionId),
-      promises: [...deferredReleases.values()].flatMap((pair) => pair[field].promises),
-      receipts: [...deferredReleases.values()].flatMap((pair) => pair[field].receipts),
-      acknowledged: [...deferredReleases.values()].flatMap((pair) => pair[field].acknowledged),
-    });
+    const combined = (field) =>
+      fragment({
+        promises: [...deferredReleases.values()].flatMap((pair) => pair[field].promises),
+        receipts: [...deferredReleases.values()].flatMap((pair) => pair[field].receipts),
+        acknowledged: [...deferredReleases.values()].flatMap((pair) => pair[field].acknowledged),
+      });
     try {
       // Validate both complete outcomes before assigning either. A valid set of
       // promises can exceed the collection budget once every receipt is earned.
@@ -340,12 +169,12 @@ export function createRewardStore({
     }
   };
   const retainLocal = (localState, localEligible) => {
-    const slice = (input, id) => ({
-      ...createRewardState(editionId),
-      promises: input.promises.filter((definition) => definition.id === id),
-      receipts: input.receipts.filter((receipt) => receipt.definition.id === id),
-      acknowledged: input.acknowledged.filter((rewardId) => rewardId === id),
-    });
+    const slice = (input, id) =>
+      fragment({
+        promises: input.promises.filter((definition) => definition.id === id),
+        receipts: input.receipts.filter((receipt) => receipt.definition.id === id),
+        acknowledged: input.acknowledged.filter((rewardId) => rewardId === id),
+      });
     for (const definition of localState.promises) {
       const previous = deferredReleases.get(definition.id) ?? emptyPair();
       deferredReleases.set(definition.id, {
@@ -473,14 +302,13 @@ export function createRewardStore({
         beforeEligible = canonicalJSON(eligible);
       const withoutDeferred = (input) =>
         deferredReleases.size
-          ? {
-              ...input,
+          ? fragment({
               promises: input.promises.filter((definition) => !deferredReleases.has(definition.id)),
               receipts: input.receipts.filter(
                 (receipt) => !deferredReleases.has(receipt.definition.id),
               ),
               acknowledged: input.acknowledged.filter((id) => !deferredReleases.has(id)),
-            }
+            })
           : input;
       const result = project(
         active,
@@ -494,14 +322,7 @@ export function createRewardStore({
         result.eligible = mergeRewardStates(eligible, result.eligible, { editionId });
       }
       if (reservations.size || deferredReleases.size) {
-        mergeRewardStates(
-          result.state,
-          {
-            ...createRewardState(editionId),
-            promises: retainedPromises(),
-          },
-          { editionId },
-        );
+        mergeRewardStates(result.state, fragment({ promises: retainedPromises() }), { editionId });
       }
       state = result.state;
       eligible = result.eligible;
@@ -532,10 +353,7 @@ export function createRewardStore({
       mergeImportedRewardStates(eligible, restored, { editionId });
       // Bound the union to the same 512-promise schema and refuse simultaneous
       // imports that disagree, before adding any transient reservation.
-      const reserved = {
-        ...createRewardState(editionId),
-        promises: retainedPromises(),
-      };
+      const reserved = fragment({ promises: retainedPromises() });
       mergeImportedRewardStates(
         mergeImportedRewardStates(state, reserved, { editionId }),
         restored,
@@ -563,10 +381,7 @@ export function createRewardStore({
                     mergeImportedRewardStates(current, restored, { editionId });
                     const pending = mergeRewardStates(
                       mergeRewardStates(current, eligible, { editionId }),
-                      {
-                        ...createRewardState(editionId),
-                        promises: state.promises,
-                      },
+                      fragment({ promises: state.promises }),
                       { editionId },
                     );
                     return mergeImportedRewardStates(pending, restored, {

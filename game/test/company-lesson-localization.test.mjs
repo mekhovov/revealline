@@ -15,7 +15,7 @@ import {
 import { mountCompanyWorkbench } from '../company-campaigns/workbench.mjs';
 import { getLocale, setLocale, t } from '../i18n/index.mjs';
 import { Document } from './helpers/couch-dom.mjs';
-const lesson = CURRICULUM_LESSONS[0];
+const lesson = CURRICULUM_LESSONS.find((entry) => entry.id === 'fpv-meet-aircraft-06-lesson');
 
 test('lesson translations preserve option identities and cannot carry different answers or evidence', () => {
   assert.deepEqual(validateCompanyLesson(lesson), lesson);
