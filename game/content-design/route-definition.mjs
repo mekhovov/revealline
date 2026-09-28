@@ -46,11 +46,23 @@ export function createAuthoredJourneyRouteDefinition(
     createCulturalTimedBonusPressureCandidates,
     createCulturalPressureTriptychCandidates,
     createCurrentRemixPressureCandidates,
+    createContestedWallTriptychCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v36')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey contested Ukrainian wall triptych · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v36',
+      profileKey: 'journey-whole-spatial-v36',
+      source: createContestedWallTriptychCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v35')
     return freezeDesign({
       id,
