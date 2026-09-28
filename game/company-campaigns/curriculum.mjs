@@ -1,3 +1,7 @@
+import {
+  CURRICULUM_LISTENING_CAMPAIGN,
+  CURRICULUM_LISTENING_ASSET_IDS,
+} from './curriculum-listening.mjs';
 import { curriculumReferenceAssetIds } from './curriculum-reference-assets.mjs';
 import { freezeDesign } from '../content-design/catalogs.mjs';
 import {
@@ -850,6 +854,7 @@ export const CURRICULUM_CAMPAIGNS = freezeDesign(
       sourcePath: `game/content/company-campaigns/${id}.json`,
       assetIds: [],
       rewardAssetIds: [
+        ...(id === CURRICULUM_LISTENING_CAMPAIGN ? CURRICULUM_LISTENING_ASSET_IDS : []),
         ...(id === 'ukraine-threads' ? ['met-degas-ukrainian-dress-436157'] : []),
         ...curriculumReferenceAssetIds(id),
       ],
