@@ -11,6 +11,7 @@ import { createCoop, startCoop, stepCoop, getCoopSummary } from '../coop/core.mj
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { createDifficultyContext } from '../campaign-difficulty.mjs';
 import { boundedJSON, canonicalJSON } from '../data-json.mjs';
+import { t } from '../i18n/index.mjs';
 
 export function resolveNeutralPilotRuntime(entry, difficulty) {
   const tuning = resolveGameplayTuning(difficulty);
@@ -108,10 +109,16 @@ function portable(value) {
   );
 }
 export function createNeutralPilotSession({ mission, difficulty = 'standard', seed = 17 }) {
-  requireValue(['gentle', 'standard', 'expert'].includes(difficulty), 'Invalid pilot difficulty.');
-  requireValue(Number.isInteger(seed) && seed >= 0 && seed <= 0xffffffff, 'Invalid pilot seed.');
+  requireValue(
+    ['gentle', 'standard', 'expert'].includes(difficulty),
+    t('errors:neutralPilot.invalidDifficulty'),
+  );
+  requireValue(
+    Number.isInteger(seed) && seed >= 0 && seed <= 0xffffffff,
+    t('errors:neutralPilot.invalidSeed'),
+  );
   const entry = neutralPilotEntries().find((row) => row.id === mission);
-  requireValue(entry, 'Unknown neutral pilot mission.');
+  requireValue(entry, t('errors:neutralPilot.unknownMission'));
   const runtime = resolveNeutralPilotRuntime(entry, difficulty);
   const { level } = runtime;
   const simulation =
@@ -148,14 +155,14 @@ export const pilotSessionEnded = (session) =>
 /** The player and verifier use this same public-input boundary. No state edits,
  * progress writes or borrowed Solo results stand in for a two-seat simulation. */
 export function advanceNeutralPilotSession(session, directions) {
-  requireValue(!pilotSessionEnded(session), 'Pilot session already ended.');
-  requireValue(session.ticks < MAX_PILOT_TICKS, 'Pilot recording tick limit reached.');
+  requireValue(!pilotSessionEnded(session), t('errors:neutralPilot.sessionEnded'));
+  requireValue(session.ticks < MAX_PILOT_TICKS, t('errors:neutralPilot.tickLimitReached'));
   const mode = session.entry.mode;
   requireValue(
     Array.isArray(directions) &&
       directions.length === (mode === 'solo' ? 1 : 2) &&
       directions.every((value) => DIRECTIONS.includes(value)),
-    'Invalid pilot directions.',
+    t('errors:neutralPilot.invalidDirections'),
   );
   // Versus explicitly rejects Team's support field, including support:false.
   const commands = directions.map((direction) =>
@@ -213,7 +220,10 @@ function outcome(session) {
   });
 }
 export function exportPilotObservations(session, notes = '') {
-  requireValue(typeof notes === 'string' && notes.length <= 8000, 'Pilot notes exceed limit.');
+  requireValue(
+    typeof notes === 'string' && notes.length <= 8000,
+    t('errors:neutralPilot.notesExceedLimit'),
+  );
   return jsonCopy({
     format: PILOT_OBSERVATIONS_FORMAT,
     mission: session.entry.id,
@@ -240,7 +250,10 @@ export function verifyPilotObservations(source) {
     maxArray: MAX_PILOT_TICKS,
     maxString: 10000,
   });
-  requireValue(record?.format === PILOT_OBSERVATIONS_FORMAT, 'Unsupported pilot observations.');
+  requireValue(
+    record?.format === PILOT_OBSERVATIONS_FORMAT,
+    t('errors:neutralPilot.unsupportedObservations'),
+  );
   requireValue(
     typeof record.mission === 'string' &&
       ['solo', 'versus', 'team'].includes(record.mode) &&
@@ -248,19 +261,19 @@ export function verifyPilotObservations(source) {
       Number.isInteger(record.seed) &&
       record.seed >= 0 &&
       record.seed <= 0xffffffff,
-    'Invalid pilot recording identity.',
+    t('errors:neutralPilot.invalidIdentity'),
   );
   requireValue(
     Number.isInteger(record.ticks) && record.ticks >= 0 && record.ticks <= MAX_PILOT_TICKS,
-    'Invalid pilot tick count.',
+    t('errors:neutralPilot.invalidTickCount'),
   );
   requireValue(
     Array.isArray(record.segments) && record.segments.length <= record.ticks,
-    'Invalid pilot segments.',
+    t('errors:neutralPilot.invalidSegments'),
   );
   requireValue(
     typeof record.notes === 'string' && record.notes.length <= 8000,
-    'Invalid pilot notes.',
+    t('errors:neutralPilot.invalidNotes'),
   );
   // Validate the complete command stream before spending time replaying it.
   let ticks = 0;
@@ -273,28 +286,28 @@ export function verifyPilotObservations(source) {
         Array.isArray(segment.directions) &&
         segment.directions.length === (record.mode === 'solo' ? 1 : 2) &&
         segment.directions.every((value) => DIRECTIONS.includes(value)),
-      'Invalid pilot segment.',
+      t('errors:neutralPilot.invalidSegment'),
     );
     ticks += segment.ticks;
-    requireValue(ticks <= MAX_PILOT_TICKS, 'Pilot recording tick limit exceeded.');
+    requireValue(ticks <= MAX_PILOT_TICKS, t('errors:neutralPilot.tickLimitExceeded'));
   }
-  requireValue(ticks === record.ticks, 'Pilot segment duration differs.');
+  requireValue(ticks === record.ticks, t('errors:neutralPilot.segmentDurationDiffers'));
   const session = createNeutralPilotSession(record);
-  requireValue(record.mode === session.entry.mode, 'Pilot mode differs.');
+  requireValue(record.mode === session.entry.mode, t('errors:neutralPilot.modeDiffers'));
   requireValue(
     canonicalJSON(record.configuration) === canonicalJSON(session.configuration),
-    'Pilot configuration differs from current source.',
+    t('errors:neutralPilot.configurationDiffers'),
   );
   for (const segment of record.segments)
     for (let tick = 0; tick < segment.ticks; tick++)
       advanceNeutralPilotSession(session, segment.directions);
   requireValue(
     canonicalJSON(record.events) === canonicalJSON(session.events),
-    'Pilot events differ from replay.',
+    t('errors:neutralPilot.eventsDiffer'),
   );
   requireValue(
     canonicalJSON(record.outcome) === canonicalJSON(outcome(session)),
-    'Pilot outcome differs from replay.',
+    t('errors:neutralPilot.outcomeDiffers'),
   );
   return {
     verified: true,
