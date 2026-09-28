@@ -9,6 +9,8 @@ export const EMPTY_MASTERY_EVIDENCE = Object.freeze({
   revision: 0,
   mastery: Object.freeze([]),
   durableMastery: Object.freeze([]),
+  historicalClears: Object.freeze([]),
+  durableHistoricalClears: Object.freeze([]),
 });
 
 /** A bounded optional replay check after the shared host has accepted a win.
@@ -60,6 +62,22 @@ export async function mountEditionMastery({
         accepted.difficulty === clear.difficulty
       );
     }) === true;
+  const acceptOwnedClear = (clear) => {
+    const mission = byMission.get(clear.missionId);
+    return (
+      mission?.journeyMissionIds.some((id) => {
+        const accepted = getJourneyProfile()?.clears?.solo?.[id];
+        return (
+          accepted &&
+          mission.bindings.some(
+            (binding) =>
+              binding.gameplayId === accepted.gameplayId &&
+              binding.difficulty === accepted.difficulty,
+          )
+        );
+      }) === true
+    );
+  };
   const tr = (key) => t('interface:journeyMastery.' + key);
   const node = (tag, key) => {
     const element = doc.createElement(tag);
@@ -123,6 +141,7 @@ export async function mountEditionMastery({
     requirements,
     bindings,
     acceptClear,
+    acceptOwnedClear,
     storage: {
       getItem: storage.getItem,
       setItem(key, value) {
@@ -146,7 +165,7 @@ export async function mountEditionMastery({
   function retrySave() {
     if (disposed) return;
     try {
-      const stillAccepted = proofs.exportProofs().filter((entry) => acceptClear(entry.clear));
+      const stillAccepted = proofs.exportProofs().filter((entry) => acceptOwnedClear(entry.clear));
       const saved = proofs.importVerified(stillAccepted);
       reportStatus(saved ? 'saved' : 'session');
     } catch (error) {
