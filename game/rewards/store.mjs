@@ -277,9 +277,13 @@ export function createRewardStore({
       });
       return queue;
     },
-    reconcile(definitions, context, { persist = true } = {}) {
+    reconcile(definitions, context, { persist = true, persistenceContext = context } = {}) {
       required(!closed, 'Reward store is closed.');
       required(context.editionId === editionId, 'Reward evidence belongs to another edition.');
+      required(
+        persistenceContext.editionId === editionId,
+        'Durable reward evidence belongs to another edition.',
+      );
       const before = canonicalJSON(state);
       const result = reconcileEarnedRewards(definitions, context, state);
       state = result.state;
@@ -294,7 +298,7 @@ export function createRewardStore({
         };
         eligible = reconcileEarnedRewards(
           definitions,
-          context,
+          persistenceContext,
           mergeRewardStates(eligible, promised, { editionId }),
         ).state;
       }

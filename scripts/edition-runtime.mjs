@@ -21,6 +21,10 @@ export const EDITION_RUNTIME_RESOURCES = Object.freeze({
   'game/company-entry.mjs': ['game/index.html'],
   'game/index.html': EDITION_RUNTIME_PAGES,
   'game/app.mjs': ['game/content/scenarios/line-impact-demo.json'],
+  'game/vendor/qrcodegen-1.8.0.mjs': [
+    'game/vendor/QRCODEGEN-LICENSE.txt',
+    'game/vendor/qrcodegen-1.8.0.json',
+  ],
   'game/content/soundtrack-catalogue.mjs': [
     'game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3',
   ],

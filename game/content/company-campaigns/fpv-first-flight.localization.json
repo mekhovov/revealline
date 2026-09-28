@@ -22,7 +22,7 @@
         "name": { "en": "Start with a Stop", "uk": "Почніть із зупинки" }
       },
       "id": "fpv-first-flight-01",
-      "identity": "025d68974011af89",
+      "identity": "48f9661a9752373e",
       "kind": "mission"
     },
     {
@@ -38,7 +38,7 @@
         "name": { "en": "Height Is a Separate Question", "uk": "Висота — окреме питання" }
       },
       "id": "fpv-first-flight-02",
-      "identity": "e5250a0453cb7e25",
+      "identity": "5f9b2e7ec26137e2",
       "kind": "mission"
     },
     {
@@ -54,7 +54,7 @@
         "name": { "en": "A Straight Path, Two Views", "uk": "Прямий шлях, два види" }
       },
       "id": "fpv-first-flight-03",
-      "identity": "d82e794e81244e4b",
+      "identity": "ca976a28b9a33ab0",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "Slide Past the Window", "uk": "Рух убік повз вікно" }
       },
       "id": "fpv-first-flight-04",
-      "identity": "73c12c9c701352bb",
+      "identity": "721a7d16502e3bb4",
       "kind": "mission"
     },
     {
@@ -86,7 +86,7 @@
         "name": { "en": "A Turn and a Translation", "uk": "Поворот і переміщення" }
       },
       "id": "fpv-first-flight-05",
-      "identity": "61555ec7b7de5dbe",
+      "identity": "27baf91e31f5dd2f",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "The Joined Practice Route", "uk": "Спільний навчальний маршрут" }
       },
       "id": "fpv-first-flight-06",
-      "identity": "4fdfff22912a0a6a",
+      "identity": "2118f6c3df294d91",
       "kind": "mission"
     }
   ],

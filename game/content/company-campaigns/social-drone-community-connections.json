@@ -2,16 +2,16 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original fictional community workshop with notebooks, unpowered hobby quad frames and warm evening light.",
-      "bytes": 1043972,
+      "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
+      "bytes": 318557,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "social-drone-ua-home-picture",
+      "id": "social-drone-community-connections-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/social-drone-ua-home-v1.png",
+      "path": "editions/assets/discovery/social-drone-community-connections-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185",
+      "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb",
       "width": 960
     }
   ],
@@ -20,7 +20,7 @@
       "band": 3,
       "discovery": {
         "exhibitLayout": "mosaic",
-        "finaleRewardRef": { "id": "social-drone-community-connections-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "social-drone-community-connections-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "social-drone-community-connections",
@@ -205,7 +205,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "social-drone-community-connections-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "social-drone-community-connections-01-discovery", "revision": "2" },
         "routeDecision": "Take the near briefing island first or build a return around the long welcome terrace. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -217,7 +217,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "social-drone-ua-home-picture",
+        "backgroundAssetId": "social-drone-community-connections-key-picture",
         "themeId": "social-drone-community-connections-theme"
       },
       "revision": "2",
@@ -277,7 +277,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "social-drone-community-connections-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "social-drone-community-connections-02-discovery", "revision": "2" },
         "routeDecision": "Choose the upper booklet bay or the lower count desk, then join them through the middle shelf. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -289,7 +289,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "social-drone-ua-home-picture",
+        "backgroundAssetId": "social-drone-community-connections-key-picture",
         "themeId": "social-drone-community-connections-theme"
       },
       "revision": "2",
@@ -349,7 +349,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "social-drone-community-connections-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "social-drone-community-connections-03-discovery", "revision": "2" },
         "routeDecision": "Join the small source alcove before crossing between the two larger handoff desks. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -361,7 +361,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "social-drone-ua-home-picture",
+        "backgroundAssetId": "social-drone-community-connections-key-picture",
         "themeId": "social-drone-community-connections-theme"
       },
       "revision": "2",
@@ -430,7 +430,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "social-drone-community-connections-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "social-drone-community-connections-04-discovery", "revision": "2" },
         "routeDecision": "Use the wide reading terrace to divide the invitation court into two manageable captures. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -443,7 +443,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "social-drone-ua-home-picture",
+        "backgroundAssetId": "social-drone-community-connections-key-picture",
         "themeId": "social-drone-community-connections-theme"
       },
       "revision": "2",
@@ -512,7 +512,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "social-drone-community-connections-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "social-drone-community-connections-05-discovery", "revision": "2" },
         "routeDecision": "Connect the text island before the image bay or take the longer lower route around both. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -525,7 +525,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "social-drone-ua-home-picture",
+        "backgroundAssetId": "social-drone-community-connections-key-picture",
         "themeId": "social-drone-community-connections-theme"
       },
       "revision": "2",
@@ -594,7 +594,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "social-drone-community-connections-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "social-drone-community-connections-06-discovery", "revision": "2" },
         "routeDecision": "Choose the central noticeboard first or connect the three update stations before the final crossing. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -607,7 +607,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "social-drone-ua-home-picture",
+        "backgroundAssetId": "social-drone-community-connections-key-picture",
         "themeId": "social-drone-community-connections-theme"
       },
       "revision": "2",
@@ -622,9 +622,9 @@
       "format": "PackDesignV1",
       "id": "social-drone-community-connections-pack",
       "name": "Community Connections",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }

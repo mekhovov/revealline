@@ -2,16 +2,16 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original fictional component museum with a propeller-free X frame, separate motors and a camera display.",
-      "bytes": 1062590,
+      "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit.",
+      "bytes": 249553,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "fpv-learning-home-picture",
+      "id": "fpv-drone-families-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-learning-home-v1.png",
+      "path": "editions/assets/discovery/fpv-drone-families-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8",
+      "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1",
       "width": 960
     }
   ],
@@ -214,7 +214,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-drone-families-key-picture",
         "themeId": "fpv-drone-families-theme"
       },
       "relayLinks": [],
@@ -281,7 +281,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-drone-families-key-picture",
         "themeId": "fpv-drone-families-theme"
       },
       "relayLinks": [],
@@ -348,7 +348,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-drone-families-key-picture",
         "themeId": "fpv-drone-families-theme"
       },
       "relayLinks": [],
@@ -424,7 +424,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-drone-families-key-picture",
         "themeId": "fpv-drone-families-theme"
       },
       "relayLinks": [],
@@ -500,7 +500,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-drone-families-key-picture",
         "themeId": "fpv-drone-families-theme"
       },
       "relayLinks": [],
@@ -577,7 +577,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-drone-families-key-picture",
         "themeId": "fpv-drone-families-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],

@@ -2,16 +2,16 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original fictional component museum with a propeller-free X frame, separate motors and a camera display.",
-      "bytes": 1062590,
+      "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
+      "bytes": 207668,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "fpv-learning-home-picture",
+      "id": "fpv-first-flight-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-learning-home-v1.png",
+      "path": "editions/assets/discovery/fpv-first-flight-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8",
+      "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757",
       "width": 960
     }
   ],
@@ -99,9 +99,9 @@
     {
       "format": "MapDesignV2",
       "foundations": [
-        { "h": 7, "w": 22, "x": 25, "y": 11 },
+        { "h": 12, "w": 32, "x": 20, "y": 9 },
         { "h": 4, "w": 10, "x": 11, "y": 26 },
-        { "h": 4, "w": 12, "x": 50, "y": 19 }
+        { "h": 5, "w": 10, "x": 53, "y": 23 }
       ],
       "gates": [],
       "height": 36,
@@ -110,7 +110,7 @@
       "revision": "2",
       "spawns": [{ "id": "home", "x": 36.5, "y": 0.5 }],
       "terrain": [],
-      "walls": [{ "h": 2, "w": 10, "x": 52, "y": 27 }],
+      "walls": [],
       "width": 72
     },
     {
@@ -137,9 +137,11 @@
         { "h": 5, "w": 10, "x": 10, "y": 24 },
         { "h": 5, "w": 10, "x": 31, "y": 10 },
         { "h": 4, "w": 10, "x": 30, "y": 26 },
-        { "h": 5, "w": 9, "x": 53, "y": 7 }
+        { "h": 5, "w": 9, "x": 53, "y": 7 },
+        { "h": 4, "w": 14, "x": 29, "y": 18 },
+        { "h": 4, "w": 13, "x": 49, "y": 23 }
       ],
-      "gates": [{ "h": 5, "id": "return-1", "w": 1, "x": 35, "y": 30 }],
+      "gates": [{ "h": 3, "id": "return-1", "w": 1, "x": 36, "y": 15 }],
       "height": 36,
       "id": "fpv-first-flight-06-map",
       "name": "The Joined Practice Route",
@@ -213,7 +215,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-first-flight-key-picture",
         "themeId": "fpv-first-flight-theme"
       },
       "relayLinks": [],
@@ -280,7 +282,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-first-flight-key-picture",
         "themeId": "fpv-first-flight-theme"
       },
       "relayLinks": [],
@@ -347,7 +349,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 26.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-first-flight-key-picture",
         "themeId": "fpv-first-flight-theme"
       },
       "relayLinks": [],
@@ -362,7 +364,7 @@
           "id": "paper-drifter",
           "role": "field-keeper",
           "tier": "measured",
-          "x": 62.5,
+          "x": 61.5,
           "y": 28.5
         },
         {
@@ -379,10 +381,10 @@
           "role": "lane-emitter",
           "tier": "measured",
           "x": 56.5,
-          "y": 26.5
+          "y": 28.5
         }
       ],
-      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 25.5, "y": 11.5 }],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 20.5, "y": 9.5 }],
       "coverage": 0.5980000000000001,
       "design": {
         "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
@@ -420,10 +422,10 @@
       "name": "Slide Past the Window",
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
-        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 22.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-first-flight-key-picture",
         "themeId": "fpv-first-flight-theme"
       },
       "relayLinks": [],
@@ -499,7 +501,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-first-flight-key-picture",
         "themeId": "fpv-first-flight-theme"
       },
       "relayLinks": [],
@@ -573,10 +575,10 @@
       "name": "The Joined Practice Route",
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
-        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 27.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-first-flight-key-picture",
         "themeId": "fpv-first-flight-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
