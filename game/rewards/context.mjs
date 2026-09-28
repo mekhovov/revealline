@@ -1,0 +1,45 @@
+/** Translate only selected authored missions from the Journey authority. Skips,
+ * practice results and unknown mission IDs never become reward evidence. */
+export function rewardContext(provider, bindings, profile) {
+  const clears = {};
+  const clearAlternatives = {};
+  for (const mission of bindings) {
+    for (const id of mission.journeyMissionIds) {
+      const clear = profile?.clears?.solo?.[id];
+      // The reward model checks its promised revision. Current bindings must
+      // not discard historical accepted clears from a retained promise.
+      if (!clear) continue;
+      const accepted = {
+        runId: clear.runId,
+        gameplayId: clear.gameplayId,
+        difficulty: clear.difficulty,
+      };
+      if (!clears[mission.missionId]) {
+        clears[mission.missionId] = accepted;
+      } else {
+        const candidates = [
+          clears[mission.missionId],
+          ...(clearAlternatives[mission.missionId] ?? []),
+        ];
+        if (
+          !candidates.some(
+            (candidate) =>
+              candidate.runId === accepted.runId &&
+              candidate.gameplayId === accepted.gameplayId &&
+              candidate.difficulty === accepted.difficulty,
+          )
+        )
+          (clearAlternatives[mission.missionId] ??= []).push(accepted);
+      }
+    }
+  }
+  return {
+    editionId: provider.editionId,
+    brandId: provider.selection.brand.id,
+    campaignIds: provider.selection.edition.campaignIds,
+    clears,
+    ...(Object.keys(clearAlternatives).length ? { clearAlternatives } : {}),
+    learning: [],
+    mastery: [],
+  };
+}
