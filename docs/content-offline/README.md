@@ -6,7 +6,7 @@ See the [current phased status and delivery batches](STATUS-2026-09-28.md),
 
 Open [the registered-content inventory](inventory.html) for current and historical Classic, Journey and Team mission/mode owners, original image thumbnail, exact source path and byte/pixel hash, normalized physics comparison and board diagram. [inventory.json](inventory.json) contains the machine-readable records and compatibility-retention roots.
 
-The audit revalidates **12 Classic shared-original groups** and **106 authored originals reused across route revisions**. Those are different categories. The report also separates current Solo/Versus artwork sharing from historical reuse and presentation settings. Company editions and their presentation overrides still require inventory coverage. Current findings are not a uniqueness approval or a complete shipped-content gate.
+The audit revalidates **12 Classic shared-original groups** and **106 authored originals reused across route revisions**. Those are different categories. The report also separates current Solo/Versus artwork sharing from historical reuse and presentation settings. The supplementary [company ownership report](company-inventory.html) covers all 14 editions, their 69 canonical current missions and 26 retained presentations through the runtime reader. Its [machine-readable records](company-inventory.json) retain separate edition save identities and compare originals against this base inventory. Company transform/perceptual screening and full historical restoration evidence remain unfinished. Current findings are not a uniqueness approval or a complete shipped-content gate.
 
 The lifecycle registry changes discovery policy only. Historical source factories, exact original bytes, campaign/execution identities, profile keys and suspended-flight slots remain intact. Compatibility roots identify material that must be retained for saves, replays and earned pictures; they are not a replacement for complete runtime dependency closures in the offline catalogue.
 
@@ -25,6 +25,9 @@ All five candidate levels have public-input, replay-verified first-return eviden
 ```sh
 node scripts/content-inventory.mjs --write
 node scripts/content-inventory.mjs --check
+node scripts/company-content-inventory.mjs --write
+node scripts/company-content-inventory.mjs --check
+node --test scripts/test-company-content-inventory.mjs
 node scripts/content-artwork-screening.mjs --write
 node scripts/content-artwork-screening.mjs --check
 node scripts/uniqueness-pilot.mjs --write

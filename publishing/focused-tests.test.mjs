@@ -29,6 +29,16 @@ test('ownership inventory changes select route coverage and artwork screening re
   assert.ok(plan.commands[0].args.includes('game/test/artwork-screening.test.mjs'));
 });
 
+test('company ownership reports select retained identity and profile preservation checks', () => {
+  const plan = focusedTestPlan(['scripts/company-content-inventory.mjs'], manifest);
+  assert.ok(plan.categories.includes('company-content-inventory'));
+  assert.deepEqual(plan.unknownRuntime, []);
+  const command = plan.commands.find(({ id }) => id === 'company-content-inventory');
+  assert.ok(command.args.includes('scripts/test-company-content-inventory.mjs'));
+  assert.ok(command.args.includes('game/test/edition-retained-presentation.test.mjs'));
+  assert.ok(command.args.includes('game/test/edition-profile-compatibility.test.mjs'));
+});
+
 test('published size reports select metadata integrity and cache-owner measurement checks', () => {
   const plan = focusedTestPlan(['scripts/report-published-offline-packages.mjs'], manifest);
   assert.ok(plan.categories.includes('offline-package-measurements'));
