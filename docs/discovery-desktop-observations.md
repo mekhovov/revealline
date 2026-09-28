@@ -60,6 +60,10 @@ evidence. It checks actual result/viewer transition counts and waits for a visib
 successfully decoded pixels; a broken image is a failure. The viewer remains open for two observed
 frames even when the image is cached, so a quick transition cannot disappear between observer
 frames. Results must expose a visible, enabled Explore control before the runner clicks it.
+Visibility includes viewport bounds and ancestor overflow clipping; controls must
+also have their complete hit box and an unobstructed center. If needed, the driver
+uses its public `scrollintoview` operation before checking again. The observer
+itself remains passive. A DOM rectangle alone is insufficient visibility evidence.
 Failures produce `new-results.json.failed.json` with the failing step and available partial
 observations. Diagnostics include bounded public control names/events, pointer-release target
 matches, modal state, control visibility and image decode state. They do not collect arbitrary
@@ -121,8 +125,31 @@ were not retained. New logic has 13 focused tests, including 20 simulated viewin
 pointer targets, failed decode, cleanup and comparison rejection. Those are test fixtures, not
 new desktop measurements; no actual result-cycle rerun is claimed.
 
-Twenty successful result/viewer cycles, first-reveal timing, exact baseline/current comparison,
-the 5% p95 target, isolated reward tasks, and retained-resource stability remain **unverified**.
+After disk recovery, a fresh attempt retained an explicit failure at the first
+Explore action. The 1280 × 633 browser showed its button at y=687–731, below the
+viewport and clipped by the 163-pixel result reading pane. No Explore pointer or
+click event was observed. This identifies a result-layout defect and a permissive
+visibility diagnostic in that resumed attempt; it does not retrospectively prove
+the cause of the older attempt with missing diagnostics. The earned reward now
+places its compact summary and Explore controls outside the prose scroll pane;
+long discovery details remain within the existing untimed reading surface. Ready
+teasers keep their original placement, and Next has no new wait or earning gate.
+Regression fixtures cover the structural placement and offscreen, partial-clip,
+opacity and occlusion rejection. The browser rerun and qualification conclusions
+must still be recorded separately.
+
+The first visible-action correction exposed another composition issue: secondary
+music controls, utility actions and a large save notice left the picture and win
+headline with only a narrow strip. Earned results now reuse the same controls
+inside a native More disclosure, keeping Next, Retry, View picture and recovery
+directly available. The picture uses contained sizing, longer prose stays in the
+existing reader, and the overlay can scroll at extreme sizes. Ready and Pause
+restore the original control positions. Pending saves show neutral saving
+feedback; session-only backup guidance is reserved for settled nondurable saves.
+These are layout and feedback changes, with no new completion or input authority.
+
+At that checkpoint, twenty successful result/viewer cycles, first-reveal timing, exact baseline/current comparison,
+the 5% p95 target, isolated reward tasks, and retained-resource stability remained **unverified**. A later actual viewing rerun is recorded below; the wider performance claims remain open.
 Human review, physical devices and installed-app update/isolation evidence remain deferred.
 
 ## Interpretation limits
@@ -141,3 +168,25 @@ Git's skip-worktree flag in this checkout. Their absence from a sparse working d
 be interpreted as a missing historical tool or baseline result.
 
 The comparator requires a bounded observed mission and explicit full/reduced effects on both samples. Older reports remain readable, but equally missing metadata cannot qualify a comparison. The observer discards viewport or pixel-ratio changes before or during sampling. Fifteen focused observer checks pass; these fixture checks do not supply the outstanding actual desktop measurements.
+
+## Resumed earned-viewing check
+
+A fresh isolated HeadlessChrome 154 session on the same local desktop exposed the clipped
+Explore control at 1280×633, DPR 1. The [failure receipt](verification/evidence/discovery-result-clipping-failure-2026-09-28.json)
+retains the missing viewer transition and narrow public-control diagnostics. Direct DOM inspection
+located Explore at y687–731 inside a reading viewport ending at y266; no trusted Explore click
+was recorded. This establishes the resumed failure's clipping cause, not the older missing diagnostics.
+
+After the first shared layout repair, a fresh normal keyboard win of The Frame reached 79.6%
+with 18,690 points and two lives. The [twenty-view receipt](verification/evidence/discovery-result-viewing-repair-2026-09-28.json)
+records 20 Results→Explore→Close→Picture cycles and successfully decoded exact reward pictures.
+At every closed checkpoint there were 2,732 connected nodes, one image, one audio element, no
+video or connected blob media, and one each of the result, reward dialog and shelf. None of
+those connected counts grew.
+
+This was an intermediate working-tree UI check served statically, with a diagnostic catalogue
+fingerprint rather than a complete immutable loaded-byte binding. It therefore remains
+`qualified:false` and cannot establish a historical frame-time comparison. The test repeated
+viewing one accepted reward; it did not create 20 wins. Detached heap objects, outstanding URLs
+and decoder allocations remain outside these connected counts. Later compact result composition
+and neutral pending-save feedback require their own final layout check.

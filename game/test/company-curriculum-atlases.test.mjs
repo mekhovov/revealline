@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createCurriculumMissionExplorations } from '../company-campaigns/curriculum-mission-explorations.mjs';
+import { createCurriculumTextileLighting } from '../company-campaigns/curriculum-textile-lighting.mjs';
 import { createCurriculumAtlasPayloads } from '../company-campaigns/curriculum-atlases.mjs';
 import { CURRICULUM_MISSIONS, CURRICULUM_SOURCES } from '../company-campaigns/curriculum.mjs';
 import {
@@ -80,13 +81,21 @@ test('two published finale atlases use exact source-linked cards and bilingual o
       );
     assert.deepEqual(
       missionExplorations,
-      createCurriculumMissionExplorations(pilotMissionId, assets).map((payload) => ({
-        missionId: pilotMissionId,
-        payload,
-      })),
-      'Only the explicitly authored first-mission image atlas accompanies each unchanged finale.',
+      [
+        ...createCurriculumMissionExplorations(pilotMissionId, assets).map((payload) => ({
+          missionId: pilotMissionId,
+          payload,
+        })),
+        ...(campaignId === 'ukraine-threads'
+          ? createCurriculumTextileLighting('ukraine-threads-03', assets).map((payload) => ({
+              missionId: 'ukraine-threads-03',
+              payload,
+            }))
+          : []),
+      ],
+      'Only the explicitly authored mission image atlas and textile study accompany each unchanged finale.',
     );
-    assert.equal(missionExplorations.length, 1);
+    assert.equal(missionExplorations.length, campaignId === 'ukraine-threads' ? 2 : 1);
     assert.equal(missionExplorations[0].payload.recipe.id, 'inspect-image-atlas');
     const noWins = {
       editionId: finale.brandId,

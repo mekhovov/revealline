@@ -47,6 +47,14 @@ function harness({ longTasks = true } = {}) {
       frames.delete(id);
     },
   });
+  document.defaultView = Object.assign(window, {
+    getComputedStyle: (element) => ({
+      display: 'block',
+      visibility: 'visible',
+      opacity: '1',
+      ...element.style,
+    }),
+  });
   if (longTasks)
     window.PerformanceObserver = class {
       static supportedEntryTypes = ['longtask'];
@@ -530,4 +538,51 @@ test('viewport and pixel ratio changes before or during sampling discard the sta
       assert.deepEqual(result.comparisons, []);
     }
   }
+});
+
+test('cycle diagnostics reject offscreen, clipped, hidden and occluded Explore hit boxes', () => {
+  const h = harness(),
+    scroll = h.document.createElement('section'),
+    explore = h.document.createElement('button');
+  scroll.style.overflowY = 'auto';
+  scroll._rect = { x: 50, y: 100, width: 600, height: 163 };
+  explore.setAttribute('data-reward-surface', 'result');
+  h.$('completion-reward-result').append(scroll);
+  scroll.append(explore);
+  const snapshot = () => discoveryCycleSurface(h.document).explore;
+  explore._rect = { x: 70, y: 687, width: 180, height: 44 };
+  assert.equal(snapshot().visible, false, 'An offscreen layout box is not a clickable control.');
+  explore._rect.y = 250;
+  assert.equal(snapshot().visible, false, 'Partial clipping cannot qualify the full button.');
+  explore._rect.y = 180;
+  assert.equal(snapshot().visible, true);
+  h.document.elementFromPoint = () => h.document.body;
+  assert.equal(snapshot().visible, false, 'Another surface blocks the center hit target.');
+  h.document.elementFromPoint = () => explore;
+  assert.equal(snapshot().visible, true);
+  scroll.style.opacity = '0';
+  assert.equal(snapshot().visible, false);
+  delete scroll.style.opacity;
+  scroll.style.visibility = 'hidden';
+  assert.equal(snapshot().visible, false);
+  h.observer.dispose();
+});
+
+test('decoded image readiness excludes pictures outside a clipped reading pane', () => {
+  const h = harness(),
+    scroll = h.document.createElement('section'),
+    image = h.document.createElement('img');
+  scroll.style.overflowY = 'hidden';
+  scroll._rect = { x: 0, y: 0, width: 640, height: 120 };
+  image._rect = { x: 0, y: 150, width: 640, height: 200 };
+  image.complete = true;
+  image.naturalWidth = 640;
+  image.naturalHeight = 200;
+  h.$('completion-reward-dialog').open = true;
+  h.$('completion-reward-dialog').append(scroll);
+  scroll.append(image);
+  assert.equal(discoveryCycleSurface(h.document).decodedVisibleImages, 0);
+  image._rect.y = 50;
+  assert.equal(discoveryCycleSurface(h.document).decodedVisibleImages, 1);
+  h.observer.dispose();
 });
