@@ -1,12 +1,12 @@
 # Character motion, game feel and authentic artwork
 
-Approved scope updated 28 September 2026 through the sixth implementation batch. This replaces the earlier character-improvement order; the [current delivery checkpoint](plan-status-2026-09-28.md) and single publisher still own release acceptance. Source base: `bb9b3640270dc26633d37cfdf4a306aecda277b6`; the sixth batch is prepared on feature input `92fa98912eb5b5509f30f12a200e91afb48fe851`. An implemented candidate below is not a published release.
+Approved scope updated 28 September 2026 through eight implementation batches and the user’s C3–C6 priority revision. This replaces the earlier character-improvement order; the [current delivery checkpoint](plan-status-2026-09-28.md) and single publisher still own release acceptance. Source base: `bb9b3640270dc26633d37cfdf4a306aecda277b6`; the seventh checkpoint is `efa33669249402ede3e1e651f1d4f3ad8f840c03`. An implemented candidate below is not a published release.
 
 ## Batch policy and current delivery state
 
 The latest user instruction supersedes one-PR-per-phase ordering: keep compatible C0–C7 work in **draft [PR761](https://github.com/mekhovov/revealline/pull/761)** while the publisher queue is occupied. Develop independent features in parallel, review and commit bounded changes inside that PR, then freeze the verified subset when the publisher admits it. Do not wait for a merge to prepare independent art, tools or evidence; do not delay a ready release for unrelated unfinished production.
 
-Latest main observed for this review is `7138e7b6187bf69991d50313c3f9ac1620427778`; the live selector reports v0.142.0 with game source `813dee5feff5d42c54ef91292f6dd434d39d311a`. The separate 17-input player-readiness batch is merged as PR768; its v0.142.1 qualification and frozen evidence are complete, with publication still owned by the canonical publisher. This branch remains an unversioned feature input. That owner reconciles it onto accepted source, checks overlap with queued UX fixes, assigns a version and owns publication. Existing tags, source originals and historical evidence remain unchanged. No release or public acceptance is claimed for this actor batch.
+Latest main observed for this review is `a10fcbf8ae982f31d684f8abdc265d7e0338b3db`; the ordinary live selector now reports v0.142.1 with game source `7138e7b6187bf69991d50313c3f9ac1620427778`. The separate 17-input player-readiness batch is merged as PR768. Its published selector identity is verified here; this branch does not repeat or expand the publisher’s public-play evidence. This branch remains an unversioned feature input. That owner reconciles it onto accepted source, checks overlap with queued UX fixes, assigns a version and owns publication. Existing tags, source originals and historical evidence remain unchanged. No release or public acceptance is claimed for this actor batch.
 
 ## Implemented and awaiting integration
 
@@ -115,22 +115,74 @@ also keeps its loading message until preparation actually finishes.
 retained failures and native-browser observations. This is another bounded
 checkpoint in the same PR761, with no extra release or version allocation.
 
-## Remaining delivery order
+## Eighth batch: parallel C3–C6 implementation
 
-| Order          | Remaining work                                                                                                                     | Acceptance                                                                                                                                                                          | Effort range after start                             |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| Active release | Finish the queued input-release correction through the canonical publisher                                                         | Fresh integrated checks, immutable publication, public bytes and deliberate Confirm/player flows                                                                                    | Publisher queue; no duplicate version allocated here |
-| C0 remainder   | Whole-game frame-time, decoded-memory/download baseline; visual decisions from the generated disposition queue                     | Actual measurements and review, including non-actor assets and explicit/manual content                                                                                              | ½–1 day                                              |
-| C1-A delivery  | Review native Scout v3/v4/v5, Carrier v3 and the larger-propeller cohort at actual size/full board, then adopt the accepted subset | Preserve production history; adopt matching rig/body revisions and motion/effects/Team fingerprints, resolve the failed production-review gate, run build/provenance/public checks  | Bounded batch after input release                    |
-| C1-B           | Prepared patrol/hunter candidate and remaining genuinely mechanical rigs; reference-based aircraft/vehicle cohorts                 | New reviewed anchor revisions, correct spin arrangement and geometry, no baked/moving double parts; all relevant states/edges                                                       | 1–2 days for rigs; wider roster belongs to C3/C5     |
-| C2             | Qualify the three implemented existing-mission comparisons; human sessions, audio/haptics and future art benchmarks                | Complete capture/loss/Retry playthroughs, responsive controls and consented newcomer/experienced-player review; keep workshop/Poltava/Synevyr artwork preparation separate          | 2–3 days                                             |
-| C3             | Remaining richer native FPV/enemy roster and all Team states; full-board and native flow closure                                   | Readable silhouette/facing/reactions beyond the scout/carrier candidates; consistent Home/Pause/loading/continuation; integrate queued fixes once                                   | 3–5 days                                             |
-| C4             | Qualify existing pursuit/interception beyond the diagnostic missions, then optional patrol-sentry variants                         | Teach individually then combine; verify counterplay, replay/checkpoint compatibility and any changed edition/score identity; no new behavior system is established by the benchmark | 3–5 days                                             |
-| C5             | DroneAid/Ukrainian community, cultural, Retro and Coupa cohorts                                                                    | Review current Journey treatments first; pixel gameplay; explicit licensed photographic-reveal choice only                                                                          | 2–4 days per cohort                                  |
-| C6             | Review Studio rotor delivery; finish other moving parts, states and knowledge/collection extensions                                | Preserve strict-reader compatibility and accepted import/export semantics; add state playback, provenance/reference usage and collection artwork policy                             | 2–3 days in parallel                                 |
-| C7             | Whole-content qualification and remaining art corrections beyond the bounded second-batch cohort                                   | Every distinct current binding and mission covered; terrain/pickup/effect/artwork and retained history checked; focused/render counts do not substitute for full coverage           | 4–7 days                                             |
+- **C3:** a complete seven-class native body cohort uses the retained C1 rigs.
+  Scout and six-rotor Carrier preserve their accepted candidate bytes; five
+  additional equipment silhouettes have native 32/64px treatments. Fourteen
+  PNGs total 6,240 bytes. The source-only [roster review](verification/rotor-motion/roster.html)
+  uses the actual Solo/Versus and Team painters, exact PNG bindings and bounded
+  frame checks. Runtime production adoption, tiny contact-cue/art balance,
+  wider enemy roles and Team state coverage remain open.
+- **C4:** optional scout/sentry authoring no longer downgrades v9 pressure
+  recipes to v8 across the project. Untouched missions retain their simulation
+  identities. Explicit on/off, both turn policies, combined attacks,
+  replay/restoration, cancellation and Studio Undo/export pass focused checks.
+  The existing live-preview guard and Team restriction remain visible; no
+  current mission gains an attack. See [the authoring contract](combat-pressure-authoring.md).
+- **C5:** three original Ukrainian/community scene sources, recorded prompts
+  and structured references are retained byte-for-byte. Their 7,633,598 bytes
+  remain source candidates outside runtime collections. Prepared board
+  derivatives, cultural correction, branding and cross-mode review are next.
+- **C6:** the actual Asset Studio imports/exports a bounded `.rlart` collection
+  packet, checks all original hashes before native image decoding, preserves
+  accepted content on failure/cancellation and records explicit pixel-art or
+  photographic-reveal treatment. EN/UK controls and provenance keep source
+  links intact; treatment edits retain selection and increment the draft
+  revision. This separate source draft does not change historical `.rltheme`
+  records or approve runtime assets. See [format and limits](artwork-collection-packets.md).
 
-Ranges are effort estimates, not promised deployment dates. The next release remains blocked by any failed source, provenance, build or public check. Avoid expanding bulk art production before C1/C2 demonstrate an improvement.
+See [batch 8 verification](verification/actor-batch-8/README.md) for focused
+checks, actual packet round trips, the corrected selection/link defects and
+raster evidence limits. C3–C6 remain partially implemented phases. C2 is not a
+prerequisite for their next bounded production/authoring slices.
+
+## Priority revision: C3–C6 first; C2 last
+
+The latest user instruction supersedes the earlier “C1/C2 before expansion”
+condition. **C3, C4, C5 and C6 are the active parallel tracks. C2 is last.**
+Publication is a serialized acceptance step, not a dependency for independent
+implementation. Keep compatible slices in PR761 with separate commits and
+feature evidence; the publisher may freeze a ready subset without waiting for
+unrelated work.
+
+| Priority         | Work                                                                                                                    | Required dependency and acceptance                                                                                                                          | Effort remaining after start                                                                       |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Parallel release | Integrate and publish a verified subset of PR761                                                                        | Preserve current main, immutable history and exact reviewed body/rig dependencies; resolve applicable production gates, build, provenance and public checks | Publisher admission plus integration; no extra version allocated here                              |
+| C3 — active      | Complete seven native FPV class bodies, current enemy silhouettes, Team state presentation and related native-flow gaps | Use C1’s shared rigs; validate pixels, moving-part clearance, actual-size readability, states and retained appearances per cohort                           | 3–5 days for the remaining phase; native roster slice implemented; production adoption open        |
+| C4 — active      | Safe authoring and qualification of existing optional pursuit/interception/patrol/sentry variants                       | Preserve registered current recipes and unaffected mission identities; qualify explicit off/on, replay/checkpoints, warning/commit/recovery and counterplay | 3–5 days; catalogue downgrade correction implemented; live counterplay qualification remains       |
+| C5 — active      | Community/Ukrainian, cultural, Retro and Coupa cohorts                                                                  | Original source/provenance and deliberate native artwork; compatible C3 rigs and C6 artwork policy where used; no dependency on C2 pilot                    | 2–4 days per cohort; three original source scenes prepared; derivatives and cultural review remain |
+| C6 — active      | Finish authoring moving parts/states, structured references and collection artwork policy                               | Version new envelopes; keep historical strict readers intact; exercise real import/edit/export/preview and invalid/stale operations                         | 2–3 days in parallel                                                                               |
+| Supporting C0/C1 | Refresh exact affected coverage; finish necessary rigs and per-cohort performance/bounds checks                         | Only the dependency needed by that cohort. Do not wait for unrelated whole-game baseline collection                                                         | Fold into C3–C6 slices; ½–1 day for wider baseline later                                           |
+| C7 / UX6         | Whole-content/player qualification and outstanding terrain/pickup/art/history corrections                               | Every current distinct binding and ordinary flow reviewed; hardware/offline limitations separate                                                            | 4–7 days plus device availability                                                                  |
+| C2 — last        | Three-mission game-feel assessment, audio/haptics comparisons and six-player pilot                                      | Two consented rounds with newcomers/experienced players; report fairness and enjoyment, not inferred retention                                              | 2–3 days plus participants/listening/hardware, after the prioritized programme                     |
+
+**Still required immediately:** source/byte identity, provenance, strict-reader
+compatibility, moving-part geometry, bounded resources, deliberate input,
+retained artwork and applicable focused/browser checks. Simulation changes need
+determinism and replay checks. These do not move to C2.
+
+**Off the critical path:** further Scout-only contrast studies and comparison UI,
+audio/haptic experiments, the six-player pilot, an exhaustive baseline unrelated
+to a changed cohort, new bulk mission production, and unrelated creator/admin
+polish. Existing comparison tools remain available; maintain them when shared
+changes require it, but do not extend them instead of completing C3–C6.
+
+Ranges are implementation estimates, not guaranteed publication dates. Failed
+checks block the affected change’s acceptance; they do not stop independent
+work. Source candidates remain candidates until visual review and explicit
+production adoption. Neither a pending release nor C2 availability blocks
+preparing the next compatible cohort.
 
 ## Stable design contract
 
@@ -142,7 +194,7 @@ Use existing roles before adding a behavior system. Optional pursuit asks when t
 
 ## Reference and artwork benchmark
 
-The implemented playable comparison uses First Return, A Return in Reserve and Crossed Bands with their existing originals. The **workshop**, **Poltava courtyard** and **Synevyr-inspired landscape** remain future artwork benchmark directions. No mission with one of those new compositions is delivered by the current playable host, and no existing original is replaced by the reference material below.
+The implemented playable comparison uses First Return, A Return in Reserve and Crossed Bands with their existing originals. The **workshop**, **Poltava courtyard** and **Synevyr-inspired landscape** now have original [source candidates and complete prompts](../authoring/library/community-art-cohort-v1/README.md). Their unchanged 1774×887 outputs are verified by the new Studio packet workflow; they are not production-size board derivatives or approved mission bindings. The Poltava candidate still needs regional-detail correction and review. No current mission or earned original is replaced.
 
 - [DroneAid workshops](https://drone-aid.nl/en) and [Social Drone UA](https://www.socialdrone.com.ua/): original practical workshop compositions, recognisable frames, repair details and volunteer collaboration; reference-only.
 - [Pyrohiv Kuntseve house](https://www.pyrohiv.com/exponat/khata-iz-sela-kuntseve) and [Polissia](https://www.pyrohiv.com/exposition/polissya): regionally coherent materials, roofs, windows and setting; reference-only.

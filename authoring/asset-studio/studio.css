@@ -986,3 +986,51 @@ body.field-kit[data-effects='reduced'] .preview-surface {
     justify-items: start;
   }
 }
+/* Source artwork packets are independent of the saved presentation workspace. */
+.artwork-collection-panel {
+  margin: 12px;
+  padding: 12px;
+  border: 1px solid var(--line, #425563);
+}
+.artwork-collection-panel summary,
+.artwork-collection-panel button,
+.artwork-collection-panel select,
+.artwork-collection-panel input {
+  min-height: 44px;
+}
+.artwork-collection-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+}
+.artwork-collection-controls label {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  max-width: 100%;
+}
+.artwork-collection-controls input,
+.artwork-collection-controls select {
+  min-width: 0;
+  max-width: 100%;
+}
+.artwork-source-preview:empty {
+  display: none;
+}
+.artwork-source-preview {
+  height: min(50dvh, 420px);
+  background: #070b12;
+}
+.artwork-source-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: auto;
+}
+.artwork-source-preview img[data-medium='pixel-art'] {
+  image-rendering: pixelated;
+}
+.artwork-source-provenance {
+  overflow-wrap: anywhere;
+}

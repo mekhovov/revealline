@@ -1,7 +1,7 @@
 import { requireAuthoring as required } from './authoring-error.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { compileContentProject } from './project.mjs';
-import { COMBAT_ACTOR_CATALOG } from './catalogs.mjs';
+import { COMBAT_ACTOR_CATALOG, journeyActors } from './catalogs.mjs';
 
 function ownedMission(source, missionId) {
   const project = structuredClone(compileContentProject(source).source);
@@ -42,7 +42,14 @@ function finish(project, mission, command) {
 export function prepareCombatAuthoring(source, missionId) {
   const { project, mission } = ownedMission(source, missionId);
   if (Object.hasOwn(mission, 'combat')) return project;
-  project.actorCatalogId = COMBAT_ACTOR_CATALOG.id;
+  // Newer registered catalogues can change ordinary pressure recipes. Retain
+  // those recipes when optional combat is already an inherited capability.
+  const roles = journeyActors(project.actorCatalogId).roles;
+  if (
+    roles['optional-scout']?.combatRole !== 'scout' ||
+    roles['optional-sentry']?.combatRole !== 'sentry'
+  )
+    project.actorCatalogId = COMBAT_ACTOR_CATALOG.id;
   mission.combat = { version: 'mission-combat.v1', enabled: false };
   return finish(project, mission, {
     action: 'prepare-combat-authoring',

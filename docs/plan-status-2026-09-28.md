@@ -9,11 +9,11 @@ programme remains in scope where it has not been accepted.
 ## Public, queued and implemented are different states
 
 The ordinary [public game](https://mekhovov.github.io/revealline/) currently
-selects **v0.142.0**, source
-`813dee5feff5d42c54ef91292f6dd434d39d311a`. This checkpoint read the live
+selects **v0.142.1**, source
+`7138e7b6187bf69991d50313c3f9ac1620427778`. This checkpoint read the live
 `release.json`, GitHub `main` and draft PR761 directly. Main is now
-`7138e7b6187bf69991d50313c3f9ac1620427778`, including merged player-readiness
-PR768. Its publishing revision is separate from the immutable game source. The publisher has now published v0.142.1 as GitHub Latest; the ordinary Pages selector is still v0.142.0 at this check.
+`a10fcbf8ae982f31d684f8abdc265d7e0338b3db`, including merged player-readiness
+PR768. Its publishing revision is separate from the immutable game source. The publisher has published v0.142.1 as GitHub Latest, and the ordinary Pages selector now matches. This is a selector/source check, not an additional whole-player qualification.
 
 The publisher has recorded a successful hosted audit of **2,229 files /
 758,963,460 bytes** for v0.142.0. That is the publisher's byte evidence, not a
@@ -22,12 +22,12 @@ reported at its actual scope.
 
 The canonical publisher merged the **17-input player-readiness batch**,
 [PR768](https://github.com/mekhovov/revealline/pull/768), at 15:58:02 UTC. Publication
-and public verification are separate; the selector still serves v0.142.0 at this
+and public verification are separate; the selector serves v0.142.1 at this
 checkpoint. This actor branch does not allocate its version or start another publisher.
 
 **Draft [PR761](https://github.com/mekhovov/revealline/pull/761)** contains the
 character, reference and authoring work. Five earlier implementation batches and cancellation corrections were pushed through
-`92fa98912eb5b5509f30f12a200e91afb48fe851`. The sixth checkpoint adds the foreground-contact study and useful loss/recovery feedback; the seventh corrects effective gameplay parity and combined threat guidance, as described below. PR761 is not merged or publicly released and needs reconciliation against
+`92fa98912eb5b5509f30f12a200e91afb48fe851`. The sixth checkpoint adds the foreground-contact study and useful loss/recovery feedback; the seventh corrects effective gameplay parity and combined threat guidance; the eighth advances the now-prioritized C3–C6 tracks in parallel, as described below. PR761 is not merged or publicly released and needs reconciliation against
 newer main. Compatible
 implementation continues in the same draft while the release queue is occupied.
 
@@ -48,15 +48,15 @@ count includes multiple content sources and does not satisfy the separate
 
 ## Character batch: implemented, not yet accepted for release
 
-| Work                     | Concrete result in PR761                                                                                                 | Remaining acceptance                                                                                         |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| C0 inventory             | Current-entry role/binding audit and reproducible Keep/Repair/Review queue                                               | Regenerate on the integrated source; complete performance and visual review                                  |
-| C1 rotor correction      | Shared prepared-rotor path, direction/phase metadata, larger-propeller candidates and actual rendered-frame checks       | Review native bodies on real boards; adopt exact new body/rig revisions without changing historical records  |
-| C2 comparison tools      | Game Feel Lab and three playable existing missions with the same simulation, exact originals and deliberate 600 ms Retry | Complete capture/loss/counterplay review, audio and consented player sessions                                |
-| C3 Team clarity          | Prepared bodies remain visible under functional contact and numbered identity cues                                       | All richer body roles, states and mode combinations                                                          |
-| C5 reference preparation | Referenced Ukrainian/community examples and explicitly opt-in CC0 Synevyr original                                       | New original compositions or separately approved photographic derivatives; no reference is silently promoted |
-| C6 authoring             | Motion Lab hub position/radius/direction/phase editing with production geometry validation                               | Studio delivery review and remaining moving-part/state/collection workflows                                  |
-| C7 coverage              | Exact binding/disposition queue, unknown scopes and focused evidence                                                     | Every distinct binding, asset family and retained-history path reviewed                                      |
+| Work                       | Concrete result in PR761                                                                                                 | Remaining acceptance                                                                                        |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| C0 inventory               | Current-entry role/binding audit and reproducible Keep/Repair/Review queue                                               | Regenerate on the integrated source; complete performance and visual review                                 |
+| C1 rotor correction        | Shared prepared-rotor path, direction/phase metadata, larger-propeller candidates and actual rendered-frame checks       | Review native bodies on real boards; adopt exact new body/rig revisions without changing historical records |
+| C2 comparison tools        | Game Feel Lab and three playable existing missions with the same simulation, exact originals and deliberate 600 ms Retry | Complete capture/loss/counterplay review, audio and consented player sessions                               |
+| C3 roster and Team clarity | Seven native body classes and actual-renderer study; prepared bodies remain visible under contact/identity cues          | Production adoption, wider enemies, all states and mode combinations                                        |
+| C5 source cohort           | Three original scenes with prompts/provenance plus explicitly opt-in CC0 comparison                                      | Board derivatives, cultural detail corrections and all-mode production review                               |
+| C6 authoring               | Motion Lab/Studio rotor editing plus real source-packet import/export, explicit treatment and structured provenance      | Runtime policy adoption, other moving parts/state tooling and full delivery review                          |
+| C7 coverage                | Exact binding/disposition queue, unknown scopes and focused evidence                                                     | Every distinct binding, asset family and retained-history path reviewed                                     |
 
 The second implementation checkpoint has **149 passing focused tests**, rendered
 body comparisons, keyboard and on-screen-control wins, and responsive browser
@@ -216,24 +216,32 @@ also keeps its loading message until preparation actually finishes.
 retained failures and native-browser observations. This is another bounded
 checkpoint in the same PR761, with no extra release or version allocation.
 
-## Remaining order and estimates
+## Remaining order and estimates — reprioritized by the user
 
-These are focused effort ranges **after work starts**, not publication promises.
-Queue time, source reconciliation, review failures and device/player availability
-are additional. Update them after the current benchmark is assessed.
+C3, C4, C5 and C6 now run in parallel, including only their actual dependencies.
+**C2 moves to the very end and no longer gates wider implementation.** Release
+qualification stays with one publisher and does not stall development. The
+first seven checkpoints end at `efa336692`; this eighth compatible batch remains
+in PR761 rather than opening several release queues.
 
-| Priority            | Remaining item                                                                                   | Focused effort / external dependency                                                        |
-| ------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
-| Now                 | Deliver the checked six-batch subset in PR761                                                    | Local review/checks complete; publication waits for publisher admission                     |
-| Next                | Reconcile/adopt the accepted C1/C2 subset and resolve the Team production guard                  | 1–2 days after publisher admission; release gate failures remain blocking                   |
-| C0                  | Extend the new local measurement to matched accepted-source full-game baselines                  | ½–1 day                                                                                     |
-| C2                  | Actual play/counterplay assessment, audio/haptics and six-player pilot                           | 2–3 days plus participants/listening/hardware                                               |
-| C3                  | Remaining FPV/enemy bodies, Team states and native-flow gaps                                     | 3–5 days                                                                                    |
-| C4                  | Optional pursuit/interception/patrol combinations and fairness                                   | 3–5 days; preserve original edition/score/replay identities                                 |
-| C5                  | DroneAid/Ukrainian, cultural, Retro and Coupa cohorts                                            | 2–4 days per cohort after benchmark acceptance                                              |
-| C6                  | Other moving parts, state playback, provenance and artwork-policy authoring                      | 2–3 days in parallel                                                                        |
-| UX6 / C7            | Whole-player/content, performance, accessibility, offline and history qualification              | 4–7 days plus physical devices and human review                                             |
-| Remaining programme | Campaign-specific art/audio production, community external environments and supporting workflows | Re-estimate from the accepted inventory; not complete and not included in the current batch |
+| Priority            | Remaining item                                                                                                       | Focused effort / external dependency                                                            |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Parallel publisher  | Reconcile checked PR761 input and resolve relevant production review gates; immutable release and Pages verification | Depends on admission, exact integrated gates and public checks, not C2                          |
+| C3 — active         | Seven-class richer native bodies, enemy roles, Team states and related native-flow gaps                              | 3–5 days; seven-class source cohort complete, production adoption open                          |
+| C4 — active         | Optional pressure/combat authoring without downgrading sibling recipes; combinations and replay qualification        | 3–5 days; catalogue bug fixed, real preview presentation next                                   |
+| C5 — active         | DroneAid/Ukrainian, cultural, Retro and Coupa cohorts                                                                | 2–4 days per cohort; three source scenes prepared, derivatives/review next                      |
+| C6 — active         | Other moving parts, state playback, structured provenance and collection artwork-policy authoring                    | 2–3 days in parallel                                                                            |
+| Supporting C0/C1    | Current affected binding coverage, exact body/rig pairing and required bounds/performance checks                     | Included per cohort; wider baseline ½–1 day later                                               |
+| C7 / UX6            | Whole-player/content, performance, accessibility, offline and history qualification                                  | 4–7 days plus physical devices                                                                  |
+| Remaining programme | Campaign-specific production and other supporting workflows                                                          | Re-estimate from accepted inventory; unrelated bulk production/admin polish does not gate C3–C6 |
+| C2 — last           | Actual game-feel comparison, audio/haptics and six-player pilot                                                      | 2–3 days plus participants/listening/hardware after prioritized work                            |
+
+These ranges begin when work starts and are not deployment promises. Independent
+cohorts continue during release qualification. Defer additional Scout-only
+comparison studies, cosmetic lab controls and unrelated admin refinements;
+keep necessary render, import/export, compatibility, safety and source checks
+inside each changed feature. No critical validation is postponed merely because
+C2 moved.
 
 ## Blockers and concerns
 
@@ -263,3 +271,9 @@ required integrated gates, preserves/finalizes immutable assets, deploys Pages
 and verifies public bytes and ordinary play. Only then mark that subset
 publicly accepted. Failed gates, human/device limitations and unfinished phases
 remain visible in the next checkpoint.
+
+## Eighth batch: priority implementation checkpoint
+
+C3, C4, C5 and C6 now advance together; **C2 stays last**. The [batch 8 evidence](verification/actor-batch-8/README.md) records the seven-class body candidate, v9 optional-combat compatibility fix, three original scene sources and the real Studio artwork-packet workflow. These are implemented source slices in the same draft PR761, not complete phases or a public actor release. C3 has56/56 focused checks, C4 has35/35, and the final C5/C6/Studio cohort has17/17; the ordinary local build and all1,796 manifest byte records verify. Counts retain their separate scopes.
+
+The next compatible batch should prioritize C3 enemy/Team states and exact production adoption, C4 readable optional-encounter previews, C5 corrected/prepared board derivatives, and C6 remaining moving-part/state authoring. Wider performance/coverage work runs only where it supports those changes. Extra Scout-only comparisons, audio/haptic experiments and the consented C2 pilot remain deferred. Publication may accept a verified subset while independent development continues.

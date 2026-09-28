@@ -5,6 +5,13 @@ description: 'Plan, vary and inspect modular Xonix animation for avatars, enemie
 
 # Xonix Animation Director
 
+The current user-approved order is **C3/C4/C5/C6 in parallel**, with necessary
+C0/C1 checks included per cohort; **C2 is last**, not an expansion prerequisite.
+Follow the [revised dependency plan](../../../docs/character-game-feel-plan.md#priority-revision-c3c6-first-c2-last).
+Prioritize complete role cohorts and real authoring workflows over additional
+Scout-only comparisons. A publishing queue does not block independent source
+work. Keep existing test/provenance, actual-size and retained-identity gates.
+
 For the current FPV proportion correction, use [the reference review](../../../docs/drone-reference-review.md) and [side-by-side actual renderer comparison](../../../docs/verification/rotor-motion/proportions.html). A changed-pixel PASS is not visual approval: the first moving rig was rejected for tiny blades relative to motors/body. Use the explicit source-only candidate geometry, keep quad and six-rotor carrier envelopes separate, and adopt new bodies with matching rigs only after review. Do not multiply all historical radii globally or overlay blades on baked originals. Keep native exports, generated concept sheets, reviewed revisions and published defaults distinct.
 
 Prompt: “Recreate an original north-facing Field Kit craft with a slender centre frame, readable camera/battery and small motor bells. Preserve the selected candidate's exact anchors and full rotor envelope. Draw static bodies on 32/64px grids with binary alpha and at most 12 opaque colours; leave blades to the shared rotor layer. Compare at 20/24/32 CSS pixels, all headings and bright/dark art. Record sweep clearance, player/Team overlays, paused/reduced states and exact native PNG hashes. Manufacturer or monitorwar images are reference-only; do not copy logos, labels or pixels.”
