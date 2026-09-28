@@ -29,7 +29,8 @@ class Surface extends EventTarget {
 function setup(t, mode = 'stick') {
   const arena = new Surface(),
     pad = new Surface(),
-    surface = new Surface();
+    surface = new Surface(),
+    win = new Surface();
   const commands = [],
     releases = [],
     cancellations = [];
@@ -38,6 +39,7 @@ function setup(t, mode = 'stick') {
     arena,
     pad,
     surface,
+    window: win,
     getSettings: () => ({ mode }),
     active: () => enabled,
     onDirection: (direction) => commands.push(direction),
@@ -49,6 +51,7 @@ function setup(t, mode = 'stick') {
     arena,
     pad,
     surface,
+    win,
     commands,
     releases,
     cancellations,
@@ -57,6 +60,47 @@ function setup(t, mode = 'stick') {
       enabled = false;
     },
   };
+}
+
+for (const mode of ['stick', 'swipe', 'dpad']) {
+  test(`${mode}: outside release recovers steering when pointer capture is unavailable`, (t) => {
+    const f = setup(t, mode);
+    const target = mode === 'dpad' ? f.pad : f.surface;
+    target.setPointerCapture = () => {
+      throw new Error('Pointer capture unavailable');
+    };
+    target.pointer('pointerdown', mode === 'dpad' ? 145 : 78, 78, 11);
+    if (mode !== 'dpad') target.pointer('pointermove', 115, 78, 11);
+    f.win.pointer('pointerup', 200, 78, 99);
+    assert.deepEqual(f.releases, [], 'Another finger does not own this gesture.');
+    f.win.pointer('pointerup', 200, 78, 11);
+    assert.deepEqual(f.releases, [11], 'Outside release retires the gesture immediately.');
+    target.pointer('pointerup', 200, 78, 11);
+    assert.deepEqual(f.releases, [11], 'Window and element delivery release exactly once.');
+    assert.deepEqual(f.cancellations, [], 'Ordinary release is not an interruption.');
+    target.pointer('pointerdown', 78, mode === 'dpad' ? 145 : 78, 22);
+    f.win.pointer('pointercancel', 200, 78, 11);
+    if (mode !== 'dpad') target.pointer('pointermove', 78, 115, 22);
+    assert.deepEqual(f.commands, ['right', 'down']);
+    assert.deepEqual(f.releases, [11], 'An old pointer cannot retire the new owner.');
+  });
+
+  test(`${mode}: outside cancellation retires only the matching steering gesture`, (t) => {
+    const f = setup(t, mode);
+    const target = mode === 'dpad' ? f.pad : f.surface;
+    target.setPointerCapture = () => {};
+    target.pointer('pointerdown', 78, 78, 11);
+    f.win.pointer('pointercancel', 200, 78, 99);
+    assert.deepEqual(f.cancellations, []);
+    f.win.pointer('pointercancel', 200, 78, 11);
+    assert.deepEqual(f.releases, [11]);
+    assert.deepEqual(f.cancellations, [true], 'Outside cancellation interrupts immediately.');
+    target.pointer('pointercancel', 200, 78, 11);
+    target.pointer('pointermove', 200, 78, 11);
+    assert.deepEqual(f.releases, [11]);
+    assert.deepEqual(f.cancellations, [true]);
+    assert.deepEqual(f.commands, []);
+  });
 }
 
 test('cardinal touch directions reject jitter and retain heading at diagonal boundaries', () => {
