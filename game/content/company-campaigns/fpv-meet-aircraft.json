@@ -15,16 +15,68 @@
       "width": 960
     },
     {
-      "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
-      "bytes": 279176,
+      "alt": "Separate inert motors and unmounted propellers sit on cyan display stations beneath sculptural airflow ribbons.",
+      "bytes": 164826,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "fpv-meet-aircraft-key-picture",
+      "height": 480,
+      "id": "fpv-meet-aircraft-02-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-meet-aircraft-key-v1.jpg",
+      "path": "editions/assets/discovery/fpv-meet-aircraft-02-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0",
+      "sha256": "ecd4d5e5281b903a965724a4fa0632f6a161b1ad57f840cb446e0dc36f150d33",
+      "width": 960
+    },
+    {
+      "alt": "A fictional ESC role sculpture stands between separate thin cyan and broad amber light ribbons, with an inert motor model apart from it.",
+      "bytes": 164334,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-meet-aircraft-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-meet-aircraft-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "38a92e62c73aacdcda4f9e22cc853f22609f8683a7c08ac4b12fc1271d639c42",
+      "width": 960
+    },
+    {
+      "alt": "A quiet cyan pavilion layers a sensor-like sculpture, a central interpretation tile and separate command-light displays around nested courtyards.",
+      "bytes": 153991,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-meet-aircraft-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-meet-aircraft-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "e7566c6d820bb94edec5f2b8ba529137718fdd9a2b9ba39a90ccb79baa60dc11",
+      "width": 960
+    },
+    {
+      "alt": "Two separate exhibit bays compare an idle handheld control unit and receiver model with a camera, video tile and viewing goggles.",
+      "bytes": 160217,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-meet-aircraft-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-meet-aircraft-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "bef707ab50ad899059120d49bfd120e82b7f571f84f6666c3bf0f2923a682487",
+      "width": 960
+    },
+    {
+      "alt": "A fictional component atlas arranges a four-arm frame, an isolated energy block and separate information components on layered circular museum tables.",
+      "bytes": 182417,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-meet-aircraft-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-meet-aircraft-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "b11754ae638bc1d41d905b8e97024fc5cd7322abdad63c03e356291d6e826db2",
       "width": 960
     }
   ],
@@ -33,7 +85,7 @@
       "band": 1,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "fpv-meet-aircraft-finale", "revision": "2" }
+        "finaleRewardRef": { "id": "fpv-meet-aircraft-finale", "revision": "3" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-meet-aircraft",
@@ -241,7 +293,7 @@
         "memorableMoment": "Four civilian display stations with separated motors and unmounted props, illustrative cyan airflow ribbons and orange accents.",
         "pacingBeat": "choose",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-02-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-meet-aircraft-02-discovery", "revision": "3" },
         "routeDecision": "Choose adjacent workstations for short cuts or opposing stations for a broader capture."
       },
       "format": "MissionDesignV1",
@@ -251,7 +303,7 @@
       "name": "Motion Makers",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 15.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "fpv-meet-aircraft-key-picture",
+        "backgroundAssetId": "fpv-meet-aircraft-02-picture",
         "themeId": "fpv-meet-aircraft-theme"
       },
       "revision": "1",
@@ -299,7 +351,7 @@
         "memorableMoment": "An original civilian ESC exhibit separating conceptual command and energy ribbons, without pin labels or wiring instructions.",
         "pacingBeat": "combine",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-03-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-meet-aircraft-03-discovery", "revision": "3" },
         "routeDecision": "Use either offset electronics return before crossing the central power aisle."
       },
       "format": "MissionDesignV1",
@@ -309,7 +361,7 @@
       "name": "The ESC",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 16.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "fpv-meet-aircraft-key-picture",
+        "backgroundAssetId": "fpv-meet-aircraft-03-picture",
         "themeId": "fpv-meet-aircraft-theme"
       },
       "revision": "1",
@@ -357,7 +409,7 @@
         "memorableMoment": "An original cyan controller pavilion with sensor, interpretation and command display layers around a quiet nested court.",
         "pacingBeat": "breathe",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-04-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-meet-aircraft-04-discovery", "revision": "3" },
         "routeDecision": "Build a return through the outer court before linking the smaller sensor gallery."
       },
       "format": "MissionDesignV1",
@@ -367,7 +419,7 @@
       "name": "The Flight Controller",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 17.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "fpv-meet-aircraft-key-picture",
+        "backgroundAssetId": "fpv-meet-aircraft-04-picture",
         "themeId": "fpv-meet-aircraft-theme"
       },
       "revision": "1",
@@ -415,7 +467,7 @@
         "memorableMoment": "Twin civilian FPV exhibit bays, one with a handheld controller and RX concept, another with a camera and goggles, with separate information paths.",
         "pacingBeat": "mastery",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-05-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-meet-aircraft-05-discovery", "revision": "3" },
         "routeDecision": "Secure the control bay or video bay first, using their crossing as a safe return."
       },
       "format": "MissionDesignV1",
@@ -425,7 +477,7 @@
       "name": "Two Different Links",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 18.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "fpv-meet-aircraft-key-picture",
+        "backgroundAssetId": "fpv-meet-aircraft-05-picture",
         "themeId": "fpv-meet-aircraft-theme"
       },
       "revision": "1",
@@ -481,7 +533,7 @@
         "memorableMoment": "An original civilian aircraft component atlas with a disconnected battery, separately displayed props and distinct support, energy and information layers.",
         "pacingBeat": "resolve",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-06-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-meet-aircraft-06-discovery", "revision": "3" },
         "routeDecision": "Join the support hub first or link the energy and information islands before the final broad cut."
       },
       "format": "MissionDesignV1",
@@ -491,7 +543,7 @@
       "name": "The Whole Aircraft",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 19.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "fpv-meet-aircraft-key-picture",
+        "backgroundAssetId": "fpv-meet-aircraft-06-picture",
         "themeId": "fpv-meet-aircraft-theme"
       },
       "revision": "1",
@@ -506,9 +558,9 @@
       "format": "PackDesignV1",
       "id": "fpv-meet-aircraft-pack",
       "name": "Meet the Aircraft",
-      "revision": "2"
+      "revision": "3"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "2"
+  "revision": "3"
 }
