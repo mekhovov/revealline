@@ -226,3 +226,73 @@ test('unavailable retained gameplay remains recoverable and cancelled proof impo
   const unaccepted = createJourneyMasteryProofStore({ ...h.config, acceptClear: () => false });
   await assert.rejects(unaccepted.inspectProofs(h.store.exportProofs()), /accepted winning run/);
 });
+
+test('verified historical attempts survive later wins but cannot create or import unowned mission progress', async () => {
+  const f = fixture(),
+    lost = fixture({ lostLife: true }),
+    values = new Map();
+  let accepted = f.clear,
+    writable = true;
+  const config = {
+    editionId: 'mastery-fixture',
+    requirements: [f.requirement],
+    bindings: f.bindings,
+    acceptClear: (clear) => canonicalJSON(clear) === canonicalJSON(accepted),
+    acceptOwnedClear: () =>
+      accepted?.missionId === f.clear.missionId &&
+      f.bindings[0].bindings.some(
+        (binding) =>
+          binding.gameplayId === accepted.gameplayId && binding.difficulty === accepted.difficulty,
+      ),
+    storage: {
+      getItem: (key) => values.get(key) ?? null,
+      setItem(key, value) {
+        if (!writable) throw Error('full');
+        values.set(key, value);
+      },
+    },
+  };
+  const store = createJourneyMasteryProofStore(config);
+  const proof = await store.prove(f);
+  store.saveVerified(proof);
+  const bytes = values.get(store.key);
+  accepted = { ...f.clear, runId: 'later-win-with-life-lost' };
+  await assert.rejects(store.prove({ ...lost, clear: accepted }), /lost a life/);
+  await assert.rejects(store.prove(f), /exact accepted winning run/);
+  assert.equal(
+    store.saveVerified(proof),
+    true,
+    'Previously verified accepted attempts retain their ownership.',
+  );
+  assert.equal(values.get(store.key), bytes, 'Historical proof and envelope bytes do not migrate.');
+  const restored = createJourneyMasteryProofStore(config);
+  assert.deepEqual(await restored.hydrate(), { verified: 1, rejected: 0 });
+  assert.deepEqual(restored.rewardEvidence().historicalClears, [f.clear]);
+  assert.deepEqual(restored.rewardEvidence().durableHistoricalClears, [f.clear]);
+  assert.equal(restored.importVerified(await restored.inspectProofs([proof])), true);
+  accepted = { ...accepted, runId: 'new-no-loss-win' };
+  const newer = await restored.prove({ ...f, clear: accepted });
+  writable = false;
+  assert.equal(restored.saveVerified(newer), false);
+  assert.equal(restored.rewardEvidence().historicalClears[0].runId, accepted.runId);
+  assert.equal(restored.rewardEvidence().durableHistoricalClears[0].runId, f.clear.runId);
+  assert.equal(values.get(store.key), bytes);
+  accepted = null;
+  await assert.rejects(restored.inspectProofs([proof]), /owned accepted winning run/);
+  assert.throws(() => restored.saveVerified(newer), /owned accepted winning run/);
+  const unowned = createJourneyMasteryProofStore(config);
+  assert.equal((await unowned.hydrate()).rejected, 1);
+  assert.deepEqual(unowned.rewardEvidence().historicalClears, []);
+  assert.ok(unowned.exportRecovery().sources.includes(bytes));
+  assert.equal(values.get(store.key), bytes);
+  accepted = { ...f.clear, gameplayId: 'foreign-gameplay' };
+  await assert.rejects(restored.inspectProofs([proof]), /owned accepted winning run/);
+  accepted = f.clear;
+  const checked = await restored.inspectProofs([proof]);
+  accepted = { ...f.clear, missionId: 'unrelated-mission' };
+  assert.throws(
+    () => restored.importVerified(checked),
+    /owned accepted winning run/,
+    'Adoption rechecks ownership after asynchronous replay verification.',
+  );
+});
