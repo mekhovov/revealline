@@ -6585,6 +6585,1089 @@
         }
       ],
       "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-soldering-workshop-01-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-soldering-workshop-01-v1.jpg",
+      "sha256": "2b18f1e9ad3c235f775d85e73b58e02354d05abe7d265ba5c6e239a94fce67dc",
+      "bytes": 122111,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Place for the Iron",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game mission reveal, full-bleed very wide 2:1 composition. Stylized 3D storybook art with beautifully tactile surfaces, warm copper highlights, plum walls, cream practice materials and calm museum lighting. Clearly fictional educational exhibit, not a photograph or manufacturer procedure. No writing, numbers, logos, model markings, UI, borders, watermark, aircraft electronics, connected battery, operational wiring or weapons. Tools are cold, unplugged and idle; no flame, fumes, sparks or active soldering. Keep focal objects complete inside central80%. Exact safety and technical explanations remain separate localized text; this image is a conceptual invitation.\nScene: An inviting preparation alcove where a cold unplugged iron rests entirely in its substantial holder on a broad clear heat-resistant mat. The unplugged connector is visibly separate at the side. Behind it, a large extraction hood curves away above empty work space, while clear safety glasses rest on a clean raised shelf. Make the memorable silhouette a strong safe resting place for the tool, with graceful lamp light and ample working clearance. No hands, live work or practice joint yet. Rich copper, plum and pale stone with a soft window beyond.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-ff207002-22e6-44a7-8d30-2a94ea3355b8.png",
+        "sha256": "ac9260cc79f3dd3f0559256f4ea18e541f4db09d129a62e33cce073a852cdf81",
+        "bytes": 1920653,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A cold unplugged iron rests in a sturdy holder beside an extraction hood, safety glasses and clear work space.",
+          "context": "Original fictional beginner soldering exhibit using inert practice objects. It does not prescribe tool temperature, material selection, repair procedure or prove joint reliability; real hot-tool work requires appropriate instruction and fume control."
+        },
+        "uk": {
+          "alt": "Холодний від’єднаний паяльник лежить у міцному тримачі поруч із витяжним кожухом, захисними окулярами та вільним робочим місцем.",
+          "context": "Оригінальна уявна виставка для початківців із неактивними навчальними предметами. Вона не задає температури інструмента, вибору матеріалів чи ремонту й не доводить надійності з’єднання; реальна робота гарячим інструментом потребує відповідного навчання й контролю випарів."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.hse.gov.uk/lung-disease/electronics-soldering.htm",
+          "role": "Conceptual research for the separately authored beginner-learning card; no source photograph, diagram or named product copied."
+        },
+        {
+          "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering",
+          "role": "Conceptual research for the separately authored beginner-learning card; no source photograph, diagram or named product copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred",
+      "correctiveGeneration": {
+        "prompt": "Edit only the soldering-iron resting holder in this fictional cold preparation scene. Preserve every other object, composition, lighting and the full 2:1 aspect ratio. The current long metal tip sticks out beyond an open spiral and is a misleading resting arrangement. Replace the spiral holder with a robust closed metal safety cradle shaped as a slanted deep cylindrical cup; the iron's entire metal shaft and pointed tip must be fully inside that cradle, with ONLY the purple insulated handle and black rear cord visible outside the opening. No exposed pointed metal. Keep the disconnected power plug visibly separate on the mat, the extraction hood, glasses and clear workspace exactly as they are. The iron remains cold and unplugged. No text or labels.",
+        "reason": "Replaced the misleading exposed iron tip in the generated resting arrangement with an enclosed inert display cradle.",
+        "input": {
+          "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-b8991be3-f31e-475d-9ac6-15aefff07d98.png",
+          "sha256": "96462b1c4c5d2fd45a7a42fa15fc34987ab501507305faf7343900b39064a36a",
+          "bytes": 2045959
+        }
+      }
+    },
+    {
+      "id": "fpv-soldering-workshop-02-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-soldering-workshop-02-v1.jpg",
+      "sha256": "b5d3e5882a7432d542263e12ef1b561db0f1621bb35a38fe86ceee11d33b2b7d",
+      "bytes": 119640,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Read the Spool",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game mission reveal, full-bleed very wide 2:1 composition. Stylized 3D storybook art with beautifully tactile surfaces, warm copper highlights, plum walls, cream practice materials and calm museum lighting. Clearly fictional educational exhibit, not a photograph or manufacturer procedure. No writing, numbers, logos, model markings, UI, borders, watermark, aircraft electronics, connected battery, operational wiring or weapons. Tools are cold, unplugged and idle; no flame, fumes, sparks or active soldering. Keep focal objects complete inside central80%. Exact safety and technical explanations remain separate localized text; this image is a conceptual invitation.\nScene: A striking gallery of two oversized closed practice-material spools on separate copper plinths, both neutral cream rather than a good/bad colour code. Each spool has its own large completely blank removable record card, and one separate empty unidentified-material tray stands between them. A magnifying lens is focused on the edge of the blank card, not on a coloured spool body. The composition is about looking for material records before guessing. Soft plum archway, pale brass shelves and a bright cream tabletop. No actual chemical names, solder composition, brand labels or readable packaging.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-fd82e364-26ae-4172-af6c-3bbbde3be1a3.png",
+        "sha256": "a1c3fad234976fb55ff7f923e10d5ae95b383f284b2ef413348d500acbad88d3",
+        "bytes": 1968431,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Two neutral spools keep separate blank material records, with a magnifier and an unidentified-material tray between them.",
+          "context": "Original fictional beginner soldering exhibit using inert practice objects. It does not prescribe tool temperature, material selection, repair procedure or prove joint reliability; real hot-tool work requires appropriate instruction and fume control."
+        },
+        "uk": {
+          "alt": "Дві нейтральні котушки мають окремі чисті записи матеріалів; між ними — лупа й лоток невизначеного матеріалу.",
+          "context": "Оригінальна уявна виставка для початківців із неактивними навчальними предметами. Вона не задає температури інструмента, вибору матеріалів чи ремонту й не доводить надійності з’єднання; реальна робота гарячим інструментом потребує відповідного навчання й контролю випарів."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering",
+          "role": "Conceptual research for the separately authored beginner-learning card; no source photograph, diagram or named product copied."
+        },
+        {
+          "url": "https://www.hse.gov.uk/lung-disease/electronics-soldering.htm",
+          "role": "Conceptual research for the separately authored beginner-learning card; no source photograph, diagram or named product copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-soldering-workshop-03-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-soldering-workshop-03-v1.jpg",
+      "sha256": "bf9e828998b19cb67914fe884dd6f5304bfd4800595b16ce0f55089ed246a699",
+      "bytes": 129530,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Hold the Practice Piece",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game mission reveal, full-bleed very wide 2:1 composition. Stylized 3D storybook art with beautifully tactile surfaces, warm copper highlights, plum walls, cream practice materials and calm museum lighting. Clearly fictional educational exhibit, not a photograph or manufacturer procedure. No writing, numbers, logos, model markings, UI, borders, watermark, aircraft electronics, connected battery, operational wiring or weapons. Tools are cold, unplugged and idle; no flame, fumes, sparks or active soldering. Keep focal objects complete inside central80%. Exact safety and technical explanations remain separate localized text; this image is a conceptual invitation.\nScene: A giant inert practice pad and simple loose wire-lead study securely held in a broad bench holder, seen at close low angle. The pale perforated practice board has no circuit traces or attached components; one copper ring and one straight metal lead are large enough to inspect without a schematic. The two padded jaws hold the practice material firmly while generous empty access space surrounds it. A round magnifying lamp overhead, separate cold empty tool tray and soft plum background create a calm preparation scene. No iron touching the material, no solder applied, no hand position tutorial and no powered circuit.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-d1c0b9cc-7843-4652-9bc2-557abe4d25fe.png",
+        "sha256": "43f7281153f8d0eed4b30d68deccf1d3bbfa5a16d75681ff19b218b8c0b0f225",
+        "bytes": 2135264,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "An inert practice board and metal lead are held steady in a padded bench holder beneath a magnifying lamp.",
+          "context": "Original fictional beginner soldering exhibit using inert practice objects. It does not prescribe tool temperature, material selection, repair procedure or prove joint reliability; real hot-tool work requires appropriate instruction and fume control."
+        },
+        "uk": {
+          "alt": "Неактивну навчальну плату й металевий вивід зафіксовано в м’якому тримачі під лампою-лупою.",
+          "context": "Оригінальна уявна виставка для початківців із неактивними навчальними предметами. Вона не задає температури інструмента, вибору матеріалів чи ремонту й не доводить надійності з’єднання; реальна робота гарячим інструментом потребує відповідного навчання й контролю випарів."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/preparation",
+          "role": "Conceptual research for the separately authored beginner-learning card; no source photograph, diagram or named product copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-soldering-workshop-04-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-soldering-workshop-04-v1.jpg",
+      "sha256": "439b3f8cc0918409669b764f0df5c4646df53df40b144ff716ecf9b53f7e577f",
+      "bytes": 93510,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Where the Heat Goes",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game mission reveal, full-bleed very wide 2:1 composition. Stylized 3D storybook art with beautifully tactile surfaces, warm copper highlights, plum walls, cream practice materials and calm museum lighting. Clearly fictional educational exhibit, not a photograph or manufacturer procedure. No writing, numbers, logos, model markings, UI, borders, watermark, aircraft electronics, connected battery, operational wiring or weapons. Tools are cold, unplugged and idle; no flame, fumes, sparks or active soldering. Keep focal objects complete inside central80%. Exact safety and technical explanations remain separate localized text; this image is a conceptual invitation.\nScene: A sculptural sectional exhibit showing two enlarged copper-coloured contact surfaces: a simple flat practice pad cutaway and a separate straight lead passing through a broad demonstration opening. Show them as clean museum teaching forms, not an electronics assembly. A translucent amber ribbon of light traces both surfaces to suggest shared warming, not temperature or a timed procedure. A matte cream sectional base and a small blank record card sit on a generous circular plum dais. Use a very quiet spacious composition with clear exposed surfaces, no blob obscuring them. No iron, active heat source, real molten metal, numerical settings or copied technical diagram.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-015399e1-19c5-434a-a946-918aa5269307.png",
+        "sha256": "3b50a9754348ccca962a1ba17edc8ea5c57348e2ce06fe3971297b330fc7e12b",
+        "bytes": 1904164,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional cutaway separates a practice pad and lead while an amber light ribbon highlights their contact surfaces.",
+          "context": "Original fictional beginner soldering exhibit using inert practice objects. It does not prescribe tool temperature, material selection, repair procedure or prove joint reliability; real hot-tool work requires appropriate instruction and fume control."
+        },
+        "uk": {
+          "alt": "Уявний розріз розділяє навчальний майданчик і вивід, а бурштинова стрічка світла виділяє контактні поверхні.",
+          "context": "Оригінальна уявна виставка для початківців із неактивними навчальними предметами. Вона не задає температури інструмента, вибору матеріалів чи ремонту й не доводить надійності з’єднання; реальна робота гарячим інструментом потребує відповідного навчання й контролю випарів."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/making-a-good-solder-joint",
+          "role": "Conceptual research for the separately authored beginner-learning card; no source photograph, diagram or named product copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-soldering-workshop-05-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-soldering-workshop-05-v1.jpg",
+      "sha256": "678d477a2c747a5bd92415c5002763a63454d041fb24df73537a2c6a61057831",
+      "bytes": 128687,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "An Inspection, Not a Guess",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game mission reveal, full-bleed very wide 2:1 composition. Stylized 3D storybook art with beautifully tactile surfaces, warm copper highlights, plum walls, cream practice materials and calm museum lighting. Clearly fictional educational exhibit, not a photograph or manufacturer procedure. No writing, numbers, logos, model markings, UI, borders, watermark, aircraft electronics, connected battery, operational wiring or weapons. Tools are cold, unplugged and idle; no flame, fumes, sparks or active soldering. Keep focal objects complete inside central80%. Exact safety and technical explanations remain separate localized text; this image is a conceptual invitation.\nScene: Three oversized inert metal practice specimens sit on separated small cream stands across a broad inspection desk. One specimen shows two separate copper pads connected by an obvious unintended silver bridge; another shows one rough uneven silver surface; the third is a plain comparison surface with no quality-certification marking. A single large magnifying lens in the foreground enlarges the bridge specimen. Keep their little blank observation cards clearly separate, with soft plum archival drawers behind. This is a fictional visual observation exercise, not an actual electrical diagnosis or a repair step. No green checkmark, success badge, heat, soldering iron touching a joint or connected wire circuit.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-2007fc2f-ff05-434f-bda4-62d433feed6c.png",
+        "sha256": "98bda9385723ee1d66573e261a18b9876c962329cb994afa28ab569ac6566024",
+        "bytes": 2070535,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A magnifier compares separate fictional practice specimens showing a metal bridge, an uneven surface and a neutral comparison.",
+          "context": "Original fictional beginner soldering exhibit using inert practice objects. It does not prescribe tool temperature, material selection, repair procedure or prove joint reliability; real hot-tool work requires appropriate instruction and fume control."
+        },
+        "uk": {
+          "alt": "Лупа порівнює окремі вигадані навчальні зразки з металевою перемичкою, нерівною поверхнею та нейтральним зразком.",
+          "context": "Оригінальна уявна виставка для початківців із неактивними навчальними предметами. Вона не задає температури інструмента, вибору матеріалів чи ремонту й не доводить надійності з’єднання; реальна робота гарячим інструментом потребує відповідного навчання й контролю випарів."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/common-problems",
+          "role": "Conceptual research for the separately authored beginner-learning card; no source photograph, diagram or named product copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-soldering-workshop-06-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-soldering-workshop-06-v1.jpg",
+      "sha256": "ef4cd4a71bfded876c5063a035d84dafbc59aabfe6da03c6e9701100a353dc67",
+      "bytes": 119078,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Know When to Pause",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game mission reveal, full-bleed very wide 2:1 composition. Stylized 3D storybook art with beautifully tactile surfaces, warm copper highlights, plum walls, cream practice materials and calm museum lighting. Clearly fictional educational exhibit, not a photograph or manufacturer procedure. No writing, numbers, logos, model markings, UI, borders, watermark, aircraft electronics, connected battery, operational wiring or weapons. Tools are cold, unplugged and idle; no flame, fumes, sparks or active soldering. Keep focal objects complete inside central80%. Exact safety and technical explanations remain separate localized text; this image is a conceptual invitation.\nScene: A beautiful quiet review desk at evening, with an inert perforated beginner practice board standing upright in a small transparent display case. Six blank inspection cards form a gentle arc in front; a simple two-bar pause sculpture sits beside a closed handoff notebook. At the far side a cold unplugged iron rests entirely in its proper holder, visibly away from the practice board. The clear empty chair and a pool of warm light invite discussion with an instructor. Copper lamps, cream cards, plum shelves and calm atmosphere. Completion means a carefully explained learning exhibit, never permission to use live equipment. No certificate, stars, checkmarks, energized board or repaired aircraft.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-4f3d8ee2-2d6a-4033-b189-856afa428ec8.png",
+        "sha256": "a19b7ccb4ce961524f94487188e20483b5e5ab4152180d8e233714829a991556",
+        "bytes": 1895988,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A quiet review desk holds an inert practice-board exhibit, inspection cards, a pause symbol and a closed handoff notebook.",
+          "context": "Original fictional beginner soldering exhibit using inert practice objects. It does not prescribe tool temperature, material selection, repair procedure or prove joint reliability; real hot-tool work requires appropriate instruction and fume control."
+        },
+        "uk": {
+          "alt": "На тихому столі перевірки стоять неактивна навчальна плата, картки огляду, символ паузи й закритий зошит передачі справ.",
+          "context": "Оригінальна уявна виставка для початківців із неактивними навчальними предметами. Вона не задає температури інструмента, вибору матеріалів чи ремонту й не доводить надійності з’єднання; реальна робота гарячим інструментом потребує відповідного навчання й контролю випарів."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/soldering-faq",
+          "role": "Conceptual research for the separately authored beginner-learning card; no source photograph, diagram or named product copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "social-drone-people-workshop-02-reveal-v1",
+      "path": "game/editions/assets/discovery/social-drone-people-workshop-02-v1.jpg",
+      "sha256": "04549079a9ce5359f9e30e8072d85ccbc17aa71a329832334f69d1a1e582896e",
+      "bytes": 179440,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Many Ways to Contribute — two connected workshop bays",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Build a beautiful miniature community workshop with two equally important open bays around a bright central circular meeting table. Left bay contains one simple tiny propeller-free civilian quadcopter display model on an unpowered mat, a closed tool drawer and entirely blank task cards. Right bay contains donated-looking plain notebooks, folded paper packaging and a neat tray of simple unmarked contribution tokens, no currency or payment instructions. Each bay has its own large blank contribution board and empty seat; broad softly luminous mint ribbons along the floor meet at the central table. Do not rank contributions: both bays receive equal warm light and space. The central meeting alcove is the memorable focal point, showing that different resources and skills connect. Large glass roof, rounded cobalt shelving, warm task lamps and soft plant details; appealing game environment, not a website. Distinctive deep petrol teal and cobalt workshop architecture, warm ivory paper, honey-yellow task lights, small mint accents, tactile painted 3D materials and cinematic inviting daylight. Make one strong focal reveal and rich layered depth, all important objects within the central 80 percent. No written words, letters, numbers, labels, logos, UI, watermarks, border or real people. Do not copy an organisation photograph or imply a real event, official endorsement or real internal process. Every aircraft object is a small unpowered civilian educational display model with propellers absent and battery visibly separate. No wiring schematics, assembly sequence, weapons, payloads, camouflage or military setting. This is fictional community-learning scenery, not practical certification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-d98fc5a5-98a6-4b3a-b28d-c28cfbbb47a2.png",
+        "sha256": "31bd0e2538a421e55e2f2379c27fd3bd8f8164ae877d42e5b89a359abf75ee8c",
+        "bytes": 2353774,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated teal-and-blue workshop with two equally lit contribution bays connected to a central meeting table.",
+          "context": "Original generated fictional civilian community-learning scene. It does not depict a real Social Drone UA event, participant or internal process and does not imply endorsement or practical certification. The organisation’s actual stated purpose is described separately with a public source."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована бірюзово-синя майстерня з двома однаково освітленими просторами внеску, з’єднаними зі спільним столом.",
+          "context": "Оригінальна згенерована вигадана сцена цивільного навчання спільноти. Вона не зображує справжню подію Social Drone UA, учасника чи внутрішній процес і не означає схвалення або практичної кваліфікації. Заявлену мету організації описано окремо з публічним джерелом."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.socialdrone.com.ua/",
+          "role": "Public organisational purpose, contribution roles and training-scope FAQ inform the separately sourced lesson; this fictional scene reproduces no source photograph or operational procedure."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "social-drone-people-workshop-03-reveal-v1",
+      "path": "game/editions/assets/discovery/social-drone-people-workshop-03-v1.jpg",
+      "sha256": "8583d72d7c92c57bd3532e32136f0950c1c71040e3276c1f945b1da8293dc1bf",
+      "bytes": 179382,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Find the Source — evidence library",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Create an imaginative source library where a bright central evidence desk sits between offset deep-blue archive shelves. At the desk, one original picture card of a tiny fictional empty workshop is visibly attached by a brass clip and short mint ribbon to its own entirely blank source card. A second loose blank card rests separately to suggest an unanswered claim. Include a large brass magnifying glass, carefully arranged blank folders and a small closed display case containing a propeller-free unpowered civilian quad model well away from the writing area. Soft glowing lines connect distinct archive alcoves without forming a map or technical circuit. Let the attached picture-and-source pair be the memorable reveal. Tall teal arches, warm square lamps, cobalt book spines without letters and ivory terrazzo floor make a rich explorable library. No photographs, dates, workshop attendance claims or actual website screenshot. Distinctive deep petrol teal and cobalt workshop architecture, warm ivory paper, honey-yellow task lights, small mint accents, tactile painted 3D materials and cinematic inviting daylight. Make one strong focal reveal and rich layered depth, all important objects within the central 80 percent. No written words, letters, numbers, labels, logos, UI, watermarks, border or real people. Do not copy an organisation photograph or imply a real event, official endorsement or real internal process. Every aircraft object is a small unpowered civilian educational display model with propellers absent and battery visibly separate. No wiring schematics, assembly sequence, weapons, payloads, camouflage or military setting. This is fictional community-learning scenery, not practical certification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-3dff6d1d-4bf9-432b-8e36-c7bf5d5f636e.png",
+        "sha256": "01f2449bf2ccaaf23743767abd90f8df1fe8035c51accb36d2d2d6a071e4fc44",
+        "bytes": 2407329,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated source library with a fictional workshop picture attached to its blank source card at a bright evidence desk.",
+          "context": "Original generated fictional civilian community-learning scene. It does not depict a real Social Drone UA event, participant or internal process and does not imply endorsement or practical certification. The organisation’s actual stated purpose is described separately with a public source."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована бібліотека джерел із вигаданою картинкою майстерні, прикріпленою до порожньої картки джерела на освітленому столі.",
+          "context": "Оригінальна згенерована вигадана сцена цивільного навчання спільноти. Вона не зображує справжню подію Social Drone UA, учасника чи внутрішній процес і не означає схвалення або практичної кваліфікації. Заявлену мету організації описано окремо з публічним джерелом."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.socialdrone.com.ua/",
+          "role": "Public organisational purpose, contribution roles and training-scope FAQ inform the separately sourced lesson; this fictional scene reproduces no source photograph or operational procedure."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "social-drone-people-workshop-04-reveal-v1",
+      "path": "game/editions/assets/discovery/social-drone-people-workshop-04-v1.jpg",
+      "sha256": "85ad91530e6bc5c33851aab986319a3491e73b3dbbbe8dc24322872f71d3eee9",
+      "bytes": 182818,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Ask a Useful Question — quiet discussion courtyard",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Create a spacious sunlit discussion courtyard inside a fictional community learning workshop. A long curved cobalt bench wraps a calm central ivory table, with three empty seats angled toward each other. On the table, one simple propeller-free civilian quad display model sits under a clear dome, while two entirely blank upright context cards stand separately beside it. The model is a decorative learning object, not an exploded view or build diagram. A large floating cream paper loop above the table forms a gentle open spiral, not a question-mark glyph; it suggests an unfinished question. Wide safe-looking tiled aisles, warm hanging lamps, plants and open blue discussion alcoves give a breathable quiet reward moment. Separate closed cases in the background hold generic learning models, no flight simulator UI or operating drone. Emphasize the welcoming empty seat and space to ask for an explanation. Distinctive deep petrol teal and cobalt workshop architecture, warm ivory paper, honey-yellow task lights, small mint accents, tactile painted 3D materials and cinematic inviting daylight. Make one strong focal reveal and rich layered depth, all important objects within the central 80 percent. No written words, letters, numbers, labels, logos, UI, watermarks, border or real people. Do not copy an organisation photograph or imply a real event, official endorsement or real internal process. Every aircraft object is a small unpowered civilian educational display model with propellers absent and battery visibly separate. No wiring schematics, assembly sequence, weapons, payloads, camouflage or military setting. This is fictional community-learning scenery, not practical certification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-e9da1f60-82ee-4f3e-8d5b-7e28982ae6fe.png",
+        "sha256": "12a1433043da96a061f048873ee027711ad25fac31d0b8f879e60b4ad66f7ce3",
+        "bytes": 2524312,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated discussion courtyard with a curved blue bench, empty seats and a civilian display model beneath a clear dome.",
+          "context": "Original generated fictional civilian community-learning scene. It does not depict a real Social Drone UA event, participant or internal process and does not imply endorsement or practical certification. The organisation’s actual stated purpose is described separately with a public source."
+        },
+        "uk": {
+          "alt": "Оригінальний ілюстрований двір обговорень із вигнутою синьою лавою, вільними місцями та цивільною навчальною моделлю під прозорим ковпаком.",
+          "context": "Оригінальна згенерована вигадана сцена цивільного навчання спільноти. Вона не зображує справжню подію Social Drone UA, учасника чи внутрішній процес і не означає схвалення або практичної кваліфікації. Заявлену мету організації описано окремо з публічним джерелом."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.socialdrone.com.ua/",
+          "role": "Public organisational purpose, contribution roles and training-scope FAQ inform the separately sourced lesson; this fictional scene reproduces no source photograph or operational procedure."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "social-drone-people-workshop-05-reveal-v1",
+      "path": "game/editions/assets/discovery/social-drone-people-workshop-05-v1.jpg",
+      "sha256": "14f06f2e8864b7e20ef33d952f8badd7eeaf52c0f61ba83a2973cf62dc575bec",
+      "bytes": 187972,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Care Before Certainty — evidence workbenches",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. A fictional evidence workshop containing three separate staggered teal benches. The foreground bench holds an orderly tray of simple unmarked model parts and an entirely blank inventory card. A second bench has a brass magnifying lens over an equally blank observation card. The third has a cream folder opened to a missing blank insert, with a small amber lamp shining on the empty space. A mint paper ribbon links the physical tray, observation card and visible gap without becoming a wiring diagram. The focal idea is that an honest record shows what remains unknown, not a magic complete checkmark. Store a tiny plain civilian drone model in a closed distant display case, not a working assembly. Deep cobalt drawers, glass roof, small plants and honey task lamps create rich welcoming depth. No checkmarks, numeric counts or certification symbols. Distinctive deep petrol teal and cobalt workshop architecture, warm ivory paper, honey-yellow task lights, small mint accents, tactile painted 3D materials and cinematic inviting daylight. Make one strong focal reveal and rich layered depth, all important objects within the central 80 percent. No written words, letters, numbers, labels, logos, UI, watermarks, border or real people. Do not copy an organisation photograph or imply a real event, official endorsement or real internal process. Every aircraft object is a small unpowered civilian educational display model with propellers absent and battery visibly separate. No wiring schematics, assembly sequence, weapons, payloads, camouflage or military setting. This is fictional community-learning scenery, not practical certification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-53934713-ffae-41a5-8bbb-563814c0b2f1.png",
+        "sha256": "587e39ddf47c1ed7cc8ff4204265bf42fb56166b4fca106496e6f0621e85076f",
+        "bytes": 2456584,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated evidence workshop with three separated benches for an inventory tray, an observation card and an open folder with a missing insert.",
+          "context": "Original generated fictional civilian community-learning scene. It does not depict a real Social Drone UA event, participant or internal process and does not imply endorsement or practical certification. The organisation’s actual stated purpose is described separately with a public source."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована майстерня доказів із трьома окремими столами для облікового лотка, картки спостереження та відкритої папки з відсутньою вкладкою.",
+          "context": "Оригінальна згенерована вигадана сцена цивільного навчання спільноти. Вона не зображує справжню подію Social Drone UA, учасника чи внутрішній процес і не означає схвалення або практичної кваліфікації. Заявлену мету організації описано окремо з публічним джерелом."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.socialdrone.com.ua/",
+          "role": "Public organisational purpose, contribution roles and training-scope FAQ inform the separately sourced lesson; this fictional scene reproduces no source photograph or operational procedure."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "social-drone-people-workshop-06-reveal-v1",
+      "path": "game/editions/assets/discovery/social-drone-people-workshop-06-v1.jpg",
+      "sha256": "b6b80c7688e32834f8ce4b7efdf9805aa0679bc3051db86e85829d101f39bb25",
+      "bytes": 232824,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "The Community Mosaic — six connected spaces",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Create an original spectacular miniature community-learning world displayed as one coherent architectural mosaic on a broad ivory exhibition island. Six visibly distinct spaces are connected by broad teal walkways: a welcome arch, two different contribution bays treated as one paired station, a tall source-library alcove, a quiet curved discussion bench, a careful evidence desk and a broad shared exhibition table. No map UI or labels. Each little space has a warm lamp and an empty place for a visitor; the connected whole is the focal reward. An original tiny propeller-free civilian aircraft display sits within one clear case, not on an operating bench. A softly lit cobalt glass-roofed hall surrounds this rich diorama; warm golden evening light falls across mint paths. This is a fictional spatial synthesis, not a real community facility or scale plan. Distinctive deep petrol teal and cobalt workshop architecture, warm ivory paper, honey-yellow task lights, small mint accents, tactile painted 3D materials and cinematic inviting daylight. Make one strong focal reveal and rich layered depth, all important objects within the central 80 percent. No written words, letters, numbers, labels, logos, UI, watermarks, border or real people. Do not copy an organisation photograph or imply a real event, official endorsement or real internal process. Every aircraft object is a small unpowered civilian educational display model with propellers absent and battery visibly separate. No wiring schematics, assembly sequence, weapons, payloads, camouflage or military setting. This is fictional community-learning scenery, not practical certification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-e8dd42dc-51e9-4fee-817d-09ea8e4d10eb.png",
+        "sha256": "3508515778cd3c2151008675b271c191f8e5994629dd90ba3dcf83be8da81693",
+        "bytes": 2776986,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated community mosaic joining a welcome arch, contribution bays, source library, discussion bench, evidence desk and shared table.",
+          "context": "Original generated fictional civilian community-learning scene. It does not depict a real Social Drone UA event, participant or internal process and does not imply endorsement or practical certification. The organisation’s actual stated purpose is described separately with a public source."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована мозаїка спільноти, що поєднує вітальну арку, простори внеску, бібліотеку джерел, лаву обговорень, стіл доказів і спільний стіл.",
+          "context": "Оригінальна згенерована вигадана сцена цивільного навчання спільноти. Вона не зображує справжню подію Social Drone UA, учасника чи внутрішній процес і не означає схвалення або практичної кваліфікації. Заявлену мету організації описано окремо з публічним джерелом."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.socialdrone.com.ua/",
+          "role": "Public organisational purpose, contribution roles and training-scope FAQ inform the separately sourced lesson; this fictional scene reproduces no source photograph or operational procedure."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "social-drone-community-connections-01-reveal-v1",
+      "path": "game/editions/assets/discovery/social-drone-community-connections-01-v1.jpg",
+      "sha256": "792d40af92d286850cd10688398440c6d444e32463f19d2b37d7dc486b46bd16",
+      "bytes": 176459,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "One Shared Brief — library science day",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. Create a bright fictional library science-day hall with one inviting teal welcome desk on the left and a large warm amber entirely blank purpose board on the right. A central open table displays three simple large everyday mechanism models, one plain gear pair, one wooden balance lever and one hand-cranked wheel, clearly decorative exhibits without instructions or numbers. Keep these models distinct and mechanically approximate, not certified educational diagrams. A generous ivory aisle and a mint floor ribbon connect welcome desk, purpose board and table. Blank audience invitation cards, empty chairs, cobalt shelving, hanging plants and soft sunlight create a welcoming community scene. The focal idea is a specific shared audience and result, rather than an anonymous technical task. No drones need appear in this civilian communications scene. Distinctive deep petrol teal and cobalt workshop architecture, warm ivory paper, honey-yellow task lights, small mint accents, tactile painted 3D materials and cinematic inviting daylight. Make one strong focal reveal and rich layered depth, all important objects within the central 80 percent. No written words, letters, numbers, labels, logos, UI, watermarks, border or real people. Do not copy an organisation photograph or imply a real event, official endorsement or real internal process. Every aircraft object is a small unpowered civilian educational display model with propellers absent and battery visibly separate. No wiring schematics, assembly sequence, weapons, payloads, camouflage or military setting. This is fictional community-learning scenery, not practical certification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-d6170486-96a2-4bed-8c5c-6792c862e229.png",
+        "sha256": "dd84b2c0a83fb0c38ba9c585601b85b5fdb139c75d8da6e2aed2735e7d283b21",
+        "bytes": 2317758,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated library science-day hall with a teal welcome desk, blank purpose board and three everyday mechanism display models.",
+          "context": "Original generated fictional civilian community-learning scene. It does not depict a real Social Drone UA event, participant or internal process and does not imply endorsement or practical certification. The organisation’s actual stated purpose is described separately with a public source."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована зала бібліотечного дня науки з бірюзовою вітальною стійкою, порожньою дошкою мети та трьома демонстраційними моделями повсякденних механізмів.",
+          "context": "Оригінальна згенерована вигадана сцена цивільного навчання спільноти. Вона не зображує справжню подію Social Drone UA, учасника чи внутрішній процес і не означає схвалення або практичної кваліфікації. Заявлену мету організації описано окремо з публічним джерелом."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.socialdrone.com.ua/",
+          "role": "Public organisational purpose, contribution roles and training-scope FAQ inform the separately sourced lesson; this fictional scene reproduces no source photograph or operational procedure."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-four-controls-01-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-four-controls-01-v1.jpg",
+      "sha256": "06376321a870bb8edbb1bff457fe27295d26b06f9a8a481634d578e831d838b7",
+      "bytes": 148286,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Two Sticks, Four Names",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium mission reveal for a civilian control-concept game, very wide2:1. Sophisticated stylized3D science-gallery artwork with midnight navy, luminous cyan, brushed silver and amber accents, cinematic light and tactile surfaces. All aircraft are inert unpowered museum sculptures on visible stands, not flying machines. Their four arms end in plain round discs without propellers. Where a controller appears, it has only two unbranded stick wells, no operational switches or labels. No writing, numbers, logos, UI, watermark, wiring, weapons or procedure. Clear central focal comparison, complete inside central80%. This is an untimed conceptual exhibit; exact Mode2 labels, axes and flight-mode assumptions are provided by localized game text rather than baked into art.\nScene: An oversized unbranded two-stick control sculpture lies flat at the centre of a beautiful navy circular table, viewed from elevated near-overhead angle so both large stick wells are clear. Around it are four separate small cyan-and-amber blank command cards on independent holders, each separated by generous space. Silver inlaid cross-shaped paths in each stick well hint at two axes without arrow labels or claiming switch mappings. A tall translucent wall and soft museum lamps give depth. The focus is one elegant clearly readable controller shape, not a cockpit, remote setup interface or busy diagram.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-bd818433-8e67-4699-af2e-5c751c176955.png",
+        "sha256": "78650cce7b9f81906fb13782a77392bd0d4e865e0bb1df10df7410d3e2235831",
+        "bytes": 2374152,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A two-stick museum control sculpture sits among four separate blank command cards.",
+          "context": "Original fictional control-concept exhibit, not a universal control map or a flight simulator. Inert models illustrate orientation comparisons; exact Mode2 labels and selected model assumptions remain in the separate lesson."
+        },
+        "uk": {
+          "alt": "Музейна скульптура пульта з двома стіками стоїть серед чотирьох окремих чистих карток команд.",
+          "context": "Оригінальна уявна виставка понять керування, а не універсальна схема чи льотний симулятор. Неактивні моделі ілюструють порівняння орієнтації; точні позначення Mode2 й припущення обраної моделі подано в окремому уроці."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ardupilot.org/copter/docs/common-radio-control-calibration.html",
+          "role": "Source context for separately authored control-concept explanations; no image, universal mapping or operational configuration copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-four-controls-02-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-four-controls-02-v1.jpg",
+      "sha256": "affba1dd04bb175292c7179ad667687ec1982977ea388686d352d0d1dfe300bf",
+      "bytes": 114622,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Pitch: Read the Nose",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium mission reveal for a civilian control-concept game, very wide2:1. Sophisticated stylized3D science-gallery artwork with midnight navy, luminous cyan, brushed silver and amber accents, cinematic light and tactile surfaces. All aircraft are inert unpowered museum sculptures on visible stands, not flying machines. Their four arms end in plain round discs without propellers. Where a controller appears, it has only two unbranded stick wells, no operational switches or labels. No writing, numbers, logos, UI, watermark, wiring, weapons or procedure. Clear central focal comparison, complete inside central80%. This is an untimed conceptual exhibit; exact Mode2 labels, axes and flight-mode assumptions are provided by localized game text rather than baked into art.\nScene: A striking side-on motion comparison: two simplified inert four-arm models on transparent stands face the same direction, both with bright cyan nose markers. One is level; the other visibly tilts its nose down around a silver horizontal hinge sculpture through its centre. The hinge is only a museum support, not a flight mechanism. Keep nose and tail easily distinguishable with a long quiet amber backdrop and a broad flat baseline surface, no travel ribbon or geographical arrow. A crescent skylight adds rich deep-blue gallery light. No propellers and no claim that tilting instantly causes a particular translation.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-71015537-cdd2-4046-9ffb-88b0370d04ff.png",
+        "sha256": "cd72a5c28206667a446fc16e557031d576ff12418c527d9b8ef49c539c28495c",
+        "bytes": 2067784,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Two inert side-view models compare a level attitude with a downward nose tilt around a display hinge.",
+          "context": "Original fictional control-concept exhibit, not a universal control map or a flight simulator. Inert models illustrate orientation comparisons; exact Mode2 labels and selected model assumptions remain in the separate lesson."
+        },
+        "uk": {
+          "alt": "Дві неактивні моделі збоку порівнюють рівне положення з нахилом носа вниз навколо виставкового шарніра.",
+          "context": "Оригінальна уявна виставка понять керування, а не універсальна схема чи льотний симулятор. Неактивні моделі ілюструють порівняння орієнтації; точні позначення Mode2 й припущення обраної моделі подано в окремому уроці."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://docs.px4.io/main/en/flight_modes_mc/manual_stabilized",
+          "role": "Source context for separately authored control-concept explanations; no image, universal mapping or operational configuration copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-four-controls-03-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-four-controls-03-v1.jpg",
+      "sha256": "2adebfe28917b39bc2686a5b8e30f4243df0fb94eb1a19fa742e8f8ffb281fbd",
+      "bytes": 147937,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Roll: One Wingtip Lower",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium mission reveal for a civilian control-concept game, very wide2:1. Sophisticated stylized3D science-gallery artwork with midnight navy, luminous cyan, brushed silver and amber accents, cinematic light and tactile surfaces. All aircraft are inert unpowered museum sculptures on visible stands, not flying machines. Their four arms end in plain round discs without propellers. Where a controller appears, it has only two unbranded stick wells, no operational switches or labels. No writing, numbers, logos, UI, watermark, wiring, weapons or procedure. Clear central focal comparison, complete inside central80%. This is an untimed conceptual exhibit; exact Mode2 labels, axes and flight-mode assumptions are provided by localized game text rather than baked into art.\nScene: An elegant front-facing orientation pavilion. A clearly inert cross-shaped four-arm model with a cyan nose facing the viewer is held on a transparent central support, tilted so one side is lower than the other. Its own left arm carries a broad blue band; the opposite arm remains cream, giving a consistent landmark rather than relying only on screen direction. A second small level silhouette sits on a separate far-left comparison plinth. A slim silver front-to-back axis sculpture passes below the model as display architecture, not through active hardware. Two blank viewpoint cards stand apart in the foreground. Beautiful navy stone, cyan glass and soft amber light; no motion trail, propellers or operational explanation.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-0efc3ab3-31db-4673-95b7-ca0bef373448.png",
+        "sha256": "07514c2cdafbea9a969070c27baba01ad2b1e92c425b30a76200b7da8304092e",
+        "bytes": 2252836,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A front-view inert model tilts one side lower, with a blue arm marker and a separate level comparison.",
+          "context": "Original fictional control-concept exhibit, not a universal control map or a flight simulator. Inert models illustrate orientation comparisons; exact Mode2 labels and selected model assumptions remain in the separate lesson."
+        },
+        "uk": {
+          "alt": "Неактивна модель спереду нахиляє один бік нижче; синя позначка променя й окремий рівний зразок допомагають порівнянню.",
+          "context": "Оригінальна уявна виставка понять керування, а не універсальна схема чи льотний симулятор. Неактивні моделі ілюструють порівняння орієнтації; точні позначення Mode2 й припущення обраної моделі подано в окремому уроці."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.nasa.gov/wp-content/uploads/2020/05/aam-science-behind-quadcopters-educator-guide_1.pdf",
+          "role": "Source context for separately authored control-concept explanations; no image, universal mapping or operational configuration copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "social-drone-community-connections-02-reveal-v1",
+      "path": "game/editions/assets/discovery/social-drone-community-connections-02-v1.jpg",
+      "sha256": "8c5cba7cbc015357ceedc5c2adc6d3d3eb63f2fbd64b6b8e64babc8efe7c2ca2",
+      "bytes": 183460,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Count What Is Here — booklet room",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. An original library preparation room with a wide honey-wood counting table, one open plain delivery box, two neatly separated stacks of blank ivory booklets and a visibly empty reserved area between them. Three entirely blank count cards stand behind the table. Let the empty reserved space glow with gentle amber reflected light; a partly filled delivery is the memorable reveal. The illustrated stacks are approximate decorative stacks, not an exact numerical counting diagram; exact quantities remain in localized text. A central teal return shelf curves around the room, with warm lamps, cobalt drawers and a broad visible corridor. No real donation receipts, addresses, exact numeric claims or payment details. Distinctive deep petrol teal and cobalt workshop architecture, warm ivory paper, honey-yellow task lights, small mint accents, tactile painted 3D materials and cinematic inviting daylight. Make one strong focal reveal and rich layered depth, all important objects within the central 80 percent. No written words, letters, numbers, labels, logos, UI, watermarks, border or real people. Do not copy an organisation photograph or imply a real event, official endorsement or real internal process. Every aircraft object is a small unpowered civilian educational display model with propellers absent and battery visibly separate. No wiring schematics, assembly sequence, weapons, payloads, camouflage or military setting. This is fictional community-learning scenery, not practical certification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-8cc1ac4b-fb56-4e45-94e2-3f0317e849bb.png",
+        "sha256": "b1d9207916f8863709225d697dbb024d7b47ce3ffc58b1ba2b1852d2fddfd80f",
+        "bytes": 2376074,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated library preparation room with an open box, separate booklet stacks and a reserved empty area beside blank count cards.",
+          "context": "Original generated fictional civilian community-learning scene. It does not depict a real Social Drone UA event, participant or internal process and does not imply endorsement or practical certification. The organisation’s actual stated purpose is described separately with a public source."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована кімната підготовки бібліотеки з відкритою коробкою, окремими стосами буклетів і залишеним порожнім місцем біля чистих карток підрахунку.",
+          "context": "Оригінальна згенерована вигадана сцена цивільного навчання спільноти. Вона не зображує справжню подію Social Drone UA, учасника чи внутрішній процес і не означає схвалення або практичної кваліфікації. Заявлену мету організації описано окремо з публічним джерелом."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.socialdrone.com.ua/",
+          "role": "Context for separately sourced communication lesson. The original fictional library scene makes no claims about a real organisation’s internal records or venue."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "social-drone-community-connections-03-reveal-v1",
+      "path": "game/editions/assets/discovery/social-drone-community-connections-03-v1.jpg",
+      "sha256": "38bf49eb62dd8e9d07f830f0d06289acf5e98d691bf83f9826cb915333ffe741",
+      "bytes": 167058,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "The Next Reader — handoff alcoves",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. An imaginative handoff gallery composed of two broad teal desks connected through a smaller glowing source alcove. In the foreground, three upright blank display-label frames stand side by side: the first two have small cream source cards visibly clipped beneath them; the third has an empty brass clip with no source card. A long mint ribbon links the third empty clip toward a closed unlabelled source folder resting in the alcove. No checkmarks or written completion claims; show the remaining work through the missing attached card. An empty chair faces the next-reader side of the table. Deep blue built-in bookshelves, honey task lamps and tall sunlit windows create a beautiful calm learning setting. Distinctive deep petrol teal and cobalt workshop architecture, warm ivory paper, honey-yellow task lights, small mint accents, tactile painted 3D materials and cinematic inviting daylight. Make one strong focal reveal and rich layered depth, all important objects within the central 80 percent. No written words, letters, numbers, labels, logos, UI, watermarks, border or real people. Do not copy an organisation photograph or imply a real event, official endorsement or real internal process. Every aircraft object is a small unpowered civilian educational display model with propellers absent and battery visibly separate. No wiring schematics, assembly sequence, weapons, payloads, camouflage or military setting. This is fictional community-learning scenery, not practical certification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-52aca1ab-40e4-446a-bddb-52531fe07b96.png",
+        "sha256": "0bd9ae422008408106aa4e4cfd7ea49cb4e6e5fd603c76fdaaa8b54421e86295",
+        "bytes": 2251316,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated handoff gallery with three blank label frames, two attached source cards and a third empty clip awaiting its source.",
+          "context": "Original generated fictional civilian community-learning scene. It does not depict a real Social Drone UA event, participant or internal process and does not imply endorsement or practical certification. The organisation’s actual stated purpose is described separately with a public source."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована галерея передачі справ із трьома порожніми рамками підписів, двома прикріпленими картками джерел і третім порожнім затискачем.",
+          "context": "Оригінальна згенерована вигадана сцена цивільного навчання спільноти. Вона не зображує справжню подію Social Drone UA, учасника чи внутрішній процес і не означає схвалення або практичної кваліфікації. Заявлену мету організації описано окремо з публічним джерелом."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.w3.org/WAI/tips/writing/",
+          "role": "Context for separately sourced communication lesson. The original fictional library scene makes no claims about a real organisation’s internal records or venue."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "social-drone-community-connections-04-reveal-v1",
+      "path": "game/editions/assets/discovery/social-drone-community-connections-04-v1.jpg",
+      "sha256": "ef616a08e49258ca9e8a2a8105a3965e3729d99d12516c777e282072f1d2ab88",
+      "bytes": 186789,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "An Invitation That Helps — accessible courtyard",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original premium storybook videogame mission reveal, full-bleed wide landscape 2:1. A welcoming spacious fictional library courtyard with an ivory level floor and a broad unobstructed continuous path from a visible reception desk to a reading room entrance. A teal reading terrace with wide open space and comfortable empty seats sits on one side. The reading-room doorway is marked by a large distinctive open-book relief ABOVE it and a matching open-book relief on a freestanding amber wayfinding board near the reception desk. The matching shapes provide a non-colour visual clue; no arrows, text, braille or standards certification. Other smaller doorways have different plain shapes, not just different colours. A blank invitation card stands on a foreground table; warm sunlight, plants and restrained mint floor accents make the main route easy to see. This is fictional venue scenery, not a claim of accessibility at a real place. Distinctive deep petrol teal and cobalt workshop architecture, warm ivory paper, honey-yellow task lights, small mint accents, tactile painted 3D materials and cinematic inviting daylight. Make one strong focal reveal and rich layered depth, all important objects within the central 80 percent. No written words, letters, numbers, labels, logos, UI, watermarks, border or real people. Do not copy an organisation photograph or imply a real event, official endorsement or real internal process. Every aircraft object is a small unpowered civilian educational display model with propellers absent and battery visibly separate. No wiring schematics, assembly sequence, weapons, payloads, camouflage or military setting. This is fictional community-learning scenery, not practical certification.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-8184d333-fd24-4e0b-bc26-5a099e269268.png",
+        "sha256": "28e548e99d9030f3e1909df342f475bed517e1e28bc2bbeb483a33cedc09bbef",
+        "bytes": 2395113,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated library courtyard with a broad level route and matching open-book reliefs connecting reception and the reading-room doorway.",
+          "context": "Original generated fictional civilian community-learning scene. It does not depict a real Social Drone UA event, participant or internal process and does not imply endorsement or practical certification. The organisation’s actual stated purpose is described separately with a public source."
+        },
+        "uk": {
+          "alt": "Оригінальний ілюстрований бібліотечний двір із широким рівним шляхом та однаковими рельєфами відкритої книжки біля стійки й дверей читальні.",
+          "context": "Оригінальна згенерована вигадана сцена цивільного навчання спільноти. Вона не зображує справжню подію Social Drone UA, учасника чи внутрішній процес і не означає схвалення або практичної кваліфікації. Заявлену мету організації описано окремо з публічним джерелом."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.w3.org/WAI/tips/writing/",
+          "role": "Context for separately sourced communication lesson. The original fictional library scene makes no claims about a real organisation’s internal records or venue."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-four-controls-04-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-four-controls-04-v1.jpg",
+      "sha256": "8604abd20aced15a333d238d4f041f074508a6adab3a4367bb39d637e951a97d",
+      "bytes": 133484,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Yaw: Turn the Heading",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium mission reveal for a civilian control-concept game, very wide2:1. Sophisticated stylized3D science-gallery artwork with midnight navy, luminous cyan, brushed silver and amber accents, cinematic light and tactile surfaces. All aircraft are inert unpowered museum sculptures on visible stands, not flying machines. Their four arms end in plain round discs without propellers. Where a controller appears, it has only two unbranded stick wells, no operational switches or labels. No writing, numbers, logos, UI, watermark, wiring, weapons or procedure. Clear central focal comparison, complete inside central80%. This is an untimed conceptual exhibit; exact Mode2 labels, axes and flight-mode assumptions are provided by localized game text rather than baked into art.\nScene: A bold overhead view of a circular cyan-glass floor exhibit. Two separate transparent layers show the same inert four-arm model at different headings over one fixed central silver dot, each model with a vivid blue triangular nose. Keep their centres coincident; only the heading differs, with no linear travel path. A thin amber arc connects the two nose orientations around the centre, without degrees, compass letters or arrowheads. The surrounding midnight-blue floor is deliberately spacious and calm, with four soft lamps far from the model. The scene is a beautiful comparison of orientation rather than a route or real map.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-0cac1010-b2a1-44f4-a151-d14a86abbcd1.png",
+        "sha256": "b9a5660f62f99e20c42e0bc114f7996c317239421c31844f371250def9163919",
+        "bytes": 2133604,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "An overhead exhibit shows one four-arm model at a fixed centre, a blue nose marker and a separate compared heading.",
+          "context": "Original fictional control-concept exhibit, not a universal control map or a flight simulator. Inert models illustrate orientation comparisons; exact Mode2 labels and selected model assumptions remain in the separate lesson."
+        },
+        "uk": {
+          "alt": "Виставка згори показує одну чотирипроменеву модель із нерухомим центром, синю позначку носа й окремий порівнюваний напрямок.",
+          "context": "Оригінальна уявна виставка понять керування, а не універсальна схема чи льотний симулятор. Неактивні моделі ілюструють порівняння орієнтації; точні позначення Mode2 й припущення обраної моделі подано в окремому уроці."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://docs.px4.io/main/en/flight_modes_mc/position",
+          "role": "Source context for separately authored control-concept explanations; no image, universal mapping or operational configuration copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred",
+      "correctiveGeneration": {
+        "prompt": "Edit this museum illustration only. Preserve the circular cyan glass display, overhead viewpoint, amber arc, surrounding navy room and wide 2:1 composition. Replace the confusing overlapping aircraft shape at the centre with ONE clear solid silver inert four-arm model: exactly four diagonal arms, each ending in one plain circular disc. Four discs total, no extra disc at bottom. Its single blue triangular nose points straight upward; its centre remains the silver dot. Do not draw a second aircraft or any second body/arms. To indicate the compared heading, retain a separate thin transparent blue TRIANGLE ONLY pointing right, with no body, arms or rotor discs attached, aligned on a radius from the same fixed central dot. The amber quarter-circle links the upward nose direction to that rightward triangle. It is an abstract static orientation exhibit, not a flight route. No text, labels, logos, weapons or propellers.",
+        "reason": "Initial overlapping models read as a five-armed object. Use one four-arm model and a separate heading marker to keep the yaw concept legible.",
+        "input": {
+          "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-7819c3d7-f76a-400a-bc90-590deb9b6917.png",
+          "sha256": "4f59c4e257e88bbc180189c1eca1675a402163b060c173d19690d42fd2e5c0e3",
+          "bytes": 2245947
+        }
+      }
+    },
+    {
+      "id": "fpv-four-controls-05-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-four-controls-05-v1.jpg",
+      "sha256": "3a5b9e4f021f5cf7dfa81cbc71a00856487b25ac96a8ff77be0ffef3c14eb992",
+      "bytes": 139478,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Throttle Needs a Model",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium mission reveal for a civilian control-concept game, very wide2:1. Sophisticated stylized3D science-gallery artwork with midnight navy, luminous cyan, brushed silver and amber accents, cinematic light and tactile surfaces. All aircraft are inert unpowered museum sculptures on visible stands, not flying machines. Their four arms end in plain round discs without propellers. Where a controller appears, it has only two unbranded stick wells, no operational switches or labels. No writing, numbers, logos, UI, watermark, wiring, weapons or procedure. Clear central focal comparison, complete inside central80%. This is an untimed conceptual exhibit; exact Mode2 labels, axes and flight-mode assumptions are provided by localized game text rather than baked into art.\nScene: Two equally sized elegant glass display cases stand side by side on a navy ledge, with identical simple centred stick sculptures on small foreground plinths. Inside the left case, one inert cross-shaped aircraft model rests on a transparent stand at mid-height. Inside the right case, a pair of translucent model silhouettes occupy different heights on separate transparent supports. Each case retains its own large blank assumption card, and a separate amber question-card sculpture sits between them. The comparison is visually deliberate but untimed: same input appearance does not establish the same model response. Tall cyan windows and warm gallery light, no speed scale, altitude numerals, universal arrow mapping or operating aircraft.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-36d11eb6-4167-4162-a695-bf7167c39afe.png",
+        "sha256": "91a81b108ce3cb71500c9a80cfcd5fde1c2469cdfcf9e18f4980826021ded7b8",
+        "bytes": 2075234,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Paired display cases keep separate model-response studies and assumption cards beside identical stick sculptures.",
+          "context": "Original fictional control-concept exhibit, not a universal control map or a flight simulator. Inert models illustrate orientation comparisons; exact Mode2 labels and selected model assumptions remain in the separate lesson."
+        },
+        "uk": {
+          "alt": "Парні вітрини зберігають окремі етюди реакції моделей і картки припущень біля однакових скульптур стіків.",
+          "context": "Оригінальна уявна виставка понять керування, а не універсальна схема чи льотний симулятор. Неактивні моделі ілюструють порівняння орієнтації; точні позначення Mode2 й припущення обраної моделі подано в окремому уроці."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://docs.px4.io/main/en/flight_modes_mc/position",
+          "role": "Source context for separately authored control-concept explanations; no image, universal mapping or operational configuration copied."
+        },
+        {
+          "url": "https://docs.px4.io/main/en/flight_modes_mc/manual_stabilized",
+          "role": "Source context for separately authored control-concept explanations; no image, universal mapping or operational configuration copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-four-controls-06-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-four-controls-06-v1.jpg",
+      "sha256": "6293ecce59eea58dbe6c6d065d18f54c71f4631ec30455f169dce9db2c7cb825",
+      "bytes": 166812,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Predict, Then Explain",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium mission reveal for a civilian control-concept game, very wide2:1. Sophisticated stylized3D science-gallery artwork with midnight navy, luminous cyan, brushed silver and amber accents, cinematic light and tactile surfaces. All aircraft are inert unpowered museum sculptures on visible stands, not flying machines. Their four arms end in plain round discs without propellers. Where a controller appears, it has only two unbranded stick wells, no operational switches or labels. No writing, numbers, logos, UI, watermark, wiring, weapons or procedure. Clear central focal comparison, complete inside central80%. This is an untimed conceptual exhibit; exact Mode2 labels, axes and flight-mode assumptions are provided by localized game text rather than baked into art.\nScene: A complete control atlas laid out like a beautiful museum treasure table. One simple two-stick control sculpture occupies a lower central pedestal. Around it, three separate framed display windows show an inert four-arm model from side, front and overhead viewpoints, each using the same cyan nose marker. A fourth clear blank interpretation panel and a closed blue learning notebook leave room to explain the chosen model. Fine amber arcs belong only to each local display rather than connecting physical controls to aircraft. A broad curved navy gallery wall and luminous cyan canopy unify the composition. No controller firmware screen, mapping numbers, flight qualification medal, live rotor or timed challenge.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-0a2eb6d4-6029-472c-af74-ec3580f77fa6.png",
+        "sha256": "c34dc3b7572738f5cc474ecbded6be7dc9852f086dc027b99ec8469d4ad1e866",
+        "bytes": 2438345,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A completed conceptual atlas surrounds a two-stick sculpture with separate side, front and overhead model views.",
+          "context": "Original fictional control-concept exhibit, not a universal control map or a flight simulator. Inert models illustrate orientation comparisons; exact Mode2 labels and selected model assumptions remain in the separate lesson."
+        },
+        "uk": {
+          "alt": "Завершений концептуальний атлас оточує скульптуру з двома стіками окремими виглядами моделі збоку, спереду та згори.",
+          "context": "Оригінальна уявна виставка понять керування, а не універсальна схема чи льотний симулятор. Неактивні моделі ілюструють порівняння орієнтації; точні позначення Mode2 й припущення обраної моделі подано в окремому уроці."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ardupilot.org/copter/docs/common-radio-control-calibration.html",
+          "role": "Source context for separately authored control-concept explanations; no image, universal mapping or operational configuration copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-first-flight-01-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-first-flight-01-v1.jpg",
+      "sha256": "991e2ba9d123625894bbb124ed92373179650f01affd65f0fcba78f7ee448376",
+      "bytes": 141896,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Start with a Stop",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide 2:1. Beautiful stylized 3D storybook science centre, pale timber gym floor, turquoise mats, warm coral markers, soft daylight and rich spatial depth. Clearly fictional untimed model exercise, not an operational flight photograph. All aircraft models are unpowered, have exactly four arms with plain circular end discs and NO propellers, and rest on a mat or visible transparent supports. No batteries, wiring, cockpit, maps, text, numbers, letters, logos, interface or watermark. No weapons or conflict. Keep primary subjects complete within central80%. Exact explanations are separate localized text; the scene invites comparison, not flight instructions.\nScene: A welcoming high-ceiling gym entrance seen at floor level. At centre an inert four-arm model rests on a soft turquoise mat. Beside it stand two large friendly coral sculptures: a pair of vertical pause bars and a circular reset arrow. An open blank notebook rests on a low timber bench, with generous clear floor space, sunny tall windows and quiet plants. Focus on pause and a resting starting state, no flying models or active pilots.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-4a37cab3-a130-4200-9570-f40564aa0aed.png",
+        "sha256": "57ba71395ebdcad201d37efd9f6c695f5d9de5d0145a1ccf1d71a48368574aef",
+        "bytes": 2125129,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A parked model, pause and reset sculptures welcome visitors to a fictional practice gym.",
+          "context": "Original fictional civilian gym illustration. The map and picture are conceptual comparisons, not a real aircraft procedure, flight simulator or evidence of piloting competence."
+        },
+        "uk": {
+          "alt": "Нерухома модель, скульптури паузи й скидання вітають відвідувачів у вигаданій навчальній залі.",
+          "context": "Оригінальна ілюстрація вигаданої цивільної зали. Карта й зображення слугують порівнянню понять, а не процедурою для реального апарата, льотним симулятором чи доказом навичок пілотування."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/",
+          "role": "Conceptual inspiration for separately authored classroom model comparisons; no source imagery or procedure copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-first-flight-02-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-first-flight-02-v1.jpg",
+      "sha256": "b08cfe7d0d4d25c55b958ffeadec3477092836606ab102e37442288f6c3ef493",
+      "bytes": 121938,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Height Is a Separate Question",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide 2:1. Beautiful stylized 3D storybook science centre, pale timber gym floor, turquoise mats, warm coral markers, soft daylight and rich spatial depth. Clearly fictional untimed model exercise, not an operational flight photograph. All aircraft models are unpowered, have exactly four arms with plain circular end discs and NO propellers, and rest on a mat or visible transparent supports. No batteries, wiring, cockpit, maps, text, numbers, letters, logos, interface or watermark. No weapons or conflict. Keep primary subjects complete within central80%. Exact explanations are separate localized text; the scene invites comparison, not flight instructions.\nScene: An elegant tabletop model gym shown at a low oblique angle. Two transparent vertical shelves, directly one above the other, each hold the same small turquoise four-arm inert model above one coral square floor tile. Their position over that tile is exactly aligned; their heights are visibly different. Beside the display, two oversized blank comparison cards show a simple overhead dot and a side-view pair of dots, no words or digits. Warm skylight and lots of empty floor. Focus on depth and height, no rulers with misleading numbers or flying aircraft.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-5877a3f2-095d-4aae-aeaa-24a89eb670ef.png",
+        "sha256": "571107d1a3ae50d4b2c219e45290b00a692185fbecfac4b4b883d2168b6ec8df",
+        "bytes": 2017340,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Two display models share one floor position at different heights beside overhead and side-view cards.",
+          "context": "Original fictional civilian gym illustration. The map and picture are conceptual comparisons, not a real aircraft procedure, flight simulator or evidence of piloting competence."
+        },
+        "uk": {
+          "alt": "Дві виставкові моделі займають одне положення над підлогою на різній висоті поряд із картками вигляду згори й збоку.",
+          "context": "Оригінальна ілюстрація вигаданої цивільної зали. Карта й зображення слугують порівнянню понять, а не процедурою для реального апарата, льотним симулятором чи доказом навичок пілотування."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/",
+          "role": "Conceptual inspiration for separately authored classroom model comparisons; no source imagery or procedure copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-first-flight-03-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-first-flight-03-v1.jpg",
+      "sha256": "00a382113a9346f8e3e664ea480a57eb98866449ff92b300ba0e8a6538194638",
+      "bytes": 120040,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Straight Path, Two Views",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide 2:1. Beautiful stylized 3D storybook science centre, pale timber gym floor, turquoise mats, warm coral markers, soft daylight and rich spatial depth. Clearly fictional untimed model exercise, not an operational flight photograph. All aircraft models are unpowered, have exactly four arms with plain circular end discs and NO propellers, and rest on a mat or visible transparent supports. No batteries, wiring, cockpit, maps, text, numbers, letters, logos, interface or watermark. No weapons or conflict. Keep primary subjects complete within central80%. Exact explanations are separate localized text; the scene invites comparison, not flight instructions.\nScene: A bright gym with one long broad CORAL arrow inlaid into the pale floor from left toward right. At centre an inert four-arm cream model sits on a low transparent pedestal directly above the arrow; its distinct TURQUOISE triangular nose points toward the back wall, perpendicular to the floor arrow. No ghost aircraft or curved path. To one side two small freestanding picture panels compare the scene from above and obliquely, without labels. Strong readable separation of a floor direction and a model's nose orientation, no flight controls.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-98df48df-a191-4c25-b491-4e9d306b6a02.png",
+        "sha256": "ba6597ca29a852e77589862cd3ca8f8fa673f3b1d9306cbbcd982d79a178bad9",
+        "bytes": 2019103,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A coral floor arrow and a turquoise model nose point in different directions in a spacious gym.",
+          "context": "Original fictional civilian gym illustration. The map and picture are conceptual comparisons, not a real aircraft procedure, flight simulator or evidence of piloting competence."
+        },
+        "uk": {
+          "alt": "Коралова стрілка підлоги й бірюзовий ніс моделі показують різні напрямки у просторій залі.",
+          "context": "Оригінальна ілюстрація вигаданої цивільної зали. Карта й зображення слугують порівнянню понять, а не процедурою для реального апарата, льотним симулятором чи доказом навичок пілотування."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/",
+          "role": "Conceptual inspiration for separately authored classroom model comparisons; no source imagery or procedure copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-first-flight-04-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-first-flight-04-v1.jpg",
+      "sha256": "0d22e3cbbf1693ef8cd4bec21003480c50b720ae9b730fae911a542be4eba827",
+      "bytes": 150717,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Slide Past the Window",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide 2:1. Beautiful stylized 3D storybook science centre, pale timber gym floor, turquoise mats, warm coral markers, soft daylight and rich spatial depth. Clearly fictional untimed model exercise, not an operational flight photograph. All aircraft models are unpowered, have exactly four arms with plain circular end discs and NO propellers, and rest on a mat or visible transparent supports. No batteries, wiring, cockpit, maps, text, numbers, letters, logos, interface or watermark. No weapons or conflict. Keep primary subjects complete within central80%. Exact explanations are separate localized text; the scene invites comparison, not flight instructions.\nScene: A peaceful spacious gym flooded with sunlight through a giant arched window overlooking fictional trees. The turquoise mat dominates the foreground. At its edge a fixed camera-shaped sculptural viewpoint marker stands still on a small wooden tripod, with two wide framed cards on a bench: one shows the window with a coral model silhouette at left, the other shows the SAME window framing with that silhouette at right. Neither image rotates or changes the window geometry. A real inert four-arm model sits parked at the far end. Calm generous negative space, no flying machine, no UI.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-28864f70-0167-4db5-b387-4e9a407cbc87.png",
+        "sha256": "abae0b79c4f3c518ad5555f1b4c414244e499c650ae07fcabe03b0ae991ef9ff",
+        "bytes": 2170790,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Two cards keep the same window view while a model silhouette appears at different sideways positions.",
+          "context": "Original fictional civilian gym illustration. The map and picture are conceptual comparisons, not a real aircraft procedure, flight simulator or evidence of piloting competence."
+        },
+        "uk": {
+          "alt": "Дві картки зберігають однаковий вид вікна, тоді як силует моделі займає різні бокові положення.",
+          "context": "Оригінальна ілюстрація вигаданої цивільної зали. Карта й зображення слугують порівнянню понять, а не процедурою для реального апарата, льотним симулятором чи доказом навичок пілотування."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/",
+          "role": "Conceptual inspiration for separately authored classroom model comparisons; no source imagery or procedure copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-first-flight-05-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-first-flight-05-v1.jpg",
+      "sha256": "ae257751d93ebe8c3c8cfedfd98a70656baf9ba4f854fc6f4f2134b4808b0bba",
+      "bytes": 117319,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Turn and a Translation",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide 2:1. Beautiful stylized 3D storybook science centre, pale timber gym floor, turquoise mats, warm coral markers, soft daylight and rich spatial depth. Clearly fictional untimed model exercise, not an operational flight photograph. All aircraft models are unpowered, have exactly four arms with plain circular end discs and NO propellers, and rest on a mat or visible transparent supports. No batteries, wiring, cockpit, maps, text, numbers, letters, logos, interface or watermark. No weapons or conflict. Keep primary subjects complete within central80%. Exact explanations are separate localized text; the scene invites comparison, not flight instructions.\nScene: An overhead-inspired oblique view of a gorgeous square timber gym floor. A broad turquoise square ribbon and a separate coral rounded arc form two distinct displayed paths without crossing. Small simple blue TRIANGULAR nose-marker tokens sit along one edge of the square, clearly independent objects; a separate upright card displays only a curved turning arrow. One unpowered four-arm model rests on a cream plinth well away from paths. Warm skylight, soft padded corners and spacious composition. The scene compares changing orientation with changing position, no tactical route or real flight instruction.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-d4613b71-340a-49d8-8adb-0bed75e700db.png",
+        "sha256": "b8c5062014866a628670433caa469d22563fb011f141c43c35c6c5784bef4084",
+        "bytes": 1881220,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A square floor ribbon, a separate turning arc and nose-marker tokens compare travel and heading.",
+          "context": "Original fictional civilian gym illustration. The map and picture are conceptual comparisons, not a real aircraft procedure, flight simulator or evidence of piloting competence."
+        },
+        "uk": {
+          "alt": "Квадратна стрічка підлоги, окрема дуга повороту й позначки носа порівнюють переміщення та курс.",
+          "context": "Оригінальна ілюстрація вигаданої цивільної зали. Карта й зображення слугують порівнянню понять, а не процедурою для реального апарата, льотним симулятором чи доказом навичок пілотування."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/",
+          "role": "Conceptual inspiration for separately authored classroom model comparisons; no source imagery or procedure copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-first-flight-06-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-first-flight-06-v1.jpg",
+      "sha256": "3c2fdd8a8c038ad1c2e50d18e833cb7cf2e141b02ffc7b3402af77c3f679a8b2",
+      "bytes": 135472,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "The Joined Practice Route",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original premium civilian learning-game reveal, full-bleed very wide 2:1. Beautiful stylized 3D storybook science centre, pale timber gym floor, turquoise mats, warm coral markers, soft daylight and rich spatial depth. Clearly fictional untimed model exercise, not an operational flight photograph. All aircraft models are unpowered, have exactly four arms with plain circular end discs and NO propellers, and rest on a mat or visible transparent supports. No batteries, wiring, cockpit, maps, text, numbers, letters, logos, interface or watermark. No weapons or conflict. Keep primary subjects complete within central80%. Exact explanations are separate localized text; the scene invites comparison, not flight instructions.\nScene: A beautiful close overhead-oblique still life of an open oversized blank practice notebook on a timber desk beside a sunny gym. SIX distinct miniature illustration cards fan across its pages: resting mat, stacked height dots, straight arrow, window, square ribbon and pause bars. No text or numerals on cards. Separate turquoise nose token and coral vertical height post sit at opposite corners. In background a complete inert four-arm model rests on a soft finish mat, with no trophy or certificate. Warm quiet completion atmosphere, scene suggests reflection and another explainable attempt.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-85cd7d6d-eabb-45f2-b9f3-65b56eded77d.png",
+        "sha256": "58b90d122b918dba88b32b3c4b5e55d9347b3b59788a95040e7cb514b8c5c314",
+        "bytes": 2152029,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Six picture cards, separate height and heading markers, and a resting model complete a practice notebook.",
+          "context": "Original fictional civilian gym illustration. The map and picture are conceptual comparisons, not a real aircraft procedure, flight simulator or evidence of piloting competence."
+        },
+        "uk": {
+          "alt": "Шість карток-зображень, окремі позначки висоти й курсу та нерухома модель завершують навчальний зошит.",
+          "context": "Оригінальна ілюстрація вигаданої цивільної зали. Карта й зображення слугують порівнянню понять, а не процедурою для реального апарата, льотним симулятором чи доказом навичок пілотування."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/",
+          "role": "Conceptual inspiration for separately authored classroom model comparisons; no source imagery or procedure copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
     }
   ]
 }

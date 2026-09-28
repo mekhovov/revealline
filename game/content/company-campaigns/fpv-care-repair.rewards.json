@@ -60,6 +60,50 @@
             "title": "Опишіть симптом"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Separate the label moved from the adhesive failed. Add the observation time and identifier before asking a follow-up question."
+              ],
+              "title": "Make the distinction: Describe the Symptom"
+            },
+            "uk": {
+              "paragraphs": [
+                "Відокремте «етикетка зрушила» від «клей не втримав». Додайте час спостереження й ідентифікатор перед наступним питанням."
+              ],
+              "title": "Розрізніть поняття: Опишіть симптом"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Read the moving-label story together. Take turns saying what happened without guessing why it happened."
+              ],
+              "title": "Explore together: Describe the Symptom"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом прочитайте історію рухомої етикетки. По черзі назвіть те, що сталося, не вгадуючи причини."
+              ],
+              "title": "Дослідіть разом: Опишіть симптом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "In a second inert display, the stand also moves. Propose the missing observation that would distinguish explanations without powering or opening anything."
+              ],
+              "title": "Apply and question: Describe the Symptom"
+            },
+            "uk": {
+              "paragraphs": [
+                "В іншому неактивному експонаті рухається також підставка. Яке спостереження розрізнить пояснення без увімкнення чи розкриття пристрою?"
+              ],
+              "title": "Застосуйте й запитайте: Опишіть симптом"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -77,7 +121,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-care-repair-01", "kind": "mission" }
   },
   {
@@ -144,6 +188,50 @@
             "title": "Огляд без живлення"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Choose record and ask for an unknown condition. Keep visible observations separate from any conclusion about electrical state."
+              ],
+              "title": "Make the distinction: An Unpowered Inspection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть «записати й запитати» для невідомого стану. Відокремте видимі спостереження від висновків про електричний стан."
+              ],
+              "title": "Розрізніть поняття: Огляд без живлення"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Compare the label, bracket and cover pictures together. Explain why looking intact is not the same as knowing everything inside."
+              ],
+              "title": "Explore together: An Unpowered Inspection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом порівняйте зображення етикетки, кронштейна й кришки. Чому цілий вигляд не означає знання всього всередині?"
+              ],
+              "title": "Дослідіть разом: Огляд без живлення"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A new fictional inspection lacks a readable part identifier. Explain how that limits manual selection and why a picture cannot replace device-specific guidance."
+              ],
+              "title": "Apply and question: An Unpowered Inspection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Новий вигаданий огляд не має читабельного ідентифікатора деталі. Як це обмежує вибір інструкції й чому фото не замінює вказівок конкретного пристрою?"
+              ],
+              "title": "Застосуйте й запитайте: Огляд без живлення"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -161,7 +249,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-care-repair-02", "kind": "mission" }
   },
   {
@@ -225,6 +313,50 @@
             "title": "Змініть одне питання"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Contrast the one-change record with the record changing lamp, label and distance. Which supports a narrower readability explanation?"
+              ],
+              "title": "Make the distinction: Change One Question"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте запис з однією зміною із записом, де змінено лампу, етикетку й відстань. Який краще пояснює читабельність?"
+              ],
+              "title": "Розрізніть поняття: Змініть одне питання"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Compare the same paper label under two drawn lamps. Together, name what stayed the same and what changed."
+              ],
+              "title": "Explore together: Change One Question"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте ту саму паперову етикетку під двома намальованими лампами. Разом назвіть незмінне й змінене."
+              ],
+              "title": "Дослідіть разом: Змініть одне питання"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Design another fictional paper-label comparison that changes one factor. State the uncertainty left over; this is not an electrical diagnostic procedure."
+              ],
+              "title": "Apply and question: Change One Question"
+            },
+            "uk": {
+              "paragraphs": [
+                "Створіть інше вигадане порівняння паперової етикетки зі зміною одного чинника. Назвіть залишкову невизначеність: це не електрична діагностика."
+              ],
+              "title": "Застосуйте й запитайте: Змініть одне питання"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -242,7 +374,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-care-repair-03", "kind": "mission" }
   },
   {
@@ -317,6 +449,50 @@
             "title": "Картка зупинки через акумулятор"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Choose stop and qualified guidance for the fictional battery warning. A successful game result cannot change the item’s condition."
+              ],
+              "title": "Make the distinction: A Battery Stop Card"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть зупинку й фахові вказівки для вигаданого попередження про акумулятор. Успіх у грі не змінює стану предмета."
+              ],
+              "title": "Розрізніть поняття: Картка зупинки через акумулятор"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Read the flat warning card together. Explain why pausing and asking a qualified person is a useful decision."
+              ],
+              "title": "Explore together: A Battery Stop Card"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом прочитайте пласку попереджувальну картку. Чому пауза й звернення до фахівця — корисне рішення?"
+              ],
+              "title": "Дослідіть разом: Картка зупинки через акумулятор"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A second fictional record omits battery condition. Preserve that uncertainty and the stop boundary; do not invent handling, repair or transport instructions."
+              ],
+              "title": "Apply and question: A Battery Stop Card"
+            },
+            "uk": {
+              "paragraphs": [
+                "В іншому вигаданому записі відсутній стан акумулятора. Збережіть невизначеність і межу зупинки, не вигадуючи поводження, ремонту чи перевезення."
+              ],
+              "title": "Застосуйте й запитайте: Картка зупинки через акумулятор"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -334,7 +510,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-care-repair-04", "kind": "mission" }
   },
   {
@@ -401,6 +577,50 @@
             "title": "Ремонтувати, замінити, запитати"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Match a display-label replacement, an identification request and a stop decision. Avoid turning repair everything into one rule."
+              ],
+              "title": "Make the distinction: Repair, Replace, Ask"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зіставте заміну етикетки експоната, запит ідентифікації й рішення зупинитися. Не перетворюйте «полагодити все» на єдине правило."
+              ],
+              "title": "Розрізніть поняття: Ремонтувати, замінити, запитати"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Sort the paper label, unknown board and battery-warning card together. Explain why they need different kinds of next steps."
+              ],
+              "title": "Explore together: Repair, Replace, Ask"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом розподіліть паперову етикетку, невідому плату й картку попередження про акумулятор. Чому наступні кроки мають бути різними?"
+              ],
+              "title": "Дослідіть разом: Ремонтувати, замінити, запитати"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A new fictional item crosses from a paper display into unknown electronics. Explain which permission boundary changes before proposing any further action."
+              ],
+              "title": "Apply and question: Repair, Replace, Ask"
+            },
+            "uk": {
+              "paragraphs": [
+                "Новий вигаданий предмет переходить від паперового експоната до невідомої електроніки. Яка межа дозволених дій змінюється перед наступною пропозицією?"
+              ],
+              "title": "Застосуйте й запитайте: Ремонтувати, замінити, запитати"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -418,7 +638,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-care-repair-05", "kind": "mission" }
   },
   {
@@ -485,6 +705,50 @@
             "title": "Відповідальний останній крок"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep the recorded decision separate from an invented disposal destination. Ask the local specialist service when the appropriate destination is unknown."
+              ],
+              "title": "Make the distinction: A Responsible Last Step"
+            },
+            "uk": {
+              "paragraphs": [
+                "Відокремте зафіксоване рішення від вигаданого місця утилізації. Зверніться до місцевої спеціалізованої служби, якщо відповідний шлях невідомий."
+              ],
+              "title": "Розрізніть поняття: Відповідальний останній крок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Tell another person the item’s identifier, observation and next contact. Together, notice anything the handoff still does not know."
+              ],
+              "title": "Explore together: A Responsible Last Step"
+            },
+            "uk": {
+              "paragraphs": [
+                "Повідомте іншій людині ідентифікатор предмета, спостереження й наступний контакт. Разом помітьте, що ще невідомо в передачі справ."
+              ],
+              "title": "Дослідіть разом: Відповідальний останній крок"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A different fictional location has different collection arrangements. Retain the observation record while identifying which local guidance must be verified again."
+              ],
+              "title": "Apply and question: A Responsible Last Step"
+            },
+            "uk": {
+              "paragraphs": [
+                "В іншому вигаданому місці діють інші правила збирання. Збережіть запис спостереження й визначте, які місцеві вказівки треба перевірити заново."
+              ],
+              "title": "Застосуйте й запитайте: Відповідальний останній крок"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -502,7 +766,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-care-repair-06", "kind": "mission" }
   },
   {
@@ -724,7 +988,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-care-repair", "kind": "campaign" }
   }
 ]

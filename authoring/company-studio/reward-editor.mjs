@@ -1,4 +1,5 @@
 import { required, dataIdentity } from '../../game/data-json.mjs';
+import { JOURNEY_NO_LOSS_MASTERY } from '../../game/mastery-journey.mjs';
 import { createRewardMissionBindings } from '../../game/rewards/bindings.mjs';
 import { projectRewardProgress, validateCompletionReward } from '../../game/rewards/model.mjs';
 import { completionLearningReference } from '../../game/rewards/learning.mjs';
@@ -36,6 +37,7 @@ export function createStudioReward({
   locales,
   lessons = [],
   learningIds = [],
+  masteryMissionIds = [],
 }) {
   required(
     ['mission-win', 'all-missions', 'selected-missions'].includes(rule),
@@ -75,6 +77,12 @@ export function createStudioReward({
     learning.every((lesson) => selected.some((entry) => entry.levelId === lesson.missionId)),
     'Each learning requirement also needs its mission selected explicitly.',
   );
+  required(
+    Array.isArray(masteryMissionIds) &&
+      new Set(masteryMissionIds).size === masteryMissionIds.length &&
+      masteryMissionIds.every((id) => selected.some((entry) => entry.levelId === id)),
+    'Each optional mastery requirement needs its mission selected explicitly.',
+  );
   return validateCompletionReward({
     format: 'revealline-completion-reward.v1',
     id,
@@ -97,7 +105,11 @@ export function createStudioReward({
     requirements: {
       missions: selected.map((entry) => ({ missionId: entry.levelId, bindings: entry.bindings })),
       learning,
-      mastery: [],
+      mastery: masteryMissionIds.map((missionId) => ({
+        id: JOURNEY_NO_LOSS_MASTERY.id,
+        revision: JOURNEY_NO_LOSS_MASTERY.revision,
+        missionId,
+      })),
     },
     payloads: [
       {
@@ -147,6 +159,12 @@ export function previewStudioReward(reward, { edition, state }) {
             attemptId: `studio-learning-${index}`,
           }))
         : [],
-    mastery: [],
+    mastery:
+      state === 'eligible'
+        ? definition.requirements.mastery.map((requirement) => ({
+            ...requirement,
+            runId: `studio-preview-${completed.findIndex((entry) => entry.missionId === requirement.missionId)}`,
+          }))
+        : [],
   });
 }

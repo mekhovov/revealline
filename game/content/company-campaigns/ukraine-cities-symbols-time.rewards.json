@@ -63,6 +63,50 @@
             "title": "Київ шарами"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep an artwork within a building distinct from the wider heritage property. Use the official record for real boundaries; the arcade courts are fictional."
+              ],
+              "title": "Make a distinction: Kyiv in Layers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть твір усередині будівлі й ширший об’єкт спадщини. Справжні межі перевіряйте в офіційному записі; ігрові двори вигадані."
+              ],
+              "title": "Розрізнімо: Київ шарами"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find a building, an artwork and a wider group of buildings in the imagined exhibit. Why might each need its own label?"
+              ],
+              "title": "Look together: Kyiv in Layers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть в уявній виставці будівлю, твір мистецтва й ширший комплекс. Чому кожному потрібен власний підпис?"
+              ],
+              "title": "Погляньмо разом: Київ шарами"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare a national-list entry, a property description and an artwork detail. Which level answers your question, and which claim would need a more specific source?"
+              ],
+              "title": "Explore the evidence: Kyiv in Layers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте запис національного переліку, опис об’єкта й деталь твору. Який рівень відповідає на ваше запитання, а що потребує точнішого джерела?"
+              ],
+              "title": "Дослідімо докази: Київ шарами"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -80,7 +124,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-cities-symbols-time-01", "kind": "mission" }
   },
   {
@@ -147,6 +191,50 @@
             "title": "Львів: вулиці й зустрічі"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Distinguish a single building from an urban ensemble. Keep Lviv’s described exchanges and communities visible without giving every façade the same origin."
+              ],
+              "title": "Make a distinction: Lviv: Streets and Encounters"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть окрему будівлю й міський ансамбль. Збережіть описані обміни та спільноти Львова, не приписуючи кожному фасаду однакове походження."
+              ],
+              "title": "Розрізнімо: Львів: вулиці й зустрічі"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Look at one imaginary façade, then picture its neighbours. Tell each other one relationship a wider street view could reveal."
+              ],
+              "title": "Look together: Lviv: Streets and Encounters"
+            },
+            "uk": {
+              "paragraphs": [
+                "Погляньте на один уявний фасад, а потім уявіть сусідні будівлі. Назвіть зв’язок, який може відкрити ширший вид вулиці."
+              ],
+              "title": "Погляньмо разом: Львів: вулиці й зустрічі"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Draft two captions at different scales: one façade observation and one source-based ensemble description. Explain what neither view can establish about an entire city."
+              ],
+              "title": "Explore the evidence: Lviv: Streets and Encounters"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть підписи двох масштабів: спостереження за фасадом і опис ансамблю за джерелом. Поясніть, чого жоден вид не встановлює про ціле місто."
+              ],
+              "title": "Дослідімо докази: Львів: вулиці й зустрічі"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -164,7 +252,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-cities-symbols-time-02", "kind": "mission" }
   },
   {
@@ -231,6 +319,50 @@
             "title": "Одеса: опис портового міста"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep the named World Heritage property separate from the whole modern city. A 2023 inscription does not make every city building part of that property."
+              ],
+              "title": "Make a distinction: Odesa: A Port City Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізняйте названий об’єкт Світової спадщини й усе сучасне місто. Запис 2023 року не включає до об’єкта кожну міську будівлю."
+              ],
+              "title": "Розрізнімо: Одеса: опис портового міста"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find harbour, square and streets in the fictional model. Which part would you ask about first, and what is outside the model?"
+              ],
+              "title": "Look together: Odesa: A Port City Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть гавань, площу й вулиці у вигаданій моделі. Про що запитаєте спершу та що лишається поза моделлю?"
+              ],
+              "title": "Погляньмо разом: Одеса: опис портового міста"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare the fictional port model with the scope stated in UNESCO’s record. Mark an illustrative relationship, a documented fact and a boundary you must not guess."
+              ],
+              "title": "Explore the evidence: Odesa: A Port City Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зіставте вигадану портову модель із межами опису ЮНЕСКО. Позначте ілюстративний зв’язок, документований факт і межу, яку не можна вгадувати."
+              ],
+              "title": "Дослідімо докази: Одеса: опис портового міста"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -248,7 +380,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-cities-symbols-time-03", "kind": "mission" }
   },
   {
@@ -321,6 +453,50 @@
               }
             ],
             "title": "Тризуб і дата"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Attach 19 February 1992 to the legal adoption in the cited resolution. Keep the historical association from Article 20 separate from that date."
+              ],
+              "title": "Make a distinction: The Trident and a Date"
+            },
+            "uk": {
+              "paragraphs": [
+                "Приєднайте 19 лютого 1992 року до правового затвердження в цитованій постанові. Відокремте історичний зв’язок зі статті 20 від цієї дати."
+              ],
+              "title": "Розрізнімо: Тризуб і дата"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Make two timeline cards together: a historical association and a modern decision. Explain why they answer different questions about the trident."
+              ],
+              "title": "Look together: The Trident and a Date"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зробіть разом дві часові картки: історичний зв’язок і сучасне рішення. Поясніть, чому вони відповідають на різні запитання про тризуб."
+              ],
+              "title": "Погляньмо разом: Тризуб і дата"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare what the resolution and Constitution each establish. Draft a caption that preserves both without assigning an invented meaning to every line of the emblem."
+              ],
+              "title": "Explore the evidence: The Trident and a Date"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте, що встановлюють постанова й Конституція. Складіть підпис, який зберігає обидва свідчення без вигаданого значення кожної лінії герба."
+              ],
+              "title": "Дослідімо докази: Тризуб і дата"
+            }
           }
         },
         "type": "knowledge"
@@ -398,7 +574,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-cities-symbols-time-04", "kind": "mission" }
   },
   {
@@ -463,6 +639,50 @@
               }
             ],
             "title": "Синій і жовтий: бачити чітко"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Use Article 20’s two equal horizontal bands as the factual description. Treat the generated composition as an illustration, not a precision flag specification."
+              ],
+              "title": "Make a distinction: Blue and Yellow, Clearly Seen"
+            },
+            "uk": {
+              "paragraphs": [
+                "Використайте опис двох рівновеликих горизонтальних смуг зі статті 20. Сприймайте згенеровану композицію як ілюстрацію, а не точну специфікацію прапора."
+              ],
+              "title": "Розрізнімо: Синій і жовтий: бачити чітко"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Compare a flag reference and an abstract blue-and-yellow picture. What description helps someone identify the flag without depending on colour alone?"
+              ],
+              "title": "Look together: Blue and Yellow, Clearly Seen"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте зразок прапора й абстрактне синьо-жовте зображення. Який опис допомагає впізнати прапор, не покладаючись лише на колір?"
+              ],
+              "title": "Погляньмо разом: Синій і жовтий: бачити чітко"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Design a clear caption that distinguishes a state-symbol reference from colour-inspired art. Which details should remain textual, readable and tied to the official source?"
+              ],
+              "title": "Explore the evidence: Blue and Yellow, Clearly Seen"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть ясний підпис, що розрізняє зразок державного символу й мистецтво, натхненне кольорами. Які деталі мають лишитися текстовими, читабельними та пов’язаними з офіційним джерелом?"
+              ],
+              "title": "Дослідімо докази: Синій і жовтий: бачити чітко"
+            }
           }
         },
         "type": "knowledge"
@@ -540,7 +760,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-cities-symbols-time-05", "kind": "mission" }
   },
   {
@@ -607,6 +827,50 @@
             "title": "Мапа з багатьма історіями"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Give each collection card a place or symbol, one specific fact and a source. Keep missing information visible instead of using the finale as a real geographic map."
+              ],
+              "title": "Make a distinction: A Map with More Than One Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Дайте кожній картці місце чи символ, конкретний факт і джерело. Залиште невідоме видимим, не використовуючи фінал як справжню географічну карту."
+              ],
+              "title": "Розрізнімо: Мапа з багатьма історіями"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose two discoveries and tell their different stories together. A place and a symbol do not need to compete to matter."
+              ],
+              "title": "Look together: A Map with More Than One Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть два відкриття й разом розкажіть їхні різні історії. Місцю й символу не потрібно змагатися, щоб мати значення."
+              ],
+              "title": "Погляньмо разом: Мапа з багатьма історіями"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Move from UNESCO’s national list to one individual property record. Explain how the question changes with scale, without treating inscription as a ranking of cultural worth."
+              ],
+              "title": "Explore the evidence: A Map with More Than One Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перейдіть від національного переліку ЮНЕСКО до запису окремого об’єкта. Поясніть зміну запитання з масштабом без оцінювання культурної цінності за наявністю запису."
+              ],
+              "title": "Дослідімо докази: Мапа з багатьма історіями"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -624,7 +888,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-cities-symbols-time-06", "kind": "mission" }
   },
   {
@@ -846,7 +1110,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-cities-symbols-time", "kind": "campaign" }
   }
 ]

@@ -1,3 +1,4 @@
+import { LEARNING_PROFILE_IDS, LEARNING_PROFILE_LABELS } from './learning-profiles.mjs';
 import { validateCompletionReward } from './model.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { inspectRewardMediaBytes } from './media-format.mjs';
@@ -87,6 +88,14 @@ export async function createPrintableReward(
     const parts = [`<h2>${escape(text.title)}</h2>`];
     if (payload.type === 'knowledge') {
       parts.push(...text.paragraphs.map((paragraph) => `<p>${escape(paragraph)}</p>`));
+      if (payload.profiles)
+        for (const profile of LEARNING_PROFILE_IDS) {
+          const variant = payload.profiles[profile][locale];
+          parts.push(
+            `<h3>${escape(LEARNING_PROFILE_LABELS[locale][profile])}: ${escape(variant.title)}</h3>`,
+            ...variant.paragraphs.map((p) => `<p>${escape(p)}</p>`),
+          );
+        }
       if (text.sources?.length)
         parts.push(
           `<ul>${text.sources.map((source) => `<li>${link(source.title, source.url)}</li>`).join('')}</ul>`,

@@ -46,6 +46,19 @@
         <option value="versus">Versus</option>
       </select></label
     >
+    <label
+      >Edition
+      <select id="edition">
+        <option value="">Default</option>
+        <option value="coupa-all">Coupa</option>
+        <option value="droneaid-nl-community">DroneAid Netherlands</option>
+        <option value="social-drone-ua">Social Drone UA</option>
+        <option value="victory-drones">Victory Drones</option>
+        <option value="ukraine-culture">Ukraine</option>
+        <option value="fpv-learning">FPV Learning</option>
+      </select>
+    </label>
+    <button id="sample" type="button" disabled>Observe 30 seconds</button>
     <button id="load" type="button">Load review game</button>
     <p>
       Play normally in the game below. The observer never drives inputs or changes game state. Times
@@ -55,7 +68,13 @@
       observations. Navigation and paint entries come from the embedded page. Heap values are
       recorded only when that browser exposes its non-standard performance memory counters; an
       unsupported result is evidence of unavailability, not zero memory use. These observations
-      include the observer's own overhead and are not cross-device benchmarks.
+      include the observer's own overhead and are not cross-device benchmarks. The optional
+      30-second sample records animation-frame intervals and browser-reported long tasks, without
+      logging during the sample. Keep this page visible; a hidden page or navigation discards the
+      sample. Compare the same scene, viewport, device, browser and input sequence against the
+      selected baseline commit. Frame intervals include browser scheduling and are not CPU render
+      duration. Long tasks are page-wide and cannot identify a reward renderer by themselves.
+      Unsupported browser counters remain unavailable, never a zero result.
     </p>
     <p id="status" role="status">Ready to observe the current default Journey.</p>
     <details>

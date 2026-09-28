@@ -63,6 +63,50 @@
             "title": "Назвіть традицію"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Begin a label with the named community, practice and source. Do not classify the game’s invented decoration as an authentic Örnek composition."
+              ],
+              "title": "Make a distinction: Name the Tradition"
+            },
+            "uk": {
+              "paragraphs": [
+                "Почніть підпис із названої спільноти, практики й джерела. Не називайте вигадану декорацію гри автентичною композицією Örnek."
+              ],
+              "title": "Розрізнімо: Назвіть традицію"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Read “Crimean Tatar” and “Örnek” together. Explain why the name of a community belongs beside the name of a practice."
+              ],
+              "title": "Look together: Name the Tradition"
+            },
+            "uk": {
+              "paragraphs": [
+                "Прочитайте разом «кримськотатарський» і «Örnek». Поясніть, чому назва спільноти має бути поруч із назвою практики."
+              ],
+              "title": "Погляньмо разом: Назвіть традицію"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare a named UNESCO entry with a generic decorative caption. Which cultural attribution would the generic version erase, and what evidence would authentic identification require?"
+              ],
+              "title": "Explore the evidence: Name the Tradition"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте іменований запис ЮНЕСКО із загальним декоративним підписом. Яке культурне авторство зникло б у другому й які докази потрібні для автентичної атрибуції?"
+              ],
+              "title": "Дослідімо докази: Назвіть традицію"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -80,7 +124,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-crimea-ornek-01", "kind": "mission" }
   },
   {
@@ -155,6 +199,50 @@
             "title": "Композиція для людини"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep the source-specific interpretation attributed to Esma Adzhiieva. The same explanation cannot automatically be applied to any floral picture."
+              ],
+              "title": "Make a distinction: A Composition for Someone"
+            },
+            "uk": {
+              "paragraphs": [
+                "Збережіть тлумачення конкретного джерела з іменем Есми Аджієвої. Його не можна автоматично переносити на будь-який квітковий малюнок."
+              ],
+              "title": "Розрізнімо: Композиція для людини"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Imagine asking a maker for a welcoming message. What would you explain about the person receiving it before choosing a flower?"
+              ],
+              "title": "Look together: A Composition for Someone"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уявіть прохання до майстрині про вітальне послання. Що розповісте про адресата перед вибором квітки?"
+              ],
+              "title": "Погляньмо разом: Композиція для людини"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare a commissioned panel’s caption with the MIRAS interpretation. Distinguish who made the object, who explains the composition and which claim remains specific to that account."
+              ],
+              "title": "Explore the evidence: A Composition for Someone"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зіставте підпис замовленого панно з тлумаченням MIRAS. Розрізніть автора предмета, того, хто пояснює композицію, і твердження, що стосується саме цієї розповіді."
+              ],
+              "title": "Дослідімо докази: Композиція для людини"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -172,7 +260,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-crimea-ornek-02", "kind": "mission" }
   },
   {
@@ -239,6 +327,50 @@
             "title": "Прочитайте опис предмета"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Use the qushaq record for place, period and collection. Leave a wearer’s life story unknown when the cited record does not establish it."
+              ],
+              "title": "Make a distinction: Read the Object Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "Використайте запис про qushaq для місця, часу й колекції. Не дописуйте історію власниці, якщо цитований запис її не встановлює."
+              ],
+              "title": "Розрізнімо: Прочитайте опис предмета"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Take turns saying “the record tells us” and “I notice.” Which sentence can date the belt, and which describes what you see?"
+              ],
+              "title": "Look together: Read the Object Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "По черзі починайте речення зі «запис повідомляє» та «я помічаю». Що може датувати пояс, а що описує побачене?"
+              ],
+              "title": "Погляньмо разом: Прочитайте опис предмета"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Draft two separate notes: a source-based object description and a visual observation. Identify the extra evidence needed before proposing a biography or occasion of use."
+              ],
+              "title": "Explore the evidence: Read the Object Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть дві окремі примітки: опис предмета за джерелом і візуальне спостереження. Назвіть докази, потрібні для біографії чи нагоди використання."
+              ],
+              "title": "Дослідімо докази: Прочитайте опис предмета"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -256,7 +388,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-crimea-ornek-03", "kind": "mission" }
   },
   {
@@ -323,6 +455,50 @@
             "title": "У знань є вчителі"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Distinguish seeing a result from learning a practice. Keep Ayder Asanov’s named teaching account attached instead of presenting the illustration as a craft lesson."
+              ],
+              "title": "Make a distinction: Knowledge Has Teachers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть споглядання результату й вивчення практики. Збережіть іменовану розповідь про навчання Айдера Асанова, не видаючи ілюстрацію за урок ремесла."
+              ],
+              "title": "Розрізнімо: У знань є вчителі"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose a tool, a finished object and a maker’s explanation in the imagined exhibit. Tell each other what a picture alone cannot teach."
+              ],
+              "title": "Look together: Knowledge Has Teachers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть інструмент, готовий предмет і пояснення майстра в уявній виставці. Розкажіть, чого саме зображення не навчає."
+              ],
+              "title": "Погляньмо разом: У знань є вчителі"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Plan a source-linked display about transmission of knowledge. What can the object show, and which question should remain with a culture bearer or teacher?"
+              ],
+              "title": "Explore the evidence: Knowledge Has Teachers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Сплануйте виставку з джерелами про передавання знань. Що покаже предмет, а яке запитання варто залишити носієві культури чи вчителю?"
+              ],
+              "title": "Дослідімо докази: У знань є вчителі"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -340,7 +516,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-crimea-ornek-04", "kind": "mission" }
   },
   {
@@ -407,6 +583,50 @@
             "title": "Голос сучасного автора"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep Rustem Skybin’s artistic practice and Mamut Churlu’s research contribution distinct. Describe the relationship using the artist’s own account."
+              ],
+              "title": "Make a distinction: A Living Author’s Voice"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізняйте мистецьку практику Рустема Скібіна та дослідницький внесок Мамута Чурлу. Опишіть зв’язок за розповіддю самого митця."
+              ],
+              "title": "Розрізнімо: Голос сучасного автора"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find the living artist’s name in the account. Can a new work be connected to a tradition without being called ancient?"
+              ],
+              "title": "Look together: A Living Author’s Voice"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть у розповіді ім’я сучасного митця. Чи може новий твір бути пов’язаним із традицією, не будучи давнім?"
+              ],
+              "title": "Погляньмо разом: Голос сучасного автора"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare “ancient object” with “contemporary work informed by heritage.” Which fits the cited biography, and what separate rights would reproducing an actual work require?"
+              ],
+              "title": "Explore the evidence: A Living Author’s Voice"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте «давній предмет» із «сучасним твором, що спирається на спадщину». Що відповідає біографії та які окремі права потрібні для відтворення справжнього твору?"
+              ],
+              "title": "Дослідімо докази: Голос сучасного автора"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -424,7 +644,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-crimea-ornek-05", "kind": "mission" }
   },
   {
@@ -491,6 +711,50 @@
             "title": "Збережіть голоси разом"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Use four headings for the collection: speaker, practice or object, source, unknown. Keep Crimean Tatar attribution visible on every relevant card."
+              ],
+              "title": "Make a distinction: Keep the Voices Together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Використайте чотири рубрики: хто говорить, практика чи предмет, джерело, невідоме. Збережіть кримськотатарську атрибуцію на кожній відповідній картці."
+              ],
+              "title": "Розрізнімо: Збережіть голоси разом"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose two discoveries and name whose voice or record helped you learn. Leave room for one question you would still ask."
+              ],
+              "title": "Look together: Keep the Voices Together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть два відкриття й назвіть, чий голос або запис допоміг дізнатися нове. Залиште місце для одного запитання."
+              ],
+              "title": "Погляньмо разом: Збережіть голоси разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Prepare a shareable reading trail that preserves individual attribution and rights. Explain why completing this collection does not confer authority to speak for culture bearers."
+              ],
+              "title": "Explore the evidence: Keep the Voices Together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Підготуйте шлях читання для поширення, зберігши індивідуальне авторство й права. Поясніть, чому завершення колекції не надає права говорити від імені носіїв культури."
+              ],
+              "title": "Дослідімо докази: Збережіть голоси разом"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -508,7 +772,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-crimea-ornek-06", "kind": "mission" }
   },
   {
@@ -730,7 +994,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-crimea-ornek", "kind": "campaign" }
   }
 ]
