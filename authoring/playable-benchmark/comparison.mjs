@@ -26,7 +26,11 @@ export function createSceneComparison({
   onStatus = () => {},
 }) {
   let reduced = true;
-  let feedback = Object.freeze({ captureAccent: true, eventAccents: true });
+  let feedback = Object.freeze({
+    captureAccent: true,
+    eventAccents: true,
+    contactStyle: 'standard',
+  });
   let disposed = false;
   const selection = createBenchmarkSelection({
     async prepare(body, { signal }) {
@@ -87,6 +91,7 @@ export function createSceneComparison({
       feedback = Object.freeze({
         captureAccent: !!value.captureAccent,
         eventAccents: !!value.eventAccents,
+        contactStyle: value.contactStyle === 'fine-outline' ? 'fine-outline' : 'standard',
       });
     },
     cancel: () => selection.cancel(),

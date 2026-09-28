@@ -1070,7 +1070,21 @@ test('comparison replacement pauses without changing the real run and releases f
   comparison.setReduced(false);
   comparison.setFeedback({ captureAccent: false, eventAccents: true });
   assert.equal(comparison.reduced, false);
-  assert.deepEqual(comparison.feedback, { captureAccent: false, eventAccents: true });
+  assert.deepEqual(comparison.feedback, {
+    captureAccent: false,
+    eventAccents: true,
+    contactStyle: 'standard',
+  });
+  session.start();
+  comparison.setFeedback({
+    captureAccent: false,
+    eventAccents: true,
+    contactStyle: 'fine-outline',
+  });
+  assert.equal(session.playing, false, 'changing contact feedback pauses without advancing');
+  assert.equal(comparison.feedback.contactStyle, 'fine-outline');
+  comparison.setFeedback({ captureAccent: false, eventAccents: true, contactStyle: 'hidden' });
+  assert.equal(comparison.feedback.contactStyle, 'standard', 'unknown styles cannot hide contact');
   assert.equal(session.run, run);
   assert.deepEqual(authoritativeCheckpoint(session.run), before);
   assert.equal(await comparison.select('approved'), true);

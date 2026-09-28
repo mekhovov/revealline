@@ -6,3 +6,9 @@ authoring/library/four-worlds-chapters/packs/original-spend-network.json linguis
 
 # Preserve exact raw failure output; whitespace is part of the retained evidence.
 docs/verification/quick-music-controls-2026-09-24/unmuted-retry-red-r3.txt -whitespace
+
+# Exact native accessibility/TAP failure evidence for the actor contact review.
+docs/verification/actor-batch-6/raster-calibration-failure.txt -whitespace
+docs/verification/actor-batch-6/raster-team-geometry-failure.txt -whitespace
+docs/verification/actor-batch-6/raster-team-width-failure.txt -whitespace
+docs/verification/actor-batch-6/team-overlay-original-failure.tap -whitespace

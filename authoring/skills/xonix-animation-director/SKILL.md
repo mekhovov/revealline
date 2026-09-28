@@ -29,6 +29,30 @@ Keep light functional ink and a dark plate independent of theme `ink`/`paper`; d
 
 For the original optional pressure extension, read only the core's validated target, phase and actor-clock deadline through `classicView`. Keep static **AIM → CHASE → REST** cues distinguishable, with a dashed amber warning ray and actual locked-target brackets. Do not extrapolate a target, animate a damaging front beyond its authoritative position, turn a cosmetic ray into a collision line, or add pressure fields to legacy actors. Freeze and Pause hold the state; reduced effects retain the explanation. This extension is not evidence of XPOSED enemy intelligence.
 
+### Prepared body and final contact review
+
+Use the [foreground raster study](../../../docs/verification/rotor-motion/contact.html)
+and [batch 6 evidence](../../../docs/verification/actor-batch-6/README.md) when
+reviewing centre detail. Inspect the complete final frame: Team previously drew
+a second filled marker after the prepared body and outline, hiding detail despite
+passing narrower command checks. Prepared pilots now draw one complete outline
+after all actor images; legacy fallback markers remain filled. Never move the
+physical contact point with a visually inset body or hide it behind equipment.
+
+The optional Fine outline comparison changes only backing width, with each
+renderer retaining its existing coordinate units. Standard is the default;
+neither comparison is a new collision shape or an approved art revision. Check
+surviving bright pixels over light/dark art, edges and overlapping actors.
+Static fixture checks are separate from actual mission play, focus and recovery.
+
+Prompt: “Review every foreground pass at the exact simulation contact point.
+Keep one complete visible contact outline for prepared Team pilots and preserve
+fallback markers, identities and reduced effects. Compare real raster pixels
+after all actors/overlays, not only draw-call counts. Report calibrated size
+fixtures separately from default gameplay and retain failed evidence. In actual
+play, verify that loss advice changes on recovery/capture and that terminal
+announcements have one owner without stealing deliberate Retry focus.”
+
 ## Inputs and scope
 
 Inspect the actual reference assets, current board fixture, intended display scale and available state/event interface. Read `authoring/CONTRACT.md` and relevant records in `authoring/prompts/round-07-animation-variants.json` when the kit is present; resolve an installed skill symlink to its physical kit if needed. The shared CLI includes this supplement: use `python3 authoring/prompt.py show animation-02-state-contract` to inspect inputs before rendering text. Consult [the motion handoff](references/motion-handoff.md) for states, timing and inspection records.

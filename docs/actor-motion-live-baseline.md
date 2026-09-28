@@ -58,4 +58,9 @@ Focused C0 checks cover current entry, source identity, Team role adaptation, ca
 
 ## Maintainer prompt
 
+For final actor/contact overlays, also follow the [batch 6 review](verification/actor-batch-6/README.md).
+Command identity alone missed a later filled Team marker over the body. Inspect
+actual final pixels, exact contact coordinates, fallback preservation and
+foreground order; distinguish static size/overlap fixtures from real play.
+
 > Refresh `scripts/actor-coverage.mjs` against the current entry resolver before changing actor art or motion. Preserve every source, campaign, mission, simulation and artwork identity. Report campaign-material painting separately from the optional FPV snapshot and uploaded overrides. For each changed body/rig, compare actual painted frames at 20/24/32 CSS pixels over bright and dark artwork, paused/downed/reduced effects and 30/60/120 FPS. Record Keep/Repair/Replace as an evidence-backed disposition; do not equate present bindings or a running animation clock with visible correct propellers. Keep original sources and production history immutable, use a reviewed successor for replacements, and submit the bounded feature to the single publisher.

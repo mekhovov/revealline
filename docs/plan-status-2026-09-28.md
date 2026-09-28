@@ -26,9 +26,9 @@ and public verification are separate; the selector still serves v0.142.0 at this
 checkpoint. This actor branch does not allocate its version or start another publisher.
 
 **Draft [PR761](https://github.com/mekhovov/revealline/pull/761)** contains the
-character, reference and authoring work. Four earlier implementation batches and cancellation corrections were pushed through
-`d8d4f732000c91ed7b1c4089853fe0d897522398`. This fifth compatible checkpoint adds
-the optical-body refinement and rendered review described below. PR761 is not merged or publicly released and needs reconciliation against
+character, reference and authoring work. Five earlier implementation batches and cancellation corrections were pushed through
+`92fa98912eb5b5509f30f12a200e91afb48fe851`. This sixth compatible checkpoint adds
+the foreground-contact study and useful loss/recovery feedback described below. PR761 is not merged or publicly released and needs reconciliation against
 newer main. Compatible
 implementation continues in the same draft while the release queue is occupied.
 
@@ -70,7 +70,7 @@ the source-stage presentation still needs explicit production adoption. Preserve
 that blocker. A source-only preview and matching geometry are not production
 approval.
 
-## Current bounded implementation batch
+## Third batch: playable candidates and Studio controls
 
 Three independent changes are now implemented and checked together, ahead of
 wider art production:
@@ -98,7 +98,7 @@ Each has its own focused evidence inside one compatible PR. No additional
 release version is allocated while the canonical publisher is busy. A finished
 subset can be frozen without waiting for unrelated art or human sessions.
 
-## Next compatible batch: Scout contrast and measured comparison
+## Fourth batch: Scout contrast and measured comparison
 
 The fourth batch adds two native **reference-v4 Scout** images and an explicit
 choice beside the retained approved/v3 views. The authored amber battery face
@@ -160,6 +160,36 @@ mapped: 37 Team, 7 motion, 10 effects/trails and 5 equipment consumer reviews. S
 Runtime motion over existing prepared assets can be admitted independently of
 optional new body artwork and broader edition production.
 
+## Sixth batch: real foreground contact and useful outcomes
+
+The full native raster study found a concrete defect missed by earlier command
+comparisons: Team painted a filled centre marker again after the prepared drone
+and its outline. The correction draws one prepared contact outline in the final
+foreground pass, keeping fallback markers, exact radius and player identities.
+This is a deliberate Team visual correction, not a claim that all old Team pixels
+remain unchanged. Solo's default drawing is retained.
+
+The developer comparison adds **Fine outline** as an explicit second-view option.
+It narrows only the dark backing, retains the bright circle and pauses safely on
+change. Standard remains the default. Both actor sources, headings, edge/overlap
+placements and bright/dark scenes are checked with actual decoded images and
+real renderers. The 24px Solo diagnostic is explicitly calibrated because default
+sizing skips that exact size; a natural 23px case is included separately.
+
+The playable benchmark also replaces raw failure codes and stale recovery text
+with event-driven cause/advice, recovery, capture and completion messages.
+One terminal live region owns the announcement. Actual browser play verifies
+life loss, recovery and victory with two lives retained, followed by focused
+deliberate Retry. See [batch 6 evidence](verification/actor-batch-6/README.md).
+These are source/browser results, not public acceptance or a six-player pilot.
+
+Final source verification is **202/202 focused checks**, repository/scoped lint,
+formatting/native formatting, validation and Motion Lab syntax. Both-pilot native
+raster results and their exact scope are retained with the batch. The release
+queue snapshot at 17:34 UTC had **16 open PRs / 12 drafts**; the publisher is
+preparing v0.142.1 publication while independent reconciliations continue.
+Queue time is separate from the effort ranges below and is not a fixed ETA.
+
 ## Remaining order and estimates
 
 These are focused effort ranges **after work starts**, not publication promises.
@@ -168,7 +198,7 @@ are additional. Update them after the current benchmark is assessed.
 
 | Priority            | Remaining item                                                                                   | Focused effort / external dependency                                                        |
 | ------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
-| Now                 | Deliver the checked five-batch subset in PR761                                                   | Implementation and local checks complete; publication waits for publisher admission         |
+| Now                 | Deliver the checked six-batch subset in PR761                                                    | Local review/checks complete; publication waits for publisher admission                     |
 | Next                | Reconcile/adopt the accepted C1/C2 subset and resolve the Team production guard                  | 1–2 days after publisher admission; release gate failures remain blocking                   |
 | C0                  | Extend the new local measurement to matched accepted-source full-game baselines                  | ½–1 day                                                                                     |
 | C2                  | Actual play/counterplay assessment, audio/haptics and six-player pilot                           | 2–3 days plus participants/listening/hardware                                               |
@@ -193,7 +223,7 @@ are additional. Update them after the current benchmark is assessed.
   controller/touch certification, comprehensive offline proof or human balance.
 - **Resources:** disk space is limited and another batch is publishing. Avoid
   duplicate full builds, large artifact downloads and extra release worktrees.
-- **Visual scope:** v5 improves native central-body prominence; full-board contact-cue overlap and remaining roster/state review still need qualification before production adoption.
+- **Visual scope:** v5 improves native central-body prominence. Native review identified and corrected a duplicate Team foreground marker; the optional finer cue and remaining roster/state review still need production acceptance.
 - **Creative scope:** broader original artwork, meaningful encounter variety,
   audio listening and playtests still require production and review. A large
   reference list or clean inventory is not finished art.

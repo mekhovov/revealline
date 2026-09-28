@@ -1,4 +1,5 @@
 import { preparedRotorRecipe } from './rotor-presentation.mjs';
+import { contactCueUnderstroke } from './contact-cue.mjs';
 import { t } from '../i18n/index.mjs';
 import { canvasTextFonts } from '../text-face.mjs';
 import { presentationEvent, drawEventFeedback, drawRecoveryCue } from './event-feedback.mjs';
@@ -937,7 +938,7 @@ export class BoardPainter {
         TAU,
       );
       ctx.strokeStyle = PRESENTATION_PLATE;
-      ctx.lineWidth = 3;
+      ctx.lineWidth = playerGeometry ? contactCueUnderstroke(feedbackComparison?.contactStyle) : 3;
       ctx.stroke();
       ctx.strokeStyle = debug ? '#ffffff' : PRESENTATION_INK;
       ctx.lineWidth = 1;

@@ -1,12 +1,12 @@
 # Character motion, game feel and authentic artwork
 
-Approved scope updated 28 September 2026 through the third implementation batch. This replaces the earlier character-improvement order; the [current delivery checkpoint](plan-status-2026-09-28.md) and single publisher still own release acceptance. Source base: `bb9b3640270dc26633d37cfdf4a306aecda277b6`; the third batch is prepared on feature input `9a86e8f50621473a7508c9e723f86bf48bcd38eb`. An implemented candidate below is not a published release.
+Approved scope updated 28 September 2026 through the sixth implementation batch. This replaces the earlier character-improvement order; the [current delivery checkpoint](plan-status-2026-09-28.md) and single publisher still own release acceptance. Source base: `bb9b3640270dc26633d37cfdf4a306aecda277b6`; the sixth batch is prepared on feature input `92fa98912eb5b5509f30f12a200e91afb48fe851`. An implemented candidate below is not a published release.
 
 ## Batch policy and current delivery state
 
 The latest user instruction supersedes one-PR-per-phase ordering: keep compatible C0–C7 work in **draft [PR761](https://github.com/mekhovov/revealline/pull/761)** while the publisher queue is occupied. Develop independent features in parallel, review and commit bounded changes inside that PR, then freeze the verified subset when the publisher admits it. Do not wait for a merge to prepare independent art, tools or evidence; do not delay a ready release for unrelated unfinished production.
 
-Latest main observed for this review is `742e4b142db681e5a6c901b35bfb4d19f0b9c8c5`; the live selector reports v0.142.0 with game source `813dee5feff5d42c54ef91292f6dd434d39d311a`. This branch remains an unversioned feature input on the source above, awaiting the canonical publisher behind its separate 17-input player-readiness batch. That owner reconciles it onto the accepted source, checks overlap with queued UX fixes, assigns a version and owns publication. Existing tags, source originals and historical evidence remain unchanged. No release or public acceptance is claimed for this batch.
+Latest main observed for this review is `7138e7b6187bf69991d50313c3f9ac1620427778`; the live selector reports v0.142.0 with game source `813dee5feff5d42c54ef91292f6dd434d39d311a`. The separate 17-input player-readiness batch is merged as PR768; its v0.142.1 qualification and frozen evidence are complete, with publication still owned by the canonical publisher. This branch remains an unversioned feature input. That owner reconciles it onto accepted source, checks overlap with queued UX fixes, assigns a version and owns publication. Existing tags, source originals and historical evidence remain unchanged. No release or public acceptance is claimed for this actor batch.
 
 ## Implemented and awaiting integration
 
@@ -71,6 +71,21 @@ in interior play, so full-board cue/art balance remains an explicit review item.
 See [batch5](verification/actor-batch-5/README.md) and its exact production-adoption
 checklist. The current default routes are unchanged by merged PR768, but main's
 FPV97 / audio49 history must survive reconciliation of this older FPV93 branch.
+
+The sixth batch studies the remaining centre-cue obstruction without hiding the
+physical contact point. An explicit **Fine outline** comparison narrows only the
+dark backing from three to two renderer units, preserving each renderer's existing
+scale convention. Its complete bright circle and geometry remain unchanged.
+Solo/Versus and Team share this bounded choice. Native raster verification found
+a later Team pass still painting a filled marker over prepared drone bodies;
+the correction moves the single prepared outline into that final foreground pass.
+Fallback markers and Solo defaults remain unchanged. The playable comparison retains it on Retry
+and pauses safely on changes. A separate native raster study exercises real
+renderers over static edge, overlap and light/dark fixtures; it is not a mission
+playthrough. Actual loss/recovery/capture messages now use the existing localized
+failure explanations and core events, replacing stale internal-code feedback.
+Terminal narration has one live-region owner. See [batch 6](verification/actor-batch-6/README.md)
+for exact checks, corrected fixture failures and remaining adoption limits.
 
 ## Remaining delivery order
 

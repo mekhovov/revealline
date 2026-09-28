@@ -195,6 +195,7 @@ export function createCoopPainter(canvas) {
       actorAppearance = null,
       feedback = null,
       previousRun = null,
+      feedbackComparison = null,
     } = {},
   ) {
     if (actorAppearance !== null && !['fpv', 'campaign'].includes(actorAppearance?.style))
@@ -585,6 +586,7 @@ export function createCoopPainter(canvas) {
         ctx.arc(spawn.x, spawn.y, 0.9, 0, Math.PI * 2);
         ctx.stroke();
       }
+      const preparedPilotContacts = new Map();
       for (const player of run.players) {
         ctx.strokeStyle = colors[player.id];
         ctx.fillStyle = colors[player.id];
@@ -644,9 +646,14 @@ export function createCoopPainter(canvas) {
           ctx.stroke();
         }
         if (pilotBody) {
-          // Preserve exact contact geometry without filling over battery/camera
-          // artwork. The adjacent badge carries number + circle/diamond identity.
-          drawPreparedPilotContact(ctx, player.radius, colors[player.id], cssCell);
+          // Retain exact physical geometry for the final foreground pass. A
+          // filled marker here or later would hide the prepared battery/camera.
+          preparedPilotContacts.set(player.id, {
+            x: player.x,
+            y: player.y,
+            radius: player.radius,
+            color: colors[player.id],
+          });
         } else {
           ctx.beginPath();
           ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
@@ -766,13 +773,29 @@ export function createCoopPainter(canvas) {
         ctx.restore();
       }
       for (const player of run.players) {
-        ctx.fillStyle = colors[player.id];
-        ctx.strokeStyle = '#07111c';
-        ctx.lineWidth = 1 / cssCell;
-        ctx.beginPath();
-        ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
+        const contact = preparedPilotContacts.get(player.id);
+        if (contact) {
+          // Keep the unfilled pilot footprint above every actor and enemy cue.
+          // The separate number/shape badge and recovery ring retain their roles.
+          ctx.save();
+          ctx.translate(contact.x, contact.y);
+          drawPreparedPilotContact(
+            ctx,
+            contact.radius,
+            contact.color,
+            cssCell,
+            feedbackComparison?.contactStyle,
+          );
+          ctx.restore();
+        } else {
+          ctx.fillStyle = colors[player.id];
+          ctx.strokeStyle = '#07111c';
+          ctx.lineWidth = 1 / cssCell;
+          ctx.beginPath();
+          ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+        }
       }
       for (const [index, outcome] of recentOutcomes.entries()) {
         if (!['running', 'paused'].includes(run.status)) break;

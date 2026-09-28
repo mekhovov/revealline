@@ -33,6 +33,7 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
     ['game/content-design/actor-marker.mjs', ['effects', 'team']],
     ['game/ui/lane-presentation.mjs', ['effects']],
     ['game/ui/render.mjs', ['effects']],
+    ['game/ui/contact-cue.mjs', ['effects', 'team']],
     ['game/ui/relay-view.mjs', ['effects']],
     ['game/ui/directional-view.mjs', ['effects']],
     ['game/enemy-catalog.mjs', ['effects', 'team']],
@@ -81,6 +82,7 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
 
 test('missing helper bytes cannot produce a supposedly valid fingerprint', async () => {
   for (const missing of [
+    'game/ui/contact-cue.mjs',
     'game/ui/lane-presentation.mjs',
     'authoring/library/fpv-role-presentations/originals/impact.png',
   ])
