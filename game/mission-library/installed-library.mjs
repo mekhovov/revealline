@@ -22,7 +22,9 @@ export async function createInstalledMissionLibrary({
   launchClassic,
   launchCustom,
   progressClassic,
+  progressStateClassic,
   progressCustom,
+  progressStateCustom,
   availabilityExternal,
   unavailableClassic,
   getProjectSources = async () => [],
@@ -33,9 +35,14 @@ export async function createInstalledMissionLibrary({
     [getPacks, compatibility, describe, prepareClassic, launchClassic, launchCustom].some(
       (fn) => typeof fn !== 'function',
     ) ||
-    [progressClassic, progressCustom, availabilityExternal, unavailableClassic].some(
-      (fn) => fn !== undefined && typeof fn !== 'function',
-    )
+    [
+      progressClassic,
+      progressStateClassic,
+      progressCustom,
+      progressStateCustom,
+      availabilityExternal,
+      unavailableClassic,
+    ].some((fn) => fn !== undefined && typeof fn !== 'function')
   )
     throw new TypeError(
       'Installed mission browsing needs explicit host adapters and a valid mode.',
@@ -167,6 +174,7 @@ export async function createInstalledMissionLibrary({
       return launchClassic(row, { ...context, pack, selection: selection(row) });
     },
     progress: progressClassic,
+    progressState: progressStateClassic,
   });
   const classicRows = classicSources.flatMap((source) => source.entries);
   const library = createMissionLibrary([...journeySources, ...classicSources]);
@@ -206,6 +214,7 @@ export async function createInstalledMissionLibrary({
               return launchCustom(binding, context);
             },
             progress: progressCustom,
+            progressState: progressStateCustom,
           },
         );
         customCache.set(pack, pending);
