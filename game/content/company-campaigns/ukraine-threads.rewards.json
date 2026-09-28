@@ -505,11 +505,11 @@
         "id": "ukraine-threads-03-image",
         "locales": {
           "en": {
-            "alt": "White on White — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "White on White — original mission illustration. Not a documentary photograph or technical plan.",
             "title": "White on White"
           },
           "uk": {
-            "alt": "Білим по білому — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Білим по білому — оригінальна ілюстрація місії. Не документальне фото й не технічна схема.",
             "title": "Білим по білому"
           }
         },
@@ -590,6 +590,154 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "id": "ukraine-threads-03-lighting-comparison",
+        "locales": {
+          "en": {
+            "intro": "Choose any two lighting studies. Compare the raised border, central diamond and small openings. These matching original illustrations vary slightly in their stitches; they explore an idea, not a controlled photographic experiment on one historical textile.",
+            "title": "Pale threads, changing emphasis"
+          },
+          "uk": {
+            "intro": "Виберіть будь-які два етюди освітлення. Порівняйте рельєфну облямівку, центральний ромб і дрібні отвори. Ці узгоджені оригінальні ілюстрації трохи відрізняються стібками: вони досліджують ідею, а не відтворюють контрольований фотоексперимент над одним історичним текстилем.",
+            "title": "Світлі нитки, різні акценти"
+          }
+        },
+        "recipe": {
+          "cards": [
+            {
+              "asset": {
+                "assetId": "textile-light-diffuse-v1",
+                "sha256": "eabcef992854e71c481a7e4fdb17fcaf86894375e2950644b940886a7ea1c7e1"
+              },
+              "id": "diffuse",
+              "locales": {
+                "en": {
+                  "alt": "Original fictional study in soft diffuse light: a pale square textile on charcoal, with a raised cord-like border, one filled central diamond and four smaller open diamonds.",
+                  "body": "Start with the pale border and the filled diamond in the centre. Both stand above the illustrated woven ground, even though their colours are similar. The regional white-on-white embroidery tradition provides context for noticing relief and open areas; this invented sample is not a documented maker’s pattern.",
+                  "sourceNote": "The regional administration describes Reshetylivka’s tradition. Regional Centre Sofia discusses its techniques and light-and-dark relief. Neither source supplies or authenticates this original illustration.",
+                  "title": "Soft light · find the structure"
+                },
+                "uk": {
+                  "alt": "Оригінальний вигаданий етюд у м’якому розсіяному світлі: світлий квадратний текстиль на темно-сірому тлі, рельєфна шнуроподібна облямівка, один заповнений центральний ромб і чотири менші відкриті ромби.",
+                  "body": "Почніть зі світлої облямівки та заповненого ромба в центрі. Обидва виступають над зображеним тканим тлом, хоча їхні кольори подібні. Регіональна традиція вишивки білим по білому дає контекст для спостереження за рельєфом і відкритими ділянками; цей вигаданий зразок не є задокументованим узором майстра.",
+                  "sourceNote": "Районна адміністрація описує традицію Решетилівки. Регіональний центр у Софії розглядає її техніки та світлотіньовий рельєф. Жодне джерело не є автором цієї оригінальної ілюстрації та не засвідчує її автентичність.",
+                  "title": "М’яке світло · знайдіть структуру"
+                }
+              },
+              "sourceIds": ["regional-white", "white-technique"]
+            },
+            {
+              "asset": {
+                "assetId": "textile-light-left-v1",
+                "sha256": "09ff0b2d7811b9ae6076db4ab2708688250ac66d4f683c0fba6e2de92dea4607"
+              },
+              "id": "left",
+              "locales": {
+                "en": {
+                  "alt": "Original fictional white-thread study lit from the left, with a raised diamond and border showing brighter left-facing ridges and darker adjacent edges on a pale woven ground.",
+                  "body": "Follow one edge of the central diamond and look for a bright ridge beside a darker patch. Side illumination can make surface relief easier to notice. A shadow beside a pale thread is different from a thread dyed dark; the colour of a single screen pixel does not establish the material.",
+                  "sourceNote": "The National Gallery explains oblique illumination and shadows for raised paint. Applying that general visual idea to this fictional textile is an illustration, not a conservation measurement. Regional Centre Sofia also describes a light-and-dark effect in white embroidery.",
+                  "title": "Light from the left · follow an edge"
+                },
+                "uk": {
+                  "alt": "Оригінальний вигаданий етюд білих ниток зі світлом зліва: рельєфний ромб і облямівка мають світліші виступи з лівого боку та темніші суміжні краї на світлому тканому тлі.",
+                  "body": "Простежте за одним краєм центрального ромба й знайдіть світлий виступ поруч із темнішою ділянкою. Бічне освітлення може допомогти помітити рельєф поверхні. Тінь біля світлої нитки відрізняється від нитки, пофарбованої в темне; колір одного пікселя на екрані не визначає матеріалу.",
+                  "sourceNote": "Національна галерея пояснює косе освітлення й тіні на рельєфній фарбі. Застосування цієї загальної візуальної ідеї до вигаданого текстилю є ілюстрацією, а не реставраційним вимірюванням. Регіональний центр у Софії також описує світлотіньовий ефект білої вишивки.",
+                  "title": "Світло зліва · простежте за краєм"
+                }
+              },
+              "sourceIds": ["raking-light", "white-technique"]
+            },
+            {
+              "asset": {
+                "assetId": "textile-light-right-v1",
+                "sha256": "53fe2601e7dfff5ea54f63fea9481c29c1cf7acdea3025f6967bacfdcc88259d"
+              },
+              "id": "right",
+              "locales": {
+                "en": {
+                  "alt": "Original fictional white-thread study lit from the right, with stronger illumination along right-facing raised threads around a filled diamond and square border. Some small stitch details differ from the other studies.",
+                  "body": "Compare the emphasis around the border and diamond with the left-lit study. Which edge catches your attention now? Small stitch details also differ between these separate illustrations. Use them to ask what lighting might reveal, not to measure thread depth or claim that only the light changed.",
+                  "sourceNote": "The National Gallery’s source explains why illumination direction matters to visible relief. These three game studies were generated separately; a controlled object comparison would need the same specimen and recorded conditions.",
+                  "title": "Light from the right · compare carefully"
+                },
+                "uk": {
+                  "alt": "Оригінальний вигаданий етюд білих ниток зі світлом справа: сильніше освітлено праві поверхні рельєфних ниток навколо заповненого ромба та квадратної облямівки. Деякі дрібні стібки відрізняються від інших етюдів.",
+                  "body": "Порівняйте акценти навколо облямівки й ромба з етюдом, освітленим зліва. Який край тепер привертає увагу? Дрібні деталі стібків у цих окремих ілюстраціях також різняться. Вони допомагають запитати, що може виявити світло, але не виміряти висоту нитки чи стверджувати, що змінилося лише освітлення.",
+                  "sourceNote": "Джерело Національної галереї пояснює вплив напрямку світла на видимий рельєф. Три ігрові етюди згенеровано окремо; контрольоване порівняння потребувало б того самого предмета й зафіксованих умов.",
+                  "title": "Світло справа · порівнюйте уважно"
+                }
+              },
+              "sourceIds": ["raking-light"]
+            }
+          ],
+          "id": "inspect-compare-atlas",
+          "predictions": [
+            {
+              "cardIds": ["left", "right"],
+              "choices": [
+                {
+                  "id": "compare-light",
+                  "locales": {
+                    "en": {
+                      "feedback": "Yes. Keep the specimen fixed and investigate whether the dark area follows the illumination.",
+                      "label": "Compare the same thread under another light"
+                    },
+                    "uk": {
+                      "feedback": "Так. Збережіть той самий зразок і перевірте, чи темна ділянка змінюється разом з освітленням.",
+                      "label": "Порівняти ту саму нитку за іншого світла"
+                    }
+                  }
+                },
+                {
+                  "id": "assume-dye",
+                  "locales": {
+                    "en": {
+                      "feedback": "A dark patch can be a shadow. Check another view before deciding what the material is.",
+                      "label": "Treat every dark patch as dyed thread"
+                    },
+                    "uk": {
+                      "feedback": "Темна ділянка може бути тінню. Перевірте інший вид, перш ніж робити висновок про матеріал.",
+                      "label": "Вважати кожну темну ділянку фарбованою ниткою"
+                    }
+                  }
+                }
+              ],
+              "expectedChoiceId": "compare-light",
+              "id": "shadow-or-dye",
+              "locales": {
+                "en": {
+                  "explanation": "Compare the same thread under another documented light direction. A shadow can move or change while the material remains the same. One photograph—or our separate illustrations—does not by itself establish dye or fibre.",
+                  "prompt": "On an unchanged real sample, a dark patch lies beside a raised pale thread. What would help you test whether it is a shadow before calling the thread dark-dyed?"
+                },
+                "uk": {
+                  "explanation": "Порівняйте ту саму нитку за іншого зафіксованого напрямку світла. Тінь може зміститися чи змінитися, хоча матеріал лишається тим самим. Одна фотографія або наші окремі ілюстрації самі по собі не визначають барвника чи волокна.",
+                  "prompt": "На незміненому реальному зразку поруч із рельєфною світлою ниткою є темна ділянка. Що допоможе перевірити, чи це тінь, перш ніж називати нитку темнофарбованою?"
+                }
+              }
+            }
+          ],
+          "revision": 1,
+          "sources": [
+            {
+              "id": "regional-white",
+              "title": "Kremenchuk district administration — Reshetylivka white-on-white embroidery",
+              "url": "https://kremenchukrda.gov.ua/news/holova-poltavskoyi-oda-prosuvayemo-vyshyvku-bilym-po-bilomu-do-nematerialnoyi-spadshchyny-yunesko"
+            },
+            {
+              "id": "white-technique",
+              "title": "Regional Centre Sofia — White on White Technique of Embroidery of Reshetylivka",
+              "url": "https://www.unesco-centerbg.org/en/2021/11/22/white-on-white-technique-of-embroidery-of-reshetylivka/"
+            },
+            {
+              "id": "raking-light",
+              "title": "National Gallery — Raking light",
+              "url": "https://www.nationalgallery.org.uk/paintings/glossary/raking-light"
+            }
+          ]
+        },
+        "type": "exploration"
       }
     ],
     "requirements": {
@@ -606,7 +754,7 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
     "scope": { "id": "ukraine-threads-03", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -1320,11 +1468,11 @@
         "id": "ukraine-threads-03-image",
         "locales": {
           "en": {
-            "alt": "White on White — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "White on White — original mission illustration. Not a documentary photograph or technical plan.",
             "title": "White on White"
           },
           "uk": {
-            "alt": "Білим по білому — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Білим по білому — оригінальна ілюстрація місії. Не документальне фото й не технічна схема.",
             "title": "Білим по білому"
           }
         },
@@ -1507,7 +1655,7 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
     "scope": { "id": "ukraine-threads", "kind": "campaign" },
     "teaserImage": {
       "asset": {
