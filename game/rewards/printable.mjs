@@ -149,6 +149,13 @@ export async function createPrintableReward(
           `<p class="unavailable">${escape(locale === 'uk' ? 'Точний текстовий супровід недоступний. Відкриття збережено.' : 'The exact transcript is unavailable. Your discovery is preserved.')}</p>`,
         );
       }
+    } else if (payload.type === 'cosmetic') {
+      parts.push(
+        `<p>${escape(locale === 'uk' ? 'Оформлення персонажа. Воно не змінює зіткнення, здібності чи рахунок.' : 'A character appearance. It does not change collision, abilities or scoring.')}</p>`,
+      );
+      parts.push(
+        `<p><code>${escape(payload.recipeId)} · ${escape(payload.recipeRevision)}</code></p>`,
+      );
     } else if (payload.type === 'url') {
       parts.push(
         `<p>${link(text.title, payload.url)}</p><p class="address">${escape(payload.url)}</p>`,

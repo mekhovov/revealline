@@ -339,7 +339,7 @@ test('selected reward admission rejects altered gameplay, foreign scopes, wrong 
           locales: { en: { title: 'Look' }, uk: { title: 'Вигляд' } },
         };
       },
-      /registered player viewer/,
+      /exact reward character/,
     ],
   ]) {
     const altered = structuredClone(f.reward);
