@@ -55,7 +55,11 @@ hosted run `36285822052` and MinIO run `36285821871` passed. Its workflow and se
 included in published `v0.141.7`, whose exact release source is
 `efbb3882b4edd447c8e9f60ed60c536a956d78f3`. The current post-release acceptance batch lets both
 deployed runners sign in already verified Better Auth accounts without persisting passwords or
-session cookies. The full community service suite passes 109/109 checks for that candidate.
+session cookies. PR #723 now consumes sign-in responses incrementally under an exact 64 KiB byte
+limit, keeps the request deadline active through body completion, cancels oversized or stalled
+streams, and rejects simultaneous Cookie and Authorization credentials. Its full community service
+suite passes 113/113 checks, and the hosted production-shaped acceptance passed for the corrected
+runtime before this documentation-only status update.
 
 | Workstream           | Completed/current result                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Remaining work                                                                                                                                                  | Focused ETA                                                   |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
@@ -73,7 +77,8 @@ session cookies. The full community service suite passes 109/109 checks for that
 1. **Verified production-session acceptance — current batch, 0.5 day.** Both destructive deployed
    runners accept one bounded credential form per actor, exchange verified email/password accounts
    for short-lived Better Auth session cookies only after exact identity and readiness checks, and
-   keep all credentials out of receipts. Ship this as one small service/docs PR after exact-head CI.
+   keep all credentials out of receipts. PR #723 is implementation-complete and has exact-head CI;
+   release allocation and coordinator admission remain.
 2. **Mail-backed account bootstrap and TLS edge — 0.5–1 day plus infrastructure.** Exercise sign-up,
    captured verification delivery, sign-in, trusted proxy addressing and administrator role binding
    on the selected host. Keep this acceptance/configuration batch separate if host or mail access is
