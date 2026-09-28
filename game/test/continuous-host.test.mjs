@@ -1,3 +1,5 @@
+import { ACTOR_APPEARANCE_PIN_FORMAT } from '../presentation/actor-appearance-pin.mjs';
+import { ACTOR_SESSION_FORMAT } from '../sessions.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -53,7 +55,8 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     page.$('pause-button').click();
     page.frame(0);
     const saved = JSON.parse(storage.getItem(sessionKey));
-    assert.equal(saved.format, 'xonix-session.v4');
+    assert.equal(saved.format, ACTOR_SESSION_FORMAT);
+    assert.equal(saved.actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
     assert.equal(saved.presentationPins.format, 'revealline-flight-pictures.v2');
     assert.ok(
       saved.presentationPins.choices.every(
