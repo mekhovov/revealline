@@ -584,6 +584,56 @@ export async function mountEditionRewards({
   }
 
   let readingProfile = 'beginners';
+  function retainReadingFocus() {
+    const previous = doc.activeElement;
+    if (!dialog.open || !reading.contains(previous)) return () => {};
+    const item = previous.closest('[data-reward-item]')?.getAttribute('data-reward-item');
+    const keys = [
+      'data-learning-profile',
+      'data-card-id',
+      'data-prediction-id',
+      'data-choice-id',
+      'data-diagram-card',
+      'data-exploration-action',
+      'data-reward-media-action',
+      'data-cosmetic-action',
+      'data-playlist-track',
+      'data-playlist-action',
+    ].filter((key) => previous.hasAttribute(key));
+    const attributes = keys.map((key) => [key, previous.getAttribute(key)]);
+    const href = previous.tagName === 'A' ? previous.href : null;
+    return () => {
+      // Locale rendering replaces controls. Match their semantic identity within
+      // the same payload, never translated text or a changing child position.
+      const target = [...reading.querySelectorAll('button,select,a,summary')].find((candidate) => {
+        if (
+          candidate.disabled ||
+          candidate.closest('[hidden],[inert]') ||
+          !candidate.getClientRects().length ||
+          candidate.tagName !== previous.tagName
+        )
+          return false;
+        if (previous.id) return candidate.id === previous.id;
+        if (
+          !item ||
+          candidate.closest('[data-reward-item]')?.getAttribute('data-reward-item') !== item
+        )
+          return false;
+        // Diagram hotspots await their raster. The equivalent list remains
+        // available immediately, so asynchronous media never strands focus.
+        if (previous.hasAttribute('data-diagram-card'))
+          return (
+            candidate.getAttribute('data-card-id') === previous.getAttribute('data-diagram-card')
+          );
+        return attributes.length
+          ? attributes.every(([key, value]) => candidate.getAttribute(key) === value)
+          : href
+            ? candidate.href === href
+            : previous.tagName === 'SUMMARY';
+      });
+      (target ?? reading).focus({ preventScroll: true });
+    };
+  }
   function renderViewer() {
     if (!viewing) return;
     releaseMedia();
@@ -668,6 +718,7 @@ export async function mountEditionRewards({
       const payload = item.kind === 'audio-group' ? item.group : item.payload;
       const text = localized(payload),
         section = node('section');
+      section.setAttribute('data-reward-item', `${item.kind}:${payload.id}`);
       section.append(node('h3', text.title));
       if (item.kind === 'audio-group') {
         explorations.add(
@@ -886,9 +937,11 @@ export async function mountEditionRewards({
     dirty = false;
   }
   const stopLocale = onLocaleChange(() => {
+    const restoreReadingFocus = retainReadingFocus();
     dirty = true;
     refresh();
     if (viewing) renderViewer();
+    restoreReadingFocus();
   });
   refresh();
   return {
