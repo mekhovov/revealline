@@ -404,6 +404,7 @@ export function attachCouchInput({
     for (const pad of doc.querySelectorAll('.race-pad')) {
       const player = Number(pad.dataset.player);
       touchInputs[player] = attachTouchSteering({
+        window: win,
         pad: pad.querySelector('.race-cross'),
         surface: pad.querySelector('.touch-surface'),
         indicator: pad.querySelector('.touch-indicator'),
