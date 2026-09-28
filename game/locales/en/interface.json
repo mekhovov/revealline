@@ -4858,7 +4858,7 @@
   "downloads.cancel": "Cancel remaining download",
   "downloads.keepOnDevice": "Keep downloads on this device",
   "downloads.storageWarning": "Device storage can be cleared by the browser or the operating system. Keep a portable backup of your progress.",
-  "downloads.removalHelp": "Removing chapters keeps the shared game, original reward artwork, imported files and saves. Restore a backup containing official chapter references after preparing the matching game downloads.",
+  "downloads.removalHelp": "Removing unplayed chapters can free download space. Chapters you have played retain their complete verified game files and artwork to protect saves, replays and earned pictures; removing them from your selection does not reclaim those files yet. Shared files, imported files and saves are kept. Modes prepared from bookmarks also stay downloaded when you remove your main chapter selection. Restore a backup containing official chapter references after preparing the matching game downloads.",
   "downloads.useEdition": "Use this edition in the installed app",
   "downloads.transferProgress": "Open progress transfer in Classic",
   "downloads.musicHeading": "Optional soundtracks",
@@ -5031,5 +5031,13 @@
   "downloads.exactMissionNoPackage": "This exact mission edition has no offline package.",
   "downloads.invalidDestinationMissionRequest": "The destination mission request is invalid.",
   "downloads.exactDestinationNoPackage": "This exact destination has no offline package.",
-  "downloads.destinationPackageIncomplete": "The destination package is incomplete."
+  "downloads.destinationPackageIncomplete": "The destination package is incomplete.",
+  "downloads.destinationHelp": "This bookmark needs game files that are not saved on this device yet. Review the size below, then choose Download and open. Connect to the internet if files are missing. Soundtracks are not required. Back to game returns to the downloaded Solo menu.",
+  "downloads.installHow": "How to install",
+  "downloads.installIconNote": "Installing the icon does not download the game. You can also download and keep playing in this browser.",
+  "downloads.soloStarterChoice": "Solo Starter · opening chapter and essential game sounds",
+  "downloads.sizeHelp": "Choose the size that suits your connection; mobile data charges may apply. Keep this app open while downloading. Verification and app setup happen automatically.",
+  "downloads.chooseChaptersAndExtras": "Choose chapters, modes and optional extras",
+  "downloads.storageAndRepair": "Storage and repair",
+  "downloads.finishSelection": "Finish app selection safely"
 }
