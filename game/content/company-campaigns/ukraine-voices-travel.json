@@ -2,16 +2,81 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
-      "bytes": 248004,
+      "alt": "Original illustrated evening listening room with an abstract wooden string-instrument silhouette, separate empty performer seat and blank cards connected by warm light.",
+      "bytes": 160887,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "ukraine-voices-travel-key-picture",
+      "height": 480,
+      "id": "ukraine-voices-travel-01-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/ukraine-voices-travel-key-v1.jpg",
+      "path": "editions/assets/discovery/ukraine-voices-travel-01-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea",
+      "sha256": "efb920278d7961fbffd8f13ec2cab5b81d6ec99353f3da24eef5f1b639ccffca",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated rehearsal library with three open connected rooms, empty seats, learning shelves and a small performance platform linked by warm light.",
+      "bytes": 184771,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-voices-travel-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-voices-travel-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "656e823c9d7f3189a68fa68f0473f06a8d2a2607a89d4b5aed013a06248eb888",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated song-archive courtyard with three separate blank group cards and equal abstract sound ribbons, beside an invented river landscape.",
+      "bytes": 196019,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-voices-travel-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-voices-travel-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "cc9dd354676ea8bfa74670b61a4a77eb8c20050f18f5ff8c9840f2805c629fa5",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated spacious concert foyer with an ocean-blue window, a distant imagined ship and three separate blank programme cards.",
+      "bytes": 177391,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-voices-travel-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-voices-travel-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "ba6a6aadc7859ace1865c0889b9215f1b8d264e85484e22a10a327568f0702e8",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated listening gallery with three separate headphones stations and equal illuminated sound ribbons leading together toward an arch.",
+      "bytes": 189714,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-voices-travel-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-voices-travel-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "919797b57a3374258d94292efca7cf835d45ebf34b404368ab3995993e013534",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated listening-library finale with six separate discovery-card islands, abstract sound ribbons and a bright open source-index cabinet.",
+      "bytes": 195867,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-voices-travel-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-voices-travel-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "62c3833fc32c79df5ddac7f113b57e4ce33ded59c1b1b4d3c161ec5621f0237a",
       "width": 960
     }
   ],
@@ -20,7 +85,7 @@
       "band": 7,
       "discovery": {
         "exhibitLayout": "route",
-        "finaleRewardRef": { "id": "ukraine-voices-travel-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "ukraine-voices-travel-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "ukraine-voices-travel",
@@ -202,7 +267,7 @@
           "travelling-trail-impact",
           "trail-pursuer"
         ],
-        "rewardRef": { "id": "ukraine-voices-travel-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-voices-travel-01-discovery", "revision": "2" },
         "routeDecision": "Secure the instrument alcove first or connect two listening islands before taking the long audience court. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -215,7 +280,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-voices-travel-key-picture",
+        "backgroundAssetId": "ukraine-voices-travel-01-picture",
         "themeId": "ukraine-voices-travel-theme"
       },
       "relayLinks": [],
@@ -269,7 +334,7 @@
           "travelling-trail-impact",
           "trail-pursuer"
         ],
-        "rewardRef": { "id": "ukraine-voices-travel-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-voices-travel-02-discovery", "revision": "2" },
         "routeDecision": "Join the nearby teaching tables for short captures or use the outer gallery to connect all three rooms. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -282,7 +347,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-voices-travel-key-picture",
+        "backgroundAssetId": "ukraine-voices-travel-02-picture",
         "themeId": "ukraine-voices-travel-theme"
       },
       "relayLinks": [],
@@ -336,7 +401,7 @@
           "travelling-trail-impact",
           "heading-interceptor"
         ],
-        "rewardRef": { "id": "ukraine-voices-travel-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-voices-travel-03-discovery", "revision": "2" },
         "routeDecision": "Read the warning from the narrow source aisle or cross the wider regional court with a nearer return prepared. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -349,7 +414,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-voices-travel-key-picture",
+        "backgroundAssetId": "ukraine-voices-travel-03-picture",
         "themeId": "ukraine-voices-travel-theme"
       },
       "relayLinks": [],
@@ -412,7 +477,7 @@
           "heading-interceptor",
           "lane-emitter"
         ],
-        "rewardRef": { "id": "ukraine-voices-travel-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-voices-travel-04-discovery", "revision": "2" },
         "routeDecision": "Take the open foyer in a wide loop or reveal the two programme alcoves before approaching the marked lane. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -425,7 +490,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-voices-travel-key-picture",
+        "backgroundAssetId": "ukraine-voices-travel-04-picture",
         "themeId": "ukraine-voices-travel-theme"
       },
       "relayLinks": [],
@@ -488,7 +553,7 @@
           "heading-interceptor",
           "lane-emitter"
         ],
-        "rewardRef": { "id": "ukraine-voices-travel-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-voices-travel-05-discovery", "revision": "2" },
         "routeDecision": "Secure the lower listening station for a quick return or connect the upper pair around the warning lane. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -501,7 +566,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-voices-travel-key-picture",
+        "backgroundAssetId": "ukraine-voices-travel-05-picture",
         "themeId": "ukraine-voices-travel-theme"
       },
       "relayLinks": [],
@@ -565,7 +630,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "ukraine-voices-travel-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-voices-travel-06-discovery", "revision": "2" },
         "routeDecision": "Open the numbered source connector first or secure the wide archive wing before returning to the final listening island. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV2",
@@ -578,7 +643,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-voices-travel-key-picture",
+        "backgroundAssetId": "ukraine-voices-travel-06-picture",
         "themeId": "ukraine-voices-travel-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -594,9 +659,9 @@
       "format": "PackDesignV1",
       "id": "ukraine-voices-travel-pack",
       "name": "Voices That Travel",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }
