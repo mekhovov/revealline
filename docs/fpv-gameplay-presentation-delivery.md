@@ -239,6 +239,10 @@ Prepare one successor while the sole publisher promotes the accepted candidate.
 - Reuse directional animation; scale visible bounds and rotor sweep around the
   existing pivot, never change hitboxes. Initially qualify 24–32 CSS-pixel desktop
   and 20–24 compact visible envelopes, with larger bosses.
+- Resolve loss debris and status language from the presentation family as well as
+  the exact theme ID. DroneAid and later community themes in the FPV family keep
+  the solid broken-frame fragments and `CRAFT LOST` feedback; they must not fall
+  back to generic corner marks merely because their collection has a distinct ID.
 - Active trails, return contours, impact fronts and capture effects have distinct
   roles. Essential warning remains in reduced-effects mode. Tiny5 needs credits,
   font-loading/cache/canvas integration and Ukrainian glyph checks. Plain text,

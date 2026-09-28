@@ -962,6 +962,7 @@ export class BoardPainter {
       if (!fullReveal)
         drawEventFeedback(ctx, f, p, {
           themeId: this.theme.id,
+          themeFamily: this.theme.family,
           reduced,
           screenScale: canvasCSSWidth / W,
           width: W,
