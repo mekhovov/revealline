@@ -1,6 +1,8 @@
 import {
   reviewTarget,
   reviewViewport,
+  reviewScenario,
+  reviewSessionSummary,
   reviewPlayerSurface,
   reviewControlViewport,
   frameSummary,
@@ -16,8 +18,15 @@ export function mountCompanyReview({ document, window }) {
   let dispose = () => {},
     current = null,
     navigation = 0;
+  const selectedScenario = () => reviewScenario($('scenario')?.value ?? 'opening-play');
   const report = (value) => {
-    const entry = { sample: $('label').value.slice(0, 80), navigation, ...value, qualified: false };
+    const entry = {
+      sample: $('label').value.slice(0, 80),
+      scenario: selectedScenario(),
+      navigation,
+      ...value,
+      qualified: false,
+    };
     records.push(entry);
     if (records.length > 100) records.shift();
     $('log').textContent = JSON.stringify(records, null, 2);
@@ -38,10 +47,11 @@ export function mountCompanyReview({ document, window }) {
   };
 
   $('load').onclick = () => {
-    let target, viewport;
+    let target, viewport, loadScenario;
     try {
       target = reviewTarget($('target').value, location.href);
       viewport = reviewViewport($('width').value, $('height').value);
+      loadScenario = selectedScenario();
     } catch (error) {
       report({ action: 'Load', outcome: error.message });
       return;
@@ -68,6 +78,7 @@ export function mountCompanyReview({ document, window }) {
         loadTimedOut = true;
         report({
           sample: label,
+          scenario: loadScenario,
           action: 'Load',
           outcome: 'Timed out; no readiness timing observation',
         });
@@ -108,7 +119,9 @@ export function mountCompanyReview({ document, window }) {
       const surface = () => reviewPlayerSurface(doc, visible);
       const running = () => surface().running;
       const stopSample = (reason) => {
-        if (sample || armed !== null) emit({ action: 'Frame intervals', outcome: reason });
+        const scenario = sample?.scenario ?? armed?.scenario;
+        if (sample || armed !== null)
+          emit({ action: 'Frame intervals', outcome: reason, ...(scenario ? { scenario } : {}) });
         sample = null;
         armed = null;
         previous = null;
@@ -116,7 +129,7 @@ export function mountCompanyReview({ document, window }) {
         $('frames').disabled = !ready;
       };
       const stopPending = (reason) => {
-        if (pending) emit({ action: pending.action, outcome: reason });
+        if (pending) emit({ action: pending.action, outcome: reason, scenario: pending.scenario });
         pending = null;
       };
       const readyTimer = window.setTimeout(
@@ -124,6 +137,7 @@ export function mountCompanyReview({ document, window }) {
           if (!ready) {
             timingInvalid = 'Menu readiness timed out';
             emit({
+              scenario: loadScenario,
               action: 'Load to company menu',
               outcome: 'Timed out; no readiness timing observation',
             });
@@ -151,6 +165,7 @@ export function mountCompanyReview({ document, window }) {
           pending = {
             began: performance.now(),
             action: button.textContent.trim().slice(0, 120),
+            scenario: selectedScenario(),
             trusted: event.isTrusted,
             entriesBefore: win.performance.getEntriesByType('resource').length,
           };
@@ -179,13 +194,17 @@ export function mountCompanyReview({ document, window }) {
         loadInterrupted = document.hidden;
         armLoad();
       };
-      const beginSample = () => {
+      const beginSample = (scenario = selectedScenario()) => {
         armed = null;
-        sample = { began: performance.now(), intervals: [] };
+        sample = { began: performance.now(), intervals: [], scenario };
         previous = null;
         $('frames').textContent = 'Measuring…';
         $('frames').disabled = true;
-        emit({ action: 'Frame intervals', outcome: '20-second observation started; keep playing' });
+        emit({
+          action: 'Frame intervals',
+          outcome: '20-second observation started; keep playing',
+          scenario,
+        });
       };
       doc.addEventListener('click', click, true);
       doc.addEventListener('visibilitychange', visibility);
@@ -206,12 +225,13 @@ export function mountCompanyReview({ document, window }) {
           else {
             // Clicking the observer blurs and pauses the Solo iframe. Arm an
             // observation; only the user's normal Resume may start the game.
-            armed = performance.now();
+            armed = { began: performance.now(), scenario: selectedScenario() };
             $('frames').textContent = 'Waiting for play…';
             $('frames').disabled = true;
             emit({
               action: 'Frame intervals',
               outcome: 'Armed; start or resume the game within 30 seconds',
+              scenario: armed.scenario,
             });
           }
         },
@@ -257,6 +277,7 @@ export function mountCompanyReview({ document, window }) {
           else if (player.prepared) {
             emit({
               action: pending.action,
+              scenario: pending.scenario,
               outcome: player.preparedOutcome,
               host: player.host,
               ms: performance.now() - pending.began,
@@ -273,10 +294,10 @@ export function mountCompanyReview({ document, window }) {
         }
         let beganThisFrame = false;
         if (armed !== null) {
-          if (performance.now() - armed > 30000)
+          if (performance.now() - armed.began > 30000)
             stopSample('No running flight observed; sample discarded');
           else if (player.running && visiblePage) {
-            beginSample();
+            beginSample(armed.scenario);
             // All callbacks in a RAF batch share its earlier timestamp. The
             // player may just have finished long preparation in this batch;
             // seed interval timing on the next frame, after sample activation.
@@ -298,6 +319,7 @@ export function mountCompanyReview({ document, window }) {
               else {
                 emit({
                   action: 'Frame intervals',
+                  scenario: sample.scenario,
                   outcome: '20 seconds observed; not device qualification',
                   metric:
                     'requestAnimationFrame intervals including observer overhead; not render duration',
@@ -386,12 +408,29 @@ export function mountCompanyReview({ document, window }) {
       memory: memory(win),
     });
   };
+  const summaryButton = $('summary');
+  if (summaryButton)
+    summaryButton.onclick = () => {
+      const coverage = reviewSessionSummary(records);
+      report({
+        action: 'Session coverage',
+        outcome: `${coverage.readyLoads} ready loads, ${coverage.targetTransitions} target transitions and ${coverage.frameSamples} completed frame samples recorded`,
+        coverage,
+        limitation:
+          'Session-local browser observations only; no installed-app, storage-isolation or physical-device claim.',
+      });
+    };
   $('export').onclick = () => {
     const url = URL.createObjectURL(
       new Blob(
         [
           JSON.stringify(
-            { format: 'revealline-company-observations.v1', qualified: false, records },
+            {
+              format: 'revealline-company-observations.v1',
+              qualified: false,
+              coverage: reviewSessionSummary(records),
+              records,
+            },
             null,
             2,
           ),
