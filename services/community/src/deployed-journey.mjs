@@ -328,10 +328,8 @@ async function adminPost({ fetchImpl, baseURL, auth, path, body, action }) {
  * resulting edition through the administrator boundary. */
 export async function runDeployedCommunityJourney(input, adapters = {}) {
   const config = validateDeployedJourneyConfig(input);
-  const fetchImpl = createBoundedFetch(
-    adapters.fetchImpl ?? globalThis.fetch,
-    config.requestTimeoutMs,
-  );
+  const rawFetch = adapters.fetchImpl ?? globalThis.fetch;
+  const fetchImpl = createBoundedFetch(rawFetch, config.requestTimeoutMs);
   const now = adapters.now ?? (() => Date.now());
   const sleep =
     adapters.sleep ??
@@ -405,15 +403,18 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
     auth = Object.freeze({
       creatorA: await resolveDeployedAcceptanceAccount(config.auth.creatorA, {
         baseURL: config.baseURL,
-        fetchImpl,
+        fetchImpl: rawFetch,
+        timeoutMs: config.requestTimeoutMs,
       }),
       creatorB: await resolveDeployedAcceptanceAccount(config.auth.creatorB, {
         baseURL: config.baseURL,
-        fetchImpl,
+        fetchImpl: rawFetch,
+        timeoutMs: config.requestTimeoutMs,
       }),
       admin: await resolveDeployedAcceptanceAccount(config.auth.admin, {
         baseURL: config.baseURL,
-        fetchImpl,
+        fetchImpl: rawFetch,
+        timeoutMs: config.requestTimeoutMs,
       }),
     });
 
