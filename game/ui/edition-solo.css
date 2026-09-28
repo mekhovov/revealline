@@ -73,3 +73,97 @@ body[data-edition-id] #shell-home {
   gap: 8px;
   margin-block: 12px;
 }
+/* Discovery feedback never resizes or interrupts the simulation board. */
+.completion-reward-result {
+  margin-block: 1rem;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+  border-inline-start: 3px solid var(--brand-primary, #74c9ff);
+  border-radius: 0.9rem;
+  text-align: start;
+}
+.completion-reward-result h3,
+.completion-reward-result p {
+  margin-block: 0 0.55rem;
+}
+.completion-reward-result .button {
+  margin-inline-end: 0.5rem;
+}
+.completion-reward-finale {
+  font-size: 0.9em;
+}
+.completion-reward-arrive {
+  animation: discovery-arrive 800ms ease-out both;
+}
+@keyframes discovery-arrive {
+  from {
+    opacity: 0.5;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.completion-reward-result[data-reduced-motion='true'] {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .completion-reward-arrive {
+    animation: none;
+  }
+}
+.completion-reward-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 0.75rem;
+}
+.completion-reward-card {
+  padding: 1rem;
+  border-radius: 0.9rem;
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+}
+.completion-reward-card[data-earned='true'] {
+  border-color: var(--brand-primary, #74c9ff);
+}
+.completion-reward-card h4 {
+  margin-block: 0.5rem;
+}
+.completion-reward-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.completion-reward-dialog {
+  width: min(52rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  box-sizing: border-box;
+  padding: clamp(1rem, 3vw, 2rem);
+  overflow: auto;
+}
+.completion-reward-dialog section {
+  margin-block: 1.5rem;
+}
+.completion-reward-dialog figure {
+  margin: 0;
+}
+.completion-reward-dialog img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+}
+.completion-reward-dialog a,
+.completion-reward-dialog p,
+.completion-reward-dialog code {
+  overflow-wrap: anywhere;
+}
+.completion-reward-dialog > .button {
+  position: sticky;
+  bottom: 0;
+}
+.completion-reward-data label {
+  display: grid;
+  gap: 0.5rem;
+  margin-block: 1rem;
+}
