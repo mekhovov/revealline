@@ -4,6 +4,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { optionalPackageFixture } from '../publishing/optional-package-fixture.mjs';
 const cli = new URL('publish-optional-packages.mjs', import.meta.url).pathname;
 async function fixture(t) {
@@ -22,16 +23,28 @@ async function fixture(t) {
   let nextId = 1;
   for (const [name, bytes] of candidate.files) {
     const id = nextId++;
-    assets.push({ id, name, size: bytes.length, state: 'uploaded' });
+    assets.push({
+      id,
+      name,
+      size: bytes.length,
+      state: 'uploaded',
+      digest: 'sha256:' + createHash('sha256').update(bytes).digest('hex'),
+    });
     responses[`${prefix}/releases/assets/${id}`] = bytes.toString('base64');
   }
   const json = (value) => Buffer.from(JSON.stringify(value)).toString('base64');
   responses[`${prefix}/releases/tags/${candidate.envelope.version}`] = json({
+    id: 101,
     tag_name: candidate.envelope.version,
+    target_commitish: candidate.envelope.sourceRevision,
+    upload_url:
+      'https://uploads.github.com/repos/mekhovov/revealline/releases/101/assets{?name,label}',
     draft: false,
     prerelease: false,
     assets,
   });
+  responses[`${prefix}/releases/101`] =
+    responses[`${prefix}/releases/tags/${candidate.envelope.version}`];
   responses[`${prefix}/commits/tags/${candidate.envelope.version}`] = json({
     sha: candidate.envelope.sourceRevision,
     commit: { tree: { sha: candidate.envelope.sourceTree } },
@@ -47,17 +60,22 @@ async function fixture(t) {
     `#!/usr/bin/env node
 const fs = require('node:fs'); const args = process.argv.slice(2);
 fs.appendFileSync(process.env.OPTIONAL_CALLS, JSON.stringify(args) + '\\n');
-if(args[0] === 'release' && args[1] === 'upload' && process.env.OPTIONAL_ALLOW_UPLOAD === 'test-only') {
+if(args[0] === 'api' && args.includes('--method') && args[args.indexOf('--method')+1] === 'POST' && process.env.OPTIONAL_ALLOW_UPLOAD === 'test-only') {
   const data = JSON.parse(fs.readFileSync(process.env.OPTIONAL_RESPONSES));
-  const prefix = 'repos/mekhovov/revealline', route = prefix + '/releases/tags/' + args[2];
+  const prefix = 'repos/mekhovov/revealline', route = prefix + '/releases/101';
+  const url = new URL(args.find(value=>value.startsWith('https://')));
+  if(url.origin !== 'https://uploads.github.com' || url.pathname !== '/repos/mekhovov/revealline/releases/101/assets')process.exit(93);
   const release = JSON.parse(Buffer.from(data[route], 'base64'));
-  const bytes = fs.readFileSync(args[3]), name = require('node:path').basename(args[3]);
+  const bytes = fs.readFileSync(args[args.indexOf('--input')+1]), name = url.searchParams.get('name');
   if(release.assets.some(row=>row.name === name) || args.includes('--clobber'))process.exit(92);
   const id = 1000 + release.assets.length;
-  release.assets.push({id,name,size:bytes.length,state:'uploaded'});
+  const asset = {id,name,size:bytes.length,state:'uploaded',digest:'sha256:'+require('node:crypto').createHash('sha256').update(bytes).digest('hex')};
+  release.assets.push(asset);
   data[prefix + '/releases/assets/' + id] = bytes.toString('base64');
   data[route] = Buffer.from(JSON.stringify(release)).toString('base64');
+  data[prefix + '/releases/tags/' + release.tag_name] = data[route];
   fs.writeFileSync(process.env.OPTIONAL_RESPONSES, JSON.stringify(data));
+  process.stdout.write(JSON.stringify(asset));
   process.exit(0);
 }
 if(args[0] !== 'api' || args.includes('--method') || args.includes('-X')) process.exit(90);
@@ -176,11 +194,16 @@ test('optional selector remains unchanged after foreign tags, changed downloads 
 
 test('optional upload refuses already published releases without sending any write request', async (t) => {
   const f = await fixture(t);
-  const result = f.run('upload-draft', ['--repository', 'mekhovov/revealline']);
+  const result = f.run('upload-draft', [
+    '--repository',
+    'mekhovov/revealline',
+    '--release-id',
+    '101',
+  ]);
   assert.notEqual(result.status, 0);
-  assert.match(result.stderr, /existing matching draft/);
+  assert.match(result.stderr, /draft identity changed/);
   const calls = (await fs.readFile(f.callsPath, 'utf8')).trim().split('\n').map(JSON.parse);
-  assert.ok(calls.every((args) => args[0] === 'api'));
+  assert.ok(calls.every((args) => args[0] === 'api' && !args.includes('--method')));
 });
 
 test('draft delivery uploads the envelope last, verifies downloaded originals and resumes without replacement', async (t) => {
@@ -190,29 +213,72 @@ test('draft delivery uploads the envelope last, verifies downloaded originals an
   release.draft = true;
   release.assets = [];
   f.responses[route] = Buffer.from(JSON.stringify(release)).toString('base64');
+  f.responses[`${f.prefix}/releases/101`] = f.responses[route];
   await fs.writeFile(f.responsePath, JSON.stringify(f.responses));
-  const result = f.run('upload-draft', ['--repository', 'mekhovov/revealline'], {
-    OPTIONAL_ALLOW_UPLOAD: 'test-only',
-  });
+  const result = f.run(
+    'upload-draft',
+    ['--repository', 'mekhovov/revealline', '--release-id', '101'],
+    {
+      OPTIONAL_ALLOW_UPLOAD: 'test-only',
+    },
+  );
   assert.equal(result.status, 0, result.stderr);
   assert.equal(JSON.parse(result.stdout).status, 'draft-assets-downloaded-and-verified');
   const calls = (await fs.readFile(f.callsPath, 'utf8')).trim().split('\n').map(JSON.parse);
-  const uploads = calls.filter((args) => args[0] === 'release');
+  const uploads = calls.filter((args) => args.includes('--method'));
   assert.equal(uploads.length, f.candidate.files.size);
-  assert.equal(path.basename(uploads.at(-1)[3]), 'optional-packages.json');
-  assert.ok(uploads.every((args) => args[1] === 'upload' && !args.includes('--clobber')));
-  assert.equal(calls.filter((args) => args.includes('-H')).length, f.candidate.files.size);
+  assert.equal(
+    new URL(uploads.at(-1).find((value) => value.startsWith('https://'))).searchParams.get('name'),
+    'optional-packages.json',
+  );
+  assert.ok(
+    uploads.every(
+      (args) => args[0] === 'api' && args.includes('POST') && !args.includes('--clobber'),
+    ),
+  );
+  assert.equal(
+    calls.filter((args) => args.includes('-H') && !args.includes('--method')).length,
+    f.candidate.files.size,
+  );
+  const receiptPath = path.join(f.bundle, 'optional-package-delivery.json');
+  const originalReceipt = await fs.readFile(receiptPath);
+  assert.equal(JSON.parse(originalReceipt).releaseId, 101);
   await fs.writeFile(f.callsPath, '');
-  const resumed = f.run('upload-draft', ['--repository', 'mekhovov/revealline']);
+  const resumed = f.run('upload-draft', [
+    '--repository',
+    'mekhovov/revealline',
+    '--release-id',
+    '101',
+  ]);
   assert.equal(resumed.status, 0, resumed.stderr);
   const resumedCalls = (await fs.readFile(f.callsPath, 'utf8')).trim().split('\n').map(JSON.parse);
-  assert.ok(resumedCalls.every((args) => args[0] === 'api'));
+  assert.ok(resumedCalls.every((args) => args[0] === 'api' && !args.includes('--method')));
+  assert.deepEqual(await fs.readFile(receiptPath), originalReceipt);
   const responses = JSON.parse(await fs.readFile(f.responsePath));
   const published = JSON.parse(Buffer.from(responses[route], 'base64'));
   responses[`${f.prefix}/releases/assets/${published.assets[0].id}`] =
     Buffer.from('tampered').toString('base64');
   await fs.writeFile(f.responsePath, JSON.stringify(responses));
-  const changed = f.run('upload-draft', ['--repository', 'mekhovov/revealline']);
+  const changed = f.run('upload-draft', [
+    '--repository',
+    'mekhovov/revealline',
+    '--release-id',
+    '101',
+  ]);
   assert.notEqual(changed.status, 0);
   assert.match(changed.stderr, /Downloaded optional artifact differs/);
+});
+
+test('optional delivery requires an explicit canonical positive release ID before any network access', async (t) => {
+  const f = await fixture(t);
+  for (const value of [null, '0', '-1', '1.1', '001', '9007199254740992']) {
+    const result = f.run('upload-draft', [
+      '--repository',
+      'mekhovov/revealline',
+      ...(value === null ? [] : ['--release-id', value]),
+    ]);
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /explicit positive --release-id/);
+  }
+  assert.equal(await fs.readFile(f.callsPath, 'utf8'), '');
 });
