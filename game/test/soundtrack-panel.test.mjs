@@ -2310,7 +2310,20 @@ test('verified external recording installs exact bytes as a draft and saves besi
   );
   await app.click(`online-install-${sha256}`);
   assert.equal((await app.store.read()).assets.length, 0, 'verified download stays a draft');
-  assert.match(app.node('status').textContent, /saved for offline/i);
+  assert.match(app.node('status').textContent, /1 MP3 file verified and added to the draft/);
+  assert.match(app.node('status').textContent, /Save all changes/);
+  assert.doesNotMatch(app.node('status').textContent, /saved for offline/i);
+  await app.click(`online-install-${sha256}`);
+  assert.equal((await app.store.read()).assets.length, 0, 'duplicate download is still unsaved');
+  assert.match(app.node('status').textContent, /added to the draft/);
+  assert.doesNotMatch(app.node('status').textContent, /saved for offline/i);
+  assert.equal(requests.filter(([url]) => url === externalURL).length, 1);
+  await app.click('reload');
+  assert.equal((await app.store.read()).assets.length, 0, 'reload cannot recover an unsaved draft');
+  assert.equal((await app.store.read()).library.tracks.length, 0);
+  await app.click(`online-install-${sha256}`);
+  assert.equal(requests.filter(([url]) => url === externalURL).length, 2);
+  assert.match(app.node('status').textContent, /added to the draft/);
   const download = requests.find(([url]) => url === externalURL);
   assert.deepEqual(download[1].headers, { Range: `bytes=0-${audio.byteLength - 1}` });
   assert.equal(download[1].credentials, 'omit');
@@ -2324,6 +2337,18 @@ test('verified external recording installs exact bytes as a draft and saves besi
   assert.equal(saved.library.tracks.length, 1);
   assert.equal(saved.library.tracks[0].title, 'External Song');
   assert.equal(saved.library.tracks[0].artist, 'Signal Artist');
+  await app.click('reload');
+  const reloaded = await app.store.read();
+  assert.deepEqual(new Uint8Array(await reloaded.assets[0].blob.arrayBuffer()), audio);
+  assert.equal(reloaded.library.tracks[0].title, 'External Song');
+  await app.click(`online-install-${sha256}`);
+  assert.equal(
+    requests.filter(([url]) => url === externalURL).length,
+    2,
+    'saved duplicate never downloads again',
+  );
+  assert.match(app.node('status').textContent, /saved for offline/i);
+  assert.equal((await app.store.read()).assets.length, 1);
 });
 
 test('public archive refresh discovers newly published recordings without game changes', async (t) => {

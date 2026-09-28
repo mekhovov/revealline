@@ -1853,7 +1853,11 @@ export function attachSoundtrackPanel({
     return task(t('interface:verifyingTheAudioOriginal'), async (signal) => {
       if (!saved) throw new Error(t('interface:loadTheLocalLibraryBeforeImporting'));
       if (assets.some((asset) => asset.sha256 === track.sha256)) {
-        setStatus(t('interface:recordingsSavedOfflinePreferencesUnchanged'));
+        setStatus(
+          saved.assets.some((asset) => asset.sha256 === track.sha256)
+            ? localizedMessage('interface:recordingsSavedOfflinePreferencesUnchanged')
+            : localizedMessage('interface:soundtrack.filesImported', { count: 1 }),
+        );
         return;
       }
       if (draft.tracks.length + BUILTIN_SOUNDTRACK_TRACKS.length >= SOUNDTRACK_LIMITS.tracks)
@@ -1891,7 +1895,7 @@ export function attachSoundtrackPanel({
       dirty = true;
       invalidateBackup();
       render({ trackId: imported.track.id });
-      setStatus(t('interface:recordingsSavedOfflinePreferencesUnchanged'));
+      setStatus(localizedMessage('interface:soundtrack.filesImported', { count: 1 }));
     });
   }
   async function loadOnlineCatalogue(force = false) {
