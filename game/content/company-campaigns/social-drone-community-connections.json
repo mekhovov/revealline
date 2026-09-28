@@ -1,0 +1,630 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [
+    {
+      "alt": "An original fictional community workshop with notebooks, unpowered hobby quad frames and warm evening light.",
+      "bytes": 1043972,
+      "format": "AssetRevisionV1",
+      "height": 640,
+      "id": "social-drone-ua-home-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/social-drone-ua-home-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185",
+      "width": 960
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 3,
+      "discovery": {
+        "exhibitLayout": "mosaic",
+        "finaleRewardRef": { "id": "social-drone-community-connections-finale", "revision": "1" }
+      },
+      "format": "CampaignDesignV1",
+      "id": "social-drone-community-connections",
+      "missionIds": [
+        "social-drone-community-connections-01",
+        "social-drone-community-connections-02",
+        "social-drone-community-connections-03",
+        "social-drone-community-connections-04",
+        "social-drone-community-connections-05",
+        "social-drone-community-connections-06"
+      ],
+      "name": "Community Connections",
+      "revision": "1"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "social-drone-community-connections",
+  "maps": [
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 11, "x": 15, "y": 10 },
+        { "h": 4, "w": 15, "x": 27, "y": 21 }
+      ],
+      "height": 36,
+      "id": "social-drone-community-connections-01-map",
+      "name": "One Shared Brief",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 20.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [{ "h": 14, "w": 2, "x": 44, "y": 10 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 12, "x": 30, "y": 8 },
+        { "h": 4, "w": 13, "x": 31, "y": 24 },
+        { "h": 4, "w": 7, "x": 8, "y": 22 }
+      ],
+      "height": 36,
+      "id": "social-drone-community-connections-02-map",
+      "name": "Count What Is Here",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 10, "x": 20, "y": 16 },
+        { "h": 2, "w": 10, "x": 47, "y": 16 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 9, "x": 11, "y": 21 },
+        { "h": 5, "w": 10, "x": 31, "y": 13 },
+        { "h": 4, "w": 8, "x": 54, "y": 8 }
+      ],
+      "height": 36,
+      "id": "social-drone-community-connections-03-map",
+      "name": "The Next Reader",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 11, "w": 2, "x": 23, "y": 8 },
+        { "h": 12, "w": 2, "x": 47, "y": 17 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 7, "w": 21, "x": 25, "y": 13 },
+        { "h": 4, "w": 8, "x": 10, "y": 24 }
+      ],
+      "height": 36,
+      "id": "social-drone-community-connections-04-map",
+      "name": "An Invitation That Helps",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 13, "x": 14, "y": 8 },
+        { "h": 2, "w": 13, "x": 47, "y": 27 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 10, "x": 12, "y": 12 },
+        { "h": 4, "w": 13, "x": 42, "y": 12 },
+        { "h": 4, "w": 13, "x": 27, "y": 26 }
+      ],
+      "height": 36,
+      "id": "social-drone-community-connections-05-map",
+      "name": "Describe the Important Part",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 17.5, "y": 0.5 }],
+      "terrain": [{ "h": 3, "id": "slow-1", "kind": "slow", "w": 16, "x": 27, "y": 19 }],
+      "walls": [
+        { "h": 9, "w": 3, "x": 32, "y": 9 },
+        { "h": 2, "w": 11, "x": 48, "y": 23 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 7, "w": 13, "x": 29, "y": 12 },
+        { "h": 4, "w": 9, "x": 11, "y": 25 },
+        { "h": 4, "w": 8, "x": 53, "y": 7 },
+        { "h": 4, "w": 8, "x": 33, "y": 26 }
+      ],
+      "height": 36,
+      "id": "social-drone-community-connections-06-map",
+      "name": "Keep the Story Accurate",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 12, "w": 2, "x": 19, "y": 11 },
+        { "h": 12, "w": 2, "x": 51, "y": 17 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 14, "y": 10 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 26.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.554,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "difficulty": {
+          "band": 3,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 3,
+          "planning": 3,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["frontier-patrol"],
+        "lesson": "Link the welcome desk and purpose board before exploring the wider community hall. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "An original community science-day hall with a teal welcome desk, a warm amber purpose board and civilian model displays.",
+        "pacingBeat": "discover",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol"
+        ],
+        "rewardRef": { "id": "social-drone-community-connections-01-discovery", "revision": "1" },
+        "routeDecision": "Take the near briefing island first or build a return around the long welcome terrace. Read the moving boundary before committing to the next connection."
+      },
+      "format": "MissionDesignV1",
+      "id": "social-drone-community-connections-01",
+      "map": { "id": "social-drone-community-connections-01-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "One Shared Brief",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "social-drone-ua-home-picture",
+        "themeId": "social-drone-community-connections-theme"
+      },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 29, "y": 8 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 26.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6040000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "difficulty": {
+          "band": 3,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 3,
+          "planning": 3,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Connect the reading tables and distinguish an expected set from an actual count. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "A fictional library preparation room with two booklet stacks, count cards and a central teal return shelf.",
+        "pacingBeat": "choose",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol"
+        ],
+        "rewardRef": { "id": "social-drone-community-connections-02-discovery", "revision": "1" },
+        "routeDecision": "Choose the upper booklet bay or the lower count desk, then join them through the middle shelf. Read the moving boundary before committing to the next connection."
+      },
+      "format": "MissionDesignV1",
+      "id": "social-drone-community-connections-02",
+      "map": { "id": "social-drone-community-connections-02-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Count What Is Here",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "social-drone-ua-home-picture",
+        "themeId": "social-drone-community-connections-theme"
+      },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 10, "y": 21 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 26.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6340000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "difficulty": {
+          "band": 3,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 3,
+          "planning": 3,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Join the handoff alcoves and leave the next person a clear route. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "An original teal handoff gallery with three display labels, a separate source alcove and a warm-lit shared table.",
+        "pacingBeat": "combine",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol"
+        ],
+        "rewardRef": { "id": "social-drone-community-connections-03-discovery", "revision": "1" },
+        "routeDecision": "Join the small source alcove before crossing between the two larger handoff desks. Read the moving boundary before committing to the next connection."
+      },
+      "format": "MissionDesignV1",
+      "id": "social-drone-community-connections-03",
+      "map": { "id": "social-drone-community-connections-03-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "The Next Reader",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "social-drone-ua-home-picture",
+        "themeId": "social-drone-community-connections-theme"
+      },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 24, "y": 13 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 28.5
+        },
+        {
+          "heading": [0, 1],
+          "id": "sleeping-backlog",
+          "role": "reclaimed-roamer",
+          "tier": "measured",
+          "x": 35.5,
+          "y": 9.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 25.5, "y": 13.5 }],
+      "coverage": 0.5740000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["frontier-patrol", "reclaimed-roamer"],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. A dormant backlog knot wakes only after you reclaim its whole body; leave its warning area before using the new ground.",
+        "difficulty": {
+          "band": 4,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 4,
+          "planning": 4,
+          "threatDensity": 4,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["reclaimed-roamer"],
+        "lesson": "Explore the spacious invitation court and use its sheltered reading terrace. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "A spacious original community library courtyard with a teal reading terrace, amber signboards and multiple visible entrances.",
+        "pacingBeat": "breathe",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol",
+          "reclaimed-roamer"
+        ],
+        "rewardRef": { "id": "social-drone-community-connections-04-discovery", "revision": "1" },
+        "routeDecision": "Use the wide reading terrace to divide the invitation court into two manageable captures. Read the moving boundary before committing to the next connection."
+      },
+      "format": "MissionDesignV1",
+      "id": "social-drone-community-connections-04",
+      "map": { "id": "social-drone-community-connections-04-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "An Invitation That Helps",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "social-drone-ua-home-picture",
+        "themeId": "social-drone-community-connections-theme"
+      },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 11, "y": 12 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 26.5
+        },
+        {
+          "heading": [0, 1],
+          "id": "sleeping-backlog",
+          "role": "reclaimed-roamer",
+          "tier": "measured",
+          "x": 35.5,
+          "y": 9.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 12.5, "y": 12.5 }],
+      "coverage": 0.674,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["frontier-patrol", "reclaimed-roamer"],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. A dormant backlog knot wakes only after you reclaim its whole body; leave its warning area before using the new ground.",
+        "difficulty": {
+          "band": 4,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 4,
+          "planning": 4,
+          "threatDensity": 4,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Connect the image and text galleries while watching the changed frontier. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "An original community communications room with paired image and text displays, teal islands and a long amber lower gallery.",
+        "pacingBeat": "mastery",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol",
+          "reclaimed-roamer"
+        ],
+        "rewardRef": { "id": "social-drone-community-connections-05-discovery", "revision": "1" },
+        "routeDecision": "Connect the text island before the image bay or take the longer lower route around both. Read the moving boundary before committing to the next connection."
+      },
+      "format": "MissionDesignV1",
+      "id": "social-drone-community-connections-05",
+      "map": { "id": "social-drone-community-connections-05-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Describe the Important Part",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "social-drone-ua-home-picture",
+        "themeId": "social-drone-community-connections-theme"
+      },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 28, "y": 12 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 24.5
+        },
+        {
+          "heading": [0, 1],
+          "id": "sleeping-backlog",
+          "role": "reclaimed-roamer",
+          "tier": "measured",
+          "x": 35.5,
+          "y": 9.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 12.5 }],
+      "coverage": 0.7140000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["frontier-patrol", "reclaimed-roamer"],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. A dormant backlog knot wakes only after you reclaim its whole body; leave its warning area before using the new ground.",
+        "difficulty": {
+          "band": 4,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 4,
+          "planning": 4,
+          "threatDensity": 4,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Complete the community noticeboard and connect every remaining update point. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "A completed original community noticeboard plaza joining six illustrated library-science-day contributions with teal and amber paths.",
+        "pacingBeat": "resolve",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol",
+          "reclaimed-roamer"
+        ],
+        "rewardRef": { "id": "social-drone-community-connections-06-discovery", "revision": "1" },
+        "routeDecision": "Choose the central noticeboard first or connect the three update stations before the final crossing. Read the moving boundary before committing to the next connection."
+      },
+      "format": "MissionDesignV1",
+      "id": "social-drone-community-connections-06",
+      "map": { "id": "social-drone-community-connections-06-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Keep the Story Accurate",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "social-drone-ua-home-picture",
+        "themeId": "social-drone-community-connections-theme"
+      },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Community Connections",
+  "packs": [
+    {
+      "campaignIds": ["social-drone-community-connections"],
+      "format": "PackDesignV1",
+      "id": "social-drone-community-connections-pack",
+      "name": "Community Connections",
+      "revision": "1"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "1"
+}

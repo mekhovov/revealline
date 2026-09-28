@@ -1376,5 +1376,57 @@
     "height": 320,
     "alt": "A fictional FPV workshop with a fully framed carbon quadcopter, goggles, camera tray and Ukrainian flag.",
     "review": "candidate"
+  },
+  {
+    "format": "AssetRevisionV1",
+    "id": "ukraine-culture-home-picture",
+    "revision": "1",
+    "kind": "reveal-background",
+    "path": "editions/assets/discovery/ukraine-culture-home-v1.png",
+    "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144",
+    "bytes": 1106859,
+    "width": 960,
+    "height": 640,
+    "alt": "An original fictional textile gallery with suspended linen, separate embroidered samples and warm natural light.",
+    "review": "candidate"
+  },
+  {
+    "format": "AssetRevisionV1",
+    "id": "social-drone-ua-home-picture",
+    "revision": "1",
+    "kind": "reveal-background",
+    "path": "editions/assets/discovery/social-drone-ua-home-v1.png",
+    "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185",
+    "bytes": 1043972,
+    "width": 960,
+    "height": 640,
+    "alt": "An original fictional community workshop with notebooks, unpowered hobby quad frames and warm evening light.",
+    "review": "candidate"
+  },
+  {
+    "format": "AssetRevisionV1",
+    "id": "victory-drones-home-picture",
+    "revision": "1",
+    "kind": "reveal-background",
+    "path": "editions/assets/discovery/victory-drones-home-v1.png",
+    "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3",
+    "bytes": 1150183,
+    "width": 960,
+    "height": 640,
+    "alt": "An original imaginary learning observatory with library islands, glass walkways and an educational aircraft exhibit.",
+    "review": "candidate"
+  },
+  {
+    "format": "AssetRevisionV1",
+    "id": "fpv-learning-home-picture",
+    "revision": "1",
+    "kind": "reveal-background",
+    "path": "editions/assets/discovery/fpv-learning-home-v1.png",
+    "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8",
+    "bytes": 1062590,
+    "width": 960,
+    "height": 640,
+    "alt": "An original fictional component museum with a propeller-free X frame, separate motors and a camera display.",
+    "review": "candidate"
   }
 ]

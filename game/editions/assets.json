@@ -1201,5 +1201,50 @@
     "publication": "public",
     "approved": true,
     "dependencies": []
+  },
+  {
+    "id": "ukraine-culture-home",
+    "path": "game/editions/assets/discovery/ukraine-culture-home-v1.png",
+    "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144",
+    "bytes": 1106859,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-ua-home",
+    "path": "game/editions/assets/discovery/social-drone-ua-home-v1.png",
+    "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185",
+    "bytes": 1043972,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-home",
+    "path": "game/editions/assets/discovery/victory-drones-home-v1.png",
+    "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3",
+    "bytes": 1150183,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-learning-home",
+    "path": "game/editions/assets/discovery/fpv-learning-home-v1.png",
+    "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8",
+    "bytes": 1062590,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "met-degas-ukrainian-dress-436157",
+    "path": "game/editions/assets/discovery/met-degas-436157.jpg",
+    "sha256": "4416b3cd2225bef59671d5bd06a4c73633e27d73a06713dd1d8d336ea1257d11",
+    "bytes": 387825,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
   }
 ]

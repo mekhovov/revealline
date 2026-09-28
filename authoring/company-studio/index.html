@@ -197,6 +197,88 @@
               ></textarea></label
             ><button id="apply-campaign">Compile &amp; apply campaign</button>
             <p id="campaign-summary" class="small"></p>
+            <details>
+              <summary data-i18n="tools:studio.localization.title">Campaign languages</summary>
+              <p data-i18n="tools:studio.localization.help">
+                Edit the selected translation sidecar. Keep its exact English source fields and give
+                edits a new revision. Applying updates the edition revision and SHA-256 pin without
+                changing gameplay.
+              </p>
+              <p id="localization-path" class="path"></p>
+              <label
+                ><span data-i18n="tools:studio.localization.json">Translation JSON</span
+                ><textarea
+                  id="localization-json"
+                  class="code"
+                  rows="16"
+                  spellcheck="false"
+                ></textarea>
+              </label>
+              <button id="apply-localization" data-i18n="tools:studio.localization.apply">
+                Validate and apply translations
+              </button>
+              <button id="preview-localization" data-i18n="tools:studio.localization.preview">
+                Preview both languages
+              </button>
+              <pre id="localization-preview" class="small" aria-live="polite"></pre>
+            </details>
+            <label
+              ><span data-i18n="tools:studio.discovery.mission">Mission discovery design</span
+              ><select id="discovery-mission"></select
+            ></label>
+            <details id="discovery-editor">
+              <summary data-i18n="tools:studio.discovery.title">
+                Discoveries, pacing and campaign exhibits
+              </summary>
+              <p class="note" data-i18n="tools:studio.discovery.companyHelp">
+                Apply rewards in Learning &amp; rewards before binding them here. Previewing never
+                earns player progress.
+              </p>
+
+              <form id="discovery-form">
+                <fieldset id="discovery-tools">
+                  <label
+                    ><span data-i18n="tools:studio.discovery.campaign">Campaign</span
+                    ><select id="discovery-campaign"></select
+                  ></label>
+                  <label
+                    ><span data-i18n="tools:studio.discovery.pacing">Mission beat</span
+                    ><select id="discovery-beat"></select
+                  ></label>
+                  <label
+                    ><span data-i18n="tools:studio.discovery.reward">First-win discovery</span
+                    ><select id="discovery-reward"></select
+                  ></label>
+                  <label
+                    ><span data-i18n="tools:studio.discovery.exhibit">Campaign exhibit layout</span
+                    ><select id="discovery-layout"></select
+                  ></label>
+                  <label
+                    ><span data-i18n="tools:studio.discovery.finale">Campaign finale</span
+                    ><select id="discovery-finale"></select
+                  ></label>
+                  <label
+                    ><span data-i18n="tools:studio.discovery.language">Preview language</span
+                    ><select id="discovery-locale">
+                      <option value="en">English</option>
+                      <option value="uk">Українська</option>
+                    </select></label
+                  >
+                  <button
+                    id="discovery-apply"
+                    type="submit"
+                    data-i18n="tools:studio.discovery.apply"
+                  >
+                    Apply discovery design
+                  </button>
+                  <button id="discovery-show" type="button" data-i18n="tools:studio.discovery.show">
+                    Preview route and exhibit
+                  </button>
+                </fieldset>
+              </form>
+              <p id="discovery-result" class="note" role="status"></p>
+              <div id="discovery-preview" aria-live="polite"></div>
+            </details>
           </div>
         </section>
         <section data-panel="4" hidden>
@@ -243,12 +325,24 @@
                     <option value="">Choose a rule…</option>
                     <option value="mission-win">Win one selected mission</option>
                     <option value="all-missions">Win every mission in this campaign</option>
+                    <option
+                      value="selected-missions"
+                      data-i18n="tools:studio.discovery.selectedMissions"
+                    >
+                      Win an explicit selection of missions
+                    </option>
                   </select></label
                 >
                 <label
                   >Mission for a single-mission reward<select id="reward-mission"></select
                 ></label>
                 <div class="reward-copy-grid">
+                  <fieldset
+                    id="reward-missions"
+                    disabled
+                    aria-label="Required missions"
+                    data-i18n-aria-label="tools:studio.discovery.requiredMissions"
+                  ></fieldset>
                   <fieldset>
                     <legend>English</legend>
                     <label>Title<input id="reward-title-en" maxlength="160" /></label>
