@@ -1,0 +1,81 @@
+{
+  "format": "revealline-discovery-capacity-build-observation.v1",
+  "qualified": false,
+  "sourceRevision": "d64e775db9989a9478f8852a0094a79cbcd86e15",
+  "sourceTree": "4859f4138672eadd6f17016d1261291fa2d7c030",
+  "editionId": "fpv-learning",
+  "version": "v0.142.0",
+  "reproducibleBuilds": 2,
+  "zipMembersVerified": true,
+  "publicEligible": false,
+  "distribution": {
+    "bytes": 32417611,
+    "path": "distribution-fpv-learning.zip",
+    "sha256": "718171ef18d3e4fe6fa21c3a5fae5457f1c026c99770a1319e6988d63212b89d"
+  },
+  "sourceArchive": {
+    "bytes": 32111807,
+    "path": "source-fpv-learning.zip",
+    "sha256": "e9804c87191b2fcfe5e4255f7075d32259a10a6084e1deb4679f5db77d47d948"
+  },
+  "capacityReport": {
+    "path": "capacity-inventory.json",
+    "bytes": 1721,
+    "sha256": "d273aa55082aa3444f6b8b6fbbd55cda53a2961c745353bdf66ef501576a0cdf"
+  },
+  "inputs": {
+    "candidateVerification": {
+      "bytes": 2043,
+      "path": "candidate-verification.json",
+      "sha256": "2e1733f37df434ecebe7ed99efa7814f6958edb4d3adf6ac8e5bcfa7b9d38321"
+    },
+    "envelope": {
+      "bytes": 1834,
+      "path": "editions.json",
+      "sha256": "067817f1e7e0d226e388f1877ff98626b1751badce878288df6f363682e36acb"
+    }
+  },
+  "capacityMetadata": {
+    "files": 5,
+    "bytes": 98801
+  },
+  "editionCapacity": {
+    "contentSha256": "f1b6aebb1dd7bbfb3f00d664c50e0f84ccb51792aa165c9bbb2a703bf774dad9",
+    "id": "fpv-learning",
+    "immutable": {
+      "bytes": 32319419,
+      "files": 677
+    },
+    "immutableAndActiveLauncherBytes": 32332104,
+    "manifest": {
+      "bytes": 92255,
+      "path": "manifest-fpv-learning.json",
+      "sha256": "bc17a8eb41b00ec65b5e67b8bce61e414b87809400dfca9c3d5edbcf0dc08d64"
+    },
+    "stableLauncher": {
+      "bytes": 12685,
+      "currentPointer": {
+        "bytes": 115,
+        "path": "editions/fpv-learning/app/current.json",
+        "sha256": "beb1010270c3231889ce4ebe8ca72dd5357adb1297b025d3c6895bc8d2a104ef"
+      },
+      "files": 6
+    }
+  },
+  "completeHostedOutput": false,
+  "missingComponents": [
+    "Exact future default artifact and generated root routes",
+    "Previously retained edition versions and launcher ownership",
+    "Selected-edition hub including download-only links",
+    "Optional packages, launchers and any other hosted files"
+  ],
+  "validation": {
+    "sourceEligibility": "verified",
+    "exactManifestAndChecksumPacket": true
+  },
+  "limitations": [
+    "One edition compiled twice from this exact clean commit; the complete 18-edition final-head CI remains required.",
+    "Only selected immutable files and the stable launcher are counted; this is not a hosted-fit or promotion receipt.",
+    "No new desktop performance, physical-device, installed-app or rollback claim is attached to these later viewer fixes."
+  ]
+}
