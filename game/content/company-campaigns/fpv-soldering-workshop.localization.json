@@ -6,7 +6,7 @@
     {
       "fields": { "name": { "en": "Soldering Workshop", "uk": "Майстерня паяння" } },
       "id": "fpv-soldering-workshop",
-      "identity": "108da10f3d83739e",
+      "identity": "14f025ea1e3ec7e7",
       "kind": "campaign"
     },
     {
@@ -22,7 +22,7 @@
         "name": { "en": "A Place for the Iron", "uk": "Місце для паяльника" }
       },
       "id": "fpv-soldering-workshop-01",
-      "identity": "3123ffa3cb162800",
+      "identity": "96993aaa3c305e97",
       "kind": "mission"
     },
     {
@@ -38,7 +38,7 @@
         "name": { "en": "Read the Spool", "uk": "Прочитайте котушку" }
       },
       "id": "fpv-soldering-workshop-02",
-      "identity": "360c8960944b289b",
+      "identity": "77070e5b324105bd",
       "kind": "mission"
     },
     {
@@ -54,7 +54,7 @@
         "name": { "en": "Hold the Practice Piece", "uk": "Зафіксуйте навчальну деталь" }
       },
       "id": "fpv-soldering-workshop-03",
-      "identity": "65fe17dcdfcbaae0",
+      "identity": "a7662a1ac5962ab1",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "Where the Heat Goes", "uk": "Куди передається тепло" }
       },
       "id": "fpv-soldering-workshop-04",
-      "identity": "6006838719d1ff0b",
+      "identity": "c8ef50f9ae1a79b7",
       "kind": "mission"
     },
     {
@@ -86,7 +86,7 @@
         "name": { "en": "An Inspection, Not a Guess", "uk": "Огляд, а не здогад" }
       },
       "id": "fpv-soldering-workshop-05",
-      "identity": "1e7b7c8197edcfec",
+      "identity": "f6102c4214af1cc9",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "Know When to Pause", "uk": "Знайте, коли зупинитися" }
       },
       "id": "fpv-soldering-workshop-06",
-      "identity": "bec3e6b1b0c7e6f7",
+      "identity": "d7f94af1bc3e2737",
       "kind": "mission"
     }
   ],

@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-soldering-workshop-key-v1",
-          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+          "assetId": "fpv-soldering-workshop-01-reveal-v1",
+          "sha256": "2b18f1e9ad3c235f775d85e73b58e02354d05abe7d265ba5c6e239a94fce67dc"
         },
         "id": "fpv-soldering-workshop-01-image",
         "locales": {
           "en": {
-            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
+            "alt": "A cold unplugged iron rests in a sturdy holder beside an extraction hood, safety glasses and clear work space.",
             "title": "A Place for the Iron"
           },
           "uk": {
-            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
+            "alt": "Холодний від’єднаний паяльник лежить у міцному тримачі поруч із витяжним кожухом, захисними окулярами та вільним робочим місцем.",
             "title": "Місце для паяльника"
           }
         },
@@ -69,6 +69,50 @@
               }
             ],
             "title": "Місце для паяльника"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Separate the stand, fume-control provision and hand path on the fictional workspace card. Keep this a cold, illustrated planning exercise."
+              ],
+              "title": "Make the distinction: A Place for the Iron"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть підставку, засіб контролю випарів і шлях рук на картці місця. Залишайте вправу плануванням за ілюстрацією без нагрівання."
+              ],
+              "title": "Розрізніть поняття: Місце для паяльника"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Together, find the cold-tool stand and the practice area in the drawing. Discuss why preparation comes before using any real hot tool."
+              ],
+              "title": "Explore together: A Place for the Iron"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом знайдіть підставку холодного інструмента й навчальну зону на малюнку. Обговоріть, чому підготовка передує роботі справжнім гарячим інструментом."
+              ],
+              "title": "Дослідіть разом: Місце для паяльника"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare two fictional workspace drawings. Identify missing evidence about exposure control; a tidy picture does not establish an adequately controlled real workspace."
+              ],
+              "title": "Apply and question: A Place for the Iron"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте два вигадані робочі місця. Визначте відсутні дані про контроль впливу випарів: охайний малюнок не доводить належної організації реального місця."
+              ],
+              "title": "Застосуйте й запитайте: Місце для паяльника"
+            }
           }
         },
         "type": "knowledge"
@@ -146,7 +190,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-soldering-workshop-01", "kind": "mission" }
   },
   {
@@ -164,17 +208,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-soldering-workshop-key-v1",
-          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+          "assetId": "fpv-soldering-workshop-02-reveal-v1",
+          "sha256": "b5d3e5882a7432d542263e12ef1b561db0f1621bb35a38fe86ceee11d33b2b7d"
         },
         "id": "fpv-soldering-workshop-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
+            "alt": "Two neutral spools keep separate blank material records, with a magnifier and an unidentified-material tray between them.",
             "title": "Read the Spool"
           },
           "uk": {
-            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
+            "alt": "Дві нейтральні котушки мають окремі чисті записи матеріалів; між ними — лупа й лоток невизначеного матеріалу.",
             "title": "Прочитайте котушку"
           }
         },
@@ -216,6 +260,50 @@
               }
             ],
             "title": "Прочитайте котушку"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Find material name, supplier guidance and the unknown field. Explain why lead-free does not mean flux fumes need no control."
+              ],
+              "title": "Make the distinction: Read the Spool"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть назву матеріалу, вказівки постачальника й невідоме поле. Чому безсвинцевий матеріал не скасовує потреби контролю випарів флюсу?"
+              ],
+              "title": "Розрізніть поняття: Прочитайте котушку"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Read the fictional material cards together. Put the unlabelled spool in the question group instead of guessing from its colour."
+              ],
+              "title": "Explore together: Read the Spool"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом прочитайте картки вигаданих матеріалів. Відкладіть котушку без етикетки до запитань, не вгадуючи за кольором."
+              ],
+              "title": "Дослідіть разом: Прочитайте котушку"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A different fictional spool has a readable brand but no material identification. What claim remains unsupported, and whose guidance should resolve it?"
+              ],
+              "title": "Apply and question: Read the Spool"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інша вигадана котушка має читабельну марку, але не склад матеріалу. Який висновок не підтверджений і чиї вказівки потрібні?"
+              ],
+              "title": "Застосуйте й запитайте: Прочитайте котушку"
+            }
           }
         },
         "type": "knowledge"
@@ -293,7 +381,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-soldering-workshop-02", "kind": "mission" }
   },
   {
@@ -314,17 +402,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-soldering-workshop-key-v1",
-          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+          "assetId": "fpv-soldering-workshop-03-reveal-v1",
+          "sha256": "bf9e828998b19cb67914fe884dd6f5304bfd4800595b16ce0f55089ed246a699"
         },
         "id": "fpv-soldering-workshop-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
+            "alt": "An inert practice board and metal lead are held steady in a padded bench holder beneath a magnifying lamp.",
             "title": "Hold the Practice Piece"
           },
           "uk": {
-            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
+            "alt": "Неактивну навчальну плату й металевий вивід зафіксовано в м’якому тримачі під лампою-лупою.",
             "title": "Зафіксуйте навчальну деталь"
           }
         },
@@ -360,6 +448,50 @@
             "title": "Зафіксуйте навчальну деталь"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Point to the pad, lead and holder in the inert fixture. Explain why stable placement and visibility are separate preparation questions."
+              ],
+              "title": "Make the distinction: Hold the Practice Piece"
+            },
+            "uk": {
+              "paragraphs": [
+                "Покажіть контактний майданчик, вивід і тримач у неактивному прикладі. Чому стійкість і видимість — окремі питання підготовки?"
+              ],
+              "title": "Розрізніть поняття: Зафіксуйте навчальну деталь"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Compare a loose paper practice piece with one shown in a holder. Which drawing leaves the part easier to inspect together?"
+              ],
+              "title": "Explore together: Hold the Practice Piece"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте вільну паперову навчальну деталь із деталлю в тримачі. Який малюнок полегшує спільний огляд?"
+              ],
+              "title": "Дослідіть разом: Зафіксуйте навчальну деталь"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A second practice drawing changes the holder and hides a contact surface. Describe the inspection information lost; do not invent tool settings."
+              ],
+              "title": "Apply and question: Hold the Practice Piece"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інший навчальний малюнок змінює тримач і приховує контактну поверхню. Опишіть втрачену інформацію для огляду, не вигадуючи налаштувань інструмента."
+              ],
+              "title": "Застосуйте й запитайте: Зафіксуйте навчальну деталь"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -377,7 +509,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-soldering-workshop-03", "kind": "mission" }
   },
   {
@@ -398,17 +530,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-soldering-workshop-key-v1",
-          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+          "assetId": "fpv-soldering-workshop-04-reveal-v1",
+          "sha256": "439b3f8cc0918409669b764f0df5c4646df53df40b144ff716ecf9b53f7e577f"
         },
         "id": "fpv-soldering-workshop-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
+            "alt": "A fictional cutaway separates a practice pad and lead while an amber light ribbon highlights their contact surfaces.",
             "title": "Where the Heat Goes"
           },
           "uk": {
-            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
+            "alt": "Уявний розріз розділяє навчальний майданчик і вивід, а бурштинова стрічка світла виділяє контактні поверхні.",
             "title": "Куди передається тепло"
           }
         },
@@ -444,6 +576,50 @@
             "title": "Куди передається тепло"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Explain which cutaway identifies both pad and lead. Name one part of the real process that a still drawing cannot demonstrate."
+              ],
+              "title": "Make the distinction: Where the Heat Goes"
+            },
+            "uk": {
+              "paragraphs": [
+                "Поясніть, який розріз позначає і майданчик, і вивід. Назвіть частину реального процесу, яку нерухомий малюнок не доводить."
+              ],
+              "title": "Розрізніть поняття: Куди передається тепло"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Together, find the two surfaces in the cutaway. Compare that drawing with a picture that shows only a lump."
+              ],
+              "title": "Explore together: Where the Heat Goes"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом знайдіть дві поверхні на розрізі. Порівняйте його з малюнком, що показує лише грудочку."
+              ],
+              "title": "Дослідіть разом: Куди передається тепло"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Consider a different fictional joint type. Which relationship might still be discussed, and why must the through-hole example not become a universal procedure?"
+              ],
+              "title": "Apply and question: Where the Heat Goes"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розгляньте інший вигаданий тип з’єднання. Який зв’язок можна обговорити й чому приклад наскрізного монтажу не є універсальною процедурою?"
+              ],
+              "title": "Застосуйте й запитайте: Куди передається тепло"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -461,7 +637,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-soldering-workshop-04", "kind": "mission" }
   },
   {
@@ -482,17 +658,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-soldering-workshop-key-v1",
-          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+          "assetId": "fpv-soldering-workshop-05-reveal-v1",
+          "sha256": "678d477a2c747a5bd92415c5002763a63454d041fb24df73537a2c6a61057831"
         },
         "id": "fpv-soldering-workshop-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
+            "alt": "A magnifier compares separate fictional practice specimens showing a metal bridge, an uneven surface and a neutral comparison.",
             "title": "An Inspection, Not a Guess"
           },
           "uk": {
-            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
+            "alt": "Лупа порівнює окремі вигадані навчальні зразки з металевою перемичкою, нерівною поверхнею та нейтральним зразком.",
             "title": "Огляд, а не здогад"
           }
         },
@@ -526,6 +702,50 @@
               }
             ],
             "title": "Огляд, а не здогад"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Describe each drawn sample without calling it electrically sound. Explain why shine alone cannot decide whether a real joint is acceptable."
+              ],
+              "title": "Make the distinction: An Inspection, Not a Guess"
+            },
+            "uk": {
+              "paragraphs": [
+                "Опишіть кожен зразок, не оголошуючи його електрично справним. Чому сам блиск не визначає придатність справжнього з’єднання?"
+              ],
+              "title": "Розрізніть поняття: Огляд, а не здогад"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Point to the visible bridge or gap together. Keep what you see separate from a story about how it happened."
+              ],
+              "title": "Explore together: An Inspection, Not a Guess"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом покажіть видиму перемичку чи проміжок. Відокремте спостереження від історії про те, як це сталося."
+              ],
+              "title": "Дослідіть разом: Огляд, а не здогад"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "An unfamiliar sample looks smooth but its history is missing. Write a bounded observation and an instructor-review question instead of an acceptance verdict."
+              ],
+              "title": "Apply and question: An Inspection, Not a Guess"
+            },
+            "uk": {
+              "paragraphs": [
+                "Незнайомий зразок гладкий, але його історія відсутня. Запишіть обмежене спостереження й питання викладачеві замість висновку про придатність."
+              ],
+              "title": "Застосуйте й запитайте: Огляд, а не здогад"
+            }
           }
         },
         "type": "knowledge"
@@ -603,7 +823,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-soldering-workshop-05", "kind": "mission" }
   },
   {
@@ -624,17 +844,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-soldering-workshop-key-v1",
-          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+          "assetId": "fpv-soldering-workshop-06-reveal-v1",
+          "sha256": "ef4cd4a71bfded876c5063a035d84dafbc59aabfe6da03c6e9701100a353dc67"
         },
         "id": "fpv-soldering-workshop-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
+            "alt": "A quiet review desk holds an inert practice-board exhibit, inspection cards, a pause symbol and a closed handoff notebook.",
             "title": "Know When to Pause"
           },
           "uk": {
-            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
+            "alt": "На тихому столі перевірки стоять неактивна навчальна плата, картки огляду, символ паузи й закритий зошит передачі справ.",
             "title": "Знайте, коли зупинитися"
           }
         },
@@ -670,6 +890,50 @@
             "title": "Знайте, коли зупинитися"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep intermittent indication separate from established cause. Explain why the illustrated next step is to pause and seek instructor guidance."
+              ],
+              "title": "Make the distinction: Know When to Pause"
+            },
+            "uk": {
+              "paragraphs": [
+                "Відокремте нестале показання від встановленої причини. Поясніть, чому наступний крок в ілюстрації — пауза й звернення до викладача."
+              ],
+              "title": "Розрізніть поняття: Знайте, коли зупинитися"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Read the uncertain result card together. Practise saying what is known and asking for help without needing to solve everything now."
+              ],
+              "title": "Explore together: Know When to Pause"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом прочитайте картку невизначеного результату. Скажіть, що відомо, й попросіть допомоги без потреби негайно все вирішити."
+              ],
+              "title": "Дослідіть разом: Знайте, коли зупинитися"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A second fictional record reports one normal reading after an uncertain result. Explain why that observation alone cannot establish lasting reliability."
+              ],
+              "title": "Apply and question: Know When to Pause"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інший вигаданий запис містить одне нормальне показання після невизначеного результату. Чому воно саме не доводить тривалої надійності?"
+              ],
+              "title": "Застосуйте й запитайте: Знайте, коли зупинитися"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -687,7 +951,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-soldering-workshop-06", "kind": "mission" }
   },
   {
@@ -738,17 +1002,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-soldering-workshop-key-v1",
-          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+          "assetId": "fpv-soldering-workshop-01-reveal-v1",
+          "sha256": "2b18f1e9ad3c235f775d85e73b58e02354d05abe7d265ba5c6e239a94fce67dc"
         },
         "id": "fpv-soldering-workshop-01-image",
         "locales": {
           "en": {
-            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
+            "alt": "A cold unplugged iron rests in a sturdy holder beside an extraction hood, safety glasses and clear work space.",
             "title": "A Place for the Iron"
           },
           "uk": {
-            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
+            "alt": "Холодний від’єднаний паяльник лежить у міцному тримачі поруч із витяжним кожухом, захисними окулярами та вільним робочим місцем.",
             "title": "Місце для паяльника"
           }
         },
@@ -756,17 +1020,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-soldering-workshop-key-v1",
-          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+          "assetId": "fpv-soldering-workshop-02-reveal-v1",
+          "sha256": "b5d3e5882a7432d542263e12ef1b561db0f1621bb35a38fe86ceee11d33b2b7d"
         },
         "id": "fpv-soldering-workshop-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
+            "alt": "Two neutral spools keep separate blank material records, with a magnifier and an unidentified-material tray between them.",
             "title": "Read the Spool"
           },
           "uk": {
-            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
+            "alt": "Дві нейтральні котушки мають окремі чисті записи матеріалів; між ними — лупа й лоток невизначеного матеріалу.",
             "title": "Прочитайте котушку"
           }
         },
@@ -774,17 +1038,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-soldering-workshop-key-v1",
-          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+          "assetId": "fpv-soldering-workshop-03-reveal-v1",
+          "sha256": "bf9e828998b19cb67914fe884dd6f5304bfd4800595b16ce0f55089ed246a699"
         },
         "id": "fpv-soldering-workshop-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
+            "alt": "An inert practice board and metal lead are held steady in a padded bench holder beneath a magnifying lamp.",
             "title": "Hold the Practice Piece"
           },
           "uk": {
-            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
+            "alt": "Неактивну навчальну плату й металевий вивід зафіксовано в м’якому тримачі під лампою-лупою.",
             "title": "Зафіксуйте навчальну деталь"
           }
         },
@@ -792,17 +1056,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-soldering-workshop-key-v1",
-          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+          "assetId": "fpv-soldering-workshop-04-reveal-v1",
+          "sha256": "439b3f8cc0918409669b764f0df5c4646df53df40b144ff716ecf9b53f7e577f"
         },
         "id": "fpv-soldering-workshop-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
+            "alt": "A fictional cutaway separates a practice pad and lead while an amber light ribbon highlights their contact surfaces.",
             "title": "Where the Heat Goes"
           },
           "uk": {
-            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
+            "alt": "Уявний розріз розділяє навчальний майданчик і вивід, а бурштинова стрічка світла виділяє контактні поверхні.",
             "title": "Куди передається тепло"
           }
         },
@@ -810,17 +1074,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-soldering-workshop-key-v1",
-          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+          "assetId": "fpv-soldering-workshop-05-reveal-v1",
+          "sha256": "678d477a2c747a5bd92415c5002763a63454d041fb24df73537a2c6a61057831"
         },
         "id": "fpv-soldering-workshop-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
+            "alt": "A magnifier compares separate fictional practice specimens showing a metal bridge, an uneven surface and a neutral comparison.",
             "title": "An Inspection, Not a Guess"
           },
           "uk": {
-            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
+            "alt": "Лупа порівнює окремі вигадані навчальні зразки з металевою перемичкою, нерівною поверхнею та нейтральним зразком.",
             "title": "Огляд, а не здогад"
           }
         },
@@ -828,17 +1092,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-soldering-workshop-key-v1",
-          "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+          "assetId": "fpv-soldering-workshop-06-reveal-v1",
+          "sha256": "ef4cd4a71bfded876c5063a035d84dafbc59aabfe6da03c6e9701100a353dc67"
         },
         "id": "fpv-soldering-workshop-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
+            "alt": "A quiet review desk holds an inert practice-board exhibit, inspection cards, a pause symbol and a closed handoff notebook.",
             "title": "Know When to Pause"
           },
           "uk": {
-            "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
+            "alt": "На тихому столі перевірки стоять неактивна навчальна плата, картки огляду, символ паузи й закритий зошит передачі справ.",
             "title": "Знайте, коли зупинитися"
           }
         },
@@ -909,7 +1173,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-soldering-workshop", "kind": "campaign" }
   }
 ]
