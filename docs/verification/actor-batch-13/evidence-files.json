@@ -31,8 +31,8 @@
   },
   {
     "path": "lint.log",
-    "bytes": 167,
-    "sha256": "e370760101251ff05f1cd882320d73cd50099f4b574ab292d4da3e38b10d74f5"
+    "bytes": 166,
+    "sha256": "2332746d8c32d876c776d93502d4771ce1b9738bc5bc423391540941a0ddd95a"
   },
   {
     "path": "missing-section-red.tap",
