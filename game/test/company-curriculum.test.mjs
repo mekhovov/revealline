@@ -252,6 +252,9 @@ test('all 108 missions have distinct admitted art and selected public dependenci
         'social-community-listening-thanks-uk',
       ],
       'ukraine-threads': [
+        'textile-light-diffuse-v1',
+        'textile-light-left-v1',
+        'textile-light-right-v1',
         'met-degas-ukrainian-dress-436157',
         'reference-ukraine-met-shirt-fragment',
       ],
@@ -259,7 +262,16 @@ test('all 108 missions have distinct admitted art and selected public dependenci
         'reference-ukraine-state-flag',
         'reference-ukraine-state-emblem',
       ],
-      'fpv-meet-aircraft': ['reference-fpv-pixhawk-controller', 'reference-fpv-brushless-motor'],
+      'fpv-meet-aircraft': [
+        'fpv-motion-makers-video',
+        'fpv-motion-makers-poster',
+        'fpv-motion-makers-transcript-en',
+        'fpv-motion-makers-transcript-uk',
+        'fpv-motion-makers-captions-en',
+        'fpv-motion-makers-captions-uk',
+        'reference-fpv-pixhawk-controller',
+        'reference-fpv-brushless-motor',
+      ],
       'fpv-soldering-workshop': [
         'reference-fpv-solder-iron',
         'reference-fpv-solder-spool-label',

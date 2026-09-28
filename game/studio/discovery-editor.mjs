@@ -1,3 +1,4 @@
+import { createVideoRewardEditor } from './video-reward-editor.mjs';
 import { createAudioGroupEditor } from './audio-group-editor.mjs';
 import { rewardPresentationItems } from '../rewards/audio-groups.mjs';
 import { createAudioRewardEditor } from './audio-reward-editor.mjs';
@@ -143,6 +144,11 @@ export function createDiscoveryEditor({
     getCompanySource: getCosmeticSource,
     window,
   });
+  const videoHandoff = createVideoRewardEditor({
+    ...sharedEditorOptions,
+    getCompanySource: getCosmeticSource,
+    window,
+  });
   const audioGroups = createAudioGroupEditor({ ...sharedEditorOptions, window });
   const feedback = createCampaignFeedbackEditor({
     container: $('tools'),
@@ -243,6 +249,7 @@ export function createDiscoveryEditor({
     cosmetics.sync();
     assetHandoff.sync();
     audioHandoff.sync();
+    videoHandoff.sync();
     audioGroups.sync();
   }
   function command() {
@@ -372,6 +379,7 @@ export function createDiscoveryEditor({
       cosmetics.dispose();
       assetHandoff.dispose();
       audioHandoff.dispose();
+      videoHandoff.dispose();
       audioGroups.dispose();
       feedback.dispose();
     },
