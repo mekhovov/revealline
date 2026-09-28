@@ -1,0 +1,379 @@
+{
+  "id": "fpv-meet-aircraft",
+  "levels": [
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "field-gap",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        }
+      ],
+      "foundations": [{ "h": 6, "w": 16, "x": 26, "y": 12 }],
+      "goal": { "coverage": 0.48 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 33.5, "y": 0.5 }],
+      "height": 36,
+      "id": "fpv-meet-aircraft-01",
+      "name": "The Frame",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 14.5, "y": 8.5 }],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 33.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "field-gap",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 10, "x": 14, "y": 9 },
+        { "h": 4, "w": 10, "x": 46, "y": 9 },
+        { "h": 4, "w": 10, "x": 14, "y": 23 },
+        { "h": 4, "w": 10, "x": 46, "y": 23 }
+      ],
+      "goal": { "coverage": 0.53 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 18.5, "y": 0.5 }],
+      "height": 36,
+      "id": "fpv-meet-aircraft-02",
+      "name": "Motion Makers",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 15.5, "y": 8.5 }],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 18.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [{ "h": 5, "w": 3, "x": 34, "y": 15 }],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "field-gap",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "second-gap",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 12.5,
+          "y": 27.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 10, "x": 12, "y": 21 },
+        { "h": 4, "w": 11, "x": 45, "y": 12 }
+      ],
+      "goal": { "coverage": 0.56 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 16.5, "y": 0.5 }],
+      "height": 36,
+      "id": "fpv-meet-aircraft-03",
+      "name": "The ESC",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 16.5, "y": 8.5 }],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 16.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 2, "w": 14, "x": 19, "y": 9 },
+        { "h": 2, "w": 14, "x": 41, "y": 24 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 27.5, "y": 9.5 }],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "field-gap",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-interference",
+          "speed": 2.52,
+          "type": "border-patrol",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 17, "x": 27, "y": 9 },
+        { "h": 5, "w": 9, "x": 31, "y": 20 }
+      ],
+      "goal": { "coverage": 0.5 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 35.5, "y": 0.5 }],
+      "height": 36,
+      "id": "fpv-meet-aircraft-04",
+      "name": "The Flight Controller",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 17.5, "y": 8.5 }],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 35.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 13, "w": 2, "x": 20, "y": 12 },
+        { "h": 13, "w": 2, "x": 50, "y": 12 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 14.5, "y": 14.5 }],
+        "terrain": [{ "h": 5, "id": "slow-1", "kind": "slow", "w": 3, "x": 28, "y": 10 }],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "field-gap",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-interference",
+          "speed": 2.52,
+          "type": "border-patrol",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "foundations": [
+        { "h": 5, "w": 12, "x": 14, "y": 14 },
+        { "h": 5, "w": 12, "x": 46, "y": 14 },
+        { "h": 3, "w": 9, "x": 31, "y": 18 }
+      ],
+      "goal": { "coverage": 0.6 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 19.5, "y": 0.5 }],
+      "height": 36,
+      "id": "fpv-meet-aircraft-05",
+      "name": "Two Different Links",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 18.5, "y": 8.5 }],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 19.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 7, "w": 3, "x": 34, "y": 8 },
+        { "h": 5, "w": 3, "x": 34, "y": 24 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 11.5 }],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "field-gap",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "second-gap",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 12.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-interference",
+          "speed": 2.52,
+          "type": "border-patrol",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "foundations": [
+        { "h": 10, "w": 13, "x": 29, "y": 11 },
+        { "h": 4, "w": 10, "x": 9, "y": 24 },
+        { "h": 4, "w": 9, "x": 50, "y": 7 }
+      ],
+      "goal": { "coverage": 0.64 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 35.5, "y": 0.5 }],
+      "height": 36,
+      "id": "fpv-meet-aircraft-06",
+      "name": "The Whole Aircraft",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 19.5, "y": 8.5 }],
+      "revision": "1",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 35.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 2, "w": 9, "x": 16, "y": 13 },
+        { "h": 2, "w": 11, "x": 48, "y": 22 }
+      ],
+      "width": 72
+    }
+  ],
+  "revision": "1",
+  "title": "Meet the Aircraft",
+  "version": "xonix-campaign.v1"
+}
