@@ -42,7 +42,7 @@ function navigationRequest(url) {
   return request;
 }
 
-test('missing bookmarked modes reach core consent, preserve selection, then open only verified bytes', async () => {
+test('explicit offline recovery preserves selection, then opens verified bytes', async () => {
   const entries = [
     ['game/index.html', 'Solo menu'],
     ['game/downloads.html', 'Download confirmation'],
@@ -102,17 +102,12 @@ test('missing bookmarked modes reach core consent, preserve selection, then open
     'game/couch/?journey=whole-spatial-v11&library-mission=opaque-original-owner&return=team&return-token-v2=opaque%2Bvalue',
     scope,
   ).href;
-  const redirected = await h.dispatch('fetch', { request: navigationRequest(original) });
-  assert.equal(redirected.status, 302);
-  const recoveryURL = redirected.headers.get('Location');
-  assert.equal(new URL(recoveryURL).searchParams.get('offline-destination'), original);
+  await assert.rejects(h.dispatch('fetch', { request: navigationRequest(original) }), /outbound/);
+  const recoveryURL = new URL('game/downloads.html', scope);
+  recoveryURL.searchParams.set('offline-destination', original);
   const confirmation = await h.dispatch('fetch', { request: navigationRequest(recoveryURL) });
   assert.equal(await confirmation.text(), 'Download confirmation');
-  assert.deepEqual(
-    h.calls,
-    [],
-    'An offline bookmark loads its confirmation from core without fetching the mode.',
-  );
+  h.calls.length = 0;
   const request = readOfflineDestination({ pageURL: recoveryURL, scope, catalogue, version: '2' });
   const store = createOfficialDownloads({
     caches: h.caches,
@@ -173,36 +168,26 @@ test('missing bookmarked modes reach core consent, preserve selection, then open
   );
 });
 
-test('bookmark recovery never redirects assets, unrelated paths or immutable v1 requests', async () => {
+test('ordinary mode navigation and artwork use the network without download redirects', async () => {
   const paths = ['game/couch/relay-rescue.html', 'game/couch/index.html', 'game/picture.png'];
   const files = paths.map((path) => ({ path, bytes: 4, sha256: digest(path) }));
-  const entries = [['game/downloads.html', 'Consent']];
-  const h = host({ packageConsent: true, downloadFiles: files }, new Map(), { entries });
-  const team = await h.dispatch('fetch', { request: navigationRequest(new URL(paths[0], scope)) });
-  assert.equal(team.status, 302);
-  for (const request of [
-    new Request(new URL(paths[1], scope)),
-    navigationRequest(new URL(paths[2], scope)),
-  ])
-    assert.equal((await h.dispatch('fetch', { request })).status, 409);
+  const h = host({ packageConsent: true, downloadFiles: files });
+  for (const path of paths) {
+    const url = new URL(path, scope).href;
+    h.network.set(url, 'Online content');
+    assert.equal(
+      await (await h.dispatch('fetch', { request: navigationRequest(url) })).text(),
+      'Online content',
+    );
+  }
+  assert.equal(h.writes.length, 0, 'ordinary online requests do not install official packages');
   assert.equal(
-    await h.dispatch('fetch', {
-      request: navigationRequest('https://outside.invalid/game/couch/'),
-    }),
+    await h.dispatch('fetch', { request: navigationRequest('https://outside.invalid/game/') }),
     null,
   );
-  assert.deepEqual(h.calls, []);
-  const legacy = host({ downloadFiles: files }, new Map(), { entries });
-  const url = new URL(paths[0], scope).href;
-  legacy.network.set(url, 'Older edition');
-  assert.equal(
-    await (await legacy.dispatch('fetch', { request: navigationRequest(url) })).text(),
-    'Older edition',
-  );
-  assert.deepEqual(legacy.calls, [url]);
 });
 
-test('a cached Solo shell preflights known archived bootstrap bytes before opening a bookmark', async () => {
+test('a cached Solo shell opens archived bookmarks without requiring an offline bootstrap', async () => {
   const body = '{"id":"whole-spatial-v2","source":{}}';
   const file = {
     path: 'game/content-design/runtime/whole-spatial-v2.json',
@@ -233,11 +218,7 @@ test('a cached Solo shell preflights known archived bootstrap bytes before openi
     scope,
   ).href;
   const missing = await h.dispatch('fetch', { request: navigationRequest(original) });
-  assert.equal(missing.status, 302);
-  assert.equal(
-    new URL(missing.headers.get('Location')).searchParams.get('offline-destination'),
-    original,
-  );
+  assert.equal(await missing.text(), 'Solo shell');
   for (const path of [
     'game/',
     'game/?journey=whole-spatial-v11',
@@ -265,25 +246,26 @@ test('a cached Solo shell preflights known archived bootstrap bytes before openi
     new Response('x'.repeat(file.bytes), { headers: { 'Content-Length': String(file.bytes) } }),
   );
   assert.equal(
-    (await h.dispatch('fetch', { request: navigationRequest(original) })).status,
-    302,
-    'Corrupt same-size bootstrap bytes need repair before host import.',
+    await (await h.dispatch('fetch', { request: navigationRequest(original) })).text(),
+    'Solo shell',
+    'Offline bootstrap readiness does not gate ordinary navigation.',
   );
   assert.deepEqual(h.calls, [], 'Navigation never fetches an unapproved historical runtime.');
 });
 
-test('package editions block unseen artwork before a confirmed downloader request', async () => {
+test('package editions load unseen artwork online without installing it', async () => {
   const body = 'original picture';
   const file = { path: 'game/picture.png', bytes: Buffer.byteLength(body), sha256: digest(body) };
   const h = host({ packageConsent: true, downloadFiles: [file] });
   const url = new URL(file.path, scope).href;
   h.network.set(url, body);
   const blocked = await h.dispatch('fetch', { request: new Request(url) });
-  assert.equal(blocked.status, 409);
-  assert.deepEqual(h.calls, [], 'being online does not authorize an unselected picture download');
+  assert.equal(await blocked.text(), body);
+  assert.deepEqual(h.calls, [url]);
+  assert.equal(h.writes.length, 0, 'online play does not prepare offline downloads');
   const accepted = await h.dispatch('fetch', { request: new Request(url, { cache: 'no-store' }) });
   assert.equal(await accepted.text(), body);
-  assert.deepEqual(h.calls, [url]);
+  assert.deepEqual(h.calls, [url, url]);
 });
 
 test('a downloaded chapter is served locally even when every outbound request fails', async () => {
@@ -303,6 +285,23 @@ test('a downloaded chapter is served locally even when every outbound request fa
   assert.equal(response.status, 200);
   assert.equal(await response.text(), body);
   assert.deepEqual(h.calls, []);
+});
+
+test('denied browser storage cannot block online gameplay assets or the core shell', async () => {
+  const body = 'online picture';
+  const file = { path: 'game/picture.png', bytes: Buffer.byteLength(body), sha256: digest(body) };
+  const h = host({ packageConsent: true, downloadFiles: [file] });
+  const url = new URL(file.path, scope).href;
+  h.network.set(url, body);
+  h.caches.open = async () => {
+    throw new Error('Storage denied');
+  };
+  assert.equal(await (await h.dispatch('fetch', { request: new Request(url) })).text(), body);
+  assert.equal(
+    (await h.dispatch('fetch', { request: navigationRequest(`${scope}game/`) })).status,
+    200,
+  );
+  assert.equal(h.writes.length, 0);
 });
 
 test('explicit verified repair bypasses a same-sized corrupt official cache entry', async () => {
@@ -1275,7 +1274,7 @@ test('asset and marker cache-write failures clean only the partial build and nev
   }
 });
 
-test('repair cache-write failure returns 503 and keeps unrelated verified entries', async () => {
+test('repair cache-write failure still serves verified online bytes and keeps existing entries', async () => {
   let fail = false;
   const h = host({}, new Map(), {
     beforePut: ({ url }) => {
@@ -1289,7 +1288,7 @@ test('repair cache-write failure returns 503 and keeps unrelated verified entrie
   cache.delete(`${scope}game/app.mjs`);
   fail = true;
   const response = await h.dispatch('fetch', { request: new Request(`${scope}game/app.mjs`) });
-  assert.equal(response.status, 503);
+  assert.equal(response.status, 200);
   assert.equal(cache.has(`${scope}game/app.mjs`), false);
   assert.equal(await cache.get(`${scope}game/index.html`).clone().text(), untouched);
   assert.equal(await cache.get(`${scope}.offline-ready`).clone().text(), marker);

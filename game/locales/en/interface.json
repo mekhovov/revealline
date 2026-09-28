@@ -5173,5 +5173,6 @@
   "controller.confirmTrace.waiting": "Waiting for Confirm input…",
   "team.previewPictureButton": "Preview {{mission}}",
   "team.picturePreviewTitle": "{{mission}} · Picture preview",
+  "downloads.ownershipUnreadable": "Download ownership could not be read. Nothing was removed; existing game files and saves are kept.",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }

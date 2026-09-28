@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  createOfflineDownloadAccess,
+  createRequiredOfflineDownloadAccess as createOfflineDownloadAccess,
   isOfflinePackageRequired,
   OFFLINE_PACKAGE_REQUIRED,
 } from '../offline-download-access.mjs';
