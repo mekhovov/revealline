@@ -120,7 +120,9 @@ see [exploration authoring](discovery-exploration.md). Earned discoveries can be
 saved as static printable HTML with exact available pictures, transcripts and sources.
 Author previews are clearly marked and cannot serve as player completion evidence.
 
-**Still pending:** cosmetic reward application, dedicated
+The shared [optional character adapter](discovery-cosmetic-rewards.md) now supports exact registered bodies through Company and Level/Campaign Studio.
+
+**Still pending:** dedicated
 reward controls throughout Asset Studio/Picture Workshop/Soundtrack Studio,
 verified retrieval-practice predicates and simulator rewards. The player/compiler
 gate rejects unsupported payloads and unregistered mastery requirements. Existing
