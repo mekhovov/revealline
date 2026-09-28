@@ -132,8 +132,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-meet-aircraft-01", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-meet-aircraft-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-meet-aircraft-key-v1",
+        "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles."
+        },
+        "uk": {
+          "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -326,8 +340,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "fpv-meet-aircraft-02", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "fpv-meet-aircraft-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-meet-aircraft-key-v1",
+        "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles."
+        },
+        "uk": {
+          "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -454,8 +482,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "fpv-meet-aircraft-03", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "fpv-meet-aircraft-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-meet-aircraft-key-v1",
+        "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles."
+        },
+        "uk": {
+          "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -640,8 +682,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "fpv-meet-aircraft-04", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "fpv-meet-aircraft-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-meet-aircraft-key-v1",
+        "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles."
+        },
+        "uk": {
+          "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -776,8 +832,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "fpv-meet-aircraft-05", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "fpv-meet-aircraft-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-meet-aircraft-key-v1",
+        "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles."
+        },
+        "uk": {
+          "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -928,8 +998,22 @@
         }
       ]
     },
-    "revision": "4",
-    "scope": { "id": "fpv-meet-aircraft-06", "kind": "mission" }
+    "revision": "5",
+    "scope": { "id": "fpv-meet-aircraft-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-meet-aircraft-key-v1",
+        "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles."
+        },
+        "uk": {
+          "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -1394,7 +1478,163 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
+    "scope": { "id": "fpv-meet-aircraft", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-meet-aircraft-key-v1",
+        "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles."
+        },
+        "uk": {
+          "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-meet-aircraft",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-meet-aircraft-application-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Optional: complete the six discoveries and repair the exhibit labels to earn a source-linked annotation card.",
+        "title": "Aircraft atlas: annotated edition"
+      },
+      "uk": {
+        "teaser": "Додатково: завершіть шість відкриттів і виправте підписи експозиції, щоб отримати картку приміток із джерелами.",
+        "title": "Атлас апарата: видання з примітками"
+      }
+    },
+    "payloads": [
+      {
+        "id": "fpv-meet-aircraft-curator-character",
+        "locales": {
+          "en": { "title": "Workshop camera courier" },
+          "uk": { "title": "Кур’єр із камерою для майстерні" }
+        },
+        "recipeId": "reward-fpv-discovery-courier-v1",
+        "recipeRevision": "character-v1-e4320f921c8a9a9d",
+        "type": "cosmetic"
+      },
+      {
+        "id": "fpv-meet-aircraft-application-annotations",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Your fictional exhibit now separates pilot control, video and motor commands. RX carries control information toward the flight controller; camera/VTX serves the video path; ESC receives motor commands and regulates motor power. Several functions can share a real device, so these are roles rather than a universal wiring layout.",
+              "Carry the distinction into another exhibit: a visitor can see a camera view but has no control transmitter. Seeing the view alone does not issue a pilot command. Explain which information path the visitor is using before inferring any ability to control the aircraft.",
+              "This annotation records the verified label exercise, not real-world assembly or flight competence. Revisit the complete aircraft atlas beside it in Collection."
+            ],
+            "sources": [
+              {
+                "title": "Betaflight — About the flight controller",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              },
+              {
+                "title": "Betaflight — Video transmitters",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/vtx"
+              }
+            ],
+            "title": "Aircraft atlas: annotated edition"
+          },
+          "uk": {
+            "paragraphs": [
+              "Ваша вигадана експозиція тепер розрізняє керування пілота, відео й команди двигуна. RX передає інформацію керування до польотного контролера; камера/VTX обслуговує відеошлях; ESC отримує команди двигуна й регулює його живлення. Реальний пристрій може поєднувати кілька функцій: це ролі, а не універсальна схема підключення.",
+              "Перенесіть це розрізнення в іншу експозицію: відвідувач бачить зображення камери, але не має передавача керування. Сам перегляд не надсилає команду пілота. Поясніть, яким інформаційним шляхом користується відвідувач, перш ніж робити висновок про можливість керувати апаратом.",
+              "Ця примітка фіксує перевірену вправу з підписами, а не навички реального складання чи польоту. Поверніться до повного атласу апарата поруч у Колекції."
+            ],
+            "sources": [
+              {
+                "title": "Betaflight — About the flight controller",
+                "url": "https://betaflight.com/docs/wiki/getting-started"
+              },
+              {
+                "title": "Betaflight — ESC firmware",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+              },
+              {
+                "title": "Betaflight — Video transmitters",
+                "url": "https://betaflight.com/docs/wiki/getting-started/hardware/vtx"
+              }
+            ],
+            "title": "Атлас апарата: видання з примітками"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [
+        {
+          "fixtureRevision": "1",
+          "lessonId": "fpv-meet-aircraft-06-lesson",
+          "lessonIdentity": "92c6595055e4bfaa",
+          "lessonRevision": "1",
+          "missionId": "fpv-meet-aircraft-06"
+        }
+      ],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "77730f31e0bcc4c2" },
+            { "difficulty": "standard", "gameplayId": "7feffc97157784af" },
+            { "difficulty": "expert", "gameplayId": "54d3cbffdcc8d294" }
+          ],
+          "missionId": "fpv-meet-aircraft-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6dea20c4da7016bf" },
+            { "difficulty": "standard", "gameplayId": "7ca6f37cdf9a1043" },
+            { "difficulty": "expert", "gameplayId": "296f7dfe12b48ba4" }
+          ],
+          "missionId": "fpv-meet-aircraft-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "753871b2d41a5e63" },
+            { "difficulty": "standard", "gameplayId": "c25ddf14b88d5cdf" },
+            { "difficulty": "expert", "gameplayId": "a427b47a6b0e8b2a" }
+          ],
+          "missionId": "fpv-meet-aircraft-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "52eccf9e0acaf49f" },
+            { "difficulty": "standard", "gameplayId": "b0f28af20bd210d1" },
+            { "difficulty": "expert", "gameplayId": "26f493faf5213868" }
+          ],
+          "missionId": "fpv-meet-aircraft-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "77b5971d130517de" },
+            { "difficulty": "standard", "gameplayId": "8d080836da749019" },
+            { "difficulty": "expert", "gameplayId": "3846a289955023f2" }
+          ],
+          "missionId": "fpv-meet-aircraft-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "92883f2555ed2fcc" },
+            { "difficulty": "standard", "gameplayId": "adbfba396e0b00b4" },
+            { "difficulty": "expert", "gameplayId": "1845994cd790fd5d" }
+          ],
+          "missionId": "fpv-meet-aircraft-06"
+        }
+      ]
+    },
+    "revision": "1",
     "scope": { "id": "fpv-meet-aircraft", "kind": "campaign" }
   }
 ]

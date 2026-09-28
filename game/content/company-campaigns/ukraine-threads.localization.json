@@ -6,14 +6,30 @@
     {
       "fields": { "name": { "en": "Threads Across Ukraine", "uk": "Нитки України" } },
       "id": "ukraine-threads",
-      "identity": "d7168ab4b5de5b8e",
+      "identity": "e405ea1506ee9cdd",
       "kind": "campaign"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+          "uk": "Замкнена лінія відкриває картину й з’єднує точку відкриття. Це не засвідчує реальних навичок і не змінює справжнього обладнання."
+        },
+        "design.counterplay": {
+          "en": "Read the field drifter before leaving safety and return to an interior island when a broad cut becomes risky.",
+          "uk": "Перш ніж залишити безпечну ділянку, простежте за мандрівним ворогом у полі; поверніться до внутрішнього острова, якщо широкий зріз стає ризикованим."
+        },
         "design.lesson": {
           "en": "Reveal the exhibition square and read the record before interpreting its ornament.",
           "uk": "Відкрийте виставкову площу й прочитайте запис перед тлумаченням орнаменту."
+        },
+        "design.mastery": {
+          "en": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+          "uk": "З’єднайте точку відкриття й завершіть місію без втрати життя; пояснення без таймера залишається окремим від аркадного рахунку."
+        },
+        "design.memorableMoment": {
+          "en": "An original warm linen exhibition square with red-and-black textile studies and an open object plinth.",
+          "uk": "Оригінальна виставкова площа в теплих лляних тонах із червоно-чорними текстильними етюдами та відкритим постаментом для предмета."
         },
         "design.routeDecision": {
           "en": "Return through the exhibition plinth or open the wide label gallery first.",
@@ -22,14 +38,30 @@
         "name": { "en": "Read the Cloth", "uk": "Прочитайте тканину" }
       },
       "id": "ukraine-threads-01",
-      "identity": "0d72a9130fc4c5ed",
+      "identity": "41d3934f07da6ada",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+          "uk": "Замкнена лінія відкриває картину й з’єднує точку відкриття. Це не засвідчує реальних навичок і не змінює справжнього обладнання."
+        },
+        "design.counterplay": {
+          "en": "Read the field drifter before leaving safety and return to an interior island when a broad cut becomes risky.",
+          "uk": "Перш ніж залишити безпечну ділянку, простежте за мандрівним ворогом у полі; поверніться до внутрішнього острова, якщо широкий зріз стає ризикованим."
+        },
         "design.lesson": {
           "en": "Connect offset sample aisles and compare a material with a technique.",
           "uk": "З’єднайте зміщені ряди зразків і порівняйте матеріал із технікою."
+        },
+        "design.mastery": {
+          "en": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+          "uk": "З’єднайте точку відкриття й завершіть місію без втрати життя; пояснення без таймера залишається окремим від аркадного рахунку."
+        },
+        "design.memorableMoment": {
+          "en": "An original textile sample gallery with magnified thread textures, offset linen aisles and red stitched paths.",
+          "uk": "Оригінальна галерея текстильних зразків зі збільшеними фактурами ниток, зміщеними лляними проходами та червоними прошитими стежками."
         },
         "design.routeDecision": {
           "en": "Choose the upper sample aisle or connect the two lower plinths before crossing between rows.",
@@ -38,14 +70,30 @@
         "name": { "en": "Stitch Paths", "uk": "Шляхи стібків" }
       },
       "id": "ukraine-threads-02",
-      "identity": "e14a478268d983c9",
+      "identity": "3600f977967cad12",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+          "uk": "Замкнена лінія відкриває картину й з’єднує точку відкриття. Це не засвідчує реальних навичок і не змінює справжнього обладнання."
+        },
+        "design.counterplay": {
+          "en": "Read the field drifter before leaving safety and return to an interior island when a broad cut becomes risky.",
+          "uk": "Перш ніж залишити безпечну ділянку, простежте за мандрівним ворогом у полі; поверніться до внутрішнього острова, якщо широкий зріз стає ризикованим."
+        },
         "design.lesson": {
           "en": "Reveal nested galleries and notice texture as well as colour.",
           "uk": "Відкрийте вкладені галереї й помічайте фактуру поряд із кольором."
+        },
+        "design.mastery": {
+          "en": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+          "uk": "З’єднайте точку відкриття й завершіть місію без втрати життя; пояснення без таймера залишається окремим від аркадного рахунку."
+        },
+        "design.memorableMoment": {
+          "en": "Original ivory textile architecture with angled light revealing raised white threads, openwork and nested exhibition courts.",
+          "uk": "Оригінальна текстильна архітектура кольору слонової кістки: косе світло виявляє рельєф білих ниток, ажур і вкладені виставкові дворики."
         },
         "design.routeDecision": {
           "en": "Use the outer textile ledge before moving into the small inner gallery.",
@@ -54,14 +102,30 @@
         "name": { "en": "White on White", "uk": "Білим по білому" }
       },
       "id": "ukraine-threads-03",
-      "identity": "45f5dd3e6f3a3502",
+      "identity": "d1e246dd6c366067",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+          "uk": "Замкнена лінія відкриває картину й з’єднує точку відкриття. Це не засвідчує реальних навичок і не змінює справжнього обладнання."
+        },
+        "design.counterplay": {
+          "en": "Watch both the field drifter and perimeter patrol; use interior returns to shorten an exposed cut.",
+          "uk": "Стежте за мандрівним ворогом у полі й патрулем периметра; використовуйте внутрішні шляхи повернення, щоб скоротити незахищену лінію."
+        },
         "design.lesson": {
           "en": "Connect two exhibit branches without reducing them to one pattern.",
           "uk": "З’єднайте дві гілки виставки, не зводячи їх до одного візерунка."
+        },
+        "design.mastery": {
+          "en": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+          "uk": "З’єднайте точку відкриття й завершіть місію без втрати життя; пояснення без таймера залишається окремим від аркадного рахунку."
+        },
+        "design.memorableMoment": {
+          "en": "An original Ukrainian textile museum garden with separate linen pavilions joined by a warm reading terrace.",
+          "uk": "Оригінальний сад музею українського текстилю з окремими лляними павільйонами, сполученими теплою читацькою терасою."
         },
         "design.routeDecision": {
           "en": "Explore either exhibit branch first, returning through the wide shared reading terrace.",
@@ -70,14 +134,30 @@
         "name": { "en": "Many Local Voices", "uk": "Розмаїття місцевих голосів" }
       },
       "id": "ukraine-threads-04",
-      "identity": "720697500d858fcd",
+      "identity": "d282a23fc79e6142",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+          "uk": "Замкнена лінія відкриває картину й з’єднує точку відкриття. Це не засвідчує реальних навичок і не змінює справжнього обладнання."
+        },
+        "design.counterplay": {
+          "en": "Watch both the field drifter and perimeter patrol; use interior returns to shorten an exposed cut.",
+          "uk": "Стежте за мандрівним ворогом у полі й патрулем периметра; використовуйте внутрішні шляхи повернення, щоб скоротити незахищену лінію."
+        },
         "design.lesson": {
           "en": "Connect the long exhibition hall and its small provenance alcoves.",
           "uk": "З’єднайте довгу виставкову залу та малі ніші історії предмета."
+        },
+        "design.mastery": {
+          "en": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+          "uk": "З’єднайте точку відкриття й завершіть місію без втрати життя; пояснення без таймера залишається окремим від аркадного рахунку."
+        },
+        "design.memorableMoment": {
+          "en": "An original linen exhibition hall with suspended rushnyk-inspired studies, archival alcoves and soft red accents.",
+          "uk": "Оригінальна лляна виставкова зала з підвішеними етюдами за мотивами рушників, архівними нішами та м’якими червоними акцентами."
         },
         "design.routeDecision": {
           "en": "Use the hall’s side alcoves to shorten exposed crossings toward the far exhibit.",
@@ -86,14 +166,30 @@
         "name": { "en": "A Rushnyk’s Story", "uk": "Історія рушника" }
       },
       "id": "ukraine-threads-05",
-      "identity": "1c23cdd581c9ca31",
+      "identity": "c92f026357c7ca70",
       "kind": "mission"
     },
     {
       "fields": {
+        "design.captureConsequence": {
+          "en": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+          "uk": "Замкнена лінія відкриває картину й з’єднує точку відкриття. Це не засвідчує реальних навичок і не змінює справжнього обладнання."
+        },
+        "design.counterplay": {
+          "en": "Watch both the field drifter and perimeter patrol; use interior returns to shorten an exposed cut.",
+          "uk": "Стежте за мандрівним ворогом у полі й патрулем периметра; використовуйте внутрішні шляхи повернення, щоб скоротити незахищену лінію."
+        },
         "design.lesson": {
           "en": "Join the contemporary design plaza and complete the textile exhibit.",
           "uk": "З’єднайте площу сучасного дизайну й завершіть текстильну виставку."
+        },
+        "design.mastery": {
+          "en": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+          "uk": "З’єднайте точку відкриття й завершіть місію без втрати життя; пояснення без таймера залишається окремим від аркадного рахунку."
+        },
+        "design.memorableMoment": {
+          "en": "An original contemporary textile plaza with linen banners, red-and-black graphic rhythms and an amber festival stage.",
+          "uk": "Оригінальна сучасна текстильна площа з лляними стягами, червоно-чорним графічним ритмом і бурштиновою фестивальною сценою."
         },
         "design.routeDecision": {
           "en": "Connect the central festival platform or take three smaller design islands in sequence.",
@@ -102,7 +198,7 @@
         "name": { "en": "Wear It Today", "uk": "Носіть сьогодні" }
       },
       "id": "ukraine-threads-06",
-      "identity": "43780cce2bac5c94",
+      "identity": "3ab11734e43e3dff",
       "kind": "mission"
     }
   ],

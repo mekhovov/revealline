@@ -124,8 +124,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-drones-ukraine-01", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-drones-ukraine-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drones-ukraine-key-v1",
+        "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards."
+        },
+        "uk": {
+          "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -252,8 +266,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-drones-ukraine-02", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-drones-ukraine-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drones-ukraine-key-v1",
+        "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards."
+        },
+        "uk": {
+          "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -380,8 +408,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-drones-ukraine-03", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-drones-ukraine-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drones-ukraine-key-v1",
+        "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards."
+        },
+        "uk": {
+          "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -510,8 +552,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-drones-ukraine-04", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-drones-ukraine-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drones-ukraine-key-v1",
+        "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards."
+        },
+        "uk": {
+          "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -638,8 +694,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-drones-ukraine-05", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-drones-ukraine-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drones-ukraine-key-v1",
+        "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards."
+        },
+        "uk": {
+          "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -774,8 +844,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-drones-ukraine-06", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-drones-ukraine-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drones-ukraine-key-v1",
+        "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards."
+        },
+        "uk": {
+          "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -996,7 +1080,21 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-drones-ukraine", "kind": "campaign" }
+    "revision": "4",
+    "scope": { "id": "fpv-drones-ukraine", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drones-ukraine-key-v1",
+        "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards."
+        },
+        "uk": {
+          "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів."
+        }
+      }
+    }
   }
 ]

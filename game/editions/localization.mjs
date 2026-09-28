@@ -135,6 +135,11 @@ export function createCampaignLocalization({
       name: locales.uk.name,
       'design.lesson': locales.uk.brief,
       'design.routeDecision': locales.uk.routeDecision,
+      ...Object.fromEntries(
+        ['counterplay', 'captureConsequence', 'memorableMoment', 'mastery']
+          .filter((field) => locales.uk[field] !== undefined)
+          .map((field) => [`design.${field}`, locales.uk[field]]),
+      ),
     });
   }
   return validateCampaignLocalization(

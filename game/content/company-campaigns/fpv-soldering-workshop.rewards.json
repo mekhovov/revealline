@@ -190,8 +190,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-soldering-workshop-01", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-soldering-workshop-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-soldering-workshop-key-v1",
+        "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp."
+        },
+        "uk": {
+          "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -381,8 +395,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-soldering-workshop-02", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-soldering-workshop-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-soldering-workshop-key-v1",
+        "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp."
+        },
+        "uk": {
+          "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -509,8 +537,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-soldering-workshop-03", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-soldering-workshop-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-soldering-workshop-key-v1",
+        "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp."
+        },
+        "uk": {
+          "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -637,8 +679,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-soldering-workshop-04", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-soldering-workshop-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-soldering-workshop-key-v1",
+        "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp."
+        },
+        "uk": {
+          "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -823,8 +879,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-soldering-workshop-05", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-soldering-workshop-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-soldering-workshop-key-v1",
+        "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp."
+        },
+        "uk": {
+          "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -951,8 +1021,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-soldering-workshop-06", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-soldering-workshop-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-soldering-workshop-key-v1",
+        "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp."
+        },
+        "uk": {
+          "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -1173,7 +1257,21 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-soldering-workshop", "kind": "campaign" }
+    "revision": "3",
+    "scope": { "id": "fpv-soldering-workshop", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-soldering-workshop-key-v1",
+        "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp."
+        },
+        "uk": {
+          "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою."
+        }
+      }
+    }
   }
 ]

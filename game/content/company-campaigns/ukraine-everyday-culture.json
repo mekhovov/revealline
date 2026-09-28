@@ -85,7 +85,16 @@
       "band": 11,
       "discovery": {
         "exhibitLayout": "mosaic",
-        "finaleRewardRef": { "id": "ukraine-everyday-culture-finale", "revision": "3" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Another everyday story joins the table."],
+            "uk": ["За столом з’явилася ще одна повсякденна історія."]
+          },
+          "revision": "feedback-b120f53df6ab7685",
+          "victoryMotif": "open-horizon-v1"
+        },
+        "finaleRewardRef": { "id": "ukraine-everyday-culture-finale", "revision": "4" }
       },
       "format": "CampaignDesignV1",
       "id": "ukraine-everyday-culture",
@@ -291,7 +300,7 @@
           "lane-emitter",
           "directional-fields"
         ],
-        "rewardRef": { "id": "ukraine-everyday-culture-01-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-everyday-culture-01-discovery", "revision": "4" },
         "routeDecision": "Take the welcome alcove first or use the marked flow only when it leads to your prepared reading-room return. Choose the flow direction that reaches a return before the next lane pulse."
       },
       "encounter": null,
@@ -360,7 +369,7 @@
           "lane-emitter",
           "directional-fields"
         ],
-        "rewardRef": { "id": "ukraine-everyday-culture-02-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-everyday-culture-02-discovery", "revision": "4" },
         "routeDecision": "Connect the near letter islands for shorter closures or cross the vertical flow after checking its return lane. Choose the flow direction that reaches a return before the next lane pulse."
       },
       "encounter": null,
@@ -429,7 +438,7 @@
           "lane-emitter",
           "directional-fields"
         ],
-        "rewardRef": { "id": "ukraine-everyday-culture-03-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-everyday-culture-03-discovery", "revision": "4" },
         "routeDecision": "Secure the shorter kitchen-story bay or use the flow to reach the far table while keeping a complete return outside the warning lane. Choose the flow direction that reaches a return before the next lane pulse."
       },
       "encounter": null,
@@ -482,7 +491,7 @@
           "travelling-trail-impact",
           "shield-relay-sentinel"
         ],
-        "rewardRef": { "id": "ukraine-everyday-culture-04-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-everyday-culture-04-discovery", "revision": "4" },
         "routeDecision": "Connect the source objective from the broad display foundation or take the outer alcove before approaching the central encounter. Connect the shield relays before committing to the exposed shared core."
       },
       "encounter": {
@@ -541,7 +550,7 @@
           "shield-relay-sentinel",
           "relay-gates"
         ],
-        "rewardRef": { "id": "ukraine-everyday-culture-05-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-everyday-culture-05-discovery", "revision": "4" },
         "routeDecision": "Open the numbered recipe return before the second station or connect both source objectives from separate safe islands. Connect the shield relays before committing to the exposed shared core."
       },
       "encounter": {
@@ -615,7 +624,7 @@
           "relay-gates",
           "directional-fields"
         ],
-        "rewardRef": { "id": "ukraine-everyday-culture-06-discovery", "revision": "3" },
+        "rewardRef": { "id": "ukraine-everyday-culture-06-discovery", "revision": "4" },
         "routeDecision": "Open both numbered returns and follow a safe flow to the final source or keep the longer outer circuit for the closing encounter. Connect the shield relays before committing to the exposed shared core."
       },
       "encounter": {
@@ -654,9 +663,9 @@
       "format": "PackDesignV1",
       "id": "ukraine-everyday-culture-pack",
       "name": "Words, Tables and Everyday Culture",
-      "revision": "3"
+      "revision": "4"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "3"
+  "revision": "4"
 }

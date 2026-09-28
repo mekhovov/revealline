@@ -54,6 +54,7 @@ export function createCandidateVersusHost(
         key: `${mission.id}/${entry.difficulty}`,
         chapter: mission.campaignTitle,
         mission,
+        ...(entry.campaignFeedback ? { campaignFeedback: entry.campaignFeedback } : {}),
         difficulty: entry.difficulty,
         level: entry.campaign.levels[index],
         classes: CLASSES,
