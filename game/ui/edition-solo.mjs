@@ -2,6 +2,7 @@ import { localizedText, t } from '../i18n/index.mjs';
 import { mountEditionNavigation } from './edition-navigation.mjs';
 import { mountEditionLessons } from './edition-lessons.mjs';
 import { mountEditionRewards } from './edition-rewards.mjs';
+import { mountEditionExpedition } from './edition-expedition.mjs';
 import { mountEditionPlayLayout } from './edition-play-layout.mjs';
 import {
   prepareEditionOffline,
@@ -30,6 +31,7 @@ export async function mountEditionSoloUI({
   onEditionChange,
   getSavedPresentation = () => null,
   onPresentationChange,
+  previewSession = null,
 }) {
   const { selection, theme } = provider;
   mountEditionNavigation({ provider, document: doc, href: win.location.href });
@@ -62,6 +64,14 @@ export async function mountEditionSoloUI({
   for (const id of ['shell-title-edition', 'shell-edition'])
     if (doc.getElementById(id)) localizedText(doc.getElementById(id), () => selection.brand.name);
   const home = doc.getElementById('shell-home');
+  const previewNotice = previewSession ? node('p') : null;
+  if (previewNotice) {
+    previewNotice.id = 'edition-studio-preview';
+    previewNotice.className = 'completion-reward-save-note';
+    previewNotice.setAttribute('role', 'status');
+    localizedText(previewNotice, () => t('interface:studioPreview.sessionOnly'));
+    (home.querySelector('.home-content') ?? home).prepend(previewNotice);
+  }
   if (selection.brand.heroAssetId) {
     const hero = node('img');
     hero.id = 'edition-home-art';
@@ -237,6 +247,7 @@ export async function mountEditionSoloUI({
     getRecorder,
     getPictureVisible,
     report,
+    previewSession,
   });
   const rewards = await mountEditionRewards({
     provider,
@@ -249,10 +260,21 @@ export async function mountEditionSoloUI({
     getJourneyRevision,
     getJourneyDurable,
     getReducedMotion,
+    previewSession,
+  });
+  const expedition = mountEditionExpedition({
+    provider,
+    document: doc,
+    window: win,
+    getJourneyProfile,
+    getJourneyRevision,
+    getRewards: () => rewards.snapshot?.(),
   });
   const legacy = node('section');
   try {
-    const raw = (win.localStorage ?? globalThis.localStorage).getItem(provider.legacySessionKey);
+    const raw = (previewSession?.storage ?? win.localStorage ?? globalThis.localStorage).getItem(
+      provider.legacySessionKey,
+    );
     if (raw) {
       const legacyHeading = node('h3'),
         legacyExplanation = node('p');
@@ -280,7 +302,7 @@ export async function mountEditionSoloUI({
   let disposed = false;
   const offline = node('section');
   offline.className = 'edition-offline';
-  if (root.dataset.editionId && version !== 'DEV') {
+  if (!previewSession && root.dataset.editionId && version !== 'DEV') {
     const prepare = node('button'),
       install = node('button'),
       status = node('p');
@@ -340,17 +362,20 @@ export async function mountEditionSoloUI({
     refresh() {
       lessons.refresh();
       rewards.refresh();
+      expedition.refresh();
     },
     pictureReady: lessons.pictureReady,
     dispose() {
       disposed = true;
       lessons.dispose();
       rewards.dispose();
+      expedition.dispose();
       typeof layout === 'function' ? layout() : layout.disconnect?.();
       picker.remove();
       about.remove();
       offline.remove();
       legacy.remove();
+      previewNotice?.remove();
     },
   };
 }
