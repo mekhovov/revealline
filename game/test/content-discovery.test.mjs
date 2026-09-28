@@ -210,7 +210,7 @@ test('the shared discovery editor previews pending choices and applies only afte
   assert.equal(documents.length, 1);
   assert((await documents[0].text()).includes('does not record a player win'));
   assert.equal(writes, 0);
-  node('form').onsubmit({ preventDefault() {} });
+  await node('form').onsubmit({ preventDefault() {} });
   assert.equal(writes, 1);
   assert.equal(source.missions[0].design.pacingBeat, 'choose');
   assert.deepEqual(source.missions[0].design.rewardRef, f.command.rewardRef);

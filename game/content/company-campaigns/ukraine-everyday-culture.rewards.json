@@ -124,8 +124,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-everyday-culture-01", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-everyday-culture-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-everyday-culture-key-v1",
+        "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -252,8 +266,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-everyday-culture-02", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-everyday-culture-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-everyday-culture-key-v1",
+        "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -380,8 +408,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-everyday-culture-03", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-everyday-culture-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-everyday-culture-key-v1",
+        "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -508,8 +550,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-everyday-culture-04", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-everyday-culture-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-everyday-culture-key-v1",
+        "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -636,8 +692,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-everyday-culture-05", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-everyday-culture-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-everyday-culture-key-v1",
+        "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -764,8 +834,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-everyday-culture-06", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-everyday-culture-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-everyday-culture-key-v1",
+        "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -986,7 +1070,21 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-everyday-culture", "kind": "campaign" }
+    "revision": "4",
+    "scope": { "id": "ukraine-everyday-culture", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-everyday-culture-key-v1",
+        "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя."
+        }
+      }
+    }
   }
 ]

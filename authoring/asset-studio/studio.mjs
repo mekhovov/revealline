@@ -6,6 +6,7 @@ import {
   formatNumber,
 } from '../../game/i18n/index.mjs';
 import { assetStudioErrorMessage } from './error-copy.mjs';
+import { mountRewardAssetExport } from '../../game/studio/reward-asset-export.mjs';
 import { createStudioDownload } from './download.mjs';
 import { isTeamPreviewScenarioAvailable } from './team-preview-fixture.mjs';
 import {
@@ -65,6 +66,7 @@ let working = { document: createDefaultThemeBundle(), assets: new Map() },
   saved = working,
   generation = 0,
   storageReady = false;
+let assetHandoffExport = null;
 let selected = working.document.slots[0].id,
   pending = null,
   undo = [],
@@ -320,6 +322,7 @@ function refresh() {
   updateCollectionCount();
 }
 function refreshInspector() {
+  assetHandoffExport?.reset();
   const slot = currentSlot(),
     view = resolved(),
     asset = view.assets[slot.id];
@@ -603,6 +606,20 @@ function fileMime(file) {
   );
 }
 const preparedDownload = createStudioDownload({ document, target: $('prepared-download') });
+assetHandoffExport = mountRewardAssetExport({
+  container: $('asset-history').parentElement,
+  getOriginal() {
+    requireSettled();
+    const asset = resolved().assets[selected];
+    if (!asset?.file) throw new Error(t('tools:fileBytesAreUnavailable'));
+    return {
+      blob: working.assets.get(asset.file.sha256),
+      sha256: asset.file.sha256,
+      mime: asset.file.mime,
+      name: `${asset.id}-${asset.revision}`,
+    };
+  },
+});
 function download(blob, filename) {
   if (!blob) {
     report(new Error(t('tools:fileBytesAreUnavailable')));
@@ -1357,6 +1374,7 @@ $('load-release').onclick = () =>
   });
 window.addEventListener('pagehide', (event) => {
   rememberView();
+  assetHandoffExport?.reset();
   copyRequest++;
   if (event.persisted) {
     operations.cancel();
@@ -1368,6 +1386,7 @@ window.addEventListener('pagehide', (event) => {
   }
   for (const id of ['current-preview', 'draft-preview']) $(id).previewCleanup?.();
   if (!event.persisted) {
+    assetHandoffExport?.dispose();
     auditionLifecycle.dispose();
     studioGuide.dispose();
     interfacePreferences.dispose();

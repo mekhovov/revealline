@@ -169,12 +169,25 @@ export function validateEditionRewardBundle(
         'Reward mastery requires an exact selected Solo Journey mission.',
       );
     }
+    if (reward.teaserImage) {
+      const teaserAsset = assets.find((item) => item.id === reward.teaserImage.asset.assetId);
+      required(teaserAsset, 'Reward teaser is missing from the selected asset closure.');
+      validateRewardMediaAsset(teaserAsset, 'poster');
+    }
     for (const payload of reward.payloads) {
       required(
         COMPLETION_REWARD_PAYLOAD_TYPES.includes(payload.type),
         `Completion reward ${payload.type} needs a registered player viewer before export.`,
       );
-      if (payload.type === 'cosmetic') resolveRewardCosmetic(cosmeticRegistry, payload);
+      if (payload.type === 'cosmetic') {
+        const cosmetic = resolveRewardCosmetic(cosmeticRegistry, payload);
+        if (reward.teaserImage && cosmetic.image)
+          required(
+            reward.teaserImage.asset.assetId !== cosmetic.image.assetId &&
+              reward.teaserImage.asset.sha256 !== cosmetic.image.sha256,
+            'Reward teaser artwork must be separate from its earned cosmetic image.',
+          );
+      }
       for (const { role, reference } of rewardMediaReferences(payload))
         validateRewardMediaAsset(
           assets.find((item) => item.id === reference.assetId),

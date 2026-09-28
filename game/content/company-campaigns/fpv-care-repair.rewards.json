@@ -121,8 +121,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-care-repair-01", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-care-repair-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-care-repair-key-v1",
+        "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+      },
+      "locales": {
+        "en": {
+          "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays."
+        },
+        "uk": {
+          "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -249,8 +263,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-care-repair-02", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-care-repair-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-care-repair-key-v1",
+        "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+      },
+      "locales": {
+        "en": {
+          "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays."
+        },
+        "uk": {
+          "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -374,8 +402,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-care-repair-03", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-care-repair-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-care-repair-key-v1",
+        "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+      },
+      "locales": {
+        "en": {
+          "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays."
+        },
+        "uk": {
+          "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -510,8 +552,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-care-repair-04", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-care-repair-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-care-repair-key-v1",
+        "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+      },
+      "locales": {
+        "en": {
+          "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays."
+        },
+        "uk": {
+          "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -638,8 +694,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-care-repair-05", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-care-repair-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-care-repair-key-v1",
+        "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+      },
+      "locales": {
+        "en": {
+          "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays."
+        },
+        "uk": {
+          "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -766,8 +836,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-care-repair-06", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "fpv-care-repair-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-care-repair-key-v1",
+        "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+      },
+      "locales": {
+        "en": {
+          "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays."
+        },
+        "uk": {
+          "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -988,7 +1072,21 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "fpv-care-repair", "kind": "campaign" }
+    "revision": "4",
+    "scope": { "id": "fpv-care-repair", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-care-repair-key-v1",
+        "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+      },
+      "locales": {
+        "en": {
+          "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays."
+        },
+        "uk": {
+          "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ."
+        }
+      }
+    }
   }
 ]
