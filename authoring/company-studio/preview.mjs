@@ -207,6 +207,7 @@ export async function verifyStudioPreview({
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
       ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+      ...(campaign.localizationPath ? [campaign.localizationPath] : []),
     ]),
   ]);
   for (const path of selectedPaths)

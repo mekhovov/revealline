@@ -6,6 +6,7 @@ import {
   validateEditionRewardBundle,
 } from './project.mjs';
 import { validateCompletionRewards } from '../rewards/model.mjs';
+import { verifyCampaignLocalization } from './localization.mjs';
 import { validateEditionPresentation } from './presets.mjs';
 import {
   freezeEdition,
@@ -139,6 +140,20 @@ export async function loadEditionBootstrap({
     ),
   );
   validateCompletionRewards(Object.values(rewards).flat());
+  const localizations = Object.fromEntries(
+    await Promise.all(
+      selection.campaigns
+        .filter((campaign) => campaign.localizationPath)
+        .map(async (campaign) => [
+          campaign.id,
+          await verifyCampaignLocalization(
+            await read(campaign.localizationPath),
+            sources[selection.campaigns.indexOf(campaign)],
+            campaign,
+          ),
+        ]),
+    ),
+  );
   if (boot)
     validateEditionPresentation({
       catalog,
@@ -165,5 +180,6 @@ export async function loadEditionBootstrap({
     lessons,
     route,
     ...(Object.keys(rewards).length ? { rewards } : {}),
+    ...(Object.keys(localizations).length ? { localizations } : {}),
   });
 }
