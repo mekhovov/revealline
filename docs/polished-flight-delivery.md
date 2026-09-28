@@ -305,3 +305,84 @@ The legacy three-argument installation observer also passes all seven transition
 with its narrower same-payload fixtures. The new observer rejects equal candidate
 versions before loading browser automation. Generated company content verifies
 **186 exports**, and source eligibility verifies **294 admitted assets**.
+
+### Complete archive sizing follow-up
+
+The [clean `440cdb749` inspection](verification/evidence/default-capacity-440cdb749.json)
+measures an exact **1,055,508-byte** reduction from inventory compaction. All
+**2,177 manifest paths** remain; **2,153 files** are byte-identical and the other
+24 are generated catalogue/cache/worker, build information and HTML build-ID
+injections. Content falls to **799,537,169 bytes**, plus a **402,023-byte** manifest.
+However, the existing STORE ZIP writer adds **378,300 bytes** of exact name/header
+overhead, projecting an **800,317,492-byte** archive: still **317,492 bytes** over
+the unchanged archive gate. No large ZIP or public qualification was produced.
+
+The follow-up compacts generated `offline-content.json` at both initial emission
+and final refresh. It retains the same catalogue builder, finalizer, schema,
+records, strings, revisions and download dependencies. The extended real-build
+regression compares against the existing catalogue authority, resolves every group
+through the runtime download reader, and checks exact catalogue hashes in the
+outer manifest and offline cache. All **39 focused checks**, formatting and lint
+pass. The final clean-source inspection must establish complete archive headroom;
+passing the manifest-content bound alone is insufficient.
+
+Both `440cdb749` candidate CI jobs pass, including all eighteen double-built
+editions and both optional packages. The downloaded optional artifact's GitHub
+digest and all twelve original members independently match the local double-built
+pair, with normal admission passing. These results remain pinned to that source.
+The independently checked [small capacity packet](verification/evidence/company-capacity-440cdb749.json)
+puts the same-source default, optional packages and four new editions at a known
+**925,227,325-byte** hosted lower bound. Six editions exceed the 950 MB cap before
+remaining hosting overhead; all eighteen reach **1,377,100,782 bytes**. Four still
+need complete target admission, including root metadata, hubs and retained releases.
+No large archive download, deployment change or cap increase is implied.
+
+### Results and save-validation follow-up
+
+The [CPU diagnostic](verification/evidence/arcade-cpu-attribution-2026-09-29.json)
+attributes avoidable work to repeated campaign geometry normalization and repeated
+UTF-8 encoding during stored reward validation. These sampled stacks explain where
+to optimize; their estimated contributions are not exclusive wall-clock costs.
+The original profiled long tasks remain in the evidence.
+
+Saved-flight lookup now resolves an already-owned compiled campaign directly.
+Dynamic routes still receive fresh identity validation, and catalogue deduplication
+retains its first-entry semantics without repeated nested geometry traversal.
+The real-host regression observes **80 authored map reads before and zero after**
+across twenty pause/continue cycles, with identical restored checkpoints and image
+pins. A separate dynamic-route test checks changed revisions and exact recovery.
+
+JSON validation reuses encoded lengths of repeated short strings within one call,
+bounded to 512 entries. It still validates every external graph, descriptor, byte
+budget, cycle and prototype. It never trusts a previous object's identity or a
+caller-supplied freeze. All **73 focused parser/reward/store/practice checks** pass,
+including Unicode and exact byte-boundary cases. These checks now join regular
+company and practice CI through the parser test file.
+
+The [updated portable fixture observation](verification/evidence/fpv-portability-wrapper-2026-09-29.json)
+includes the changed parser among eight exact source pins. All **26 unchanged
+fixtures** agree across Node, Chrome, Firefox and WebKit, including intermediate
+checkpoints and the two 3,000-tick sequences. Served bytes match Node before and
+after the run. This is source-pinned working-tree numeric evidence; frozen-artifact,
+performance and physical-radio qualification remain separate.
+
+The reusable `scripts/observe-discovery-runtime.mjs` accepts an explicit Playwright
+module, bounded plan and new output directory. It verifies original edition ZIP
+members, manifest/source bindings and the reviewed Frame 01 gameplay identity,
+then uses ordinary keyboard/UI actions. Twenty result/viewer cycles are optional;
+unprofiled timings and CPU/timeline diagnostics are separate modes. Failures and
+exact instrumentation bytes are retained. The server uses minimal no-store/nosniff
+headers; this observation does not claim production cache/CSP equivalence. Its seven
+source/server checks and seventeen existing observer checks pass, and the new test
+joins company CI. Success is finalized only after owned observer, browser and
+server cleanup; cleanup failures and any original measurement error remain recorded.
+
+The follow-up practice suite passes **165 checks**. The broad company run records
+**935 passes and three timeout cancellations** during concurrent local work; all
+three affected cases pass in a subsequent isolated four-check cohort without
+changing their assertions or timeout bounds. The initial report is retained rather
+than relabelled as a clean full-suite run. Compatibility review also corrects old
+host-test session-format literals and waits for actual asynchronous startup.
+All 22 picture-host checks pass; fixture-owned JSON download leases are explicitly
+retired at teardown, with the two export cases rerun successfully. This cleanup
+does not change production download lifetime or gameplay.

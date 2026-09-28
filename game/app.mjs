@@ -4926,8 +4926,8 @@ try {
       location.assign(runtimeContent?.href() ?? new URL('./', location.href).href);
     }
   }
-  function catalog() {
-    const entries = [...installedEntries];
+  function challengeEntries() {
+    const entries = [];
     for (const key of Object.keys(library.campaigns)) {
       const id = key.split('/')[0],
         match = /^route-(\d{4}-\d\d-\d\d)-(daily|calm|expert)$/.exec(id);
@@ -4938,29 +4938,45 @@ try {
         } catch {}
       }
     }
-    const selected = {
+    return entries;
+  }
+  function selectedCatalogEntry() {
+    return {
       ...activeEntry,
       campaign: activeEntry.baseCampaign || activeEntry.campaign,
     };
-    if (!entries.some((e) => campaignKey(e.campaign) === campaignKey(selected.campaign)))
-      entries.push(selected);
-    return entries.filter(
-      (e, i, all) =>
-        all.findIndex((x) => campaignKey(x.campaign) === campaignKey(e.campaign)) === i,
-    );
+  }
+  function catalog() {
+    const entries = new Map();
+    for (const entry of [...installedEntries, ...challengeEntries(), selectedCatalogEntry()]) {
+      const key = campaignKey(entry.campaign);
+      if (!entries.has(key)) entries.set(key, entry);
+    }
+    return [...entries.values()];
   }
   function executionEntries() {
-    // Removed packs keep archived records but cannot resolve a saved flight.
-    return [
-      ...(candidateHost?.entries ?? []),
-      ...executionCatalog.entries,
-      ...catalog().filter(
-        (entry) =>
-          !entry.sourcePackId &&
-          !executionCatalog.find(campaignKey(entry.campaign)) &&
-          /^route-\d{4}-\d\d-\d\d-(daily|calm|expert)$/.test(entry.campaign.id),
-      ),
-    ];
+    // The installed execution catalog already owns immutable normalized entries.
+    // Only dynamic routes need fresh identity validation; removed packs remain
+    // archived records and cannot resolve a saved flight.
+    const routes = new Map();
+    for (const entry of [...challengeEntries(), selectedCatalogEntry()]) {
+      if (
+        entry.sourcePackId ||
+        !/^route-\d{4}-\d\d-\d\d-(daily|calm|expert)$/.test(entry.campaign.id)
+      )
+        continue;
+      const key = campaignKey(entry.campaign);
+      if (!executionCatalog.find(key) && !routes.has(key)) routes.set(key, entry);
+    }
+    return [...(candidateHost?.entries ?? []), ...executionCatalog.entries, ...routes.values()];
+  }
+  function knownExecutionEntry(key) {
+    if (typeof key !== 'string') return null;
+    return (
+      candidateHost?.entries.find(
+        (entry) => candidateHost.owns(entry) && entry.executionKey === key,
+      ) ?? executionCatalog.find(key)
+    );
   }
   function currentSelection(options = {}) {
     if (candidateHost?.owns(activeEntry)) {
@@ -5951,8 +5967,12 @@ try {
   }
   function refreshSavedFlight() {
     const saved = savedAttempt();
-    // No stored attempt (and no practice attempt) can produce this preview.
-    const entries = saved && !practice ? executionEntries() : [];
+    // Preview only the requested identity. Known compiled content must not
+    // rebuild the authored catalog (or unrelated historical challenges).
+    const key = !practice && typeof saved?.campaignKey === 'string' ? saved.campaignKey : null;
+    const known = knownExecutionEntry(key);
+    const metadata = key && !known ? candidateHost?.executionMetadata?.(key) : null;
+    const entries = known ? [known] : key && !metadata ? executionEntries() : [];
     const keyedEntries = entries.map((entry) => ({
       entry,
       campaign: entry.campaign,
@@ -5961,11 +5981,7 @@ try {
           ? entry.executionKey
           : campaignKey(entry.campaign),
     }));
-    const savedEntry = keyedEntries.find((row) => row.key === saved?.campaignKey)?.entry;
-    const metadata =
-      saved && !practice && !savedEntry
-        ? candidateHost?.executionMetadata?.(saved.campaignKey)
-        : null;
+    const savedEntry = keyedEntries.find((row) => row.key === key)?.entry;
     const savedMode = metadata
       ? gameplayDifficultyLabel(metadata.difficulty)
       : difficultyLabel(savedEntry);
@@ -6078,7 +6094,8 @@ try {
     return session;
   }
   function findCampaignEntry(key) {
-    let entry = executionEntries().find((e) => campaignKey(e.campaign) === key);
+    let entry =
+      knownExecutionEntry(key) ?? executionEntries().find((e) => campaignKey(e.campaign) === key);
     if (!entry) {
       const match = /^route-(\d{4}-\d\d-\d\d)-(daily|calm|expert)\//.exec(key || '');
       if (match) {

@@ -14,6 +14,8 @@ import {
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { presentationPicturePins } from '../flight-media-pins.mjs';
+import { ACTOR_SESSION_FORMAT } from '../sessions.mjs';
+import { ACTOR_APPEARANCE_PIN_FORMAT } from '../presentation/actor-appearance-pin.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
@@ -119,6 +121,31 @@ async function pageFor(t, f, options = {}) {
   });
 }
 
+// Native download dialogs keep JSON URLs alive for a minute. These fixtures
+// inspect the exported JSON immediately and explicitly retire their own leases.
+function retireJSONDownloads(t) {
+  const URLImpl = globalThis.URL,
+    create = URLImpl.createObjectURL.bind(URLImpl),
+    revoke = URLImpl.revokeObjectURL.bind(URLImpl),
+    schedule = globalThis.setTimeout,
+    urls = [],
+    timers = [];
+  t.mock.method(URLImpl, 'createObjectURL', (blob) => {
+    const url = create(blob);
+    if (blob.type === 'application/json') urls.push(url);
+    return url;
+  });
+  t.mock.method(globalThis, 'setTimeout', (callback, delay, ...args) => {
+    const timer = schedule(callback, delay, ...args);
+    if (delay === 60000 && new Error().stack.includes('/platform.mjs:')) timers.push(timer);
+    return timer;
+  });
+  t.after(() => {
+    for (const timer of timers) clearTimeout(timer);
+    for (const url of urls) revoke(url);
+  });
+}
+
 for (const policy of ['immediate', 'grid-center'])
   test(`${policy}: real cut saves chosen A; assignment B cannot change Resume, completion receipt or victory`, async (t) => {
     const f = await setup(t),
@@ -128,6 +155,7 @@ for (const policy of ['immediate', 'grid-center'])
       await settle(() => p.doc.body.dataset.pictureState === 'ready');
     }
     p.$('start-button').click();
+    await settle(() => p.doc.body.dataset.flightState === 'running');
     p.key('ArrowDown');
     ticks(p, 13);
     p.key('ArrowDown', false);
@@ -135,7 +163,8 @@ for (const policy of ['immediate', 'grid-center'])
     p.frame(0);
     const saved = JSON.parse(p.storage.getItem(sessionKey)),
       beforeTime = p.rendered.run.time;
-    assert.equal(saved.format, 'xonix-session.v4');
+    assert.equal(saved.format, ACTOR_SESSION_FORMAT);
+    assert.equal(saved.actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
     assert.equal(
       presentationPicturePins(saved.presentationPins).choices.find(
         (x) => x.identity.themeId === 'fpv',
@@ -155,11 +184,13 @@ for (const policy of ['immediate', 'grid-center'])
     assert.equal(verifyReplay(saved.replay).match, true);
     image = p.rendered.backdrop.image;
     p.$('start-button').click();
+    await settle(() => p.doc.body.dataset.flightState === 'running');
     ticks(p, 1);
     assert.equal(p.rendered.backdrop.image, image);
     assert.equal(p.rendered.backdrop.pin.assetId, 'picture-a');
     assert.ok(p.rendered.run.time > beforeTime);
-    for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
+    // Four unchanged fixed steps per render retain the same 900-tick budget.
+    for (let i = 0; i < 225 && p.rendered.run.status !== 'won'; i++) p.frame(1000 / 30);
     assert.equal(p.rendered.run.status, 'won');
     const profile = loadLibrary(p.storage, 'revealline.library.dev.v1', {
       campaigns: [campaign],
@@ -350,9 +381,11 @@ for (const launch of ['start', 'retry', 'restart'])
       joinPad(p, pad);
       if (launch !== 'start') {
         p.$('start-button').click();
+        await settle(() => p.doc.body.dataset.flightState === 'running');
         p.key('ArrowDown');
         if (launch === 'retry') {
-          for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
+          // Four unchanged fixed steps per render retain the same 900-tick budget.
+          for (let i = 0; i < 225 && p.rendered.run.status !== 'won'; i++) p.frame(1000 / 30);
           p.key('ArrowDown', false);
           assert.equal(p.rendered.run.status, 'won');
           await settle(
@@ -445,6 +478,7 @@ test('old v2 saved flight remains legacy even when a current managed assignment 
   const f = await setup(t),
     p = await pageFor(t, f);
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 13);
   p.key('ArrowDown', false);
@@ -452,6 +486,8 @@ test('old v2 saved flight remains legacy even when a current managed assignment 
   const old = JSON.parse(p.storage.getItem(sessionKey));
   old.format = 'xonix-session.v2';
   delete old.presentationPins;
+  delete old.visualThemePin;
+  delete old.actorAppearancePin;
   p.$('library-button').click();
   p.$('save-json').value = JSON.stringify(old);
   p.$('import-save').click();
@@ -460,6 +496,7 @@ test('old v2 saved flight remains legacy even when a current managed assignment 
   assert.equal(p.rendered.backdrop, null);
   assert.equal(p.doc.body.dataset.flightState, 'paused');
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.frame();
   p.$('pause-button').click();
   assert.equal(JSON.parse(p.storage.getItem(sessionKey)).format, 'xonix-session.v2');
@@ -493,6 +530,7 @@ test('a missing saved original cannot adopt a different picture or overwrite the
   const f = await setup(t),
     p = await pageFor(t, f);
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 13);
   p.key('ArrowDown', false);
@@ -554,6 +592,7 @@ test('First Flight keeps legacy artwork and creates no managed or player progres
   const p = await pageFor(t, f, { search: '?course=first-flight&lesson=close-line' });
   const writes = p.storage.writes.length;
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 30);
   p.key('ArrowDown', false);
@@ -568,6 +607,7 @@ test('First Flight keeps legacy artwork and creates no managed or player progres
 test('managed current attempt export and First Flight handoff preserve the exact pinned saved session', async (t) => {
   const f = await setup(t),
     p = await pageFor(t, f);
+  retireJSONDownloads(t);
   let navigation = null;
   p.win.location.assign = (url) => {
     navigation = url;
@@ -575,6 +615,7 @@ test('managed current attempt export and First Flight handoff preserve the exact
   p.change('turn-select', 'grid-center');
   await settle(() => p.doc.body.dataset.pictureState === 'ready');
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 13);
   p.key('ArrowDown', false);
@@ -589,7 +630,8 @@ test('managed current attempt export and First Flight handoff preserve the exact
   p.$('export-session').click();
   await settle(() => p.$('save-json').value.startsWith('{'));
   const exported = JSON.parse(p.$('save-json').value);
-  assert.equal(exported.format, 'xonix-session.v4');
+  assert.equal(exported.format, ACTOR_SESSION_FORMAT);
+  assert.equal(exported.actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
   assert.deepEqual(exported.presentationPins, raw.presentationPins);
   assert.equal(verifyReplay(exported.replay).match, true);
   p.$('library-dialog').close();
@@ -597,7 +639,8 @@ test('managed current attempt export and First Flight handoff preserve the exact
   p.$('first-flight-help-enter').click();
   await settle(() => navigation !== null);
   const retained = JSON.parse(p.storage.getItem(sessionKey));
-  assert.equal(retained.format, 'xonix-session.v4');
+  assert.equal(retained.format, ACTOR_SESSION_FORMAT);
+  assert.equal(retained.actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
   assert.deepEqual(retained.presentationPins, raw.presentationPins);
   assert.deepEqual(retained.continuation, raw.continuation);
   assert.equal(verifyReplay(retained.replay).match, true);
@@ -608,7 +651,9 @@ test('managed current attempt export and First Flight handoff preserve the exact
 test('raw installed campaign plus retained normalized owner can export a complete pinned backup', async (t) => {
   const f = await setup(t),
     p = await pageFor(t, f);
+  retireJSONDownloads(t);
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 13);
   p.key('ArrowDown', false);
@@ -617,7 +662,8 @@ test('raw installed campaign plus retained normalized owner can export a complet
   p.$('export-backup').click();
   await settle(() => p.$('save-json').value.startsWith('{'));
   const backup = JSON.parse(p.$('save-json').value);
-  assert.equal(backup.session.format, 'xonix-session.v4');
+  assert.equal(backup.session.format, ACTOR_SESSION_FORMAT);
+  assert.equal(backup.session.actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
   assert.equal(
     presentationPicturePins(backup.session.presentationPins).choices.find(
       (x) => x.identity.themeId === 'fpv',
