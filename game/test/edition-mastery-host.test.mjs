@@ -13,7 +13,10 @@ import { createRewardBackend } from '../rewards/store.mjs';
 
 test(
   'the actual Solo app accepts the normal winning run before asynchronously granting its configured no-loss discovery',
-  { timeout: 30000 },
+  // CI's concurrent qualification exceeded 30s with 469 separate 120Hz UI
+  // renders. Keep every simulation step, render at an ordinary 60Hz cadence,
+  // and allow the same bounded host budget as the personal-best replay tests.
+  { timeout: 60000 },
   async (t) => {
     const f = await editionProviderFixture(),
       catalog = structuredClone(f.catalog),
@@ -69,10 +72,16 @@ test(
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), authoritativeCheckpoint(expected));
     page.key('ArrowDown');
     let ticks = 0;
-    while (expected.status === 'running' && ticks++ < 1200) {
-      stepRun(expected, { direction: 'down' }, FIXED_DT);
-      page.frame(FIXED_DT * 1000);
+    while (expected.status === 'running' && ticks < 1200) {
+      let frameTicks = 0;
+      while (frameTicks < 2 && expected.status === 'running' && ticks < 1200) {
+        stepRun(expected, { direction: 'down' }, FIXED_DT);
+        ticks++;
+        frameTicks++;
+      }
+      page.frame(FIXED_DT * 1000 * frameTicks);
     }
+    assert.equal(ticks, 469, 'The fixture still executes its complete original winning route.');
     page.key('ArrowDown', false);
     page.frame(0);
     assert.equal(expected.status, 'won');
@@ -86,6 +95,7 @@ test(
     });
     const proof = JSON.parse(storage.getItem(proofKey)).proofs[0];
     const backend = createRewardBackend({ editionId: 'sample-public', indexedDB: disk.indexedDB });
+    t.after(() => backend.close());
     let state;
     for (let attempt = 0; attempt < 100; attempt++) {
       page.frame(0);
