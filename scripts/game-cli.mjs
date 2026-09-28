@@ -506,6 +506,9 @@ export function addPublicEntries(entries, info) {
           (localized
             ? '<p data-i18n-rich="website:page.i18nextNotice">Localization uses i18next under its <a href="./game/vendor/I18NEXT-LICENSE.txt" data-i18n-slot="slot0" data-i18n="website:page.license">MIT license</a>.</p>'
             : '') +
+          (has('game/vendor/QRCODEGEN-LICENSE.txt')
+            ? '<p data-i18n-rich="website:page.qrNotice">Offline QR rewards use Project Nayuki’s QR Code generator 1.8.0 under its <a href="./game/vendor/QRCODEGEN-LICENSE.txt" data-i18n-slot="license">MIT license</a>. Its <a href="./game/vendor/qrcodegen-1.8.0.json" data-i18n-slot="source">source and checksum record</a> is included.</p>'
+            : '') +
           (has(
             'game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3',
           )

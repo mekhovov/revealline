@@ -246,6 +246,8 @@ test('verified bonus save failures stay in the owning modal or named host recove
       });
       h.settings.close();
       h.view.refresh();
+      let rewardUpdates = 0;
+      const stopRewards = h.view.onRewardEvidenceChange(() => rewardUpdates++);
       h.doc.getElementById('edition-lesson-open').click();
       const dialog = h.doc.getElementById('edition-lesson-dialog'),
         status = h.doc.getElementById('edition-lesson-status'),
@@ -261,6 +263,10 @@ test('verified bonus save failures stay in the owning modal or named host recove
       for (let tries = 0; tries < 1000 && !/Export learning/.test(h.reports.at(-1)); tries++)
         await new Promise((resolve) => setTimeout(resolve, 5));
       assert.match(h.reports.at(-1), /complete in this tab.*Export learning/);
+      assert.equal(rewardUpdates, 1);
+      assert.equal(h.view.rewardEvidence().learning.length, 1);
+      assert.deepEqual(h.view.rewardEvidence().durableLearning, []);
+      stopRewards();
       assert.equal(status.getAttribute('role'), 'status');
       if (failure === 'closed-read-only') {
         assert.equal(dialog.open, false);
