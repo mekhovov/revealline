@@ -1,4 +1,5 @@
 import { boundedJSON, dataIdentity, exactKeys, required, stableId } from '../data-json.mjs';
+import { validateKnowledgeProfiles } from './learning-profiles.mjs';
 import { explorationAssetReferences, validateExplorationPayload } from './exploration.mjs';
 
 export const COMPLETION_REWARD_FORMAT = 'revealline-completion-reward.v1';
@@ -71,7 +72,7 @@ function payload(value) {
   }
   const shared = ['id', 'type', 'locales'];
   const fields = {
-    knowledge: [],
+    knowledge: ['profiles'],
     image: ['asset'],
     url: ['url', 'qr'],
     'public-code': ['code', 'issuer', 'termsUrl', 'expiresOn'],
@@ -83,6 +84,7 @@ function payload(value) {
   exactKeys(value, [...shared, ...fields[value.type]], 'reward payload');
   required(stableId(value.id), 'Invalid reward payload ID.');
   if (value.type === 'knowledge') {
+    if (value.profiles !== undefined) validateKnowledgeProfiles(value.profiles);
     locales(value.locales, ['title', 'paragraphs', 'sources'], ['title']);
     for (const locale of Object.values(value.locales)) {
       array(locale.paragraphs, 12, 'knowledge paragraphs', 1);
