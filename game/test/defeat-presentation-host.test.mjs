@@ -1,7 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { setTimeout as delay } from 'node:timers/promises';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
@@ -87,6 +89,9 @@ async function setup(t, { themeId = 'fpv', lives = 1, classic = false, reduced =
   await settle(() => surface.frame.painter.image !== null);
   page.$('reduced-effects').checked = reduced;
   page.$('start-button').click();
+  // Start owns asynchronous picture preparation; steer only after the exact
+  // attempt has replaced the ready briefing state.
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   for (let i = 0; i < (classic ? 292 : 30); i++) page.frame();
   page.key('ArrowDown', false);
@@ -193,6 +198,10 @@ test('controller skip cannot carry held Confirm into Retry', async (t) => {
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   pad.buttons[0] = { pressed: false, value: 0 };
   page.frame(0);
+  // The Confirm lifecycle uses the real performance clock. Observe a full
+  // neutral window before treating the next press as a deliberate Retry.
+  await delay(130);
+  page.frame(0);
   pad.buttons[0] = { pressed: true, value: 1 };
   page.frame(0);
   assert.equal(
@@ -202,10 +211,17 @@ test('controller skip cannot carry held Confirm into Retry', async (t) => {
   );
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   assert.equal(page.$('game-overlay').dataset.kind, 'lost');
-  await settle(() => {
-    page.frame(0);
-    return page.doc.body.dataset.flightState === 'running';
-  });
+  assert.equal(page.$('retry-button').disabled, true);
+  await waitFor(
+    () => {
+      page.frame(0);
+      return page.doc.body.dataset.flightState === 'running';
+    },
+    {
+      timeoutMs: 45000,
+      message: 'Owned Retry preparation did not settle within its finite test bound.',
+    },
+  );
   const retried = page.rendered.run;
   assert.notEqual(retried, run);
   assert.equal(retried.tick, 0);
