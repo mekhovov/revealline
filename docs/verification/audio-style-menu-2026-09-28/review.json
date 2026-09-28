@@ -1,6 +1,6 @@
 {
   "format": "revealline-audio-style-menu-continuation.v1",
-  "reviewedAt": "2026-09-28T15:24:04.863Z",
+  "reviewedAt": "2026-09-28T15:37:03.620074Z",
   "status": "Bounded existing-recipe audio UI and taxonomy continuation. Exact-source CI, frozen/public, listening and physical-device acceptance remain pending.",
   "scope": [
     "audio.focus.field-kit",
@@ -25,7 +25,7 @@
       "orderedInputs": 28,
       "bytes": 1069103,
       "priorSHA256": "d10dcf448002347b200f9886d0a5f3a23789a7f4fb928bccb4884224359cd575",
-      "currentSHA256": "1b1c1e4005dec1f0ae4103031b12a710c0c0d0a0f9a4bbc437b0d9a5a5af37f2",
+      "currentSHA256": "001974ea95a5b3f79046fb232eb1b267cfe3c7579e7eee638f2053a69126d700",
       "algorithm": "SHA256 concatenation of the ordered original source bytes declared by the producer",
       "paths": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs",
       "inputs": [
@@ -85,9 +85,9 @@
         },
         {
           "path": "game/soundtrack-style-taxonomy.mjs",
-          "gitBlob": "2a8abaab0e790400652611e86e1545b1254a88eb",
+          "gitBlob": "fc8f343e54feac30546bfc7fd7708dd1e9df901c",
           "bytes": 2160,
-          "sha256": "3884f56b69bc9b70b72577e601573c4c232cfe71f6869fcd2d052cbc2766b9c6"
+          "sha256": "34dae503ba367d54f2078879c308832cc0ae07ad7533feaec24727a3d591f944"
         },
         {
           "path": "game/soundtrack-rights.mjs",
@@ -212,7 +212,7 @@
   },
   "assessment": {
     "behavior": "Audio settings now expose Previous, Play/Pause and Next first, followed by one-click multi-style selection. Matching public archive recordings join matching built-in and uploaded music automatically.",
-    "taxonomy": "Player-facing families are Synth, Metal, Electronic, Chiptune & 8-bit, Rock, Ambient, Fusion, Other, Ukrainian · UA and ФПВ. UA aliases Ukrainian; only exact Cyrillic ФПВ enters that family; Latin FPV does not.",
+    "taxonomy": "Player-facing families are Synth, Metal, Chiptune & 8-bit, Rock, Electronic, Ambient, Fusion, Other, Ukrainian · UA and ФПВ. UA aliases Ukrainian; only exact Cyrillic ФПВ enters that family; Latin FPV does not.",
     "dependencyClosure": "The audio fingerprint now explicitly includes quick-music-controls.mjs and soundtrack-style-taxonomy.mjs. No procedural recipe, encoded recording, catalogue identity, rights policy or game mechanic changes.",
     "verification": "Focused audio/style/panel/player tests passed 196/196. Localized Audio settings were inspected in the real browser at the current source. Hosted CI, frozen/public, subjective listening and physical-device qualification remain separate."
   }
