@@ -6,6 +6,7 @@ import {
   installOfflineFrameFocused,
 } from '../ui/install-offline-panel.mjs';
 import { captureInstallPrompt, installInstructions } from '../ui/pwa-install.mjs';
+import { setLocale } from '../i18n/index.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
 function setup(options = {}) {
@@ -64,6 +65,28 @@ test('menu remains lightweight until opened; closing restores focus without any 
   h.panel.open();
   assert.equal(h.panel.root()?.open, true);
   h.panel.dispose();
+});
+test('the open chooser and its menu label switch locale without remounting', () => {
+  const h = setup();
+  try {
+    h.panel.open();
+    const root = h.panel.root();
+    assert.equal(root.querySelector('h2').textContent, 'Install & offline play');
+    assert.equal(
+      root.querySelector('iframe').getAttribute('title'),
+      'Offline game and optional soundtrack downloads',
+    );
+    setLocale('uk', { persist: false });
+    assert.equal(root.querySelector('h2').textContent, 'Встановлення та гра офлайн');
+    assert.equal(
+      root.querySelector('iframe').getAttribute('title'),
+      'Офлайн-гра та необов’язкові завантаження саундтреків',
+    );
+    assert.equal(h.panel.label(), 'Встановлення та гра офлайн');
+  } finally {
+    h.panel.dispose();
+    setLocale('en', { persist: false });
+  }
 });
 test('a requested package resolves only for the exact embedded source after verified readiness', async () => {
   const h = setup();
