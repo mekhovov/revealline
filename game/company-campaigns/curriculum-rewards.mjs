@@ -1,10 +1,17 @@
+import {
+  CURRICULUM_REFERENCE_ASSETS,
+  curriculumReferencePayloads,
+} from './curriculum-reference-assets.mjs';
 import { required } from '../data-json.mjs';
 import { CURRICULUM_MISSIONS, CURRICULUM_SOURCES } from './curriculum.mjs';
+import { curriculumPresentationRevision } from './curriculum-presentation-revisions.mjs';
+import { createCurriculumAtlasPayloads } from './curriculum-atlases.mjs';
 const localized = (locales, select) =>
   Object.fromEntries(['en', 'uk'].map((locale) => [locale, select(locales[locale], locale)]));
 
 /** Same reward and receipt authority as the rest of the game. */
 export function createCurriculumRewards({ definition, source, assets, missionBindings }) {
+  const presentationRevision = curriculumPresentationRevision(definition.id);
   const rows = definition.missionIds.map((id) =>
     CURRICULUM_MISSIONS.find((entry) => entry.id === id),
   );
@@ -37,7 +44,15 @@ export function createCurriculumRewards({ definition, source, assets, missionBin
       id: row.id + '-image',
       type: 'image',
       asset: { assetId: descriptor.id, sha256: descriptor.sha256 },
-      locales: localized(row.locales, ({ title, alt }) => ({ title, alt })),
+      locales: localized(row.locales, ({ title, alt }, locale) => ({
+        title,
+        alt:
+          picture.id === `${row.id}-picture`
+            ? alt
+            : locale === 'uk'
+              ? `Оригінальна уявна сцена кампанії «${definition.locales.uk.title}», а не документальне зображення.`
+              : `An original imaginary scene for ${definition.locales.en.title}, not a documentary image.`,
+      })),
     };
   };
   const knowledge = (id, locales, refs) => ({
@@ -52,7 +67,10 @@ export function createCurriculumRewards({ definition, source, assets, missionBin
   const base = (id, scope, locales, missions, payloads) => ({
     format: 'revealline-completion-reward.v1',
     id,
-    revision: '1',
+    revision:
+      scope.kind === 'mission'
+        ? (presentationRevision.missionRewards[scope.id] ?? '1')
+        : presentationRevision.finale,
     brandId: definition.brandId,
     campaignId: definition.id,
     scope,
@@ -66,11 +84,16 @@ export function createCurriculumRewards({ definition, source, assets, missionBin
       { kind: 'mission', id: row.id },
       row.locales,
       [requirements[index]],
-      [imageFor(row), knowledge(row.id + '-knowledge', row.locales, row.refs)],
+      [
+        imageFor(row),
+        knowledge(row.id + '-knowledge', row.locales, row.refs),
+        ...curriculumReferencePayloads(row.id, assets),
+      ],
     ),
   );
   const finalePayloads = [
     knowledge(definition.id + '-guide', definition.locales, [definition.link]),
+    ...createCurriculumAtlasPayloads(definition.id),
     ...rows.map(imageFor),
     {
       id: definition.id + '-official-source',
@@ -85,8 +108,15 @@ export function createCurriculumRewards({ definition, source, assets, missionBin
   for (const assetId of definition.rewardAssetIds) {
     const asset = assets.find((entry) => entry.id === assetId);
     required(asset?.sha256, 'Missing declared curriculum reward asset: ' + assetId);
-    required(assetId === 'met-degas-ukrainian-dress-436157', 'Undeclared source comparison.');
-    finalePayloads.push(...museumComparison(definition.id, asset));
+    if (assetId === 'met-degas-ukrainian-dress-436157')
+      finalePayloads.push(...museumComparison(definition.id, asset));
+    else
+      required(
+        CURRICULUM_REFERENCE_ASSETS.some(
+          (item) => item.id === assetId && definition.missionIds.includes(item.missionId),
+        ),
+        'Undeclared source comparison.',
+      );
   }
   rewards.push(
     base(

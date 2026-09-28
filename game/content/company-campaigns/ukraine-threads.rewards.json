@@ -179,8 +179,8 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-threads-03-art-v1",
+          "sha256": "16b7fcca255f5915b14cadf0bddb3d543df5a214bb881144eff9f8024d6dce70"
         },
         "id": "ukraine-threads-03-image",
         "locales": {
@@ -242,7 +242,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-threads-03", "kind": "mission" }
   },
   {
@@ -552,6 +552,179 @@
         "type": "knowledge"
       },
       {
+        "id": "ukraine-threads-source-atlas",
+        "locales": {
+          "en": {
+            "intro": "Compare the records and choose evidence-backed labels for a small exhibition. Try the optional, untimed questions about sources and uncertainty, and change an answer whenever a detail catches your attention.",
+            "title": "Curate three documented objects"
+          },
+          "uk": {
+            "intro": "Порівняйте записи та оберіть обґрунтовані підписи для малої виставки. Спробуйте необов’язкові запитання без таймера про джерела й невизначеність та змінюйте відповідь, коли помітите нову деталь.",
+            "title": "Упорядкуйте три документовані предмети"
+          }
+        },
+        "recipe": {
+          "cards": [
+            {
+              "id": "poltava-shirt",
+              "locales": {
+                "en": {
+                  "body": "Ivan Honchar Museum records men’s embroidered shirt НДФ-6482 as late nineteenth to early twentieth century, from Hadiach in the Poltava area. Its maker is unknown.\n\nBegin a label with the documented object, date, place and maker when known. “Unknown” is useful information; a motif is not permission to invent a personal story. This scene is an illustration, not that museum object.",
+                  "sourceNote": "This record describes one particular object. Follow the attached museum source for its full catalogue context and keep documented uncertainty visible.",
+                  "title": "Shirt НДФ-6482: an unknown maker"
+                },
+                "uk": {
+                  "body": "Музей Івана Гончара датує чоловічу вишиту сорочку НДФ-6482 кінцем XIX — початком XX століття та пов’язує її з Гадячем на Полтавщині. Автор невідомий.\n\nПочинайте підпис із документованих назви речі, дати, місця й автора, якщо він відомий. «Невідомо» — корисна інформація; мотив не дозволяє вигадувати особисту історію. Сцена є ілюстрацією, а не цим музейним предметом.",
+                  "sourceNote": "Цей запис описує конкретний предмет. Перейдіть до музейного джерела для повного контексту каталогу та збережіть документовану невизначеність.",
+                  "title": "Сорочка НДФ-6482: невідомий автор"
+                }
+              },
+              "sourceIds": ["shirt"]
+            },
+            {
+              "id": "volyn-shirt",
+              "locales": {
+                "en": {
+                  "body": "The museum records Volyn shirt НДФ-7132 as made by Anastasiia Kravchuk in the first half of the twentieth century. Compare this named maker with the unknown maker in the earlier Poltava record.\n\nBoth records describe specific objects. Their differences invite questions about maker, time, material and place; they do not establish a rule for every garment in either region.",
+                  "sourceNote": "This record describes one particular object. Follow the attached museum source for its full catalogue context and keep documented uncertainty visible.",
+                  "title": "Shirt НДФ-7132: a named maker"
+                },
+                "uk": {
+                  "body": "Музей пов’язує волинську сорочку НДФ-7132 з Анастасією Кравчук і датує першою половиною XX століття. Порівняйте відоме ім’я майстрині з невідомим автором попереднього полтавського запису.\n\nОбидва записи описують конкретні речі. Відмінності спонукають запитувати про автора, час, матеріал і місце, але не встановлюють правила для всього одягу регіону.",
+                  "sourceNote": "Цей запис описує конкретний предмет. Перейдіть до музейного джерела для повного контексту каталогу та збережіть документовану невизначеність.",
+                  "title": "Сорочка НДФ-7132: відома майстриня"
+                }
+              },
+              "sourceIds": ["volyn", "shirt"]
+            },
+            {
+              "id": "rushnyk-record",
+              "locales": {
+                "en": {
+                  "body": "The museum dates rushnyk КН-3081 to the first half of the nineteenth century, with a homespun linen ground and an unknown maker. Its record notes a donation by Petro Honchar in 2001.\n\nSeparate an object’s creation from its later path into a collection. A donation date is not its making date. Ornament alone does not establish the exact ceremony in which it was used.",
+                  "sourceNote": "This record describes one particular object. Follow the attached museum source for its full catalogue context and keep documented uncertainty visible.",
+                  "title": "Rushnyk КН-3081: two different dates"
+                },
+                "uk": {
+                  "body": "Музей датує рушник КН-3081 першою половиною XIX століття; основу описано як доморобне лляне полотно, автор невідомий. Запис зазначає дарунок Петра Гончара 2001 року.\n\nВідокремлюйте створення предмета від його подальшого шляху до колекції. Дата дарування не є датою виготовлення. Сам орнамент не визначає конкретного обряду використання.",
+                  "sourceNote": "Цей запис описує конкретний предмет. Перейдіть до музейного джерела для повного контексту каталогу та збережіть документовану невизначеність.",
+                  "title": "Рушник КН-3081: дві різні дати"
+                }
+              },
+              "sourceIds": ["rushnyk"]
+            }
+          ],
+          "id": "inspect-compare-atlas",
+          "predictions": [
+            {
+              "cardIds": ["poltava-shirt", "volyn-shirt"],
+              "choices": [
+                {
+                  "id": "specific-records",
+                  "locales": {
+                    "en": {
+                      "feedback": "That keeps each claim attached to its own record without inventing a maker.",
+                      "label": "Name the known maker; retain “unknown” for the other object"
+                    },
+                    "uk": {
+                      "feedback": "Так кожне твердження пов’язане зі своїм записом без вигадування автора.",
+                      "label": "Назвати відому майстриню; для іншої речі зберегти «невідомо»"
+                    }
+                  }
+                },
+                {
+                  "id": "regional-rule",
+                  "locales": {
+                    "en": {
+                      "feedback": "Two records cannot establish that general rule. Compare the specific dates, places and maker fields instead.",
+                      "label": "Use the two makers as a rule for all regional garments"
+                    },
+                    "uk": {
+                      "feedback": "Два записи не встановлюють такого правила. Натомість порівняйте конкретні дати, місця й відомості про авторів.",
+                      "label": "Вважати двох авторів правилом для всього одягу регіонів"
+                    }
+                  }
+                }
+              ],
+              "expectedChoiceId": "specific-records",
+              "id": "name-what-is-known",
+              "locales": {
+                "en": {
+                  "explanation": "The records concern two specific garments. One names Anastasiia Kravchuk; the other records an unknown maker. Neither record supports a universal regional rule.",
+                  "prompt": "Which label preserves what these two shirt records actually establish?"
+                },
+                "uk": {
+                  "explanation": "Записи стосуються двох конкретних речей. Один називає Анастасію Кравчук, а в іншому автор невідомий. Жоден не доводить універсального правила для регіону.",
+                  "prompt": "Який підпис зберігає те, що справді встановлюють записи двох сорочок?"
+                }
+              }
+            },
+            {
+              "cardIds": ["rushnyk-record"],
+              "choices": [
+                {
+                  "id": "donation",
+                  "locales": {
+                    "en": {
+                      "feedback": "Yes. Keep the donation date beside the donor and the earlier creation period beside the object.",
+                      "label": "The recorded donation"
+                    },
+                    "uk": {
+                      "feedback": "Так. Залиште дату дарування поряд з ім’ям дарувальника, а давніший період створення — поряд із предметом.",
+                      "label": "Зафіксоване дарування"
+                    }
+                  }
+                },
+                {
+                  "id": "creation",
+                  "locales": {
+                    "en": {
+                      "feedback": "That would replace the earlier object date with a later event. Inspect the record again and keep both events.",
+                      "label": "The creation of the rushnyk"
+                    },
+                    "uk": {
+                      "feedback": "Це замінило б давнішу дату предмета пізнішою подією. Перегляньте запис і збережіть обидві події.",
+                      "label": "Створення рушника"
+                    }
+                  }
+                }
+              ],
+              "expectedChoiceId": "donation",
+              "id": "separate-creation-and-donation",
+              "locales": {
+                "en": {
+                  "explanation": "2001 records Petro Honchar’s donation. The object is dated to the first half of the nineteenth century; its making date and later collection history are separate.",
+                  "prompt": "The rushnyk record includes 2001. Which event should your exhibition timeline attach to that date?"
+                },
+                "uk": {
+                  "explanation": "2001 рік стосується дарунка Петра Гончара. Сам предмет датовано першою половиною XIX століття; виготовлення й пізніша історія колекції — різні події.",
+                  "prompt": "Запис рушника містить 2001 рік. Яку подію слід пов’язати з цією датою на шкалі виставки?"
+                }
+              }
+            }
+          ],
+          "revision": 1,
+          "sources": [
+            {
+              "id": "shirt",
+              "title": "Ivan Honchar Museum — shirt НДФ-6482",
+              "url": "https://honchar.org.ua/collections/detail/4181"
+            },
+            {
+              "id": "volyn",
+              "title": "Ivan Honchar Museum — shirt НДФ-7132",
+              "url": "https://honchar.org.ua/collections/detail/4182"
+            },
+            {
+              "id": "rushnyk",
+              "title": "Ivan Honchar Museum — rushnyk КН-3081",
+              "url": "https://honchar.org.ua/collections/detail/1591"
+            }
+          ]
+        },
+        "type": "exploration"
+      },
+      {
         "asset": {
           "assetId": "ukraine-culture-home",
           "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
@@ -589,8 +762,8 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-threads-03-art-v1",
+          "sha256": "16b7fcca255f5915b14cadf0bddb3d543df5a214bb881144eff9f8024d6dce70"
         },
         "id": "ukraine-threads-03-image",
         "locales": {
@@ -781,7 +954,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-threads", "kind": "campaign" }
   }
 ]

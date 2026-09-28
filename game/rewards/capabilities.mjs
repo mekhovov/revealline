@@ -5,4 +5,7 @@ export const COMPLETION_REWARD_PAYLOAD_TYPES = Object.freeze([
   'image',
   'url',
   'public-code',
+  'exploration',
+  'audio',
+  'video',
 ]);

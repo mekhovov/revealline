@@ -1,0 +1,115 @@
+{
+  "campaignId": "fpv-care-repair",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": {
+        "name": {
+          "en": "Care, Diagnosis and Repair Decisions",
+          "uk": "Догляд, діагностика та рішення про ремонт"
+        }
+      },
+      "id": "fpv-care-repair",
+      "identity": "ed11a9e9cd2eb72f",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the observation cards before proposing a cause for the unpowered model. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте картки спостережень перед припущенням про причину в моделі без живлення. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Capture the observation shelf before the cause shelf or connect both through the central return. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Захопіть полицю спостережень перед полицею причин або з’єднайте їх через центр. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "Describe the Symptom", "uk": "Опишіть симптом" }
+      },
+      "id": "fpv-care-repair-01",
+      "identity": "b50fc0a38ba43bcf",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Open inspection alcoves; do not connect a battery or spin propellers to answer the fixture. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Відкрийте ніші огляду; не підключайте акумулятор і не обертайте пропелери для відповіді. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Use each small inspection alcove or reach the long well-lit return first. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Скористайтеся малими нішами огляду або спершу досягніть довгого освітленого повернення. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "An Unpowered Inspection", "uk": "Огляд без живлення" }
+      },
+      "id": "fpv-care-repair-02",
+      "identity": "5f63b942df9daf85",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Join the comparison benches and keep the fictional test bounded to a paper model. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте столи порівняння й обмежте вигадану перевірку паперовою моделлю. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Join adjacent comparison islands or cross to the unchanged-reference island first. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Поєднайте сусідні острови порівняння або спершу перейдіть до незмінного зразка. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "Change One Question", "uk": "Змініть одне питання" }
+      },
+      "id": "fpv-care-repair-03",
+      "identity": "58fb364027df58ff",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Reveal the safety desk; a damaged or swollen battery is not a beginner repair exercise. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Відкрийте стіл безпеки; пошкоджений чи здутий акумулятор не є вправою ремонту для початківця. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.routeDecision": {
+          "en": "Take the broad quiet safety terrace or connect the small guidance desk first. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Оберіть широку спокійну терасу безпеки або спершу приєднайте малий стіл вказівок. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "A Battery Stop Card", "uk": "Картка зупинки через акумулятор" }
+      },
+      "id": "fpv-care-repair-04",
+      "identity": "35dd174efc93b76a",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the decision stations and preserve the evidence behind each fictional choice. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "З’єднайте станції рішень і збережіть підстави кожного вигаданого вибору. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.routeDecision": {
+          "en": "Compare the three decision bays using interior returns or join the evidence spine first. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Порівняйте три зони рішень через внутрішні повернення або спершу з’єднайте вісь доказів. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "Repair, Replace, Ask", "uk": "Ремонтувати, замінити, запитати" }
+      },
+      "id": "fpv-care-repair-05",
+      "identity": "99f14ea8673f4000",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Complete the care notebook with a handoff and an appropriate disposal question. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Завершіть щоденник догляду передачею справ і питанням належної утилізації. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.routeDecision": {
+          "en": "Complete the handoff chain from the centre or join the final two collection desks first. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Завершіть ланцюг передачі від центру або спершу приєднайте останні два столи збору. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "A Responsible Last Step", "uk": "Відповідальний останній крок" }
+      },
+      "id": "fpv-care-repair-06",
+      "identity": "a6b0ae025b71ce17",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}
