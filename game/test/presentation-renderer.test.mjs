@@ -170,7 +170,8 @@ test('compiled enemy bodies skip legacy image loads while explicit skins retain 
     original = image('legacy-selected-body'),
     requested = [];
   painter.enemyBodies = {
-    update: (frames) => requested.push([...frames].map((frame) => frame.type)),
+    update: (frames, _overrides, { image: needsOriginal = () => true } = {}) =>
+      requested.push([...frames].filter(needsOriginal).map((frame) => frame.type)),
     current: () => ({ image: original, record: { motion: [] } }),
   };
   run.enemies = [{ id: 'guard', type: 'bouncer', x: 10, y: 10, vx: 1, vy: 1, radius: 0.2 }];
