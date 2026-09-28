@@ -71,6 +71,50 @@
             "title": "Рама"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Point to an arm and the centre. Explain why holding a component is different from sensing movement or sending a command."
+              ],
+              "title": "Make the distinction: The Frame"
+            },
+            "uk": {
+              "paragraphs": [
+                "Покажіть промінь і центр. Поясніть, чому утримувати деталь — не те саме, що вимірювати рух чи передавати команду."
+              ],
+              "title": "Розрізніть поняття: Рама"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Together, find what supports the model. Compare the frame with a shelf: what job belongs to the support, and what belongs to the things it holds?"
+              ],
+              "title": "Explore together: The Frame"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом знайдіть опору моделі. Порівняйте раму з полицею: яке завдання має опора, а яке — речі на ній?"
+              ],
+              "title": "Дослідіть разом: Рама"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A second fictional display has a different frame outline. Which support-role claim transfers, and which dimensions or compatibility claims still need exact evidence?"
+              ],
+              "title": "Apply and question: The Frame"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інша вигадана модель має раму іншої форми. Який висновок про опору залишається чинним, а які розміри чи сумісність потребують точних даних?"
+              ],
+              "title": "Застосуйте й запитайте: Рама"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -88,7 +132,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-meet-aircraft-01", "kind": "mission" }
   },
   {
@@ -161,6 +205,50 @@
               }
             ],
             "title": "Джерела руху"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Complete two role sentences: the motor produces rotation; the propeller uses rotation to move air. Why are these separate roles?"
+              ],
+              "title": "Make the distinction: Motion Makers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Доповніть два описи: двигун створює обертання; пропелер використовує обертання для руху повітря. Чому це різні ролі?"
+              ],
+              "title": "Розрізніть поняття: Джерела руху"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Take turns pointing to the motor and the separate propeller. Describe rotation and moving air without touching or powering equipment."
+              ],
+              "title": "Explore together: Motion Makers"
+            },
+            "uk": {
+              "paragraphs": [
+                "По черзі покажіть двигун і окремий пропелер. Опишіть обертання та рух повітря, не торкаючись обладнання й не вмикаючи його."
+              ],
+              "title": "Дослідіть разом: Джерела руху"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare two fictional motor cards with no ratings. Explain the shared role and identify why appearance cannot establish matching propellers or performance."
+              ],
+              "title": "Apply and question: Motion Makers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте дві вигадані картки двигунів без характеристик. Поясніть спільну роль і чому вигляд не доводить сумісності пропелерів чи продуктивності."
+              ],
+              "title": "Застосуйте й запитайте: Джерела руху"
+            }
           }
         },
         "type": "knowledge"
@@ -238,7 +326,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "fpv-meet-aircraft-02", "kind": "mission" }
   },
   {
@@ -305,6 +393,50 @@
             "title": "Регулятор ESC"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Trace the two conceptual ribbons in the exhibit. Explain why the ESC needs a command relationship and an energy relationship."
+              ],
+              "title": "Make the distinction: The ESC"
+            },
+            "uk": {
+              "paragraphs": [
+                "Простежте дві умовні стрічки виставки. Поясніть, чому ESC має зв’язок із командами та зв’язок з енергією."
+              ],
+              "title": "Розрізніть поняття: Регулятор ESC"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "One person names a request; another names an energy source. Which idea belongs to a command, and which belongs to the supply?"
+              ],
+              "title": "Explore together: The ESC"
+            },
+            "uk": {
+              "paragraphs": [
+                "Одна людина називає запит, інша — джерело енергії. Що належить до команди, а що — до живлення?"
+              ],
+              "title": "Дослідіть разом: Регулятор ESC"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "An unfamiliar civilian model labels only its motor command. Name the missing energy relationship without inventing connectors, electrical ratings or configuration."
+              ],
+              "title": "Apply and question: The ESC"
+            },
+            "uk": {
+              "paragraphs": [
+                "Незнайома цивільна модель позначає лише команду двигуна. Назвіть відсутній зв’язок з енергією, не вигадуючи роз’ємів, електричних параметрів чи налаштувань."
+              ],
+              "title": "Застосуйте й запитайте: Регулятор ESC"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -322,7 +454,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "fpv-meet-aircraft-03", "kind": "mission" }
   },
   {
@@ -387,6 +519,50 @@
               }
             ],
             "title": "Польотний контролер"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Use the three words sense, interpret and command to tell the controller story. Keep information flow separate from physical connections."
+              ],
+              "title": "Make the distinction: The Flight Controller"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розкажіть про контролер словами «виміряти, опрацювати, керувати». Відокремте потік інформації від фізичних з’єднань."
+              ],
+              "title": "Розрізніть поняття: Польотний контролер"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Together, separate something the model senses from something a person requests. Explain why these are not the same message."
+              ],
+              "title": "Explore together: The Flight Controller"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом відокремте те, що модель вимірює, від того, чого просить людина. Поясніть, чому це різні повідомлення."
+              ],
+              "title": "Дослідіть разом: Польотний контролер"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "For a different fictional exhibit, classify a sensor observation and an operator request. What additional documentation would be needed to discuss real control behaviour?"
+              ],
+              "title": "Apply and question: The Flight Controller"
+            },
+            "uk": {
+              "paragraphs": [
+                "Для іншої вигаданої виставки розрізніть показ датчика й запит оператора. Які додаткові документи потрібні для розмови про реальну поведінку керування?"
+              ],
+              "title": "Застосуйте й запитайте: Польотний контролер"
+            }
           }
         },
         "type": "knowledge"
@@ -464,7 +640,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "fpv-meet-aircraft-04", "kind": "mission" }
   },
   {
@@ -539,6 +715,50 @@
             "title": "Два різні канали"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Match RX to incoming control and camera/VTX to the picture pathway. State what remains unknown when only a picture is confirmed."
+              ],
+              "title": "Make the distinction: Two Different Links"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зіставте RX із прийманням команд, а камеру/VTX — зі шляхом зображення. Що лишається невідомим, якщо підтверджена лише картинка?"
+              ],
+              "title": "Розрізніть поняття: Два різні канали"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "One person describes the camera picture; another describes a control message. Decide together whether seeing one proves the other arrived."
+              ],
+              "title": "Explore together: Two Different Links"
+            },
+            "uk": {
+              "paragraphs": [
+                "Одна людина описує зображення камери, інша — команду керування. Разом визначте, чи наявність одного доводить отримання іншого."
+              ],
+              "title": "Дослідіть разом: Два різні канали"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A second fictional report confirms commands but says nothing about video. Write the narrow supported conclusion, without proposing field troubleshooting."
+              ],
+              "title": "Apply and question: Two Different Links"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інший вигаданий звіт підтверджує команди, але нічого не каже про відео. Сформулюйте вузький доведений висновок без польової діагностики."
+              ],
+              "title": "Застосуйте й запитайте: Два різні канали"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -556,7 +776,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "fpv-meet-aircraft-05", "kind": "mission" }
   },
   {
@@ -647,6 +867,50 @@
             "title": "Цілий дрон"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Explain why a battery is not a command. Retell the component atlas using roles rather than a sequence of physical assembly steps."
+              ],
+              "title": "Make the distinction: The Whole Aircraft"
+            },
+            "uk": {
+              "paragraphs": [
+                "Поясніть, чому акумулятор не є командою. Перекажіть атлас через ролі, а не послідовність фізичного складання."
+              ],
+              "title": "Розрізніть поняття: Цілий дрон"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Sort the discoveries together into support, energy and information. Let one item connect two ideas and explain the choice."
+              ],
+              "title": "Explore together: The Whole Aircraft"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом розподіліть відкриття між опорою, енергією та інформацією. Дозвольте одній деталі поєднати дві ідеї й поясніть вибір."
+              ],
+              "title": "Дослідіть разом: Цілий дрон"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Apply the three-role model to a new fictional museum diagram. Mark unanswered component questions explicitly; the atlas alone cannot establish a build specification."
+              ],
+              "title": "Apply and question: The Whole Aircraft"
+            },
+            "uk": {
+              "paragraphs": [
+                "Застосуйте три ролі до нової вигаданої музейної схеми. Явно позначте питання про деталі: сам атлас не визначає специфікацію складання."
+              ],
+              "title": "Застосуйте й запитайте: Цілий дрон"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -664,7 +928,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "fpv-meet-aircraft-06", "kind": "mission" }
   },
   {
@@ -1130,7 +1394,7 @@
         }
       ]
     },
-    "revision": "3",
+    "revision": "4",
     "scope": { "id": "fpv-meet-aircraft", "kind": "campaign" }
   }
 ]

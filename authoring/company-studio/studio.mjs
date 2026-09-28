@@ -1,3 +1,4 @@
+import { mountRewardKnowledge } from '../../game/ui/reward-knowledge.mjs';
 import { t } from '../../game/i18n/index.mjs';
 import { mountRewardMedia } from '../../game/ui/reward-media.mjs';
 import { mountRewardQr } from '../../game/ui/reward-qr.mjs';
@@ -140,7 +141,7 @@ const discoveryEditor = createDiscoveryEditor({
     files = nextFiles;
     catalog = checkedCatalog;
     changed(
-      'Applied an interactive discovery revision. Completion requirements and gameplay are unchanged.',
+      'Applied a new discovery revision. Review its explicit reward requirements; gameplay is unchanged.',
     );
     renderCatalog();
     await renderDocuments();
@@ -426,6 +427,16 @@ async function renderDocuments() {
     }),
   );
   $('reward-learning').disabled = !lessons?.length;
+  $('reward-mastery').replaceChildren(
+    ...project.missions.map((mission) => {
+      const label = node('label'),
+        input = node('input');
+      input.type = 'checkbox';
+      input.value = mission.id;
+      label.append(input, node('span', mission.name));
+      return label;
+    }),
+  );
   const rewards = campaign.rewardPath ? files.get(campaign.rewardPath) : [];
   $('rewards-summary').textContent =
     `${rewards.length} declared rewards. Requirements are explicit; preview grants no progress.`;
@@ -544,6 +555,9 @@ function addRewardDraft() {
       .filter((item) => item.checked)
       .map((item) => item.value),
     lessons: campaign.lessonPath ? files.get(campaign.lessonPath) : [],
+    masteryMissionIds: [...$('reward-mastery').querySelectorAll('input')]
+      .filter((item) => item.checked)
+      .map((item) => item.value),
     learningIds: [...$('reward-learning').querySelectorAll('input')]
       .filter((item) => item.checked)
       .map((item) => item.value),
@@ -637,10 +651,7 @@ function previewRewardDraft() {
     for (const payload of reward.payloads) {
       panel.append(node('h4', payload.locales[locale].title));
       if (payload.type === 'knowledge') {
-        for (const paragraph of payload.locales[locale].paragraphs)
-          panel.append(node('p', paragraph));
-        for (const source of payload.locales[locale].sources ?? [])
-          panel.append(resourceLink(source.title, source.url));
+        rewardPreviewExplorations.push(mountRewardKnowledge({ container: panel, payload, locale }));
       } else if (payload.type === 'image') {
         const asset = catalog.assets.find(
           (item) => item.id === payload.asset.assetId && item.sha256 === payload.asset.sha256,
