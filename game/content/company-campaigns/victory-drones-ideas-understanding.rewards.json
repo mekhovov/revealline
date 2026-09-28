@@ -65,6 +65,50 @@
             "title": "Спостерігайте перед поясненням"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Write the observation and possible explanation on separate cards. Name another difference that could affect the result."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Запишіть спостереження й можливе пояснення на окремих картках. Назвіть іншу відмінність, що могла вплинути на результат."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Point to the sentence that reports what the cart did. Which other sentence tries to explain why?"
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть речення, що описує рух візка. Яке інше речення намагається пояснити причину?"
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Identify competing explanations for the same fictional observation. State what further comparison could distinguish them."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Визначте різні пояснення одного вигаданого спостереження. Опишіть додаткове порівняння, що допоможе їх розрізнити."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -82,7 +126,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "victory-drones-ideas-understanding-01", "kind": "mission" }
   },
   {
@@ -149,6 +193,50 @@
             "title": "Сили взаємодії"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Separate the two interacting objects before drawing their force pair. Explain why arrows on different objects are not summed as forces on one object."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Спершу розділіть два об’єкти взаємодії, потім намалюйте пару сил. Поясніть, чому сили на різних тілах не додають як сили на одному."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Draw one arrow on the hand and another on the wall. Say which object each arrow belongs to."
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Намалюйте одну стрілку на руці, іншу — на стіні. Назвіть об’єкт, якому належить кожна."
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Contrast an interaction pair with two balancing forces on one object. Use labels that make the object of each force explicit."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте пару сил взаємодії з двома врівноваженими силами на одному тілі. Підпишіть, на яке тіло діє кожна сила."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -166,7 +254,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "victory-drones-ideas-understanding-02", "kind": "mission" }
   },
   {
@@ -233,6 +321,50 @@
             "title": "Рівнодійна сил"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "List forces acting on one cart, including directions. Distinguish zero net force from zero velocity."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перелічіть сили, що діють на один візок, разом із напрямками. Розрізніть нульову рівнодійну та нульову швидкість."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Imagine a cart already moving straight. In the idealized equal-force picture, does zero change in motion mean it must stop?"
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уявіть візок, що вже рухається прямо. Чи означає нульова зміна руху в ідеалізованій схемі рівних сил, що він мусить зупинитися?"
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "State the initial velocity and included external forces before predicting a change. Identify how omitted resistance would change the model’s adequacy."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зазначте початкову швидкість і враховані зовнішні сили, перш ніж передбачати зміну. Поясніть, як пропущений опір вплине на придатність моделі."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -250,7 +382,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "victory-drones-ideas-understanding-03", "kind": "mission" }
   },
   {
@@ -317,6 +449,50 @@
             "title": "Напрямок має значення"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Describe each arrow with both magnitude and direction. Explain why the number alone leaves the description incomplete."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Опишіть кожну стрілку величиною та напрямком. Поясніть, чому самого числа недостатньо."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Make two equal-length paper arrows pointing different ways. What is the same and what differs?"
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зробіть дві паперові стрілки однакової довжини з різними напрямками. Що збігається, а що відрізняється?"
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Check a diagram’s scale before comparing arrow lengths. Propose a caption that distinguishes equal magnitude from equal vectors."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перевірте масштаб схеми перед порівнянням довжин стрілок. Запропонуйте підпис, що розрізняє рівні величини й рівні вектори."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -334,7 +510,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "victory-drones-ideas-understanding-04", "kind": "mission" }
   },
   {
@@ -401,6 +577,50 @@
             "title": "Коректне порівняння"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "On paper, name what changes, what stays alike and what is observed. Add one possible source of measurement uncertainty."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "На папері назвіть, що змінюється, що лишається однаковим і що спостерігають. Додайте можливе джерело похибки вимірювання."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Two things changed in the cart story. Circle both. Can the result tell us which change mattered?"
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "В історії візка змінилися дві речі. Обведіть обидві. Чи показує результат, яка зміна мала значення?"
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Review the proposed comparison for confounded changes and inconsistent measurement. Describe what evidence would support a narrower conclusion."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перевірте порівняння на змішані зміни й непослідовне вимірювання. Опишіть докази для обережнішого висновку."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -418,7 +638,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "victory-drones-ideas-understanding-05", "kind": "mission" }
   },
   {
@@ -493,6 +713,50 @@
             "title": "Поясніть модель"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Give your model an intended use, an assumption and a limit. A useful model does not need to reproduce everything."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Визначте призначення моделі, припущення та межу. Корисна модель не мусить відтворювати все."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Explain the book-on-table picture to a partner. Name what the simple picture leaves out."
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Поясніть партнерові малюнок книжки на столі. Назвіть те, чого проста схема не показує."
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Transfer the reasoning to a different everyday system. State when your simplified model is useful and what observation would make you revise it."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перенесіть міркування на іншу побутову систему. Вкажіть, коли спрощена модель корисна й яке спостереження змусить її переглянути."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -510,7 +774,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "victory-drones-ideas-understanding-06", "kind": "mission" }
   },
   {
@@ -726,7 +990,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "victory-drones-ideas-understanding", "kind": "campaign" }
   }
 ]

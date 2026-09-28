@@ -44,7 +44,20 @@ test('two published finale atlases use exact source-linked cards and bilingual o
       ),
     );
     const finale = rewards.find((reward) => reward.scope.kind === 'campaign');
-    assert.equal(finale.revision, '2');
+    const source = JSON.parse(
+      await readFile(
+        new URL(`../content/company-campaigns/${campaignId}.json`, import.meta.url),
+        'utf8',
+      ),
+    );
+    assert.deepEqual(
+      source.campaigns.find((item) => item.id === campaignId).discovery.finaleRewardRef,
+      { id: finale.id, revision: finale.revision },
+    );
+    assert.ok(
+      Number(finale.revision) >= 2,
+      'The atlas remains in its first admitted or a newer immutable presentation.',
+    );
     assert.deepEqual(
       finale.payloads.find((item) => item.type === 'exploration'),
       payload,

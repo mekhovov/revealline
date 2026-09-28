@@ -6,7 +6,7 @@
     {
       "fields": { "name": { "en": "Community Connections", "uk": "Зв’язки спільноти" } },
       "id": "social-drone-community-connections",
-      "identity": "4269bec0803d1b24",
+      "identity": "74ff60969cb39e89",
       "kind": "campaign"
     },
     {
@@ -22,7 +22,7 @@
         "name": { "en": "One Shared Brief", "uk": "Спільний задум" }
       },
       "id": "social-drone-community-connections-01",
-      "identity": "2780c5e7b9d9d6ae",
+      "identity": "d0c8316f470981d9",
       "kind": "mission"
     },
     {
@@ -38,7 +38,7 @@
         "name": { "en": "Count What Is Here", "uk": "Порахуйте наявне" }
       },
       "id": "social-drone-community-connections-02",
-      "identity": "6020305b6d7acb10",
+      "identity": "1e396061744d4c28",
       "kind": "mission"
     },
     {
@@ -54,7 +54,7 @@
         "name": { "en": "The Next Reader", "uk": "Наступний читач" }
       },
       "id": "social-drone-community-connections-03",
-      "identity": "7ccc40c673044029",
+      "identity": "c55314af527d9c0c",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "An Invitation That Helps", "uk": "Корисне запрошення" }
       },
       "id": "social-drone-community-connections-04",
-      "identity": "ec0edb21c82cb029",
+      "identity": "bd00a040515e8c97",
       "kind": "mission"
     },
     {
@@ -86,7 +86,7 @@
         "name": { "en": "Describe the Important Part", "uk": "Опишіть важливе" }
       },
       "id": "social-drone-community-connections-05",
-      "identity": "877a7b9c226968bf",
+      "identity": "e0fae0ed884975fa",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "Keep the Story Accurate", "uk": "Збережіть точність історії" }
       },
       "id": "social-drone-community-connections-06",
-      "identity": "5de65de6f15402a6",
+      "identity": "94afd451859d525b",
       "kind": "mission"
     }
   ],

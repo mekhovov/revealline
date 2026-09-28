@@ -8,28 +8,49 @@ export { DISCOVERY_PACING_BEATS, DISCOVERY_EXHIBIT_LAYOUTS } from './discovery-s
 /** Editing an exhibit never edits its promised requirements. New immutable
  * payload revisions rebind only references to the exact old authored reward. */
 export function editDiscoveryExploration(source, rewardSource, rewardId, input) {
-  return editPayload(source, rewardSource, rewardId, validateExplorationPayload(input), 'explore');
+  return editDiscoveryPayload(
+    source,
+    rewardSource,
+    rewardId,
+    validateExplorationPayload(input),
+    'explore',
+  );
 }
 
 export function editDiscoveryResource(source, rewardSource, rewardId, input) {
   const payload = validateCompletionRewardPayload(input);
   required(payload.type === 'url', 'Resource editor requires a URL reward.');
-  return editPayload(source, rewardSource, rewardId, payload, 'resource');
+  return editDiscoveryPayload(source, rewardSource, rewardId, payload, 'resource');
 }
 
-function editPayload(source, rewardSource, rewardId, payload, prefix) {
+export function editDiscoveryPayload(source, rewardSource, rewardId, payload, prefix) {
+  return editDiscoveryReward(
+    source,
+    rewardSource,
+    rewardId,
+    (reward) => {
+      const index = reward.payloads.findIndex((item) => item.id === payload.id);
+      required(
+        index < 0 || reward.payloads[index].type === payload.type,
+        'A payload cannot replace another reward payload type.',
+      );
+      if (index < 0) reward.payloads.push(payload);
+      else reward.payloads[index] = payload;
+    },
+    prefix,
+  );
+}
+
+/** Shared authored revision/rebinding boundary. The editor supplies the mutation;
+ * imported data cannot execute a callback. Existing promised revisions stay
+ * frozen in player receipts and retained presentation snapshots. */
+export function editDiscoveryReward(source, rewardSource, rewardId, mutate, prefix) {
   const project = structuredClone(compileContentProject(source).source),
     rewards = structuredClone(validateCompletionRewards(rewardSource)),
     reward = rewards.find((item) => item.id === rewardId);
-  required(reward, 'Choose an authored reward before editing its payload.');
-  const previousRevision = reward.revision,
-    index = reward.payloads.findIndex((item) => item.id === payload.id);
-  required(
-    index < 0 || reward.payloads[index].type === payload.type,
-    'A payload cannot replace another reward payload type.',
-  );
-  if (index < 0) reward.payloads.push(payload);
-  else reward.payloads[index] = payload;
+  required(reward, 'Choose an authored reward before editing it.');
+  const previousRevision = reward.revision;
+  mutate(reward);
   const { revision: _revision, ...content } = reward;
   reward.revision = `${prefix}-${dataIdentity(content)}`;
   const rebind = (reference) => {

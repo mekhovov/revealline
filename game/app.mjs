@@ -11572,6 +11572,7 @@ try {
           clearInput();
         },
         getRun: () => run,
+        getRunId: () => runId,
         getRecorder: () => recorder,
         getJourneyProfile: () => journeyProfile?.snapshot() ?? null,
         getJourneyRevision: () => journeyProfile?.stateRevision() ?? 0,

@@ -63,6 +63,50 @@
             "title": "Вітаємо у спільноті"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Make two headings: “Public purpose” and “Imagined room.” Place one sentence under each. An attractive room does not prove a real event occurred."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Створіть два заголовки: «Публічна мета» й «Уявна кімната». Додайте по реченню. Приваблива кімната не доводить, що відбулася реальна подія."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Together, point to one welcoming detail in the fictional room. Which words describe the artwork, and which words describe the community’s stated purpose?"
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом знайдіть одну привітну деталь у вигаданій кімнаті. Які слова описують ілюстрацію, а які — заявлену мету спільноти?"
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare the public description with the gallery caption. Identify the origin of each claim and rewrite any sentence that accidentally implies endorsement."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте публічний опис із підписом галереї. Визначте походження кожного твердження й перепишіть речення, яке ненавмисно натякає на схвалення."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -80,7 +124,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-people-workshop-01", "kind": "mission" }
   },
   {
@@ -101,17 +145,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-people-workshop-key-v1",
-          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+          "assetId": "social-drone-people-workshop-02-reveal-v1",
+          "sha256": "04549079a9ce5359f9e30e8072d85ccbc17aa71a329832334f69d1a1e582896e"
         },
         "id": "social-drone-people-workshop-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
+            "alt": "Original illustrated teal-and-blue workshop with two equally lit contribution bays connected to a central meeting table.",
             "title": "Many Ways to Contribute"
           },
           "uk": {
-            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
+            "alt": "Оригінальна ілюстрована бірюзово-синя майстерня з двома однаково освітленими просторами внеску, з’єднаними зі спільним столом.",
             "title": "Різні способи долучитися"
           }
         },
@@ -147,6 +191,50 @@
             "title": "Різні способи долучитися"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Choose two different contributions. Describe what each needs from the other without ranking the people or assuming equal time and resources."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть два різні внески. Опишіть, що кожен потребує від іншого, не оцінюючи людей і не припускаючи однакового часу й ресурсів."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Imagine preparing a small book display together. One person writes labels and another welcomes visitors. Explain how each helps the other."
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уявіть, що разом готуєте невелику книжкову виставку. Одна людина пише підписи, інша зустрічає гостей. Поясніть, як вони допомагають одна одній."
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Sketch a dependency between two fictional roles. Add an alternative if one person cannot participate; keep the purpose while changing the arrangement."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Накресліть залежність між двома вигаданими ролями. Додайте альтернативу, якщо хтось не може долучитися: збережіть мету, змінивши організацію."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -164,7 +252,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-people-workshop-02", "kind": "mission" }
   },
   {
@@ -182,17 +270,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-people-workshop-key-v1",
-          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+          "assetId": "social-drone-people-workshop-03-reveal-v1",
+          "sha256": "8583d72d7c92c57bd3532e32136f0950c1c71040e3276c1f945b1da8293dc1bf"
         },
         "id": "social-drone-people-workshop-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
+            "alt": "Original illustrated source library with a fictional workshop picture attached to its blank source card at a bright evidence desk.",
             "title": "Find the Source"
           },
           "uk": {
-            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
+            "alt": "Оригінальна ілюстрована бібліотека джерел із вигаданою картинкою майстерні, прикріпленою до порожньої картки джерела на освітленому столі.",
             "title": "Знайдіть джерело"
           }
         },
@@ -228,6 +316,50 @@
             "title": "Знайдіть джерело"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Pair each claim with its evidence: the official page for stated purpose, the artwork for its visible fictional details. Leave unsupported claims unconfirmed."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Поєднайте твердження з доказом: офіційна сторінка — для заявленої мети, ілюстрація — для видимих вигаданих деталей. Непідтверджене залиште невизначеним."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Read “A community learning room” and “A real workshop last Tuesday.” Which caption can our invented picture support? Explain your choice together."
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Прочитайте «Кімната спільного навчання» та «Реальна майстерня минулого вівторка». Який підпис підтримує вигаданий малюнок? Разом поясніть вибір."
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Write a source note that separates creator, publication date and what the source actually establishes. State one question it cannot answer."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть примітку, що розрізняє автора, дату публікації та те, що джерело справді підтверджує. Назвіть запитання, на яке воно не відповідає."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -245,7 +377,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-people-workshop-03", "kind": "mission" }
   },
   {
@@ -266,17 +398,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-people-workshop-key-v1",
-          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+          "assetId": "social-drone-people-workshop-04-reveal-v1",
+          "sha256": "85ad91530e6bc5c33851aab986319a3491e73b3dbbbe8dc24322872f71d3eee9"
         },
         "id": "social-drone-people-workshop-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
+            "alt": "Original illustrated discussion courtyard with a curved blue bench, empty seats and a civilian display model beneath a clear dome.",
             "title": "Ask a Useful Question"
           },
           "uk": {
-            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
+            "alt": "Оригінальний ілюстрований двір обговорень із вигнутою синьою лавою, вільними місцями та цивільною навчальною моделлю під прозорим ковпаком.",
             "title": "Поставте корисне запитання"
           }
         },
@@ -312,6 +444,50 @@
             "title": "Поставте корисне запитання"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Before choosing a course, separate the question you want answered from the scope the provider states. Assembly and flight training are different scopes."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перш ніж обрати курс, відокремте власне запитання від заявленої програми. Навчання складання й навчання польотів мають різний зміст."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose one unfamiliar word on a fictional display label. Ask someone “What is its job?” and listen for an explanation you can repeat."
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть незнайоме слово на вигаданому підписі. Запитайте «Яка його роль?» і вислухайте пояснення, яке зможете переказати."
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Turn a broad request into one bounded question with context and uncertainty. Identify which source could answer it and what still needs an instructor."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перетворіть широкий запит на одне конкретне запитання з контекстом і невизначеністю. Вкажіть доречне джерело й те, що ще потребує наставника."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -329,7 +505,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-people-workshop-04", "kind": "mission" }
   },
   {
@@ -350,17 +526,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-people-workshop-key-v1",
-          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+          "assetId": "social-drone-people-workshop-05-reveal-v1",
+          "sha256": "14f06f2e8864b7e20ef33d952f8badd7eeaf52c0f61ba83a2973cf62dc575bec"
         },
         "id": "social-drone-people-workshop-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
+            "alt": "Original illustrated evidence workshop with three separated benches for an inventory tray, an observation card and an open folder with a missing insert.",
             "title": "Care Before Certainty"
           },
           "uk": {
-            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
+            "alt": "Оригінальна ілюстрована майстерня доказів із трьома окремими столами для облікового лотка, картки спостереження та відкритої папки з відсутньою вкладкою.",
             "title": "Уважність перед упевненістю"
           }
         },
@@ -396,6 +572,50 @@
             "title": "Уважність перед упевненістю"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Rewrite “all done” as three short parts: what was checked, the evidence, and what remains open. Use only the facts in the fictional card."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перепишіть «усе готово» трьома короткими частинами: що перевірили, які докази маємо та що лишилося відкритим. Використовуйте лише факти вигаданої картки."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Compare “checked” with the longer fictional note. Find who checked the label and what remains unknown. Why would the next person prefer that detail?"
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте «перевірено» з довшою вигаданою нотаткою. Знайдіть, хто перевірив підпис і що лишилося невідомим. Чому це допоможе наступній людині?"
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Design a review note for a different civilian display task. Distinguish an observation, the reviewer’s judgement and an unresolved question."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть нотатку перевірки для іншого цивільного виставкового завдання. Розрізніть спостереження, висновок перевіряльника й нерозв’язане запитання."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -413,7 +633,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-people-workshop-05", "kind": "mission" }
   },
   {
@@ -434,17 +654,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-people-workshop-key-v1",
-          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+          "assetId": "social-drone-people-workshop-06-reveal-v1",
+          "sha256": "b6b80c7688e32834f8ce4b7efdf9805aa0679bc3051db86e85829d101f39bb25"
         },
         "id": "social-drone-people-workshop-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
+            "alt": "Original illustrated community mosaic joining a welcome arch, contribution bays, source library, discussion bench, evidence desk and shared table.",
             "title": "The Community Mosaic"
           },
           "uk": {
-            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
+            "alt": "Оригінальна ілюстрована мозаїка спільноти, що поєднує вітальну арку, простори внеску, бібліотеку джерел, лаву обговорень, стіл доказів і спільний стіл.",
             "title": "Мозаїка спільноти"
           }
         },
@@ -480,6 +700,50 @@
             "title": "Мозаїка спільноти"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Plan the next step for the fictional library display. Include its purpose, one source and the information the next helper needs."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Сплануйте наступний крок для вигаданої бібліотечної виставки. Вкажіть мету, одне джерело та відомості, потрібні наступному помічникові."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose two collected cards and explain their connection to a partner. Swap roles: can your partner describe the same connection differently?"
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть дві зібрані картки й поясніть їхній зв’язок партнерові. Поміняйтеся ролями: чи можна пояснити його інакше?"
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Transfer the six-card routine to a new community learning fixture. Explain which principles transfer and which organisational details you cannot assume."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перенесіть підхід шести карток до нового завдання спільного навчання. Поясніть, які принципи переносяться, а які організаційні деталі не можна припускати."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -497,7 +761,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-people-workshop-06", "kind": "mission" }
   },
   {
@@ -566,17 +830,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-people-workshop-key-v1",
-          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+          "assetId": "social-drone-people-workshop-02-reveal-v1",
+          "sha256": "04549079a9ce5359f9e30e8072d85ccbc17aa71a329832334f69d1a1e582896e"
         },
         "id": "social-drone-people-workshop-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
+            "alt": "Original illustrated teal-and-blue workshop with two equally lit contribution bays connected to a central meeting table.",
             "title": "Many Ways to Contribute"
           },
           "uk": {
-            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
+            "alt": "Оригінальна ілюстрована бірюзово-синя майстерня з двома однаково освітленими просторами внеску, з’єднаними зі спільним столом.",
             "title": "Різні способи долучитися"
           }
         },
@@ -584,17 +848,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-people-workshop-key-v1",
-          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+          "assetId": "social-drone-people-workshop-03-reveal-v1",
+          "sha256": "8583d72d7c92c57bd3532e32136f0950c1c71040e3276c1f945b1da8293dc1bf"
         },
         "id": "social-drone-people-workshop-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
+            "alt": "Original illustrated source library with a fictional workshop picture attached to its blank source card at a bright evidence desk.",
             "title": "Find the Source"
           },
           "uk": {
-            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
+            "alt": "Оригінальна ілюстрована бібліотека джерел із вигаданою картинкою майстерні, прикріпленою до порожньої картки джерела на освітленому столі.",
             "title": "Знайдіть джерело"
           }
         },
@@ -602,17 +866,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-people-workshop-key-v1",
-          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+          "assetId": "social-drone-people-workshop-04-reveal-v1",
+          "sha256": "85ad91530e6bc5c33851aab986319a3491e73b3dbbbe8dc24322872f71d3eee9"
         },
         "id": "social-drone-people-workshop-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
+            "alt": "Original illustrated discussion courtyard with a curved blue bench, empty seats and a civilian display model beneath a clear dome.",
             "title": "Ask a Useful Question"
           },
           "uk": {
-            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
+            "alt": "Оригінальний ілюстрований двір обговорень із вигнутою синьою лавою, вільними місцями та цивільною навчальною моделлю під прозорим ковпаком.",
             "title": "Поставте корисне запитання"
           }
         },
@@ -620,17 +884,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-people-workshop-key-v1",
-          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+          "assetId": "social-drone-people-workshop-05-reveal-v1",
+          "sha256": "14f06f2e8864b7e20ef33d952f8badd7eeaf52c0f61ba83a2973cf62dc575bec"
         },
         "id": "social-drone-people-workshop-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
+            "alt": "Original illustrated evidence workshop with three separated benches for an inventory tray, an observation card and an open folder with a missing insert.",
             "title": "Care Before Certainty"
           },
           "uk": {
-            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
+            "alt": "Оригінальна ілюстрована майстерня доказів із трьома окремими столами для облікового лотка, картки спостереження та відкритої папки з відсутньою вкладкою.",
             "title": "Уважність перед упевненістю"
           }
         },
@@ -638,17 +902,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-people-workshop-key-v1",
-          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+          "assetId": "social-drone-people-workshop-06-reveal-v1",
+          "sha256": "b6b80c7688e32834f8ce4b7efdf9805aa0679bc3051db86e85829d101f39bb25"
         },
         "id": "social-drone-people-workshop-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
+            "alt": "Original illustrated community mosaic joining a welcome arch, contribution bays, source library, discussion bench, evidence desk and shared table.",
             "title": "The Community Mosaic"
           },
           "uk": {
-            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
+            "alt": "Оригінальна ілюстрована мозаїка спільноти, що поєднує вітальну арку, простори внеску, бібліотеку джерел, лаву обговорень, стіл доказів і спільний стіл.",
             "title": "Мозаїка спільноти"
           }
         },
@@ -719,7 +983,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-people-workshop", "kind": "campaign" }
   }
 ]
