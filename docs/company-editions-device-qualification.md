@@ -4,6 +4,12 @@ This is the executable check list for the remaining installation, offline and re
 It does not reopen formative playtesting: the user reported that complete on 26 September 2026. It does not certify artwork, hardware or a public release. Record an observed result
 for the exact artifact; leave an unrun case pending.
 
+The exact post-merge main baseline is now v0.141.7 commit `6fe52474b5`, tree `282cb34616`.
+[Candidate CI 36363707594](https://github.com/mekhovov/revealline/actions/runs/36363707594)
+and the independent downloaded-byte comparison are recorded in the
+[current phase status](company-editions-phase-status-2026-09-28.md). The artifact remains a
+candidate and does not retroactively populate the physical-device rows below.
+
 ## Evidence available
 
 The last independently checked candidate is commit
