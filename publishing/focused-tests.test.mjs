@@ -14,6 +14,20 @@ import {
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(await readFile(path.join(directory, 'focused-test-map.json'), 'utf8'));
 
+test('online play changes retain optional-offline and published host coverage', () => {
+  for (const file of [
+    'game/offline-download-access.mjs',
+    'game/offline/service-worker.template.js',
+    'game/ui/company-startup.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    const command = plan.commands.find(({ id }) => id === 'optional-offline-play');
+    assert.ok(command);
+    assert.ok(command.args.includes('game/test/published-solo-entry-host.test.mjs'));
+    assert.ok(command.args.includes('game/test/optional-offline-access.test.mjs'));
+  }
+});
+
 test('localization and offline paths select only their bounded gates', () => {
   const plan = focusedTestPlan(['game/localization/en.json', 'game/offline/install.mjs'], manifest);
   assert.deepEqual(plan.categories, ['localization', 'offline']);
