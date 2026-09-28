@@ -1,7 +1,9 @@
 import { freezeDesign } from '../content-design/catalogs.mjs';
+import { CURRICULUM_SHOWCASE_LESSONS } from './curriculum-showcase-lessons.mjs';
 
 /** Fictional untimed application fixtures; no live company systems or physical controls. */
 export const CURRICULUM_LESSONS = freezeDesign([
+  ...CURRICULUM_SHOWCASE_LESSONS,
   {
     format: 'revealline-learning-lesson.v1',
     id: 'fpv-meet-aircraft-06-lesson',

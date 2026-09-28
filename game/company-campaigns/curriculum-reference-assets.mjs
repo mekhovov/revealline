@@ -4,6 +4,29 @@ import { required } from '../data-json.mjs';
 // undocumented wallpaper replacements or a recommendation for a real build.
 export const CURRICULUM_REFERENCE_ASSETS = [
   {
+    id: 'reference-ukraine-met-shirt-fragment-157571',
+    sha256: '4a5913f8a42a58165353e44bf492df473f9a90b12bf7b060cc49e3819e6de6bd',
+    missionId: 'ukraine-threads-04',
+    sourceUrl: 'https://www.metmuseum.org/art/collection/search/157571',
+    licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+    attribution:
+      'The Metropolitan Museum of Art, Fragment of a shirt, 2009.300.2713. Brooklyn Museum Costume Collection; Gift of the Brooklyn Museum, 2009; Gift of Mrs. Edward S. Harkness in memory of her mother, Elizabeth Greenman Stillman, 1931. Public Domain / CC0. Exact source photograph, unchanged.',
+    locales: {
+      en: {
+        title: 'A second documented shirt fragment',
+        alt: 'A long cream-coloured textile on black, with red branching floral embroidery, gold and silver-coloured areas, repeated small motifs along both borders, and vertical folds left of centre.',
+        caption:
+          'This is Met object 2009.300.2713, separately recorded from the earlier fragment 2009.300.2715. The museum identifies Ukrainian culture, the fourth quarter of the eighteenth century, and silk, linen and metal. Compare the two individual records; similar materials or motifs do not establish one maker, a precise shared locality or a universal symbolic meaning.',
+      },
+      uk: {
+        title: 'Другий документований фрагмент сорочки',
+        alt: 'Довгий кремовий текстиль на чорному тлі: червона розгалужена квіткова вишивка, золотисті й сріблясті ділянки, повторювані дрібні мотиви вздовж обох країв і вертикальні складки ліворуч від центру.',
+        caption:
+          'Це предмет Метрополітен 2009.300.2713, облікований окремо від попереднього фрагмента 2009.300.2715. Музей зазначає українську культуру, останню чверть XVIII століття та шовк, льон і метал. Порівнюйте два окремі записи; подібні матеріали чи мотиви не встановлюють одного майстра, точної спільної місцевості або універсального символічного значення.',
+      },
+    },
+  },
+  {
     id: 'reference-ukraine-met-shirt-fragment',
     sha256: 'edb86aaaa16ec601d1816765940cdfa37d761e3e557b9e5c2ba37d642fbc216f',
     missionId: 'ukraine-threads-01',

@@ -101,7 +101,14 @@ test('every new mission has sourced bilingual discovery content and an exact fir
   for (const { definition, rewards, missionBindings } of projects) {
     assert.equal(
       rewards.length,
-      ['fpv-meet-aircraft', 'ukraine-threads'].includes(definition.id) ? 8 : 7,
+      [
+        'fpv-meet-aircraft',
+        'ukraine-threads',
+        'social-drone-community-connections',
+        'victory-drones-ideas-understanding',
+      ].includes(definition.id)
+        ? 8
+        : 7,
     );
     for (const missionId of definition.missionIds) {
       const row = CURRICULUM_MISSIONS.find((entry) => entry.id === missionId);
@@ -256,6 +263,7 @@ test('all 108 missions have distinct admitted art and selected public dependenci
         'textile-light-left-v1',
         'textile-light-right-v1',
         'met-degas-ukrainian-dress-436157',
+        'reference-ukraine-met-shirt-fragment-157571',
         'reference-ukraine-met-shirt-fragment',
       ],
       'ukraine-cities-symbols-time': [

@@ -2614,5 +2614,14 @@
     "dependencies": [],
     "publication": "public",
     "approved": true
+  },
+  {
+    "id": "reference-ukraine-met-shirt-fragment-157571",
+    "path": "game/editions/assets/discovery/met-shirt-fragment-157571.jpg",
+    "sha256": "4a5913f8a42a58165353e44bf492df473f9a90b12bf7b060cc49e3819e6de6bd",
+    "bytes": 1761339,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
   }
 ]
