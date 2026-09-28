@@ -21,14 +21,15 @@ new exhaustive playthrough by this branch. Public player qualification must be
 reported at its actual scope.
 
 The canonical publisher is preparing a separate **17-input player-readiness
-batch**. That integration is ahead of this character work; this branch does not
+batch**, draft [PR768](https://github.com/mekhovov/revealline/pull/768). That integration is ahead of this character work; this branch does not
 allocate its version, merge its PRs or start another publisher.
 
 **Draft [PR761](https://github.com/mekhovov/revealline/pull/761)** contains the
-character, reference and authoring work. The three-change batch is pushed as
-`0b43aaa06e50bf4ca78cbd90c3c6e05afe631269`, followed by the bounded cancellation-focus
-correction documented below. It is not merged
-or publicly released and needs reconciliation against newer main. Compatible
+character, reference and authoring work. The prior three-change batch and cancellation correction are pushed through
+`71e4d55c0d6c208d15bdeb3b1f71e69a5b9eff93`. The next compatible implementation
+checkpoint adds the Scout contrast study and real local measurement described
+below. PR761 is not merged or publicly released and needs reconciliation against
+newer main. Compatible
 implementation continues in the same draft while the release queue is occupied.
 
 ## Completed foundations to preserve
@@ -97,6 +98,38 @@ Each has its own focused evidence inside one compatible PR. No additional
 release version is allocated while the canonical publisher is busy. A finished
 subset can be frozen without waiting for unrelated art or human sessions.
 
+## Next compatible batch: Scout contrast and measured comparison
+
+The fourth batch adds two native **reference-v4 Scout** images and an explicit
+choice beside the retained approved/v3 views. The authored amber battery face
+changes only central RGB clusters; silhouette, alpha, camera, motors, hubs,
+propeller direction and geometry remain exact. PNG payload is **838 bytes**.
+The loader verifies the fixed cohort and source/PNG hashes before swapping it;
+no production slot, retained pin or mission original is changed.
+
+The playable tool now optionally records the last **120 actual active frame
+intervals** and each painter's JavaScript draw duration. Pauses, loading, the
+ready cue and background gaps are segmented; measurements reset after appearance,
+effects, size or run changes. It runs both painters even when one view is hidden,
+so these numbers are not standalone game FPS or GPU time. The two decoded
+candidate images account for a **20,480-byte RGBA lower bound**; shared assets,
+canvas/GPU copies and decoder overhead remain explicitly unknown.
+
+**129/129 focused tests pass.** Independent review caught a controller Pause
+inside input polling being counted as an active measurement; the host now
+checks segment ownership after polling, with a regression through the actual
+Pause handler. The real browser completed First Return at tick 414 / 3.45 seconds,
+34.3% of a 30% target, three lives and 8,160 points; Retry retained v4 and reduced
+effects. Source, loader, reproduction and optional-build classification checks
+are recorded in [batch 4 evidence](verification/actor-batch-4/README.md).
+
+**Visual acceptance remains open:** the amber face is stronger than v3, but the
+slim body still has weak prominence at small full-board sizes. Keep it a study;
+measurement and correct propellers do not justify production adoption. Single-view
+play fits board and 48px steering controls at 390×844 and 844×390; the optional
+two-view authoring comparison can require scrolling at those sizes. This is not
+whole-product or physical-device certification.
+
 ## Remaining order and estimates
 
 These are focused effort ranges **after work starts**, not publication promises.
@@ -105,9 +138,9 @@ are additional. Update them after the current benchmark is assessed.
 
 | Priority            | Remaining item                                                                                   | Focused effort / external dependency                                                        |
 | ------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
-| Now                 | Deliver the checked three-change batch in PR761                                                  | Implementation and local checks complete; publication waits for publisher admission         |
+| Now                 | Deliver the checked four-batch subset in PR761                                                   | Implementation and local checks complete; publication waits for publisher admission         |
 | Next                | Reconcile/adopt the accepted C1/C2 subset and resolve the Team production guard                  | 1–2 days after publisher admission; release gate failures remain blocking                   |
-| C0                  | Full frame-time, decoded-memory and download comparison on accepted source                       | ½–1 day                                                                                     |
+| C0                  | Extend the new local measurement to matched accepted-source full-game baselines                  | ½–1 day                                                                                     |
 | C2                  | Actual play/counterplay assessment, audio/haptics and six-player pilot                           | 2–3 days plus participants/listening/hardware                                               |
 | C3                  | Remaining FPV/enemy bodies, Team states and native-flow gaps                                     | 3–5 days                                                                                    |
 | C4                  | Optional pursuit/interception/patrol combinations and fairness                                   | 3–5 days; preserve original edition/score/replay identities                                 |
@@ -130,6 +163,7 @@ are additional. Update them after the current benchmark is assessed.
   controller/touch certification, comprehensive offline proof or human balance.
 - **Resources:** disk space is limited and another batch is publishing. Avoid
   duplicate full builds, large artifact downloads and extra release worktrees.
+- **Current visual issue:** v4 improves central colour contrast but not enough full-board prominence for approval. Complete actual-size refinement before adopting body/rig revisions.
 - **Creative scope:** broader original artwork, meaningful encounter variety,
   audio listening and playtests still require production and review. A large
   reference list or clean inventory is not finished art.

@@ -14,6 +14,10 @@ import {
   attachDeliberateButton,
 } from '../../authoring/playable-benchmark/result-controls.mjs';
 import { createPreviewLifecycle } from '../../authoring/game-feel-lab/lifecycle.mjs';
+import {
+  createBenchmarkPerformance,
+  candidateMemory,
+} from '../../authoring/playable-benchmark/performance.mjs';
 
 const appURL = new URL('../../authoring/playable-benchmark/app.mjs', import.meta.url);
 const source = await readFile(appURL, 'utf8');
@@ -82,6 +86,8 @@ async function harness(t) {
   const scenes = [],
     requests = [],
     candidates = [];
+  let scheduledFrame = null;
+  let cpuClock = 0;
   const catalog = {
     entries: ['first', 'second'].map((id) => ({ id, manifest: { level: { name: id } } })),
   };
@@ -99,12 +105,21 @@ async function harness(t) {
       run: { tick: 0, status: 'running', level: { goal: { coverage: 0.3 } } },
       summary: { tick: 0, status: 'running', coverage: 0, lives: 3, score: 0, time: 0 },
       events: [],
+      advances: 0,
+      advance() {
+        if (this.playing) this.advances++;
+      },
       pause() {
         this.playing = false;
       },
       start() {
         this.playing = true;
         return true;
+      },
+      retry() {
+        this.playing = false;
+        this.run.tick = 0;
+        this.run.status = 'running';
       },
     };
     const actors = { snapshot: {}, pin: () => ({ approved: true }) };
@@ -133,7 +148,13 @@ async function harness(t) {
       session,
       actors,
       comparison,
-      painters: [{ draw() {} }, { draw() {} }],
+      painters: [0, 1].map(() => ({
+        draws: 0,
+        draw() {
+          this.draws++;
+        },
+      })),
+      resetPresentation() {},
       disposals: 0,
       dispose() {
         this.disposals++;
@@ -157,6 +178,8 @@ async function harness(t) {
     boardPaintSizeForRun: () => ({ width: 1152, height: 576 }),
     attachBenchmarkInput: () => input,
     createPreviewLifecycle,
+    createBenchmarkPerformance,
+    candidateMemory,
   };
   for (const item of imports)
     for (const specifier of item.specifiers)
@@ -166,8 +189,14 @@ async function harness(t) {
     document,
     window,
     matchMedia: () => ({ matches: false }),
-    requestAnimationFrame: () => 1,
-    cancelAnimationFrame() {},
+    requestAnimationFrame: (callback) => {
+      scheduledFrame = callback;
+      return 1;
+    },
+    cancelAnimationFrame() {
+      scheduledFrame = null;
+    },
+    performance: { now: () => (cpuClock += 0.5) },
     fetch: async () => ({ ok: true, json: async () => ({}) }),
     URL,
     AbortController,
@@ -183,7 +212,27 @@ async function harness(t) {
     $('cancel').focus();
     $('cancel').click();
   };
-  return { $, document, setup, summary, requests, scenes, candidates, input, accept, cancel };
+  return {
+    $,
+    document,
+    window,
+    setup,
+    summary,
+    requests,
+    scenes,
+    candidates,
+    input,
+    accept,
+    cancel,
+    frame(now) {
+      assert.ok(scheduledFrame, 'Host owns an active frame callback.');
+      scheduledFrame(now);
+    },
+    metrics() {
+      $('performance-panel').emit('toggle');
+      return JSON.parse($('performance-output').textContent);
+    },
+  };
 }
 
 test('automatic first preparation cancels to the visible native summary, retaining late disposal', async (t) => {
@@ -298,4 +347,137 @@ test('cancellation preserves unrelated focus and old completion cannot retire a 
   );
   await h.accept();
   assert.equal(h.document.activeElement, h.$('show-comparison'));
+});
+
+test('host measures only opted-in uninterrupted play and retains both painter costs', async (t) => {
+  const h = await harness(t);
+  await h.accept();
+  h.$('start').click();
+  h.frame(1000);
+  h.frame(1016);
+  assert.equal(h.metrics().timing.totalSamples, 0);
+  const advances = h.scenes[0].session.advances;
+  h.$('measure-performance').checked = true;
+  h.$('measure-performance').emit('change');
+  h.frame(1032);
+  assert.equal(h.metrics().timing.totalSamples, 0, 'First active frame establishes a baseline.');
+  h.frame(1048);
+  h.frame(1148);
+  let report = h.metrics();
+  assert.equal(report.timing.totalSamples, 2);
+  assert.equal(report.timing.frameInterval.worstMs, 100, 'Slow active intervals are not clipped.');
+  assert.equal(report.timing.referenceDrawCPU.p50Ms, 0.5);
+  assert.equal(report.timing.comparisonDrawCPU.p50Ms, 0.5);
+  assert.equal(h.scenes[0].session.advances, advances + 3);
+  h.$('pause').click();
+  h.frame(1164);
+  h.frame(1180);
+  assert.equal(h.metrics().timing.totalSamples, 2, 'Paused RAF callbacks cannot become samples.');
+  h.$('start').click();
+  h.frame(1196);
+  assert.equal(h.metrics().timing.totalSamples, 2, 'Resume does not bridge paused time.');
+  h.frame(1212);
+  h.frame(1600);
+  report = h.metrics();
+  assert.equal(report.timing.totalSamples, 3);
+  assert.equal(report.timing.excludedGapCount, 2);
+  assert.equal(h.scenes[0].session.playing, false, 'Existing long-frame pause remains.');
+  assert.equal(report.timing.frameInterval.worstMs, 100);
+  assert.equal(h.scenes[0].painters[0].draws, h.scenes[0].painters[1].draws);
+  assert.equal(
+    report.candidateMemory.approvedSharedBytes,
+    null,
+    'Unknown shared memory is not zero.',
+  );
+});
+
+test('changing comparison conditions and viewport resets samples without mixing configurations', async (t) => {
+  const h = await harness(t);
+  await h.accept();
+  h.$('measure-performance').checked = true;
+  h.$('measure-performance').emit('change');
+  h.$('start').click();
+  h.frame(1000);
+  h.frame(1016);
+  assert.equal(h.metrics().timing.totalSamples, 1);
+  h.$('show-comparison').checked = false;
+  h.$('show-comparison').emit('change');
+  h.frame(1032);
+  h.frame(1048);
+  let report = h.metrics();
+  assert.equal(report.comparisonVisible, false);
+  assert.equal(report.timing.totalSamples, 1);
+  assert.equal(report.timing.comparisonDrawCPU.sampleCount, 1, 'Hidden painter still runs.');
+  h.window.emit('resize');
+  assert.equal(h.metrics().timing.totalSamples, 0);
+  h.frame(1064);
+  h.frame(1080);
+  h.$('comparison-body').value = 'v4-detailed';
+  h.$('comparison-body').emit('change');
+  h.frame(1096);
+  h.frame(1112);
+  assert.equal(h.metrics().timing.totalSamples, 0, 'Pending appearance does not collect frames.');
+  h.cancel();
+  report = h.metrics();
+  assert.equal(report.comparison, 'approved');
+  assert.equal(report.timing.totalSamples, 0);
+  h.$('reference-reduced').checked = true;
+  h.$('reference-reduced').emit('change');
+  report = h.metrics();
+  assert.equal(report.referenceReduced, true);
+  assert.equal(report.timing.totalSamples, 0);
+});
+
+test('a controller pause during the actual input poll cannot append a paused timing sample', async (t) => {
+  const h = await harness(t);
+  await h.accept();
+  h.$('measure-performance').checked = true;
+  h.$('measure-performance').emit('change');
+  h.$('start').click();
+  h.frame(1000);
+  h.frame(1016);
+  const advances = h.scenes[0].session.advances;
+  h.input.poll = () => {
+    h.$('pause').click();
+    return {};
+  };
+  h.frame(1032);
+  const report = h.metrics();
+  assert.equal(h.scenes[0].session.playing, false);
+  assert.equal(h.scenes[0].session.advances, advances);
+  assert.equal(report.timing.totalSamples, 1);
+  assert.equal(report.timing.referenceDrawCPU.sampleCount, 1);
+  assert.equal(report.timing.comparisonDrawCPU.sampleCount, 1);
+  assert.equal(report.timing.excludedGapCount, 1);
+});
+
+test('Retry cue and background return begin new measurement segments without sampling waits', async (t) => {
+  const h = await harness(t);
+  await h.accept();
+  h.$('measure-performance').checked = true;
+  h.$('measure-performance').emit('change');
+  h.$('start').click();
+  h.frame(1000);
+  h.frame(1016);
+  assert.equal(h.metrics().timing.totalSamples, 1);
+  h.$('retry').emit('pointerdown', { button: 0, pointerId: 7, isPrimary: true });
+  h.$('retry').emit('pointerup', { pointerId: 7 });
+  h.$('retry').emit('click', { detail: 1 });
+  for (const now of [1032, 1232, 1432, 1632]) h.frame(now);
+  assert.equal(h.metrics().timing.totalSamples, 0, 'The 600 ms cue never becomes play timing.');
+  h.frame(1648);
+  h.frame(1664);
+  assert.equal(h.metrics().timing.totalSamples, 1);
+  h.document.hidden = true;
+  h.document.emit('visibilitychange');
+  h.document.hidden = false;
+  h.document.emit('visibilitychange');
+  assert.equal(h.scenes[0].session.playing, false);
+  h.frame(2000);
+  assert.equal(h.metrics().timing.totalSamples, 1);
+  h.$('start').click();
+  h.frame(2016);
+  h.frame(2032);
+  assert.equal(h.metrics().timing.totalSamples, 2);
+  assert.equal(h.metrics().timing.frameInterval.worstMs, 16);
 });

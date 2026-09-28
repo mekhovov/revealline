@@ -20,8 +20,14 @@ import {
 import { attachBenchmarkInput } from '../../authoring/playable-benchmark/controls.mjs';
 import { installActorAppearanceTransport } from './helpers/actor-appearance-transport.mjs';
 import { ACTOR_APPEARANCE_RELEASES } from '../presentation/actor-appearance-lease.mjs';
-import { acquireScoutComparison } from '../../authoring/playable-benchmark/candidate-appearance.mjs';
-import { createSceneComparison } from '../../authoring/playable-benchmark/comparison.mjs';
+import {
+  acquireScoutComparison,
+  SCOUT_COMPARISON_COHORTS,
+} from '../../authoring/playable-benchmark/candidate-appearance.mjs';
+import {
+  createSceneComparison,
+  COMPARISON_BODIES,
+} from '../../authoring/playable-benchmark/comparison.mjs';
 import { FIELD_KIT_CANDIDATE_RIGS } from '../presentation/rotor-candidate-art.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
@@ -624,7 +630,11 @@ test('scene owns the exact approved actor lease, resets visual phase on Retry, a
   scene.resetPresentation();
   assert.deepEqual(painters[0].animation, initialAnimation);
   assert.equal(picturesReleased, 0, 'Retry retains the exact loaded artwork');
-  assert.equal(scene.comparison.body, 'v3-detailed', 'Retry retains the accepted comparison');
+  assert.equal(
+    scene.comparison.body,
+    'v4-detailed',
+    'Retry retains the accepted comparison revision',
+  );
   assert.ok(candidateFiles.decoded.slice(-2).every((image) => image.closes === 0));
   assert.ok(candidateFiles.decoded.slice(0, -2).every((image) => image.closes === 1));
   scene.dispose();
@@ -702,6 +712,11 @@ test('native Scout loader verifies both treatments and exposes only source prove
   assert.equal(candidate.pin, undefined);
   assert.equal(candidate.provenance.productionRegistered, false);
   assert.equal(candidate.provenance.status, 'source-candidate-not-runtime-default');
+  assert.equal(
+    candidate.provenance.construction,
+    'reference-v3',
+    'omitted construction preserves v3 API behavior',
+  );
   assert.match(candidate.provenance.manifest.sha256, /^[a-f0-9]{64}$/);
   assert.equal(candidate.snapshot.image('enemy.border-patrol'), original);
   assert.equal(candidate.snapshot.image('player.bomber.compact'), original);
@@ -733,6 +748,101 @@ test('native Scout loader verifies both treatments and exposes only source prove
   candidate.release();
   assert.ok(files.decoded.every((image) => image.closes === 1));
   assert.throws(() => candidate.snapshot.image('player.scout.compact'), /released/);
+});
+
+test('explicit v4 Scout cohort remains separate from unchanged v3 images and delegated approval', async () => {
+  const original = { image: { id: 'approved' } };
+  const approved = { image: () => original };
+  const files = candidateTransport();
+  const v3 = await acquireScoutComparison(approved, files.options);
+  const v4 = await acquireScoutComparison(approved, {
+    ...files.options,
+    construction: 'reference-v4',
+  });
+  assert.equal(v4.provenance.construction, 'reference-v4');
+  assert.equal(
+    v4.provenance.manifest.path,
+    'authoring/library/fpv-body-contrast-candidates/manifest.json',
+  );
+  assert.equal(v4.provenance.productionRegistered, false);
+  assert.equal(v4.pin, undefined);
+  assert.equal(v4.snapshot.image('enemy.border-patrol'), original);
+  const oldHashes = {
+    compact: '4ac554d9d481c56ad12fc839d62188f89b4ca23fd430f0dc19921de268f450fb',
+    detailed: '31de37c929886b60580a1f38b166bebd3da6cc1ebbab68b786cbf2a41fd0c72a',
+  };
+  for (const treatment of ['compact', 'detailed']) {
+    const a = v3.snapshot.image(`player.scout.${treatment}`);
+    const b = v4.snapshot.image(`player.scout.${treatment}`);
+    assert.equal(a.asset.file.sha256, oldHashes[treatment]);
+    assert.notEqual(b.asset.file.sha256, a.asset.file.sha256);
+    assert.equal(b.asset.id, `candidate.reference-v4.scout.${treatment}`);
+    assert.equal(b.asset.revision, 1);
+    assert.deepEqual(b.geometry, a.geometry, 'contrast cannot move the frame, pivot or rotors');
+  }
+  v4.release();
+  v3.release();
+  assert.ok(files.decoded.every((image) => image.closes === 1));
+});
+
+test('known cohort table rejects aliases, cross-cohort manifests and extra or redirected entries before file reads', async () => {
+  const approved = { image: () => null };
+  for (const construction of [
+    'latest',
+    'reference-v5',
+    '__proto__',
+    '../reference-v4',
+    { construction: 'reference-v4' },
+  ]) {
+    let reads = 0;
+    await assert.rejects(
+      acquireScoutComparison(approved, {
+        construction,
+        fetch: () => {
+          reads++;
+        },
+      }),
+      /Unknown candidate construction/,
+    );
+    assert.equal(reads, 0);
+  }
+  for (const construction of ['reference-v3', 'reference-v4']) {
+    for (const fault of [
+      'construction',
+      'format',
+      'sources',
+      'extra',
+      'duplicate',
+      'path',
+      'revision',
+    ]) {
+      const files = candidateTransport((path, bytes) => {
+        if (!path.endsWith('/manifest.json')) return bytes;
+        const manifest = JSON.parse(bytes);
+        if (fault === 'construction')
+          manifest.construction = construction === 'reference-v3' ? 'reference-v4' : 'reference-v3';
+        if (fault === 'format') manifest.format = 'revealline-compiled-presentation.v1';
+        if (fault === 'sources')
+          manifest.sources['https://invalid.example/source.mjs'] = '0'.repeat(64);
+        if (fault === 'extra')
+          manifest.assets.push({ ...manifest.assets[0], slot: 'player.bomber.compact' });
+        if (fault === 'duplicate') manifest.assets[1] = structuredClone(manifest.assets[0]);
+        if (fault === 'path') manifest.assets[0].path = 'https://invalid.example/scout.compact.png';
+        if (fault === 'revision') manifest.assets[0].assetRevision.revision = 2;
+        return Buffer.from(JSON.stringify(manifest));
+      });
+      await assert.rejects(
+        acquireScoutComparison(approved, { ...files.options, construction }),
+        /manifest|Candidate/,
+      );
+      assert.equal(
+        files.requests.length,
+        1,
+        `${construction}/${fault} rejects at the named manifest`,
+      );
+      assert.equal(files.decoded.length, 0);
+    }
+  }
 });
 
 test('candidate byte, source, native geometry and decode mismatches fail without admitting images', async () => {
@@ -857,6 +967,8 @@ test('comparison replacement pauses without changing the real run and releases f
   const before = authoritativeCheckpoint(session.run),
     run = session.run;
   const first = comparison.select('v3-auto');
+  assert.equal(pending[0].options.construction, 'reference-v3');
+  assert.equal(pending[0].options.treatment, 'auto');
   assert.equal(session.playing, false);
   assert.equal(comparison.snapshot, original);
   session.advance({ direction: 'down' }, 0.1);
@@ -870,7 +982,9 @@ test('comparison replacement pauses without changing the real run and releases f
   assert.equal(comparison.snapshot, accepted.snapshot);
   assert.equal(accepted.releases, 0);
   const stale = comparison.select('v3-detailed');
-  const next = comparison.select('v3-compact');
+  const next = comparison.select('v4-compact');
+  assert.equal(pending[3].options.construction, 'reference-v4');
+  assert.equal(pending[3].options.treatment, 'compact');
   const newer = owned('newer');
   pending[3].resolve(newer);
   assert.equal(await next, true);
@@ -902,26 +1016,29 @@ test('comparison replacement pauses without changing the real run and releases f
 test('the shipped Scout option has exact dependencies and adds no mode core files', async () => {
   const root = new URL('../../', import.meta.url);
   const files = await collectBuildFiles(fileURLToPath(root));
-  const directory = 'authoring/library/fpv-body-detail-candidates/';
-  const candidatePaths = [
-    `${directory}manifest.json`,
-    `${directory}scout.compact.png`,
-    `${directory}scout.detailed.png`,
-  ];
-  assert.deepEqual(
-    files.filter((path) => path.startsWith(directory)),
-    candidatePaths,
-    'only the manifest and two selected Scout rasters are added',
-  );
-  const candidateManifest = JSON.parse(await readFile(new URL(candidatePaths[0], root)));
-  for (const [path, sha256] of Object.entries(candidateManifest.sources)) {
-    assert.ok(files.includes(path), `${path} is shipped without substituting a source`);
-    assert.equal(
-      createHash('sha256')
-        .update(await readFile(new URL(path, root)))
-        .digest('hex'),
-      sha256,
+  const candidatePaths = [];
+  for (const [construction, cohort] of Object.entries(SCOUT_COMPARISON_COHORTS)) {
+    const paths = ['manifest.json', 'scout.compact.png', 'scout.detailed.png'].map(
+      (name) => `${cohort.directory}/${name}`,
     );
+    candidatePaths.push(...paths);
+    assert.deepEqual(
+      files.filter((path) => path.startsWith(`${cohort.directory}/`)),
+      paths,
+      `${construction}: only the manifest and two selected Scout rasters are added`,
+    );
+    const candidateManifest = JSON.parse(await readFile(new URL(paths[0], root)));
+    assert.equal(candidateManifest.construction, construction);
+    assert.deepEqual(Object.keys(candidateManifest.sources).sort(), [...cohort.sources].sort());
+    for (const [path, sha256] of Object.entries(candidateManifest.sources)) {
+      assert.ok(files.includes(path), `${path} is shipped without substituting a source`);
+      assert.equal(
+        createHash('sha256')
+          .update(await readFile(new URL(path, root)))
+          .digest('hex'),
+        sha256,
+      );
+    }
   }
   // This executes the real source collector and closure classifier, without
   // building snapshots, archives or output directories. Binary payload contents
@@ -934,7 +1051,7 @@ test('the shipped Scout option has exact dependencies and adds no mode core file
         : Buffer.alloc(0),
     })),
   );
-  const added = new Set(candidatePaths);
+  const added = new Set([...candidatePaths, 'game/presentation/rotor-body-contrast-art.mjs']);
   const previous = entries.filter((entry) => !added.has(entry.name));
   for (const mode of ['solo', 'versus', 'team']) {
     const before = selectOfflineCore(previous, new Set(), { mode });
@@ -946,6 +1063,7 @@ test('the shipped Scout option has exact dependencies and adds no mode core file
     );
     for (const path of [
       ...candidatePaths,
+      'game/presentation/rotor-body-contrast-art.mjs',
       'game/presentation/rotor-body-detail-art.mjs',
       'game/presentation/rotor-candidate-art.mjs',
     ]) {
@@ -972,7 +1090,7 @@ async function verifyCandidateBoardPaint(scene) {
     image: { id: 'accepted-mission-original', width: 1774, height: 887 },
     fit: 'contain',
   };
-  for (const body of ['approved', 'v3-auto', 'v3-compact', 'v3-detailed']) {
+  for (const body of COMPARISON_BODIES) {
     assert.equal(await scene.comparison.select(body), true);
     for (const width of [390, 1152])
       for (const reduced of [false, true])
