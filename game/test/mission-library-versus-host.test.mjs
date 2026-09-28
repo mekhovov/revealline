@@ -152,7 +152,7 @@ test('Versus All missions lists exact Journey and retained Classic rows without 
   assert.equal(p.$('journey-mode').value, 'versus');
   assert.equal(p.$('journey-collection').value, '');
   assert.equal(p.$('journey-lifecycle').value, 'current');
-  assert.equal(p.$('journey-cards').children.length, 252);
+  assert.equal(p.$('journey-cards').children.length, 186);
   showAllLifecycles(p);
   assert.equal(p.$('journey-cards').children.length, 327);
   assert.match(p.$('journey-cards').children[0].textContent, /Journey/);

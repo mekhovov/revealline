@@ -90,7 +90,7 @@ function mode(f, value) {
 const loaded = async (f) => {
   await f.remoteReady();
   const rows = cards(f);
-  assert.equal(rows.length, 252, f.$('coop-library-remote-status').textContent);
+  assert.equal(rows.length, 186, f.$('coop-library-remote-status').textContent);
   const identities = rows.map((row) => JSON.parse(row.dataset.missionId));
   assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v25').length, 91);
   for (let edition = 9; edition <= 24; edition++) {
@@ -100,10 +100,10 @@ const loaded = async (f) => {
       `Historical v${edition} is not a current mission.`,
     );
   }
-  assert.equal(identities.filter((identity) => identity[0].startsWith('["classic",')).length, 161);
+  assert.equal(identities.filter((identity) => identity[0].startsWith('["classic",')).length, 95);
 };
 
-test('Team lazily loads 252 current and 75 archived Solo/Versus rows without decoding rewards', async (t) => {
+test('Team lazily loads 186 current and 141 archived Solo/Versus rows without decoding rewards', async (t) => {
   const f = await fixture(t);
   await open(f);
   assert.equal(cards(f).length, 14);
@@ -121,13 +121,13 @@ test('Team lazily loads 252 current and 75 archived Solo/Versus rows without dec
   assert.equal(f.doc.activeElement.id, 'journey-mode');
   assert(f.$('coop-library-remote-status').textContent.length < 80);
   assert.equal(f.artwork.calls.reads.length, pictureReads);
-  assert.equal(cards(f).filter((row) => row.textContent.includes('Unavailable')).length, 149);
+  assert.equal(cards(f).filter((row) => row.textContent.includes('Unavailable')).length, 83);
   const lifecycle = f.$('journey-lifecycle');
   lifecycle.focus();
   lifecycle.value = 'archive';
   lifecycle.emit('change');
   const archived = cards(f).map((row) => JSON.parse(row.dataset.missionId));
-  assert.equal(archived.length, 75);
+  assert.equal(archived.length, 141);
   for (let edition = 11; edition <= 24; edition++) {
     assert.equal(
       archived.filter((identity) => identity[1] === `whole-spatial-v${edition}`).length,
@@ -137,7 +137,7 @@ test('Team lazily loads 252 current and 75 archived Solo/Versus rows without dec
   }
   assert.equal(archived.filter((identity) => identity[1] === 'whole-spatial-v10').length, 3);
   assert.equal(archived.filter((identity) => identity[1] === 'whole-spatial-v9').length, 3);
-  assert.equal(archived.filter((identity) => identity[0].startsWith('["classic",')).length, 27);
+  assert.equal(archived.filter((identity) => identity[0].startsWith('["classic",')).length, 93);
   lifecycle.value = '';
   lifecycle.emit('change');
   assert.equal(cards(f).length, 327, 'All historical identities remain available in All.');
@@ -146,7 +146,7 @@ test('Team lazily loads 252 current and 75 archived Solo/Versus rows without dec
   assert.equal(cards(f).length, 327);
   lifecycle.value = 'current';
   lifecycle.emit('change');
-  assert.equal(cards(f).length, 252);
+  assert.equal(cards(f).length, 186);
   assert.equal(f.reads.length, 4);
   assert.equal(f.artwork.calls.reads.length, pictureReads);
   mode(f, 'team');

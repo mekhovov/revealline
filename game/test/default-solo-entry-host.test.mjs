@@ -93,7 +93,7 @@ function lifecycle(p, value) {
   return collection(p, '');
 }
 
-test('ordinary Solo entry separates 252 current and 75 archived missions without changing exact owners or Start, Retry and Next', async (t) => {
+test('ordinary Solo entry separates 186 current and 141 archived missions without changing exact owners or Start, Retry and Next', async (t) => {
   const p = await page(t);
   assert.equal(p.$('shell-featured').hidden, false);
   assert.equal(p.$('shell-continue').hidden, true);
@@ -117,13 +117,13 @@ test('ordinary Solo entry separates 252 current and 75 archived missions without
   await missions(p);
   assert.equal(p.$('journey-collection').value, '');
   assert.equal(p.$('journey-lifecycle').value, 'current');
-  assert.equal(p.$('journey-cards').children.length, 252);
+  assert.equal(p.$('journey-cards').children.length, 186);
   assert.equal(p.$('journey-chooser').contains(p.$('missions-catalogue')), false);
-  assert.equal(collection(p, 'Classic').length, 161);
+  assert.equal(collection(p, 'Classic').length, 95);
   assert.equal(collection(p, 'Journey').length, 91);
   const archived = lifecycle(p, 'archive');
-  assert.equal(archived.length, 75);
-  assert.equal(collection(p, 'Classic').length, 27);
+  assert.equal(archived.length, 141);
+  assert.equal(collection(p, 'Classic').length, 93);
   assert.equal(collection(p, 'Journey').length, 48);
   const all = lifecycle(p, '');
   assert.equal(all.length, 327);
@@ -262,8 +262,8 @@ test('Legacy is explicitly accessible and its unified selector opens an exact Ne
     assert.match(p.$(id).getAttribute('href'), /journey=legacy/);
   await missions(p, 'shell-catalogue');
   assert.equal(p.$('journey-collection').value, '');
-  assert.equal(p.$('journey-cards').children.length, 252);
-  assert.equal(lifecycle(p, 'archive').length, 75);
+  assert.equal(p.$('journey-cards').children.length, 186);
+  assert.equal(lifecycle(p, 'archive').length, 141);
   assert.equal(lifecycle(p, '').length, 327);
   lifecycle(p, 'current');
   const card = collection(p, 'Journey').find((candidate) =>
@@ -327,8 +327,8 @@ for (const search of ['?journey=', '?journey=unknown', '?mode-return=unknown'])
     assert.equal(p.doc.body.classList.contains('journey-preview'), false);
     assert.equal(p.$('shell-catalogue').textContent, 'All missions');
     await missions(p);
-    assert.equal(p.$('journey-cards').children.length, 252);
-    assert.equal(lifecycle(p, 'archive').length, 75);
+    assert.equal(p.$('journey-cards').children.length, 186);
+    assert.equal(lifecycle(p, 'archive').length, 141);
     assert.equal(lifecycle(p, '').length, 327);
     assert.deepEqual(p.errors, []);
   });
