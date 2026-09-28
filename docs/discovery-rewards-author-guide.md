@@ -19,7 +19,9 @@ node scripts/game-cli.mjs serve --port 8768
 Open `http://127.0.0.1:8768/authoring/company-studio/`. Select an edition, or use
 **Import catalog or draft** to open an existing source packet. The two built-in
 pilot campaigns are **Spend in Motion** and **Workshop Lights** in the
-Netherlands DroneAid edition.
+Netherlands DroneAid edition. For the current example → try → later-application
+sequence, use **Community Connections**, **Ideas into Understanding**, **Threads
+Across Ukraine** or **Meet the Aircraft**; each uses six existing arcade missions.
 
 1. Open **05 / Learning & rewards**, then select the campaign.
 2. If needed, choose **Add a reward sidecar to this campaign**. This adds an empty
@@ -129,9 +131,40 @@ The shared editor also accepts [exact soundtrack originals](discovery-audio-hand
 with exact posters, bilingual transcripts and captions. Picture Workshop hands off the complete inspected clip;
 its playback range does not silently trim the original.
 
-**Still pending:** broader optional application fixtures and simulator rewards. Two authored [verified application bonuses](discovery-learning-rewards.md) already use the existing canonical lesson verifier. The player/compiler
-gate rejects unsupported payloads and unregistered mastery requirements. Existing
-game media, characters and soundtracks retain their independent authoring paths. Registered [campaign result feedback](campaign-feedback.md) is editable and previewable through the shared discovery controls.
+The four showcases have [verified application bonuses](discovery-learning-rewards.md)
+through the canonical lesson verifier. The separate FPV package has
+[typed practice discoveries](discovery-practice-rewards.md), authored through
+[Course Studio](civilian-fpv-authoring.md), with its own course and proof admission.
+The Company/Level Studio arcade controls do not import simulator courses or grant
+practice completion. Player/compiler admission rejects unsupported payloads and
+unregistered predicates. Existing game media, characters and soundtracks retain
+their independent authoring paths. Registered [campaign result feedback](campaign-feedback.md)
+is editable and previewable through the shared discovery controls.
+
+### Edit the teaching sequence without changing the finale
+
+In Company Studio, **05 / Learning & rewards → Add a lesson sidecar** creates the
+missing lesson file when necessary. Select a mission and edit the guided bilingual
+objective, worked-example evidence, different application situation, options,
+corrective feedback and sources. **Stage lesson draft** updates the JSON buffer;
+**Validate & apply lessons** validates and applies it to the source draft. A changed
+lesson needs new lesson and fixture revisions. Any reward requiring its previous
+exact fixture must be reviewed explicitly; applying lessons never silently moves
+that reward's requirements.
+
+Use the wrong/alternative, supported/reflective, incomplete and **Resume current
+preview** actions before exporting. They run the same bounded workbench without
+player storage. For an unscored reflection, describe the consequence of each choice
+rather than marking a personal value correct. In **Interactive discovery atlas**,
+guided bilingual cards and **Add a later-application question** use the shared
+[atlas workflow](discovery-exploration.md); atlas predictions are untimed practice,
+not verified lesson evidence.
+
+Keep the six-win finale separate from an optional application reward. The latter
+can require those six wins plus the exact final lesson; changing an example or
+adding a bonus must not add a condition to an existing finale. Edit built-in
+showcases through their source modules and generator, or export an independent
+Studio draft; do not maintain competing edits to generated JSON.
 
 ## 3. Preview, export and whole-game checks
 
@@ -174,7 +207,23 @@ For a standalone compiled directory, use a fresh output name:
 node scripts/company-studio.mjs export --workspace .cache/coupa-rewards-source --edition coupa-adventure --out dist/company-exports/coupa-rewards-candidate
 ```
 
-This produces a candidate and report, not a ZIP release or publication. Leave
+For a complete authoring check, use a disposable profile and serve that compiled
+candidate independently. Win with ordinary game controls, open the optional
+activity directly from the initial won result, try an incorrect decision, then
+correct it. Confirm **Next/Retry** stays available. Reopen the earned picture and
+discovery from **Collection**, check both languages and sources, and confirm a
+revisit does not create another receipt or a new verified lesson completion.
+Temporarily unavailable exact media must keep its recovery message until the same
+original bytes return; do not replace it with a similar image.
+
+This player check is distinct from **06 / Whole-game preview**: the Studio-launched
+preview explicitly uses fresh in-memory progress and does not read, save, import
+or export a player's Journey or rewards. Guided fixture and reward previews also
+cannot supply completion evidence. The automated chain is covered by
+`game/test/company-studio-playthrough.test.mjs`; its modeled DOM/canvas boundaries
+do not establish physical touch/controller, layout or learning effectiveness.
+
+The export command produces a candidate and report, not a ZIP release or publication. Leave
 release version allocation, frozen archives and promotion to the existing release
 pipeline. For checked-in built-in content, edit the authoring source and regenerate
 through `scripts/produce-company-content.mjs`; do not maintain a generated sidecar

@@ -1,53 +1,71 @@
 # Optional practice installation observation
 
-This check uses the original optional-package ZIPs downloaded from candidate CI.
-It validates their envelope, hashes, selected source and dependency inventories
-before staging those exact validated bytes. It does not rebuild or publish them.
+This check validates frozen optional-package envelopes, hashes, selected source and
+complete dependency inventories before staging those exact bytes. It accepts local
+frozen candidates or original candidate CI downloads. It does not rebuild or publish
+them, allocate a release or grant review approval.
 
 ```sh
-node scripts/observe-optional-installation.mjs /absolute/path/to/playwright/index.mjs /absolute/path/to/frozen-optional-bundle /tmp/new-installation-observation.json
+node scripts/observe-optional-installation.mjs /absolute/path/to/playwright/index.mjs /absolute/path/to/current-frozen-bundle /tmp/new-installation-observation.json /absolute/path/to/previous-frozen-bundle
 ```
 
-The frozen bundle must contain both `civilian-flight` and `civilian-fpv`, with a
-`/revealline/` installation base. The observer uses installed Chrome, a temporary
-persistent browser profile and an isolated loopback server with production-style
-headers. It never opens the user's normal browser profile. Both test apps are
-uninstalled and the temporary profile removed on completion. Cleanup failures
-retain that directory and identify it in the receipt instead of hiding the failure.
+The current bundle must contain both `civilian-flight` and `civilian-fpv`, with a
+`/revealline/` installation base. The optional previous bundle must contain
+`civilian-fpv`. Both candidates must pass normal admission, have different versions,
+commits, trees and FPV archives, and preserve the same stable launcher manifest.
+The report identifies both sources and lists every changed FPV runtime file. The
+initial launcher comes from the previous candidate; update stages the current
+launcher's exact bytes before advancing the candidate pointer.
+
+Omit the last argument to retain the older same-payload path-fixture check. In that
+mode `v0.0.0` holds the current payload under a different local version path. Both
+modes reserve `v0.0.1` for a deliberately truncated dependency. Fixture paths must
+not collide with either candidate version. They are never published releases.
+
+The observer uses installed Chrome, a temporary persistent browser profile and an
+isolated loopback server with production-style headers. It never opens the user's
+normal browser profile. Both test apps are uninstalled and the temporary profile
+removed on completion. Cleanup failures retain that directory and identify it in
+the receipt instead of hiding the failure.
 
 The public UI prepares each package offline and imports one explicitly scripted,
-replay-verified FPV attempt. No database records, reward receipts or completion
-flags are injected. The input frames come from a frozen teaching example under a
-synthetic practice session; this establishes import/persistence behaviour, not a
-human flight or learning achievement.
+replay-verified FPV attempt. No database records, reward receipts or completion flags
+are injected. Input frames come from the previous candidate's teaching example
+under a synthetic practice session. Setup imports a deliberately unverified radio
+mapping and independent response profile, including reordered/reversed channels
+and full-travel throttle. This establishes import and persistence behaviour, not
+a human flight, learning achievement or physical-radio compatibility.
 
 The check covers:
 
 - Distinct manifest identities and coexisting prepared caches/worker scopes.
 - Chrome PWA installation, explicit standalone preference and two launched windows.
-- Offline page startup and byte-identical exported proof persistence.
-- A candidate installed over an earlier local version-path fixture.
+- Offline startup and byte-identical exported flight proofs and profile settings.
+- Installation over the admitted previous candidate or the declared path fixture.
 - A truncated dependency rejected without advancing installation pointers.
-- Removal restoring the previous pointer and offline operation.
-- Removing/uninstalling the gym while keeping the FPV registration and proof.
+- Removal restoring the previous pointer, offline operation and saved settings.
+- Removing/uninstalling the gym while preserving the FPV registration and proof.
 
-`v0.0.0` and `v0.0.1` are local path fixtures holding the same candidate payload,
-except the deliberately truncated dependency in the rejected-install fixture.
-They do not allocate releases or establish migration between different models,
-campaign revisions or historical binaries. The candidate's real version and
-source commit/tree remain recorded separately. Gameplay offline checks run in the
-browser tab; the standalone windows verify the installed launchers and coexistence.
+Gameplay offline checks run in the browser tab; the standalone windows verify the
+installed launchers and coexistence. A passing report requires browser preparation,
+OS installation, standalone windows, no captured page errors, unchanged observer
+source and successful cleanup. Failed assertions preserve completed checkpoints
+and their failure message. A distinct-candidate pass covers the listed changed
+files only; it cannot establish arbitrary historical model/schema migrations or
+production deployment and rollback.
 
-The report separates browser preparation, OS installation registration and
-standalone-window status. Failed assertions preserve the completed checkpoints
-and failure message. The observer pins its source at startup and checks that it
-remained unchanged. It never grants publication review approvals from these checks.
+The [distinct-candidate observation](verification/evidence/optional-installation-910502531.json)
+updates frozen `d22621010` / v0.142.1 to `910502531` / v0.142.2 and rolls back
+offline, retaining the exact verified proof and unverified radio/response settings.
+Its three changed runtime files are the input-guard implementation, worker and
+package manifest; the model and proof schemas are unchanged. All seven checkpoints
+and both standalone launcher windows pass, with successful cleanup.
 
-The [candidate observation](verification/evidence/optional-installation-c1a62377a.json)
+The earlier [same-payload candidate observation](verification/evidence/optional-installation-c1a62377a.json)
 records seven successful transitions and both standalone launchers on Chrome
-154.0.8037.57 in an isolated headless macOS browser session. This is one automated
-environment. Other operating systems, browser families, real radio hardware,
-real version migrations and deployed public bytes remain separate gates.
+154.0.8037.57 in an isolated headless macOS browser session. It remains evidence
+for its original narrower scope. Other operating systems, browser families,
+physical radios and deployed public bytes remain separate gates.
 
 Installation and window control use the official experimental
 [Chrome DevTools PWA protocol](https://raw.githubusercontent.com/ChromeDevTools/devtools-protocol/master/pdl/domains/PWA.pdl).
