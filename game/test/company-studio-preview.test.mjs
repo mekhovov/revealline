@@ -75,7 +75,7 @@ test('whole-game preview verifies the report, every artifact byte and exact sele
     ...f.input,
     fetcher: fetchFiles(f.result.files, requests),
   });
-  assert.equal(verified.url.href, 'http://localhost/preview/game/company.html');
+  assert.equal(verified.url.href, 'http://localhost/preview/game/company.html?studio-preview=1');
   assert.equal(verified.verifiedFiles, f.result.files.size);
   assert.equal(requests.length, f.result.files.size);
   assert(
