@@ -41,6 +41,22 @@
       ]
     },
     {
+      "id": "company-content-inventory",
+      "pathPatterns": ["^scripts/(test-)?company-content-inventory\\.mjs$"],
+      "commands": [
+        {
+          "id": "company-content-inventory",
+          "command": "node",
+          "args": [
+            "--test",
+            "scripts/test-company-content-inventory.mjs",
+            "game/test/edition-retained-presentation.test.mjs",
+            "game/test/edition-profile-compatibility.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
       "id": "offline-package-measurements",
       "pathPatterns": [
         "^scripts/(report-(published-)?offline-packages|test-report-(published-)?offline-packages)\\.mjs$"
