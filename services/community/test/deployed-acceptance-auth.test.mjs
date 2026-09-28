@@ -233,3 +233,63 @@ test('deployed acceptance sign-in times out stalled bodies and cancels them', as
   assert.equal(cancelled, true);
   assert.ok(Date.now() - startedAt < 1_000);
 });
+
+test('deployed acceptance sign-in never waits for best-effort cancellation', async () => {
+  const password = 'correct horse battery staple';
+  const credentials = validateDeployedAcceptanceAccount(
+    { email: 'creator@example.test', password },
+    'Creator authentication',
+  );
+  const headers = {
+    'set-cookie': 'better-auth.session_token=bounded; Path=/; HttpOnly; Secure',
+  };
+  const pendingCancellation = (bytes) => {
+    let cancelled = false;
+    return {
+      body: new ReadableStream({
+        start(controller) {
+          controller.enqueue(new Uint8Array(bytes));
+        },
+        cancel() {
+          cancelled = true;
+          return new Promise(() => {});
+        },
+      }),
+      cancelled: () => cancelled,
+    };
+  };
+  const within = async (operation) =>
+    Promise.race([
+      operation.then(
+        () => ({ status: 'resolved' }),
+        (error) => ({ status: 'rejected', error }),
+      ),
+      new Promise((resolve) => setTimeout(() => resolve({ status: 'timed-out' }), 250)),
+    ]);
+
+  const oversized = pendingCancellation(64 * 1024 + 1);
+  const oversizedResult = await within(
+    resolveDeployedAcceptanceAccount(credentials, {
+      baseURL: 'https://community.example.test/',
+      fetchImpl: async () => new Response(oversized.body, { headers }),
+      timeoutMs: 100,
+    }),
+  );
+  assert.equal(oversizedResult.status, 'rejected');
+  assert.equal(oversizedResult.error.message, 'Account sign-in returned too much data.');
+  assert.equal(oversizedResult.error.message.includes(password), false);
+  assert.equal(oversized.cancelled(), true);
+
+  const rejected = pendingCancellation(1);
+  const rejectedResult = await within(
+    resolveDeployedAcceptanceAccount(credentials, {
+      baseURL: 'https://community.example.test/',
+      fetchImpl: async () => new Response(rejected.body, { status: 401 }),
+      timeoutMs: 100,
+    }),
+  );
+  assert.equal(rejectedResult.status, 'rejected');
+  assert.equal(rejectedResult.error.message, 'Account sign-in failed (401).');
+  assert.equal(rejectedResult.error.message.includes(password), false);
+  assert.equal(rejected.cancelled(), true);
+});
