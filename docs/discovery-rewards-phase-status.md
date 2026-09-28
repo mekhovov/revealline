@@ -176,7 +176,6 @@ The preceding `31fcf37fe` candidate completed successfully in run `36443438023`:
 
 The recovery/capacity implementation at `d64e775db` then compiled FPV Learning twice from a clean commit, verified original distribution/source members, and emitted a valid five-file **98,801-byte** capacity packet. The [build observation](verification/evidence/discovery-2026-09-28-capacity-build.json) records the 32,417,611-byte distribution (`718171ef18d3e4fe6fa21c3a5fae5457f1c026c99770a1319e6988d63212b89d`). Its exact immutable files use 32,319,419 bytes and its stable launcher another 12,685 bytes. These component counts are not a whole-site fit verdict. The same integration PR now carries this batch; final-head full CI and the remaining phase-seven gates stay open.
 
-
 ## Main refresh and explicit-import recovery batch
 
 The integration is rebased onto `7138e7b61`. Main’s localized offline/recovery controls and
@@ -222,10 +221,26 @@ new cycles or retaining paths were recorded; its isolated browser closed. Existi
 DOM/media counts remain scoped observations, and retained-resource qualification stays open.
 Human and physical-device review remains deferred.
 
-
 The final combined company/edition/build-inspector suite passes **758/758 checks** with four
 workers in 158.2 seconds, with no failures, cancellations or skips. This follows the earlier
 756-pass run and includes both capacity regressions. Changed code passes ESLint, repository
 formatting and whitespace checks. Independent review found no remaining concrete issue in the
 import boundaries or shared inspector. The rebased source still needs its own immutable CI;
 previous-head green runs are not reused as current qualification.
+
+## Default distribution dependency repair
+
+The first manifest-only inspection at `a991ac3ea` correctly failed reference validation:
+three shared reward editors imported a Company Studio validator omitted from the default
+build. The repair explicitly includes only `authoring/company-studio/model.mjs`; neighbouring
+authoring originals remain excluded. A regression proves an existing but unselected module
+fails both ordinary build and inspection until explicitly admitted, then compares their
+actual manifests. The combined build/inspection cohort passes **36/36**, and independent
+review confirms the admitted module's dependencies are already selected. Version and size
+limits are unchanged.
+
+The subsequent `3c829b56c` attempt passed that reference boundary and then stopped at a missing
+tracked soundtrack producer in the sparse checkout. It wrote no report and established no
+default size. Exact required producer inputs are being restored from the committed source;
+normal validation remains mandatory. The device runbook now labels its old v0.141.6/v0.141.7
+receipts as historical and links this current ledger.
