@@ -177,6 +177,12 @@ function fixture({
     accumulator: 0,
     lastBuiltInArena: 'relay-yard',
     presentationPage: { ready: Promise.resolve() },
+    // These rows are already-local campaign fixtures. Optional package fetches
+    // have a separate integration fixture; retain this transaction boundary.
+    async ensureTeamPicturePackage(selection, { signal }) {
+      assert.equal(signal.aborted, false);
+      assert(leases.includes(selection));
+    },
     displayPreferences: { snapshot: () => ({ effectiveReducedEffects: true, textFace: 'sans' }) },
     currentRecipe: () => ({ options: { difficulty: 'standard', seed: 17 } }),
     freshRecipe: (level, options) => ({ level, options }),
@@ -329,7 +335,8 @@ test('boundary Next stages exact Custom artwork behind earned result, then adopt
     oldRun = f.ctx.run,
     oldPicture = f.ctx.acceptedPicture;
   const pending = f.api.nextArena();
-  await Promise.resolve();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert(f.calls.some((call) => Array.isArray(call) && call[0] === 'select'));
   assert.equal(f.ctx.run, oldRun);
   assert.equal(f.ctx.acceptedPicture, oldPicture);
   assert.equal(f.$('coop-next-cancel').hidden, false);
@@ -355,7 +362,8 @@ for (const outcome of ['cancel', 'failure', 'paint-failure', 'adoption-failure']
     const oldRun = f.ctx.run,
       oldPicture = f.ctx.acceptedPicture;
     const pending = f.api.nextArena();
-    await Promise.resolve();
+    await new Promise((resolve) => setImmediate(resolve));
+    assert(f.calls.some((call) => Array.isArray(call) && call[0] === 'select'));
     if (outcome === 'cancel') f.api.cancelNext({ restore: true });
     if (outcome === 'paint-failure')
       f.ctx.painter.paint = () => {

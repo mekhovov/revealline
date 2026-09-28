@@ -124,8 +124,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "ukraine-colour-clay-spring-01", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "ukraine-colour-clay-spring-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-colour-clay-spring-key-v1",
+        "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -252,8 +266,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "ukraine-colour-clay-spring-02", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "ukraine-colour-clay-spring-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-colour-clay-spring-key-v1",
+        "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -388,8 +416,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "ukraine-colour-clay-spring-03", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "ukraine-colour-clay-spring-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-colour-clay-spring-key-v1",
+        "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -516,8 +558,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "ukraine-colour-clay-spring-04", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "ukraine-colour-clay-spring-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-colour-clay-spring-key-v1",
+        "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -644,8 +700,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "ukraine-colour-clay-spring-05", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "ukraine-colour-clay-spring-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-colour-clay-spring-key-v1",
+        "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -780,8 +850,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "ukraine-colour-clay-spring-06", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "ukraine-colour-clay-spring-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-colour-clay-spring-key-v1",
+        "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -1002,7 +1086,21 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "ukraine-colour-clay-spring", "kind": "campaign" }
+    "revision": "3",
+    "scope": { "id": "ukraine-colour-clay-spring", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-colour-clay-spring-key-v1",
+        "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном."
+        }
+      }
+    }
   }
 ]

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { selectExactCompanyArtworkDescriptions } from '../company-campaigns/artwork.mjs';
+import { CURRICULUM_LESSONS } from '../company-campaigns/curriculum-lessons.mjs';
 import { CURRICULUM_CAMPAIGNS } from '../company-campaigns/curriculum.mjs';
 import { createCurriculumProject } from '../company-campaigns/curriculum-content.mjs';
 import { createCurriculumRewards } from '../company-campaigns/curriculum-rewards.mjs';
@@ -61,6 +62,7 @@ test('mission and finale image rewards use the reviewed selected artwork descrip
   const rewards = createCurriculumRewards({
     definition,
     source,
+    lessons: CURRICULUM_LESSONS,
     assets,
     assetSources: sourceManifest.assets,
     missionBindings: createRewardMissionBindings(source),

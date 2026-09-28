@@ -28,7 +28,9 @@ export function createContentExecutionCatalog(source, options = {}) {
     byKey = new Map(),
     byBase = new Map();
   for (const base of standard.campaigns) {
-    const baseCampaignKey = executionIdentity(base.runtime);
+    const baseCampaignKey = executionIdentity(base.runtime),
+      campaignFeedback = project.source.campaigns.find((item) => item.id === base.campaignId)
+        ?.discovery?.feedback;
     // Shared campaign membership can appear in several packs. Keep ownership
     // explicit, rather than silently selecting the first identically named one.
     const owner = `${base.packId}/${base.campaignId}`;
@@ -49,6 +51,7 @@ export function createContentExecutionCatalog(source, options = {}) {
         sourcePackId: base.packId,
         campaignId: base.campaignId,
         manifests: resolved.manifests,
+        ...(campaignFeedback ? { campaignFeedback } : {}),
         officialProgressEligible: false,
       });
       entries.push(entry);

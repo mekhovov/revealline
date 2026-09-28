@@ -85,7 +85,16 @@
       "band": 4,
       "discovery": {
         "exhibitLayout": "mosaic",
-        "finaleRewardRef": { "id": "fpv-soldering-workshop-finale", "revision": "2" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Another workshop observation is ready."],
+            "uk": ["Готове ще одне спостереження з майстерні."]
+          },
+          "revision": "feedback-91b838d4f64ba0d5",
+          "victoryMotif": "bright-return-v1"
+        },
+        "finaleRewardRef": { "id": "fpv-soldering-workshop-finale", "revision": "3" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-soldering-workshop",
@@ -272,7 +281,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "fpv-soldering-workshop-01-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-soldering-workshop-01-discovery", "revision": "3" },
         "routeDecision": "Join the stand-side island or capture the open preparation mat first. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -347,7 +356,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "fpv-soldering-workshop-02-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-soldering-workshop-02-discovery", "revision": "3" },
         "routeDecision": "Choose the labelled supply bay or return through the question-card shelf. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -422,7 +431,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "fpv-soldering-workshop-03-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-soldering-workshop-03-discovery", "revision": "3" },
         "routeDecision": "Link both holder islands before the middle capture or work from one stable side. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -505,7 +514,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-soldering-workshop-04-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-soldering-workshop-04-discovery", "revision": "3" },
         "routeDecision": "Open the broad heat-transfer terrace or use the narrow cutaway return. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -588,7 +597,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-soldering-workshop-05-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-soldering-workshop-05-discovery", "revision": "3" },
         "routeDecision": "Inspect the three small lenses separately or join the paired upper lenses first. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -671,7 +680,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-soldering-workshop-06-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-soldering-workshop-06-discovery", "revision": "3" },
         "routeDecision": "Use the central review desk as a return or connect the outside evidence chain. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -699,9 +708,9 @@
       "format": "PackDesignV1",
       "id": "fpv-soldering-workshop-pack",
       "name": "Soldering Workshop",
-      "revision": "2"
+      "revision": "3"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "2"
+  "revision": "3"
 }

@@ -18,6 +18,7 @@ export function projectRewardExhibits({ campaigns, definitions, receipts, progre
           scope: exact.scope,
           locales: exact.locales,
           receipt: receipt ?? null,
+          teaserImage: exact.teaserImage ?? null,
           image: receipt?.definition.payloads.find((payload) => payload.type === 'image') ?? null,
           progress: counts.get(definition.id) ?? null,
           order: order.get(exact.scope.id) ?? campaign.missionIds.length,

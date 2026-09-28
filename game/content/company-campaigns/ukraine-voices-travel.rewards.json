@@ -124,8 +124,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-voices-travel-01", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-voices-travel-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-voices-travel-key-v1",
+        "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window."
+        },
+        "uk": {
+          "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -252,8 +266,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-voices-travel-02", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-voices-travel-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-voices-travel-key-v1",
+        "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window."
+        },
+        "uk": {
+          "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -380,8 +408,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-voices-travel-03", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-voices-travel-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-voices-travel-key-v1",
+        "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window."
+        },
+        "uk": {
+          "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -508,8 +550,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-voices-travel-04", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-voices-travel-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-voices-travel-key-v1",
+        "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window."
+        },
+        "uk": {
+          "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -644,8 +700,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-voices-travel-05", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-voices-travel-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-voices-travel-key-v1",
+        "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window."
+        },
+        "uk": {
+          "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -772,8 +842,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-voices-travel-06", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "ukraine-voices-travel-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-voices-travel-key-v1",
+        "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window."
+        },
+        "uk": {
+          "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою."
+        }
+      }
+    }
   },
   {
     "brandId": "ukraine-culture",
@@ -994,7 +1078,21 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "ukraine-voices-travel", "kind": "campaign" }
+    "revision": "4",
+    "scope": { "id": "ukraine-voices-travel", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-voices-travel-key-v1",
+        "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window."
+        },
+        "uk": {
+          "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою."
+        }
+      }
+    }
   }
 ]

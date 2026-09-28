@@ -1,3 +1,4 @@
+import { curriculumCampaignFeedback } from './curriculum-feedback.mjs';
 import { createStarterProject } from '../content-design/starter.mjs';
 import {
   TRAIL_IMPACT_JOURNEY_POLICY,
@@ -452,6 +453,7 @@ export function createCurriculumProject({ campaignId, brandId, artwork = false }
       missionIds: [...definition.missionIds],
       discovery: {
         exhibitLayout: definition.exhibitLayout,
+        feedback: curriculumCampaignFeedback(campaignId),
         finaleRewardRef: { id: `${campaignId}-finale`, revision: presentationRevision.finale },
       },
     },
