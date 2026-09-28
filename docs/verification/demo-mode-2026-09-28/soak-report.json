@@ -1,0 +1,502 @@
+{
+  "kind": "revealline-demo-accelerated-soak.v1",
+  "startedAt": "2026-09-28T20:11:19.035Z",
+  "requestedSimulationSeconds": 7200,
+  "actualSimulationSeconds": 7231.491666666684,
+  "wallSeconds": 188.79717475,
+  "frameSeconds": 0.25,
+  "passed": true,
+  "scenes": 301,
+  "replayScenes": 151,
+  "botScenes": 150,
+  "verifiedRecordings": 301,
+  "pauseChecks": 301,
+  "sources": {
+    "immediate/first-signal-left": {
+      "kind": "replay",
+      "scenes": 13,
+      "simulationSeconds": 354.68333333333345,
+      "wallSeconds": 0.44213470899999235
+    },
+    "immediate/live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-2": {
+      "kind": "bot",
+      "scenes": 12,
+      "simulationSeconds": 185.39999999999998,
+      "wallSeconds": 7.0161882910000175
+    },
+    "immediate/crosswind-openings": {
+      "kind": "replay",
+      "scenes": 13,
+      "simulationSeconds": 499.0916666666665,
+      "wallSeconds": 0.8053020000000132
+    },
+    "immediate/live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-3": {
+      "kind": "bot",
+      "scenes": 13,
+      "simulationSeconds": 277.55,
+      "wallSeconds": 11.987254541000034
+    },
+    "immediate/night-patrol-loop": {
+      "kind": "replay",
+      "scenes": 13,
+      "simulationSeconds": 223.27500000000006,
+      "wallSeconds": 0.334664166999999
+    },
+    "immediate/relay-orchard-stairs": {
+      "kind": "replay",
+      "scenes": 13,
+      "simulationSeconds": 504.29166666666674,
+      "wallSeconds": 0.6091612090000145
+    },
+    "immediate/live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-1": {
+      "kind": "bot",
+      "scenes": 13,
+      "simulationSeconds": 273.54166666666663,
+      "wallSeconds": 12.076821540000003
+    },
+    "immediate/relay-orchard-loop": {
+      "kind": "replay",
+      "scenes": 12,
+      "simulationSeconds": 206.10000000000005,
+      "wallSeconds": 0.24150237499999594
+    },
+    "immediate/live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-3": {
+      "kind": "bot",
+      "scenes": 13,
+      "simulationSeconds": 408.41666666666674,
+      "wallSeconds": 19.46090895699999
+    },
+    "immediate/live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-2": {
+      "kind": "bot",
+      "scenes": 13,
+      "simulationSeconds": 165.8583333333333,
+      "wallSeconds": 5.907806126000006
+    },
+    "immediate/first-signal-right": {
+      "kind": "replay",
+      "scenes": 13,
+      "simulationSeconds": 354.68333333333345,
+      "wallSeconds": 0.414689209999995
+    },
+    "immediate/live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-1": {
+      "kind": "bot",
+      "scenes": 13,
+      "simulationSeconds": 164.125,
+      "wallSeconds": 6.369040293000021
+    },
+    "grid-center/first-signal-left": {
+      "kind": "replay",
+      "scenes": 13,
+      "simulationSeconds": 354.68333333333345,
+      "wallSeconds": 0.4173687929998851
+    },
+    "grid-center/live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-1": {
+      "kind": "bot",
+      "scenes": 12,
+      "simulationSeconds": 252.49999999999997,
+      "wallSeconds": 11.152724540999975
+    },
+    "grid-center/live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-2": {
+      "kind": "bot",
+      "scenes": 12,
+      "simulationSeconds": 230.20000000000002,
+      "wallSeconds": 9.610125834000023
+    },
+    "grid-center/first-signal-right": {
+      "kind": "replay",
+      "scenes": 12,
+      "simulationSeconds": 327.4000000000001,
+      "wallSeconds": 0.38025858500000326
+    },
+    "grid-center/live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-2": {
+      "kind": "bot",
+      "scenes": 12,
+      "simulationSeconds": 185.39999999999998,
+      "wallSeconds": 7.089820959000003
+    },
+    "grid-center/crosswind-openings": {
+      "kind": "replay",
+      "scenes": 12,
+      "simulationSeconds": 460.6999999999999,
+      "wallSeconds": 0.7409790419999918
+    },
+    "grid-center/live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-3": {
+      "kind": "bot",
+      "scenes": 13,
+      "simulationSeconds": 408.41666666666674,
+      "wallSeconds": 20.148026749000085
+    },
+    "grid-center/relay-orchard-loop": {
+      "kind": "replay",
+      "scenes": 12,
+      "simulationSeconds": 206.10000000000005,
+      "wallSeconds": 0.24249091599999523
+    },
+    "grid-center/live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-1": {
+      "kind": "bot",
+      "scenes": 12,
+      "simulationSeconds": 254.20000000000002,
+      "wallSeconds": 10.32167521099995
+    },
+    "grid-center/relay-orchard-stairs": {
+      "kind": "replay",
+      "scenes": 12,
+      "simulationSeconds": 465.50000000000006,
+      "wallSeconds": 0.5639422910000721
+    },
+    "grid-center/live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-3": {
+      "kind": "bot",
+      "scenes": 12,
+      "simulationSeconds": 246.09999999999994,
+      "wallSeconds": 11.026963502000013
+    },
+    "grid-center/night-patrol-loop": {
+      "kind": "replay",
+      "scenes": 13,
+      "simulationSeconds": 223.27500000000006,
+      "wallSeconds": 0.33858403900003753
+    }
+  },
+  "policies": {
+    "immediate": {
+      "scenes": 154,
+      "simulationSeconds": 3617.016666666667,
+      "availableSources": 12,
+      "visitedSources": 12
+    },
+    "grid-center": {
+      "scenes": 147,
+      "simulationSeconds": 3614.475,
+      "availableSources": 12,
+      "visitedSources": 12
+    }
+  },
+  "memory": [
+    {
+      "scenes": 0,
+      "simulationSeconds": 0,
+      "forcedGC": true,
+      "rss": 126861312,
+      "heapTotal": 54296576,
+      "heapUsed": 19608936,
+      "external": 2966282,
+      "arrayBuffers": 944530,
+      "livePlayers": 0,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 20,
+      "simulationSeconds": 463.20000000000005,
+      "forcedGC": true,
+      "rss": 189284352,
+      "heapTotal": 82870272,
+      "heapUsed": 24414056,
+      "external": 3417144,
+      "arrayBuffers": 86406,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 40,
+      "simulationSeconds": 914.8916666666664,
+      "forcedGC": true,
+      "rss": 191807488,
+      "heapTotal": 60850176,
+      "heapUsed": 24260096,
+      "external": 3406063,
+      "arrayBuffers": 67398,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 60,
+      "simulationSeconds": 1403.7083333333333,
+      "forcedGC": true,
+      "rss": 175865856,
+      "heapTotal": 64520192,
+      "heapUsed": 24614840,
+      "external": 3398211,
+      "arrayBuffers": 86406,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 80,
+      "simulationSeconds": 1872.5166666666669,
+      "forcedGC": true,
+      "rss": 163561472,
+      "heapTotal": 68190208,
+      "heapUsed": 24365576,
+      "external": 3581966,
+      "arrayBuffers": 67398,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 100,
+      "simulationSeconds": 2367.5750000000003,
+      "forcedGC": true,
+      "rss": 169656320,
+      "heapTotal": 72908800,
+      "heapUsed": 24484160,
+      "external": 3578005,
+      "arrayBuffers": 67398,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 120,
+      "simulationSeconds": 2829.0333333333324,
+      "forcedGC": true,
+      "rss": 183992320,
+      "heapTotal": 76316672,
+      "heapUsed": 25212928,
+      "external": 3522550,
+      "arrayBuffers": 86406,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 140,
+      "simulationSeconds": 3254.633333333332,
+      "forcedGC": true,
+      "rss": 167804928,
+      "heapTotal": 65044480,
+      "heapUsed": 24449744,
+      "external": 3553127,
+      "arrayBuffers": 67398,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 154,
+      "simulationSeconds": 3617.016666666665,
+      "forcedGC": true,
+      "rss": 175734784,
+      "heapTotal": 72908800,
+      "heapUsed": 24710704,
+      "external": 3478774,
+      "arrayBuffers": 67398,
+      "livePlayers": 0,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 160,
+      "simulationSeconds": 3765.6499999999983,
+      "forcedGC": true,
+      "rss": 166559744,
+      "heapTotal": 65044480,
+      "heapUsed": 24586656,
+      "external": 3546922,
+      "arrayBuffers": 110222,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 180,
+      "simulationSeconds": 4251.241666666667,
+      "forcedGC": true,
+      "rss": 174751744,
+      "heapTotal": 69763072,
+      "heapUsed": 24679880,
+      "external": 3561773,
+      "arrayBuffers": 67398,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 200,
+      "simulationSeconds": 4762.200000000003,
+      "forcedGC": true,
+      "rss": 170885120,
+      "heapTotal": 69238784,
+      "heapUsed": 24662280,
+      "external": 3409872,
+      "arrayBuffers": 67398,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 220,
+      "simulationSeconds": 5249.7083333333385,
+      "forcedGC": true,
+      "rss": 182829056,
+      "heapTotal": 77103104,
+      "heapUsed": 24924696,
+      "external": 3474811,
+      "arrayBuffers": 67398,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 240,
+      "simulationSeconds": 5723.425000000008,
+      "forcedGC": true,
+      "rss": 202801152,
+      "heapTotal": 81035264,
+      "heapUsed": 25268048,
+      "external": 3568512,
+      "arrayBuffers": 86406,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 260,
+      "simulationSeconds": 6236.333333333345,
+      "forcedGC": true,
+      "rss": 165494784,
+      "heapTotal": 63995904,
+      "heapUsed": 24712000,
+      "external": 3387812,
+      "arrayBuffers": 67398,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 280,
+      "simulationSeconds": 6715.9500000000135,
+      "forcedGC": true,
+      "rss": 173490176,
+      "heapTotal": 63209472,
+      "heapUsed": 24733832,
+      "external": 3553327,
+      "arrayBuffers": 67398,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 300,
+      "simulationSeconds": 7200.075000000017,
+      "forcedGC": true,
+      "rss": 161005568,
+      "heapTotal": 63995904,
+      "heapUsed": 24755736,
+      "external": 3529062,
+      "arrayBuffers": 67398,
+      "livePlayers": 1,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 301,
+      "simulationSeconds": 7231.491666666684,
+      "forcedGC": true,
+      "rss": 166707200,
+      "heapTotal": 65044480,
+      "heapUsed": 25061944,
+      "external": 3448472,
+      "arrayBuffers": 86406,
+      "livePlayers": 0,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    },
+    {
+      "scenes": 301,
+      "simulationSeconds": 7231.491666666684,
+      "forcedGC": true,
+      "rss": 156123136,
+      "heapTotal": 61898752,
+      "heapUsed": 25081640,
+      "external": 3367404,
+      "arrayBuffers": 86406,
+      "livePlayers": 0,
+      "liveWorkerOwners": 0,
+      "runningWorkerThreads": 0,
+      "adapterListeners": 0
+    }
+  ],
+  "errors": [],
+  "sourceSHA256": {
+    "scripts/soak-demo.mjs": "9a55a28cdb3277f43ae811147925b966271741e320f64cac8747357a9f17c7aa",
+    "game/demo-director.mjs": "76a1b275be8f28fbb7db298c5a6cc3ec5d24cd7a29a07d752d0adf05825a39d8",
+    "game/demo-sources.mjs": "98ef6476a8a31589a2d12a6a9d14dc17bff6b173e590bb58554f4fa849bef820",
+    "game/demo-catalog.mjs": "3b000d96492d94423d4496d627eb8a44a3d479500804dcbbd5a826195a7c1983",
+    "game/demo-bot.mjs": "ab2159318b9cd52ae959a45afe6bbbb9eabef9aefcac84d7d490697825793c4d",
+    "game/demo-bot-player.mjs": "49a3fcb4191eb4c8cecef04a64eacbf97faff1dc865edbd2a4acba61af7900ab",
+    "game/demo-bot-worker.mjs": "135b0c9aefbef402be23fdbd91fd16a3549a30e68d34aabdd6998152a18dc837",
+    "game/replay.mjs": "4ff829ba1e0998adf003e7991a29daea466ac7d6a2177e2115301020a3247b7b",
+    "game/replay-player.mjs": "e57dc38f6f190479cb170964852f61f33ca02d86a77feb009d65abff0d579bbb",
+    "game/campaign-contexts.mjs": "3243fc2fc9d0db9fb6cf913609a86105d87bf80270a24fde10ec3b46d5eb92b8",
+    "game/campaign-difficulty.mjs": "7890880e30df503b69fef0e44e8d58bfa919243aa535ed33c6a1afaa83367b97",
+    "game/content/campaign.json": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718",
+    "game/content/classes.json": "2f776b0dfd099478ffe78465c7b602cd98896206a222a0ed7fd4405a4a643f84",
+    "game/content/packs/fpv-arcade-r5.json": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74",
+    "game/core/abilities.mjs": "bb7cb0df95beb6878878d77cac40b2cb6f2403f74e089db46432659098fb3cde",
+    "game/core/arcade-actions.mjs": "fa88d2371b6a6c889550ab196ac0cfbc5dced9ad8493cda126928f4cd53f2726",
+    "game/core/capture.mjs": "960ebb9ecf19a656fd4fb0877cc5a1d967d1e83617b0262ba62dad4c2189aaef",
+    "game/core/classic-contour.mjs": "39f096ad8a10605031eecf49227c06d77cf5032042325c0053439ed311ce5da8",
+    "game/core/classic-definition.mjs": "fa49c1e2442a393b2be8e3d3b34a0eef188bbe158243f7c13cb824d18d1d3638",
+    "game/core/classic-motion.mjs": "d593680e715467fd4ebfd50bf68bfdd2c3690e79ebbc579a64cdbab093c0a020",
+    "game/core/classic-state.mjs": "1964712c73cbb2c793881ccf74a2899ef173eff6cc48251274cb738aa0473377",
+    "game/core/classic-step.mjs": "c6078d7ce18dc8d5b4ecf3414bbf943bcb68dd80951d68e2cc7b8f1bf5b29fca",
+    "game/core/classic-topology.mjs": "aae16753e999d4829dab13503f3ef603e42b73f4b44e782180881160651db3ff",
+    "game/core/contacts.mjs": "aadd6aceee0380ff8e9389f305fe96b6642d553ee255ebfb7bcc1251c2c7c67b",
+    "game/core/encounter.mjs": "7b98eb4ec29998ce902a62388b089a0a26b41675199bb9601e4b2a55f0df44ba",
+    "game/core/enemy-pressure.mjs": "e66302eab2bc961c3328f0fc572f21d3ea67ee32132c4d0d8f15c1c08d04a2cb",
+    "game/core/geometry.mjs": "8ca7877a89ea203f072fbf3b85f304844f3a3abcf992e8ba1a54f39957e6f331",
+    "game/core/index.mjs": "787d7cdc759b04ae2a475e8d5ac49e0618dd26f153336ea71b5920232532e1a2",
+    "game/core/level.mjs": "0a9fa39cdfa6bb6ed4c9b07a231491529777ab099f2cd6528c54fde84d5e41b8",
+    "game/core/line-impact.mjs": "cf6e1b509d6789f3bd922f1374ba4ba7a80933bb8a117058dfe579bb95b547e6",
+    "game/core/movement.mjs": "3f9ee5115eb94c001fe38595f39763b188ea276114ca21d1bc7a426be6e6922a",
+    "game/core/registry.mjs": "ca7e365071ab3c49514343ea7683d8e552d2cd3f9fdbd0f317df64a57c0b7c2c",
+    "game/core/systems.mjs": "ecfc946dbe6caf9feacab674730b8b1844e2f133c40566069d722206c6e546b6",
+    "game/core/versions.mjs": "9bc39659dde70e76c63c9f9bfaa267b3cdfa07966d9096cc079383c71478eec3",
+    "game/demo-data/catalog.json": "62330f2bfb84baa0bea047816e1e6dbdff1c910c2bd9bc2353ccc7c9a2a5cd8b",
+    "game/demo-data/crosswind-openings.replay.json": "1b4367944c4d2b7ca414aca8b2281354c74562e3267f458e6dea2a1693b28b52",
+    "game/demo-data/first-signal-left.replay.json": "497c916f313895173acaa9afa089f6c1c3d0540aee414969d53404fa6c019689",
+    "game/demo-data/first-signal-right.replay.json": "04b41a57e1521f8fde9d21cf4c2f39e4fb210128cef7545e605b0bf5ecc05de3",
+    "game/demo-data/night-patrol-loop.replay.json": "bce9e3886bc484fae0b9d451dfe9c7942119d1c6052d630dc754c6e458828963",
+    "game/demo-data/relay-orchard-loop.replay.json": "2df92bd518e4da10c6c9d0539e32a66b2e49cfaf5b86f90148f64788570a9fed",
+    "game/demo-data/relay-orchard-stairs.replay.json": "e47c9209a47f93c3052243b207b658fa9294c2c1c3c122b2b3d233436ddb29c8"
+  },
+  "qualification": "Accelerated core/director/real-worker verification. Not two wall hours, browser rendering, GPU, touch/controller hardware, audio or human watchability qualification.",
+  "finishedAt": "2026-09-28T20:14:27.841Z",
+  "players": {
+    "created": 301,
+    "disposed": 301,
+    "live": 0,
+    "peakLive": 1
+  },
+  "workers": {
+    "created": 150,
+    "liveOwners": 0,
+    "running": 0,
+    "peakRunning": 2,
+    "listeners": 0
+  },
+  "changedSources": []
+}

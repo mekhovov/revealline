@@ -1,0 +1,9 @@
+# FPV field-kit artwork
+
+Original image-generation artwork for the approved redesign. The title source is preserved in `originals/title-hangar.png`; a byte-identical working copy is in `game/ui/art/field-kit/title-hangar.png`. Generated using the built-in image tool on 2026-09-14. It contains no existing game artwork, logos or functional text.
+
+The title is a source candidate for the Phase 4 title implementation. Its actual source frame is 1672×941; the requested 960×540 target was not produced directly. Asset preparation must declare and validate its output dimensions instead of treating the prompt as verification. No small-sprite or limited-palette certification is claimed for this large scene.
+
+## Resolved generation prompt
+
+Create original production title-screen artwork for Reveal Line: a richly composed but restrained pixel-art FPV field workshop, wide 16:9 landscape, no text, logo, controls or interface. A practical four-rotor quadcopter rests on a bench on the right half, with front camera, charcoal frame, amber battery strap, short antenna, propellers, cables and subtle blue/yellow arm bindings. An open hangar reveals an orchard and distant low industrial silhouettes at dawn. A radio and goggles are secondary right-edge objects. Keep the left 42 percent dark and uncluttered for the menu. Palette: ink #070B12, slate #101923, dusty blue shadows, restrained cyan #78DCE8, amber #F4BF62, offwhite #F3F0DB, desaturated olive foliage. Use deliberate pixel clusters, stair-step diagonals, consistent detail density, controlled palette grouping and horizontal light bands. Avoid painterly brushing, photorealism, 3D rendering, smooth bloom, blur and overlaid scanlines. Maintain a recognizable drone silhouette at small display sizes. Opaque PNG, ideally 960×540 or a clean integer multiple. Original scene, no watermark.

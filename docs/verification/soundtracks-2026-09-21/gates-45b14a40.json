@@ -1,0 +1,140 @@
+{
+  "commit": "45b14a403cdb663b5b8d3c5db94269e32e09b55d",
+  "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/soundtrack-implementation/frozen-final/source",
+  "startedAt": "2026-09-20T22:43:13.014Z",
+  "node": "v20.19.5",
+  "nodeExecutable": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+  "dependencies": {
+    "type": "symlink",
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules",
+    "excludedFromSourceManifest": true
+  },
+  "sourceFiles": 2047,
+  "sourceManifestSha256": "94ea19dda9bc0a2cdf1c59006dec19b2246b3585e820eb71e6dd1ad1f1d0a664",
+  "gates": [
+    {
+      "id": "test",
+      "command": "npm",
+      "args": [
+        "test"
+      ],
+      "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/soundtrack-implementation/frozen-final/source",
+      "startedAt": "2026-09-20T22:43:13.016Z",
+      "status": "passed",
+      "log": "test.log",
+      "processId": 49917,
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-09-20T22:58:06.730Z",
+      "logBytes": 823891,
+      "logSha256": "61cf2f08d8bca378ccca1acbe4241a867d4b109301d24116990d4165534c6caa",
+      "tapSummary": {
+        "tests": "3514",
+        "suites": "0",
+        "pass": "3514",
+        "fail": "0",
+        "cancelled": "0",
+        "skipped": "0",
+        "todo": "0",
+        "duration_ms": "893337.17225"
+      },
+      "topLevelReportedPasses": 3423,
+      "nestedReportedPasses": 91
+    },
+    {
+      "id": "lint",
+      "command": "npm",
+      "args": [
+        "run",
+        "lint"
+      ],
+      "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/soundtrack-implementation/frozen-final/source",
+      "startedAt": "2026-09-20T22:43:13.018Z",
+      "status": "passed",
+      "log": "lint.log",
+      "processId": 49919,
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-09-20T22:43:23.617Z",
+      "logBytes": 148,
+      "logSha256": "3c917700a17fc030deda09452cc9c4a2d3f2960a2c404cc1d3d948e8098228b4"
+    },
+    {
+      "id": "format",
+      "command": "npm",
+      "args": [
+        "run",
+        "format:check"
+      ],
+      "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/soundtrack-implementation/frozen-final/source",
+      "startedAt": "2026-09-20T22:43:13.019Z",
+      "status": "passed",
+      "log": "format.log",
+      "processId": 49921,
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-09-20T22:43:39.530Z",
+      "logBytes": 195,
+      "logSha256": "8d75770b74ab217c5680c171c91a689d03b14f59da11e4c08e5f360ca3e4a328"
+    },
+    {
+      "id": "native-format",
+      "command": "npm",
+      "args": [
+        "run",
+        "format:native:check"
+      ],
+      "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/soundtrack-implementation/frozen-final/source",
+      "startedAt": "2026-09-20T22:43:13.020Z",
+      "status": "passed",
+      "log": "native-format.log",
+      "processId": 49923,
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-09-20T22:43:14.187Z",
+      "logBytes": 254,
+      "logSha256": "1a2d11555e3320b10346ce8ebd9539703d1596f97386fd4ffeba7d1d4718a9df"
+    },
+    {
+      "id": "content-validation",
+      "command": "npm",
+      "args": [
+        "run",
+        "validate"
+      ],
+      "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/soundtrack-implementation/frozen-final/source",
+      "startedAt": "2026-09-20T22:43:13.020Z",
+      "status": "passed",
+      "log": "content-validation.log",
+      "processId": 49925,
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-09-20T22:43:41.490Z",
+      "logBytes": 639,
+      "logSha256": "916fa54d1c0e0cd9ba0cd30718b81bddbb4178fa5d072b8474afdaac0d5e9347"
+    },
+    {
+      "id": "motion-lab-syntax",
+      "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+      "args": [
+        "--check",
+        "authoring/motion-lab/app.js"
+      ],
+      "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/soundtrack-implementation/frozen-final/source",
+      "startedAt": "2026-09-20T22:43:13.021Z",
+      "status": "passed",
+      "log": "motion-lab-syntax.log",
+      "processId": 49926,
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-09-20T22:43:13.045Z",
+      "logBytes": 0,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "sourceUnchangedAfterGates": true,
+  "finishedAt": "2026-09-20T22:58:07.721Z",
+  "status": "passed",
+  "qualificationComplete": true,
+  "scope": "Source and software gates for this exact commit only; does not certify musical quality or create/approve any of the 36 planned original recordings."
+}

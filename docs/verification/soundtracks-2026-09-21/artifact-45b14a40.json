@@ -1,0 +1,37 @@
+{
+  "sourceRevision": "45b14a403cdb663b5b8d3c5db94269e32e09b55d",
+  "version": "0.44.2",
+  "fileCount": 367,
+  "totalBytes": 444064468,
+  "manifestSha256": "753f6e8491c3b77ca3d1dd0274c226196c5ef65b1dd49c9f8217dd8927812a40",
+  "distributionBytes": 444179532,
+  "distributionSha256": "7b98e4ffe7999afab88e74026ec04144bdb62b995a2156c0f6a9db310af4ecba",
+  "sourceArchiveSha256": "4b97901865b88d61a6b49b319a7761967eae1f121e6d6c6e1f414b8ab6deb441",
+  "optionalAudio": [
+    {
+      "path": "optional/soundtracks/3xblast.pop-punk-chiptune.rlsound",
+      "bytes": 27157529,
+      "sha256": "8e7a25ba954c78916d87443ba3bca2c967b90c9c1f6f90a2a1fd8900a1d3b593"
+    },
+    {
+      "path": "optional/soundtracks/holizna.retro-wave-1.rlsound",
+      "bytes": 52541133,
+      "sha256": "0e97b6c5330f197e3427313db3100c5cb941b11f66553927cec7c1344b74fc8e"
+    },
+    {
+      "path": "optional/soundtracks/holizna.retro-wave-2.rlsound",
+      "bytes": 41485046,
+      "sha256": "b5c78ec7b8e19389090e68b18670ab05378e5646fac025308158058a5767c08e"
+    },
+    {
+      "path": "optional/soundtracks/licensed.rock-metal.rlsound",
+      "bytes": 24068144,
+      "sha256": "5519e4091bc05ff1d745c740c4abd2d0d048a2df4374feb4a01094002802b17a"
+    }
+  ],
+  "allManifestFilesVerified": true,
+  "zipEntriesVerified": 368,
+  "coreFileCount": 318,
+  "coreBytes": 53639799,
+  "optionalAudioExcludedFromCore": true
+}

@@ -1,0 +1,495 @@
+{
+  "version": "xonix-replay.v3",
+  "build": "authored-attract-route.v1",
+  "ruleset": "xonix-core.v2",
+  "level": {
+    "version": "xonix-level.v1",
+    "id": "signal-03",
+    "revision": "1",
+    "name": "Crosswind",
+    "width": 48,
+    "height": 36,
+    "spawn": {
+      "x": 24.5,
+      "y": 0.5
+    },
+    "walls": [],
+    "enemies": [
+      {
+        "id": "west",
+        "type": "bouncer",
+        "x": 11.5,
+        "y": 24.5,
+        "vx": 2.5,
+        "vy": -2.1,
+        "radius": 0.3
+      },
+      {
+        "id": "east",
+        "type": "bouncer",
+        "x": 38.5,
+        "y": 12.5,
+        "vx": -2.2,
+        "vy": 2.5,
+        "radius": 0.3
+      }
+    ],
+    "objectives": [],
+    "supplies": [
+      {
+        "id": "home",
+        "x": 24.5,
+        "y": 0.5,
+        "radius": 2
+      }
+    ],
+    "goal": {
+      "coverage": 0.62
+    },
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 10,
+      "boostMultiplier": 1.5,
+      "respawnSeconds": 0.7,
+      "graceSeconds": 0.7,
+      "playerRadius": 0.18,
+      "pointsPerCell": 10,
+      "objectivePoints": 500,
+      "timeMedals": [50, 89],
+      "switchCooldownSeconds": 2,
+      "timeLimitSeconds": 0,
+      "cutTimeLimitSeconds": 0,
+      "maxTrailCells": 0
+    },
+    "signalZones": [],
+    "hangars": [
+      {
+        "id": "home-hangar",
+        "x": 24.5,
+        "y": 0.5,
+        "radius": 2
+      }
+    ]
+  },
+  "options": {
+    "seed": 1,
+    "turnPolicy": "immediate",
+    "classId": "scout",
+    "classRecipes": [
+      {
+        "id": "scout",
+        "label": "Scout",
+        "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+        "primitive": "scan",
+        "capacity": 0,
+        "cooldown": 6,
+        "duration": 4,
+        "radius": 48,
+        "revision": "1"
+      },
+      {
+        "id": "bomber",
+        "label": "Light carrier",
+        "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+        "primitive": "stun-field",
+        "capacity": 1,
+        "cooldown": 2,
+        "duration": 2.5,
+        "radius": 3,
+        "revision": "1"
+      },
+      {
+        "id": "carrier",
+        "label": "Heavy carrier",
+        "description": "Carry two charges; each creates the same temporary stun field.",
+        "primitive": "stun-field",
+        "capacity": 2,
+        "cooldown": 2,
+        "duration": 2.5,
+        "radius": 3,
+        "revision": "1"
+      },
+      {
+        "id": "interceptor",
+        "label": "Interceptor",
+        "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+        "primitive": "shield",
+        "capacity": 0,
+        "cooldown": 9,
+        "duration": 1.5,
+        "radius": 0,
+        "revision": "1"
+      },
+      {
+        "id": "fiber",
+        "label": "Fiber relay",
+        "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+        "primitive": "scan",
+        "capacity": 0,
+        "cooldown": 7,
+        "duration": 3,
+        "radius": 30,
+        "signalResistance": true,
+        "moveSpeedMultiplier": 1,
+        "revision": "1"
+      },
+      {
+        "id": "impact",
+        "label": "Impact craft",
+        "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+        "primitive": "impact-pulse",
+        "capacity": 0,
+        "cooldown": 10,
+        "duration": 3,
+        "radius": 5,
+        "revision": "1"
+      },
+      {
+        "id": "trapper",
+        "label": "Trapper",
+        "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+        "primitive": "slow-field",
+        "capacity": 1,
+        "cooldown": 2,
+        "duration": 4,
+        "radius": 4,
+        "slowFactor": 0.25,
+        "revision": "1"
+      }
+    ]
+  },
+  "segments": [
+    {
+      "ticks": 1,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": true,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 96,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 60,
+      "input": {
+        "direction": "down",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 96,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 60,
+      "input": {
+        "direction": "up",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 1,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": true,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 192,
+      "input": {
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 120,
+      "input": {
+        "direction": "down",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 192,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 120,
+      "input": {
+        "direction": "up",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 1,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": true,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 288,
+      "input": {
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 180,
+      "input": {
+        "direction": "down",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 336,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 180,
+      "input": {
+        "direction": "up",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 1,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": true,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 432,
+      "input": {
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 240,
+      "input": {
+        "direction": "down",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 432,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 240,
+      "input": {
+        "direction": "up",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 1,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": true,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 480,
+      "input": {
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 312,
+      "input": {
+        "direction": "down",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 480,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 66,
+      "input": {
+        "direction": "up",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    }
+  ],
+  "releaseAfter": false,
+  "ticks": 4607,
+  "summary": {
+    "ruleset": "xonix-core.v2",
+    "levelId": "signal-03",
+    "revision": "1",
+    "seed": 1,
+    "turnPolicy": "immediate",
+    "classId": "scout",
+    "activeClassId": "scout",
+    "rosterHash": "roster-v1-e159e435",
+    "classHistory": [
+      {
+        "classId": "scout",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "tick": 0
+      }
+    ],
+    "switches": 0,
+    "failureCause": null,
+    "classRevision": "1",
+    "loadoutHash": "loadout-v1-aaa4aadd",
+    "status": "won",
+    "won": true,
+    "tick": 4607,
+    "time": 38.39166666666513,
+    "lives": 3,
+    "score": 10660,
+    "coverage": 0.6815856777493606,
+    "claimedCount": 1066,
+    "totalClaimable": 1564,
+    "medal": "gold",
+    "objectives": {
+      "captured": 0,
+      "total": 0,
+      "required": 0
+    }
+  },
+  "checkpoint": {
+    "algorithm": "fnv1a64-state-v2",
+    "hash": "606285fafb3921a9",
+    "sections": {
+      "identity": "0878a2cdb1938852",
+      "configuration": "99a31a6bd112d519",
+      "board": "ec8ea6ad08bdf4f5",
+      "player": "1a8302570c5e9d11",
+      "trail": "f0ca473df9efdcc8",
+      "enemies": "d99ae6d4f6df5603",
+      "objectives": "09612b07b5ecb5a5",
+      "supplies": "e1b45854413ff5f8",
+      "ability": "e741fccd672232c7",
+      "clock": "24091d38ba0a3e1d",
+      "continuation": "a9d828ced6380d30",
+      "result": "077fa8451935cfde"
+    }
+  }
+}

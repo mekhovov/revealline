@@ -1,0 +1,701 @@
+{
+  "format": "revealline-soundtrack-albums.v1",
+  "albums": [
+    {
+      "id": "holizna.retro-wave-1",
+      "title": "Holizna — Retro Wave 1",
+      "genre": "Synthwave / electronic",
+      "description": "Seven tracks from Holizna’s Retro Wave Collection.",
+      "credit": "Holizna — Retro Wave Collection",
+      "source": "https://opengameart.org/content/retro-wave-collection",
+      "path": "optional/soundtracks/holizna.retro-wave-1.rlsound",
+      "bytes": 52541133,
+      "sha256": "0e97b6c5330f197e3427313db3100c5cb941b11f66553927cec7c1344b74fc8e",
+      "library": {
+        "format": "revealline-soundtrack.v1",
+        "tracks": [
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "holizna.drama",
+            "title": "Drama",
+            "artist": "Holizna",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "bacdf4eae1d6031a357837389b86f5b114997629be60ca9cb3d2e14284fee34b",
+              "bytes": 8431885,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 48000,
+              "channels": 2,
+              "frames": 8783,
+              "durationSeconds": 210.792
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Holizna — Retro Wave Collection",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/retro-wave-collection"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "holizna.retro-soundtrack",
+            "title": "Retro Soundtrack",
+            "artist": "Holizna",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "b5f4aaee16d26df31fb64d19d80d98190b617a3e8bfa41c4f20a977bdbf56982",
+              "bytes": 6308365,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 48000,
+              "channels": 2,
+              "frames": 6571,
+              "durationSeconds": 157.704
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Holizna — Retro Wave Collection",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/retro-wave-collection"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "holizna.cyber-anxiety",
+            "title": "Cyber Anxiety",
+            "artist": "Holizna",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "10c172f2fcc6cd889fcbefcd8ac64d18e494748223973fba906d7371575181ed",
+              "bytes": 6799885,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 48000,
+              "channels": 2,
+              "frames": 7083,
+              "durationSeconds": 169.992
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Holizna — Retro Wave Collection",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/retro-wave-collection"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "holizna.lost-in-the-jungle",
+            "title": "Lost In The Jungle",
+            "artist": "Holizna",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "e50fd5b7f3275040ba246df9ce2ed9a07b7c015d90ce628692f3c7615cd9dee3",
+              "bytes": 6492685,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 48000,
+              "channels": 2,
+              "frames": 6763,
+              "durationSeconds": 162.312
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Holizna — Retro Wave Collection",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/retro-wave-collection"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "holizna.night-life",
+            "title": "Night Life",
+            "artist": "Holizna",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "119b628fece763ccaf3da607d848258e6a281d6a45d0e27ac6c6841ee3022b21",
+              "bytes": 8960845,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 48000,
+              "channels": 2,
+              "frames": 9334,
+              "durationSeconds": 224.016
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Holizna — Retro Wave Collection",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/retro-wave-collection"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "holizna.day-dreams",
+            "title": "Day Dreams",
+            "artist": "Holizna",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "345324857ee7c8ffc6ae15b8d646036f3630fbc7c4470cc633907715bfaad44f",
+              "bytes": 7901965,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 48000,
+              "channels": 2,
+              "frames": 8231,
+              "durationSeconds": 197.544
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Holizna — Retro Wave Collection",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/retro-wave-collection"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "holizna.fires-uptown",
+            "title": "Fires Uptown",
+            "artist": "Holizna",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "01fc5e02157285c9ceb8f3c2d303768dfb02a43896f9c75a07629628330af126",
+              "bytes": 7640845,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 48000,
+              "channels": 2,
+              "frames": 7959,
+              "durationSeconds": 191.016
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Holizna — Retro Wave Collection",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/retro-wave-collection"
+            }
+          }
+        ],
+        "playlists": [
+          {
+            "id": "holizna.retro-wave-1",
+            "title": "Holizna — Retro Wave 1",
+            "trackIds": [
+              "holizna.drama",
+              "holizna.retro-soundtrack",
+              "holizna.cyber-anxiety",
+              "holizna.lost-in-the-jungle",
+              "holizna.night-life",
+              "holizna.day-dreams",
+              "holizna.fires-uptown"
+            ],
+            "order": "ordered",
+            "repeat": "all"
+          }
+        ],
+        "assignments": [],
+        "selection": {
+          "playlistId": "holizna.retro-wave-1"
+        }
+      }
+    },
+    {
+      "id": "holizna.retro-wave-2",
+      "title": "Holizna — Retro Wave 2",
+      "genre": "Synthwave / electronic",
+      "description": "Six more tracks from Holizna’s Retro Wave Collection.",
+      "credit": "Holizna — Retro Wave Collection",
+      "source": "https://opengameart.org/content/retro-wave-collection",
+      "path": "optional/soundtracks/holizna.retro-wave-2.rlsound",
+      "bytes": 41485046,
+      "sha256": "b5c78ec7b8e19389090e68b18670ab05378e5646fac025308158058a5767c08e",
+      "library": {
+        "format": "revealline-soundtrack.v1",
+        "tracks": [
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "holizna.mutant-club",
+            "title": "Mutant Club",
+            "artist": "Holizna",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "385d8b71a88b933f5360ef63ed1e777ceb869e32ad6b1c6a4b784cba56a0255c",
+              "bytes": 5228365,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 48000,
+              "channels": 2,
+              "frames": 5446,
+              "durationSeconds": 130.704
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Holizna — Retro Wave Collection",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/retro-wave-collection"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "holizna.we-used-to-dance",
+            "title": "We used To Dance",
+            "artist": "Holizna",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "5af6bb3a28e3e8a45996c64638ebfbaf7abb71954a2a957de4b89141f555dbf2",
+              "bytes": 8572045,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 48000,
+              "channels": 2,
+              "frames": 8929,
+              "durationSeconds": 214.296
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Holizna — Retro Wave Collection",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/retro-wave-collection"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "holizna.machines-with-feelings",
+            "title": "Machines With Feelings",
+            "artist": "Holizna",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "abe5a49446af9a06514277dd4e585694cd0be70a4191ed9932a419f3086a4930",
+              "bytes": 7920205,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 48000,
+              "channels": 2,
+              "frames": 8250,
+              "durationSeconds": 198
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Holizna — Retro Wave Collection",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/retro-wave-collection"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "holizna.retro-synths",
+            "title": "Retro Synths",
+            "artist": "Holizna",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "0aba9efcd8b2d6b127ac69676e15c7364ba5e2ed0adc811a19aa2da2eb2ed1d7",
+              "bytes": 8919565,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 48000,
+              "channels": 2,
+              "frames": 9291,
+              "durationSeconds": 222.984
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Holizna — Retro Wave Collection",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/retro-wave-collection"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "holizna.50-over-the-speed-limit",
+            "title": "50 Over The Speed Limit",
+            "artist": "Holizna",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "c00de3e6294bc7dbd484c26815dfcfe0787cb352e7129a0e84ba14941fcab37f",
+              "bytes": 5228365,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 48000,
+              "channels": 2,
+              "frames": 5446,
+              "durationSeconds": 130.704
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Holizna — Retro Wave Collection",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/retro-wave-collection"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "holizna.dear-mr-super-computer",
+            "title": "Dear Mr Super Computer",
+            "artist": "Holizna",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "ea56caa66bd6c7ae35e07da2ee3912588e4934970d887f6cc1427716c30ef66b",
+              "bytes": 5612365,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 48000,
+              "channels": 2,
+              "frames": 5846,
+              "durationSeconds": 140.304
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Holizna — Retro Wave Collection",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/retro-wave-collection"
+            }
+          }
+        ],
+        "playlists": [
+          {
+            "id": "holizna.retro-wave-2",
+            "title": "Holizna — Retro Wave 2",
+            "trackIds": [
+              "holizna.mutant-club",
+              "holizna.we-used-to-dance",
+              "holizna.machines-with-feelings",
+              "holizna.retro-synths",
+              "holizna.50-over-the-speed-limit",
+              "holizna.dear-mr-super-computer"
+            ],
+            "order": "ordered",
+            "repeat": "all"
+          }
+        ],
+        "assignments": [],
+        "selection": {
+          "playlistId": "holizna.retro-wave-2"
+        }
+      }
+    },
+    {
+      "id": "licensed.rock-metal",
+      "title": "Rock & Metal",
+      "genre": "Rock / metal",
+      "description": "Four guitar-led tracks by Emma_MA, HydroGene and Vitalezzz.",
+      "credit": "Emma_MA, HydroGene, Vitalezzz",
+      "source": "https://opengameart.org/content/megasong",
+      "path": "optional/soundtracks/licensed.rock-metal.rlsound",
+      "bytes": 24068144,
+      "sha256": "5519e4091bc05ff1d745c740c4abd2d0d048a2df4374feb4a01094002802b17a",
+      "library": {
+        "format": "revealline-soundtrack.v1",
+        "tracks": [
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "emma-ma.megasong",
+            "title": "Megasong",
+            "artist": "Emma_MA",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "13ac89fa8e5b12b78c872f981376315d0b9d33829ab85f259972be54913f8239",
+              "bytes": 5374338,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 44100,
+              "channels": 2,
+              "frames": 8585,
+              "durationSeconds": 224.26122448979592
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Emma_MA — Megasong",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/megasong"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "hydrogene.determination",
+            "title": "Determination",
+            "artist": "HydroGene",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "409a98ca2923cbe78427ba21f8f5131fb9f3439a255be562bcd840b111586fe7",
+              "bytes": 2745003,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 44100,
+              "channels": 2,
+              "frames": 2627,
+              "durationSeconds": 68.62367346938775
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "HydroGene — Determination",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/determination-anime-style-music"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "vitalezzz.silver-bullet",
+            "title": "Silver Bullet",
+            "artist": "Vitalezzz",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "ee645b6a0cf9c8cd45fa96882cd35cc3ba5ffd0a5b4fb92544d8ee49d24cedf1",
+              "bytes": 8675578,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 48000,
+              "channels": 2,
+              "frames": 9037,
+              "durationSeconds": 216.888
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Vitalezzz — Silver Bullet",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/silver-bullet"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "vitalezzz.devoted-guard",
+            "title": "Devoted Guard",
+            "artist": "Vitalezzz",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "6a7ab8157315c16eee234fd0eb5c523dc830c335272cec3cc5e795a5aa067e26",
+              "bytes": 7270456,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 44100,
+              "channels": 2,
+              "frames": 6958,
+              "durationSeconds": 181.76
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "Vitalezzz — Devoted Guard",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/devoted-guard"
+            }
+          }
+        ],
+        "playlists": [
+          {
+            "id": "licensed.rock-metal",
+            "title": "Rock & Metal",
+            "trackIds": [
+              "emma-ma.megasong",
+              "hydrogene.determination",
+              "vitalezzz.silver-bullet",
+              "vitalezzz.devoted-guard"
+            ],
+            "order": "ordered",
+            "repeat": "all"
+          }
+        ],
+        "assignments": [],
+        "selection": {
+          "playlistId": "licensed.rock-metal"
+        }
+      }
+    },
+    {
+      "id": "3xblast.pop-punk-chiptune",
+      "title": "3xBlast — Pop-Punk Chiptune",
+      "genre": "Pop-punk / chiptune",
+      "description": "Seven instrumental tracks from 3xBlast’s Babe, You Look Poggers Tonight! album.",
+      "credit": "3xBlast",
+      "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+      "path": "optional/soundtracks/3xblast.pop-punk-chiptune.rlsound",
+      "bytes": 27157529,
+      "sha256": "8e7a25ba954c78916d87443ba3bca2c967b90c9c1f6f90a2a1fd8900a1d3b593",
+      "library": {
+        "format": "revealline-soundtrack.v1",
+        "tracks": [
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "3xblast.a-band-of-jellyfish",
+            "title": "A Band of Jellyfish",
+            "artist": "3xBlast",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "f03927dbb34fca2946b4d156523e24d8ada69fbf390ed522597b9fbaedbf09a6",
+              "bytes": 1423569,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 44100,
+              "channels": 2,
+              "frames": 1703,
+              "durationSeconds": 44.4865306122449
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "3xBlast — A Band of Jellyfish",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "3xblast.babe-you-look-poggers-tonight",
+            "title": "Babe, You Look Poggers Tonight!",
+            "artist": "3xBlast",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "709bdef4fae6f42a2747ddab802ce3087c79e126037f64b9d60b0fa71160c536",
+              "bytes": 3841044,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 44100,
+              "channels": 2,
+              "frames": 4595,
+              "durationSeconds": 120.0326530612245
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "3xBlast — Babe, You Look Poggers Tonight!",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "3xblast.if-you-re-thinking-about-giving-up-think-again-beause-i-believe-in-you",
+            "title": "If You're Thinking About Giving Up, Think Again Beause I Believe In You!",
+            "artist": "3xBlast",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "e9cd1330b99e2f978b04795a7311c37f2fd7e2419bfd89c3c4277bfd15f216fa",
+              "bytes": 5684244,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 44100,
+              "channels": 2,
+              "frames": 6800,
+              "durationSeconds": 177.6326530612245
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "3xBlast — If You're Thinking About Giving Up, Think Again Beause I Believe In You!",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "3xblast.let-s-go-olive-boy",
+            "title": "Let's Go, Olive Boy!",
+            "artist": "3xBlast",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "f97ea7ef15cff0de647b8116a8e917827268559b35f3bf3cad58ad901132b49f",
+              "bytes": 2972525,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 44100,
+              "channels": 2,
+              "frames": 3556,
+              "durationSeconds": 92.89142857142858
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "3xBlast — Let's Go, Olive Boy!",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "3xblast.now-this-is-a-waterpark",
+            "title": "Now This Is A Waterpark!",
+            "artist": "3xBlast",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "93634c4c3d76558d0b4c80740883223c2d68cc0a095142c420107b2f8b08d037",
+              "bytes": 3890364,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 44100,
+              "channels": 2,
+              "frames": 4654,
+              "durationSeconds": 121.5738775510204
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "3xBlast — Now This Is A Waterpark!",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "3xblast.thanks-for-listening",
+            "title": "Thanks For Listening!",
+            "artist": "3xBlast",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "ecf32b424b78773ba6df4c56a5068ddb0e1674f5c3fdadc47d23c79dde15f5af",
+              "bytes": 1781342,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 44100,
+              "channels": 2,
+              "frames": 2131,
+              "durationSeconds": 55.666938775510204
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "3xBlast — Thanks For Listening!",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks"
+            }
+          },
+          {
+            "format": "revealline-audio-track.v1",
+            "id": "3xblast.the-best-move-is-to-keep-going",
+            "title": "The Best Move Is To Keep Going",
+            "artist": "3xBlast",
+            "kind": "mp3",
+            "asset": {
+              "sha256": "bdff30f60f78f5c6e5103ba387f31b98672b8514358a9624207c33aeed1ac9c7",
+              "bytes": 7559209,
+              "mime": "audio/mpeg",
+              "mpegVersion": "1",
+              "sampleRate": 44100,
+              "channels": 2,
+              "frames": 9043,
+              "durationSeconds": 236.22530612244898
+            },
+            "rights": {
+              "kind": "licensed",
+              "credit": "3xBlast — The Best Move Is To Keep Going",
+              "license": "CC0 1.0 Universal",
+              "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks"
+            }
+          }
+        ],
+        "playlists": [
+          {
+            "id": "3xblast.pop-punk-chiptune",
+            "title": "3xBlast — Pop-Punk Chiptune",
+            "trackIds": [
+              "3xblast.a-band-of-jellyfish",
+              "3xblast.babe-you-look-poggers-tonight",
+              "3xblast.if-you-re-thinking-about-giving-up-think-again-beause-i-believe-in-you",
+              "3xblast.let-s-go-olive-boy",
+              "3xblast.now-this-is-a-waterpark",
+              "3xblast.thanks-for-listening",
+              "3xblast.the-best-move-is-to-keep-going"
+            ],
+            "order": "ordered",
+            "repeat": "all"
+          }
+        ],
+        "assignments": [],
+        "selection": {
+          "playlistId": "3xblast.pop-punk-chiptune"
+        }
+      }
+    }
+  ]
+}

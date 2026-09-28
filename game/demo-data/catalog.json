@@ -1,0 +1,89 @@
+{
+  "format": "revealline-demo-catalog.v1",
+  "clips": [
+    {
+      "id": "first-signal-left",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-01",
+      "levelRevision": "1",
+      "identity": "d31dfb37580148ee",
+      "title": "First Signal",
+      "provenance": "authored",
+      "tags": ["capture", "bent-cut", "safe-ground"],
+      "durationSeconds": 27.283333333333335,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/first-signal-left.replay.json"
+    },
+    {
+      "id": "first-signal-right",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-01",
+      "levelRevision": "1",
+      "identity": "d31dfb37580148ee",
+      "title": "First Signal",
+      "provenance": "authored",
+      "tags": ["capture", "bent-cut", "safe-ground"],
+      "durationSeconds": 27.283333333333335,
+      "turnPolicy": "grid-center",
+      "replayURL": "./demo-data/first-signal-right.replay.json"
+    },
+    {
+      "id": "relay-orchard-loop",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-02",
+      "levelRevision": "1",
+      "identity": "b89d47ba6cee39e0",
+      "title": "Relay Orchard",
+      "provenance": "authored",
+      "tags": ["capture", "bent-cut", "relay"],
+      "durationSeconds": 17.175,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/relay-orchard-loop.replay.json"
+    },
+    {
+      "id": "relay-orchard-stairs",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-02",
+      "levelRevision": "1",
+      "identity": "b89d47ba6cee39e0",
+      "title": "Relay Orchard",
+      "provenance": "authored",
+      "tags": ["capture", "bent-cut", "relay"],
+      "durationSeconds": 38.791666666666664,
+      "turnPolicy": "grid-center",
+      "replayURL": "./demo-data/relay-orchard-stairs.replay.json"
+    },
+    {
+      "id": "crosswind-openings",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-03",
+      "levelRevision": "1",
+      "identity": "6fcd5c0f32ae8df5",
+      "title": "Crosswind",
+      "provenance": "authored",
+      "tags": ["capture", "bent-cut", "multiple-enemies"],
+      "durationSeconds": 38.391666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/crosswind-openings.replay.json"
+    },
+    {
+      "id": "night-patrol-loop",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-05",
+      "levelRevision": "1",
+      "identity": "e36556a872307a25",
+      "title": "Night Patrol",
+      "provenance": "authored",
+      "tags": ["capture", "bent-cut", "border-patrol"],
+      "durationSeconds": 17.175,
+      "turnPolicy": "grid-center",
+      "replayURL": "./demo-data/night-patrol-loop.replay.json"
+    }
+  ]
+}

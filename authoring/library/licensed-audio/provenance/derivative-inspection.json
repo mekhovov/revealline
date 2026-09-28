@@ -1,0 +1,84 @@
+{
+  "format": "revealline-candidate-mp3-inspection.v1",
+  "tracks": [
+    {
+      "name": "3xBlast - A Band of Jellyfish (Looped).mp3",
+      "sha256": "f03927dbb34fca2946b4d156523e24d8ada69fbf390ed522597b9fbaedbf09a6",
+      "bytes": 1423569,
+      "mime": "audio/mpeg",
+      "mpegVersion": "1",
+      "sampleRate": 44100,
+      "channels": 2,
+      "frames": 1703,
+      "durationSeconds": 44.4865306122449
+    },
+    {
+      "name": "3xBlast - Babe, You Look Poggers Tonight! (Looped).mp3",
+      "sha256": "709bdef4fae6f42a2747ddab802ce3087c79e126037f64b9d60b0fa71160c536",
+      "bytes": 3841044,
+      "mime": "audio/mpeg",
+      "mpegVersion": "1",
+      "sampleRate": 44100,
+      "channels": 2,
+      "frames": 4595,
+      "durationSeconds": 120.0326530612245
+    },
+    {
+      "name": "3xBlast - If You're Thinking About Giving Up, Think Again Beause I Believe In You! (Looped).mp3",
+      "sha256": "e9cd1330b99e2f978b04795a7311c37f2fd7e2419bfd89c3c4277bfd15f216fa",
+      "bytes": 5684244,
+      "mime": "audio/mpeg",
+      "mpegVersion": "1",
+      "sampleRate": 44100,
+      "channels": 2,
+      "frames": 6800,
+      "durationSeconds": 177.6326530612245
+    },
+    {
+      "name": "3xBlast - Let's Go, Olive Boy! (Looped).mp3",
+      "sha256": "f97ea7ef15cff0de647b8116a8e917827268559b35f3bf3cad58ad901132b49f",
+      "bytes": 2972525,
+      "mime": "audio/mpeg",
+      "mpegVersion": "1",
+      "sampleRate": 44100,
+      "channels": 2,
+      "frames": 3556,
+      "durationSeconds": 92.89142857142858
+    },
+    {
+      "name": "3xBlast - Now This Is A Waterpark! (Looped).mp3",
+      "sha256": "93634c4c3d76558d0b4c80740883223c2d68cc0a095142c420107b2f8b08d037",
+      "bytes": 3890364,
+      "mime": "audio/mpeg",
+      "mpegVersion": "1",
+      "sampleRate": 44100,
+      "channels": 2,
+      "frames": 4654,
+      "durationSeconds": 121.5738775510204
+    },
+    {
+      "name": "3xBlast - Thanks For Listening! (Looped).mp3",
+      "sha256": "ecf32b424b78773ba6df4c56a5068ddb0e1674f5c3fdadc47d23c79dde15f5af",
+      "bytes": 1781342,
+      "mime": "audio/mpeg",
+      "mpegVersion": "1",
+      "sampleRate": 44100,
+      "channels": 2,
+      "frames": 2131,
+      "durationSeconds": 55.666938775510204
+    },
+    {
+      "name": "3xBlast - The Best Move Is To Keep Going (Looped).mp3",
+      "sha256": "bdff30f60f78f5c6e5103ba387f31b98672b8514358a9624207c33aeed1ac9c7",
+      "bytes": 7559209,
+      "mime": "audio/mpeg",
+      "mpegVersion": "1",
+      "sampleRate": 44100,
+      "channels": 2,
+      "frames": 9043,
+      "durationSeconds": 236.22530612244898
+    }
+  ],
+  "totalBytes": 27152297,
+  "limits": "Existing strict MP3 frame validation; no native audition or library installation."
+}
