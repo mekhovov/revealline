@@ -92,10 +92,17 @@ test(
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), authoritativeCheckpoint(expected));
     page.key('ArrowDown');
     let ticks = 0;
-    while (expected.status === 'running' && ticks++ < 1200) {
-      stepRun(expected, { direction: 'down' }, FIXED_DT);
-      page.frame(FIXED_DT * 1000);
+    // Render at 60 Hz while preserving every fixed simulation step and the final partial frame.
+    while (expected.status === 'running' && ticks < 1200) {
+      let frameTicks = 0;
+      while (frameTicks < 2 && expected.status === 'running' && ticks < 1200) {
+        stepRun(expected, { direction: 'down' }, FIXED_DT);
+        ticks++;
+        frameTicks++;
+      }
+      page.frame(FIXED_DT * 1000 * frameTicks);
     }
+    assert.equal(ticks, 469, 'The fixture still executes its complete original winning route.');
     page.key('ArrowDown', false);
     page.frame(0);
     assert.equal(expected.status, 'won');
@@ -117,6 +124,7 @@ test(
     assert.equal(page.$('match-class-appearance').checked, false);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
     const backend = createRewardBackend({ editionId: 'sample-public', indexedDB: disk.indexedDB });
+    t.after(() => backend.close());
     let state;
     for (let n = 0; n < 100; n++) {
       page.frame(0);

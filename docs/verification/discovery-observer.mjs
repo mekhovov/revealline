@@ -1,8 +1,65 @@
 import { frameSummary, resourceSummary, reviewPlayerSurface } from './company-review-model.mjs';
 
 export const DISCOVERY_OBSERVATION_FORMAT = 'revealline-discovery-observation.v1';
-const visible = (node) =>
-  !!node && !node.closest('[hidden], [inert]') && node.getClientRects().length > 0;
+// Layout boxes exist even below a scroll viewport or behind an overflow clip.
+// Controls additionally need their complete hit box and an unobstructed center;
+// image readiness requires actual pixels intersecting the visible viewport.
+const visible = (node, { control = false } = {}) => {
+  if (!node || node.closest('[hidden], [inert]') || !node.getClientRects().length) return false;
+  const document = node.ownerDocument,
+    window = document.defaultView;
+  const rect = node.getBoundingClientRect();
+  let left = 0,
+    top = 0,
+    right = window?.innerWidth,
+    bottom = window?.innerHeight;
+  if (
+    ![rect.left, rect.top, rect.right, rect.bottom, right, bottom].every(Number.isFinite) ||
+    rect.right <= rect.left ||
+    rect.bottom <= rect.top ||
+    right <= 0 ||
+    bottom <= 0
+  )
+    return false;
+  for (let ancestor = node; ancestor?.nodeType === 1; ancestor = ancestor.parentElement) {
+    const style = window.getComputedStyle(ancestor);
+    if (
+      style.display === 'none' ||
+      ['hidden', 'collapse'].includes(style.visibility) ||
+      Number(style.opacity) === 0
+    )
+      return false;
+    if (ancestor === node) continue;
+    const clipsX = /^(auto|scroll|hidden|clip)$/.test(style.overflowX),
+      clipsY = /^(auto|scroll|hidden|clip)$/.test(style.overflowY);
+    if (!clipsX && !clipsY) continue;
+    const bounds = ancestor.getBoundingClientRect();
+    if (clipsX) {
+      left = Math.max(left, bounds.left);
+      right = Math.min(right, bounds.right);
+    }
+    if (clipsY) {
+      top = Math.max(top, bounds.top);
+      bottom = Math.min(bottom, bounds.bottom);
+    }
+  }
+  if (
+    Math.min(right, rect.right) <= Math.max(left, rect.left) ||
+    Math.min(bottom, rect.bottom) <= Math.max(top, rect.top)
+  )
+    return false;
+  if (!control) return true;
+  if (rect.left < left || rect.top < top || rect.right > right || rect.bottom > bottom)
+    return false;
+  if (document.elementFromPoint) {
+    const hit = document.elementFromPoint(
+      (rect.left + rect.right) / 2,
+      (rect.top + rect.bottom) / 2,
+    );
+    if (!hit || !node.contains(hit)) return false;
+  }
+  return true;
+};
 const finite = (value) => (Number.isFinite(value) ? value : null);
 
 /** Connected DOM observations do not count detached nodes, browser decoder
@@ -52,7 +109,11 @@ export function discoverySurfaceState(document) {
  * player records are collected. Presence alone is not decoded-image readiness. */
 export function discoveryCycleSurface(document) {
   const control = (element) => {
-    return { present: !!element, visible: visible(element), disabled: element?.disabled === true };
+    return {
+      present: !!element,
+      visible: visible(element, { control: true }),
+      disabled: element?.disabled === true,
+    };
   };
   const images = [
     ...(document.getElementById('completion-reward-dialog')?.querySelectorAll('img') ?? []),
