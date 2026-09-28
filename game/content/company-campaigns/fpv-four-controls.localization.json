@@ -1,0 +1,112 @@
+{
+  "campaignId": "fpv-four-controls",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": {
+        "name": { "en": "Understand the Four Controls", "uk": "Зрозумійте чотири органи керування" }
+      },
+      "id": "fpv-four-controls",
+      "identity": "f7a7db1dd90752e1",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect four command stations using the illustrated Mode 2 layout. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "З’єднайте чотири станції команд за ілюстрованим розташуванням Mode 2. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
+        "design.routeDecision": {
+          "en": "Link the left command pair first or establish a return at the right pair. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Спершу з’єднайте ліву пару команд або підготуйте повернення біля правої. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "Two Sticks, Four Names", "uk": "Два стіки, чотири назви" }
+      },
+      "id": "fpv-four-controls-01",
+      "identity": "196f3164136b135a",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Reveal the nose-and-tail comparison without confusing tilt with a map direction. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "Відкрийте порівняння носа й хвоста, не змішуючи нахил із напрямком карти. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
+        "design.routeDecision": {
+          "en": "Choose the long side-view aisle or the short nose-marker alcove. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Оберіть довгий прохід вигляду збоку або коротку нішу позначки носа. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "Pitch: Read the Nose", "uk": "Тангаж: стежте за носом" }
+      },
+      "id": "fpv-four-controls-02",
+      "identity": "0e26d66aa43e5666",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the left-right comparison stations around the model’s own axis. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "З’єднайте станції порівняння ліворуч і праворуч від власної осі моделі. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
+        "design.routeDecision": {
+          "en": "Use the centre axis island to compare both sides or secure the far-side pair. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Порівняйте боки від центрального острова осі або закріпіть дальню пару. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "Roll: One Wingtip Lower", "uk": "Крен: один бік нижче" }
+      },
+      "id": "fpv-four-controls-03",
+      "identity": "9ac228f5b1d8eec4",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Open the heading court while keeping turn and travel separate. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Відкрийте двір курсу, розділяючи поворот і переміщення. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Circle the heading island or take the wide quiet door-side capture. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Обійдіть острів курсу або зробіть широке спокійне захоплення біля дверей. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "Yaw: Turn the Heading", "uk": "Рискання: змініть курс" }
+      },
+      "id": "fpv-four-controls-04",
+      "identity": "91e60e801375595e",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Join the response cards and read their stated flight-mode assumptions. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте картки реакцій і прочитайте припущення щодо режиму польоту. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Collect the separate mode islands before crossing or group the paired response cards. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Спершу зберіть окремі острови режимів або об’єднайте парні картки реакцій. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "Throttle Needs a Model", "uk": "Газ потребує пояснення моделі" }
+      },
+      "id": "fpv-four-controls-05",
+      "identity": "c4a00869b0ad7545",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Complete the command atlas and separate stick layout from response rules. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Завершіть атлас команд і відокремте схему стіків від правил реакції. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Join the four command islands through the centre or complete the outer atlas loop. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "З’єднайте чотири острови команд через центр або завершіть зовнішню петлю атласу. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "Predict, Then Explain", "uk": "Спрогнозуйте й поясніть" }
+      },
+      "id": "fpv-four-controls-06",
+      "identity": "de2100c5c1136fd4",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

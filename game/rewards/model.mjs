@@ -1,4 +1,5 @@
 import { boundedJSON, dataIdentity, exactKeys, required, stableId } from '../data-json.mjs';
+import { explorationAssetReferences, validateExplorationPayload } from './exploration.mjs';
 
 export const COMPLETION_REWARD_FORMAT = 'revealline-completion-reward.v1';
 export const EARNED_REWARD_FORMAT = 'revealline-earned-reward.v1';
@@ -64,6 +65,10 @@ function source(value) {
 }
 
 function payload(value) {
+  if (value?.type === 'exploration') {
+    validateExplorationPayload(value);
+    return;
+  }
   const shared = ['id', 'type', 'locales'];
   const fields = {
     knowledge: [],
@@ -127,6 +132,13 @@ function payload(value) {
       stableId(value.recipeId) && text(value.recipeRevision, 128),
       'Invalid cosmetic recipe reference.',
     );
+}
+
+/** A standalone typed payload validator for shared authoring/player viewers. */
+export function validateCompletionRewardPayload(input) {
+  const value = boundedJSON(input, { maxBytes: 65536, maxNodes: 8192, maxArray: 256 });
+  payload(value);
+  return freeze(value);
 }
 
 function learningRequirement(value) {
@@ -252,6 +264,7 @@ export function completionRewardAssetReferences(input) {
         item.poster,
         ...Object.values(item.transcript ?? {}),
         ...Object.values(item.captions ?? {}),
+        ...(item.type === 'exploration' ? explorationAssetReferences(item.recipe) : []),
       ].filter(Boolean)) {
         required(
           !references.has(reference.assetId) ||

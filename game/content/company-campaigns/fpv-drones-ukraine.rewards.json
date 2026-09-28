@@ -1,0 +1,737 @@
+[
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-drones-ukraine",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-drones-ukraine-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "An aerial image can begin a question about a community’s needs.",
+        "title": "A Map for Recovery"
+      },
+      "uk": {
+        "teaser": "Знімок згори може започаткувати питання про потреби громади.",
+        "title": "Карта для відбудови"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-drones-ukraine-01-image",
+        "locales": {
+          "en": {
+            "alt": "A Map for Recovery — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Map for Recovery"
+          },
+          "uk": {
+            "alt": "Карта для відбудови — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Карта для відбудови"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-drones-ukraine-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "In September 2023, UNDP described using drone footage and satellite imagery in damage assessment across settlements in Chernihiv Oblast. This is a dated institutional report about reconstruction support.",
+              "Our fictional archive card shows an empty community hall before and after a storm. Label date, source and what is visible. A picture alone does not certify structural safety or establish which repair should happen first."
+            ],
+            "sources": [
+              {
+                "title": "UNDP — Chernihiv reconstruction and image-based assessment, 2023",
+                "url": "https://www.undp.org/ukraine/press-releases/latvia-targets-2-million-euro-reconstruction-efforts-chernihiv-oblast"
+              }
+            ],
+            "title": "A Map for Recovery"
+          },
+          "uk": {
+            "paragraphs": [
+              "У вересні 2023 року UNDP описала використання знімання дронами та супутникових зображень для оцінювання пошкоджень населених пунктів Чернігівщини. Це датоване повідомлення установи про підтримку відбудови.",
+              "Вигадана архівна картка показує порожній громадський зал до й після бурі. Позначте дату, джерело та видиме. Сам знімок не підтверджує міцність будівлі й не визначає черговість ремонту."
+            ],
+            "sources": [
+              {
+                "title": "UNDP — Chernihiv reconstruction and image-based assessment, 2023",
+                "url": "https://www.undp.org/ukraine/press-releases/latvia-targets-2-million-euro-reconstruction-efforts-chernihiv-oblast"
+              }
+            ],
+            "title": "Карта для відбудови"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "7f39b563ce3d0da9" },
+            { "difficulty": "standard", "gameplayId": "05049293a4358eff" },
+            { "difficulty": "expert", "gameplayId": "802bf08dca7d4daa" }
+          ],
+          "missionId": "fpv-drones-ukraine-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-drones-ukraine-01", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-drones-ukraine",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-drones-ukraine-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A specialist’s observation and a safe-land decision are different things.",
+        "title": "Survey Is Not Clearance"
+      },
+      "uk": {
+        "teaser": "Спостереження фахівця й висновок про безпечність землі — різні речі.",
+        "title": "Обстеження — не очищення"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-drones-ukraine-02-image",
+        "locales": {
+          "en": {
+            "alt": "Survey Is Not Clearance — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Survey Is Not Clearance"
+          },
+          "uk": {
+            "alt": "Обстеження — не очищення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Обстеження — не очищення"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-drones-ukraine-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNDP reported providing aerial detection technology to trained Ukrainian SESU humanitarian demining teams in 2025. Specialist survey work must not be confused with a public permission to enter or clear land.",
+              "Our exhibit contains only a fictional document flow: observation, expert review and recorded decision. Identify who owns the next step. No hazardous objects, detection techniques, field routes or clearance procedures are taught."
+            ],
+            "sources": [
+              {
+                "title": "UNDP — Aerial detection technology for SESU humanitarian teams, 2025",
+                "url": "https://www.undp.org/ukraine/press-releases/undp-equips-sesu-cutting-edge-ukrainian-aerial-detection-technology-accelerate-humanitarian-demining-operations"
+              }
+            ],
+            "title": "Survey Is Not Clearance"
+          },
+          "uk": {
+            "paragraphs": [
+              "У 2025 році UNDP повідомила про передання технології повітряного виявлення навченим командам гуманітарного розмінування ДСНС. Спеціалізоване обстеження не є дозволом людям заходити на територію чи очищати її.",
+              "Експозиція містить лише вигаданий рух документів: спостереження, експертний розгляд і зафіксоване рішення. Визначте відповідального за наступний крок. Небезпечні предмети, методи виявлення, польові маршрути й процедури очищення не вивчаються."
+            ],
+            "sources": [
+              {
+                "title": "UNDP — Aerial detection technology for SESU humanitarian teams, 2025",
+                "url": "https://www.undp.org/ukraine/press-releases/undp-equips-sesu-cutting-edge-ukrainian-aerial-detection-technology-accelerate-humanitarian-demining-operations"
+              }
+            ],
+            "title": "Обстеження — не очищення"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "f48fee1c7a50b1e4" },
+            { "difficulty": "standard", "gameplayId": "ae6ee6b6daabbabc" },
+            { "difficulty": "expert", "gameplayId": "7e2ef755b011ff5a" }
+          ],
+          "missionId": "fpv-drones-ukraine-02"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-drones-ukraine-02", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-drones-ukraine",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-drones-ukraine-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A promising result still needs a question mark in the right place.",
+        "title": "A Pilot Study Has Limits"
+      },
+      "uk": {
+        "teaser": "Перспективний результат усе ще потребує доречного знака питання.",
+        "title": "Пілотне дослідження має межі"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-drones-ukraine-03-image",
+        "locales": {
+          "en": {
+            "alt": "A Pilot Study Has Limits — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Pilot Study Has Limits"
+          },
+          "uk": {
+            "alt": "Пілотне дослідження має межі — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Пілотне дослідження має межі"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-drones-ukraine-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNDP’s July 2025 AI Data Jam report describes image-analysis research involving drone imagery and humanitarian experts. A reported research result is not proof that an automated system can declare any area safe.",
+              "Compare invented captions: “tested on this dataset” and “works everywhere”. Keep the supported scope and add the missing test context. This card teaches evidence reading, with no real imagery, detection targets or operational methods."
+            ],
+            "sources": [
+              {
+                "title": "UNDP — AI Data Jam image-analysis research, 2025",
+                "url": "https://www.undp.org/ukraine/press-releases/ai-demining-ukrainian-innovators-train-algorithms-detect-explosives-drone-images"
+              }
+            ],
+            "title": "A Pilot Study Has Limits"
+          },
+          "uk": {
+            "paragraphs": [
+              "Повідомлення UNDP про AI Data Jam у липні 2025 року описує аналіз зображень із дронів за участю гуманітарних експертів. Дослідницький результат не доводить, що автоматична система може визнати будь-яку територію безпечною.",
+              "Порівняйте вигадані підписи: «перевірено на цьому наборі» й «працює всюди». Збережіть підтверджені межі та додайте контекст перевірки. Картка вчить читати докази без реальних знімків, об’єктів виявлення чи оперативних методів."
+            ],
+            "sources": [
+              {
+                "title": "UNDP — AI Data Jam image-analysis research, 2025",
+                "url": "https://www.undp.org/ukraine/press-releases/ai-demining-ukrainian-innovators-train-algorithms-detect-explosives-drone-images"
+              }
+            ],
+            "title": "Пілотне дослідження має межі"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "b19582655bc1ac46" },
+            { "difficulty": "standard", "gameplayId": "e37ccef7f7e3f8c6" },
+            { "difficulty": "expert", "gameplayId": "55d842f93aab3feb" }
+          ],
+          "missionId": "fpv-drones-ukraine-03"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-drones-ukraine-03", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-drones-ukraine",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-drones-ukraine-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A community includes people who explain, document and ask questions.",
+        "title": "Learning Has Many Roles"
+      },
+      "uk": {
+        "teaser": "До спільноти належать ті, хто пояснює, документує й запитує.",
+        "title": "Навчання має багато ролей"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-drones-ukraine-04-image",
+        "locales": {
+          "en": {
+            "alt": "Learning Has Many Roles — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Learning Has Many Roles"
+          },
+          "uk": {
+            "alt": "Навчання має багато ролей — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Навчання має багато ролей"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-drones-ukraine-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The public Social Drone UA and Victory Drones sources describe organized community and educational work in Ukraine. Their real missions are not replaced by the civilian classroom story used here.",
+              "Our fictional library session has a host, a diagram maker, a source checker and a learner. Match each contribution to a useful handoff. No real members are depicted, and a game badge does not certify membership, training or endorsement."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              },
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Learning Has Many Roles"
+          },
+          "uk": {
+            "paragraphs": [
+              "Відкриті джерела Social Drone UA та Victory Drones описують організовану спільнотну й освітню діяльність в Україні. Цивільна історія класу тут не замінює їхні реальні місії.",
+              "У вигаданій бібліотечній зустрічі є ведучий, автор схем, перевіряльник джерел і учасник. Поєднайте внески для корисної передачі знань. Реальних людей не зображено; ігрова відзнака не підтверджує членство, навчання чи схвалення."
+            ],
+            "sources": [
+              {
+                "title": "Social Drone UA — public community and FAQ",
+                "url": "https://www.socialdrone.com.ua/"
+              },
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Навчання має багато ролей"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "7c36660d83f397ff" },
+            { "difficulty": "standard", "gameplayId": "76b656e38285b1b7" },
+            { "difficulty": "expert", "gameplayId": "85e36fa858823947" }
+          ],
+          "missionId": "fpv-drones-ukraine-04"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-drones-ukraine-04", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-drones-ukraine",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-drones-ukraine-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A date, a speaker and a purpose make a claim more readable.",
+        "title": "Read the Historical Caption"
+      },
+      "uk": {
+        "teaser": "Дата, автор і мета роблять твердження зрозумілішим.",
+        "title": "Прочитайте історичний підпис"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-drones-ukraine-05-image",
+        "locales": {
+          "en": {
+            "alt": "Read the Historical Caption — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Read the Historical Caption"
+          },
+          "uk": {
+            "alt": "Прочитайте історичний підпис — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Прочитайте історичний підпис"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-drones-ukraine-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNITED24’s 2022 Army of Drones announcement describes a programme including procurement, maintenance and training in Ukraine’s defence context. It is a historical programme source, not a civilian flight manual.",
+              "Our archive task labels the publication date, issuer and stated purpose. Separate these from an unsupported claim about today’s equipment or outcomes. The exhibit contains no targeting, combat flight, weapon adaptation or operational assistance."
+            ],
+            "sources": [
+              {
+                "title": "UNITED24 — Army of Drones programme announcement, 2022",
+                "url": "https://u24.gov.ua/news/army_of_drones"
+              }
+            ],
+            "title": "Read the Historical Caption"
+          },
+          "uk": {
+            "paragraphs": [
+              "Оголошення UNITED24 2022 року про «Армію дронів» описує програму із закупівлею, обслуговуванням і навчанням в оборонному контексті України. Це історичне джерело програми, а не цивільний льотний посібник.",
+              "В архівній вправі позначте дату публікації, автора та заявлену мету. Відділіть їх від непідтверджених тверджень про нинішню техніку чи результати. Експозиція не містить цілевказання, бойового польоту, озброєння чи оперативної допомоги."
+            ],
+            "sources": [
+              {
+                "title": "UNITED24 — Army of Drones programme announcement, 2022",
+                "url": "https://u24.gov.ua/news/army_of_drones"
+              }
+            ],
+            "title": "Прочитайте історичний підпис"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "787e778ab200e4d0" },
+            { "difficulty": "standard", "gameplayId": "1d35272903141a7e" },
+            { "difficulty": "expert", "gameplayId": "ffa9750a5a50ae61" }
+          ],
+          "missionId": "fpv-drones-ukraine-05"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-drones-ukraine-05", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-drones-ukraine",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-drones-ukraine-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "The final label explains both what is known and what must remain a specialist’s task.",
+        "title": "An Exhibit with Boundaries"
+      },
+      "uk": {
+        "teaser": "Фінальний напис пояснює відоме й те, що залишається роботою фахівців.",
+        "title": "Виставка з чіткими межами"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-drones-ukraine-06-image",
+        "locales": {
+          "en": {
+            "alt": "An Exhibit with Boundaries — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "An Exhibit with Boundaries"
+          },
+          "uk": {
+            "alt": "Виставка з чіткими межами — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Виставка з чіткими межами"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-drones-ukraine-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNICEF Ukraine’s safety education emphasizes not approaching or touching suspicious objects and contacting emergency services; in Ukraine the SESU number is 101. That information is available before winning too.",
+              "Curate the five earlier cards with dates and bounded claims. Replace “the drone proved it safe” with a statement of the actual evidence and responsible expert review. Our illustrations use invented places and never invite a real visit or inspection."
+            ],
+            "sources": [
+              {
+                "title": "UNICEF Ukraine — Safety education for children and youth, 2025",
+                "url": "https://www.unicef.org/ukraine/en/stories/fostering-culture-safety-among-children-and-youth-making-mine-safety-rules-known-children"
+              },
+              {
+                "title": "UNDP — Chernihiv reconstruction and image-based assessment, 2023",
+                "url": "https://www.undp.org/ukraine/press-releases/latvia-targets-2-million-euro-reconstruction-efforts-chernihiv-oblast"
+              }
+            ],
+            "title": "An Exhibit with Boundaries"
+          },
+          "uk": {
+            "paragraphs": [
+              "Просвіта UNICEF Ukraine наголошує: не наближайтеся й не торкайтеся підозрілих предметів, повідомляйте екстрені служби; номер ДСНС в Україні — 101. Ці відомості доступні й до перемоги.",
+              "Упорядкуйте п’ять попередніх карток із датами та межами тверджень. Замініть «дрон довів безпечність» точним описом доказів і відповідального експертного розгляду. Ілюстрації показують вигадані місця й не запрошують відвідувати чи оглядати реальні об’єкти."
+            ],
+            "sources": [
+              {
+                "title": "UNICEF Ukraine — Safety education for children and youth, 2025",
+                "url": "https://www.unicef.org/ukraine/en/stories/fostering-culture-safety-among-children-and-youth-making-mine-safety-rules-known-children"
+              },
+              {
+                "title": "UNDP — Chernihiv reconstruction and image-based assessment, 2023",
+                "url": "https://www.undp.org/ukraine/press-releases/latvia-targets-2-million-euro-reconstruction-efforts-chernihiv-oblast"
+              }
+            ],
+            "title": "Виставка з чіткими межами"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c2d4d23009d37f73" },
+            { "difficulty": "standard", "gameplayId": "9f183e1e2845673d" },
+            { "difficulty": "expert", "gameplayId": "0fa9d51429ce6dfb" }
+          ],
+          "missionId": "fpv-drones-ukraine-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-drones-ukraine-06", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-drones-ukraine",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-drones-ukraine-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "A Source-Led Civilian Context Exhibit"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Виставка контексту з перевірними джерелами"
+      }
+    },
+    "payloads": [
+      {
+        "id": "fpv-drones-ukraine-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Complete a dated exhibit about reconstruction, humanitarian research, public education and the historical defence context. Distinguish an organization’s report, a pilot study and your own interpretation. Use fictional locations and no operational details. Responsible understanding includes what an image cannot prove and which work belongs to qualified specialists."
+            ],
+            "sources": [
+              {
+                "title": "UNDP — Chernihiv reconstruction and image-based assessment, 2023",
+                "url": "https://www.undp.org/ukraine/press-releases/latvia-targets-2-million-euro-reconstruction-efforts-chernihiv-oblast"
+              }
+            ],
+            "title": "A Source-Led Civilian Context Exhibit"
+          },
+          "uk": {
+            "paragraphs": [
+              "Завершіть датовану виставку про відбудову, гуманітарні дослідження, просвіту та історичний оборонний контекст. Розрізняйте повідомлення організації, пілотне дослідження й власний висновок. Використовуйте вигадані місця без оперативних подробиць. Відповідальне розуміння охоплює межі доказовості зображення та роботу, яку виконують лише фахівці."
+            ],
+            "sources": [
+              {
+                "title": "UNDP — Chernihiv reconstruction and image-based assessment, 2023",
+                "url": "https://www.undp.org/ukraine/press-releases/latvia-targets-2-million-euro-reconstruction-efforts-chernihiv-oblast"
+              }
+            ],
+            "title": "Виставка контексту з перевірними джерелами"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-drones-ukraine-01-image",
+        "locales": {
+          "en": {
+            "alt": "A Map for Recovery — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Map for Recovery"
+          },
+          "uk": {
+            "alt": "Карта для відбудови — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Карта для відбудови"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-drones-ukraine-02-image",
+        "locales": {
+          "en": {
+            "alt": "Survey Is Not Clearance — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Survey Is Not Clearance"
+          },
+          "uk": {
+            "alt": "Обстеження — не очищення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Обстеження — не очищення"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-drones-ukraine-03-image",
+        "locales": {
+          "en": {
+            "alt": "A Pilot Study Has Limits — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Pilot Study Has Limits"
+          },
+          "uk": {
+            "alt": "Пілотне дослідження має межі — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Пілотне дослідження має межі"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-drones-ukraine-04-image",
+        "locales": {
+          "en": {
+            "alt": "Learning Has Many Roles — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Learning Has Many Roles"
+          },
+          "uk": {
+            "alt": "Навчання має багато ролей — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Навчання має багато ролей"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-drones-ukraine-05-image",
+        "locales": {
+          "en": {
+            "alt": "Read the Historical Caption — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Read the Historical Caption"
+          },
+          "uk": {
+            "alt": "Прочитайте історичний підпис — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Прочитайте історичний підпис"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-drones-ukraine-06-image",
+        "locales": {
+          "en": {
+            "alt": "An Exhibit with Boundaries — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "An Exhibit with Boundaries"
+          },
+          "uk": {
+            "alt": "Виставка з чіткими межами — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Виставка з чіткими межами"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-drones-ukraine-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "type": "url",
+        "url": "https://www.undp.org/ukraine/press-releases/latvia-targets-2-million-euro-reconstruction-efforts-chernihiv-oblast"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "7f39b563ce3d0da9" },
+            { "difficulty": "standard", "gameplayId": "05049293a4358eff" },
+            { "difficulty": "expert", "gameplayId": "802bf08dca7d4daa" }
+          ],
+          "missionId": "fpv-drones-ukraine-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "f48fee1c7a50b1e4" },
+            { "difficulty": "standard", "gameplayId": "ae6ee6b6daabbabc" },
+            { "difficulty": "expert", "gameplayId": "7e2ef755b011ff5a" }
+          ],
+          "missionId": "fpv-drones-ukraine-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "b19582655bc1ac46" },
+            { "difficulty": "standard", "gameplayId": "e37ccef7f7e3f8c6" },
+            { "difficulty": "expert", "gameplayId": "55d842f93aab3feb" }
+          ],
+          "missionId": "fpv-drones-ukraine-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "7c36660d83f397ff" },
+            { "difficulty": "standard", "gameplayId": "76b656e38285b1b7" },
+            { "difficulty": "expert", "gameplayId": "85e36fa858823947" }
+          ],
+          "missionId": "fpv-drones-ukraine-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "787e778ab200e4d0" },
+            { "difficulty": "standard", "gameplayId": "1d35272903141a7e" },
+            { "difficulty": "expert", "gameplayId": "ffa9750a5a50ae61" }
+          ],
+          "missionId": "fpv-drones-ukraine-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c2d4d23009d37f73" },
+            { "difficulty": "standard", "gameplayId": "9f183e1e2845673d" },
+            { "difficulty": "expert", "gameplayId": "0fa9d51429ce6dfb" }
+          ],
+          "missionId": "fpv-drones-ukraine-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-drones-ukraine", "kind": "campaign" }
+  }
+]

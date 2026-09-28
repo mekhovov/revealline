@@ -1,3 +1,5 @@
+import { rewardAudioFixture } from './helpers/reward-audio-fixture.mjs';
+import { createAudioMaster } from '../ui/audio-master.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -8,10 +10,11 @@ import { projectRewardProgress } from '../rewards/model.mjs';
 import { createRewardBackend } from '../rewards/store.mjs';
 import { emptyJourneyProfile, applyJourneyEvent } from '../journey/profile.mjs';
 import { resolveEditionSelection } from '../editions/model.mjs';
-import { Document } from './helpers/couch-dom.mjs';
+import { Document, Events } from './helpers/couch-dom.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { createExplorationExample } from '../studio/exploration-example.mjs';
 
 const copy = (value) => structuredClone(value);
 const locales = (value) => ({ en: copy(value), uk: copy(value) });
@@ -24,7 +27,14 @@ const png = Uint8Array.from(
 
 async function fixture(
   t,
-  { storage = managedIndexedDB(), image = false, reducedMotion = false, durable = true } = {},
+  {
+    storage = managedIndexedDB(),
+    image = false,
+    reducedMotion = false,
+    durable = true,
+    exploration = false,
+    audio = false,
+  } = {},
 ) {
   const base = await editionProviderFixture();
   const source = copy(base.source);
@@ -47,6 +57,40 @@ async function fixture(
     });
     catalog.campaigns[0].assetIds.push('reward-picture');
   }
+  const audioFiles = new Map();
+  const audioRef = (id, extension, bytes) => {
+    const asset = {
+      id,
+      path: `game/content/sample/${id}.${extension}`,
+      sha256: createHash('sha256').update(bytes).digest('hex'),
+      bytes: bytes.length,
+      publication: 'public',
+      approved: true,
+      dependencies: [],
+    };
+    catalog.assets.push(asset);
+    catalog.campaigns[0].assetIds.push(id);
+    audioFiles.set(`http://localhost/${asset.path}`, bytes);
+    return { assetId: id, sha256: asset.sha256 };
+  };
+  const audioPayload = audio
+    ? {
+        id: 'recording',
+        type: 'audio',
+        locales: locales({ title: 'Owned diagnostic' }),
+        asset: audioRef('recording', 'wav', rewardAudioFixture()),
+        transcript: Object.fromEntries(
+          ['en', 'uk'].map((locale) => [
+            locale,
+            audioRef(
+              `transcript-${locale}`,
+              'txt',
+              new TextEncoder().encode('An exact diagnostic transcript.'),
+            ),
+          ]),
+        ),
+      }
+    : null;
   const selection = resolveEditionSelection(catalog);
   const missionReward = (mission) => ({
     format: 'revealline-completion-reward.v1',
@@ -73,6 +117,8 @@ async function fixture(
     ],
   });
   const rewards = bindings.map(missionReward);
+  if (exploration) rewards[0].payloads.push(createExplorationExample());
+  if (audio) rewards[0].payloads.push(audioPayload);
   rewards[0].payloads.push({
     id: 'resource',
     type: 'url',
@@ -138,9 +184,34 @@ async function fixture(
     revoked = [],
     externalClicks = [],
     requests = [];
+  const audioElements = [];
+  let audioLeases = 0;
+  const master = createAudioMaster({ muted: false, volume: 0.4 });
+  t.after(() => master.dispose());
   const create = doc.createElement.bind(doc);
   doc.createElement = (tag) => {
     const element = create(tag);
+    if (tag === 'audio') {
+      Object.assign(element, {
+        paused: true,
+        duration: 1,
+        playCalls: 0,
+        load() {
+          if (this.src) queueMicrotask(() => this.emit('loadedmetadata'));
+        },
+        play() {
+          this.playCalls++;
+          this.paused = false;
+          this.emit('play');
+          return Promise.resolve();
+        },
+        pause() {
+          this.paused = true;
+          this.emit('pause');
+        },
+      });
+      audioElements.push(element);
+    }
     if (tag === 'a')
       element.addEventListener('click', () => {
         if (element.href?.startsWith('https://')) externalClicks.push(element.href);
@@ -150,7 +221,7 @@ async function fixture(
   let profile = emptyJourneyProfile(),
     run = { levelId: 'mission-1', status: 'ready' },
     pauses = 0;
-  const win = {
+  const win = Object.assign(new Events(), {
     indexedDB: storage?.indexedDB ?? null,
     URL: {
       createObjectURL(blob) {
@@ -166,10 +237,10 @@ async function fixture(
       queueMicrotask(callback);
       return 1;
     },
-  };
+  });
   t.mock.method(globalThis, 'fetch', async (url, options) => {
     requests.push({ url: String(url), options });
-    return new Response(png);
+    return new Response(audioFiles.get(String(url)) ?? png);
   });
   const view = await mountEditionRewards({
     provider,
@@ -184,6 +255,16 @@ async function fixture(
     getJourneyRevision: () => profile.generation,
     getJourneyDurable: () => durable,
     getReducedMotion: () => reducedMotion,
+    audioMaster: master,
+    musicDucker: {
+      acquire(factor) {
+        assert.equal(factor, 0);
+        audioLeases++;
+        return () => {
+          audioLeases--;
+        };
+      },
+    },
   });
   t.after(() => view.dispose());
   const backend = storage
@@ -222,6 +303,11 @@ async function fixture(
     revoked,
     externalClicks,
     requests,
+    audioElements,
+    master,
+    get audioLeases() {
+      return audioLeases;
+    },
     backend,
     settle,
     accepted,
@@ -455,4 +541,78 @@ test('closing a viewer cancels pending media without publishing a late object UR
   await f.settle();
   assert.equal(dialog.querySelector('img'), null);
   assert.equal(f.created.length, 0);
+});
+
+test('an earned discovery exports exact offline pictures without opening resources or changing progress', async (t) => {
+  const f = await fixture(t, { image: true });
+  assert.equal(f.doc.getElementById('completion-reward-printable'), null);
+  f.accepted(1);
+  f.view.refresh();
+  await f.settle();
+  const before = await f.exportState();
+  f.collection.showModal();
+  f.cards[0].querySelector('button').click();
+  await f.doc.getElementById('completion-reward-printable').onclick();
+  const file = f.created.findLast((item) => item.blob.type.startsWith('text/html'));
+  assert(file);
+  const html = await file.blob.text();
+  assert(html.includes('src="data:image/png;base64,'));
+  assert(html.includes('Knowledge earned'));
+  assert.deepEqual(f.externalClicks, []);
+  assert.deepEqual((await f.exportState()).receipts, before.receipts);
+  f.doc.getElementById('completion-reward-dialog').close();
+  assert(f.revoked.includes(file.url));
+});
+
+test('optional atlas mounts only after earning and cannot change accepted progress', async (t) => {
+  const f = await fixture(t, { exploration: true });
+  assert.equal(f.doc.querySelector('.discovery-exploration'), null);
+  assert.equal(f.requests.length, 0);
+  f.accepted(1);
+  f.view.refresh();
+  await f.settle();
+  const before = await f.exportState();
+  f.collection.showModal();
+  f.cards[0].querySelector('button').click();
+  const atlas = f.doc.querySelector('.discovery-exploration');
+  assert(atlas);
+  const cards = atlas.querySelector('nav').querySelectorAll('button');
+  assert.equal(cards.length, 2);
+  cards[1].click();
+  assert.equal(atlas.querySelector('.discovery-compare').querySelectorAll('article').length, 2);
+  const choices = atlas.querySelector('fieldset').querySelectorAll('button');
+  choices[0].click();
+  assert(atlas.querySelector('.discovery-feedback').textContent.length > 0);
+  assert.deepEqual((await f.exportState()).receipts, before.receipts);
+  f.doc.getElementById('completion-reward-dialog').close();
+  assert.equal(f.doc.querySelector('.discovery-exploration'), null);
+});
+
+test('native media is absent while locked; earned viewer uses shared sound ownership and close leaves progress unchanged', async (t) => {
+  const f = await fixture(t, { audio: true });
+  assert.equal(f.doc.querySelector('[data-reward-media]'), null);
+  assert.equal(f.requests.length, 0);
+  f.accepted(1);
+  f.view.refresh();
+  await waitFor(() => f.cards[0].dataset.earned === 'true');
+  const before = await f.exportState();
+  f.collection.showModal();
+  f.cards[0].querySelector('button').click();
+  assert(f.doc.querySelector('[data-reward-media="audio"]'));
+  await waitFor(() =>
+    f.doc.querySelector('details')?.textContent.includes('An exact diagnostic transcript.'),
+  );
+  assert.equal(f.audioElements.length, 0);
+  assert(!f.requests.some(({ url }) => url.endsWith('.wav')));
+  f.doc.querySelector('[data-reward-media-action="play"]').click();
+  await waitFor(() => f.audioElements[0]?.playCalls === 1);
+  assert.equal(f.audioElements[0].volume, 0.4);
+  assert.equal(f.audioLeases, 1);
+  f.master.setMuted(true);
+  assert.equal(f.audioElements[0].muted, true);
+  f.doc.getElementById('completion-reward-dialog').close();
+  assert.equal(f.audioLeases, 0);
+  assert.equal(f.audioElements[0].paused, true);
+  assert.equal(f.doc.querySelector('[data-reward-media]'), null);
+  assert.deepEqual((await f.exportState()).receipts, before.receipts);
 });

@@ -17,8 +17,8 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-meet-aircraft-01-art-v1",
+          "sha256": "8b79d705bb064333eefece3c6acdd0f9f0a4a9079cab8ab2939401ae47689fe8"
         },
         "id": "fpv-meet-aircraft-01-image",
         "locales": {
@@ -88,7 +88,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-meet-aircraft-01", "kind": "mission" }
   },
   {
@@ -164,6 +164,64 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "reference-fpv-brushless-motor",
+          "sha256": "c1ada93c62901ed4e724e0c0f3ba7207b3da1d44bb079813c457c71d11d23a94"
+        },
+        "id": "reference-fpv-brushless-motor-image",
+        "locales": {
+          "en": {
+            "alt": "Close-up photograph of a Quadshot brushless motor showing copper windings inside its metal housing.",
+            "title": "A brushless motor, close up"
+          },
+          "uk": {
+            "alt": "Фото безколекторного двигуна Quadshot зблизька: мідні обмотки всередині металевого корпусу.",
+            "title": "Безколекторний двигун зблизька"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "reference-fpv-brushless-motor-credit",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Ed Schipul’s close-up shows a motor housing and visible copper windings. The motor is different from the propeller it can drive. This historical component photograph is for recognizing parts, not copying its mount or electrical connections.",
+              "Ed Schipul — Quadshot drone brushless motors (8107827099).jpg — CC BY 2.0 (https://creativecommons.org/licenses/by/2.0). Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes."
+            ],
+            "sources": [
+              {
+                "title": "A brushless motor, close up",
+                "url": "https://commons.wikimedia.org/wiki/File:Quadshot_drone_brushless_motors_(8107827099).jpg"
+              },
+              {
+                "title": "License and sharing terms",
+                "url": "https://creativecommons.org/licenses/by/2.0"
+              }
+            ],
+            "title": "A brushless motor, close up"
+          },
+          "uk": {
+            "paragraphs": [
+              "На фото Ed Schipul видно корпус двигуна й мідні обмотки. Двигун відрізняється від пропелера, який може обертати. Історичне фото допомагає розпізнавати деталі, а не копіювати кріплення чи електричні з’єднання.",
+              "Ed Schipul — Quadshot drone brushless motors (8107827099).jpg — CC BY 2.0 (https://creativecommons.org/licenses/by/2.0). Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes."
+            ],
+            "sources": [
+              {
+                "title": "Безколекторний двигун зблизька",
+                "url": "https://commons.wikimedia.org/wiki/File:Quadshot_drone_brushless_motors_(8107827099).jpg"
+              },
+              {
+                "title": "Ліцензія та умови поширення",
+                "url": "https://creativecommons.org/licenses/by/2.0"
+              }
+            ],
+            "title": "Безколекторний двигун зблизька"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -180,7 +238,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-meet-aircraft-02", "kind": "mission" }
   },
   {
@@ -332,6 +390,64 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "reference-fpv-pixhawk-controller",
+          "sha256": "bfd4dc1a46b9c8dd0680590ea277c5ada26caaed34ab436635d22c55a4c10bf6"
+        },
+        "id": "reference-fpv-pixhawk-controller-image",
+        "locales": {
+          "en": {
+            "alt": "A Pixhawk flight controller in a black case, with labelled ports, an orientation arrow and connector pins.",
+            "title": "One flight-controller design"
+          },
+          "uk": {
+            "alt": "Польотний контролер Pixhawk у чорному корпусі з підписаними портами, стрілкою орієнтації та контактами.",
+            "title": "Один із варіантів польотного контролера"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "reference-fpv-pixhawk-controller-credit",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "A specific Pixhawk controller design credited to the Pixhawk project authors. Its enclosure and port labels are examples, not a universal FPV wiring map. Follow the exact model and revision documentation for real hardware.",
+              "Pixhawk project authors — Pixhawk.png — CC BY 4.0 (https://creativecommons.org/licenses/by/4.0). Unchanged source bytes; renamed for the edition asset registry."
+            ],
+            "sources": [
+              {
+                "title": "One flight-controller design",
+                "url": "https://commons.wikimedia.org/wiki/File:Pixhawk.png"
+              },
+              {
+                "title": "License and sharing terms",
+                "url": "https://creativecommons.org/licenses/by/4.0"
+              }
+            ],
+            "title": "One flight-controller design"
+          },
+          "uk": {
+            "paragraphs": [
+              "Конкретний контролер Pixhawk, зображення авторів проєкту Pixhawk. Корпус і написи портів — приклад, а не універсальна схема FPV-проводки. Реальне обладнання потребує документації точної моделі й ревізії.",
+              "Pixhawk project authors — Pixhawk.png — CC BY 4.0 (https://creativecommons.org/licenses/by/4.0). Unchanged source bytes; renamed for the edition asset registry."
+            ],
+            "sources": [
+              {
+                "title": "Один із варіантів польотного контролера",
+                "url": "https://commons.wikimedia.org/wiki/File:Pixhawk.png"
+              },
+              {
+                "title": "Ліцензія та умови поширення",
+                "url": "https://creativecommons.org/licenses/by/4.0"
+              }
+            ],
+            "title": "Один із варіантів польотного контролера"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -348,7 +464,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-meet-aircraft-04", "kind": "mission" }
   },
   {
@@ -598,9 +714,253 @@
         "type": "knowledge"
       },
       {
+        "id": "fpv-meet-aircraft-interactive-atlas",
+        "locales": {
+          "en": {
+            "intro": "Compare any two of your six discoveries, then try two untimed predictions about a fictional civilian classroom diagram. You can revise an answer or leave at any time; exploration does not change arcade progress or certify a practical skill.",
+            "title": "Inspect the aircraft atlas"
+          },
+          "uk": {
+            "intro": "Порівняйте будь-які два з шести відкриттів, а потім спробуйте два прогнози без таймера для вигаданої цивільної навчальної схеми. Відповідь можна змінити, а перегляд — закрити; дослідження не змінює аркадного прогресу й не засвідчує практичних навичок.",
+            "title": "Дослідіть атлас дрона"
+          }
+        },
+        "recipe": {
+          "cards": [
+            {
+              "id": "frame",
+              "locales": {
+                "en": {
+                  "body": "A quadcopter frame is its supporting structure. It holds components in an arrangement; it does not itself sense motion or create motor commands.\n\nFind the arms and centre in the civilian model illustration. Compare a frame with a bookshelf: both support other things with their own jobs. The arcade map is a metaphor, not a wiring diagram.",
+                  "sourceNote": "Simplified civilian role comparison. The source links describe concepts; this exhibit supplies no live wiring or configuration procedure.",
+                  "title": "The supporting frame"
+                },
+                "uk": {
+                  "body": "Рама квадрокоптера — його опорна конструкція. Вона утримує компоненти в певному розташуванні, але сама не вимірює рух і не створює команд двигунам.\n\nЗнайдіть промені та центр на ілюстрації цивільної моделі. Порівняйте раму з полицею: обидві тримають інші речі з власними функціями. Ігрова карта — метафора, а не електрична схема.",
+                  "sourceNote": "Спрощене порівняння ролей цивільної моделі. Джерела пояснюють поняття; виставка не містить підключення живлення чи процедур налаштування.",
+                  "title": "Опорна рама"
+                }
+              },
+              "sourceIds": ["nasa", "safety"]
+            },
+            {
+              "id": "motion",
+              "locales": {
+                "en": {
+                  "body": "A motor produces rotation. A propeller uses rotation to move air and produce thrust. NASA’s quadcopter learning material connects rotor forces with movement and torque.\n\nPoint to the part that turns and the separate part that pushes air. A motor alone and one with a propeller have different effects. An arcade win never authorizes a physical powered test.",
+                  "sourceNote": "Simplified civilian role comparison. The source links describe concepts; this exhibit supplies no live wiring or configuration procedure.",
+                  "title": "Motor and propeller"
+                },
+                "uk": {
+                  "body": "Двигун створює обертання. Пропелер завдяки обертанню рухає повітря й створює тягу. Матеріал NASA пов’язує сили роторів із рухом і крутним моментом.\n\nВкажіть деталь, що обертає, та окрему деталь, що рухає повітря. Двигун сам по собі й двигун із пропелером діють по-різному. Перемога в грі не дозволяє фізичного випробування під живленням.",
+                  "sourceNote": "Спрощене порівняння ролей цивільної моделі. Джерела пояснюють поняття; виставка не містить підключення живлення чи процедур налаштування.",
+                  "title": "Двигун і пропелер"
+                }
+              },
+              "sourceIds": ["nasa", "safety"]
+            },
+            {
+              "id": "esc",
+              "locales": {
+                "en": {
+                  "body": "ESC means electronic speed controller. It receives motor commands from the flight controller and controls electrical power delivered to a motor.\n\nSeparate instruction from energy: a command describes the requested behaviour; the electrical supply provides energy. This conceptual illustration omits wiring, ratings and configuration, which depend on actual components.",
+                  "sourceNote": "Simplified civilian role comparison. The source links describe concepts; this exhibit supplies no live wiring or configuration procedure.",
+                  "title": "The electronic speed controller"
+                },
+                "uk": {
+                  "body": "ESC означає електронний регулятор швидкості. Він отримує команди від польотного контролера й керує електричною енергією, що надходить до двигуна.\n\nВідокремте вказівку від енергії: команда задає потрібну поведінку, а живлення забезпечує енергію. Концептуальна ілюстрація не показує проводку, номінали й налаштування, які залежать від конкретних деталей.",
+                  "sourceNote": "Спрощене порівняння ролей цивільної моделі. Джерела пояснюють поняття; виставка не містить підключення живлення чи процедур налаштування.",
+                  "title": "Електронний регулятор швидкості"
+                }
+              },
+              "sourceIds": ["esc"]
+            },
+            {
+              "id": "controller",
+              "locales": {
+                "en": {
+                  "body": "A flight controller uses sensor information and control inputs to calculate motor commands. “Sense → interpret → command” describes information flow, not physical wiring.\n\nA sensor reading and requested movement are different inputs. Explain why the controller needs information about the aircraft as well as an operator’s request. This civilian example does not choose firmware settings.",
+                  "sourceNote": "Simplified civilian role comparison. The source links describe concepts; this exhibit supplies no live wiring or configuration procedure.",
+                  "title": "The flight controller"
+                },
+                "uk": {
+                  "body": "Польотний контролер використовує дані датчиків і входи керування для обчислення команд двигунам. «Виміряти → опрацювати → керувати» описує потік інформації, а не фізичну проводку.\n\nПоказ датчика й бажаний рух — різні входи. Поясніть, чому контролеру потрібні дані про дрон поряд із запитом оператора. Цей цивільний приклад не добирає налаштувань прошивки.",
+                  "sourceNote": "Спрощене порівняння ролей цивільної моделі. Джерела пояснюють поняття; виставка не містить підключення живлення чи процедур налаштування.",
+                  "title": "Польотний контролер"
+                }
+              },
+              "sourceIds": ["fc"]
+            },
+            {
+              "id": "links",
+              "locales": {
+                "en": {
+                  "body": "RX names the control-link receiver. The camera captures a view, while VTX sends video toward the viewing system. Control and video links carry different information.\n\nIn a fictional civilian comparison, the picture is visible but control input is unconfirmed. Does a picture prove both links work? No: evidence about one does not establish the other. This is a reasoning exercise, not field troubleshooting.",
+                  "sourceNote": "Simplified civilian role comparison. The source links describe concepts; this exhibit supplies no live wiring or configuration procedure.",
+                  "title": "Control and video links"
+                },
+                "uk": {
+                  "body": "RX позначає приймач каналу керування. Камера отримує зображення, а VTX передає відео до системи перегляду. Канали керування та відео несуть різну інформацію.\n\nУ вигаданому цивільному порівнянні зображення видно, але приймання команд не підтверджене. Чи доводить картинка роботу обох каналів? Ні: доказ про один не підтверджує інший. Це вправа на міркування, а не польова діагностика.",
+                  "sourceNote": "Спрощене порівняння ролей цивільної моделі. Джерела пояснюють поняття; виставка не містить підключення живлення чи процедур налаштування.",
+                  "title": "Канали керування та відео"
+                }
+              },
+              "sourceIds": ["fc", "vtx"]
+            },
+            {
+              "id": "energy",
+              "locales": {
+                "en": {
+                  "body": "A battery is an energy source, not a control command or a video link. Together with the earlier parts, it completes three different relationships: support, energy and information.\n\nExplain the civilian model through those relationships using your six discoveries. Real equipment requires its own instructions and safe battery handling; this conceptual atlas is not a wiring recipe or a practical qualification.",
+                  "sourceNote": "Simplified civilian role comparison. The source links describe concepts; this exhibit supplies no live wiring or configuration procedure.",
+                  "title": "The battery and the whole model"
+                },
+                "uk": {
+                  "body": "Акумулятор — джерело енергії, а не команда керування чи відеоканал. Разом із попередніми деталями він доповнює три різні зв’язки: опору, енергію та інформацію.\n\nЗа шістьма відкриттями поясніть цивільну модель через ці зв’язки. Реальне обладнання потребує власних інструкцій і безпечного поводження з акумулятором; концептуальний атлас не є схемою підключення чи практичною кваліфікацією.",
+                  "sourceNote": "Спрощене порівняння ролей цивільної моделі. Джерела пояснюють поняття; виставка не містить підключення живлення чи процедур налаштування.",
+                  "title": "Акумулятор і ціла модель"
+                }
+              },
+              "sourceIds": ["safety", "fc", "esc", "vtx"]
+            }
+          ],
+          "id": "inspect-compare-atlas",
+          "predictions": [
+            {
+              "cardIds": ["controller", "esc", "energy"],
+              "choices": [
+                {
+                  "id": "controller",
+                  "locales": {
+                    "en": {
+                      "feedback": "Yes. This box combines information to calculate commands; it is not the energy source.",
+                      "label": "Flight controller"
+                    },
+                    "uk": {
+                      "feedback": "Так. Цей блок поєднує інформацію для обчислення команд, а не є джерелом енергії.",
+                      "label": "Польотний контролер"
+                    }
+                  }
+                },
+                {
+                  "id": "battery",
+                  "locales": {
+                    "en": {
+                      "feedback": "The battery supplies energy. Compare its card with the controller card to find the information-processing role.",
+                      "label": "Battery"
+                    },
+                    "uk": {
+                      "feedback": "Акумулятор надає енергію. Порівняйте його картку з контролером, щоб знайти роль опрацювання інформації.",
+                      "label": "Акумулятор"
+                    }
+                  }
+                },
+                {
+                  "id": "esc",
+                  "locales": {
+                    "en": {
+                      "feedback": "The ESC receives motor commands. The requested box is the earlier step that calculates those commands.",
+                      "label": "ESC"
+                    },
+                    "uk": {
+                      "feedback": "ESC отримує команди двигуна. Потрібний блок — попередній крок, що обчислює ці команди.",
+                      "label": "ESC"
+                    }
+                  }
+                }
+              ],
+              "expectedChoiceId": "controller",
+              "id": "information-and-energy",
+              "locales": {
+                "en": {
+                  "explanation": "The flight controller calculates commands. The ESC acts on motor commands, while the battery supplies energy. These conceptual roles remain different even when real products combine parts.",
+                  "prompt": "A new classroom diagram needs a box labelled “use sensor readings and requested movement to calculate motor commands”. Which role belongs there?"
+                },
+                "uk": {
+                  "explanation": "Польотний контролер обчислює команди. ESC виконує команди для двигуна, а акумулятор надає енергію. Ці ролі різні, навіть якщо реальний виріб поєднує компоненти.",
+                  "prompt": "У новій навчальній схемі потрібен блок «використати покази датчиків і запитаний рух для обчислення команд двигунам». Яка роль йому відповідає?"
+                }
+              }
+            },
+            {
+              "cardIds": ["links", "controller"],
+              "choices": [
+                {
+                  "id": "control-branch",
+                  "locales": {
+                    "en": {
+                      "feedback": "Yes. The receiver’s role concerns control information; keep it distinct from the camera/VTX branch.",
+                      "label": "Control receiver branch"
+                    },
+                    "uk": {
+                      "feedback": "Так. Роль приймача стосується інформації керування; відокремлюйте її від гілки камери/VTX.",
+                      "label": "Гілка приймача керування"
+                    }
+                  }
+                },
+                {
+                  "id": "video-branch",
+                  "locales": {
+                    "en": {
+                      "feedback": "That branch carries the view of the scene. Inspect the two-links card again to separate a movement request from a picture.",
+                      "label": "Camera/video branch"
+                    },
+                    "uk": {
+                      "feedback": "Ця гілка передає зображення сцени. Знову розгляньте картку двох каналів, щоб відокремити запит руху від картинки.",
+                      "label": "Гілка камери та відео"
+                    }
+                  }
+                }
+              ],
+              "expectedChoiceId": "control-branch",
+              "id": "place-the-operator-input",
+              "locales": {
+                "en": {
+                  "explanation": "The request belongs to the control-information branch through the receiver. An image of the scene and an operator’s command are different information; this diagram does not test a real radio system.",
+                  "prompt": "The diagram already has a camera → video-transmitter branch. Where should a separate arrow labelled “operator’s movement request” arrive?"
+                },
+                "uk": {
+                  "explanation": "Запит належить до гілки інформації керування через приймач. Зображення сцени й команда оператора — різна інформація; схема не перевіряє реальну радіосистему.",
+                  "prompt": "Схема вже має гілку «камера → відеопередавач». До якої гілки має надходити окрема стрілка «запит оператора на рух»?"
+                }
+              }
+            }
+          ],
+          "revision": 1,
+          "sources": [
+            {
+              "id": "nasa",
+              "title": "NASA — The Science Behind Quadcopters",
+              "url": "https://www.nasa.gov/stem-content/the-science-behind-quadcopters/"
+            },
+            {
+              "id": "safety",
+              "title": "Betaflight — Safety",
+              "url": "https://betaflight.com/docs/wiki/guides/current/Safety"
+            },
+            {
+              "id": "esc",
+              "title": "Betaflight — ESC firmware",
+              "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+            },
+            {
+              "id": "fc",
+              "title": "Betaflight — Getting started",
+              "url": "https://betaflight.com/docs/wiki/getting-started"
+            },
+            {
+              "id": "vtx",
+              "title": "Betaflight — Video transmitters",
+              "url": "https://betaflight.com/docs/wiki/getting-started/hardware/vtx"
+            }
+          ]
+        },
+        "type": "exploration"
+      },
+      {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-meet-aircraft-01-art-v1",
+          "sha256": "8b79d705bb064333eefece3c6acdd0f9f0a4a9079cab8ab2939401ae47689fe8"
         },
         "id": "fpv-meet-aircraft-01-image",
         "locales": {
@@ -769,7 +1129,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-meet-aircraft", "kind": "campaign" }
   }
 ]

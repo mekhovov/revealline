@@ -1,0 +1,110 @@
+{
+  "campaignId": "ukraine-voices-travel",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "Voices That Travel", "uk": "Голоси, що мандрують" } },
+      "id": "ukraine-voices-travel",
+      "identity": "93d4f3e31b6c19ce",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the instrument room to the listening court and discover the people behind the sound. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "З’єднайте інструментальну залу з подвір’ям слухання та відкрийте людей за звучанням. Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.routeDecision": {
+          "en": "Secure the instrument alcove first or connect two listening islands before taking the long audience court. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Спершу закріпіть інструментальну нішу або поєднайте два острови слухання перед довгим подвір’ям глядачів. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "An Instrument and a Voice", "uk": "Інструмент і голос" }
+      },
+      "id": "ukraine-voices-travel-01",
+      "identity": "f9ea3aedf0501cfa",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Link the teaching rooms and keep a return open between learning and sharing. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "Поєднайте навчальні кімнати та збережіть повернення між навчанням і передачею знань. Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.routeDecision": {
+          "en": "Join the nearby teaching tables for short captures or use the outer gallery to connect all three rooms. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Поєднайте сусідні навчальні столи короткими захопленнями або з’єднайте всі три кімнати зовнішньою галереєю. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "A Practice Kept Together", "uk": "Практика, яку бережуть разом" }
+      },
+      "id": "ukraine-voices-travel-02",
+      "identity": "ca11158ddd8ee1b4",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Reveal the regional song gallery while keeping each group’s record distinct. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Відкрийте галерею регіональної пісні, зберігаючи окремий запис кожного гурту. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.routeDecision": {
+          "en": "Read the warning from the narrow source aisle or cross the wider regional court with a nearer return prepared. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Стежте за попередженням із вузького архівного проходу або перетніть ширше регіональне подвір’я з підготовленим близьким поверненням. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "A Region Has Many Voices", "uk": "Регіон має багато голосів" }
+      },
+      "id": "ukraine-voices-travel-03",
+      "identity": "94982b90e7eb602f",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Open the broad concert foyer and connect the composition to its documented journey. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Відкрийте широке концертне фоє та пов’яжіть твір із його документованою подорожжю. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.routeDecision": {
+          "en": "Take the open foyer in a wide loop or reveal the two programme alcoves before approaching the marked lane. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Захопіть відкрите фоє широкою петлею або відкрийте дві ніші програмок перед наближенням до позначеної смуги. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "Shchedryk Crosses an Ocean", "uk": "«Щедрик» перетинає океан" }
+      },
+      "id": "ukraine-voices-travel-04",
+      "identity": "e1787136356dd97f",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the listening stations and discover how an archive can let you hear parts of a whole. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "З’єднайте станції слухання та дізнайтеся, як архів відкриває частини цілого. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.routeDecision": {
+          "en": "Secure the lower listening station for a quick return or connect the upper pair around the warning lane. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Закріпіть нижню станцію слухання для швидкого повернення або з’єднайте верхню пару навколо смуги попередження. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "One Voice, Then the Group", "uk": "Один голос, потім гурт" }
+      },
+      "id": "ukraine-voices-travel-05",
+      "identity": "d1f2f84f20920957",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Complete the listening trail and preserve the source with every discovery. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Завершіть маршрут слухання та збережіть джерело кожного відкриття. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.routeDecision": {
+          "en": "Open the numbered source connector first or secure the wide archive wing before returning to the final listening island. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Спершу відкрийте нумерований прохід джерел або закріпіть широке архівне крило перед поверненням до фінального острова слухання. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "Carry the Context", "uk": "Передайте контекст" }
+      },
+      "id": "ukraine-voices-travel-06",
+      "identity": "07f87a034b559b77",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}
