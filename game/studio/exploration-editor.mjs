@@ -3,7 +3,8 @@ import { t } from '../i18n/index.mjs';
 import { validateExplorationPayload } from '../rewards/exploration.mjs';
 import { validateCompletionRewards } from '../rewards/model.mjs';
 import { editDiscoveryExploration } from '../content-design/discovery.mjs';
-import { mountDiscoveryExploration } from '../ui/discovery-exploration.mjs';
+import { mountLocalExplorationPreview } from './exploration-image-preview.mjs';
+import { createExplorationDiagramEditor } from './exploration-diagram-editor.mjs';
 import { createExplorationExample } from './exploration-example.mjs';
 
 /** Reusable authoring panel for Level/Campaign Studio and Company Studio.
@@ -78,25 +79,38 @@ export function createExplorationEditor({
         maxString: 2048,
       }),
     );
+  const diagram = createExplorationDiagramEditor({
+    container: root,
+    getDraft: read,
+    setDraft(value) {
+      stopPreview();
+      editor.value = JSON.stringify(value, null, 2);
+    },
+    getLocale,
+  });
+  editor.onchange = () => diagram.sync();
   function load() {
     stopPreview();
     const reward = getRewards().find((item) => item.id === select.value),
       payload = reward?.payloads.find((item) => item.type === 'exploration');
     editor.value = payload ? JSON.stringify(payload, null, 2) : '';
+    diagram.sync();
     status.textContent = tr(payload ? 'loaded' : 'start');
   }
   button('load', load);
   button('example', () => {
     stopPreview();
     editor.value = JSON.stringify(createExplorationExample(), null, 2);
+    diagram.sync();
     status.textContent = tr('exampleReady');
   });
   button('preview', () => {
     stopPreview();
-    viewer = mountDiscoveryExploration({
+    viewer = mountLocalExplorationPreview({
       container: preview,
       payload: read(),
       locale: getLocale(),
+      window,
     });
     status.textContent = tr('previewOnly');
   });
@@ -145,7 +159,9 @@ export function createExplorationEditor({
     dispose() {
       disposed = true;
       stopPreview();
+      diagram.dispose();
       select.onchange = null;
+      editor.onchange = null;
       controls.forEach((node) => {
         node.onclick = null;
       });
