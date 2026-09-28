@@ -217,15 +217,19 @@ export async function readBuildConfig(root = PROJECT_ROOT) {
   return config;
 }
 
+export function isBuildInputPath(file) {
+  if (file.startsWith('game/test/') || file.startsWith('game/offline/')) return false;
+  if (file.split('/').some((part) => part.startsWith('.') || part === 'node_modules'))
+    fail(`Private path in build: ${file}`);
+  return true;
+}
+
 export async function collectBuildFiles(root = PROJECT_ROOT, config) {
   config ??= await readBuildConfig(root);
   const files = new Set();
   for (const included of config.include) {
     for (const file of await regularFiles(root, included)) {
-      if (file.startsWith('game/test/') || file.startsWith('game/offline/')) continue;
-      if (file.split('/').some((p) => p.startsWith('.') || p === 'node_modules'))
-        fail(`Private path in build: ${file}`);
-      files.add(file);
+      if (isBuildInputPath(file)) files.add(file);
     }
   }
   if (!files.has(config.entry)) fail(`Build include does not contain entry ${config.entry}`);
@@ -776,14 +780,14 @@ export async function addOfflineEntries(
   }
 }
 
-export async function buildProject({
+async function prepareBuildProject({
   root = PROJECT_ROOT,
-  out = path.join(root, 'dist'),
+  out = null,
   version,
   sourceRevision = null,
 } = {}) {
   root = await fs.realpath(root);
-  out = path.resolve(out);
+  if (out !== null) out = path.resolve(out);
   const config = await readBuildConfig(root);
   version = safeVersion(version ?? config.version);
   if (sourceRevision !== null && !/^[0-9a-f]{40,64}$/.test(sourceRevision))
@@ -798,7 +802,7 @@ export async function buildProject({
       : await (
           await import('./optional-artwork.mjs')
         ).readOptionalArtwork(root, config.optionalArtwork, files);
-  await assertOutput(root, out, config.include);
+  if (out !== null) await assertOutput(root, out, config.include);
   await validateBuildReferences(root, files);
   const { contentSnapshots = [] } = await validateContentSnapshots(root, files);
   if (files.includes('game/coop/library.mjs')) await validateCoopContent(root);
@@ -862,54 +866,93 @@ export async function buildProject({
       fail('Soundtrack bodies must remain outside automatic includes and other downloads');
     declared.add(entry.name);
   }
+  const entries = [];
+  for (const name of files) entries.push({ name, bytes: await fs.readFile(path.join(root, name)) });
+  if (
+    missionIndexSnapshot &&
+    !entries
+      .find((entry) => entry.name === missionIndexSnapshot.path)
+      ?.bytes.equals(missionIndexSnapshot.bytes)
+  )
+    fail('Mission library index changed after validation; rebuild from stable source');
+  for (const snapshot of contentSnapshots) {
+    const entry = entries.find((candidate) => candidate.name === snapshot.file);
+    if (!entry || entry.bytes.length !== snapshot.bytes || sha256(entry.bytes) !== snapshot.sha256)
+      fail('Spatial snapshot changed after validation; rebuild from stable source');
+  }
+  entries.push(...optionalEntries, ...externalEntries, ...soundtrackEntries);
+  const info = { formatVersion: FORMAT_VERSION, version, sourceRevision, entry: config.entry };
+  const replace = (name, bytes) => {
+    const found = entries.find((e) => e.name === name);
+    if (found) found.bytes = Buffer.from(bytes);
+    else entries.push({ name, bytes: Buffer.from(bytes) });
+  };
+  replace('game/build-info.json', json(info));
+  addPublicEntries(entries, info);
+  await addOfflineEntries(
+    root,
+    entries,
+    info,
+    config,
+    optionalEntries.map((entry) => entry.name),
+    [...externalEntries, ...soundtrackEntries].map((entry) => entry.name),
+    optionalArtwork,
+  );
+  entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+  const manifest = {
+    ...info,
+    totalBytes: entries.reduce((n, e) => n + e.bytes.length, 0),
+    files: entries.map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) })),
+  };
+  const manifestBytes = Buffer.from(json(manifest));
+  entries.push({ name: 'manifest.json', bytes: manifestBytes });
+  return { root, out, version, sourceRevision, entries, manifest, manifestBytes };
+}
+
+/** Runs the same preparation and validation as a build, without allocating a
+ * ZIP or writing an expanded site. This inventory is not publication admission. */
+export async function inspectBuildProject(options = {}) {
+  const { version, sourceRevision, manifest, manifestBytes } = await prepareBuildProject({
+    root: options.root,
+    version: options.version,
+    sourceRevision: options.sourceRevision,
+  });
+  return {
+    format: 'revealline-default-build-inspection.v1',
+    version,
+    sourceRevision,
+    publicEligible: false,
+    promotable: false,
+    completeHostedOutput: false,
+    publicationAssessment: 'not-performed',
+    payloadBytesIncludingManifest: manifest.totalBytes + manifestBytes.length,
+    manifestDescriptor: {
+      path: 'manifest.json',
+      bytes: manifestBytes.length,
+      sha256: sha256(manifestBytes),
+    },
+    manifest,
+    missingComponents: [
+      'Pages root routes and publication metadata',
+      'Hosted edition versions, stable launchers and company hub',
+      'Hosted optional packages, launchers and any other generated files',
+    ],
+  };
+}
+
+export async function buildProject({
+  root = PROJECT_ROOT,
+  out = path.join(root, 'dist'),
+  version,
+  sourceRevision = null,
+} = {}) {
+  const prepared = await prepareBuildProject({ root, out, version, sourceRevision });
+  ({ root, out, version, sourceRevision } = prepared);
+  const { entries, manifest } = prepared;
   await fs.mkdir(path.dirname(out), { recursive: true });
   const staging = await fs.mkdtemp(path.join(path.dirname(out), '.xonix-build-'));
   let old;
   try {
-    const entries = [];
-    for (const name of files)
-      entries.push({ name, bytes: await fs.readFile(path.join(root, name)) });
-    if (
-      missionIndexSnapshot &&
-      !entries
-        .find((entry) => entry.name === missionIndexSnapshot.path)
-        ?.bytes.equals(missionIndexSnapshot.bytes)
-    )
-      fail('Mission library index changed after validation; rebuild from stable source');
-    for (const snapshot of contentSnapshots) {
-      const entry = entries.find((candidate) => candidate.name === snapshot.file);
-      if (
-        !entry ||
-        entry.bytes.length !== snapshot.bytes ||
-        sha256(entry.bytes) !== snapshot.sha256
-      )
-        fail('Spatial snapshot changed after validation; rebuild from stable source');
-    }
-    entries.push(...optionalEntries, ...externalEntries, ...soundtrackEntries);
-    const info = { formatVersion: FORMAT_VERSION, version, sourceRevision, entry: config.entry };
-    const replace = (name, bytes) => {
-      const found = entries.find((e) => e.name === name);
-      if (found) found.bytes = Buffer.from(bytes);
-      else entries.push({ name, bytes: Buffer.from(bytes) });
-    };
-    replace('game/build-info.json', json(info));
-    addPublicEntries(entries, info);
-    await addOfflineEntries(
-      root,
-      entries,
-      info,
-      config,
-      optionalEntries.map((entry) => entry.name),
-      [...externalEntries, ...soundtrackEntries].map((entry) => entry.name),
-      optionalArtwork,
-    );
-    entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
-    const manifest = {
-      ...info,
-      totalBytes: entries.reduce((n, e) => n + e.bytes.length, 0),
-      files: entries.map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) })),
-    };
-    entries.push({ name: 'manifest.json', bytes: Buffer.from(json(manifest)) });
     const zip = createZip(entries);
     for (const entry of entries) {
       const target = path.join(staging, entry.name);
