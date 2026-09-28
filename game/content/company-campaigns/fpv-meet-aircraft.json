@@ -252,7 +252,7 @@
         "memorableMoment": "An original civilian learning workshop with an exploded carbon frame on a cyan display, no connected battery and no mounted props.",
         "pacingBeat": "discover",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "fpv-meet-aircraft-01-discovery", "revision": "4" },
+        "rewardRef": { "id": "fpv-meet-aircraft-01-discovery", "revision": "5" },
         "routeDecision": "Take short returns to the central frame island or a wider capture around its open west side."
       },
       "format": "MissionDesignV1",
@@ -567,9 +567,9 @@
       "format": "PackDesignV1",
       "id": "fpv-meet-aircraft-pack",
       "name": "Meet the Aircraft",
-      "revision": "5"
+      "revision": "6"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "5"
+  "revision": "6"
 }

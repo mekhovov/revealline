@@ -1,3 +1,6 @@
+import { createAudioGroupEditor } from './audio-group-editor.mjs';
+import { rewardPresentationItems } from '../rewards/audio-groups.mjs';
+import { createAudioRewardEditor } from './audio-reward-editor.mjs';
 import { createAssetRewardEditor } from './asset-reward-editor.mjs';
 import { createTeaserRewardEditor } from './teaser-reward-editor.mjs';
 import { mountLocalRewardTeaserPreview } from './reward-teaser-preview.mjs';
@@ -54,7 +57,8 @@ export function createDiscoveryEditor({
           window,
         }),
       );
-    for (const payload of reward?.payloads ?? [])
+    for (const item of reward ? rewardPresentationItems(reward) : []) {
+      const payload = item.kind === 'audio-group' ? item.group : item.payload;
       if (payload.type === 'knowledge' && payload.profiles)
         mediaPreviews.push(
           mountRewardKnowledge({ container, payload, locale: $('locale').value || 'en' }),
@@ -67,11 +71,13 @@ export function createDiscoveryEditor({
           note.textContent = error.message;
           container.append(note);
         }
-      } else if (['audio', 'video'].includes(payload.type))
+      } else if (item.kind === 'audio-group' || ['audio', 'video'].includes(payload.type))
         mediaPreviews.push(
           mountLocalRewardMediaPreview({
             container,
-            payload,
+            ...(item.kind === 'audio-group'
+              ? { group: item.group, payloads: item.payloads }
+              : { payload }),
             locale: $('locale').value || 'en',
             window,
           }),
@@ -80,6 +86,7 @@ export function createDiscoveryEditor({
         mediaPreviews.push(
           mountRewardQr({ container, payload, locale: $('locale').value || 'en' }),
         );
+    }
     return container;
   }
   let imported = [],
@@ -131,6 +138,12 @@ export function createDiscoveryEditor({
     getCosmeticSource,
     window,
   });
+  const audioHandoff = createAudioRewardEditor({
+    ...sharedEditorOptions,
+    getCompanySource: getCosmeticSource,
+    window,
+  });
+  const audioGroups = createAudioGroupEditor({ ...sharedEditorOptions, window });
   const feedback = createCampaignFeedbackEditor({
     container: $('tools'),
     getSource,
@@ -229,6 +242,8 @@ export function createDiscoveryEditor({
     profiles.sync();
     cosmetics.sync();
     assetHandoff.sync();
+    audioHandoff.sync();
+    audioGroups.sync();
   }
   function command() {
     const finaleRewardRef = readRef($('finale')),
@@ -356,6 +371,8 @@ export function createDiscoveryEditor({
       profiles.dispose();
       cosmetics.dispose();
       assetHandoff.dispose();
+      audioHandoff.dispose();
+      audioGroups.dispose();
       feedback.dispose();
     },
   };

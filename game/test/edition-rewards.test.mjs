@@ -38,6 +38,7 @@ async function fixture(
     durable = true,
     exploration = false,
     audio = false,
+    playlist = false,
     learning = false,
     getLearningEvidence,
     mastery = false,
@@ -81,24 +82,25 @@ async function fixture(
     audioFiles.set(`http://localhost/${asset.path}`, bytes);
     return { assetId: id, sha256: asset.sha256 };
   };
-  const audioPayload = audio
-    ? {
-        id: 'recording',
-        type: 'audio',
-        locales: locales({ title: 'Owned diagnostic' }),
-        asset: audioRef('recording', 'wav', rewardAudioFixture()),
-        transcript: Object.fromEntries(
-          ['en', 'uk'].map((locale) => [
-            locale,
-            audioRef(
-              `transcript-${locale}`,
-              'txt',
-              new TextEncoder().encode('An exact diagnostic transcript.'),
-            ),
-          ]),
-        ),
-      }
-    : null;
+  const audioPayload =
+    audio || playlist
+      ? {
+          id: 'recording',
+          type: 'audio',
+          locales: locales({ title: 'Owned diagnostic' }),
+          asset: audioRef('recording', 'wav', rewardAudioFixture()),
+          transcript: Object.fromEntries(
+            ['en', 'uk'].map((locale) => [
+              locale,
+              audioRef(
+                `transcript-${locale}`,
+                'txt',
+                new TextEncoder().encode('An exact diagnostic transcript.'),
+              ),
+            ]),
+          ),
+        }
+      : null;
   const teaserImage = teaser
     ? {
         asset: audioRef('separate-preview', 'png', teaserBytes()),
@@ -140,7 +142,22 @@ async function fixture(
   const rewards = bindings.map(missionReward);
   if (teaserImage) rewards[0].teaserImage = teaserImage;
   if (exploration) rewards[0].payloads.push(createExplorationExample());
-  if (audio) rewards[0].payloads.push(audioPayload);
+  if (audio || playlist) rewards[0].payloads.push(audioPayload);
+  if (playlist) {
+    rewards[0].payloads.push({
+      ...copy(audioPayload),
+      id: 'second-recording',
+      locales: locales({ title: 'Second recording' }),
+    });
+    rewards[0].audioGroups = [
+      {
+        format: 'revealline-ordered-audio-group.v1',
+        id: 'listening-room',
+        locales: locales({ title: 'Listening room' }),
+        payloadIds: ['second-recording', 'recording'],
+      },
+    ];
+  }
   rewards[0].payloads.push({
     id: 'resource',
     type: 'url',
@@ -182,6 +199,7 @@ async function fixture(
     ],
   });
   delete rewards.at(-1).teaserImage;
+  delete rewards.at(-1).audioGroups;
   const provider = {
     editionId: selection.edition.id,
     selection,
@@ -893,4 +911,38 @@ test('leaving the ready card during a delayed teaser download prevents late imag
   await f.settle();
   assert.equal(f.created.length, 0);
   assert.equal(f.doc.getElementById('completion-reward-result').querySelector('img'), null);
+});
+
+test('earned playlist stays locked until its accepted win and switching never changes receipts or autoplays', async (t) => {
+  const f = await fixture(t, { playlist: true });
+  assert.equal(f.doc.querySelector('[data-reward-audio-group]'), null);
+  assert.equal(f.requests.length, 0);
+  f.accepted(1);
+  f.view.refresh();
+  await waitFor(() => f.cards[0].dataset.earned === 'true');
+  const before = await f.exportState();
+  f.collection.showModal();
+  f.cards[0].querySelector('button').click();
+  const group = f.doc.querySelector('[data-reward-audio-group]');
+  assert(group);
+  assert.deepEqual(
+    group
+      .querySelectorAll('[data-playlist-track]')
+      .map((n) => n.getAttribute('data-playlist-track')),
+    ['second-recording', 'recording'],
+  );
+  assert.equal(f.doc.querySelectorAll('[data-reward-media]').length, 1);
+  await waitFor(() =>
+    group.querySelector('details')?.textContent.includes('An exact diagnostic transcript.'),
+  );
+  assert.equal(f.audioElements.length, 0);
+  group.querySelector('[data-reward-media-action="play"]').click();
+  await waitFor(() => f.audioElements[0]?.playCalls === 1);
+  group.querySelector('[data-playlist-action="next"]').click();
+  assert.equal(f.audioLeases, 0);
+  assert.equal(f.audioElements[0].paused, true);
+  assert.equal(f.audioElements.length, 1);
+  f.doc.getElementById('completion-reward-dialog').close();
+  assert.equal(f.doc.querySelector('[data-reward-audio-group]'), null);
+  assert.deepEqual((await f.exportState()).receipts, before.receipts);
 });

@@ -105,6 +105,210 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "reference-ukraine-met-shirt-fragment",
+          "sha256": "edb86aaaa16ec601d1816765940cdfa37d761e3e557b9e5c2ba37d642fbc216f"
+        },
+        "id": "reference-ukraine-met-shirt-fragment-image",
+        "locales": {
+          "en": {
+            "alt": "A long pale textile fragment on black, with coloured floral embroidery, a row of small motifs along the lower border, and a vertical fold near the right edge.",
+            "title": "A documented Ukrainian shirt fragment"
+          },
+          "uk": {
+            "alt": "Довгий світлий фрагмент тканини на чорному тлі: кольорова квіткова вишивка, ряд дрібних мотивів уздовж нижнього краю та вертикальна складка праворуч.",
+            "title": "Документований фрагмент української сорочки"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "reference-ukraine-met-shirt-fragment-credit",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Met identifies this fragment as Ukrainian, dates it to the final quarter of the eighteenth century, and records linen, silk and metal. That is a record of one object. The photograph alone does not name its maker, establish a precise region, or explain a universal meaning for its flowers. Compare the museum record with what you can actually observe.",
+              "The Metropolitan Museum of Art, Fragment of a shirt, 2009.300.2715. Brooklyn Museum Costume Collection; gift of the Brooklyn Museum, 2009; earlier Harkness gift, 1931. Public Domain / CC0. Exact source photograph, unchanged."
+            ],
+            "sources": [
+              {
+                "title": "A documented Ukrainian shirt fragment",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "License and sharing terms",
+                "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+              }
+            ],
+            "title": "A documented Ukrainian shirt fragment"
+          },
+          "uk": {
+            "paragraphs": [
+              "Музей Метрополітен визначає цей фрагмент як український, датує останньою чвертю XVIII століття й зазначає льон, шовк та метал. Це запис про один предмет. Сама фотографія не називає майстра, не визначає точного регіону й не пояснює універсального значення квітів. Порівняйте музейний запис із тим, що справді можна побачити.",
+              "The Metropolitan Museum of Art, Fragment of a shirt, 2009.300.2715. Brooklyn Museum Costume Collection; gift of the Brooklyn Museum, 2009; earlier Harkness gift, 1931. Public Domain / CC0. Exact source photograph, unchanged."
+            ],
+            "sources": [
+              {
+                "title": "Документований фрагмент української сорочки",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "Ліцензія та умови поширення",
+                "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+              }
+            ],
+            "title": "Документований фрагмент української сорочки"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "id": "ukraine-threads-01-object-exploration",
+        "locales": {
+          "en": {
+            "intro": "Choose a flower, a border or a fold in this museum photograph. Separate an observation you can make from the image from information supplied by the object record. These optional questions do not assess identity or change your arcade result.",
+            "title": "Look closely · one documented textile"
+          },
+          "uk": {
+            "intro": "Виберіть квітку, облямівку або складку на музейній фотографії. Відокремте спостереження за зображенням від відомостей у записі про предмет. Ці необов’язкові запитання не оцінюють ідентичність і не змінюють аркадний результат.",
+            "title": "Придивіться · один задокументований текстиль"
+          }
+        },
+        "recipe": {
+          "cards": [
+            {
+              "id": "flower",
+              "locales": {
+                "en": {
+                  "body": "Look at the rounded centre and the surrounding coloured lobes. Calling this a flower-like form describes what the photograph shows. The record identifies this particular object as Ukrainian; it does not give this shape one universal meaning or identify its maker.",
+                  "sourceNote": "The shape description is an observation of the museum photograph. Cultural attribution comes from The Met’s record for object 2009.300.2715. Neither source establishes a symbol shared by every Ukrainian region.",
+                  "title": "Flower · visible form, open meaning"
+                },
+                "uk": {
+                  "body": "Розгляньте округлу середину й кольорові пелюсткоподібні частини навколо. Назвати цю форму схожою на квітку — описати те, що видно на фотографії. Запис визначає саме цей предмет як український, але не надає формі єдиного універсального значення й не називає автора.",
+                  "sourceNote": "Опис форми — спостереження за музейною фотографією. Культурна атрибуція походить із запису The Met про предмет 2009.300.2715. Жодне з цих джерел не встановлює символу, спільного для всіх регіонів України.",
+                  "title": "Квітка · видима форма, відкрите значення"
+                }
+              },
+              "sourceIds": ["met-object"]
+            },
+            {
+              "id": "border",
+              "locales": {
+                "en": {
+                  "body": "Follow the smaller repeated forms beneath the long horizontal line, then compare them with the larger flowers above. Size, spacing and colour can be observed here. The listed materials—linen, silk and metal—come from the museum record, not from identifying fibres by colour on a screen.",
+                  "sourceNote": "The Met lists the object’s materials and dates it to the fourth quarter of the eighteenth century. These are catalogue statements for this object, not facts that the photograph alone can prove.",
+                  "title": "Lower border · compare scale and spacing"
+                },
+                "uk": {
+                  "body": "Простежте дрібніші повторювані форми під довгою горизонтальною лінією й порівняйте їх із більшими квітами вгорі. Тут можна спостерігати розмір, інтервали та колір. Перелік матеріалів — льон, шовк і метал — походить із музейного запису, а не з визначення волокон за кольором на екрані.",
+                  "sourceNote": "The Met наводить матеріали предмета й датує його останньою чвертю XVIII століття. Це твердження каталогу про цей предмет, а не факти, які сама фотографія здатна довести.",
+                  "title": "Нижня облямівка · порівняйте масштаб та інтервали"
+                }
+              },
+              "sourceIds": ["met-object"]
+            },
+            {
+              "id": "fold",
+              "locales": {
+                "en": {
+                  "body": "The cloth turns into folds on the right; some decoration disappears behind the overlap. A photograph shows this arrangement and viewpoint, not every surface or a complete garment. Keep the object title “Fragment of a shirt” when sharing it, and follow the record before making a more specific claim.",
+                  "sourceNote": "The public-domain photograph is provided through The Met’s Open Access programme. Credit the museum and object number even when reusing it freely; a reuse licence does not supply missing evidence about maker, region or meaning.",
+                  "title": "Right fold · notice what is hidden"
+                },
+                "uk": {
+                  "body": "Праворуч тканина утворює складки, і частина оздоблення зникає за перекриттям. Фотографія показує це розташування з певного ракурсу, а не всі поверхні чи цілу сорочку. Поширюючи зображення, зберігайте назву «Фрагмент сорочки» й перевіряйте запис перед конкретнішим твердженням.",
+                  "sourceNote": "Фотографія в суспільному надбанні доступна через програму Open Access музею The Met. Навіть за вільного використання зазначайте музей і номер предмета: дозвіл на повторне використання не додає відсутніх доказів про автора, регіон чи значення.",
+                  "title": "Складка праворуч · помітьте приховане"
+                }
+              },
+              "sourceIds": ["met-object", "met-open-access"]
+            }
+          ],
+          "diagram": {
+            "asset": {
+              "assetId": "reference-ukraine-met-shirt-fragment",
+              "sha256": "edb86aaaa16ec601d1816765940cdfa37d761e3e557b9e5c2ba37d642fbc216f"
+            },
+            "hotspots": [
+              { "cardId": "flower", "x": 0.196, "y": 0.328 },
+              { "cardId": "border", "x": 0.261, "y": 0.729 },
+              { "cardId": "fold", "x": 0.746, "y": 0.482 }
+            ],
+            "locales": {
+              "en": {
+                "alt": "A long embroidered shirt fragment on black. Curling green stems and multicoloured flowers cover the upper band; smaller repeated forms run along the lower border. The right end is folded. Points mark a left flower, the lower border and a right-hand fold.",
+                "caption": "Photograph of a real collection object, not a reconstruction: The Met, Fragment of a shirt, Ukrainian, fourth quarter 18th century, linen, silk and metal; object 2009.300.2715. Brooklyn Museum Costume Collection; gift of the Brooklyn Museum, 2009, following the 1931 gift from Mrs. Edward S. Harkness in memory of Elizabeth Greenman Stillman. Public-domain image."
+              },
+              "uk": {
+                "alt": "Довгий вишитий фрагмент сорочки на чорному тлі. У верхній смузі — вигнуті зелені стебла й різнокольорові квіти; внизу — дрібніші повторювані форми. Правий кінець складено. Точки позначають квітку ліворуч, нижню облямівку й складку праворуч.",
+                "caption": "Фотографія реального музейного предмета, не реконструкція: The Met, «Фрагмент сорочки», українська культура, остання чверть XVIII століття, льон, шовк і метал; номер 2009.300.2715. Колекція костюма Бруклінського музею; дар Бруклінського музею 2009 року, первісний дар пані Едвард С. Гаркнесс 1931 року на згадку про Елізабет Ґрінмен Стіллман. Зображення в суспільному надбанні."
+              }
+            }
+          },
+          "id": "inspect-image-atlas",
+          "predictions": [
+            {
+              "cardIds": ["border", "fold"],
+              "choices": [
+                {
+                  "id": "record",
+                  "locales": {
+                    "en": {
+                      "feedback": "Yes. This is documented catalogue information about the particular object.",
+                      "label": "The museum record"
+                    },
+                    "uk": {
+                      "feedback": "Так. Це задокументовані відомості каталогу про конкретний предмет.",
+                      "label": "Із музейного запису"
+                    }
+                  }
+                },
+                {
+                  "id": "image-only",
+                  "locales": {
+                    "en": {
+                      "feedback": "Colour is visible, but it does not establish this date. Compare the object record with what you can directly observe.",
+                      "label": "The colours in the photograph alone"
+                    },
+                    "uk": {
+                      "feedback": "Колір видно, але він не встановлює цієї дати. Порівняйте запис про предмет із тим, що спостерігаєте безпосередньо.",
+                      "label": "Лише з кольорів на фотографії"
+                    }
+                  }
+                }
+              ],
+              "expectedChoiceId": "record",
+              "id": "observation-or-record",
+              "locales": {
+                "en": {
+                  "explanation": "The date is supplied by the museum’s object record. Looking at colour, flowers or folds alone does not establish the date. Keep that source attached to the label.",
+                  "prompt": "A label dates this object to the fourth quarter of the eighteenth century. Where does that statement come from?"
+                },
+                "uk": {
+                  "explanation": "Дату наводить музейний запис про предмет. Самі колір, квіти чи складки не встановлюють дату. Зберігайте посилання на це джерело поруч із підписом.",
+                  "prompt": "Підпис датує цей предмет останньою чвертю XVIII століття. Звідки походить це твердження?"
+                }
+              }
+            }
+          ],
+          "revision": 1,
+          "sources": [
+            {
+              "id": "met-object",
+              "title": "The Met · Fragment of a shirt · object 2009.300.2715",
+              "url": "https://www.metmuseum.org/art/collection/search/157573"
+            },
+            {
+              "id": "met-open-access",
+              "title": "The Met · Open Access",
+              "url": "https://www.metmuseum.org/hubs/open-access"
+            }
+          ]
+        },
+        "type": "exploration"
       }
     ],
     "requirements": {
@@ -121,7 +325,7 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
     "scope": { "id": "ukraine-threads-01", "kind": "mission" },
     "teaserImage": {
       "asset": {
