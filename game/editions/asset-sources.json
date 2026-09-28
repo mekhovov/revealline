@@ -9096,6 +9096,90 @@
       "accession": "2009.300.2715",
       "credit": "The Metropolitan Museum of Art, Brooklyn Museum Costume Collection; gift of the Brooklyn Museum, 2009; earlier gift of Mrs. Edward S. Harkness, 1931.",
       "context": "The museum attributes this particular fragment to Ukrainian culture and identifies linen, silk and metal. No precise region, maker, stitch technique or universal symbol meaning is inferred from its photograph."
+    },
+    {
+      "id": "social-community-listening-jellyfish",
+      "path": "game/editions/assets/discovery/audio/3xblast-jellyfish-v1.mp3",
+      "sha256": "f03927dbb34fca2946b4d156523e24d8ada69fbf390ed522597b9fbaedbf09a6",
+      "bytes": 1423569,
+      "revision": 1,
+      "rights": "CC0-1.0",
+      "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution": "3xBlast — A Band of Jellyfish. CC0 1.0 Universal. Existing OGG-to-MP3 derivative; no musical edits.",
+      "publication": "public",
+      "review": "Exact existing admitted runtime bytes verified against game soundtrack catalogue; creator source and CC0 checked 2026-09-28. Full listening and device review remain pending.",
+      "notes": [
+        "The creator describes this source set as vocalless pop-punk/chiptune.",
+        "A contemporary game recording, not a Social Drone UA recording or endorsement.",
+        "An older archive README restriction was removed by the creator in the source-page comments on 2021-12-09; current source page states CC0."
+      ]
+    },
+    {
+      "id": "social-community-listening-jellyfish-en",
+      "path": "game/editions/assets/discovery/audio/3xblast-jellyfish-en-v1.txt",
+      "sha256": "eeabea4dcee857b57b0b16a18db66634e1a5e60c726889b8d00810024e2fa813",
+      "bytes": 779,
+      "revision": 1,
+      "rights": "original-authored-text",
+      "source": "game/company-campaigns/curriculum-listening.mjs",
+      "publication": "public",
+      "review": "Original bilingual instrumental description and optional listening prompt; artist and licence copied from existing cleared source records; no invented lyrics or audition-specific claims.",
+      "attribution": "RevealLine original description; recording by 3xBlast, CC0 1.0 Universal."
+    },
+    {
+      "id": "social-community-listening-jellyfish-uk",
+      "path": "game/editions/assets/discovery/audio/3xblast-jellyfish-uk-v1.txt",
+      "sha256": "607565e80f20763ae3ae31e42b9aac372eb84d4015f663970ed0e1fdbb8f8ddb",
+      "bytes": 1242,
+      "revision": 1,
+      "rights": "original-authored-text",
+      "source": "game/company-campaigns/curriculum-listening.mjs",
+      "publication": "public",
+      "review": "Original bilingual instrumental description and optional listening prompt; artist and licence copied from existing cleared source records; no invented lyrics or audition-specific claims.",
+      "attribution": "RevealLine original description; recording by 3xBlast, CC0 1.0 Universal."
+    },
+    {
+      "id": "social-community-listening-thanks",
+      "path": "game/editions/assets/discovery/audio/3xblast-thanks-v1.mp3",
+      "sha256": "ecf32b424b78773ba6df4c56a5068ddb0e1674f5c3fdadc47d23c79dde15f5af",
+      "bytes": 1781342,
+      "revision": 1,
+      "rights": "CC0-1.0",
+      "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution": "3xBlast — Thanks For Listening!. CC0 1.0 Universal. Existing OGG-to-MP3 derivative; no musical edits.",
+      "publication": "public",
+      "review": "Exact existing admitted runtime bytes verified against game soundtrack catalogue; creator source and CC0 checked 2026-09-28. Full listening and device review remain pending.",
+      "notes": [
+        "The creator describes this source set as vocalless pop-punk/chiptune.",
+        "A contemporary game recording, not a Social Drone UA recording or endorsement.",
+        "An older archive README restriction was removed by the creator in the source-page comments on 2021-12-09; current source page states CC0."
+      ]
+    },
+    {
+      "id": "social-community-listening-thanks-en",
+      "path": "game/editions/assets/discovery/audio/3xblast-thanks-en-v1.txt",
+      "sha256": "964728a066d5761e7e5b69d81662fbce30210eacf67904873d535108dc5fcc9f",
+      "bytes": 783,
+      "revision": 1,
+      "rights": "original-authored-text",
+      "source": "game/company-campaigns/curriculum-listening.mjs",
+      "publication": "public",
+      "review": "Original bilingual instrumental description and optional listening prompt; artist and licence copied from existing cleared source records; no invented lyrics or audition-specific claims.",
+      "attribution": "RevealLine original description; recording by 3xBlast, CC0 1.0 Universal."
+    },
+    {
+      "id": "social-community-listening-thanks-uk",
+      "path": "game/editions/assets/discovery/audio/3xblast-thanks-uk-v1.txt",
+      "sha256": "269063c609e595b1482573ceb11233d5f5364457aaf4c8a79bdc01325e865237",
+      "bytes": 1246,
+      "revision": 1,
+      "rights": "original-authored-text",
+      "source": "game/company-campaigns/curriculum-listening.mjs",
+      "publication": "public",
+      "review": "Original bilingual instrumental description and optional listening prompt; artist and licence copied from existing cleared source records; no invented lyrics or audition-specific claims.",
+      "attribution": "RevealLine original description; recording by 3xBlast, CC0 1.0 Universal."
     }
   ]
 }
