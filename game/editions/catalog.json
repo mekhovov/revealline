@@ -972,6 +972,7 @@
       "name": "Workshop Lights",
       "publication": "public",
       "revision": "2",
+      "rewardPath": "game/content/company-campaigns/droneaid-nl-workshop-lights.rewards.json",
       "sourcePath": "game/content/company-campaigns/droneaid-nl-workshop-lights.json"
     },
     {
@@ -1139,10 +1140,16 @@
           "id": "389459b2b3b2a5b330a053b9eaf11918878a8f19688e035cd19b641744f98c85",
           "path": "game/editions/retained/droneaid-nl-community-38d320f48.json",
           "sha256": "24c8cdff37378db2fdd5e405e650a0512ae5fa308188b3ce76b68b02ab71a8fa"
+        },
+        {
+          "bytes": 148338,
+          "id": "8b53a415ac9b76ebd25aca2ac7b67464f026e43e39185970c59501e6f918e3cb",
+          "path": "game/editions/retained/droneaid-nl-community-before-discovery-rewards.json",
+          "sha256": "3fc0e4773277c7a126195cbe68a37c5182871d93e29f82c50c9a0064eedd5d58"
         }
       ],
       "publication": "public",
-      "revision": 5
+      "revision": 6
     },
     {
       "audience": "public",
@@ -1177,10 +1184,16 @@
           "id": "115d034320ff3efb161abd00b5886485bd92c7a161d405e5f8cb384263480b70",
           "path": "game/editions/retained/droneaid-nl-workshop-lights-475bccde4.json",
           "sha256": "4099c606f57300678a6874695da6fc1c0af8b1ec2402e1cb1277cd339694f0ca"
+        },
+        {
+          "bytes": 34100,
+          "id": "f4882beacf8fc6bb07aaee36b818541df42b08c0e64ffcc461a2744f6503d302",
+          "path": "game/editions/retained/droneaid-nl-workshop-lights-before-discovery-rewards.json",
+          "sha256": "b3246af4f642600a818e9f9e0ba496aaef5c720a5be9d4651c90672ee247a7bc"
         }
       ],
       "publication": "public",
-      "revision": 4
+      "revision": 5
     },
     {
       "audience": "public",
