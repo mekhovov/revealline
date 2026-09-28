@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-drone-families-key-v1",
-          "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+          "assetId": "fpv-drone-families-01-reveal-v1",
+          "sha256": "43b5eb213c9e6aea5565587f3cb45bb592175982b7140de666b6ac049e5a2b7d"
         },
         "id": "fpv-drone-families-01-image",
         "locales": {
           "en": {
-            "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit.",
+            "alt": "A viewing-goggles sculpture stands apart from three different inert aircraft shapes in a museum hall.",
             "title": "A View, Not a Shape"
           },
           "uk": {
-            "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження.",
+            "alt": "Скульптура окулярів перегляду стоїть окремо від трьох різних неактивних форм літальних апаратів у музейній залі.",
             "title": "Спосіб бачити, а не форма"
           }
         },
@@ -182,7 +182,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-drone-families-01", "kind": "mission" }
   },
   {
@@ -203,17 +203,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-drone-families-key-v1",
-          "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+          "assetId": "fpv-drone-families-02-reveal-v1",
+          "sha256": "d6c316fe11726eecc47d18894e0a880da2b33f5b68d22bb1f39801e2661df385"
         },
         "id": "fpv-drone-families-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit.",
+            "alt": "Three museum silhouettes compare four, six and eight rotor positions without ranking their performance.",
             "title": "More Than Four Rotors"
           },
           "uk": {
-            "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження.",
+            "alt": "Три музейні силуети порівнюють чотири, шість і вісім позицій роторів без оцінювання їхніх характеристик.",
             "title": "Не лише чотири ротори"
           }
         },
@@ -310,7 +310,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-drone-families-02", "kind": "mission" }
   },
   {
@@ -331,17 +331,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-drone-families-key-v1",
-          "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+          "assetId": "fpv-drone-families-03-reveal-v1",
+          "sha256": "802bbc7a54eeb0a538832d06bb411be02b8e7bc4cc9a5f8a5c98c8b76e2eb180"
         },
         "id": "fpv-drone-families-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit.",
+            "alt": "A broad-winged civilian glider and a four-disc multicopter form a structural comparison.",
             "title": "Wings Tell Another Story"
           },
           "uk": {
-            "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження.",
+            "alt": "Цивільний планер із широким крилом і мультикоптер із чотирма дисками утворюють порівняння конструкцій.",
             "title": "Крила розповідають інакше"
           }
         },
@@ -446,7 +446,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-drone-families-03", "kind": "mission" }
   },
   {
@@ -461,17 +461,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-drone-families-key-v1",
-          "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+          "assetId": "fpv-drone-families-04-reveal-v1",
+          "sha256": "db4151cdb72326a815a779f1b8bf8684e9899d036088d981fcfb0828d35a7649"
         },
         "id": "fpv-drone-families-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit.",
+            "alt": "An exhibition combines a demonstration court, separate viewing gallery and prominent pause symbol.",
             "title": "A Sport Has a Setting"
           },
           "uk": {
-            "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження.",
+            "alt": "Виставка поєднує демонстраційний майданчик, окрему глядацьку галерею й помітний символ паузи.",
             "title": "Спорт має свої умови"
           }
         },
@@ -568,7 +568,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-drone-families-04", "kind": "mission" }
   },
   {
@@ -589,17 +589,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-drone-families-key-v1",
-          "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+          "assetId": "fpv-drone-families-05-reveal-v1",
+          "sha256": "96fd3b75b810745a1c87ebed3d4055162d4789e0a436c9d0177ebcc05aa88676"
         },
         "id": "fpv-drone-families-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit.",
+            "alt": "Three separate alcoves present a classroom model, a still-life camera and a fictional parcel-study desk.",
             "title": "Purpose Changes the Questions"
           },
           "uk": {
-            "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження.",
+            "alt": "Три окремі ніші представляють навчальну модель, камеру натюрморту й стіл вигаданого дослідження посилок.",
             "title": "Мета змінює запитання"
           }
         },
@@ -696,7 +696,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-drone-families-05", "kind": "mission" }
   },
   {
@@ -717,17 +717,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-drone-families-key-v1",
-          "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+          "assetId": "fpv-drone-families-06-reveal-v1",
+          "sha256": "879ae84c35afadd6a8f220656dd311ec279ccf6e162af8b6b642b5969dfdc358"
         },
         "id": "fpv-drone-families-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit.",
+            "alt": "An illustrated family atlas has separate classification columns and intentionally empty fields.",
             "title": "Curate the Family Atlas"
           },
           "uk": {
-            "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження.",
+            "alt": "Ілюстрований атлас родин має окремі стовпці класифікації та навмисно порожні поля.",
             "title": "Упорядкуйте атлас родин"
           }
         },
@@ -832,7 +832,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-drone-families-06", "kind": "mission" }
   },
   {
@@ -883,17 +883,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-drone-families-key-v1",
-          "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+          "assetId": "fpv-drone-families-01-reveal-v1",
+          "sha256": "43b5eb213c9e6aea5565587f3cb45bb592175982b7140de666b6ac049e5a2b7d"
         },
         "id": "fpv-drone-families-01-image",
         "locales": {
           "en": {
-            "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit.",
+            "alt": "A viewing-goggles sculpture stands apart from three different inert aircraft shapes in a museum hall.",
             "title": "A View, Not a Shape"
           },
           "uk": {
-            "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження.",
+            "alt": "Скульптура окулярів перегляду стоїть окремо від трьох різних неактивних форм літальних апаратів у музейній залі.",
             "title": "Спосіб бачити, а не форма"
           }
         },
@@ -901,17 +901,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-drone-families-key-v1",
-          "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+          "assetId": "fpv-drone-families-02-reveal-v1",
+          "sha256": "d6c316fe11726eecc47d18894e0a880da2b33f5b68d22bb1f39801e2661df385"
         },
         "id": "fpv-drone-families-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit.",
+            "alt": "Three museum silhouettes compare four, six and eight rotor positions without ranking their performance.",
             "title": "More Than Four Rotors"
           },
           "uk": {
-            "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження.",
+            "alt": "Три музейні силуети порівнюють чотири, шість і вісім позицій роторів без оцінювання їхніх характеристик.",
             "title": "Не лише чотири ротори"
           }
         },
@@ -919,17 +919,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-drone-families-key-v1",
-          "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+          "assetId": "fpv-drone-families-03-reveal-v1",
+          "sha256": "802bbc7a54eeb0a538832d06bb411be02b8e7bc4cc9a5f8a5c98c8b76e2eb180"
         },
         "id": "fpv-drone-families-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit.",
+            "alt": "A broad-winged civilian glider and a four-disc multicopter form a structural comparison.",
             "title": "Wings Tell Another Story"
           },
           "uk": {
-            "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження.",
+            "alt": "Цивільний планер із широким крилом і мультикоптер із чотирма дисками утворюють порівняння конструкцій.",
             "title": "Крила розповідають інакше"
           }
         },
@@ -937,17 +937,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-drone-families-key-v1",
-          "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+          "assetId": "fpv-drone-families-04-reveal-v1",
+          "sha256": "db4151cdb72326a815a779f1b8bf8684e9899d036088d981fcfb0828d35a7649"
         },
         "id": "fpv-drone-families-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit.",
+            "alt": "An exhibition combines a demonstration court, separate viewing gallery and prominent pause symbol.",
             "title": "A Sport Has a Setting"
           },
           "uk": {
-            "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження.",
+            "alt": "Виставка поєднує демонстраційний майданчик, окрему глядацьку галерею й помітний символ паузи.",
             "title": "Спорт має свої умови"
           }
         },
@@ -955,17 +955,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-drone-families-key-v1",
-          "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+          "assetId": "fpv-drone-families-05-reveal-v1",
+          "sha256": "96fd3b75b810745a1c87ebed3d4055162d4789e0a436c9d0177ebcc05aa88676"
         },
         "id": "fpv-drone-families-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit.",
+            "alt": "Three separate alcoves present a classroom model, a still-life camera and a fictional parcel-study desk.",
             "title": "Purpose Changes the Questions"
           },
           "uk": {
-            "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження.",
+            "alt": "Три окремі ніші представляють навчальну модель, камеру натюрморту й стіл вигаданого дослідження посилок.",
             "title": "Мета змінює запитання"
           }
         },
@@ -973,17 +973,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-drone-families-key-v1",
-          "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+          "assetId": "fpv-drone-families-06-reveal-v1",
+          "sha256": "879ae84c35afadd6a8f220656dd311ec279ccf6e162af8b6b642b5969dfdc358"
         },
         "id": "fpv-drone-families-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit.",
+            "alt": "An illustrated family atlas has separate classification columns and intentionally empty fields.",
             "title": "Curate the Family Atlas"
           },
           "uk": {
-            "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження.",
+            "alt": "Ілюстрований атлас родин має окремі стовпці класифікації та навмисно порожні поля.",
             "title": "Упорядкуйте атлас родин"
           }
         },
@@ -1054,7 +1054,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "fpv-drone-families", "kind": "campaign" }
   }
 ]
