@@ -104,6 +104,12 @@ class Element {
       this.children.push(child);
     }
   }
+  after(...siblings) {
+    if (!this.parentNode) return;
+    const index = this.parentNode.children.indexOf(this);
+    for (const sibling of siblings) sibling.parentNode = this.parentNode;
+    this.parentNode.children.splice(index + 1, 0, ...siblings);
+  }
   replaceChildren(...children) {
     this._text = '';
     this.children = [];
@@ -123,11 +129,20 @@ class Element {
       this.parentNode.children = this.parentNode.children.filter((child) => child !== this);
   }
   querySelectorAll(selector) {
-    const tags = selector.toUpperCase().split(',');
+    const selectors = selector.split(',').map((value) => value.trim());
     return this.children.flatMap((child) => [
-      ...(tags.includes(child.tagName) ? [child] : []),
+      ...(selectors.some((value) =>
+        value.startsWith('.')
+          ? child.className?.split(/\s+/).includes(value.slice(1))
+          : value.toUpperCase() === child.tagName,
+      )
+        ? [child]
+        : []),
       ...child.querySelectorAll(selector),
     ]);
+  }
+  querySelector(selector) {
+    return this.querySelectorAll(selector)[0] ?? null;
   }
   addEventListener(type, callback) {
     if (!this.listeners.has(type)) this.listeners.set(type, new Set());
@@ -208,6 +223,7 @@ async function setup(
     store: overrideStore,
     callbacks = {},
     open = true,
+    settings = false,
   } = {},
 ) {
   const doc = {
@@ -224,6 +240,7 @@ async function setup(
   doc.body = new Element(doc, 'body');
   doc.head = new Element(doc, 'head');
   doc.createElement = (tag) => new Element(doc, tag);
+  const settingsRoot = settings ? new Element(doc, 'section') : null;
   const db = memoryIndexedDB(),
     store =
       overrideStore ??
@@ -311,6 +328,7 @@ async function setup(
         throw new Error('Online catalogue is unavailable in this isolated test.');
       },
     },
+    settingsRoot,
     ...callbacks,
   });
   const node = (id) => {
@@ -343,6 +361,7 @@ async function setup(
     downloads,
     urls,
     revoked,
+    settingsRoot,
   };
 }
 const file = (name = 'Neon sky.mp3', value = silenceBytes) =>
@@ -2225,9 +2244,10 @@ test('public archive searches and plays any published recording through the shar
   app.node('online-style-fpv').onchange();
   assert.equal(app.node('online-results').children.length, 1);
   assert.match(app.node('online-results').textContent, /FPV Run/);
-  app.node('online-style-ua').checked = true;
-  app.node('online-style-ua').onchange();
-  assert.equal(app.node('online-results').children.length, 1);
+  app.node('online-style-ukrainian').checked = true;
+  app.node('online-style-ukrainian').onchange();
+  assert.equal(app.node('online-results').children.length, 2);
+  assert.match(app.node('online-results').textContent, /Dnipro Bells/);
   app.choose('online-collection', 'ФПВ');
   assert.equal(app.node('online-results').children.length, 1);
 
@@ -2252,6 +2272,55 @@ test('public archive searches and plays any published recording through the shar
   assert.equal(app.node('online-results').children.length, 0);
   assert.equal(app.node('online-play-all').disabled, true);
   assert.match(app.node('online-status').textContent, /Recording mode excludes 7/);
+});
+
+test('Audio settings expose streamed styles and play a selected style without opening Studio', async (t) => {
+  const catalogue = onlineCatalogueFixture(),
+    requests = [];
+  const app = await setup(t, {
+    open: false,
+    settings: true,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async (url, options) => {
+          requests.push([url, options]);
+          return onlineCatalogueResponse(catalogue);
+        },
+      },
+    },
+  });
+  await settleOnlineCatalogue(
+    () =>
+      requests.length === 1 &&
+      app.node('online-results').children.length === 7 &&
+      !app.node('settings-play-styles').disabled,
+    'the settings catalogue preload',
+  );
+  assert.equal(app.settingsRoot.children.length, 1);
+  assert.match(app.settingsRoot.textContent, /Music styles/);
+  assert.match(app.settingsRoot.textContent, /Ukrainian · UA/);
+  assert.match(app.settingsRoot.textContent, /ФПВ/);
+
+  await app.click('settings-styles-none');
+  app.node('settings-style-synth').checked = true;
+  app.node('settings-style-synth').onchange();
+  app.node('online-search').value = 'hidden advanced filter must not constrain Audio settings';
+  app.node('online-search').oninput();
+  await app.click('settings-play-styles');
+
+  const streamed = app.calls.findLast(([name]) => name === 'remote');
+  assert.deepEqual(
+    streamed[1].map((track) => track.title),
+    ['Night Circuit'],
+  );
+  assert.deepEqual(streamed[2], {
+    order: 'shuffle',
+    repeat: 'all',
+    mixWithLibrary: true,
+  });
+  assert.deepEqual((await app.store.read()).library.listening.genres, ['synth90s']);
+  assert.match(app.node('settings-style-status').textContent, /Playing 1 matching/);
 });
 
 test('verified external recording installs exact bytes as a draft and saves beside local music', async (t) => {
@@ -2931,8 +3000,8 @@ test('additional genre choices save a specific style or selected cross-style mix
     app.node(`mix-${genre}`).checked = ['chiptune', 'electronic', 'ambient'].includes(genre);
   await app.click('apply-listening');
   assert.deepEqual((await app.store.read()).library.listening.genres, [
-    'chiptune',
     'electronic',
+    'chiptune',
     'ambient',
   ]);
   assert(!app.calls.some(([name]) => name === 'play'));

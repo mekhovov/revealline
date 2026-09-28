@@ -49,6 +49,11 @@ import {
   onlineSoundtrackRecordingAllowed,
 } from '../online-soundtrack-catalogue.mjs';
 import { soundtrackErrorText } from './soundtrack-error-copy.mjs';
+import {
+  PUBLIC_SOUNDTRACK_STYLE_IDS,
+  localGenresForPublicStyles,
+  matchesPublicSoundtrackStyle,
+} from '../soundtrack-style-taxonomy.mjs';
 
 const copy = (value) => structuredClone(value);
 const message = soundtrackErrorText;
@@ -56,16 +61,16 @@ const seconds = (value = 0) =>
   `${Math.floor(value / 60)}:${String(Math.floor(value % 60)).padStart(2, '0')}`;
 const bytes = (value) => `${(value / 1024 / 1024).toFixed(1)} MiB`;
 const ONLINE_STYLE_CHOICES = Object.freeze([
-  ['fpv', localizedMessage('interface:fpvMusic')],
-  ['ua', localizedMessage('interface:uaMusic')],
-  ['synth', localizedMessage('interface:synthElectronic')],
+  ['synth', localizedMessage('interface:synthMusic')],
   ['metal', localizedMessage('interface:metal')],
-  ['ukrainian', localizedMessage('interface:ukrainian')],
+  ['electronic', localizedMessage('interface:electronicMusic')],
   ['chiptune', localizedMessage('interface:chiptune8Bit')],
   ['rock', localizedMessage('interface:rock')],
   ['ambient', localizedMessage('interface:ambient')],
   ['fusion', localizedMessage('interface:fusion')],
   ['other', localizedMessage('interface:otherStyles')],
+  ['ukrainian', localizedMessage('interface:ukrainianUaMusic')],
+  ['fpv', localizedMessage('interface:fpvMusic')],
 ]);
 
 /** Local music authoring. Draft changes become authoritative only after one verified store commit. */
@@ -93,6 +98,7 @@ export function attachSoundtrackPanel({
   onMasterMuted = null,
   onMasterVolume = null,
   beforeAudio = async () => {},
+  settingsRoot = null,
   albumDownload = {},
   onlineCatalogueDownload = {},
   catalogue = null,
@@ -130,7 +136,9 @@ export function attachSoundtrackPanel({
     albumGeneration = 0;
   let onlineCatalogue = null,
     onlineCatalogueController = null,
+    onlineCataloguePromise = null,
     onlineCatalogueGeneration = 0;
+  let settingsLibraryPromise = null;
   const albumControls = new Map();
   const node = (tag, id, text, attrs = {}) => {
     const element = doc.createElement(tag);
@@ -558,6 +566,77 @@ export function attachSoundtrackPanel({
     },
   );
   onlineStyles.append(row(selectAllOnlineStyles, clearOnlineStyles));
+  const settingsStyleInputs = new Map();
+  let settingsStyleStatus = null;
+  let settingsStylesSection = null;
+  if (settingsRoot) {
+    const labels = new Map(ONLINE_STYLE_CHOICES);
+    const picker = node('fieldset', 'settings-styles', null, {
+      class: 'soundtrack-settings-styles',
+    });
+    picker.append(node('legend', null, localizedMessage('interface:musicStylesChooseAnyMix')));
+    for (const value of PUBLIC_SOUNDTRACK_STYLE_IDS) {
+      const checkbox = node('input', `settings-style-${value}`, null, {
+        type: 'checkbox',
+        value,
+      });
+      checkbox.checked = true;
+      const choice = node('label', null, null, { class: 'soundtrack-online-style' });
+      choice.append(checkbox, node('span', null, labels.get(value) ?? value));
+      picker.append(choice);
+      settingsStyleInputs.set(value, checkbox);
+      checkbox.onchange = () => {
+        onlineStyleInputs.get(value).checked = checkbox.checked;
+        renderSettingsStyleStatus();
+      };
+    }
+    const all = button('settings-styles-all', localizedMessage('interface:allStyles'), () => {
+      for (const [value, checkbox] of settingsStyleInputs) {
+        checkbox.checked = true;
+        onlineStyleInputs.get(value).checked = true;
+      }
+      renderSettingsStyleStatus();
+    });
+    const clear = button('settings-styles-none', localizedMessage('interface:clear'), () => {
+      for (const [value, checkbox] of settingsStyleInputs) {
+        checkbox.checked = false;
+        onlineStyleInputs.get(value).checked = false;
+      }
+      renderSettingsStyleStatus();
+    });
+    const play = button(
+      'settings-play-styles',
+      localizedMessage('interface:playSelectedStyles'),
+      () => playSettingsStyles(),
+    );
+    play.classList.add('soundtrack-primary-action');
+    settingsStyleStatus = node('p', 'settings-style-status', null, {
+      class: 'micro-note',
+      role: 'status',
+      'aria-live': 'polite',
+    });
+    settingsStylesSection = section(
+      localizedMessage('interface:musicStyles'),
+      node(
+        'p',
+        null,
+        localizedMessage('interface:chooseStylesPublicArchiveIncludedAutomatically'),
+        { class: 'soundtrack-lede' },
+      ),
+      picker,
+      node('p', null, localizedMessage('interface:chiptuneStyleExplanation'), {
+        class: 'micro-note',
+      }),
+      row(all, clear, play),
+      settingsStyleStatus,
+    );
+    settingsStylesSection.classList.add('soundtrack-settings-style-card');
+    const anchor =
+      settingsRoot.querySelector('.quick-music-settings-transport') ??
+      settingsRoot.querySelector('.micro-note');
+    if (anchor) anchor.after(settingsStylesSection);
+    else settingsRoot.append(settingsStylesSection);
+  }
   const onlineOrder = input('online-order', localizedMessage('interface:order'), { tag: 'select' });
   options(onlineOrder.element, [
     ['shuffle', t('interface:shuffle')],
@@ -600,13 +679,78 @@ export function attachSoundtrackPanel({
     mixWithLibrary: onlineMixLibrary.checked,
   });
   const onlinePlaybackWindow = (matches, startTrackId = null) => {
-    const limit = SOUNDTRACK_LIMITS.catalogueTracks;
+    const limit = SOUNDTRACK_LIMITS.onlineTracks;
     if (matches.length <= limit) return matches;
     if (startTrackId === null) return matches.slice(0, limit);
     const selected = matches.findIndex((track) => track.id === startTrackId);
     if (selected < 0) return matches.slice(0, limit);
     return [...matches.slice(selected), ...matches.slice(0, selected)].slice(0, limit);
   };
+  function selectedSettingsStyles() {
+    return [...settingsStyleInputs]
+      .filter(([, checkbox]) => checkbox.checked)
+      .map(([style]) => style);
+  }
+  function renderSettingsStyleStatus(message = null) {
+    if (!settingsStyleStatus) return;
+    if (message) {
+      localizedText(settingsStyleStatus, () => message);
+      return;
+    }
+    const selected = selectedSettingsStyles();
+    localizedText(settingsStyleStatus, () =>
+      selected.length
+        ? t('interface:soundtrack.stylesSelected', { count: selected.length })
+        : t('interface:soundtrack.chooseAtLeastOneStyle'),
+    );
+  }
+  function playSettingsStyles() {
+    const selected = selectedSettingsStyles();
+    if (!selected.length) {
+      renderSettingsStyleStatus(t('interface:soundtrack.chooseAtLeastOneStyle'));
+      return false;
+    }
+    for (const [style, checkbox] of onlineStyleInputs) checkbox.checked = selected.includes(style);
+    wakeAudio();
+    return task(t('interface:loadingThePublicSoundtrackCatalogue'), async (signal) => {
+      await loadSettingsLibrary();
+      throwIfSoundtrackAborted(signal);
+      const loaded = await loadOnlineCatalogue();
+      throwIfSoundtrackAborted(signal);
+      if (!loaded) throw new Error(t('interface:thePublicSoundtrackCatalogueIsUnavailable'));
+      const styles = new Set(selected);
+      const matches = loaded.tracks.filter(
+        (track) =>
+          (!draft.listening?.recordingMode || onlineSoundtrackRecordingAllowed(track)) &&
+          [...styles].some((style) => matchesOnlineStyle(track, style)),
+      );
+      if (!matches.length) throw new Error(t('interface:soundtrack.chooseAtLeastOneStyle'));
+      const localGenres = localGenresForPublicStyles(selected);
+      if (localGenres.length) {
+        edit((value) => {
+          value.selection.playlistId = null;
+          value.listening = {
+            ...value.listening,
+            mode: 'mix',
+            genres: localGenres,
+          };
+        });
+        const committed = await commitDraft(signal);
+        if (!committed.adopted || disposed) return;
+      }
+      await stopAudition(false);
+      throwIfSoundtrackAborted(signal);
+      await player.playRemotePlaylist(onlinePlaybackWindow(matches), {
+        order: onlineOrder.element.value,
+        repeat: onlineRepeat.element.value,
+        mixWithLibrary: localGenres.length > 0,
+      });
+      await notifyPlayback();
+      renderSettingsStyleStatus(
+        t('interface:soundtrack.playingSelectedStyles', { count: matches.length }),
+      );
+    });
+  }
   const playOnlineResults = button(
     'online-play-all',
     localizedMessage('interface:playSelectedSongs'),
@@ -1707,30 +1851,7 @@ export function attachSoundtrackPanel({
     return soundtrackTracks(draft);
   }
   function matchesOnlineStyle(track, style) {
-    const tags = track.tags.map((tag) => tag.toLowerCase()),
-      has = (...values) => values.some((value) => tags.some((tag) => tag.includes(value)));
-    if (style === 'fpv') return has('фпв', 'fpv');
-    if (style === 'ua') return tags.some((tag) => tag === 'ua');
-    if (style === 'ukrainian') return has('ukrain') || tags.some((tag) => tag === 'ua');
-    if (style === 'metal') return has('metal');
-    if (style === 'synth') return has('synth', 'electro', 'tracker', 'fm', 'dance', 'techno');
-    if (style === 'chiptune') return has('chiptune', '8-bit', 'fakebit');
-    if (style === 'rock') return has('rock', 'punk');
-    if (style === 'ambient') return has('ambient', 'atmospher');
-    if (style === 'fusion') {
-      const families = [
-        has('ukrain'),
-        has('metal'),
-        has('synth', 'electro', 'tracker', 'fm', 'dance', 'techno'),
-        has('chiptune', '8-bit', 'fakebit'),
-        has('rock', 'punk'),
-        has('ambient', 'atmospher'),
-      ];
-      return has('fusion') || families.filter(Boolean).length > 1;
-    }
-    return !['ukrainian', 'metal', 'synth', 'chiptune', 'rock', 'ambient', 'fusion'].some(
-      (family) => matchesOnlineStyle(track, family),
-    );
+    return matchesPublicSoundtrackStyle(track, style);
   }
   function selectedOnlineStyles() {
     return new Set(
@@ -1899,41 +2020,54 @@ export function attachSoundtrackPanel({
     });
   }
   async function loadOnlineCatalogue(force = false) {
-    if (disposed || (onlineCatalogueController && !force)) return;
+    if (disposed) return null;
+    if (onlineCatalogue && !force) return onlineCatalogue;
+    if (onlineCataloguePromise && !force) return onlineCataloguePromise;
     onlineCatalogueController?.abort();
     const generation = ++onlineCatalogueGeneration,
       current = new AbortController();
     onlineCatalogueController = current;
     reloadOnline.disabled = true;
     localizedText(onlineStatus, () => t('interface:loadingThePublicSoundtrackCatalogue'));
-    try {
-      const loaded = await fetchOnlineSoundtrackCatalogue({
-        ...onlineCatalogueDownload,
-        signal: current.signal,
-      });
-      if (disposed || !dialog.open || generation !== onlineCatalogueGeneration) return;
-      onlineCatalogue = loaded;
-      options(onlineCollection.element, [
-        ['', t('interface:allCollections')],
-        ...[...new Set(loaded.tracks.flatMap((track) => track.collections ?? [track.collection]))]
-          .sort((a, b) => a.localeCompare(b))
-          .map((collection) => [collection, collection]),
-      ]);
-      renderOnlineCatalogue();
-    } catch (error) {
-      if (error?.name !== 'AbortError' && !disposed && generation === onlineCatalogueGeneration) {
-        localizedText(onlineStatus, () =>
-          t('interface:soundtrack.publicUnavailable', { error: message(error) }),
-        );
-        onlineResults.replaceChildren();
-        playOnlineResults.disabled = true;
+    const pending = (async () => {
+      try {
+        const loaded = await fetchOnlineSoundtrackCatalogue({
+          ...onlineCatalogueDownload,
+          signal: current.signal,
+        });
+        if (disposed || generation !== onlineCatalogueGeneration) return null;
+        onlineCatalogue = loaded;
+        options(onlineCollection.element, [
+          ['', t('interface:allCollections')],
+          ...[...new Set(loaded.tracks.flatMap((track) => track.collections ?? [track.collection]))]
+            .sort((a, b) => a.localeCompare(b))
+            .map((collection) => [collection, collection]),
+        ]);
+        renderOnlineCatalogue();
+        renderSettingsStyleStatus();
+        return loaded;
+      } catch (error) {
+        if (error?.name !== 'AbortError' && !disposed && generation === onlineCatalogueGeneration) {
+          localizedText(onlineStatus, () =>
+            t('interface:soundtrack.publicUnavailable', { error: message(error) }),
+          );
+          onlineResults.replaceChildren();
+          playOnlineResults.disabled = true;
+          renderSettingsStyleStatus(
+            t('interface:soundtrack.publicUnavailable', { error: message(error) }),
+          );
+        }
+        return null;
+      } finally {
+        if (generation === onlineCatalogueGeneration) {
+          onlineCatalogueController = null;
+          onlineCataloguePromise = null;
+          reloadOnline.disabled = disposed;
+        }
       }
-    } finally {
-      if (generation === onlineCatalogueGeneration) {
-        onlineCatalogueController = null;
-        reloadOnline.disabled = disposed;
-      }
-    }
+    })();
+    onlineCataloguePromise = pending;
+    return pending;
   }
   function renderAlbums() {
     if (!albumCatalog) return;
@@ -2536,6 +2670,9 @@ export function attachSoundtrackPanel({
         control.disabled = busy || !saved;
       for (const control of quickListen.querySelectorAll('button,input,select'))
         control.disabled = busy || !saved;
+      if (settingsStylesSection)
+        for (const control of settingsStylesSection.querySelectorAll('button,input,select'))
+          control.disabled = busy || !saved;
       const explicitPlaylist = playlists().find((item) => item.id === draft.selection.playlistId);
       const modeLabel =
         [
@@ -2665,6 +2802,34 @@ export function attachSoundtrackPanel({
     } catch (error) {
       return refreshWarning(error);
     }
+  }
+  function loadSettingsLibrary() {
+    if (saved) return Promise.resolve(saved);
+    if (settingsLibraryPromise) return settingsLibraryPromise;
+    settingsLibraryPromise = store
+      .read()
+      .then((value) => {
+        if (disposed) return null;
+        saved = value;
+        draft = adopt(value.library);
+        assets = [...value.assets];
+        dirty = false;
+        render();
+        return value;
+      })
+      .catch((error) => {
+        if (!disposed) {
+          onError(error);
+          renderSettingsStyleStatus(
+            t('interface:soundtrack.refreshFailed', { error: message(error) }),
+          );
+        }
+        return null;
+      })
+      .finally(() => {
+        settingsLibraryPromise = null;
+      });
+    return settingsLibraryPromise;
   }
   async function commitDraft(signal) {
     if (!saved) throw new Error(t('interface:loadTheLocalLibraryBeforeSaving'));
@@ -3239,9 +3404,15 @@ export function attachSoundtrackPanel({
     for (const unbind of bindings) unbind();
     invalidateBackup();
     dialog.remove();
+    settingsStylesSection?.remove();
     style.remove();
   }
   render();
+  renderSettingsStyleStatus();
+  if (settingsRoot) {
+    void loadSettingsLibrary();
+    void loadOnlineCatalogue();
+  }
   return Object.freeze({
     open,
     close,
