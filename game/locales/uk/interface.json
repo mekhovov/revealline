@@ -5093,5 +5093,19 @@
   "downloads.offline.prepareFirst": "Спочатку підготуйте офлайн-гру.",
   "downloads.offline.waiting": "Оновлення збережено. Закрийте всі вкладки цього випуску, щоб скористатися ним; поточна гра залишиться без змін.",
   "downloads.offline.ready": "Офлайн-файли перевірено. Цей випуск може відкриватися без мережі, доки браузер зберігає його дані.",
-  "downloads.offline.coreVerified": "Основні офлайн-файли перевірено."
+  "downloads.offline.coreVerified": "Основні офлайн-файли перевірено.",
+  "editionLessons.revisionMismatch": "Для попередніх навчальних записів потрібна відповідна версія. Вони залишаються доступними в резервній копії навчання.",
+  "editionLessons.exploreConnection": "Необов’язковий бонус · дослідити цей зв’язок",
+  "editionLessons.namedReport": "{{title}}: {{message}}",
+  "editionLessons.checkingCompletedBonus": "Перевіряємо завершений бонус перед збереженням…",
+  "editionLessons.completedInTab": "Необов’язковий бонус завершено в цій вкладці. Експортуйте навчальні записи перед виходом.",
+  "editionLessons.recordSaved": "Запис необов’язкового навчання збережено.",
+  "editionLessons.recordsHeading": "Записи необов’язкового навчання",
+  "editionLessons.separateBonus": "Навчання — окремий бонус. Місії та зображення ніколи не залежать від його проходження.",
+  "editionLessons.exportRecords": "Експортувати необов’язкове навчання",
+  "editionLessons.importMatchingRecords": "Імпортувати відповідні навчальні записи",
+  "editionLessons.checkingRecords": "Перевіряємо навчальні записи…",
+  "editionLessons.recordsImported": "Записи необов’язкового навчання імпортовано.",
+  "editionLessons.importedInTab": "Навчальні записи доступні в цій вкладці. Експортуйте їх перед виходом.",
+  "editionLessons.revisitConnection": "Необов’язковий бонус · повернутися до цього зв’язку"
 }

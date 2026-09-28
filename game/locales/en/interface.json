@@ -4987,5 +4987,19 @@
   "downloads.offline.prepareFirst": "Prepare offline play first.",
   "downloads.offline.waiting": "Update saved. Close all tabs of this version to use it; your current game continues unchanged.",
   "downloads.offline.ready": "Offline files verified. This version can open without a connection while the browser retains its storage.",
-  "downloads.offline.coreVerified": "Core offline files verified."
+  "downloads.offline.coreVerified": "Core offline files verified.",
+  "editionLessons.revisionMismatch": "Earlier learning records need their matching revision. They remain available in the learning backup.",
+  "editionLessons.exploreConnection": "Optional bonus · explore this connection",
+  "editionLessons.namedReport": "{{title}}: {{message}}",
+  "editionLessons.checkingCompletedBonus": "Checking this completed bonus before saving…",
+  "editionLessons.completedInTab": "The optional bonus is complete in this tab. Export learning records before leaving.",
+  "editionLessons.recordSaved": "Optional learning record saved.",
+  "editionLessons.recordsHeading": "Optional learning records",
+  "editionLessons.separateBonus": "Learning is a separate bonus. Missions and pictures never depend on completing it.",
+  "editionLessons.exportRecords": "Export optional learning",
+  "editionLessons.importMatchingRecords": "Import matching learning records",
+  "editionLessons.checkingRecords": "Checking learning records…",
+  "editionLessons.recordsImported": "Optional learning records imported.",
+  "editionLessons.importedInTab": "Learning records are available in this tab. Export them before leaving.",
+  "editionLessons.revisitConnection": "Optional bonus · revisit this connection"
 }
