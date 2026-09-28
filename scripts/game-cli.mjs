@@ -681,11 +681,14 @@ export async function addOfflineEntries(
   const { buildOfflineContent } = await import('./offline-content.mjs');
   const contentCatalogue = await buildOfflineContent(entries, excluded, info.version);
   const { finalizeOfflineContent } = await import('./offline-finalize.mjs');
-  const contentEntry = { name: 'offline-content.json', bytes: Buffer.from(json(contentCatalogue)) };
+  // Derived catalogue data can be compact without changing any published
+  // descriptor, authored string, retained revision, or download dependency.
+  const catalogueBytes = () => Buffer.from(`${JSON.stringify(contentCatalogue)}\n`);
+  const contentEntry = { name: 'offline-content.json', bytes: catalogueBytes() };
   entries.push(contentEntry);
   const refreshCatalogue = () => {
     finalizeOfflineContent(entries, contentCatalogue);
-    contentEntry.bytes = Buffer.from(json(contentCatalogue));
+    contentEntry.bytes = catalogueBytes();
   };
   const placeholder = '0'.repeat(64),
     injected = [];
