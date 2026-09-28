@@ -243,3 +243,17 @@ A retained genuinely earned Frame profile on `61a315090` also passed a bounded d
 The viewer kept its explanation and selectable comparison list, displayed the exact-media recovery message, and offered no replacement image or image download. Removing only the request block and reopening normally restored both original 960×640 image views. Discovery exports before, during and after the failure were byte-identical: 385,716 bytes, SHA-256 `b25e1181602a0632d3dccbb1da1795b578bc0b55716c36c81236e45122f0ed8e`, with one earned receipt. The exact compiled reward model validated the original backup. Backups and browser state remain in ignored local evidence; only hashes/counts enter this report.
 
 This is one English image-recovery case on the same immutable artifact. It does not exercise video/caption failures, failed saves, offline installation, different-version rollback, cross-edition isolation or physical devices. The owned browser was closed and no progress was edited. Qualification remains open for those separate cases and the later viewer fixes.
+
+## First-win and catalogue processing follow-up
+
+A real first win on the `76ea5b31b` candidate exposed repeated reward validation and
+mission-catalogue work. The shared runtime now reuses only its own deeply immutable,
+validated results while external and imported data keep boundary validation. The
+[phase ledger](discovery-rewards-phase-status.md#packaged-browser-follow-up-at-1106ec0ac)
+and [1106ec0ac receipt](verification/evidence/discovery-2026-09-28-first-win-1106ec0ac.json)
+record the resulting measurements: one 53.708 ms task under CPU sampling, a separate
+timeline-only first win with a 45.793 ms maximum, and twenty result/viewer cycles
+with an 11.629 ms renderer maximum. The original oversized cycle trace remains
+preserved alongside an explicit renderer-only derivative. These scoped observations
+retain the negative result and do not close matched p95, all-reward or retained-resource
+qualification.
