@@ -85,7 +85,16 @@
       "band": 3,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "victory-drones-ideas-understanding-finale", "revision": "4" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["The idea gallery has a new piece to explore."],
+            "uk": ["У галереї ідей є новий експонат для дослідження."]
+          },
+          "revision": "feedback-5a7e257673770b32",
+          "victoryMotif": "shared-spark-v1"
+        },
+        "finaleRewardRef": { "id": "victory-drones-ideas-understanding-finale", "revision": "5" }
       },
       "format": "CampaignDesignV1",
       "id": "victory-drones-ideas-understanding",
@@ -268,7 +277,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "victory-drones-ideas-understanding-01-discovery", "revision": "4" },
+        "rewardRef": { "id": "victory-drones-ideas-understanding-01-discovery", "revision": "5" },
         "routeDecision": "Use the small observation islands or capture the broad comparison terrace first. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -340,7 +349,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "victory-drones-ideas-understanding-02-discovery", "revision": "4" },
+        "rewardRef": { "id": "victory-drones-ideas-understanding-02-discovery", "revision": "5" },
         "routeDecision": "Choose the hand-side return or wall-side return before crossing the interaction court. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -412,7 +421,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "victory-drones-ideas-understanding-03-discovery", "revision": "4" },
+        "rewardRef": { "id": "victory-drones-ideas-understanding-03-discovery", "revision": "5" },
         "routeDecision": "Connect the two balance islands separately or encircle their central comparison space. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -493,7 +502,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "victory-drones-ideas-understanding-04-discovery", "revision": "4" },
+        "rewardRef": { "id": "victory-drones-ideas-understanding-04-discovery", "revision": "5" },
         "routeDecision": "Follow the broad arrow terrace, then choose the shorter vertical link or longer horizontal return. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -575,7 +584,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "victory-drones-ideas-understanding-05-discovery", "revision": "4" },
+        "rewardRef": { "id": "victory-drones-ideas-understanding-05-discovery", "revision": "5" },
         "routeDecision": "Join the near experiment bay before the distant record shelf or take the outer comparison route. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -657,7 +666,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "victory-drones-ideas-understanding-06-discovery", "revision": "4" },
+        "rewardRef": { "id": "victory-drones-ideas-understanding-06-discovery", "revision": "5" },
         "routeDecision": "Build a return through the central model court or connect the three explanation islands first. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -685,9 +694,9 @@
       "format": "PackDesignV1",
       "id": "victory-drones-ideas-understanding-pack",
       "name": "Ideas into Understanding",
-      "revision": "4"
+      "revision": "5"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "4"
+  "revision": "5"
 }

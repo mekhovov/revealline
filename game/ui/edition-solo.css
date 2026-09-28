@@ -176,9 +176,14 @@ body[data-edition-id] #shell-home {
 
 /* The expedition keeps the canonical mission buttons, focus order and launch
    guards. Only their arrangement and discovery annotations change. */
-#journey-chooser.edition-expedition[open] {
-  grid-template-rows: auto auto auto auto auto auto minmax(9rem, 1fr) auto;
+#journey-chooser.mission-library-chooser.edition-expedition[open] {
+  grid-template-rows: auto auto auto auto auto auto minmax(12rem, 1fr) auto;
   overflow: auto;
+  overscroll-behavior: contain;
+  scroll-padding-block: 0.75rem;
+}
+#journey-chooser.edition-expedition > * {
+  min-width: 0;
 }
 /* Explicit tracks keep the mission viewport in its flexible row when compact
    mode hides the introduction or a filter hides the campaign rail. */
@@ -272,18 +277,32 @@ body[data-edition-id] #shell-home {
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  max-height: 14rem;
-  overflow: auto;
+  overflow-x: auto;
   padding: 0.2rem;
+  scroll-padding-inline: 0.2rem;
+  scrollbar-width: thin;
 }
 .edition-expedition-campaign {
   flex: 1 0 min(24rem, 82%);
   min-width: 0;
-  padding: 0.8rem 1rem;
+  padding: 0.65rem 0.8rem;
   border: 1px solid color-mix(in srgb, var(--brand-paper, #e5eddd) 25%, transparent);
   border-radius: 1rem;
   background: color-mix(in srgb, var(--brand-primary, #1565c0) 15%, transparent);
   overflow-wrap: anywhere;
+  display: flow-root;
+}
+.edition-expedition-campaign > .button {
+  min-height: 44px;
+  max-width: 100%;
+  white-space: normal;
+}
+.edition-expedition-campaign .completion-reward-exhibit-picture:not(:empty) {
+  clear: both;
+  padding-block-start: 0.5rem;
+}
+.edition-expedition-campaign .completion-reward-exhibit-picture img {
+  max-height: 10rem;
 }
 .edition-expedition-campaign[data-finale-earned='true'] {
   border-color: var(--brand-accent, #aee5ed);
@@ -400,18 +419,11 @@ body[data-edition-id] #shell-home {
   #journey-chooser.edition-expedition-map .journey-card[data-expedition-layout='gallery']::after {
     display: none;
   }
-  .edition-expedition-overview {
-    max-height: 8rem;
-  }
 }
 @media (max-height: 600px) {
   .edition-expedition-toolbar h3,
-  .edition-expedition-note,
-  .edition-expedition-teaser {
+  .edition-expedition-note {
     display: none;
-  }
-  .edition-expedition-overview {
-    max-height: 5.5rem;
   }
   .edition-expedition-controls {
     margin-block: 0.25rem;
@@ -420,14 +432,128 @@ body[data-edition-id] #shell-home {
 
 .edition-expedition-campaign-art {
   display: block;
-  width: 100%;
-  height: 7rem;
+  float: inline-start;
+  width: 7rem;
+  height: 5rem;
   object-fit: cover;
   border-radius: 0.6rem;
   margin-block-end: 0.65rem;
+  margin-inline-end: 0.75rem;
 }
 .edition-expedition-campaign-art[hidden] {
   display: none;
+}
+
+/* A campaign pane beside the missions leaves their viewport usable at laptop
+   heights. DOM order, canonical mission buttons and launch guards stay intact. */
+@media (min-width: 960px) and (min-height: 600px) {
+  #journey-chooser.mission-library-chooser.edition-expedition[open] {
+    grid-template-columns: minmax(16rem, 25%) minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto minmax(12rem, 1fr) auto;
+    gap: 0.45rem 0.8rem;
+  }
+  #journey-chooser.edition-expedition > h2 {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  #journey-chooser.edition-expedition > .journey-filters {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  #journey-chooser.edition-expedition > #journey-chooser-status {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin-block: 0;
+  }
+  #journey-chooser.edition-expedition > .journey-campaign-rail {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
+  #journey-chooser.edition-expedition > .edition-expedition-toolbar {
+    grid-column: 1;
+    grid-row: 5;
+    min-height: 0;
+    overflow: auto;
+    margin: 0;
+    padding: 0.25rem;
+    scroll-padding-block: 0.5rem;
+  }
+  #journey-chooser.edition-expedition .edition-expedition-overview {
+    display: grid;
+    overflow: visible;
+  }
+  #journey-chooser.edition-expedition .edition-expedition-campaign {
+    padding: 0.65rem;
+  }
+  #journey-chooser.edition-expedition > .journey-cards {
+    grid-column: 2;
+    grid-row: 5;
+    min-height: 12rem;
+    padding: 0.75rem;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  }
+  #journey-chooser.edition-expedition-map .journey-card[data-expedition-connect='true']::after {
+    display: none;
+  }
+  #journey-chooser.edition-expedition-list > .journey-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #journey-chooser.edition-expedition > .journey-footer {
+    grid-column: 1 / -1;
+    grid-row: 6;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.35rem 0.75rem;
+  }
+  #journey-chooser.edition-expedition .journey-goal {
+    min-width: 0;
+  }
+  #journey-chooser.edition-expedition .mission-library-setup {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Short and narrow windows keep an outer recovery scroll. The mission list
+   retains a useful bounded viewport, and the complete footer remains in flow
+   after it instead of being clipped by a fixed grid or an upward setup panel. */
+@media (max-width: 959px), (max-height: 599px) {
+  #journey-chooser.mission-library-chooser.edition-expedition[open] {
+    display: block;
+    overflow: auto;
+  }
+  #journey-chooser.edition-expedition > .journey-filters,
+  #journey-chooser.edition-expedition > .journey-campaign-rail,
+  #journey-chooser.edition-expedition > .journey-footer {
+    margin-block: 0.5rem;
+  }
+  #journey-chooser.edition-expedition > .journey-cards {
+    min-height: 14rem;
+    max-height: max(14rem, 48dvh);
+    overflow: auto;
+    scroll-padding: 0.75rem;
+  }
+  #journey-chooser.edition-expedition .mission-library-setup[open] {
+    max-height: none;
+    overflow: visible;
+  }
+  #journey-chooser.edition-expedition .mission-library-setup > .mission-picker-setup-fields {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+}
+@media (max-height: 720px) {
+  #journey-chooser.edition-expedition .edition-expedition-toolbar > h3,
+  #journey-chooser.edition-expedition .edition-expedition-note {
+    display: none;
+  }
+  #journey-chooser.edition-expedition .edition-expedition-campaign-art {
+    width: 4.5rem;
+    height: 3.25rem;
+    margin-inline-end: 0.5rem;
+  }
 }
 
 /* Authored campaign layouts use the same earned discoveries in every edition. */
