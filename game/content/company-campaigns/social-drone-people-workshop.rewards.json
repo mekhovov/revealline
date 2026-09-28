@@ -101,17 +101,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-ua-home",
-          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+          "assetId": "social-drone-people-workshop-key-v1",
+          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
         },
         "id": "social-drone-people-workshop-02-image",
         "locales": {
           "en": {
-            "alt": "Many Ways to Contribute — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
             "title": "Many Ways to Contribute"
           },
           "uk": {
-            "alt": "Різні способи долучитися — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
             "title": "Різні способи долучитися"
           }
         },
@@ -164,7 +164,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "social-drone-people-workshop-02", "kind": "mission" }
   },
   {
@@ -182,17 +182,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-ua-home",
-          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+          "assetId": "social-drone-people-workshop-key-v1",
+          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
         },
         "id": "social-drone-people-workshop-03-image",
         "locales": {
           "en": {
-            "alt": "Find the Source — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
             "title": "Find the Source"
           },
           "uk": {
-            "alt": "Знайдіть джерело — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
             "title": "Знайдіть джерело"
           }
         },
@@ -245,7 +245,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "social-drone-people-workshop-03", "kind": "mission" }
   },
   {
@@ -266,17 +266,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-ua-home",
-          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+          "assetId": "social-drone-people-workshop-key-v1",
+          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
         },
         "id": "social-drone-people-workshop-04-image",
         "locales": {
           "en": {
-            "alt": "Ask a Useful Question — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
             "title": "Ask a Useful Question"
           },
           "uk": {
-            "alt": "Поставте корисне запитання — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
             "title": "Поставте корисне запитання"
           }
         },
@@ -329,7 +329,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "social-drone-people-workshop-04", "kind": "mission" }
   },
   {
@@ -350,17 +350,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-ua-home",
-          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+          "assetId": "social-drone-people-workshop-key-v1",
+          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
         },
         "id": "social-drone-people-workshop-05-image",
         "locales": {
           "en": {
-            "alt": "Care Before Certainty — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
             "title": "Care Before Certainty"
           },
           "uk": {
-            "alt": "Уважність перед упевненістю — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
             "title": "Уважність перед упевненістю"
           }
         },
@@ -413,7 +413,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "social-drone-people-workshop-05", "kind": "mission" }
   },
   {
@@ -434,17 +434,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "social-drone-ua-home",
-          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+          "assetId": "social-drone-people-workshop-key-v1",
+          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
         },
         "id": "social-drone-people-workshop-06-image",
         "locales": {
           "en": {
-            "alt": "The Community Mosaic — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
             "title": "The Community Mosaic"
           },
           "uk": {
-            "alt": "Мозаїка спільноти — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
             "title": "Мозаїка спільноти"
           }
         },
@@ -497,7 +497,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "social-drone-people-workshop-06", "kind": "mission" }
   },
   {
@@ -566,17 +566,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-ua-home",
-          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+          "assetId": "social-drone-people-workshop-key-v1",
+          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
         },
         "id": "social-drone-people-workshop-02-image",
         "locales": {
           "en": {
-            "alt": "Many Ways to Contribute — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
             "title": "Many Ways to Contribute"
           },
           "uk": {
-            "alt": "Різні способи долучитися — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
             "title": "Різні способи долучитися"
           }
         },
@@ -584,17 +584,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-ua-home",
-          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+          "assetId": "social-drone-people-workshop-key-v1",
+          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
         },
         "id": "social-drone-people-workshop-03-image",
         "locales": {
           "en": {
-            "alt": "Find the Source — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
             "title": "Find the Source"
           },
           "uk": {
-            "alt": "Знайдіть джерело — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
             "title": "Знайдіть джерело"
           }
         },
@@ -602,17 +602,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-ua-home",
-          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+          "assetId": "social-drone-people-workshop-key-v1",
+          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
         },
         "id": "social-drone-people-workshop-04-image",
         "locales": {
           "en": {
-            "alt": "Ask a Useful Question — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
             "title": "Ask a Useful Question"
           },
           "uk": {
-            "alt": "Поставте корисне запитання — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
             "title": "Поставте корисне запитання"
           }
         },
@@ -620,17 +620,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-ua-home",
-          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+          "assetId": "social-drone-people-workshop-key-v1",
+          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
         },
         "id": "social-drone-people-workshop-05-image",
         "locales": {
           "en": {
-            "alt": "Care Before Certainty — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
             "title": "Care Before Certainty"
           },
           "uk": {
-            "alt": "Уважність перед упевненістю — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
             "title": "Уважність перед упевненістю"
           }
         },
@@ -638,17 +638,17 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-ua-home",
-          "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185"
+          "assetId": "social-drone-people-workshop-key-v1",
+          "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
         },
         "id": "social-drone-people-workshop-06-image",
         "locales": {
           "en": {
-            "alt": "The Community Mosaic — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
             "title": "The Community Mosaic"
           },
           "uk": {
-            "alt": "Мозаїка спільноти — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
             "title": "Мозаїка спільноти"
           }
         },
@@ -660,6 +660,7 @@
           "en": { "title": "Explore the official source" },
           "uk": { "title": "Відкрити офіційне джерело" }
         },
+        "qr": true,
         "type": "url",
         "url": "https://www.socialdrone.com.ua/"
       }

@@ -31,7 +31,40 @@ export function createCompanyLearningProofStore({ editionId, storage, lessons, a
   const recoveryKey = `${key}.recovery`;
   const trusted = new WeakSet();
   const trustedRecovery = new WeakSet();
-  let records = new Map();
+  let records = new Map(),
+    durableRecords = new Map();
+  const listeners = new Set();
+  let rewardSnapshot = freezeDesign({ revision: 0, learning: [], durableLearning: [] });
+  const rewardRows = (entries) =>
+    [...entries.values()].map(({ attempt }) => ({
+      lessonId: attempt.lessonId,
+      lessonRevision: attempt.lessonRevision,
+      fixtureRevision: attempt.fixtureRevision,
+      lessonIdentity: attempt.lessonIdentity,
+      missionId: attempt.missionId,
+      attemptId: attempt.id,
+    }));
+  const publishRewardEvidence = () => {
+    const learning = rewardRows(records),
+      durableLearning = rewardRows(durableRecords);
+    if (
+      canonicalJSON([learning, durableLearning]) ===
+      canonicalJSON([rewardSnapshot.learning, rewardSnapshot.durableLearning])
+    )
+      return;
+    rewardSnapshot = freezeDesign({
+      revision: rewardSnapshot.revision + 1,
+      learning,
+      durableLearning,
+    });
+    for (const listener of listeners) {
+      try {
+        listener();
+      } catch {
+        /* A presentation observer cannot own proof adoption. */
+      }
+    }
+  };
   let recoverySources = new Set(),
     recoveryBlocked = false;
   const recoveryEnvelope = () => ({
@@ -148,9 +181,12 @@ export function createCompanyLearningProofStore({ editionId, storage, lessons, a
       const serialized = JSON.stringify(envelope(records.values()));
       boundedJSON(serialized, { ...limits, maxBytes: STORAGE_BYTES });
       storage.setItem(key, serialized);
+      durableRecords = new Map(records);
       return true;
     } catch {
       return false;
+    } finally {
+      publishRewardEvidence();
     }
   };
   const importVerified = (entries) => {
@@ -167,6 +203,12 @@ export function createCompanyLearningProofStore({ editionId, storage, lessons, a
   return Object.freeze({
     key,
     recoveryKey,
+    rewardEvidence: () => rewardSnapshot,
+    onRewardEvidenceChange(listener) {
+      required(typeof listener === 'function', 'Learning evidence observer must be a function.');
+      listeners.add(listener);
+      return () => listeners.delete(listener);
+    },
     load: (missionId) => records.get(missionId)?.attempt ?? null,
     exportProofs: () => [...records.values()],
     exportRecovery: () => recoveryEnvelope(),
@@ -221,6 +263,8 @@ export function createCompanyLearningProofStore({ editionId, storage, lessons, a
         }
       }
       records = next;
+      durableRecords = new Map(next);
+      publishRewardEvidence();
       if (rejected) preserve(raw);
       return { verified: next.size, rejected };
     },

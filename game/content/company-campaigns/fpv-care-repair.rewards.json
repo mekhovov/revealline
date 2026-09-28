@@ -14,17 +14,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-care-repair-key-v1",
+          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
         },
         "id": "fpv-care-repair-01-image",
         "locales": {
           "en": {
-            "alt": "Describe the Symptom — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
             "title": "Describe the Symptom"
           },
           "uk": {
-            "alt": "Опишіть симптом — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
             "title": "Опишіть симптом"
           }
         },
@@ -98,17 +98,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-care-repair-key-v1",
+          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
         },
         "id": "fpv-care-repair-02-image",
         "locales": {
           "en": {
-            "alt": "An Unpowered Inspection — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
             "title": "An Unpowered Inspection"
           },
           "uk": {
-            "alt": "Огляд без живлення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
             "title": "Огляд без живлення"
           }
         },
@@ -179,17 +179,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-care-repair-key-v1",
+          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
         },
         "id": "fpv-care-repair-03-image",
         "locales": {
           "en": {
-            "alt": "Change One Question — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
             "title": "Change One Question"
           },
           "uk": {
-            "alt": "Змініть одне питання — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
             "title": "Змініть одне питання"
           }
         },
@@ -263,17 +263,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-care-repair-key-v1",
+          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
         },
         "id": "fpv-care-repair-04-image",
         "locales": {
           "en": {
-            "alt": "A Battery Stop Card — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
             "title": "A Battery Stop Card"
           },
           "uk": {
-            "alt": "Картка зупинки через акумулятор — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
             "title": "Картка зупинки через акумулятор"
           }
         },
@@ -355,17 +355,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-care-repair-key-v1",
+          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
         },
         "id": "fpv-care-repair-05-image",
         "locales": {
           "en": {
-            "alt": "Repair, Replace, Ask — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
             "title": "Repair, Replace, Ask"
           },
           "uk": {
-            "alt": "Ремонтувати, замінити, запитати — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
             "title": "Ремонтувати, замінити, запитати"
           }
         },
@@ -439,17 +439,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-care-repair-key-v1",
+          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
         },
         "id": "fpv-care-repair-06-image",
         "locales": {
           "en": {
-            "alt": "A Responsible Last Step — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
             "title": "A Responsible Last Step"
           },
           "uk": {
-            "alt": "Відповідальний останній крок — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
             "title": "Відповідальний останній крок"
           }
         },
@@ -553,17 +553,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-care-repair-key-v1",
+          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
         },
         "id": "fpv-care-repair-01-image",
         "locales": {
           "en": {
-            "alt": "Describe the Symptom — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
             "title": "Describe the Symptom"
           },
           "uk": {
-            "alt": "Опишіть симптом — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
             "title": "Опишіть симптом"
           }
         },
@@ -571,17 +571,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-care-repair-key-v1",
+          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
         },
         "id": "fpv-care-repair-02-image",
         "locales": {
           "en": {
-            "alt": "An Unpowered Inspection — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
             "title": "An Unpowered Inspection"
           },
           "uk": {
-            "alt": "Огляд без живлення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
             "title": "Огляд без живлення"
           }
         },
@@ -589,17 +589,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-care-repair-key-v1",
+          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
         },
         "id": "fpv-care-repair-03-image",
         "locales": {
           "en": {
-            "alt": "Change One Question — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
             "title": "Change One Question"
           },
           "uk": {
-            "alt": "Змініть одне питання — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
             "title": "Змініть одне питання"
           }
         },
@@ -607,17 +607,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-care-repair-key-v1",
+          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
         },
         "id": "fpv-care-repair-04-image",
         "locales": {
           "en": {
-            "alt": "A Battery Stop Card — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
             "title": "A Battery Stop Card"
           },
           "uk": {
-            "alt": "Картка зупинки через акумулятор — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
             "title": "Картка зупинки через акумулятор"
           }
         },
@@ -625,17 +625,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-care-repair-key-v1",
+          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
         },
         "id": "fpv-care-repair-05-image",
         "locales": {
           "en": {
-            "alt": "Repair, Replace, Ask — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
             "title": "Repair, Replace, Ask"
           },
           "uk": {
-            "alt": "Ремонтувати, замінити, запитати — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
             "title": "Ремонтувати, замінити, запитати"
           }
         },
@@ -643,17 +643,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-care-repair-key-v1",
+          "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
         },
         "id": "fpv-care-repair-06-image",
         "locales": {
           "en": {
-            "alt": "A Responsible Last Step — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
             "title": "A Responsible Last Step"
           },
           "uk": {
-            "alt": "Відповідальний останній крок — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
             "title": "Відповідальний останній крок"
           }
         },
@@ -665,6 +665,7 @@
           "en": { "title": "Explore the official source" },
           "uk": { "title": "Відкрити офіційне джерело" }
         },
+        "qr": true,
         "type": "url",
         "url": "https://www.ifixit.com/Info/Device_Safety"
       }
