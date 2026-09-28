@@ -14,6 +14,7 @@ import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { Soundscape } from '../ui/audio.mjs';
+import { auditSource } from '../../scripts/localization-audit.mjs';
 
 // Run the actual host callbacks against real stores/preference adapters without
 // starting a browser or replacing their production API with permissive stubs.
@@ -83,6 +84,13 @@ test('company notices retain a live message producer in the page and open dialog
   assert.equal(dialog.status.dataset.error, 'true');
   assert.equal(dialog.status.attributes.get('role'), 'status');
   assert.equal(dialog.status.attributes.get('aria-live'), 'polite');
+});
+
+test('company player leaves only technical tokens outside the localization catalogs', () => {
+  assert.deepEqual(
+    auditSource(source, 'game/company-player.mjs').map(({ text }) => text),
+    ['Company Brand', '"Company Brand", system-ui, sans-serif', 'noopener noreferrer'],
+  );
 });
 
 test('the company host keeps multiple read-only wins in exported progress without writing another tab’s store', async () => {
@@ -225,7 +233,11 @@ test('Home retires a staged mission and ignores its late abort or response witho
       missionFor: (id) => ({ id }),
       pause() {},
       preferences: { difficulty: 'standard' },
-      report: (message) => notices.push(message),
+      t: (key) => {
+        assert.equal(key, 'interface:companyPlayer.preparingMission');
+        return 'Preparing the exact mission and its artwork…';
+      },
+      report: (message) => notices.push(typeof message === 'function' ? message() : message),
       $: (id) => screens[id],
       renderCampaigns: () => {
         rendered++;

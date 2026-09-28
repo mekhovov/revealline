@@ -811,5 +811,9 @@
   "companyPlayer.learningTranscriptMismatch": "Навчальний протокол дублюється або не відповідає симуляціям цього видання.",
   "companyPlayer.missingLearningReplayProof": "Завершене навчання потребує відповідного доказу повтором. Відкрийте резервну копію у відповідному давнішому випуску.",
   "companyPlayer.importWhilePreparing": "Дочекайтеся завершення підготовки місії, перш ніж імпортувати прогрес.",
-  "companyPlayer.openFailed": "Не вдалося відкрити це видання: {{error}}"
+  "companyPlayer.openFailed": "Не вдалося відкрити це видання: {{error}}",
+  "companyPlayer.precedingConnectionIncomplete": "Спочатку завершіть попередній зв’язок і його завдання.",
+  "companyPlayer.missionOutsideEdition": "Ця місія не належить до вибраного видання.",
+  "companyPlayer.savedMissionUnavailable": "Збережена місія належить до недоступної кампанії. Її дані залишено без змін.",
+  "companyPlayer.workbenchUnsafe": "Поверніться на безпечну територію, перш ніж відкривати робоче місце."
 }
