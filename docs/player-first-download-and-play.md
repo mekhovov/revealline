@@ -43,7 +43,8 @@ Focused automated evidence on the rebased feature source:
 
 - offline download access and exact typed state: 14/14 passing;
 - real Team and Versus host, embedded package panel, cache verification,
-  cancellation, repeated Confirm and one-action launch: 2/2 passing;
+  cancellation, repeated Confirm, stale-focus refusal and one-action launch: 3/3
+  passing;
 - Team presentation retry and dependency retention cohort: 6/6 passing;
 - Versus installed/static picture and action-focus regression cohort: 63/63
   passing;

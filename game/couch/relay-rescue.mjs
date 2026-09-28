@@ -2208,7 +2208,7 @@ export function bootCoop({
         selection.downloadRequired = false;
         selection.state = 'ready';
         pictureOperation = null;
-        if (onPrepared?.(selection) === true) {
+        if (onPrepared?.(selection, focus) === true) {
           focus.finish(null, false);
           return;
         }
@@ -2264,7 +2264,7 @@ export function bootCoop({
       recipe = currentRecipe();
     return preparePicture({
       retry: true,
-      onPrepared(prepared) {
+      onPrepared(prepared, actionFocus) {
         if (
           prepared !== selection ||
           run !== attempt ||
@@ -2272,14 +2272,15 @@ export function bootCoop({
           pictureSelection !== selection ||
           disposed ||
           inactive ||
-          !foreground()
+          !foreground() ||
+          !actionFocus?.current()
         )
           return false;
         // The package panel returns to the temporary Cancel control. Publish
         // readiness and transfer this same admitted action to Start before the
         // retention gate; hiding a focused Cancel must not strand the launch.
         pictureUI(localizedMessage('interface:teamPictureReadyStartRemainsASeparateAction'));
-        focusPreparedStart(selection, epoch);
+        actionFocus.pending($('coop-start'));
         if (document.activeElement !== $('coop-start')) return false;
         start(recipe);
         return true;

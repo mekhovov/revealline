@@ -115,7 +115,7 @@ function versusMedia() {
   return { Image, URLImpl };
 }
 
-test('fresh Team missing package offers one Download & play action and starts only after exact verified readiness', async (t) => {
+async function teamDownloadPlayPage(t) {
   const caches = committedCaches();
   const f = await page(t, {
     href: 'http://localhost/game/couch/relay-rescue.html',
@@ -166,6 +166,11 @@ test('fresh Team missing package offers one Download & play action and starts on
       });
     },
   });
+  return { f, caches };
+}
+
+test('fresh Team missing package offers one Download & play action and starts only after exact verified readiness', async (t) => {
+  const { f, caches } = await teamDownloadPlayPage(t);
 
   await waitFor(
     () => f.$('coop-picture-status').dataset.state === 'error',
@@ -224,6 +229,44 @@ test('fresh Team missing package offers one Download & play action and starts on
   );
   assert.equal(f.$('coop-menu').hidden, true);
   assert.equal(f.$('coop-play').hidden, false);
+});
+
+test('Team Download & play never reclaims focus or starts after a newer lobby choice', async (t) => {
+  const { f, caches } = await teamDownloadPlayPage(t);
+  await waitFor(
+    () => f.$('coop-picture-status').dataset.state === 'error',
+    () => f.$('coop-picture-status').textContent,
+  );
+  const retry = f.$('coop-picture-retry');
+  retry.focus();
+  const preparing = retry.onclick();
+  await waitFor(
+    () => f.doc.getElementById('install-offline-dialog')?.open,
+    () => f.$('coop-picture-status').textContent,
+  );
+  const frame = connectPackagePanel(f, 'team:download-play'),
+    newerChoice = f.$('coop-settings-open');
+  newerChoice.focus();
+  assert.equal(f.doc.activeElement, newerChoice);
+  await (
+    await caches.open(OFFICIAL_CACHE)
+  ).put(
+    officialAssetURL(file.sha256, 'http://localhost'),
+    new Response(bytes, { headers: { 'Content-Length': file.bytes } }),
+  );
+  f.win.emit('message', {
+    origin: 'null',
+    source: frame.contentWindow,
+    data: {
+      format: 'revealline.offline-panel.v1',
+      action: 'packages-ready',
+      groups: ['team:download-play'],
+    },
+  });
+  await preparing;
+  assert.equal(f.doc.body.classList.contains('playing'), false);
+  assert.notEqual(f.doc.activeElement, f.$('coop-start'));
+  assert.equal(f.$('coop-start').disabled, false);
 });
 
 test('fresh Versus missing package offers one Download & play action and admits that exact race once ready', async (t) => {
