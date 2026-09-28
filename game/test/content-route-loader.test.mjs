@@ -64,6 +64,7 @@ const golden = {
   'whole-spatial-v34': [289778, 'a8758622b19bfeca9257c090c3116a88eb32773749623487dd1de0be2c908cec'],
   'whole-spatial-v35': [290366, '74954e3d5c0c75c28611d41926ca77aa1466f80901a5254b8699aa601f1f7b4b'],
   'whole-spatial-v36': [291919, 'd84735dafc1ee103edfb355bdc696ce67517b41a28dbd0638399b68940bd1b71'],
+  'whole-spatial-v37': [293248, '2584d793ce3940bff1c3916d826bfd9ec5801cec08be2e993e063724a0641900'],
   'whole-ornament-v1': [260665, '3b29bc220cdb06a33fedefabb6adec9527bd10902a9dd44899270e885ddfc4ad'],
   'whole-ornament-v2': [266314, '3f0116efe9cb9b2e134fb60dd252ac5bfbd44758a993e18a56abb2131ca10a1b'],
 };
@@ -499,6 +500,17 @@ test('Contested wall triptych imports only its bounded successor chain', () => {
   assert(!has(result, 'horizon-candidates.mjs'));
 });
 
+test('Pressure corridor triptych imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v37');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v37' });
+  assert(has(result, 'pressure-corridor-triptych-candidates.mjs'));
+  assert(has(result, 'contested-wall-triptych-candidates.mjs'));
+  assert(has(result, 'current-remix-pressure-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
 test('ornament editions import only their bounded opt-in source chain', () => {
   const study = routeProbe('whole-ornament-v1');
   assert.deepEqual(study.output, { id: 'whole-ornament-v1' });
@@ -550,6 +562,7 @@ test('all literal lazy imports and shared modules are in the actual game build i
   const source = await readFile(new URL(loaderURL), 'utf8');
   const imports = [...source.matchAll(/import\('(.+?)'\)/g)].map((m) => m[1]);
   assert.deepEqual(imports, [
+    './pressure-corridor-triptych-candidates.mjs',
     './contested-wall-triptych-candidates.mjs',
     './current-remix-pressure-candidates.mjs',
     './cultural-pressure-triptych-candidates.mjs',
