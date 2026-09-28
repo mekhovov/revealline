@@ -15,6 +15,7 @@ const originals = [
     campaignId: 'fpv-meet-aircraft',
     oldEditionRevision: 6,
     snapshotSha256: '03035e3f1eaefd245d5ad54706055456205ba26c003fd25c1a6f0ab25dce6a4e',
+    afterSnapshotSha256: 'e50b6a3c0197f4944756942af314e31a76a2db559b505a23d310185e834a0289',
     rewardIdentity: '857304c74f9d6e40',
     addedPayloadIds: ['fpv-meet-aircraft-01-structure-exploration'],
   },
@@ -23,6 +24,7 @@ const originals = [
     campaignId: 'ukraine-threads',
     oldEditionRevision: 5,
     snapshotSha256: 'fb63b425bdc90769bdb9a5f7bbb8a3d4a3c18086bee0d87f4187712398e4dcb0',
+    afterSnapshotSha256: 'c7122ae0c8f17932986df03fc636c02900d83a30c235529789f0a90f253c7555',
     rewardIdentity: 'a87a029bafb6ea54',
     addedPayloadIds: [
       'reference-ukraine-met-shirt-fragment-image',
@@ -47,23 +49,35 @@ for (const fixture of originals)
     assert.equal(createHash('sha256').update(raw).digest('hex'), fixture.snapshotSha256);
     assert.equal(raw.length, retained.bytes);
     const { snapshot } = await validateRetainedPresentation(raw.toString('utf8'), { edition });
+    const afterRaw = await readFile(
+      new URL(`game/editions/retained/${edition.id}-before-textile-and-motion.json`, root),
+    );
+    assert.equal(createHash('sha256').update(afterRaw).digest('hex'), fixture.afterSnapshotSha256);
+    const { snapshot: afterSnapshot } = await validateRetainedPresentation(
+      afterRaw.toString('utf8'),
+      { edition },
+    );
     assert.equal(snapshot.catalog.editions[0].revision, fixture.oldEditionRevision);
     assert.equal(
-      edition.revision,
+      afterSnapshot.catalog.editions[0].revision,
       fixture.oldEditionRevision + 1,
-      'The diagram batch receives a new edition revision.',
+      'The exact diagram batch received a new edition revision, independent of later additions.',
     );
     const changed = [];
     for (const descriptor of snapshot.catalog.campaigns) {
       const beforeSource = snapshot.files.find((file) => file.path === descriptor.sourcePath).data;
-      const afterSource = await json(descriptor.sourcePath);
+      const afterSource = afterSnapshot.files.find(
+        (file) => file.path === descriptor.sourcePath,
+      ).data;
       assert.deepEqual(
         createRewardMissionBindings(afterSource),
         createRewardMissionBindings(beforeSource),
         descriptor.id,
       );
       const beforeRewards = snapshot.files.find((file) => file.path === descriptor.rewardPath).data;
-      const afterRewards = await json(descriptor.rewardPath);
+      const afterRewards = afterSnapshot.files.find(
+        (file) => file.path === descriptor.rewardPath,
+      ).data;
       assert.deepEqual(
         afterRewards.map((item) => item.id),
         beforeRewards.map((item) => item.id),
@@ -103,7 +117,7 @@ for (const fixture of originals)
     assert.deepEqual(changed, [fixture.campaignId + '-01-discovery']);
     const descriptor = snapshot.catalog.campaigns.find((item) => item.id === fixture.campaignId);
     const old = snapshot.files.find((file) => file.path === descriptor.rewardPath).data;
-    const current = await json(descriptor.rewardPath);
+    const current = afterSnapshot.files.find((file) => file.path === descriptor.rewardPath).data;
     const rewardIds = [fixture.campaignId + '-01-discovery', fixture.campaignId + '-finale'];
     const oldPromised = old.filter((item) => rewardIds.includes(item.id));
     const newDefinitions = current.filter((item) => rewardIds.includes(item.id));

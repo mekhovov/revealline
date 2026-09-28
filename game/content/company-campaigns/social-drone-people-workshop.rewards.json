@@ -23,11 +23,11 @@
         "id": "social-drone-people-workshop-01-image",
         "locales": {
           "en": {
-            "alt": "Welcome to the Network — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Welcome to the Network — original mission illustration. Not a documentary photograph or technical plan.",
             "title": "Welcome to the Network"
           },
           "uk": {
-            "alt": "Вітаємо у спільноті — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Вітаємо у спільноті — оригінальна ілюстрація місії. Не документальне фото й не технічна схема.",
             "title": "Вітаємо у спільноті"
           }
         },
@@ -124,7 +124,7 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
     "scope": { "id": "social-drone-people-workshop-01", "kind": "mission" },
     "teaserImage": {
       "asset": {
@@ -902,11 +902,11 @@
         "id": "social-drone-people-workshop-01-image",
         "locales": {
           "en": {
-            "alt": "Welcome to the Network — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Welcome to the Network — original mission illustration. Not a documentary photograph or technical plan.",
             "title": "Welcome to the Network"
           },
           "uk": {
-            "alt": "Вітаємо у спільноті — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Вітаємо у спільноті — оригінальна ілюстрація місії. Не документальне фото й не технічна схема.",
             "title": "Вітаємо у спільноті"
           }
         },
@@ -1067,7 +1067,7 @@
         }
       ]
     },
-    "revision": "4",
+    "revision": "5",
     "scope": { "id": "social-drone-people-workshop", "kind": "campaign" },
     "teaserImage": {
       "asset": {

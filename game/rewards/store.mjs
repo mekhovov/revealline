@@ -208,9 +208,14 @@ export function createRewardStore({
     error = null;
   let queue = Promise.resolve(),
     closed = false,
-    closing = null;
+    closing = null,
+    pendingOperations = 0;
   const snapshot = () => structuredClone(state);
-  const status = () => ({ durable, error: error?.message ?? null });
+  const status = () => ({
+    durable,
+    pending: pendingOperations > 0,
+    error: error?.message ?? null,
+  });
   const announce = () => {
     if (closed) return;
     try {
@@ -224,6 +229,7 @@ export function createRewardStore({
     // Session-only discoveries must not leak through a later retry or unrelated save.
     const pending = eligible;
     durable = false;
+    pendingOperations++;
     queue = queue.then(async () => {
       try {
         const saved = validateRewardState(
@@ -247,10 +253,13 @@ export function createRewardStore({
       } catch (failure) {
         error = failure;
         durable = false;
+      } finally {
+        pendingOperations--;
       }
       announce();
       return status();
     });
+    announce();
     return queue;
   };
   return {
@@ -258,6 +267,7 @@ export function createRewardStore({
     status,
     load() {
       required(!closed, 'Reward store is closed.');
+      pendingOperations++;
       queue = queue.then(async () => {
         try {
           const saved = validateRewardState(
@@ -271,10 +281,13 @@ export function createRewardStore({
         } catch (failure) {
           error = failure;
           durable = false;
+        } finally {
+          pendingOperations--;
         }
         announce();
         return snapshot();
       });
+      announce();
       return queue;
     },
     reconcile(definitions, context, { persist = true, persistenceContext = context } = {}) {

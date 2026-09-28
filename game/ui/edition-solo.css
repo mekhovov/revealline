@@ -89,6 +89,69 @@ body[data-edition-id] #shell-home {
 .completion-reward-result .button {
   margin-inline-end: 0.5rem;
 }
+/* The earned teaser and action are an independent result row. Longer
+   discoveries remain in the keyboard/controller-owned reading pane. */
+.overlay-card:has(> .completion-reward-result[data-placement='summary']:not([hidden]))
+  > #overlay-reading {
+  min-height: 0;
+}
+.completion-reward-result[data-placement='summary'] {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin-block: 8px;
+  padding: 8px 12px;
+}
+.completion-reward-result-copy {
+  flex: 1 1 150px;
+  min-width: 0;
+}
+.completion-reward-result[data-placement='summary'] h3 {
+  margin: 0 0 3px;
+  font-size: 0.78rem;
+}
+.completion-reward-result-copy p {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+.completion-reward-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.completion-reward-result-actions .button {
+  min-height: 44px;
+  margin: 0;
+  padding: 8px 12px;
+}
+.completion-reward-result[data-placement='summary'] .completion-reward-save-note {
+  flex-basis: 100%;
+  margin: 0;
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .field-kit.game-shell
+    .game-overlay[data-kind='won']:has(
+      .completion-reward-result[data-placement='summary']:not([hidden])
+    )
+    #overlay-reading {
+    grid-row: 1;
+  }
+  .field-kit.game-shell
+    .game-overlay[data-kind='won']
+    > .overlay-card
+    > .completion-reward-result[data-placement='summary'] {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 0;
+  }
+}
 .completion-reward-finale {
   font-size: 0.9em;
 }
@@ -608,4 +671,155 @@ body[data-edition-id] #shell-home {
   aspect-ratio: 2;
   object-fit: contain;
   border-radius: 0.35rem;
+}
+
+/* Earned results reserve the main surface for the picture, outcome and primary
+   actions. Secondary controls keep their real handlers in a native disclosure. */
+.field-kit.game-shell .overlay-card[data-earned-result-layout='true'] {
+  overflow: auto;
+}
+.field-kit.game-shell:has(
+    .game-overlay[data-kind='won']:not([hidden]) > .overlay-card[data-earned-result-layout='true']
+  )
+  .telemetry {
+  /* The result already contains the accepted score and time. Preserve the
+     measured HUD space without painting duplicate counters over the picture. */
+  visibility: hidden;
+}
+.field-kit.game-shell .overlay-card[data-earned-result-layout='true'] > .reading-toolbar {
+  margin-block: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.field-kit.game-shell .overlay-card[data-earned-result-layout='true'] .reading-actions {
+  display: flex;
+  gap: 6px;
+}
+.field-kit.game-shell .overlay-card[data-earned-result-layout='true'] .reading-actions button {
+  padding-inline: 12px;
+}
+.field-kit.game-shell .overlay-card[data-earned-result-layout='true'] #result-picture {
+  height: min(30dvh, 240px);
+  max-height: min(30dvh, 240px);
+  object-fit: contain;
+}
+.field-kit.game-shell .overlay-card[data-earned-result-layout='true'] > #overlay-reading {
+  flex: 1 1 auto;
+  min-height: min(24dvh, 180px);
+}
+.completion-reward-result-copy .completion-reward-session-status {
+  font-size: 0.75rem;
+  margin-block-start: 4px;
+  display: block;
+}
+.earned-result-more {
+  min-width: 0;
+}
+.earned-result-more > summary {
+  cursor: pointer;
+  min-height: 44px;
+  list-style: none;
+}
+.earned-result-more > summary::-webkit-details-marker {
+  display: none;
+}
+.earned-result-more > summary::after {
+  content: '▾';
+}
+.earned-result-more[open] > summary::after {
+  content: '▴';
+}
+.earned-result-more[open] {
+  flex-basis: 100%;
+  grid-column: 1 / -1;
+  width: 100%;
+}
+.earned-result-more-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: min(32dvh, 220px);
+  overflow: auto;
+  padding: 8px 0;
+}
+.earned-result-more-content > .overlay-footnote,
+.earned-result-more-content > .completion-reward-save-note {
+  flex-basis: 100%;
+  margin: 0;
+}
+@media (max-width: 799px), (max-height: 500px) {
+  .field-kit.game-shell
+    .game-overlay[data-kind='won']
+    .overlay-card[data-earned-result-layout='true']
+    #overlay-reading {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .field-kit.game-shell
+    .game-overlay[data-kind='won']
+    .overlay-card[data-earned-result-layout='true']
+    #overlay-reading
+    > * {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .field-kit.game-shell
+    .game-overlay[data-kind='won']
+    .overlay-card[data-earned-result-layout='true']
+    #result-picture {
+    width: 100%;
+    height: auto;
+    max-height: min(23dvh, 190px);
+    aspect-ratio: 16 / 9;
+    margin: 0 0 4px;
+  }
+  .field-kit.game-shell
+    .game-overlay[data-kind='won']
+    .overlay-card[data-earned-result-layout='true']
+    #overlay-title {
+    font-size: clamp(24px, 6vw, 32px);
+    line-height: 1.1;
+  }
+  .field-kit.game-shell
+    .game-overlay[data-kind='won']
+    .overlay-card[data-earned-result-layout='true']
+    #overlay-copy {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  .field-kit.game-shell
+    .game-overlay[data-kind='won']
+    .overlay-card[data-earned-result-layout='true']
+    #overlay-difficulty {
+    padding-inline-end: 0;
+  }
+  .field-kit.game-shell
+    .game-overlay[data-kind='won']
+    .overlay-card[data-earned-result-layout='true']
+    #result-medals {
+    justify-self: start;
+  }
+}
+@media (max-width: 600px) {
+  .field-kit.game-shell
+    .game-overlay[data-kind='won']
+    .overlay-card[data-earned-result-layout='true']
+    .overlay-actions
+    #next-button {
+    grid-column: auto;
+  }
+}
+@media (max-height: 500px) {
+  .field-kit.game-shell
+    .game-overlay[data-kind='won']
+    .overlay-card[data-earned-result-layout='true']
+    #result-picture {
+    height: min(26dvh, 130px);
+    max-height: min(26dvh, 130px);
+    aspect-ratio: auto;
+  }
+  .field-kit.game-shell .overlay-card[data-earned-result-layout='true'] > #overlay-reading {
+    min-height: min(20dvh, 100px);
+  }
 }

@@ -3732,6 +3732,8 @@
   "campaignEnd": "КІНЕЦЬ КАМПАНІЇ",
   "endOfThisCampaign": "Кінець цієї кампанії.",
   "journeyMissionComplete": "Місію подорожі завершено.",
+  "editionMissionComplete": "Місію завершено. Продовжуйте досліджувати кампанію.",
+  "studioPreviewMissionComplete": "Місію попереднього перегляду завершено. Прогрес гравця не змінено.",
   "authoredTestClearRecordedInJourneyProgressNoLegacyCollection": "Проходження авторського тесту записано в прогрес подорожі. Без нагород класичної колекції.",
   "pictureCollectedForThisSessionExportGameDataAndSession": "Зображення додано до колекції цього сеансу. Щоб зберегти його, експортуйте ігрові дані й оригінали сеансу: Налаштування → Ігрові дані → Збереження й відновлення.",
   "browseMissions2": "Переглянути місії →",
@@ -5531,5 +5533,7 @@
   "rewardPlaylist.help": "Оберіть запис, потім натисніть «Відтворити». Записи не запускаються й не перемикаються автоматично.",
   "rewardPlaylist.previous": "Попередній запис",
   "rewardPlaylist.next": "Наступний запис",
-  "rewardPlaylist.selected": "{{index}} із {{count}}: {{title}}"
+  "rewardPlaylist.selected": "{{index}} із {{count}}: {{title}}",
+  "completionRewards.sessionOnlyShort": "Збережено лише в цій вкладці · резервна копія в «Більше»",
+  "completionRewards.saving": "Зберігаємо відкриття…"
 }
