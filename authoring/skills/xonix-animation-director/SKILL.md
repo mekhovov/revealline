@@ -53,6 +53,23 @@ fixtures separately from default gameplay and retain failed evidence. In actual
 play, verify that loss advice changes on recovery/capture and that terminal
 announcements have one owner without stealing deliberate Retry focus.”
 
+## Effective gameplay benchmark identity
+
+Before using a playable art comparison as gameplay evidence, compare its actual
+attempt preparation with the ordinary mode host. Authored simulation identity
+and effective difficulty/tuning identity are different. Apply a fresh-attempt
+recipe exactly once, retain the owned result for Retry, and display source and
+runtime revisions separately. Do not read or overwrite player preferences merely
+to make an authoring fixture reproducible. An unchanged mission ID does not prove
+matching actor speed, trail-impact speed or threat timing.
+
+Prompt: “Compare the benchmark with ordinary fresh Standard preparation, including
+class recipes, seed and steering mode. Verify locked warning targets, commitment,
+capture cancellation and risky versus safe returns using real inputs. An enemy's
+cooldown does not retire existing projectiles or trail impacts. Preserve earlier
+untuned evidence under its actual scope, and keep modeled counterplay separate
+from human readability, hardware checks and public package acceptance.”
+
 ## Inputs and scope
 
 Inspect the actual reference assets, current board fixture, intended display scale and available state/event interface. Read `authoring/CONTRACT.md` and relevant records in `authoring/prompts/round-07-animation-variants.json` when the kit is present; resolve an installed skill symlink to its physical kit if needed. The shared CLI includes this supplement: use `python3 authoring/prompt.py show animation-02-state-contract` to inspect inputs before rendering text. Consult [the motion handoff](references/motion-handoff.md) for states, timing and inspection records.

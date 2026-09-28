@@ -245,10 +245,10 @@ const selection = createBenchmarkSelection({
         campaign: current.entry.campaignId,
         mission: {
           id: current.entry.id,
-          revision: current.session.run.revision,
+          revision: current.entry.manifest.level.revision,
           simulationIdentity: current.entry.manifest.simulationIdentity,
         },
-        setup: { difficulty: 'standard', classId: 'scout', turnPolicy: 'immediate', seed: 1 },
+        setup: current.session.setup,
         presentation: current.entry.manifest.presentation,
         artwork: current.entry.manifest.background,
         actorAppearance: current.actors.pin(),
@@ -468,7 +468,10 @@ function loop(now) {
   const dt = lastTime === null ? 0 : (now - lastTime) / 1000;
   lastTime = now;
   if (dt > 0.25) {
-    hold('Paused after a long frame. Resume when ready.');
+    // Decoding can delay an idle frame too. Preserve preparation/failure/result
+    // status unless a real run or ready cue was interrupted.
+    const interrupted = selection.current?.session.playing || readyCue.active;
+    hold(interrupted ? 'Paused after a long frame. Resume when ready.' : undefined);
     paint();
     return;
   }

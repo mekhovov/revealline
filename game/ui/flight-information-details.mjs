@@ -20,6 +20,19 @@ const group = (lines) => {
   for (const line of lines) counts.set(line, (counts.get(line) || 0) + 1);
   return [...counts].map(([line, count]) => (count > 1 ? `${count} × ${line}` : line));
 };
+const enemyRole = (enemy) => {
+  const pressure =
+    enemy.pressure?.mode === 'trail-pursuit'
+      ? t('interface:trailPursuer')
+      : enemy.pressure?.mode === 'head-intercept'
+        ? t('interface:headingInterceptor')
+        : null;
+  return (
+    [pressure, enemy.impactCarrier ? t('interface:trailImpactCarrier') : null]
+      .filter(Boolean)
+      .join(' · ') || roleName(enemy.type)
+  );
+};
 const enemyState = (enemy, snapshot) => {
   if (enemy.type === 'relay-sentinel')
     return snapshot.encounterLane?.id === enemy.id && snapshot.encounter
@@ -36,17 +49,22 @@ const enemyState = (enemy, snapshot) => {
       }[enemy.mode] || 'watch the changing frontier';
     return `${state}. A capture can change its route; check your next return before departing. ${enemy.frozen ? t('interface:whenFreezeEndsContactWithYourCraftOrUnfinishedLine') : t('interface:contactWithYourCraftOrUnfinishedLineIsStillDangerous')}`;
   }
-  if (enemy.impactCarrier)
-    return t('interface:trailContactSendsVisibleFrontsAlongYourUnfinishedLineClose');
-  if (enemy.pressure)
-    return (
+  if (enemy.pressure) {
+    const state =
       {
         patrol: 'patrolling hidden ground',
         warning: `preparing a charge · ${seconds(enemy.pressure.seconds)}`,
         committed: `charging toward its marked target · ${seconds(enemy.pressure.seconds)}`,
         cooldown: `recovering from its last charge · ${seconds(enemy.pressure.seconds)}`,
-      }[enemy.pressure.phase] || t('interface:watchItsMovementInTheField')
-    );
+      }[enemy.pressure.phase] || t('interface:watchItsMovementInTheField');
+    // Pressure and trail impact are independent abilities. Recovery from a
+    // charge does not clear travelling fronts or make the carrier harmless.
+    return enemy.impactCarrier
+      ? `${sentence(state)} ${t('interface:trailContactSendsVisibleFrontsAlongYourUnfinishedLineClose')}`
+      : state;
+  }
+  if (enemy.impactCarrier)
+    return t('interface:trailContactSendsVisibleFrontsAlongYourUnfinishedLineClose');
   return (
     {
       dormant: t('interface:waitingRevealingItsPositionCanWakeIt'),
@@ -133,9 +151,7 @@ export function flightDetailsModel(information, context) {
           : enemy.slowed
             ? ' ' + t('interface:movementSlowed') + ''
             : '';
-      threats.push(
-        `${enemy.impactCarrier ? t('interface:trailImpactCarrier') : enemy.pressure?.mode === 'trail-pursuit' ? t('interface:trailPursuer') : enemy.pressure?.mode === 'head-intercept' ? t('interface:headingInterceptor') : roleName(enemy.type)}: ${sentence(enemyState(enemy, s))}${effect}`,
-      );
+      threats.push(`${enemyRole(enemy)}: ${sentence(enemyState(enemy, s))}${effect}`);
     }
     for (const mark of classic.erosion)
       threats.push(`Marked ground can reopen · ${seconds(mark.seconds)}.`);

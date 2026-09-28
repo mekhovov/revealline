@@ -1,4 +1,6 @@
 import { createRun, stepRun, FIXED_DT, getSummary } from '../../game/core/index.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../../game/gameplay-tuning.mjs';
+import { dataIdentity } from '../../game/data-json.mjs';
 
 const terminal = (run) => ['won', 'lost'].includes(run.status);
 
@@ -8,7 +10,22 @@ export function createBenchmarkSession(manifest, { onStep = () => {} } = {}) {
   if (manifest?.mode !== 'solo' || manifest.difficulty !== 'standard')
     throw new Error('Choose a resolved standard Solo mission.');
   const options = Object.freeze({ seed: 1, classId: 'scout', turnPolicy: 'immediate' });
-  let run = createRun(manifest.level, options);
+  // Match ordinary fresh Standard play. The source identity and artwork remain
+  // authored; tuning owns a separate effective level and never reads preferences.
+  // Retain this once-prepared level for Retry, not the mutable caller's manifest.
+  const tuning = resolveGameplayTuning('standard');
+  const level = applyGameplayTuning(manifest.level, tuning);
+  const setup = Object.freeze({
+    ...options,
+    sourceSimulationIdentity: manifest.simulationIdentity,
+    sourceRevision: manifest.level.revision,
+    runtimeLevelIdentity: dataIdentity(level),
+    runtimeRevision: level.revision,
+    gameplayTuning: tuning.version,
+    difficulty: tuning.difficulty,
+    adminOverride: tuning.adminOverride,
+  });
+  let run = createRun(level, options);
   let playing = false;
   let accumulator = 0;
   let disposed = false;
@@ -18,6 +35,9 @@ export function createBenchmarkSession(manifest, { onStep = () => {} } = {}) {
     accumulator = 0;
   };
   return {
+    get setup() {
+      return setup;
+    },
     get run() {
       return run;
     },
@@ -40,7 +60,7 @@ export function createBenchmarkSession(manifest, { onStep = () => {} } = {}) {
     retry() {
       if (disposed) return false;
       pause();
-      run = createRun(manifest.level, options);
+      run = createRun(level, options);
       events.length = 0;
       return true;
     },

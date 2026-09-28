@@ -90,7 +90,10 @@ async function harness(t) {
   let scheduledFrame = null;
   let cpuClock = 0;
   const catalog = {
-    entries: ['first', 'second'].map((id) => ({ id, manifest: { level: { name: id } } })),
+    entries: ['first', 'second'].map((id) => ({
+      id,
+      manifest: { level: { name: id, revision: 'authored-1' }, simulationIdentity: `${id}-source` },
+    })),
   };
   const input = {
     clears: 0,
@@ -102,6 +105,15 @@ async function harness(t) {
   };
   function scene(entry, options) {
     const session = {
+      setup: Object.freeze({
+        sourceSimulationIdentity: entry.manifest.simulationIdentity,
+        sourceRevision: 'authored-1',
+        runtimeLevelIdentity: `${entry.id}-effective`,
+        runtimeRevision: 'tuned-1',
+        gameplayTuning: 'fixed-standard-fixture',
+        difficulty: 'standard',
+        adminOverride: false,
+      }),
       playing: false,
       run: { tick: 0, status: 'running', level: { goal: { coverage: 0.3 } } },
       summary: { tick: 0, status: 'running', coverage: 0, lives: 3, score: 0, time: 0 },
@@ -567,4 +579,33 @@ test('actual event handler replaces stale loss feedback without stealing focus o
   assert.equal(h.document.activeElement, h.$('mission'), 'Status never takes setup focus');
   onStep([], run);
   assert.equal(writes, 4);
+});
+
+test('source details distinguish authored identity from the accepted effective runtime setup', async (t) => {
+  const h = await harness(t);
+  await h.accept();
+  const identity = JSON.parse(h.$('identity').textContent);
+  assert.equal(identity.mission.revision, 'authored-1');
+  assert.equal(identity.mission.simulationIdentity, 'first-source');
+  assert.deepEqual(identity.setup, h.scenes[0].session.setup);
+  assert.equal(identity.setup.runtimeRevision, 'tuned-1');
+  assert.equal(identity.setup.adminOverride, false);
+});
+
+test('slow decoding preserves loading status; only active play gets a long-frame pause notice', async (t) => {
+  const h = await harness(t);
+  const loading = h.$('loading').textContent;
+  h.frame(1000);
+  h.frame(1400);
+  assert.equal(h.$('loading').textContent, loading);
+  assert.equal(h.$('loading').dataset.state, 'loading');
+  assert.equal(h.$('start').disabled, true);
+  assert.equal(h.$('cancel').hidden, false);
+  await h.accept();
+  h.$('start').click();
+  h.frame(1800);
+  h.frame(2200);
+  assert.equal(h.scenes[0].session.playing, false);
+  assert.equal(h.$('loading').textContent, 'Paused after a long frame. Resume when ready.');
+  assert.equal(h.$('start').disabled, false);
 });

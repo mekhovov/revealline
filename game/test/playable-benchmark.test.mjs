@@ -78,10 +78,10 @@ test('real introductory capture wins and Retry exactly repeats setup and result 
   assert.equal(session.playing, false);
   session.advance({ direction: 'down' }, 0.1);
   assert.equal(session.run.tick, 0);
-  play(session, [[414, 'down']]);
+  play(session, [[469, 'down']]);
   const won = session.summary;
   assert.equal(won.status, 'won');
-  assert.equal(won.tick, 414);
+  assert.equal(won.tick, 469);
   assert.equal(won.claimedCount, 816);
   assert.equal(won.totalClaimable, 2380);
   assert.equal(won.score, 8160);
@@ -95,7 +95,7 @@ test('real introductory capture wins and Retry exactly repeats setup and result 
   assert.deepEqual(session.summary, initial);
   assert.equal(session.playing, false);
   assert.deepEqual(session.events, []);
-  play(session, [[414, 'down']]);
+  play(session, [[469, 'down']]);
   assert.deepEqual(session.summary, won);
   assert.equal(retired.status, 'won');
   assert.equal(JSON.stringify(source), before);
@@ -144,7 +144,7 @@ test('real self-contact failure consumes lives and reaches loss before a fresh d
   assert.equal(session.advance({ direction: 'down' }, FIXED_DT), 0);
 });
 
-test('native pursuit and interception warnings, impacts and captures come from their actual source missions', () => {
+test('historical raw-speed routes expose the actual Standard threats after fresh-play tuning', () => {
   const pursuitEvents = [];
   const pursuit = createBenchmarkSession(manifest('return-in-reserve'), {
     onStep: (events) => pursuitEvents.push(...structuredClone(events)),
@@ -156,12 +156,19 @@ test('native pursuit and interception warnings, impacts and captures come from t
     [180, 'left'],
   ]);
   assert.equal(pursuit.run.tick, 618);
-  assert.equal(pursuit.run.claimedCount, 60);
-  assert.equal(pursuit.run.score, 600);
-  assert.equal(pursuit.run.lives, 3);
+  assert.equal(pursuit.run.claimedCount, 8);
+  assert.equal(pursuit.run.score, 80);
+  assert.equal(pursuit.run.lives, 2);
   assert.ok(
-    pursuitEvents.some((event) => event.type === 'lineImpact.seeded' && event.tick === 555),
+    pursuitEvents.some((event) => event.type === 'lineImpact.seeded' && event.tick === 140),
   );
+  assert.ok(
+    pursuitEvents.some(
+      (event) =>
+        event.type === 'player.failed' && event.tick === 140 && event.actorId === 'carrier',
+    ),
+  );
+  assert.ok(pursuitEvents.some((event) => event.type === 'cells.claimed' && event.tick === 445));
   assert.equal(pursuit.run.classic.lineImpact.fronts.length, 0);
   const interceptionEvents = [];
   const interception = createBenchmarkSession(manifest('crossed-bands'), {
@@ -173,15 +180,19 @@ test('native pursuit and interception warnings, impacts and captures come from t
     [90, 'down'],
     [60, 'left'],
   ]);
-  assert.equal(interception.run.claimedCount, 52);
-  assert.equal(interception.run.score, 520);
-  assert.equal(interception.run.lives, 3);
+  assert.equal(interception.run.claimedCount, 0);
+  assert.equal(interception.run.score, 0);
+  assert.equal(interception.run.lives, 2);
   assert.ok(
-    interceptionEvents.some((event) => event.tick === 322 && event.type === 'cells.claimed'),
+    interceptionEvents.some((event) => event.tick === 121 && event.type === 'pressure.warning'),
   );
   assert.ok(
-    interceptionEvents.some((event) => event.tick === 322 && event.reason === 'trail-closed'),
+    interceptionEvents.some(
+      (event) =>
+        event.tick === 163 && event.type === 'player.failed' && event.actorId === 'frontier',
+    ),
   );
+  assert.ok(interceptionEvents.some((event) => event.tick === 163 && event.reason === 'recovery'));
   pursuit.dispose();
   interception.dispose();
 });
