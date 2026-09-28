@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-cities-symbols-time-key-v1",
-          "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+          "assetId": "ukraine-cities-symbols-time-01-reveal-v1",
+          "sha256": "08b07520b4dc9d551c207e99de322f66c9d30a23f62cc64be7fcb077066b8604"
         },
         "id": "ukraine-cities-symbols-time-01-image",
         "locales": {
           "en": {
-            "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
+            "alt": "Original illustrated architectural exhibition with separate abstract mosaic-colour panel, invented domed model and wider model grouping, each with a blank record card.",
             "title": "Kyiv in Layers"
           },
           "uk": {
-            "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї.",
+            "alt": "Оригінальна ілюстрована архітектурна виставка з окремою абстрактною мозаїчною панеллю, вигаданою купольною моделлю та групою моделей, кожна зі своєю порожньою карткою.",
             "title": "Київ шарами"
           }
         },
@@ -80,7 +80,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-cities-symbols-time-01", "kind": "mission" }
   },
   {
@@ -101,17 +101,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-cities-symbols-time-key-v1",
-          "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+          "assetId": "ukraine-cities-symbols-time-02-reveal-v1",
+          "sha256": "91b992f6582f1a43c6ff7fa252090856b145cad929f5c7322ed745e8fb1cd8e3"
         },
         "id": "ukraine-cities-symbols-time-02-image",
         "locales": {
           "en": {
-            "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
+            "alt": "Original illustrated urban-study gallery comparing one isolated invented façade with a separate model street of varied neighbouring buildings.",
             "title": "Lviv: Streets and Encounters"
           },
           "uk": {
-            "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї.",
+            "alt": "Оригінальна ілюстрована містобудівна галерея, що порівнює один окремий вигаданий фасад із моделлю вулиці різних сусідніх будівель.",
             "title": "Львів: вулиці й зустрічі"
           }
         },
@@ -164,7 +164,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-cities-symbols-time-02", "kind": "mission" }
   },
   {
@@ -185,17 +185,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-cities-symbols-time-key-v1",
-          "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+          "assetId": "ukraine-cities-symbols-time-03-reveal-v1",
+          "sha256": "3355b815e9331081fc536ac9cd47a66763acf25a95cbf293ad7b271371d98df9"
         },
         "id": "ukraine-cities-symbols-time-03-image",
         "locales": {
           "en": {
-            "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
+            "alt": "Original illustrated port-city exhibition with separate invented harbour, street-grid and civic-square models, blank cards and a blue sea view.",
             "title": "Odesa: A Port City Record"
           },
           "uk": {
-            "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї.",
+            "alt": "Оригінальна ілюстрована виставка портового міста з окремими вигаданими моделями гавані, мережі вулиць і громадської площі, порожніми картками та синім морським краєвидом.",
             "title": "Одеса: опис портового міста"
           }
         },
@@ -248,7 +248,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-cities-symbols-time-03", "kind": "mission" }
   },
   {
@@ -269,17 +269,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-cities-symbols-time-key-v1",
-          "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+          "assetId": "ukraine-cities-symbols-time-04-reveal-v1",
+          "sha256": "24b3bc2dd9a79f4130f7af5c1ba28a1ab09e348f5b7d2beb9a5b99d4434923e4"
         },
         "id": "ukraine-cities-symbols-time-04-image",
         "locales": {
           "en": {
-            "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
+            "alt": "Original illustrated civic-history room with separate archive and modern document stands and a blank upright blue emblem placeholder.",
             "title": "The Trident and a Date"
           },
           "uk": {
-            "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї.",
+            "alt": "Оригінальна ілюстрована зала громадянської історії з окремими архівною та сучасною документальними підставками й порожнім вертикальним синім місцем для емблеми.",
             "title": "Тризуб і дата"
           }
         },
@@ -324,6 +324,64 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "reference-ukraine-state-emblem",
+          "sha256": "43e0b61f5fa66df1674160b9d7cbc1d189a1fce2d9be6362e82bc2b3127dc7cf"
+        },
+        "id": "reference-ukraine-state-emblem-image",
+        "locales": {
+          "en": {
+            "alt": "An upright golden trident on a blue shield with a golden border.",
+            "title": "The small State Coat of Arms"
+          },
+          "uk": {
+            "alt": "Вертикальний золотий тризуб на синьому щиті із золотим обрамленням.",
+            "title": "Малий Державний Герб"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "reference-ukraine-state-emblem-credit",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "A source-rendered reference to Ukraine’s small State Coat of Arms, shown upright and unchanged. Compare this documented state symbol with the fictional exhibition scene. The mission’s official resolution link provides the historical and civic context.",
+              "State symbol of Ukraine. SVG rendering by Andrew Pertsev, 2022; design attributed by the source to Vasyl Krychevsky. Wikimedia Commons public-domain state-symbol record. Source-rendered 500px PNG kept upright and unchanged."
+            ],
+            "sources": [
+              {
+                "title": "The small State Coat of Arms",
+                "url": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Ukraine.svg"
+              },
+              {
+                "title": "License and sharing terms",
+                "url": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Ukraine.svg#Licensing"
+              }
+            ],
+            "title": "The small State Coat of Arms"
+          },
+          "uk": {
+            "paragraphs": [
+              "Зображення Малого Державного Герба України з джерела, показане вертикально й без змін. Порівняйте документований державний символ із вигаданою виставковою сценою. Офіційна постанова за посиланням у місії надає історичний і громадянський контекст.",
+              "State symbol of Ukraine. SVG rendering by Andrew Pertsev, 2022; design attributed by the source to Vasyl Krychevsky. Wikimedia Commons public-domain state-symbol record. Source-rendered 500px PNG kept upright and unchanged."
+            ],
+            "sources": [
+              {
+                "title": "Малий Державний Герб",
+                "url": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Ukraine.svg"
+              },
+              {
+                "title": "Ліцензія та умови поширення",
+                "url": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Ukraine.svg#Licensing"
+              }
+            ],
+            "title": "Малий Державний Герб"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -340,7 +398,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-cities-symbols-time-04", "kind": "mission" }
   },
   {
@@ -361,17 +419,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-cities-symbols-time-key-v1",
-          "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+          "assetId": "ukraine-cities-symbols-time-05-reveal-v1",
+          "sha256": "17b8455b4ab30803951b2a276b3a1c4031164fcd2164f53c1313cd86d34e32dc"
         },
         "id": "ukraine-cities-symbols-time-05-image",
         "locales": {
           "en": {
-            "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
+            "alt": "Original illustrated design comparison with a flat blue-over-yellow two-band flag card on the left and a separate abstract blue-and-yellow ribbon sculpture on the right.",
             "title": "Blue and Yellow, Clearly Seen"
           },
           "uk": {
-            "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї.",
+            "alt": "Оригінальне ілюстроване порівняння дизайну: ліворуч пласка картка прапора із синьою верхньою та жовтою нижньою смугами, праворуч окрема абстрактна синьо-жовта скульптура зі стрічок.",
             "title": "Синій і жовтий: бачити чітко"
           }
         },
@@ -408,6 +466,64 @@
           }
         },
         "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "reference-ukraine-state-flag",
+          "sha256": "2331ad1bb17e2f072b42dbc3fb145917a3963a45efdf0b6cff307d2ee8f7e514"
+        },
+        "id": "reference-ukraine-state-flag-image",
+        "locales": {
+          "en": {
+            "alt": "The rectangular flag of Ukraine: a blue upper half and a yellow lower half, shown flat in a three-to-two width-to-height ratio.",
+            "title": "The state flag, clearly identified"
+          },
+          "uk": {
+            "alt": "Прямокутний прапор України: верхня половина синя, нижня жовта; пласке зображення зі співвідношенням ширини до висоти три до двох.",
+            "title": "Державний прапор із чітким підписом"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "reference-ukraine-state-flag-credit",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "This is the separately identified state flag reference. Its two equal horizontal bands match the arrangement described in Article 20 of Ukraine’s Constitution. The nearby generated exhibition uses the same colours illustratively and is not the technical reference.",
+              "State flag of Ukraine — Government of Ukraine; Wikimedia Commons SVG contributors. Public-domain state-symbol record. Unchanged 960×640 source-rendered PNG, blue above yellow, no generative editing."
+            ],
+            "sources": [
+              {
+                "title": "The state flag, clearly identified",
+                "url": "https://commons.wikimedia.org/wiki/File:Flag_of_Ukraine.svg"
+              },
+              {
+                "title": "License and sharing terms",
+                "url": "https://commons.wikimedia.org/wiki/File:Flag_of_Ukraine.svg#Licensing"
+              }
+            ],
+            "title": "The state flag, clearly identified"
+          },
+          "uk": {
+            "paragraphs": [
+              "Це окремо позначене зображення державного прапора. Дві рівновеликі горизонтальні смуги відповідають розташуванню, описаному в статті 20 Конституції України. Згенерована виставка поруч використовує ці кольори образно й не є технічним зразком.",
+              "State flag of Ukraine — Government of Ukraine; Wikimedia Commons SVG contributors. Public-domain state-symbol record. Unchanged 960×640 source-rendered PNG, blue above yellow, no generative editing."
+            ],
+            "sources": [
+              {
+                "title": "Державний прапор із чітким підписом",
+                "url": "https://commons.wikimedia.org/wiki/File:Flag_of_Ukraine.svg"
+              },
+              {
+                "title": "Ліцензія та умови поширення",
+                "url": "https://commons.wikimedia.org/wiki/File:Flag_of_Ukraine.svg#Licensing"
+              }
+            ],
+            "title": "Державний прапор із чітким підписом"
+          }
+        },
+        "type": "knowledge"
       }
     ],
     "requirements": {
@@ -424,7 +540,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-cities-symbols-time-05", "kind": "mission" }
   },
   {
@@ -445,17 +561,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-cities-symbols-time-key-v1",
-          "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+          "assetId": "ukraine-cities-symbols-time-06-reveal-v1",
+          "sha256": "553e59b52cf99f317696d6639789f689ae9fe9074767ad53ca3bff35f80aa31d"
         },
         "id": "ukraine-cities-symbols-time-06-image",
         "locales": {
           "en": {
-            "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
+            "alt": "Original illustrated museum planning room connecting three fictional city-model tables with a separate civic-history timeline and six blank source cards.",
             "title": "A Map with More Than One Story"
           },
           "uk": {
-            "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї.",
+            "alt": "Оригінальна ілюстрована музейна зала планування, що поєднує три столи вигаданих міських моделей з окремою часовою шкалою та шістьма порожніми картками джерел.",
             "title": "Мапа з багатьма історіями"
           }
         },
@@ -508,7 +624,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-cities-symbols-time-06", "kind": "mission" }
   },
   {
@@ -559,17 +675,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-cities-symbols-time-key-v1",
-          "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+          "assetId": "ukraine-cities-symbols-time-01-reveal-v1",
+          "sha256": "08b07520b4dc9d551c207e99de322f66c9d30a23f62cc64be7fcb077066b8604"
         },
         "id": "ukraine-cities-symbols-time-01-image",
         "locales": {
           "en": {
-            "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
+            "alt": "Original illustrated architectural exhibition with separate abstract mosaic-colour panel, invented domed model and wider model grouping, each with a blank record card.",
             "title": "Kyiv in Layers"
           },
           "uk": {
-            "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї.",
+            "alt": "Оригінальна ілюстрована архітектурна виставка з окремою абстрактною мозаїчною панеллю, вигаданою купольною моделлю та групою моделей, кожна зі своєю порожньою карткою.",
             "title": "Київ шарами"
           }
         },
@@ -577,17 +693,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-cities-symbols-time-key-v1",
-          "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+          "assetId": "ukraine-cities-symbols-time-02-reveal-v1",
+          "sha256": "91b992f6582f1a43c6ff7fa252090856b145cad929f5c7322ed745e8fb1cd8e3"
         },
         "id": "ukraine-cities-symbols-time-02-image",
         "locales": {
           "en": {
-            "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
+            "alt": "Original illustrated urban-study gallery comparing one isolated invented façade with a separate model street of varied neighbouring buildings.",
             "title": "Lviv: Streets and Encounters"
           },
           "uk": {
-            "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї.",
+            "alt": "Оригінальна ілюстрована містобудівна галерея, що порівнює один окремий вигаданий фасад із моделлю вулиці різних сусідніх будівель.",
             "title": "Львів: вулиці й зустрічі"
           }
         },
@@ -595,17 +711,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-cities-symbols-time-key-v1",
-          "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+          "assetId": "ukraine-cities-symbols-time-03-reveal-v1",
+          "sha256": "3355b815e9331081fc536ac9cd47a66763acf25a95cbf293ad7b271371d98df9"
         },
         "id": "ukraine-cities-symbols-time-03-image",
         "locales": {
           "en": {
-            "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
+            "alt": "Original illustrated port-city exhibition with separate invented harbour, street-grid and civic-square models, blank cards and a blue sea view.",
             "title": "Odesa: A Port City Record"
           },
           "uk": {
-            "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї.",
+            "alt": "Оригінальна ілюстрована виставка портового міста з окремими вигаданими моделями гавані, мережі вулиць і громадської площі, порожніми картками та синім морським краєвидом.",
             "title": "Одеса: опис портового міста"
           }
         },
@@ -613,17 +729,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-cities-symbols-time-key-v1",
-          "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+          "assetId": "ukraine-cities-symbols-time-04-reveal-v1",
+          "sha256": "24b3bc2dd9a79f4130f7af5c1ba28a1ab09e348f5b7d2beb9a5b99d4434923e4"
         },
         "id": "ukraine-cities-symbols-time-04-image",
         "locales": {
           "en": {
-            "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
+            "alt": "Original illustrated civic-history room with separate archive and modern document stands and a blank upright blue emblem placeholder.",
             "title": "The Trident and a Date"
           },
           "uk": {
-            "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї.",
+            "alt": "Оригінальна ілюстрована зала громадянської історії з окремими архівною та сучасною документальними підставками й порожнім вертикальним синім місцем для емблеми.",
             "title": "Тризуб і дата"
           }
         },
@@ -631,17 +747,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-cities-symbols-time-key-v1",
-          "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+          "assetId": "ukraine-cities-symbols-time-05-reveal-v1",
+          "sha256": "17b8455b4ab30803951b2a276b3a1c4031164fcd2164f53c1313cd86d34e32dc"
         },
         "id": "ukraine-cities-symbols-time-05-image",
         "locales": {
           "en": {
-            "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
+            "alt": "Original illustrated design comparison with a flat blue-over-yellow two-band flag card on the left and a separate abstract blue-and-yellow ribbon sculpture on the right.",
             "title": "Blue and Yellow, Clearly Seen"
           },
           "uk": {
-            "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї.",
+            "alt": "Оригінальне ілюстроване порівняння дизайну: ліворуч пласка картка прапора із синьою верхньою та жовтою нижньою смугами, праворуч окрема абстрактна синьо-жовта скульптура зі стрічок.",
             "title": "Синій і жовтий: бачити чітко"
           }
         },
@@ -649,17 +765,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-cities-symbols-time-key-v1",
-          "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+          "assetId": "ukraine-cities-symbols-time-06-reveal-v1",
+          "sha256": "553e59b52cf99f317696d6639789f689ae9fe9074767ad53ca3bff35f80aa31d"
         },
         "id": "ukraine-cities-symbols-time-06-image",
         "locales": {
           "en": {
-            "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
+            "alt": "Original illustrated museum planning room connecting three fictional city-model tables with a separate civic-history timeline and six blank source cards.",
             "title": "A Map with More Than One Story"
           },
           "uk": {
-            "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї.",
+            "alt": "Оригінальна ілюстрована музейна зала планування, що поєднує три столи вигаданих міських моделей з окремою часовою шкалою та шістьма порожніми картками джерел.",
             "title": "Мапа з багатьма історіями"
           }
         },
@@ -730,7 +846,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-cities-symbols-time", "kind": "campaign" }
   }
 ]
