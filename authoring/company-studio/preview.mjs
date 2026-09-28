@@ -206,6 +206,7 @@ export async function verifyStudioPreview({
     ...selection.campaigns.flatMap((campaign) => [
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+      ...(campaign.rewardPath ? [campaign.rewardPath] : []),
     ]),
   ]);
   for (const path of selectedPaths)
@@ -252,6 +253,15 @@ export async function verifyStudioPreview({
       0,
     ),
     assets: publicationAssets.size,
+    ...(selection.campaigns.some((campaign) => campaign.rewardPath)
+      ? {
+          rewards: selection.campaigns.reduce(
+            (sum, campaign) =>
+              sum + (campaign.rewardPath ? selectedData.get(campaign.rewardPath).length : 0),
+            0,
+          ),
+        }
+      : {}),
     runtimeFiles: admitted.length,
     runtimeBytes: totalBytes,
   };
