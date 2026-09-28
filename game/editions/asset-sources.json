@@ -9076,6 +9076,26 @@
         "deviceReview": "deferred",
         "notes": "Tall narrow character; alpha>=32 silhouette spans x44–83,y8–118 on128px frame. Keep square canvas/pivot; choose a readable cosmetic size without changing collisions. Most filled pixels have alpha253 from the generated original; those samples are preserved, not silently forced opaque. Decorative diamonds are original design, not a claimed cultural symbol."
       }
+    },
+    {
+      "id": "reference-ukraine-met-shirt-fragment",
+      "path": "game/editions/assets/discovery/met-shirt-fragment-157573.jpg",
+      "sha256": "edb86aaaa16ec601d1816765940cdfa37d761e3e557b9e5c2ba37d642fbc216f",
+      "bytes": 177615,
+      "publication": "public",
+      "revision": 1,
+      "rights": "CC0-1.0",
+      "source": "https://www.metmuseum.org/art/collection/search/157573",
+      "download": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/157573/332063/main-image",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseEvidence": "https://www.metmuseum.org/hubs/open-access",
+      "review": "Primary object record and Public Domain label checked 2026-09-28; exact image visually inspected by assistant, no alterations; human/device review deferred.",
+      "title": "Fragment of a shirt",
+      "creator": "Unknown maker",
+      "date": "fourth quarter 18th century",
+      "accession": "2009.300.2715",
+      "credit": "The Metropolitan Museum of Art, Brooklyn Museum Costume Collection; gift of the Brooklyn Museum, 2009; earlier gift of Mrs. Edward S. Harkness, 1931.",
+      "context": "The museum attributes this particular fragment to Ukrainian culture and identifies linen, silk and metal. No precise region, maker, stitch technique or universal symbol meaning is inferred from its photograph."
     }
   ]
 }

@@ -1,6 +1,7 @@
 import { boundedJSON, dataIdentity, exactKeys, required, stableId } from '../data-json.mjs';
 import { validateKnowledgeProfiles } from './learning-profiles.mjs';
 import { explorationAssetReferences, validateExplorationPayload } from './exploration.mjs';
+import { validateRewardAudioGroups } from './audio-groups.mjs';
 
 export const COMPLETION_REWARD_FORMAT = 'revealline-completion-reward.v1';
 export const EARNED_REWARD_FORMAT = 'revealline-earned-reward.v1';
@@ -211,6 +212,7 @@ export function validateCompletionReward(input) {
       'requirements',
       'payloads',
       'teaserImage',
+      'audioGroups',
     ],
     'completion reward',
   );
@@ -271,6 +273,7 @@ export function validateCompletionReward(input) {
   array(value.payloads, 16, 'reward payloads', 1);
   value.payloads.forEach(payload);
   required(unique(value.payloads.map((item) => item.id)), 'Duplicate reward payload.');
+  if (value.audioGroups !== undefined) validateRewardAudioGroups(value.audioGroups, value.payloads);
   if (value.teaserImage !== undefined) {
     validateRewardTeaserImage(value.teaserImage);
     const teaser = value.teaserImage.asset;
