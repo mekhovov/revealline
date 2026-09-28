@@ -84,9 +84,10 @@ const sessionCookie = (headers) => {
   throw new Error('Account sign-in did not return a bounded session cookie.');
 };
 
-const cancelBody = async (body) => {
+const cancelBody = (body) => {
   try {
-    await body?.cancel();
+    const cancellation = body?.cancel();
+    cancellation?.catch(() => {});
   } catch {
     // Cancellation is best effort; the caller still receives the bounded error.
   }
@@ -103,7 +104,7 @@ const consumeBoundedBody = async (response, deadline) => {
       if (done) return;
       bytes += value.byteLength;
       if (bytes > MAX_RESPONSE_BYTES) {
-        await cancelBody(reader);
+        cancelBody(reader);
         throw new Error('Account sign-in returned too much data.');
       }
     }
@@ -161,7 +162,7 @@ export async function resolveDeployedAcceptanceAccount(
       timeout,
     ]);
     if (!response.ok) {
-      await cancelBody(response.body);
+      cancelBody(response.body);
       throw new Error(`Account sign-in failed (${response.status}).`);
     }
     await consumeBoundedBody(response, deadline);
@@ -174,6 +175,6 @@ export async function resolveDeployedAcceptanceAccount(
     throw new Error('Account sign-in failed.');
   } finally {
     clearTimeout(timer);
-    if (response && activeReader) await cancelBody(activeReader);
+    if (response && activeReader) cancelBody(activeReader);
   }
 }

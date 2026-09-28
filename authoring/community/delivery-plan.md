@@ -58,7 +58,7 @@ deployed runners sign in already verified Better Auth accounts without persistin
 session cookies. PR #723 now consumes sign-in responses incrementally under an exact 64 KiB byte
 limit, keeps the request deadline active through body completion, cancels oversized or stalled
 streams, and rejects simultaneous Cookie and Authorization credentials. Its full community service
-suite passes 113/113 checks, and the hosted production-shaped acceptance passed for the corrected
+suite passes 114/114 checks, and the hosted production-shaped acceptance passed for the corrected
 runtime before this documentation-only status update.
 
 | Workstream           | Completed/current result                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Remaining work                                                                                                                                                  | Focused ETA                                                   |
