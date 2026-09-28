@@ -33,7 +33,7 @@ function snapshot(revision) {
   return { resolved: structuredClone(resolvePresentation(document)) };
 }
 function fixture(
-  revision = 97,
+  revision = 99,
   pack = COOP_STARTER_PACK,
   levelId = 'first-connection',
   policy = COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
@@ -71,15 +71,15 @@ function fixture(
   return { current, calls, request, presentation };
 }
 
-test('integrated97 retains complete58–96 historical picture and actor records and original bytes', async () => {
+test('integrated99 retains complete58–97 historical picture and actor records and original bytes', async () => {
   const retained = [
     58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
-    82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96,
+    82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97,
   ];
-  assert.equal(bundle.document.selection.theme.revision, 97);
+  assert.equal(bundle.document.selection.theme.revision, 99);
   assert.deepEqual(
     COOP_SUPPORTED_PICTURE_BINDINGS.map((row) => row.themeRevision),
-    [97, 97, ...retained.flatMap((revision) => [revision, revision])],
+    [99, 99, ...retained.flatMap((revision) => [revision, revision])],
   );
   assert.deepEqual(
     COOP_RETAINED_PICTURE_BINDINGS,
@@ -94,7 +94,7 @@ test('integrated97 retains complete58–96 historical picture and actor records 
       row.collection,
     ]),
     [
-      ['fpv', 97, null],
+      ['fpv', 99, null],
       ['fpv', 58, null],
       ['fpv', 59, null],
       ['fpv', 60, null],
@@ -134,6 +134,7 @@ test('integrated97 retains complete58–96 historical picture and actor records 
       ['fpv', 94, null],
       ['fpv', 95, null],
       ['fpv', 96, null],
+      ['fpv', 97, null],
     ],
   );
   const slots = [
@@ -147,7 +148,7 @@ test('integrated97 retains complete58–96 historical picture and actor records 
   ];
   assert.equal(slots.length, 8);
   // Keep the original complete-record comparison on the retained 58–91 lineage.
-  // Current97 leases are exercised separately below; this does not relabel actor successors.
+  // Current99 leases are exercised separately below; this does not relabel actor successors.
   const old = snapshot(58),
     current = snapshot(91);
   for (const slot of slots) {
@@ -172,14 +173,16 @@ test('integrated97 retains complete58–96 historical picture and actor records 
   // Revision92 introduced separately reviewed actor successors; preserve those
   // complete records independently instead of relabelling the58–91 lineage.
   // Main94 and95 and preview96 retain their original UI/audio/effects histories.
-  // Current97 adds ownership audio-source provenance, never relabelling actor records.
+  // Revisions97–99 add scoped audio provenance, never relabelling actor records.
   for (const slot of slots) {
     const priorAsset = snapshot(92).resolved.assets[slot];
     assert.deepEqual(snapshot(93).resolved.assets[slot], priorAsset, 'retained92 ' + slot);
     assert.deepEqual(snapshot(94).resolved.assets[slot], priorAsset, 'retained94 ' + slot);
     assert.deepEqual(snapshot(95).resolved.assets[slot], priorAsset, 'retained95 ' + slot);
     assert.deepEqual(snapshot(96).resolved.assets[slot], priorAsset, 'retained96 ' + slot);
-    assert.deepEqual(snapshot(97).resolved.assets[slot], priorAsset, 'current97 ' + slot);
+    assert.deepEqual(snapshot(97).resolved.assets[slot], priorAsset, 'retained97 ' + slot);
+    assert.deepEqual(snapshot(98).resolved.assets[slot], priorAsset, 'unbound98 ' + slot);
+    assert.deepEqual(snapshot(99).resolved.assets[slot], priorAsset, 'current99 ' + slot);
     const body = Buffer.from(await bundle.assets.get(priorAsset.file.sha256).arrayBuffer());
     assert.equal(body.length, priorAsset.file.bytes);
     assert.equal(sha(body), priorAsset.file.sha256);
@@ -199,7 +202,7 @@ test('integrated97 retains complete58–96 historical picture and actor records 
 
 for (const revision of [
   58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
-  82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96,
+  82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97,
 ]) {
   test(`exact${revision} built-in and historical-import attempts retain their own verified lease`, async () => {
     for (const [pack, levelId, picture] of [
@@ -261,16 +264,16 @@ for (const revision of [
   });
 }
 
-test('exact97 current built-in and historical-import attempts use the reviewed current lease', async () => {
+test('exact99 current built-in and historical-import attempts use the reviewed current lease', async () => {
   for (const [pack, levelId, picture] of [
     [COOP_STARTER_PACK, 'first-connection', COOP_PICTURE_BINDINGS[0].picture],
     [COOP_STARTER_PACK, 'relay-yard', COOP_PICTURE_BINDINGS[1].picture],
     [imported, imported.levels[0].id, COOP_PICTURE_BINDINGS[0].picture],
   ]) {
-    const f = fixture(97, pack, levelId);
+    const f = fixture(99, pack, levelId);
     try {
       const binding = await f.presentation.select(f.request);
-      assert.equal(binding.choice.themeRevision, 97);
+      assert.equal(binding.choice.themeRevision, 99);
       assert.equal(binding.choice.themeId, 'fpv');
       assert.equal(binding.choice.collection, null);
       assert.deepEqual(binding.choice.picture, picture);
@@ -285,8 +288,8 @@ test('exact97 current built-in and historical-import attempts use the reviewed c
   }
 });
 
-test('actual Team host prepares and explicitly starts current97 Relay Yard', async (t) => {
-  const exact = snapshot(97);
+test('actual Team host prepares and explicitly starts current99 Relay Yard', async (t) => {
+  const exact = snapshot(99);
   const f = await page(t, {
     capturePaint: true,
     beforeImport({ $ }) {
@@ -299,7 +302,7 @@ test('actual Team host prepares and explicitly starts current97 Relay Yard', asy
       },
     },
   });
-  assert.equal(f.artwork.snapshot.resolved.theme.revision, 97);
+  assert.equal(f.artwork.snapshot.resolved.theme.revision, 99);
   assert.equal(f.$('coop-picture-status').dataset.state, 'ready');
   assert.equal(f.$('coop-menu').hidden, false);
   f.$('coop-start').click();
@@ -314,7 +317,7 @@ test('actual Team host prepares and explicitly starts current97 Relay Yard', asy
   }
   assert.equal(f.$('coop-menu').hidden, true);
   assert.ok(
-    f.artwork.calls.reads.every((read) => read.options.snapshot.resolved.theme.revision === 97),
+    f.artwork.calls.reads.every((read) => read.options.snapshot.resolved.theme.revision === 99),
   );
 });
 
@@ -380,16 +383,16 @@ test('legacy singular policy retains exact59 support and malformed finite lists 
   }
 });
 
-test('historical picture authority remains bounded to forty exact distinct revisions', () => {
+test('historical picture authority remains bounded to forty-one exact distinct revisions', () => {
   const policies = [
     58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
-    82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,
+    82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,
   ].map((themeRevision) => ({
     ...COOP_RETAINED_HISTORICAL_IMPORT_PICTURE_POLICY,
     themeRevision,
   }));
-  assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.length, 40);
-  assert.equal(COOP_SUPPORTED_PICTURE_BINDINGS.length, 80);
-  assert.equal(policies.length, 41);
-  assert.throws(() => fixture(97, imported, imported.levels[0].id, policies), /item budget/);
+  assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.length, 41);
+  assert.equal(COOP_SUPPORTED_PICTURE_BINDINGS.length, 82);
+  assert.equal(policies.length, 42);
+  assert.throws(() => fixture(99, imported, imported.levels[0].id, policies), /item budget/);
 });

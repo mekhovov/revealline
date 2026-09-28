@@ -2457,5 +2457,10 @@
   "neutralPilot.report.review.2": "Record route choices, failures and completion times across Standard, Gentle and Expert; confirm the intended decision is observable.",
   "neutralPilot.report.review.3": "Verify cooperative Twin landings remains a distinct shared-return decision. It is a control, not a redesign request.",
   "neutralPilot.report.review.4": "Review the five artwork composition briefs before image generation. No commissioned image or automatic hash difference counts as design approval.",
-  "neutralPilot.report.review.5": "Keep these tooling identities outside current catalogues until full route evidence and human review are recorded."
+  "neutralPilot.report.review.5": "Keep these tooling identities outside current catalogues until full route evidence and human review are recorded.",
+  "studio.image.bundledReference": "Load Synevyr raft reference · CC0",
+  "studio.image.bundledNote": "Try a real Ukrainian landscape detail: rafts on Synevyr Lake. Loading it changes only the reference overlay, never your map, reveal picture or published content.",
+  "studio.image.downloadReference": "Download reference",
+  "studio.spatialReview.solo": "Solo · {{id}} (new tab)",
+  "studio.spatialReview.versus": "Versus · {{id}} (new tab)"
 }

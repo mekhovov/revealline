@@ -12,6 +12,8 @@ import { missionLibraryHref } from '../mission-library/handoff.mjs';
 import { createModeReturn } from '../mode-return.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 
+const enemyCatalogURL = new URL('../content/enemy-presentations.json', import.meta.url);
+const enemyCatalogBytes = await readFile(enemyCatalogURL);
 const root = 'http://localhost/releases/v-test/game/';
 const source = createTeamCulturalSpecialistV2OriginalCandidates();
 const library = createMissionLibrary(createRemoteTeamLibrarySources({ launch: () => true }));
@@ -84,6 +86,7 @@ async function fixture(t, href, returnStorage = memory()) {
       install('localStorage', { value: settings });
       install('fetch', {
         value: async (url) => {
+          if (new URL(url).href === enemyCatalogURL.href) return new Response(enemyCatalogBytes);
           const path = new URL(url).pathname.split('/game/')[1];
           if (metadata.has(path)) return new Response(metadata.get(path));
           const asset = source.assets.find((row) => new URL(url).pathname.endsWith('/' + row.path));
@@ -223,13 +226,13 @@ for (const route of [
     }
     assert.equal(pending.length, 1, 'Mode selection owns one remote metadata operation.');
     await pending[0];
-    assert.equal(f.$('journey-cards').children.length, archivedSource ? 75 : 252);
+    assert.equal(f.$('journey-cards').children.length, archivedSource ? 141 : 186);
     // Browsing an archived Team source retains its archive filter until the
     // player explicitly chooses current missions in the receiving mode.
     lifecycle.focus();
     lifecycle.value = 'current';
     lifecycle.emit('change');
-    assert.equal(f.$('journey-cards').children.length, 252);
+    assert.equal(f.$('journey-cards').children.length, 186);
     const selected = f.$('journey-cards').children[8];
     assert.equal(JSON.parse(selected.dataset.missionId)[1], DEFAULT_JOURNEY_ROUTES.solo);
     selected.focus();

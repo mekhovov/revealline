@@ -425,11 +425,12 @@ async function authenticatedCurrentReview(relative, expectedSHA256, groups) {
     ? Object.values(review.priorReviews)
     : [review.priorReview];
   for (const prior of predecessors)
-    assert.equal(
-      digest(await read(prior.path)),
-      prior.sha256,
-      'immutable predecessor ' + prior.path,
-    );
+    if (prior.path)
+      assert.equal(
+        digest(await read(prior.path)),
+        prior.sha256,
+        'immutable predecessor ' + prior.path,
+      );
   const sources = {};
   for (const group of groups) {
     const fingerprint = review.fingerprints?.[group] ?? review.fingerprint;
@@ -537,9 +538,8 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
   const continuationHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
-  const currentReviewPath =
-    'docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json';
-  const currentReviewSHA256 = '0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608';
+  const currentReviewPath = 'docs/verification/audio-style-menu-correction-2026-09-28/review.json';
+  const currentReviewSHA256 = '62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'audio',
   ]);
@@ -547,9 +547,21 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
     'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json';
   const mainUIReviewSHA256 = '15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867';
   const mainUI = await authenticatedCurrentReview(mainUIReviewPath, mainUIReviewSHA256, ['ui']);
+  assert.equal(
+    current.review.priorReviews.independentCorrection.sha256,
+    '667561c739a060bffbe0abbba02eaa942f7db9323247308d30f33d4a8c93cfb0',
+  );
+  const styleReview = JSON.parse(
+    await fs.readFile(
+      new URL('../../' + current.review.priorReviews.audioStyleMenu.path, import.meta.url),
+    ),
+  );
+  const priorAudioReview = JSON.parse(
+    await fs.readFile(new URL('../../' + styleReview.priorReviews.audio.path, import.meta.url)),
+  );
   const canonicalReview = JSON.parse(
     await fs.readFile(
-      new URL('../../' + current.review.priorReviews.canonical.path, import.meta.url),
+      new URL('../../' + priorAudioReview.priorReviews.canonical.path, import.meta.url),
     ),
   );
   assert.equal(
@@ -628,6 +640,8 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
       assert.match(asset.provenance.source, /game\/soundtrack-portable\.mjs/);
       assert.match(asset.provenance.source, /game\/content\/soundtrack-catalogue\.mjs/);
       assert.match(asset.provenance.source, /game\/online-soundtrack-catalogue\.mjs/);
+      assert.match(asset.provenance.source, /game\/ui\/quick-music-controls\.mjs/);
+      assert.match(asset.provenance.source, /game\/soundtrack-style-taxonomy\.mjs/);
     }
   }
 });
@@ -1087,7 +1101,13 @@ test('player readiness continuation preserves exact localization14 theme96 and a
       'utf8',
     ),
   );
-  const current = await importThemeBundle(
+  const currentOracle = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-main7138-fpv97.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const latest = await importThemeBundle(
     new Blob([
       await fs.readFile(
         new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
@@ -1095,6 +1115,7 @@ test('player readiness continuation preserves exact localization14 theme96 and a
     ]),
     { decodeImage: null },
   );
+  const current = await reconstructPinnedProduction(currentOracle, latest);
   const prior = await reconstructPinnedProduction(oracle, current);
   assert.equal(prior.document.revision, 96);
   assert.equal(prior.document.assets.length, 2574);
@@ -1133,4 +1154,129 @@ test('player readiness continuation preserves exact localization14 theme96 and a
     assert.deepEqual(a.recipe, old.recipe);
     assert.deepEqual(a.file, old.file);
   }
+});
+
+test('Audio style-menu continuation preserves exact player-readiness theme97 and appends only eight audio50 successors', async () => {
+  const oracle = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-main7138-fpv97.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const currentOracle = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-pr770-0d165-audio50.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const latest = await importThemeBundle(
+    new Blob([
+      await fs.readFile(
+        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+      ),
+    ]),
+    { decodeImage: null },
+  );
+  const current = await reconstructPinnedProduction(currentOracle, latest);
+  const prior = await reconstructPinnedProduction(oracle, current);
+
+  assert.equal(current.document.revision, 98);
+  assert.equal(current.document.assets.length, 2590);
+  assert.equal(prior.document.revision, 97);
+  assert.equal(prior.document.assets.length, 2582);
+  validateThemeBundle(current.document, { previous: prior.document, expectedRevision: 97 });
+  assert.equal(current.assets.size, 132);
+
+  const before = resolvePresentation(prior.document);
+  const after = resolvePresentation(current.document);
+  for (const [slot, asset] of Object.entries(before.assets))
+    if (!slot.startsWith('audio.')) assert.deepEqual(after.assets[slot], asset, slot);
+
+  const added = current.document.assets.slice(2582);
+  assert.equal(added.length, 8);
+  for (const asset of added) {
+    assert(asset.id.startsWith('audio.'));
+    assert.equal(asset.revision, 50);
+    assert.equal(asset.quality.stage, 'reviewed');
+    const old = prior.document.assets
+      .filter((candidate) => candidate.id === asset.id)
+      .sort((a, b) => b.revision - a.revision)[0];
+    assert.equal(old.revision, 49);
+    assert.deepEqual(asset.provenance.parent, { id: old.id, revision: 49 });
+    assert.deepEqual(asset.recipe, old.recipe);
+    assert.deepEqual(asset.file, old.file);
+    assert.ok(
+      asset.quality.evidence.some((entry) =>
+        entry.includes(
+          'docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49',
+        ),
+      ),
+    );
+  }
+});
+
+test('PR #770 correction preserves exact theme98 and appends only eight audio51 successors', async () => {
+  const oracle = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-pr770-0d165-audio50.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const current = await importThemeBundle(
+    new Blob([
+      await fs.readFile(
+        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+      ),
+    ]),
+    { decodeImage: null },
+  );
+  const prior = await reconstructPinnedProduction(oracle, current);
+
+  assert.equal(current.document.revision, 99);
+  assert.equal(current.document.assets.length, 2598);
+  assert.equal(current.document.themes.length, 100);
+  assert.equal(prior.document.revision, 98);
+  assert.equal(prior.document.assets.length, 2590);
+  assert.equal(prior.document.themes.length, 99);
+  validateThemeBundle(current.document, { previous: prior.document, expectedRevision: 98 });
+  assert.equal(current.assets.size, 132);
+
+  const before = resolvePresentation(prior.document);
+  const after = resolvePresentation(current.document);
+  for (const [slot, asset] of Object.entries(before.assets))
+    if (!slot.startsWith('audio.')) assert.deepEqual(after.assets[slot], asset, slot);
+
+  const added = current.document.assets.slice(2590);
+  assert.equal(added.length, 8);
+  for (const asset of added) {
+    assert(asset.id.startsWith('audio.'));
+    assert.equal(asset.revision, 51);
+    assert.equal(asset.quality.stage, 'reviewed');
+    const old = prior.document.assets
+      .filter((candidate) => candidate.id === asset.id)
+      .sort((a, b) => b.revision - a.revision)[0];
+    assert.equal(old.revision, 50);
+    assert.deepEqual(asset.provenance.parent, { id: old.id, revision: 50 });
+    assert.deepEqual(asset.recipe, old.recipe);
+    assert.deepEqual(asset.file, old.file);
+    assert.ok(
+      asset.quality.evidence.some((entry) =>
+        entry.includes(
+          'docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09',
+        ),
+      ),
+    );
+  }
+
+  const theme = current.document.themes.at(-1);
+  assert.equal(theme.id, 'fpv');
+  assert.equal(theme.revision, 99);
+  assert.deepEqual(theme.parent, { id: 'fpv', revision: 98 });
+  assert.deepEqual(theme.tokens, {});
+  assert.deepEqual(
+    Object.values(theme.bindings)
+      .map((binding) => `${binding.id}@${binding.revision}`)
+      .sort(),
+    added.map((asset) => `${asset.id}@${asset.revision}`).sort(),
+  );
 });

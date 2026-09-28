@@ -9,6 +9,10 @@ import {
   classicLibrarySources,
   prepareMissionLibraryIndex,
 } from '../mission-library/classic-source.mjs';
+import {
+  CLASSIC_RULES_ORIGINAL,
+  supportsClassicCurrentRules,
+} from '../mission-library/classic-current-rules.mjs';
 
 const index = JSON.parse(
   await readFile(new URL('../content/mission-library-index.json', import.meta.url)),
@@ -19,7 +23,7 @@ const adapters = {
   launch: () => true,
 };
 
-test('Archive retains superseded First Light and pilot owners while named chapters stay current', () => {
+test('Archive retains superseded content and original rules once a current-rules edition exists', () => {
   const identity = dataIdentity(index);
   const sources = classicLibrarySources(index, adapters);
   const archivedPacks = new Set([
@@ -31,16 +35,30 @@ test('Archive retains superseded First Light and pilot owners while named chapte
   ]);
   for (const source of sources) {
     const original = source.entries[0];
+    const supersededRules =
+      original.rulesEdition === CLASSIC_RULES_ORIGINAL && supportsClassicCurrentRules(original);
     assert.equal(
       source.lifecycle,
-      original.source === 'archived' || archivedPacks.has(original.packId) ? 'archive' : 'current',
+      original.source === 'archived' || archivedPacks.has(original.packId) || supersededRules
+        ? 'archive'
+        : 'current',
       original.packId,
     );
   }
   const library = createMissionLibrary(sources);
-  assert.equal(library.search('', { lifecycle: 'current' }).length, 161);
-  assert.equal(library.search('', { lifecycle: 'archive' }).length, 27);
+  assert.equal(library.search('', { lifecycle: 'current' }).length, 95);
+  assert.equal(library.search('', { lifecycle: 'archive' }).length, 93);
   assert.equal(library.search('', { lifecycle: '' }).length, 188);
+  assert.equal(
+    new Set(
+      library
+        .search('', { lifecycle: 'current' })
+        .map(
+          (row) => `${row.ownerId.replace(/,"classic-current-rules"\]$/, ']')}\0${row.runtimeId}`,
+        ),
+    ).size,
+    95,
+  );
   assert.equal(dataIdentity(index), identity);
 });
 

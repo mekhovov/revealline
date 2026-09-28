@@ -182,6 +182,7 @@ export function createSoundtrackPlayer({
     volume = soundscape.getSettings().music,
     fade = 1,
     generation = 0,
+    intentGeneration = 0,
     operation = null,
     pendingSeek = null;
   let failed = new Set(),
@@ -1117,6 +1118,7 @@ export function createSoundtrackPlayer({
         selectionContext(),
       );
     }
+    intentGeneration++;
     remoteSelection = null;
     remoteTracks = [];
     override = id;
@@ -1199,6 +1201,7 @@ export function createSoundtrackPlayer({
       startTrackId === null || eligibleTracks.some((track) => track.id === startTrackId),
       t('interface:theChosenOnlineSoundtrackIsUnavailableInThisPlaybackMode'),
     );
+    intentGeneration++;
     const localSelection = mixWithLibrary ? resolveBase() : null;
     remoteTracks = eligibleTracks;
     const localTrackIds = localSelection
@@ -1236,6 +1239,7 @@ export function createSoundtrackPlayer({
   }
   async function play() {
     if (disposed || suspended) return false;
+    intentGeneration++;
     intentionallyPaused = false;
     desired = true;
     notice = null;
@@ -1343,6 +1347,7 @@ export function createSoundtrackPlayer({
       status !== 'playing' && status !== 'loading',
       t('interface:restoreListeningIntentOnlyWhileMusicIsInactive'),
     );
+    intentGeneration++;
     desired = value;
     intentionallyPaused = !value;
     emit();
@@ -1350,6 +1355,7 @@ export function createSoundtrackPlayer({
   }
   function pause() {
     if (disposed) return;
+    intentGeneration++;
     desired = false;
     intentionallyPaused = true;
     cancel();
@@ -1385,6 +1391,7 @@ export function createSoundtrackPlayer({
   }
   async function previous() {
     if (disposed || suspended) return false;
+    intentGeneration++;
     failed = new Set();
     fallbackUsed = false;
     if (position().positionSeconds > 3) {
@@ -1408,6 +1415,7 @@ export function createSoundtrackPlayer({
   }
   function suspend() {
     if (disposed) return;
+    intentGeneration++;
     cancel();
     suspended = true;
     clearTimeout(activeDeck.remoteWatchdog);
@@ -1455,6 +1463,7 @@ export function createSoundtrackPlayer({
   });
   return Object.freeze({
     setLibrary,
+    intentRevision: () => intentGeneration,
     setLocalRecordingIds,
     setContext,
     setAuthoredTrack,
@@ -1467,7 +1476,11 @@ export function createSoundtrackPlayer({
     play,
     pause,
     setIntent,
-    next: () => advance(false),
+    next: () => {
+      if (disposed || suspended) return false;
+      intentGeneration++;
+      return advance(false);
+    },
     previous,
     seek,
     setVolume,
