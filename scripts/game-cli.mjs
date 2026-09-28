@@ -775,7 +775,11 @@ export async function addOfflineEntries(
     const { buildOfflineInventory } = await import('./offline-content.mjs');
     entries.push({
       name: 'offline-inventory.json',
-      bytes: Buffer.from(json(buildOfflineInventory(entries, contentCatalogue, files))),
+      // This derived inventory carries every original descriptor; indentation is
+      // unnecessary distribution weight and is not part of its data format.
+      bytes: Buffer.from(
+        `${JSON.stringify(buildOfflineInventory(entries, contentCatalogue, files))}\n`,
+      ),
     });
   }
 }
