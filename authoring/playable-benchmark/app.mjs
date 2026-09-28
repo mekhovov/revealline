@@ -41,7 +41,7 @@ function status(kind, message) {
 }
 function controls() {
   const current = selection.current;
-  const pending = selection.pending;
+  const pending = selection.pending || current?.comparison.pending;
   $('start').disabled =
     !current ||
     pending ||
@@ -54,6 +54,29 @@ function controls() {
   $('cancel').hidden = !pending;
   $('mission').disabled = !catalog;
   $('load').disabled = !catalog || pending;
+  $('comparison-body').disabled = !current || selection.pending;
+  for (const id of ['comparison-reduced', 'capture-pulse', 'event-flashes'])
+    $(id).disabled = !current || pending;
+}
+function comparisonDetails() {
+  const current = selection.current;
+  if (!current || disposed) return;
+  const comparison = current.comparison;
+  $('comparison-body').value = comparison.body;
+  $('comparison-reduced').checked = comparison.reduced;
+  $('capture-pulse').checked = comparison.feedback.captureAccent;
+  $('event-flashes').checked = comparison.feedback.eventAccents;
+  const body = {
+    approved: 'Approved FPV',
+    'v3-auto': 'V3 Scout · automatic native size',
+    'v3-compact': 'V3 Scout · native 32 px',
+    'v3-detailed': 'V3 Scout · native 64 px',
+  }[comparison.body];
+  $('comparison-label').textContent =
+    `${body} · ${comparison.reduced ? 'reduced' : 'standard'} effects`;
+  $('comparison-identity').textContent = comparison.provenance
+    ? JSON.stringify(comparison.provenance, null, 2)
+    : 'Approved FPV actor lease. No source-candidate images are loaded in this view.';
 }
 function refresh() {
   if (disposed) return;
@@ -96,13 +119,17 @@ function paint(dt = 0) {
   current.painters.forEach((painter, index) =>
     painter.draw(contexts[index], current.session.run, dt, {
       paused: !current.session.playing,
-      reduced: index === 1 || $('reference-reduced').checked,
+      reduced: index === 1 ? current.comparison.reduced : $('reference-reduced').checked,
       displayCSSWidth: canvases[index].clientWidth,
       fullReveal: current.session.run.status === 'won',
       celebrationPaused: document.hidden,
       defeatEffectsRunning: current.session.run.status === 'lost' && !document.hidden,
       backdrop: current.picture,
-      actorAppearance: { style: 'fpv', snapshot: current.actors.snapshot },
+      actorAppearance: {
+        style: 'fpv',
+        snapshot: index === 1 ? current.comparison.snapshot : current.actors.snapshot,
+      },
+      ...(index === 1 ? { feedbackComparison: current.comparison.feedback } : {}),
     }),
   );
 }
@@ -123,6 +150,7 @@ const selection = createBenchmarkSelection({
       catalog,
       presets,
       signal,
+      onComparisonStatus: status,
       onStep(events, run) {
         if (events.some((event) => ['player.failed', 'player.respawned'].includes(event.type)))
           input.clear();
@@ -178,6 +206,7 @@ const selection = createBenchmarkSelection({
     lastSummary = '';
     lastEvents = '';
     $('outcome').textContent = '';
+    comparisonDetails();
     refresh();
     paint();
   },
@@ -188,6 +217,7 @@ const input = attachBenchmarkInput({
   active: () =>
     !disposed &&
     !selection.pending &&
+    !selection.current?.comparison.pending &&
     selection.current?.session.playing &&
     selection.current.session.run.status === 'running',
   onPause: () => hold('Paused. Resume requires a fresh steering press.'),
@@ -223,6 +253,7 @@ async function select(id) {
   const entry = catalog?.entries.find((item) => item.id === id);
   if (!entry || disposed) return;
   hold();
+  selection.current?.comparison.cancel();
   const accepted = await selection.select(entry);
   if (disposed) return;
   if (!accepted && !selection.pending) {
@@ -232,7 +263,13 @@ async function select(id) {
 }
 $('mission').onchange = () => void select($('mission').value);
 $('start').onclick = () => {
-  if (selection.pending || readyCue.active || !lifecycle.active) return;
+  if (
+    selection.pending ||
+    selection.current?.comparison.pending ||
+    readyCue.active ||
+    !lifecycle.active
+  )
+    return;
   input.clear();
   if (selection.current?.session.start()) {
     lastTime = null;
@@ -243,7 +280,7 @@ $('start').onclick = () => {
 };
 $('pause').onclick = () => hold('Paused. Resume requires a fresh steering press.');
 function retry() {
-  if (selection.pending || !selection.current) return;
+  if (selection.pending || selection.current?.comparison.pending || !selection.current) return;
   hold();
   const current = selection.current;
   current.session.retry();
@@ -257,15 +294,50 @@ function retry() {
 const retryGuard = attachDeliberateButton($('retry'), {
   window,
   enabled: () =>
-    !disposed && lifecycle.active && !selection.pending && !readyCue.active && !!selection.current,
+    !disposed &&
+    lifecycle.active &&
+    !selection.pending &&
+    !selection.current?.comparison.pending &&
+    !readyCue.active &&
+    !!selection.current,
   activate: retry,
 });
 $('cancel').onclick = () => {
   selection.cancel();
+  selection.current?.comparison.cancel();
   $('mission').value = selection.current?.entry.id ?? catalog.entries[0].id;
   status('ready', 'Loading cancelled. The previous run remains paused.');
   $('mission').focus({ preventScroll: true });
+  comparisonDetails();
 };
+async function selectComparison(body) {
+  const current = selection.current;
+  if (!current || selection.pending || disposed) return;
+  hold();
+  $('show-comparison').checked = true;
+  showComparison();
+  await current.comparison.select(body);
+  if (disposed || selection.current !== current) return;
+  comparisonDetails();
+  controls();
+  paint();
+}
+$('comparison-body').onchange = () => void selectComparison($('comparison-body').value);
+$('comparison-reduced').onchange = () => {
+  hold('Comparison effects changed. Resume when ready.');
+  selection.current?.comparison.setReduced($('comparison-reduced').checked);
+  comparisonDetails();
+  paint();
+};
+for (const id of ['capture-pulse', 'event-flashes'])
+  $(id).onchange = () => {
+    hold('Comparison accents changed. Resume when ready.');
+    selection.current?.comparison.setFeedback({
+      captureAccent: $('capture-pulse').checked,
+      eventAccents: $('event-flashes').checked,
+    });
+    paint();
+  };
 $('reference-reduced').onchange = () => {
   hold('Effects changed. Resume when ready.');
   $('reference-label').textContent = $('reference-reduced').checked
@@ -307,6 +379,7 @@ const lifecycle = createPreviewLifecycle({
   onFrame: loop,
   onSuspend() {
     selection.cancel();
+    selection.current?.comparison.cancel();
     startup?.abort();
     hold();
   },

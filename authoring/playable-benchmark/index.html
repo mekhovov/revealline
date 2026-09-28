@@ -44,12 +44,12 @@
                 ></canvas>
               </figure>
               <figure id="comparison-pane">
-                <figcaption>Comparison · reduced effects</figcaption>
+                <figcaption id="comparison-label">Approved FPV · reduced effects</figcaption>
                 <canvas
                   id="comparison"
                   width="1152"
                   height="576"
-                  aria-label="Reduced-effects view of the same live mission"
+                  aria-label="Comparison view of the same live mission"
                 ></canvas>
               </figure>
             </div>
@@ -84,14 +84,40 @@
           </select></label
         >
         <p>
-          One real run is drawn twice. The second view uses reduced effects. Arrow keys, WASD, the
-          direction pad or the selected swipe mode steer continuously. Shift boosts; Escape pauses.
-          The existing basic gamepad reader supports steering and flight actions; controller menu
-          navigation is outside this tool.
+          One real run is drawn twice. The second view defaults to reduced effects. Arrow keys,
+          WASD, the direction pad or the selected swipe mode steer continuously. Shift boosts;
+          Escape pauses. The existing basic gamepad reader supports steering and flight actions;
+          controller menu navigation is outside this tool.
         </p>
         <label
           ><input id="reference-reduced" type="checkbox" /> Reduced effects in reference too</label
         >
+        <fieldset>
+          <legend>Second view</legend>
+          <label
+            >Actors
+            <select id="comparison-body" disabled>
+              <option value="approved">Approved FPV</option>
+              <option value="v3-auto">V3 Scout candidate · automatic native size</option>
+              <option value="v3-compact">V3 Scout candidate · native 32 px</option>
+              <option value="v3-detailed">V3 Scout candidate · native 64 px</option>
+            </select>
+          </label>
+          <label
+            ><input id="comparison-reduced" type="checkbox" checked disabled /> Reduced
+            effects</label
+          >
+          <label><input id="capture-pulse" type="checkbox" checked disabled /> Capture pulse</label>
+          <label
+            ><input id="event-flashes" type="checkbox" checked disabled /> Extra event
+            flashes</label
+          >
+          <p class="note">
+            The reference always uses approved FPV actors. V3 changes only the Scout body and its
+            retained rotor anchors in this source-only view. Other actors, mission artwork, contact
+            cues and simulation stay shared. No candidate is registered or approved by this preview.
+          </p>
+        </fieldset>
         <p>
           Retry keeps the exact setup, shows a 600 ms ready cue without advancing simulation, then
           begins. Release held controls and choose a fresh direction. Terminal results wait for a
@@ -109,6 +135,10 @@
         </p>
       </details>
       <p id="input-status" role="status"></p>
+      <details data-game-reading>
+        <summary>Separate comparison provenance</summary>
+        <pre id="comparison-identity">No source-candidate images selected.</pre>
+      </details>
       <details data-game-reading>
         <summary>Recent simulation events</summary>
         <ol id="events"></ol>

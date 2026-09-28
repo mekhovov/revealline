@@ -20,6 +20,14 @@ import {
 import { attachBenchmarkInput } from '../../authoring/playable-benchmark/controls.mjs';
 import { installActorAppearanceTransport } from './helpers/actor-appearance-transport.mjs';
 import { ACTOR_APPEARANCE_RELEASES } from '../presentation/actor-appearance-lease.mjs';
+import { acquireScoutComparison } from '../../authoring/playable-benchmark/candidate-appearance.mjs';
+import { createSceneComparison } from '../../authoring/playable-benchmark/comparison.mjs';
+import { FIELD_KIT_CANDIDATE_RIGS } from '../presentation/rotor-candidate-art.mjs';
+import { BoardPainter } from '../ui/render.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
+import { collectBuildFiles } from '../../scripts/game-cli.mjs';
+import { selectOfflineCore } from '../../scripts/offline-core-closure.mjs';
+import { fileURLToPath } from 'node:url';
 
 const catalog = await loadBenchmarkCatalog();
 const manifest = (id) => catalog.entries.find((entry) => entry.id === id).manifest;
@@ -564,10 +572,13 @@ test('scene owns the exact approved actor lease, resets visual phase on Retry, a
       old ? Object.defineProperty(globalThis, key, old) : delete globalThis[key];
   });
   let picturesReleased = 0;
+  const candidateFiles = candidateTransport();
   const painters = [];
   const dependencies = {
     catalog,
     actorBaseURL,
+    acquireComparison: (snapshot, options) =>
+      acquireScoutComparison(snapshot, { ...options, ...candidateFiles.options }),
     signal: new AbortController().signal,
     loadTheme: async () => ({ player: 'test-body' }),
     acquirePicture: async () => ({
@@ -595,15 +606,34 @@ test('scene owns the exact approved actor lease, resets visual phase on Retry, a
     manifest('first-return').simulationIdentity,
   );
   assert.ok(scene.actors.snapshot.image('player.scout.compact'));
+  const approvedPin = scene.actors.pin();
+  const approvedScout = scene.actors.snapshot.image('player.scout.compact');
+  assert.equal(await scene.comparison.select('v3-detailed'), true);
+  assert.notEqual(scene.comparison.snapshot.image('player.scout.compact'), approvedScout);
+  assert.equal(scene.comparison.snapshot.image('player.scout.compact').image.width, 64);
+  assert.deepEqual(
+    scene.actors.pin(),
+    approvedPin,
+    'a source preview cannot change the approved pin',
+  );
+  assert.equal(scene.actors.snapshot.image('player.scout.compact'), approvedScout);
+  await verifyCandidateBoardPaint(scene);
   const initialAnimation = structuredClone(painters[0].animation);
   painters[0].animation.elapsed = 999;
   scene.session.retry();
   scene.resetPresentation();
   assert.deepEqual(painters[0].animation, initialAnimation);
   assert.equal(picturesReleased, 0, 'Retry retains the exact loaded artwork');
+  assert.equal(scene.comparison.body, 'v3-detailed', 'Retry retains the accepted comparison');
+  assert.ok(candidateFiles.decoded.slice(-2).every((image) => image.closes === 0));
+  assert.ok(candidateFiles.decoded.slice(0, -2).every((image) => image.closes === 1));
   scene.dispose();
   scene.dispose();
   assert.equal(picturesReleased, 1);
+  assert.ok(
+    candidateFiles.decoded.every((image) => image.closes === 1),
+    'scene disposal closes candidate images once',
+  );
   assert.ok(transport.decoded.length > 0);
   assert.ok(
     transport.decoded.every((image) => image.closes === 1),
@@ -633,3 +663,373 @@ test('scene owns the exact approved actor lease, resets visual phase on Retry, a
   assert.equal(actorReleases, 1);
   assert.equal(picturesReleased, 2, 'partial preparation releases the prior decoded original');
 });
+
+function candidateTransport(transform = (_path, bytes) => bytes) {
+  const decoded = [],
+    requests = [];
+  return {
+    decoded,
+    requests,
+    options: {
+      fetch: async (url) => {
+        const path = new URL(url).pathname;
+        requests.push(path);
+        return new Response(await transform(path, await readFile(url)));
+      },
+      decodeImage: async (dataUrl) => {
+        const bytes = Buffer.from(dataUrl.split(',')[1], 'base64');
+        const image = {
+          width: bytes.readUInt32BE(16),
+          height: bytes.readUInt32BE(20),
+          closes: 0,
+          close() {
+            this.closes++;
+          },
+        };
+        decoded.push(image);
+        return image;
+      },
+    },
+  };
+}
+
+test('native Scout loader verifies both treatments and exposes only source provenance with delegated actors', async () => {
+  const original = Object.freeze({ image: { id: 'approved-unmodified' } });
+  const approved = Object.freeze({ image: () => original });
+  const files = candidateTransport();
+  const candidate = await acquireScoutComparison(approved, files.options);
+  assert.deepEqual(Object.keys(candidate.snapshot), ['image']);
+  assert.equal(candidate.pin, undefined);
+  assert.equal(candidate.provenance.productionRegistered, false);
+  assert.equal(candidate.provenance.status, 'source-candidate-not-runtime-default');
+  assert.match(candidate.provenance.manifest.sha256, /^[a-f0-9]{64}$/);
+  assert.equal(candidate.snapshot.image('enemy.border-patrol'), original);
+  assert.equal(candidate.snapshot.image('player.bomber.compact'), original);
+  assert.equal(approved.image('player.scout.compact'), original);
+  for (const [treatment, side] of [
+    ['compact', 32],
+    ['detailed', 64],
+  ]) {
+    const frame = candidate.snapshot.image(`player.scout.${treatment}`);
+    assert.equal(frame.image.width, side);
+    assert.equal(frame.image.height, side);
+    assert.deepEqual(frame.asset.geometry.rotorAnchors, FIELD_KIT_CANDIDATE_RIGS.scout);
+    assert.deepEqual(
+      frame.geometry.rotors.map((rotor) => [rotor.direction, rotor.phaseDegrees]),
+      [
+        [1, 0],
+        [-1, 23],
+        [-1, 46],
+        [1, 69],
+      ],
+    );
+    assert.ok(Object.isFrozen(frame.geometry));
+    assert.equal(
+      candidate.provenance.assets.find((asset) => asset.slot.endsWith(treatment)).assetRevision,
+      frame.asset,
+    );
+  }
+  candidate.release();
+  candidate.release();
+  assert.ok(files.decoded.every((image) => image.closes === 1));
+  assert.throws(() => candidate.snapshot.image('player.scout.compact'), /released/);
+});
+
+test('candidate byte, source, native geometry and decode mismatches fail without admitting images', async () => {
+  const approved = { image: () => null };
+  for (const fault of ['png-digest', 'png-length', 'source', 'geometry', 'header', 'decode']) {
+    const files = candidateTransport((path, bytes) => {
+      if (fault === 'source' && path.endsWith('/rotor-body-detail-art.mjs'))
+        return Buffer.concat([bytes, Buffer.from(' ')]);
+      if (path.endsWith('/manifest.json') && ['geometry', 'header'].includes(fault)) {
+        const manifest = JSON.parse(bytes);
+        const asset = manifest.assets[0];
+        if (fault === 'geometry') {
+          asset.geometry.rotorAnchors[0].direction = -1;
+          asset.assetRevision.geometry.rotorAnchors[0].direction = -1;
+        } else {
+          const png = Buffer.from('not a PNG');
+          asset.bytes = asset.assetRevision.file.bytes = png.length;
+          asset.sha256 = asset.assetRevision.file.sha256 = createHash('sha256')
+            .update(png)
+            .digest('hex');
+        }
+        return Buffer.from(JSON.stringify(manifest));
+      }
+      if (path.endsWith('/scout.compact.png')) {
+        if (fault === 'png-digest') {
+          const changed = Buffer.from(bytes);
+          changed[50] ^= 1;
+          return changed;
+        }
+        if (fault === 'png-length') return bytes.subarray(0, -1);
+        if (fault === 'header') return Buffer.from('not a PNG');
+      }
+      return bytes;
+    });
+    const options = { ...files.options };
+    if (fault === 'decode')
+      options.decodeImage = async () => {
+        const image = {
+          width: 17,
+          height: 17,
+          closes: 0,
+          close() {
+            this.closes++;
+          },
+        };
+        files.decoded.push(image);
+        return image;
+      };
+    await assert.rejects(acquireScoutComparison(approved, options), /Candidate|candidate/);
+    assert.ok(
+      files.decoded.every((image) => image.closes === 1),
+      `${fault} releases staged images`,
+    );
+    if (fault !== 'decode') assert.equal(files.decoded.length, 0, `${fault} rejects before decode`);
+  }
+});
+
+test('candidate cancellation rejects promptly and closes a decoder that returns late', async () => {
+  const files = candidateTransport();
+  const controller = new AbortController();
+  let releaseDecode, started;
+  const decoding = new Promise((resolve) => {
+    started = resolve;
+  });
+  const work = acquireScoutComparison(
+    { image: () => null },
+    {
+      ...files.options,
+      signal: controller.signal,
+      decodeImage: () => {
+        started();
+        return new Promise((resolve) => {
+          releaseDecode = resolve;
+        });
+      },
+    },
+  );
+  await decoding;
+  controller.abort();
+  await assert.rejects(work, { name: 'AbortError' });
+  const late = {
+    width: 32,
+    height: 32,
+    closes: 0,
+    close() {
+      this.closes++;
+    },
+  };
+  releaseDecode(late);
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(late.closes, 1);
+});
+
+test('comparison replacement pauses without changing the real run and releases failed, stale or retired candidates', async () => {
+  const session = createBenchmarkSession(manifest('first-return'));
+  const original = { image: () => ({ image: 'approved' }) };
+  const pending = [],
+    statuses = [];
+  const comparison = createSceneComparison({
+    actors: { snapshot: original },
+    session,
+    acquire: (_snapshot, options) =>
+      new Promise((resolve, reject) => pending.push({ resolve, reject, options })),
+    onStatus: (kind) => statuses.push(kind),
+  });
+  const candidate = (id) => ({
+    snapshot: { image: () => id },
+    provenance: { id },
+    releases: 0,
+    release() {
+      this.releases++;
+    },
+  });
+  // Acquisition handles expose release closures, as the production loader does.
+  const owned = (id) => {
+    const item = candidate(id);
+    item.release = item.release.bind(item);
+    return item;
+  };
+  session.start();
+  session.advance({ direction: 'down' }, 0.1);
+  const before = authoritativeCheckpoint(session.run),
+    run = session.run;
+  const first = comparison.select('v3-auto');
+  assert.equal(session.playing, false);
+  assert.equal(comparison.snapshot, original);
+  session.advance({ direction: 'down' }, 0.1);
+  assert.deepEqual(authoritativeCheckpoint(session.run), before);
+  const accepted = owned('accepted');
+  pending[0].resolve(accepted);
+  assert.equal(await first, true);
+  const failed = comparison.select('v3-compact');
+  pending[1].reject(new Error('bad PNG'));
+  assert.equal(await failed, false);
+  assert.equal(comparison.snapshot, accepted.snapshot);
+  assert.equal(accepted.releases, 0);
+  const stale = comparison.select('v3-detailed');
+  const next = comparison.select('v3-compact');
+  const newer = owned('newer');
+  pending[3].resolve(newer);
+  assert.equal(await next, true);
+  const old = owned('stale');
+  pending[2].resolve(old);
+  assert.equal(await stale, false);
+  assert.equal(old.releases, 1);
+  assert.equal(accepted.releases, 1);
+  comparison.setReduced(false);
+  comparison.setFeedback({ captureAccent: false, eventAccents: true });
+  assert.equal(comparison.reduced, false);
+  assert.deepEqual(comparison.feedback, { captureAccent: false, eventAccents: true });
+  assert.equal(session.run, run);
+  assert.deepEqual(authoritativeCheckpoint(session.run), before);
+  assert.equal(await comparison.select('approved'), true);
+  assert.equal(newer.releases, 1);
+  assert.equal(comparison.snapshot, original);
+  const departed = comparison.select('v3-auto');
+  comparison.dispose();
+  const late = owned('late');
+  pending[4].resolve(late);
+  assert.equal(await departed, false);
+  assert.equal(late.releases, 1);
+  assert.ok(statuses.includes('error'));
+  assert.equal(session.playing, false);
+  session.dispose();
+});
+
+test('the shipped Scout option has exact dependencies and adds no mode core files', async () => {
+  const root = new URL('../../', import.meta.url);
+  const files = await collectBuildFiles(fileURLToPath(root));
+  const directory = 'authoring/library/fpv-body-detail-candidates/';
+  const candidatePaths = [
+    `${directory}manifest.json`,
+    `${directory}scout.compact.png`,
+    `${directory}scout.detailed.png`,
+  ];
+  assert.deepEqual(
+    files.filter((path) => path.startsWith(directory)),
+    candidatePaths,
+    'only the manifest and two selected Scout rasters are added',
+  );
+  const candidateManifest = JSON.parse(await readFile(new URL(candidatePaths[0], root)));
+  for (const [path, sha256] of Object.entries(candidateManifest.sources)) {
+    assert.ok(files.includes(path), `${path} is shipped without substituting a source`);
+    assert.equal(
+      createHash('sha256')
+        .update(await readFile(new URL(path, root)))
+        .digest('hex'),
+      sha256,
+    );
+  }
+  // This executes the real source collector and closure classifier, without
+  // building snapshots, archives or output directories. Binary payload contents
+  // cannot contain dependency references, so they need no read or duplicate buffer.
+  const entries = await Promise.all(
+    files.map(async (name) => ({
+      name,
+      bytes: /\.(m?js|json|html|css)$/.test(name)
+        ? await readFile(new URL(name, root))
+        : Buffer.alloc(0),
+    })),
+  );
+  const added = new Set(candidatePaths);
+  const previous = entries.filter((entry) => !added.has(entry.name));
+  for (const mode of ['solo', 'versus', 'team']) {
+    const before = selectOfflineCore(previous, new Set(), { mode });
+    const after = selectOfflineCore(entries, new Set(), { mode });
+    assert.deepEqual(
+      [...after.retained].sort(),
+      [...before.retained].sort(),
+      `${mode}: no core expansion`,
+    );
+    for (const path of [
+      ...candidatePaths,
+      'game/presentation/rotor-body-detail-art.mjs',
+      'game/presentation/rotor-candidate-art.mjs',
+    ]) {
+      assert.ok(after.optional.includes(path), `${mode}: ${path} remains optional tooling`);
+      assert.equal(after.retained.has(path), false);
+    }
+    assert.ok(
+      before.retained.has('game/presentation/pixel-art.mjs'),
+      'the common pixel source was already core',
+    );
+  }
+});
+
+async function verifyCandidateBoardPaint(scene) {
+  const presets = JSON.parse(
+    await readFile(new URL('../../authoring/motion-lab/presets.json', import.meta.url)),
+  );
+  const theme = JSON.parse(
+    await readFile(new URL('../content/themes.json', import.meta.url)),
+  ).themes.find((item) => item.id === 'fpv');
+  const run = scene.session.run;
+  const before = authoritativeCheckpoint(run);
+  const original = {
+    image: { id: 'accepted-mission-original', width: 1774, height: 887 },
+    fit: 'contain',
+  };
+  for (const body of ['approved', 'v3-auto', 'v3-compact', 'v3-detailed']) {
+    assert.equal(await scene.comparison.select(body), true);
+    for (const width of [390, 1152])
+      for (const reduced of [false, true])
+        for (const paused of [false, true]) {
+          const calls = [],
+            values = {},
+            stack = [];
+          const ctx = new Proxy(
+            { canvas: { width: 1152, height: 576, clientWidth: width } },
+            {
+              get(target, name) {
+                if (name in target) return target[name];
+                if (name in values) return values[name];
+                return (...args) => {
+                  calls.push({ name, args });
+                  if (name === 'save') stack.push({ ...values });
+                  if (name === 'restore') Object.assign(values, stack.pop());
+                };
+              },
+              set(_target, name, value) {
+                values[name] = value;
+                return true;
+              },
+            },
+          );
+          const painter = new BoardPainter(presets);
+          painter.theme = theme;
+          painter.bodyId = 'fpv-scout-v1';
+          painter.body = presets.characters[painter.bodyId];
+          painter.recipe = presets.animationRecipes[painter.body.animationRecipe];
+          painter.makeArt = () => null; // The accepted original is supplied as the backdrop.
+          painter.setLevel(run.level, { seed: 1 });
+          const slot = `player.scout.${width < 480 ? 'compact' : 'detailed'}`;
+          const frame = scene.comparison.snapshot.image(slot);
+          painter.draw(ctx, run, 1 / 60, {
+            paused,
+            reduced,
+            displayCSSWidth: width,
+            backdrop: original,
+            actorAppearance: { style: 'fpv', snapshot: scene.comparison.snapshot },
+          });
+          assert.equal(calls.find((call) => call.name === 'drawImage').args[0], original.image);
+          assert.ok(
+            calls.some((call) => call.name === 'drawImage' && call.args[0] === frame.image),
+          );
+          assert.ok(
+            calls.some(
+              (call) => call.name === 'arc' && call.args[2] === run.rules.playerRadius * 16,
+            ),
+            'contact radius survives each candidate/effect state',
+          );
+          assert.equal(
+            painter.presentation,
+            null,
+            'candidate cannot become the scene presentation',
+          );
+          assert.deepEqual(authoritativeCheckpoint(run), before);
+        }
+  }
+}

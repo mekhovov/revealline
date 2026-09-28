@@ -81,6 +81,9 @@
     "authoring/motion-lab/rotor-editor.mjs",
     "authoring/game-feel-lab",
     "authoring/playable-benchmark",
+    "authoring/library/fpv-body-detail-candidates/manifest.json",
+    "authoring/library/fpv-body-detail-candidates/scout.compact.png",
+    "authoring/library/fpv-body-detail-candidates/scout.detailed.png",
     "authoring/library/real-world-references"
   ],
   "optionalOffline": [

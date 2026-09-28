@@ -1,5 +1,9 @@
 # RevealLine — current completion and remaining delivery plan
 
+Historical checkpoint: the [28 September update](plan-status-2026-09-28.md)
+supersedes the queue, version reservations and ETA below. Keep this document's
+dated acceptance evidence; do not use its old planned versions as the live queue.
+
 Status checked **27 September 2026** against GitHub releases, merged source,
 open pull requests, the Pages marker, and retained public-acceptance evidence.
 This is the current status summary. Older dated plans remain useful design and

@@ -316,9 +316,14 @@ export class BoardPainter {
       actorSkins = {},
       actorAppearance = null,
       backdrop = null,
+      feedbackComparison = null,
     } = {},
   ) {
     if (!this.theme || !state) return;
+    // Developer comparison only: omit these flags for the accepted presentation.
+    // Hide only additive decoration; functional cues and all effect clocks stay.
+    const captureAccent = feedbackComparison?.captureAccent !== false,
+      eventAccents = feedbackComparison?.eventAccents !== false;
     const presentation =
       this.theme.id === 'fpv' || this.theme.family === 'fpv' ? this.presentation : null;
     if (
@@ -516,7 +521,7 @@ export class BoardPainter {
     drawClassicTerrain(ctx, classic, p, images);
     // Reveal decoration belongs below current hazards, actors and live cuts.
     // An old capture pulse must never wash over a newly opened live line.
-    if (!fullReveal)
+    if (!fullReveal && captureAccent)
       for (const effect of this.effects)
         if (effect.type === 'cells.claimed')
           drawCapturePulse(ctx, effect, columns, state.cells, p, reduced);
@@ -971,7 +976,7 @@ export class BoardPainter {
           height: H,
           fonts,
         });
-      if (!fullReveal && !reduced && f.type === 'craft.redeployed' && f.age < 0.6) {
+      if (!fullReveal && !reduced && eventAccents && f.type === 'craft.redeployed' && f.age < 0.6) {
         ctx.save();
         ctx.strokeStyle = p.accent;
         ctx.globalAlpha = (1 - f.age / 0.6) * 0.6;
@@ -987,7 +992,7 @@ export class BoardPainter {
         ctx.stroke();
         ctx.restore();
       }
-      if (!fullReveal && !reduced && f.type === 'player.failed' && f.age < 0.6) {
+      if (!fullReveal && !reduced && eventAccents && f.type === 'player.failed' && f.age < 0.6) {
         ctx.strokeStyle = f.type === 'player.failed' ? p.danger : p.accent;
         ctx.globalAlpha = (1 - f.age / 0.6) * 0.55;
         ctx.lineWidth = 4;
