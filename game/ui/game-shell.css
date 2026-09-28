@@ -297,6 +297,22 @@ dialog textarea {
   position: relative;
   z-index: 1;
 }
+.title-character {
+  display: block;
+  width: clamp(72px, 10vh, 112px);
+  height: auto;
+  aspect-ratio: 1;
+  margin: 0 0 4px;
+  pointer-events: none;
+}
+.title-character[hidden] {
+  display: none;
+}
+@media (max-height: 560px) {
+  .title-character {
+    display: none;
+  }
+}
 .home-content .eyebrow {
   color: #7fabbc;
   letter-spacing: 3px;

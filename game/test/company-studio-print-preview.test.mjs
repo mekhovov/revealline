@@ -10,6 +10,7 @@ import {
 } from '../../authoring/company-studio/reward-editor.mjs';
 import { validateStudioData } from '../../authoring/company-studio/model.mjs';
 import { createRewardPrintPreview } from '../studio/reward-print-preview.mjs';
+import { mountRewardKnowledge } from '../ui/reward-knowledge.mjs';
 import { t } from '../i18n/index.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 
@@ -176,6 +177,7 @@ test('Company Studio actual eligible-preview callback exposes printable text and
     selected: () => ({ edition }),
     validateStudioData,
     previewStudioReward,
+    mountRewardKnowledge,
     chooseOptions(element, options, value) {
       element.value = value;
     },
