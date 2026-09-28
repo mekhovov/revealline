@@ -18,6 +18,8 @@ import { collectEditionSelectedFiles, compileEdition } from '../../scripts/compi
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
 import { resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { dataIdentity } from '../data-json.mjs';
+import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
+import { completionLearningReference } from '../rewards/learning.mjs';
 import {
   companySourceDraft,
   companyDraftFiles,
@@ -140,6 +142,78 @@ async function fixture() {
     });
   return { ...f, catalog, files, descriptor, edition, asset, reward, requests, load };
 }
+
+test('learning reward requirements compile, bootstrap and round trip only with their exact selected lesson sidecar', async () => {
+  const f = await fixture();
+  const lesson = {
+    ...structuredClone(COMPANY_LESSONS[0]),
+    campaignId: f.descriptor.id,
+    missionId: f.source.missions[0].id,
+  };
+  f.descriptor.lessonPath = 'game/content/sample/lessons.json';
+  f.reward.requirements.learning = [completionLearningReference(lesson)];
+  f.files.set(f.descriptor.lessonPath, bytes([lesson]));
+  f.files.set(f.descriptor.rewardPath, bytes([f.reward]));
+  const bootstrap = await f.load();
+  assert.deepEqual(
+    bootstrap.rewards[f.descriptor.id][0].requirements.learning,
+    f.reward.requirements.learning,
+  );
+  const packet = companySourceDraft(f),
+    roundTrip = companyDraftFiles(packet);
+  assert.deepEqual(JSON.parse(roundTrip.files.get(f.descriptor.lessonPath)), [lesson]);
+  assert.deepEqual(JSON.parse(roundTrip.files.get(f.descriptor.rewardPath)), [f.reward]);
+  const compile = (files = f.files) =>
+    compileEdition({
+      catalog: f.catalog,
+      editionIds: [f.edition.id],
+      files,
+      enginePaths: ['game/company.html'],
+    });
+  const output = await compile();
+  assert(output.files.has(f.descriptor.lessonPath));
+  const historical = await captureEditionPresentation(bootstrap);
+  const changed = new Map(f.files);
+  changed.set(f.descriptor.lessonPath, bytes([{ ...lesson, fixtureRevision: 'new-fixture' }]));
+  await assert.rejects(compile(changed), /exact selected lesson/);
+  const missing = new Map(f.files);
+  missing.set(f.descriptor.lessonPath, bytes([]));
+  await assert.rejects(compile(missing), /exact selected lesson/);
+  const restored = await validateRetainedPresentation(historical, { edition: f.edition });
+  assert.deepEqual(
+    restored.bootstrap.rewards[f.descriptor.id][0].requirements.learning,
+    f.reward.requirements.learning,
+  );
+  for (const field of ['lessonId', 'lessonRevision', 'fixtureRevision', 'lessonIdentity']) {
+    const bad = structuredClone(f.reward);
+    bad.requirements.learning[0][field] =
+      field === 'lessonIdentity' ? '0123456789abcdef' : 'foreign';
+    assert.throws(
+      () =>
+        validateStudioData(
+          f.descriptor.rewardPath,
+          [bad],
+          f.catalog,
+          new Map([
+            [f.descriptor.sourcePath, f.source],
+            [f.descriptor.lessonPath, [lesson]],
+          ]),
+        ),
+      /exact selected lesson/,
+    );
+  }
+  const mastery = structuredClone(f.reward);
+  mastery.requirements.mastery = [{ id: 'seal', revision: '1', missionId: lesson.missionId }];
+  assert.throws(
+    () =>
+      validateEditionRewardBundle([mastery], f.source, {
+        descriptor: f.descriptor,
+        assets: f.catalog.assets,
+        lessons: [lesson],
+      }),
+    /mastery requires a registered/,
+  );
+});
 
 test('reward bindings use the canonical candidate host and its single pressure application', async () => {
   const f = await fixture();

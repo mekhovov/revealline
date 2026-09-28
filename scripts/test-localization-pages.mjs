@@ -50,6 +50,8 @@ test('generated public pages use complete messages and retain original attributi
   const entries = [
     ...assets,
     'game/vendor/LZ-STRING-LICENSE.txt',
+    'game/vendor/QRCODEGEN-LICENSE.txt',
+    'game/vendor/qrcodegen-1.8.0.json',
     'game/ui/fonts/field-kit/provenance.json',
   ].map((name) => entry(name));
   addPublicEntries(entries, {

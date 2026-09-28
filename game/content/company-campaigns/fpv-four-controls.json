@@ -2,16 +2,16 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original fictional component museum with a propeller-free X frame, separate motors and a camera display.",
-      "bytes": 1062590,
+      "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
+      "bytes": 246308,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "fpv-learning-home-picture",
+      "id": "fpv-four-controls-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-learning-home-v1.png",
+      "path": "editions/assets/discovery/fpv-four-controls-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8",
+      "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03",
       "width": 960
     }
   ],
@@ -220,7 +220,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-four-controls-key-picture",
         "themeId": "fpv-four-controls-theme"
       },
       "revision": "2",
@@ -295,7 +295,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-four-controls-key-picture",
         "themeId": "fpv-four-controls-theme"
       },
       "revision": "2",
@@ -370,7 +370,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-four-controls-key-picture",
         "themeId": "fpv-four-controls-theme"
       },
       "revision": "2",
@@ -453,7 +453,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-four-controls-key-picture",
         "themeId": "fpv-four-controls-theme"
       },
       "revision": "2",
@@ -536,7 +536,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-four-controls-key-picture",
         "themeId": "fpv-four-controls-theme"
       },
       "revision": "2",
@@ -619,7 +619,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-learning-home-picture",
+        "backgroundAssetId": "fpv-four-controls-key-picture",
         "themeId": "fpv-four-controls-theme"
       },
       "revision": "2",
