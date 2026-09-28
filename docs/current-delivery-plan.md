@@ -1,5 +1,12 @@
 # RevealLine: detailed delivery history
 
+> **Current status and execution order:** use the
+> [28 September completion and remaining delivery plan](plan-status-2026-09-28.md).
+> It records deployed v0.141.7, the remaining acceptance gates, the active touch
+> follow-up and independently owned PR #716, and the sole coordinator's current
+> main-only batching policy. Every dated checkpoint and “next” label below is
+> preserved historical evidence, not today's release queue.
+
 ## Current execution order — 24 September 2026
 
 The approved [player-first UX execution board](player-first-ux-execution.md) now

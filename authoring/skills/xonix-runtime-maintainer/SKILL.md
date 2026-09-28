@@ -88,6 +88,15 @@ Do not hide this ownership error with a null controller-frame fallback or reuse
 of a stale sample. Keep the original failed CI and red/green evidence.
 Solo and couch seats must use `attachTouchSteering`; preserve independent fingers,
 capture-stop fresh input, held rescue, neutral controller gates and explicit Resume.
+Pointer capture is not guaranteed: pass the host window into shared steering and
+observe matching pointerup/pointercancel in its capture phase. Normal outside
+release retires the finger while preserving continuous heading; cancellation uses
+the existing interruption/pause contract. Ignore unrelated and stale pointer IDs,
+release only once across window/element delivery, and remove window observers on
+destroy. Regression prompt: “Make setPointerCapture throw; steer and lift outside
+the pad, then steer with a fresh finger in stick/swipe/D-pad. Repeat in Solo and
+both couch seats, including a control that stops propagation, unrelated cancel,
+matching cancel, and teardown. Keep adapter evidence separate from real devices.”
 Use the shared validated touch preference record without writing another mode's
 campaign save. Do not claim Steam Deck hardware acceptance from injected standard
 Gamepad samples. Compact HUD work must retain required objectives and complete
