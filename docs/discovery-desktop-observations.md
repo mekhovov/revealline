@@ -190,3 +190,16 @@ fingerprint rather than a complete immutable loaded-byte binding. It therefore r
 viewing one accepted reward; it did not create 20 wins. Detached heap objects, outstanding URLs
 and decoder allocations remain outside these connected counts. Later compact result composition
 and neutral pending-save feedback require their own final layout check.
+
+## Matched compiled artifacts on 28 September
+
+The [bounded comparison record](verification/evidence/discovery-2026-09-28-comparison-record.json) binds baseline `a0eefe578` and candidate `de4cec8ba` to their exact distribution hashes and unchanged Frame gameplay identity. Separate fresh profiles used the same Mac, HeadlessChrome 154, 1280×633/DPR 1, Standard/Immediate/Scout, full effects and muted sound. Both distributions were independently admitted; the current local bundle reproduced twice. The same frozen passive observer measured ordinary controls without creating progress.
+
+| First accepted 20-second case | Baseline p95 | Candidate p95 | Change |
+| ----------------------------- | -----------: | ------------: | -----: |
+| Stationary active play        |      16.7 ms |       16.8 ms | +0.60% |
+| Normal first-win result entry |      16.7 ms |       16.8 ms | +0.60% |
+
+Both scoped comparisons are within the five-percent engineering target. All earlier rejected attempts remain in the linked raw reports, including three current attempts that did not finish the objective within the bounded window. Current maximum frame intervals were 350.0/366.7 ms; page-wide long tasks numbered 3/6 with a maximum 375 ms. These stalls are not hidden by the p95 summary and are not attributed specifically to reward rendering.
+
+There is only one accepted sample per scenario. The normal routes and scores differed; displayed play time includes command latency and is not pacing evidence. The reports remain `qualified: false`. Reward-only 50 ms attribution, detached owners/decoder retention, installed-app behavior and deferred human/device review remain separate. A later workflow/evidence-only commit does not change the measured player code; the measured artifact identity remains `de4cec8ba`, not an unnamed latest build.
