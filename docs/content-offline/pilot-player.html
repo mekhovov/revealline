@@ -12,6 +12,7 @@ body{font:16px/1.5 system-ui;background:#111722;color:#e8eef8;max-width:1200px;m
 <p id="brief"></p><p>Player 1: arrow keys. Player 2: WASD. Escape pauses. Use direction buttons on touch screens. Release and press again after banking. Cyan/magenta mark players; red marks threats; yellow marks objectives; green marks optional pickups. Original pressure warnings and travelling-impact cues remain visible.</p>
 <p id="status" role="status" aria-live="polite">Loading pilot…</p>
 <div id="boards" class="boards"></div><div id="pads" class="pads"></div>
+<p>Exported v2 observations contain both players’ inputs, the initial mission configuration and replay-checkable results. Verify the file with <code>node scripts/verify-pilot-observations.mjs observations.json</code>. A verified partial run is not a clear; recordings do not grant design approval. <a href="PILOT-OBSERVATIONS.md">Recording and review guide</a>.</p>
 <label for="notes">Playtest observations: route choice, confusing moment, failure cause, difficulty</label><textarea id="notes" maxlength="8000"></textarea>
 <script type="module" src="../../game/content-design/uniqueness-pilot-player.mjs"></script>
 </html>
