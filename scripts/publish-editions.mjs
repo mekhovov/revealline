@@ -12,6 +12,7 @@ import {
   selectRetainedEditionRelease,
 } from '../publishing/edition-promotion.mjs';
 import { editionHash } from '../publishing/edition-zip.mjs';
+import { compileCompanyQualificationReview } from '../docs/verification/company-qualification-model.mjs';
 
 /** Both selector commands reread the complete retained publication from GitHub.
  * Metadata and binary reads stay bounded; no mutating GitHub commands are used. */
@@ -94,18 +95,24 @@ async function replaceUnchangedSelector(selectorPath, original, updated) {
 const [command, ...args] = process.argv.slice(2),
   options = {};
 if (
-  !['review-template', 'verify', 'upload-draft', 'sync-selector', 'select-retained'].includes(
-    command,
-  )
+  ![
+    'review-template',
+    'review-from-qualification',
+    'verify',
+    'upload-draft',
+    'sync-selector',
+    'select-retained',
+  ].includes(command)
 )
   throw new Error(
-    'Usage: publish-editions.mjs review-template|verify|upload-draft|sync-selector --bundle DIR --review FILE [--repository OWNER/REPO --selector FILE --base-path /PATH/]; or select-retained --version vX.Y.Z --editions ID[,ID] --selector FILE --repository OWNER/REPO --base-path /PATH/',
+    'Usage: publish-editions.mjs review-template|review-from-qualification|verify|upload-draft|sync-selector --bundle DIR --review FILE [--qualification FILE --repository OWNER/REPO --selector FILE --base-path /PATH/]; or select-retained --version vX.Y.Z --editions ID[,ID] --selector FILE --repository OWNER/REPO --base-path /PATH/',
   );
 for (let i = 0; i < args.length; i += 2) {
   if (
     ![
       '--bundle',
       '--review',
+      '--qualification',
       '--repository',
       '--selector',
       '--base-path',
@@ -122,6 +129,7 @@ if (command === 'select-retained') {
   if (
     options['--bundle'] ||
     options['--review'] ||
+    options['--qualification'] ||
     !options['--selector'] ||
     !options['--version'] ||
     !options['--editions'] ||
@@ -151,6 +159,8 @@ if (options['--version'] || options['--editions'])
   throw new Error('Explicit version and editions belong to select-retained only.');
 if (!options['--bundle'] || !options['--review'])
   throw new Error('Bundle and review paths are required.');
+if (command !== 'review-from-qualification' && options['--qualification'])
+  throw new Error('Qualification input belongs to review-from-qualification only.');
 const directory = path.resolve(options['--bundle']);
 const original = await fs.readFile(path.join(directory, 'editions.json')),
   envelope = JSON.parse(original);
@@ -180,6 +190,53 @@ if (command === 'review-template') {
   };
   await fs.writeFile(options['--review'], `${JSON.stringify(review, null, 2)}\n`, { flag: 'wx' });
   console.log('Created pending review template. No qualification is claimed.');
+  process.exit(0);
+}
+if (command === 'review-from-qualification') {
+  if (!options['--qualification'])
+    throw new Error('Exact qualification input is required to compile a promotion review.');
+  const qualificationBytes = await fs.readFile(path.resolve(options['--qualification']));
+  if (qualificationBytes.length === 0 || qualificationBytes.length > 8_000_000)
+    throw new Error('Qualification evidence is empty or exceeds its bounded public size.');
+  const qualification = JSON.parse(
+      new TextDecoder('utf-8', { fatal: true }).decode(qualificationBytes),
+    ),
+    evidenceName = `review-company-qualification-${envelope.version}.json`,
+    evidencePath = path.join(directory, evidenceName),
+    reviewPath = path.resolve(options['--review']),
+    evidence = {
+      ...descriptor(evidenceName, qualificationBytes),
+      publication: 'public',
+      approved: true,
+    },
+    review = compileCompanyQualificationReview(envelope, qualification, {
+      envelopeSha256: editionHash(original),
+      evidence,
+    }),
+    reviewBytes = Buffer.from(`${JSON.stringify(review, null, 2)}\n`);
+  if (evidencePath === reviewPath)
+    throw new Error('Qualification evidence and promotion review need distinct output paths.');
+  const assertAbsent = async (file) => {
+    try {
+      await fs.lstat(file);
+    } catch (error) {
+      if (error?.code === 'ENOENT') return;
+      throw error;
+    }
+    throw new Error(`Refusing to replace existing promotion output: ${file}`);
+  };
+  await assertAbsent(evidencePath);
+  await assertAbsent(reviewPath);
+  await fs.writeFile(evidencePath, qualificationBytes, { flag: 'wx' });
+  try {
+    await fs.writeFile(reviewPath, reviewBytes, { flag: 'wx' });
+  } catch (error) {
+    await fs.rm(evidencePath, { force: true });
+    throw error;
+  }
+  console.log(
+    'Compiled complete qualification into hash-bound promotion evidence. No release or selector was changed.',
+  );
   process.exit(0);
 }
 const reviewBytes = await fs.readFile(options['--review']),

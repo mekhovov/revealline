@@ -1,5 +1,3 @@
-> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
-
 # Company edition phase status — 28 September 2026
 
 > Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
@@ -16,6 +14,14 @@
 PR #615 was merged through cumulative integration commit `b0d0a819c1` and is an ancestor of
 main. Main `6fe52474b5b395a5c416bd388555d488db33f287`, tree
 `282cb34616d7641ed9ca84465e228d11878d8495`, publishes the default v0.141.7 game.
+
+Phase 7 evidence maintenance subsequently merged as PR #725 at main `4cb5e3199e`, tree
+`d75300e6e5`. It does not change the published default game or populate the standalone edition
+selector. Exact-main [candidate CI 36367544165](https://github.com/mekhovov/revealline/actions/runs/36367544165)
+passed and uploaded artifact `10948100942` (725,315,513 GitHub-reported bytes).
+The current maintenance base is main `c5885a1556`, tree `39bf58fda8`; exact-main
+[candidate CI 36368498099](https://github.com/mekhovov/revealline/actions/runs/36368498099)
+passed and uploaded artifact `10948975755` (725,315,743 GitHub-reported bytes).
 
 ## Post-merge technical evidence
 
@@ -42,12 +48,13 @@ This evidence establishes candidate integrity. The candidate remains `publicElig
    make desktop observations identify opening play, advanced encounters, picture reveals and
    edition-switch sequences. This changes review tooling and documentation only, so it does not
    allocate a product version or enter the serialized freeze lane.
-   assistive-technology/input results, and two OS-installed PWAs exercising offline launch,
-   update, rollback, storage failure and backup transfer. Evidence must name the exact artifact.
-   Source-free evidence can remain a maintenance batch.
+   content approval, actual assistive-technology/input results, and two OS-installed PWAs
+   exercising offline launch, update, rollback, storage failure and backup transfer when this work
+   resumes. Evidence must name the exact artifact. The bounded qualification recorder binds every
+   observation to the envelope, source tree, downloaded artifact SHA-256, editions, device
+   environment and required scenarios; missing or failed observations remain non-promotable.
+   Meanwhile, the review compiler can be completed and tested without creating a passing review.
 3. **Primary company promotion.** After every required gate passes, allocate one release root and
-   freeze the exact source once. Upload all qualified edition archives, but initially select only
-   the 950,000,000-byte operational cap before changing the selector.
 4. **Audience rollout.** Add the twelve campaign-specific editions through bounded selector-only
    maintenance batches, reusing the same immutable release assets. Admit each batch only when the
    assembled Pages total remains within the cap. A selector batch does not rebuild gameplay.
