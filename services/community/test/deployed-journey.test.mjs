@@ -96,6 +96,117 @@ test('configuration requires explicit destructive opt-in, a unique namespace and
     ).auth.admin.cookie,
     'session=admin',
   );
+  assert.equal(
+    validateDeployedJourneyConfig(
+      config({
+        auth: {
+          ...config().auth,
+          creatorA: {
+            email: 'creator-a@example.test',
+            password: 'correct horse battery staple',
+          },
+        },
+      }),
+    ).auth.creatorA.email,
+    'creator-a@example.test',
+  );
+});
+
+test('verified-account sign-in fails before package creation and keeps secrets out of receipts', async () => {
+  const password = 'correct horse battery staple';
+  let packageCreates = 0;
+  const calls = [];
+  await assert.rejects(
+    runDeployedCommunityJourney(
+      config({
+        auth: {
+          ...config().auth,
+          creatorA: { email: 'creator-a@example.test', password },
+        },
+      }),
+      {
+        fetchImpl: async (input) => {
+          const pathname = new URL(input).pathname;
+          calls.push(pathname);
+          if (pathname === '/version')
+            return Response.json({ format: 'revealline-community-release.v1', ...expectedRelease });
+          if (pathname === '/health') return Response.json({ status: 'ok' });
+          if (pathname === '/ready') return Response.json({ status: 'ready' });
+          if (pathname === '/api/auth/sign-in/email')
+            return Response.json({ error: 'invalid credentials' }, { status: 401 });
+          assert.fail('Authentication failure must stop before content mutation.');
+        },
+        createPackage: async () => {
+          packageCreates += 1;
+          assert.fail('Authentication failure must stop before package creation.');
+        },
+        randomUUID: () => 'abcdef12-1234-4abc-8def-123456789abc',
+      },
+    ),
+    (error) => {
+      assert.equal(error.stage, 'authentication');
+      assert.equal(error.receipt.failedStage, 'authentication');
+      assert.equal(JSON.stringify(error.receipt).includes(password), false);
+      return true;
+    },
+  );
+  assert.deepEqual(calls, ['/version', '/health', '/ready', '/api/auth/sign-in/email']);
+  assert.equal(packageCreates, 0);
+});
+
+test('verified-account sign-in keeps its deadline through a stalled response body', async () => {
+  const password = 'correct horse battery staple';
+  let packageCreates = 0;
+  let cancelled = false;
+  const startedAt = Date.now();
+  await assert.rejects(
+    runDeployedCommunityJourney(
+      config({
+        requestTimeoutMs: 100,
+        auth: {
+          ...config().auth,
+          creatorA: { email: 'creator-a@example.test', password },
+        },
+      }),
+      {
+        fetchImpl: async (input) => {
+          const pathname = new URL(input).pathname;
+          if (pathname === '/version')
+            return Response.json({ format: 'revealline-community-release.v1', ...expectedRelease });
+          if (pathname === '/health') return Response.json({ status: 'ok' });
+          if (pathname === '/ready') return Response.json({ status: 'ready' });
+          if (pathname === '/api/auth/sign-in/email')
+            return new Response(
+              new ReadableStream({
+                cancel() {
+                  cancelled = true;
+                },
+              }),
+              {
+                headers: {
+                  'set-cookie': 'better-auth.session_token=never-read; Path=/; HttpOnly; Secure',
+                },
+              },
+            );
+          assert.fail('Authentication timeout must stop before content mutation.');
+        },
+        createPackage: async () => {
+          packageCreates += 1;
+          assert.fail('Authentication timeout must stop before package creation.');
+        },
+        randomUUID: () => 'abcdef12-1234-4abc-8def-123456789abc',
+      },
+    ),
+    (error) => {
+      assert.equal(error.stage, 'authentication');
+      assert.equal(error.cause.message, 'Account sign-in timed out.');
+      assert.equal(JSON.stringify(error.receipt).includes(password), false);
+      return true;
+    },
+  );
+  assert.equal(cancelled, true);
+  assert.equal(packageCreates, 0);
+  assert.ok(Date.now() - startedAt < 1_000);
 });
 
 test('deployed journey publishes, polls, isolates owners, downloads exact bytes and moderates', async (t) => {
