@@ -330,6 +330,41 @@ test('real keyboard self-crossings explain the shared recovery and cause-aware r
   assert.equal(f.$('coop-level').value, 'self-crossing-coverage');
 });
 
+test('terminal failure offers a direct keyboard path to the same arena difficulty', async (t) => {
+  const f = await page(t, { nativeFocus: true }),
+    pack = customPack('change-difficulty');
+  pack.levels[0].enemies = [];
+  await f.selectFile(JSON.stringify(pack));
+  await f.choose('coop-difficulty', 'expert');
+  f.$('coop-start').click();
+  f.tick(3);
+  for (let attempt = 0; attempt < 2; attempt++)
+    for (const [first, second, ticks] of [
+      ['KeyD', 'ArrowLeft', 30],
+      ['KeyW', 'ArrowUp', 15],
+      ['KeyD', 'ArrowLeft', 15],
+      ['KeyS', 'ArrowDown', 15],
+      ['KeyA', 'ArrowRight', 15],
+    ]) {
+      f.tap(first);
+      f.tap(second);
+      f.tick(ticks);
+    }
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.doc.activeElement.id, 'coop-retry');
+  assert.equal(f.$('coop-lobby').textContent, 'Change difficulty');
+  assert.equal(f.$('coop-level').value, 'change-difficulty-coverage');
+  tabToTeamAction(f, 'coop-lobby');
+  assert.equal(f.$('coop-lobby').disabled, false);
+  f.$('coop-lobby').onclick();
+  assert.equal(f.$('coop-play').hidden, true);
+  assert.equal(f.$('coop-menu').hidden, false);
+  assert.equal(f.$('coop-optional-setup').open, true);
+  assert.equal(f.doc.activeElement.id, 'coop-difficulty');
+  assert.equal(f.$('coop-difficulty').value, 'expert');
+  assert.equal(f.$('coop-level').value, 'change-difficulty-coverage');
+});
+
 test('retry feedback counts required objectives and distinguishes enemy and spark causes', () => {
   const run = {
     coverage: 0.5,
