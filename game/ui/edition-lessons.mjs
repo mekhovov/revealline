@@ -9,6 +9,7 @@ import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.m
 import { createRun } from '../core/index.mjs';
 import { exportReplay } from '../replay.mjs';
 import { boundedJSON } from '../data-json.mjs';
+import { journeyMissionId } from '../journey/catalog.mjs';
 import { getLocale, localizedText, render, t } from '../i18n/index.mjs';
 import { localizeCompanyLesson } from '../company-campaigns/lesson-localization.mjs';
 
@@ -78,20 +79,33 @@ export async function mountEditionLessons({
     }
   };
   const simulations = new Map(),
+    pictureBindings = new Map(),
     compiled = compileContentProject(provider.route.source);
   for (const lesson of provider.lessons) {
-    const identities = new Set();
+    const identities = new Set(),
+      acceptedPictures = new Set();
     for (const difficulty of Object.keys(
       journeyDifficultyCatalog(compiled.source.difficultyCatalogId).presets,
     )) {
       const manifest = resolveMission(compiled, lesson.missionId, { difficulty });
-      identities.add(
-        companySimulationIdentity(
-          createRun(applyGameplayTuning(manifest.level, resolveGameplayTuning(difficulty))),
-        ),
-      );
+      const run = createRun(applyGameplayTuning(manifest.level, resolveGameplayTuning(difficulty)));
+      const identity = companySimulationIdentity(run);
+      identities.add(identity);
+      acceptedPictures.add(`${difficulty}:${identity}`);
     }
     simulations.set(lesson.missionId, identities);
+    for (const pack of compiled.source.packs.filter((item) =>
+      item.campaignIds.includes(lesson.campaignId),
+    ))
+      pictureBindings.set(
+        journeyMissionId({
+          source: 'candidate',
+          packId: pack.id,
+          campaignId: lesson.campaignId,
+          levelId: lesson.missionId,
+        }),
+        { lesson, acceptedPictures },
+      );
   }
   const storage = createCompanyStorage({
     getStorage: () => previewSession?.storage ?? win.localStorage ?? globalThis.localStorage,
@@ -313,9 +327,19 @@ export async function mountEditionLessons({
     rewardEvidence: proofs.rewardEvidence,
     onRewardEvidenceChange: proofs.onRewardEvidenceChange,
     pictureReady(record) {
-      if (disposed || record.editionId !== provider.editionId) return null;
-      const lesson = provider.lessons.find((entry) => entry.missionId === record.missionId);
-      if (!lesson) return null;
+      if (disposed || record.editionId !== provider.editionId || record.mode !== 'solo')
+        return null;
+      // Journey pictures retain their composite catalog identity. Resolve that
+      // exact owned binding rather than trusting a display name or bare level ID.
+      // Retained presentations mount their own source and therefore their own pins.
+      const binding = pictureBindings.get(record.missionId);
+      if (
+        !binding ||
+        binding.lesson.missionId !== record.levelId ||
+        !binding.acceptedPictures.has(`${record.difficulty}:${record.gameplayId}`)
+      )
+        return null;
+      const { lesson } = binding;
       const revisit = node('button');
       localizedText(revisit, () => t('interface:editionLessons.revisitConnection'));
       revisit.type = 'button';
@@ -328,7 +352,13 @@ export async function mountEditionLessons({
     },
     refresh() {
       const run = getRun();
-      if (run?.status === 'won' && getPictureVisible()) seen.add(run);
+      if (run?.status === 'won' && !seen.has(run) && getPictureVisible()) {
+        try {
+          if (simulations.get(run.levelId)?.has(companySimulationIdentity(run))) seen.add(run);
+        } catch {
+          // A foreign or incomplete run cannot expose this edition's activity.
+        }
+      }
       const visible =
         !!run &&
         run.status === 'won' &&
