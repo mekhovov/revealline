@@ -44,6 +44,7 @@ export function drawEventFeedback(
   palette,
   {
     themeId = 'fpv',
+    themeFamily = null,
     reduced = false,
     screenScale = 1,
     width = 1152,
@@ -52,7 +53,15 @@ export function drawEventFeedback(
   } = {},
 ) {
   if (!finitePoint(event) || event.age >= 0.7) return;
-  const pickup = event.type === 'powerup.collected' && PICKUP_COLORS[event.kind],
+  const feedbackTheme =
+      themeFamily === 'fpv'
+        ? 'fpv'
+        : themeFamily === 'atlas'
+          ? 'ukraine'
+          : themeFamily === 'navi'
+            ? 'coupa'
+            : themeId,
+    pickup = event.type === 'powerup.collected' && PICKUP_COLORS[event.kind],
     failed = event.type === 'player.failed',
     lineHit = event.type === 'lineImpact.seeded',
     recovered = ['player.respawned', 'shield.absorbed'].includes(event.type);
@@ -91,7 +100,7 @@ export function drawEventFeedback(
   } else if (failed) {
     // Small themed debris stays local to the failed craft, never follows respawn.
     const offset = reduced ? 5 : 4 + Math.min(event.age, 0.35) * 15;
-    if (themeId === 'fpv') {
+    if (feedbackTheme === 'fpv') {
       // Four solid rotor fragments communicate the broken FPV frame without
       // putting bright square brackets around the craft silhouette.
       for (const [x, y] of [
@@ -104,14 +113,14 @@ export function drawEventFeedback(
         ctx.fillRect(x * (offset + 2) - 1, y * (offset + 2) - 1, 2, 2);
       }
       ctx.fillRect(-2, -4, 4, 8);
-    } else if (themeId === 'ukraine') {
+    } else if (feedbackTheme === 'ukraine') {
       for (let i = 0; i < 6; i++) {
         ctx.save();
         ctx.rotate((i * Math.PI) / 3);
         ctx.fillRect(-2, -offset - 3, 4, 5);
         ctx.restore();
       }
-    } else if (themeId === 'coupa') {
+    } else if (feedbackTheme === 'coupa') {
       ctx.fillRect(-offset - 3, -6, 5, 12);
       ctx.fillRect(offset - 2, -4, 5, 10);
       ctx.fillRect(-2, -1, 3, 3);
@@ -138,9 +147,9 @@ export function drawEventFeedback(
     : failed
       ? t('gameplay:1Life', {
           value1:
-            themeId === 'fpv'
+            feedbackTheme === 'fpv'
               ? t('interface:craftLost')
-              : themeId === 'coupa'
+              : feedbackTheme === 'coupa'
                 ? t('interface:linkLost')
                 : t('interface:lifeLost'),
         })
