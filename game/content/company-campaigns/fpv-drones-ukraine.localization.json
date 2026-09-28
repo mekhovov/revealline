@@ -22,7 +22,7 @@
         "name": { "en": "A Map for Recovery", "uk": "Карта для відбудови" }
       },
       "id": "fpv-drones-ukraine-01",
-      "identity": "ffee0632370e00cf",
+      "identity": "0643f0223c27de74",
       "kind": "mission"
     },
     {
@@ -38,7 +38,7 @@
         "name": { "en": "Survey Is Not Clearance", "uk": "Обстеження — не очищення" }
       },
       "id": "fpv-drones-ukraine-02",
-      "identity": "02da6ebf42cf58d5",
+      "identity": "6731c50bcdddf522",
       "kind": "mission"
     },
     {
@@ -54,7 +54,7 @@
         "name": { "en": "A Pilot Study Has Limits", "uk": "Пілотне дослідження має межі" }
       },
       "id": "fpv-drones-ukraine-03",
-      "identity": "7a6701c0922fc3e9",
+      "identity": "c44299c725339b76",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "Learning Has Many Roles", "uk": "Навчання має багато ролей" }
       },
       "id": "fpv-drones-ukraine-04",
-      "identity": "8d7a26917e74adc7",
+      "identity": "6d427ef590d2cfac",
       "kind": "mission"
     },
     {
@@ -86,7 +86,7 @@
         "name": { "en": "Read the Historical Caption", "uk": "Прочитайте історичний підпис" }
       },
       "id": "fpv-drones-ukraine-05",
-      "identity": "d6d5ff6c8f6997c3",
+      "identity": "bf3b332171071d88",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "An Exhibit with Boundaries", "uk": "Виставка з чіткими межами" }
       },
       "id": "fpv-drones-ukraine-06",
-      "identity": "0473de4c31695ce8",
+      "identity": "8c04ab7f1828d221",
       "kind": "mission"
     }
   ],

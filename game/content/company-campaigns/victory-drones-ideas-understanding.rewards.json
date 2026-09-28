@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-ideas-understanding-key-v1",
+          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
         },
         "id": "victory-drones-ideas-understanding-01-image",
         "locales": {
           "en": {
-            "alt": "Observe Before Explaining — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
             "title": "Observe Before Explaining"
           },
           "uk": {
-            "alt": "Спостерігайте перед поясненням — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
             "title": "Спостерігайте перед поясненням"
           }
         },
@@ -82,7 +82,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "victory-drones-ideas-understanding-01", "kind": "mission" }
   },
   {
@@ -103,17 +103,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-ideas-understanding-key-v1",
+          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
         },
         "id": "victory-drones-ideas-understanding-02-image",
         "locales": {
           "en": {
-            "alt": "Forces Come in Pairs — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
             "title": "Forces Come in Pairs"
           },
           "uk": {
-            "alt": "Сили взаємодії — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
             "title": "Сили взаємодії"
           }
         },
@@ -166,7 +166,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "victory-drones-ideas-understanding-02", "kind": "mission" }
   },
   {
@@ -187,17 +187,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-ideas-understanding-key-v1",
+          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
         },
         "id": "victory-drones-ideas-understanding-03-image",
         "locales": {
           "en": {
-            "alt": "The Net Force — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
             "title": "The Net Force"
           },
           "uk": {
-            "alt": "Рівнодійна сил — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
             "title": "Рівнодійна сил"
           }
         },
@@ -250,7 +250,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "victory-drones-ideas-understanding-03", "kind": "mission" }
   },
   {
@@ -271,17 +271,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-ideas-understanding-key-v1",
+          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
         },
         "id": "victory-drones-ideas-understanding-04-image",
         "locales": {
           "en": {
-            "alt": "Direction Matters — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
             "title": "Direction Matters"
           },
           "uk": {
-            "alt": "Напрямок має значення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
             "title": "Напрямок має значення"
           }
         },
@@ -334,7 +334,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "victory-drones-ideas-understanding-04", "kind": "mission" }
   },
   {
@@ -355,17 +355,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-ideas-understanding-key-v1",
+          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
         },
         "id": "victory-drones-ideas-understanding-05-image",
         "locales": {
           "en": {
-            "alt": "A Fair Comparison — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
             "title": "A Fair Comparison"
           },
           "uk": {
-            "alt": "Коректне порівняння — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
             "title": "Коректне порівняння"
           }
         },
@@ -418,7 +418,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "victory-drones-ideas-understanding-05", "kind": "mission" }
   },
   {
@@ -439,17 +439,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-ideas-understanding-key-v1",
+          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
         },
         "id": "victory-drones-ideas-understanding-06-image",
         "locales": {
           "en": {
-            "alt": "Explain the Model — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
             "title": "Explain the Model"
           },
           "uk": {
-            "alt": "Поясніть модель — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
             "title": "Поясніть модель"
           }
         },
@@ -510,7 +510,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "victory-drones-ideas-understanding-06", "kind": "mission" }
   },
   {
@@ -555,17 +555,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-ideas-understanding-key-v1",
+          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
         },
         "id": "victory-drones-ideas-understanding-01-image",
         "locales": {
           "en": {
-            "alt": "Observe Before Explaining — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
             "title": "Observe Before Explaining"
           },
           "uk": {
-            "alt": "Спостерігайте перед поясненням — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
             "title": "Спостерігайте перед поясненням"
           }
         },
@@ -573,17 +573,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-ideas-understanding-key-v1",
+          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
         },
         "id": "victory-drones-ideas-understanding-02-image",
         "locales": {
           "en": {
-            "alt": "Forces Come in Pairs — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
             "title": "Forces Come in Pairs"
           },
           "uk": {
-            "alt": "Сили взаємодії — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
             "title": "Сили взаємодії"
           }
         },
@@ -591,17 +591,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-ideas-understanding-key-v1",
+          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
         },
         "id": "victory-drones-ideas-understanding-03-image",
         "locales": {
           "en": {
-            "alt": "The Net Force — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
             "title": "The Net Force"
           },
           "uk": {
-            "alt": "Рівнодійна сил — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
             "title": "Рівнодійна сил"
           }
         },
@@ -609,17 +609,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-ideas-understanding-key-v1",
+          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
         },
         "id": "victory-drones-ideas-understanding-04-image",
         "locales": {
           "en": {
-            "alt": "Direction Matters — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
             "title": "Direction Matters"
           },
           "uk": {
-            "alt": "Напрямок має значення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
             "title": "Напрямок має значення"
           }
         },
@@ -627,17 +627,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-ideas-understanding-key-v1",
+          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
         },
         "id": "victory-drones-ideas-understanding-05-image",
         "locales": {
           "en": {
-            "alt": "A Fair Comparison — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
             "title": "A Fair Comparison"
           },
           "uk": {
-            "alt": "Коректне порівняння — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
             "title": "Коректне порівняння"
           }
         },
@@ -645,17 +645,17 @@
       },
       {
         "asset": {
-          "assetId": "victory-drones-home",
-          "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3"
+          "assetId": "victory-drones-ideas-understanding-key-v1",
+          "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
         },
         "id": "victory-drones-ideas-understanding-06-image",
         "locales": {
           "en": {
-            "alt": "Explain the Model — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
             "title": "Explain the Model"
           },
           "uk": {
-            "alt": "Поясніть модель — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
             "title": "Поясніть модель"
           }
         },
@@ -667,6 +667,7 @@
           "en": { "title": "Explore the official source" },
           "uk": { "title": "Відкрити офіційне джерело" }
         },
+        "qr": true,
         "type": "url",
         "url": "https://victory-drones.com/"
       }
@@ -725,7 +726,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "victory-drones-ideas-understanding", "kind": "campaign" }
   }
 ]

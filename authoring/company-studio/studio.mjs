@@ -1,5 +1,6 @@
 import { t } from '../../game/i18n/index.mjs';
 import { mountRewardMedia } from '../../game/ui/reward-media.mjs';
+import { mountRewardQr } from '../../game/ui/reward-qr.mjs';
 import { acquireStudioRewardAudio } from '../../game/studio/reward-audio.mjs';
 import { campaignLocalizationSha256 } from '../../game/editions/localization.mjs';
 import { boundedJSON } from '../../game/data-json.mjs';
@@ -411,6 +412,20 @@ async function renderDocuments() {
     }),
   );
   $('reward-missions').disabled = true;
+  $('reward-learning').replaceChildren(
+    ...(lessons ?? []).map((lesson) => {
+      const label = node('label'),
+        input = node('input');
+      input.type = 'checkbox';
+      input.value = lesson.id;
+      label.append(
+        input,
+        node('span', `${lesson.title} · ${lesson.revision}/${lesson.fixtureRevision}`),
+      );
+      return label;
+    }),
+  );
+  $('reward-learning').disabled = !lessons?.length;
   const rewards = campaign.rewardPath ? files.get(campaign.rewardPath) : [];
   $('rewards-summary').textContent =
     `${rewards.length} declared rewards. Requirements are explicit; preview grants no progress.`;
@@ -507,6 +522,10 @@ function addRewardDraft() {
     missionIds: [...$('reward-missions').querySelectorAll('input')]
       .filter((item) => item.checked)
       .map((item) => item.value),
+    lessons: campaign.lessonPath ? files.get(campaign.lessonPath) : [],
+    learningIds: [...$('reward-learning').querySelectorAll('input')]
+      .filter((item) => item.checked)
+      .map((item) => item.value),
     id: `${campaign.id}-reward-${ordinal}`,
     locales: Object.fromEntries(
       ['en', 'uk'].map((locale) => [
@@ -566,6 +585,17 @@ function previewRewardDraft() {
       `${progress.completed}/${progress.total} requirements · ${progress.eligible ? 'Eligible preview' : 'Locked preview'}`,
     ),
     node('p', `Missing missions: ${progress.missingMissionIds.join(', ') || 'None'}`),
+    node(
+      'p',
+      t('tools:studio.discovery.missingLearning', {
+        lessons:
+          progress.learning
+            .filter((item) => !item.complete)
+            .map((item) => item.lessonId)
+            .join(', ') || '—',
+        lng: locale,
+      }),
+    ),
   );
   if (progress.eligible) {
     const printStatus = node('p');
@@ -636,6 +666,8 @@ function previewRewardDraft() {
           node('p', payload.url),
           resourceLink(previewText('openResource'), payload.url),
         );
+        if (payload.qr)
+          rewardPreviewExplorations.push(mountRewardQr({ container: panel, payload, locale }));
       } else if (payload.type === 'public-code') {
         panel.append(
           node('p', payload.issuer),

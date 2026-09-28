@@ -1,6 +1,6 @@
 import { boundedJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
 import { compileContentProject } from './project.mjs';
-import { validateCompletionRewards } from '../rewards/model.mjs';
+import { validateCompletionRewardPayload, validateCompletionRewards } from '../rewards/model.mjs';
 import { validateDiscoveryRewardBindings } from './discovery-schema.mjs';
 import { validateExplorationPayload } from '../rewards/exploration.mjs';
 export { DISCOVERY_PACING_BEATS, DISCOVERY_EXHIBIT_LAYOUTS } from './discovery-schema.mjs';
@@ -8,21 +8,30 @@ export { DISCOVERY_PACING_BEATS, DISCOVERY_EXHIBIT_LAYOUTS } from './discovery-s
 /** Editing an exhibit never edits its promised requirements. New immutable
  * payload revisions rebind only references to the exact old authored reward. */
 export function editDiscoveryExploration(source, rewardSource, rewardId, input) {
+  return editPayload(source, rewardSource, rewardId, validateExplorationPayload(input), 'explore');
+}
+
+export function editDiscoveryResource(source, rewardSource, rewardId, input) {
+  const payload = validateCompletionRewardPayload(input);
+  required(payload.type === 'url', 'Resource editor requires a URL reward.');
+  return editPayload(source, rewardSource, rewardId, payload, 'resource');
+}
+
+function editPayload(source, rewardSource, rewardId, payload, prefix) {
   const project = structuredClone(compileContentProject(source).source),
     rewards = structuredClone(validateCompletionRewards(rewardSource)),
-    reward = rewards.find((item) => item.id === rewardId),
-    payload = validateExplorationPayload(input);
-  required(reward, 'Choose an authored reward before editing its exploration.');
+    reward = rewards.find((item) => item.id === rewardId);
+  required(reward, 'Choose an authored reward before editing its payload.');
   const previousRevision = reward.revision,
     index = reward.payloads.findIndex((item) => item.id === payload.id);
   required(
-    index < 0 || reward.payloads[index].type === 'exploration',
-    'Exploration cannot replace another reward payload type.',
+    index < 0 || reward.payloads[index].type === payload.type,
+    'A payload cannot replace another reward payload type.',
   );
   if (index < 0) reward.payloads.push(payload);
   else reward.payloads[index] = payload;
   const { revision: _revision, ...content } = reward;
-  reward.revision = `explore-${dataIdentity(content)}`;
+  reward.revision = `${prefix}-${dataIdentity(content)}`;
   const rebind = (reference) => {
     if (reference?.id === reward.id && reference.revision === previousRevision)
       reference.revision = reward.revision;

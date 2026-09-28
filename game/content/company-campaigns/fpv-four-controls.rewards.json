@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-four-controls-key-v1",
+          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
         },
         "id": "fpv-four-controls-01-image",
         "locales": {
           "en": {
-            "alt": "Two Sticks, Four Names — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
             "title": "Two Sticks, Four Names"
           },
           "uk": {
-            "alt": "Два стіки, чотири назви — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
             "title": "Два стіки, чотири назви"
           }
         },
@@ -101,17 +101,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-four-controls-key-v1",
+          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
         },
         "id": "fpv-four-controls-02-image",
         "locales": {
           "en": {
-            "alt": "Pitch: Read the Nose — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
             "title": "Pitch: Read the Nose"
           },
           "uk": {
-            "alt": "Тангаж: стежте за носом — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
             "title": "Тангаж: стежте за носом"
           }
         },
@@ -185,17 +185,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-four-controls-key-v1",
+          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
         },
         "id": "fpv-four-controls-03-image",
         "locales": {
           "en": {
-            "alt": "Roll: One Wingtip Lower — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
             "title": "Roll: One Wingtip Lower"
           },
           "uk": {
-            "alt": "Крен: один бік нижче — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
             "title": "Крен: один бік нижче"
           }
         },
@@ -269,17 +269,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-four-controls-key-v1",
+          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
         },
         "id": "fpv-four-controls-04-image",
         "locales": {
           "en": {
-            "alt": "Yaw: Turn the Heading — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
             "title": "Yaw: Turn the Heading"
           },
           "uk": {
-            "alt": "Рискання: змініть курс — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
             "title": "Рискання: змініть курс"
           }
         },
@@ -353,17 +353,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-four-controls-key-v1",
+          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
         },
         "id": "fpv-four-controls-05-image",
         "locales": {
           "en": {
-            "alt": "Throttle Needs a Model — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
             "title": "Throttle Needs a Model"
           },
           "uk": {
-            "alt": "Газ потребує пояснення моделі — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
             "title": "Газ потребує пояснення моделі"
           }
         },
@@ -445,17 +445,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-four-controls-key-v1",
+          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
         },
         "id": "fpv-four-controls-06-image",
         "locales": {
           "en": {
-            "alt": "Predict, Then Explain — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
             "title": "Predict, Then Explain"
           },
           "uk": {
-            "alt": "Спрогнозуйте й поясніть — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
             "title": "Спрогнозуйте й поясніть"
           }
         },
@@ -559,17 +559,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-four-controls-key-v1",
+          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
         },
         "id": "fpv-four-controls-01-image",
         "locales": {
           "en": {
-            "alt": "Two Sticks, Four Names — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
             "title": "Two Sticks, Four Names"
           },
           "uk": {
-            "alt": "Два стіки, чотири назви — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
             "title": "Два стіки, чотири назви"
           }
         },
@@ -577,17 +577,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-four-controls-key-v1",
+          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
         },
         "id": "fpv-four-controls-02-image",
         "locales": {
           "en": {
-            "alt": "Pitch: Read the Nose — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
             "title": "Pitch: Read the Nose"
           },
           "uk": {
-            "alt": "Тангаж: стежте за носом — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
             "title": "Тангаж: стежте за носом"
           }
         },
@@ -595,17 +595,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-four-controls-key-v1",
+          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
         },
         "id": "fpv-four-controls-03-image",
         "locales": {
           "en": {
-            "alt": "Roll: One Wingtip Lower — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
             "title": "Roll: One Wingtip Lower"
           },
           "uk": {
-            "alt": "Крен: один бік нижче — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
             "title": "Крен: один бік нижче"
           }
         },
@@ -613,17 +613,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-four-controls-key-v1",
+          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
         },
         "id": "fpv-four-controls-04-image",
         "locales": {
           "en": {
-            "alt": "Yaw: Turn the Heading — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
             "title": "Yaw: Turn the Heading"
           },
           "uk": {
-            "alt": "Рискання: змініть курс — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
             "title": "Рискання: змініть курс"
           }
         },
@@ -631,17 +631,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-four-controls-key-v1",
+          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
         },
         "id": "fpv-four-controls-05-image",
         "locales": {
           "en": {
-            "alt": "Throttle Needs a Model — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
             "title": "Throttle Needs a Model"
           },
           "uk": {
-            "alt": "Газ потребує пояснення моделі — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
             "title": "Газ потребує пояснення моделі"
           }
         },
@@ -649,17 +649,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-four-controls-key-v1",
+          "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
         },
         "id": "fpv-four-controls-06-image",
         "locales": {
           "en": {
-            "alt": "Predict, Then Explain — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
             "title": "Predict, Then Explain"
           },
           "uk": {
-            "alt": "Спрогнозуйте й поясніть — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
             "title": "Спрогнозуйте й поясніть"
           }
         },
@@ -671,6 +671,7 @@
           "en": { "title": "Explore the official source" },
           "uk": { "title": "Відкрити офіційне джерело" }
         },
+        "qr": true,
         "type": "url",
         "url": "https://ardupilot.org/copter/docs/common-radio-control-calibration.html"
       }

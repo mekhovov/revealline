@@ -102,3 +102,7 @@ picture's plausible appearance does not establish historic authenticity or
 technical correctness. The image-admission tool verifies exact selected bytes,
 retains prompts and corrective-generation provenance, and refuses replacement
 of an already registered revision. Human artwork review remains deferred.
+
+## Local shareable resource rewards
+
+[Project Nayuki’s primary documentation](https://www.nayuki.io/page/qr-code-generator-library) describes its dependency-free MIT QR encoder. The edition implementation pins the upstream 1.8.0 JavaScript release and keeps code generation offline. Resource teasers promise a useful source; the earned QR only offers another way to reach the same visible HTTPS address. The player chooses whether to display or open it. No scanning, tracking, remote image service or secret entitlement is implied.

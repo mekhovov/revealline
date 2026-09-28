@@ -9,6 +9,7 @@ import {
 import { createCurriculumProject } from '../company-campaigns/curriculum-content.mjs';
 import { createCurriculumRewards } from '../company-campaigns/curriculum-rewards.mjs';
 import { createCompanyProject } from '../company-campaigns/content.mjs';
+import { selectCurrentCompanyArtwork } from '../company-campaigns/artwork.mjs';
 import {
   COMPANY_BRANDS,
   COMPANY_EDITIONS,
@@ -34,14 +35,25 @@ import {
 } from '../content-design/catalogs.mjs';
 
 const json = async (file) => JSON.parse(await readFile(new URL(file, import.meta.url), 'utf8'));
-const [assets, artwork, catalog] = await Promise.all(
-  ['../editions/assets.json', '../editions/artwork.json', '../editions/catalog.json'].map(json),
+const [assets, artwork, catalog, assetSources] = await Promise.all(
+  [
+    '../editions/assets.json',
+    '../editions/artwork.json',
+    '../editions/catalog.json',
+    '../editions/asset-sources.json',
+  ].map(json),
 );
 const projects = CURRICULUM_CAMPAIGNS.map((definition) => {
   const source = createCurriculumProject({ campaignId: definition.id, artwork });
   const missionBindings = createRewardMissionBindings(source);
   const rewards = validateCompletionRewards(
-    createCurriculumRewards({ definition, source, assets, missionBindings }),
+    createCurriculumRewards({
+      definition,
+      source,
+      assets,
+      assetSources: assetSources.assets,
+      missionBindings,
+    }),
   );
   return { definition, source, missionBindings, rewards };
 });
@@ -179,21 +191,27 @@ test('explicit public dependencies include only selected campaign art and seven 
       source.missions.map((mission) => mission.presentation.backgroundAssetId),
       expectedPictures,
     );
-    assert.deepEqual(descriptor.assetIds, [
-      ...source.assets.map(
-        (picture) => assets.find((asset) => asset.path === 'game/' + picture.path).id,
-      ),
-      ...definition.rewardAssetIds,
-    ]);
-    const keyPicture = source.assets.find((asset) => asset.id === `${definition.id}-key-picture`);
-    const keyAsset = assets.find((asset) => asset.path === 'game/' + keyPicture.path);
-    assert.equal(descriptor.heroAssetId, keyAsset.id);
-    assert.ok(
-      completionRewardAssetReferences(
-        rewards.filter((reward) => reward.scope.kind === 'campaign'),
-      ).some((ref) => ref.assetId === keyAsset.id && ref.sha256 === keyAsset.sha256),
-      'The campaign finale retains its exact campaign composition.',
+    const keyPicture = selectCurrentCompanyArtwork(artwork).find(
+      (asset) => asset.id === `${definition.id}-key-picture`,
     );
+    const keyAsset = assets.find((asset) => asset.path === 'game/' + keyPicture.path);
+    assert.deepEqual(descriptor.assetIds, [
+      ...new Set([
+        ...source.assets.map(
+          (picture) => assets.find((asset) => asset.path === 'game/' + picture.path).id,
+        ),
+        keyAsset.id,
+        ...definition.rewardAssetIds,
+      ]),
+    ]);
+    assert.equal(descriptor.heroAssetId, keyAsset.id);
+    if (source.assets.some((asset) => asset.id === keyPicture.id))
+      assert.ok(
+        completionRewardAssetReferences(
+          rewards.filter((reward) => reward.scope.kind === 'campaign'),
+        ).some((ref) => ref.assetId === keyAsset.id && ref.sha256 === keyAsset.sha256),
+        'The campaign finale retains its exact campaign composition.',
+      );
     for (const ref of completionRewardAssetReferences(rewards)) {
       assert.ok(descriptor.assetIds.includes(ref.assetId));
       assert.equal(assets.find((asset) => asset.id === ref.assetId).sha256, ref.sha256);
