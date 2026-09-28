@@ -10,7 +10,7 @@ import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
 import { completionLearningReference } from '../rewards/learning.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 
-test('Company Studio actual author action binds only its explicitly checked selected lesson and preserves source/profile isolation', async () => {
+test('Company Studio actual author action binds only its explicitly checked lesson/mastery goals and preserves source/profile isolation', async () => {
   const workspace = createCompanyWorkspaceFiles({
       brandId: 'museum',
       editionId: 'museum-public',
@@ -46,6 +46,12 @@ test('Company Studio actual author action binds only its explicitly checked sele
   control('reward-rule', 'all-missions');
   control('reward-mission', '');
   control('reward-missions');
+  const mastery = control('reward-mastery'),
+    masteryChoice = document.createElement('input');
+  masteryChoice.type = 'checkbox';
+  masteryChoice.value = source.missions[0].id;
+  masteryChoice.checked = true;
+  mastery.append(masteryChoice);
   const learning = control('reward-learning'),
     choice = document.createElement('input');
   choice.type = 'checkbox';
@@ -87,6 +93,9 @@ test('Company Studio actual author action binds only its explicitly checked sele
   vm.runInContext('addRewardDraft()', context);
   const reward = JSON.parse(nodes.get('rewards-json').value)[0];
   assert.deepEqual(reward.requirements.learning, [completionLearningReference(lesson)]);
+  assert.deepEqual(reward.requirements.mastery, [
+    { id: 'journey-no-loss-win', revision: '1', missionId: source.missions[0].id },
+  ]);
   assert.deepEqual(validateStudioData(campaign.rewardPath, [reward], catalog, files), [reward]);
   assert.equal(
     files.get(campaign.rewardPath).length,
@@ -96,6 +105,8 @@ test('Company Studio actual author action binds only its explicitly checked sele
   assert.equal(editorBuffers.get(campaign.rewardPath), nodes.get('rewards-json').value);
   assert.equal(JSON.stringify({ source, lesson, catalog }), before);
   choice.checked = false;
+  masteryChoice.checked = false;
   vm.runInContext('addRewardDraft()', context);
   assert.deepEqual(JSON.parse(nodes.get('rewards-json').value)[1].requirements.learning, []);
+  assert.deepEqual(JSON.parse(nodes.get('rewards-json').value)[1].requirements.mastery, []);
 });

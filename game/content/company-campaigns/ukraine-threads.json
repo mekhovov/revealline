@@ -85,7 +85,7 @@
       "band": 1,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "ukraine-threads-finale", "revision": "2" }
+        "finaleRewardRef": { "id": "ukraine-threads-finale", "revision": "3" }
       },
       "format": "CampaignDesignV1",
       "id": "ukraine-threads",
@@ -245,7 +245,7 @@
         "memorableMoment": "An original warm linen exhibition square with red-and-black textile studies and an open object plinth.",
         "pacingBeat": "discover",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "ukraine-threads-01-discovery", "revision": "2" },
+        "rewardRef": { "id": "ukraine-threads-01-discovery", "revision": "3" },
         "routeDecision": "Return through the exhibition plinth or open the wide label gallery first."
       },
       "format": "MissionDesignV1",
@@ -295,7 +295,7 @@
         "memorableMoment": "An original textile sample gallery with magnified thread textures, offset linen aisles and red stitched paths.",
         "pacingBeat": "choose",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "ukraine-threads-02-discovery", "revision": "2" },
+        "rewardRef": { "id": "ukraine-threads-02-discovery", "revision": "3" },
         "routeDecision": "Choose the upper sample aisle or connect the two lower plinths before crossing between rows."
       },
       "format": "MissionDesignV1",
@@ -353,7 +353,7 @@
         "memorableMoment": "Original ivory textile architecture with angled light revealing raised white threads, openwork and nested exhibition courts.",
         "pacingBeat": "combine",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "ukraine-threads-03-discovery", "revision": "2" },
+        "rewardRef": { "id": "ukraine-threads-03-discovery", "revision": "3" },
         "routeDecision": "Use the outer textile ledge before moving into the small inner gallery."
       },
       "format": "MissionDesignV1",
@@ -411,7 +411,7 @@
         "memorableMoment": "An original Ukrainian textile museum garden with separate linen pavilions joined by a warm reading terrace.",
         "pacingBeat": "breathe",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "ukraine-threads-04-discovery", "revision": "2" },
+        "rewardRef": { "id": "ukraine-threads-04-discovery", "revision": "3" },
         "routeDecision": "Explore either exhibit branch first, returning through the wide shared reading terrace."
       },
       "format": "MissionDesignV1",
@@ -469,7 +469,7 @@
         "memorableMoment": "An original linen exhibition hall with suspended rushnyk-inspired studies, archival alcoves and soft red accents.",
         "pacingBeat": "mastery",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "ukraine-threads-05-discovery", "revision": "2" },
+        "rewardRef": { "id": "ukraine-threads-05-discovery", "revision": "3" },
         "routeDecision": "Use the hall’s side alcoves to shorten exposed crossings toward the far exhibit."
       },
       "format": "MissionDesignV1",
@@ -535,7 +535,7 @@
         "memorableMoment": "An original contemporary textile plaza with linen banners, red-and-black graphic rhythms and an amber festival stage.",
         "pacingBeat": "resolve",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "ukraine-threads-06-discovery", "revision": "2" },
+        "rewardRef": { "id": "ukraine-threads-06-discovery", "revision": "3" },
         "routeDecision": "Connect the central festival platform or take three smaller design islands in sequence."
       },
       "format": "MissionDesignV1",
@@ -560,9 +560,9 @@
       "format": "PackDesignV1",
       "id": "ukraine-threads-pack",
       "name": "Threads Across Ukraine",
-      "revision": "2"
+      "revision": "3"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "2"
+  "revision": "3"
 }

@@ -243,3 +243,13 @@ The campaign discovery metadata selects a route, gallery or mosaic layout. Compa
 Show collected pictures is explicit. Locked cards never fetch final images. At most twelve exact earned thumbnails are retained, with two verification requests in flight; every reward still opens in the full reader. Changing campaign, hiding pictures or closing Collection cancels pending work and releases object URLs. Missing exact art keeps its text and recovery action.
 
 The shared More menu also offers optional flight practice when an admitted package is published. Opening it fetches only the bounded launcher catalogue; starting a package remains explicit and uses a separate installation. Authoring or previewing a practice package cannot grant Journey wins. See [optional package candidate delivery](optional-package-candidates.md).
+
+## Learning profiles
+
+The shared discovery editor offers three bilingual reading profiles for an existing knowledge section. Fill the heading and one to four short paragraphs for Schools & families, New to the subject, and Explore further. Separate paragraphs with a blank line. These are optional exploration prompts; keep essential explanations, safety information and sources in the common section, which remains visible for every choice.
+
+Preview uses the same native reader as Collection and never records a win. Apply creates a new reward revision and updates exact authored references without editing requirements or gameplay. JSON import/export retains the variants. Printable offline discoveries include all three labelled versions. Older rewards without profiles continue to render their original common explanation.
+
+## Local timing observations
+
+Open `docs/verification/journey-performance.html` from the development server, choose an edition, and load the review game. After reaching the intended menu, play or result scene, select **Observe 30 seconds**. Keep the same scene and viewport for the baseline and candidate. The JSON log includes p95 frame intervals, supported long-task counters and optional heap snapshots. Hidden pages and interrupted samples are discarded. The observer never drives gameplay and is omitted from release output. These measurements are local observations; use matched repeated samples plus browser traces before asserting the 5% regression or 50 ms reward-rendering targets.

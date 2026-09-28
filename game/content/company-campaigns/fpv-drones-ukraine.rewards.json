@@ -63,6 +63,50 @@
             "title": "Карта для відбудови"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Add date, source and observation to the fictional archive card. Separate visible damage from a professional structural-safety judgment."
+              ],
+              "title": "Make the distinction: A Map for Recovery"
+            },
+            "uk": {
+              "paragraphs": [
+                "Додайте дату, джерело й спостереження до вигаданої архівної картки. Відокремте видиме пошкодження від професійного висновку про безпечність конструкції."
+              ],
+              "title": "Розрізніть поняття: Карта для відбудови"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Look at the invented hall pictures together. Find what is visible and ask who made the record and when."
+              ],
+              "title": "Explore together: A Map for Recovery"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом розгляньте вигадані зображення зали. Назвіть видиме й запитайте, хто та коли зробив запис."
+              ],
+              "title": "Дослідіть разом: Карта для відбудови"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A second fictional archive omits its date. Explain why the image cannot establish current condition or repair priorities without additional expert evidence."
+              ],
+              "title": "Apply and question: A Map for Recovery"
+            },
+            "uk": {
+              "paragraphs": [
+                "В іншому вигаданому архіві пропущена дата. Чому зображення без додаткових експертних даних не встановлює поточного стану чи пріоритетів ремонту?"
+              ],
+              "title": "Застосуйте й запитайте: Карта для відбудови"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -80,7 +124,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-drones-ukraine-01", "kind": "mission" }
   },
   {
@@ -147,6 +191,50 @@
             "title": "Обстеження — не очищення"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Explain the difference between a survey record and permission to enter land. Keep this exercise entirely within the fictional documents."
+              ],
+              "title": "Make the distinction: Survey Is Not Clearance"
+            },
+            "uk": {
+              "paragraphs": [
+                "Поясніть різницю між записом обстеження й дозволом заходити на землю. Залишайте вправу лише в межах вигаданих документів."
+              ],
+              "title": "Розрізніть поняття: Обстеження — не очищення"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Follow the document cards together from observation to expert review. Name who should own the next recorded decision."
+              ],
+              "title": "Explore together: Survey Is Not Clearance"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом простежте картки документів від спостереження до експертного розгляду. Назвіть відповідального за наступне зафіксоване рішення."
+              ],
+              "title": "Дослідіть разом: Обстеження — не очищення"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A new fictional caption confuses specialist observation with clearance. Rewrite the claim to preserve its evidence boundary and responsible review, without field methods."
+              ],
+              "title": "Apply and question: Survey Is Not Clearance"
+            },
+            "uk": {
+              "paragraphs": [
+                "Новий вигаданий підпис плутає спеціалізоване спостереження з очищенням території. Збережіть межі доказів і відповідальний розгляд без польових методів."
+              ],
+              "title": "Застосуйте й запитайте: Обстеження — не очищення"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -164,7 +252,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-drones-ukraine-02", "kind": "mission" }
   },
   {
@@ -231,6 +319,50 @@
             "title": "Пілотне дослідження має межі"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Find the dataset and test-context questions missing from the broad caption. A research report does not make every setting equivalent."
+              ],
+              "title": "Make the distinction: A Pilot Study Has Limits"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть питання про набір даних і умови перевірки, відсутні в широкому підписі. Дослідницький звіт не прирівнює всі умови."
+              ],
+              "title": "Розрізніть поняття: Пілотне дослідження має межі"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Compare tested here with works everywhere together. Which phrase leaves room to ask where the evidence came from?"
+              ],
+              "title": "Explore together: A Pilot Study Has Limits"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом порівняйте «перевірено тут» і «працює скрізь». Який вислів залишає місце для питання про походження доказів?"
+              ],
+              "title": "Дослідіть разом: Пілотне дослідження має межі"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Another fictional study reports a promising result on different material. Identify the scope change and missing validation rather than extending its safety conclusion."
+              ],
+              "title": "Apply and question: A Pilot Study Has Limits"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інше вигадане дослідження має перспективний результат на іншому матеріалі. Визначте зміну меж і відсутню перевірку замість розширення висновку про безпечність."
+              ],
+              "title": "Застосуйте й запитайте: Пілотне дослідження має межі"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -248,7 +380,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-drones-ukraine-03", "kind": "mission" }
   },
   {
@@ -317,6 +449,50 @@
             "title": "Навчання має багато ролей"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Match each contribution to a useful handoff. Keep the civilian classroom story separate from claims about real community membership or certification."
+              ],
+              "title": "Make the distinction: Learning Has Many Roles"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зіставте внесок із корисною передачею справ. Відокремте цивільну навчальну історію від тверджень про реальне членство чи сертифікацію."
+              ],
+              "title": "Розрізніть поняття: Навчання має багато ролей"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Take turns choosing host, diagram maker, source checker or learner. Describe how each can help the next person in a fictional library session."
+              ],
+              "title": "Explore together: Learning Has Many Roles"
+            },
+            "uk": {
+              "paragraphs": [
+                "По черзі оберіть ведучого, автора схеми, перевіряльника джерел чи учня. Як кожен допомагає наступній людині на вигаданому занятті в бібліотеці?"
+              ],
+              "title": "Дослідіть разом: Навчання має багато ролей"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A second fictional session uses a community name without a source. Revise the attribution so illustrative roles do not imply endorsement or a real event."
+              ],
+              "title": "Apply and question: Learning Has Many Roles"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інше вигадане заняття використовує назву спільноти без джерела. Уточніть атрибуцію, щоб ілюстративні ролі не означали підтримки чи реальної події."
+              ],
+              "title": "Застосуйте й запитайте: Навчання має багато ролей"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -334,7 +510,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-drones-ukraine-04", "kind": "mission" }
   },
   {
@@ -401,6 +577,50 @@
             "title": "Прочитайте історичний підпис"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Separate the programme’s stated historical purpose from an unsupported claim about today. Keep this an archive-reading task."
+              ],
+              "title": "Make the distinction: Read the Historical Caption"
+            },
+            "uk": {
+              "paragraphs": [
+                "Відокремте заявлену історичну мету програми від непідтвердженого твердження про сьогодення. Залишайте це вправою читання архіву."
+              ],
+              "title": "Розрізніть поняття: Прочитайте історичний підпис"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find the date and issuer of the historical caption together. Explain why an old announcement and a current fact are different records."
+              ],
+              "title": "Explore together: Read the Historical Caption"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом знайдіть дату й автора історичного підпису. Чому давнє оголошення й поточний факт — різні записи?"
+              ],
+              "title": "Дослідіть разом: Прочитайте історичний підпис"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare a dated announcement with an invented present-tense summary. Mark the unsupported time shift; do not infer current equipment, outcomes or operational methods."
+              ],
+              "title": "Apply and question: Read the Historical Caption"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте датоване оголошення з вигаданим викладом у теперішньому часі. Позначте недоведений часовий перехід без висновків про обладнання, результати чи методи."
+              ],
+              "title": "Застосуйте й запитайте: Прочитайте історичний підпис"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -418,7 +638,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-drones-ukraine-05", "kind": "mission" }
   },
   {
@@ -493,6 +713,50 @@
             "title": "Виставка з чіткими межами"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Replace an overconfident safety caption with the actual evidence and responsible review. Essential safety information stays available before any win."
+              ],
+              "title": "Make the distinction: An Exhibit with Boundaries"
+            },
+            "uk": {
+              "paragraphs": [
+                "Замініть надмірно впевнений підпис про безпечність фактичними даними й відповідальним розглядом. Основна інформація безпеки доступна до перемоги."
+              ],
+              "title": "Розрізніть поняття: Виставка з чіткими межами"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose an earlier archive card together and read its limits. Recall that suspicious objects should not be approached or touched."
+              ],
+              "title": "Explore together: An Exhibit with Boundaries"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом оберіть попередню архівну картку й прочитайте її межі. Пригадайте: до підозрілих предметів не наближаються й не торкаються їх."
+              ],
+              "title": "Дослідіть разом: Виставка з чіткими межами"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Curate a new fictional exhibit using dates, source ownership and explicit uncertainty. Explain why collecting these cards never authorizes a real visit or inspection."
+              ],
+              "title": "Apply and question: An Exhibit with Boundaries"
+            },
+            "uk": {
+              "paragraphs": [
+                "Упорядкуйте нову вигадану виставку з датами, авторами джерел і явною невизначеністю. Чому збирання карток не дозволяє реального відвідування чи огляду?"
+              ],
+              "title": "Застосуйте й запитайте: Виставка з чіткими межами"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -510,7 +774,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-drones-ukraine-06", "kind": "mission" }
   },
   {
@@ -732,7 +996,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-drones-ukraine", "kind": "campaign" }
   }
 ]

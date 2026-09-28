@@ -6,7 +6,7 @@
     {
       "fields": { "name": { "en": "People Behind the Workshop", "uk": "Люди майстерні" } },
       "id": "social-drone-people-workshop",
-      "identity": "a459e6db7b8b95b9",
+      "identity": "997b66c31d4909ca",
       "kind": "campaign"
     },
     {
@@ -22,7 +22,7 @@
         "name": { "en": "Welcome to the Network", "uk": "Вітаємо у спільноті" }
       },
       "id": "social-drone-people-workshop-01",
-      "identity": "ab4dddf4875282ab",
+      "identity": "087d4d219577abb6",
       "kind": "mission"
     },
     {
@@ -38,7 +38,7 @@
         "name": { "en": "Many Ways to Contribute", "uk": "Різні способи долучитися" }
       },
       "id": "social-drone-people-workshop-02",
-      "identity": "c1685afd9718e4ab",
+      "identity": "e80e5c630bde1adf",
       "kind": "mission"
     },
     {
@@ -54,7 +54,7 @@
         "name": { "en": "Find the Source", "uk": "Знайдіть джерело" }
       },
       "id": "social-drone-people-workshop-03",
-      "identity": "51c60313eabdb3c1",
+      "identity": "c18830a118d71952",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "Ask a Useful Question", "uk": "Поставте корисне запитання" }
       },
       "id": "social-drone-people-workshop-04",
-      "identity": "903b0797478f30e9",
+      "identity": "aa00db09bc80f663",
       "kind": "mission"
     },
     {
@@ -86,7 +86,7 @@
         "name": { "en": "Care Before Certainty", "uk": "Уважність перед упевненістю" }
       },
       "id": "social-drone-people-workshop-05",
-      "identity": "689a90a48b9d456f",
+      "identity": "d9991c5f06a38772",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "The Community Mosaic", "uk": "Мозаїка спільноти" }
       },
       "id": "social-drone-people-workshop-06",
-      "identity": "41022361b100a0a0",
+      "identity": "3366822a28146890",
       "kind": "mission"
     }
   ],
