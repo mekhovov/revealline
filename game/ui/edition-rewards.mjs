@@ -965,7 +965,7 @@ export async function mountEditionRewards({
       dirty = true;
     }
     if (dirty) {
-      state = store.snapshot();
+      state = store.current();
       updateCosmetics();
       dataTitle.textContent = tr('backupTitle');
       dataNote.textContent = tr('backupNote');
