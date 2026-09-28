@@ -67,6 +67,8 @@ test('an unexpected runtime import fails closed before a package can be publishe
     await mkdir(path.dirname(target), { recursive: true });
     await writeFile(target, entry.bytes);
   }
+  const template = OPTIONAL_PRACTICE_ROOT + 'worker-template.mjs';
+  await writeFile(path.join(fixture, template), await readFile(path.join(root, template)));
   for (const locale of ['en', 'uk']) {
     const name = `game/locales/${locale}/errors.json`,
       target = path.join(fixture, name);

@@ -5300,5 +5300,18 @@
   "completionRewards.qrAlt": "QR code for {{url}}",
   "completionRewards.qrNote": "Scan to open this same resource on another device. The address above is the complete destination.",
   "completionRewards.qrUnavailable": "The QR image is unavailable. You can still use the resource link.",
-  "completionRewards.hideQr": "Hide QR code"
+  "completionRewards.hideQr": "Hide QR code",
+  "completionRewards.chooseExhibit": "Campaign exhibit",
+  "completionRewards.showCollectedPictures": "Show collected pictures",
+  "completionRewards.hideCollectedPictures": "Hide collected pictures",
+  "completionRewards.exhibitCollected": "{{collected}} of {{total}} discoveries collected",
+  "optionalPractice.title": "Optional flight practice",
+  "optionalPractice.note": "Explore separate practice packages. Opening a package launches its own window; installation is an explicit choice there. Practice never grants campaign wins.",
+  "optionalPractice.refresh": "Check available packages",
+  "optionalPractice.back": "Back to game",
+  "optionalPractice.loading": "Checking this host’s practice catalog…",
+  "optionalPractice.ready": "Choose a package to open its launcher.",
+  "optionalPractice.empty": "No optional practice packages are published on this host yet.",
+  "optionalPractice.unavailable": "The practice catalog is unavailable. Your game and progress remain here.",
+  "completionRewards.campaignFinale": "Campaign finale"
 }
