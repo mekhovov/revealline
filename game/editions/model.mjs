@@ -21,6 +21,11 @@ export const EDITION_BOOT_KEYS = Object.freeze([
 ]);
 const publications = ['public', 'restricted'];
 const modes = ['solo', 'versus', 'team'];
+// Only this module's completely validated, deeply frozen results are reusable.
+// A caller's frozen object or a mutable imported catalogue is never trusted.
+// Weak ownership lets an old presentation and all its derived closures retire.
+const validatedCatalogs = new WeakSet();
+const assetClosures = new WeakMap();
 const own = (source) =>
   boundedJSON(source, { maxBytes: 4 * 1024 * 1024, maxNodes: 100000, maxArray: 4096 });
 const text = (value, max = 512) =>
@@ -486,10 +491,13 @@ export function createEditionRuntimeCatalog(source) {
     );
     paths.set(asset.path, asset);
   }
-  return freezeEdition(result);
+  freezeEdition(result);
+  validatedCatalogs.add(result);
+  return result;
 }
 
 export function validateEditionRuntimeCatalog(source) {
+  if (validatedCatalogs.has(source)) return source;
   const value = own(source);
   fields(
     value,
@@ -526,6 +534,9 @@ export function resolveEditionSelection(source, { editionId, campaignId } = {}) 
  * The registry owns all references, including edition-specific additions. */
 export function resolveEditionAssets(source, { editionId } = {}) {
   const catalog = validateEditionRuntimeCatalog(source);
+  const selectedId = editionId ?? catalog.defaultEditionId;
+  const closures = assetClosures.get(catalog);
+  if (closures?.has(selectedId)) return closures.get(selectedId);
   const selection = resolveEditionSelection(catalog, { editionId });
   const byId = new Map(catalog.assets.map((asset) => [asset.id, asset]));
   const ids = new Set([
@@ -538,5 +549,9 @@ export function resolveEditionAssets(source, { editionId } = {}) {
     required(asset, 'An edition asset is unavailable.');
     asset.dependencies.forEach((dependency) => ids.add(dependency));
   }
-  return freezeEdition(catalog.assets.filter((asset) => ids.has(asset.id)));
+  const closure = freezeEdition(catalog.assets.filter((asset) => ids.has(asset.id)));
+  const cache = closures ?? new Map();
+  cache.set(selectedId, closure);
+  assetClosures.set(catalog, cache);
+  return closure;
 }
