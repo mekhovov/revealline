@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { CURRICULUM_LESSONS } from '../company-campaigns/curriculum-lessons.mjs';
 import { createCompanyLearningProofStore } from '../company-campaigns/learning-proofs.mjs';
 import { createLearningAttempt, reduceLearningAttempt } from '../company-campaigns/learning.mjs';
@@ -151,6 +152,23 @@ for (const lesson of CURRICULUM_LESSONS) {
 }
 
 test('all four exact pre-feedback editions retain prior promises and unchanged gameplay identities', async () => {
+  const recordedAfter = {
+    'social-drone-ua': {
+      path: 'game/editions/retained/social-drone-ua-before-mission-alt.json',
+      sha256: '13d119e2e5aa67bd6636a2d83d9e1374d792a05edc33c462654f19d965efe409',
+      revision: 6,
+    },
+    'ukraine-culture': {
+      path: 'game/editions/retained/ukraine-culture-before-textile-and-motion.json',
+      sha256: 'c7122ae0c8f17932986df03fc636c02900d83a30c235529789f0a90f253c7555',
+      revision: 6,
+    },
+    'fpv-learning': {
+      path: 'game/editions/retained/fpv-learning-before-textile-and-motion.json',
+      sha256: 'e50b6a3c0197f4944756942af314e31a76a2db559b505a23d310185e834a0289',
+      revision: 7,
+    },
+  };
   for (const edition of catalog.editions.filter((entry) =>
     ['social-drone-ua', 'victory-drones', 'ukraine-culture', 'fpv-learning'].includes(entry.id),
   )) {
@@ -160,16 +178,33 @@ test('all four exact pre-feedback editions retain prior promises and unchanged g
     assert.ok(history);
     const raw = await readFile(new URL(history.path, root), 'utf8');
     const { snapshot } = await validateRetainedPresentation(raw, { edition });
+    const after = recordedAfter[edition.id];
+    let afterFiles;
+    if (after) {
+      const afterBytes = await readFile(new URL(after.path, root));
+      assert.equal(createHash('sha256').update(afterBytes).digest('hex'), after.sha256);
+      const { snapshot: recorded } = await validateRetainedPresentation(
+        afterBytes.toString('utf8'),
+        { edition },
+      );
+      assert.equal(recorded.catalog.editions[0].revision, after.revision);
+      afterFiles = new Map(recorded.files.map((file) => [file.path, file.data]));
+    } else {
+      assert.equal(edition.id, 'victory-drones');
+      assert.equal(edition.revision, 5, 'Victory has no changed presentation in this media batch.');
+    }
     for (const descriptor of snapshot.catalog.campaigns) {
       const oldSource = snapshot.files.find((entry) => entry.path === descriptor.sourcePath).data;
-      const currentSource = await json(descriptor.sourcePath);
+      const currentSource =
+        afterFiles?.get(descriptor.sourcePath) ?? (await json(descriptor.sourcePath));
       assert.deepEqual(
         createRewardMissionBindings(currentSource),
         createRewardMissionBindings(oldSource),
       );
       assert.equal(oldSource.campaigns[0].discovery.feedback, undefined);
       const oldRewards = snapshot.files.find((entry) => entry.path === descriptor.rewardPath).data;
-      const currentRewards = await json(descriptor.rewardPath);
+      const currentRewards =
+        afterFiles?.get(descriptor.rewardPath) ?? (await json(descriptor.rewardPath));
       for (const reward of oldRewards) {
         assert.equal(reward.teaserImage, undefined);
         const next = currentRewards.find((entry) => entry.id === reward.id);
