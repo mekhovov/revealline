@@ -701,7 +701,7 @@ export function drawPresentedActor(
   image = null,
   geometry = null,
   bodyRecord = null,
-  { bodyOffset = null, showRotors = true } = {},
+  { bodyOffset = null, showRotors = true, showBodyCues = true } = {},
 ) {
   if (!frame) return;
   const colors = {
@@ -767,7 +767,7 @@ export function drawPresentedActor(
   if (image) ctx.scale(d / 28, d / 28);
   // Two small nose pixels give rounded/compact and uploaded bodies a stable
   // heading cue. They remain within the body envelope, never a targeting ray.
-  if (frame.role !== 'boss') {
+  if (showBodyCues && frame.role !== 'boss') {
     rect(ctx, colors.dark, -4, -13, 8, 4);
     rect(ctx, colors.light, -3, -12, 2, 2);
     rect(ctx, colors.light, 1, -12, 2, 2);
@@ -775,18 +775,22 @@ export function drawPresentedActor(
   ctx.restore();
   drawRoleBadge(ctx, frame, colors);
   if (offset) ctx.restore();
-  // The luminous center is the contact footprint; larger body art is cosmetic.
-  ctx.globalAlpha = 0.8;
-  ctx.strokeStyle = colors.dark;
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.arc(0, 0, frame.radius, 0, TAU);
-  ctx.stroke();
-  ctx.strokeStyle = colors.light;
-  ctx.lineWidth = 1;
-  ctx.stroke();
-  rect(ctx, colors.dark, -2, -2, 4, 4);
-  rect(ctx, colors.light, -1, -1, 2, 2);
+  // Ordinary callers retain the complete heading/contact treatment. A host may
+  // own these cues itself (Team pilots), avoiding duplicate ink over equipment.
+  // That host must keep its true contact position/radius and player identity.
+  if (showBodyCues) {
+    ctx.globalAlpha = 0.8;
+    ctx.strokeStyle = colors.dark;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(0, 0, frame.radius, 0, TAU);
+    ctx.stroke();
+    ctx.strokeStyle = colors.light;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    rect(ctx, colors.dark, -2, -2, 4, 4);
+    rect(ctx, colors.light, -1, -1, 2, 2);
+  }
   ctx.restore();
 }
 

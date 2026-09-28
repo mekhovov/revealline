@@ -16,8 +16,14 @@ import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { DIRECTIONS, clamp, createMotionState, validatePresets } from './motion.mjs';
 import { createManualSteering } from './steering.mjs';
 import { nextGridCenter } from './grid-motion.mjs';
-import { createAnimationState, advanceAnimation, validateAnimationRecipes } from './animation.mjs';
-import { paintCharacter } from './render-character.mjs';
+import {
+  createAnimationState,
+  advanceAnimation,
+  validateAnimationRecipes,
+  rotorAnchors,
+} from './animation.mjs';
+import { paintCharacter, fittedBodySize } from './render-character.mjs';
+import { createRotorEditor, rotorSamplingRecipe } from './rotor-editor.mjs';
 import {
   validateCollection,
   createProfile,
@@ -135,7 +141,9 @@ function mountMotionLab() {
   let liveAnimation = createAnimationState(),
     inspectionAnimation = createAnimationState();
   const recipeOverrides = new Map(),
-    rotorOverrides = new Map();
+    rotorOverrides = new Map(),
+    rigOverrides = new Map();
+  let rotorEditor = null;
   const storageKey = 'xonix.motion-lab.collection.v1';
   const profileOptions = { mode: 'lab', profileId: 'local-design' };
   let recoveryRaw = null,
@@ -604,6 +612,13 @@ function mountMotionLab() {
     };
   }
 
+  function bodyFor(characterId) {
+    const body = presets.characters[characterId];
+    return rigOverrides.has(characterId)
+      ? { ...body, rotors: rigOverrides.get(characterId) }
+      : body;
+  }
+
   function saveProfile() {
     try {
       // A corrupt/incompatible save is retained before the first explicit user mutation writes fresh data.
@@ -645,7 +660,7 @@ function mountMotionLab() {
   }
 
   function updateAnimationControls() {
-    const body = presets.characters[inspectedCharacter];
+    const body = bodyFor(inspectedCharacter);
     $('animation-recipe').value = recipeOverrides.get(inspectedCharacter) || body.animationRecipe;
     const recipe = recipeFor(inspectedCharacter),
       rotor = recipe.components.find((component) => component.type === 'rotors');
@@ -680,6 +695,7 @@ function mountMotionLab() {
             : 'tools:motionLab.cosmeticRecipe',
       ),
     );
+    rotorEditor?.refresh();
   }
 
   function componentName(type) {
@@ -789,6 +805,47 @@ function mountMotionLab() {
   }
 
   function setupCollection() {
+    rotorEditor = createRotorEditor({
+      elements: Object.fromEntries(
+        [
+          'root',
+          'hub',
+          'direction',
+          'phase',
+          'json',
+          'apply',
+          'reset',
+          'export',
+          'status',
+          'summary',
+        ].map((key) => [key, $(`rotor-editor-${key}`)]),
+      ),
+      getSelection: () => ({
+        id: inspectedCharacter,
+        body: bodyFor(inspectedCharacter),
+        recipe: recipeFor(inspectedCharacter),
+      }),
+      apply: (rotors) => {
+        if (rotors === null) rigOverrides.delete(inspectedCharacter);
+        else rigOverrides.set(inspectedCharacter, rotors);
+        // Cosmetic edits retain both animation clocks, pause and steering intent.
+        updateAnimationControls();
+        render();
+        readouts();
+      },
+      listen,
+      text: (key, values) => t(`tools:motionLab.rotorEditor.${key}`, values),
+      review: render,
+      download: (json, name) => {
+        const url = URL.createObjectURL(new Blob([json], { type: 'application/json' })),
+          link = document.createElement('a');
+        link.href = url;
+        link.download = name;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 0);
+      },
+    });
+    listen($('rotor-editor-guides'), 'change', render);
     setOptions(
       'collection-context',
       Object.fromEntries(collection.contexts.map((item) => [item.id, item])),
@@ -1410,7 +1467,7 @@ function mountMotionLab() {
       ctx.fillStyle = rgba(colors.accent, (particle.life / 0.42) * 0.55);
       ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
     }
-    const body = presets.characters[selection.character],
+    const body = bodyFor(selection.character),
       image = assetRecord(body.src);
     paintCharacter(ctx, {
       body,
@@ -1479,7 +1536,7 @@ function mountMotionLab() {
       inspectionCtx.stroke();
     }
     inspectionCtx.setTransform(155, 0, 0, 155, 200, 160);
-    const body = presets.characters[inspectedCharacter],
+    const body = bodyFor(inspectedCharacter),
       image = assetRecord(body.src);
     paintCharacter(inspectionCtx, {
       body,
@@ -1493,6 +1550,23 @@ function mountMotionLab() {
       pixel: 1 / 155,
       inspectionSlow: $('inspection-slow').checked,
     });
+    if (image.image && $('rotor-editor-guides').checked) {
+      const anchor = rotorAnchors(body)[rotorEditor?.selectedHub() ?? 0],
+        component = recipeFor(inspectedCharacter).components.find((item) => item.type === 'rotors');
+      if (anchor && component) {
+        const { width, height } = fittedBodySize(body, image.image);
+        inspectionCtx.save();
+        inspectionCtx.rotate((body.headingOffsetDegrees * Math.PI) / 180);
+        inspectionCtx.translate(anchor.x * width, anchor.y * height);
+        inspectionCtx.lineWidth = 1.5 / 155;
+        inspectionCtx.strokeStyle = colors.accent;
+        inspectionCtx.beginPath();
+        inspectionCtx.arc(0, 0, component.radius * anchor.radiusScale * width, 0, Math.PI * 2);
+        inspectionCtx.stroke();
+        inspectionCtx.strokeRect(-0.025, -0.025, 0.05, 0.05);
+        inspectionCtx.restore();
+      }
+    }
     inspectionCtx.setTransform(1, 0, 0, 1, 0, 0);
     const status = $('inspection-status');
     status.hidden = image.state === 'loaded';
@@ -1988,13 +2062,19 @@ function mountMotionLab() {
     );
     updateParticles(dt);
     const travel = { visualSpeed: state.visualSpeed, cruiseSpeed: motion.cruiseSpeed };
-    liveAnimation = advanceAnimation(liveAnimation, recipeFor(selection.character), travel, dt, {
-      paused,
-      reducedMotion,
-    });
+    liveAnimation = advanceAnimation(
+      liveAnimation,
+      rotorSamplingRecipe(bodyFor(selection.character), recipeFor(selection.character)),
+      travel,
+      dt,
+      {
+        paused,
+        reducedMotion,
+      },
+    );
     inspectionAnimation = advanceAnimation(
       inspectionAnimation,
-      recipeFor(inspectedCharacter),
+      rotorSamplingRecipe(bodyFor(inspectedCharacter), recipeFor(inspectedCharacter)),
       travel,
       dt,
       { paused, reducedMotion, inspectionSlow: $('inspection-slow').checked },
@@ -2149,6 +2229,7 @@ function mountMotionLab() {
   const stopLocale = onLocaleChange(() => {
     if (!disposed && state) {
       updateReduced();
+      rotorEditor?.refresh();
     }
   });
   const stopDisplay = display.subscribe((value) => {

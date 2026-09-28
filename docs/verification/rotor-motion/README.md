@@ -19,6 +19,10 @@ Keyboard interactions exercised Slow inspection, renderer selection, reduced eff
 
 The native candidate body detail is still more restrained than the approved concept. Team's centre/nose overlays visibly obscure equipment detail, as in the baseline. Resolve body richness and this overlay hierarchy before production adoption. Full-board edges/crowding, responsive play, memory/frame-time baseline, retained original journeys and public/device checks remain open. See [the exact source/evidence inventory](proportions-evidence.json). No asset collection, immutable production history, public version or release is changed by this candidate.
 
+## Subsequent combined batch
+
+The [game-feel batch evidence](../game-feel-batch/README.md) supersedes the open Team overlay item for source review: prepared pilots now keep a hollow functional contact outline and their external numbered badges without the duplicate face/centre cover. It also records Motion Lab rotor editing, the game-feel comparison and the current art-disposition queue. The historical hashes and screenshots above are preserved. Production asset adoption and full qualification remain open.
+
 ## Earlier C1-A browser raster review
 
 Serve the repository and open [review.html](review.html). This fixture decodes the exact fourteen compiled FPV player PNGs, uses the shipped character and Team actor drawing paths, and exposes Pause, reduced effects and controlled sampling. It does not instantiate a full game, measure real device FPS or alter player storage.
@@ -38,7 +42,6 @@ two failures: one obsolete test expected the removed outer rotor circle (correct
 to assert actual connected blade paths), and the production-review assertion below
 remains intentionally blocking canonical adoption. Do not add these overlapping
 counts together or describe the production guard as passed.
-
 
 - BoardPainter tests invoke the actual Solo/Versus painter with compiled geometry at 240/390/1152px, compare painted command streams, retain manual override precedence, and verify unchanged simulation/asset data.
 - Team tests cover both pilots, playing/paused/downed/reduced, actual connected polygons and alias bounds for 2/3/4 blades at 4/30/60/120 FPS including wrap.

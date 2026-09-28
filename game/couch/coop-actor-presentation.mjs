@@ -359,6 +359,9 @@ export function createCoopActorPresentation({
           bodyOffset: frame.bodyOffset,
           // Prepared geometry owns the motor hubs in every Team state.
           showRotors: true,
+          // The Team host paints one contact ring and an external numbered,
+          // shaped badge. Do not paint a second face/crosshair over the craft.
+          showBodyCues: kind !== 'pilot',
         });
     } finally {
       ctx.restore();

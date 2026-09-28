@@ -1,4 +1,5 @@
 import { imagePresentation } from '../../../game/presentation/runtime.mjs';
+import { drawPreparedPilotContact } from '../../../game/couch/coop-pilot-cues.mjs';
 import { paintCharacter } from '../../../authoring/motion-lab/render-character.mjs';
 import {
   createAnimationState,
@@ -120,14 +121,23 @@ function render(e, mode, diameter, heading, reduced, background = '#07111c') {
       reducedMotion: reduced,
       pixel: 1,
     });
-  } else
+  } else {
     drawPresentedActor(
       c,
       { ...e.frame, x: 24, y: 24, diameter, heading, bank: 0, tail: [], reduced },
       palette,
       e.image,
       e.geometry,
+      null,
+      { showBodyCues: e.enemy },
     );
+    if (!e.enemy) {
+      c.save();
+      c.translate(24, 24);
+      drawPreparedPilotContact(c, e.frame.radius, palette.accent, 1);
+      c.restore();
+    }
+  }
   return canvas;
 }
 let paused = false,

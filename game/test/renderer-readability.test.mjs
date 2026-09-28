@@ -478,3 +478,30 @@ test('legacy actors acquire no pressure display and malformed getters are not ex
   assert.equal(classicView(malformed), null);
   assert.equal(reads, 0);
 });
+
+test('a host-owned contact cue keeps prepared pilot equipment clear without changing its paint transform', () => {
+  const frame = createActorPresentation()
+    .sample([{ ...actor, type: 'team-pilot' }], { themeId: 'fpv', reduced: true })
+    .get(actor.id);
+  const original = structuredClone(frame),
+    image = { owned: 'prepared-pilot' },
+    usual = surface(),
+    delegated = surface();
+  drawPresentedActor(usual.ctx, frame, theme.palette, image);
+  drawPresentedActor(delegated.ctx, frame, theme.palette, image, null, null, {
+    showBodyCues: false,
+  });
+  const placements = (calls) =>
+    calls
+      .filter((c) => ['drawImage', 'translate', 'rotate', 'scale'].includes(c.op))
+      .map((c) => [c.op, ...c.args]);
+  assert.deepEqual(placements(delegated.calls), placements(usual.calls));
+  assert.ok(usual.calls.some((c) => c.op === 'arc' && c.args[2] === actor.radius * 16));
+  assert.equal(delegated.calls.filter((c) => c.op === 'arc').length, 0);
+  assert.equal(
+    delegated.calls.filter((c) => c.op === 'fillRect').length,
+    0,
+    'no synthetic eyes, crosshair or filled battery cover',
+  );
+  assert.deepEqual(frame, original);
+});
