@@ -5408,5 +5408,18 @@
   "completionRewards.qrAlt": "QR-код для {{url}}",
   "completionRewards.qrNote": "Відскануйте, щоб відкрити цей ресурс на іншому пристрої. Вище наведено повну адресу призначення.",
   "completionRewards.qrUnavailable": "QR-зображення недоступне. Ви можете скористатися посиланням на ресурс.",
-  "completionRewards.hideQr": "Приховати QR-код"
+  "completionRewards.hideQr": "Приховати QR-код",
+  "completionRewards.chooseExhibit": "Виставка кампанії",
+  "completionRewards.showCollectedPictures": "Показати зібрані зображення",
+  "completionRewards.hideCollectedPictures": "Сховати зібрані зображення",
+  "completionRewards.exhibitCollected": "Зібрано {{collected}} із {{total}} відкриттів",
+  "optionalPractice.title": "Додаткова практика польотів",
+  "optionalPractice.note": "Перегляньте окремі навчальні пакети. Пакет відкривається у власному вікні, де ви самі обираєте встановлення. Практика не дає перемог у кампаніях.",
+  "optionalPractice.refresh": "Перевірити доступні пакети",
+  "optionalPractice.back": "Назад до гри",
+  "optionalPractice.loading": "Перевіряємо каталог практики цього сайту…",
+  "optionalPractice.ready": "Виберіть пакет, щоб відкрити його сторінку запуску.",
+  "optionalPractice.empty": "На цьому сайті ще не опубліковано додаткових навчальних пакетів.",
+  "optionalPractice.unavailable": "Каталог практики недоступний. Ваша гра й прогрес залишаються тут.",
+  "completionRewards.campaignFinale": "Фінал кампанії"
 }

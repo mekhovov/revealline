@@ -6,7 +6,7 @@
     {
       "fields": { "name": { "en": "Voices That Travel", "uk": "Голоси, що мандрують" } },
       "id": "ukraine-voices-travel",
-      "identity": "93d4f3e31b6c19ce",
+      "identity": "8edbb27a7c06c065",
       "kind": "campaign"
     },
     {
@@ -22,7 +22,7 @@
         "name": { "en": "An Instrument and a Voice", "uk": "Інструмент і голос" }
       },
       "id": "ukraine-voices-travel-01",
-      "identity": "ddb6c982bbd06fe4",
+      "identity": "7a5d3cc5a0e733a7",
       "kind": "mission"
     },
     {
@@ -38,7 +38,7 @@
         "name": { "en": "A Practice Kept Together", "uk": "Практика, яку бережуть разом" }
       },
       "id": "ukraine-voices-travel-02",
-      "identity": "4453627be542b0c2",
+      "identity": "c1cc9faa215e9ac0",
       "kind": "mission"
     },
     {
@@ -54,7 +54,7 @@
         "name": { "en": "A Region Has Many Voices", "uk": "Регіон має багато голосів" }
       },
       "id": "ukraine-voices-travel-03",
-      "identity": "1e795c9e65349337",
+      "identity": "16576a13440b161a",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "Shchedryk Crosses an Ocean", "uk": "«Щедрик» перетинає океан" }
       },
       "id": "ukraine-voices-travel-04",
-      "identity": "d00c29a885c47327",
+      "identity": "9514b15ccc3da973",
       "kind": "mission"
     },
     {
@@ -86,7 +86,7 @@
         "name": { "en": "One Voice, Then the Group", "uk": "Один голос, потім гурт" }
       },
       "id": "ukraine-voices-travel-05",
-      "identity": "1692397aa704c0af",
+      "identity": "85e400aa9311fc3e",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "Carry the Context", "uk": "Передайте контекст" }
       },
       "id": "ukraine-voices-travel-06",
-      "identity": "e0af9f26fbe8c81f",
+      "identity": "c826fa82e7b12c75",
       "kind": "mission"
     }
   ],

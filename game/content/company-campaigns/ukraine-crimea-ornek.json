@@ -15,16 +15,68 @@
       "width": 960
     },
     {
-      "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
-      "bytes": 297277,
+      "alt": "Original illustrated consultation room with separate visitor and maker desks, plain thread and textile materials, and a blank paper ribbon connecting request and sketch.",
+      "bytes": 154495,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "ukraine-crimea-ornek-key-picture",
+      "height": 480,
+      "id": "ukraine-crimea-ornek-02-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/ukraine-crimea-ornek-key-v1.jpg",
+      "path": "editions/assets/discovery/ukraine-crimea-ornek-02-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b",
+      "sha256": "215c097a82066b44b65001c54db18a57bab0d56e72413cdec0d0348b1006802e",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated material archive with separate plain textile, abstract metal belt-like form and woven panel cabinets, each retaining a blank record card.",
+      "bytes": 148122,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-crimea-ornek-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-crimea-ornek-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "b20f4074396bbf1095cb2c2acdc245816de51edd313cda74029662eada08b351",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated quiet learning courtyard with two empty craft tables and separate stands for a tool silhouette, a plain loop sculpture and a blank book.",
+      "bytes": 187796,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-crimea-ornek-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-crimea-ornek-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "bf62229d15c47d7960e1bac8995ba9cfac76f8b832debcd9ccb380a7d0d53020",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated contemporary clay gallery with open research drawers, blank source cards, unornamented abstract ceramic forms and a separate maker panel.",
+      "bytes": 156173,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-crimea-ornek-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-crimea-ornek-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "a449f2633c14c4a4681e36f23e1a6b9b647771211714545bb23e6d73c32348ca",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated twilight reading court with six separate blank source-card stations connected by a brass path leading to a library.",
+      "bytes": 180624,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-crimea-ornek-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-crimea-ornek-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "1032314b0755ee10aeea0d317665b7b3dd932463ea3b9f64234f9c8f99126afd",
       "width": 960
     }
   ],
@@ -33,7 +85,7 @@
       "band": 5,
       "discovery": {
         "exhibitLayout": "mosaic",
-        "finaleRewardRef": { "id": "ukraine-crimea-ornek-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "ukraine-crimea-ornek-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "ukraine-crimea-ornek",
@@ -294,7 +346,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "ukraine-crimea-ornek-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-crimea-ornek-02-discovery", "revision": "2" },
         "routeDecision": "Use the paired consultation bays for short closures or take the diagonal open space between the two workstations. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -307,7 +359,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-crimea-ornek-key-picture",
+        "backgroundAssetId": "ukraine-crimea-ornek-02-picture",
         "themeId": "ukraine-crimea-ornek-theme"
       },
       "revision": "2",
@@ -369,7 +421,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "ukraine-crimea-ornek-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-crimea-ornek-03-discovery", "revision": "2" },
         "routeDecision": "Capture the three offset record bays in sequence or keep the lower foundation as a shared return for two larger loops. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -382,7 +434,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-crimea-ornek-key-picture",
+        "backgroundAssetId": "ukraine-crimea-ornek-03-picture",
         "themeId": "ukraine-crimea-ornek-theme"
       },
       "revision": "2",
@@ -452,7 +504,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "ukraine-crimea-ornek-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-crimea-ornek-04-discovery", "revision": "2" },
         "routeDecision": "Take the broad quiet courtyard first or use its sheltered side alcoves to make several short returns. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -465,7 +517,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-crimea-ornek-key-picture",
+        "backgroundAssetId": "ukraine-crimea-ornek-04-picture",
         "themeId": "ukraine-crimea-ornek-theme"
       },
       "revision": "2",
@@ -535,7 +587,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "ukraine-crimea-ornek-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-crimea-ornek-05-discovery", "revision": "2" },
         "routeDecision": "Preserve two short returns through the archive islands or capture the longer contemporary wing after checking the moving boundary. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -548,7 +600,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-crimea-ornek-key-picture",
+        "backgroundAssetId": "ukraine-crimea-ornek-05-picture",
         "themeId": "ukraine-crimea-ornek-theme"
       },
       "revision": "2",
@@ -618,7 +670,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "ukraine-crimea-ornek-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-crimea-ornek-06-discovery", "revision": "2" },
         "routeDecision": "Secure the small source alcoves before the large exhibit loop or connect the two central foundations to retain a shorter final return. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -631,7 +683,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-crimea-ornek-key-picture",
+        "backgroundAssetId": "ukraine-crimea-ornek-06-picture",
         "themeId": "ukraine-crimea-ornek-theme"
       },
       "revision": "2",
@@ -646,9 +698,9 @@
       "format": "PackDesignV1",
       "id": "ukraine-crimea-ornek-pack",
       "name": "Crimea: Ornament and Community",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }

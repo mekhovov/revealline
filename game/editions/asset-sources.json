@@ -5180,6 +5180,1411 @@
         }
       ],
       "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-crimea-ornek-02-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-crimea-ornek-02-v1.jpg",
+      "sha256": "215c097a82066b44b65001c54db18a57bab0d56e72413cdec0d0348b1006802e",
+      "bytes": 154495,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Composition for Someone — original consultation room",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium cultural discovery game, wide 2:1 composition. Create a beautiful fictional exhibition planning room seen diagonally through two open consultation bays. At left, a visitor’s small table holds a closed teal notebook, a blank cream request card and one simple warm lamp. At right, a maker’s wide wooden desk holds a completely blank sketch sheet, several plain coloured thread spools and a folded unpatterned ivory textile. The memorable focal idea is a wide flowing ivory paper ribbon crossing the open space from the request card to the sketch sheet, suggesting a conversation becoming a thoughtful plan, but with no symbols or writing on it. A plain textile silhouette hangs in the background beside its own blank caption stand. Curved shelving, soft side-window light and a glimpse of a quiet garden add depth; the route through the room remains broad and inviting. No actual embroidered panel or symbolic flower composition is shown. The composition must be visually rich and intimate through light, perspective and tactile materials, not through invented ethnographic decoration. Use sophisticated stylized 3D storybook game art, visibly painted material textures, warm limestone, deep teal and muted turquoise with brass highlights, elegant contemporary exhibition architecture and cinematic light. Keep the complete focal objects within the central 80 percent. This is a fictional contemporary exhibition supporting a chapter about Crimean Tatar knowledge, not a historic reconstruction. No writing, letters, numbers, dates, signatures, real people, logos, flags, UI, borders or watermarks. No fabricated portrait, sacred imagery, copied museum object or photograph, pseudo-Ornek ornament, named artist imitation or invented universal symbolism. Exact records and community attribution are provided separately as localized source-linked text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-9cdf56fc-339a-4c4d-a373-b773237eeb57.png",
+        "sha256": "3cd420ffafa1bce60161391a40c52f5b335091f25679d6a9d981addaedd7cb06",
+        "bytes": 2308082,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated consultation room with separate visitor and maker desks, plain thread and textile materials, and a blank paper ribbon connecting request and sketch.",
+          "context": "Original generated fictional exhibition supporting source-linked Crimean Tatar learning. It does not reproduce or authenticate Ornek ornament, documented museum objects, named makers’ work, historical architecture or community events."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована кімната розмови з окремими столами відвідувача й майстра, простими нитками та тканиною і порожньою паперовою стрічкою між задумом та ескізом.",
+          "context": "Оригінальна згенерована вигадана виставка для навчання про кримськотатарську спадщину з окремими джерелами. Вона не відтворює й не засвідчує автентичність Орьнеку, музейних предметів, творів названих майстрів, історичної архітектури чи подій спільноти."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.ornek-crimea.com/stories-of-crimea-ua/stories-miras-ornek",
+          "role": "The separate learning card attributes the maker, object record or teaching account to MIRAS/Alem. The generated room and study objects are original illustrative designs and reproduce no source image."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-crimea-ornek-03-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-crimea-ornek-03-v1.jpg",
+      "sha256": "b20f4074396bbf1095cb2c2acdc245816de51edd313cda74029662eada08b351",
+      "bytes": 148122,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Read the Object Record — original material archive",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium cultural discovery game, wide 2:1 composition. Create a striking fictional museum reading room with three separated glass-fronted material cabinets arranged in a shallow zigzag. One cabinet holds folded plain ivory textile, one holds a simple unengraved silver curved belt-like silhouette on deep teal cloth, and one holds a plain woven panel. Each cabinet has its own completely blank cream record card at a different height, never a shared label. Near the foreground an enlarged blank object-record card rests beside a brass magnifier on a wooden reading desk; it is the visual focal reveal linking careful observation with documentary context. The belt-like form is deliberately abstract and undecorated, not a replica of a Crimean qushaq or a museum artefact. Bright grazing light separates glass, metal and cloth textures, with quiet teal archive drawers and an open arch beyond. Make the three material bays distinct and readable without filling the room with objects. Use sophisticated stylized 3D storybook game art, visibly painted material textures, warm limestone, deep teal and muted turquoise with brass highlights, elegant contemporary exhibition architecture and cinematic light. Keep the complete focal objects within the central 80 percent. This is a fictional contemporary exhibition supporting a chapter about Crimean Tatar knowledge, not a historic reconstruction. No writing, letters, numbers, dates, signatures, real people, logos, flags, UI, borders or watermarks. No fabricated portrait, sacred imagery, copied museum object or photograph, pseudo-Ornek ornament, named artist imitation or invented universal symbolism. Exact records and community attribution are provided separately as localized source-linked text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-36d9ec27-72ac-43fa-85c1-43a39923564a.png",
+        "sha256": "a4445c6cb90160247695ff6c2807227045e4fc33058aa644453ca39147a9e2ed",
+        "bytes": 2245388,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated material archive with separate plain textile, abstract metal belt-like form and woven panel cabinets, each retaining a blank record card.",
+          "context": "Original generated fictional exhibition supporting source-linked Crimean Tatar learning. It does not reproduce or authenticate Ornek ornament, documented museum objects, named makers’ work, historical architecture or community events."
+        },
+        "uk": {
+          "alt": "Оригінальний ілюстрований архів матеріалів з окремими вітринами простої тканини, абстрактної металевої поясоподібної форми й тканого панно, кожна зі своєю порожньою карткою.",
+          "context": "Оригінальна згенерована вигадана виставка для навчання про кримськотатарську спадщину з окремими джерелами. Вона не відтворює й не засвідчує автентичність Орьнеку, музейних предметів, творів названих майстрів, історичної архітектури чи подій спільноти."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.ornek-crimea.com/stories-of-crimea-ua/stories-miras-ornek",
+          "role": "The separate learning card attributes the maker, object record or teaching account to MIRAS/Alem. The generated room and study objects are original illustrative designs and reproduce no source image."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-crimea-ornek-04-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-crimea-ornek-04-v1.jpg",
+      "sha256": "bf62229d15c47d7960e1bac8995ba9cfac76f8b832debcd9ccb380a7d0d53020",
+      "bytes": 187796,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Knowledge Has Teachers — original learning courtyard",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium cultural discovery game, wide 2:1 composition. Create a luminous, spacious fictional learning courtyard at peaceful morning light. Two empty craft tables face each other across a wide sunlit central path: one older dark wooden table and one lighter modern table. Between them are exactly three separate low exhibition stands: a simple tool silhouette under glass, an invented plain silver loop sculpture with no ornament, and an open book with entirely blank ivory pages. The memorable visual relationship is tool, result and explanation held separately, with the two tables suggesting shared learning. A folded teal cloth, a few harmless plain wooden study forms and a closed box add tactile detail. Soft flowering branches cast shadows on limestone walls; low turquoise tiles and a quiet fountain at the far edge produce a generous calm atmosphere. Do not depict real working metalwork, heated tools or a fabrication tutorial. Do not fabricate Ayder Asanov, his family, his workshop or a historical scene. Keep the empty tables and three stands visibly central and the layout welcoming rather than dense. Use sophisticated stylized 3D storybook game art, visibly painted material textures, warm limestone, deep teal and muted turquoise with brass highlights, elegant contemporary exhibition architecture and cinematic light. Keep the complete focal objects within the central 80 percent. This is a fictional contemporary exhibition supporting a chapter about Crimean Tatar knowledge, not a historic reconstruction. No writing, letters, numbers, dates, signatures, real people, logos, flags, UI, borders or watermarks. No fabricated portrait, sacred imagery, copied museum object or photograph, pseudo-Ornek ornament, named artist imitation or invented universal symbolism. Exact records and community attribution are provided separately as localized source-linked text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-94a03fb6-1711-4d8a-a994-e1b53b0d54ce.png",
+        "sha256": "f10a40b65c9a12f1d079d328e3c0070883cca926c449127d4ed226bea756d6e0",
+        "bytes": 2570115,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated quiet learning courtyard with two empty craft tables and separate stands for a tool silhouette, a plain loop sculpture and a blank book.",
+          "context": "Original generated fictional exhibition supporting source-linked Crimean Tatar learning. It does not reproduce or authenticate Ornek ornament, documented museum objects, named makers’ work, historical architecture or community events."
+        },
+        "uk": {
+          "alt": "Оригінальне ілюстроване спокійне навчальне подвір’я з двома порожніми робочими столами та окремими підставками для силуету інструмента, простої кільцевої скульптури й порожньої книги.",
+          "context": "Оригінальна згенерована вигадана виставка для навчання про кримськотатарську спадщину з окремими джерелами. Вона не відтворює й не засвідчує автентичність Орьнеку, музейних предметів, творів названих майстрів, історичної архітектури чи подій спільноти."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.ornek-crimea.com/stories-of-crimea-ua/stories-miras-ornek",
+          "role": "The separate learning card attributes the maker, object record or teaching account to MIRAS/Alem. The generated room and study objects are original illustrative designs and reproduce no source image."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-crimea-ornek-05-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-crimea-ornek-05-v1.jpg",
+      "sha256": "a449f2633c14c4a4681e36f23e1a6b9b647771211714545bb23e6d73c32348ca",
+      "bytes": 156173,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Living Author’s Voice — original clay and archive gallery",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium cultural discovery game, wide 2:1 composition. Create an imaginative contemporary ceramics gallery where research and individual authorship meet. At left a tall dark-teal archive cabinet has several shallow drawers partly open, showing only blank cream source cards and plain paper material studies. At right, three beautifully lit abstract unornamented clay sculptures stand on low limestone islands: a smooth asymmetrical bowl, a rounded hollow vessel and an elegant curved clay sheet. They are entirely new sculptural designs with no decorative motifs. A single softly illuminated blank maker-label panel between cabinet and display is the memorable connection. Deep teal, turquoise, clay ochre and warm brass accents, bright side light, textured hand-worked surfaces and spacious gallery paths. Do not copy Rustem Skybin’s Quru Isar designs, Mamut Churlu’s research imagery, an authentic Ornek motif or a real workshop. No pseudo-ethnic ornament; let the sculptural forms, archive depth and elegant light provide beauty. Premium stylized 3D storybook game concept art with visible hand-painted material texture, polished large silhouettes and cinematic layered light, original fictional architecture. Keep focal objects complete within the central 80 percent. No writing, letters, numbers, dates, signatures, real people, logos, flags, UI, borders or watermarks. No copied photograph, museum object, named artist imitation, fabricated endorsement or invented universal cultural meanings. The game presents exact source records separately as localized text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-7f85dc42-2a09-4b4e-8328-1e4ce37e6b77.png",
+        "sha256": "6e353bef2cd480a99b55ba8a98743542ac9b92d3799b65448cf9876664e24f79",
+        "bytes": 2415674,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated contemporary clay gallery with open research drawers, blank source cards, unornamented abstract ceramic forms and a separate maker panel.",
+          "context": "Original generated fictional exhibition introducing source-linked Crimean Tatar knowledge. The invented unornamented displays do not reproduce or authenticate Ornek compositions, named artists’ work, historic buildings or community events."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована галерея сучасної кераміки з відкритими архівними шухлядами, порожніми картками, абстрактними неорнаментованими формами та окремою панеллю автора.",
+          "context": "Оригінальна згенерована вигадана виставка, що знайомить із кримськотатарськими знаннями через окремі джерела. Вигадані неорнаментовані експонати не відтворюють і не засвідчують автентичність Орьнеку, творів названих митців, історичних будівель чи подій спільноти."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.rustemskybin.com/pages/about",
+          "role": "The separate learning card attributes the artist’s own biography; generated clay forms and gallery are original, not a copy or endorsement of Quru Isar."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-crimea-ornek-06-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-crimea-ornek-06-v1.jpg",
+      "sha256": "1032314b0755ee10aeea0d317665b7b3dd932463ea3b9f64234f9c8f99126afd",
+      "bytes": 180624,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Keep the Voices Together — original six-part reading trail",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium cultural discovery game, wide 2:1 composition. Create a memorable fictional exhibition finale as a broad twilight reading court that opens into a glowing library. Exactly six distinct source-card stations form a gently curving trail: each low stand has a blank cream card and one small original study object, respectively plain cloth, thread spool, smooth metal loop, blank book, unornamented clay bowl and folded blank paper. These objects are conceptual learning markers, not ethnographic artefacts. An elegant continuous brass floor inlay connects the stands visually without arrows or symbols, ending at the library doorway. The focal reveal is the complete six-stop trail with each source kept visible and separate. Turquoise walls, deep teal shadows, warm brass lamps, ivory pages, a quiet tree and luminous bookshelves produce an inspiring sense of completion. Contemporary invented architecture only; no real museum reconstruction, sacred imagery or pseudo-Ornek pattern. Leave open paths and generous visible floor around the six displays. Premium stylized 3D storybook game concept art with visible hand-painted material texture, polished large silhouettes and cinematic layered light, original fictional architecture. Keep focal objects complete within the central 80 percent. No writing, letters, numbers, dates, signatures, real people, logos, flags, UI, borders or watermarks. No copied photograph, museum object, named artist imitation, fabricated endorsement or invented universal cultural meanings. The game presents exact source records separately as localized text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-faae306f-2d57-4747-90ab-29854e8bf33c.png",
+        "sha256": "5cf0581c5890fbd5c485b2d3fcb31e945e54b62acf8a5132ffd45d767d35ad3f",
+        "bytes": 2471691,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated twilight reading court with six separate blank source-card stations connected by a brass path leading to a library.",
+          "context": "Original generated fictional exhibition introducing source-linked Crimean Tatar knowledge. The invented unornamented displays do not reproduce or authenticate Ornek compositions, named artists’ work, historic buildings or community events."
+        },
+        "uk": {
+          "alt": "Оригінальний ілюстрований вечірній двір читання з шістьма окремими станціями порожніх карток, поєднаних латунною доріжкою до бібліотеки.",
+          "context": "Оригінальна згенерована вигадана виставка, що знайомить із кримськотатарськими знаннями через окремі джерела. Вигадані неорнаментовані експонати не відтворюють і не засвідчують автентичність Орьнеку, творів названих митців, історичних будівель чи подій спільноти."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.ornek-crimea.com/",
+          "role": "Context for the separate lesson about Alem and community stewardship. This original exhibition is not an image of an actual community event or cultural object."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-voices-travel-01-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-voices-travel-01-v1.jpg",
+      "sha256": "efb920278d7961fbffd8f13ec2cab5b81d6ec99353f3da24eef5f1b639ccffca",
+      "bytes": 160887,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "An Instrument and a Voice — original evening listening room",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium cultural discovery game, wide 2:1 composition. Create an evocative evening music exhibition with an intimate instrument alcove opening onto a broad listening court. A simple abstract wooden plucked-string instrument silhouette rests on an elegant stand at left, while a separate low seat and an entirely blank performer card sit at right. A softly glowing curved amber ribbon of light links their two blank record cards, making instrument and human practice inseparable without depicting a real performer. The instrument is a conceptual silhouette, not a technical reconstruction of a named kobza, bandura or wheel lyre; avoid complex mechanisms and detailed instructional anatomy. Violet alcoves, honey-coloured wood, deep midnight blue walls, soft hanging ivory sound panels and distant warm open shelves create a rich original concert-gallery world. A second subtle bowed string silhouette in the background suggests variety but must not copy a museum object. Clear broad passages and a small raised stage invite discovery, with generous dark-to-light contrast. No actual recording interface, musical notation, lyrics, historical portrait, ethnographic costume or fabricated tradition bearer. Premium stylized 3D storybook game concept art with visible hand-painted material texture, polished large silhouettes and cinematic layered light, original fictional architecture. Keep focal objects complete within the central 80 percent. No writing, letters, numbers, dates, signatures, real people, logos, flags, UI, borders or watermarks. No copied photograph, museum object, named artist imitation, fabricated endorsement or invented universal cultural meanings. The game presents exact source records separately as localized text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-597ae0c6-9b35-4efe-bf17-5b9ede25ffa1.png",
+        "sha256": "3ab035fceb2f41cd0c2bb080ea9543fc3c623f47672143b8af2fcd7fecfa1071",
+        "bytes": 2367396,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated evening listening room with an abstract wooden string-instrument silhouette, separate empty performer seat and blank cards connected by warm light.",
+          "context": "Original generated conceptual music exhibition, not a historical performance, portrait or technical instrument diagram. Named musical practices and their bearers are documented separately through source-linked learning text."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована вечірня зала слухання з абстрактним силуетом дерев’яного струнного інструмента, окремим порожнім місцем виконавця та картками, поєднаними теплим світлом.",
+          "context": "Оригінальна згенерована концептуальна музична виставка, а не історичне виконання, портрет чи технічна схема інструмента. Названі музичні практики та їхніх носіїв описано окремо в навчальному тексті з джерелами."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ich.unesco.org/en/BSP/safeguarding-programme-of-kobza-and-wheel-lyre-tradition-02136",
+          "role": "Source for the separate kobza and wheel-lyre safeguarding lesson. No source photograph, recording or specific instrument specimen is reproduced."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-voices-travel-02-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-voices-travel-02-v1.jpg",
+      "sha256": "656e823c9d7f3189a68fa68f0473f06a8d2a2607a89d4b5aed013a06248eb888",
+      "bytes": 184771,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Practice Kept Together — original rehearsal library",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create a welcoming fictional rehearsal library with three connected well-spaced rooms visible through wide open arches. In the nearest room, three empty wooden chairs form an inclusive open semicircle around a low round table holding entirely blank cream learning cards. A second room has shelves of closed unlabelled books and one empty instrument stand; a third has a small empty performance platform with soft curved ivory acoustic panels. Three amber floor-light ribbons lead between people’s seating, learning shelves and performance space, preserving a broad unobstructed central path and avoiding steps or narrow gates. A tall window with a quiet starry blue sky, violet cushions, visible wood grain and warm lanterns make the room intimate and inspiring. Represent a living practice through connected spaces for people, skills and opportunities, without portraying a particular guild, real teacher or historical scene. Rich stylized 3D storybook game art with painted tactile textures, honey-coloured wood, violet, midnight blue and warm amber light. Make the complete focal display readable within the central 80 percent; strong layered depth and elegant spacious composition. This is a fictional conceptual exhibition, not a historical photograph. No writing, letters, numbers, dates, musical notation, lyrics, real people, portraits, historical costumes, logos, UI, borders or watermarks. No copied museum or concert photograph, named artist imitation or fabricated recording. Source-linked histories and recordings appear separately in the game.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-61ab2ad4-0963-4c86-af05-d92bb3474043.png",
+        "sha256": "31d0ed383686302477f2c5a64018e19614f446584de15036de6ca1db79844f6f",
+        "bytes": 2659130,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated rehearsal library with three open connected rooms, empty seats, learning shelves and a small performance platform linked by warm light.",
+          "context": "Original generated conceptual music exhibition. It does not document an actual performance, performer, historical venue or recording session. Musical practices and recorded events are described separately through their source-linked records."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована репетиційна бібліотека з трьома відкритими поєднаними кімнатами, порожніми місцями, навчальними полицями та малою сценою, зв’язаними теплим світлом.",
+          "context": "Оригінальна згенерована концептуальна музична виставка. Вона не документує справжнє виконання, виконавця, історичну залу чи запис. Музичні практики та події описано окремо через записи з джерелами."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ich.unesco.org/en/BSP/safeguarding-programme-of-kobza-and-wheel-lyre-tradition-02136",
+          "role": "Context for the separate lesson about people, practice and learning opportunities; no specific guild, instrument collection or performer is depicted."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-voices-travel-03-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-voices-travel-03-v1.jpg",
+      "sha256": "cc9dd354676ea8bfa74670b61a4a77eb8c20050f18f5ff8c9840f2805c629fa5",
+      "bytes": 196019,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Region Has Many Voices — original song-archive court",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create a beautiful original regional song archive built around a generous open central courtyard. Three separate low reading stations have differently shaped blank cream group cards and small unlabelled sound-ribbon sculptures; one amber ribbon, one muted lilac and one soft blue ribbon retain separate identities as they curve above their own stands. In the distance, large windows open onto an entirely invented broad river-and-grassland landscape at blue hour. The view gives atmosphere but is not a map, exact Dnipropetrovsk site or documentary recording location. Archive drawers along one wall and a wide violet stone path make the setting feel like a place to explore. The memorable visual idea is several equal voices retaining their own record, not one ribbon overpowering the rest. No battles, military objects, ethnic costumes, lyrics, national borders or staged group portraits. Rich stylized 3D storybook game art with painted tactile textures, honey-coloured wood, violet, midnight blue and warm amber light. Make the complete focal display readable within the central 80 percent; strong layered depth and elegant spacious composition. This is a fictional conceptual exhibition, not a historical photograph. No writing, letters, numbers, dates, musical notation, lyrics, real people, portraits, historical costumes, logos, UI, borders or watermarks. No copied museum or concert photograph, named artist imitation or fabricated recording. Source-linked histories and recordings appear separately in the game.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-0e55c153-e869-4f33-ab24-435c79c46165.png",
+        "sha256": "309e37734ea699761798c77f50d066ddcc51a7ba9faa7bc99a22103fadd49407",
+        "bytes": 2587134,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated song-archive courtyard with three separate blank group cards and equal abstract sound ribbons, beside an invented river landscape.",
+          "context": "Original generated conceptual music exhibition. It does not document an actual performance, performer, historical venue or recording session. Musical practices and recorded events are described separately through their source-linked records."
+        },
+        "uk": {
+          "alt": "Оригінальний ілюстрований двір пісенного архіву з трьома окремими порожніми картками гуртів та рівноправними абстрактними звуковими стрічками біля вигаданого річкового краєвиду.",
+          "context": "Оригінальна згенерована концептуальна музична виставка. Вона не документує справжнє виконання, виконавця, історичну залу чи запис. Музичні практики та події описано окремо через записи з джерелами."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ich.unesco.org/en/USL/cossacks-songs-of-dnipropetrovsk-region-01194",
+          "role": "The separate lesson concerns the specifically named singing communities. The image is an invented archive, not a record of their performers or region boundaries."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-voices-travel-04-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-voices-travel-04-v1.jpg",
+      "sha256": "ba6a6aadc7859ace1865c0889b9215f1b8d264e85484e22a10a327568f0702e8",
+      "bytes": 177391,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Shchedryk Crosses an Ocean — original concert foyer",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create an original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an expansive fictional concert foyer with a spectacular ocean-blue curved window and calm golden morning light. Three separate blank ivory programme cards rest on a long polished wooden reading table near the centre, each on its own small stand; an elegant unmarked closed music folder lies nearby. The sweeping window shows an imagined ocean horizon and a tiny distant passenger-ship silhouette, suggesting a work travelling without illustrating a documented voyage. Broad amber-lit stairs far in the background lead to an open concert hall, while the primary foreground floor is wide and clear. Use violet velvet alcoves, brass rail details, honey-coloured wood, a soft linen banner without writing and spacious reflections. The image is an invented contemporary storybook foyer, not Carnegie Hall or a reconstruction of the 1922 concert. No performers, faces, original programmes, scores, lyrics, dates or famous architecture. The memorable reveal is the luminous ocean opening behind three separate kinds of record: work, performers and event, represented only by blank cards. Rich stylized 3D storybook game art with painted tactile textures, honey-coloured wood, violet, midnight blue and warm amber light. Make the complete focal display readable within the central 80 percent; strong layered depth and elegant spacious composition. This is a fictional conceptual exhibition, not a historical photograph. No writing, letters, numbers, dates, musical notation, lyrics, real people, portraits, historical costumes, logos, UI, borders or watermarks. No copied museum or concert photograph, named artist imitation or fabricated recording. Source-linked histories and recordings appear separately in the game.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-badb5c12-1dc6-4f5e-b2cf-d30e9b202830.png",
+        "sha256": "96ad32375664ec57ddd735afb2c7a3b05387d686b0eade23c4c94a6f0edefe69",
+        "bytes": 2508423,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated spacious concert foyer with an ocean-blue window, a distant imagined ship and three separate blank programme cards.",
+          "context": "Original generated conceptual music exhibition. It does not document an actual performance, performer, historical venue or recording session. Musical practices and recorded events are described separately through their source-linked records."
+        },
+        "uk": {
+          "alt": "Оригінальне ілюстроване просторе концертне фоє з океанським синім вікном, далеким вигаданим кораблем і трьома окремими порожніми картками програм.",
+          "context": "Оригінальна згенерована концептуальна музична виставка. Вона не документує справжнє виконання, виконавця, історичну залу чи запис. Музичні практики та події описано окремо через записи з джерелами."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ui.org.ua/en/sectors-en/carol-of-the-bells-at-carnegie-hall/",
+          "role": "The separate lesson attributes the documented 1922 concert. This original foyer and imagined ocean vista reproduce no actual concert photograph, programme, performers or venue."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-meet-aircraft-02-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-meet-aircraft-02-v1.jpg",
+      "sha256": "ecd4d5e5281b903a965724a4fa0632f6a161b1ad57f840cb446e0dc36f150d33",
+      "bytes": 164826,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Motion Makers — separate motor and propeller studies",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original full-bleed mission reward art for a premium civilian science-adventure game, very wide 2:1 landscape composition. Sophisticated stylized 3D storybook illustration with painterly textures, clear material contrasts and beautiful cinematic light. Visibly fictional educational exhibit, not a photograph or an engineering diagram. Maintain the campaign's midnight-navy, cyan-glass and warm-amber museum identity, but create one distinctive close-up spatial idea. Complete important focal objects inside central 80%; no image borders. No writing, numbers, model names, logos, UI, watermark, pin labels, functional wiring, component specifications or assembly steps. No batteries connected to anything, powered bench tests, weapons or military imagery. Source-linked lessons explain facts separately; all depicted hardware is an inert invented role model, not a manufacturer's device.\nScene: A dazzling close-up motion exhibit spread across four cyan-glass pedestals in a shallow curved line. Foreground hero: one oversized golden cylindrical motor study rests fully separate from one broad two-bladed ivory propeller study on its own adjacent stand, with a generous visible gap and no shaft connection. Three simpler paired studies recede softly behind, all detached and stationary. A circular amber sculptural ring behind the motor suggests rotation; a separate sweeping translucent cyan ribbon above the detached propeller evokes moving air without implying a powered demonstration. A rounded navy gallery wall, angled ceiling skylight and fine dust-like highlights add depth. Use low three-quarter viewpoint with exquisite copper, satin ivory and blue-glass textures. The contrast between the round motor and long propeller is the memorable discovery. No live aircraft, no spinning parts, no electrical leads, no labels and no exploded assembly alignment. This is a quiet museum comparison of two different roles.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-80102398-f0fb-4bf6-a687-b37dc3426ba5.png",
+        "sha256": "2d38c5fd7f79c49921747a3f4115026a474c22e0068fdae194267d18f2d2c588",
+        "bytes": 2353027,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Separate inert motors and unmounted propellers sit on cyan display stations beneath sculptural airflow ribbons.",
+          "context": "Original fictional civilian science exhibit. Objects, ribbons and architectural relationships illustrate component roles, not physical wiring, actual products, compatibility, assembly instructions or permission for a powered test."
+        },
+        "uk": {
+          "alt": "Окремі неактивні двигуни й незмонтовані пропелери лежать на блакитних стендах під скульптурними стрічками повітряного потоку.",
+          "context": "Оригінальна уявна цивільна наукова виставка. Предмети, стрічки й просторові зв’язки ілюструють ролі компонентів, а не фізичну проводку, реальні вироби, сумісність, інструкції зі складання чи дозвіл на випробування під живленням."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.nasa.gov/stem-content/the-science-behind-quadcopters/",
+          "role": "Conceptual research for the separately authored motor/propeller lesson; no NASA image copied."
+        },
+        {
+          "url": "https://betaflight.com/docs/wiki/guides/current/Safety",
+          "role": "Props-off bench context for the separate lesson; no operational procedure depicted."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-meet-aircraft-03-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-meet-aircraft-03-v1.jpg",
+      "sha256": "38a92e62c73aacdcda4f9e22cc853f22609f8683a7c08ac4b12fc1271d639c42",
+      "bytes": 164334,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "The ESC — command and energy gallery",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original full-bleed mission reward art for a premium civilian science-adventure game, very wide 2:1 landscape composition. Sophisticated stylized 3D storybook illustration with painterly textures, clear material contrasts and beautiful cinematic light. Visibly fictional educational exhibit, not a photograph or an engineering diagram. Maintain the campaign's midnight-navy, cyan-glass and warm-amber museum identity, but create one distinctive close-up spatial idea. Complete important focal objects inside central 80%; no image borders. No writing, numbers, model names, logos, UI, watermark, pin labels, functional wiring, component specifications or assembly steps. No batteries connected to anything, powered bench tests, weapons or military imagery. Source-linked lessons explain facts separately; all depicted hardware is an inert invented role model, not a manufacturer's device.\nScene: A dramatic amber-and-cyan chamber with two offset luminous exhibition aisles leading toward one central simple electronics-shaped sculpture, an inert dark ceramic square on a low navy plinth. Its top has a few smooth abstract blocks and no conductive traces, real connectors or identifying marks. Along one side a very thin cyan ribbon of light travels through independent glass rings, while on the other a broad warm-amber ribbon curves through a separate set of low arches. The two ribbons approach the central sculpture but never attach like cables. On a distinct far-right pedestal sits an unpowered gold motor study, spatially separated, with no propeller. Perspective makes the contrasting thin information ribbon and broad energy ribbon unmistakable as visual metaphors. Elegant polished floor, overhead soft light, intimate wide composition, beautiful original game-world atmosphere. Do not encode a circuit or depict a real ESC. No physical wires, voltage numbers, arrow labels, battery, heat or sparks.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-af64b229-3e25-4632-9404-40450ffc407a.png",
+        "sha256": "5da19c073f86080d9ee3efc38b4c8a5c4e62a25a98cce6a7ae096f0a25e5bb83",
+        "bytes": 2253796,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional ESC role sculpture stands between separate thin cyan and broad amber light ribbons, with an inert motor model apart from it.",
+          "context": "Original fictional civilian science exhibit. Objects, ribbons and architectural relationships illustrate component roles, not physical wiring, actual products, compatibility, assembly instructions or permission for a powered test."
+        },
+        "uk": {
+          "alt": "Уявна скульптура ролі ESC стоїть між окремими тонкою блакитною й широкою бурштиновою стрічками світла; неактивна модель двигуна розміщена окремо.",
+          "context": "Оригінальна уявна цивільна наукова виставка. Предмети, стрічки й просторові зв’язки ілюструють ролі компонентів, а не фізичну проводку, реальні вироби, сумісність, інструкції зі складання чи дозвіл на випробування під живленням."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware",
+          "role": "Conceptual role research for a separate source-linked learning card; no source image or physical wiring copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-meet-aircraft-04-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-meet-aircraft-04-v1.jpg",
+      "sha256": "e7566c6d820bb94edec5f2b8ba529137718fdd9a2b9ba39a90ccb79baa60dc11",
+      "bytes": 153991,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "The Flight Controller — a quiet sensing pavilion",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original full-bleed mission reward art for a premium civilian science-adventure game, very wide 2:1 landscape composition. Sophisticated stylized 3D storybook illustration with painterly textures, clear material contrasts and beautiful cinematic light. Visibly fictional educational exhibit, not a photograph or an engineering diagram. Maintain the campaign's midnight-navy, cyan-glass and warm-amber museum identity, but create one distinctive close-up spatial idea. Complete important focal objects inside central 80%; no image borders. No writing, numbers, model names, logos, UI, watermark, pin labels, functional wiring, component specifications or assembly steps. No batteries connected to anything, powered bench tests, weapons or military imagery. Source-linked lessons explain facts separately; all depicted hardware is an inert invented role model, not a manufacturer's device.\nScene: A serene nested courtyard inside a science museum, viewed from a high three-quarter angle. Three translucent cyan architectural terraces form a calm stepped pavilion around one central ivory table. On the left terrace stands a small abstract sensor sculpture made from a suspended silver bead and delicate glass rings; the central table holds a simple unmarked dark controller-shaped tile on an open blank notebook; the right terrace contains four separate short amber light columns. Fine blue threads of light travel between the terraces as an idea-flow metaphor, floating above the architecture and never connecting to physical ports. Give the central interpretation table generous quiet space, a shallow reflecting pool, deep indigo walls and warm late-afternoon light entering through a slit skylight. No whole aircraft or busy workshop. The discovery is sensing, interpretation and command as distinct roles within one calm composition. No readable diagram, instructions, circuit tracks, computer interface or real control settings.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-a498dd1f-5619-4f84-a737-a76b294b252a.png",
+        "sha256": "c74e10b81daa6ca848f949f6348da004a6310a2888c975893da6485cdacf37f7",
+        "bytes": 2183431,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A quiet cyan pavilion layers a sensor-like sculpture, a central interpretation tile and separate command-light displays around nested courtyards.",
+          "context": "Original fictional civilian science exhibit. Objects, ribbons and architectural relationships illustrate component roles, not physical wiring, actual products, compatibility, assembly instructions or permission for a powered test."
+        },
+        "uk": {
+          "alt": "Тихий блакитний павільйон розташовує скульптуру-датчик, центральну плитку опрацювання й окремі світлові стенди команд довкола вкладених двориків.",
+          "context": "Оригінальна уявна цивільна наукова виставка. Предмети, стрічки й просторові зв’язки ілюструють ролі компонентів, а не фізичну проводку, реальні вироби, сумісність, інструкції зі складання чи дозвіл на випробування під живленням."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://betaflight.com/docs/wiki/getting-started",
+          "role": "General flight-controller role research for separate localized text, not firmware setup or hardware reconstruction."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred",
+      "correctiveGeneration": {
+        "prompt": "Edit only the central object lying on the open notebook in the supplied image. It currently incorrectly resembles a handheld gamepad. Replace it with one flat, square, inert teal electronic-board-shaped museum tile, about the same visual size. Give the tile four small round mounting holes, one low square black central chip and two tiny plain silver block shapes; NO thumbsticks, hand grips, buttons, lettering, pin labels, copper traces, wires or connected power. This abstract onboard flight-controller display must clearly be a rectangular electronic board, not a remote controller. Preserve the notebook, sensor sculpture on the left, four amber columns on the right, light ribbons, water, lighting and the entire original wide 2:1 composition. No other changes.",
+        "reason": "Initial generation depicted a handheld gamepad instead of an onboard flight-controller tile; selected edit replaces only that object.",
+        "input": {
+          "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-7cbb4e10-7c31-43e5-ad6a-f09484fae790.png",
+          "sha256": "25368bbdc83efc9f8fd07441ca66a488c61150ec6f2fb5f145b6a4599d4e1612",
+          "bytes": 2366620
+        }
+      }
+    },
+    {
+      "id": "ukraine-voices-travel-05-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-voices-travel-05-v1.jpg",
+      "sha256": "919797b57a3374258d94292efca7cf835d45ebf34b404368ab3995993e013534",
+      "bytes": 189714,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "One Voice, Then the Group — original listening channels",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create a beautiful modern listening exhibit in a midnight-blue and violet gallery. Three illuminated translucent sound ribbons enter from three separate blank listening stations and gently run beside each other toward one broad glowing arch at the back; they remain individually visible, never collapse into one line. Use amber, soft lilac and blue ribbons of equal importance. Headphones rest on simple wooden stands at the three stations, with blank cream accessible reading panels beside each; do not show an interface or fake waveform graph. The near-left station is warmly highlighted for a first listen while all others remain visible. Curved acoustic wall panels, honey-coloured wood, soft fabric seating and generous open floor give depth and a calm native-game world. The memorable image explains one part and the group as a visual metaphor. It does not depict the Polyphony website, a real recording studio, performers or a specific song. Premium stylized 3D storybook game art with visibly painted texture, tactile materials, layered cinematic lighting and readable focal shapes within the central 80 percent. Original fictional architecture, not documentary photography. No text, letters, numbers, dates, lyrics, notation, UI, logos, borders, watermarks or real people. No copied museum photography, historical portraits, exact source interface or named artist imitation. Exact records and source attribution appear separately as localized game text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-5eecc81d-2c9e-4fcd-8df0-2a30779f7683.png",
+        "sha256": "b990b3772f3d6bcf76dbcc8e01daaf97b5b9236f64db078d45b40e05f9a1948f",
+        "bytes": 2681912,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated listening gallery with three separate headphones stations and equal illuminated sound ribbons leading together toward an arch.",
+          "context": "Original generated conceptual listening exhibition, not an actual recording session or copied archive interface. The game separately links musical practices, performers and recording contexts to their original sources."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована галерея слухання з трьома окремими станціями навушників і рівноправними світловими звуковими стрічками, що разом ведуть до арки.",
+          "context": "Оригінальна згенерована концептуальна виставка слухання, а не справжній запис чи скопійований інтерфейс архіву. Гра окремо пов’язує музичні практики, виконавців та обставини записів із першоджерелами."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.polyphonyproject.com/en",
+          "role": "Context for the separate lesson about individual voices and multitrack listening. This is an original visual metaphor, not the archive interface or a copied recording image."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-voices-travel-06-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-voices-travel-06-v1.jpg",
+      "sha256": "62c3833fc32c79df5ddac7f113b57e4ce33ded59c1b1b4d3c161ec5621f0237a",
+      "bytes": 195867,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Carry the Context — original listening-library finale",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create a spectacular but calm fictional listening-library finale. Exactly six separate blank ivory discovery cards sit on six small reading islands in a sweeping shallow arc around a central circular low platform. Each card has one small abstract violet or amber sound-ribbon sculpture beside it, individual and distinct. An elegant bright source-index cabinet at the rear stands open with blank cards in tidy drawers, while broad connected galleries lead to a peaceful evening garden. A gentle golden ribbon of light follows the reading islands and returns to the source cabinet, expressing that context travels with each discovery. Rich midnight blue, violet velvet, honey-coloured wood and amber lantern light. No lyrics, actual musical scores, portrait photographs, recordings, fake interface controls or invented attribution. Keep all six card islands fully visible; the focal reveal is the complete collection and clear route back to its sources, not an unlabelled mass of sound. Premium stylized 3D storybook game art with visibly painted texture, tactile materials, layered cinematic lighting and readable focal shapes within the central 80 percent. Original fictional architecture, not documentary photography. No text, letters, numbers, dates, lyrics, notation, UI, logos, borders, watermarks or real people. No copied museum photography, historical portraits, exact source interface or named artist imitation. Exact records and source attribution appear separately as localized game text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-da79bc15-43fd-4763-90ea-f0a5f5ee46f8.png",
+        "sha256": "fd50414ba972105c01a626b028d8eb400f5c8e88b22c4479c95c71bfea9070f5",
+        "bytes": 2422948,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated listening-library finale with six separate discovery-card islands, abstract sound ribbons and a bright open source-index cabinet.",
+          "context": "Original generated conceptual listening exhibition, not an actual recording session or copied archive interface. The game separately links musical practices, performers and recording contexts to their original sources."
+        },
+        "uk": {
+          "alt": "Оригінальний ілюстрований фінал бібліотеки слухання з шістьма окремими островами карток, абстрактними звуковими стрічками та світлою відкритою картотекою джерел.",
+          "context": "Оригінальна згенерована концептуальна виставка слухання, а не справжній запис чи скопійований інтерфейс архіву. Гра окремо пов’язує музичні практики, виконавців та обставини записів із першоджерелами."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.polyphonyproject.com/en",
+          "role": "The separate lesson keeps recording context and attribution attached. This imagined library does not reproduce the archive, its recordings or performers."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred",
+      "correctiveGeneration": {
+        "prompt": "Edit only the decorative design on the circular low platform in the centre foreground. Remove the map-like outline and all smaller border-like lines completely. Replace them with three simple elegant concentric golden circles and smooth shallow circular sound-ripple grooves on plain deep-violet stone. No geographical outline, no countries, no map boundaries, no landmass silhouette, no writing. Preserve exactly the composition, six discovery-card stations, all abstract sound sculptures, source-index cabinet, architecture, lighting, colour palette and aspect ratio. This is a conceptual listening-library game illustration, not a map.",
+        "reason": "Original candidate introduced an unrequested map-like outline; replace it with abstract sound rings to avoid suggesting inaccurate geography.",
+        "input": {
+          "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-dbb3bc3b-58e7-4de1-bd77-bbd2475cac6c.png",
+          "sha256": "d796053bdcb4ec95e0cada43ffa88d0474eeeabadc8858c704e9db94cfec9643",
+          "bytes": 2674335
+        }
+      }
+    },
+    {
+      "id": "ukraine-cities-symbols-time-01-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-01-v1.jpg",
+      "sha256": "08b07520b4dc9d551c207e99de322f66c9d30a23f62cc64be7fcb077066b8604",
+      "bytes": 178217,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Kyiv in Layers — original architecture exhibition",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an imaginative architectural exhibition that distinguishes artwork, an individual building and a wider complex. Three separate low plinths span a broad blue-shadowed gallery: at left an abstract upright panel of shimmering cobalt, gold and ivory mosaic-colour tiles with no sacred figures; at centre a simplified completely invented white-and-ochre domed architectural model; at right a larger unlabelled grouping of small neutral architectural massing blocks on a separate base. Each has its own entirely blank cream record card. The models must be clearly conceptual fictional forms, not a reconstruction of Saint-Sophia, Kyiv-Pechersk Lavra or their real boundaries. A suspended sheet of translucent gold material between ceiling beams gives the memorable impression of historical layers; morning light illuminates the separate plinths. Warm limestone, deep blue shadow, restrained gold highlights and wide readable passages. No sacred fresco copying, exact historic interior, street map or claim to date a building from its appearance. Premium stylized 3D storybook game art with visibly painted texture, tactile materials, layered cinematic lighting and readable focal shapes within the central 80 percent. Original fictional architecture, not documentary photography. No text, letters, numbers, dates, lyrics, notation, UI, logos, borders, watermarks or real people. No copied museum photography, historical portraits, exact source interface or named artist imitation. Exact records and source attribution appear separately as localized game text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-3557b615-63ff-46bf-8cb8-b230ad911fe9.png",
+        "sha256": "da068aa2812e567aeb3aac7cc5e49498e4cd5d4828f866021041c2a50ee3ee3b",
+        "bytes": 2587419,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated architectural exhibition with separate abstract mosaic-colour panel, invented domed model and wider model grouping, each with a blank record card.",
+          "context": "Original generated conceptual architecture exhibition. Its invented models are not reconstructions or navigation maps of Kyiv heritage sites. The actual buildings, artworks and site boundaries are described separately through UNESCO’s record."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована архітектурна виставка з окремою абстрактною мозаїчною панеллю, вигаданою купольною моделлю та групою моделей, кожна зі своєю порожньою карткою.",
+          "context": "Оригінальна згенерована концептуальна архітектурна виставка. Її вигадані моделі не є реконструкціями чи навігаційними мапами пам’яток Києва. Справжні будівлі, твори та межі об’єктів описано окремо через запис ЮНЕСКО."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://whc.unesco.org/en/list/527/",
+          "role": "Context for distinguishing layers and parts of the UNESCO Kyiv property. No exact historic building, sacred artwork or source photograph is reproduced."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-meet-aircraft-05-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-meet-aircraft-05-v1.jpg",
+      "sha256": "bef707ab50ad899059120d49bfd120e82b7f571f84f6666c3bf0f2923a682487",
+      "bytes": 160217,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Two Different Links — twin information bays",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original full-bleed mission reward art for a premium civilian science-adventure game, very wide 2:1 landscape. Sophisticated stylized 3D storybook illustration with hand-painted materials, cinematic depth and a memorable focal reveal. The navy, cyan and amber museum identity continues, but each scene has a distinct composition. All objects are inert invented exhibit models, never manufacturer's hardware. No writing, numbers, logos, UI, real circuit tracks, pinouts, connected batteries, functional wiring instructions, live aircraft or weapons. Focal objects complete inside central 80%, no borders.\nScene: A beautiful symmetrical-but-not-identical twin-bay exhibition separated by a tall transparent glass fin. Left bay on a deep navy pedestal: one small idle two-stick handheld control unit, with a separate plain receiver-shaped tile standing a generous distance away. Right bay on a warm amber pedestal: a large camera-lens study, a separate slim video-tile silhouette and one pair of unbranded viewing goggles on three distinct stands. A thin blue sculptural ribbon arches above the left bay; a broad amber picture-like ribbon arches independently above the right bay, never crossing or physically connecting to devices. The background shows two different tall window shapes, one narrow, one broad, emphasizing distinct information roles. Central pedestrian bridge joins the bays without joining the ribbons. Crisp close-to-mid view, gorgeous glass reflections, quiet dusk gallery light. No shared control/video cable, no screen with flight imagery, no frequency, antenna specifications or operational feedback indicators.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-f9ea8a77-ed4b-4855-8c71-4295e03612a8.png",
+        "sha256": "c5c43a74cf58e9e82f29885f32570b805d01b1ee3069dfc05b3cf806cb4df4c9",
+        "bytes": 2297464,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Two separate exhibit bays compare an idle handheld control unit and receiver model with a camera, video tile and viewing goggles.",
+          "context": "Original fictional civilian component exhibit. Separate devices and light ribbons explain roles, not a connection procedure, component compatibility, working radio links or real aircraft readiness."
+        },
+        "uk": {
+          "alt": "Два окремі стенди порівнюють неактивний пульт і модель приймача з камерою, плиткою відеопередавача й окулярами для перегляду.",
+          "context": "Оригінальна уявна виставка цивільних компонентів. Окремі пристрої та стрічки світла пояснюють ролі, а не процедуру підключення, сумісність деталей, робочі радіоканали чи готовність реального апарата."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://betaflight.com/docs/wiki/getting-started",
+          "role": "Control-role context for the separately authored lesson; no product copied."
+        },
+        {
+          "url": "https://betaflight.com/docs/wiki/getting-started/hardware/vtx",
+          "role": "Video-role context for separate localized text; no link configuration or wiring represented."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-meet-aircraft-06-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-meet-aircraft-06-v1.jpg",
+      "sha256": "b11754ae638bc1d41d905b8e97024fc5cd7322abdad63c03e356291d6e826db2",
+      "bytes": 182417,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "The Whole Aircraft — structure, energy and information atlas",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original full-bleed mission reward art for a premium civilian science-adventure game, very wide 2:1 landscape. Sophisticated stylized 3D storybook illustration with hand-painted materials, cinematic depth and a memorable focal reveal. The navy, cyan and amber museum identity continues, but each scene has a distinct composition. All objects are inert invented exhibit models, never manufacturer's hardware. No writing, numbers, logos, UI, real circuit tracks, pinouts, connected batteries, functional wiring instructions, live aircraft or weapons. Focal objects complete inside central 80%, no borders.\nScene: A triumphant complete component atlas in a circular science-gallery rotunda, seen from elevated three-quarter view. Three stepped concentric display tables represent three different ideas. The innermost raised table supports a clean four-arm frame model with exactly four round motor locations and NO attached propellers. The next table holds a closed, unmarked energy-block sculpture alone in its own transparent case, visibly disconnected from everything. The broad outer table displays a camera lens, a receiver-like tile, two simple electronics-board silhouettes and four detached propeller study shapes, each on its own small stand. Grey, amber and cyan fabric-like light ribbons follow the three separate table rims; they never behave as physical wires. One dramatic skylight illuminates the whole arrangement like an earned museum treasure, with warm brass highlights and rich blue-glass shadows. A wide entrance and six blank discovery cards in the foreground suggest a finished collection. No exploded assembly stack, no electrical leads, no battery opened, no mounted props, no live aircraft or readable instructions.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-316b099a-b8cb-4c52-b444-e8588d1c1c61.png",
+        "sha256": "15d0d0792cc28a557b5e70059f6d99842aad65ab704d73818671ee71a0d4e27d",
+        "bytes": 2470422,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional component atlas arranges a four-arm frame, an isolated energy block and separate information components on layered circular museum tables.",
+          "context": "Original fictional civilian component exhibit. Separate devices and light ribbons explain roles, not a connection procedure, component compatibility, working radio links or real aircraft readiness."
+        },
+        "uk": {
+          "alt": "Уявний атлас компонентів розташовує чотирипроменеву раму, окремий блок енергії й інформаційні компоненти на багаторівневих круглих музейних столах.",
+          "context": "Оригінальна уявна виставка цивільних компонентів. Окремі пристрої та стрічки світла пояснюють ролі, а не процедуру підключення, сумісність деталей, робочі радіоканали чи готовність реального апарата."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://betaflight.com/docs/wiki/guides/current/Safety",
+          "role": "Separate props-off and component-specific safety context; no practical procedure."
+        },
+        {
+          "url": "https://www.nasa.gov/stem-content/the-science-behind-quadcopters/",
+          "role": "General component-role concept only; no source image copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-parts-bench-01-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-parts-bench-01-v1.jpg",
+      "sha256": "2c0956d41e954d3b4fb76004e035ae7aad18dfb197b9459195b51fb8e4085f25",
+      "bytes": 148819,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Tray of Questions — an inert inventory landscape",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original full-bleed mission reward art for a premium civilian science game, very wide 2:1 composition. Beautiful stylized 3D storybook concept illustration, tangible paper and wood textures, cinematic warm sunlight and clear readable forms. This campaign uses honey-coloured workshop tables, muted blue shelves, cream card and cyan accents; maintain that identity while giving each scene one distinct spatial idea. All aircraft-related objects are clearly inert cardboard, plywood or museum props. No live electronics, connected battery, mounted propeller, powered tool, functional wiring, manufacturer logo, text, numbers, watermark or UI. No real-world assembly instructions or claim that a display is airworthy. Keep complete focal objects in central80%, no borders.\nScene: A delightful macro landscape of an oversized wooden inventory tray, seen obliquely from above so its compartments become small courtyards. Each compartment contains a different clearly inert cardboard teaching shape: a flat four-arm frame silhouette, round motor tokens, a closed rectangular energy-block card, a camera-lens cutout and simple board-shaped tiles. Keep every shape loose and separate, not arranged as a functional aircraft or connected system. Blank cream record cards lean against each compartment, while one especially empty compartment and a little freestanding question-mark-shaped wooden sculpture create room for something still unknown. In the foreground a brass magnifying lens catches the rough corrugated edge of a single card. Sunlight crosses the tray from a tall workshop window; muted blue shelves and an open blank notebook recede into soft background. Warm tactile wonder and generous clear organization, distinct from the campaign's complete central aircraft model. No real screws, electrical connectors or product labels.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-8f94d350-79c7-4084-8d83-3d115d6c93cc.png",
+        "sha256": "eb25a886b833c29fb511043600d3ededd84b48dbb78959afde05e28b58c1a7ff",
+        "bytes": 2185157,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "An oversized divided tray holds separate cardboard component shapes, blank record cards and a magnifying lens in a warm workshop.",
+          "context": "Original fictional unpowered civilian bench-model study. Cardboard shapes and record cards are teaching metaphors; they do not establish actual component orientation, wiring, compatibility, inspection approval or aircraft readiness."
+        },
+        "uk": {
+          "alt": "Великий поділений лоток містить окремі картонні форми компонентів, чисті картки записів і лупу в теплій майстерні.",
+          "context": "Оригінальний уявний етюд цивільного настільного макета без живлення. Картонні форми й картки записів є навчальними метафорами; вони не визначають реальної орієнтації деталей, проводки, сумісності, схвалення огляду чи готовності апарата."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://docs.px4.io/main/en/assembly/",
+          "role": "General inventory context for separate source-linked learning text; no specific kit or assembly sequence copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-cities-symbols-time-02-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-02-v1.jpg",
+      "sha256": "91b992f6582f1a43c6ff7fa252090856b145cad929f5c7322ed745e8fb1cd8e3",
+      "bytes": 149431,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Lviv: Streets and Encounters — original urban-study gallery",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create a beautiful fictional urban-study gallery in which a single façade model is compared with a whole street relationship. In the near left foreground a tall slender cream model façade stands alone on a small blue plinth. Across the right and middle distance, a separate broad table carries a curving miniature street of several varied invented façades: rounded arches, a modest stepped roof, narrow tall windows and a small open square. These are generic conceptual designs, not exact buildings in Lviv or claims that different communities shared one architectural style. Each display has a separate blank cream record card. A suspended thin brass viewing frame aligns the isolated façade with its neighbours, the memorable surprise revealing context as the eye moves. Warm morning light through tall windows, timber model-making drawers and a broad clear floor make an inspiring architecture gallery. No exact real street plan or reconstructed old city photograph. Sophisticated stylized 3D storybook game concept art with visibly painted texture, warm limestone, deep blue shadows and selective brass-gold light. Keep complete focal objects within the central 80 percent and make the scene richly layered yet spacious. Fictional exhibition architecture, not documentary photography. No writing, dates, letters, numbers, logos, UI, borders, watermarks, portraits or real people. No copied protected photograph, actual historic interior, invented map boundaries or named artist imitation. Documentary records appear separately as localized text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-145c8dd3-99df-4c82-976f-07eb963a386e.png",
+        "sha256": "607cc44c310775270b9d763f0d5a333351d31389d5cda3f0900d434cc647ba02",
+        "bytes": 2099122,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated urban-study gallery comparing one isolated invented façade with a separate model street of varied neighbouring buildings.",
+          "context": "Original generated conceptual exhibition. Invented architecture and folders are not exact historic sites, real navigation maps or documentary artefacts; any blank symbol placeholder is intentionally unfilled. Exact records remain separately source-linked."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована містобудівна галерея, що порівнює один окремий вигаданий фасад із моделлю вулиці різних сусідніх будівель.",
+          "context": "Оригінальна згенерована концептуальна виставка. Вигадані будівлі й папки не є точними історичними об’єктами, навігаційними мапами чи документальними артефактами; порожнє місце символу навмисно не заповнене. Точні записи наведено окремими посиланнями."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://whc.unesco.org/en/list/865/",
+          "role": "Context for the separate Lviv urban-ensemble lesson; the model street is fictional and reproduces no actual buildings or source photograph."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-cities-symbols-time-03-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-03-v1.jpg",
+      "sha256": "3355b815e9331081fc536ac9cd47a66763acf25a95cbf293ad7b271371d98df9",
+      "bytes": 205707,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Odesa: A Port City Record — original harbour-model hall",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create a luminous blue-gold port-city exhibition with three clearly separated model displays. A broad oval harbour model in the foreground has a calm blue water basin, a few tiny plain civilian boat silhouettes and an invented gently curving quay. Beyond it a separate rectangular table holds an abstract street-grid model, while a third low square plinth carries an open civic-square model with simple neutral buildings. Each model has its own entirely blank cream caption card. None is an accurate map of Odesa or its protected-property boundary. Large arched windows reveal an imagined blue sea, warm limestone walls, brass model rails and soft gold afternoon light. The memorable focal reveal is the water meeting the invented city, with clear visible differences between harbour, grid and square. No wartime imagery, weapons, military boats, real street labels or copied historic panorama. Sophisticated stylized 3D storybook game concept art with visibly painted texture, warm limestone, deep blue shadows and selective brass-gold light. Keep complete focal objects within the central 80 percent and make the scene richly layered yet spacious. Fictional exhibition architecture, not documentary photography. No writing, dates, letters, numbers, logos, UI, borders, watermarks, portraits or real people. No copied protected photograph, actual historic interior, invented map boundaries or named artist imitation. Documentary records appear separately as localized text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-18c23641-76f0-46b8-b79e-2938947d96b8.png",
+        "sha256": "d7d224306c4b6885b28cfd7215577aed9030db4c311511b9316fac597eafc6d6",
+        "bytes": 2588914,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated port-city exhibition with separate invented harbour, street-grid and civic-square models, blank cards and a blue sea view.",
+          "context": "Original generated conceptual exhibition. Invented architecture and folders are not exact historic sites, real navigation maps or documentary artefacts; any blank symbol placeholder is intentionally unfilled. Exact records remain separately source-linked."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована виставка портового міста з окремими вигаданими моделями гавані, мережі вулиць і громадської площі, порожніми картками та синім морським краєвидом.",
+          "context": "Оригінальна згенерована концептуальна виставка. Вигадані будівлі й папки не є точними історичними об’єктами, навігаційними мапами чи документальними артефактами; порожнє місце символу навмисно не заповнене. Точні записи наведено окремими посиланнями."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://whc.unesco.org/en/list/1703/",
+          "role": "Context for the separate Odesa property record; the models and sea vista are original illustrations, not a real plan or documentary photograph."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-cities-symbols-time-04-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-04-v1.jpg",
+      "sha256": "24b3bc2dd9a79f4130f7af5c1ba28a1ab09e348f5b7d2beb9a5b99d4434923e4",
+      "bytes": 147999,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "The Trident and a Date — original civic-history reading room",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an elegant fictional civic-history gallery about keeping a historical association and a modern legal record distinct. Two spacious low reading stands sit on opposite sides of a broad central dark-blue display pedestal. One stand holds a closed weathered plain ivory archive folder; the other holds a crisp modern cream document folder with completely blank pages. A small unmarked brass timeline rail connects their separate bases without any dates or writing. The central pedestal supports one tall entirely blank upright deep-blue shield-shaped inset with a thin gold edge, explicitly a reserved space for a separately verified state emblem: DO NOT draw a trident, coat of arms, crest, speculative symbol or any decorative mark inside it. This avoids a distorted AI-generated state emblem; actual state-symbol records are supplied separately by the game. Warm skylight, wide cream floor, two quiet blue side alcoves and restrained gold reflections create a calm inspiring reveal. Do not invent a legal document facsimile or imply that the folders are real historical artefacts. Sophisticated stylized 3D storybook game concept art with visibly painted texture, warm limestone, deep blue shadows and selective brass-gold light. Keep complete focal objects within the central 80 percent and make the scene richly layered yet spacious. Fictional exhibition architecture, not documentary photography. No writing, dates, letters, numbers, logos, UI, borders, watermarks, portraits or real people. No copied protected photograph, actual historic interior, invented map boundaries or named artist imitation. Documentary records appear separately as localized text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-261e2999-8960-49dd-bdbc-b7e6d1e317f4.png",
+        "sha256": "e8ba49c51b5e3cfccec2f512aea6e9410066191b9240445560da70f5c723b971",
+        "bytes": 2322635,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated civic-history room with separate archive and modern document stands and a blank upright blue emblem placeholder.",
+          "context": "Original generated conceptual exhibition. Invented architecture and folders are not exact historic sites, real navigation maps or documentary artefacts; any blank symbol placeholder is intentionally unfilled. Exact records remain separately source-linked."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована зала громадянської історії з окремими архівною та сучасною документальними підставками й порожнім вертикальним синім місцем для емблеми.",
+          "context": "Оригінальна згенерована концептуальна виставка. Вигадані будівлі й папки не є точними історичними об’єктами, навігаційними мапами чи документальними артефактами; порожнє місце символу навмисно не заповнене. Точні записи наведено окремими посиланнями."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://zakon.rada.gov.ua/laws/show/2137-12",
+          "role": "The separate learning text cites the 1992 legal record; the image intentionally uses a blank emblem placeholder rather than a generated or distorted state emblem."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "reference-ukraine-state-emblem",
+      "path": "game/editions/assets/discovery/reference-ukraine-state-emblem.png",
+      "revision": "1",
+      "sha256": "43e0b61f5fa66df1674160b9d7cbc1d189a1fce2d9be6362e82bc2b3127dc7cf",
+      "bytes": 32211,
+      "publication": "public",
+      "title": "Small State Coat of Arms of Ukraine — source rendering",
+      "creator": "Andrew Pertsev; design attributed by source to Vasyl Krychevsky",
+      "rights": "Public domain — Ukrainian state symbol (PD-UA)",
+      "source": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Ukraine.svg",
+      "sourceRevision": "https://commons.wikimedia.org/w/index.php?oldid=1263033409&title=File:Coat_of_Arms_of_Ukraine.svg",
+      "licenseURL": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Ukraine.svg#Licensing",
+      "attribution": "State symbol of Ukraine. SVG rendering by Andrew Pertsev, 2022; design attributed by the source to Vasyl Krychevsky. Wikimedia Commons public-domain state-symbol record. Source-rendered 500px PNG kept upright and unchanged.",
+      "review": "candidate-public-bytes; state-symbol public-domain record checked; exact PNG source rendering visually inspected; human review deferred",
+      "derivation": "Unchanged Wikimedia 500px raster derivative (actual 500×699); no cropping, recolouring or generative editing. SVG remains outside runtime.",
+      "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Coat_of_Arms_of_Ukraine.svg/500px-Coat_of_Arms_of_Ukraine.svg.png",
+      "sourceSha256": "43e0b61f5fa66df1674160b9d7cbc1d189a1fce2d9be6362e82bc2b3127dc7cf",
+      "context": "Separate documentary reference beside the original fictional room; not a game faction, avatar, enemy or endorsement."
+    },
+    {
+      "id": "fpv-parts-bench-02-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-parts-bench-02-v1.jpg",
+      "sha256": "1e9510e6330ef432ee9078e25bffc9fe31d125daf0140f582b34f1faf16acb40",
+      "bytes": 123554,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Which Way Is Forward? — nose and reference",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original full-bleed mission reward art for a premium civilian science game, very wide 2:1 composition. Beautiful stylized 3D storybook concept illustration, tangible paper and wood textures, cinematic warm sunlight and clear readable forms. This campaign uses honey-coloured workshop tables, muted blue shelves, cream card and cyan accents; maintain that identity while giving each scene one distinct spatial idea. All aircraft-related objects are clearly inert cardboard, plywood or museum props. No live electronics, connected battery, mounted propeller, powered tool, functional wiring, manufacturer logo, text, numbers, watermark or UI. No real-world assembly instructions or claim that a display is airworthy. Keep complete focal objects in central80%, no borders.\nScene: One elegant circular rotating museum plinth at a sunlit workbench, viewed from low three-quarter angle. A simple cardboard four-arm model rests securely on the plinth, its nose a bold blue triangular paper tip pointing diagonally toward the viewer's right. Its four arm ends are flat blank discs with no motors or propellers. On the workbench beside the turntable, a separate amber wooden direction arrow is fixed pointing toward the back wall, clearly independent of the model and not attached to it. A thin transparent circular display ring around the plinth makes rotation imaginable without motion blur or instructional arrows. Show crisp corrugated layers, soft wood grain, cool blue shadows and a broad cream background notebook with blank pages. The whole visual question is that a model's forward direction and an external reference can point differently. No compass lettering, map, real controller board, electronics, orientation calibration procedure or spinning machinery.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-5751ae34-4280-46d2-aa96-90ab73d15050.png",
+        "sha256": "093665700235464846247bc14e6f033edeca629c792c48bb6484b2d7808932a9",
+        "bytes": 2096985,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A cardboard four-arm model with a blue nose rests on a round display stand beside a separate fixed amber direction arrow.",
+          "context": "Original fictional unpowered civilian bench-model study. Cardboard shapes and record cards are teaching metaphors; they do not establish actual component orientation, wiring, compatibility, inspection approval or aircraft readiness."
+        },
+        "uk": {
+          "alt": "Картонна чотирипроменева модель із синім носом стоїть на круглому стенді поруч з окремою нерухомою бурштиновою стрілкою напрямку.",
+          "context": "Оригінальний уявний етюд цивільного настільного макета без живлення. Картонні форми й картки записів є навчальними метафорами; вони не визначають реальної орієнтації деталей, проводки, сумісності, схвалення огляду чи готовності апарата."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://docs.px4.io/main/en/assembly/quick_start_pixhawk4",
+          "role": "Source explains device-specific orientation; illustration is a fictional model, not that board's mounting instructions."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-parts-bench-03-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-parts-bench-03-v1.jpg",
+      "sha256": "2154c75f9cfcd0acc3b6942c161a1af3dded9c8527e85829bd688a4db15a1fdc",
+      "bytes": 169233,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Three Coloured Paths — roles kept separate",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original full-bleed mission reward art for a premium civilian science game, very wide 2:1 composition. Beautiful stylized 3D storybook concept illustration, tangible paper and wood textures, cinematic warm sunlight and clear readable forms. This campaign uses honey-coloured workshop tables, muted blue shelves, cream card and cyan accents; maintain that identity while giving each scene one distinct spatial idea. All aircraft-related objects are clearly inert cardboard, plywood or museum props. No live electronics, connected battery, mounted propeller, powered tool, functional wiring, manufacturer logo, text, numbers, watermark or UI. No real-world assembly instructions or claim that a display is airworthy. Keep complete focal objects in central80%, no borders.\nScene: A wide polished wooden table arranged like a small landscape of three distinct role islands. Left island: a pale plywood four-arm frame sculpture on a grey felt base. Centre island: an unmarked closed rectangular cardboard block behind a tiny clear display cover on an amber felt base. Right island: two plain blue card silhouettes representing a receiver and an electronics tile, with no circuits or marks, on a blue felt base. Three broad fabric ribbons — grey, amber and sky blue — curl freely around the islands at visibly different heights, with soft woven texture and loose free ends. The ribbons never plug into or physically connect any objects; they are the memorable sculptural metaphor for support, stored energy and information. A small blank source-card rack sits at the far edge, and sunlight makes the fabric's shadows vivid. No complete aircraft, electrical leads, actual battery contacts, plugs, firmware settings, diagram labels or arrow flowchart. Calm, tactile and clearly fictional.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-ddc73c3d-cf88-40eb-b381-c2d12781aa06.png",
+        "sha256": "7151102ca11d4048b25b2eac4632789bd72a5c00830aedcdc82bf99724652c72",
+        "bytes": 2612609,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Grey, amber and blue fabric ribbons weave around three separate inert role stations on a broad workshop table.",
+          "context": "Original fictional unpowered civilian bench-model study. Cardboard shapes and record cards are teaching metaphors; they do not establish actual component orientation, wiring, compatibility, inspection approval or aircraft readiness."
+        },
+        "uk": {
+          "alt": "Сіра, бурштинова й синя тканинні стрічки огинають три окремі неактивні станції ролей на широкому столі майстерні.",
+          "context": "Оригінальний уявний етюд цивільного настільного макета без живлення. Картонні форми й картки записів є навчальними метафорами; вони не визначають реальної орієнтації деталей, проводки, сумісності, схвалення огляду чи готовності апарата."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://docs.px4.io/main/en/assembly/",
+          "role": "Component-role context only; fabric paths are metaphors, not electrical connections."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-parts-bench-04-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-parts-bench-04-v1.jpg",
+      "sha256": "343176573a12f4697df0c3172d2e7cdeda49e04f5e9968dc7e568589934c50f8",
+      "bytes": 133773,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Same Shape, Different Label — the comparison court",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original full-bleed mission reward art for a premium civilian science game, very wide 2:1 composition. Beautiful stylized 3D storybook concept illustration, tangible paper and wood textures, cinematic warm sunlight and clear readable forms. This campaign uses honey-coloured workshop tables, muted blue shelves, cream card and cyan accents; maintain that identity while giving each scene one distinct spatial idea. All aircraft-related objects are clearly inert cardboard, plywood or museum props. No live electronics, connected battery, mounted propeller, powered tool, functional wiring, manufacturer logo, text, numbers, watermark or UI. No real-world assembly instructions or claim that a display is airworthy. Keep complete focal objects in central80%, no borders.\nScene: A spacious quiet comparison court inside the blue-and-wood workshop, with an unusually long low cream table beneath a high window. Two separate large record cards stand on modest wooden easels, each bearing the same simple abstract cardboard connector outline cut from grey card. They are flat silhouette studies with no pins, sockets or electrical details. A small cyan record tab belongs to one card and a small amber tab to the other, visibly distinct but entirely unlettered. Between them lies a substantial open reference book with clean blank pages, its central gutter lit by a warm shaft of sun. A round magnifier rests beside the book, and a distant open shelf holds closed manuals with no titles. The composition emphasizes generous space and checking records before assuming a match. No parts forced together, real compatibility claim, assembly action, plug pinout or product branding. Elegant restrained materials, thoughtful atmosphere and one strong paired visual comparison.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-1ab685d1-9507-49d2-bfeb-270854ebab7d.png",
+        "sha256": "0d4f80d4a76a53c29c2a00b9fcb99d9e8e9302e32826cab008c27a7df8a650de",
+        "bytes": 2042659,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Two matching abstract cardboard connector silhouettes sit on separate cards beside an open blank manual and distinct record tabs.",
+          "context": "Original fictional unpowered civilian bench-model study. Cardboard shapes and record cards are teaching metaphors; they do not establish actual component orientation, wiring, compatibility, inspection approval or aircraft readiness."
+        },
+        "uk": {
+          "alt": "Два однакові абстрактні картонні силуети роз’ємів лежать на окремих картках біля відкритої чистої інструкції та різних вкладок записів.",
+          "context": "Оригінальний уявний етюд цивільного настільного макета без живлення. Картонні форми й картки записів є навчальними метафорами; вони не визначають реальної орієнтації деталей, проводки, сумісності, схвалення огляду чи готовності апарата."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://docs.px4.io/main/en/assembly/quick_start_pixhawk4",
+          "role": "Device-specific documentation context; no real connector or pin mapping is reproduced."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-parts-bench-05-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-parts-bench-05-v1.jpg",
+      "sha256": "34da85b3bd3d4afea5290acff9538ebb95fae9a667f47eae3a7dc32e790eb4fc",
+      "bytes": 134307,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Look Before the Next Step — observation lightbox",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original full-bleed mission reward art for a premium civilian science game, very wide 2:1 composition. Beautiful stylized 3D storybook concept illustration, tangible paper and wood textures, cinematic warm sunlight and clear readable forms. This campaign uses honey-coloured workshop tables, muted blue shelves, cream card and cyan accents; maintain that identity while giving each scene one distinct spatial idea. All aircraft-related objects are clearly inert cardboard, plywood or museum props. No live electronics, connected battery, mounted propeller, powered tool, functional wiring, manufacturer logo, text, numbers, watermark or UI. No real-world assembly instructions or claim that a display is airworthy. Keep complete focal objects in central80%, no borders.\nScene: A cinematic close-up observation corner with three tall narrow backlit panes and a broad low workshop bench. Foreground hero: a magnifier reveals a small tear in the corrugated layer of one detached cardboard model arm resting on a cream mat. A second pane shows a lifted blank paper tag; a third shows a worn blank record card, without writing. Keep these everyday evidence objects visually distinct, cleanly separated and obviously cardboard or paper, never actual damaged aircraft electronics. In the background an inert four-arm cardboard model sits still on a shelf with no propellers, power or tools touching it. Soft cyan edge-light and warm amber lamps contrast with muted blue archive drawers. The memorable scene is a patient look at visible details, not a glowing diagnostic machine. No green approval lights, checkmarks, safe-to-fly badge, real serial number, invasive repair, soldering or hot tools. Beautiful crisp paper fibres under the lens and calm surrounding negative space.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-7870bcc2-6d07-411b-98bd-8baa4517ff51.png",
+        "sha256": "a1cc84ea87cf3879ab3e754adc44de1e38960f9d9a87f85c15fef3d2fed1c94b",
+        "bytes": 2044322,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A large magnifier reveals a torn cardboard arm beside a loose blank tag, a worn record card and an inert model on the shelf.",
+          "context": "Original fictional unpowered civilian bench-model study. Cardboard shapes and record cards are teaching metaphors; they do not establish actual component orientation, wiring, compatibility, inspection approval or aircraft readiness."
+        },
+        "uk": {
+          "alt": "Велика лупа показує надрив картонного променя поруч із вільною чистою биркою, потертою карткою записів і неактивною моделлю на полиці.",
+          "context": "Оригінальний уявний етюд цивільного настільного макета без живлення. Картонні форми й картки записів є навчальними метафорами; вони не визначають реальної орієнтації деталей, проводки, сумісності, схвалення огляду чи готовності апарата."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.ifixit.com/Info/Device_Safety",
+          "role": "General safety and uncertainty context for a separate lesson; no real repair or powered inspection instruction."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-parts-bench-06-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-parts-bench-06-v1.jpg",
+      "sha256": "de0f3074e9c6378ef75052407351e94ea100928f9c4fc7f9ab67541f8723de24",
+      "bytes": 160283,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "The Model Handoff — known and still unknown",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Original full-bleed mission reward art for a premium civilian science game, very wide 2:1 composition. Beautiful stylized 3D storybook concept illustration, tangible paper and wood textures, cinematic warm sunlight and clear readable forms. This campaign uses honey-coloured workshop tables, muted blue shelves, cream card and cyan accents; maintain that identity while giving each scene one distinct spatial idea. All aircraft-related objects are clearly inert cardboard, plywood or museum props. No live electronics, connected battery, mounted propeller, powered tool, functional wiring, manufacturer logo, text, numbers, watermark or UI. No real-world assembly instructions or claim that a display is airworthy. Keep complete focal objects in central80%, no borders.\nScene: A warm evening finale in the model workshop. A handsome inert cardboard four-arm aircraft display with blue nose and plain round arm-end discs stands on a central circular wooden podium, with no propellers or live parts. Around the front half of the podium, six blank cream evidence cards are carefully arranged on small individual holders; a separate seventh card with one simple question-mark icon stands slightly apart beside a closed blue handoff folder. The unsolved question is treated as a useful part of the finished exhibit, not a failure. Two empty stools at different sides of the table suggest one learner leaving room for the next, and an open doorway leads to the next bright room. Blue shelving, paper mobiles, softly glowing warm lamps, neat material trays and textured wood provide rich continuity with earlier workshop scenes. Strong celebratory but quiet composition. No completion certificate, flight approval badge, actual electronics, circuit diagram, operational vehicle or language-specific writing.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-8b74c37b-0677-46f2-b495-7d8163325422.png",
+        "sha256": "f4495dd29e6636558d1b1a6e0aad9d9a418de58d51e649f6f87c8efb3569398a",
+        "bytes": 2173380,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional mechanical sips resize from2:1 master to960×480 and JPEGquality78; no cropping, recolouring or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A finished inert cardboard model and separate evidence cards form a welcoming handoff display with one unresolved question card.",
+          "context": "Original fictional unpowered civilian bench-model study. Cardboard shapes and record cards are teaching metaphors; they do not establish actual component orientation, wiring, compatibility, inspection approval or aircraft readiness."
+        },
+        "uk": {
+          "alt": "Завершений неактивний картонний макет і окремі картки доказів утворюють привітну експозицію передачі справ з одним невирішеним запитанням.",
+          "context": "Оригінальний уявний етюд цивільного настільного макета без живлення. Картонні форми й картки записів є навчальними метафорами; вони не визначають реальної орієнтації деталей, проводки, сумісності, схвалення огляду чи готовності апарата."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://docs.px4.io/main/en/assembly/",
+          "role": "Component-specific documentation context for separate learning text; display completion is not aircraft readiness."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-cities-symbols-time-05-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-05-v1.jpg",
+      "sha256": "17b8455b4ab30803951b2a276b3a1c4031164fcd2164f53c1313cd86d34e32dc",
+      "bytes": 123064,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Blue and Yellow, Clearly Seen — original design comparison",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create a sophisticated fictional accessible design exhibition comparing a precisely drawn flag with a free abstract artwork. At left, a flat front-facing rectangular flag card with width to height ratio 3:2 has exactly two equal horizontal bands: plain vivid blue on the entire top half, plain clear yellow on the entire bottom half. No other marks, crest, folds, trim or subdivisions occur inside this rectangle. The card is the Ukrainian flag study, held upright on a plain cream stand with a separate completely blank caption card. At right, a different large sculptural artwork freely interweaves broad blue and yellow curved ribbons, clearly not a rectangular flag. Keep both displays distinctly separated by a wide calm cream floor. Soft skylight, deep blue wall alcoves, restrained gold details and warm ivory architecture make the comparison beautiful and legible. The focal idea is exact two-band flag description versus creative use of the same colours. No other flags, no third colour band, no flagpole and no imaginary traditional symbolism. Premium stylized 3D storybook game art with visible painterly material texture, rich warm light, layered depth and large readable objects within the central 80 percent. No writing, letters, numbers, logos, UI, borders, watermarks, real people or copied documentary photographs. Exact source descriptions and localized labels are rendered separately by the game.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-3b8443bd-c58b-4856-ba86-c55adb75409d.png",
+        "sha256": "1dcf813e5d5d4bb05fd57641f5dc9d3bd4dbf4873d20fffd66c6127f77df4192",
+        "bytes": 1932316,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated design comparison with a flat blue-over-yellow two-band flag card on the left and a separate abstract blue-and-yellow ribbon sculpture on the right.",
+          "context": "Original generated design exhibit. The flat card shows the flag’s blue upper and yellow lower bands; the separate sculpture is an abstract artwork, not another version of the flag. Documentary description remains linked to Article 20."
+        },
+        "uk": {
+          "alt": "Оригінальне ілюстроване порівняння дизайну: ліворуч пласка картка прапора із синьою верхньою та жовтою нижньою смугами, праворуч окрема абстрактна синьо-жовта скульптура зі стрічок.",
+          "context": "Оригінальна згенерована виставка дизайну. Пласка картка показує синю верхню й жовту нижню смуги прапора; окрема скульптура — абстрактний твір, а не інший варіант прапора. Документальний опис наведено за посиланням на статтю 20."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.president.gov.ua/documents/constitution/konstituciya-ukrayini-rozdil-i",
+          "role": "Article 20 supports the separate precise description of two equal horizontal blue and yellow flag bands; no speculative symbol meaning is added."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred",
+      "correctiveGeneration": {
+        "prompt": "Correct only the left flat Ukrainian flag-study rectangle. It is currently too tall. Make it a geometrically precise front-facing landscape rectangle with width exactly 1.5 times its height (3:2), by reducing its height while retaining approximately its current width. It must have exactly two equal-height horizontal solid colour bands, blue on top and yellow on bottom, separated at the exact vertical midpoint. No shading gradient, symbols, borders, folds or extra marks inside the flag. Preserve the full scene, right ribbon sculpture, plinths, separate blank labels, lighting, architecture and 2:1 overall canvas. This flag study supports a lesson about an exact two-band description; it must not look square or have unequal bands.",
+        "reason": "First candidate made the illustrative flag card too tall; correct its presentation and two-band split. Generated perspective remains illustrative, not an exact specification drawing.",
+        "input": {
+          "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-8be6006b-99c8-4020-8528-227bd0624857.png",
+          "sha256": "eb0dd753689c78e6b91b5de9d0af57b630b8ef36654d9f47b360de88c8a9e78a",
+          "bytes": 2030160
+        }
+      }
+    },
+    {
+      "id": "ukraine-cities-symbols-time-06-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-06-v1.jpg",
+      "sha256": "553e59b52cf99f317696d6639789f689ae9fe9074767ad53ca3bff35f80aa31d",
+      "bytes": 193849,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Map with More Than One Story — original exhibition connections",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create a magnificent fictional museum planning room seen from a gentle elevated angle. Three distinct architectural model tables occupy the foreground and middle: one abstract mosaic-panel and dome study, one invented street-ensemble study, one small fictional harbour model. Each sits on a clearly separate island with a blank cream record card. A fourth broad display at the rear is a civic-history timeline holding three unmarked document stands; alongside it a generous source-card wall holds six entirely blank cream cards. Thin brass floor inlays connect the table islands to the source wall like an exhibition diagram. Do not draw any real geographical map, country shape, city outline or property boundary anywhere. This is a relationship map between exhibits, not an actual map of Ukraine. Warm gold skylight, deep blue gallery walls, cream stone, fine wood models and broad open routes create a satisfying complete collection. No actual heritage-site replicas, real documents, state emblems or flag distortions. Premium stylized 3D storybook game art with visible painterly material texture, rich warm light, layered depth and large readable objects within the central 80 percent. No writing, letters, numbers, logos, UI, borders, watermarks, real people or copied documentary photographs. Exact source descriptions and localized labels are rendered separately by the game.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-064fd5d0-121b-4b06-9420-f28ef4b401f4.png",
+        "sha256": "e444a3f52691d9ef86cb02d8c179903be6b351cc1bc22889b2fc7bb157eb8b75",
+        "bytes": 2577581,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated museum planning room connecting three fictional city-model tables with a separate civic-history timeline and six blank source cards.",
+          "context": "Original generated exhibition diagram, not a real map, historical reconstruction or exhaustive account of Ukraine. The actual places and symbol records remain separately attributed to their sources."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована музейна зала планування, що поєднує три столи вигаданих міських моделей з окремою часовою шкалою та шістьма порожніми картками джерел.",
+          "context": "Оригінальна згенерована схема виставки, а не справжня мапа, історична реконструкція чи вичерпний опис України. Справжні місця й записи про символи окремо пов’язані зі своїми джерелами."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://whc.unesco.org/en/statesparties/ua/",
+          "role": "Context for the separate lesson about a national list and individual property records; the generated models and connections do not reproduce real geography."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-everyday-culture-01-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-everyday-culture-01-v1.jpg",
+      "sha256": "8f4ed7543e43144de4fcf3766ea375df0c09eb143a2466c19038c40a25f23eac",
+      "bytes": 177174,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Door Opens with Words — original welcome library",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an original warm welcoming Ukrainian discovery-library scene. A wide open coral-painted door leads from a sunny courtyard into a cosy cream reading room. Near the entrance a low wooden welcome desk has exactly two blank cream greeting panels on small stands, one facing a arriving visitor’s space and one beside a neatly wrapped book ready to be handed over. An empty comfortable chair and a second table in the distance suggest a friendly exchange, without depicting real people. Soft coral lamps, pale linen curtains, a small vase of field flowers, honey-coloured wood and shelves of closed unlabelled books create an inviting everyday atmosphere. The memorable focal idea is an open door and a book exchange that begins and ends with kind words. Do not bake any greeting or transliteration into the picture; the two panels are entirely blank for correctly localized interface text. No stereotyped costumes, fabricated documentary household or claim to represent every Ukrainian home. Premium stylized 3D storybook game art with visible painterly material texture, rich warm light, layered depth and large readable objects within the central 80 percent. No writing, letters, numbers, logos, UI, borders, watermarks, real people or copied documentary photographs. Exact source descriptions and localized labels are rendered separately by the game.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-9e72eecc-4c49-46e3-bc1f-9fb5d52e21a7.png",
+        "sha256": "82ec8eba5b12c4e7a4e505245488883f1a8757c434baea14eed5ba156ea188ba",
+        "bytes": 2385584,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated welcoming library with an open coral door, a book ready to exchange and two blank greeting panels on a wooden desk.",
+          "context": "Original generated fictional library, not a documentary Ukrainian household. Greeting text is intentionally supplied by the localized interface rather than generated into the artwork."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована гостинна бібліотека з відчиненими кораловими дверима, книжкою для обміну й двома порожніми панелями привітання на дерев’яному столі.",
+          "context": "Оригінальна згенерована вигадана бібліотека, а не документальне зображення української оселі. Текст привітань навмисно подає локалізований інтерфейс, а не згенерована ілюстрація."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://promote.ukraine.ua/wp-content/uploads/2021/07/Instruktsiya-z-realizatsii-kampanii-Visit-Urkaine-in-Summer-kopiya.pdf",
+          "role": "Source for the separate greeting/thanks learning text; original library art contains no copied phrases or source images."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "reference-ukraine-state-flag",
+      "path": "game/editions/assets/discovery/reference-ukraine-state-flag.png",
+      "revision": "1",
+      "sha256": "2331ad1bb17e2f072b42dbc3fb145917a3963a45efdf0b6cff307d2ee8f7e514",
+      "bytes": 704,
+      "publication": "public",
+      "title": "State flag of Ukraine — source rendering",
+      "creator": "Government of Ukraine; Wikimedia Commons SVG contributors",
+      "rights": "Public domain — Ukrainian state symbol (PD-UA)",
+      "source": "https://commons.wikimedia.org/wiki/File:Flag_of_Ukraine.svg",
+      "sourceRevision": "https://commons.wikimedia.org/w/index.php?oldid=1270265354&title=File:Flag_of_Ukraine.svg",
+      "licenseURL": "https://commons.wikimedia.org/wiki/File:Flag_of_Ukraine.svg#Licensing",
+      "attribution": "State flag of Ukraine — Government of Ukraine; Wikimedia Commons SVG contributors. Public-domain state-symbol record. Unchanged 960×640 source-rendered PNG, blue above yellow, no generative editing.",
+      "review": "candidate-public-bytes; public-domain state-symbol record and Article20 primary source checked; exact PNG visually inspected; human review deferred",
+      "derivation": "Unchanged Wikimedia 960px raster derivative (960×640); no cropping, recolouring or generative editing. SVG remains outside runtime.",
+      "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Ukraine.svg/960px-Flag_of_Ukraine.svg.png",
+      "sourceSha256": "2331ad1bb17e2f072b42dbc3fb145917a3963a45efdf0b6cff307d2ee8f7e514",
+      "context": "Documentary flag reference beside original blue/yellow design illustration. Equal horizontal bands; explicit labels do not rely on colour alone. No faction/enemy branding or endorsement."
+    },
+    {
+      "id": "ukraine-everyday-culture-02-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-everyday-culture-02-v1.jpg",
+      "sha256": "7c1377b4e36f4e28daa99bcfda585768ceef275df8f64e51d283e0b2673c4ab6",
+      "bytes": 134202,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Look Closely at Ї — original letter-study room",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an inspiring fictional typographic study room in a warm Ukrainian reading library. Exactly two large upright ivory typographic sculptures stand on separate small coral plinths: left is the Ukrainian capital letter І, a single simple vertical stem with modest horizontal serifs and no dots; right is the Ukrainian capital letter Ї, the same vertical stem and serifs with exactly TWO separate round dots visibly centered above it. Render these two precise single glyphs clearly, with generous spacing and no extra letters. The paired dots are the memorable focal reveal and must be distinct from background decoration. A brass magnifying lens lies on the near wooden study table, alongside two completely blank cream explanation cards and a small stack of blank paper. Soft linen curtains, quiet shelves of unlabelled books, spring window light and a few coral details give welcoming depth. Keep all decoration far from the letter sculptures so the dots cannot disappear or be mistaken for ornaments. These are letter-study sculptures, not an interface or a complete word; no other writing, alphabet sequence or invented glyphs. Premium stylized 3D storybook game art with visibly painted tactile materials, coral and cream accents, honey-coloured wood and warm natural light. Important focal objects complete within the central 80 percent, beautiful layered depth and spacious readable arrangement. Fictional exhibit, not documentary household photography. No labels, numbers, signatures, logos, UI, borders, watermarks or real people. No copied museum work, real family portrait, named artist imitation or claim that this scene represents every Ukrainian home. Correct localized explanations are supplied separately in the interface.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-8f3a100a-d7ee-4ef2-b68a-637f4c27ffec.png",
+        "sha256": "21b10cc4f102fdf616dc8f858fe86a3b7c4072ffd1a1cb69e889c9cbe639acbf",
+        "bytes": 2117378,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated letter-study room with separate ivory І and Ї sculptures, two clearly visible dots above Ї, blank cards and a magnifier.",
+          "context": "Original generated conceptual letter study. The image illustrates the visible distinction; selectable Ukrainian characters and pronunciation context remain in the localized lesson text."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована кімната дослідження літер з окремими світлими скульптурами І та Ї, двома виразними крапками над Ї, порожніми картками й лупою.",
+          "context": "Оригінальне згенероване концептуальне дослідження літер. Зображення показує видиму відмінність; справжні українські символи та пояснення вимови залишаються в локалізованому навчальному тексті."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ui.org.ua/wp-content/uploads/2025/07/decolonisation-in-museums_part-1.pdf",
+          "role": "The separate alphabet lesson distinguishes І and Ї. The original study room copies no guide layout or source image."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-everyday-culture-03-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-everyday-culture-03-v1.jpg",
+      "sha256": "5ebb4aaca19d026d0a610d712149395848bb9e3ace016e7432f2485e8b311623",
+      "bytes": 185270,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Dish and Its People — original kitchen-story exhibit",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an original cosy kitchen-story exhibition centred on a beautifully illustrated bowl of red beet-coloured vegetable soup on a wooden table. A little gentle steam curls upward like an inviting story ribbon, without forming text or a face. Around it, three entirely blank cream recipe-story cards have their own stands, leaving room for ingredients, the person who shared the recipe and the occasion. A few beetroot, cabbage-leaf, carrot and herb silhouettes in small separate baskets are illustrative possible ingredients, not a complete or prescriptive recipe. A second empty chair, a softly lit kitchen shelf, cream pottery, a coral pendant lamp and an open garden window suggest sharing and everyday life. No working cooker, flame, knife technique or cooking procedure. This is a fictional museum storytelling scene, not a documentary family meal or a claim of one authentic borscht recipe. Let the warm bowl and three distinct context cards be the focal reveal. Premium stylized 3D storybook game art with visibly painted tactile materials, coral and cream accents, honey-coloured wood and warm natural light. Important focal objects complete within the central 80 percent, beautiful layered depth and spacious readable arrangement. Fictional exhibit, not documentary household photography. No labels, numbers, signatures, logos, UI, borders, watermarks or real people. No copied museum work, real family portrait, named artist imitation or claim that this scene represents every Ukrainian home. Correct localized explanations are supplied separately in the interface.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-bbf62758-f377-445a-861e-acf630094723.png",
+        "sha256": "0a31f950562ce9e00fdaf75d03becdaf734b0ccb05029166d98037bd74562f84",
+        "bytes": 2519630,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated kitchen-story exhibit with a red vegetable-soup bowl, possible ingredient baskets and three separate blank recipe-context cards.",
+          "context": "Original generated fictional cooking-story exhibit. Possible ingredients and serving choices are illustrative examples, not a single authentic recipe or a documentary family account."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована виставка кухонних історій із мискою червоного овочевого супу, кошиками можливих складників та трьома окремими порожніми картками контексту рецепта.",
+          "context": "Оригінальна згенерована вигадана виставка кулінарних історій. Можливі складники й подання є ілюстративними прикладами, а не єдиним автентичним рецептом чи документальною родинною розповіддю."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ich.unesco.org/en/USL/culture-of-ukrainian-borscht-cooking-01852",
+          "role": "Context for the separate cooking-and-social-practice lesson. The original soup and kitchen are illustrative, not a copied recipe or source photograph."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-everyday-culture-04-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-everyday-culture-04-v1.jpg",
+      "sha256": "b1f860501106e80dd47b46b856bc50a7735d84adc95ae9de5b4ffc37eb58bf6e",
+      "bytes": 133829,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Bowl with a Record — original vessel reading court",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create a serene spacious ceramics reading room with one generous generic earthenware mixing-bowl silhouette on a low cream stone plinth. The bowl has a broad mouth, rounded terracotta body and restrained newly invented cream and muted-green painted bands; it is not a replica of a documented makitra or any museum photograph. Beside it, two delicate plain brass measuring bars without numbers mark height and width as abstract observation guides, not actual certified measurements. An enlarged completely blank cream source card rests on a separate wood stand. Warm coral curtains, an open cabinet with spare plain bowls, smooth cream floor and broad soft window light make a calm tactile reward scene. A brass magnifier and closed plain archive folder add careful-looking context without clutter. No invented maker portrait, archaeological dating or precise dimension claims. The memorable idea is an everyday vessel gaining a careful record while unknown facts remain unfilled. Premium stylized 3D storybook game art with visibly painted tactile materials, coral and cream accents, honey-coloured wood and warm natural light. Important focal objects complete within the central 80 percent, beautiful layered depth and spacious readable arrangement. Fictional exhibit, not documentary household photography. No labels, numbers, signatures, logos, UI, borders, watermarks or real people. No copied museum work, real family portrait, named artist imitation or claim that this scene represents every Ukrainian home. Correct localized explanations are supplied separately in the interface.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-31717501-e86f-445c-b150-337c79422f98.png",
+        "sha256": "86525c3f81d2a3c355cf0871cb0d3c4d1f81ddffcff72104a16c4fca0fb03e31",
+        "bytes": 2146783,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated ceramics reading room with a generic terracotta bowl, unnumbered measuring guides and a separate enlarged blank source card.",
+          "context": "Original generated fictional vessel display. The bowl is not the cited museum makitra, and the unnumbered guides assert no real measurements or maker. The exact object record is linked separately."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована керамічна читальня з умовною теракотовою мискою, вимірювальними напрямними без чисел та окремою великою порожньою карткою джерела.",
+          "context": "Оригінальна згенерована вигадана вітрина посудини. Миска не відтворює згадану музейну макітру, а напрямні без чисел не стверджують справжніх розмірів чи авторства. Точний опис предмета наведено окремо."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://museum.mincult.gov.ua/collections/279349",
+          "role": "The separate lesson cites the museum’s makitra record. No source photograph or exact object is reproduced in this original scene."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-everyday-culture-05-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-everyday-culture-05-v1.jpg",
+      "sha256": "f140d676d3f01fce4a2e2cd50d80277456b51454f5fc404cd3c566686f655810",
+      "bytes": 192176,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Two Recipe Cards — original comparison gallery",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. An inviting original two-table recipe exhibition seen from a slightly elevated diagonal view. On the left, a small weekday table has a simple cream bowl of red vegetable soup, a plain spoon, a folded linen napkin, one empty chair and one large entirely blank cream recipe-context card on a coral stand. On the right, a separate wider celebration table has a generous plain soup tureen, four individual empty cream bowls around it, a soft coral runner, a modest vase of seasonal flowers and its own entirely blank recipe-context card on a matching coral stand. Show both tables as equally thoughtful, beautiful and valuable, with separate personal contexts; neither is the winning or more authentic recipe. A broad cream aisle divides the two complete table arrangements, then a gentle coral ribbon along the floor connects their two blank cards to a third empty contribution card in the background. No ingredient list, instructions or claims of one true recipe. The different occasions are the memorable composition, in a warm fictional museum kitchen gallery with large sunlit windows. Premium stylized 3D storybook game art with visibly painted tactile materials, coral and cream accents, honey-coloured wood and warm natural light. Important focal objects complete within the central 80 percent; beautiful layered depth and spacious readable arrangement. Fictional exhibit, not documentary household photography. No writing, labels, numbers, signatures, logos, UI, borders, watermarks or real people. No copied museum work, real family portrait, named artist imitation or claim that this scene represents every Ukrainian home. Correct localized explanations are supplied separately in the interface.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-403db36a-5ae8-480d-b7b8-d5ab2fb30774.png",
+        "sha256": "e063d7b93d552a6bead5bc48cb520cc3ad5c8cc14f76151c189bf8a427292be2",
+        "bytes": 2639402,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated two-table recipe exhibit comparing a simple weekday setting with a wider celebration setting, each with its own blank context card.",
+          "context": "Original generated fictional comparison of cooking occasions. Neither setting reproduces a real family account or establishes a correct or universal recipe."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована виставка двох столів, що зіставляє просте щоденне сервірування зі святковим, кожне з власною порожньою карткою контексту.",
+          "context": "Оригінальне згенероване вигадане порівняння кулінарних нагод. Жодне сервірування не відтворює реальну родинну історію й не встановлює правильного чи універсального рецепта."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ich.unesco.org/en/USL/culture-of-ukrainian-borscht-cooking-01852",
+          "role": "Social practices and varied cooking contexts inform the separate lesson. The two table settings are original fictional illustrations, not source-photo reproductions."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-everyday-culture-06-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-everyday-culture-06-v1.jpg",
+      "sha256": "9c67d5162dc5be14ffb1b56c81ee76e8d3f6468ebdfc90fa179db2cca0d2f3a8",
+      "bytes": 191952,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Make Room for Another Story — original welcome book finale",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create a distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an inspiring generous cultural reading room arranged around a large beautiful open cream scrapbook on a honey-wood central table. The visible open pages have exactly six separate inset picture windows in a loose two-by-three arrangement, with small simple original visual reminders: a pair of empty welcome cards, two abstract upright letter-study blocks with no readable glyphs, a red soup bowl, a plain earthenware bowl, two little table silhouettes and an open doorway. These are decorative pictures, not a menu or buttons, and have no captions. One wholly blank loose contribution card and an unused pencil sit prominently beside the completed book, with a spare chair pulled out to invite the next person. Low curved shelves, six softly glowing reading alcoves, coral cushions, pale linen curtains and bright spring light create a memorable warm finale. A gentle paper-like ribbon curls from the final book page toward the blank contribution card, suggesting that a new story can still be added. No magical authority, no claim to summarize a whole culture and no real book reproduction. Frame the full book and blank invitation card clearly in the central foreground, with spacious depth into the fictional library. Premium stylized 3D storybook game art with visibly painted tactile materials, coral and cream accents, honey-coloured wood and warm natural light. Important focal objects complete within the central 80 percent; beautiful layered depth and spacious readable arrangement. Fictional exhibit, not documentary household photography. No writing, labels, numbers, signatures, logos, UI, borders, watermarks or real people. No copied museum work, real family portrait, named artist imitation or claim that this scene represents every Ukrainian home. Correct localized explanations are supplied separately in the interface.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-7da57d59-1d2e-48a5-a1ab-dd91d438a0eb.png",
+        "sha256": "ee0021db9dc8d11f29f45e712e93a19cb07a8935d65c47f93e7660a3099b0f1d",
+        "bytes": 2590094,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated welcome-book finale with six small discovery pictures, an empty contribution card and a spare chair in a warm fictional reading room.",
+          "context": "Original generated fictional collection finale. The book invites another contribution; it does not claim to represent every Ukrainian household or confer authority over a culture."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована фінальна книга гостинності з шістьма невеликими зображеннями відкриттів, порожньою карткою для внеску та вільним стільцем у теплій вигаданій читальні.",
+          "context": "Оригінальний згенерований вигаданий фінал колекції. Книга запрошує наступний внесок; вона не представляє всі українські оселі й не надає права говорити від імені культури."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ui.org.ua/wp-content/uploads/2025/07/decolonisation-in-museums_part-1.pdf",
+          "role": "The separate finale links further reading on careful names and cultural context. No source page, layout or image is copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
     }
   ]
 }

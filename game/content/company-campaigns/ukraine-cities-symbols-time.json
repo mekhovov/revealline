@@ -2,16 +2,81 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
-      "bytes": 294985,
+      "alt": "Original illustrated architectural exhibition with separate abstract mosaic-colour panel, invented domed model and wider model grouping, each with a blank record card.",
+      "bytes": 178217,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "ukraine-cities-symbols-time-key-picture",
+      "height": 480,
+      "id": "ukraine-cities-symbols-time-01-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/ukraine-cities-symbols-time-key-v1.jpg",
+      "path": "editions/assets/discovery/ukraine-cities-symbols-time-01-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4",
+      "sha256": "08b07520b4dc9d551c207e99de322f66c9d30a23f62cc64be7fcb077066b8604",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated urban-study gallery comparing one isolated invented façade with a separate model street of varied neighbouring buildings.",
+      "bytes": 149431,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-cities-symbols-time-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-cities-symbols-time-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "91b992f6582f1a43c6ff7fa252090856b145cad929f5c7322ed745e8fb1cd8e3",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated port-city exhibition with separate invented harbour, street-grid and civic-square models, blank cards and a blue sea view.",
+      "bytes": 205707,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-cities-symbols-time-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-cities-symbols-time-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "3355b815e9331081fc536ac9cd47a66763acf25a95cbf293ad7b271371d98df9",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated civic-history room with separate archive and modern document stands and a blank upright blue emblem placeholder.",
+      "bytes": 147999,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-cities-symbols-time-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-cities-symbols-time-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "24b3bc2dd9a79f4130f7af5c1ba28a1ab09e348f5b7d2beb9a5b99d4434923e4",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated design comparison with a flat blue-over-yellow two-band flag card on the left and a separate abstract blue-and-yellow ribbon sculpture on the right.",
+      "bytes": 123064,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-cities-symbols-time-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-cities-symbols-time-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "17b8455b4ab30803951b2a276b3a1c4031164fcd2164f53c1313cd86d34e32dc",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated museum planning room connecting three fictional city-model tables with a separate civic-history timeline and six blank source cards.",
+      "bytes": 193849,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-cities-symbols-time-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-cities-symbols-time-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "553e59b52cf99f317696d6639789f689ae9fe9074767ad53ca3bff35f80aa31d",
       "width": 960
     }
   ],
@@ -20,7 +85,7 @@
       "band": 9,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "ukraine-cities-symbols-time-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "ukraine-cities-symbols-time-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "ukraine-cities-symbols-time",
@@ -230,7 +295,7 @@
           "frontier-patrol",
           "relay-gates"
         ],
-        "rewardRef": { "id": "ukraine-cities-symbols-time-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-cities-symbols-time-01-discovery", "revision": "2" },
         "routeDecision": "Open the short numbered return into the mosaic wing or take the outer court first while keeping two retreat choices. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -243,7 +308,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-cities-symbols-time-key-picture",
+        "backgroundAssetId": "ukraine-cities-symbols-time-01-picture",
         "themeId": "ukraine-cities-symbols-time-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -305,7 +370,7 @@
           "frontier-patrol",
           "relay-gates"
         ],
-        "rewardRef": { "id": "ukraine-cities-symbols-time-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-cities-symbols-time-02-discovery", "revision": "2" },
         "routeDecision": "Secure the nearby market islands or activate the connector that opens a longer safe route behind the side galleries. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -318,7 +383,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 26.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-cities-symbols-time-key-picture",
+        "backgroundAssetId": "ukraine-cities-symbols-time-02-picture",
         "themeId": "ukraine-cities-symbols-time-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -380,7 +445,7 @@
           "frontier-patrol",
           "relay-gates"
         ],
-        "rewardRef": { "id": "ukraine-cities-symbols-time-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-cities-symbols-time-03-discovery", "revision": "2" },
         "routeDecision": "Take the lower harbour bay for a short closure or connect the upper squares through the numbered return. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -393,7 +458,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-cities-symbols-time-key-picture",
+        "backgroundAssetId": "ukraine-cities-symbols-time-03-picture",
         "themeId": "ukraine-cities-symbols-time-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -456,7 +521,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "ukraine-cities-symbols-time-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-cities-symbols-time-04-discovery", "revision": "2" },
         "routeDecision": "Use the broad central foundation for a calmer approach or unlock the side return before entering the marked lane. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -469,7 +534,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-cities-symbols-time-key-picture",
+        "backgroundAssetId": "ukraine-cities-symbols-time-04-picture",
         "themeId": "ukraine-cities-symbols-time-theme"
       },
       "relayLinks": [
@@ -535,7 +600,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "ukraine-cities-symbols-time-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-cities-symbols-time-05-discovery", "revision": "2" },
         "routeDecision": "Open the nearest numbered connection first or secure both colour islands before crossing the warning lane. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -548,7 +613,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-cities-symbols-time-key-picture",
+        "backgroundAssetId": "ukraine-cities-symbols-time-05-picture",
         "themeId": "ukraine-cities-symbols-time-theme"
       },
       "relayLinks": [
@@ -615,7 +680,7 @@
           "relay-gates",
           "directional-fields"
         ],
-        "rewardRef": { "id": "ukraine-cities-symbols-time-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-cities-symbols-time-06-discovery", "revision": "2" },
         "routeDecision": "Activate the two source returns before following the directional fields or take a longer loop around the flow. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -628,7 +693,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-cities-symbols-time-key-picture",
+        "backgroundAssetId": "ukraine-cities-symbols-time-06-picture",
         "themeId": "ukraine-cities-symbols-time-theme"
       },
       "relayLinks": [
@@ -647,9 +712,9 @@
       "format": "PackDesignV1",
       "id": "ukraine-cities-symbols-time-pack",
       "name": "Cities, Symbols and Time",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }

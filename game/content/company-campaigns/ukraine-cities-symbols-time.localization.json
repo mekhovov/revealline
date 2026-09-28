@@ -6,7 +6,7 @@
     {
       "fields": { "name": { "en": "Cities, Symbols and Time", "uk": "Міста, символи і час" } },
       "id": "ukraine-cities-symbols-time",
-      "identity": "90b0c4ce7b990e9f",
+      "identity": "645b5ab595c719cc",
       "kind": "campaign"
     },
     {
@@ -22,7 +22,7 @@
         "name": { "en": "Kyiv in Layers", "uk": "Київ шарами" }
       },
       "id": "ukraine-cities-symbols-time-01",
-      "identity": "d33e490cb648d479",
+      "identity": "885f94d5a279b2a6",
       "kind": "mission"
     },
     {
@@ -38,7 +38,7 @@
         "name": { "en": "Lviv: Streets and Encounters", "uk": "Львів: вулиці й зустрічі" }
       },
       "id": "ukraine-cities-symbols-time-02",
-      "identity": "06d8258290dc5487",
+      "identity": "fac8e851bc9164bd",
       "kind": "mission"
     },
     {
@@ -54,7 +54,7 @@
         "name": { "en": "Odesa: A Port City Record", "uk": "Одеса: опис портового міста" }
       },
       "id": "ukraine-cities-symbols-time-03",
-      "identity": "93be356201ad47f5",
+      "identity": "ad8f4fd39c8e6f86",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "The Trident and a Date", "uk": "Тризуб і дата" }
       },
       "id": "ukraine-cities-symbols-time-04",
-      "identity": "95dd1a026c12048e",
+      "identity": "a9c5dfa76878afb8",
       "kind": "mission"
     },
     {
@@ -86,7 +86,7 @@
         "name": { "en": "Blue and Yellow, Clearly Seen", "uk": "Синій і жовтий: бачити чітко" }
       },
       "id": "ukraine-cities-symbols-time-05",
-      "identity": "c06378050c33af61",
+      "identity": "aa0f9ef886793726",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "A Map with More Than One Story", "uk": "Мапа з багатьма історіями" }
       },
       "id": "ukraine-cities-symbols-time-06",
-      "identity": "1b560ba134f4ea72",
+      "identity": "d73d5d4372666b34",
       "kind": "mission"
     }
   ],
