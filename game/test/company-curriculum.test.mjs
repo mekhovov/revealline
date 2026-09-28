@@ -243,6 +243,14 @@ test('all 108 missions have distinct admitted art and selected public dependenci
       ]),
     ),
     {
+      'social-drone-community-connections': [
+        'social-community-listening-jellyfish',
+        'social-community-listening-jellyfish-en',
+        'social-community-listening-jellyfish-uk',
+        'social-community-listening-thanks',
+        'social-community-listening-thanks-en',
+        'social-community-listening-thanks-uk',
+      ],
       'ukraine-threads': [
         'met-degas-ukrainian-dress-436157',
         'reference-ukraine-met-shirt-fragment',
