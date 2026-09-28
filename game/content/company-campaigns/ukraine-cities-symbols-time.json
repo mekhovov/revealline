@@ -1,0 +1,655 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [
+    {
+      "alt": "An original fictional textile gallery with suspended linen, separate embroidered samples and warm natural light.",
+      "bytes": 1106859,
+      "format": "AssetRevisionV1",
+      "height": 640,
+      "id": "ukraine-culture-home-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-culture-home-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144",
+      "width": 960
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 9,
+      "discovery": {
+        "exhibitLayout": "gallery",
+        "finaleRewardRef": { "id": "ukraine-cities-symbols-time-finale", "revision": "1" }
+      },
+      "format": "CampaignDesignV1",
+      "id": "ukraine-cities-symbols-time",
+      "missionIds": [
+        "ukraine-cities-symbols-time-01",
+        "ukraine-cities-symbols-time-02",
+        "ukraine-cities-symbols-time-03",
+        "ukraine-cities-symbols-time-04",
+        "ukraine-cities-symbols-time-05",
+        "ukraine-cities-symbols-time-06"
+      ],
+      "name": "Cities, Symbols and Time",
+      "revision": "1"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "ukraine-cities-symbols-time",
+  "maps": [
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 5, "w": 11, "x": 15, "y": 11 },
+        { "h": 5, "w": 13, "x": 31, "y": 23 }
+      ],
+      "gates": [{ "h": 7, "id": "return-1", "w": 1, "x": 37, "y": 28 }],
+      "height": 36,
+      "id": "ukraine-cities-symbols-time-01-map",
+      "name": "Kyiv in Layers",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 20.5, "y": 0.5 }],
+      "speedZones": [],
+      "terrain": [],
+      "walls": [{ "h": 11, "w": 2, "x": 48, "y": 10 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 5, "w": 12, "x": 9, "y": 22 },
+        { "h": 5, "w": 12, "x": 32, "y": 10 },
+        { "h": 5, "w": 10, "x": 49, "y": 12 }
+      ],
+      "gates": [{ "h": 1, "id": "return-1", "w": 5, "x": 44, "y": 12 }],
+      "height": 36,
+      "id": "ukraine-cities-symbols-time-02-map",
+      "name": "Lviv: Streets and Encounters",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 36.5, "y": 0.5 }],
+      "speedZones": [],
+      "terrain": [],
+      "walls": [
+        { "h": 11, "w": 2, "x": 23, "y": 8 },
+        { "h": 2, "w": 14, "x": 44, "y": 24 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 5, "w": 12, "x": 29, "y": 12 },
+        { "h": 4, "w": 12, "x": 11, "y": 25 },
+        { "h": 4, "w": 10, "x": 52, "y": 9 }
+      ],
+      "gates": [{ "h": 6, "id": "return-1", "w": 1, "x": 17, "y": 29 }],
+      "height": 36,
+      "id": "ukraine-cities-symbols-time-03-map",
+      "name": "Odesa: A Port City Record",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 34.5, "y": 0.5 }],
+      "speedZones": [],
+      "terrain": [],
+      "walls": [
+        { "h": 11, "w": 2, "x": 18, "y": 11 },
+        { "h": 10, "w": 2, "x": 49, "y": 19 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 7, "w": 20, "x": 27, "y": 13 },
+        { "h": 5, "w": 10, "x": 10, "y": 23 }
+      ],
+      "gates": [
+        { "h": 7, "id": "return-1", "w": 1, "x": 15, "y": 28 },
+        { "h": 1, "id": "return-2", "w": 9, "x": 1, "y": 25 }
+      ],
+      "height": 36,
+      "id": "ukraine-cities-symbols-time-04-map",
+      "name": "The Trident and a Date",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 36.5, "y": 0.5 }],
+      "speedZones": [],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 12, "x": 12, "y": 8 },
+        { "h": 2, "w": 13, "x": 48, "y": 25 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 5, "w": 12, "x": 12, "y": 15 },
+        { "h": 5, "w": 12, "x": 45, "y": 13 },
+        { "h": 3, "w": 10, "x": 29, "y": 20 }
+      ],
+      "gates": [
+        { "h": 1, "id": "return-1", "w": 11, "x": 1, "y": 17 },
+        { "h": 12, "id": "return-2", "w": 1, "x": 51, "y": 1 }
+      ],
+      "height": 36,
+      "id": "ukraine-cities-symbols-time-05-map",
+      "name": "Blue and Yellow, Clearly Seen",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 18.5, "y": 0.5 }],
+      "speedZones": [],
+      "terrain": [],
+      "walls": [
+        { "h": 8, "w": 3, "x": 32, "y": 9 },
+        { "h": 5, "w": 3, "x": 33, "y": 25 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 5, "w": 12, "x": 28, "y": 11 },
+        { "h": 4, "w": 12, "x": 34, "y": 25 },
+        { "h": 4, "w": 9, "x": 11, "y": 25 },
+        { "h": 4, "w": 9, "x": 54, "y": 8 }
+      ],
+      "gates": [
+        { "h": 6, "id": "return-1", "w": 1, "x": 15, "y": 29 },
+        { "h": 6, "id": "return-2", "w": 1, "x": 40, "y": 29 }
+      ],
+      "height": 36,
+      "id": "ukraine-cities-symbols-time-06-map",
+      "name": "A Map with More Than One Story",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 33.5, "y": 0.5 }],
+      "speedZones": [
+        { "direction": "down", "h": 7, "id": "outbound-flow", "w": 3, "x": 24, "y": 8 },
+        { "direction": "right", "h": 3, "id": "return-flow", "w": 7, "x": 41, "y": 22 }
+      ],
+      "terrain": [],
+      "walls": [
+        { "h": 12, "w": 2, "x": 22, "y": 10 },
+        { "h": 12, "w": 2, "x": 48, "y": 17 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 14, "y": 11 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.5900000000000001,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 9,
+          "coordination": 0,
+          "execution": 8,
+          "mechanicLoad": 9,
+          "planning": 9,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": ["relay-gates"],
+        "lesson": "Connect the mosaic gallery and monastery court while keeping their histories distinct. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original architectural exhibition with separate mosaic-colour panels and monastery model plinths, blue shadows and warm gold light; no copied sacred fresco, reconstructed historic interior or real navigation map.",
+        "pacingBeat": "discover",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol",
+          "relay-gates"
+        ],
+        "rewardRef": { "id": "ukraine-cities-symbols-time-01-discovery", "revision": "1" },
+        "routeDecision": "Open the short numbered return into the mosaic wing or take the outer court first while keeping two retreat choices. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV3",
+      "id": "ukraine-cities-symbols-time-01",
+      "map": { "id": "ukraine-cities-symbols-time-01-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Kyiv in Layers",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-culture-home-picture",
+        "themeId": "ukraine-cities-symbols-time-theme"
+      },
+      "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 8, "y": 22 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6400000000000001,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 9,
+          "coordination": 0,
+          "execution": 8,
+          "mechanicLoad": 9,
+          "planning": 9,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Connect the market and side galleries to discover more than one architectural influence. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original Lviv-inspired urban-study gallery with model streets and varied generic façade silhouettes, clearly a fictional exhibition rather than an exact city view or single-style historical claim.",
+        "pacingBeat": "choose",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol",
+          "relay-gates"
+        ],
+        "rewardRef": { "id": "ukraine-cities-symbols-time-02-discovery", "revision": "1" },
+        "routeDecision": "Secure the nearby market islands or activate the connector that opens a longer safe route behind the side galleries. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV3",
+      "id": "ukraine-cities-symbols-time-02",
+      "map": { "id": "ukraine-cities-symbols-time-02-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Lviv: Streets and Encounters",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 26.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-culture-home-picture",
+        "themeId": "ukraine-cities-symbols-time-theme"
+      },
+      "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 29.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 28, "y": 12 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6700000000000002,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 9,
+          "coordination": 0,
+          "execution": 8,
+          "mechanicLoad": 9,
+          "planning": 9,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Link the harbour-model bays and follow the relationship between a city and its wider setting. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original blue-gold port-city exhibition with harbour model, separate street-grid panel and generous square; no exact Odesa street plan, wartime scene or recreated documentary view.",
+        "pacingBeat": "combine",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol",
+          "relay-gates"
+        ],
+        "rewardRef": { "id": "ukraine-cities-symbols-time-03-discovery", "revision": "1" },
+        "routeDecision": "Take the lower harbour bay for a short closure or connect the upper squares through the numbered return. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV3",
+      "id": "ukraine-cities-symbols-time-03",
+      "map": { "id": "ukraine-cities-symbols-time-03-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Odesa: A Port City Record",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-culture-home-picture",
+        "themeId": "ukraine-cities-symbols-time-theme"
+      },
+      "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 28.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 27.5, "y": 13.5 }],
+      "coverage": 0.6100000000000001,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["lane-emitter", "relay-gates"],
+        "counterplay": "Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 10,
+          "coordination": 0,
+          "execution": 8,
+          "mechanicLoad": 10,
+          "planning": 10,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Open the spacious symbol gallery and match the modern state record to its date. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original civic-history gallery with two clear timeline stands and a placeholder for an accurately sourced upright state emblem; no distorted trident, speculative symbol decoding or fabricated legal document facsimile.",
+        "pacingBeat": "breathe",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "lane-emitter",
+          "relay-gates"
+        ],
+        "rewardRef": { "id": "ukraine-cities-symbols-time-04-discovery", "revision": "1" },
+        "routeDecision": "Use the broad central foundation for a calmer approach or unlock the side return before entering the marked lane. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV3",
+      "id": "ukraine-cities-symbols-time-04",
+      "map": { "id": "ukraine-cities-symbols-time-04-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "The Trident and a Date",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 7.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-culture-home-picture",
+        "themeId": "ukraine-cities-symbols-time-theme"
+      },
+      "relayLinks": [
+        { "gateId": "return-1", "objectiveId": "connection" },
+        { "gateId": "return-2", "objectiveId": "handoff" }
+      ],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 12.5, "y": 15.5 }],
+      "coverage": 0.71,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["lane-emitter", "relay-gates"],
+        "counterplay": "Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 10,
+          "coordination": 0,
+          "execution": 8,
+          "mechanicLoad": 10,
+          "planning": 10,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Connect the two colour halls and keep the symbol readable at every scale. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original accessible design exhibit with blue and yellow panels, separate blank labels and a correctly proportioned two-band flag card; quiet cream surround, no colour-only essential information.",
+        "pacingBeat": "mastery",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "lane-emitter",
+          "relay-gates"
+        ],
+        "rewardRef": { "id": "ukraine-cities-symbols-time-05-discovery", "revision": "1" },
+        "routeDecision": "Open the nearest numbered connection first or secure both colour islands before crossing the warning lane. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV3",
+      "id": "ukraine-cities-symbols-time-05",
+      "map": { "id": "ukraine-cities-symbols-time-05-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Blue and Yellow, Clearly Seen",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-culture-home-picture",
+        "themeId": "ukraine-cities-symbols-time-theme"
+      },
+      "relayLinks": [
+        { "gateId": "return-1", "objectiveId": "connection" },
+        { "gateId": "return-2", "objectiveId": "handoff" }
+      ],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 29.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 28.5, "y": 11.5 }],
+      "coverage": 0.75,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["lane-emitter", "relay-gates", "directional-fields"],
+        "counterplay": "Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill. Arrows speed travel with the flow and slow opposite travel in unclaimed field. Capture neutralizes them.",
+        "difficulty": {
+          "band": 10,
+          "coordination": 0,
+          "execution": 8,
+          "mechanicLoad": 10,
+          "planning": 10,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": ["directional-fields"],
+        "lesson": "Connect the city records and symbol timeline into a clearly sourced final exhibition. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original museum map room with three distinct city model tables, a separate civic-symbol timeline and generous source-card wall; an exhibition diagram, not a real navigation map or exhaustive account of Ukraine.",
+        "pacingBeat": "resolve",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "lane-emitter",
+          "relay-gates",
+          "directional-fields"
+        ],
+        "rewardRef": { "id": "ukraine-cities-symbols-time-06-discovery", "revision": "1" },
+        "routeDecision": "Activate the two source returns before following the directional fields or take a longer loop around the flow. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV3",
+      "id": "ukraine-cities-symbols-time-06",
+      "map": { "id": "ukraine-cities-symbols-time-06-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A Map with More Than One Story",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-culture-home-picture",
+        "themeId": "ukraine-cities-symbols-time-theme"
+      },
+      "relayLinks": [
+        { "gateId": "return-1", "objectiveId": "connection" },
+        { "gateId": "return-2", "objectiveId": "handoff" }
+      ],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Cities, Symbols and Time",
+  "packs": [
+    {
+      "campaignIds": ["ukraine-cities-symbols-time"],
+      "format": "PackDesignV1",
+      "id": "ukraine-cities-symbols-time-pack",
+      "name": "Cities, Symbols and Time",
+      "revision": "1"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "1"
+}

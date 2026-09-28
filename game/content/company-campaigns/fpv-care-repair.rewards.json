@@ -1,0 +1,729 @@
+[
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-care-repair",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-care-repair-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "“What happened?” is a different question from “Why?”",
+        "title": "Describe the Symptom"
+      },
+      "uk": { "teaser": "«Що сталося?» відрізняється від «Чому?».", "title": "Опишіть симптом" }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-care-repair-01-image",
+        "locales": {
+          "en": {
+            "alt": "Describe the Symptom — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Describe the Symptom"
+          },
+          "uk": {
+            "alt": "Опишіть симптом — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Опишіть симптом"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-care-repair-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Our fictional training model has a label that moves when the display stand is touched. “The label moved” is an observation; “the adhesive failed” is only one possible explanation.",
+              "Write the observation without powering anything or opening a device. Add the time and the part identifier, then ask what evidence would distinguish a loose label from a moving stand. NASA’s scientific-method resource provides further reading on testable explanations."
+            ],
+            "sources": [
+              {
+                "title": "NASA Space Place — Steps in the scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Describe the Symptom"
+          },
+          "uk": {
+            "paragraphs": [
+              "На вигаданій навчальній моделі напис рухається від дотику до стенда. «Напис зрушив» — спостереження; «клей не тримає» — лише одне можливе пояснення.",
+              "Запишіть спостереження без живлення чи відкривання пристрою. Додайте час і позначення деталі та запитайте, які докази відрізнять відклеєний напис від рухомого стенда. Ресурс NASA пояснює перевірювані припущення."
+            ],
+            "sources": [
+              {
+                "title": "NASA Space Place — Steps in the scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Опишіть симптом"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "8e797f08bb56a240" },
+            { "difficulty": "standard", "gameplayId": "95d940c5e1009442" },
+            { "difficulty": "expert", "gameplayId": "5e814a291e8121d9" }
+          ],
+          "missionId": "fpv-care-repair-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-care-repair-01", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-care-repair",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-care-repair-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A clear description can travel safely to the next person.",
+        "title": "An Unpowered Inspection"
+      },
+      "uk": {
+        "teaser": "Точний опис можна безпечно передати іншій людині.",
+        "title": "Огляд без живлення"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-care-repair-02-image",
+        "locales": {
+          "en": {
+            "alt": "An Unpowered Inspection — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "An Unpowered Inspection"
+          },
+          "uk": {
+            "alt": "Огляд без живлення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Огляд без живлення"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-care-repair-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The fictional inspection photographs show an unreadable label, an obviously broken display bracket and an intact-looking cover. None is proof of internal electrical condition.",
+              "Choose “record and ask” for an unknown condition rather than “power it to find out”. iFixit’s safety guidance supports using the actual manual and seeking help when unsure. Our exercise stays with visual records and an inert museum model."
+            ],
+            "sources": [
+              {
+                "title": "iFixit — Device Safety",
+                "url": "https://www.ifixit.com/Info/Device_Safety"
+              }
+            ],
+            "title": "An Unpowered Inspection"
+          },
+          "uk": {
+            "paragraphs": [
+              "Вигадані знімки огляду показують нечитаний напис, зламаний кронштейн макета й зовні цілу кришку. Жоден не доводить внутрішній електричний стан.",
+              "Для невідомого стану оберіть «записати й запитати», а не «увімкнути, щоб дізнатися». Поради iFixit підтримують використання точної інструкції та допомогу за невпевненості. Вправа обмежена записами огляду й неактивним музейним макетом."
+            ],
+            "sources": [
+              {
+                "title": "iFixit — Device Safety",
+                "url": "https://www.ifixit.com/Info/Device_Safety"
+              }
+            ],
+            "title": "Огляд без живлення"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "4ef4aa3850b6a07a" },
+            { "difficulty": "standard", "gameplayId": "df6371479e5781ee" },
+            { "difficulty": "expert", "gameplayId": "353c377d5aa0182e" }
+          ],
+          "missionId": "fpv-care-repair-02"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-care-repair-02", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-care-repair",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-care-repair-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A useful comparison says what stayed the same.",
+        "title": "Change One Question"
+      },
+      "uk": { "teaser": "Корисне порівняння називає незмінне.", "title": "Змініть одне питання" }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-care-repair-03-image",
+        "locales": {
+          "en": {
+            "alt": "Change One Question — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Change One Question"
+          },
+          "uk": {
+            "alt": "Змініть одне питання — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Змініть одне питання"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-care-repair-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "In our paper-model fixture, the same label is viewed under two lamps. The viewing distance and label stay the same; only illumination changes. This helps examine a readability question, not an electrical fault.",
+              "Compare that record with one that changes lamp, label and distance at once. Explain which comparison supports a narrower conclusion. No actual aircraft diagnostic or live-circuit procedure is performed."
+            ],
+            "sources": [
+              {
+                "title": "NASA Space Place — Steps in the scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Change One Question"
+          },
+          "uk": {
+            "paragraphs": [
+              "У вправі той самий напис паперової моделі розглядають під двома лампами. Відстань і напис незмінні; змінюється лише освітлення. Це питання читабельності, а не електричної несправності.",
+              "Порівняйте запис із випадком, де одночасно змінено лампу, напис і відстань. Поясніть, який підтримує точніший висновок. Реальної діагностики апарата чи процедури під живленням немає."
+            ],
+            "sources": [
+              {
+                "title": "NASA Space Place — Steps in the scientific method",
+                "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+              }
+            ],
+            "title": "Змініть одне питання"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "9be715438cf5e758" },
+            { "difficulty": "standard", "gameplayId": "678a5c3fb03f5514" },
+            { "difficulty": "expert", "gameplayId": "ee2c024462a1ad0b" }
+          ],
+          "missionId": "fpv-care-repair-03"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-care-repair-03", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-care-repair",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-care-repair-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Recognizing a boundary is a useful skill.",
+        "title": "A Battery Stop Card"
+      },
+      "uk": {
+        "teaser": "Розпізнавання межі — корисна навичка.",
+        "title": "Картка зупинки через акумулятор"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-care-repair-04-image",
+        "locales": {
+          "en": {
+            "alt": "A Battery Stop Card — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Battery Stop Card"
+          },
+          "uk": {
+            "alt": "Картка зупинки через акумулятор — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Картка зупинки через акумулятор"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-care-repair-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "iFixit advises stopping use of a swollen lithium-ion battery and seeking professional help when uncertain. Damaged batteries must not be punctured or treated as ordinary practice parts.",
+              "Our illustration is a flat warning card, not a real battery. Select “stop and follow qualified guidance”, then explain why a successful game route cannot make the item safe. Actual handling follows the manufacturer and local specialist guidance."
+            ],
+            "sources": [
+              {
+                "title": "iFixit — What to do with a swollen battery",
+                "url": "https://www.ifixit.com/Wiki/What_to_do_with_a_swollen_battery"
+              },
+              {
+                "title": "iFixit — Device Safety",
+                "url": "https://www.ifixit.com/Info/Device_Safety"
+              }
+            ],
+            "title": "A Battery Stop Card"
+          },
+          "uk": {
+            "paragraphs": [
+              "iFixit радить припинити використання здутого літій-іонного акумулятора й звернутися до фахівця за невпевненості. Пошкоджені акумулятори не проколюють і не використовують як звичайні навчальні деталі.",
+              "Ілюстрація — пласка картка попередження, а не реальний акумулятор. Оберіть «зупинитися й діяти за фаховими вказівками» та поясніть, чому ігровий маршрут не робить предмет безпечним. Реальне поводження визначають виробник і місцеві фахівці."
+            ],
+            "sources": [
+              {
+                "title": "iFixit — What to do with a swollen battery",
+                "url": "https://www.ifixit.com/Wiki/What_to_do_with_a_swollen_battery"
+              },
+              {
+                "title": "iFixit — Device Safety",
+                "url": "https://www.ifixit.com/Info/Device_Safety"
+              }
+            ],
+            "title": "Картка зупинки через акумулятор"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "363eefafb8ef3b58" },
+            { "difficulty": "standard", "gameplayId": "59739281f12689c9" },
+            { "difficulty": "expert", "gameplayId": "6bd95b37e828d16e" }
+          ],
+          "missionId": "fpv-care-repair-04"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-care-repair-04", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-care-repair",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-care-repair-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "The same symptom does not always justify the same action.",
+        "title": "Repair, Replace, Ask"
+      },
+      "uk": {
+        "teaser": "Однаковий симптом не завжди обґрунтовує однакову дію.",
+        "title": "Ремонтувати, замінити, запитати"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-care-repair-05-image",
+        "locales": {
+          "en": {
+            "alt": "Repair, Replace, Ask — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Repair, Replace, Ask"
+          },
+          "uk": {
+            "alt": "Ремонтувати, замінити, запитати — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Ремонтувати, замінити, запитати"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-care-repair-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Our fixture offers three civilian display cases: a torn paper label, an unidentified electronic board and a damaged battery warning card. These belong to different decision boundaries.",
+              "Replace the paper label within the display task, request identification for the board, and stop use for the battery case. Explain why “repair everything” is not a sensible single rule. No component-level repair, battery repair or powered testing is taught."
+            ],
+            "sources": [
+              {
+                "title": "iFixit — What to do with a swollen battery",
+                "url": "https://www.ifixit.com/Wiki/What_to_do_with_a_swollen_battery"
+              }
+            ],
+            "title": "Repair, Replace, Ask"
+          },
+          "uk": {
+            "paragraphs": [
+              "Вправа має три випадки цивільної експозиції: порваний напис, невизначену електронну плату й картку пошкодженого акумулятора. Межі рішень для них різні.",
+              "Замініть паперовий напис у межах макета, запросіть визначення плати й припиніть використання в ситуації з акумулятором. Поясніть, чому «ремонтувати все» — погане єдине правило. Ремонт електроніки, акумуляторів і перевірки під живленням не вивчаються."
+            ],
+            "sources": [
+              {
+                "title": "iFixit — What to do with a swollen battery",
+                "url": "https://www.ifixit.com/Wiki/What_to_do_with_a_swollen_battery"
+              }
+            ],
+            "title": "Ремонтувати, замінити, запитати"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "7e64ba3584382064" },
+            { "difficulty": "standard", "gameplayId": "2a46d773ace2d31c" },
+            { "difficulty": "expert", "gameplayId": "9d73113395b46aed" }
+          ],
+          "missionId": "fpv-care-repair-05"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-care-repair-05", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-care-repair",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-care-repair-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "An item’s story continues after the last repair decision.",
+        "title": "A Responsible Last Step"
+      },
+      "uk": {
+        "teaser": "Історія предмета триває після останнього рішення про ремонт.",
+        "title": "Відповідальний останній крок"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-care-repair-06-image",
+        "locales": {
+          "en": {
+            "alt": "A Responsible Last Step — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Responsible Last Step"
+          },
+          "uk": {
+            "alt": "Відповідальний останній крок — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Відповідальний останній крок"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-care-repair-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The US EPA advises keeping lithium-ion batteries out of ordinary trash and municipal recycling, using appropriate collection services instead. Damaged items require specific guidance; local arrangements differ.",
+              "Our fictional handoff records the item ID, observation, decision and responsible next contact. Choose “ask the local specialist service” when the destination is unknown. Never invent a shipping or disposal procedure from the game’s museum map."
+            ],
+            "sources": [
+              {
+                "title": "US EPA — Lithium-ion battery facts and disposal, 2023",
+                "url": "https://www.epa.gov/system/files/documents/2023-09/Lithium-Ion-Batteries-Fact-Sheet-8-2023.pdf"
+              }
+            ],
+            "title": "A Responsible Last Step"
+          },
+          "uk": {
+            "paragraphs": [
+              "Агентство EPA США радить не класти літій-іонні акумулятори до звичайного сміття чи комунальної вторсировини, а користуватися належними службами збору. Пошкоджені предмети потребують окремих вказівок; місцеві умови різняться.",
+              "Вигадана передача містить номер предмета, спостереження, рішення та наступний відповідальний контакт. За невідомого місця призначення оберіть «запитати місцеву спеціалізовану службу». Не вигадуйте процедуру пересилання чи утилізації за музейною картою гри."
+            ],
+            "sources": [
+              {
+                "title": "US EPA — Lithium-ion battery facts and disposal, 2023",
+                "url": "https://www.epa.gov/system/files/documents/2023-09/Lithium-Ion-Batteries-Fact-Sheet-8-2023.pdf"
+              }
+            ],
+            "title": "Відповідальний останній крок"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a02b2d030b9fcf88" },
+            { "difficulty": "standard", "gameplayId": "5a32cd753c2fe480" },
+            { "difficulty": "expert", "gameplayId": "b968c9a0511d9079" }
+          ],
+          "missionId": "fpv-care-repair-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-care-repair-06", "kind": "mission" }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-care-repair",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-care-repair-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "The Evidence Before Action Notebook"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Щоденник доказів перед дією"
+      }
+    },
+    "payloads": [
+      {
+        "id": "fpv-care-repair-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Build a handoff from an observation, an unpowered inspection, a bounded comparison, a battery stop decision, a repair boundary and a disposal question. Keep symptom, possible cause and confirmed finding separate. The fictional training model never becomes flight-ready because a card was collected; the next real action belongs to the appropriate manual and qualified person."
+            ],
+            "sources": [
+              {
+                "title": "iFixit — Device Safety",
+                "url": "https://www.ifixit.com/Info/Device_Safety"
+              }
+            ],
+            "title": "The Evidence Before Action Notebook"
+          },
+          "uk": {
+            "paragraphs": [
+              "Складіть передачу справ зі спостереження, огляду без живлення, обмеженого порівняння, рішення зупинитися через акумулятор, меж ремонту й питання утилізації. Розрізняйте симптом, можливу причину та підтверджений висновок. Збирання карток не робить навчальну модель готовою до польоту; наступну реальну дію визначають відповідна інструкція та фахівець."
+            ],
+            "sources": [
+              {
+                "title": "iFixit — Device Safety",
+                "url": "https://www.ifixit.com/Info/Device_Safety"
+              }
+            ],
+            "title": "Щоденник доказів перед дією"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-care-repair-01-image",
+        "locales": {
+          "en": {
+            "alt": "Describe the Symptom — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Describe the Symptom"
+          },
+          "uk": {
+            "alt": "Опишіть симптом — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Опишіть симптом"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-care-repair-02-image",
+        "locales": {
+          "en": {
+            "alt": "An Unpowered Inspection — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "An Unpowered Inspection"
+          },
+          "uk": {
+            "alt": "Огляд без живлення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Огляд без живлення"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-care-repair-03-image",
+        "locales": {
+          "en": {
+            "alt": "Change One Question — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Change One Question"
+          },
+          "uk": {
+            "alt": "Змініть одне питання — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Змініть одне питання"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-care-repair-04-image",
+        "locales": {
+          "en": {
+            "alt": "A Battery Stop Card — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Battery Stop Card"
+          },
+          "uk": {
+            "alt": "Картка зупинки через акумулятор — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Картка зупинки через акумулятор"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-care-repair-05-image",
+        "locales": {
+          "en": {
+            "alt": "Repair, Replace, Ask — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "Repair, Replace, Ask"
+          },
+          "uk": {
+            "alt": "Ремонтувати, замінити, запитати — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Ремонтувати, замінити, запитати"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-learning-home",
+          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+        },
+        "id": "fpv-care-repair-06-image",
+        "locales": {
+          "en": {
+            "alt": "A Responsible Last Step — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "title": "A Responsible Last Step"
+          },
+          "uk": {
+            "alt": "Відповідальний останній крок — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "title": "Відповідальний останній крок"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-care-repair-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "type": "url",
+        "url": "https://www.ifixit.com/Info/Device_Safety"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "8e797f08bb56a240" },
+            { "difficulty": "standard", "gameplayId": "95d940c5e1009442" },
+            { "difficulty": "expert", "gameplayId": "5e814a291e8121d9" }
+          ],
+          "missionId": "fpv-care-repair-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "4ef4aa3850b6a07a" },
+            { "difficulty": "standard", "gameplayId": "df6371479e5781ee" },
+            { "difficulty": "expert", "gameplayId": "353c377d5aa0182e" }
+          ],
+          "missionId": "fpv-care-repair-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "9be715438cf5e758" },
+            { "difficulty": "standard", "gameplayId": "678a5c3fb03f5514" },
+            { "difficulty": "expert", "gameplayId": "ee2c024462a1ad0b" }
+          ],
+          "missionId": "fpv-care-repair-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "363eefafb8ef3b58" },
+            { "difficulty": "standard", "gameplayId": "59739281f12689c9" },
+            { "difficulty": "expert", "gameplayId": "6bd95b37e828d16e" }
+          ],
+          "missionId": "fpv-care-repair-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "7e64ba3584382064" },
+            { "difficulty": "standard", "gameplayId": "2a46d773ace2d31c" },
+            { "difficulty": "expert", "gameplayId": "9d73113395b46aed" }
+          ],
+          "missionId": "fpv-care-repair-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a02b2d030b9fcf88" },
+            { "difficulty": "standard", "gameplayId": "5a32cd753c2fe480" },
+            { "difficulty": "expert", "gameplayId": "b968c9a0511d9079" }
+          ],
+          "missionId": "fpv-care-repair-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "fpv-care-repair", "kind": "campaign" }
+  }
+]

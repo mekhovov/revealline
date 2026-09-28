@@ -1,3 +1,4 @@
+import { mountLocalRewardMediaPreview } from './reward-media-preview.mjs';
 import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
 import { boundedJSON, dataIdentity, required } from '../data-json.mjs';
 import { validateCompletionRewards } from '../rewards/model.mjs';
@@ -8,14 +9,74 @@ import {
   DISCOVERY_EXHIBIT_LAYOUTS,
 } from '../content-design/discovery.mjs';
 import { showEditorFailure } from './editor-copy.mjs';
+import { createRewardPrintPreview } from './reward-print-preview.mjs';
+import { createExplorationEditor } from './exploration-editor.mjs';
 
 /** Shared Level/Campaign and Company Studio controls. Import/preview never touch
  * Journey, reward receipts or storage; the supplied apply owns draft persistence. */
-export function createDiscoveryEditor({ document, getSource, getMission, getRewards, apply }) {
+export function createDiscoveryEditor({
+  document,
+  window = globalThis.window,
+  getSource,
+  getMission,
+  getRewards,
+  applyRewards,
+  apply,
+}) {
   const $ = (id) => document.getElementById(`discovery-${id}`);
+  let mediaPreviews = [];
+  const disposeMediaPreviews = () => {
+    mediaPreviews.forEach((viewer) => viewer.dispose());
+    mediaPreviews = [];
+  };
+  function mediaPreview(reference) {
+    const container = document.createElement('section');
+    const reward = rewards().find(
+      (item) => item.id === reference.id && item.revision === reference.revision,
+    );
+    for (const payload of reward?.payloads ?? [])
+      if (['audio', 'video'].includes(payload.type))
+        mediaPreviews.push(
+          mountLocalRewardMediaPreview({
+            container,
+            payload,
+            locale: $('locale').value || 'en',
+            window,
+          }),
+        );
+    return container;
+  }
   let imported = [],
     key = null;
   const rewards = () => (getRewards ? getRewards() : imported);
+  const exploration = createExplorationEditor({
+    container: $('tools'),
+    getSource,
+    getRewards: rewards,
+    window,
+    getLocale: () => $('locale').value || 'en',
+    apply: async (candidate) => {
+      if (getRewards) {
+        required(applyRewards, 'This host does not support editing its reward sidecar.');
+        if ((await applyRewards(candidate)) === false) return false;
+      } else {
+        const previous = imported;
+        imported = candidate.rewards;
+        try {
+          if ((await apply(candidate.source)) === false) {
+            imported = previous;
+            return false;
+          }
+        } catch (error) {
+          imported = previous;
+          throw error;
+        }
+      }
+      key = null;
+      sync();
+      return true;
+    },
+  });
   const context = () =>
     dataIdentity({ source: getSource(), missionId: getMission()?.id, rewards: rewards() });
   const refValue = (ref) => (ref ? JSON.stringify({ id: ref.id, revision: ref.revision }) : '');
@@ -52,7 +113,25 @@ export function createDiscoveryEditor({ document, getSource, getMission, getRewa
     $('layout').value = campaign?.discovery?.exhibitLayout ?? '';
     rewardOptions($('finale'), 'campaign', campaign?.id, campaign?.discovery?.finaleRewardRef);
     localizedText($('result'), localizedMessage('tools:studio.discovery.prompt'));
+    disposeMediaPreviews();
     $('preview').replaceChildren();
+  }
+  function printPreview(reference) {
+    const viewer = createRewardPrintPreview({
+      document,
+      window,
+      getReward: () =>
+        rewards().find((item) => item.id === reference.id && item.revision === reference.revision),
+      getLocale: () => $('locale').value || 'en',
+      onSaved() {
+        localizedText($('result'), localizedMessage('tools:studio.discovery.printPreviewSaved'));
+      },
+      onError(error) {
+        showEditorFailure($('result'), error);
+      },
+    });
+    mediaPreviews.push(viewer);
+    return viewer.button;
   }
   function sync() {
     const mission = getMission();
@@ -80,6 +159,7 @@ export function createDiscoveryEditor({ document, getSource, getMission, getRewa
     );
     rewardOptions($('reward'), 'mission', mission?.id, mission?.design.rewardRef);
     selectCampaign();
+    exploration.sync();
   }
   function command() {
     const finaleRewardRef = readRef($('finale'));
@@ -110,6 +190,7 @@ export function createDiscoveryEditor({ document, getSource, getMission, getRewa
   };
   $('campaign').onchange = selectCampaign;
   $('show').onclick = () => {
+    disposeMediaPreviews();
     try {
       const preview = projectDiscoveryPreview(
         draft(),
@@ -138,7 +219,7 @@ export function createDiscoveryEditor({ document, getSource, getMission, getRewa
         if (mission.reward) {
           const teaser = document.createElement('p');
           teaser.textContent = mission.reward.teaser;
-          item.append(teaser);
+          item.append(teaser, printPreview(mission.reward), mediaPreview(mission.reward));
         }
         list.append(item);
       }
@@ -152,7 +233,12 @@ export function createDiscoveryEditor({ document, getSource, getMission, getRewa
             missions: preview.finale.requirements.join(', '),
           }),
         );
-        $('preview').append(finale, requirements);
+        $('preview').append(
+          finale,
+          requirements,
+          printPreview(preview.finale),
+          mediaPreview(preview.finale),
+        );
       }
       localizedText($('result'), localizedMessage('tools:studio.discovery.previewOnly'));
       return preview;
@@ -183,5 +269,11 @@ export function createDiscoveryEditor({ document, getSource, getMission, getRewa
       }
     };
   }
-  return { sync };
+  return {
+    sync,
+    dispose() {
+      disposeMediaPreviews();
+      exploration.dispose();
+    },
+  };
 }

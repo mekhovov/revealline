@@ -13,6 +13,19 @@
       "revision": "1",
       "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144",
       "width": 960
+    },
+    {
+      "alt": "Original white-on-white textile samples in raking museum light; illustrative patterns, not a reconstruction of a named historic object.",
+      "bytes": 263606,
+      "format": "AssetRevisionV1",
+      "height": 640,
+      "id": "ukraine-threads-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-threads-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "16b7fcca255f5915b14cadf0bddb3d543df5a214bb881144eff9f8024d6dce70",
+      "width": 960
     }
   ],
   "campaigns": [
@@ -20,7 +33,7 @@
       "band": 1,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "ukraine-threads-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "ukraine-threads-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "ukraine-threads",
@@ -288,7 +301,7 @@
         "memorableMoment": "Original ivory textile architecture with angled light revealing raised white threads, openwork and nested exhibition courts.",
         "pacingBeat": "combine",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "ukraine-threads-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-threads-03-discovery", "revision": "2" },
         "routeDecision": "Use the outer textile ledge before moving into the small inner gallery."
       },
       "format": "MissionDesignV1",
@@ -298,7 +311,7 @@
       "name": "White on White",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 16.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-threads-03-picture",
         "themeId": "ukraine-threads-theme"
       },
       "revision": "1",
@@ -495,9 +508,9 @@
       "format": "PackDesignV1",
       "id": "ukraine-threads-pack",
       "name": "Threads Across Ukraine",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }

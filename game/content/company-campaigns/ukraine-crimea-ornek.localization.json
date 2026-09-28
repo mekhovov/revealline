@@ -1,0 +1,112 @@
+{
+  "campaignId": "ukraine-crimea-ornek",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": {
+        "name": { "en": "Crimea: Ornament and Community", "uk": "Крим: орнамент і спільнота" }
+      },
+      "id": "ukraine-crimea-ornek",
+      "identity": "ac8e6d579071b908",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Open the Crimean Tatar exhibition court and keep the tradition’s name with its story. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "Відкрийте подвір’я кримськотатарської виставки та збережіть назву традиції поруч з історією. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
+        "design.routeDecision": {
+          "en": "Connect the short introductory alcoves or preserve the central return while revealing the long context wall. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Поєднайте короткі вступні ніші або збережіть центральне повернення, відкриваючи довгу стіну контексту. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "Name the Tradition", "uk": "Назвіть традицію" }
+      },
+      "id": "ukraine-crimea-ornek-01",
+      "identity": "3decf5b5ce29acea",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Link the maker’s desk and the visitor’s brief while preserving the meaning between them. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "Поєднайте стіл майстра та задум відвідувача, зберігаючи зміст між ними. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
+        "design.routeDecision": {
+          "en": "Use the paired consultation bays for short closures or take the diagonal open space between the two workstations. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Скористайтеся парними нішами розмови для коротких замикань або відкритим простором навскіс між двома станціями. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "A Composition for Someone", "uk": "Композиція для людини" }
+      },
+      "id": "ukraine-crimea-ornek-02",
+      "identity": "463d0e8fdbf2758a",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the garment, metalwork and woven-object bays without losing their labels. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+          "uk": "З’єднайте зали вбрання, металу й тканини, не втрачаючи підписи. Повторна робота може руйнувати вже захоплену територію. Захистіть другий шлях повернення й стежте, як після захоплення прокидається сплячий вузол."
+        },
+        "design.routeDecision": {
+          "en": "Capture the three offset record bays in sequence or keep the lower foundation as a shared return for two larger loops. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Захоплюйте три зміщені зали послідовно або збережіть нижню основу як спільне повернення для двох більших петель. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "Read the Object Record", "uk": "Прочитайте опис предмета" }
+      },
+      "id": "ukraine-crimea-ornek-03",
+      "identity": "3be0b749371e6c52",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Open the quieter learning courtyard and connect the teacher and apprentice tables. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Відкрийте спокійніше навчальне подвір’я та з’єднайте столи вчителя й учня. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Take the broad quiet courtyard first or use its sheltered side alcoves to make several short returns. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Спершу відкрийте широке тихе подвір’я або скористайтеся захищеними бічними нішами для кількох коротких повернень. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "Knowledge Has Teachers", "uk": "У знань є вчителі" }
+      },
+      "id": "ukraine-crimea-ornek-04",
+      "identity": "434b06f0900f426b",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the research cabinet to the contemporary ceramics wing and retain both tradition and authorship. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте дослідницьку вітрину з крилом сучасної кераміки, зберігаючи традицію та авторство. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Preserve two short returns through the archive islands or capture the longer contemporary wing after checking the moving boundary. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Збережіть два короткі повернення через архівні острови або захопіть довше сучасне крило після перевірки рухомої межі. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "A Living Author’s Voice", "uk": "Голос сучасного автора" }
+      },
+      "id": "ukraine-crimea-ornek-05",
+      "identity": "ec8e74189e82e476",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Complete the six-part exhibition while keeping community, maker, object and source connected. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Завершіть виставку з шести частин, зберігаючи зв’язок спільноти, майстра, предмета та джерела. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.routeDecision": {
+          "en": "Secure the small source alcoves before the large exhibit loop or connect the two central foundations to retain a shorter final return. Keep another return available when capture wakes a knot or rework erodes the edge.",
+          "uk": "Закріпіть малі ніші джерел перед великою петлею виставки або поєднайте дві центральні основи для коротшого фінального повернення. Залишайте запасний шлях повернення, коли захоплення пробуджує вузол або повторна робота руйнує край."
+        },
+        "name": { "en": "Keep the Voices Together", "uk": "Збережіть голоси разом" }
+      },
+      "id": "ukraine-crimea-ornek-06",
+      "identity": "b38bb237eed12593",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

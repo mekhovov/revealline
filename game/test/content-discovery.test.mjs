@@ -149,7 +149,7 @@ test('Company Studio source packets preserve discovery design with the exact sid
   assert.deepEqual(JSON.parse(restored.files.get(descriptor.rewardPath)), f.rewards);
 });
 
-test('the shared discovery editor previews pending choices and applies only after an explicit submit', () => {
+test('the shared discovery editor previews pending choices and applies only after an explicit submit', async () => {
   const f = fixture();
   let source = f.source,
     writes = 0;
@@ -174,8 +174,21 @@ test('the shared discovery editor previews pending choices and applies only afte
     document.body.append(element);
   }
   const node = (id) => document.getElementById(`discovery-${id}`);
+  const documents = [];
   const editor = createDiscoveryEditor({
     document,
+    window: {
+      URL: {
+        createObjectURL(blob) {
+          documents.push(blob);
+          return 'blob:preview';
+        },
+        revokeObjectURL() {},
+      },
+      setTimeout(callback) {
+        callback();
+      },
+    },
     getSource: () => source,
     getMission: () => source.missions[0],
     getRewards: () => f.rewards,
@@ -193,6 +206,10 @@ test('the shared discovery editor previews pending choices and applies only afte
   assert.equal(preview.layout, 'gallery');
   assert.equal(writes, 0);
   assert.equal(source.missions[0].design.pacingBeat, undefined);
+  await node('preview').querySelector('button').onclick();
+  assert.equal(documents.length, 1);
+  assert((await documents[0].text()).includes('does not record a player win'));
+  assert.equal(writes, 0);
   node('form').onsubmit({ preventDefault() {} });
   assert.equal(writes, 1);
   assert.equal(source.missions[0].design.pacingBeat, 'choose');
