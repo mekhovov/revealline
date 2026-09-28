@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-crimea-ornek-01-reveal-v1",
+          "sha256": "dc7fad1a463982a631b34151834fe71cd934972f65ffebe86e894b98edc02ae3"
         },
         "id": "ukraine-crimea-ornek-01-image",
         "locales": {
           "en": {
-            "alt": "Name the Tradition — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated heritage entrance with turquoise accents, blank source panels and separate plain textile, ceramic and thread displays.",
             "title": "Name the Tradition"
           },
           "uk": {
-            "alt": "Назвіть традицію — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальний ілюстрований вхід до виставки спадщини з бірюзовими акцентами, порожніми панелями джерел та окремими простими зразками тканини, кераміки й ниток.",
             "title": "Назвіть традицію"
           }
         },
@@ -101,17 +101,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-crimea-ornek-key-v1",
+          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
         },
         "id": "ukraine-crimea-ornek-02-image",
         "locales": {
           "en": {
-            "alt": "A Composition for Someone — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
             "title": "A Composition for Someone"
           },
           "uk": {
-            "alt": "Композиція для людини — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
             "title": "Композиція для людини"
           }
         },
@@ -193,17 +193,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-crimea-ornek-key-v1",
+          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
         },
         "id": "ukraine-crimea-ornek-03-image",
         "locales": {
           "en": {
-            "alt": "Read the Object Record — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
             "title": "Read the Object Record"
           },
           "uk": {
-            "alt": "Прочитайте опис предмета — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
             "title": "Прочитайте опис предмета"
           }
         },
@@ -277,17 +277,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-crimea-ornek-key-v1",
+          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
         },
         "id": "ukraine-crimea-ornek-04-image",
         "locales": {
           "en": {
-            "alt": "Knowledge Has Teachers — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
             "title": "Knowledge Has Teachers"
           },
           "uk": {
-            "alt": "У знань є вчителі — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
             "title": "У знань є вчителі"
           }
         },
@@ -361,17 +361,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-crimea-ornek-key-v1",
+          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
         },
         "id": "ukraine-crimea-ornek-05-image",
         "locales": {
           "en": {
-            "alt": "A Living Author’s Voice — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
             "title": "A Living Author’s Voice"
           },
           "uk": {
-            "alt": "Голос сучасного автора — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
             "title": "Голос сучасного автора"
           }
         },
@@ -445,17 +445,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-crimea-ornek-key-v1",
+          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
         },
         "id": "ukraine-crimea-ornek-06-image",
         "locales": {
           "en": {
-            "alt": "Keep the Voices Together — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
             "title": "Keep the Voices Together"
           },
           "uk": {
-            "alt": "Збережіть голоси разом — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
             "title": "Збережіть голоси разом"
           }
         },
@@ -559,17 +559,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-crimea-ornek-01-reveal-v1",
+          "sha256": "dc7fad1a463982a631b34151834fe71cd934972f65ffebe86e894b98edc02ae3"
         },
         "id": "ukraine-crimea-ornek-01-image",
         "locales": {
           "en": {
-            "alt": "Name the Tradition — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated heritage entrance with turquoise accents, blank source panels and separate plain textile, ceramic and thread displays.",
             "title": "Name the Tradition"
           },
           "uk": {
-            "alt": "Назвіть традицію — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальний ілюстрований вхід до виставки спадщини з бірюзовими акцентами, порожніми панелями джерел та окремими простими зразками тканини, кераміки й ниток.",
             "title": "Назвіть традицію"
           }
         },
@@ -577,17 +577,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-crimea-ornek-key-v1",
+          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
         },
         "id": "ukraine-crimea-ornek-02-image",
         "locales": {
           "en": {
-            "alt": "A Composition for Someone — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
             "title": "A Composition for Someone"
           },
           "uk": {
-            "alt": "Композиція для людини — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
             "title": "Композиція для людини"
           }
         },
@@ -595,17 +595,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-crimea-ornek-key-v1",
+          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
         },
         "id": "ukraine-crimea-ornek-03-image",
         "locales": {
           "en": {
-            "alt": "Read the Object Record — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
             "title": "Read the Object Record"
           },
           "uk": {
-            "alt": "Прочитайте опис предмета — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
             "title": "Прочитайте опис предмета"
           }
         },
@@ -613,17 +613,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-crimea-ornek-key-v1",
+          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
         },
         "id": "ukraine-crimea-ornek-04-image",
         "locales": {
           "en": {
-            "alt": "Knowledge Has Teachers — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
             "title": "Knowledge Has Teachers"
           },
           "uk": {
-            "alt": "У знань є вчителі — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
             "title": "У знань є вчителі"
           }
         },
@@ -631,17 +631,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-crimea-ornek-key-v1",
+          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
         },
         "id": "ukraine-crimea-ornek-05-image",
         "locales": {
           "en": {
-            "alt": "A Living Author’s Voice — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
             "title": "A Living Author’s Voice"
           },
           "uk": {
-            "alt": "Голос сучасного автора — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
             "title": "Голос сучасного автора"
           }
         },
@@ -649,17 +649,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-crimea-ornek-key-v1",
+          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
         },
         "id": "ukraine-crimea-ornek-06-image",
         "locales": {
           "en": {
-            "alt": "Keep the Voices Together — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
             "title": "Keep the Voices Together"
           },
           "uk": {
-            "alt": "Збережіть голоси разом — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
             "title": "Збережіть голоси разом"
           }
         },
@@ -671,6 +671,7 @@
           "en": { "title": "Explore the official source" },
           "uk": { "title": "Відкрити офіційне джерело" }
         },
+        "qr": true,
         "type": "url",
         "url": "https://www.ornek-crimea.com/"
       }

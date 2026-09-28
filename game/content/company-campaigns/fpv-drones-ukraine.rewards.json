@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-drones-ukraine-key-v1",
+          "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
         },
         "id": "fpv-drones-ukraine-01-image",
         "locales": {
           "en": {
-            "alt": "A Map for Recovery — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
             "title": "A Map for Recovery"
           },
           "uk": {
-            "alt": "Карта для відбудови — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів.",
             "title": "Карта для відбудови"
           }
         },
@@ -101,17 +101,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-drones-ukraine-key-v1",
+          "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
         },
         "id": "fpv-drones-ukraine-02-image",
         "locales": {
           "en": {
-            "alt": "Survey Is Not Clearance — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
             "title": "Survey Is Not Clearance"
           },
           "uk": {
-            "alt": "Обстеження — не очищення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів.",
             "title": "Обстеження — не очищення"
           }
         },
@@ -185,17 +185,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-drones-ukraine-key-v1",
+          "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
         },
         "id": "fpv-drones-ukraine-03-image",
         "locales": {
           "en": {
-            "alt": "A Pilot Study Has Limits — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
             "title": "A Pilot Study Has Limits"
           },
           "uk": {
-            "alt": "Пілотне дослідження має межі — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів.",
             "title": "Пілотне дослідження має межі"
           }
         },
@@ -269,17 +269,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-drones-ukraine-key-v1",
+          "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
         },
         "id": "fpv-drones-ukraine-04-image",
         "locales": {
           "en": {
-            "alt": "Learning Has Many Roles — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
             "title": "Learning Has Many Roles"
           },
           "uk": {
-            "alt": "Навчання має багато ролей — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів.",
             "title": "Навчання має багато ролей"
           }
         },
@@ -355,17 +355,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-drones-ukraine-key-v1",
+          "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
         },
         "id": "fpv-drones-ukraine-05-image",
         "locales": {
           "en": {
-            "alt": "Read the Historical Caption — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
             "title": "Read the Historical Caption"
           },
           "uk": {
-            "alt": "Прочитайте історичний підпис — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів.",
             "title": "Прочитайте історичний підпис"
           }
         },
@@ -439,17 +439,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-drones-ukraine-key-v1",
+          "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
         },
         "id": "fpv-drones-ukraine-06-image",
         "locales": {
           "en": {
-            "alt": "An Exhibit with Boundaries — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
             "title": "An Exhibit with Boundaries"
           },
           "uk": {
-            "alt": "Виставка з чіткими межами — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів.",
             "title": "Виставка з чіткими межами"
           }
         },
@@ -561,17 +561,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-drones-ukraine-key-v1",
+          "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
         },
         "id": "fpv-drones-ukraine-01-image",
         "locales": {
           "en": {
-            "alt": "A Map for Recovery — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
             "title": "A Map for Recovery"
           },
           "uk": {
-            "alt": "Карта для відбудови — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів.",
             "title": "Карта для відбудови"
           }
         },
@@ -579,17 +579,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-drones-ukraine-key-v1",
+          "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
         },
         "id": "fpv-drones-ukraine-02-image",
         "locales": {
           "en": {
-            "alt": "Survey Is Not Clearance — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
             "title": "Survey Is Not Clearance"
           },
           "uk": {
-            "alt": "Обстеження — не очищення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів.",
             "title": "Обстеження — не очищення"
           }
         },
@@ -597,17 +597,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-drones-ukraine-key-v1",
+          "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
         },
         "id": "fpv-drones-ukraine-03-image",
         "locales": {
           "en": {
-            "alt": "A Pilot Study Has Limits — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
             "title": "A Pilot Study Has Limits"
           },
           "uk": {
-            "alt": "Пілотне дослідження має межі — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів.",
             "title": "Пілотне дослідження має межі"
           }
         },
@@ -615,17 +615,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-drones-ukraine-key-v1",
+          "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
         },
         "id": "fpv-drones-ukraine-04-image",
         "locales": {
           "en": {
-            "alt": "Learning Has Many Roles — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
             "title": "Learning Has Many Roles"
           },
           "uk": {
-            "alt": "Навчання має багато ролей — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів.",
             "title": "Навчання має багато ролей"
           }
         },
@@ -633,17 +633,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-drones-ukraine-key-v1",
+          "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
         },
         "id": "fpv-drones-ukraine-05-image",
         "locales": {
           "en": {
-            "alt": "Read the Historical Caption — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
             "title": "Read the Historical Caption"
           },
           "uk": {
-            "alt": "Прочитайте історичний підпис — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів.",
             "title": "Прочитайте історичний підпис"
           }
         },
@@ -651,17 +651,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-drones-ukraine-key-v1",
+          "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
         },
         "id": "fpv-drones-ukraine-06-image",
         "locales": {
           "en": {
-            "alt": "An Exhibit with Boundaries — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
             "title": "An Exhibit with Boundaries"
           },
           "uk": {
-            "alt": "Виставка з чіткими межами — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів.",
             "title": "Виставка з чіткими межами"
           }
         },
@@ -673,6 +673,7 @@
           "en": { "title": "Explore the official source" },
           "uk": { "title": "Відкрити офіційне джерело" }
         },
+        "qr": true,
         "type": "url",
         "url": "https://www.undp.org/ukraine/press-releases/latvia-targets-2-million-euro-reconstruction-efforts-chernihiv-oblast"
       }

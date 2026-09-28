@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { COMPANY_CAMPAIGNS } from '../company-campaigns/catalog.mjs';
 import { CURRICULUM_CAMPAIGNS } from '../company-campaigns/curriculum.mjs';
+import { COMPANY_LEARNING_REWARD_CAMPAIGN_IDS } from '../company-campaigns/learning-rewards.mjs';
 import {
   COMPANY_REWARD_CAMPAIGN_IDS,
   createCompanyRewards,
@@ -43,8 +44,15 @@ const campaigns = await Promise.all(
 
 test('reward pilots are complete bilingual discoveries with exact existing campaign pictures', () => {
   assert.deepEqual(
-    catalog.campaigns.filter((entry) => entry.rewardPath).map((entry) => entry.id),
-    [...COMPANY_REWARD_CAMPAIGN_IDS, ...CURRICULUM_CAMPAIGNS.map((entry) => entry.id)],
+    catalog.campaigns
+      .filter((entry) => entry.rewardPath)
+      .map((entry) => entry.id)
+      .sort(),
+    [
+      ...COMPANY_REWARD_CAMPAIGN_IDS,
+      ...COMPANY_LEARNING_REWARD_CAMPAIGN_IDS,
+      ...CURRICULUM_CAMPAIGNS.map((entry) => entry.id),
+    ].sort(),
   );
   for (const { descriptor, source, definition, rewards, missionBindings } of campaigns) {
     assert.deepEqual(

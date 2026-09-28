@@ -2,16 +2,29 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original fictional textile gallery with suspended linen, separate embroidered samples and warm natural light.",
-      "bytes": 1106859,
+      "alt": "Original illustrated linen exhibition square with a fictional shirt on a dark wooden plinth, blank record cards and warm arched galleries.",
+      "bytes": 161965,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "ukraine-culture-home-picture",
+      "height": 480,
+      "id": "ukraine-threads-01-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/ukraine-culture-home-v1.png",
+      "path": "editions/assets/discovery/ukraine-threads-01-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144",
+      "sha256": "948ae2b5db094f54aec6e7d9fe57408bb121dd535b471943425378a7af9de2af",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated thread-study gallery with offset linen ribbons, crimson and charcoal thread, wooden trays and a magnifier revealing woven texture.",
+      "bytes": 170394,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-threads-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-threads-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "3b0ba003bc7e170dbb16dc46ba35f6bbdbaf81bf6dc9e8b34b7fce78dc3cec72",
       "width": 960
     },
     {
@@ -25,6 +38,45 @@
       "review": "candidate",
       "revision": "1",
       "sha256": "16b7fcca255f5915b14cadf0bddb3d543df5a214bb881144eff9f8024d6dce70",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated exhibition with two distinct fictional linen garment displays, separate blank record cards and a broad shared reading terrace.",
+      "bytes": 158455,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-threads-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-threads-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "22ae3b4e43d3e02260437d980e4a421d73bbacc0a35dfd0e809a0300150dec16",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated long gallery with a fictional fringed ivory textile draped across a wooden bench and two separate blank record cards.",
+      "bytes": 173578,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-threads-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-threads-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "d3c81a60d651ba8c9e2801a4de4608e5580fa4d2df5a4df44210e41c5de405c4",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated contemporary textile festival plaza with flowing ivory banners, invented crimson-and-charcoal designs and an amber-lit display stage.",
+      "bytes": 207158,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-threads-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-threads-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "f85f89cd0a3513736e1b88867982878176affe8ee8e7c72171c6887ded041614",
       "width": 960
     }
   ],
@@ -193,7 +245,7 @@
         "memorableMoment": "An original warm linen exhibition square with red-and-black textile studies and an open object plinth.",
         "pacingBeat": "discover",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "ukraine-threads-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-threads-01-discovery", "revision": "2" },
         "routeDecision": "Return through the exhibition plinth or open the wide label gallery first."
       },
       "format": "MissionDesignV1",
@@ -203,7 +255,7 @@
       "name": "Read the Cloth",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 14.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-threads-01-picture",
         "themeId": "ukraine-threads-theme"
       },
       "revision": "1",
@@ -243,7 +295,7 @@
         "memorableMoment": "An original textile sample gallery with magnified thread textures, offset linen aisles and red stitched paths.",
         "pacingBeat": "choose",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "ukraine-threads-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-threads-02-discovery", "revision": "2" },
         "routeDecision": "Choose the upper sample aisle or connect the two lower plinths before crossing between rows."
       },
       "format": "MissionDesignV1",
@@ -253,7 +305,7 @@
       "name": "Stitch Paths",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 15.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-threads-02-picture",
         "themeId": "ukraine-threads-theme"
       },
       "revision": "1",
@@ -359,7 +411,7 @@
         "memorableMoment": "An original Ukrainian textile museum garden with separate linen pavilions joined by a warm reading terrace.",
         "pacingBeat": "breathe",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "ukraine-threads-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-threads-04-discovery", "revision": "2" },
         "routeDecision": "Explore either exhibit branch first, returning through the wide shared reading terrace."
       },
       "format": "MissionDesignV1",
@@ -369,7 +421,7 @@
       "name": "Many Local Voices",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 17.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-threads-04-picture",
         "themeId": "ukraine-threads-theme"
       },
       "revision": "1",
@@ -417,7 +469,7 @@
         "memorableMoment": "An original linen exhibition hall with suspended rushnyk-inspired studies, archival alcoves and soft red accents.",
         "pacingBeat": "mastery",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "ukraine-threads-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-threads-05-discovery", "revision": "2" },
         "routeDecision": "Use the hall’s side alcoves to shorten exposed crossings toward the far exhibit."
       },
       "format": "MissionDesignV1",
@@ -427,7 +479,7 @@
       "name": "A Rushnyk’s Story",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 18.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-threads-05-picture",
         "themeId": "ukraine-threads-theme"
       },
       "revision": "1",
@@ -483,7 +535,7 @@
         "memorableMoment": "An original contemporary textile plaza with linen banners, red-and-black graphic rhythms and an amber festival stage.",
         "pacingBeat": "resolve",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "ukraine-threads-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-threads-06-discovery", "revision": "2" },
         "routeDecision": "Connect the central festival platform or take three smaller design islands in sequence."
       },
       "format": "MissionDesignV1",
@@ -493,7 +545,7 @@
       "name": "Wear It Today",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 19.5, "y": 7.5 }],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-threads-06-picture",
         "themeId": "ukraine-threads-theme"
       },
       "revision": "1",

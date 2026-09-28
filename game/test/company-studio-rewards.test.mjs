@@ -8,6 +8,8 @@ import {
 import { validateStudioData } from '../../authoring/company-studio/model.mjs';
 import { validateEditionRuntimeCatalog } from '../editions/model.mjs';
 import { createCompanyWorkspaceFiles } from '../../scripts/company-studio.mjs';
+import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
+import { completionLearningReference } from '../rewards/learning.mjs';
 
 const json = async (file) => JSON.parse(await readFile(new URL(file, import.meta.url), 'utf8'));
 const catalog = await json('../editions/catalog.json');
@@ -28,6 +30,39 @@ const locales = {
 };
 const create = (extra = {}) =>
   createStudioReward({ campaign, source, id: 'authored-reward', locales, ...extra });
+
+test('authors explicitly select exact learning requirements without silently adding a mission or granting preview progress', () => {
+  const lesson = {
+    ...structuredClone(COMPANY_LESSONS[0]),
+    campaignId: campaign.id,
+    missionId: source.missions[1].id,
+  };
+  const reward = create({ rule: 'all-missions', lessons: [lesson], learningIds: [lesson.id] });
+  assert.deepEqual(reward.requirements.learning, [completionLearningReference(lesson)]);
+  assert.equal(previewStudioReward(reward, { edition, state: 'locked' }).eligible, false);
+  assert.equal(previewStudioReward(reward, { edition, state: 'partial' }).eligible, false);
+  assert.equal(previewStudioReward(reward, { edition, state: 'eligible' }).eligible, true);
+  assert.equal(
+    Object.hasOwn(previewStudioReward(reward, { edition, state: 'eligible' }), 'receipt'),
+    false,
+  );
+  assert.throws(
+    () =>
+      create({
+        rule: 'mission-win',
+        missionId: source.missions[0].id,
+        lessons: [lesson],
+        learningIds: [lesson.id],
+      }),
+    /mission selected explicitly/,
+  );
+  for (const learningIds of [['unknown'], [lesson.id, lesson.id]])
+    assert.throws(
+      () => create({ rule: 'all-missions', lessons: [lesson], learningIds }),
+      /distinct learning/,
+    );
+  assert.deepEqual(create({ rule: 'all-missions', lessons: [lesson] }).requirements.learning, []);
+});
 
 test('the studio requires an explicit completion rule and a valid selected mission', () => {
   for (const rule of [undefined, '', 'default', 'last-mission'])
