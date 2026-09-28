@@ -183,6 +183,23 @@ includes `editions.json`, standalone ZIPs, selected-source ZIPs, manifests, chec
 candidate verification receipt. The source ZIP is a selected input packet, not a full repository
 checkout. The legacy full-source archive separately runs the public-source eligibility gate.
 
+After the same source, double-build and archive-member checks, the existing job also uploads
+`company-capacity-<commit>`, a separate metadata-only artifact bounded to 16 MiB. It contains
+`capacity-inventory.json`, the exact envelope, candidate verification receipt, runtime manifests
+and checksums. It does not include media, distribution ZIPs or source archives. The report's own
+bytes are pinned by `checksums.json`, and every input manifest is pinned to the envelope and
+the admitted source commit/tree. The complete candidate artifact remains separately available;
+the report does not change its distribution or source archive bytes.
+
+The capacity report gives each edition's exact immutable-site size, including its manifest,
+and the additional stable launcher size using the publisher's shared pointer recipe. Its
+aggregate assumes every candidate edition is hosted and active once; it is not a selected
+deployment. Use individual rows to compare possible subsets. The report always states
+`publicEligible: false`, `promotable: false`, and `completeHostedOutput: false`. Future default
+output, retained editions, the generated hub and optional packages remain explicit unknowns.
+There is no whole-site fit verdict, and downloading this packet does not reverify the omitted
+ZIP bodies or establish human, device or publication evidence.
+
 The review template starts with every gate **pending**. Reviewers supply public, approved,
 hash-pinned evidence for automation, content, assets, human comprehension/pacing, accessibility,
 two installed PWAs, update/rollback, storage/backup recovery and same-device performance.

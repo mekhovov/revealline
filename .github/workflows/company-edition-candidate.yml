@@ -102,6 +102,18 @@ jobs:
         env:
           EDITION_IDS: ${{ inputs.editions || 'coupa-all,coupa-adventure,coupa-culture,coupa-foundations,coupa-operations,coupa-developers,droneaid-community,droneaid-nl-community,droneaid-nl-workshop-lights,droneaid-nl-parts-in-motion,droneaid-nl-signals-of-support,droneaid-nl-careful-handoff,droneaid-nl-makers-together,droneaid-nl-shared-horizon,social-drone-ua,victory-drones,ukraine-culture,fpv-learning' }}
         run: node scripts/bundle-editions.mjs --editions "$EDITION_IDS" --out .cache/company-candidate --base-path /revealline/
+      - name: Save small capacity metadata for review
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: company-capacity-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            .cache/company-candidate/capacity-inventory.json
+            .cache/company-candidate/editions.json
+            .cache/company-candidate/candidate-verification.json
+            .cache/company-candidate/checksums.json
+            .cache/company-candidate/manifest-*.json
+          if-no-files-found: error
+          retention-days: 14
       - name: Save immutable candidates for review
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
@@ -112,4 +124,5 @@ jobs:
       - name: Report qualification boundary
         run: |
           echo 'Company candidate compilation and original member checks passed.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'The small capacity artifact contains exact candidate manifests and launcher component sizes. It excludes future default, retained, hub and optional output; it is not a complete hosted-size or promotion verdict.' >> "$GITHUB_STEP_SUMMARY"
           echo 'These artifacts are not promoted or published. Artwork, pacing, installation, offline recovery, accessibility, performance and downloaded-byte receipts remain separate release gates. Existing full-suite policy is unchanged.' >> "$GITHUB_STEP_SUMMARY"
