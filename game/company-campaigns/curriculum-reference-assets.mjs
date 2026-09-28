@@ -4,6 +4,52 @@ import { required } from '../data-json.mjs';
 // undocumented wallpaper replacements or a recommendation for a real build.
 export const CURRICULUM_REFERENCE_ASSETS = [
   {
+    id: 'reference-ukraine-state-flag',
+    sha256: '2331ad1bb17e2f072b42dbc3fb145917a3963a45efdf0b6cff307d2ee8f7e514',
+    missionId: 'ukraine-cities-symbols-time-05',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Flag_of_Ukraine.svg',
+    licenseUrl: 'https://commons.wikimedia.org/wiki/File:Flag_of_Ukraine.svg#Licensing',
+    attribution:
+      'State flag of Ukraine — Government of Ukraine; Wikimedia Commons SVG contributors. Public-domain state-symbol record. Unchanged 960×640 source-rendered PNG, blue above yellow, no generative editing.',
+    locales: {
+      en: {
+        title: 'The state flag, clearly identified',
+        alt: 'The rectangular flag of Ukraine: a blue upper half and a yellow lower half, shown flat in a three-to-two width-to-height ratio.',
+        caption:
+          'This is the separately identified state flag reference. Its two equal horizontal bands match the arrangement described in Article 20 of Ukraine’s Constitution. The nearby generated exhibition uses the same colours illustratively and is not the technical reference.',
+      },
+      uk: {
+        title: 'Державний прапор із чітким підписом',
+        alt: 'Прямокутний прапор України: верхня половина синя, нижня жовта; пласке зображення зі співвідношенням ширини до висоти три до двох.',
+        caption:
+          'Це окремо позначене зображення державного прапора. Дві рівновеликі горизонтальні смуги відповідають розташуванню, описаному в статті 20 Конституції України. Згенерована виставка поруч використовує ці кольори образно й не є технічним зразком.',
+      },
+    },
+  },
+  {
+    id: 'reference-ukraine-state-emblem',
+    sha256: '43e0b61f5fa66df1674160b9d7cbc1d189a1fce2d9be6362e82bc2b3127dc7cf',
+    missionId: 'ukraine-cities-symbols-time-04',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Ukraine.svg',
+    licenseUrl: 'https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Ukraine.svg#Licensing',
+    attribution:
+      'State symbol of Ukraine. SVG rendering by Andrew Pertsev, 2022; design attributed by the source to Vasyl Krychevsky. Wikimedia Commons public-domain state-symbol record. Source-rendered 500px PNG kept upright and unchanged.',
+    locales: {
+      en: {
+        title: 'The small State Coat of Arms',
+        alt: 'An upright golden trident on a blue shield with a golden border.',
+        caption:
+          'A source-rendered reference to Ukraine’s small State Coat of Arms, shown upright and unchanged. Compare this documented state symbol with the fictional exhibition scene. The mission’s official resolution link provides the historical and civic context.',
+      },
+      uk: {
+        title: 'Малий Державний Герб',
+        alt: 'Вертикальний золотий тризуб на синьому щиті із золотим обрамленням.',
+        caption:
+          'Зображення Малого Державного Герба України з джерела, показане вертикально й без змін. Порівняйте документований державний символ із вигаданою виставковою сценою. Офіційна постанова за посиланням у місії надає історичний і громадянський контекст.',
+      },
+    },
+  },
+  {
     id: 'reference-fpv-ar-drone-prototype',
     sha256: '9b990e53725e07fdf08f93f99aaeeb2eae0746db4bc696c3146ea570fb13abdf',
     locales: {

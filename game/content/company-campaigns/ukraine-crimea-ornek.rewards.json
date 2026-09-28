@@ -101,17 +101,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-crimea-ornek-key-v1",
-          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+          "assetId": "ukraine-crimea-ornek-02-reveal-v1",
+          "sha256": "215c097a82066b44b65001c54db18a57bab0d56e72413cdec0d0348b1006802e"
         },
         "id": "ukraine-crimea-ornek-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
+            "alt": "Original illustrated consultation room with separate visitor and maker desks, plain thread and textile materials, and a blank paper ribbon connecting request and sketch.",
             "title": "A Composition for Someone"
           },
           "uk": {
-            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
+            "alt": "Оригінальна ілюстрована кімната розмови з окремими столами відвідувача й майстра, простими нитками та тканиною і порожньою паперовою стрічкою між задумом та ескізом.",
             "title": "Композиція для людини"
           }
         },
@@ -172,7 +172,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-crimea-ornek-02", "kind": "mission" }
   },
   {
@@ -193,17 +193,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-crimea-ornek-key-v1",
-          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+          "assetId": "ukraine-crimea-ornek-03-reveal-v1",
+          "sha256": "b20f4074396bbf1095cb2c2acdc245816de51edd313cda74029662eada08b351"
         },
         "id": "ukraine-crimea-ornek-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
+            "alt": "Original illustrated material archive with separate plain textile, abstract metal belt-like form and woven panel cabinets, each retaining a blank record card.",
             "title": "Read the Object Record"
           },
           "uk": {
-            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
+            "alt": "Оригінальний ілюстрований архів матеріалів з окремими вітринами простої тканини, абстрактної металевої поясоподібної форми й тканого панно, кожна зі своєю порожньою карткою.",
             "title": "Прочитайте опис предмета"
           }
         },
@@ -256,7 +256,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-crimea-ornek-03", "kind": "mission" }
   },
   {
@@ -277,17 +277,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-crimea-ornek-key-v1",
-          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+          "assetId": "ukraine-crimea-ornek-04-reveal-v1",
+          "sha256": "bf62229d15c47d7960e1bac8995ba9cfac76f8b832debcd9ccb380a7d0d53020"
         },
         "id": "ukraine-crimea-ornek-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
+            "alt": "Original illustrated quiet learning courtyard with two empty craft tables and separate stands for a tool silhouette, a plain loop sculpture and a blank book.",
             "title": "Knowledge Has Teachers"
           },
           "uk": {
-            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
+            "alt": "Оригінальне ілюстроване спокійне навчальне подвір’я з двома порожніми робочими столами та окремими підставками для силуету інструмента, простої кільцевої скульптури й порожньої книги.",
             "title": "У знань є вчителі"
           }
         },
@@ -340,7 +340,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-crimea-ornek-04", "kind": "mission" }
   },
   {
@@ -361,17 +361,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-crimea-ornek-key-v1",
-          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+          "assetId": "ukraine-crimea-ornek-05-reveal-v1",
+          "sha256": "a449f2633c14c4a4681e36f23e1a6b9b647771211714545bb23e6d73c32348ca"
         },
         "id": "ukraine-crimea-ornek-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
+            "alt": "Original illustrated contemporary clay gallery with open research drawers, blank source cards, unornamented abstract ceramic forms and a separate maker panel.",
             "title": "A Living Author’s Voice"
           },
           "uk": {
-            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
+            "alt": "Оригінальна ілюстрована галерея сучасної кераміки з відкритими архівними шухлядами, порожніми картками, абстрактними неорнаментованими формами та окремою панеллю автора.",
             "title": "Голос сучасного автора"
           }
         },
@@ -424,7 +424,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-crimea-ornek-05", "kind": "mission" }
   },
   {
@@ -445,17 +445,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-crimea-ornek-key-v1",
-          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+          "assetId": "ukraine-crimea-ornek-06-reveal-v1",
+          "sha256": "1032314b0755ee10aeea0d317665b7b3dd932463ea3b9f64234f9c8f99126afd"
         },
         "id": "ukraine-crimea-ornek-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
+            "alt": "Original illustrated twilight reading court with six separate blank source-card stations connected by a brass path leading to a library.",
             "title": "Keep the Voices Together"
           },
           "uk": {
-            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
+            "alt": "Оригінальний ілюстрований вечірній двір читання з шістьма окремими станціями порожніх карток, поєднаних латунною доріжкою до бібліотеки.",
             "title": "Збережіть голоси разом"
           }
         },
@@ -508,7 +508,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-crimea-ornek-06", "kind": "mission" }
   },
   {
@@ -577,17 +577,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-crimea-ornek-key-v1",
-          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+          "assetId": "ukraine-crimea-ornek-02-reveal-v1",
+          "sha256": "215c097a82066b44b65001c54db18a57bab0d56e72413cdec0d0348b1006802e"
         },
         "id": "ukraine-crimea-ornek-02-image",
         "locales": {
           "en": {
-            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
+            "alt": "Original illustrated consultation room with separate visitor and maker desks, plain thread and textile materials, and a blank paper ribbon connecting request and sketch.",
             "title": "A Composition for Someone"
           },
           "uk": {
-            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
+            "alt": "Оригінальна ілюстрована кімната розмови з окремими столами відвідувача й майстра, простими нитками та тканиною і порожньою паперовою стрічкою між задумом та ескізом.",
             "title": "Композиція для людини"
           }
         },
@@ -595,17 +595,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-crimea-ornek-key-v1",
-          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+          "assetId": "ukraine-crimea-ornek-03-reveal-v1",
+          "sha256": "b20f4074396bbf1095cb2c2acdc245816de51edd313cda74029662eada08b351"
         },
         "id": "ukraine-crimea-ornek-03-image",
         "locales": {
           "en": {
-            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
+            "alt": "Original illustrated material archive with separate plain textile, abstract metal belt-like form and woven panel cabinets, each retaining a blank record card.",
             "title": "Read the Object Record"
           },
           "uk": {
-            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
+            "alt": "Оригінальний ілюстрований архів матеріалів з окремими вітринами простої тканини, абстрактної металевої поясоподібної форми й тканого панно, кожна зі своєю порожньою карткою.",
             "title": "Прочитайте опис предмета"
           }
         },
@@ -613,17 +613,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-crimea-ornek-key-v1",
-          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+          "assetId": "ukraine-crimea-ornek-04-reveal-v1",
+          "sha256": "bf62229d15c47d7960e1bac8995ba9cfac76f8b832debcd9ccb380a7d0d53020"
         },
         "id": "ukraine-crimea-ornek-04-image",
         "locales": {
           "en": {
-            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
+            "alt": "Original illustrated quiet learning courtyard with two empty craft tables and separate stands for a tool silhouette, a plain loop sculpture and a blank book.",
             "title": "Knowledge Has Teachers"
           },
           "uk": {
-            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
+            "alt": "Оригінальне ілюстроване спокійне навчальне подвір’я з двома порожніми робочими столами та окремими підставками для силуету інструмента, простої кільцевої скульптури й порожньої книги.",
             "title": "У знань є вчителі"
           }
         },
@@ -631,17 +631,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-crimea-ornek-key-v1",
-          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+          "assetId": "ukraine-crimea-ornek-05-reveal-v1",
+          "sha256": "a449f2633c14c4a4681e36f23e1a6b9b647771211714545bb23e6d73c32348ca"
         },
         "id": "ukraine-crimea-ornek-05-image",
         "locales": {
           "en": {
-            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
+            "alt": "Original illustrated contemporary clay gallery with open research drawers, blank source cards, unornamented abstract ceramic forms and a separate maker panel.",
             "title": "A Living Author’s Voice"
           },
           "uk": {
-            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
+            "alt": "Оригінальна ілюстрована галерея сучасної кераміки з відкритими архівними шухлядами, порожніми картками, абстрактними неорнаментованими формами та окремою панеллю автора.",
             "title": "Голос сучасного автора"
           }
         },
@@ -649,17 +649,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-crimea-ornek-key-v1",
-          "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+          "assetId": "ukraine-crimea-ornek-06-reveal-v1",
+          "sha256": "1032314b0755ee10aeea0d317665b7b3dd932463ea3b9f64234f9c8f99126afd"
         },
         "id": "ukraine-crimea-ornek-06-image",
         "locales": {
           "en": {
-            "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
+            "alt": "Original illustrated twilight reading court with six separate blank source-card stations connected by a brass path leading to a library.",
             "title": "Keep the Voices Together"
           },
           "uk": {
-            "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
+            "alt": "Оригінальний ілюстрований вечірній двір читання з шістьма окремими станціями порожніх карток, поєднаних латунною доріжкою до бібліотеки.",
             "title": "Збережіть голоси разом"
           }
         },
@@ -730,7 +730,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-crimea-ornek", "kind": "campaign" }
   }
 ]

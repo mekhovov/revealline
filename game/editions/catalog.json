@@ -1598,6 +1598,330 @@
       "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-key-v1.jpg",
       "publication": "public",
       "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
+    },
+    {
+      "approved": true,
+      "bytes": 154495,
+      "dependencies": [],
+      "id": "ukraine-crimea-ornek-02-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-crimea-ornek-02-v1.jpg",
+      "publication": "public",
+      "sha256": "215c097a82066b44b65001c54db18a57bab0d56e72413cdec0d0348b1006802e"
+    },
+    {
+      "approved": true,
+      "bytes": 148122,
+      "dependencies": [],
+      "id": "ukraine-crimea-ornek-03-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-crimea-ornek-03-v1.jpg",
+      "publication": "public",
+      "sha256": "b20f4074396bbf1095cb2c2acdc245816de51edd313cda74029662eada08b351"
+    },
+    {
+      "approved": true,
+      "bytes": 187796,
+      "dependencies": [],
+      "id": "ukraine-crimea-ornek-04-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-crimea-ornek-04-v1.jpg",
+      "publication": "public",
+      "sha256": "bf62229d15c47d7960e1bac8995ba9cfac76f8b832debcd9ccb380a7d0d53020"
+    },
+    {
+      "approved": true,
+      "bytes": 156173,
+      "dependencies": [],
+      "id": "ukraine-crimea-ornek-05-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-crimea-ornek-05-v1.jpg",
+      "publication": "public",
+      "sha256": "a449f2633c14c4a4681e36f23e1a6b9b647771211714545bb23e6d73c32348ca"
+    },
+    {
+      "approved": true,
+      "bytes": 180624,
+      "dependencies": [],
+      "id": "ukraine-crimea-ornek-06-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-crimea-ornek-06-v1.jpg",
+      "publication": "public",
+      "sha256": "1032314b0755ee10aeea0d317665b7b3dd932463ea3b9f64234f9c8f99126afd"
+    },
+    {
+      "approved": true,
+      "bytes": 160887,
+      "dependencies": [],
+      "id": "ukraine-voices-travel-01-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-voices-travel-01-v1.jpg",
+      "publication": "public",
+      "sha256": "efb920278d7961fbffd8f13ec2cab5b81d6ec99353f3da24eef5f1b639ccffca"
+    },
+    {
+      "approved": true,
+      "bytes": 184771,
+      "dependencies": [],
+      "id": "ukraine-voices-travel-02-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-voices-travel-02-v1.jpg",
+      "publication": "public",
+      "sha256": "656e823c9d7f3189a68fa68f0473f06a8d2a2607a89d4b5aed013a06248eb888"
+    },
+    {
+      "approved": true,
+      "bytes": 196019,
+      "dependencies": [],
+      "id": "ukraine-voices-travel-03-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-voices-travel-03-v1.jpg",
+      "publication": "public",
+      "sha256": "cc9dd354676ea8bfa74670b61a4a77eb8c20050f18f5ff8c9840f2805c629fa5"
+    },
+    {
+      "approved": true,
+      "bytes": 177391,
+      "dependencies": [],
+      "id": "ukraine-voices-travel-04-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-voices-travel-04-v1.jpg",
+      "publication": "public",
+      "sha256": "ba6a6aadc7859ace1865c0889b9215f1b8d264e85484e22a10a327568f0702e8"
+    },
+    {
+      "approved": true,
+      "bytes": 164826,
+      "dependencies": [],
+      "id": "fpv-meet-aircraft-02-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-meet-aircraft-02-v1.jpg",
+      "publication": "public",
+      "sha256": "ecd4d5e5281b903a965724a4fa0632f6a161b1ad57f840cb446e0dc36f150d33"
+    },
+    {
+      "approved": true,
+      "bytes": 164334,
+      "dependencies": [],
+      "id": "fpv-meet-aircraft-03-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-meet-aircraft-03-v1.jpg",
+      "publication": "public",
+      "sha256": "38a92e62c73aacdcda4f9e22cc853f22609f8683a7c08ac4b12fc1271d639c42"
+    },
+    {
+      "approved": true,
+      "bytes": 153991,
+      "dependencies": [],
+      "id": "fpv-meet-aircraft-04-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-meet-aircraft-04-v1.jpg",
+      "publication": "public",
+      "sha256": "e7566c6d820bb94edec5f2b8ba529137718fdd9a2b9ba39a90ccb79baa60dc11"
+    },
+    {
+      "approved": true,
+      "bytes": 189714,
+      "dependencies": [],
+      "id": "ukraine-voices-travel-05-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-voices-travel-05-v1.jpg",
+      "publication": "public",
+      "sha256": "919797b57a3374258d94292efca7cf835d45ebf34b404368ab3995993e013534"
+    },
+    {
+      "approved": true,
+      "bytes": 195867,
+      "dependencies": [],
+      "id": "ukraine-voices-travel-06-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-voices-travel-06-v1.jpg",
+      "publication": "public",
+      "sha256": "62c3833fc32c79df5ddac7f113b57e4ce33ded59c1b1b4d3c161ec5621f0237a"
+    },
+    {
+      "approved": true,
+      "bytes": 178217,
+      "dependencies": [],
+      "id": "ukraine-cities-symbols-time-01-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-01-v1.jpg",
+      "publication": "public",
+      "sha256": "08b07520b4dc9d551c207e99de322f66c9d30a23f62cc64be7fcb077066b8604"
+    },
+    {
+      "approved": true,
+      "bytes": 160217,
+      "dependencies": [],
+      "id": "fpv-meet-aircraft-05-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-meet-aircraft-05-v1.jpg",
+      "publication": "public",
+      "sha256": "bef707ab50ad899059120d49bfd120e82b7f571f84f6666c3bf0f2923a682487"
+    },
+    {
+      "approved": true,
+      "bytes": 182417,
+      "dependencies": [],
+      "id": "fpv-meet-aircraft-06-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-meet-aircraft-06-v1.jpg",
+      "publication": "public",
+      "sha256": "b11754ae638bc1d41d905b8e97024fc5cd7322abdad63c03e356291d6e826db2"
+    },
+    {
+      "approved": true,
+      "bytes": 148819,
+      "dependencies": [],
+      "id": "fpv-parts-bench-01-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-parts-bench-01-v1.jpg",
+      "publication": "public",
+      "sha256": "2c0956d41e954d3b4fb76004e035ae7aad18dfb197b9459195b51fb8e4085f25"
+    },
+    {
+      "approved": true,
+      "bytes": 149431,
+      "dependencies": [],
+      "id": "ukraine-cities-symbols-time-02-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-02-v1.jpg",
+      "publication": "public",
+      "sha256": "91b992f6582f1a43c6ff7fa252090856b145cad929f5c7322ed745e8fb1cd8e3"
+    },
+    {
+      "approved": true,
+      "bytes": 205707,
+      "dependencies": [],
+      "id": "ukraine-cities-symbols-time-03-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-03-v1.jpg",
+      "publication": "public",
+      "sha256": "3355b815e9331081fc536ac9cd47a66763acf25a95cbf293ad7b271371d98df9"
+    },
+    {
+      "approved": true,
+      "bytes": 147999,
+      "dependencies": [],
+      "id": "ukraine-cities-symbols-time-04-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-04-v1.jpg",
+      "publication": "public",
+      "sha256": "24b3bc2dd9a79f4130f7af5c1ba28a1ab09e348f5b7d2beb9a5b99d4434923e4"
+    },
+    {
+      "approved": true,
+      "bytes": 32211,
+      "dependencies": [],
+      "id": "reference-ukraine-state-emblem",
+      "path": "game/editions/assets/discovery/reference-ukraine-state-emblem.png",
+      "publication": "public",
+      "sha256": "43e0b61f5fa66df1674160b9d7cbc1d189a1fce2d9be6362e82bc2b3127dc7cf"
+    },
+    {
+      "approved": true,
+      "bytes": 123554,
+      "dependencies": [],
+      "id": "fpv-parts-bench-02-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-parts-bench-02-v1.jpg",
+      "publication": "public",
+      "sha256": "1e9510e6330ef432ee9078e25bffc9fe31d125daf0140f582b34f1faf16acb40"
+    },
+    {
+      "approved": true,
+      "bytes": 169233,
+      "dependencies": [],
+      "id": "fpv-parts-bench-03-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-parts-bench-03-v1.jpg",
+      "publication": "public",
+      "sha256": "2154c75f9cfcd0acc3b6942c161a1af3dded9c8527e85829bd688a4db15a1fdc"
+    },
+    {
+      "approved": true,
+      "bytes": 133773,
+      "dependencies": [],
+      "id": "fpv-parts-bench-04-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-parts-bench-04-v1.jpg",
+      "publication": "public",
+      "sha256": "343176573a12f4697df0c3172d2e7cdeda49e04f5e9968dc7e568589934c50f8"
+    },
+    {
+      "approved": true,
+      "bytes": 134307,
+      "dependencies": [],
+      "id": "fpv-parts-bench-05-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-parts-bench-05-v1.jpg",
+      "publication": "public",
+      "sha256": "34da85b3bd3d4afea5290acff9538ebb95fae9a667f47eae3a7dc32e790eb4fc"
+    },
+    {
+      "approved": true,
+      "bytes": 160283,
+      "dependencies": [],
+      "id": "fpv-parts-bench-06-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-parts-bench-06-v1.jpg",
+      "publication": "public",
+      "sha256": "de0f3074e9c6378ef75052407351e94ea100928f9c4fc7f9ab67541f8723de24"
+    },
+    {
+      "approved": true,
+      "bytes": 123064,
+      "dependencies": [],
+      "id": "ukraine-cities-symbols-time-05-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-05-v1.jpg",
+      "publication": "public",
+      "sha256": "17b8455b4ab30803951b2a276b3a1c4031164fcd2164f53c1313cd86d34e32dc"
+    },
+    {
+      "approved": true,
+      "bytes": 193849,
+      "dependencies": [],
+      "id": "ukraine-cities-symbols-time-06-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-06-v1.jpg",
+      "publication": "public",
+      "sha256": "553e59b52cf99f317696d6639789f689ae9fe9074767ad53ca3bff35f80aa31d"
+    },
+    {
+      "approved": true,
+      "bytes": 177174,
+      "dependencies": [],
+      "id": "ukraine-everyday-culture-01-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-everyday-culture-01-v1.jpg",
+      "publication": "public",
+      "sha256": "8f4ed7543e43144de4fcf3766ea375df0c09eb143a2466c19038c40a25f23eac"
+    },
+    {
+      "approved": true,
+      "bytes": 704,
+      "dependencies": [],
+      "id": "reference-ukraine-state-flag",
+      "path": "game/editions/assets/discovery/reference-ukraine-state-flag.png",
+      "publication": "public",
+      "sha256": "2331ad1bb17e2f072b42dbc3fb145917a3963a45efdf0b6cff307d2ee8f7e514"
+    },
+    {
+      "approved": true,
+      "bytes": 134202,
+      "dependencies": [],
+      "id": "ukraine-everyday-culture-02-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-everyday-culture-02-v1.jpg",
+      "publication": "public",
+      "sha256": "7c1377b4e36f4e28daa99bcfda585768ceef275df8f64e51d283e0b2673c4ab6"
+    },
+    {
+      "approved": true,
+      "bytes": 185270,
+      "dependencies": [],
+      "id": "ukraine-everyday-culture-03-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-everyday-culture-03-v1.jpg",
+      "publication": "public",
+      "sha256": "5ebb4aaca19d026d0a610d712149395848bb9e3ace016e7432f2485e8b311623"
+    },
+    {
+      "approved": true,
+      "bytes": 133829,
+      "dependencies": [],
+      "id": "ukraine-everyday-culture-04-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-everyday-culture-04-v1.jpg",
+      "publication": "public",
+      "sha256": "b1f860501106e80dd47b46b856bc50a7735d84adc95ae9de5b4ffc37eb58bf6e"
+    },
+    {
+      "approved": true,
+      "bytes": 192176,
+      "dependencies": [],
+      "id": "ukraine-everyday-culture-05-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-everyday-culture-05-v1.jpg",
+      "publication": "public",
+      "sha256": "f140d676d3f01fce4a2e2cd50d80277456b51454f5fc404cd3c566686f655810"
+    },
+    {
+      "approved": true,
+      "bytes": 191952,
+      "dependencies": [],
+      "id": "ukraine-everyday-culture-06-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-everyday-culture-06-v1.jpg",
+      "publication": "public",
+      "sha256": "9c67d5162dc5be14ffb1b56c81ee76e8d3f6468ebdfc90fa179db2cca0d2f3a8"
     }
   ],
   "brands": [
@@ -2109,6 +2433,11 @@
     {
       "assetIds": [
         "fpv-meet-aircraft-01-art-v1",
+        "fpv-meet-aircraft-02-reveal-v1",
+        "fpv-meet-aircraft-03-reveal-v1",
+        "fpv-meet-aircraft-04-reveal-v1",
+        "fpv-meet-aircraft-05-reveal-v1",
+        "fpv-meet-aircraft-06-reveal-v1",
         "fpv-meet-aircraft-key-v1",
         "reference-fpv-pixhawk-controller",
         "reference-fpv-brushless-motor"
@@ -2117,7 +2446,7 @@
       "heroAssetId": "fpv-meet-aircraft-key-v1",
       "id": "fpv-meet-aircraft",
       "localizationPath": "game/content/company-campaigns/fpv-meet-aircraft.localization.json",
-      "localizationSha256": "105b3d25fa8d9a9424c2780688a4f40059f085adcc7cd610b13b6dee397b576d",
+      "localizationSha256": "ac715698daa9429ee5cd41c4deaf1963150ae5f0541e4bb92ecfc936cc9f8171",
       "modes": ["solo"],
       "name": "Meet the Aircraft",
       "publication": "public",
@@ -2176,12 +2505,20 @@
       "sourcePath": "game/content/company-campaigns/ukraine-colour-clay-spring.json"
     },
     {
-      "assetIds": ["ukraine-crimea-ornek-01-reveal-v1", "ukraine-crimea-ornek-key-v1"],
+      "assetIds": [
+        "ukraine-crimea-ornek-01-reveal-v1",
+        "ukraine-crimea-ornek-02-reveal-v1",
+        "ukraine-crimea-ornek-03-reveal-v1",
+        "ukraine-crimea-ornek-04-reveal-v1",
+        "ukraine-crimea-ornek-05-reveal-v1",
+        "ukraine-crimea-ornek-06-reveal-v1",
+        "ukraine-crimea-ornek-key-v1"
+      ],
       "brandId": "ukraine-culture",
       "heroAssetId": "ukraine-crimea-ornek-key-v1",
       "id": "ukraine-crimea-ornek",
       "localizationPath": "game/content/company-campaigns/ukraine-crimea-ornek.localization.json",
-      "localizationSha256": "cfa7e7242e9ddcc6961a1621b07349a412e9f83d410491a0234ac42957cd9ce4",
+      "localizationSha256": "b445380ca0ef19ad25c1fc0b7838b234e7cd1030882125bca4dcceba910960d2",
       "modes": ["solo"],
       "name": "Crimea: Ornament and Community",
       "publication": "public",
@@ -2190,12 +2527,20 @@
       "sourcePath": "game/content/company-campaigns/ukraine-crimea-ornek.json"
     },
     {
-      "assetIds": ["ukraine-voices-travel-key-v1"],
+      "assetIds": [
+        "ukraine-voices-travel-01-reveal-v1",
+        "ukraine-voices-travel-02-reveal-v1",
+        "ukraine-voices-travel-03-reveal-v1",
+        "ukraine-voices-travel-04-reveal-v1",
+        "ukraine-voices-travel-05-reveal-v1",
+        "ukraine-voices-travel-06-reveal-v1",
+        "ukraine-voices-travel-key-v1"
+      ],
       "brandId": "ukraine-culture",
       "heroAssetId": "ukraine-voices-travel-key-v1",
       "id": "ukraine-voices-travel",
       "localizationPath": "game/content/company-campaigns/ukraine-voices-travel.localization.json",
-      "localizationSha256": "16ce04e84e1de3b3ac10dd53ca2cfe192db9f6556220b63c49a5b33837af2887",
+      "localizationSha256": "1dd4b1ddf22179ac5af8979ddaa763591b92a65d93d4681416406e52e58e3a7b",
       "modes": ["solo"],
       "name": "Voices That Travel",
       "publication": "public",
@@ -2204,12 +2549,22 @@
       "sourcePath": "game/content/company-campaigns/ukraine-voices-travel.json"
     },
     {
-      "assetIds": ["ukraine-cities-symbols-time-key-v1"],
+      "assetIds": [
+        "ukraine-cities-symbols-time-01-reveal-v1",
+        "ukraine-cities-symbols-time-02-reveal-v1",
+        "ukraine-cities-symbols-time-03-reveal-v1",
+        "ukraine-cities-symbols-time-04-reveal-v1",
+        "ukraine-cities-symbols-time-05-reveal-v1",
+        "ukraine-cities-symbols-time-06-reveal-v1",
+        "ukraine-cities-symbols-time-key-v1",
+        "reference-ukraine-state-flag",
+        "reference-ukraine-state-emblem"
+      ],
       "brandId": "ukraine-culture",
       "heroAssetId": "ukraine-cities-symbols-time-key-v1",
       "id": "ukraine-cities-symbols-time",
       "localizationPath": "game/content/company-campaigns/ukraine-cities-symbols-time.localization.json",
-      "localizationSha256": "abaca1e45acecac5cef3eb6417cac6df7f70a1ce8660447eca0b738c24d6c9ba",
+      "localizationSha256": "d33b63776df2a4d2f40f2aa525fefc5e5f57c72a59df1d5ef1577352d170ab0d",
       "modes": ["solo"],
       "name": "Cities, Symbols and Time",
       "publication": "public",
@@ -2218,12 +2573,20 @@
       "sourcePath": "game/content/company-campaigns/ukraine-cities-symbols-time.json"
     },
     {
-      "assetIds": ["ukraine-everyday-culture-key-v1"],
+      "assetIds": [
+        "ukraine-everyday-culture-01-reveal-v1",
+        "ukraine-everyday-culture-02-reveal-v1",
+        "ukraine-everyday-culture-03-reveal-v1",
+        "ukraine-everyday-culture-04-reveal-v1",
+        "ukraine-everyday-culture-05-reveal-v1",
+        "ukraine-everyday-culture-06-reveal-v1",
+        "ukraine-everyday-culture-key-v1"
+      ],
       "brandId": "ukraine-culture",
       "heroAssetId": "ukraine-everyday-culture-key-v1",
       "id": "ukraine-everyday-culture",
       "localizationPath": "game/content/company-campaigns/ukraine-everyday-culture.localization.json",
-      "localizationSha256": "aeef9d61b8ae1e94df82eb8a539db93f2d3cc5bc60f72dd687360a300f5dc747",
+      "localizationSha256": "d1d5e50eaf6e333142f90f26843cc529cc523118c06363c9dc1ca3ce7f659201",
       "modes": ["solo"],
       "name": "Words, Tables and Everyday Culture",
       "publication": "public",
@@ -2232,12 +2595,20 @@
       "sourcePath": "game/content/company-campaigns/ukraine-everyday-culture.json"
     },
     {
-      "assetIds": ["fpv-parts-bench-key-v1"],
+      "assetIds": [
+        "fpv-parts-bench-01-reveal-v1",
+        "fpv-parts-bench-02-reveal-v1",
+        "fpv-parts-bench-03-reveal-v1",
+        "fpv-parts-bench-04-reveal-v1",
+        "fpv-parts-bench-05-reveal-v1",
+        "fpv-parts-bench-06-reveal-v1",
+        "fpv-parts-bench-key-v1"
+      ],
       "brandId": "fpv-learning",
       "heroAssetId": "fpv-parts-bench-key-v1",
       "id": "fpv-parts-bench",
       "localizationPath": "game/content/company-campaigns/fpv-parts-bench.localization.json",
-      "localizationSha256": "0472aab0d5e4a77d810e5e105828fdb1ac98e735897d7234b80ed512a07b637f",
+      "localizationSha256": "fd0c134c0024b9d82b88f52861f25da7ef7a17f8aa25a00052af7f32cc258a57",
       "modes": ["solo"],
       "name": "From Parts to a Bench Model",
       "publication": "public",
@@ -2419,6 +2790,12 @@
       "name": "Ukraine: Living Culture",
       "presentationHistory": [
         {
+          "bytes": 371603,
+          "id": "976af38b7451ae581864ff9baef4975cab0c3feb385fa73ea8d3680e43ed5742",
+          "path": "game/editions/retained/ukraine-culture-before-mission-art-2.json",
+          "sha256": "0a85908023fea2213d21813275fefd58211ee9b08377e2caeca77463a969db36"
+        },
+        {
           "bytes": 61157,
           "id": "c92804d620efc050f08aacc1428bf20a5517d5f89488daf07abc67c336815e7f",
           "path": "game/editions/retained/ukraine-culture-first-discoveries.json",
@@ -2426,7 +2803,7 @@
         }
       ],
       "publication": "public",
-      "revision": 2
+      "revision": 3
     },
     {
       "audience": "learners",
@@ -2456,6 +2833,12 @@
       "name": "FPV Learning",
       "presentationHistory": [
         {
+          "bytes": 473797,
+          "id": "ace3662d4631d798e58b5eeea22d4f0d2c3fc8bf538f6a7a47bcb54ae6938fd0",
+          "path": "game/editions/retained/fpv-learning-before-mission-art-2.json",
+          "sha256": "4bd5a789d5f2d35b97ef16ab28ecabebdaf610d56493ec25c34225af1a4c8df6"
+        },
+        {
           "bytes": 59411,
           "id": "d5188109991148940036debb16fabe91d600104b3e82d4670efa5aed5dabfa16",
           "path": "game/editions/retained/fpv-learning-first-discoveries.json",
@@ -2463,7 +2846,7 @@
         }
       ],
       "publication": "public",
-      "revision": 2
+      "revision": 3
     },
     {
       "audience": "everyone",
