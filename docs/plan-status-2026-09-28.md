@@ -11,24 +11,24 @@ programme remains in scope where it has not been accepted.
 The ordinary [public game](https://mekhovov.github.io/revealline/) currently
 selects **v0.142.0**, source
 `813dee5feff5d42c54ef91292f6dd434d39d311a`. This checkpoint read the live
-`release.json`, GitHub `main` and draft PR761 directly. Main is
-`742e4b142db681e5a6c901b35bfb4d19f0b9c8c5`, the already merged Pages-selector
-PR767. Its publishing revision is separate from the immutable game source.
+`release.json`, GitHub `main` and draft PR761 directly. Main is now
+`7138e7b6187bf69991d50313c3f9ac1620427778`, including merged player-readiness
+PR768. Its publishing revision is separate from the immutable game source.
 
 The publisher has recorded a successful hosted audit of **2,229 files /
 758,963,460 bytes** for v0.142.0. That is the publisher's byte evidence, not a
 new exhaustive playthrough by this branch. Public player qualification must be
 reported at its actual scope.
 
-The canonical publisher is preparing a separate **17-input player-readiness
-batch**, draft [PR768](https://github.com/mekhovov/revealline/pull/768). That integration is ahead of this character work; this branch does not
-allocate its version, merge its PRs or start another publisher.
+The canonical publisher merged the **17-input player-readiness batch**,
+[PR768](https://github.com/mekhovov/revealline/pull/768), at 15:58:02 UTC. Publication
+and public verification are separate; the selector still serves v0.142.0 at this
+checkpoint. This actor branch does not allocate its version or start another publisher.
 
 **Draft [PR761](https://github.com/mekhovov/revealline/pull/761)** contains the
-character, reference and authoring work. The prior three-change batch and cancellation correction are pushed through
-`71e4d55c0d6c208d15bdeb3b1f71e69a5b9eff93`. The next compatible implementation
-checkpoint adds the Scout contrast study and real local measurement described
-below. PR761 is not merged or publicly released and needs reconciliation against
+character, reference and authoring work. Four earlier implementation batches and cancellation corrections were pushed through
+`d8d4f732000c91ed7b1c4089853fe0d897522398`. This fifth compatible checkpoint adds
+the optical-body refinement and rendered review described below. PR761 is not merged or publicly released and needs reconciliation against
 newer main. Compatible
 implementation continues in the same draft while the release queue is occupied.
 
@@ -130,6 +130,36 @@ play fits board and 48px steering controls at 390×844 and 844×390; the optiona
 two-view authoring comparison can require scrolling at those sizes. This is not
 whole-product or physical-device certification.
 
+## Fifth batch: fix the small-scale body proportion
+
+The full-board audit found no v4-specific renderer scaling/tint defect. The
+whole body+propeller envelope is held constant: larger propellers reduce the
+frame scale, while v4's battery was half as wide as the approved source. A
+612px board therefore showed a roughly 3.58px candidate battery versus 8.94px in
+the approved reference. The real contact ring additionally overlaps the centre;
+its gameplay position/radius remain authoritative.
+
+The new immutable **reference-v5 Scout** broadens the central equipment without
+moving the camera, arms, motors or propellers. The two native PNGs total 868 bytes.
+Outer occupied bounds and every rig value remain exact; all v2–v4 bytes remain
+unchanged. The opt-in benchmark validates the new named cohort and preserves
+accepted setup/picture on replacement, Retry, cancellation and failure.
+
+The expanded cohort passes **137/137 focused checks**. Actual browser raster
+checks pass **384 changed frames / 768 held poses**, covering both render paths,
+20/24/32px, four headings, dark/light backgrounds and 4/30/60/120fps sampling.
+First Return again completed at tick 414 / 3.45s with 34.3%, three lives and 8,160 points.
+These are bounded browser/model observations, not production or hardware acceptance.
+See [batch 5](verification/actor-batch-5/README.md).
+
+A fresh main audit confirms unchanged default content/actor contracts. Compiled
+presentation history advanced FPV93→97 through audio work. The old C0 fingerprint
+must be regenerated after integration. The production review gap is now explicitly
+mapped: 37 Team, 7 motion, 10 effects/trails and 5 equipment consumer reviews. See
+[exact adoption requirements](verification/actor-batch-5/production-adoption.md).
+Runtime motion over existing prepared assets can be admitted independently of
+optional new body artwork and broader edition production.
+
 ## Remaining order and estimates
 
 These are focused effort ranges **after work starts**, not publication promises.
@@ -138,7 +168,7 @@ are additional. Update them after the current benchmark is assessed.
 
 | Priority            | Remaining item                                                                                   | Focused effort / external dependency                                                        |
 | ------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
-| Now                 | Deliver the checked four-batch subset in PR761                                                   | Implementation and local checks complete; publication waits for publisher admission         |
+| Now                 | Deliver the checked five-batch subset in PR761                                                   | Implementation and local checks complete; publication waits for publisher admission         |
 | Next                | Reconcile/adopt the accepted C1/C2 subset and resolve the Team production guard                  | 1–2 days after publisher admission; release gate failures remain blocking                   |
 | C0                  | Extend the new local measurement to matched accepted-source full-game baselines                  | ½–1 day                                                                                     |
 | C2                  | Actual play/counterplay assessment, audio/haptics and six-player pilot                           | 2–3 days plus participants/listening/hardware                                               |
@@ -163,7 +193,7 @@ are additional. Update them after the current benchmark is assessed.
   controller/touch certification, comprehensive offline proof or human balance.
 - **Resources:** disk space is limited and another batch is publishing. Avoid
   duplicate full builds, large artifact downloads and extra release worktrees.
-- **Current visual issue:** v4 improves central colour contrast but not enough full-board prominence for approval. Complete actual-size refinement before adopting body/rig revisions.
+- **Visual scope:** v5 improves native central-body prominence; full-board contact-cue overlap and remaining roster/state review still need qualification before production adoption.
 - **Creative scope:** broader original artwork, meaningful encounter variety,
   audio listening and playtests still require production and review. A large
   reference list or clean inventory is not finished art.

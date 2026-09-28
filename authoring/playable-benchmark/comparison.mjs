@@ -6,6 +6,7 @@ const choices = Object.freeze(
     [
       ['v3', 'reference-v3'],
       ['v4', 'reference-v4'],
+      ['v5', 'reference-v5'],
     ].flatMap(([prefix, construction]) =>
       ['auto', 'compact', 'detailed'].map((treatment) => [
         `${prefix}-${treatment}`,

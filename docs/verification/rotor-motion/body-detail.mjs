@@ -17,6 +17,19 @@ import {
 } from '../../../authoring/game-feel-lab/lifecycle.mjs';
 
 const $ = (id) => document.getElementById(id);
+// Fixed source-only studies. Never accept a caller-supplied asset path.
+const optical = document.body.dataset.study === 'optical';
+const study = optical
+  ? {
+      before: 'fpv-body-contrast-candidates',
+      after: 'fpv-body-optical-candidates',
+      labels: ['V4 contrast', 'V5 optical body'],
+    }
+  : {
+      before: 'fpv-proportion-candidates',
+      after: 'fpv-body-detail-candidates',
+      labels: ['Proportion candidate', 'Body detail candidate'],
+    };
 const pairs = [];
 let paused = true,
   ready = false,
@@ -303,8 +316,8 @@ $('check').onclick = async () => {
 };
 try {
   const [before, after, presets] = await Promise.all([
-    json('../../../authoring/library/fpv-proportion-candidates/manifest.json'),
-    json('../../../authoring/library/fpv-body-detail-candidates/manifest.json'),
+    json(`../../../authoring/library/${study.before}/manifest.json`),
+    json(`../../../authoring/library/${study.after}/manifest.json`),
     json('../../../authoring/motion-lab/presets.json'),
   ]);
   const set = presets.characterPresentations.sets.find((s) => s.themeId === 'fpv');
@@ -323,7 +336,11 @@ try {
       canvas = document.createElement('canvas');
     caption.textContent = `${asset.slot.split('.')[1]} · ${asset.treatment}`;
     legend.className = 'legend';
-    legend.innerHTML = '<span>Proportion candidate</span><span>Body detail candidate</span>';
+    for (const text of study.labels) {
+      const label = document.createElement('span');
+      label.textContent = text;
+      legend.append(label);
+    }
     canvas.width = 384;
     canvas.height = 302;
     canvas.setAttribute(
@@ -342,7 +359,7 @@ try {
   $('pause').disabled = false;
   $('check').disabled = false;
   $('status').textContent =
-    'Four exact candidate pairs ready. Paused for body review; Play to compare attached rotor motion.';
+    `${pairs.length} exact candidate pairs ready. Paused for body review; Play to compare attached rotor motion.`;
 } catch (error) {
   const departed = boot.signal.aborted;
   boot.abort();

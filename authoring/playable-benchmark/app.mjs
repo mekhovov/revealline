@@ -115,6 +115,9 @@ function comparisonDetails() {
     'v4-auto': 'V4 Scout contrast · automatic native size',
     'v4-compact': 'V4 Scout contrast · native 32 px',
     'v4-detailed': 'V4 Scout contrast · native 64 px',
+    'v5-auto': 'V5 Scout optical body · automatic native size',
+    'v5-compact': 'V5 Scout optical body · native 32 px',
+    'v5-detailed': 'V5 Scout optical body · native 64 px',
   }[comparison.body];
   $('comparison-label').textContent =
     `${body} · ${comparison.reduced ? 'reduced' : 'standard'} effects`;
