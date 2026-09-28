@@ -22,7 +22,9 @@ export async function createMetadataInstalledMissionLibrary({
   launchClassic,
   launchCustom,
   progressClassic,
+  progressStateClassic,
   progressCustom,
+  progressStateCustom,
 }) {
   if (
     !Array.isArray(journeySources) ||
@@ -36,7 +38,9 @@ export async function createMetadataInstalledMissionLibrary({
       launchClassic,
       launchCustom,
     ].some((fn) => typeof fn !== 'function') ||
-    [progressClassic, progressCustom].some((fn) => fn !== undefined && typeof fn !== 'function')
+    [progressClassic, progressStateClassic, progressCustom, progressStateCustom].some(
+      (fn) => fn !== undefined && typeof fn !== 'function',
+    )
   )
     throw new TypeError(
       'Metadata inventory browsing needs explicit readiness and launch adapters.',
@@ -141,6 +145,7 @@ export async function createMetadataInstalledMissionLibrary({
       });
     },
     progress: progressClassic,
+    progressState: progressStateClassic,
   });
   const rows = sources.flatMap((source) => source.entries);
   const library = createMissionLibrary([...journeySources, ...sources]);
@@ -169,6 +174,7 @@ export async function createMetadataInstalledMissionLibrary({
         launch: (binding, context) =>
           launchCustom(binding, { ...metadataContext(context), inventory }),
         progress: progressCustom,
+        progressState: progressStateCustom,
       });
       cache.set(inventory, pending);
       pending.catch(() => {

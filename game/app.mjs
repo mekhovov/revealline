@@ -9562,6 +9562,7 @@ try {
                 classes: run.classRecipes,
               }),
               difficulty: activeEntry.difficulty || 'standard',
+              stars: run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1,
               ...(candidateHost?.owns(activeEntry) &&
               flightPictures?.context.runId === runId &&
               flightPictures.context.levelId === run.levelId &&
@@ -10890,10 +10891,25 @@ try {
             ? t('interface:cleared')
             : '';
         },
+        progressStateClassic: (row) => {
+          const entry = classicRuntimeEntry(row);
+          const clear =
+            entry && library.campaigns[campaignKey(entry.campaign)]?.clears?.[row.levelId];
+          return clear
+            ? { state: 'completed', bestStars: clear.medals ?? null }
+            : { state: 'new', bestStars: null };
+        },
         progressCustom: (binding) =>
           library.campaigns[binding.selection.campaignKey]?.clears?.[binding.selection.levelId]
             ? t('interface:cleared')
             : '',
+        progressStateCustom: (binding) => {
+          const clear =
+            library.campaigns[binding.selection.campaignKey]?.clears?.[binding.selection.levelId];
+          return clear
+            ? { state: 'completed', bestStars: clear.medals ?? null }
+            : { state: 'new', bestStars: null };
+        },
       });
       if (unifiedDisposed) {
         result.library.dispose();

@@ -7,6 +7,7 @@ import {
   supportsClassicCurrentRules,
 } from './classic-current-rules.mjs';
 import { classicMissionPresentation, classicMissionDetails } from './classic-presentation.mjs';
+import { canonicalMissionLevelKey, officialLevelNumber } from '../level-numbering.mjs';
 
 const SOURCES = ['base', 'bundled', 'archived', 'optional', 'external'];
 const digest = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/u.test(value);
@@ -81,7 +82,10 @@ export function prepareMissionLibraryIndex(value) {
 
 /** No source-name guesses and no eager artwork reads. In particular an installed
  * pack with a matching name or ID is not automatically the official edition. */
-export function classicLibrarySources(index, { availability, prepare, launch, progress, card }) {
+export function classicLibrarySources(
+  index,
+  { availability, prepare, launch, progress, progressState, card },
+) {
   const checked = prepareMissionLibraryIndex(index);
   if (typeof availability !== 'function' || typeof launch !== 'function')
     throw new TypeError('Classic browsing needs host-owned availability and launch adapters.');
@@ -124,21 +128,27 @@ export function classicLibrarySources(index, { availability, prepare, launch, pr
           : entry.sourceFile.sha256,
         edition: `${entry.edition} · ${current ? 'Current rules' : 'Original rules'}`,
         entries: [],
-        describe: (row) => ({
-          id: row.levelId,
-          revision: row.levelRevision,
-          campaignKey: classicRulesCampaignIdentity(row),
-          campaignTitle: row.campaignTitle,
-          name: row.name,
-          levelIndex: row.levelIndex,
-          modes: row.modes,
-          tags: row.tags,
-          rules: row.rules,
-        }),
+        describe: (row) => {
+          const canonicalLevelKey = canonicalMissionLevelKey(row);
+          return {
+            id: row.levelId,
+            revision: row.levelRevision,
+            campaignKey: classicRulesCampaignIdentity(row),
+            campaignTitle: row.campaignTitle,
+            name: row.name,
+            levelIndex: row.levelIndex,
+            canonicalLevelKey,
+            globalLevelNumber: officialLevelNumber(canonicalLevelKey),
+            modes: row.modes,
+            tags: row.tags,
+            rules: row.rules,
+          };
+        },
         availability,
         prepare,
         launch,
         progress,
+        progressState,
         card,
         presentation: (row) => classicMissionPresentation(originals.get(row), row.rulesEdition),
         details: (row, mode) => classicMissionDetails(originals.get(row), row.rulesEdition, mode),

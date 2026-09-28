@@ -71,6 +71,12 @@ export async function installedCreatorLibrarySources({
       },
       availability: () => ({ state: 'ready' }),
       progress: (mission, mode) => (snapshot()?.clears?.[mode]?.[mission.levelId] ? 'Cleared' : ''),
+      progressState: (mission, mode) => {
+        const receipt = snapshot()?.clears?.[mode]?.[mission.levelId];
+        return receipt
+          ? { state: 'completed', bestStars: receipt.bestStars ?? null }
+          : { state: 'new', bestStars: null };
+      },
       completion(mission, mode) {
         const current = snapshot();
         return current

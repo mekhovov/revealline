@@ -756,6 +756,354 @@
     box-shadow: 0 -0.75rem 1.5rem #0008;
   }
 }
+
+/* Unified level gallery: one vertical scroll surface, fixed card geometry and
+   Field Kit signal colours. Company editions may override the semantic tokens. */
+#journey-chooser.mission-library-chooser {
+  --level-card-bg: var(--fk-panel-raised, #182531);
+  --level-card-bg-selected: color-mix(
+    in srgb,
+    var(--fk-panel-raised, #182531) 84%,
+    var(--fk-cyan, #78dce8)
+  );
+  --level-card-line: var(--fk-line, #425563);
+  --level-card-focus: var(--fk-cyan, #78dce8);
+  --level-card-award: var(--fk-amber, #f4bf62);
+  --level-card-muted: var(--fk-muted, #a5b2bb);
+  box-sizing: border-box;
+  min-height: 0;
+  padding-block-start: max(clamp(0.75rem, 2vw, 1.5rem), env(safe-area-inset-top));
+  padding-inline: max(clamp(0.75rem, 2vw, 1.5rem), env(safe-area-inset-left));
+  padding-inline-end: max(clamp(0.75rem, 2vw, 1.5rem), env(safe-area-inset-right));
+  overflow: hidden;
+  color: var(--fk-text, #f3f0db);
+  background: radial-gradient(circle at 85% 0%, #173046 0, transparent 35%), var(--fk-bg, #070b12);
+}
+#journey-chooser.mission-library-chooser[open] {
+  grid-template-rows: auto auto auto auto auto minmax(0, 1fr) minmax(53.6px, auto) auto;
+}
+#journey-chooser.mission-library-chooser .journey-cards {
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-block: 2.25rem 0.5rem;
+  grid-auto-rows: auto;
+  scrollbar-gutter: stable;
+}
+#journey-chooser .journey-campaign-heading {
+  position: static;
+  z-index: 1;
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  color: var(--level-card-focus);
+  background: transparent;
+  border: 0;
+  font-family: var(--fk-font-mono, monospace);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+#journey-chooser .journey-campaign-heading[hidden] {
+  display: none;
+}
+#journey-chooser .journey-card[data-campaign-start='true'] {
+  padding-top: 0.58rem;
+}
+#journey-chooser .journey-card[data-campaign-start='true'] .journey-card-number {
+  grid-column: 2;
+  text-align: end;
+}
+#journey-chooser .journey-campaign-shortcut {
+  color: var(--level-card-muted);
+  border-color: var(--level-card-line);
+  border-radius: 0;
+  background: var(--fk-panel, #101923);
+}
+#journey-chooser .journey-campaign-shortcut[aria-pressed='true'] {
+  color: var(--fk-bg, #070b12);
+  border-color: var(--level-card-focus);
+  background: var(--level-card-focus);
+}
+#journey-chooser.mission-library-chooser .journey-card,
+#journey-chooser.mission-library-chooser .journey-card-illustrated {
+  position: relative;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(2.45em, auto) auto auto 3.35rem;
+  gap: 0.18rem 0.5rem;
+  height: 11.2rem;
+  min-height: 11.2rem;
+  min-block-size: 11.2rem;
+  padding: 0.58rem;
+  overflow: hidden;
+  color: var(--fk-text, #f3f0db);
+  border: 1px solid var(--level-card-line);
+  border-top: 2px solid var(--level-card-focus);
+  border-radius: 0;
+  background: var(--level-card-bg);
+  transition:
+    border-color var(--fk-motion-fast, 100ms) ease-out,
+    background var(--fk-motion-fast, 100ms) ease-out,
+    transform var(--fk-motion-fast, 100ms) ease-out;
+}
+#journey-chooser .journey-card::before {
+  content: none;
+}
+#journey-chooser .journey-card[data-current='true'] {
+  box-shadow: inset 0 0 0 2px var(--level-card-award);
+}
+#journey-chooser .journey-card[data-completion-state='completed'] {
+  border-color: color-mix(in srgb, var(--level-card-award) 75%, var(--level-card-line));
+}
+#journey-chooser .journey-card[data-completion-state='completed']::after {
+  content: none;
+}
+#journey-chooser .journey-card-meta,
+#journey-chooser .journey-card-progress-group {
+  display: contents;
+}
+#journey-chooser .journey-card-check {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.45rem;
+  display: none;
+  color: var(--level-card-award);
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+#journey-chooser .journey-card[data-completion-state='completed'] .journey-card-check {
+  display: block;
+}
+#journey-chooser .journey-card:focus-visible,
+#journey-chooser .journey-card:hover {
+  outline: 2px solid var(--level-card-focus);
+  outline-offset: 1px;
+  background: var(--level-card-bg-selected);
+}
+#journey-chooser .journey-card:hover {
+  transform: translateY(-1px);
+}
+#journey-chooser .journey-card-number {
+  grid-column: 1;
+  grid-row: 1;
+  color: var(--level-card-focus);
+  font-family: var(--fk-font-mono, monospace);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+#journey-chooser .journey-card > strong {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 0.94rem;
+  line-height: 1.2;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+#journey-chooser .journey-card-campaign {
+  grid-column: 1;
+  grid-row: 3;
+  display: block;
+  overflow: hidden;
+  color: var(--level-card-muted);
+  font-size: 0.7rem;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#journey-chooser .journey-card-position {
+  grid-column: 2;
+  grid-row: 3;
+  color: var(--level-card-muted);
+  font-family: var(--fk-font-mono, monospace);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+}
+#journey-chooser .journey-card-progress {
+  grid-column: 1;
+  grid-row: 4;
+  overflow: hidden;
+  color: var(--level-card-muted);
+  font-size: 0.68rem;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#journey-chooser .journey-card-stars {
+  grid-column: 2;
+  grid-row: 4;
+  color: var(--level-card-award);
+  font-family: var(--fk-font-mono, monospace);
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  white-space: nowrap;
+}
+#journey-chooser .journey-card[data-completion-state='new'] .journey-card-stars,
+#journey-chooser .journey-card[data-completion-state='skipped'] .journey-card-stars {
+  color: var(--level-card-line);
+}
+#journey-chooser .journey-card-preview {
+  grid-column: 1 / -1;
+  grid-row: 5;
+  display: block;
+  min-height: 3.35rem;
+  overflow: hidden;
+  border: 1px solid var(--level-card-line);
+  background:
+    linear-gradient(90deg, transparent 49%, #78dce812 50%, transparent 51%),
+    linear-gradient(#78dce80d 49%, transparent 50%);
+  background-size: 1rem 1rem;
+}
+#journey-chooser .journey-card-preview .journey-card-map {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  margin: 0;
+  object-fit: cover;
+  border: 0;
+}
+#journey-chooser .journey-card-action:not([hidden]) {
+  position: absolute;
+  right: 0.4rem;
+  bottom: 0.4rem;
+  max-width: calc(100% - 0.8rem);
+  min-height: 0;
+  padding: 0.18rem 0.35rem;
+  overflow: hidden;
+  color: var(--fk-bg, #070b12);
+  background: var(--level-card-award);
+  font-size: 0.65rem;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mission-library-chooser:not(.mission-library-detailed) .journey-card-campaign {
+  display: block;
+}
+.mission-library-chooser:not(.mission-library-detailed)
+  .journey-card
+  :is(
+    .journey-card-edition,
+    .journey-card-tags,
+    .journey-card-challenge,
+    .journey-card-route,
+    .journey-card-mastery
+  ) {
+  display: none;
+}
+#journey-chooser.mission-library-detailed .journey-card {
+  height: 18rem;
+  min-height: 18rem;
+}
+#journey-chooser.mission-library-chooser .journey-footer {
+  position: relative;
+  z-index: 4;
+  box-sizing: border-box;
+  flex-wrap: nowrap;
+  min-height: calc(44px + 0.6rem);
+  margin: 0;
+  padding-block: 0.45rem max(0.15rem, env(safe-area-inset-bottom));
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-top: 1px solid var(--level-card-line);
+  background: var(--fk-bg, #070b12);
+}
+#journey-chooser.mission-library-chooser .journey-footer > button,
+#journey-chooser.mission-library-chooser .journey-footer > .mission-library-setup {
+  flex-shrink: 0;
+}
+#journey-chooser.mission-library-chooser .journey-filter-details > summary,
+#journey-chooser.mission-library-chooser .journey-filter-options,
+#journey-chooser.mission-library-chooser .mission-picker-setup-fields {
+  border-color: var(--level-card-line);
+  background: var(--fk-panel, #101923);
+}
+@media (max-width: 600px), (max-height: 720px) {
+  #journey-chooser.mission-library-chooser {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    padding-block-start: max(0.45rem, env(safe-area-inset-top));
+    padding-inline: max(0.45rem, env(safe-area-inset-left));
+    padding-inline-end: max(0.45rem, env(safe-area-inset-right));
+    border: 0;
+  }
+  #journey-chooser.mission-library-chooser[open] {
+    grid-template-rows: auto auto auto auto minmax(9rem, 1fr) minmax(53.6px, auto) auto;
+  }
+  #journey-chooser.mission-library-chooser .journey-cards {
+    gap: 0.38rem;
+  }
+  #journey-chooser.mission-library-chooser .journey-card,
+  #journey-chooser.mission-library-chooser .journey-card-illustrated {
+    height: 9.7rem;
+    min-height: 9.7rem;
+    min-block-size: 9.7rem;
+    grid-template-rows: auto minmax(2.35em, auto) auto auto 2.25rem;
+    padding: 0.45rem;
+  }
+  #journey-chooser .journey-card-preview {
+    min-height: 2.25rem;
+  }
+  #journey-chooser.mission-library-detailed .journey-card {
+    height: 16rem;
+    min-height: 16rem;
+  }
+}
+@media (max-height: 480px) {
+  /* On short phone landscapes, keep the useful controls on one line and give
+     the gallery the remaining height. Campaigns are still available from the
+     filter menu and remain embedded in the uninterrupted card collection. */
+  #journey-chooser.mission-library-chooser h2,
+  #journey-chooser.mission-library-chooser .journey-campaign-rail {
+    display: none;
+  }
+  #journey-chooser.mission-library-chooser[open] {
+    grid-template-rows: auto auto minmax(5.5rem, 1fr) minmax(53.6px, auto);
+  }
+  #journey-chooser.mission-library-chooser .journey-search-field {
+    grid-column: 1;
+  }
+  #journey-chooser.mission-library-chooser .journey-filter-details {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+@media (max-width: 600px) {
+  .game-shell[data-text-size='large'] #journey-chooser.mission-library-chooser .journey-card,
+  .game-shell[data-text-size='large']
+    #journey-chooser.mission-library-chooser
+    .journey-card-illustrated {
+    height: auto;
+    min-height: 11rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #journey-chooser.mission-library-chooser .journey-card {
+    transition: none;
+  }
+  #journey-chooser.mission-library-chooser .journey-card:hover {
+    transform: none;
+  }
+}
 /* Mission previews are supplementary. In forced-colour mode the native text,
    borders and state cues stay authoritative instead of depending on themed
    raster borders or authored greens and yellows. */
@@ -775,7 +1123,8 @@
     outline-offset: -4px;
     box-shadow: none;
   }
-  #journey-chooser .journey-card[data-completion-state='earned'] .journey-card-progress {
+  #journey-chooser .journey-card[data-completion-state='completed'] .journey-card-progress,
+  #journey-chooser .journey-card[data-completion-state='completed'] .journey-card-stars {
     color: LinkText;
   }
   #journey-chooser .journey-card[data-availability-state='unavailable'] {
