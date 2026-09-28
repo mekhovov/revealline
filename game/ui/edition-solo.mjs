@@ -1,6 +1,7 @@
 import { localizedText, t } from '../i18n/index.mjs';
 import { mountEditionNavigation } from './edition-navigation.mjs';
 import { mountEditionLessons } from './edition-lessons.mjs';
+import { mountEditionMastery } from './edition-mastery.mjs';
 import { mountEditionRewards } from './edition-rewards.mjs';
 import { mountEditionExpedition } from './edition-expedition.mjs';
 import { mountEditionPlayLayout } from './edition-play-layout.mjs';
@@ -20,6 +21,7 @@ export async function mountEditionSoloUI({
   version,
   pause,
   getRun,
+  getRunId,
   getRecorder,
   getPictureVisible,
   getJourneyProfile,
@@ -250,6 +252,20 @@ export async function mountEditionSoloUI({
     report,
     previewSession,
   });
+  const mastery = await mountEditionMastery({
+    provider,
+    document: doc,
+    window: win,
+    writer,
+    getRun,
+    getRunId,
+    getRecorder,
+    getJourneyProfile,
+    getJourneyRevision,
+    getJourneyDurable,
+    previewSession,
+    report,
+  });
   const rewards = await mountEditionRewards({
     provider,
     document: doc,
@@ -261,12 +277,14 @@ export async function mountEditionSoloUI({
     getJourneyRevision,
     getJourneyDurable,
     getLearningEvidence: lessons.rewardEvidence,
+    getMasteryEvidence: mastery.rewardEvidence,
     getReducedMotion,
     audioMaster,
     musicDucker,
     previewSession,
   });
   const stopLearningRewards = lessons.onRewardEvidenceChange(() => rewards.refresh());
+  const stopMasteryRewards = mastery.onRewardEvidenceChange(() => rewards.refresh());
   const expedition = mountEditionExpedition({
     provider,
     document: doc,
@@ -369,6 +387,7 @@ export async function mountEditionSoloUI({
   return {
     refresh() {
       lessons.refresh();
+      mastery.refresh();
       rewards.refresh();
       expedition.refresh();
     },
@@ -376,7 +395,9 @@ export async function mountEditionSoloUI({
     dispose() {
       disposed = true;
       stopLearningRewards();
+      stopMasteryRewards();
       lessons.dispose();
+      mastery.dispose();
       rewards.dispose();
       expedition.dispose();
       typeof layout === 'function' ? layout() : layout.disconnect?.();
