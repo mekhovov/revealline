@@ -112,6 +112,16 @@
       "path": "validate.log",
       "bytes": 1182,
       "sha256": "8ae3073c51590c1393f0f08c1387d6314bc143f365a9d70acc70cf36a4714c81"
+    },
+    {
+      "path": "focused-followup.tap",
+      "bytes": 27409,
+      "sha256": "48b41c19af32c02073aaa8b52e84b213e81789f9b261feab67c908effcdf12c9"
+    },
+    {
+      "path": "cancel-initial-focus.png",
+      "bytes": 39268,
+      "sha256": "a9dd13fb2dc5fca45ed0f3b9a2bda867351a68880b2917d9f8e8d4d5389a6764"
     }
   ],
   "logNormalization": {
@@ -120,5 +130,23 @@
       "rawSha256": "e370760101251ff05f1cd882320d73cd50099f4b574ab292d4da3e38b10d74f5",
       "change": "Removed one trailing blank line from successful command output; no diagnostic lines changed."
     }
+  },
+  "followup": {
+    "parentSource": "0b43aaa06e50bf4ca78cbd90c3c6e05afe631269",
+    "scope": "Operation-aware Cancel focus and accurate first-load cancellation status",
+    "focused": {
+      "tests": 110,
+      "pass": 110,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0
+    },
+    "gates": {
+      "scopedLint": "pass",
+      "scopedFormat": "pass",
+      "syntax": "pass",
+      "diffCheck": "pass"
+    },
+    "browser": "Actual app with controlled 9-second theme/candidate-manifest delay: initial, appearance, collapsed setup and late response; keyboard/native select actions; not physical controller or touch certification."
   }
 }

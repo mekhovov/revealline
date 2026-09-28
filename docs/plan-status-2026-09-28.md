@@ -25,8 +25,9 @@ batch**. That integration is ahead of this character work; this branch does not
 allocate its version, merge its PRs or start another publisher.
 
 **Draft [PR761](https://github.com/mekhovov/revealline/pull/761)** contains the
-character, reference and authoring work. Its last pushed checkpoint at the start
-of this review is `9a86e8f50621473a7508c9e723f86bf48bcd38eb`. It is not merged
+character, reference and authoring work. The three-change batch is pushed as
+`0b43aaa06e50bf4ca78cbd90c3c6e05afe631269`, followed by the bounded cancellation-focus
+correction documented below. It is not merged
 or publicly released and needs reconciliation against newer main. Compatible
 implementation continues in the same draft while the release queue is occupied.
 
@@ -83,9 +84,13 @@ wider art production:
    geometry and production validation. Preserve advanced JSON, immutable
    revisions and stale-edit/failure protection.
 
-The combined final cohort passes **105/105 focused tests**, with scoped independent
+The expanded final cohort passes **110/110 focused tests**, with scoped independent
 review and real-browser layout/play/edit checks. The preview-label and missing
-packaged-candidate defects found during verification are corrected. See
+packaged-candidate defects found during verification are corrected. A further
+review found and fixed Cancel returning to a hidden or unrelated Mission selector:
+Mission, Load and Actors now restore their actual opener, with a reachable closed
+setup-summary fallback and retained stale-operation protection. Initial loading
+cancellation accurately reports that no prior attempt exists. See
 [batch 3 evidence](verification/actor-batch-3/README.md) for exact scope and limits.
 
 Each has its own focused evidence inside one compatible PR. No additional
