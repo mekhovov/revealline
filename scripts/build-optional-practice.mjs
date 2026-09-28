@@ -7,29 +7,13 @@ import { parse as parseHTML } from 'parse5';
 import { createZip, offlineIcons } from './game-cli.mjs';
 import { installPracticeWorker } from '../optional-practice/civilian-flight/worker-template.mjs';
 
-export const OPTIONAL_PRACTICE_ROOT = 'optional-practice/civilian-flight/';
-export const OPTIONAL_PRACTICE_LIMITS = Object.freeze({ files: 64, bytes: 8 * 1024 * 1024 });
-const shared = new Set([
-  'game/data-json.mjs',
-  'game/key-bindings.mjs',
-  'game/i18n/index.mjs',
-  'game/i18n/bootstrap.mjs',
-  'game/i18n/catalogs.mjs',
-  'game/vendor/i18next-26.4.2.min.js',
-  'game/vendor/I18NEXT-LICENSE.txt',
-]);
-const optionalFiles = [
-  'index.html',
-  'app.mjs',
-  'model.mjs',
-  'input.mjs',
-  'catalogue.mjs',
-  'copy.mjs',
-  'offline.mjs',
-  'style.css',
-  'app.webmanifest',
-  'README.md',
-];
+import { buildOptionalLauncher } from './optional-launcher.mjs';
+import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
+const policy = OPTIONAL_PACKAGE_POLICIES['civilian-flight'];
+export const OPTIONAL_PRACTICE_ROOT = policy.root;
+export const OPTIONAL_PRACTICE_LIMITS = policy.limits;
+const shared = new Set(policy.sharedFiles);
+const optionalFiles = policy.localFiles;
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const requireValid = (condition, message) => {
   if (!condition) throw new Error(message);
@@ -128,13 +112,27 @@ function workerSource(files, revision) {
 /** Separate opt-in archive. Nothing is added to default build/core inventories.
  * Explicit shared-module admission prevents pulling an edition or authoring tree
  * into this package merely because a source file acquired another import. */
-export async function buildOptionalPractice(root, { engineCommit = null, engineTree = null } = {}) {
+export async function buildOptionalPractice(
+  root,
+  { engineCommit = null, engineTree = null, basePath = '/' } = {},
+) {
   requireValid(
     (engineCommit === null && engineTree === null) ||
       (/^[a-f0-9]{40}$/.test(engineCommit) && /^[a-f0-9]{40}$/.test(engineTree)),
     'Frozen optional packages require exact commit and tree together',
   );
-  const entries = new Map();
+  const entries = new Map(),
+    inputs = new Map();
+  const readInput = async (name) => {
+    const bytes = await ordinary(root, name);
+    inputs.set(name, bytes);
+    return bytes;
+  };
+  const template = await readInput(policy.template);
+  requireValid(
+    template.equals(await readFile(new URL('../' + policy.template, import.meta.url))),
+    'Optional worker template differs from the loaded builder',
+  );
   const generatedIcons = new Map(
     offlineIcons([192, 512])
       .filter((entry) => entry.name.endsWith('.png'))
@@ -154,7 +152,7 @@ export async function buildOptionalPractice(root, { engineCommit = null, engineT
     if (name === 'game/i18n/catalogs.mjs') {
       const locales = {};
       for (const locale of ['en', 'uk']) {
-        const errors = JSON.parse(await ordinary(root, `game/locales/${locale}/errors.json`));
+        const errors = JSON.parse(await readInput(`game/locales/${locale}/errors.json`));
         locales[locale] = {
           errors: Object.fromEntries(
             Object.entries(errors).filter(([key]) => key.startsWith('dataJson.')),
@@ -164,10 +162,26 @@ export async function buildOptionalPractice(root, { engineCommit = null, engineT
       bytes = Buffer.from(
         `// Selected optional-practice validator messages only.\nglobalThis.RevealLineTranslations=${JSON.stringify(locales)};\n`,
       );
-    } else bytes = generatedIcons.get(name) ?? (await ordinary(root, name));
+    } else bytes = generatedIcons.get(name) ?? (await readInput(name));
     entries.set(name, bytes);
     pending.push(...staticImports(name, bytes));
     pending.push(...resourceReferences(name, bytes));
+  }
+  let installation;
+  if (engineCommit) {
+    const launcherTemplate = await readInput(policy.launcherTemplate);
+    requireValid(
+      launcherTemplate.equals(
+        await readFile(new URL('../' + policy.launcherTemplate, import.meta.url)),
+      ),
+      'Optional launcher template differs from the loaded builder',
+    );
+    installation = buildOptionalLauncher({
+      packageId: 'civilian-flight',
+      basePath,
+      entries,
+      contextSource: inputs.get('optional-practice/install-context.mjs'),
+    });
   }
   const files = [...entries]
     .sort(([a], [b]) => a.localeCompare(b))
@@ -195,6 +209,7 @@ export async function buildOptionalPractice(root, { engineCommit = null, engineT
     locales: ['en', 'uk'],
     core: false,
     limits: OPTIONAL_PRACTICE_LIMITS,
+    ...(installation ? { installation } : {}),
     files: [...entries]
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([name, bytes]) => ({ path: name, bytes: bytes.length, sha256: hash(bytes) })),
@@ -209,7 +224,7 @@ export async function buildOptionalPractice(root, { engineCommit = null, engineT
         OPTIONAL_PRACTICE_LIMITS.bytes,
     'Complete optional output exceeds package limits',
   );
-  return { manifest, entries: ordered, zip: createZip(ordered) };
+  return { manifest, entries: ordered, zip: createZip(ordered), inputs };
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
