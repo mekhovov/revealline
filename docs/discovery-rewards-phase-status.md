@@ -24,7 +24,7 @@ The planned content count is implemented: **108 missions, 18 standard campaign f
 Current qualification is narrower than implementation:
 
 - The latest completed candidate at `76ea5b31b` passed all eighteen edition builds in run `36454587128`, optional practice and hosted acceptance `36454587277`. The small [capacity packet](verification/evidence/discovery-2026-09-28-capacity-packet-76ea5b31b.json) verifies 118,539,041 bytes for the four new edition components and 244,117,395 bytes for the six practical components, including launchers. These omit default, retained versions, hub and optional output.
-- A genuine first Frame win on the exact `76ea5b31b` player exposed **seven tasks over 50 ms containing reward work**, from 55.052 to 496.522 ms. Earlier frame-interval and earned-viewer observations did not reveal this grant/save cost. The shared model now reuses only its own immutable validated data; external and imported data retain full boundary validation. The `923454e7f` follow-up reduces this to one 323.001 ms task; sampled reward processing is a small fraction of the remaining task. Shared mission-catalogue refresh work is the next measured target.
+- A genuine first Frame win on the exact `76ea5b31b` player exposed **seven tasks over 50 ms containing reward work**, from 55.052 to 496.522 ms. Earlier frame-interval and earned-viewer observations did not reveal this grant/save cost. The shared model now reuses only its own immutable validated data; external and imported data retain full boundary validation. The `923454e7f` follow-up reduces this to one 323.001 ms task. After the shared mission-catalogue fix, `1106ec0ac` records one 53.708 ms task under full CPU profiling and a separately labelled fresh timeline-only win peaks at 45.793 ms with no task over 50 ms. The latter is a scoped observation, not complete performance qualification.
 - The same browser profile survives **76ea → 61a → 76ea** with byte-identical Journey and discovery backups, the same accepted clear, exact earned payload and usable Frame atlas. This is a same-origin browser check of an unchanged pack, not installed-app, cross-gameplay-revision or public-release qualification.
 
 - Exact artifact `de4cec8ba` completed **20 result/viewer pairs and 20 closed-view checkpoints** after a normal Frame win. Closed connected DOM/media counts stayed constant. The hash-bound local receipt is `.cache/discovery-evidence-20260928/cycles-de4cec8ba/validation-receipt.json`; it does not establish detached-object, outstanding-URL or decoder retention.
@@ -344,3 +344,38 @@ review. The release pipeline now runs the added campaign identity, thumbnail,
 library and Continue regressions as part of its existing company job. The next
 exact clean candidate must still be compiled and measured; this test result alone
 does not close the first-win timing gate.
+
+## Packaged browser follow-up at 1106ec0ac
+
+The combined runtime/resource fix compiles FPV Learning twice from clean commit
+`1106ec0ac1aacbdc097a122f2188a9d592ac2e3e`, with original archive, source,
+presentation and offline admission. Both repaired CSS resources return HTTP 200
+with exact admitted hashes. The soundtrack stylesheet also appears in the loaded
+document stylesheet list; the offline panel was not opened in this observation.
+
+A genuine fresh-profile Frame win under the same full CPU-profiling method records
+one task of **53.708 ms**, reduced from the preceding 323.001 ms observation but
+still over the 50 ms target. A separate fresh-profile win with timeline events and
+no CPU sampling records **45.793 ms maximum** across 9,979 selected renderer tasks
+in its approximately six-second marked window, with no task over 50 ms. Both
+captures remain in evidence; the timeline capture does not erase the full-profile
+result. These legal routes and tools are observations, not identical-tick or
+statistically repeated p95 comparisons.
+
+Twenty subsequent Results/Explore/Back/Picture cycles complete normally and preserve
+constant connected counts: 2,755 nodes, one image, one audio element, no video/blob
+media, and one copy of each reward dialog/shelf/results surface. The discovery is
+saved on the device. The original 166,284,622-byte cycle trace exceeds the analyzer's
+unchanged 128 MiB limit and remains preserved. A documented derivative retains every
+selected renderer event and all metadata in their original order, with exact
+round-trip verification and an inventory of excluded other-thread events. Across
+47,731 renderer tasks, its maximum is **11.629 ms**, with none over 50 ms.
+
+Twenty-one renderer counter checkpoints show documents unchanged, nodes up 181,
+listeners up 35 and heap up 271,608 bytes between first and last checkpoints.
+These observations have no controlled collection, retaining-path or decoder
+measurement. They neither prove a leak nor qualify retained-resource stability.
+The [exact artifact, trace and preservation receipt](verification/evidence/discovery-2026-09-28-first-win-1106ec0ac.json)
+retains both first-win methods and the original trace rejection. Broader performance,
+installed/public rollback, final release admission and publication remain open;
+human/device review stays deferred.
