@@ -522,6 +522,59 @@ non-empty target blob roots are rejected. Keep failed rehearsal work for diagnos
 target after review, restart the source writers, and retain the successful receipt with the
 off-host snapshot record.
 
+## Deployed account bootstrap acceptance
+
+`npm run acceptance:account-bootstrap` automates the production account gate that precedes the
+two-user content journey. It requires an exact HTTPS service origin, creates two disposable creator
+accounts, waits for each verification delivery through an operator-controlled capture boundary,
+opens the exact same-origin verification action, signs both creators in, and verifies that an
+existing administrator account can read the bounded report queue. Run it only against a disposable
+account namespace; the service does not yet expose account deletion.
+
+The capture boundary is a protected operator/testing API separate from the public mail-delivery
+webhook. The runner sends `POST` with a bearer token and this JSON body, keeping recipient addresses
+out of access-log query strings:
+
+```json
+{
+  "kind": "verify-email",
+  "to": "creator-a+unique-run@example.test",
+  "after": "2026-09-28T02:00:00.000Z"
+}
+```
+
+Return `404` while no matching delivery exists. Return `200` with
+`{"message":{"id":"<64 lowercase hex>","kind":"verify-email","to":"...","actionURL":"https://community.example.test/api/auth/verify-email?token=...","expiresAt":"..."}}`
+when it arrives. The reader endpoint and service must use HTTPS. The runner rejects expired,
+cross-origin, incorrectly addressed, malformed, oversized, or stalled results and never records the
+recipient, password, capture token, verification token, session cookie, or administrator subject.
+
+```sh
+cd services/community
+export COMMUNITY_ACCOUNT_ACCEPTANCE_BASE_URL='https://community.example.test/'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_NAMESPACE='account-staging-20260928-a'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_ALLOW_DESTRUCTIVE='I_UNDERSTAND_THIS_CREATES_DISPOSABLE_TEST_ACCOUNTS'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_EXPECTED_VERSION='v0.141.7'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_EXPECTED_SOURCE_REVISION='replace-with-exact-deployed-source'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_CREATOR_A_NAME='Acceptance creator A'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_CREATOR_A_EMAIL='creator-a+unique-run@example.test'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_CREATOR_A_PASSWORD='replace-in-owner-only-environment'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_CREATOR_B_NAME='Acceptance creator B'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_CREATOR_B_EMAIL='creator-b+unique-run@example.test'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_CREATOR_B_PASSWORD='replace-in-owner-only-environment'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_ADMIN_EMAIL='verified-admin@example.test'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_ADMIN_PASSWORD='replace-in-owner-only-environment'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_MAIL_CAPTURE_URL='https://mail-capture.example.test/messages/claim'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_MAIL_CAPTURE_TOKEN='replace-with-at-least-32-characters'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_RECEIPT='/secure/acceptance/account-staging-20260928-a.json'
+npm run acceptance:account-bootstrap
+```
+
+The mail-capture API proves that the configured webhook received the service-generated action and
+that the deployed HTTPS origin can complete it. A production launch still requires a separate live
+mailbox/deliverability rehearsal through the selected provider. The administrator must already be
+verified and its immutable Better Auth user ID must be present in `COMMUNITY_ADMIN_SUBJECTS`.
+
 ## Deployed two-user acceptance
 
 The `Community hosted acceptance` workflow combines `compose.yaml`, `compose.production.yaml`, and
