@@ -20,7 +20,7 @@
       "band": 7,
       "discovery": {
         "exhibitLayout": "route",
-        "finaleRewardRef": { "id": "fpv-care-repair-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "fpv-care-repair-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-care-repair",
@@ -233,7 +233,7 @@
           "frontier-patrol",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-care-repair-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-care-repair-01-discovery", "revision": "2" },
         "routeDecision": "Capture the observation shelf before the cause shelf or connect both through the central return. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -308,7 +308,7 @@
           "frontier-patrol",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-care-repair-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-care-repair-02-discovery", "revision": "2" },
         "routeDecision": "Use each small inspection alcove or reach the long well-lit return first. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -383,7 +383,7 @@
           "frontier-patrol",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-care-repair-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-care-repair-03-discovery", "revision": "2" },
         "routeDecision": "Join adjacent comparison islands or cross to the unchanged-reference island first. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -459,7 +459,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-care-repair-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-care-repair-04-discovery", "revision": "2" },
         "routeDecision": "Take the broad quiet safety terrace or connect the small guidance desk first. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -538,7 +538,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-care-repair-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-care-repair-05-discovery", "revision": "2" },
         "routeDecision": "Compare the three decision bays using interior returns or join the evidence spine first. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -618,7 +618,7 @@
           "relay-gates",
           "directional-fields"
         ],
-        "rewardRef": { "id": "fpv-care-repair-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-care-repair-06-discovery", "revision": "2" },
         "routeDecision": "Complete the handoff chain from the centre or join the final two collection desks first. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV3",
@@ -650,9 +650,9 @@
       "format": "PackDesignV1",
       "id": "fpv-care-repair-pack",
       "name": "Care, Diagnosis and Repair Decisions",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }

@@ -63,6 +63,50 @@
             "title": "Двері відчиняються словами"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Match greeting and thanks to two moments in the book exchange. Keep the Cyrillic words visible; a transliteration is an aid, not a replacement for listening."
+              ],
+              "title": "Make a distinction: A Door Opens with Words"
+            },
+            "uk": {
+              "paragraphs": [
+                "Поєднайте привітання й подяку з двома моментами обміну книжкою. Збережіть видимими кириличні слова; транслітерація — допомога, а не заміна слухання."
+              ],
+              "title": "Розрізнімо: Двері відчиняються словами"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Take turns welcoming someone with “добрий день” and thanking them with “дякую” in the imagined library. Read slowly and help each other."
+              ],
+              "title": "Look together: A Door Opens with Words"
+            },
+            "uk": {
+              "paragraphs": [
+                "По черзі привітайте когось словами «добрий день» і подякуйте словом «дякую» в уявній бібліотеці. Читайте повільно й допомагайте одне одному."
+              ],
+              "title": "Погляньмо разом: Двері відчиняються словами"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Prepare a short welcoming exchange using the cited phrase guide. Identify what written text can support and what pronunciation practice would need from a speaker."
+              ],
+              "title": "Explore the evidence: A Door Opens with Words"
+            },
+            "uk": {
+              "paragraphs": [
+                "Підготуйте коротке вітання за цитованим розмовником. Визначте, що підтримує письмовий текст, а для чого у вимові потрібне слухання мовця."
+              ],
+              "title": "Дослідімо докази: Двері відчиняються словами"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -80,7 +124,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-everyday-culture-01", "kind": "mission" }
   },
   {
@@ -147,6 +191,50 @@
             "title": "Придивіться до Ї"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Treat І and Ї as distinct characters. Enlarge the text if helpful and explain why decoration or a lost pair of dots can change what is read."
+              ],
+              "title": "Make a distinction: Look Closely at Ї"
+            },
+            "uk": {
+              "paragraphs": [
+                "Сприймайте І та Ї як різні символи. За потреби збільште текст і поясніть, як декор чи втрата двох крапок змінює прочитане."
+              ],
+              "title": "Розрізнімо: Придивіться до Ї"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find the two dots of Ї together. Compare І and Ї, then locate Ї in “Україна” without changing the actual letters."
+              ],
+              "title": "Look together: Look Closely at Ї"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом знайдіть дві крапки над Ї. Порівняйте І та Ї, а потім знайдіть Ї у слові «Україна», не змінюючи справжніх літер."
+              ],
+              "title": "Погляньмо разом: Придивіться до Ї"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare a decorative caption with a readable version preserving “Україна.” Which visual choices improve access without changing the characters or claiming pronunciation from an image?"
+              ],
+              "title": "Explore the evidence: Look Closely at Ї"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте декоративний підпис із читабельним, що зберігає «Україна». Які візуальні рішення поліпшують доступ, не змінюючи символів і не виводячи вимову із зображення?"
+              ],
+              "title": "Дослідімо докази: Придивіться до Ї"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -164,7 +252,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-everyday-culture-02", "kind": "mission" }
   },
   {
@@ -231,6 +319,50 @@
             "title": "Страва та її люди"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Separate a recipe’s ingredient list from its social context. The record concerns a cooking practice passed on by people, not one required household recipe."
+              ],
+              "title": "Make a distinction: A Dish and Its People"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть перелік складників і соціальний контекст рецепта. Запис стосується практики, яку передають люди, а не одного обов’язкового родинного рецепта."
+              ],
+              "title": "Розрізнімо: Страва та її люди"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Imagine a recipe card with an ingredient, a person and an occasion. Which story would disappear if only the ingredients stayed?"
+              ],
+              "title": "Look together: A Dish and Its People"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уявіть картку рецепта зі складником, людиною й нагодою. Яка історія зникне, якщо залишити лише складники?"
+              ],
+              "title": "Погляньмо разом: Страва та її люди"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Draft a respectful fictional recipe-story card that preserves who shared it and when it is used. Mark invented examples clearly and leave room for different accounts."
+              ],
+              "title": "Explore the evidence: A Dish and Its People"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть уважну вигадану картку кулінарної історії: хто поділився рецептом і коли його використовує. Чітко позначте вигадані приклади й залиште місце різним розповідям."
+              ],
+              "title": "Дослідімо докази: Страва та її люди"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -248,7 +380,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-everyday-culture-03", "kind": "mission" }
   },
   {
@@ -315,6 +447,50 @@
             "title": "Миска з описом"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep recorded material and measurements separate from imagined use or maker. The game’s bowl is a new illustration, not the museum’s actual makitra."
+              ],
+              "title": "Make a distinction: A Bowl with a Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть записані матеріал і розміри та уявне використання чи авторство. Миска гри — нова ілюстрація, а не справжня музейна макітра."
+              ],
+              "title": "Розрізнімо: Миска з описом"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Look at the bowl illustration and its separate record description. Name one thing you see and one thing you must learn from the record."
+              ],
+              "title": "Look together: A Bowl with a Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "Погляньте на ілюстрацію миски й окремий опис запису. Назвіть те, що бачите, і те, що можна дізнатися лише із запису."
+              ],
+              "title": "Погляньмо разом: Миска з описом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Write a compact object label from the museum record and identify its gaps. Which attractive story would exceed the evidence, and how would you keep that uncertainty visible?"
+              ],
+              "title": "Explore the evidence: A Bowl with a Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть стислий підпис за музейним записом і визначте прогалини. Яка приваблива історія перевищує докази та як зберегти невизначеність видимою?"
+              ],
+              "title": "Дослідімо докази: Миска з описом"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -332,7 +508,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-everyday-culture-04", "kind": "mission" }
   },
   {
@@ -399,6 +575,50 @@
             "title": "Дві картки рецептів"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Describe a difference in occasion or practice without deciding which household is more authentic. Keep the two cards as examples, not universal rules."
+              ],
+              "title": "Make a distinction: Two Recipe Cards"
+            },
+            "uk": {
+              "paragraphs": [
+                "Опишіть різницю нагоди чи практики без визначення «автентичнішої» родини. Збережіть картки як приклади, а не універсальні правила."
+              ],
+              "title": "Розрізнімо: Дві картки рецептів"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Compare an invented weekday recipe card with a celebration card. Ask what their imagined authors would want to explain about the difference."
+              ],
+              "title": "Look together: Two Recipe Cards"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте вигадані картки щоденного й святкового рецепта. Запитайте, що їхні уявні автори хотіли б пояснити про відмінність."
+              ],
+              "title": "Погляньмо разом: Дві картки рецептів"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Transfer the comparison to a different fictional food story. What source or person’s account would be needed before making a broader cultural claim?"
+              ],
+              "title": "Explore the evidence: Two Recipe Cards"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перенесіть порівняння на іншу вигадану кулінарну історію. Яке джерело чи особиста розповідь потрібні перед ширшим культурним твердженням?"
+              ],
+              "title": "Дослідімо докази: Дві картки рецептів"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -416,7 +636,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-everyday-culture-05", "kind": "mission" }
   },
   {
@@ -483,6 +703,50 @@
             "title": "Залиште місце для ще однієї історії"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Review words, letters, cooking context and the object record. Separate source-supported details from the game’s invented scenes before sharing the collection."
+              ],
+              "title": "Make a distinction: Make Room for Another Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перегляньте слова, літери, кулінарний контекст і запис предмета. Перед поширенням розрізніть підтверджені джерелами подробиці й вигадані сцени гри."
+              ],
+              "title": "Розрізнімо: Залиште місце для ще однієї історії"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Add an imagined blank contribution card to the welcome book. Tell each other one new question you would invite another person to answer."
+              ],
+              "title": "Look together: Make Room for Another Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Додайте уявну порожню картку внеску до книги гостинності. Розкажіть одне одному нове запитання, на яке запросите відповісти іншу людину."
+              ],
+              "title": "Погляньмо разом: Залиште місце для ще однієї історії"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Curate a welcome-book page that states its sources, limits and next question. Explain why completing the collection invites more voices rather than authorising one account for everyone."
+              ],
+              "title": "Explore the evidence: Make Room for Another Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть сторінку книги гостинності з джерелами, межами й наступним запитанням. Поясніть, чому завершена колекція запрошує нові голоси, а не уповноважує одну розповідь за всіх."
+              ],
+              "title": "Дослідімо докази: Залиште місце для ще однієї історії"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -500,7 +764,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-everyday-culture-06", "kind": "mission" }
   },
   {
@@ -722,7 +986,7 @@
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "ukraine-everyday-culture", "kind": "campaign" }
   }
 ]
