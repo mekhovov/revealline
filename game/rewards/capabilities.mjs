@@ -8,4 +8,5 @@ export const COMPLETION_REWARD_PAYLOAD_TYPES = Object.freeze([
   'exploration',
   'audio',
   'video',
+  'cosmetic',
 ]);
