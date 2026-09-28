@@ -8,6 +8,7 @@ import { completionLearningReference } from '../rewards/learning.mjs';
 import { COMPLETION_REWARD_PAYLOAD_TYPES } from '../rewards/capabilities.mjs';
 import { validateDiscoveryRewardBindings } from '../content-design/discovery-schema.mjs';
 import { resolveJourneyMasteryRequirement } from '../mastery-journey.mjs';
+import { createRewardCosmeticRegistry, resolveRewardCosmetic } from '../rewards/cosmetics.mjs';
 
 /** Exact player campaign projection: invisible missions, archived maps and
  * unreferenced media are source material, not runtime dependencies. */
@@ -80,7 +81,15 @@ export function validateEditionLessonBundle(lessons, project) {
 export function validateEditionRewardBundle(
   source,
   project,
-  { descriptor, assets = [], editionId, editionProject = project, lessons = [] } = {},
+  {
+    descriptor,
+    assets = [],
+    editionId,
+    editionProject = project,
+    lessons = [],
+    presets,
+    themes = [],
+  } = {},
 ) {
   const rewards = validateCompletionRewards(source);
   const compiled = compileContentProject(project);
@@ -99,6 +108,11 @@ export function validateEditionRewardBundle(
     campaignId: lesson.campaignId,
     reference: completionLearningReference(lesson),
   }));
+  const cosmeticRegistry = rewards.some((reward) =>
+    reward.payloads.some((payload) => payload.type === 'cosmetic'),
+  )
+    ? createRewardCosmeticRegistry({ presets, assets, themes, publication: descriptor.publication })
+    : [];
   for (const reward of rewards) {
     required(
       reward.brandId === descriptor.brandId && reward.campaignId === descriptor.id,
@@ -160,6 +174,7 @@ export function validateEditionRewardBundle(
         COMPLETION_REWARD_PAYLOAD_TYPES.includes(payload.type),
         `Completion reward ${payload.type} needs a registered player viewer before export.`,
       );
+      if (payload.type === 'cosmetic') resolveRewardCosmetic(cosmeticRegistry, payload);
       for (const { role, reference } of rewardMediaReferences(payload))
         validateRewardMediaAsset(
           assets.find((item) => item.id === reference.assetId),
