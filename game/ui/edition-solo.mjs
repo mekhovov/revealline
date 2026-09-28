@@ -44,6 +44,11 @@ export async function mountEditionSoloUI({
     if (text !== undefined) value.textContent = text;
     return value;
   };
+  const copy = (tag, key, values) => {
+    const element = node(tag);
+    localizedText(element, () => t('interface:editionShell.' + key, values));
+    return element;
+  };
   const root = doc.documentElement;
   doc.body.dataset.brandId = selection.brand.id;
   doc.body.dataset.editionId = provider.editionId;
@@ -68,6 +73,10 @@ export async function mountEditionSoloUI({
   for (const id of ['shell-title-edition', 'shell-edition'])
     if (doc.getElementById(id)) localizedText(doc.getElementById(id), () => selection.brand.name);
   const home = doc.getElementById('shell-home');
+  const homeContent = home.querySelector('.home-content') ?? home;
+  const editionMenu = doc.getElementById('shell-workshop-dialog') ?? homeContent;
+  const titleEdition = doc.getElementById('shell-title-edition');
+  if (titleEdition && selection.edition.name === selection.brand.name) titleEdition.hidden = true;
   const previewNotice = previewSession ? node('p') : null;
   if (previewNotice) {
     previewNotice.id = 'edition-studio-preview';
@@ -100,9 +109,8 @@ export async function mountEditionSoloUI({
     (home.querySelector('.home-content') ?? home).prepend(logo);
   }
   const picker = node('label'),
-    pickerLabel = node('span'),
+    pickerTitle = copy('span', 'chooseEdition'),
     select = node('select');
-  localizedText(pickerLabel, () => t('interface:editionSolo.switcherLabel'));
   picker.className = 'field edition-switcher';
   select.id = 'edition-select';
   const availableEditions = (provider.currentCatalog ?? provider.catalog).editions;
@@ -113,8 +121,9 @@ export async function mountEditionSoloUI({
   }
   select.value = provider.editionId;
   select.disabled = availableEditions.length === 1;
-  picker.append(pickerLabel, select);
-  (home.querySelector('.home-content') ?? home).append(picker);
+  picker.append(pickerTitle, select);
+  picker.hidden = availableEditions.length === 1;
+  editionMenu.append(picker);
   select.onchange = () => {
     const requested = select.value;
     // This remains the active edition until the shared host has retained the
@@ -123,25 +132,21 @@ export async function mountEditionSoloUI({
     if (requested === provider.editionId) return false;
     return onEditionChange(requested, select);
   };
+  let retainedPanel;
   if (provider.presentationHistory?.length) {
     const retained = node('details'),
-      title = node('summary'),
+      title = copy('summary', 'originalArt'),
       choice = node('select'),
-      label = node('label'),
-      labelText = node('span');
-    localizedText(title, () => t('interface:editionSolo.originalArtworkRecovery'));
-    localizedText(labelText, () => t('interface:editionSolo.artworkSnapshot'));
+      label = node('label');
+    label.append(copy('span', 'snapshot'));
     retained.className = 'edition-about';
+    retainedPanel = retained;
     choice.id = 'edition-presentation-select';
-    const current = node('option');
-    localizedText(current, () => t('interface:soloDeparture.currentArtwork'));
+    const current = copy('option', 'currentArt');
     current.value = '';
     choice.append(current);
     for (const record of provider.presentationHistory) {
-      const option = node('option');
-      localizedText(option, () =>
-        t('interface:editionSolo.retainedOriginal', { id: record.id.slice(0, 12) }),
-      );
+      const option = copy('option', 'retainedOriginal', { revision: record.id.slice(0, 12) });
       option.value = record.id;
       choice.append(option);
     }
@@ -151,17 +156,14 @@ export async function mountEditionSoloUI({
       choice.value = provider.retainedPresentationId ?? '';
       return onPresentationChange(requested, choice);
     };
-    label.append(labelText, choice);
-    const recoveryExplanation = node('p');
-    localizedText(recoveryExplanation, () => t('interface:editionSolo.recoveryExplanation'));
-    retained.append(title, recoveryExplanation, label);
+    label.append(choice);
+    retained.append(title, copy('p', 'recoveryExplanation'), label);
     const saved = getSavedPresentation();
     if (
       saved !== provider.authoredPresentationSha256 &&
       provider.presentationHistory.some((item) => item.id === saved)
     ) {
-      const recover = node('button');
-      localizedText(recover, () => t('interface:editionSolo.openSavedArtwork'));
+      const recover = copy('button', 'recoverSaved');
       recover.type = 'button';
       recover.id = 'edition-recover-presentation';
       recover.className = 'button secondary';
@@ -169,24 +171,19 @@ export async function mountEditionSoloUI({
       retained.append(recover);
       retained.open = true;
     }
-    if (provider.retainedPresentationId) {
-      const retainedNotice = node('p');
-      localizedText(retainedNotice, () =>
-        t('interface:editionSolo.retainedNotice', {
-          id: provider.retainedPresentationId.slice(0, 12),
+    if (provider.retainedPresentationId)
+      retained.append(
+        copy('p', 'retainedExplanation', {
+          revision: provider.retainedPresentationId.slice(0, 12),
         }),
       );
-      retained.append(retainedNotice);
-    }
-    (home.querySelector('.home-content') ?? home).append(retained);
+    // A known saved-flight mismatch stays immediately reachable at home.
+    (retained.open ? homeContent : editionMenu).append(retained);
   }
   const about = node('details'),
-    aboutTitle = node('summary'),
-    learningDisclaimer = node('p');
-  localizedText(aboutTitle, () => t('interface:editionSolo.about'));
-  localizedText(learningDisclaimer, () => t('interface:editionSolo.learningDisclaimer'));
+    aboutTitle = copy('summary', 'about');
   about.className = 'edition-about';
-  about.append(aboutTitle, node('p', selection.brand.description), learningDisclaimer);
+  about.append(aboutTitle, node('p', selection.brand.description), copy('p', 'learningContext'));
   for (const source of new Map(
     [
       ...(selection.brand.sources ?? []),
@@ -201,7 +198,7 @@ export async function mountEditionSoloUI({
     p.append(link);
     about.append(p);
   }
-  (home.querySelector('.home-content') ?? home).append(about);
+  editionMenu.append(about);
   // Mode controls stay on the common template, but this delivery contains only
   // Solo. The mission library itself derives availability from selected sources.
   for (const id of [
@@ -220,7 +217,7 @@ export async function mountEditionSoloUI({
   }
   if (doc.getElementById('menu-actor-note'))
     localizedText(doc.getElementById('menu-actor-note'), () =>
-      t('interface:editionSolo.campaignArtworkNote'),
+      t('interface:editionShell.sharedRules'),
     );
   const worlds = doc.getElementById('shell-worlds');
   if (worlds) {
@@ -401,6 +398,7 @@ export async function mountEditionSoloUI({
       typeof layout === 'function' ? layout() : layout.disconnect?.();
       picker.remove();
       about.remove();
+      retainedPanel?.remove();
       offline.remove();
       legacy.remove();
       previewNotice?.remove();
