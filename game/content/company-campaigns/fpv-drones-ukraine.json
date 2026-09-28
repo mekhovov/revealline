@@ -2,16 +2,81 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
-      "bytes": 270366,
+      "alt": "Two invented community-hall drawings sit beside separate date and source cards in a recovery archive.",
+      "bytes": 174451,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "fpv-drones-ukraine-key-picture",
+      "height": 480,
+      "id": "fpv-drones-ukraine-01-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-drones-ukraine-key-v1.jpg",
+      "path": "editions/assets/discovery/fpv-drones-ukraine-01-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931",
+      "sha256": "59a72f4aa8ed8529b8b9babf4a94e873d404e3bdcf7084f6c57084316c88c50f",
+      "width": 960
+    },
+    {
+      "alt": "Separate observation, specialist-review and recorded-decision exhibits make the document stages visible.",
+      "bytes": 110577,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-drones-ukraine-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-drones-ukraine-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "f8d0b39849e0e56431327a28f606bf8a1bf3d0ca6b43c7977b32c9dbbef4c2cf",
+      "width": 960
+    },
+    {
+      "alt": "A bounded group of abstract research tiles is surrounded by open space and question marks.",
+      "bytes": 98917,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-drones-ukraine-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-drones-ukraine-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "8a6ec57c23eaaf34200510a0733bc24a3464a19fd711b273d62895aca6b4b8b9",
+      "width": 960
+    },
+    {
+      "alt": "Four empty library stations suggest hosting, drawing, checking sources and asking questions.",
+      "bytes": 186265,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-drones-ukraine-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-drones-ukraine-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "a85aa3515935cdae8f983c0376d3da03178f6310287ed9266cf364b2923e3d98",
+      "width": 960
+    },
+    {
+      "alt": "An invented archive folder and separate calendar, issuer and purpose markers invite careful historical reading.",
+      "bytes": 128946,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-drones-ukraine-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-drones-ukraine-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "92ec7e8bcce3fe937565eaba83d4ed7a930d6e64d74f9335583f49e51bd866fb",
+      "width": 960
+    },
+    {
+      "alt": "Five fictional evidence scenes, source tabs and a separate safety-information lectern complete the gallery.",
+      "bytes": 180611,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-drones-ukraine-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-drones-ukraine-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "82feb4086bcf33a5a80d4a98fa7d50cace3bff9de95336562f53ca394b68341f",
       "width": 960
     }
   ],
@@ -20,7 +85,7 @@
       "band": 6,
       "discovery": {
         "exhibitLayout": "mosaic",
-        "finaleRewardRef": { "id": "fpv-drones-ukraine-finale", "revision": "2" }
+        "finaleRewardRef": { "id": "fpv-drones-ukraine-finale", "revision": "3" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-drones-ukraine",
@@ -204,7 +269,7 @@
           "travelling-trail-impact",
           "trail-pursuer"
         ],
-        "rewardRef": { "id": "fpv-drones-ukraine-01-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-drones-ukraine-01-discovery", "revision": "3" },
         "routeDecision": "Capture the two archive wings separately or join the shared source desk first. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -217,7 +282,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-drones-ukraine-key-picture",
+        "backgroundAssetId": "fpv-drones-ukraine-01-picture",
         "themeId": "fpv-drones-ukraine-theme"
       },
       "relayLinks": [],
@@ -271,7 +336,7 @@
           "travelling-trail-impact",
           "trail-pursuer"
         ],
-        "rewardRef": { "id": "fpv-drones-ukraine-02-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-drones-ukraine-02-discovery", "revision": "3" },
         "routeDecision": "Use the expert-review island or the longer document-gallery return. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -284,7 +349,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-drones-ukraine-key-picture",
+        "backgroundAssetId": "fpv-drones-ukraine-02-picture",
         "themeId": "fpv-drones-ukraine-theme"
       },
       "relayLinks": [],
@@ -338,7 +403,7 @@
           "travelling-trail-impact",
           "heading-interceptor"
         ],
-        "rewardRef": { "id": "fpv-drones-ukraine-03-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-drones-ukraine-03-discovery", "revision": "3" },
         "routeDecision": "Compare the two evidence shelves through the centre or clear the separate question alcove. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -351,7 +416,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-drones-ukraine-key-picture",
+        "backgroundAssetId": "fpv-drones-ukraine-03-picture",
         "themeId": "fpv-drones-ukraine-theme"
       },
       "relayLinks": [],
@@ -414,7 +479,7 @@
           "heading-interceptor",
           "lane-emitter"
         ],
-        "rewardRef": { "id": "fpv-drones-ukraine-04-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-drones-ukraine-04-discovery", "revision": "3" },
         "routeDecision": "Explore the broad reading terrace or link the two smaller contribution desks. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -427,7 +492,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-drones-ukraine-key-picture",
+        "backgroundAssetId": "fpv-drones-ukraine-04-picture",
         "themeId": "fpv-drones-ukraine-theme"
       },
       "relayLinks": [],
@@ -490,7 +555,7 @@
           "heading-interceptor",
           "lane-emitter"
         ],
-        "rewardRef": { "id": "fpv-drones-ukraine-05-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-drones-ukraine-05-discovery", "revision": "3" },
         "routeDecision": "Join the date and issuer islands before the wide context capture. Keep a second return ready before the warning locks your trail or heading."
       },
       "format": "MissionDesignV2",
@@ -503,7 +568,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-drones-ukraine-key-picture",
+        "backgroundAssetId": "fpv-drones-ukraine-05-picture",
         "themeId": "fpv-drones-ukraine-theme"
       },
       "relayLinks": [],
@@ -567,7 +632,7 @@
           "lane-emitter",
           "relay-gates"
         ],
-        "rewardRef": { "id": "fpv-drones-ukraine-06-discovery", "revision": "2" },
+        "rewardRef": { "id": "fpv-drones-ukraine-06-discovery", "revision": "3" },
         "routeDecision": "Connect the six exhibit plinths by safe interior returns or close the archive’s outer court. Choose which numbered relay will open the most useful return connector first."
       },
       "format": "MissionDesignV2",
@@ -580,7 +645,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-drones-ukraine-key-picture",
+        "backgroundAssetId": "fpv-drones-ukraine-06-picture",
         "themeId": "fpv-drones-ukraine-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -596,9 +661,9 @@
       "format": "PackDesignV1",
       "id": "fpv-drones-ukraine-pack",
       "name": "Drones in Ukraine",
-      "revision": "2"
+      "revision": "3"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "2"
+  "revision": "3"
 }
