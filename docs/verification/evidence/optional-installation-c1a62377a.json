@@ -1,0 +1,307 @@
+{
+  "format": "OptionalInstallationObservation.v1",
+  "passed": true,
+  "browserPreparationPassed": true,
+  "osInstallationStatus": "passed",
+  "standaloneWindowStatus": "passed",
+  "harnessStable": true,
+  "createdAt": "2026-09-28T21:30:45.292Z",
+  "browser": "154.0.8037.57",
+  "scope": "Isolated local persistent Chrome profile, exact downloaded CI runtime bytes and ordinary offline/backup UI. v0.0.0/v0.0.1 are same-payload path fixtures, not allocated releases or actual model upgrades. Progress comes from an explicitly scripted verified input import, not a human flight. No public deployment or physical radio claim.",
+  "envelopeSha256": "51268c7b735171995a3d1cc19392aa97bc8ad2399babaa0443b8f8993e288d20",
+  "sourceRevision": "c1a62377abe93ca390bec79ac4417db513e898b3",
+  "sourceTree": "316f353beed98ee6f1e296240916fc9a9e4d77f6",
+  "artifacts": [
+    {
+      "id": "civilian-flight",
+      "distribution": {
+        "bytes": 182692,
+        "path": "distribution-optional-civilian-flight.zip",
+        "sha256": "db2f5bd57d375ba7627fbc0cd97687618f49f85ee04bdd6a6ff5fadd4b1c020b"
+      },
+      "manifest": {
+        "bytes": 5631,
+        "path": "manifest-optional-civilian-flight.json",
+        "sha256": "9c58eac2bf2d09e98e72a5b81748f77fde09de1e7ba1f3d86e8203cb5e1744a1"
+      }
+    },
+    {
+      "id": "civilian-fpv",
+      "distribution": {
+        "bytes": 2754548,
+        "path": "distribution-optional-civilian-fpv.zip",
+        "sha256": "cb622f24f4dd931750c5964839bbf34ac37aa15e4bd2db789d89d09fcaaba6d8"
+      },
+      "manifest": {
+        "bytes": 9242,
+        "path": "manifest-optional-civilian-fpv.json",
+        "sha256": "3fe24c21eaeff81fe0a2c65d34270fe08e4df13c35ef3315c4840863bb080569"
+      }
+    }
+  ],
+  "harnessSha256": "a7d936d1c01d0d5fba79f4c3c7d06333f8c5da881e6bbe79d2979318c340b489",
+  "proof": {
+    "input": "first frozen demonstration frames under an explicit synthetic practice session",
+    "sha256": "5c7fe2b10e9d9dc7d2a95efa42ded4abacfc383619e5ff51deb0973870e374a6",
+    "attempts": 1
+  },
+  "osApps": [
+    {
+      "id": "civilian-fpv",
+      "manifestId": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/",
+      "installed": true,
+      "state": {
+        "badgeCount": 0,
+        "fileHandlers": []
+      },
+      "launch": {
+        "targetId": "0BA8F55ADFE46B87D54F0DC43E0F1C5C"
+      },
+      "window": {
+        "standalone": true,
+        "url": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/app/"
+      },
+      "afterOtherUninstall": {
+        "badgeCount": 0,
+        "fileHandlers": []
+      },
+      "uninstalled": true
+    },
+    {
+      "id": "civilian-flight",
+      "manifestId": "http://127.0.0.1:54743/revealline/practice/civilian-flight/",
+      "installed": true,
+      "state": {
+        "badgeCount": 0,
+        "fileHandlers": []
+      },
+      "launch": {
+        "targetId": "58BA206CC87BCE3C30243C9A10FF1FEF"
+      },
+      "window": {
+        "standalone": true,
+        "url": "http://127.0.0.1:54743/revealline/practice/civilian-flight/app/"
+      },
+      "uninstalled": true
+    }
+  ],
+  "checkpoints": [
+    {
+      "label": "both-prepared",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{\"active\":{\"id\":\"civilian-flight\",\"version\":\"v0.142.1\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-flight/releases/v0.142.1/site/\",\"entry\":\"optional-practice/civilian-flight/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.142.1/site/optional-practice/civilian-flight/:bff3a4edada5c899cf81d64abb704af9f51e9d4b4abace6e7b515c43f0f3e0cc",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:86ad5dc2048d4c3f1f8f30930be57dd219808cf60e3ad33069e810d7ba424a58"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-flight/releases/v0.142.1/site/optional-practice/civilian-flight/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        }
+      ]
+    },
+    {
+      "label": "both-open-offline",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{\"active\":{\"id\":\"civilian-flight\",\"version\":\"v0.142.1\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-flight/releases/v0.142.1/site/\",\"entry\":\"optional-practice/civilian-flight/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:df23c17d8aec2de5581af0a10c5288c4ecb28314f50dad1a24039acd8d826b50",
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.142.1/site/optional-practice/civilian-flight/:bff3a4edada5c899cf81d64abb704af9f51e9d4b4abace6e7b515c43f0f3e0cc",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:9f07078364936f829237011e6db6f510c0db9d41e3a10cbec6f99a4a6fdb06dd",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:86ad5dc2048d4c3f1f8f30930be57dd219808cf60e3ad33069e810d7ba424a58"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-flight/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-flight/releases/v0.142.1/site/optional-practice/civilian-flight/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        }
+      ]
+    },
+    {
+      "label": "candidate-installed-over-alternate-path",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{\"active\":{\"id\":\"civilian-flight\",\"version\":\"v0.142.1\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-flight/releases/v0.142.1/site/\",\"entry\":\"optional-practice/civilian-flight/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.142.1\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.142.1/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"},\"previous\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:df23c17d8aec2de5581af0a10c5288c4ecb28314f50dad1a24039acd8d826b50",
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.142.1/site/optional-practice/civilian-flight/:bff3a4edada5c899cf81d64abb704af9f51e9d4b4abace6e7b515c43f0f3e0cc",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:9f07078364936f829237011e6db6f510c0db9d41e3a10cbec6f99a4a6fdb06dd",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:86ad5dc2048d4c3f1f8f30930be57dd219808cf60e3ad33069e810d7ba424a58",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.142.1/site/optional-practice/civilian-fpv/:86ad5dc2048d4c3f1f8f30930be57dd219808cf60e3ad33069e810d7ba424a58"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-flight/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-flight/releases/v0.142.1/site/optional-practice/civilian-flight/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.142.1/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        }
+      ]
+    },
+    {
+      "label": "failed-install-preserves-pointers",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{\"active\":{\"id\":\"civilian-flight\",\"version\":\"v0.142.1\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-flight/releases/v0.142.1/site/\",\"entry\":\"optional-practice/civilian-flight/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.142.1\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.142.1/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"},\"previous\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:df23c17d8aec2de5581af0a10c5288c4ecb28314f50dad1a24039acd8d826b50",
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.142.1/site/optional-practice/civilian-flight/:bff3a4edada5c899cf81d64abb704af9f51e9d4b4abace6e7b515c43f0f3e0cc",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:9f07078364936f829237011e6db6f510c0db9d41e3a10cbec6f99a4a6fdb06dd",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:86ad5dc2048d4c3f1f8f30930be57dd219808cf60e3ad33069e810d7ba424a58",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.142.1/site/optional-practice/civilian-fpv/:86ad5dc2048d4c3f1f8f30930be57dd219808cf60e3ad33069e810d7ba424a58"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-flight/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-flight/releases/v0.142.1/site/optional-practice/civilian-flight/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.142.1/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        }
+      ]
+    },
+    {
+      "label": "candidate-removed-retained-path-restored",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{\"active\":{\"id\":\"civilian-flight\",\"version\":\"v0.142.1\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-flight/releases/v0.142.1/site/\",\"entry\":\"optional-practice/civilian-flight/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:df23c17d8aec2de5581af0a10c5288c4ecb28314f50dad1a24039acd8d826b50",
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.142.1/site/optional-practice/civilian-flight/:bff3a4edada5c899cf81d64abb704af9f51e9d4b4abace6e7b515c43f0f3e0cc",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:9f07078364936f829237011e6db6f510c0db9d41e3a10cbec6f99a4a6fdb06dd",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:86ad5dc2048d4c3f1f8f30930be57dd219808cf60e3ad33069e810d7ba424a58"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-flight/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-flight/releases/v0.142.1/site/optional-practice/civilian-flight/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        }
+      ]
+    },
+    {
+      "label": "rollback-and-other-package-work-offline",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{\"active\":{\"id\":\"civilian-flight\",\"version\":\"v0.142.1\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-flight/releases/v0.142.1/site/\",\"entry\":\"optional-practice/civilian-flight/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:df23c17d8aec2de5581af0a10c5288c4ecb28314f50dad1a24039acd8d826b50",
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.142.1/site/optional-practice/civilian-flight/:bff3a4edada5c899cf81d64abb704af9f51e9d4b4abace6e7b515c43f0f3e0cc",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:9f07078364936f829237011e6db6f510c0db9d41e3a10cbec6f99a4a6fdb06dd",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:86ad5dc2048d4c3f1f8f30930be57dd219808cf60e3ad33069e810d7ba424a58"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-flight/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-flight/releases/v0.142.1/site/optional-practice/civilian-flight/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        }
+      ]
+    },
+    {
+      "label": "gym-cache-removal-preserves-fpv",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:df23c17d8aec2de5581af0a10c5288c4ecb28314f50dad1a24039acd8d826b50",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:9f07078364936f829237011e6db6f510c0db9d41e3a10cbec6f99a4a6fdb06dd",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:86ad5dc2048d4c3f1f8f30930be57dd219808cf60e3ad33069e810d7ba424a58"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-flight/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:54743/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "cleanup": {
+    "errors": [],
+    "temporaryProfileRemoved": true
+  }
+}
