@@ -234,6 +234,7 @@ export async function runDeployedTusResumeAcceptance(input, adapters = {}) {
   let stage = 'identity';
   let editionId = null;
   let proxy = null;
+  let rawFetch;
   let fetchImpl;
   let auth = null;
   const cleanup = async () => {
@@ -255,7 +256,8 @@ export async function runDeployedTusResumeAcceptance(input, adapters = {}) {
   };
 
   try {
-    fetchImpl = boundedFetch(adapters.fetchImpl ?? globalThis.fetch, config.requestTimeoutMs);
+    rawFetch = adapters.fetchImpl ?? globalThis.fetch;
+    fetchImpl = boundedFetch(rawFetch, config.requestTimeoutMs);
     const identity = await json(
       await fetchImpl(new URL('version', config.baseURL), { cache: 'no-store' }),
       'Release identity',
@@ -292,11 +294,13 @@ export async function runDeployedTusResumeAcceptance(input, adapters = {}) {
     auth = Object.freeze({
       creator: await resolveDeployedAcceptanceAccount(config.auth.creator, {
         baseURL: config.baseURL,
-        fetchImpl,
+        fetchImpl: rawFetch,
+        timeoutMs: config.requestTimeoutMs,
       }),
       admin: await resolveDeployedAcceptanceAccount(config.auth.admin, {
         baseURL: config.baseURL,
-        fetchImpl,
+        fetchImpl: rawFetch,
+        timeoutMs: config.requestTimeoutMs,
       }),
     });
 

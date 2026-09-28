@@ -11,6 +11,13 @@ test('deployed acceptance accounts accept one bounded header or password credent
     'Creator authentication',
   );
   assert.deepEqual(headers, { cookie: 'better-auth.session_token=short-lived' });
+  assert.deepEqual(
+    validateDeployedAcceptanceAccount(
+      { authorization: 'Bearer short-lived', 'x-acceptance-scope': 'production' },
+      'Creator authentication',
+    ),
+    { authorization: 'Bearer short-lived', 'x-acceptance-scope': 'production' },
+  );
 
   const credentials = validateDeployedAcceptanceAccount(
     { email: 'creator@example.test', password: 'correct horse battery staple' },
@@ -22,6 +29,14 @@ test('deployed acceptance accounts accept one bounded header or password credent
   });
   assert.equal(Object.isFrozen(credentials), true);
 
+  assert.throws(
+    () =>
+      validateDeployedAcceptanceAccount(
+        { Authorization: 'Bearer old', Cookie: 'session=old' },
+        'Creator authentication',
+      ),
+    /exactly one credential form/u,
+  );
   assert.throws(
     () =>
       validateDeployedAcceptanceAccount(
@@ -114,4 +129,107 @@ test('deployed acceptance sign-in fails closed without exposing credentials', as
     }),
     /did not return a bounded session cookie/u,
   );
+});
+
+test('deployed acceptance sign-in enforces the response limit in bytes while streaming', async () => {
+  const credentials = validateDeployedAcceptanceAccount(
+    { email: 'creator@example.test', password: 'correct horse battery staple' },
+    'Creator authentication',
+  );
+  const headers = {
+    'set-cookie': 'better-auth.session_token=bounded; Path=/; HttpOnly; Secure',
+  };
+
+  const boundary = await resolveDeployedAcceptanceAccount(credentials, {
+    baseURL: 'https://community.example.test/',
+    fetchImpl: async () => new Response(new Uint8Array(64 * 1024), { headers }),
+    timeoutMs: 1_000,
+  });
+  assert.deepEqual(boundary, { cookie: 'better-auth.session_token=bounded' });
+
+  let multibyteCancelled = false;
+  const multibyteBytes = new TextEncoder().encode('é'.repeat(40_000));
+  await assert.rejects(
+    resolveDeployedAcceptanceAccount(credentials, {
+      baseURL: 'https://community.example.test/',
+      fetchImpl: async () =>
+        new Response(
+          new ReadableStream({
+            start(controller) {
+              controller.enqueue(multibyteBytes);
+            },
+            cancel() {
+              multibyteCancelled = true;
+            },
+          }),
+          { headers },
+        ),
+      timeoutMs: 1_000,
+    }),
+    /returned too much data/u,
+  );
+  assert.equal(multibyteBytes.byteLength, 80_000);
+  assert.equal(multibyteCancelled, true);
+
+  let chunksProduced = 0;
+  let streamCancelled = false;
+  await assert.rejects(
+    resolveDeployedAcceptanceAccount(credentials, {
+      baseURL: 'https://community.example.test/',
+      fetchImpl: async () =>
+        new Response(
+          new ReadableStream({
+            pull(controller) {
+              chunksProduced += 1;
+              controller.enqueue(new Uint8Array(chunksProduced === 1 ? 32 * 1024 : 32 * 1024 + 1));
+            },
+            cancel() {
+              streamCancelled = true;
+            },
+          }),
+          { headers },
+        ),
+      timeoutMs: 1_000,
+    }),
+    /returned too much data/u,
+  );
+  assert.ok(chunksProduced <= 3);
+  assert.equal(streamCancelled, true);
+});
+
+test('deployed acceptance sign-in times out stalled bodies and cancels them', async () => {
+  const password = 'correct horse battery staple';
+  const credentials = validateDeployedAcceptanceAccount(
+    { email: 'creator@example.test', password },
+    'Creator authentication',
+  );
+  let cancelled = false;
+  const startedAt = Date.now();
+  await assert.rejects(
+    resolveDeployedAcceptanceAccount(credentials, {
+      baseURL: 'https://community.example.test/',
+      fetchImpl: async () =>
+        new Response(
+          new ReadableStream({
+            cancel() {
+              cancelled = true;
+            },
+          }),
+          {
+            headers: {
+              'set-cookie':
+                'better-auth.session_token=never-read; Path=/; HttpOnly; Secure; SameSite=Lax',
+            },
+          },
+        ),
+      timeoutMs: 100,
+    }),
+    (error) => {
+      assert.equal(error.message, 'Account sign-in timed out.');
+      assert.equal(error.message.includes(password), false);
+      return true;
+    },
+  );
+  assert.equal(cancelled, true);
+  assert.ok(Date.now() - startedAt < 1_000);
 });

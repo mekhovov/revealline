@@ -115,6 +115,67 @@ const fetchThroughFastify =
     return new Response(injected.rawPayload, { status: injected.statusCode, headers });
   };
 
+test('deployed tus sign-in keeps its deadline through a stalled response body', async () => {
+  const password = 'correct horse battery staple';
+  let proxyStarts = 0;
+  let packageCreates = 0;
+  let cancelled = false;
+  const startedAt = Date.now();
+  await assert.rejects(
+    runDeployedTusResumeAcceptance(
+      config({
+        requestTimeoutMs: 100,
+        auth: {
+          ...config().auth,
+          creator: { email: 'creator@example.test', password },
+        },
+      }),
+      {
+        fetchImpl: async (input) => {
+          const pathname = new URL(input).pathname;
+          if (pathname === '/version')
+            return Response.json({ format: 'revealline-community-release.v1', ...expectedRelease });
+          if (pathname === '/health') return Response.json({ status: 'ok' });
+          if (pathname === '/ready') return Response.json({ status: 'ready' });
+          if (pathname === '/api/auth/sign-in/email')
+            return new Response(
+              new ReadableStream({
+                cancel() {
+                  cancelled = true;
+                },
+              }),
+              {
+                headers: {
+                  'set-cookie': 'better-auth.session_token=never-read; Path=/; HttpOnly; Secure',
+                },
+              },
+            );
+          assert.fail('Authentication timeout must stop before proxy or package creation.');
+        },
+        startProxy: async () => {
+          proxyStarts += 1;
+          assert.fail('Authentication timeout must stop before the fault proxy.');
+        },
+        createPackage: async () => {
+          packageCreates += 1;
+          assert.fail('Authentication timeout must stop before package creation.');
+        },
+        randomUUID: () => 'abcdef12-1234-4abc-8def-123456789abc',
+      },
+    ),
+    (error) => {
+      assert.equal(error.stage, 'authentication');
+      assert.equal(error.cause.message, 'Account sign-in timed out.');
+      assert.equal(JSON.stringify(error.receipt).includes(password), false);
+      return true;
+    },
+  );
+  assert.equal(cancelled, true);
+  assert.equal(proxyStarts, 0);
+  assert.equal(packageCreates, 0);
+  assert.ok(Date.now() - startedAt < 1_000);
+});
+
 test('remote fault proxy requires deliberate HTTPS remote mode', async () => {
   await assert.rejects(
     startTusFaultProxy({ upstreamURL: 'https://community.example.test/' }),

@@ -21,6 +21,11 @@ const credentialText = (value, { name, minimum, maximum }) => {
 export function validateDeployedAcceptanceAccount(value, name) {
   required(value && typeof value === 'object' && !Array.isArray(value), `${name} is required.`);
   const entries = Object.entries(value);
+  const headerNames = new Set(entries.map(([key]) => key.toLowerCase()));
+  required(
+    !(headerNames.has('authorization') && headerNames.has('cookie')),
+    `${name} must use exactly one credential form.`,
+  );
   const usesPassword = entries.some(([key]) => key === 'email' || key === 'password');
   if (usesPassword) {
     required(
@@ -79,29 +84,96 @@ const sessionCookie = (headers) => {
   throw new Error('Account sign-in did not return a bounded session cookie.');
 };
 
-export async function resolveDeployedAcceptanceAccount(account, { baseURL, fetchImpl }) {
+const cancelBody = async (body) => {
+  try {
+    await body?.cancel();
+  } catch {
+    // Cancellation is best effort; the caller still receives the bounded error.
+  }
+};
+
+const consumeBoundedBody = async (response, deadline) => {
+  if (!response.body) return;
+  const reader = response.body.getReader();
+  deadline.setReader(reader);
+  let bytes = 0;
+  try {
+    while (true) {
+      const { done, value } = await Promise.race([reader.read(), deadline.promise]);
+      if (done) return;
+      bytes += value.byteLength;
+      if (bytes > MAX_RESPONSE_BYTES) {
+        await cancelBody(reader);
+        throw new Error('Account sign-in returned too much data.');
+      }
+    }
+  } finally {
+    deadline.clearReader(reader);
+    reader.releaseLock();
+  }
+};
+
+export async function resolveDeployedAcceptanceAccount(
+  account,
+  { baseURL, fetchImpl, timeoutMs = 15_000 },
+) {
   if (!Object.hasOwn(account, 'email')) return account;
   required(typeof fetchImpl === 'function', 'Account sign-in fetch adapter is required.');
+  required(
+    Number.isSafeInteger(timeoutMs) && timeoutMs >= 100 && timeoutMs <= 60_000,
+    'Account sign-in timeout is invalid.',
+  );
+  const controller = new AbortController();
+  let activeReader = null;
+  let rejectTimeout;
+  const timeoutError = new Error('Account sign-in timed out.');
+  const timeout = new Promise((_, reject) => {
+    rejectTimeout = reject;
+  });
+  const timer = setTimeout(() => {
+    rejectTimeout(timeoutError);
+    controller.abort(timeoutError);
+    void cancelBody(activeReader);
+  }, timeoutMs);
+  const deadline = {
+    promise: timeout,
+    setReader: (reader) => {
+      activeReader = reader;
+    },
+    clearReader: (reader) => {
+      if (activeReader === reader) activeReader = null;
+    },
+  };
   let response;
   try {
-    response = await fetchImpl(new URL('api/auth/sign-in/email', baseURL), {
-      method: 'POST',
-      cache: 'no-store',
-      redirect: 'error',
-      headers: {
-        accept: 'application/json',
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({ email: account.email, password: account.password }),
-    });
-    const body = await response.text();
-    required(body.length <= MAX_RESPONSE_BYTES, 'Account sign-in returned too much data.');
-    required(response.ok, `Account sign-in failed (${response.status}).`);
+    response = await Promise.race([
+      fetchImpl(new URL('api/auth/sign-in/email', baseURL), {
+        method: 'POST',
+        cache: 'no-store',
+        redirect: 'error',
+        signal: controller.signal,
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({ email: account.email, password: account.password }),
+      }),
+      timeout,
+    ]);
+    if (!response.ok) {
+      await cancelBody(response.body);
+      throw new Error(`Account sign-in failed (${response.status}).`);
+    }
+    await consumeBoundedBody(response, deadline);
     return Object.freeze({ cookie: sessionCookie(response.headers) });
   } catch (error) {
     if (error?.message === 'Account sign-in returned too much data.') throw error;
+    if (error?.message === 'Account sign-in timed out.') throw error;
     if (/^Account sign-in failed \(\d+\)\.$/u.test(error?.message ?? '')) throw error;
     if (error?.message === 'Account sign-in did not return a bounded session cookie.') throw error;
     throw new Error('Account sign-in failed.');
+  } finally {
+    clearTimeout(timer);
+    if (response && activeReader) await cancelBody(activeReader);
   }
 }
