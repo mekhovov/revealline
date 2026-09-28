@@ -178,7 +178,7 @@ node scripts/publish-editions.mjs review-template \
 
 `Company edition candidates` runs on relevant pull requests and main changes, storing
 the explicitly selected candidates as Actions artifacts for 14 days. The successful
-14-edition runs and exact downloaded-byte receipts are recorded in the qualification log. The workflow defaults to all 14 edition IDs; the command above builds only the two combined examples. It cannot publish releases. Each bundle
+14-edition runs and exact downloaded-byte receipts are recorded in the qualification log. The workflow now defaults to all 18 edition IDs; the command above builds only the two combined examples. It cannot publish releases. Each bundle
 includes `editions.json`, standalone ZIPs, selected-source ZIPs, manifests, checksums and a
 candidate verification receipt. The source ZIP is a selected input packet, not a full repository
 checkout. The legacy full-source archive separately runs the public-source eligibility gate.
@@ -220,6 +220,26 @@ selector edits abort the write without replacing another writer's changes. The e
 Pages publisher composes these verified edition files with
 the default artifact and rechecks the combined 950 MB operational budget. Empty selection
 preserves default publication. `editions/index.html` links the same standalone artifacts.
+
+By default, `sync-selector` hosts every edition in the new envelope. An explicit `--editions`
+chooses a nonempty subset from that exact envelope, without changing any ZIP or its review:
+
+```sh
+node scripts/publish-editions.mjs sync-selector \
+  --bundle .cache/company-candidate --review .cache/edition-review.json \
+  --editions social-drone-ua,victory-drones,ukraine-culture,fpv-learning \
+  --selector publishing/pages-controller/editions.json \
+  --repository mekhovov/revealline --base-path /revealline/
+```
+
+This example does not establish that those editions fit the future target. All envelope editions,
+including omitted ones, must still pass the complete review, immutable tag and downloaded-byte
+checks. Omitted new versions appear in the hub as explicit GitHub release ZIP downloads with
+their exact byte size and SHA-256; they have no new hosted Play link. Existing versions' frozen
+paths remain, and an omitted edition's existing active launcher is preserved. The selected
+edition IDs determine hosted immutable files; changing only `activeEditionIds` does not save
+their storage. A previously selected immutable version cannot be respecified to prune it.
+
 Rollback changes the active edition selection to a retained version; it never rewrites frozen
 release bytes or changes another edition's launcher. Use the verified local-selector command:
 
@@ -233,6 +253,53 @@ It downloads and checks the retained published artifacts before writing the sele
 launcher choice. A failed check leaves the selector untouched. Review and deploy that selector
 through the ordinary pipeline; this command does not publish or deploy. Additional distribution targets require
 their own reviewed configuration. Restricted editions have no public promotion path.
+
+### Whole-site capacity before publication
+
+Per-edition asset budgets and ZIP sizes are not the complete deployed size. Count the default
+site, all retained edition versions, stable launchers, the hub, optional packages and every
+other generated route together. The main-only publisher retains its **950,000,000-byte** cap;
+an edition overlay passing its own check does not qualify the combined target.
+
+A read-only inventory of the already downloaded 18-edition candidate artifact `10962669328`
+(source `a0eefe5780756bf063f5e13af536da0e75010740`, candidate version `v0.142.0`)
+gave the following immutable `site/` totals. They include each runtime manifest itself, but
+exclude stable launcher copies and the hub:
+
+| Edition                   | Immutable site bytes |
+| ------------------------- | -------------------: |
+| `coupa-all`               |           60,350,371 |
+| `droneaid-nl-community`   |           64,817,389 |
+| `social-drone-ua`         |           24,868,930 |
+| `victory-drones`          |           21,323,062 |
+| `ukraine-culture`         |           29,356,178 |
+| `fpv-learning`            |           31,322,130 |
+| Four new editions alone   |          106,870,300 |
+| All six rows              |          232,038,060 |
+| All 18 candidate editions |          555,140,894 |
+
+The separately selected `v0.142.0` default manifest totals 740,350,558 bytes. Adding the six
+rows already reaches **972,388,618 bytes**, before the missing overhead. Adding the four new
+editions instead reaches **847,220,858 bytes**, leaving 102,779,142 bytes before overhead.
+These are lower-bound planning estimates from older artifacts, not qualification of a current
+or future build. The next merged default can grow when it includes the new content. No subset
+is cleared until the exact future default and selected overlays are measured together.
+
+With reviewed frozen inputs and selectors available, the existing local staging commands are:
+
+```sh
+node publishing/pages-controller/publish.mjs build --preview
+node publishing/pages-controller/publish.mjs verify-artifact --preview
+```
+
+They do not publish or allocate a release. They write `.cache/frozen-pages`, download the
+selected original release assets, and require the existing exact metadata, qualification,
+tag/source identities and edition/optional review evidence. The resulting
+`artifact-receipt.json` lists every hosted path and `totalBytes`; the second command rereads
+the complete staged output. Do not substitute candidates or fabricate pending review evidence
+to run this ahead of admission. Candidate manifest sums are useful for planning; the publisher's
+final exact combined inventory remains authoritative. The fast PR Pages authority check can
+succeed without building this full artifact, so its success alone is not capacity evidence.
 
 ## Evidence and outstanding human gates
 
