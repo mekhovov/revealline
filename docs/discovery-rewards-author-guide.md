@@ -235,3 +235,11 @@ Level/Campaign Studio and Company Studio share a resource editor. Select an exis
 QR addresses are limited to 256 serialized UTF-8 bytes so the result stays readable. Collection and author previews generate the code locally only after Show QR; the same code is included in the printable offline document. The visible full address and resource link remain available. QR presentation never opens a URL, shortens an address or contacts a QR service. Existing URL rewards without the optional `qr` flag behave as before.
 
 Project Nayuki QR Code generator 1.8.0 is pinned with its upstream checksum, MIT notice and one documented ES-module export. Generated SVG geometry is built exclusively from numeric QR cells; this does not add support for importing SVG artwork. A reference symbol was independently decoded with macOS CoreImage. Six focused checks cover exact vendor bytes, bounded addresses, quiet zones, authoring and 20 disposal cycles. A local Node run measured 10.55 ms cold generation and 2.32 ms p95 over 20 warm generations at a 250-byte address; these measurements are not frame-time or phone-camera evidence.
+
+## Campaign Collection exhibits
+
+The campaign discovery metadata selects a route, gallery or mosaic layout. Company Studio and Level/Campaign Studio preserve this field through preview and export. Collection offers one campaign at a time using the canonical mission order, with a separate campaign-finale card. This is a projection of existing promises and earned receipts, not another completion store.
+
+Show collected pictures is explicit. Locked cards never fetch final images. At most twelve exact earned thumbnails are retained, with two verification requests in flight; every reward still opens in the full reader. Changing campaign, hiding pictures or closing Collection cancels pending work and releases object URLs. Missing exact art keeps its text and recovery action.
+
+The shared More menu also offers optional flight practice when an admitted package is published. Opening it fetches only the bounded launcher catalogue; starting a package remains explicit and uses a separate installation. Authoring or previewing a practice package cannot grant Journey wins. See [optional package candidate delivery](optional-package-candidates.md).

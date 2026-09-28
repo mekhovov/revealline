@@ -2,16 +2,81 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
-      "bytes": 227588,
+      "alt": "An oversized divided tray holds separate cardboard component shapes, blank record cards and a magnifying lens in a warm workshop.",
+      "bytes": 148819,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "fpv-parts-bench-key-picture",
+      "height": 480,
+      "id": "fpv-parts-bench-01-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-parts-bench-key-v1.jpg",
+      "path": "editions/assets/discovery/fpv-parts-bench-01-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265",
+      "sha256": "2c0956d41e954d3b4fb76004e035ae7aad18dfb197b9459195b51fb8e4085f25",
+      "width": 960
+    },
+    {
+      "alt": "A cardboard four-arm model with a blue nose rests on a round display stand beside a separate fixed amber direction arrow.",
+      "bytes": 123554,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-parts-bench-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-parts-bench-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "1e9510e6330ef432ee9078e25bffc9fe31d125daf0140f582b34f1faf16acb40",
+      "width": 960
+    },
+    {
+      "alt": "Grey, amber and blue fabric ribbons weave around three separate inert role stations on a broad workshop table.",
+      "bytes": 169233,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-parts-bench-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-parts-bench-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "2154c75f9cfcd0acc3b6942c161a1af3dded9c8527e85829bd688a4db15a1fdc",
+      "width": 960
+    },
+    {
+      "alt": "Two matching abstract cardboard connector silhouettes sit on separate cards beside an open blank manual and distinct record tabs.",
+      "bytes": 133773,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-parts-bench-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-parts-bench-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "343176573a12f4697df0c3172d2e7cdeda49e04f5e9968dc7e568589934c50f8",
+      "width": 960
+    },
+    {
+      "alt": "A large magnifier reveals a torn cardboard arm beside a loose blank tag, a worn record card and an inert model on the shelf.",
+      "bytes": 134307,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-parts-bench-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-parts-bench-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "34da85b3bd3d4afea5290acff9538ebb95fae9a667f47eae3a7dc32e790eb4fc",
+      "width": 960
+    },
+    {
+      "alt": "A finished inert cardboard model and separate evidence cards form a welcoming handoff display with one unresolved question card.",
+      "bytes": 160283,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-parts-bench-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-parts-bench-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "de0f3074e9c6378ef75052407351e94ea100928f9c4fc7f9ab67541f8723de24",
       "width": 960
     }
   ],
@@ -20,7 +85,7 @@
       "band": 3,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "fpv-parts-bench-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "fpv-parts-bench-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-parts-bench",
@@ -203,7 +268,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-parts-bench-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-parts-bench-01-discovery", "revision": "2" },
         "routeDecision": "Choose the long inventory shelf or the two short tray returns. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -215,7 +280,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-parts-bench-key-picture",
+        "backgroundAssetId": "fpv-parts-bench-01-picture",
         "themeId": "fpv-parts-bench-theme"
       },
       "revision": "2",
@@ -275,7 +340,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-parts-bench-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-parts-bench-02-discovery", "revision": "2" },
         "routeDecision": "Secure the nose-side alcove or loop behind the orientation spine. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -287,7 +352,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-parts-bench-key-picture",
+        "backgroundAssetId": "fpv-parts-bench-02-picture",
         "themeId": "fpv-parts-bench-theme"
       },
       "revision": "2",
@@ -347,7 +412,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-parts-bench-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-parts-bench-03-discovery", "revision": "2" },
         "routeDecision": "Join the middle role island first or link the outer pair before crossing. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -359,7 +424,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 7.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-parts-bench-key-picture",
+        "backgroundAssetId": "fpv-parts-bench-03-picture",
         "themeId": "fpv-parts-bench-theme"
       },
       "revision": "2",
@@ -428,7 +493,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "fpv-parts-bench-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-parts-bench-04-discovery", "revision": "2" },
         "routeDecision": "Use the broad comparison terrace or the quiet label alcove first. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -441,7 +506,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-parts-bench-key-picture",
+        "backgroundAssetId": "fpv-parts-bench-04-picture",
         "themeId": "fpv-parts-bench-theme"
       },
       "revision": "2",
@@ -510,7 +575,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "fpv-parts-bench-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-parts-bench-05-discovery", "revision": "2" },
         "routeDecision": "Reach the isolated inspection island or clear the paired windows first. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -523,7 +588,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-parts-bench-key-picture",
+        "backgroundAssetId": "fpv-parts-bench-05-picture",
         "themeId": "fpv-parts-bench-theme"
       },
       "revision": "2",
@@ -592,7 +657,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "fpv-parts-bench-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-parts-bench-06-discovery", "revision": "2" },
         "routeDecision": "Build a chain through the handoff islands or enclose the wide workshop bay. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -605,7 +670,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-parts-bench-key-picture",
+        "backgroundAssetId": "fpv-parts-bench-06-picture",
         "themeId": "fpv-parts-bench-theme"
       },
       "revision": "2",
@@ -620,9 +685,9 @@
       "format": "PackDesignV1",
       "id": "fpv-parts-bench-pack",
       "name": "From Parts to a Bench Model",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }

@@ -106,3 +106,9 @@ of an already registered revision. Human artwork review remains deferred.
 ## Local shareable resource rewards
 
 [Project Nayuki’s primary documentation](https://www.nayuki.io/page/qr-code-generator-library) describes its dependency-free MIT QR encoder. The edition implementation pins the upstream 1.8.0 JavaScript release and keeps code generation offline. Resource teasers promise a useful source; the earned QR only offers another way to reach the same visible HTTPS address. The player chooses whether to display or open it. No scanning, tracking, remote image service or secret entitlement is implied.
+
+## Symbols and a growing collection
+
+The Ukraine state-symbol reward now includes the actual upright [small state emblem](https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Ukraine.svg) and [state flag](https://commons.wikimedia.org/wiki/File:Flag_of_Ukraine.svg), with pinned source revisions and exact offline raster hashes. Their state-symbol descriptions are checked against [Article 20 of the Constitution](https://www.president.gov.ua/documents/constitution/konstituciya-ukrayini-rozdil-i). These reference images are separate from the fictional illustrated exhibition rooms; no generated symbol is presented as the authoritative design.
+
+The collection applies the [Xbox navigation guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112) through a labelled native campaign selector, visible focus, predictable Back and no automatic navigation after a reward. Authored route/gallery/mosaic exhibits visibly fill from accepted discoveries. Exact earned pictures are optional and bounded, avoiding the cost of loading a whole edition each time Collection opens.

@@ -190,6 +190,12 @@ const retainedPresentations = Object.freeze({
   ],
   'ukraine-culture': [
     {
+      id: '976af38b7451ae581864ff9baef4975cab0c3feb385fa73ea8d3680e43ed5742',
+      path: 'game/editions/retained/ukraine-culture-before-mission-art-2.json',
+      sha256: '0a85908023fea2213d21813275fefd58211ee9b08377e2caeca77463a969db36',
+      bytes: 371603,
+    },
+    {
       id: 'c92804d620efc050f08aacc1428bf20a5517d5f89488daf07abc67c336815e7f',
       path: 'game/editions/retained/ukraine-culture-first-discoveries.json',
       sha256: '3f5b41552fcda8d940c21898922f5fd5cdf638b169f50a846f43d301b25a6b64',
@@ -197,6 +203,12 @@ const retainedPresentations = Object.freeze({
     },
   ],
   'fpv-learning': [
+    {
+      id: 'ace3662d4631d798e58b5eeea22d4f0d2c3fc8bf538f6a7a47bcb54ae6938fd0',
+      path: 'game/editions/retained/fpv-learning-before-mission-art-2.json',
+      sha256: '4bd5a789d5f2d35b97ef16ab28ecabebdaf610d56493ec25c34225af1a4c8df6',
+      bytes: 473797,
+    },
     {
       id: 'd5188109991148940036debb16fabe91d600104b3e82d4670efa5aed5dabfa16',
       path: 'game/editions/retained/fpv-learning-first-discoveries.json',
@@ -446,14 +458,16 @@ export const COMPANY_EDITIONS = Object.freeze(
                 ? 5
                 : brandId === 'droneaid-nl'
                   ? 4
-                  : [
-                        'social-drone-ua',
-                        'victory-drones',
-                        'ukraine-culture',
-                        'fpv-learning',
-                      ].includes(id)
-                    ? 2
-                    : 1,
+                  : ['ukraine-culture', 'fpv-learning'].includes(id)
+                    ? 3
+                    : [
+                          'social-drone-ua',
+                          'victory-drones',
+                          'ukraine-culture',
+                          'fpv-learning',
+                        ].includes(id)
+                      ? 2
+                      : 1,
     name,
     brandId,
     audience,

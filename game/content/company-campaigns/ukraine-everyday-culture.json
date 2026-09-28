@@ -2,16 +2,81 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest.",
-      "bytes": 290344,
+      "alt": "Original illustrated welcoming library with an open coral door, a book ready to exchange and two blank greeting panels on a wooden desk.",
+      "bytes": 177174,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "ukraine-everyday-culture-key-picture",
+      "height": 480,
+      "id": "ukraine-everyday-culture-01-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/ukraine-everyday-culture-key-v1.jpg",
+      "path": "editions/assets/discovery/ukraine-everyday-culture-01-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f",
+      "sha256": "8f4ed7543e43144de4fcf3766ea375df0c09eb143a2466c19038c40a25f23eac",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated letter-study room with separate ivory І and Ї sculptures, two clearly visible dots above Ї, blank cards and a magnifier.",
+      "bytes": 134202,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-everyday-culture-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-everyday-culture-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "7c1377b4e36f4e28daa99bcfda585768ceef275df8f64e51d283e0b2673c4ab6",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated kitchen-story exhibit with a red vegetable-soup bowl, possible ingredient baskets and three separate blank recipe-context cards.",
+      "bytes": 185270,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-everyday-culture-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-everyday-culture-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "5ebb4aaca19d026d0a610d712149395848bb9e3ace016e7432f2485e8b311623",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated ceramics reading room with a generic terracotta bowl, unnumbered measuring guides and a separate enlarged blank source card.",
+      "bytes": 133829,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-everyday-culture-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-everyday-culture-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "b1f860501106e80dd47b46b856bc50a7735d84adc95ae9de5b4ffc37eb58bf6e",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated two-table recipe exhibit comparing a simple weekday setting with a wider celebration setting, each with its own blank context card.",
+      "bytes": 192176,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-everyday-culture-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-everyday-culture-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "f140d676d3f01fce4a2e2cd50d80277456b51454f5fc404cd3c566686f655810",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated welcome-book finale with six small discovery pictures, an empty contribution card and a spare chair in a warm fictional reading room.",
+      "bytes": 191952,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-everyday-culture-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-everyday-culture-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "9c67d5162dc5be14ffb1b56c81ee76e8d3f6468ebdfc90fa179db2cca0d2f3a8",
       "width": 960
     }
   ],
@@ -20,7 +85,7 @@
       "band": 11,
       "discovery": {
         "exhibitLayout": "mosaic",
-        "finaleRewardRef": { "id": "ukraine-everyday-culture-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "ukraine-everyday-culture-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "ukraine-everyday-culture",
@@ -226,7 +291,7 @@
           "lane-emitter",
           "directional-fields"
         ],
-        "rewardRef": { "id": "ukraine-everyday-culture-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-everyday-culture-01-discovery", "revision": "2" },
         "routeDecision": "Take the welcome alcove first or use the marked flow only when it leads to your prepared reading-room return. Choose the flow direction that reaches a return before the next lane pulse."
       },
       "encounter": null,
@@ -240,7 +305,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-everyday-culture-key-picture",
+        "backgroundAssetId": "ukraine-everyday-culture-01-picture",
         "themeId": "ukraine-everyday-culture-theme"
       },
       "relayLinks": [],
@@ -295,7 +360,7 @@
           "lane-emitter",
           "directional-fields"
         ],
-        "rewardRef": { "id": "ukraine-everyday-culture-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-everyday-culture-02-discovery", "revision": "2" },
         "routeDecision": "Connect the near letter islands for shorter closures or cross the vertical flow after checking its return lane. Choose the flow direction that reaches a return before the next lane pulse."
       },
       "encounter": null,
@@ -309,7 +374,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-everyday-culture-key-picture",
+        "backgroundAssetId": "ukraine-everyday-culture-02-picture",
         "themeId": "ukraine-everyday-culture-theme"
       },
       "relayLinks": [],
@@ -364,7 +429,7 @@
           "lane-emitter",
           "directional-fields"
         ],
-        "rewardRef": { "id": "ukraine-everyday-culture-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-everyday-culture-03-discovery", "revision": "2" },
         "routeDecision": "Secure the shorter kitchen-story bay or use the flow to reach the far table while keeping a complete return outside the warning lane. Choose the flow direction that reaches a return before the next lane pulse."
       },
       "encounter": null,
@@ -378,7 +443,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-everyday-culture-key-picture",
+        "backgroundAssetId": "ukraine-everyday-culture-03-picture",
         "themeId": "ukraine-everyday-culture-theme"
       },
       "relayLinks": [],
@@ -417,7 +482,7 @@
           "travelling-trail-impact",
           "shield-relay-sentinel"
         ],
-        "rewardRef": { "id": "ukraine-everyday-culture-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-everyday-culture-04-discovery", "revision": "2" },
         "routeDecision": "Connect the source objective from the broad display foundation or take the outer alcove before approaching the central encounter. Connect the shield relays before committing to the exposed shared core."
       },
       "encounter": {
@@ -436,7 +501,7 @@
         { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-everyday-culture-key-picture",
+        "backgroundAssetId": "ukraine-everyday-culture-04-picture",
         "themeId": "ukraine-everyday-culture-theme"
       },
       "relayLinks": [],
@@ -476,7 +541,7 @@
           "shield-relay-sentinel",
           "relay-gates"
         ],
-        "rewardRef": { "id": "ukraine-everyday-culture-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-everyday-culture-05-discovery", "revision": "2" },
         "routeDecision": "Open the numbered recipe return before the second station or connect both source objectives from separate safe islands. Connect the shield relays before committing to the exposed shared core."
       },
       "encounter": {
@@ -496,7 +561,7 @@
         { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-everyday-culture-key-picture",
+        "backgroundAssetId": "ukraine-everyday-culture-05-picture",
         "themeId": "ukraine-everyday-culture-theme"
       },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
@@ -550,7 +615,7 @@
           "relay-gates",
           "directional-fields"
         ],
-        "rewardRef": { "id": "ukraine-everyday-culture-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-everyday-culture-06-discovery", "revision": "2" },
         "routeDecision": "Open both numbered returns and follow a safe flow to the final source or keep the longer outer circuit for the closing encounter. Connect the shield relays before committing to the exposed shared core."
       },
       "encounter": {
@@ -570,7 +635,7 @@
         { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-everyday-culture-key-picture",
+        "backgroundAssetId": "ukraine-everyday-culture-06-picture",
         "themeId": "ukraine-everyday-culture-theme"
       },
       "relayLinks": [
@@ -589,9 +654,9 @@
       "format": "PackDesignV1",
       "id": "ukraine-everyday-culture-pack",
       "name": "Words, Tables and Everyday Culture",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }
