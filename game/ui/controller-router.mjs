@@ -116,11 +116,20 @@ export function createControllerRouter({
     lastTime = 0,
     pendingDisconnect = false,
     menuConfirmActive = false,
+    menuConfirmButtons = [],
+    menuGamepadTimestamp = 0,
     destroyed = false;
 
-  const confirms = (buttons) =>
-    buttons.has(compiled.menu.buttons.confirm) ||
-    (navigationAliases && defaultLayout && buttons.has(2));
+  const confirmIndexes = (buttons) =>
+    [
+      ...new Set([
+        compiled.menu.buttons.confirm,
+        ...(navigationAliases && defaultLayout ? [2] : []),
+      ]),
+    ]
+      .filter((index) => buttons.has(index))
+      .sort((a, b) => a - b);
+  const confirms = (buttons) => confirmIndexes(buttons).length > 0;
   function menuConfirmPressed(capturedPads = null) {
     if (destroyed || !assigned || (lastScope === 'flight' && !menuConfirmActive)) return false;
     // Native events may arrive before the next animation frame. This read-only
@@ -177,6 +186,8 @@ export function createControllerRouter({
   const boostState = () => ({ mode, latched: boostLatched });
   function invalidate() {
     menuConfirmActive = false;
+    menuConfirmButtons = [];
+    menuGamepadTimestamp = 0;
     pendingDisconnect = pendingDisconnect || assigned !== null;
     assigned = null;
     clear();
@@ -187,6 +198,8 @@ export function createControllerRouter({
     seen.delete(index);
     if (assigned?.index === index) {
       menuConfirmActive = false;
+      menuConfirmButtons = [];
+      menuGamepadTimestamp = 0;
       pendingDisconnect = true;
       assigned = null;
       clear();
@@ -254,6 +267,7 @@ export function createControllerRouter({
       direction,
       stickActive,
       neutral,
+      timestamp: Number.isFinite(pad.timestamp) ? pad.timestamp : 0,
     };
   }
   const result = (
@@ -275,6 +289,8 @@ export function createControllerRouter({
         }
       : null,
     confirmHeld: menuConfirmActive,
+    confirmButtons: [...menuConfirmButtons],
+    gamepadTimestamp: menuGamepadTimestamp,
     disconnected,
   });
 
@@ -359,6 +375,8 @@ export function createControllerRouter({
           // Enter/mouse echo after release. Expose held Confirm to the host guard
           // without turning this same press into a menu activation.
           menuConfirmActive = confirms(pad.buttons);
+          menuConfirmButtons = confirmIndexes(pad.buttons);
+          menuGamepadTimestamp = pad.timestamp;
           assigned = candidate;
           clear();
           if (autoJoin) blocked = false;
@@ -388,6 +406,8 @@ export function createControllerRouter({
       return sampleLoss();
     }
     menuConfirmActive = confirms(pad.buttons) && (scope !== 'flight' || menuConfirmActive);
+    menuConfirmButtons = menuConfirmActive ? confirmIndexes(pad.buttons) : [];
+    menuGamepadTimestamp = pad.timestamp;
     // The same physical-neutral sample may lift both gates. A latched command
     // is not physical input and must not prevent a later ordinary release.
     if (mode === 'toggle' && scope === 'flight' && toggleBoostEligible && pad.neutral)

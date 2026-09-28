@@ -350,6 +350,53 @@ function setup(t, overrides = {}) {
   };
 }
 
+test('Confirm captures the focused control on press and activates it once on release', (t) => {
+  let activations = 0;
+  const h = setup(t, {
+      activateControl: () => {
+        activations++;
+      },
+    }),
+    first = h.control('button', { id: 'first' }),
+    second = h.control('button', { id: 'second' });
+  first.focus();
+  assert.equal(h.api.handle({ confirmStart: true }), first);
+  assert.equal(first.getAttribute('data-controller-pressed'), 'true');
+  assert.equal(activations, 0);
+  second.focus();
+  assert.equal(h.api.handle({ confirmCommit: true }), first);
+  assert.equal(first.hasAttribute('data-controller-pressed'), false);
+  assert.equal(activations, 1);
+  assert.equal(h.api.handle({ confirmCommit: true }), null);
+  assert.equal(activations, 1);
+});
+
+test('Confirm cancellation, removal, and scope changes never activate the captured control', (t) => {
+  let activations = 0;
+  const h = setup(t, {
+      activateControl: () => {
+        activations++;
+      },
+    }),
+    button = h.control('button', { id: 'action' });
+  button.focus();
+  h.api.handle({ confirmStart: true });
+  h.api.handle({ confirmCancel: true });
+  assert.equal(activations, 0);
+
+  h.api.handle({ confirmStart: true });
+  button.remove();
+  assert.equal(h.api.handle({ confirmCommit: true }), null);
+  assert.equal(activations, 0);
+
+  const replacement = h.control('button', { id: 'replacement' });
+  replacement.focus();
+  h.api.handle({ confirmStart: true });
+  h.setScope('paused');
+  assert.equal(h.api.handle({ confirmCommit: true }), null);
+  assert.equal(activations, 0);
+});
+
 test('locale refresh retains the exact active reader and scroll without renewing replaced content', (context) => {
   const locale = getLocale();
   context.after(() => setLocale(locale, { persist: false }));
