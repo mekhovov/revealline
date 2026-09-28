@@ -6,6 +6,12 @@ import { format, resolveConfig } from 'prettier';
 import { boundedJSON, canonicalJSON, required } from '../game/data-json.mjs';
 import { compileAssetRevision } from '../game/content-design/assets.mjs';
 import { COMPANY_MISSIONS } from '../game/company-campaigns/catalog.mjs';
+import { COMPANY_CAMPAIGNS } from '../game/company-campaigns/catalog.mjs';
+import {
+  CURRICULUM_CAMPAIGNS,
+  CURRICULUM_MISSIONS,
+} from '../game/company-campaigns/curriculum.mjs';
+import { importCampaignKeyArt } from './lib/import-campaign-key-art.mjs';
 import { decodeOriginalPNG } from '../authoring/library/four-worlds-chapters/verify-images.mjs';
 
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -206,13 +212,16 @@ export async function importCompanyArt({
 
 async function main(args) {
   const write = args.includes('--write'),
-    receiptPaths = args.filter((arg) => arg !== '--write');
+    campaignKeys = args.includes('--campaign-keys') || args.includes('--discovery-art'),
+    receiptPaths = args.filter(
+      (arg) => !['--write', '--campaign-keys', '--discovery-art'].includes(arg),
+    );
   required(
     receiptPaths.length && receiptPaths.every((arg) => !arg.startsWith('-')),
-    'Usage: node scripts/import-company-art.mjs RECEIPT.json ... [--write]',
+    'Usage: node scripts/import-company-art.mjs RECEIPT.json ... [--discovery-art] [--write]',
   );
   const root = fileURLToPath(new URL('../', import.meta.url));
-  const read = (name) => fs.readFile(path.join(root, name));
+  const read = (name) => fs.readFile(path.resolve(root, name));
   const json = async (name) => JSON.parse(await read(name));
   const [assets, artwork, sources, ...receipts] = await Promise.all(
     [
@@ -222,7 +231,15 @@ async function main(args) {
       ...receiptPaths,
     ].map(json),
   );
-  const result = await importCompanyArt({ receipts, assets, artwork, sources, read });
+  const result = await (campaignKeys ? importCampaignKeyArt : importCompanyArt)({
+    receipts,
+    assets,
+    artwork,
+    sources,
+    read,
+    campaigns: [...COMPANY_CAMPAIGNS, ...CURRICULUM_CAMPAIGNS],
+    missions: [...COMPANY_MISSIONS, ...CURRICULUM_MISSIONS],
+  });
   if (write) {
     const config = await resolveConfig(fileURLToPath(import.meta.url));
     for (const [name, value] of [

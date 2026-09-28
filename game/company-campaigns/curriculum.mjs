@@ -1,3 +1,4 @@
+import { curriculumReferenceAssetIds } from './curriculum-reference-assets.mjs';
 import { freezeDesign } from '../content-design/catalogs.mjs';
 import {
   COMMUNITY_CAMPAIGNS,
@@ -5,12 +6,29 @@ import {
   COMMUNITY_SOURCES,
   COMMUNITY_LOOKS,
 } from './curriculum-community.mjs';
+import {
+  CULTURE_CAMPAIGNS,
+  CULTURE_MISSION_ROWS,
+  CULTURE_SOURCES,
+  CULTURE_LOOKS,
+} from './curriculum-culture.mjs';
+import {
+  CULTURE_JOURNEY_CAMPAIGNS,
+  CULTURE_JOURNEY_MISSION_ROWS,
+  CULTURE_JOURNEY_SOURCES,
+  CULTURE_JOURNEY_LOOKS,
+} from './curriculum-culture-journeys.mjs';
+
+import { FPV_CAMPAIGNS, FPV_MISSION_ROWS, FPV_SOURCES, FPV_LOOKS } from './curriculum-fpv.mjs';
 
 // Public-source facts and original prompts reviewed 2026-09-28. Source links do
 // not license source imagery or imply community endorsement. Aircraft examples
 // concern a fictional civilian trainer, never operational military instruction.
 export const CURRICULUM_SOURCES = freezeDesign({
   ...COMMUNITY_SOURCES,
+  ...CULTURE_SOURCES,
+  ...CULTURE_JOURNEY_SOURCES,
+  ...FPV_SOURCES,
   social: {
     title: 'Social Drone UA — public community and FAQ',
     url: 'https://www.socialdrone.com.ua/',
@@ -787,8 +805,25 @@ rows['social-drone-people-workshop'] = [
   },
 ];
 
-campaigns.push(...COMMUNITY_CAMPAIGNS);
-Object.assign(rows, COMMUNITY_MISSION_ROWS);
+campaigns.push(
+  ...COMMUNITY_CAMPAIGNS,
+  ...CULTURE_CAMPAIGNS,
+  ...CULTURE_JOURNEY_CAMPAIGNS,
+  ...FPV_CAMPAIGNS,
+);
+Object.assign(
+  rows,
+  COMMUNITY_MISSION_ROWS,
+  CULTURE_MISSION_ROWS,
+  CULTURE_JOURNEY_MISSION_ROWS,
+  FPV_MISSION_ROWS,
+);
+const campaignLooks = {
+  ...COMMUNITY_LOOKS,
+  ...CULTURE_LOOKS,
+  ...CULTURE_JOURNEY_LOOKS,
+  ...FPV_LOOKS,
+};
 
 const languages = ['en', 'uk'];
 export const CURRICULUM_CAMPAIGNS = freezeDesign(
@@ -814,13 +849,16 @@ export const CURRICULUM_CAMPAIGNS = freezeDesign(
       publication: 'public',
       sourcePath: `game/content/company-campaigns/${id}.json`,
       assetIds: [],
-      rewardAssetIds: id === 'ukraine-threads' ? ['met-degas-ukrainian-dress-436157'] : [],
+      rewardAssetIds: [
+        ...(id === 'ukraine-threads' ? ['met-degas-ukrainian-dress-436157'] : []),
+        ...curriculumReferenceAssetIds(id),
+      ],
       modes: ['solo'],
       missionIds: rows[id].map((_, index) => `${id}-${String(index + 1).padStart(2, '0')}`),
       link,
       exhibitLayout,
       ...(progression ? { progression } : {}),
-      ...(COMMUNITY_LOOKS[id] ? { look: COMMUNITY_LOOKS[id] } : {}),
+      ...(campaignLooks[id] ? { look: campaignLooks[id] } : {}),
       locales: {
         en: {
           name,

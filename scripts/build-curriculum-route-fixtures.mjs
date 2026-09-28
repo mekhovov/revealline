@@ -29,6 +29,10 @@ import {
 const execute = promisify(execFile);
 const path = 'game/test/fixtures/curriculum-campaign-routes.json';
 const previous = existsSync(path) ? JSON.parse(readFileSync(path, 'utf8')).rows : [];
+// Independently searched candidates are only inputs: replayInputs must still
+// prove the selected manifest, zero life loss and the public replay below.
+for (const argument of process.argv.filter((value) => value.startsWith('--candidate=')))
+  previous.push(JSON.parse(readFileSync(argument.slice('--candidate='.length), 'utf8')));
 const projects = new Map(
   CURRICULUM_CAMPAIGNS.map(({ id: campaignId }) => {
     const source = createCompanyProject({ campaignId });

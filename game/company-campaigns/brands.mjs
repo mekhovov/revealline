@@ -172,6 +172,38 @@ const choices = [
 ];
 // Exact pre-art snapshots; their bytes must never be reformatted or overwritten.
 const retainedPresentations = Object.freeze({
+  'victory-drones': [
+    {
+      id: '36e42f75903c47abf1c23da0f22f46b74498284cdf84abd0b5f36b10d5838037',
+      path: 'game/editions/retained/victory-drones-first-discoveries.json',
+      sha256: '3c2bf181cf224dcc1a477a1b17ccfa7109f06803af31f49e9af379a40deb290f',
+      bytes: 114051,
+    },
+  ],
+  'social-drone-ua': [
+    {
+      id: '95c2f3c78f07732c3d804e042b5c5a1bb56d9c38f79330b1d09135f46affecd5',
+      path: 'game/editions/retained/social-drone-ua-first-discoveries.json',
+      sha256: 'c44f6757b369f0ac7c08a86e6ee4b5633ab707cd8f6624d9e43b2b719ac08aaa',
+      bytes: 114183,
+    },
+  ],
+  'ukraine-culture': [
+    {
+      id: 'c92804d620efc050f08aacc1428bf20a5517d5f89488daf07abc67c336815e7f',
+      path: 'game/editions/retained/ukraine-culture-first-discoveries.json',
+      sha256: '3f5b41552fcda8d940c21898922f5fd5cdf638b169f50a846f43d301b25a6b64',
+      bytes: 61157,
+    },
+  ],
+  'fpv-learning': [
+    {
+      id: 'd5188109991148940036debb16fabe91d600104b3e82d4670efa5aed5dabfa16',
+      path: 'game/editions/retained/fpv-learning-first-discoveries.json',
+      sha256: 'def9f98137328c4545cb26729e0e563b1727cda637bec66990fd0f788e5d6e98',
+      bytes: 59411,
+    },
+  ],
   'coupa-all': [
     {
       id: 'ecb87b6208f6f55322188ab34d8d9aa63b94064dd346f400bbe2bbbcc9d7870b',
@@ -401,7 +433,11 @@ export const COMPANY_EDITIONS = Object.freeze(
               ? 5
               : brandId === 'droneaid-nl'
                 ? 4
-                : 1,
+                : ['social-drone-ua', 'victory-drones', 'ukraine-culture', 'fpv-learning'].includes(
+                      id,
+                    )
+                  ? 2
+                  : 1,
     name,
     brandId,
     audience,

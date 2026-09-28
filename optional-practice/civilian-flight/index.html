@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#10231f" />
+    <title>Civilian flight gym</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="app.webmanifest" />
+    <script type="module" src="app.mjs"></script>
+  </head>
+  <body>
+    <header>
+      <h1 data-copy="title">Civilian flight gym</h1>
+      <select id="language" aria-label="Language / Мова">
+        <option value="en">English</option>
+        <option value="uk">Українська</option></select
+      ><button id="help" data-copy="controls">Controls &amp; authoring</button>
+    </header>
+    <main>
+      <section class="gym-area">
+        <div class="gym-toolbar">
+          <label
+            ><span data-copy="drill">Practice drill</span
+            ><select id="drill"></select></label
+          ><button id="start" data-copy="start">Start / resume</button
+          ><button id="pause" data-copy="pause">Pause</button
+          ><button id="reset" data-copy="reset">Reset drill</button>
+        </div>
+        <p id="brief"></p>
+        <div
+          id="arena"
+          tabindex="0"
+          role="group"
+          aria-label="Civilian training gym"
+          aria-describedby="instructions"
+        >
+          <canvas id="board" width="800" height="800" aria-hidden="true"></canvas>
+          <p id="fallback" hidden data-copy="fallback"></p>
+        </div>
+      </section>
+      <aside>
+        <p id="status" role="status" aria-live="polite"></p>
+        <p id="readout"></p>
+        <p id="target"></p>
+        <p id="discovery" role="status"></p>
+        <p data-copy="noTimer"></p>
+        <div class="touch-controls" role="group" aria-label="Touch controls">
+          <button data-axis="pitch" data-direction="1" data-copy="pitch">Forward</button
+          ><button data-axis="pitch" data-direction="-1" data-copy="back">Back</button
+          ><button data-axis="roll" data-direction="-1" data-copy="left">Left</button
+          ><button data-axis="roll" data-direction="1" data-copy="right">Right</button
+          ><button data-axis="yaw" data-direction="-1" data-copy="yawLeft">Nose left</button
+          ><button data-axis="yaw" data-direction="1" data-copy="yawRight">Nose right</button
+          ><button data-axis="throttle" data-direction="1" data-copy="up">Rise</button
+          ><button data-axis="throttle" data-direction="-1" data-copy="down">Descend</button>
+        </div>
+        <button id="connect" data-copy="connect">Use standard gamepad</button>
+        <p id="pad-status" role="status"></p>
+        <p id="instructions" data-copy="instructions"></p>
+        <p data-copy="kept"></p>
+      </aside>
+    </main>
+    <dialog id="help-dialog" aria-labelledby="help-title">
+      <h2 id="help-title" data-copy="controls"></h2>
+      <p data-copy="limitation"></p>
+      <p data-copy="mode"></p>
+      <p><a href="README.md" data-copy="source"></a></p>
+      <button id="offline" data-copy="offline"></button
+      ><button id="remove-offline" data-copy="removeOffline"></button>
+      <p id="package-status" role="status"></p>
+      <details>
+        <summary data-copy="author"></summary>
+        <textarea id="catalogue" rows="10" maxlength="131072" aria-label="Practice JSON"></textarea
+        ><button id="export" data-copy="export"></button
+        ><button id="import" data-copy="import"></button
+        ><button id="export-trace" data-copy="exportTrace"></button>
+        <p id="author-status" role="status"></p>
+      </details>
+      <button id="close-help" data-copy="close"></button>
+    </dialog>
+  </body>
+</html>

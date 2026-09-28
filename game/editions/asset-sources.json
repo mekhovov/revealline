@@ -3670,6 +3670,856 @@
       "accession": "29.100.556",
       "credit": "The Metropolitan Museum of Art, H. O. Havemeyer Collection, Bequest of Mrs. H. O. Havemeyer, 1929.",
       "context": "An artist’s interpretation, not a technical garment record or evidence of universal Ukrainian dress."
+    },
+    {
+      "id": "fpv-meet-aircraft-01-art-v1",
+      "path": "game/editions/assets/discovery/fpv-meet-aircraft-01-v1.jpg",
+      "revision": 1,
+      "sha256": "8b79d705bb064333eefece3c6acdd0f9f0a4a9079cab8ab2939401ae47689fe8",
+      "bytes": 193494,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated original and exact selected derivative inspected; human artwork approval deferred",
+      "generationPrompt": "Create one polished landscape 1536x1024 illustrated game discovery artwork, no text or logos. Subject: THE FRAME in a fictional civilian FPV aircraft museum workshop. A beautifully rendered matte charcoal X-shaped carbon-fibre hobby quadcopter frame occupies the central 60 percent, floating slightly above a pale sage rounded museum worktable, four symmetric empty arm ends clearly visible, open central deck, tidy mounting holes. No motors, propellers, battery or attached electronics. The structure is an evocative exhibit, not a build diagram or usable drilling template. Around it are softly out-of-focus separate wooden component trays, magnifying loupe, folded notebooks and warm brass lamp; luminous cyan edge reflections, cream, charcoal and muted pistachio palette. A small architectural arch opens to a peaceful courtyard. Visibly illustrative premium adventure-game art, tactile detailed materials, calm cinematic lighting, high finish, original composition with a low three-quarter view. Keep full frame comfortably inside central safe area for mobile crops. No weapons, military scene, wiring connections, branding, people or diagram labels. This is fictional artwork, not documentation of a real manufacturer or facility.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-a2f3-7290-927a-06dce78afc5a/exec-c977cf96-f19b-431c-9817-e20acef36dc9.png",
+        "sha256": "36d0800e42a1f9a6e5e1e6b4b8c72a82d407e98e1174917a48317ea95f5c39f0",
+        "bytes": 2440365,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": {
+        "kind": "mechanical-resize-and-jpeg-encoding",
+        "width": 960,
+        "height": 640,
+        "quality": 82,
+        "aspectRatioPreserved": true
+      },
+      "context": "An original fictional museum exhibit with a bare carbon X frame, separate trays and a sunlit courtyard; illustrative, not a build diagram."
+    },
+    {
+      "id": "ukraine-threads-03-art-v1",
+      "path": "game/editions/assets/discovery/ukraine-threads-03-v1.jpg",
+      "revision": 1,
+      "sha256": "16b7fcca255f5915b14cadf0bddb3d543df5a214bb881144eff9f8024d6dce70",
+      "bytes": 263606,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated original and exact selected derivative inspected; human artwork approval deferred",
+      "generationPrompt": "Create one polished landscape 1536x1024 illustrated game discovery artwork, no text or logos. WHITE ON WHITE: an evocative fictional textile exhibition room in Ukraine, inspired by careful museum observation rather than reproducing any named artifact. Large suspended panels of ivory woven linen in the central 65 percent, with intricate raised white-on-white embroidery rendered as original abstract geometric stitching. Warm raking side-light from a tall window reveals subtle relief and tiny thread shadows; one section lies in soft shade. Folded linen on a small dark oak table, a museum loupe and neutral empty label cards, cream stone walls, softly visible exhibition arches in the distance. Restrained burgundy accents far behind, luminous pale flax, warm white, graphite and muted gold. Rich tactile cloth close-up, unusually beautiful visual reveal, premium hand-painted adventure game style with natural material realism. Garment details are original illustrations, not a reconstruction or claim about a specific region/date; no invented readable symbols, no national emblem, no people or photorealistic historic object documentation. Centered subject and safe margins for mobile cropping; nothing important touching edges.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-a2f3-7290-927a-06dce78afc5a/exec-a01bb76f-8c01-43fa-8cc8-a94f206fd84a.png",
+        "sha256": "51e5007bc9e6804ccae09370af737479d45618bc1eaa28da01bb37242e2f2ef6",
+        "bytes": 3220118,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": {
+        "kind": "mechanical-resize-and-jpeg-encoding",
+        "width": 960,
+        "height": 640,
+        "quality": 82,
+        "aspectRatioPreserved": true
+      },
+      "context": "Original white-on-white textile samples in raking museum light; illustrative patterns, not a reconstruction of a named historic object."
+    },
+    {
+      "id": "social-drone-people-workshop-01-art-v1",
+      "path": "game/editions/assets/discovery/social-drone-people-workshop-01-v1.jpg",
+      "revision": 1,
+      "sha256": "1a23739d451d250b8622edd8d5dd6c0d82d2125143dcf16c46df1f8b8e326319",
+      "bytes": 270761,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated original and exact selected derivative inspected; human artwork approval deferred",
+      "generationPrompt": "Create one polished landscape 1536x1024 illustrated game discovery artwork, no text, no logo. FIRST COMMUNITY WORKSHOP: a welcoming fictional civilian learning workshop seen from a cinematic high three-quarter angle, composition centered on an oval amber worktable with six different carefully arranged stations connected visually by a turquoise path in the tiled floor. Three small unpowered hobby quadcopter X-frames WITHOUT propellers and WITHOUT attached electronics sit on separate trays, alongside neatly sorted empty component boxes, colourful inventory tags without writing, notebooks, an unplugged magnifying lamp and tools in closed stands. Warm brick arched windows, plants and coat hooks, soft evening skylight, blue-and-yellow restrained environmental accents. No actual people, weapons, military markings, live soldering, batteries, wiring diagrams or working assembly. Premium original adventure-game illustration, intricate wood and ceramic textures, visually rich yet calm, inviting the player to discover contributions of many volunteers. Central focal table occupies middle 65 percent with generous compositional margin for narrow-screen crop. Do not imply this is a real Social Drone location or documentary photograph.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-a2f3-7290-927a-06dce78afc5a/exec-98de9050-d884-4292-8501-8b0a64aa2414.png",
+        "sha256": "9316ee1e3e0e1d098d45895276335fd6730d5fe8dd7db0b9e2ff43ef6e83eb3f",
+        "bytes": 2746323,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": {
+        "kind": "mechanical-resize-and-jpeg-encoding",
+        "width": 960,
+        "height": 640,
+        "quality": 82,
+        "aspectRatioPreserved": true
+      },
+      "context": "An original fictional community workshop with six unpowered model-frame stations around a welcoming table; not a photograph of an actual organization."
+    },
+    {
+      "id": "reference-fpv-ar-drone-prototype",
+      "path": "game/editions/assets/discovery/reference-fpv-ar-drone-prototype.jpg",
+      "revision": "1",
+      "sha256": "9b990e53725e07fdf08f93f99aaeeb2eae0746db4bc696c3146ea570fb13abdf",
+      "bytes": 135252,
+      "publication": "public",
+      "title": "Ardrone-img5-front.jpg",
+      "creator": "Nicolas Halftermeyer",
+      "attribution": "Nicolas Halftermeyer — Ardrone-img5-front.jpg — CC BY 3.0 (https://creativecommons.org/licenses/by/3.0). Unchanged source bytes; renamed for the edition asset registry.",
+      "rights": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ardrone-img5-front.jpg",
+      "sourceRevision": "https://commons.wikimedia.org/w/index.php?title=File%3AArdrone-img5-front.jpg&oldid=1079862556",
+      "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+      "review": "candidate-public-bytes; explicit license and exact source bytes checked; original and derivative inspected; human review deferred",
+      "derivation": "Unchanged source bytes; renamed for the edition asset registry.",
+      "context": "Historical product reference only; not a current recommendation or flight-permission example. No identifiable people.",
+      "sourceSha256": "9b990e53725e07fdf08f93f99aaeeb2eae0746db4bc696c3146ea570fb13abdf"
+    },
+    {
+      "id": "reference-fpv-solder-iron",
+      "path": "game/editions/assets/discovery/reference-fpv-solder-iron.jpg",
+      "revision": "1",
+      "sha256": "4c657713640d71b4b43cadd125c3420304d3a8458609cee4f833b20c28efdf49",
+      "bytes": 95391,
+      "publication": "public",
+      "title": "Pinecil USB C soldering iron.jpg",
+      "creator": "4300streetcar",
+      "attribution": "4300streetcar — Pinecil USB C soldering iron.jpg — CC BY 4.0 (https://creativecommons.org/licenses/by/4.0). Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes.",
+      "rights": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Pinecil_USB_C_soldering_iron.jpg",
+      "sourceRevision": "https://commons.wikimedia.org/w/index.php?title=File%3APinecil%20USB%20C%20soldering%20iron.jpg&oldid=1236475309",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0",
+      "review": "candidate-public-bytes; explicit license and exact source bytes checked; original and derivative inspected; human review deferred",
+      "derivation": "Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes.",
+      "context": "Must retain contextual caption: powered iron lies on a surface without a stand; not an example of safe setup. No procedural temperature advice. Modified Torx screw explicitly recorded by author.",
+      "sourceSha256": "dde066b13cabfe1de457d37429fea3647bb5f7546b267ad9b1499d377a86bab6"
+    },
+    {
+      "id": "reference-fpv-pixhawk-controller",
+      "path": "game/editions/assets/discovery/reference-fpv-pixhawk-controller.png",
+      "revision": "1",
+      "sha256": "bfd4dc1a46b9c8dd0680590ea277c5ada26caaed34ab436635d22c55a4c10bf6",
+      "bytes": 82439,
+      "publication": "public",
+      "title": "Pixhawk.png",
+      "creator": "Pixhawk project authors",
+      "attribution": "Pixhawk project authors — Pixhawk.png — CC BY 4.0 (https://creativecommons.org/licenses/by/4.0). Unchanged source bytes; renamed for the edition asset registry.",
+      "rights": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Pixhawk.png",
+      "sourceRevision": "https://commons.wikimedia.org/w/index.php?title=File%3APixhawk.png&oldid=1200998711",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0",
+      "review": "candidate-public-bytes; explicit license and exact source bytes checked; original and derivative inspected; human review deferred",
+      "derivation": "Unchanged source bytes; renamed for the edition asset registry.",
+      "context": "380x276 original; do not upscale into a main wallpaper or treat legible connector labels as configuration instructions. Manufacturer marks are documentary only.",
+      "sourceSha256": "bfd4dc1a46b9c8dd0680590ea277c5ada26caaed34ab436635d22c55a4c10bf6"
+    },
+    {
+      "id": "reference-fpv-brushless-motor",
+      "path": "game/editions/assets/discovery/reference-fpv-brushless-motor.jpg",
+      "revision": "1",
+      "sha256": "c1ada93c62901ed4e724e0c0f3ba7207b3da1d44bb079813c457c71d11d23a94",
+      "bytes": 129226,
+      "publication": "public",
+      "title": "Quadshot drone brushless motors (8107827099).jpg",
+      "creator": "Ed Schipul",
+      "attribution": "Ed Schipul — Quadshot drone brushless motors (8107827099).jpg — CC BY 2.0 (https://creativecommons.org/licenses/by/2.0). Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes.",
+      "rights": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Quadshot_drone_brushless_motors_(8107827099).jpg",
+      "sourceRevision": "https://commons.wikimedia.org/wiki/File:Quadshot_drone_brushless_motors_(8107827099).jpg",
+      "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+      "review": "candidate-public-bytes; explicit license and exact source bytes checked; original and derivative inspected; human review deferred",
+      "derivation": "Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes.",
+      "context": "Flickr CC BY 2.0 reviewed by Commons FlickreviewR 2 on 2020-12-09; creator page currently unavailable to web fetch, rights statement independently captured through Commons. Depicts one historical motor, not a recommended build.",
+      "sourceSha256": "97cdc35f12d3a2618ce3337b12c66e10185a97f662e6d5f8591708424939252e"
+    },
+    {
+      "id": "reference-fpv-solder-spool-label",
+      "path": "game/editions/assets/discovery/reference-fpv-solder-spool-label.jpg",
+      "revision": "1",
+      "sha256": "5245e5a65b8bd0d7f735c7dca8adab46b32d31d549709afbedf93cbbafa45095",
+      "bytes": 205957,
+      "publication": "public",
+      "title": "Solder on spool.jpeg",
+      "creator": "Wikideas1 (original upload credited as Kcida10)",
+      "attribution": "Wikideas1 (original upload credited as Kcida10) — Solder on spool.jpeg — CC0 (https://creativecommons.org/publicdomain/zero/1.0/deed.en). Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes.",
+      "rights": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Solder_on_spool.jpeg",
+      "sourceRevision": "https://commons.wikimedia.org/w/index.php?title=File%3ASolder%20on%20spool.jpeg&oldid=1128570659",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "review": "candidate-public-bytes; explicit license and exact source bytes checked; original and derivative inspected; human review deferred",
+      "derivation": "Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes.",
+      "context": "Negative/comparison example only. The visible acid-core label rules out presenting this as the campaign’s recommended practice solder. Source metadata only said lead-free; visual review adds this essential distinction.",
+      "sourceSha256": "17998f2f10e0fb0358b8145a02e9e43c055877a3b1cc293e9a9d2ad16d3e50ca"
+    },
+    {
+      "id": "reference-fpv-solder-joint",
+      "path": "game/editions/assets/discovery/reference-fpv-solder-joint.jpg",
+      "revision": "1",
+      "sha256": "b0971f7e55c5c93308415698bc7af50038bb583672323adace25eb8f485dde0c",
+      "bytes": 278304,
+      "publication": "public",
+      "title": "Solderedjoint.jpg",
+      "creator": "MJN123; source crop by Soerfm",
+      "attribution": "MJN123; source crop by Soerfm — Solderedjoint.jpg — CC BY 3.0 (https://creativecommons.org/licenses/by/3.0). Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes.",
+      "rights": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Solderedjoint.jpg",
+      "sourceRevision": "https://commons.wikimedia.org/w/index.php?title=File%3ASolderedjoint.jpg&oldid=1267710331",
+      "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+      "review": "candidate-public-bytes; explicit license and exact source bytes checked; original and derivative inspected; human review deferred",
+      "derivation": "Proportional resize to maximum dimension 1280px and JPEG quality 78 using macOS sips 316; no crop, recolour or generative changes.",
+      "context": "Inspection example only, never labelled ideal/good/certified; no implied repair procedure.",
+      "sourceSha256": "76af21f17923a4beeac2cbabba0e8c82844fc2284047a5f4984a41e98318e785"
+    },
+    {
+      "id": "ukraine-threads-key-v1",
+      "path": "game/editions/assets/discovery/ukraine-threads-key-v1.jpg",
+      "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a",
+      "bytes": 336268,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Threads Across Ukraine",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: original premium campaign key art for an educational arcade game, wide landscape 3:2 composition, 1536x1024 pixels. Sophisticated handcrafted storybook concept art with painterly surface texture, rich spatial depth, carefully lit focal objects, crisp large silhouettes that remain readable at 320px. Fill the canvas with an inviting scene, not a website, screenshot, infographic or collage of boxed panels. No text, letters, numbers, logos, watermarks, UI controls or decorative borders. This is clearly an original fictional illustration, not a photograph or reconstruction of a real museum object or historical event. Do not copy any individual artist's recognizable work or claim that invented motifs have authentic cultural meanings. Keep essential focal objects inside the central 80% and avoid excessive visual clutter.\nScene: An extraordinary close-up tabletop textile landscape, as if folds of cream linen form soft hills and pathways. The strong focal point is a curved cascade of white-on-white raised stitch samples lit by a diagonal late-afternoon sunbeam; the open weave and individual fibres are lovingly visible. In the foreground, small wooden spools of deep red and charcoal thread, one blunt needle resting safely on a swatch, and a simple magnifying lens establish a real craft scale. A long narrow plain linen study drapes from the upper left toward the lower right, with restrained original geometric red and black stitch exercises, not a copied regional pattern. Several separate stitch swatches imply distinct makers and methods, joined visually by one loose red thread. Background is a deep indigo worktable receding into warm shadow. Atmosphere: tactile, intimate, beautiful, a memorable treasure to discover. This is a textile close-up rather than a museum hall. Never invent a claim of authentic symbolic or regional meaning.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-38df5841-74ad-4c4a-94da-0722032425b3.png",
+        "sha256": "bbb4acc6ec6bce6c81c15a78e7a070322f39c170fb0092d31a7e7a2e75fe37ea",
+        "bytes": 3376307,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light.",
+          "context": "Original fictional textile study. Invented stitch exercises are not attributed museum objects, regional patterns or verified symbols; the source-linked discoveries carry the historical context."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі.",
+          "context": "Оригінальний уявний текстильний етюд. Вигадані вправи зі стібками не є атрибутованими музейними предметами, регіональними орнаментами чи підтвердженими символами; історичний контекст подано у відкриттях із посиланнями на джерела."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://honchar.org.ua/collections/view/odag?type=list",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://honchar.org.ua/collections/detail/1591",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-colour-clay-spring-key-v1",
+      "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-key-v1.jpg",
+      "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4",
+      "bytes": 263191,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Colour, Clay and Spring",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: original premium campaign key art for an educational arcade game, wide landscape 3:2 composition, 1536x1024 pixels. Sophisticated handcrafted storybook concept art with painterly surface texture, rich spatial depth, carefully lit focal objects, crisp large silhouettes that remain readable at 320px. Fill the canvas with an inviting scene, not a website, screenshot, infographic or collage of boxed panels. No text, letters, numbers, logos, watermarks, UI controls or decorative borders. This is clearly an original fictional illustration, not a photograph or reconstruction of a real museum object or historical event. Do not copy any individual artist's recognizable work or claim that invented motifs have authentic cultural meanings. Keep essential focal objects inside the central 80% and avoid excessive visual clutter.\nScene: A radiant spring arts studio, seen from a low three-quarter angle through an open whitewashed arch. One broad wooden workbench connects three clearly distinct crafts: loose paper brush exercises with original colourful floral gestures at the left; a modest unglazed jug and shallow plate with restrained green, ochre and brown colour experiments at the centre; egg-shaped paper models and three partly wax-reserved practice eggs at the right. A tiny sprig of fresh leaves and a folded blank gift card catch the light. Focus on the luminous tactile contrast of clay, paper, wax and spring sunshine. An open window reveals a soft flowering garden, with moving curtains providing a graceful diagonal. Palette warm cream, leaf green, ochre, restrained berry red and pale sky blue. Compose as one coherent inviting workshop with depth, not three equal panels. Objects and decorations are newly invented practice studies, not replicas of Petrykivka, Kosiv or a specific artist's work. No named motifs, portraits or claims of authentic regional design.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-fbcaad57-2e57-4fa2-a687-fe278763577c.png",
+        "sha256": "7286189f7e231532dd0e6954db299a134e08f0011096272802f045006922d9cc",
+        "bytes": 2565874,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window.",
+          "context": "Original fictional spring workshop with separate painting, pottery and egg-decoration studies. These are invented practice designs, not replicas of Petrykivka, Kosiv or a named maker's work, nor an authenticated regional pysanka."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном.",
+          "context": "Оригінальна уявна весняна майстерня з окремими етюдами малювання, кераміки та оздоблення яєць. Це вигадані навчальні зразки, а не копії петриківських, косівських чи авторських творів і не атрибутована регіональна писанка."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ich.unesco.org/en/Decisions/8.COM/8.29",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://ich.unesco.org/en/RL/tradition-of-kosiv-painted-ceramics-01456",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://ich.unesco.org/en/RL/pysanka-ukrainian-tradition-and-art-of-decorating-eggs-02134",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-crimea-ornek-key-v1",
+      "path": "game/editions/assets/discovery/ukraine-crimea-ornek-key-v1.jpg",
+      "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b",
+      "bytes": 297277,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Crimea: Ornament and Community",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: original premium campaign key art for an educational arcade game, wide landscape 3:2 composition, 1536x1024 pixels. Sophisticated handcrafted storybook concept art with painterly surface texture, rich spatial depth, carefully lit focal objects, crisp large silhouettes that remain readable at 320px. Fill the canvas with an inviting scene, not a website, screenshot, infographic or collage of boxed panels. No text, letters, numbers, logos, watermarks, UI controls or decorative borders. This is clearly an original fictional illustration, not a photograph or reconstruction of a real museum object or historical event. Do not copy any individual artist's recognizable work or claim that invented motifs have authentic cultural meanings. Keep essential focal objects inside the central 80% and avoid excessive visual clutter.\nScene: A serene contemporary community craft courtyard at blue hour, with six low workstations arranged in an open welcoming arc around a luminous central table. Contemporary turquoise walls, a simple colonnade and warm brass lamps create depth without copying a real historical building. The central table holds blank cream composition papers, a few unornamented clay forms, loose coloured threads and a folded textile; surrounding stations suggest teaching, listening, documenting and making through books without visible text, tools and unfinished studies. A ribbon of warm light links the workstations and invites the eye toward the open doorway beyond. Rich midnight teal, turquoise, warm cream and muted gold; painterly shadows and subtle fabric texture. Show community through shared places ready for different participants, without invented ethnic costume or documentary faces. Inspired by the idea of living Crimean Tatar craft knowledge and its teachers, but do not reproduce Örnek motifs, invented symbolic compositions, actual artist designs, religious insignia or historic artifacts. A beautiful fictional gathering space, not an authoritative cultural reconstruction.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-3b84299a-82df-4dfa-938c-44be646abf69.png",
+        "sha256": "7e190648af50f0a5ac11ceedbf2551e915020e70ff36befbcc9112003bdd14db",
+        "bytes": 2823231,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies.",
+          "context": "Original fictional community craft space inspired by living knowledge and teaching. It does not depict an actual Crimean Tatar building or event, reproduce a maker's work, establish the meaning of Örnek motifs, or imply endorsement."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій.",
+          "context": "Оригінальний уявний простір спільної майстерні, натхнений передаванням живих знань. Він не зображує реальну кримськотатарську будівлю чи подію, не відтворює авторські твори, не визначає значень мотивів Орьнек і не означає схвалення."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.ornek-crimea.com/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://ich.unesco.org/en/decisions/16.COM/8.B.45",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://www.ornek-crimea.com/stories-of-crimea-ua/stories-miras-ornek",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-voices-travel-key-v1",
+      "path": "game/editions/assets/discovery/ukraine-voices-travel-key-v1.jpg",
+      "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea",
+      "bytes": 248004,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Voices That Travel",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: original premium campaign key art for an educational arcade game, wide landscape 3:2 composition, 1536x1024 pixels. Sophisticated handcrafted storybook concept art with painterly surface texture, rich spatial depth, carefully lit focal objects, crisp large silhouettes that remain readable at 320px. Fill the canvas with an inviting scene, not a website, screenshot, infographic or collage of boxed panels. No text, letters, numbers, logos, watermarks, UI controls or decorative borders. This is clearly an original fictional illustration, not a photograph or reconstruction of a real museum object or historical event. Do not copy any individual artist's recognizable work or claim that invented motifs have authentic cultural meanings. Keep essential focal objects inside the central 80% and avoid excessive visual clutter.\nScene: An enchanting night-time listening hall with violet alcoves and a tall ocean-blue window. In the foreground, two simple unbranded stringed-instrument silhouettes rest on stands, visibly different in body shape, softly lit amber. From the listening alcoves, translucent ribbons of turquoise, amber and rose light weave together and travel diagonally across the hall toward the wide window, suggesting one voice becoming a group and music crossing distances. The light ribbons should feel like expressive painted sound, not literal sheet music, wave graphs or magic weapons. Empty curved seats and small unlabelled source-card stands make the space intimate and inviting. Beyond the window, a moonlit sea and a tiny distant warm-lit concert doorway suggest travel without depicting a named real venue or city. Strong indigo-violet atmosphere, glowing warm wood, one clear flowing visual journey. No lyrics, notation, portraits, copied archive interface, flags or historical-event reconstruction. Original celebratory illustration about listening and carrying context.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-306d26ed-6028-4f69-9a0c-b16c06f39b43.png",
+        "sha256": "4fd7428d94eccb2ba557fd876a425bffc7c8392c3b083a7163ccfbe39754c6a7",
+        "bytes": 2464221,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional listening hall where luminous sound ribbons travel past stringed instrument silhouettes toward an ocean-blue window.",
+          "context": "Original fictional listening hall and visual metaphor for voices travelling. Instrument forms are illustrative rather than authoritative kobza or wheel-lyre diagrams; the hall, sea and distant venue do not reconstruct a named historical performance."
+        },
+        "uk": {
+          "alt": "Уявна зала для слухання, де світлі стрічки звуку проходять повз силуети струнних інструментів до вікна з океанською синявою.",
+          "context": "Оригінальна уявна зала для слухання та візуальна метафора мандрівки голосів. Форми інструментів є ілюстративними, а не точними схемами кобзи чи колісної ліри; зала, море й віддалений майданчик не відтворюють конкретного історичного виступу."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.polyphonyproject.com/en",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://ich.unesco.org/en/BSP/safeguarding-programme-of-kobza-and-wheel-lyre-tradition-02136",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://ui.org.ua/en/sectors-en/carol-of-the-bells-at-carnegie-hall/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-cities-symbols-time-key-v1",
+      "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-key-v1.jpg",
+      "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4",
+      "bytes": 294985,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Cities, Symbols and Time",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: original premium campaign key art for an educational arcade game, wide landscape 3:2 composition, 1536x1024 pixels. Sophisticated handcrafted storybook concept art with painterly surface texture, rich spatial depth, carefully lit focal objects, crisp large silhouettes that remain readable at 320px. Fill the canvas with an inviting scene, not a website, screenshot, infographic or collage of boxed panels. No text, letters, numbers, logos, watermarks, UI controls or decorative borders. This is clearly an original fictional illustration, not a photograph or reconstruction of a real museum object or historical event. Do not copy any individual artist's recognizable work or claim that invented motifs have authentic cultural meanings. Keep essential focal objects inside the central 80% and avoid excessive visual clutter.\nScene: A spectacular sunlit architectural story gallery containing three connected miniature city landscapes on staggered museum tables, seen from elevated three-quarter view. Left: a warm hilltop model with generic gilded dome-like roofs and tiny mosaic-colour panels, presented as architectural study forms, not an exact religious monument. Centre: a winding cobblestone street through varied cream, green and terracotta façades with arches and welcoming courtyards. Right: an airy pale-stone harbour model with blue water, a simple passenger pier and a broad staircase. A slim brass timeline-like rail without numbers connects the three tables and bends toward two equal broad panels of sky blue and warm yellow in the background. The key focal composition is the varied city miniature landscape, with intricate but legible rooftops and beautiful light. All architecture is fictional and loosely inspired by layers, streets and port-city records; no exact skyline, geographic map, borders, coats of arms, state emblems, battle damage or historical claims. Premium painterly architectural game concept art, optimistic and curious.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-8c6a4eb6-bdf6-4a90-876b-9e742c23761b.png",
+        "sha256": "36707a3a72ff9c04956770a62c05e89b735c63617a2ad37e40f5bbe340e84965",
+        "bytes": 2790555,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "Three fictional city-study models combine layered architecture, winding streets and a harbour in a sunlit gallery.",
+          "context": "Original fictional architectural study models inspired by layered, street and port-city stories. They are not accurate views of Kyiv, Lviv or Odesa. Decorative suns and compass-like forms are fictional gallery ornament, not Ukrainian state emblems; background colour panels are not a flag diagram."
+        },
+        "uk": {
+          "alt": "Три уявні міські макети поєднують різні шари архітектури, звивисті вулиці та гавань у сонячній галереї.",
+          "context": "Оригінальні уявні архітектурні макети, натхнені історіями міських шарів, вулиць і порту. Це не точні краєвиди Києва, Львова чи Одеси. Декоративні сонця та форми, подібні до компаса, — вигадане оздоблення галереї, а не державні символи України; кольорові панелі позаду не є схемою прапора."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://whc.unesco.org/en/list/527/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://whc.unesco.org/en/list/865/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://whc.unesco.org/en/list/1703/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-everyday-culture-key-v1",
+      "path": "game/editions/assets/discovery/ukraine-everyday-culture-key-v1.jpg",
+      "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f",
+      "bytes": 290344,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Words, Tables and Everyday Culture",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: original premium campaign key art for an educational arcade game, wide landscape 3:2 composition, 1536x1024 pixels. Sophisticated handcrafted storybook concept art with painterly surface texture, rich spatial depth, carefully lit focal objects, crisp large silhouettes that remain readable at 320px. Fill the canvas with an inviting scene, not a website, screenshot, infographic or collage of boxed panels. No text, letters, numbers, logos, watermarks, UI controls or decorative borders. This is clearly an original fictional illustration, not a photograph or reconstruction of a real museum object or historical event. Do not copy any individual artist's recognizable work or claim that invented motifs have authentic cultural meanings. Keep essential focal objects inside the central 80% and avoid excessive visual clutter.\nScene: A warm civilian kitchen and reading-room story table at late afternoon, viewed close from an inviting seated angle. A beautiful deep-red soup in a simple ceramic bowl is the focal point, with delicate curling steam, a spoon, a small wooden board and a folded cream linen napkin. Nearby are a modest unornamented clay mixing bowl, a few fresh vegetables, two clearly separate blank recipe cards and a closed clothbound book with no title. Place settings are varied rather than identical; one open chair and generous clear space welcome another person's story. Beyond the table an open door leads to a small leafy courtyard, while a coral-shaded lamp and the golden window light enrich the cozy atmosphere. Compose a sumptuous but honest everyday still life with strong depth and tactile ceramics, linen and wood. This is an original fictional scene about hospitality and diverse household practices, not a documentary family, a universal authentic recipe, a copied museum object or a claim about all Ukrainians. No visible writing, glyphs, logos or stereotyped costume.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-1a0cf66f-9c2d-456e-87b6-c11b0a74ee1c.png",
+        "sha256": "07091e931534d39d88f3cee307849899066d6b3a3233d20c6c7f45b62fa45084",
+        "bytes": 2751043,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest.",
+          "context": "Original fictional everyday table about hospitality and household stories. The illustrated soup and ingredients do not prescribe one authentic recipe, and the pottery and room do not document a particular family or museum object."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя.",
+          "context": "Оригінальний уявний повсякденний стіл про гостинність і домашні історії. Зображені суп та інгредієнти не визначають єдиного автентичного рецепта, а кераміка й кімната не документують конкретну родину чи музейний предмет."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ich.unesco.org/en/USL/culture-of-ukrainian-borscht-cooking-01852",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://museum.mincult.gov.ua/collections/279349",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://ui.org.ua/wp-content/uploads/2025/07/decolonisation-in-museums_part-1.pdf",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-meet-aircraft-key-v1",
+      "path": "game/editions/assets/discovery/fpv-meet-aircraft-key-v1.jpg",
+      "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0",
+      "bytes": 279176,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Meet the Aircraft",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: premium original campaign key art for an educational arcade game. Wide 3:2 landscape, 1536x1024 pixels. Beautiful stylized game concept illustration, tactile painterly surfaces, carefully shaped light, cinematic depth, strong readable focal composition, a little wonder and playful exploration. Not a photograph, website screenshot, infographic or boxed collage. All equipment and spaces are fictional civilian educational displays, not exact products or manufacturers' documentation. No text, lettering, numbers, logos, watermarks or UI. Do not draw functional circuit diagrams, wiring instructions, pinouts, real model markings, military equipment or weapons. No implication of actual flight certification, safe real-world assembly or a universal controller response. Keep the important silhouettes inside the central 80% for responsive cards. No source photographs or existing artist works are supplied or copied.\nScene: A spectacular midnight-blue science museum whose central exhibit is a large four-arm drone frame suspended horizontally inside a luminous amber ring. Its four arms are clearly legible; no attached spinning propellers. Surrounding it on separate stepped plinths are oversized inert study models: a cylindrical motor beside a separate propeller silhouette, two simplified circuit-board-shaped tiles with no tracks or labels, a tiny camera lens beside a receiver-shaped tile, and a closed energy-block silhouette. The components remain apart, connected visually only by soft ribbons of light that represent ideas, never cables or assembly positions. A curved walkway draws the viewer through six discoveries toward the frame. Teal glass, warm amber light, charcoal surfaces, soft reflections and a few brass details. A grand game-world treasure room about how parts have different roles, visually distinct from a workshop table or realistic frame close-up. No operational machine, readable electronics or sparks.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-89e3ae59-615e-4bb8-af40-aa5cb5ade776.png",
+        "sha256": "83d5517aab304b37631f5f9fb87173bd22635cdf4aa0d92787d311a85ea6be88",
+        "bytes": 2542985,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional component museum with a suspended drone frame and separate displays for motors, controllers, camera and energy roles.",
+          "context": "Original fictional component museum. Separate display objects explain component roles; their placement is not an assembly order, wiring diagram or an exact product."
+        },
+        "uk": {
+          "alt": "Уявний музей компонентів із підвішеною рамою дрона й окремими стендами ролей двигунів, контролерів, камери та енергії.",
+          "context": "Оригінальний уявний музей компонентів. Окремі експонати пояснюють ролі деталей; їхнє розташування не є порядком складання, електричною схемою чи точним виробом."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.nasa.gov/wp-content/uploads/2020/05/aam-science-behind-quadcopters-educator-guide_1.pdf",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://docs.px4.io/main/en/assembly/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-parts-bench-key-v1",
+      "path": "game/editions/assets/discovery/fpv-parts-bench-key-v1.jpg",
+      "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265",
+      "bytes": 227588,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "From Parts to a Bench Model",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: premium original campaign key art for an educational arcade game. Wide 3:2 landscape, 1536x1024 pixels. Beautiful stylized game concept illustration, tactile painterly surfaces, carefully shaped light, cinematic depth, strong readable focal composition, a little wonder and playful exploration. Not a photograph, website screenshot, infographic or boxed collage. All equipment and spaces are fictional civilian educational displays, not exact products or manufacturers' documentation. No text, lettering, numbers, logos, watermarks or UI. Do not draw functional circuit diagrams, wiring instructions, pinouts, real model markings, military equipment or weapons. No implication of actual flight certification, safe real-world assembly or a universal controller response. Keep the important silhouettes inside the central 80% for responsive cards. No source photographs or existing artist works are supplied or copied.\nScene: A welcoming daytime model-making workshop viewed from an elevated close angle. The hero is a charming, visibly inert cardboard-and-plywood four-arm aircraft display model with a blue-painted nose, held above a broad honey-coloured workbench by a simple stand. Its motor positions are plain wooden discs with no propellers. Around it, an arc of compartment trays holds abstract shape tokens and loose nonconductive cardboard component cards, carefully separated. Three broad fabric ribbons — grey, amber and blue — travel between independent role stations on the table without touching electrical connectors. An open blank notebook, magnifier and several blank question cards suggest observation, documentation and handoff to the next learner. Tall workshop windows, dusty golden light, muted blue shelving, rounded tool silhouettes in the background. Make the unmistakable cardboard texture central: this is a playful unpowered museum model, not a live aircraft assembly demonstration. No batteries, connected wires, soldering, hot tools or readable labels.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-63c0763f-639f-4ad9-b5ba-70bd48c95a86.png",
+        "sha256": "841ecfcec1cca6e1abdba6243773de5b66e5e38548aa27d150681f33bb5a18fd",
+        "bytes": 2276468,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
+          "context": "Original unpowered civilian bench-model illustration. Cardboard parts and ribbons explain inventory, orientation and roles, not real connections or compatibility."
+        },
+        "uk": {
+          "alt": "Виставкова картонна модель дрона без живлення стоїть серед лотків деталей, чистих карток запитань і трьох кольорових стрічок ролей.",
+          "context": "Оригінальна ілюстрація цивільного настільного макета без живлення. Картонні деталі та стрічки пояснюють перелік, орієнтацію й ролі, а не справжні з’єднання чи сумісність."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://docs.px4.io/main/en/assembly/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://docs.px4.io/main/en/assembly/quick_start_pixhawk4",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://www.ifixit.com/Info/Device_Safety",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-soldering-workshop-key-v1",
+      "path": "game/editions/assets/discovery/fpv-soldering-workshop-key-v1.jpg",
+      "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939",
+      "bytes": 236903,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Soldering Workshop",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: premium original campaign key art for an educational arcade game. Wide 3:2 landscape, 1536x1024 pixels. Beautiful stylized game concept illustration, tactile painterly surfaces, carefully shaped light, cinematic depth, strong readable focal composition, a little wonder and playful exploration. Not a photograph, website screenshot, infographic or boxed collage. All equipment and spaces are fictional civilian educational displays, not exact products or manufacturers' documentation. No text, lettering, numbers, logos, watermarks or UI. Do not draw functional circuit diagrams, wiring instructions, pinouts, real model markings, military equipment or weapons. No implication of actual flight certification, safe real-world assembly or a universal controller response. Keep the important silhouettes inside the central 80% for responsive cards. No source photographs or existing artist works are supplied or copied.\nScene: An exquisite quiet electronics practice studio in plum, copper and soft cream, close three-quarter composition. A large circular magnifying lamp creates a pool of calm light over an inert perforated practice board, securely held in a small bench clamp. The board is simple empty holes and separate copper-coloured sample discs, with no real circuit, battery or connected aircraft. At the side a cool soldering iron rests fully in a sturdy purpose-made holder; its unplugged power connector lies visibly apart on the bench, with no glowing light, heat, smoke or sparks. Closed safety glasses, a small unobtrusive extraction hood, trays of cold practice samples and blank observation cards round out the prepared work area. A dark purple wall with softly lit tool niches creates a memorable landmark. Focus on preparation and close observation rather than an active procedure. Do not depict molten solder, hand positions, powered tools, exact joint quality, numeric settings or brand markings. A premium inviting craft-and-science environment.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-d5795873-d9aa-43db-a97b-a08db7082557.png",
+        "sha256": "dba56d37207e33be8cebad0ab120912b3e22ac178dc85573e5fc817ca347c6fa",
+        "bytes": 2376119,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
+          "context": "Original cold practice-studio illustration. Tools are idle and the practice board is inert; the scene does not prescribe temperature, material compatibility, technique or certification of a solder joint."
+        },
+        "uk": {
+          "alt": "Уявна майстерня холодної підготовки до паяння з від’єднаним паяльником у тримачі, закріпленою навчальною платою та лампою-лупою.",
+          "context": "Оригінальна ілюстрація майстерні холодної підготовки. Інструменти не працюють, а навчальна плата неактивна; сцена не задає температури, сумісності матеріалів, техніки чи підтвердження якості паяного з’єднання."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/preparation",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://www.hse.gov.uk/lung-disease/electronics-soldering.htm",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-four-controls-key-v1",
+      "path": "game/editions/assets/discovery/fpv-four-controls-key-v1.jpg",
+      "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03",
+      "bytes": 246308,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Understand the Four Controls",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: premium original campaign key art for an educational arcade game. Wide 3:2 landscape, 1536x1024 pixels. Beautiful stylized game concept illustration, tactile painterly surfaces, carefully shaped light, cinematic depth, strong readable focal composition, a little wonder and playful exploration. Not a photograph, website screenshot, infographic or boxed collage. All equipment and spaces are fictional civilian educational displays, not exact products or manufacturers' documentation. No text, lettering, numbers, logos, watermarks or UI. Do not draw functional circuit diagrams, wiring instructions, pinouts, real model markings, military equipment or weapons. No implication of actual flight certification, safe real-world assembly or a universal controller response. Keep the important silhouettes inside the central 80% for responsive cards. No source photographs or existing artist works are supplied or copied.\nScene: An elegant kinetic science gallery made of deep blue glass and brushed silver, with four separate suspended miniature four-arm aircraft study shapes arranged along a sweeping spiral walkway. The four bays suggest different kinds of motion through simple sculptural poses: one study tilts forward, one tilts sideways, one is seen turning in the horizontal plane, and one is raised higher on a transparent display rod. Each has a vivid cyan nose marker to make its orientation legible. Thin luminous amber and cyan arcs evoke motion as beautiful sculpture, without arrows, mapping lines, labels or technical diagrams. In the near foreground, one unbranded two-stick handheld controller sits idle on a stone pedestal; it is not wired to the displays. Backlit translucent panels and dark reflective floor give the place a premium game-world feeling. Strong composition with one large curved ring unifying the four displays, generous negative space. No real flight, no claim of exact stick mappings, no gauges, numbers or operational settings.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-c51c3fc6-5417-4be0-a4dc-d302719c91c4.png",
+        "sha256": "6a49776ecea55749415d0b2c8316ffbd617202964f5a6112681a4a9a996f3b37",
+        "bytes": 2413311,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional motion gallery with four separate suspended aircraft studies and an unlabelled two-stick controller on a pedestal.",
+          "context": "Original conceptual motion-gallery artwork, not a control map. The interactive lesson separately labels its selected Mode 2 model and explains that aircraft response depends on the model and mode."
+        },
+        "uk": {
+          "alt": "Уявна галерея руху з чотирма окремими підвішеними моделями апарата й пультом із двома стіками без написів на постаменті.",
+          "context": "Оригінальна концептуальна ілюстрація галереї руху, а не схема керування. Інтерактивний урок окремо позначає обрану модель Mode 2 та пояснює залежність реакції апарата від моделі й режиму."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ardupilot.org/copter/docs/common-radio-control-calibration.html",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://docs.px4.io/main/en/flight_modes_mc/manual_stabilized",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://docs.px4.io/main/en/flight_modes_mc/position",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-first-flight-key-v1",
+      "path": "game/editions/assets/discovery/fpv-first-flight-key-v1.jpg",
+      "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757",
+      "bytes": 207668,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "First Flight Patterns",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: premium original campaign key art for an educational arcade game. Wide 3:2 landscape, 1536x1024 pixels. Beautiful stylized game concept illustration, tactile painterly surfaces, carefully shaped light, cinematic depth, strong readable focal composition, a little wonder and playful exploration. Not a photograph, website screenshot, infographic or boxed collage. All equipment and spaces are fictional civilian educational displays, not exact products or manufacturers' documentation. No text, lettering, numbers, logos, watermarks or UI. Do not draw functional circuit diagrams, wiring instructions, pinouts, real model markings, military equipment or weapons. No implication of actual flight certification, safe real-world assembly or a universal controller response. Keep the important silhouettes inside the central 80% for responsive cards. No source photographs or existing artist works are supplied or copied.\nScene: A spacious, sunlit indoor toy-aircraft practice gym, viewed from a slightly elevated corner. Tall arched windows cast dramatic geometric sunlight across a clear pale-wood floor. A small fictional white-and-cyan four-rotor craft with a continuous protective cage is shown hovering low over a broad blue resting mat; its propellers are tiny and enclosed. Three widely separated soft foam gates and several low rounded floor markers create a calm, legible practice journey into the background. A single elegant translucent coral route ribbon loops through the space and returns to the mat, suggesting straight travel, lateral movement and a gentle turn without precise arrows or flight instructions. A simple notebook with blank pages lies on a side bench. Palette sky blue, pale wood, white, touches of coral. No people in the flight area, outdoor streets, speed blur, race ranking, combat equipment or obstacles near bystanders. The mood is curiosity and quiet confidence, not extreme-speed racing. Visibly fictional educational game environment.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-1ecb053d-839f-409c-9d54-6398b38796c2.png",
+        "sha256": "0f6daea1937e19bb6f841f29528ce6754ae8c6185f76f9e5594448542d0f2c70",
+        "bytes": 2101510,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
+          "context": "Original fictional civilian practice-gym artwork. Route ribbons and gates illustrate the bounded assisted practice package, not real-flight instructions or proof of proficiency."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами.",
+          "context": "Оригінальна ілюстрація вигаданої цивільної тренувальної зали. Стрічки маршруту й ворота показують обмежений пакет вправ із допомогою, а не реальні льотні вказівки чи підтвердження майстерності."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://docs.px4.io/main/en/flight_modes_mc/position",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred",
+      "correctiveGeneration": {
+        "prompt": "Edit the supplied fictional civilian practice-gym illustration. Preserve exactly the room, lighting, colour palette, gates, floor, route ribbon, camera composition and aircraft position. Correct only the aircraft geometry: it must have exactly FOUR circular protective rotor guards and exactly FOUR rotors, arranged as a clear compact 2-by-2 rectangle around one central body. Remove the extra fifth rotor/guard behind the central body. Show a coherent four-rotor toy quadcopter with two front guards and two rear guards, each of the four rotors attached to its own corner. No new rotors, text, logos or extra details. Preserve the wide 1536x1024 image.",
+        "reason": "Initial generated aircraft had five rotors; selected edit corrects it to four enclosed rotors.",
+        "input": {
+          "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-43a672e0-53fc-4179-ad48-ffe5f1787d83.png",
+          "sha256": "1c8e9a8b1c10c12ee2bf427965dbf100a77850b744b8a93f8a4f2951e23e7641",
+          "bytes": 2273768
+        }
+      }
+    },
+    {
+      "id": "fpv-drone-families-key-v1",
+      "path": "game/editions/assets/discovery/fpv-drone-families-key-v1.jpg",
+      "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1",
+      "bytes": 249553,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Drone Families",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: premium original campaign key art for an educational arcade game. Wide 3:2 landscape, 1536x1024 pixels. Beautiful stylized game concept illustration, tactile painterly surfaces, carefully shaped light, cinematic depth, strong readable focal composition, a little wonder and playful exploration. Not a photograph, website screenshot, infographic or boxed collage. All equipment and spaces are fictional civilian educational displays, not exact products or manufacturers' documentation. No text, lettering, numbers, logos, watermarks or UI. Do not draw functional circuit diagrams, wiring instructions, pinouts, real model markings, military equipment or weapons. No implication of actual flight certification, safe real-world assembly or a universal controller response. Keep the important silhouettes inside the central 80% for responsive cards. No source photographs or existing artist works are supplied or copied.\nScene: A grand civilian aircraft museum with a sweeping cream-and-teal hangar roof. Three distinct inert display models dominate separate museum islands: a small four-arm quadcopter on the nearest dark plinth, a clearly different six-arm multicopter in the middle distance, and a graceful simple fixed-wing glider suspended high across the rear of the hall. All propellers on the multicopter displays are stationary; no cargo, payload mounts or technical markings. A separate oversized unbranded viewing-goggles sculpture on a small foreground stand introduces the idea that how one sees is different from an aircraft's shape. Wide pale walkways connect the islands and sunlight streams through clerestory windows. Warm orange highlights against teal, ivory and charcoal, polished game concept art. Aircraft are deliberately simplified fictional educational sculptures, not real products. Emphasize clean silhouette differences, coherent scale and a strong upward wing shape as a memorable landmark; no claim that one model is better or more capable, no military profiles, no racing spectacle.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-3e7f8a4a-ada2-4b10-a508-6f32a353f5ef.png",
+        "sha256": "2779c5924bd78bff2f0138b1492e2559a759eec04e2cce433da64b7477863308",
+        "bytes": 2196681,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit.",
+          "context": "Original fictional aircraft-family exhibition. Silhouettes introduce comparison, not model specifications, capabilities, autonomy, payload or permission to operate."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження.",
+          "context": "Оригінальна уявна виставка родин літальних апаратів. Силуети слугують порівнянню, а не характеристикам моделей, можливостям, автономності, вантажності чи дозволу на використання."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://docs.px4.io/main/en/airframes/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/airplane-parts-function/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://www.easa.europa.eu/en/light/topics/drone-racing-and-flying-drone-goggles-first-person-view-fpv",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-drones-ukraine-key-v1",
+      "path": "game/editions/assets/discovery/fpv-drones-ukraine-key-v1.jpg",
+      "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931",
+      "bytes": 270366,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Drones in Ukraine",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: premium original campaign key art for an educational arcade game. Wide 3:2 landscape, 1536x1024 pixels. Beautiful stylized game concept illustration, tactile painterly surfaces, carefully shaped light, cinematic depth, strong readable focal composition, a little wonder and playful exploration. Not a photograph, website screenshot, infographic or boxed collage. All equipment and spaces are fictional civilian educational displays, not exact products or manufacturers' documentation. No text, lettering, numbers, logos, watermarks or UI. Do not draw functional circuit diagrams, wiring instructions, pinouts, real model markings, military equipment or weapons. No implication of actual flight certification, safe real-world assembly or a universal controller response. Keep the important silhouettes inside the central 80% for responsive cards. No source photographs or existing artist works are supplied or copied.\nScene: A hopeful civic learning-and-recovery exhibition in a bright contemporary library. The focal object is a large gently curved table holding a miniature fictional neighbourhood with small homes, a school-like community building, planted trees and a pedestrian bridge, made from clearly visible wood and coloured paper. No destruction or hazards. An inactive civilian four-rotor survey-aircraft display rests on a separate nearby shelf behind a low clear panel, never flying over the model. A fan of blank evidence cards, closed notebooks and abstract aerial-texture sample sheets without coordinates surrounds the community model; their separation suggests source checking and careful interpretation. Sky-blue glazed wall panels and warm yellow lamps introduce a restrained Ukrainian colour mood without flags, logos, state symbols or political graphics. Through the tall window, a peaceful fictional garden. Premium original illustrative game art, warm and optimistic, no real city map, reconnaissance screen, weapon, target, tactical route, explosive object, mine-search scene or claimed deployment result.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-66378947-dee4-4764-9c7e-0b2b130c4209.png",
+        "sha256": "b477660d0127575aef94e91539639312b9bf8746ae041522c2475dfcce764ab8",
+        "bytes": 2431546,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian recovery exhibition with a miniature community, an inactive survey-drone model and blank evidence cards.",
+          "context": "Original fictional civilian recovery and public-learning exhibit. It does not show an actual Ukrainian location, operational route, military activity, hazard-detection result or documented recovery outcome."
+        },
+        "uk": {
+          "alt": "Уявна виставка цивільного відновлення з макетом громади, неактивною моделлю знімального дрона й чистими картками доказів.",
+          "context": "Оригінальна уявна виставка цивільного відновлення та просвіти. Вона не зображує реального місця в Україні, оперативного маршруту, військових дій, результату виявлення небезпеки чи документованого відновлення."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.undp.org/ukraine/press-releases/latvia-targets-2-million-euro-reconstruction-efforts-chernihiv-oblast",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://www.undp.org/ukraine/press-releases/undp-equips-sesu-cutting-edge-ukrainian-aerial-detection-technology-accelerate-humanitarian-demining-operations",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://www.unicef.org/ukraine/en/stories/fostering-culture-safety-among-children-and-youth-making-mine-safety-rules-known-children",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "fpv-care-repair-key-v1",
+      "path": "game/editions/assets/discovery/fpv-care-repair-key-v1.jpg",
+      "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90",
+      "bytes": 207785,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Care, Diagnosis and Repair Decisions",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: premium original campaign key art for an educational arcade game. Wide 3:2 landscape, 1536x1024 pixels. Beautiful stylized game concept illustration, tactile painterly surfaces, carefully shaped light, cinematic depth, strong readable focal composition, a little wonder and playful exploration. Not a photograph, website screenshot, infographic or boxed collage. All equipment and spaces are fictional civilian educational displays, not exact products or manufacturers' documentation. No text, lettering, numbers, logos, watermarks or UI. Do not draw functional circuit diagrams, wiring instructions, pinouts, real model markings, military equipment or weapons. No implication of actual flight certification, safe real-world assembly or a universal controller response. Keep the important silhouettes inside the central 80% for responsive cards. No source photographs or existing artist works are supplied or copied.\nScene: A refined, quiet diagnosis room with a mint-green workbench and warm amber inspection lights. At centre, an inert cardboard four-arm training model with no propellers sits on a soft pale mat. One separate cardboard arm sample lies under a large round magnifier, showing an obvious small tear in the paper layer, not damage to a live aircraft. Behind it, three generously spaced shallow trays hold blank observation cards, unresolved question cards and a folded handoff notebook; different shapes distinguish them without text or symbols. A wall of softly glowing rectangular lightboxes reveals enlarged abstract paper textures, creating an elegant investigative atmosphere. Closed storage drawers and a clear empty area emphasize order and room to pause. Palette sage, muted turquoise, cream and warm brass. No exposed real circuit, connected power, hot tool, swollen battery, smoke, invasive repair operation, certification badge or instruction graphic. The visual story is patient observation and asking before acting, like a calm science detective room.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-bee3d847-8e42-47d3-8c1f-2f663cb75ce3.png",
+        "sha256": "09e0e23cbe77f71f1cbc7d63ecc532415e4b46ea0df550545dd41172ebee9a97",
+        "bytes": 2287982,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A quiet fictional diagnosis room with an unpowered model, magnified cardboard observations and separate question and handoff trays.",
+          "context": "Original fictional diagnosis and handoff scene. The model is inert and no battery is opened or repaired. Visual observations do not certify a real device as safe or flight-ready."
+        },
+        "uk": {
+          "alt": "Тиха уявна кімната діагностики з моделлю без живлення, збільшеними картонними зразками спостережень та окремими лотками запитань і передачі справ.",
+          "context": "Оригінальна уявна сцена діагностики та передачі справ. Модель неактивна; акумулятори не відкривають і не ремонтують. Візуальні спостереження не підтверджують безпечності реального пристрою чи його готовності до польоту."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.ifixit.com/Info/Device_Safety",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://www.ifixit.com/Wiki/What_to_do_with_a_swollen_battery",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://www.epa.gov/system/files/documents/2023-09/Lithium-Ion-Batteries-Fact-Sheet-8-2023.pdf",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
     }
   ]
 }

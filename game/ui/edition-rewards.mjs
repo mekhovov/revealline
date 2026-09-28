@@ -5,6 +5,9 @@ import { rewardContext } from '../rewards/context.mjs';
 import { createRewardBackend, createRewardStore } from '../rewards/store.mjs';
 import { verifyEditionAssets } from '../editions/assets.mjs';
 import { resolveRewardAsset } from '../rewards/media.mjs';
+import { createPrintableReward } from '../rewards/printable.mjs';
+import { mountDiscoveryExploration } from './discovery-exploration.mjs';
+import { mountRewardMedia } from './reward-media.mjs';
 
 /** A presentation of accepted Journey evidence. No simulation, completion,
  * mission launch or scoring authority is passed into this view. */
@@ -20,6 +23,8 @@ export async function mountEditionRewards({
   getJourneyRevision,
   getJourneyDurable,
   getReducedMotion = () => false,
+  audioMaster,
+  musicDucker,
 }) {
   if (!provider.rewards?.length)
     return { refresh() {}, snapshot: () => ({ state: null, progress: [] }), dispose() {} };
@@ -60,6 +65,7 @@ export async function mountEditionRewards({
     mediaVisit = 0;
   let mediaRequest = null;
   const objectURLs = new Set(),
+    explorations = new Set(),
     played = new WeakSet(),
     celebrated = new WeakSet();
   const result = node('section', undefined, 'completion-reward-result');
@@ -128,6 +134,8 @@ export async function mountEditionRewards({
     mediaVisit++;
     mediaRequest?.abort();
     mediaRequest = null;
+    for (const exploration of explorations) exploration.dispose();
+    explorations.clear();
     for (const url of objectURLs) win.URL.revokeObjectURL(url);
     objectURLs.clear();
   }
@@ -280,6 +288,7 @@ export async function mountEditionRewards({
     restoreFocus(focused);
   }
   async function loadImage(payload, container, signal, visit) {
+    let ownedURL = null;
     try {
       const { bootstrap, asset } = await resolveRewardAsset(provider, payload.asset, { signal });
       await verifyEditionAssets(bootstrap, {
@@ -287,7 +296,8 @@ export async function mountEditionRewards({
         ids: [asset.id],
         signal,
         onVerifiedAsset({ asset: verified, bytes }) {
-          if (verified.id !== asset.id || disposed || visit !== mediaVisit) return;
+          if (verified.id !== asset.id || disposed || visit !== mediaVisit || signal.aborted)
+            return;
           const type = /\.webp$/i.test(asset.path)
             ? 'image/webp'
             : /\.jpe?g$/i.test(asset.path)
@@ -295,6 +305,7 @@ export async function mountEditionRewards({
               : 'image/png';
           const url = win.URL.createObjectURL(new Blob([bytes], { type }));
           objectURLs.add(url);
+          ownedURL = url;
           const image = node('img');
           image.alt = localized(payload).alt;
           image.src = url;
@@ -308,6 +319,9 @@ export async function mountEditionRewards({
       if (!disposed && visit === mediaVisit && !signal.aborted)
         container.replaceChildren(node('p', tr('missingMedia')));
     }
+    return () => {
+      if (ownedURL && objectURLs.delete(ownedURL)) win.URL.revokeObjectURL(ownedURL);
+    };
   }
   function renderViewer() {
     if (!viewing) return;
@@ -319,6 +333,75 @@ export async function mountEditionRewards({
     const title = node('h2', copy.title);
     title.id = 'completion-reward-title';
     reading.replaceChildren(node('p', tr('collected'), 'completion-reward-eyebrow'), title);
+    const printableStatus = node('p');
+    printableStatus.setAttribute('role', 'status');
+    const printable = button(tr('savePrintable'), async () => {
+      printable.disabled = true;
+      printableStatus.textContent = tr('preparingPrintable');
+      const signal = mediaRequest.signal;
+      try {
+        const document = await createPrintableReward(definition, {
+          locale: getLocale(),
+          signal,
+          preview: Boolean(previewSession),
+          async getTranscript(reference) {
+            const { bootstrap, asset } = await resolveRewardAsset(provider, reference, { signal });
+            let textBytes;
+            await verifyEditionAssets(bootstrap, {
+              baseURL: provider.rootURL,
+              ids: [asset.id],
+              signal,
+              onVerifiedAsset({ bytes }) {
+                textBytes = bytes;
+              },
+            });
+            return textBytes;
+          },
+          async getImage(reference) {
+            const { bootstrap, asset } = await resolveRewardAsset(provider, reference, { signal });
+            let media;
+            await verifyEditionAssets(bootstrap, {
+              baseURL: provider.rootURL,
+              ids: [asset.id],
+              signal,
+              onVerifiedAsset({ bytes }) {
+                media = {
+                  bytes,
+                  mimeType: /\.webp$/i.test(asset.path)
+                    ? 'image/webp'
+                    : /\.jpe?g$/i.test(asset.path)
+                      ? 'image/jpeg'
+                      : 'image/png',
+                };
+              },
+            });
+            return media;
+          },
+        });
+        if (disposed || visit !== mediaVisit || signal.aborted) return;
+        const url = win.URL.createObjectURL(
+          new Blob([document.html], { type: 'text/html;charset=utf-8' }),
+        );
+        objectURLs.add(url);
+        const anchor = node('a');
+        anchor.href = url;
+        anchor.download = `${definition.id}-${getLocale()}.html`;
+        anchor.click();
+        win.setTimeout(() => {
+          if (objectURLs.delete(url)) win.URL.revokeObjectURL(url);
+        }, 1000);
+        printableStatus.textContent = tr(
+          document.missingAssetIds.length ? 'printableMissing' : 'printableSaved',
+        );
+      } catch {
+        if (!disposed && visit === mediaVisit && !signal.aborted)
+          printableStatus.textContent = tr('printableFailed');
+      } finally {
+        if (!disposed && visit === mediaVisit) printable.disabled = false;
+      }
+    });
+    printable.id = 'completion-reward-printable';
+    reading.append(printable, printableStatus);
     closeButton.textContent = tr('back');
     for (const payload of definition.payloads) {
       const text = localized(payload),
@@ -336,6 +419,30 @@ export async function mountEditionRewards({
         media.append(node('p', tr('loadingMedia')));
         section.append(media);
         void loadImage(payload, media, mediaRequest.signal, visit);
+      } else if (payload.type === 'exploration') {
+        explorations.add(
+          mountDiscoveryExploration({
+            container: section,
+            payload,
+            locale: getLocale(),
+            loadImage: (imagePayload, figure, { signal }) =>
+              loadImage(imagePayload, figure, signal, visit),
+          }),
+        );
+      } else if (payload.type === 'audio' || payload.type === 'video') {
+        explorations.add(
+          mountRewardMedia({
+            container: section,
+            payload,
+            provider,
+            locale: getLocale(),
+            audioMaster,
+            musicDucker,
+            document: doc,
+            window: win,
+            signal: mediaRequest.signal,
+          }),
+        );
       } else if (payload.type === 'url') {
         section.append(node('p', payload.url), link(tr('openResource'), payload.url));
       } else if (payload.type === 'public-code') {
