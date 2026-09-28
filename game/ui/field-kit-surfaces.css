@@ -524,6 +524,12 @@ body.field-kit[data-field-kit-page]
    (including the Pause-only mission group) an equal shrinking share; long
    translated labels could consequently collapse to a single character wide
    while a picture or font was being prepared. */
+.field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-card {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-padding-block: 12px;
+}
 .field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -636,6 +642,13 @@ body.field-kit[data-field-kit-page]
 
 @media (max-width: 380px) {
   .field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .field-kit.game-shell
+    .game-overlay[data-kind='ready']
+    .pause-missions-section
+    .pause-mission-info
+    > div {
     grid-template-columns: minmax(0, 1fr);
   }
   .field-kit.game-shell .game-overlay[data-kind='pause'] .pause-menu-section {
