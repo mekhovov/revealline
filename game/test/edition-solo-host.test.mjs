@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { PNGImage } from './helpers/png-image.mjs';
+import { RasterImage } from './helpers/raster-image.mjs';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
@@ -809,7 +810,7 @@ test('every declared edition boots and starts through the canonical Solo host', 
         search: `?edition=${edition.id}`,
         titleScreen: true,
         journeyIndexedDB: managedIndexedDB().indexedDB,
-        pictures: { Image: PNGImage },
+        pictures: { Image: RasterImage },
         fetchResponse,
       });
       assert.equal(page.doc.body.dataset.editionId, edition.id);

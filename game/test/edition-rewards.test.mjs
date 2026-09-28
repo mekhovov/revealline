@@ -6,6 +6,8 @@ import { createHash } from 'node:crypto';
 import { mountEditionRewards } from '../ui/edition-rewards.mjs';
 import { createRewardMissionBindings } from '../rewards/bindings.mjs';
 import { rewardContext } from '../rewards/context.mjs';
+import { completionLearningReference } from '../rewards/learning.mjs';
+import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
 import { projectRewardProgress } from '../rewards/model.mjs';
 import { createRewardBackend } from '../rewards/store.mjs';
 import { emptyJourneyProfile, applyJourneyEvent } from '../journey/profile.mjs';
@@ -34,6 +36,8 @@ async function fixture(
     durable = true,
     exploration = false,
     audio = false,
+    learning = false,
+    getLearningEvidence,
   } = {},
 ) {
   const base = await editionProviderFixture();
@@ -92,6 +96,13 @@ async function fixture(
       }
     : null;
   const selection = resolveEditionSelection(catalog);
+  const lesson = learning
+    ? {
+        ...copy(COMPANY_LESSONS[0]),
+        missionId: source.missions[0].id,
+        campaignId: source.campaigns[0].id,
+      }
+    : null;
   const missionReward = (mission) => ({
     format: 'revealline-completion-reward.v1',
     id: `${mission.missionId}-discovery`,
@@ -164,10 +175,12 @@ async function fixture(
     selection,
     route: { source },
     rewards,
+    lessons: lesson ? [lesson] : [],
     catalog,
     bootstrap: { catalog, selection },
     rootURL: 'http://localhost/',
   };
+  if (lesson) rewards[0].requirements.learning = [completionLearningReference(lesson)];
   const doc = new Document();
   const overlay = doc.createElement('section');
   overlay.id = 'game-overlay';
@@ -254,6 +267,7 @@ async function fixture(
     getJourneyProfile: () => profile,
     getJourneyRevision: () => profile.generation,
     getJourneyDurable: () => durable,
+    getLearningEvidence,
     getReducedMotion: () => reducedMotion,
     audioMaster: master,
     musicDucker: {
@@ -339,6 +353,41 @@ async function fixture(
     },
   };
 }
+
+test('learning-only evidence changes refresh rewards without changing arcade progress or persisting an unsaved proof', async (t) => {
+  let evidence = { revision: 0, learning: [], durableLearning: [] };
+  const f = await fixture(t, { learning: true, getLearningEvidence: () => evidence });
+  f.accepted(1);
+  f.view.refresh();
+  await f.settle();
+  assert.equal(f.view.snapshot().state.receipts.length, 0);
+  const verified = {
+    ...completionLearningReference(f.provider.lessons[0]),
+    attemptId: 'verified-lesson',
+  };
+  evidence = {
+    revision: 1,
+    learning: [{ ...verified, fixtureRevision: 'wrong' }],
+    durableLearning: [],
+  };
+  f.view.refresh();
+  assert.equal(f.view.snapshot().state.receipts.length, 0);
+  evidence = { revision: 2, learning: [verified], durableLearning: [] };
+  f.view.refresh();
+  await f.settle();
+  assert.equal(f.view.snapshot().state.receipts.length, 1);
+  assert.equal((await f.backend.read()).receipts.length, 0);
+  f.accepted(2);
+  f.view.refresh();
+  await f.settle();
+  assert.equal((await f.backend.read()).receipts.length, 1);
+  const profile = JSON.stringify(f.profile);
+  evidence = { revision: 3, learning: [verified], durableLearning: [verified] };
+  f.view.refresh();
+  await f.settle();
+  assert.equal((await f.backend.read()).receipts.length, 2);
+  assert.equal(JSON.stringify(f.profile), profile);
+});
 
 test('accepted Journey IDs map to authoring IDs; skips and other modes are excluded, with revision eligibility checked by the model', async (t) => {
   const f = await fixture(t);

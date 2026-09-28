@@ -8,6 +8,13 @@ import { resolveRewardAsset } from '../rewards/media.mjs';
 import { createPrintableReward } from '../rewards/printable.mjs';
 import { mountDiscoveryExploration } from './discovery-exploration.mjs';
 import { mountRewardMedia } from './reward-media.mjs';
+import { mountRewardQr } from './reward-qr.mjs';
+
+const EMPTY_LEARNING = Object.freeze({
+  revision: 0,
+  learning: Object.freeze([]),
+  durableLearning: Object.freeze([]),
+});
 
 /** A presentation of accepted Journey evidence. No simulation, completion,
  * mission launch or scoring authority is passed into this view. */
@@ -22,6 +29,7 @@ export async function mountEditionRewards({
   getJourneyProfile,
   getJourneyRevision,
   getJourneyDurable,
+  getLearningEvidence = () => EMPTY_LEARNING,
   getReducedMotion = () => false,
   audioMaster,
   musicDucker,
@@ -53,6 +61,7 @@ export async function mountEditionRewards({
   let disposed = false,
     dirty = true,
     revision,
+    learningRevision,
     durable,
     lastRun,
     lastKind,
@@ -445,6 +454,15 @@ export async function mountEditionRewards({
         );
       } else if (payload.type === 'url') {
         section.append(node('p', payload.url), link(tr('openResource'), payload.url));
+        if (payload.qr)
+          explorations.add(
+            mountRewardQr({
+              container: section,
+              payload,
+              locale: getLocale(),
+              signal: mediaRequest.signal,
+            }),
+          );
       } else if (payload.type === 'public-code') {
         section.append(
           node('p', payload.issuer),
@@ -482,14 +500,30 @@ export async function mountEditionRewards({
   function refresh() {
     if (disposed) return;
     const nextRevision = getJourneyRevision(),
-      nextDurable = getJourneyDurable();
+      nextDurable = getJourneyDurable(),
+      learning = getLearningEvidence();
     const run = getRun(),
       kind = doc.getElementById('game-overlay').dataset.kind;
     if (run?.status === 'running') played.add(run);
     let animate = false;
-    if (revision !== nextRevision || durable !== nextDurable || !state) {
-      context = rewardContext(provider, bindings, getJourneyProfile());
-      const update = store.reconcile(provider.rewards, context, { persist: nextDurable });
+    if (
+      revision !== nextRevision ||
+      learningRevision !== learning.revision ||
+      durable !== nextDurable ||
+      !state
+    ) {
+      const profile = getJourneyProfile();
+      context = rewardContext(provider, bindings, profile, learning.learning);
+      const persistenceContext = rewardContext(
+        provider,
+        bindings,
+        profile,
+        learning.durableLearning,
+      );
+      const update = store.reconcile(provider.rewards, context, {
+        persist: nextDurable,
+        persistenceContext,
+      });
       state = update.state;
       progress = update.progress;
       animate =
@@ -504,6 +538,7 @@ export async function mountEditionRewards({
         );
       if (animate) celebrated.add(run);
       revision = nextRevision;
+      learningRevision = learning.revision;
       durable = nextDurable;
       dirty = true;
     }

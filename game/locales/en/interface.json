@@ -5282,5 +5282,10 @@
   "rewardMedia.playAgain": "Ready. Press Play again if your browser requires another gesture.",
   "rewardMedia.posterUnavailable": "The exact poster is unavailable. Your discovery is preserved.",
   "rewardMedia.transcriptUnavailable": "The exact transcript is unavailable. Your discovery is preserved. Reload this view to retry.",
-  "editionExpedition.campaignArtwork": "Campaign artwork: {{name}}"
+  "editionExpedition.campaignArtwork": "Campaign artwork: {{name}}",
+  "completionRewards.showQr": "Show QR code",
+  "completionRewards.qrAlt": "QR code for {{url}}",
+  "completionRewards.qrNote": "Scan to open this same resource on another device. The address above is the complete destination.",
+  "completionRewards.qrUnavailable": "The QR image is unavailable. You can still use the resource link.",
+  "completionRewards.hideQr": "Hide QR code"
 }

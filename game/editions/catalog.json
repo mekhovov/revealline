@@ -1328,6 +1328,276 @@
       "path": "game/editions/assets/discovery/reference-fpv-solder-joint.jpg",
       "publication": "public",
       "sha256": "b0971f7e55c5c93308415698bc7af50038bb583672323adace25eb8f485dde0c"
+    },
+    {
+      "approved": true,
+      "bytes": 336268,
+      "dependencies": [],
+      "id": "ukraine-threads-key-v1",
+      "path": "game/editions/assets/discovery/ukraine-threads-key-v1.jpg",
+      "publication": "public",
+      "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+    },
+    {
+      "approved": true,
+      "bytes": 263191,
+      "dependencies": [],
+      "id": "ukraine-colour-clay-spring-key-v1",
+      "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-key-v1.jpg",
+      "publication": "public",
+      "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+    },
+    {
+      "approved": true,
+      "bytes": 297277,
+      "dependencies": [],
+      "id": "ukraine-crimea-ornek-key-v1",
+      "path": "game/editions/assets/discovery/ukraine-crimea-ornek-key-v1.jpg",
+      "publication": "public",
+      "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+    },
+    {
+      "approved": true,
+      "bytes": 248004,
+      "dependencies": [],
+      "id": "ukraine-voices-travel-key-v1",
+      "path": "game/editions/assets/discovery/ukraine-voices-travel-key-v1.jpg",
+      "publication": "public",
+      "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea"
+    },
+    {
+      "approved": true,
+      "bytes": 294985,
+      "dependencies": [],
+      "id": "ukraine-cities-symbols-time-key-v1",
+      "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-key-v1.jpg",
+      "publication": "public",
+      "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4"
+    },
+    {
+      "approved": true,
+      "bytes": 290344,
+      "dependencies": [],
+      "id": "ukraine-everyday-culture-key-v1",
+      "path": "game/editions/assets/discovery/ukraine-everyday-culture-key-v1.jpg",
+      "publication": "public",
+      "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+    },
+    {
+      "approved": true,
+      "bytes": 279176,
+      "dependencies": [],
+      "id": "fpv-meet-aircraft-key-v1",
+      "path": "game/editions/assets/discovery/fpv-meet-aircraft-key-v1.jpg",
+      "publication": "public",
+      "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0"
+    },
+    {
+      "approved": true,
+      "bytes": 227588,
+      "dependencies": [],
+      "id": "fpv-parts-bench-key-v1",
+      "path": "game/editions/assets/discovery/fpv-parts-bench-key-v1.jpg",
+      "publication": "public",
+      "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265"
+    },
+    {
+      "approved": true,
+      "bytes": 236903,
+      "dependencies": [],
+      "id": "fpv-soldering-workshop-key-v1",
+      "path": "game/editions/assets/discovery/fpv-soldering-workshop-key-v1.jpg",
+      "publication": "public",
+      "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939"
+    },
+    {
+      "approved": true,
+      "bytes": 246308,
+      "dependencies": [],
+      "id": "fpv-four-controls-key-v1",
+      "path": "game/editions/assets/discovery/fpv-four-controls-key-v1.jpg",
+      "publication": "public",
+      "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03"
+    },
+    {
+      "approved": true,
+      "bytes": 207668,
+      "dependencies": [],
+      "id": "fpv-first-flight-key-v1",
+      "path": "game/editions/assets/discovery/fpv-first-flight-key-v1.jpg",
+      "publication": "public",
+      "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+    },
+    {
+      "approved": true,
+      "bytes": 249553,
+      "dependencies": [],
+      "id": "fpv-drone-families-key-v1",
+      "path": "game/editions/assets/discovery/fpv-drone-families-key-v1.jpg",
+      "publication": "public",
+      "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+    },
+    {
+      "approved": true,
+      "bytes": 270366,
+      "dependencies": [],
+      "id": "fpv-drones-ukraine-key-v1",
+      "path": "game/editions/assets/discovery/fpv-drones-ukraine-key-v1.jpg",
+      "publication": "public",
+      "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931"
+    },
+    {
+      "approved": true,
+      "bytes": 207785,
+      "dependencies": [],
+      "id": "fpv-care-repair-key-v1",
+      "path": "game/editions/assets/discovery/fpv-care-repair-key-v1.jpg",
+      "publication": "public",
+      "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90"
+    },
+    {
+      "approved": true,
+      "bytes": 161965,
+      "dependencies": [],
+      "id": "ukraine-threads-01-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-threads-01-v1.jpg",
+      "publication": "public",
+      "sha256": "948ae2b5db094f54aec6e7d9fe57408bb121dd535b471943425378a7af9de2af"
+    },
+    {
+      "approved": true,
+      "bytes": 170394,
+      "dependencies": [],
+      "id": "ukraine-threads-02-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-threads-02-v1.jpg",
+      "publication": "public",
+      "sha256": "3b0ba003bc7e170dbb16dc46ba35f6bbdbaf81bf6dc9e8b34b7fce78dc3cec72"
+    },
+    {
+      "approved": true,
+      "bytes": 158455,
+      "dependencies": [],
+      "id": "ukraine-threads-04-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-threads-04-v1.jpg",
+      "publication": "public",
+      "sha256": "22ae3b4e43d3e02260437d980e4a421d73bbacc0a35dfd0e809a0300150dec16"
+    },
+    {
+      "approved": true,
+      "bytes": 173578,
+      "dependencies": [],
+      "id": "ukraine-threads-05-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-threads-05-v1.jpg",
+      "publication": "public",
+      "sha256": "d3c81a60d651ba8c9e2801a4de4608e5580fa4d2df5a4df44210e41c5de405c4"
+    },
+    {
+      "approved": true,
+      "bytes": 207158,
+      "dependencies": [],
+      "id": "ukraine-threads-06-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-threads-06-v1.jpg",
+      "publication": "public",
+      "sha256": "f85f89cd0a3513736e1b88867982878176affe8ee8e7c72171c6887ded041614"
+    },
+    {
+      "approved": true,
+      "bytes": 233452,
+      "dependencies": [],
+      "id": "ukraine-colour-clay-spring-01-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-01-v1.jpg",
+      "publication": "public",
+      "sha256": "76afafc6aee7efbbb84b8b97ac96768465023c8cd3acdd7093f7de08b9c3f655"
+    },
+    {
+      "approved": true,
+      "bytes": 169956,
+      "dependencies": [],
+      "id": "ukraine-colour-clay-spring-02-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-02-v1.jpg",
+      "publication": "public",
+      "sha256": "eac1252d6cf2e6b6084f3c00cbc0d07d0278aa1a2f27badf2418b95856caaab1"
+    },
+    {
+      "approved": true,
+      "bytes": 224938,
+      "dependencies": [],
+      "id": "ukraine-colour-clay-spring-03-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-03-v1.jpg",
+      "publication": "public",
+      "sha256": "7df81716961ae08ed04adf4d4359edbad08e9010190563fbd8ef3da3e01a2547"
+    },
+    {
+      "approved": true,
+      "bytes": 140500,
+      "dependencies": [],
+      "id": "ukraine-colour-clay-spring-04-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-04-v1.jpg",
+      "publication": "public",
+      "sha256": "c3ea48e72d2cc67dee8a8bb611580286aa1c1b0afccf1e2ee0bfb97a16e68d2d"
+    },
+    {
+      "approved": true,
+      "bytes": 282921,
+      "dependencies": [],
+      "id": "social-drone-people-workshop-key-v1",
+      "path": "game/editions/assets/discovery/social-drone-people-workshop-key-v1.jpg",
+      "publication": "public",
+      "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+    },
+    {
+      "approved": true,
+      "bytes": 318557,
+      "dependencies": [],
+      "id": "social-drone-community-connections-key-v1",
+      "path": "game/editions/assets/discovery/social-drone-community-connections-key-v1.jpg",
+      "publication": "public",
+      "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb"
+    },
+    {
+      "approved": true,
+      "bytes": 304837,
+      "dependencies": [],
+      "id": "victory-drones-knowledge-connects-key-v1",
+      "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-key-v1.jpg",
+      "publication": "public",
+      "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+    },
+    {
+      "approved": true,
+      "bytes": 156667,
+      "dependencies": [],
+      "id": "ukraine-colour-clay-spring-05-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-05-v1.jpg",
+      "publication": "public",
+      "sha256": "3ce2f25907dc3a3aac911729deb7be72180ee39b4510c6d69a8c821c27796b3b"
+    },
+    {
+      "approved": true,
+      "bytes": 227413,
+      "dependencies": [],
+      "id": "ukraine-colour-clay-spring-06-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-06-v1.jpg",
+      "publication": "public",
+      "sha256": "3906cda63a720416d840efb79ceb5acd2cda31f9d8f9b8fcbacdca776651ea27"
+    },
+    {
+      "approved": true,
+      "bytes": 178150,
+      "dependencies": [],
+      "id": "ukraine-crimea-ornek-01-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-crimea-ornek-01-v1.jpg",
+      "publication": "public",
+      "sha256": "dc7fad1a463982a631b34151834fe71cd934972f65ffebe86e894b98edc02ae3"
+    },
+    {
+      "approved": true,
+      "bytes": 292281,
+      "dependencies": [],
+      "id": "victory-drones-ideas-understanding-key-v1",
+      "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-key-v1.jpg",
+      "publication": "public",
+      "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb"
     }
   ],
   "brands": [
@@ -1629,6 +1899,7 @@
       "name": "From Need to Value",
       "publication": "public",
       "revision": "4",
+      "rewardPath": "game/content/company-campaigns/coupa-source-to-pay.rewards.json",
       "sourcePath": "game/content/company-campaigns/coupa-source-to-pay.json"
     },
     {
@@ -1785,11 +2056,12 @@
       "sourcePath": "game/content/company-campaigns/droneaid-nl-shared-horizon.json"
     },
     {
-      "assetIds": ["social-drone-people-workshop-01-art-v1", "social-drone-ua-home"],
+      "assetIds": ["social-drone-people-workshop-01-art-v1", "social-drone-people-workshop-key-v1"],
       "brandId": "social-drone-ua",
+      "heroAssetId": "social-drone-people-workshop-key-v1",
       "id": "social-drone-people-workshop",
       "localizationPath": "game/content/company-campaigns/social-drone-people-workshop.localization.json",
-      "localizationSha256": "d399f347d318a8895553291c08dcef34e1e0d30a863436569d06924caeb1ebbf",
+      "localizationSha256": "842daa9870328bca8e0fded0f3cc5b29c30c9b2aeb8d653aa5e96d9c36161f27",
       "modes": ["solo"],
       "name": "People Behind the Workshop",
       "publication": "public",
@@ -1798,11 +2070,12 @@
       "sourcePath": "game/content/company-campaigns/social-drone-people-workshop.json"
     },
     {
-      "assetIds": ["victory-drones-home"],
+      "assetIds": ["victory-drones-knowledge-connects-key-v1"],
       "brandId": "victory-drones",
+      "heroAssetId": "victory-drones-knowledge-connects-key-v1",
       "id": "victory-drones-knowledge-connects",
       "localizationPath": "game/content/company-campaigns/victory-drones-knowledge-connects.localization.json",
-      "localizationSha256": "158b16f052aeaf3ca0a8d223732ac224fefe4e142235919b38f13031ce414464",
+      "localizationSha256": "eb825e8588b8c7c4bc495ce1c79fce85e5a6d9164977c8dfa0deaff710feea6c",
       "modes": ["solo"],
       "name": "Knowledge Connects",
       "publication": "public",
@@ -1812,14 +2085,20 @@
     },
     {
       "assetIds": [
-        "ukraine-culture-home",
+        "ukraine-threads-01-reveal-v1",
+        "ukraine-threads-02-reveal-v1",
         "ukraine-threads-03-art-v1",
+        "ukraine-threads-04-reveal-v1",
+        "ukraine-threads-05-reveal-v1",
+        "ukraine-threads-06-reveal-v1",
+        "ukraine-threads-key-v1",
         "met-degas-ukrainian-dress-436157"
       ],
       "brandId": "ukraine-culture",
+      "heroAssetId": "ukraine-threads-key-v1",
       "id": "ukraine-threads",
       "localizationPath": "game/content/company-campaigns/ukraine-threads.localization.json",
-      "localizationSha256": "f98f00df3447d300778d1c9d8cfbf0c1208799267af285bc935b630006cb8dba",
+      "localizationSha256": "e129306f3693f8775f9eee99db452f7c2c3629706108f82990d762121a0218d1",
       "modes": ["solo"],
       "name": "Threads Across Ukraine",
       "publication": "public",
@@ -1830,14 +2109,15 @@
     {
       "assetIds": [
         "fpv-meet-aircraft-01-art-v1",
-        "fpv-learning-home",
+        "fpv-meet-aircraft-key-v1",
         "reference-fpv-pixhawk-controller",
         "reference-fpv-brushless-motor"
       ],
       "brandId": "fpv-learning",
+      "heroAssetId": "fpv-meet-aircraft-key-v1",
       "id": "fpv-meet-aircraft",
       "localizationPath": "game/content/company-campaigns/fpv-meet-aircraft.localization.json",
-      "localizationSha256": "58e4699ff76294b631f5f299e3cb730b83e84f73850d299360d875f9444c4eb3",
+      "localizationSha256": "105b3d25fa8d9a9424c2780688a4f40059f085adcc7cd610b13b6dee397b576d",
       "modes": ["solo"],
       "name": "Meet the Aircraft",
       "publication": "public",
@@ -1846,11 +2126,12 @@
       "sourcePath": "game/content/company-campaigns/fpv-meet-aircraft.json"
     },
     {
-      "assetIds": ["social-drone-ua-home"],
+      "assetIds": ["social-drone-community-connections-key-v1"],
       "brandId": "social-drone-ua",
+      "heroAssetId": "social-drone-community-connections-key-v1",
       "id": "social-drone-community-connections",
       "localizationPath": "game/content/company-campaigns/social-drone-community-connections.localization.json",
-      "localizationSha256": "81a595e3882f640dec6b5069896f74df2612ee4644f083eaa19f11adc75378c6",
+      "localizationSha256": "8cd13107b4a2b416ae2b696bb8d2dc7d6ad1939fc7fb8a84e0d671a868be22a0",
       "modes": ["solo"],
       "name": "Community Connections",
       "publication": "public",
@@ -1859,11 +2140,12 @@
       "sourcePath": "game/content/company-campaigns/social-drone-community-connections.json"
     },
     {
-      "assetIds": ["victory-drones-home"],
+      "assetIds": ["victory-drones-ideas-understanding-key-v1"],
       "brandId": "victory-drones",
+      "heroAssetId": "victory-drones-ideas-understanding-key-v1",
       "id": "victory-drones-ideas-understanding",
       "localizationPath": "game/content/company-campaigns/victory-drones-ideas-understanding.localization.json",
-      "localizationSha256": "5dc4f5ba74730607916012b6f48e4ccdf6de81512013b3bfd70917a8d1180bd5",
+      "localizationSha256": "b1bc88b657926c25f6ce9c228fd42eda4e9e40c5561aee877b4c3faf3fb4afef",
       "modes": ["solo"],
       "name": "Ideas into Understanding",
       "publication": "public",
@@ -1872,11 +2154,20 @@
       "sourcePath": "game/content/company-campaigns/victory-drones-ideas-understanding.json"
     },
     {
-      "assetIds": ["ukraine-culture-home"],
+      "assetIds": [
+        "ukraine-colour-clay-spring-01-reveal-v1",
+        "ukraine-colour-clay-spring-02-reveal-v1",
+        "ukraine-colour-clay-spring-03-reveal-v1",
+        "ukraine-colour-clay-spring-04-reveal-v1",
+        "ukraine-colour-clay-spring-05-reveal-v1",
+        "ukraine-colour-clay-spring-06-reveal-v1",
+        "ukraine-colour-clay-spring-key-v1"
+      ],
       "brandId": "ukraine-culture",
+      "heroAssetId": "ukraine-colour-clay-spring-key-v1",
       "id": "ukraine-colour-clay-spring",
       "localizationPath": "game/content/company-campaigns/ukraine-colour-clay-spring.localization.json",
-      "localizationSha256": "7594f2b9e0e6a87714012a941c585d92e6f239969c907d13858170c2470f4194",
+      "localizationSha256": "bcec493cc9c9d4801c7bcda7960c01ab796198ee749f78382978aae77ee90a9c",
       "modes": ["solo"],
       "name": "Colour, Clay and Spring",
       "publication": "public",
@@ -1885,11 +2176,12 @@
       "sourcePath": "game/content/company-campaigns/ukraine-colour-clay-spring.json"
     },
     {
-      "assetIds": ["ukraine-culture-home"],
+      "assetIds": ["ukraine-crimea-ornek-01-reveal-v1", "ukraine-crimea-ornek-key-v1"],
       "brandId": "ukraine-culture",
+      "heroAssetId": "ukraine-crimea-ornek-key-v1",
       "id": "ukraine-crimea-ornek",
       "localizationPath": "game/content/company-campaigns/ukraine-crimea-ornek.localization.json",
-      "localizationSha256": "10eeccbf7a5b3a12bde8f2c62ffbbe67d2d371fa5c9891cc63b5983571fa933e",
+      "localizationSha256": "cfa7e7242e9ddcc6961a1621b07349a412e9f83d410491a0234ac42957cd9ce4",
       "modes": ["solo"],
       "name": "Crimea: Ornament and Community",
       "publication": "public",
@@ -1898,11 +2190,12 @@
       "sourcePath": "game/content/company-campaigns/ukraine-crimea-ornek.json"
     },
     {
-      "assetIds": ["ukraine-culture-home"],
+      "assetIds": ["ukraine-voices-travel-key-v1"],
       "brandId": "ukraine-culture",
+      "heroAssetId": "ukraine-voices-travel-key-v1",
       "id": "ukraine-voices-travel",
       "localizationPath": "game/content/company-campaigns/ukraine-voices-travel.localization.json",
-      "localizationSha256": "621dd64607f69613fda30f922a0d650f09b761994359412e1efa299705f2a5ac",
+      "localizationSha256": "16ce04e84e1de3b3ac10dd53ca2cfe192db9f6556220b63c49a5b33837af2887",
       "modes": ["solo"],
       "name": "Voices That Travel",
       "publication": "public",
@@ -1911,11 +2204,12 @@
       "sourcePath": "game/content/company-campaigns/ukraine-voices-travel.json"
     },
     {
-      "assetIds": ["ukraine-culture-home"],
+      "assetIds": ["ukraine-cities-symbols-time-key-v1"],
       "brandId": "ukraine-culture",
+      "heroAssetId": "ukraine-cities-symbols-time-key-v1",
       "id": "ukraine-cities-symbols-time",
       "localizationPath": "game/content/company-campaigns/ukraine-cities-symbols-time.localization.json",
-      "localizationSha256": "15c1a15583eb8c4eb6c83fc1e4b4e9f1e49ef06638e5a766aebe69cde085a188",
+      "localizationSha256": "abaca1e45acecac5cef3eb6417cac6df7f70a1ce8660447eca0b738c24d6c9ba",
       "modes": ["solo"],
       "name": "Cities, Symbols and Time",
       "publication": "public",
@@ -1924,11 +2218,12 @@
       "sourcePath": "game/content/company-campaigns/ukraine-cities-symbols-time.json"
     },
     {
-      "assetIds": ["ukraine-culture-home"],
+      "assetIds": ["ukraine-everyday-culture-key-v1"],
       "brandId": "ukraine-culture",
+      "heroAssetId": "ukraine-everyday-culture-key-v1",
       "id": "ukraine-everyday-culture",
       "localizationPath": "game/content/company-campaigns/ukraine-everyday-culture.localization.json",
-      "localizationSha256": "6f57ea15f1b1a2068d24a0dfdded2de6a0230cf171ce2ff706e27c06684f5218",
+      "localizationSha256": "aeef9d61b8ae1e94df82eb8a539db93f2d3cc5bc60f72dd687360a300f5dc747",
       "modes": ["solo"],
       "name": "Words, Tables and Everyday Culture",
       "publication": "public",
@@ -1937,11 +2232,12 @@
       "sourcePath": "game/content/company-campaigns/ukraine-everyday-culture.json"
     },
     {
-      "assetIds": ["fpv-learning-home"],
+      "assetIds": ["fpv-parts-bench-key-v1"],
       "brandId": "fpv-learning",
+      "heroAssetId": "fpv-parts-bench-key-v1",
       "id": "fpv-parts-bench",
       "localizationPath": "game/content/company-campaigns/fpv-parts-bench.localization.json",
-      "localizationSha256": "8727ef505a2db9f4e56703bc2002e1cc314d082f3083920e344993ed60bc43f6",
+      "localizationSha256": "0472aab0d5e4a77d810e5e105828fdb1ac98e735897d7234b80ed512a07b637f",
       "modes": ["solo"],
       "name": "From Parts to a Bench Model",
       "publication": "public",
@@ -1951,15 +2247,16 @@
     },
     {
       "assetIds": [
-        "fpv-learning-home",
+        "fpv-soldering-workshop-key-v1",
         "reference-fpv-solder-iron",
         "reference-fpv-solder-spool-label",
         "reference-fpv-solder-joint"
       ],
       "brandId": "fpv-learning",
+      "heroAssetId": "fpv-soldering-workshop-key-v1",
       "id": "fpv-soldering-workshop",
       "localizationPath": "game/content/company-campaigns/fpv-soldering-workshop.localization.json",
-      "localizationSha256": "7a040b541d900129a3787ba7a9a966b629ab6a1b7c368e47bb465a36f6f4190e",
+      "localizationSha256": "b63793619e713427d52577aaf2db6d7740c25b7d436ddaf08102dad6578fba8d",
       "modes": ["solo"],
       "name": "Soldering Workshop",
       "publication": "public",
@@ -1968,11 +2265,12 @@
       "sourcePath": "game/content/company-campaigns/fpv-soldering-workshop.json"
     },
     {
-      "assetIds": ["fpv-learning-home"],
+      "assetIds": ["fpv-four-controls-key-v1"],
       "brandId": "fpv-learning",
+      "heroAssetId": "fpv-four-controls-key-v1",
       "id": "fpv-four-controls",
       "localizationPath": "game/content/company-campaigns/fpv-four-controls.localization.json",
-      "localizationSha256": "1a9244cc63da9f13a502f5d640b5c1a10687202b18a7c10ac7877e575f85ee9c",
+      "localizationSha256": "d79e18c2b13d3f5e5a11c9fdc3490f4a3b7328027b22098b47e003658118c3fd",
       "modes": ["solo"],
       "name": "Understand the Four Controls",
       "publication": "public",
@@ -1981,11 +2279,12 @@
       "sourcePath": "game/content/company-campaigns/fpv-four-controls.json"
     },
     {
-      "assetIds": ["fpv-learning-home"],
+      "assetIds": ["fpv-first-flight-key-v1"],
       "brandId": "fpv-learning",
+      "heroAssetId": "fpv-first-flight-key-v1",
       "id": "fpv-first-flight",
       "localizationPath": "game/content/company-campaigns/fpv-first-flight.localization.json",
-      "localizationSha256": "92c65b0aa845de79f2c7528cda90da89d7b13d95a40c91ae082d712d245a7aaf",
+      "localizationSha256": "79b45f087ca69555e448d60ef1cdef2c86f941a707e26ebee574b5b7cd47ca2b",
       "modes": ["solo"],
       "name": "First Flight Patterns",
       "publication": "public",
@@ -1994,11 +2293,12 @@
       "sourcePath": "game/content/company-campaigns/fpv-first-flight.json"
     },
     {
-      "assetIds": ["fpv-learning-home", "reference-fpv-ar-drone-prototype"],
+      "assetIds": ["fpv-drone-families-key-v1", "reference-fpv-ar-drone-prototype"],
       "brandId": "fpv-learning",
+      "heroAssetId": "fpv-drone-families-key-v1",
       "id": "fpv-drone-families",
       "localizationPath": "game/content/company-campaigns/fpv-drone-families.localization.json",
-      "localizationSha256": "456ba03f61f80e3bea04e1db118e14855bb362d0ca4f729cfb289f6239ac2d45",
+      "localizationSha256": "be7380a5122f73b0e6b7eb08451dfbef6b9e546b72dde9f0f2313735b83541ac",
       "modes": ["solo"],
       "name": "Drone Families",
       "publication": "public",
@@ -2007,11 +2307,12 @@
       "sourcePath": "game/content/company-campaigns/fpv-drone-families.json"
     },
     {
-      "assetIds": ["fpv-learning-home"],
+      "assetIds": ["fpv-drones-ukraine-key-v1"],
       "brandId": "fpv-learning",
+      "heroAssetId": "fpv-drones-ukraine-key-v1",
       "id": "fpv-drones-ukraine",
       "localizationPath": "game/content/company-campaigns/fpv-drones-ukraine.localization.json",
-      "localizationSha256": "9e523282279e62819e1d3680ceefae0e15a3dc34ac329105b00bef89d2d9ca64",
+      "localizationSha256": "e37f21ddcaacc9ac86f9f63617359c588306db3d94428d553185faf4987d8922",
       "modes": ["solo"],
       "name": "Drones in Ukraine",
       "publication": "public",
@@ -2020,11 +2321,12 @@
       "sourcePath": "game/content/company-campaigns/fpv-drones-ukraine.json"
     },
     {
-      "assetIds": ["fpv-learning-home"],
+      "assetIds": ["fpv-care-repair-key-v1"],
       "brandId": "fpv-learning",
+      "heroAssetId": "fpv-care-repair-key-v1",
       "id": "fpv-care-repair",
       "localizationPath": "game/content/company-campaigns/fpv-care-repair.localization.json",
-      "localizationSha256": "379a88ae2320dd58eef0d7ea47d71dac582356005717901f02c8cb48ac048abd",
+      "localizationSha256": "07b0c9c26243593517b4b30ba5c2483bfd49d3f5e733967cedd23b92b1c86a64",
       "modes": ["solo"],
       "name": "Care, Diagnosis and Repair Decisions",
       "publication": "public",
@@ -2080,8 +2382,16 @@
       "id": "victory-drones",
       "modes": ["solo"],
       "name": "Victory Drones",
+      "presentationHistory": [
+        {
+          "bytes": 114051,
+          "id": "36e42f75903c47abf1c23da0f22f46b74498284cdf84abd0b5f36b10d5838037",
+          "path": "game/editions/retained/victory-drones-first-discoveries.json",
+          "sha256": "3c2bf181cf224dcc1a477a1b17ccfa7109f06803af31f49e9af379a40deb290f"
+        }
+      ],
       "publication": "public",
-      "revision": 1
+      "revision": 2
     },
     {
       "audience": "learners",
@@ -2180,6 +2490,12 @@
       "name": "Coupa Village",
       "presentationHistory": [
         {
+          "bytes": 191970,
+          "id": "13e5c4ff2313ebd3714e6d6461e2468857be6e4997fede8da24542880951df13",
+          "path": "game/editions/retained/coupa-all-before-learning-bonus.json",
+          "sha256": "de8370665d5c99e953326e1861f0817afb3dfc511f0629cdec6f50c6d4b5c709"
+        },
+        {
           "bytes": 146284,
           "id": "ecb87b6208f6f55322188ab34d8d9aa63b94064dd346f400bbe2bbbcc9d7870b",
           "path": "game/editions/retained/coupa-all.json",
@@ -2199,7 +2515,7 @@
         }
       ],
       "publication": "public",
-      "revision": 7
+      "revision": 8
     },
     {
       "audience": "public",
@@ -2282,6 +2598,12 @@
       "name": "From Need to Value",
       "presentationHistory": [
         {
+          "bytes": 50235,
+          "id": "bb5393ff4a73f30346496334ac6004d84766dfbd958dbdfb62d2b3554e20d429",
+          "path": "game/editions/retained/coupa-foundations-before-learning-bonus.json",
+          "sha256": "0ee0079828321ec31cfc6f0683f76ec5a8e90d7065008626793e33195f6a1187"
+        },
+        {
           "bytes": 46542,
           "id": "57dd4d5b7e0f8c27662349a8af870862657d700682ac758ad51721a61fdd59aa",
           "path": "game/editions/retained/coupa-foundations.json",
@@ -2295,7 +2617,7 @@
         }
       ],
       "publication": "public",
-      "revision": 6
+      "revision": 7
     },
     {
       "audience": "operators",
