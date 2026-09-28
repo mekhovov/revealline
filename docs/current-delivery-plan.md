@@ -7,6 +7,10 @@
 > main-only batching policy. Every dated checkpoint and “next” label below is
 > preserved historical evidence, not today's release queue.
 
+## Current scoped handoff — 28 September 2026
+
+The [completed/remaining phase audit and Flight Details correction](flight-details-localization-2026-09-28.md) records the v0.141.7 public baseline, queued touch work, the next bounded P05/P03 fix, and the original whole-game phases still open. The release coordinator owns cumulative integration, version allocation and Pages publication. Read the dated sections below as history; they do not describe the current queue.
+
 ## Current execution order — 24 September 2026
 
 The approved [player-first UX execution board](player-first-ux-execution.md) now

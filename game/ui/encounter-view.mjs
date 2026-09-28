@@ -1,4 +1,4 @@
-import { t, formatNumber } from '../i18n/index.mjs';
+import { encounterCopy } from './encounter-copy.mjs';
 import { geometryForRun } from '../core/geometry.mjs';
 import { CELL, FIXED_DT } from '../core/registry.mjs';
 import { encounterCutCells, encounterShieldIds } from '../core/encounter.mjs';
@@ -36,56 +36,32 @@ export function encounterView(state) {
   const frozen = frozenActors(state);
   const suppressed = frozen || (!!enemy && enemy.stunnedUntil > state.time + 1e-8);
   const isolated = remaining <= min;
-  const lane = Number.isFinite(e.lane)
-    ? e.axis === 'horizontal'
-      ? t('gameplay:encounter.row', { number: Math.floor(e.lane) })
-      : t('gameplay:encounter.column', { number: Math.floor(e.lane) })
-    : '';
-  const phaseName = {
-    delay: shieldPlural ? t('interface:shieldRelays') : t('interface:shieldRelay'),
-    warning: t('interface:laneWarning'),
-    active: suppressed ? t('interface:laneSuppressed') : t('interface:laneActive'),
-    rest: shieldPlural ? t('interface:shieldRelays') : t('interface:shieldRelay'),
-    transition: t('interface:shieldOpening'),
-    open: t('interface:coreOpen'),
-    defeated: t('interface:coreReleased'),
-  }[e.phase];
-  const title = ended
-    ? t('interface:flightEnded2')
-    : `${e.stage === 'shielded' ? '1 / 2' : '2 / 2'} · ${phaseName}${e.defeated ? '' : ` · ${t('common:units.secondsShort', { seconds: formatNumber(seconds, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) })}`}`;
-  let instruction;
-  if (ended) instruction = t('interface:restartToTryTheTwoStagesAgain');
-  else if (state.status === 'respawning')
-    instruction = frozen
-      ? t('interface:recoveringAtHomeEnemyFreezeHoldsTheEncounterClockWait')
-      : t('interface:recoveringAtHomeTheEncounterClockContinuesWaitForControl');
-  else if (e.defeated)
-    instruction =
-      e.defeatCause === 'isolated'
-        ? t('interface:coreIsolatedThePictureIsYours')
-        : t('interface:releaseCutSecuredThePictureIsYours');
-  else if (e.stage === 'shielded')
-    instruction = `${multiple ? t('gameplay:encounter.shieldProgress', { count: shields.total, captured: shields.captured }) : t('interface:captureTheShieldRelay')} ${lane ? t('gameplay:encounter.watchLane', { lane }) : multiple ? t('gameplay:encounter.reclaimedReturn') : t('gameplay:encounter.safeReturn')}`;
-  else if (e.stage === 'transition')
-    instruction = shieldPlural
-      ? t('gameplay:encounter.multipleTransition')
-      : t('gameplay:encounter.singleTransition');
-  else if (isolated)
-    instruction =
-      e.phase === 'open'
-        ? multiple
-          ? t('gameplay:encounter.isolatedReclaimedFinish')
-          : t('gameplay:encounter.isolatedSafeFinish')
-        : multiple
-          ? t('gameplay:encounter.isolatedReclaimedWait')
-          : t('gameplay:encounter.isolatedSafeWait');
-  else
-    instruction = `${multiple ? t('gameplay:encounter.reclaimedCut', { cells: cutCells, minimum: min }) : t('gameplay:encounter.safeCut', { cells: cutCells, minimum: min })}${lane && e.phase !== 'open' ? ` ${t('gameplay:encounter.watchLane', { lane })}` : ''}`;
-  if (frozen && !ended && !e.defeated && state.status !== 'respawning')
-    instruction += ' ' + t('interface:enemyFreezeHoldsTheEncounterClock') + '';
+  // Presentation facts are detached from the run so an open reader can change
+  // language while retaining its accepted clock, stage and shield progress.
+  const copyFacts = Object.freeze({
+    status: state.status,
+    phase: e.phase,
+    stage: e.stage,
+    seconds,
+    multiple,
+    shieldPlural,
+    shields: multiple ? Object.freeze({ total: shields.total, captured: shields.captured }) : null,
+    lane: Number.isFinite(e.lane) ? e.lane : null,
+    axis: e.axis ?? null,
+    min,
+    remaining,
+    cutCells,
+    isolated,
+    frozen,
+    suppressed,
+    defeated: !!e.defeated,
+    defeatCause: e.defeatCause ?? null,
+  });
+  const { title, instruction, lane } = encounterCopy(copyFacts);
   return Object.freeze({
     title,
     instruction,
+    copyFacts,
     phase: e.phase,
     stage: e.stage,
     seconds,

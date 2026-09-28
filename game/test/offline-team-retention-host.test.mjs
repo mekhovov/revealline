@@ -36,7 +36,7 @@ const catalogue = {
     groups: ['team:fixture'],
   })),
 };
-async function fixture(t) {
+async function fixture(t, { prepared = true } = {}) {
   const caches = committedCaches(),
     queue = [];
   let blocked = false,
@@ -48,12 +48,16 @@ async function fixture(t) {
       return work();
     },
   };
+  if (prepared)
+    await (
+      await caches.open(OFFICIAL_CACHE)
+    ).put(
+      officialAssetURL(file.sha256, 'http://localhost'),
+      new Response(bytes, { headers: { 'Content-Length': file.bytes } }),
+    );
   await (
-    await caches.open(OFFICIAL_CACHE)
-  ).put(
-    officialAssetURL(file.sha256, 'http://localhost'),
-    new Response(bytes, { headers: { 'Content-Length': file.bytes } }),
-  );
+    await caches.open('fixture-core')
+  ).put('http://localhost/offline-content.json', Response.json(catalogue));
   const f = await page(t, {
     href: 'http://localhost/game/couch/relay-rescue.html',
     nativeFocus: true,
@@ -165,4 +169,14 @@ test('a prepared Team preview is not pinned; deliberate Start waits for retentio
   );
   assert.equal(retained.length, 1);
   assert.deepEqual(retained[0].hashes, [file.sha256]);
+});
+
+test('Team starts online without downloaded files or an install popup', async (t) => {
+  const f = await fixture(t, { prepared: false });
+  f.$('coop-start').focus();
+  f.tap('Enter');
+  await waitFor(() => f.doc.body.classList.contains('playing'));
+  assert.equal(f.doc.getElementById('install-offline-dialog'), null);
+  assert.equal(f.lockRequests, 0);
+  assert.deepEqual(await f.store.states(), []);
 });
