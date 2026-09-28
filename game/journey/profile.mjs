@@ -124,14 +124,15 @@ export function validateJourneyProfile(source) {
     for (const [id, receipt] of Object.entries(profile.clears[mode])) {
       exactJourneyKeys(
         receipt,
-        ['runId', 'gameplayId', 'difficulty'],
+        ['runId', 'gameplayId', 'difficulty', 'bestStars'],
         'Journey completion receipt',
       );
       if (
         !text(id) ||
         !text(receipt.runId) ||
         !text(receipt.gameplayId) ||
-        !['gentle', 'standard', 'expert'].includes(receipt.difficulty)
+        !['gentle', 'standard', 'expert'].includes(receipt.difficulty) ||
+        !(receipt.bestStars === undefined || [1, 2, 3].includes(receipt.bestStars))
       )
         throw new TypeError(t('errors:journey.invalidCompletionReceipt'));
     }
@@ -164,6 +165,8 @@ export function mergeJourneyBackup(source, backupSource) {
     profile.cursors[mode] ??= backup.cursors[mode];
     for (const [id, receipt] of Object.entries(backup.clears[mode])) {
       if (!own(profile.clears[mode], id)) profile.clears[mode][id] = receipt;
+      else if (receipt.bestStars && (profile.clears[mode][id].bestStars ?? 0) < receipt.bestStars)
+        profile.clears[mode][id].bestStars = receipt.bestStars;
     }
     profile.skipped[mode] = [
       ...new Set([...profile.skipped[mode], ...backup.skipped[mode]]),
@@ -195,7 +198,8 @@ export function applyJourneyEvent(source, event) {
     if (
       !text(event.runId) ||
       !text(event.gameplayId) ||
-      !['gentle', 'standard', 'expert'].includes(event.difficulty)
+      !['gentle', 'standard', 'expert'].includes(event.difficulty) ||
+      !(event.stars === undefined || [1, 2, 3].includes(event.stars))
     )
       throw new TypeError(t('errors:journey.exactReceiptRequired'));
     if (own(profile.clears[mode], missionId)) {
@@ -203,14 +207,26 @@ export function applyJourneyEvent(source, event) {
       if (old.runId === event.runId) {
         if (old.gameplayId !== event.gameplayId || old.difficulty !== event.difficulty)
           throw new TypeError(t('errors:journey.completionIdentityChanged'));
+        if (event.stars && (old.bestStars ?? 0) < event.stars) {
+          old.bestStars = event.stars;
+          profile.generation++;
+          return validateJourneyProfile(profile);
+        }
         return profile;
       }
     }
+    const previousBest = profile.clears[mode][missionId]?.bestStars ?? 0;
+    const bestStars = Math.max(previousBest, event.stars ?? 0);
     Object.defineProperty(profile.clears[mode], missionId, {
       enumerable: true,
       configurable: true,
       writable: true,
-      value: { runId: event.runId, gameplayId: event.gameplayId, difficulty: event.difficulty },
+      value: {
+        runId: event.runId,
+        gameplayId: event.gameplayId,
+        difficulty: event.difficulty,
+        ...(bestStars ? { bestStars } : {}),
+      },
     });
     profile.skipped[mode] = profile.skipped[mode].filter((id) => id !== missionId);
   }
