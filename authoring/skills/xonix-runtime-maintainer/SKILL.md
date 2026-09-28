@@ -1596,3 +1596,22 @@ it on cancellation, filtering, close and offscreen movement. Test second-write
 rollback, session export/retry, conflict rejection and strict older backup readers.
 Backup v3 contains references, not image bytes. Solo admission does not establish
 Versus/Team completion; those hosts remain UX1-A2 qualification work.
+
+## Global optional-enemy remains and exact practice override
+
+Use the separate `EncounterDisplayPreferencesV1` controller and shared Settings
+controls; never append fields to strict historical display/profile/replay records.
+Ordinary Solo, both Versus boards and Replay read only the cosmetic residue flag.
+Team shares the preference UI but has no new combat mechanic. Preserve invalid or
+future raw bytes, session-only/read-only behavior, verified retry, cross-tab and
+BFCache authority, and disposal. Live enemies, warnings, shots and brief hits stay.
+Studio snapshots explicit Show/Hide only for validated optional Solo previews;
+owned exact practice parameters override the global choice, and ambiguity falls
+back to the global preference. No preview writes player settings or scenario data.
+
+Fixture guidance: open collapsed Mission info before entering its brief; use a
+monotonic controller clock and real neutral release interval. Team starts may
+write the first-cut teaching receipt: assert that exact write separately, then
+measure Settings/disposal writes from their actual boundary. A restored page needs
+its neutral sample before deliberate tab input, even when testing an edit before
+its deferred preference restore. See batch11 evidence; do not relax these guards.

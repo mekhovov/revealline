@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { createCombatCandidates } from '../content-design/combat-candidates.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { prepareScenario } from '../imports.mjs';
+import { ENCOUNTER_DISPLAY_PREFERENCES_KEY } from '../encounter-display-preferences.mjs';
 import { FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
@@ -62,7 +63,13 @@ test('practice remains affect only painter options through a real combat route a
     ['show', true],
   ]) {
     await t.test(choice, async (t) => {
-      const storage = memoryStorage({ 'practice-presentation-control': 'unchanged' });
+      const storage = memoryStorage({
+        'practice-presentation-control': 'unchanged',
+        [ENCOUNTER_DISPLAY_PREFERENCES_KEY]: JSON.stringify({
+          format: 'EncounterDisplayPreferencesV1',
+          showRemains: !showCombatScrap,
+        }),
+      });
       const previewStorage = memoryStorage({ [previewKey]: scenarioJSON });
       const page = await soloPage(t, {
         storage,

@@ -170,3 +170,13 @@ clocks, invalid retention and full export/import. Team hunters show the core's
 locked warning point, then actual charge velocity and held recovery heading;
 never turn a passed-target charge back towards a live target in presentation.
 See [batch10 evidence](../../../docs/verification/actor-batch-10/README.md).
+
+## Existing timed Team freeze
+
+The core retains velocity during enemy freeze. Project its actual `[from, until)`
+interval into the shared actor sampler rather than inferring motion from velocity.
+Combine freeze with rover dormancy without changing state/heading/contact cues or
+opacity. Use the real pickup, expiry, paused/reduced samples and unchanged parallel
+core runs. The source review's borrowed prepared Scout/drifter rig is a labelled
+compatibility specimen; current tank treads already follow displacement. Neither
+fixture establishes a new production binding. See batch11 and team-freeze study.

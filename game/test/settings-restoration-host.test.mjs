@@ -178,6 +178,9 @@ for (const mode of ['Solo', 'Versus', 'Team']) {
     const f = await host(t, mode),
       latest = { ...stale, volume: 0.22, ornaments: 'subtle' };
     f.win.emit('pageshow', { persisted: true });
+    // Team deliberately gates Confirm after restoration until a neutral input
+    // sample. This synchronous frame still precedes the deferred form repair.
+    if (mode === 'Team') f.tick();
     for (const [key, value] of Object.entries(latest)) f.change(key, value);
     const writes = [...f.storage.writes],
       records = [...f.storage.map],

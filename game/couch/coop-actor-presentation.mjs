@@ -215,6 +215,11 @@ export function createCoopActorPresentation({
     const actors = [],
       descriptions = new Map(),
       frozen = [];
+    // The Team core preserves authored velocity during a timed freeze. Read
+    // its exact active interval rather than inferring motion from that velocity;
+    // this holds cosmetic parts without dimming bodies or changing role cues.
+    const freeze = run.bonuses?.effects?.['enemy-freeze'],
+      enemiesFrozen = Boolean(freeze && run.tick >= freeze.from && run.tick < freeze.until);
     for (const player of run.players) {
       const id = key('pilot', player.id),
         vector = DIRECTION[player.direction] ?? [0, 0];
@@ -242,8 +247,12 @@ export function createCoopActorPresentation({
       if (enemy.type === 'claimed-rover') {
         const slot = COOP_ACTOR_ROLES[enemy.type].slot;
         if (!sprites.has(slot)) sprites.set(slot, snapshot?.image?.(slot) ?? null);
-        frozen.push({ id, mode: enemy.rover?.mode, frozen: enemy.rover?.mode !== 'active' });
-      }
+        frozen.push({
+          id,
+          mode: enemy.rover?.mode,
+          frozen: enemiesFrozen || enemy.rover?.mode !== 'active',
+        });
+      } else if (enemiesFrozen) frozen.push({ id, frozen: true });
       actors.push({
         id,
         type: enemy.type,

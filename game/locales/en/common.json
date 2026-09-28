@@ -217,5 +217,10 @@
   "counts.images_one": "{{count}} image",
   "counts.images_other": "{{count}} images",
   "counts.videos_one": "{{count}} video",
-  "counts.videos_other": "{{count}} videos"
+  "counts.videos_other": "{{count}} videos",
+  "preferences.enemyRemains": "Show enemy remains",
+  "preferences.enemyRemainsHint": "Show defeated optional enemies where supported. Warnings, shots and brief hit effects stay visible.",
+  "preferences.retryEncounterSave": "Retry saving",
+  "preferences.encounterSessionOnly": "Enemy remains changed for this session; saving is disabled here.",
+  "preferences.encounterSaveFailed": "Enemy remains changed for this session. The choice could not be saved; existing settings are preserved."
 }

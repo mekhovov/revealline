@@ -171,7 +171,7 @@ import { attachControllerReading } from './ui/controller-reading.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
 import { createPracticeRenderFailure } from './ui/practice-render-failure.mjs';
-import { readPracticePresentation } from './ui/practice-presentation.mjs';
+import { readPracticeRemainsOverride } from './ui/practice-presentation.mjs';
 import { requestControllerPracticeExit } from './ui/controller-practice-exit.mjs';
 import { playgroundTabBoundary } from './ui/playground-tab-boundary.mjs';
 import { attachEnemyWorkshopReturn } from './ui/enemy-workshop-return.mjs';
@@ -184,6 +184,7 @@ import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
 import { createAudioMaster } from './ui/audio-master.mjs';
 import { createAudioPreferences } from './audio-preferences.mjs';
+import { attachEncounterDisplayControls } from './ui/encounter-display-controls.mjs';
 import { createDisplayPreferences } from './display-preferences.mjs';
 import { createActorStylePreferences } from './actor-style-preferences.mjs';
 import {
@@ -481,7 +482,7 @@ try {
   // Switching source maps inside an authored preview must not turn the same
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
-  const practicePresentation = readPracticePresentation(location.search, {
+  const practiceRemains = readPracticeRemainsOverride(location.search, {
     practice: practiceSession && !courseSession,
   });
   const practiceRenderFailure = createPracticeRenderFailure({
@@ -1079,6 +1080,13 @@ try {
     onWarning: (message, key) => {
       localizedText($('display-preferences-status'), () => (key ? t(key) : message));
     },
+  });
+  const encounterDisplay = attachEncounterDisplayControls({
+    document,
+    window,
+    getStorage: () => localStorage,
+    writable: () =>
+      !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
   });
   const stopDisplayView = displayPreferences.subscribe(applyDisplayPreferences);
   const actorPreferences = createActorStylePreferences({
@@ -2840,6 +2848,7 @@ try {
       audioRestoration.dispose();
       displayRestoration.dispose();
       displayPreferences.dispose();
+      encounterDisplay.dispose();
       menuStyle.dispose();
       audioPreferences.dispose();
       audioMaster.dispose();
@@ -10430,7 +10439,7 @@ try {
           reduced: displayPreferences.snapshot().effectiveReducedEffects,
           fullReveal: run.status === 'won',
           showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
-          showCombatScrap: practicePresentation.showCombatScrap,
+          showCombatScrap: practiceRemains ?? encounterDisplay.snapshot().showRemains,
           backdrop: flightPictures?.current(),
           celebrationPaused: document.hidden || dialogOpen(),
           defeatEffectsRunning: defeatEffectsRunning(),

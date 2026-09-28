@@ -129,3 +129,11 @@ operation, not a build-time mutation of accepted originals. Preserve the origina
 record/bytes and derivative parent/fit/sampling/hash; nearest sampling is not
 native-grid cleanup. Export/reimport the real downloaded packet. C5 culture,
 contrast and production binding review remain separate. See [batch10](../../../docs/verification/actor-batch-10/README.md).
+
+For cultural corrections, retain prior originals and exact packet records. The
+separate Poltava revision6 uses Pyrohiv's textual Kuntseve reference only; its
+single-leaf shutters, four-pane windows, exposed-log entrance and interpreted
+horse-profile beam ends are candidate observations, not historical reconstruction.
+Keep the actual1774×887 image and make a separate board derivative in Studio.
+Model byte round-trips, native import, native-grid cleanup, cultural approval and
+in-game contrast each require their own evidence. The new packet adds no mission.

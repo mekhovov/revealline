@@ -27,7 +27,7 @@ checkpoint. This actor branch does not allocate its version or start another pub
 
 **Draft [PR761](https://github.com/mekhovov/revealline/pull/761)** contains the
 character, reference and authoring work. Five earlier implementation batches and cancellation corrections were pushed through
-`92fa98912eb5b5509f30f12a200e91afb48fe851`. The sixth checkpoint adds the foreground-contact study and useful loss/recovery feedback; the seventh corrects effective gameplay parity and combined threat guidance; the eighth advances the now-prioritized C3–C6 tracks in parallel; the ninth connects optional encounters to real Solo practice with bounded failure recovery; the tenth adds Team intent poses, optional remains, non-rotor editing and real board-image preparation. PR761 is not merged or publicly released and needs reconciliation against
+`92fa98912eb5b5509f30f12a200e91afb48fe851`. The sixth checkpoint adds the foreground-contact study and useful loss/recovery feedback; the seventh corrects effective gameplay parity and combined threat guidance; the eighth advances the now-prioritized C3–C6 tracks in parallel; the ninth connects optional encounters to real Solo practice with bounded failure recovery; the tenth adds Team intent poses, optional remains, non-rotor editing and real board-image preparation; the eleventh adds global remains controls, real timed-freeze presentation and a separately revised Poltava candidate. PR761 is not merged or publicly released and needs reconciliation against
 newer main. Compatible
 implementation continues in the same draft while the release queue is occupied.
 
@@ -331,3 +331,36 @@ policy and recovery. Continue these in parallel with the canonical publisher.
 C0/C1 support only their dependencies, C7/UX6 follows, and C2 remains last.
 Phase effort ranges above remain estimates; publication depends on reconciled
 source and the unresolved production review, not the availability of C2 participants.
+
+## Batch 11 checkpoint — implemented ahead of publication
+
+[Evidence and corrections](verification/actor-batch-11/README.md) distinguish
+source, modeled input, real browser and artwork observations. Public selector
+still reads **v0.142.1 / 7138e7b6187bf69991d50313c3f9ac1620427778**; main remains
+`a10fcbf8ae982f31d684f8abdc265d7e0338b3db` at this fresh check. The canonical
+publisher's fixed v0.142.2 batch is separate. No release/version has been allocated
+by this branch and PR761 remains a conflicting draft input requiring reconciliation.
+
+Completed in this checkpoint: global cosmetic remains setting in all three mode
+Settings, Solo/Versus/Replay consumption, isolated explicit Studio override,
+prepared Team rigs freezing with the actual core pickup, and Poltava revision 6
+with unchanged previous sources. Practice and Team settings fixture failures were
+reproduced and corrected without weakening runtime safeguards. No historical art,
+profile, simulation, replay or display-v1 schema was rewritten.
+
+Remaining priorities and effort ranges after work starts:
+
+| Priority  | Remaining acceptance/work                                                                                        | Effort range               |
+| --------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| C3        | Exact native roster/enemy/Team-state production adoption, whole-board review and retained appearance checks      | 3–5 days                   |
+| C4        | Broader opt-in pursuit/interception/patrol/sentry counterplay, full mission/replay qualification and public play | 3–5 days                   |
+| C5        | Poltava native derivative/pixel cleanup/cultural review; next community, Retro and Coupa cohorts                 | 2–4 days per cohort        |
+| C6        | Complete moving-part/state workflows, native r6 import, full collection/theme restoration and authoring handoff  | 2–3 days in parallel       |
+| C7 / UX6  | Remaining distinct bindings, whole-player, performance/offline/hardware qualification                            | 4–7 days plus devices      |
+| C2 — last | Game-feel comparison, listening and two consented rounds with six players                                        | 2–3 days plus participants |
+
+These are implementation ranges, not publication dates. The two reopened Team
+production-review assertions and reconciliation against newer main still block
+acceptance of affected source; passing ordinary build/tests cannot replace that
+review. Waived long suites, physical hardware, full balance and comprehensive
+offline play are not claimed passed. None of these prevents independent C3–C6 work.

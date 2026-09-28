@@ -80,7 +80,8 @@ dialog.shared-settings {
   align-content: center;
   margin-block: 12px;
 }
-.shared-settings :is(.race-check, .settings-check) {
+.shared-settings :is(.race-check, .settings-check),
+#coop-options label.settings-check {
   display: flex;
   align-items: center;
   gap: 12px;

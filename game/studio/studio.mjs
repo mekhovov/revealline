@@ -1198,7 +1198,7 @@ async function launchPreview(source, missionId, difficulty) {
   localizedText($('preview-status'), localizedMessage('tools:studio.preview.preparing'));
   let result,
     previewProject,
-    showCombatScrap = true;
+    showCombatScrap = null;
   try {
     // Own one immutable edition across asynchronous media loading and reuse its
     // validated projections; never compile the whole library twice per launch.
@@ -1230,7 +1230,8 @@ async function launchPreview(source, missionId, difficulty) {
     return;
   }
   const target = new URL(`../?practice=1&revision=studio-${ticket}`, location.href);
-  if (!showCombatScrap) target.searchParams.set('preview-remains', 'hide');
+  if (showCombatScrap !== null)
+    target.searchParams.set('preview-remains', showCombatScrap ? 'show' : 'hide');
   const url = target.href;
   $('preview').src = url;
   localizedText($('preview-status'), () =>
