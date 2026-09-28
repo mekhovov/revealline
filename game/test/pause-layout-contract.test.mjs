@@ -10,6 +10,7 @@ const headerCss = [
 ]
   .map((path) => readFileSync(new URL(path, import.meta.url), 'utf8'))
   .join('\n');
+const surfaceCss = readFileSync(new URL('../ui/field-kit-surfaces.css', import.meta.url), 'utf8');
 const declarations = (selector) => {
   const start = css.indexOf(`${selector} {`);
   assert.notEqual(start, -1, `Missing pause-specific rule: ${selector}`);
@@ -68,4 +69,35 @@ test('oversized pause commands have a top-reachable scrollport and focus clearan
 
 test('gameplay header CSS no longer reserves or hides space for fullscreen', () => {
   assert.doesNotMatch(headerCss, /shell-fullscreen/);
+});
+
+test('ready actions use a bounded grid instead of shrinking translated labels into columns', () => {
+  assert.match(
+    surfaceCss,
+    /data-kind='ready'[^}]*\.overlay-actions\s*\{[\s\S]*?display:\s*grid[\s\S]*?repeat\(2,\s*minmax\(0,\s*1fr\)\)/,
+  );
+  assert.match(
+    surfaceCss,
+    /data-kind='ready'[\s\S]*?>\s*#start-button[\s\S]*?grid-column:\s*1\s*\/\s*-1/,
+  );
+  assert.match(
+    surfaceCss,
+    /data-kind='ready'[\s\S]*?\.overlay-actions \.button\s*\{[\s\S]*?word-break:\s*normal[\s\S]*?overflow-wrap:\s*break-word/,
+  );
+  assert.match(
+    headerCss,
+    /not\(\[data-kind='pause'\]\) \.pause-secondary-groups[\s\S]*?display:\s*none/,
+  );
+});
+
+test('pause hierarchy uses compact side labels and a quiet full-width exit', () => {
+  assert.match(
+    surfaceCss,
+    /data-kind='pause'[^}]*\.pause-menu-section\s*\{[\s\S]*?grid-template-columns:\s*72px\s+minmax\(0,\s*1fr\)/,
+  );
+  assert.match(surfaceCss, /data-kind='pause'[^}]*\.pause-label\s*\{[\s\S]*?font-size:\s*13px/);
+  assert.match(
+    surfaceCss,
+    /data-kind='pause'[^}]*#overlay-menu\s*\{[\s\S]*?background:\s*transparent/,
+  );
 });
