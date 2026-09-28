@@ -1,3 +1,7 @@
+import {
+  createCurriculumListeningContent,
+  CURRICULUM_LISTENING_ASSET_IDS,
+} from './curriculum-listening.mjs';
 import { createCurriculumMissionExplorations } from './curriculum-mission-explorations.mjs';
 import { createCurriculumApplicationRewards } from './curriculum-application-rewards.mjs';
 import { CURRICULUM_LEARNING_PROFILES } from './curriculum-profiles.mjs';
@@ -127,6 +131,7 @@ export function createCurriculumRewards({
       ],
     ),
   );
+  const listening = createCurriculumListeningContent(definition.id, assets);
   const finalePayloads = [
     knowledge(definition.id + '-guide', definition.locales, [definition.link]),
     ...createCurriculumAtlasPayloads(definition.id),
@@ -142,9 +147,11 @@ export function createCurriculumRewards({
       },
     },
   ];
+  finalePayloads.push(...listening.payloads);
   for (const assetId of definition.rewardAssetIds) {
     const asset = assets.find((entry) => entry.id === assetId);
     required(asset?.sha256, 'Missing declared curriculum reward asset: ' + assetId);
+    if (CURRICULUM_LISTENING_ASSET_IDS.includes(assetId)) continue;
     if (assetId === 'met-degas-ukrainian-dress-436157')
       finalePayloads.push(...museumComparison(definition.id, asset));
     else
@@ -164,6 +171,7 @@ export function createCurriculumRewards({
       finalePayloads,
     ),
   );
+  if (listening.audioGroups.length) rewards[rewards.length - 1].audioGroups = listening.audioGroups;
   rewards.push(
     ...createCurriculumApplicationRewards({ definition, requirements, lessons, assets }),
   );
