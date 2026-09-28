@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-colour-clay-spring-01-reveal-v1",
+          "sha256": "76afafc6aee7efbbb84b8b97ac96768465023c8cd3acdd7093f7de08b9c3f655"
         },
         "id": "ukraine-colour-clay-spring-01-image",
         "locales": {
           "en": {
-            "alt": "A Painted Home — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated spring courtyard with different invented floral paintings on a whitewashed wall, a wooden household box and paper studies.",
             "title": "A Painted Home"
           },
           "uk": {
-            "alt": "Розписана оселя — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальний ілюстрований весняний двір із різними вигаданими квітковими розписами на білій стіні, дерев’яній скриньці та паперових етюдах.",
             "title": "Розписана оселя"
           }
         },
@@ -101,17 +101,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-colour-clay-spring-02-reveal-v1",
+          "sha256": "eac1252d6cf2e6b6084f3c00cbc0d07d0278aa1a2f27badf2418b95856caaab1"
         },
         "id": "ukraine-colour-clay-spring-02-image",
         "locales": {
           "en": {
-            "alt": "The Teacher in the Portrait — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated art-school gallery with an empty portrait frame, two distinct worktables, blank record cards and invented colour studies.",
             "title": "The Teacher in the Portrait"
           },
           "uk": {
-            "alt": "Учителька на портреті — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована художня галерея з порожньою портретною рамою, двома різними робочими столами, порожніми картками й вигаданими кольоровими етюдами.",
             "title": "Учителька на портреті"
           }
         },
@@ -185,17 +185,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-colour-clay-spring-03-reveal-v1",
+          "sha256": "7df81716961ae08ed04adf4d4359edbad08e9010190563fbd8ef3da3e01a2547"
         },
         "id": "ukraine-colour-clay-spring-03-image",
         "locales": {
           "en": {
-            "alt": "Clay, Glaze and Place — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated ceramic courtyard with three different display bays, cream vessels with invented green, yellow and brown glaze marks, and separate blank cards.",
             "title": "Clay, Glaze and Place"
           },
           "uk": {
-            "alt": "Глина, полива і місце — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальний ілюстрований керамічний двір із трьома різними виставковими нішами, світлими посудинами з вигаданими зеленими, жовтими й коричневими розписами та окремими порожніми картками.",
             "title": "Глина, полива і місце"
           }
         },
@@ -277,17 +277,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-colour-clay-spring-04-reveal-v1",
+          "sha256": "c3ea48e72d2cc67dee8a8bb611580286aa1c1b0afccf1e2ee0bfb97a16e68d2d"
         },
         "id": "ukraine-colour-clay-spring-04-image",
         "locales": {
           "en": {
-            "alt": "Two Objects, Two Makers — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated spacious gallery with a fictional tall vase and a separate circular plate display, each with its own blank record card.",
             "title": "Two Objects, Two Makers"
           },
           "uk": {
-            "alt": "Два предмети — два автори — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована простора галерея з вигаданою високою вазою та окремою круглою таріллю, кожна зі своєю порожньою карткою.",
             "title": "Два предмети — два автори"
           }
         },
@@ -361,17 +361,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-colour-clay-spring-05-reveal-v1",
+          "sha256": "3ce2f25907dc3a3aac911729deb7be72180ee39b4510c6d69a8c821c27796b3b"
         },
         "id": "ukraine-colour-clay-spring-05-image",
         "locales": {
           "en": {
-            "alt": "What the Wax Keeps — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated paper display with three egg-shaped studies, cobalt backgrounds and an ivory diamond showing an area that keeps its earlier colour.",
             "title": "What the Wax Keeps"
           },
           "uk": {
-            "alt": "Що зберігає віск — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована паперова виставка з трьома яйцеподібними етюдами, кобальтовим тлом і світлим ромбом, що показує збереження попереднього кольору.",
             "title": "Що зберігає віск"
           }
         },
@@ -445,17 +445,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-colour-clay-spring-06-reveal-v1",
+          "sha256": "3906cda63a720416d840efb79ceb5acd2cda31f9d8f9b8fcbacdca776651ea27"
         },
         "id": "ukraine-colour-clay-spring-06-image",
         "locales": {
           "en": {
-            "alt": "A Gift with a Story — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated spring exhibition with separate painting, ceramic and paper-egg displays, plus a gift box and blank personal card in the foreground.",
             "title": "A Gift with a Story"
           },
           "uk": {
-            "alt": "Подарунок з історією — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована весняна виставка з окремими розписами, керамікою та паперовими яйцеподібними етюдами, подарунковою коробкою й порожньою особистою карткою попереду.",
             "title": "Подарунок з історією"
           }
         },
@@ -567,17 +567,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-colour-clay-spring-01-reveal-v1",
+          "sha256": "76afafc6aee7efbbb84b8b97ac96768465023c8cd3acdd7093f7de08b9c3f655"
         },
         "id": "ukraine-colour-clay-spring-01-image",
         "locales": {
           "en": {
-            "alt": "A Painted Home — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated spring courtyard with different invented floral paintings on a whitewashed wall, a wooden household box and paper studies.",
             "title": "A Painted Home"
           },
           "uk": {
-            "alt": "Розписана оселя — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальний ілюстрований весняний двір із різними вигаданими квітковими розписами на білій стіні, дерев’яній скриньці та паперових етюдах.",
             "title": "Розписана оселя"
           }
         },
@@ -585,17 +585,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-colour-clay-spring-02-reveal-v1",
+          "sha256": "eac1252d6cf2e6b6084f3c00cbc0d07d0278aa1a2f27badf2418b95856caaab1"
         },
         "id": "ukraine-colour-clay-spring-02-image",
         "locales": {
           "en": {
-            "alt": "The Teacher in the Portrait — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated art-school gallery with an empty portrait frame, two distinct worktables, blank record cards and invented colour studies.",
             "title": "The Teacher in the Portrait"
           },
           "uk": {
-            "alt": "Учителька на портреті — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована художня галерея з порожньою портретною рамою, двома різними робочими столами, порожніми картками й вигаданими кольоровими етюдами.",
             "title": "Учителька на портреті"
           }
         },
@@ -603,17 +603,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-colour-clay-spring-03-reveal-v1",
+          "sha256": "7df81716961ae08ed04adf4d4359edbad08e9010190563fbd8ef3da3e01a2547"
         },
         "id": "ukraine-colour-clay-spring-03-image",
         "locales": {
           "en": {
-            "alt": "Clay, Glaze and Place — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated ceramic courtyard with three different display bays, cream vessels with invented green, yellow and brown glaze marks, and separate blank cards.",
             "title": "Clay, Glaze and Place"
           },
           "uk": {
-            "alt": "Глина, полива і місце — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальний ілюстрований керамічний двір із трьома різними виставковими нішами, світлими посудинами з вигаданими зеленими, жовтими й коричневими розписами та окремими порожніми картками.",
             "title": "Глина, полива і місце"
           }
         },
@@ -621,17 +621,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-colour-clay-spring-04-reveal-v1",
+          "sha256": "c3ea48e72d2cc67dee8a8bb611580286aa1c1b0afccf1e2ee0bfb97a16e68d2d"
         },
         "id": "ukraine-colour-clay-spring-04-image",
         "locales": {
           "en": {
-            "alt": "Two Objects, Two Makers — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated spacious gallery with a fictional tall vase and a separate circular plate display, each with its own blank record card.",
             "title": "Two Objects, Two Makers"
           },
           "uk": {
-            "alt": "Два предмети — два автори — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована простора галерея з вигаданою високою вазою та окремою круглою таріллю, кожна зі своєю порожньою карткою.",
             "title": "Два предмети — два автори"
           }
         },
@@ -639,17 +639,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-colour-clay-spring-05-reveal-v1",
+          "sha256": "3ce2f25907dc3a3aac911729deb7be72180ee39b4510c6d69a8c821c27796b3b"
         },
         "id": "ukraine-colour-clay-spring-05-image",
         "locales": {
           "en": {
-            "alt": "What the Wax Keeps — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated paper display with three egg-shaped studies, cobalt backgrounds and an ivory diamond showing an area that keeps its earlier colour.",
             "title": "What the Wax Keeps"
           },
           "uk": {
-            "alt": "Що зберігає віск — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована паперова виставка з трьома яйцеподібними етюдами, кобальтовим тлом і світлим ромбом, що показує збереження попереднього кольору.",
             "title": "Що зберігає віск"
           }
         },
@@ -657,17 +657,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-colour-clay-spring-06-reveal-v1",
+          "sha256": "3906cda63a720416d840efb79ceb5acd2cda31f9d8f9b8fcbacdca776651ea27"
         },
         "id": "ukraine-colour-clay-spring-06-image",
         "locales": {
           "en": {
-            "alt": "A Gift with a Story — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated spring exhibition with separate painting, ceramic and paper-egg displays, plus a gift box and blank personal card in the foreground.",
             "title": "A Gift with a Story"
           },
           "uk": {
-            "alt": "Подарунок з історією — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована весняна виставка з окремими розписами, керамікою та паперовими яйцеподібними етюдами, подарунковою коробкою й порожньою особистою карткою попереду.",
             "title": "Подарунок з історією"
           }
         },
@@ -679,6 +679,7 @@
           "en": { "title": "Explore the official source" },
           "uk": { "title": "Відкрити офіційне джерело" }
         },
+        "qr": true,
         "type": "url",
         "url": "https://ich.unesco.org/en/RL/pysanka-ukrainian-tradition-and-art-of-decorating-eggs-02134"
       }

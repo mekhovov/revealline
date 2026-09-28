@@ -14,17 +14,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-threads-01-reveal-v1",
+          "sha256": "948ae2b5db094f54aec6e7d9fe57408bb121dd535b471943425378a7af9de2af"
         },
         "id": "ukraine-threads-01-image",
         "locales": {
           "en": {
-            "alt": "Read the Cloth — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated linen exhibition square with a fictional shirt on a dark wooden plinth, blank record cards and warm arched galleries.",
             "title": "Read the Cloth"
           },
           "uk": {
-            "alt": "Прочитайте тканину — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована виставкова площа з вигаданою сорочкою на темному дерев’яному п’єдесталі, порожніми картками й теплими арковими галереями.",
             "title": "Прочитайте тканину"
           }
         },
@@ -77,7 +77,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-threads-01", "kind": "mission" }
   },
   {
@@ -98,17 +98,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-threads-02-reveal-v1",
+          "sha256": "3b0ba003bc7e170dbb16dc46ba35f6bbdbaf81bf6dc9e8b34b7fce78dc3cec72"
         },
         "id": "ukraine-threads-02-image",
         "locales": {
           "en": {
-            "alt": "Stitch Paths — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated thread-study gallery with offset linen ribbons, crimson and charcoal thread, wooden trays and a magnifier revealing woven texture.",
             "title": "Stitch Paths"
           },
           "uk": {
-            "alt": "Шляхи стібків — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована галерея зразків: зміщені лляні стрічки, багряні й темні нитки, дерев’яні лотки та лупа над фактурою тканини.",
             "title": "Шляхи стібків"
           }
         },
@@ -161,7 +161,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-threads-02", "kind": "mission" }
   },
   {
@@ -263,17 +263,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-threads-04-reveal-v1",
+          "sha256": "22ae3b4e43d3e02260437d980e4a421d73bbacc0a35dfd0e809a0300150dec16"
         },
         "id": "ukraine-threads-04-image",
         "locales": {
           "en": {
-            "alt": "Many Local Voices — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated exhibition with two distinct fictional linen garment displays, separate blank record cards and a broad shared reading terrace.",
             "title": "Many Local Voices"
           },
           "uk": {
-            "alt": "Розмаїття місцевих голосів — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована виставка з двома різними вигаданими лляними виробами, окремими порожніми картками та спільною широкою терасою читання.",
             "title": "Розмаїття місцевих голосів"
           }
         },
@@ -334,7 +334,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-threads-04", "kind": "mission" }
   },
   {
@@ -355,17 +355,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-threads-05-reveal-v1",
+          "sha256": "d3c81a60d651ba8c9e2801a4de4608e5580fa4d2df5a4df44210e41c5de405c4"
         },
         "id": "ukraine-threads-05-image",
         "locales": {
           "en": {
-            "alt": "A Rushnyk’s Story — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated long gallery with a fictional fringed ivory textile draped across a wooden bench and two separate blank record cards.",
             "title": "A Rushnyk’s Story"
           },
           "uk": {
-            "alt": "Історія рушника — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована довга галерея з вигаданим світлим полотном із торочками на дерев’яній лаві та двома окремими порожніми картками.",
             "title": "Історія рушника"
           }
         },
@@ -418,7 +418,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-threads-05", "kind": "mission" }
   },
   {
@@ -439,17 +439,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-threads-06-reveal-v1",
+          "sha256": "f85f89cd0a3513736e1b88867982878176affe8ee8e7c72171c6887ded041614"
         },
         "id": "ukraine-threads-06-image",
         "locales": {
           "en": {
-            "alt": "Wear It Today — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated contemporary textile festival plaza with flowing ivory banners, invented crimson-and-charcoal designs and an amber-lit display stage.",
             "title": "Wear It Today"
           },
           "uk": {
-            "alt": "Носіть сьогодні — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована площа сучасного текстильного фестивалю зі світлими полотняними банерами, вигаданими багряно-темними візерунками та тепло освітленою сценою.",
             "title": "Носіть сьогодні"
           }
         },
@@ -502,7 +502,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-threads-06", "kind": "mission" }
   },
   {
@@ -726,17 +726,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-threads-01-reveal-v1",
+          "sha256": "948ae2b5db094f54aec6e7d9fe57408bb121dd535b471943425378a7af9de2af"
         },
         "id": "ukraine-threads-01-image",
         "locales": {
           "en": {
-            "alt": "Read the Cloth — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated linen exhibition square with a fictional shirt on a dark wooden plinth, blank record cards and warm arched galleries.",
             "title": "Read the Cloth"
           },
           "uk": {
-            "alt": "Прочитайте тканину — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована виставкова площа з вигаданою сорочкою на темному дерев’яному п’єдесталі, порожніми картками й теплими арковими галереями.",
             "title": "Прочитайте тканину"
           }
         },
@@ -744,17 +744,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-threads-02-reveal-v1",
+          "sha256": "3b0ba003bc7e170dbb16dc46ba35f6bbdbaf81bf6dc9e8b34b7fce78dc3cec72"
         },
         "id": "ukraine-threads-02-image",
         "locales": {
           "en": {
-            "alt": "Stitch Paths — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated thread-study gallery with offset linen ribbons, crimson and charcoal thread, wooden trays and a magnifier revealing woven texture.",
             "title": "Stitch Paths"
           },
           "uk": {
-            "alt": "Шляхи стібків — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована галерея зразків: зміщені лляні стрічки, багряні й темні нитки, дерев’яні лотки та лупа над фактурою тканини.",
             "title": "Шляхи стібків"
           }
         },
@@ -780,17 +780,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-threads-04-reveal-v1",
+          "sha256": "22ae3b4e43d3e02260437d980e4a421d73bbacc0a35dfd0e809a0300150dec16"
         },
         "id": "ukraine-threads-04-image",
         "locales": {
           "en": {
-            "alt": "Many Local Voices — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated exhibition with two distinct fictional linen garment displays, separate blank record cards and a broad shared reading terrace.",
             "title": "Many Local Voices"
           },
           "uk": {
-            "alt": "Розмаїття місцевих голосів — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована виставка з двома різними вигаданими лляними виробами, окремими порожніми картками та спільною широкою терасою читання.",
             "title": "Розмаїття місцевих голосів"
           }
         },
@@ -798,17 +798,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-threads-05-reveal-v1",
+          "sha256": "d3c81a60d651ba8c9e2801a4de4608e5580fa4d2df5a4df44210e41c5de405c4"
         },
         "id": "ukraine-threads-05-image",
         "locales": {
           "en": {
-            "alt": "A Rushnyk’s Story — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated long gallery with a fictional fringed ivory textile draped across a wooden bench and two separate blank record cards.",
             "title": "A Rushnyk’s Story"
           },
           "uk": {
-            "alt": "Історія рушника — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована довга галерея з вигаданим світлим полотном із торочками на дерев’яній лаві та двома окремими порожніми картками.",
             "title": "Історія рушника"
           }
         },
@@ -816,17 +816,17 @@
       },
       {
         "asset": {
-          "assetId": "ukraine-culture-home",
-          "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144"
+          "assetId": "ukraine-threads-06-reveal-v1",
+          "sha256": "f85f89cd0a3513736e1b88867982878176affe8ee8e7c72171c6887ded041614"
         },
         "id": "ukraine-threads-06-image",
         "locales": {
           "en": {
-            "alt": "Wear It Today — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "Original illustrated contemporary textile festival plaza with flowing ivory banners, invented crimson-and-charcoal designs and an amber-lit display stage.",
             "title": "Wear It Today"
           },
           "uk": {
-            "alt": "Носіть сьогодні — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Оригінальна ілюстрована площа сучасного текстильного фестивалю зі світлими полотняними банерами, вигаданими багряно-темними візерунками та тепло освітленою сценою.",
             "title": "Носіть сьогодні"
           }
         },
@@ -838,6 +838,7 @@
           "en": { "title": "Explore the official source" },
           "uk": { "title": "Відкрити офіційне джерело" }
         },
+        "qr": true,
         "type": "url",
         "url": "https://honchar.org.ua/collections/view/odag?type=list"
       },

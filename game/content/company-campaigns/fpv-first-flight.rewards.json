@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-first-flight-key-v1",
+          "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
         },
         "id": "fpv-first-flight-01-image",
         "locales": {
           "en": {
-            "alt": "Start with a Stop — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
             "title": "Start with a Stop"
           },
           "uk": {
-            "alt": "Почніть із зупинки — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами.",
             "title": "Почніть із зупинки"
           }
         },
@@ -101,17 +101,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-first-flight-key-v1",
+          "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
         },
         "id": "fpv-first-flight-02-image",
         "locales": {
           "en": {
-            "alt": "Height Is a Separate Question — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
             "title": "Height Is a Separate Question"
           },
           "uk": {
-            "alt": "Висота — окреме питання — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами.",
             "title": "Висота — окреме питання"
           }
         },
@@ -185,17 +185,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-first-flight-key-v1",
+          "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
         },
         "id": "fpv-first-flight-03-image",
         "locales": {
           "en": {
-            "alt": "A Straight Path, Two Views — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
             "title": "A Straight Path, Two Views"
           },
           "uk": {
-            "alt": "Прямий шлях, два види — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами.",
             "title": "Прямий шлях, два види"
           }
         },
@@ -269,17 +269,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-first-flight-key-v1",
+          "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
         },
         "id": "fpv-first-flight-04-image",
         "locales": {
           "en": {
-            "alt": "Slide Past the Window — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
             "title": "Slide Past the Window"
           },
           "uk": {
-            "alt": "Рух убік повз вікно — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами.",
             "title": "Рух убік повз вікно"
           }
         },
@@ -324,9 +324,9 @@
       "missions": [
         {
           "bindings": [
-            { "difficulty": "gentle", "gameplayId": "f1eeb4a7fee6b4bc" },
-            { "difficulty": "standard", "gameplayId": "19eb3d3d1713807c" },
-            { "difficulty": "expert", "gameplayId": "6f67f753e580d9da" }
+            { "difficulty": "gentle", "gameplayId": "79a9987ef3bbb60d" },
+            { "difficulty": "standard", "gameplayId": "7be65d5bbdefa2d7" },
+            { "difficulty": "expert", "gameplayId": "cd4e1b575c0fc2e6" }
           ],
           "missionId": "fpv-first-flight-04"
         }
@@ -353,17 +353,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-first-flight-key-v1",
+          "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
         },
         "id": "fpv-first-flight-05-image",
         "locales": {
           "en": {
-            "alt": "A Turn and a Translation — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
             "title": "A Turn and a Translation"
           },
           "uk": {
-            "alt": "Поворот і переміщення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами.",
             "title": "Поворот і переміщення"
           }
         },
@@ -437,17 +437,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-first-flight-key-v1",
+          "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
         },
         "id": "fpv-first-flight-06-image",
         "locales": {
           "en": {
-            "alt": "The Joined Practice Route — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
             "title": "The Joined Practice Route"
           },
           "uk": {
-            "alt": "Спільний навчальний маршрут — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами.",
             "title": "Спільний навчальний маршрут"
           }
         },
@@ -492,9 +492,9 @@
       "missions": [
         {
           "bindings": [
-            { "difficulty": "gentle", "gameplayId": "a3fbf7d595255346" },
-            { "difficulty": "standard", "gameplayId": "284edd34f0450ac9" },
-            { "difficulty": "expert", "gameplayId": "757d6abd47f80577" }
+            { "difficulty": "gentle", "gameplayId": "fdbef147770e0696" },
+            { "difficulty": "standard", "gameplayId": "6c0cfbf125da1328" },
+            { "difficulty": "expert", "gameplayId": "0b281aebdfd95a99" }
           ],
           "missionId": "fpv-first-flight-06"
         }
@@ -551,17 +551,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-first-flight-key-v1",
+          "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
         },
         "id": "fpv-first-flight-01-image",
         "locales": {
           "en": {
-            "alt": "Start with a Stop — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
             "title": "Start with a Stop"
           },
           "uk": {
-            "alt": "Почніть із зупинки — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами.",
             "title": "Почніть із зупинки"
           }
         },
@@ -569,17 +569,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-first-flight-key-v1",
+          "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
         },
         "id": "fpv-first-flight-02-image",
         "locales": {
           "en": {
-            "alt": "Height Is a Separate Question — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
             "title": "Height Is a Separate Question"
           },
           "uk": {
-            "alt": "Висота — окреме питання — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами.",
             "title": "Висота — окреме питання"
           }
         },
@@ -587,17 +587,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-first-flight-key-v1",
+          "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
         },
         "id": "fpv-first-flight-03-image",
         "locales": {
           "en": {
-            "alt": "A Straight Path, Two Views — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
             "title": "A Straight Path, Two Views"
           },
           "uk": {
-            "alt": "Прямий шлях, два види — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами.",
             "title": "Прямий шлях, два види"
           }
         },
@@ -605,17 +605,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-first-flight-key-v1",
+          "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
         },
         "id": "fpv-first-flight-04-image",
         "locales": {
           "en": {
-            "alt": "Slide Past the Window — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
             "title": "Slide Past the Window"
           },
           "uk": {
-            "alt": "Рух убік повз вікно — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами.",
             "title": "Рух убік повз вікно"
           }
         },
@@ -623,17 +623,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-first-flight-key-v1",
+          "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
         },
         "id": "fpv-first-flight-05-image",
         "locales": {
           "en": {
-            "alt": "A Turn and a Translation — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
             "title": "A Turn and a Translation"
           },
           "uk": {
-            "alt": "Поворот і переміщення — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами.",
             "title": "Поворот і переміщення"
           }
         },
@@ -641,17 +641,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-learning-home",
-          "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8"
+          "assetId": "fpv-first-flight-key-v1",
+          "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
         },
         "id": "fpv-first-flight-06-image",
         "locales": {
           "en": {
-            "alt": "The Joined Practice Route — original campaign illustration; a shared home scene may be reused. Not a documentary photograph or technical plan.",
+            "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows.",
             "title": "The Joined Practice Route"
           },
           "uk": {
-            "alt": "Спільний навчальний маршрут — оригінальна ілюстрація кампанії; спільна домашня сцена може повторюватися. Не документальне фото й не технічна схема.",
+            "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами.",
             "title": "Спільний навчальний маршрут"
           }
         },
@@ -663,6 +663,7 @@
           "en": { "title": "Explore the official source" },
           "uk": { "title": "Відкрити офіційне джерело" }
         },
+        "qr": true,
         "type": "url",
         "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
       }
@@ -697,9 +698,9 @@
         },
         {
           "bindings": [
-            { "difficulty": "gentle", "gameplayId": "f1eeb4a7fee6b4bc" },
-            { "difficulty": "standard", "gameplayId": "19eb3d3d1713807c" },
-            { "difficulty": "expert", "gameplayId": "6f67f753e580d9da" }
+            { "difficulty": "gentle", "gameplayId": "79a9987ef3bbb60d" },
+            { "difficulty": "standard", "gameplayId": "7be65d5bbdefa2d7" },
+            { "difficulty": "expert", "gameplayId": "cd4e1b575c0fc2e6" }
           ],
           "missionId": "fpv-first-flight-04"
         },
@@ -713,9 +714,9 @@
         },
         {
           "bindings": [
-            { "difficulty": "gentle", "gameplayId": "a3fbf7d595255346" },
-            { "difficulty": "standard", "gameplayId": "284edd34f0450ac9" },
-            { "difficulty": "expert", "gameplayId": "757d6abd47f80577" }
+            { "difficulty": "gentle", "gameplayId": "fdbef147770e0696" },
+            { "difficulty": "standard", "gameplayId": "6c0cfbf125da1328" },
+            { "difficulty": "expert", "gameplayId": "0b281aebdfd95a99" }
           ],
           "missionId": "fpv-first-flight-06"
         }

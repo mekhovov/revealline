@@ -5404,5 +5404,10 @@
   "rewardMedia.posterUnavailable": "Точний постер недоступний. Відкриття збережено.",
   "rewardMedia.transcriptUnavailable": "Точний транскрипт недоступний. Відкриття збережено. Відкрийте цей перегляд знову, щоб повторити спробу.",
   "editionExpedition.campaignArtwork": "Ілюстрація кампанії: {{name}}",
+  "completionRewards.showQr": "Показати QR-код",
+  "completionRewards.qrAlt": "QR-код для {{url}}",
+  "completionRewards.qrNote": "Відскануйте, щоб відкрити цей ресурс на іншому пристрої. Вище наведено повну адресу призначення.",
+  "completionRewards.qrUnavailable": "QR-зображення недоступне. Ви можете скористатися посиланням на ресурс.",
+  "completionRewards.hideQr": "Приховати QR-код",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }

@@ -214,11 +214,14 @@ export function editionPublicationAssets(catalog, files) {
         retained?.id !== edition.id ||
         retained.presentationHistory?.length ||
         !['brandId', 'audience', 'publication'].every((key) => retained[key] === edition[key]) ||
-        !sameList(retained.campaignIds, edition.campaignIds) ||
+        !Array.isArray(retained.campaignIds) ||
+        !retained.campaignIds.length ||
+        new Set(retained.campaignIds).size !== retained.campaignIds.length ||
+        !retained.campaignIds.every((id) => edition.campaignIds.includes(id)) ||
         !sameList(retained.modes, edition.modes) ||
         !sameList(
           old.campaigns?.map((item) => item.id),
-          edition.campaignIds,
+          retained.campaignIds,
         ) ||
         old.campaigns.some(
           (item) => item.brandId !== edition.brandId || item.publication !== 'public',

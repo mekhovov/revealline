@@ -267,16 +267,19 @@ export const COMPANY_EDITIONS = Object.freeze(
     id,
     revision:
       ['droneaid-nl-community'].includes(id)
-          ? 6
-          : ['droneaid-nl-workshop-lights', 'droneaid-nl-parts-in-motion'].includes(id)
-              ? 5
-              : brandId === 'droneaid-nl'
-                ? 4
-                : ['social-drone-ua', 'victory-drones', 'ukraine-culture', 'fpv-learning'].includes(
-                      id,
-                    )
-                  ? 2
-                  : 1,
+            ? 6
+            : ['droneaid-nl-workshop-lights', 'droneaid-nl-parts-in-motion'].includes(id)
+                ? 5
+                : brandId === 'droneaid-nl'
+                  ? 4
+                  : [
+                        'social-drone-ua',
+                        'victory-drones',
+                        'ukraine-culture',
+                        'fpv-learning',
+                      ].includes(id)
+                    ? 2
+                    : 1,
     name,
     brandId,
     audience,
