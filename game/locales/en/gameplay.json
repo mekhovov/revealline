@@ -186,6 +186,7 @@
   "finalCheckpointMatchesNoProgressAwarded": "Final checkpoint matches · {{value1}} · No progress awarded.",
   "sourceVerifiedExactInputTicksFinalCheckpointCheckedAgainAt": "Source verified · {{value1}} exact input ticks · Final checkpoint checked again at the end.",
   "tick2": "Tick {{value1}} · {{value2}}{{value3}}{{value4}}{{value5}}{{value6}}",
+  "interferenceResisted": " · interference resisted",
   "reading2": "Reading {{value1}}…",
   "verifyingTicks": "Verifying {{value1}} / {{value2}} ticks…",
   "verifiedAndLoadedReadyToWatch": "{{value1}} verified and loaded. Ready to watch.",

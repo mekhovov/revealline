@@ -18,6 +18,7 @@ import { encounterView } from '../ui/encounter-view.mjs';
 import { attachReplayNavigation } from './navigation.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { mountReplayDisplay } from './display.mjs';
+import { replayEventRecord, replayEventText } from './event-copy.mjs';
 
 const $ = (id) => document.getElementById(id);
 globalThis.RevealLineToolLaunch?.attached();
@@ -152,7 +153,7 @@ try {
     controller = null,
     lastFrame = 0,
     lastClass = null,
-    eventLines = [],
+    eventHistory = [],
     disposed = false,
     frameId = null,
     nativeUnsubscribe = null;
@@ -261,26 +262,16 @@ try {
   }
   function displayEvents(events) {
     if (events.length) {
-      eventLines.push(
+      eventHistory.push(
         ...events.map((event) =>
-          t('gameplay:tick2', {
-            value1: event.tick ?? player.state.tick,
-            value2: clipped(event.type, 80),
-            value3: event.classId ? ` · ${clipped(event.classId, 80)}` : '',
-            value4: event.primitive ? ` · ${clipped(event.primitive, 80)}` : '',
-            value5:
-              event.type === 'signal.changed' && event.resistant && event.zoneIds.length
-                ? ' · interference resisted'
-                : '',
-            value6: event.reason ? ` · ${clipped(event.reason, 80)}` : '',
-          }),
+          replayEventRecord(event, player.state.tick, (value) => clipped(value, 80)),
         ),
       );
-      eventLines = eventLines.slice(-12);
+      eventHistory = eventHistory.slice(-12);
     }
-    const items = (eventLines.length ? eventLines : [t('interface:noEventsYet')]).map((text) => {
+    const items = (eventHistory.length ? eventHistory : [null]).map((event) => {
       const item = document.createElement('li');
-      localizedText(item, () => text);
+      localizedText(item, () => (event ? replayEventText(event) : t('interface:noEventsYet')));
       return item;
     });
     $('events').replaceChildren(...items);
@@ -447,7 +438,7 @@ try {
       if (actorLease?.pin().authoredPresentationSha256) $('theme').value = theme.id;
       lastClass = player.state.activeClassId;
       lastFrame = 0;
-      eventLines = [];
+      eventHistory = [];
       displayEvents([]);
       localizedText($('recording-name'), () => player.info.levelName);
       localizedText($('asset-status'), () => assetMessage);
@@ -560,7 +551,7 @@ try {
       if (!player || pending) return;
       player.reset();
       painter.setLevel(player.state.level, { seed: player.info.seed });
-      eventLines = [];
+      eventHistory = [];
       displayEvents([]);
       lastFrame = 0;
       consume(player.pause());
