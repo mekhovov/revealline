@@ -211,7 +211,7 @@ test('learning reward requirements compile, bootstrap and round trip only with t
         assets: f.catalog.assets,
         lessons: [lesson],
       }),
-    /mastery requires a registered/,
+    /Unsupported exact Journey mastery/,
   );
 });
 

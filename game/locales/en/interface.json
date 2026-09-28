@@ -5311,5 +5311,21 @@
   "optionalPractice.ready": "Choose a package to open its launcher.",
   "optionalPractice.empty": "No optional practice packages are published on this host yet.",
   "optionalPractice.unavailable": "The practice catalog is unavailable. Your game and progress remain here.",
-  "completionRewards.campaignFinale": "Campaign finale"
+  "completionRewards.campaignFinale": "Campaign finale",
+  "learningProfiles.choose": "Choose how to explore",
+  "journeyMastery.title": "Optional mission mastery",
+  "journeyMastery.note": "These local goals check an accepted winning replay. They do not change arcade progression or certify real-world skills.",
+  "journeyMastery.challenge": "Optional goal: win this mission without losing a life.",
+  "journeyMastery.checking": "Checking the accepted winning replay…",
+  "journeyMastery.saved": "No-life-lost goal verified and saved.",
+  "journeyMastery.session": "Verified mastery is available in this tab. Export it before leaving; its Journey win must also be saved.",
+  "journeyMastery.tryAgain": "Picture earned. Try another route to win without losing a life.",
+  "journeyMastery.unavailable": "Optional mastery could not be checked. You can continue playing.",
+  "journeyMastery.recovery": "Earlier mastery needs its matching accepted win and gameplay revision. Original evidence remains in the backup.",
+  "journeyMastery.export": "Export optional mastery",
+  "journeyMastery.import": "Import matching mastery evidence",
+  "journeyMastery.retry": "Retry saving verified mastery",
+  "journeyMastery.tooLarge": "The mastery backup exceeds its size limit.",
+  "journeyMastery.wrongEdition": "This mastery backup belongs to another edition.",
+  "journeyMastery.imported": "Matching mastery evidence verified and imported."
 }

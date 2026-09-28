@@ -38,6 +38,8 @@ async function fixture(
     audio = false,
     learning = false,
     getLearningEvidence,
+    mastery = false,
+    getMasteryEvidence,
   } = {},
 ) {
   const base = await editionProviderFixture();
@@ -181,6 +183,10 @@ async function fixture(
     rootURL: 'http://localhost/',
   };
   if (lesson) rewards[0].requirements.learning = [completionLearningReference(lesson)];
+  if (mastery)
+    rewards[0].requirements.mastery = [
+      { id: 'journey-no-loss-win', revision: '1', missionId: bindings[0].missionId },
+    ];
   const doc = new Document();
   const overlay = doc.createElement('section');
   overlay.id = 'game-overlay';
@@ -268,6 +274,7 @@ async function fixture(
     getJourneyRevision: () => profile.generation,
     getJourneyDurable: () => durable,
     getLearningEvidence,
+    getMasteryEvidence,
     getReducedMotion: () => reducedMotion,
     audioMaster: master,
     musicDucker: {
@@ -386,6 +393,43 @@ test('learning-only evidence changes refresh rewards without changing arcade pro
   f.view.refresh();
   await f.settle();
   assert.equal((await f.backend.read()).receipts.length, 2);
+  assert.equal(JSON.stringify(f.profile), profile);
+});
+
+test('verified mastery changes grant once while session evidence cannot persist through an unrelated win', async (t) => {
+  let evidence = { revision: 0, mastery: [], durableMastery: [] };
+  const f = await fixture(t, { mastery: true, getMasteryEvidence: () => evidence });
+  f.accepted(1);
+  f.view.refresh();
+  await f.settle();
+  assert.equal(f.view.snapshot().state.receipts.length, 0);
+  const verified = { ...f.provider.rewards[0].requirements.mastery[0], runId: 'accepted-1' };
+  evidence = {
+    revision: 1,
+    mastery: [{ ...verified, runId: 'different-attempt' }],
+    durableMastery: [],
+  };
+  f.view.refresh();
+  assert.equal(f.view.snapshot().state.receipts.length, 0);
+  evidence = { revision: 2, mastery: [verified], durableMastery: [] };
+  f.view.refresh();
+  await f.settle();
+  assert.equal(f.view.snapshot().state.receipts.length, 1);
+  assert.equal((await f.backend.read()).receipts.length, 0);
+  f.accepted(2);
+  f.view.refresh();
+  await f.settle();
+  assert.equal((await f.backend.read()).receipts.length, 1);
+  const profile = JSON.stringify(f.profile);
+  evidence = { revision: 3, mastery: [verified], durableMastery: [verified] };
+  f.view.refresh();
+  await f.settle();
+  const receipts = (await f.backend.read()).receipts;
+  assert.equal(receipts.length, 2);
+  assert.deepEqual(
+    receipts.find((item) => item.definition.id === f.provider.rewards[0].id).evidence.mastery,
+    [verified],
+  );
   assert.equal(JSON.stringify(f.profile), profile);
 });
 
