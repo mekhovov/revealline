@@ -4,6 +4,7 @@ import { verifyEditionAssets } from './editions/assets.mjs';
 import { resolveEditionAssets } from './editions/model.mjs';
 import { resolveEditionContext } from './edition-context.mjs';
 import { required } from './data-json.mjs';
+import { validateCompletionRewards } from './rewards/model.mjs';
 import { isStudioPreview, STUDIO_PREVIEW_PARAMETER } from './studio-preview-session.mjs';
 import { projectEditionThemeSelection } from './editions/selected-presentation.mjs';
 import { installEditionLocalization } from './editions/localization-runtime.mjs';
@@ -177,7 +178,7 @@ export async function loadRuntimeContentProvider({
     rootURL: rootURL.href,
     themes: projected.themes.themes,
     lessons: Object.values(bootstrap.lessons).flat(),
-    rewards: Object.values(bootstrap.rewards ?? {}).flat(),
+    rewards: validateCompletionRewards(Object.values(bootstrap.rewards ?? {}).flat()),
     installLocalization: () => installEditionLocalization(bootstrap),
     // The canonical host owns and augments its boot data; the immutable source
     // registry must remain untouched for session/presentation identities.
