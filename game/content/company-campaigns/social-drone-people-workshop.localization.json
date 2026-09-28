@@ -6,7 +6,7 @@
     {
       "fields": { "name": { "en": "People Behind the Workshop", "uk": "Люди майстерні" } },
       "id": "social-drone-people-workshop",
-      "identity": "df54a638559f0168",
+      "identity": "a459e6db7b8b95b9",
       "kind": "campaign"
     },
     {
@@ -22,7 +22,7 @@
         "name": { "en": "Welcome to the Network", "uk": "Вітаємо у спільноті" }
       },
       "id": "social-drone-people-workshop-01",
-      "identity": "671110e1f6251c4d",
+      "identity": "ab4dddf4875282ab",
       "kind": "mission"
     },
     {

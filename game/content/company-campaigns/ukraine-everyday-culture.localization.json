@@ -1,0 +1,115 @@
+{
+  "campaignId": "ukraine-everyday-culture",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": {
+        "name": {
+          "en": "Words, Tables and Everyday Culture",
+          "uk": "Слова, стіл і повсякденна культура"
+        }
+      },
+      "id": "ukraine-everyday-culture",
+      "identity": "791b95f7675f4758",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the welcome desk to the reading tables and discover two useful Ukrainian expressions. Plan a complete return around the lane warning before committing to the marked flow.",
+          "uk": "З’єднайте стіл привітань із читальними столами та відкрийте два корисні українські вислови. Перш ніж увійти в позначений потік, сплануйте повний шлях повернення з урахуванням попередження про смугу."
+        },
+        "design.routeDecision": {
+          "en": "Take the welcome alcove first or use the marked flow only when it leads to your prepared reading-room return. Choose the flow direction that reaches a return before the next lane pulse.",
+          "uk": "Спершу захопіть нішу привітань або використайте позначений потік лише тоді, коли він веде до підготовленого повернення в читальню. Оберіть напрямок потоку, що дозволить повернутися до наступного імпульсу смуги."
+        },
+        "name": { "en": "A Door Opens with Words", "uk": "Двері відчиняються словами" }
+      },
+      "id": "ukraine-everyday-culture-01",
+      "identity": "6c37a606789df2a0",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Reveal the letter-study stations and keep small visual differences readable. Plan a complete return around the lane warning before committing to the marked flow.",
+          "uk": "Відкрийте станції дослідження літер і збережіть помітність малих відмінностей. Перш ніж увійти в позначений потік, сплануйте повний шлях повернення з урахуванням попередження про смугу."
+        },
+        "design.routeDecision": {
+          "en": "Connect the near letter islands for shorter closures or cross the vertical flow after checking its return lane. Choose the flow direction that reaches a return before the next lane pulse.",
+          "uk": "Поєднайте ближні острови літер короткими замиканнями або перетніть вертикальний потік після перевірки смуги повернення. Оберіть напрямок потоку, що дозволить повернутися до наступного імпульсу смуги."
+        },
+        "name": { "en": "Look Closely at Ї", "uk": "Придивіться до Ї" }
+      },
+      "id": "ukraine-everyday-culture-02",
+      "identity": "a99ddaba25047242",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the kitchen-story tables and discover why a cooking practice includes more than ingredients. Plan a complete return around the lane warning before committing to the marked flow.",
+          "uk": "З’єднайте столи кухонних історій і дізнайтеся, чому кулінарна практика ширша за інгредієнти. Перш ніж увійти в позначений потік, сплануйте повний шлях повернення з урахуванням попередження про смугу."
+        },
+        "design.routeDecision": {
+          "en": "Secure the shorter kitchen-story bay or use the flow to reach the far table while keeping a complete return outside the warning lane. Choose the flow direction that reaches a return before the next lane pulse.",
+          "uk": "Закріпіть коротшу залу кухонних історій або скористайтеся потоком до дальнього столу, зберігаючи повне повернення поза смугою попередження. Оберіть напрямок потоку, що дозволить повернутися до наступного імпульсу смуги."
+        },
+        "name": { "en": "A Dish and Its People", "uk": "Страва та її люди" }
+      },
+      "id": "ukraine-everyday-culture-03",
+      "identity": "2dac92ac4d5ec2ae",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Open the quieter vessel court and connect its labels before revealing the central cabinet. Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field.",
+          "uk": "Відкрийте спокійніше подвір’я посуду та поєднайте підписи перед центральною вітриною. Захопіть усі реле щита. Після вертикальної атаки ядра замкніть вісім нових клітин лінії під час фази CORE OPEN або ізолюйте ядро; його звільнення забезпечить решту поля."
+        },
+        "design.routeDecision": {
+          "en": "Connect the source objective from the broad display foundation or take the outer alcove before approaching the central encounter. Connect the shield relays before committing to the exposed shared core.",
+          "uk": "З’єднайте ціль джерела з широкої виставкової основи або захопіть зовнішню нішу перед наближенням до центральної зустрічі. З’єднайте реле щита, перш ніж наближатися до відкритого спільного ядра."
+        },
+        "name": { "en": "A Bowl with a Record", "uk": "Миска з описом" }
+      },
+      "id": "ukraine-everyday-culture-04",
+      "identity": "9d51ff838a3959b6",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect two recipe-story stations and compare their contexts without choosing a single winning household. Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field.",
+          "uk": "З’єднайте дві станції рецептів і порівняйте контексти без вибору єдиної правильної родини. Захопіть усі реле щита. Після вертикальної атаки ядра замкніть вісім нових клітин лінії під час фази CORE OPEN або ізолюйте ядро; його звільнення забезпечить решту поля."
+        },
+        "design.routeDecision": {
+          "en": "Open the numbered recipe return before the second station or connect both source objectives from separate safe islands. Connect the shield relays before committing to the exposed shared core.",
+          "uk": "Відкрийте нумероване повернення рецепта перед другою станцією або поєднайте обидві цілі джерел з окремих безпечних островів. З’єднайте реле щита, перш ніж наближатися до відкритого спільного ядра."
+        },
+        "name": { "en": "Two Recipe Cards", "uk": "Дві картки рецептів" }
+      },
+      "id": "ukraine-everyday-culture-05",
+      "identity": "ae81bc9ff1680b04",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Complete the welcome book and leave space for the next person’s voice. Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field.",
+          "uk": "Завершіть книгу гостинності та залиште місце для голосу наступної людини. Захопіть усі реле щита. Після вертикальної атаки ядра замкніть вісім нових клітин лінії під час фази CORE OPEN або ізолюйте ядро; його звільнення забезпечить решту поля."
+        },
+        "design.routeDecision": {
+          "en": "Open both numbered returns and follow a safe flow to the final source or keep the longer outer circuit for the closing encounter. Connect the shield relays before committing to the exposed shared core.",
+          "uk": "Відкрийте обидва нумеровані повернення та скористайтеся безпечним потоком до останнього джерела або збережіть довший зовнішній обхід для фінальної зустрічі. З’єднайте реле щита, перш ніж наближатися до відкритого спільного ядра."
+        },
+        "name": { "en": "Make Room for Another Story", "uk": "Залиште місце для ще однієї історії" }
+      },
+      "id": "ukraine-everyday-culture-06",
+      "identity": "6228dfe5460a12f0",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}
