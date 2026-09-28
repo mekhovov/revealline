@@ -3596,6 +3596,25 @@ test('original MP3 download is explicit and preserves exact bytes', async (t) =>
   );
 });
 
+test('discovery recording handoff downloads one exact original without changing playback, assignments or saved library', async (t) => {
+  const raw = await fixture('discovery-original'),
+    app = await setup(t, { initial: raw });
+  app.choose('tracks', raw.track.id);
+  const before = await app.store.read(),
+    calls = [...app.calls];
+  await app.click('discovery-recording');
+  assert.equal(app.downloads.length, 0, 'Preparation never downloads automatically.');
+  assert.deepEqual(app.calls, calls, 'Preparation never plays or selects music.');
+  assert.deepEqual(await app.store.read(), before);
+  await app.click('download-prepared');
+  assert.equal(app.downloads.length, 1);
+  assert.deepEqual(
+    new Uint8Array(await app.downloads[0].blob.arrayBuffer()),
+    new Uint8Array(await raw.blob.arrayBuffer()),
+  );
+  assert.deepEqual(await app.store.read(), before);
+});
+
 test('cached restricted recordings cannot audition through either UI or direct handler', async (t) => {
   for (const webPlayback of ['denied', 'unknown']) {
     const raw = await fixture(`cached-${webPlayback}`);

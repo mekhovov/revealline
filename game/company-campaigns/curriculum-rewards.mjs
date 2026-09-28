@@ -1,3 +1,4 @@
+import { createCurriculumMissionExplorations } from './curriculum-mission-explorations.mjs';
 import { createCurriculumApplicationRewards } from './curriculum-application-rewards.mjs';
 import { CURRICULUM_LEARNING_PROFILES } from './curriculum-profiles.mjs';
 import {
@@ -122,6 +123,7 @@ export function createCurriculumRewards({
         imageFor(row),
         knowledge(row.id + '-knowledge', row.locales, row.refs),
         ...curriculumReferencePayloads(row.id, assets),
+        ...createCurriculumMissionExplorations(row.id, assets),
       ],
     ),
   );

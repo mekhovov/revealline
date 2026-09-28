@@ -3,6 +3,8 @@ import { t } from '../i18n/index.mjs';
 import { rewardMediaReferences, REWARD_MEDIA_LIMITS } from '../rewards/media-format.mjs';
 import { acquireStudioRewardAudio } from './reward-audio.mjs';
 import { mountRewardMedia } from '../ui/reward-media.mjs';
+import { mountRewardAudioGroup } from '../ui/reward-audio-group.mjs';
+import { validateRewardAudioGroups } from '../rewards/audio-groups.mjs';
 
 /** Level/Campaign Studio has no edition asset authority. Authors explicitly
  * choose local originals, matched against exact payload hashes; nothing is
@@ -10,6 +12,8 @@ import { mountRewardMedia } from '../ui/reward-media.mjs';
 export function mountLocalRewardMediaPreview({
   container,
   payload,
+  group,
+  payloads,
   locale = 'en',
   window = globalThis.window,
 }) {
@@ -19,13 +23,18 @@ export function mountLocalRewardMediaPreview({
     input = document.createElement('input'),
     status = document.createElement('p'),
     target = document.createElement('div'),
-    references = rewardMediaReferences(payload),
+    recordings = group
+      ? validateRewardAudioGroups([group], payloads)[0].payloadIds.map((id) =>
+          payloads.find((item) => item.id === id),
+        )
+      : [payload],
+    references = recordings.flatMap(rewardMediaReferences),
     files = new Map();
   const tr = (key) => t(`tools:studio.rewardMedia.${key}`, { lng: locale });
   input.type = 'file';
   input.multiple = true;
   input.accept = '.mp3,.ogg,.wav,.mp4,.webm,.png,.jpg,.jpeg,.webp,.txt,.vtt';
-  input.setAttribute('data-reward-media-files', payload.id);
+  input.setAttribute('data-reward-media-files', group?.id ?? payload.id);
   label.textContent = tr('choose');
   label.append(input);
   status.setAttribute('role', 'status');
@@ -71,9 +80,10 @@ export function mountLocalRewardMediaPreview({
       }
       for (const [hash, file] of accepted) files.set(hash, file);
       audioOwner = acquireStudioRewardAudio(document);
-      viewer = mountRewardMedia({
+      const mount = group ? mountRewardAudioGroup : mountRewardMedia;
+      viewer = mount({
         container: target,
-        payload,
+        ...(group ? { group, payloads: recordings } : { payload }),
         locale,
         document,
         window,

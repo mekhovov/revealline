@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { createCurriculumMissionExplorations } from '../company-campaigns/curriculum-mission-explorations.mjs';
 import { createCurriculumAtlasPayloads } from '../company-campaigns/curriculum-atlases.mjs';
 import { CURRICULUM_MISSIONS, CURRICULUM_SOURCES } from '../company-campaigns/curriculum.mjs';
 import {
@@ -9,6 +10,10 @@ import {
   validateExplorationPayload,
 } from '../rewards/exploration.mjs';
 import { projectRewardProgress } from '../rewards/model.mjs';
+
+const assets = JSON.parse(
+  await readFile(new URL('../editions/assets.json', import.meta.url), 'utf8'),
+);
 
 test('two published finale atlases use exact source-linked cards and bilingual optional predictions', async () => {
   for (const [campaignId, count, cardIds] of [
@@ -65,11 +70,24 @@ test('two published finale atlases use exact source-linked cards and bilingual o
     assert.equal(finale.requirements.missions.length, 6);
     assert.deepEqual(finale.requirements.learning, []);
     assert.deepEqual(finale.requirements.mastery, []);
-    assert.ok(
-      rewards
-        .filter((reward) => reward.scope.kind === 'mission')
-        .every((reward) => reward.payloads.every((item) => item.type !== 'exploration')),
+    const pilotMissionId = campaignId + '-01';
+    const missionExplorations = rewards
+      .filter((reward) => reward.scope.kind === 'mission')
+      .flatMap((reward) =>
+        reward.payloads
+          .filter((item) => item.type === 'exploration')
+          .map((payload) => ({ missionId: reward.scope.id, payload })),
+      );
+    assert.deepEqual(
+      missionExplorations,
+      createCurriculumMissionExplorations(pilotMissionId, assets).map((payload) => ({
+        missionId: pilotMissionId,
+        payload,
+      })),
+      'Only the explicitly authored first-mission image atlas accompanies each unchanged finale.',
     );
+    assert.equal(missionExplorations.length, 1);
+    assert.equal(missionExplorations[0].payload.recipe.id, 'inspect-image-atlas');
     const noWins = {
       editionId: finale.brandId,
       brandId: finale.brandId,
