@@ -44,14 +44,21 @@ uses the canonical catalogue, supports release-backed and verified external URLs
 structured unknown rights and multiple collections, excludes review-only entries,
 and recovers to remote, bundled or uploaded music after a failed remote deck. The
 rebase preserves v0.141.7 company startup, offline-build integrity and the complete
-revision-93 Field Kit ledger. Exact-source audio continuation, focused tests,
-required hosted gates and independent review are still required before merge.
+revision-93 Field Kit ledger. The local handoff candidate
+`055cd97d133ce702cd6a2aee1c2988fccdde6a03` contains reviewed Field Kit revision 94
+and passes validation, lint, both formatting checks, production reproduction, the
+complete production-history file, a 201-test capacity/preservation cohort, the
+remaining distribution file after its stale archived-source fixture was repaired,
+and a reproducible local build. The public PR still points at its old conflicted
+head `4679ab73399e61dde454053ad6baf4ab09419cea`; the release owner must integrate the
+local candidate while preserving that PR's ancestry, then run fresh exact-head
+hosted gates and independent review before merge.
 
 Current item order and hands-on estimates:
 
-1. **Finish PR #716:** refresh the audio ledger, run focused and production checks,
-   push the rebased head and pass all required exact-head gates. **0.5–1 working
-   day**, plus CI.
+1. **Finish PR #716:** integrate the prepared local candidate into the public PR
+   without discarding its existing ancestry, review the resulting delta, and pass
+   all required exact-head gates. **About 0.5 working day**, plus CI.
 2. **Release and verify the canonical adapter:** qualify/freeze the actual merge,
    publish through the immutable release and reviewed Pages selector flow, then
    verify discovery of all public entries, mixed remote/bundled/uploaded playback,
