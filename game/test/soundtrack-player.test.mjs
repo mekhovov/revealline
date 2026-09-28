@@ -233,6 +233,39 @@ test('online archive honors shuffle, repeat and an explicitly chosen first song'
   assert.equal(h.player.snapshot().status, 'ended');
   h.player.dispose();
 });
+test('online archive playback accepts the complete bounded 512-recording catalogue', async (t) => {
+  const h = setup({ library: emptySoundtrackLibrary() }),
+    tracks = resolvedRemoteTracks(
+      Array.from({ length: 512 }, (_, index) => ({
+        sha256: (index + 1).toString(16).padStart(64, '0'),
+        title: `Remote ${index + 1}`,
+        tags: ['electronic', 'catalogue-capacity'],
+        collections: ['canonical-library', `volume-${Math.floor(index / 64) + 1}`],
+      })),
+    );
+  t.after(() => h.player.dispose());
+  assert.equal(await h.player.playRemotePlaylist(tracks), true);
+  assert.equal(h.player.snapshot().queue.length, 512);
+  assert.equal(h.player.snapshot().track.id, tracks[0].id);
+  assert.equal(h.media.src, tracks[0].url);
+});
+
+test('online archive playback rejects a queue beyond the supported 512-recording limit', async (t) => {
+  const h = setup({ library: emptySoundtrackLibrary() }),
+    tracks = resolvedRemoteTracks(
+      Array.from({ length: 512 }, (_, index) => ({
+        sha256: (index + 1).toString(16).padStart(64, '0'),
+        title: `Remote ${index + 1}`,
+      })),
+    ),
+    before = h.player.snapshot();
+  t.after(() => h.player.dispose());
+  await assert.rejects(
+    h.player.playRemotePlaylist([...tracks, tracks[0]]),
+    /array exceeds its item budget/i,
+  );
+  assert.deepEqual(h.player.snapshot(), before);
+});
 test('online archive playback rejects forged hosts, hashes and duplicate recordings', async () => {
   const h = setup({ library: emptySoundtrackLibrary() }),
     sha256 = 'b'.repeat(64),

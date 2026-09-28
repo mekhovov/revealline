@@ -168,9 +168,12 @@ test('integrated94 retains complete58–93 historical picture and actor records 
   }
   // Revision92 introduced separately reviewed actor successors; preserve those
   // complete records independently instead of relabelling the58–91 lineage.
+  // Revision94 changes audio/catalogue inputs only, so its complete current
+  // picture and actor records must stay byte-for-byte equal to revision93.
   for (const slot of slots) {
     const priorAsset = snapshot(92).resolved.assets[slot];
     assert.deepEqual(snapshot(93).resolved.assets[slot], priorAsset, 'retained92 ' + slot);
+    assert.deepEqual(snapshot(94).resolved.assets[slot], priorAsset, 'current94 ' + slot);
     const body = Buffer.from(await bundle.assets.get(priorAsset.file.sha256).arrayBuffer());
     assert.equal(body.length, priorAsset.file.bytes);
     assert.equal(sha(body), priorAsset.file.sha256);
@@ -251,6 +254,63 @@ for (const revision of [
     );
   });
 }
+
+test('exact94 current built-in and historical-import attempts use the reviewed current lease', async () => {
+  for (const [pack, levelId, picture] of [
+    [COOP_STARTER_PACK, 'first-connection', COOP_PICTURE_BINDINGS[0].picture],
+    [COOP_STARTER_PACK, 'relay-yard', COOP_PICTURE_BINDINGS[1].picture],
+    [imported, imported.levels[0].id, COOP_PICTURE_BINDINGS[0].picture],
+  ]) {
+    const f = fixture(94, pack, levelId);
+    try {
+      const binding = await f.presentation.select(f.request);
+      assert.equal(binding.choice.themeRevision, 94);
+      assert.equal(binding.choice.themeId, 'fpv');
+      assert.equal(binding.choice.collection, null);
+      assert.deepEqual(binding.choice.picture, picture);
+      assert.equal(binding.image.sha256, picture.sha256);
+      assert.equal(await f.presentation.select(f.request), binding);
+      assert.equal(f.presentation.confirm(f.request), binding);
+      assert.deepEqual(f.calls, { reads: 1, decodes: 1, releases: 0 });
+    } finally {
+      f.presentation.dispose();
+    }
+    assert.equal(f.calls.releases, 1);
+  }
+});
+
+test('actual Team host prepares and explicitly starts current94 Relay Yard', async (t) => {
+  const exact = snapshot(94);
+  const f = await page(t, {
+    capturePaint: true,
+    beforeImport({ $ }) {
+      $('coop-level').value = 'relay-yard';
+      $('coop-level').emit('change');
+    },
+    presentation: {
+      load({ snapshot: prepared }) {
+        prepared.resolved = exact.resolved;
+      },
+    },
+  });
+  assert.equal(f.artwork.snapshot.resolved.theme.revision, 94);
+  assert.equal(f.$('coop-picture-status').dataset.state, 'ready');
+  assert.equal(f.$('coop-menu').hidden, false);
+  f.$('coop-start').click();
+  const decodedPicture = f.artwork.calls.decodes[0];
+  for (let frame = 0; frame < 3; frame++) {
+    f.drawImages.length = 0;
+    f.tick(1);
+    assert.equal(f.drawImages[0], decodedPicture);
+    assert.equal(f.drawImages[0].sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
+    assert.equal(f.drawImages.filter((image) => image === decodedPicture).length, 1);
+    assert.ok(f.drawImages.length > 1, 'Actors paint after the exact accepted picture');
+  }
+  assert.equal(f.$('coop-menu').hidden, true);
+  assert.ok(
+    f.artwork.calls.reads.every((read) => read.options.snapshot.resolved.theme.revision === 94),
+  );
+});
 
 test('finite host authority rejects54,57,95, other themes and collections before reads', async () => {
   for (const pack of [COOP_STARTER_PACK, imported]) {

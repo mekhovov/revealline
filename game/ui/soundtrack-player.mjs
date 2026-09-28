@@ -1160,7 +1160,7 @@ export function createSoundtrackPlayer({
     );
     const owned = boundedJSON(value, {
       maxBytes: 1024 * 1024,
-      maxNodes: 20000,
+      maxNodes: 65536,
       maxDepth: 5,
       maxArray: 512,
       maxString: 2048,
