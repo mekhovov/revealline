@@ -174,7 +174,12 @@ test('all four exact pre-feedback editions retain prior promises and unchanged g
         assert.equal(reward.teaserImage, undefined);
         const next = currentRewards.find((entry) => entry.id === reward.id);
         assert.deepEqual(next.requirements, reward.requirements);
-        const visualAdditions = {
+        const authoredAdditions = {
+          'social-drone-community-connections-finale': [
+            'social-community-listening-guide',
+            'social-community-listening-jellyfish',
+            'social-community-listening-thanks',
+          ],
           'fpv-meet-aircraft-01-discovery': ['fpv-meet-aircraft-01-structure-exploration'],
           'ukraine-threads-01-discovery': [
             'reference-ukraine-met-shirt-fragment-image',
@@ -182,17 +187,34 @@ test('all four exact pre-feedback editions retain prior promises and unchanged g
             'ukraine-threads-01-object-exploration',
           ],
         }[reward.id];
-        if (visualAdditions) {
+        if (authoredAdditions) {
           assert.deepEqual(
             next.payloads.slice(0, reward.payloads.length),
             reward.payloads,
-            'The two visual pilots append discoveries without rewriting any historical payload.',
+            'The named visual and listening pilots append discoveries without rewriting historical payloads.',
           );
           assert.deepEqual(
             next.payloads.slice(reward.payloads.length).map((entry) => entry.id),
-            visualAdditions,
+            authoredAdditions,
           );
         } else assert.deepEqual(next.payloads, reward.payloads);
+        assert.equal(reward.audioGroups, undefined);
+        if (reward.id === 'social-drone-community-connections-finale') {
+          assert.deepEqual(next.audioGroups, [
+            {
+              format: 'revealline-ordered-audio-group.v1',
+              id: 'social-community-listening-pair',
+              locales: {
+                en: { title: 'A shared pause · two instrumentals' },
+                uk: { title: 'Спільна пауза · два інструментальні треки' },
+              },
+              payloadIds: [
+                'social-community-listening-jellyfish',
+                'social-community-listening-thanks',
+              ],
+            },
+          ]);
+        } else assert.equal(next.audioGroups, undefined);
         assert.notEqual(next.revision, reward.revision);
         assert.ok(next.teaserImage);
       }
