@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   createExecutionCatalog,
+  isOwnedExecutionEntries,
   expandDifficultyCampaigns,
   EXECUTION_CATALOG_LIMITS,
 } from '../campaign-contexts.mjs';
@@ -179,4 +180,14 @@ test('the registry rejects malformed arrays, accessors and mismatching execution
     () => createExecutionCatalog([{ campaign: base, classRecipes: base.classRecipes.slice(0, 1) }]),
     /equipment differs/,
   );
+});
+
+test('presentation-cache provenance belongs only to a complete factory-owned entry array', () => {
+  const source = [{ campaign: base, sourcePackId: null }];
+  const catalog = createExecutionCatalog(source);
+  assert.equal(isOwnedExecutionEntries(catalog.entries), true);
+  assert.equal(isOwnedExecutionEntries(source), false);
+  assert.equal(isOwnedExecutionEntries(Object.freeze([...catalog.entries])), false);
+  assert.equal(isOwnedExecutionEntries(clone(catalog.entries)), false);
+  assert.equal(isOwnedExecutionEntries(null), false);
 });
