@@ -54,16 +54,21 @@ work and the minimal truthful offline-status correction into local cumulative
 candidate `1267bf01305016a5301c1beeea193f8511638b00` on current main. Its focused
 soundtrack panel suite passes 111/111, the cumulative Team suite passes 119/119,
 source/history passes 21/21 and Field Kit revision 95 is reproducible. This
-candidate is still local and unreferenced: it is not the remote PR head, a merged
-source or a release qualification. The public PR therefore still points at its old
-conflicted head `4679ab73399e61dde454053ad6baf4ab09419cea`; only the release owner may
-complete the exact-head integration and bulk release.
+candidate is now published unchanged as draft bulk-integration
+[PR #746](https://github.com/mekhovov/revealline/pull/746), exact head
+`1267bf01305016a5301c1beeea193f8511638b00` on authoritative main `c5885a1`.
+The original [PR #716](https://github.com/mekhovov/revealline/pull/716) still points
+at its old conflicted head; #746 preserves its ancestry and is the active combined
+integration path. This is a draft, unversioned candidate rather than a merged
+source or release qualification. Only the release owner may promote, merge and
+publish it.
 
 Current item order and hands-on estimates:
 
-1. **Finish PR #716:** convert the release owner's local cumulative candidate into
-   the reviewed remote integration without discarding existing ancestry, then pass
-   all required exact-head gates. **About 0.5 working day**, plus CI.
+1. **Finish the canonical adapter in PR #746:** complete native combined-source
+   checks and independent final review, resolve the bounded previous-public
+   acceptance gate, promote the exact head and pass all required release gates.
+   **About 0.5 working day**, plus CI.
 2. **Release and verify the canonical adapter:** qualify/freeze the actual merge,
    publish through the immutable release and reviewed Pages selector flow, then
    verify discovery of all public entries, mixed remote/bundled/uploaded playback,
@@ -126,7 +131,7 @@ Ship the remaining soundtrack work in these independently reviewable batches:
 
 | Batch | Included work | Completed evidence | Remaining gate | Hands-on estimate |
 | --- | --- | --- | --- | --- |
-| **S1 — canonical game adapter** | Canonical catalogue discovery, structured rights, external URLs, 512-recording capacity and remote failure recovery | Local reviewed soundtrack candidate `66eff728617786a650fa12ce39cca5cbbb485f9d`; truthful offline-status correction incorporated in local cumulative candidate `1267bf01305016a5301c1beeea193f8511638b00`; focused 111/111, Team 119/119 and source/history 21/21; production revision 95 | Convert the local cumulative candidate into the reviewed remote integration, require exact-head hosted gates, qualify the actual merge and publish once through the bulk release lane | **0.5–1 working day**, plus shared CI/release queue |
+| **S1 — canonical game adapter** | Canonical catalogue discovery, structured rights, external URLs, 512-recording capacity and remote failure recovery | Draft [PR #746](https://github.com/mekhovov/revealline/pull/746) publishes exact candidate `1267bf01305016a5301c1beeea193f8511638b00`; truthful offline-status correction included; focused 111/111, Team 119/119 and source/history 21/21; production revision 95; exact-head preflight and reconciliation pass | Hosted acceptance jobs are running; draft/unallocated `release-ready` correctly fails while build/focused/test are skipped. Complete native combined-source checks, independent review and bounded previous-public acceptance, promote the exact head, require non-skipped release gates, qualify the actual merge and publish once | **0.5–1 working day**, plus shared CI/release queue |
 | **S2 — compact Audio player** | Current title/artist/source, Previous, Play/Pause, Next, game/upload and archive source toggles, all ten archive styles, ordered/shuffled mixed playback and one advanced-library disclosure | Local feature `435da8de428a854484f9b8d751ef48b24418241d`, with complete production-input binding at `9b1146de952bb4130e14582d6f7f126ee223f327`; fresh combined focused/source-closure run 227/227 with zero failures/skips/cancellations; lint/localization/validation/formatting pass; local browser loaded 202 public tracks and switched streamed → bundled playback | Rebase/cherry-pick only after S1's actual merge, append a scoped Field Kit review successor, run hosted build because local packaging hit `ENOSPC`, then independently review and release | **0.5–1 working day after S1**, plus CI |
 | **S3 — device and offline closure** | Physical B/N and touch/controller controls, Shchedryk startup and transitions, iPhone/desktop qualification and cold offline restart | Desktop streamed/bundled recovery and existing public quick controls are already delivered | Requires physical targets and a release containing S1/S2; record device and listening evidence separately | **0.5–1 working day**, depending on device access |
 | **S4 — reviewed music admissions** | Small accepted synthwave/electro, heavier-metal and Ukrainian collections | Archive already publishes the audition pool and exact source/licence metadata; rejected and backup decisions are retained | Full-track listening, transitions, warning audibility and Ukrainian cultural review; admission must use accepted subsets only | **1–2 working days per accepted batch**, excluding reviewer response |
