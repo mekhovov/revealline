@@ -521,6 +521,55 @@
                     step="any"
                     value="0"
                 /></label>
+                <label class="field"
+                  ><span data-i18n="tools:motionLab.rotorEditor.x">Hub X (from center)</span>
+                  <input
+                    id="rotor-editor-x"
+                    type="number"
+                    min="-0.5"
+                    max="0.5"
+                    step="any"
+                    value="0"
+                    disabled
+                    aria-describedby="rotor-editor-coordinates rotor-editor-envelope"
+                /></label>
+                <label class="field"
+                  ><span data-i18n="tools:motionLab.rotorEditor.y">Hub Y (from center)</span>
+                  <input
+                    id="rotor-editor-y"
+                    type="number"
+                    min="-0.5"
+                    max="0.5"
+                    step="any"
+                    value="0"
+                    disabled
+                    aria-describedby="rotor-editor-coordinates rotor-editor-envelope"
+                /></label>
+                <label class="field full-width"
+                  ><span data-i18n="tools:motionLab.rotorEditor.radius"
+                    >Hub radius (fraction of image width)</span
+                  >
+                  <input
+                    id="rotor-editor-radius"
+                    type="number"
+                    min="0"
+                    max="0.5"
+                    step="any"
+                    value="0"
+                    disabled
+                    aria-describedby="rotor-editor-limits rotor-editor-envelope"
+                /></label>
+                <p
+                  id="rotor-editor-coordinates"
+                  class="setting-note full-width"
+                  data-i18n="tools:motionLab.rotorEditor.coordinates"
+                >
+                  X and Y are relative to the body origin: X uses image width, Y uses image height.
+                  Radius uses image width. The complete circular sweep must fit inside the source
+                  image.
+                </p>
+                <p id="rotor-editor-limits" class="setting-note full-width"></p>
+                <p id="rotor-editor-envelope" class="setting-note full-width"></p>
                 <label class="check full-width"
                   ><input id="rotor-editor-guides" type="checkbox" />
                   <span data-i18n="tools:motionLab.rotorEditor.guides"

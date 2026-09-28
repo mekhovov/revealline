@@ -1592,6 +1592,122 @@ for (const reduced of [false, true])
     assert.equal(h.doc.activeElement, h.$('rotor-editor-phase'), 'Review never moves focus');
   });
 
+for (const reduced of [false, true])
+  test(`Motion hub envelope edits preserve actual paint, guides, paused state and reduced=${reduced}`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    assert.equal(h.$('rotor-editor-x').disabled, true);
+    assert.match(h.$('rotor-editor-envelope').textContent, /image dimensions/);
+    h.images.find((image) => image.src.startsWith('https:')).onload();
+    assert.equal(h.$('rotor-editor-x').disabled, false);
+    h.tick(0);
+    h.tick(100);
+    h.host.emit('blur');
+    h.cap(reduced);
+    h.$('rotor-editor-guides').checked = true;
+    const draw = () => {
+        const calls = h.$('inspection').context.calls;
+        calls.length = 0;
+        h.$('rotor-editor-guides').emit('change');
+        return calls.map((call) => ({ ...call, ...(call.args ? { args: [...call.args] } : {}) }));
+      },
+      original = h.$('rotor-editor-json').value,
+      before = freezeView(h),
+      sourcePaint = draw(),
+      writes = h.writes.length;
+    h.$('rotor-editor-x').focus();
+    h.change('rotor-editor-x', '-0.2');
+    h.change('rotor-editor-y', '-0.2');
+    h.change('rotor-editor-radius', '0.2');
+    assert.match(h.$('rotor-editor-status').textContent, /applied/);
+    const accepted = h.$('rotor-editor-json').value,
+      rig = JSON.parse(accepted),
+      changedPaint = draw();
+    assert.equal(rig[0].x, -0.2);
+    assert.equal(rig[0].y, -0.2);
+    assert.equal(rig[0].radiusScale, 1.25);
+    assert.notDeepEqual(changedPaint, sourcePaint);
+    const outlines = changedPaint.filter((call) => call.op === 'strokeRect');
+    assert.ok(
+      outlines.some((call) => call.args[2] > 1 && call.args[3] > 1),
+      'Guide includes the actual contained image frame',
+    );
+    const frame = outlines.find((call) => call.args[2] > 1 && call.args[3] > 1);
+    assert.ok(
+      changedPaint.some(
+        (call) =>
+          call.op === 'translate' &&
+          call.args[0] === rig[0].x * frame.args[2] &&
+          call.args[1] === rig[0].y * frame.args[3],
+      ),
+      'Guide uses the same normalized anchor as the painted rotor',
+    );
+    assert.ok(
+      changedPaint.some((call) => call.op === 'arc' && call.args[2] === 0.2 * frame.args[2]),
+      'Sweep radius is measured against contained image width',
+    );
+    h.change('rotor-editor-x', '-0.49');
+    assert.match(h.$('rotor-editor-status').textContent, /Rig rejected/);
+    assert.equal(h.$('rotor-editor-json').value, accepted);
+    assert.deepEqual(
+      draw(),
+      changedPaint,
+      'Invalid envelope edit cannot alter any painted command',
+    );
+    h.$('rotor-editor-json').value = '[[0,0]]';
+    h.$('rotor-editor-apply').click();
+    assert.match(h.$('rotor-editor-status').textContent, /three values/);
+    assert.deepEqual(draw(), changedPaint);
+    h.$('rotor-editor-json').value = accepted;
+    h.$('rotor-editor-apply').click();
+    assert.equal(h.$('rotor-editor-json').value, accepted);
+    h.$('rotor-editor-reset').click();
+    assert.equal(h.$('rotor-editor-json').value, original);
+    assert.deepEqual(draw(), sourcePaint);
+    assert.deepEqual(freezeView(h), before);
+    assert.equal(h.frames.size, 0);
+    assert.equal(h.$('play-pause').textContent, 'Play');
+    assert.equal(h.doc.body.dataset.effects, reduced ? 'reduced' : 'full');
+    assert.equal(h.doc.activeElement, h.$('rotor-editor-x'));
+    assert.equal(h.writes.length, writes);
+  });
+
+test('Motion envelope validation and guide use the decoded non-square source aspect, not its body fit box', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  const image = h.images.find((image) => image.src.startsWith('https:'));
+  image.naturalWidth = 128;
+  image.naturalHeight = 64;
+  image.onload();
+  h.host.emit('blur');
+  assert.match(h.$('rotor-editor-envelope').textContent, /does not pass/);
+  h.$('rotor-editor-json').value = '[{"x":0,"y":0,"radiusScale":1}]';
+  h.$('rotor-editor-apply').click();
+  assert.match(h.$('rotor-editor-status').textContent, /applied/);
+  h.$('rotor-editor-guides').checked = true;
+  const draw = () => {
+    const calls = h.$('inspection').context.calls;
+    calls.length = 0;
+    h.$('rotor-editor-guides').emit('change');
+    return calls.map((call) => ({ ...call, ...(call.args ? { args: [...call.args] } : {}) }));
+  };
+  const accepted = h.$('rotor-editor-json').value,
+    priorPaint = draw(),
+    frame = priorPaint.filter((call) => call.op === 'strokeRect').find((call) => call.args[2] > 1);
+  assert.equal(frame.args[2] / frame.args[3], 2);
+  h.change('rotor-editor-y', '0.19');
+  assert.match(h.$('rotor-editor-status').textContent, /Rig rejected/);
+  assert.equal(h.$('rotor-editor-json').value, accepted);
+  assert.deepEqual(
+    draw(),
+    priorPaint,
+    '0.16 width radius is 0.32 height radius; y 0.19 cannot fit',
+  );
+  h.change('rotor-editor-y', '0.15');
+  assert.match(h.$('rotor-editor-status').textContent, /applied/);
+  assert.equal(JSON.parse(h.$('rotor-editor-json').value)[0].y, 0.15);
+});
+
 test('Motion rotor editor preserves a running frame and per-character drafts while non-rotor recipes stay gated', async (t) => {
   const h = await harness(t, { holdBoot: true });
   await h.start();
@@ -1678,7 +1794,7 @@ test('Motion rotor labels resolve in EN and UK through the HTML-selected catalog
     const labels = h.doc
       .querySelectorAll('[data-i18n]')
       .filter((node) => node.getAttribute('data-i18n').startsWith('tools:motionLab.rotorEditor.'));
-    assert.equal(labels.length, 11);
+    assert.equal(labels.length, 15);
     for (const [locale, hubLabel] of [
       ['en', 'Motor hub'],
       ['uk', 'Маточина двигуна'],

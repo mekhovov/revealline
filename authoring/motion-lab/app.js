@@ -219,6 +219,7 @@ function mountMotionLab() {
       record.state = 'loaded';
       record.image = image;
       updateAssetStatus();
+      rotorEditor?.refresh();
       if (state) {
         render();
         readouts();
@@ -812,6 +813,11 @@ function mountMotionLab() {
           'hub',
           'direction',
           'phase',
+          'x',
+          'y',
+          'radius',
+          'envelope',
+          'limits',
           'json',
           'apply',
           'reset',
@@ -824,6 +830,7 @@ function mountMotionLab() {
         id: inspectedCharacter,
         body: bodyFor(inspectedCharacter),
         recipe: recipeFor(inspectedCharacter),
+        image: assetRecord(bodyFor(inspectedCharacter).src).image,
       }),
       apply: (rotors) => {
         if (rotors === null) rigOverrides.delete(inspectedCharacter);
@@ -1555,13 +1562,21 @@ function mountMotionLab() {
         component = recipeFor(inspectedCharacter).components.find((item) => item.type === 'rotors');
       if (anchor && component) {
         const { width, height } = fittedBodySize(body, image.image);
+        const pivot = body.presentationPivot || { x: 0.5, y: 0.5 };
         inspectionCtx.save();
         inspectionCtx.rotate((body.headingOffsetDegrees * Math.PI) / 180);
-        inspectionCtx.translate(anchor.x * width, anchor.y * height);
         inspectionCtx.lineWidth = 1.5 / 155;
         inspectionCtx.strokeStyle = colors.accent;
+        inspectionCtx.strokeRect(-pivot.x * width, -pivot.y * height, width, height);
+        inspectionCtx.translate(anchor.x * width, anchor.y * height);
         inspectionCtx.beginPath();
-        inspectionCtx.arc(0, 0, component.radius * anchor.radiusScale * width, 0, Math.PI * 2);
+        for (const rotor of recipeFor(inspectedCharacter).components.filter(
+          (item) => item.type === 'rotors',
+        )) {
+          const radius = rotor.radius * anchor.radiusScale * width;
+          inspectionCtx.moveTo(radius, 0);
+          inspectionCtx.arc(0, 0, radius, 0, Math.PI * 2);
+        }
         inspectionCtx.stroke();
         inspectionCtx.strokeRect(-0.025, -0.025, 0.05, 0.05);
         inspectionCtx.restore();
