@@ -1,3 +1,4 @@
+import { rewardPresentationItems } from '../rewards/audio-groups.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
@@ -177,6 +178,7 @@ test('Company Studio actual eligible-preview callback exposes printable text and
     selected: () => ({ edition }),
     validateStudioData,
     previewStudioReward,
+    rewardPresentationItems,
     mountRewardKnowledge,
     chooseOptions(element, options, value) {
       element.value = value;

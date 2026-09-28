@@ -5255,5 +5255,16 @@
   "journeyBest.unavailable": "Performance comparison unavailable. Your mission clear is kept.",
   "journeyBest.saveUnconfirmed": "Saving this comparison could not be confirmed. It may already be saved; your mission clear is kept.",
   "journeyBest.backupPartial": "Mission progress merged and saved locally. Performance comparisons are kept for this session only; export them before closing.",
-  "journeyBest.backupUnconfirmed": "Mission progress merged and saved locally. Saving performance comparisons could not be confirmed; keep your backup."
+  "journeyBest.backupUnconfirmed": "Mission progress merged and saved locally. Saving performance comparisons could not be confirmed; keep your backup.",
+  "soundtrack.discoveryRecording": "Prepare recording for a discovery",
+  "soundtrack.discoveryChecking": "Verifying the discovery recording original…",
+  "soundtrack.discoveryPrepared": "Exact original prepared. Download it below, then use Recording discovery in Level/Campaign or Company Studio with the approved English and Ukrainian transcripts.",
+  "soundtrack.discoveryHelp": "Discovery handoff needs an MP3 up to 120 seconds with web, offline and redistribution permission. It keeps original bytes; longer recordings need a separately approved shorter original.",
+  "exploration.diagram.loading": "Loading the exact illustration…",
+  "exploration.diagram.missing": "This exact illustration is unavailable. Every explanation remains available in the numbered controls below.",
+  "exploration.diagram.ready": "Use the numbered points or the controls below to compare parts.",
+  "rewardPlaylist.help": "Choose a recording, then press Play. Tracks do not start or advance automatically.",
+  "rewardPlaylist.previous": "Previous recording",
+  "rewardPlaylist.next": "Next recording",
+  "rewardPlaylist.selected": "{{index}} of {{count}}: {{title}}"
 }

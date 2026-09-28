@@ -227,6 +227,12 @@ const retainedPresentations = Object.freeze({
   ],
   'ukraine-culture': [
     {
+      id: '95915f9348a50bb93f6c5d234624f85fc1a758f59d1db2bb4f804876257a3c25',
+      path: 'game/editions/retained/ukraine-culture-before-visual-atlas.json',
+      sha256: 'fb63b425bdc90769bdb9a5f7bbb8a3d4a3c18086bee0d87f4187712398e4dcb0',
+      bytes: 574139,
+    },
+    {
       id: '004d6874394bf5d37967eb841fa0004c4980d40169f7154b425ab3fcdea83e58',
       path: 'game/editions/retained/ukraine-culture-before-discovery-feedback.json',
       sha256: 'ce5fbde12003892ad63b17b71ee03ff897ba1a81d021271dfe613b44260adcc0',
@@ -252,6 +258,12 @@ const retainedPresentations = Object.freeze({
     },
   ],
   'fpv-learning': [
+    {
+      id: '2ccf3e4f9b9066359219e3fdcd2dad32366f9ea3e2cf12d1b16c0de09d36c604',
+      path: 'game/editions/retained/fpv-learning-before-visual-atlas.json',
+      sha256: '03035e3f1eaefd245d5ad54706055456205ba26c003fd25c1a6f0ab25dce6a4e',
+      bytes: 719041,
+    },
     {
       id: '089b0801b048970f1920e76b03ceda92f389e256c5e38e45c5e25abeebe04f0d',
       path: 'game/editions/retained/fpv-learning-before-discovery-feedback.json',
@@ -526,15 +538,17 @@ export const COMPANY_EDITIONS = Object.freeze(
                 : brandId === 'droneaid-nl'
                   ? 4
                   : id === 'fpv-learning'
-                    ? 6
-                    : [
-                          'social-drone-ua',
-                          'victory-drones',
-                          'ukraine-culture',
-                          'fpv-learning',
-                        ].includes(id)
-                      ? 5
-                      : 1,
+                    ? 7
+                    : id === 'ukraine-culture'
+                      ? 6
+                      : [
+                            'social-drone-ua',
+                            'victory-drones',
+                            'ukraine-culture',
+                            'fpv-learning',
+                          ].includes(id)
+                        ? 5
+                        : 1,
     name,
     brandId,
     audience,

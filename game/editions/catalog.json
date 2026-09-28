@@ -2471,6 +2471,15 @@
       "path": "game/editions/assets/discovery/reward-textile-discovery-shuttle-v1.png",
       "publication": "public",
       "sha256": "d7075034d3b53761fa0ee5e696af619eb950af29c9af028fe0f73a5ada06b604"
+    },
+    {
+      "approved": true,
+      "bytes": 177615,
+      "dependencies": [],
+      "id": "reference-ukraine-met-shirt-fragment",
+      "path": "game/editions/assets/discovery/met-shirt-fragment-157573.jpg",
+      "publication": "public",
+      "sha256": "edb86aaaa16ec601d1816765940cdfa37d761e3e557b9e5c2ba37d642fbc216f"
     }
   ],
   "brands": [
@@ -2981,14 +2990,15 @@
         "ukraine-threads-05-reveal-v1",
         "ukraine-threads-06-reveal-v1",
         "ukraine-threads-key-v1",
-        "met-degas-ukrainian-dress-436157"
+        "met-degas-ukrainian-dress-436157",
+        "reference-ukraine-met-shirt-fragment"
       ],
       "brandId": "ukraine-culture",
       "heroAssetId": "ukraine-threads-key-v1",
       "id": "ukraine-threads",
       "lessonPath": "game/content/company-campaigns/ukraine-threads.lessons.json",
       "localizationPath": "game/content/company-campaigns/ukraine-threads.localization.json",
-      "localizationSha256": "9745f898bc5d4016acc34c8c60db7f617cd6d75aa6a51d63955c346f76dc7266",
+      "localizationSha256": "7c42351961b0c18b5c2e445658c22bb2d2ef4f74705d963db63d36c3e0abc6fe",
       "modes": ["solo"],
       "name": "Threads Across Ukraine",
       "publication": "public",
@@ -3013,7 +3023,7 @@
       "id": "fpv-meet-aircraft",
       "lessonPath": "game/content/company-campaigns/fpv-meet-aircraft.lessons.json",
       "localizationPath": "game/content/company-campaigns/fpv-meet-aircraft.localization.json",
-      "localizationSha256": "2e85bd39d96b2bfde755ea32f686996d96f21ea91baab4821d4e9ad96fd86251",
+      "localizationSha256": "3776b5fc5ba9af1c30921e27d80ad1d2f55e4a89297b3d6b5356d46e28d4f71c",
       "modes": ["solo"],
       "name": "Meet the Aircraft",
       "publication": "public",
@@ -3456,6 +3466,12 @@
       "name": "Ukraine: Living Culture",
       "presentationHistory": [
         {
+          "bytes": 574139,
+          "id": "95915f9348a50bb93f6c5d234624f85fc1a758f59d1db2bb4f804876257a3c25",
+          "path": "game/editions/retained/ukraine-culture-before-visual-atlas.json",
+          "sha256": "fb63b425bdc90769bdb9a5f7bbb8a3d4a3c18086bee0d87f4187712398e4dcb0"
+        },
+        {
           "bytes": 462558,
           "id": "004d6874394bf5d37967eb841fa0004c4980d40169f7154b425ab3fcdea83e58",
           "path": "game/editions/retained/ukraine-culture-before-discovery-feedback.json",
@@ -3481,7 +3497,7 @@
         }
       ],
       "publication": "public",
-      "revision": 5
+      "revision": 6
     },
     {
       "audience": "learners",
@@ -3510,6 +3526,12 @@
       "modes": ["solo"],
       "name": "FPV Learning",
       "presentationHistory": [
+        {
+          "bytes": 719041,
+          "id": "2ccf3e4f9b9066359219e3fdcd2dad32366f9ea3e2cf12d1b16c0de09d36c604",
+          "path": "game/editions/retained/fpv-learning-before-visual-atlas.json",
+          "sha256": "03035e3f1eaefd245d5ad54706055456205ba26c003fd25c1a6f0ab25dce6a4e"
+        },
         {
           "bytes": 583333,
           "id": "089b0801b048970f1920e76b03ceda92f389e256c5e38e45c5e25abeebe04f0d",
@@ -3542,7 +3564,7 @@
         }
       ],
       "publication": "public",
-      "revision": 6
+      "revision": 7
     },
     {
       "audience": "everyone",
