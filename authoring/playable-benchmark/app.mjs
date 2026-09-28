@@ -32,6 +32,7 @@ let disposed = false;
 let startup = null;
 let lastSummary = '';
 let lastEvents = '';
+let loadingFocus = null;
 
 function status(kind, message) {
   if (disposed) return;
@@ -249,19 +250,22 @@ const resultFocus = createResultFocusCue({
   },
 });
 
-async function select(id) {
+async function select(id, opener = null) {
   const entry = catalog?.entries.find((item) => item.id === id);
   if (!entry || disposed) return;
   hold();
   selection.current?.comparison.cancel();
+  const owner = { opener };
+  loadingFocus = owner;
   const accepted = await selection.select(entry);
+  if (loadingFocus === owner) loadingFocus = null;
   if (disposed) return;
   if (!accepted && !selection.pending) {
     if (selection.current) $('mission').value = selection.current.entry.id;
     controls();
   }
 }
-$('mission').onchange = () => void select($('mission').value);
+$('mission').onchange = () => void select($('mission').value, $('mission'));
 $('start').onclick = () => {
   if (
     selection.pending ||
@@ -302,13 +306,43 @@ const retryGuard = attachDeliberateButton($('retry'), {
     !!selection.current,
   activate: retry,
 });
+function visibleFocusTarget(element) {
+  if (
+    !element?.isConnected ||
+    element.disabled ||
+    element.closest('[hidden],[inert]') ||
+    !element.getClientRects().length
+  )
+    return false;
+  // A closed details keeps its native summary available, never its fields.
+  for (let parent = element.parentElement; parent; parent = parent.parentElement)
+    if (
+      parent.tagName === 'DETAILS' &&
+      !parent.open &&
+      !parent.querySelector('summary')?.contains(element)
+    )
+      return false;
+  return true;
+}
 $('cancel').onclick = () => {
+  if (disposed || (!selection.pending && !selection.current?.comparison.pending)) return;
+  const opener = loadingFocus?.opener;
+  const returnFocus = [document.body, $('cancel'), opener].includes(document.activeElement);
+  loadingFocus = null;
   selection.cancel();
   selection.current?.comparison.cancel();
   $('mission').value = selection.current?.entry.id ?? catalog.entries[0].id;
-  status('ready', 'Loading cancelled. The previous run remains paused.');
-  $('mission').focus({ preventScroll: true });
+  status(
+    'ready',
+    selection.current
+      ? 'Loading cancelled. The previous run remains paused.'
+      : 'Loading cancelled. Choose a mission when ready.',
+  );
   comparisonDetails();
+  if (returnFocus && !document.hidden && document.hasFocus()) {
+    const summary = $('mission').closest('details')?.querySelector('summary');
+    [opener, summary, $('start')].find(visibleFocusTarget)?.focus();
+  }
 };
 async function selectComparison(body) {
   const current = selection.current;
@@ -316,7 +350,10 @@ async function selectComparison(body) {
   hold();
   $('show-comparison').checked = true;
   showComparison();
+  const owner = { opener: $('comparison-body') };
+  loadingFocus = owner;
   await current.comparison.select(body);
+  if (loadingFocus === owner) loadingFocus = null;
   if (disposed || selection.current !== current) return;
   comparisonDetails();
   controls();
@@ -353,7 +390,7 @@ $('touch-mode').onchange = () => {
   hold('Touch control changed. Resume when ready.');
   $('direction-pad').hidden = $('touch-mode').value !== 'dpad';
 };
-$('load').onclick = () => void select($('mission').value);
+$('load').onclick = () => void select($('mission').value, $('load'));
 function loop(now) {
   const dt = lastTime === null ? 0 : (now - lastTime) / 1000;
   lastTime = now;
@@ -378,6 +415,7 @@ const lifecycle = createPreviewLifecycle({
   initialActive: !document.hidden,
   onFrame: loop,
   onSuspend() {
+    loadingFocus = null;
     selection.cancel();
     selection.current?.comparison.cancel();
     startup?.abort();

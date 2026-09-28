@@ -119,6 +119,35 @@ Screenshots:
 - [Desktop Studio controls](studio-rotors-desktop.png)
 - [Ukrainian portrait Studio controls](studio-rotors-uk-phone.png)
 
+## Follow-up — operation-aware cancellation focus
+
+A second bounded commit on parent `0b43aaa06e50bf4ca78cbd90c3c6e05afe631269`
+fixes a focus defect found while reviewing the next task. Cancel had always
+focused Mission, which is hidden inside the initially closed setup section and
+is the wrong destination after an appearance change.
+
+Each pending operation now retains its actual Mission, Load or Actors opener.
+Explicit Cancel restores that control when available, otherwise the visible
+native setup summary, then enabled Start. Normal focus allows the target to
+scroll into view. It never expands details or overrides unrelated current focus;
+late work cannot replace a newer operation's opener. Initial cancellation now
+says to choose a mission, rather than implying a previous run exists.
+
+The expanded complete focused cohort passes **110/110**, zero failures/skips/
+cancellations. This supersedes the earlier 105-test checkpoint for these files;
+do not add the counts. Reproduce the command above with
+`game/test/playable-benchmark-focus-host.test.mjs` added. Scoped ESLint, format,
+syntax and diff checks also pass. See [the final TAP](focused-followup.tap).
+
+A temporary localhost source server deliberately delayed theme and candidate
+manifest responses by nine seconds. Native browser controls verified initial
+Cancel returning to the closed summary, appearance Cancel returning to Actors,
+and collapsed-setup cancellation retaining the approved view/tick 0 while
+focusing the closed summary. The final-source initial case displayed the correct
+message; the late response did not replace it or its focus.
+[The screenshot](cancel-initial-focus.png) records that final state. This
+controlled delay is diagnostic evidence, not a production-network measurement.
+
 ## Release and evidence limits
 
 No simulation identity, approved asset, production history, package version,
