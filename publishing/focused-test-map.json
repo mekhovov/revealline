@@ -22,6 +22,26 @@
       ]
     },
     {
+      "id": "neutral-pilot-evidence",
+      "pathPatterns": [
+        "^game/content-design/(neutral-pilot-session|uniqueness-pilot(-player)?)\\.mjs$",
+        "^game/test/(neutral-pilot-session|uniqueness-pilot)\\.test\\.mjs$",
+        "^scripts/verify-pilot-observations\\.mjs$",
+        "^docs/content-offline/pilot-player\\.html$"
+      ],
+      "commands": [
+        {
+          "id": "neutral-pilot-evidence",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/neutral-pilot-session.test.mjs",
+            "game/test/uniqueness-pilot.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
       "id": "team-picture-bindings",
       "pathPatterns": [
         "^game/couch/coop-(picture-bindings|presentation)\\.mjs$",
