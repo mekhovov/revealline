@@ -1,3 +1,5 @@
+import { t } from '../i18n/index.mjs';
+
 /**
  * Own native compatibility events while one sampled Gamepad Confirm
  * transaction is active. A trusted native activation that finishes before the
@@ -13,7 +15,7 @@ export function attachControllerConfirmGuard({
   onTrace = null,
 } = {}) {
   if (onTrace !== null && typeof onTrace !== 'function')
-    throw new TypeError('Controller Confirm trace must be a function.');
+    throw new TypeError(t('errors:controller.confirmTrace.function'));
   const keys = new Set(),
     listeners = [];
   let primaryPointer = null,
