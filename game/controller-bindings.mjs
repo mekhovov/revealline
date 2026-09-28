@@ -1,3 +1,4 @@
+import { t, localizedMessage, render } from './i18n/index.mjs';
 import { boundedJSON, plainObject } from './data-json.mjs';
 
 export const CONTROLLER_BINDINGS_VERSION = 'xonix-controllerbindings.v1';
@@ -19,25 +20,25 @@ export const CONTROLLER_BINDING_ACTIONS = Object.freeze({
 });
 export const CONTROLLER_ACTION_LABELS = Object.freeze({
   flight: Object.freeze({
-    up: 'Move up',
-    down: 'Move down',
-    left: 'Move left',
-    right: 'Move right',
-    ability: 'Use ability',
-    pickup: 'Pick up supply',
-    boost: 'Boost',
-    hangar: 'Open hangar',
-    stop: 'Stop movement',
-    pause: 'Pause',
+    get up() { return t('common:controls.moveUp'); },
+    get down() { return t('common:controls.moveDown'); },
+    get left() { return t('common:controls.moveLeft'); },
+    get right() { return t('common:controls.moveRight'); },
+    get ability() { return t('common:controls.useAbility'); },
+    get pickup() { return t('common:controls.pickUpSupply'); },
+    get boost() { return t('common:controls.boost'); },
+    get hangar() { return t('common:controls.openHangar'); },
+    get stop() { return t('common:controls.stopMovement'); },
+    get pause() { return t('common:controls.pause'); },
   }),
   menu: Object.freeze({
-    up: 'Focus up',
-    down: 'Focus down',
-    left: 'Focus left',
-    right: 'Focus right',
-    confirm: 'Confirm',
-    back: 'Back / cancel',
-    menu: 'Resume paused flight',
+    get up() { return t('common:controls.focusUp'); },
+    get down() { return t('common:controls.focusDown'); },
+    get left() { return t('common:controls.focusLeft'); },
+    get right() { return t('common:controls.focusRight'); },
+    get confirm() { return t('common:controls.confirm'); },
+    get back() { return t('common:controls.backCancel'); },
+    get menu() { return t('common:controls.resumePausedFlight'); },
   }),
 });
 const CONTEXTS = Object.freeze(['flight', 'menu']);
@@ -208,23 +209,23 @@ export function replaceControllerButtonBinding(source, context, action, index) {
 }
 
 const GENERIC_BUTTON_LABELS = Object.freeze([
-  'South',
-  'East',
-  'West',
-  'North',
-  'Left shoulder',
-  'Right shoulder',
-  'Left trigger',
-  'Right trigger',
-  'View / select',
-  'Menu / start',
-  'Left stick press',
-  'Right stick press',
-  'D-pad up',
-  'D-pad down',
-  'D-pad left',
-  'D-pad right',
-  'System / home',
+  localizedMessage('common:controls.south'),
+  localizedMessage('common:controls.east'),
+  localizedMessage('common:controls.west'),
+  localizedMessage('common:controls.north'),
+  localizedMessage('common:controls.leftShoulder'),
+  localizedMessage('common:controls.rightShoulder'),
+  localizedMessage('common:controls.leftTrigger'),
+  localizedMessage('common:controls.rightTrigger'),
+  localizedMessage('common:controls.viewSelect'),
+  localizedMessage('common:controls.menuStart'),
+  localizedMessage('common:controls.leftStickPress'),
+  localizedMessage('common:controls.rightStickPress'),
+  localizedMessage('common:controls.dPadUp'),
+  localizedMessage('common:controls.dPadDown'),
+  localizedMessage('common:controls.dPadLeft'),
+  localizedMessage('common:controls.dPadRight'),
+  localizedMessage('common:controls.systemHome'),
 ]);
 const BUTTON_LABELS = Object.freeze({
   generic: GENERIC_BUTTON_LABELS,
@@ -237,34 +238,34 @@ const BUTTON_LABELS = Object.freeze({
     'RB',
     'LT',
     'RT',
-    'View',
-    'Menu',
+    localizedMessage('common:controls.view'),
+    localizedMessage('common:controls.menu'),
     'LS',
     'RS',
     ...GENERIC_BUTTON_LABELS.slice(12, 16),
-    'Xbox button',
+    localizedMessage('common:controls.xboxButton'),
   ]),
   playstation: Object.freeze([
-    'Cross (×)',
-    'Circle (○)',
-    'Square (□)',
-    'Triangle (△)',
+    localizedMessage('common:controls.cross'),
+    localizedMessage('common:controls.circle'),
+    localizedMessage('common:controls.square'),
+    localizedMessage('common:controls.triangle'),
     'L1',
     'R1',
     'L2',
     'R2',
-    'Create / share',
-    'Options',
+    localizedMessage('common:controls.createShare'),
+    localizedMessage('common:controls.options'),
     'L3',
     'R3',
     ...GENERIC_BUTTON_LABELS.slice(12, 16),
-    'PS button',
+    localizedMessage('common:controls.psButton'),
   ]),
 });
 /** Text-only player-selected labels. This does not detect hardware or promise host support. */
 export function controllerButtonLabel(index, family = 'generic') {
   if (!Number.isInteger(index) || index < 0 || index > 16) return 'Unknown button';
-  return BUTTON_LABELS[CONTROLLER_GLYPH_FAMILIES.includes(family) ? family : 'generic'][index];
+  return render(BUTTON_LABELS[CONTROLLER_GLYPH_FAMILIES.includes(family) ? family : 'generic'][index]);
 }
 export function controllerGlyphFamily(id = '') {
   if (/dualsense|dualshock|playstation|054c|sony/i.test(id)) return 'playstation';

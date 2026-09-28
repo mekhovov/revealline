@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import {
   createPresentationPins,
   snapshotPresentationPins,
@@ -62,8 +63,8 @@ export function createFlightPictures({
     pending = null;
   }
   async function ensure(themeId = ownContext.themeId, { signal } = {}) {
-    if (disposed) throw new Error('This picture attempt is closed.');
-    if (signal?.aborted) throw new DOMException('Picture preparation cancelled.', 'AbortError');
+    if (disposed) throw new Error(t("interface:thisPictureAttemptIsClosed"));
+    if (signal?.aborted) throw new DOMException(t("interface:picturePreparationCancelled"), 'AbortError');
     cancel();
     if (readyTheme === themeId) return true;
     const ticket = generation,
@@ -75,7 +76,7 @@ export function createFlightPictures({
     let candidate = null;
     const check = () => {
       if (disposed || controller.signal.aborted || ticket !== generation)
-        throw new DOMException('Picture preparation cancelled.', 'AbortError');
+        throw new DOMException(t("interface:picturePreparationCancelled"), 'AbortError');
     };
     try {
       check();
@@ -120,7 +121,7 @@ export function createFlightPictures({
       const pin = presentationPicturePins(pins).choices.find(
         (choice) => choice.identity.themeId === themeId,
       );
-      if (!pin) throw new Error('This saved attempt has no picture choice for that world.');
+      if (!pin) throw new Error(t("interface:thisSavedAttemptHasNoPictureChoiceForThatWorld"));
       if (pin.kind === 'still') {
         media ??= await readMedia({ signal: controller.signal });
         check();

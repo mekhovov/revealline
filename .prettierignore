@@ -1,1 +1,3 @@
 game/vendor/
+game/i18n/catalogs.mjs
+game/i18n/content-registry.mjs

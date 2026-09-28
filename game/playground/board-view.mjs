@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { geometryForLevel } from '../core/geometry.mjs';
 import { boardPaintSizeForLevel } from '../ui/render.mjs';
 import { createRun } from '../core/index.mjs';
@@ -51,7 +52,7 @@ export function paintEditorMap(canvas, current) {
     c.setLineDash([]);
     c.fillStyle = '#e4c9f4';
     c.font = 'bold 10px monospace';
-    c.fillText(`SIGNAL ${Math.round(zone.speedFactor * 100)}%`, zone.x * s + 3, zone.y * s + 12);
+    c.fillText(t("tools:signal", { value1: Math.round(zone.speedFactor * 100) }), zone.x * s + 3, zone.y * s + 12);
   }
   const hangars = current.level.hangars ?? [{ ...current.level.spawn, radius: 2 }];
   for (const h of hangars) {

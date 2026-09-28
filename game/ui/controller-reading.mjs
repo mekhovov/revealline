@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { localizedText, t } from '../i18n/index.mjs';
 /** Bind the finite first-party reading surfaces. The navigation adapter owns
  * scrolling/focus; this host layer owns visible controls and the pause boundary. */
 export function attachControllerReading({
@@ -11,8 +13,8 @@ export function attachControllerReading({
   compactOverlay = false,
 } = {}) {
   const definitions = [
-    ['overlay-reading', 'overlay-read', 'Mission details', 'overlay-reading-unit'],
-    ['mission-brief-reading', 'mission-brief-read', 'Mission brief', 'mission-brief-unit'],
+    ['overlay-reading', 'overlay-read', t("interface:missionDetails"), 'overlay-reading-unit'],
+    ['mission-brief-reading', 'mission-brief-read', t("interface:missionBrief"), 'mission-brief-unit'],
     ...additionalSurfaces,
   ];
   const surfaces = definitions.map(([id, entryId, label, unitId]) => {
@@ -26,7 +28,7 @@ export function attachControllerReading({
       unit: doc.getElementById(unitId),
     };
     if (Object.values(surface).some((value) => !value))
-      throw new Error(`Missing first-party reading controls: ${id}`);
+      throw new Error(t("gameplay:missingFirstPartyReadingControls", { value1: id }));
     return surface;
   });
   let activeId = null,
@@ -38,7 +40,7 @@ export function attachControllerReading({
   };
   const prompt = () => {
     const labels = getControlLabels();
-    return `Up/Down scroll · ${labels.confirm} or ${labels.back} returns.`;
+    return t("gameplay:upDownScrollOrReturns", { value1: labels.confirm, value2: labels.back });
   };
   function refresh() {
     if (destroyed) return;
@@ -46,9 +48,9 @@ export function attachControllerReading({
       const active = activeId === surface.id;
       surface.done.disabled = !active;
       surface.entry.setAttribute('aria-pressed', String(active));
-      surface.hint.textContent = active
-        ? `Reading ${surface.label}. ${prompt()}`
-        : 'Read without starting or resuming.';
+      localizedText(surface.hint, () =>active
+        ? t("gameplay:reading", { value1: contentText(surface, 'label'), value2: prompt() })
+        : t("interface:readWithoutStartingOrResuming"));
       if (surface.id === 'overlay-reading' && (compactOverlay || surface.region.hidden)) {
         const { clientHeight, scrollHeight } = surface.region;
         const measured =
@@ -79,14 +81,13 @@ export function attachControllerReading({
     activeId = surfaces.some((surface) => surface.id === state?.regionId) ? state.regionId : null;
     refresh();
     if (previous && previous !== activeId) {
-      surfaces.find((surface) => surface.id === previous).hint.textContent =
-        'Reading ended. Choose an action when ready.';
+      localizedText(surfaces.find((surface) => surface.id === previous).hint, () =>t("interface:readingEndedChooseAnActionWhenReady"));
     }
     onTransition();
   }
   function hint(message) {
     if (destroyed || !activeId) return;
-    surfaces.find((surface) => surface.id === activeId).hint.textContent = message;
+    localizedText(surfaces.find((surface) => surface.id === activeId).hint, () =>message);
   }
   for (const surface of surfaces) {
     listen(surface.entry, 'click', () => {

@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { createExternalChapterHost } from '../external-chapter-host.mjs';
 import { SOURCE_EXTERNAL_CHAPTERS, SOURCE_EXTERNAL_EDITIONS } from '../external-chapter-source.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
@@ -5,7 +6,7 @@ import { acquirePresentationImage } from '../ui/presentation-image.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 
 const cancelled = () =>
-  new DOMException('Installed couch chapter loading cancelled.', 'AbortError');
+  new DOMException(t("interface:installedCouchChapterLoadingCancelled"), 'AbortError');
 const requireValue = (value, message) => {
   if (!value) throw new Error(message);
 };
@@ -41,7 +42,7 @@ export function createCouchInstalledChapters({
   };
   function decode(source, signal) {
     check(signal);
-    requireValue(typeof ImageClass === 'function', 'Browser picture decoding is unavailable.');
+    requireValue(typeof ImageClass === 'function', t("interface:browserPictureDecodingIsUnavailable"));
     return new Promise((resolve, reject) => {
       const image = new ImageClass();
       let settled = false;
@@ -58,16 +59,16 @@ export function createCouchInstalledChapters({
       };
       const abort = () => finish(cancelled());
       const timer = setTimeout(
-        () => finish(new Error('Installed couch picture decode timed out.')),
+        () => finish(new Error(t("interface:installedCouchPictureDecodeTimedOut"))),
         15000,
       );
       signal?.addEventListener('abort', abort, { once: true });
-      image.onerror = () => finish(new Error('The installed couch picture could not decode.'));
+      image.onerror = () => finish(new Error(t("interface:theInstalledCouchPictureCouldNotDecode")));
       image.onload = async () => {
         try {
           requireValue(
             typeof image.decode === 'function',
-            'Complete picture decoding is unavailable.',
+            t("interface:completePictureDecodingIsUnavailable"),
           );
           await image.decode();
           check(signal);
@@ -141,7 +142,7 @@ export function createCouchInstalledChapters({
       // Join cancelled authority work before entering its single-operation lock.
       if (previous) await previous.promise.catch(() => {});
       check(controller.signal);
-      requireValue(ticket === generation, 'The selected couch chapter changed.');
+      requireValue(ticket === generation, t("interface:theSelectedCouchChapterChanged"));
       // Legacy pack preparation receives no signal argument from its decoder
       // caller. Bind that decoder to the work actually executing, never to a
       // newer queued operation that is still waiting for this one to unwind.
@@ -149,7 +150,7 @@ export function createCouchInstalledChapters({
       try {
         return await work(controller.signal, () => {
           check(controller.signal);
-          requireValue(ticket === generation, 'The selected couch chapter changed.');
+          requireValue(ticket === generation, t("interface:theSelectedCouchChapterChanged"));
         });
       } finally {
         if (executingSignal === controller.signal) executingSignal = null;
@@ -169,7 +170,7 @@ export function createCouchInstalledChapters({
       current();
       requireValue(
         next.status === 'checked',
-        'Installed chapters need recovery in solo More worlds before racing.',
+        t("interface:installedChaptersNeedRecoveryInSoloMoreWorldsBeforeRacing"),
       );
       const rows = [];
       for (const entry of next.executionCatalog.entries) {
@@ -182,7 +183,7 @@ export function createCouchInstalledChapters({
           };
           const row = Object.freeze({
             key: `installed/${entry.executionKey}/${level.id}`,
-            chapter: `${SOURCE_EXTERNAL_EDITIONS.find((edition) => edition.descriptor.id === entry.sourcePackId)?.name || entry.campaign.title} · Installed`,
+            chapter: t("gameplay:installed", { value1: SOURCE_EXTERNAL_EDITIONS.find((edition) => edition.descriptor.id === entry.sourcePackId)?.name || entry.campaign.title }),
             level,
             classes: entry.classRecipes,
             themes: entry.themes,
@@ -206,10 +207,10 @@ export function createCouchInstalledChapters({
   }
   function stateFor(row, themeId) {
     const state = choices.get(row);
-    requireValue(state && state.snapshot === snapshot, 'Select a current installed couch chapter.');
+    requireValue(state && state.snapshot === snapshot, t("interface:selectACurrentInstalledCouchChapter"));
     requireValue(
       row.themes.some((theme) => theme.id === themeId),
-      'This world does not belong to the selected chapter.',
+      t("interface:thisWorldDoesNotBelongToTheSelectedChapter"),
     );
     return state;
   }
@@ -221,7 +222,7 @@ export function createCouchInstalledChapters({
           const latest = await proof.store.readPresentationMetadata({ signal });
           requireValue(
             latest.metadata.generation === proof.metadata.generation,
-            'Installed originals changed; reload this chapter before starting.',
+            t("interface:installedOriginalsChangedReloadThisChapterBeforeStarting"),
           );
         }
         check(signal);
@@ -231,7 +232,7 @@ export function createCouchInstalledChapters({
   }
   async function select(row, { themeId = row.defaultThemeId, raceId, signal } = {}) {
     const state = stateFor(row, themeId);
-    requireValue(Number.isSafeInteger(raceId) && raceId >= 0, 'Use a new in-memory race identity.');
+    requireValue(Number.isSafeInteger(raceId) && raceId >= 0, t("interface:useANewInMemoryRaceIdentity"));
     clearBinding();
     return operation(signal, async (s, current) => {
       let candidate = null,
@@ -250,10 +251,10 @@ export function createCouchInstalledChapters({
           );
           current();
           candidate = await acquirePresentationImage(proof, { signal: s, ImageClass, URLImpl });
-          requireValue(candidate?.image, 'The installed authored original is unavailable.');
+          requireValue(candidate?.image, t("interface:theInstalledAuthoredOriginalIsUnavailable"));
         } else if (state.background) {
           const header = inspectImageDataUrl(state.background.dataUrl);
-          requireValue(header.valid, 'The installed embedded original is invalid.');
+          requireValue(header.valid, t("interface:theInstalledEmbeddedOriginalIsInvalid"));
           const image = await decode(state.background.dataUrl, s);
           candidate = Object.freeze({
             image,
@@ -263,13 +264,13 @@ export function createCouchInstalledChapters({
           });
           requireValue(
             image.naturalWidth === header.width && image.naturalHeight === header.height,
-            'The installed original decoded to different dimensions.',
+            t("interface:theInstalledOriginalDecodedToDifferentDimensions"),
           );
         }
         current();
         await verifyCurrent(state, proof, s);
         current();
-        requireValue(state === stateFor(row, themeId), 'The selected installed owner changed.');
+        requireValue(state === stateFor(row, themeId), t("interface:theSelectedInstalledOwnerChanged"));
         binding = candidate;
         candidate = null;
         selection = { row, themeId, raceId, state, proof };
@@ -283,12 +284,12 @@ export function createCouchInstalledChapters({
     const selected = selection;
     requireValue(
       selected?.row === row && selected.raceId === raceId,
-      'Load the selected original before starting.',
+      t("interface:loadTheSelectedOriginalBeforeStarting"),
     );
     return operation(signal, async (s, current) => {
       await verifyCurrent(selected.state, selected.proof, s);
       current();
-      requireValue(selection === selected, 'The prepared race changed.');
+      requireValue(selection === selected, t("interface:thePreparedRaceChanged"));
       return binding;
     });
   }

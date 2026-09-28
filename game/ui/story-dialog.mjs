@@ -1,3 +1,4 @@
+import { localizedText, t, localizedAttribute } from '../i18n/index.mjs';
 import { canonicalJSON, required } from '../data-json.mjs';
 import { snapshotStoryPin, resolveAuthoredStoryPin } from '../story-bindings.mjs';
 import { requirePreparedVictoryStory } from '../victory-story.mjs';
@@ -7,7 +8,7 @@ import { createVictoryStoryPresentation } from './victory-story.mjs';
  * verifies its exact retained descriptor and original; today's binding is irrelevant. */
 export async function acquirePinnedStory({ pin: source, media }, { signal, ...inspection } = {}) {
   const pin = snapshotStoryPin(source);
-  required(pin && media?.storyStore && media.story, 'The compatible story store is unavailable.');
+  required(pin && media?.storyStore && media.story, t("interface:theCompatibleStoryStoreIsUnavailable"));
   const selected = await resolveAuthoredStoryPin(
     pin,
     {
@@ -17,7 +18,7 @@ export async function acquirePinnedStory({ pin: source, media }, { signal, ...in
     },
     { signal },
   );
-  required(selected.kind === 'available', 'Restore this story’s exact .rlstory original.');
+  required(selected.kind === 'available', t("interface:restoreThisStorySExactRlstoryOriginal"));
   const prepared = await media.storyStore.acquire(
     { id: pin.id, revision: pin.revision, picturePin: pin.picturePin },
     { signal, ...inspection },
@@ -25,9 +26,9 @@ export async function acquirePinnedStory({ pin: source, media }, { signal, ...in
   const checked = requirePreparedVictoryStory(prepared, pin.picturePin);
   required(
     canonicalJSON(checked.descriptor) === canonicalJSON(selected.descriptor),
-    'The acquired movie does not match the frozen story revision.',
+    t("interface:theAcquiredMovieDoesNotMatchTheFrozenStoryRevision"),
   );
-  if (signal?.aborted) throw new DOMException('Story opening cancelled.', 'AbortError');
+  if (signal?.aborted) throw new DOMException(t("interface:storyOpeningCancelled"), 'AbortError');
   return prepared;
 }
 
@@ -55,8 +56,8 @@ export function createStoryDialog({
   dialog.setAttribute('aria-labelledby', title.id);
   close.type = 'button';
   close.className = 'dialog-close';
-  close.textContent = '×';
-  close.setAttribute('aria-label', 'Close story');
+  localizedText(close, () =>'×');
+  localizedAttribute(close, "aria-label", () => t("interface:closeStory"));
   notice.setAttribute('role', 'status');
   stage.className = 'story-stage';
   dialog.append(close, title, notice, stage);
@@ -68,7 +69,7 @@ export function createStoryDialog({
     previousSettings = null,
     externalCleanup = null;
   const failure = (error) =>
-    `Story unavailable. Your exact picture stays visible. Restore its original .rlstory file and reopen to try again. ${error instanceof Error ? error.message : String(error)}`;
+    t("gameplay:storyUnavailableYourExactPictureStaysVisibleRestoreItsOriginal", { value1: error instanceof Error ? error.message : String(error) });
   function cancel() {
     generation++;
     externalCleanup?.();
@@ -93,17 +94,17 @@ export function createStoryDialog({
     }
   }
   async function open({ pin: source, title: label, drawPoster }, { signal } = {}) {
-    required(!disposed, 'The story view is closed.');
+    required(!disposed, t("interface:theStoryViewIsClosed"));
     const pin = snapshotStoryPin(source);
     required(
       pin && typeof drawPoster === 'function',
-      'An exact story and decoded poster are required.',
+      t("interface:anExactStoryAndDecodedPosterAreRequired"),
     );
     if (signal?.aborted) return false;
     // Draw offscreen first: a failed caller draw cannot replace an open prior picture.
     const canvas = doc.createElement('canvas');
     canvas.setAttribute('role', 'img');
-    canvas.setAttribute('aria-label', 'Exact unlocked picture');
+    localizedAttribute(canvas, "aria-label", () => t("interface:exactUnlockedPicture"));
     drawPoster(canvas);
     cancel();
     const ticket = generation,
@@ -114,9 +115,9 @@ export function createStoryDialog({
     };
     signal?.addEventListener('abort', abort, { once: true });
     externalCleanup = () => signal?.removeEventListener('abort', abort);
-    title.textContent = label;
+    localizedText(title, () =>label);
     stage.replaceChildren(canvas);
-    notice.textContent = 'Your picture is ready. Checking the optional story original…';
+    localizedText(notice, () =>t("interface:yourPictureIsReadyCheckingTheOptionalStoryOriginal"));
     dialog.dataset.storyState = 'preparing';
     dialog.setAttribute('aria-busy', 'true');
     if (!dialog.open) dialog.showModal();
@@ -159,7 +160,7 @@ export function createStoryDialog({
             try {
               saveVolume(volume);
             } catch (error) {
-              notice.textContent = `Cinematic preference could not be saved. ${error.message}`;
+              localizedText(notice, () =>t("gameplay:cinematicPreferenceCouldNotBeSaved", { value1: error.message }));
             }
             previousSettings = { ...settings() };
           }
@@ -170,11 +171,11 @@ export function createStoryDialog({
         return false;
       }
       presentation = created;
-      notice.textContent = '';
+      localizedText(notice, () =>'');
       return true;
     } catch (error) {
       if (current()) {
-        notice.textContent = failure(error);
+        localizedText(notice, () =>failure(error));
         dialog.dataset.storyState = 'unavailable';
         dialog.setAttribute('aria-busy', 'false');
       }

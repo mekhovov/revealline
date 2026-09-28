@@ -1,13 +1,15 @@
+import { contentText } from '../i18n/content.mjs';
+import { t } from '../i18n/index.mjs';
 import { CELL, FIXED_DT } from '../core/registry.mjs';
 import { drawPresentedActor, PRESENTATION_INK, PRESENTATION_PLATE } from './actor-presentation.mjs';
 
 const SIZE = 16;
 const KINDS = ['extra-life', 'player-speed', 'enemy-slow', 'enemy-freeze'];
 const LABELS = {
-  'extra-life': 'Life',
-  'player-speed': 'Speed',
-  'enemy-slow': 'Enemies slow',
-  'enemy-freeze': 'Enemies frozen',
+  get 'extra-life'() { return t("interface:life"); },
+  get 'player-speed'() { return t("interface:speed"); },
+  get 'enemy-slow'() { return t("interface:enemiesSlow"); },
+  get 'enemy-freeze'() { return t("interface:enemiesFrozen"); },
 };
 const TYPES = [
   'bouncer',
@@ -19,15 +21,15 @@ const TYPES = [
   'eroder',
 ];
 const own = (value, key) => {
-  if (!value || typeof value !== 'object') throw new TypeError('Expected presentation data');
+  if (!value || typeof value !== 'object') throw new TypeError(t("interface:expectedPresentationData"));
   const field = Object.getOwnPropertyDescriptor(value, key);
   if (!field) return undefined;
   if (!Object.hasOwn(field, 'value'))
-    throw new TypeError('Presentation data cannot contain getters');
+    throw new TypeError(t("interface:presentationDataCannotContainGetters"));
   return field.value;
 };
 const check = (condition) => {
-  if (!condition) throw new TypeError('Invalid classic presentation');
+  if (!condition) throw new TypeError(t("interface:invalidClassicPresentation"));
 };
 const integer = (value) => Number.isSafeInteger(value) && value >= 0;
 const typedLength = Object.getOwnPropertyDescriptor(
@@ -242,17 +244,17 @@ export function classicView(run) {
         ...(terrain.some((cell) => cell.kind === 'slow') ? ['Slow ground active'] : []),
         ...(terrain.some((cell) => cell.kind === 'lethal') ? ['Lethal ground active'] : []),
         ...(powerups.length
-          ? [`${powerups.length} contact pickup${powerups.length === 1 ? '' : 's'}`]
+          ? [t("gameplay:contactPickup", { value1: powerups.length, value2: powerups.length === 1 ? '' : 's' })]
           : []),
         ...enemies
           .filter((enemy) => enemy.mode === 'warning')
           .map(
             (enemy) =>
-              `${enemy.type === 'eroder' ? 'Ground reopens' : 'Rover wakes'} in ${enemy.seconds.toFixed(1)}s`,
+              t("gameplay:inS", { value1: enemy.type === 'eroder' ? t("interface:groundReopens") : t("interface:roverWakes"), value2: enemy.seconds.toFixed(1) }),
           ),
         ...effects.map(
           (effect) =>
-            `${effect.label}: ${effect.phase === 'pending' ? 'next tick' : `${effect.seconds.toFixed(1)}s`}`,
+            `${contentText(effect, 'label')}: ${effect.phase === 'pending' ? 'next tick' : `${effect.seconds.toFixed(1)}s`}`,
         ),
       ].join(' · '),
     });
@@ -547,7 +549,7 @@ export function drawClassicStatus(
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'left';
     const label = compact
-      ? { 'player-speed': 'SPEED', 'enemy-slow': 'SLOW', 'enemy-freeze': 'FREEZE' }[effect.kind]
+      ? { 'player-speed': t("interface:speed2"), 'enemy-slow': t("interface:slow"), 'enemy-freeze': t("interface:freeze") }[effect.kind]
       : effect.label;
     ctx.fillText(
       `${label} ${effect.phase === 'pending' ? 'next' : `${effect.seconds.toFixed(1)}s`}`,
@@ -607,7 +609,7 @@ export function drawEnemyPressure(
           ],
         ]);
     }
-    const label = cooldown ? 'REST' : warning ? 'AIM' : 'CHASE',
+    const label = cooldown ? t("interface:rest") : warning ? t("interface:aim") : t("interface:chase"),
       textWidth = (label.length * 6 + 4) * unit,
       x = Math.max(0, Math.min(1152 - textWidth, enemy.x * SIZE - textWidth / 2)),
       y = Math.max(
