@@ -216,8 +216,7 @@ const postJSON = (fetchImpl, url, body, timeoutMs, action, headers = {}) =>
     action,
   );
 
-const capturedVerification = async ({ config, account, fetchImpl, sleep, now }) => {
-  const requestedAfter = new Date(now()).toISOString();
+const capturedVerification = async ({ config, account, fetchImpl, sleep, now, requestedAfter }) => {
   const deadline = now() + config.mailTimeoutMs;
   let polls = 0;
   while (now() <= deadline) {
@@ -267,6 +266,7 @@ const capturedVerification = async ({ config, account, fetchImpl, sleep, now }) 
 };
 
 const verifyAccount = async ({ config, account, fetchImpl, sleep, now }) => {
+  const requestedAfter = new Date(now()).toISOString();
   const signUp = await postJSON(
     fetchImpl,
     new URL('api/auth/sign-up/email', config.baseURL),
@@ -281,7 +281,14 @@ const verifyAccount = async ({ config, account, fetchImpl, sleep, now }) => {
       signUp.user.emailVerified === false,
     'Account sign-up did not create an unverified account.',
   );
-  const captured = await capturedVerification({ config, account, fetchImpl, sleep, now });
+  const captured = await capturedVerification({
+    config,
+    account,
+    fetchImpl,
+    sleep,
+    now,
+    requestedAfter,
+  });
   const verification = await requestJSON(
     fetchImpl,
     captured.actionURL,
