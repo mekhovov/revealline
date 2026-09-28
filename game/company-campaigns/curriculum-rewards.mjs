@@ -1,3 +1,4 @@
+import { createCurriculumApplicationRewards } from './curriculum-application-rewards.mjs';
 import { CURRICULUM_LEARNING_PROFILES } from './curriculum-profiles.mjs';
 import {
   CURRICULUM_REFERENCE_ASSETS,
@@ -18,6 +19,7 @@ export function createCurriculumRewards({
   assets,
   assetSources = [],
   missionBindings,
+  lessons = [],
 }) {
   const presentationRevision = curriculumPresentationRevision(definition.id);
   const rows = definition.missionIds.map((id) =>
@@ -77,6 +79,24 @@ export function createCurriculumRewards({
       sources: refs.map((ref) => ({ ...CURRICULUM_SOURCES[ref] })),
     })),
   });
+  const keyAsset = assets.find((entry) => entry.id === `${definition.id}-key-v1`);
+  required(keyAsset, 'Missing separate campaign preview: ' + definition.id);
+  const previewDescriptions = selectExactCompanyArtworkDescriptions(keyAsset, assetSources);
+  const teaserImage = {
+    asset: { assetId: keyAsset.id, sha256: keyAsset.sha256 },
+    locales: Object.fromEntries(
+      ['en', 'uk'].map((locale) => [
+        locale,
+        {
+          alt:
+            previewDescriptions?.[locale] ??
+            (locale === 'uk'
+              ? `Ілюстрований анонс кампанії «${definition.locales.uk.title}».`
+              : `Illustrated preview of ${definition.locales.en.title}.`),
+        },
+      ]),
+    ),
+  };
   const base = (id, scope, locales, missions, payloads) => ({
     format: 'revealline-completion-reward.v1',
     id,
@@ -84,6 +104,7 @@ export function createCurriculumRewards({
       scope.kind === 'mission'
         ? (presentationRevision.missionRewards[scope.id] ?? '1')
         : presentationRevision.finale,
+    teaserImage,
     brandId: definition.brandId,
     campaignId: definition.id,
     scope,
@@ -140,6 +161,9 @@ export function createCurriculumRewards({
       requirements,
       finalePayloads,
     ),
+  );
+  rewards.push(
+    ...createCurriculumApplicationRewards({ definition, requirements, lessons, assets }),
   );
   return rewards;
 }

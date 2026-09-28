@@ -1,3 +1,4 @@
+import { validateCampaignFeedback } from '../journey/campaign-feedback.mjs';
 import { exactKeys, required, stableId } from '../data-json.mjs';
 
 export const DISCOVERY_PACING_BEATS = Object.freeze([
@@ -28,11 +29,12 @@ export function validateMissionDiscovery(design) {
 }
 
 export function validateCampaignDiscovery(value) {
-  exactKeys(value, ['exhibitLayout', 'finaleRewardRef'], 'campaign discovery');
+  exactKeys(value, ['exhibitLayout', 'finaleRewardRef', 'feedback'], 'campaign discovery');
   required(
     DISCOVERY_EXHIBIT_LAYOUTS.includes(value.exhibitLayout),
     'Unknown discovery exhibit layout.',
   );
+  if (value.feedback !== undefined) validateCampaignFeedback(value.feedback);
   if (value.finaleRewardRef !== undefined) validateDiscoveryRewardRef(value.finaleRewardRef);
 }
 

@@ -96,3 +96,10 @@ Runtime pin/receipt models and original acquisition APIs are integrated in the s
 The public v0.61.9 Large/Plain portrait-return check exposed approximately 1.77 CSS pixels of clipped picker focus outline. The helper had measured the dialog's border box instead of its inner scrolling area. The v0.61.23 candidate uses native client geometry while retaining the existing gap, label fallback, sticky rail and lifecycle guards. It does not reduce text size or control targets, change focus ownership, or mutate the draft. See [the retained failure, correction and remaining gates](verification/cross-mode/focus-scrollport-v06123/README.md).
 
 Measure the complete outline against the inner scrollport after both rotation directions, and the label against the sticky status rail. Verify the selected original, unsaved fields and preview before and after; reach Close by keyboard, reopen with Return and close with Escape. Record computed font families separately from rendered-glyph provenance. The minimum WCAG focused-component criterion does not by itself turn slight external-outline clipping into a conformance finding; full outline visibility remains RevealLine's explicit quality requirement.
+
+## Reward-authoring handoff
+
+The selected exact picture or captured video-poster draft can be downloaded without
+re-encoding and matched to an already admitted asset in Company or Level Studio.
+This does not grant publication approval, transfer complete clips, save an
+assignment or earn a player reward. See [the raster handoff](discovery-asset-handoff.md).

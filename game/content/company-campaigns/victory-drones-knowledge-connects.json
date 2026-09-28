@@ -85,7 +85,16 @@
       "band": 1,
       "discovery": {
         "exhibitLayout": "route",
-        "finaleRewardRef": { "id": "victory-drones-knowledge-connects-finale", "revision": "4" }
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Another discovery joins the learning wall."],
+            "uk": ["Ще одне відкриття з’явилося на стіні знань."]
+          },
+          "revision": "feedback-0c4cf72e688d9a18",
+          "victoryMotif": "shared-spark-v1"
+        },
+        "finaleRewardRef": { "id": "victory-drones-knowledge-connects-finale", "revision": "5" }
       },
       "format": "CampaignDesignV1",
       "id": "victory-drones-knowledge-connects",
@@ -242,7 +251,7 @@
         "memorableMoment": "An original steel-blue learning observatory with a yellow compass floor and open question stations.",
         "pacingBeat": "discover",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "victory-drones-knowledge-connects-01-discovery", "revision": "4" },
+        "rewardRef": { "id": "victory-drones-knowledge-connects-01-discovery", "revision": "5" },
         "routeDecision": "Use the crescent-shaped pair of returns or capture the open court in a wider loop."
       },
       "format": "MissionDesignV1",
@@ -292,7 +301,7 @@
         "memorableMoment": "Twin steel-blue pavilions connected by a yellow bridge, with diagram and original story displays.",
         "pacingBeat": "choose",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "victory-drones-knowledge-connects-02-discovery", "revision": "4" },
+        "rewardRef": { "id": "victory-drones-knowledge-connects-02-discovery", "revision": "5" },
         "routeDecision": "Choose the diagram bay or story bay first; the narrow middle return links both routes."
       },
       "format": "MissionDesignV1",
@@ -350,7 +359,7 @@
         "memorableMoment": "Three luminous source pedestals in an asymmetric blue research hall with yellow index ribbons.",
         "pacingBeat": "combine",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "victory-drones-knowledge-connects-03-discovery", "revision": "4" },
+        "rewardRef": { "id": "victory-drones-knowledge-connects-03-discovery", "revision": "5" },
         "routeDecision": "Capture the near evidence island, then split or encircle the two distant stations."
       },
       "format": "MissionDesignV1",
@@ -408,7 +417,7 @@
         "memorableMoment": "A quiet blue open-air learning court with yellow seating islands and an illuminated question wall.",
         "pacingBeat": "breathe",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "victory-drones-knowledge-connects-04-discovery", "revision": "4" },
+        "rewardRef": { "id": "victory-drones-knowledge-connects-04-discovery", "revision": "5" },
         "routeDecision": "Use the large quiet court to break a long crossing into two shorter decisions."
       },
       "format": "MissionDesignV1",
@@ -466,7 +475,7 @@
         "memorableMoment": "A stepped blue comparison library with paired display frames and a yellow reading terrace.",
         "pacingBeat": "mastery",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "victory-drones-knowledge-connects-05-discovery", "revision": "4" },
+        "rewardRef": { "id": "victory-drones-knowledge-connects-05-discovery", "revision": "5" },
         "routeDecision": "Connect the upper reference shelves before the longer lower route, or reverse the order."
       },
       "format": "MissionDesignV1",
@@ -532,7 +541,7 @@
         "memorableMoment": "A completed original learning network joining a compass, source hall and shared forum with yellow bridges.",
         "pacingBeat": "resolve",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "victory-drones-knowledge-connects-06-discovery", "revision": "4" },
+        "rewardRef": { "id": "victory-drones-knowledge-connects-06-discovery", "revision": "5" },
         "routeDecision": "Choose the shorter reference chain or broad outer gallery, returning through the central forum."
       },
       "format": "MissionDesignV1",
@@ -557,9 +566,9 @@
       "format": "PackDesignV1",
       "id": "victory-drones-knowledge-connects-pack",
       "name": "Knowledge Connects",
-      "revision": "4"
+      "revision": "5"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "4"
+  "revision": "5"
 }

@@ -124,8 +124,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-first-flight-01", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-first-flight-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-first-flight-key-v1",
+        "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -252,8 +266,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-first-flight-02", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-first-flight-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-first-flight-key-v1",
+        "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -380,8 +408,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-first-flight-03", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-first-flight-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-first-flight-key-v1",
+        "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -508,8 +550,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-first-flight-04", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-first-flight-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-first-flight-key-v1",
+        "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -636,8 +692,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-first-flight-05", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-first-flight-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-first-flight-key-v1",
+        "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -764,8 +834,22 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-first-flight-06", "kind": "mission" }
+    "revision": "3",
+    "scope": { "id": "fpv-first-flight-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-first-flight-key-v1",
+        "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами."
+        }
+      }
+    }
   },
   {
     "brandId": "fpv-learning",
@@ -986,7 +1070,21 @@
         }
       ]
     },
-    "revision": "2",
-    "scope": { "id": "fpv-first-flight", "kind": "campaign" }
+    "revision": "3",
+    "scope": { "id": "fpv-first-flight", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-first-flight-key-v1",
+        "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами."
+        }
+      }
+    }
   }
 ]

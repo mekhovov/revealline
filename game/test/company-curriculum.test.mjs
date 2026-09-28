@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { CURRICULUM_LESSONS } from '../company-campaigns/curriculum-lessons.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { readFile } from 'node:fs/promises';
 import {
@@ -54,6 +55,7 @@ const projects = CURRICULUM_CAMPAIGNS.map((definition) => {
       assets,
       assetSources: assetSources.assets,
       missionBindings,
+      lessons: CURRICULUM_LESSONS.filter((entry) => entry.campaignId === definition.id),
     }),
   );
   return { definition, source, missionBindings, rewards };
@@ -97,7 +99,10 @@ test('eighteen real six-mission curricula preserve shared rules and use 108 dist
 
 test('every new mission has sourced bilingual discovery content and an exact first-win binding', () => {
   for (const { definition, rewards, missionBindings } of projects) {
-    assert.equal(rewards.length, 7);
+    assert.equal(
+      rewards.length,
+      ['fpv-meet-aircraft', 'ukraine-threads'].includes(definition.id) ? 8 : 7,
+    );
     for (const missionId of definition.missionIds) {
       const row = CURRICULUM_MISSIONS.find((entry) => entry.id === missionId);
       const reward = rewards.find((entry) => entry.scope.id === missionId);
@@ -219,7 +224,7 @@ test('all 108 missions have distinct admitted art and selected public dependenci
     }
     assert.throws(
       () => createCurriculumRewards({ definition, source, missionBindings, assets: [] }),
-      /exact public inventory/,
+      /exact public inventory|separate campaign preview/,
     );
     assert.throws(
       () => createCurriculumProject({ campaignId: definition.id, artwork: [] }),
