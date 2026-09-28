@@ -451,6 +451,39 @@
                   data-i18n-aria-label="tools:enlargedInspectionOfTheSelectedCharacterAndItsCosmeticAnimation"
                 ></canvas>
                 <p id="inspection-status" class="setting-note" role="status" hidden></p>
+                <label class="field"
+                  ><span data-i18n="tools:motionLab.inspectionTravel.label"
+                    >Inspection travel response</span
+                  ><select id="inspection-travel" aria-describedby="inspection-travel-hint">
+                    <option
+                      value="follow"
+                      selected
+                      data-i18n="tools:motionLab.inspectionTravel.follow"
+                    >
+                      Follow arena
+                    </option>
+                    <option value="idle" data-i18n="tools:motionLab.inspectionTravel.idle">
+                      Idle
+                    </option>
+                    <option value="cruise" data-i18n="tools:motionLab.inspectionTravel.cruise">
+                      Cruise
+                    </option>
+                    <option value="boost" data-i18n="tools:motionLab.inspectionTravel.boost">
+                      Boost
+                    </option>
+                    <option value="slow" data-i18n="tools:motionLab.inspectionTravel.slow">
+                      Slow
+                    </option>
+                  </select></label
+                >
+                <p
+                  id="inspection-travel-hint"
+                  class="setting-note"
+                  data-i18n="tools:motionLab.inspectionTravel.hint"
+                >
+                  Cosmetic preview only; arena travel stays unchanged. Pause freezes animation. Slow
+                  inspection can make rotor speeds look alike. Pulses and lights ignore travel.
+                </p>
                 <label class="check"
                   ><input id="inspection-slow" type="checkbox" checked /><span
                     data-i18n="tools:slowInspectionMotion"

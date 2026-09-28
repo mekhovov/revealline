@@ -51,6 +51,24 @@ Studio does not substitute Solo for either mode.
    authored scenario and bypasses ordinary fresh-attempt gameplay tuning. It
    writes no mission awards or campaign progress.
 
+The ready card and **Mission brief** now derive optional-actor guidance from the
+enabled mission rules. Scout-only editions explain contact and enclosure removal;
+editions with sentries also explain the locked ray, warning bar and counterplay.
+Later steering does not retarget a sentry's shot. Closing before it fires cancels
+the warning, while a sentry in recovery can still have a live shot. The full brief
+warns against crossing that shot to reach its owner and distinguishes removable
+bracketed bodies from ordinary territory-retaining keepers. Authored prose stays
+complete, followed by the rule-derived explanation. Absent, disabled or empty
+optional populations retain their previous brief, and combined pressure guidance
+remains visible. English and Ukrainian use the same rule gates.
+
+The [briefing checks](../game/test/combat-brief.test.mjs) cover compiled optional
+candidates and the actual practice host. Public-input core fixtures establish
+fixed aim after a direction change, a live shot during recovery, warning
+cancellation on an earlier return, and scout removal by contact or enclosure.
+These are deterministic counterplay checks, not human fairness or physical-device
+qualification.
+
 The live presentation is additive. Absent or disabled combat preserves the
 existing drawing commands. Bodies and warnings sit below exposed trails and
 ordinary keepers; fired projectiles remain above keepers and below the craft.
@@ -60,7 +78,16 @@ behavior or default mission is introduced. The historical held patch in
 [integration tests](../game/test/combat-board-adapter.test.mjs) now exercise the
 actual checked-out painter as well as retained historical evidence.
 
-### Preview-only remains choice
+### Global remains preference and exact preview override
+
+Solo, Versus and Team Settings share **Show enemy remains**, which defaults to
+shown. Ordinary Solo, both Versus painters and Replay use it for inert optional
+residue. Team exposes the shared control without enabling unsupported combat.
+The separate strict `revealline.encounter-display.v1` record contains only its
+format and boolean choice; historical display, player, scenario and replay
+schemas remain unchanged. Reading never saves. Corrupt or future records retain
+their bytes, and failed or disabled persistence leaves the choice active for the
+current session. Explicit Retry verifies persistence before sharing resumes.
 
 **Show enemy remains** starts checked. Studio exposes it only when the selected
 mission resolves to valid, explicitly enabled Solo combat. It is hidden and
@@ -75,13 +102,15 @@ Native Retry retains the current child's launch choice. Close, replacement launc
 and page departure retire the pending operation; a late completion cannot revive
 that preview or write its scenario after retirement.
 
-The unchecked choice travels in the child's URL, for example
+The explicit Studio choice travels in the child's URL as `preview-remains=show`
+or `preview-remains=hide`, for example
 `?practice=1&revision=studio-7&preview-remains=hide`. The
-[practice presentation parser](../game/ui/practice-presentation.mjs) accepts it
-only for an actual practice session, excluding course sessions, with exactly one
-`practice=1` and exactly one `preview-remains=hide`. Missing, unknown, malformed or
-duplicate option values retain the usual shown presentation. Ordinary game and
-course sessions ignore this preview option.
+[practice presentation parser](../game/ui/practice-presentation.mjs) accepts an
+override only for an actual practice session, excluding course sessions, with
+exactly one `practice=1` and one recognized `preview-remains` value. That accepted
+launch choice overrides the global preference for the owned preview. Missing,
+unknown, malformed or duplicate values grant no override; the host uses the
+global preference. Ordinary game and course sessions ignore preview parameters.
 
 A successful launch still uses the existing tab-scoped scenario transport.
 Showing and hiding remains produce byte-identical scenario payloads; the choice
@@ -92,7 +121,8 @@ verified replays for both choices. The
 [query and localized control checks](../game/test/practice-presentation.test.mjs)
 and [Studio lifecycle checks](../game/test/studio-preview-readiness.test.mjs)
 cover these boundaries. This is a Studio practice control, not a global remains
-preference for ordinary or published play; that broader preference remains open.
+preference write. The separate global control and cross-mode persistence are
+covered by the [Batch 11 evidence](verification/actor-batch-11/README.md).
 
 If a frame fails after startup, the practice child stops simulation and gameplay
 input and displays a persistent failure message. It cannot Resume or Retry that

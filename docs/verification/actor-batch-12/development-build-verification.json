@@ -1,0 +1,22 @@
+{
+  "scope": "Unversioned local development build; not integrated release qualification",
+  "version": "0.141.7",
+  "sourceRevision": null,
+  "files": 1804,
+  "totalBytes": 744576560,
+  "manifestSha256": "f33bf7b1ccd170421c81e57525007506ff6f00875a5c4102254e1d37e852dbd7",
+  "allManifestBytesVerified": true,
+  "affectedRuntimeModulesMatchSource": [
+    "game/couch/coop-actor-presentation.mjs",
+    "game/mission-brief.mjs",
+    "game/i18n/catalogs.mjs",
+    "authoring/motion-lab/app.js",
+    "authoring/motion-lab/inspection-travel.mjs"
+  ],
+  "builtMarkup": "Native inspection travel selector retained; PWA HTML augmentation expected.",
+  "sourceArtwork": "Poltava candidate not a production runtime dependency",
+  "comparedWithBatch11": {
+    "filesDelta": 1,
+    "bytesDelta": 11055
+  }
+}

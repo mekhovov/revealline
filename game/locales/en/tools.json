@@ -2495,5 +2495,12 @@
   "studio.artwork.fitCover": "Centre crop",
   "studio.artwork.prepareBoard": "Create board candidate",
   "studio.artwork.preparingBoard": "Preparing and verifying a separate board image…",
-  "studio.artwork.boardReady": "Board candidate added. Original retained; visual and production review still required."
+  "studio.artwork.boardReady": "Board candidate added. Original retained; visual and production review still required.",
+  "motionLab.inspectionTravel.label": "Inspection travel response",
+  "motionLab.inspectionTravel.follow": "Follow arena",
+  "motionLab.inspectionTravel.idle": "Idle",
+  "motionLab.inspectionTravel.cruise": "Cruise",
+  "motionLab.inspectionTravel.boost": "Boost",
+  "motionLab.inspectionTravel.slow": "Slow",
+  "motionLab.inspectionTravel.hint": "Cosmetic preview only; arena travel stays unchanged. Pause freezes animation. Slow inspection can make rotor speeds look alike. Pulses and lights ignore travel."
 }

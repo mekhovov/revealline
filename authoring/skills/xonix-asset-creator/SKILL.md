@@ -137,3 +137,13 @@ horse-profile beam ends are candidate observations, not historical reconstructio
 Keep the actual1774×887 image and make a separate board derivative in Studio.
 Model byte round-trips, native import, native-grid cleanup, cultural approval and
 in-game contrast each require their own evidence. The new packet adds no mission.
+
+### Native candidate handoff
+
+The revised Poltava source has a separate Studio-created revision 7 wide candidate.
+Use its collection and verification record; retain all eight earlier declarations
+and byte strings. A successfully decoded native reimport and byte-exact packet
+roundtrip establish authoring transport, not cultural accuracy, uniform pixel
+clusters, scene contrast or runtime approval. Do not infer a failed export solely
+from an automation download-event timeout: inspect the prepared-file status and
+actual named browser download before classifying the product result.

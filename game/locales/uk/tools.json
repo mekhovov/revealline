@@ -2553,5 +2553,12 @@
   "studio.artwork.fitCover": "Обрізати по центру",
   "studio.artwork.prepareBoard": "Створити пробне зображення",
   "studio.artwork.preparingBoard": "Підготовка та перевірка окремого зображення поля…",
-  "studio.artwork.boardReady": "Пробне зображення додано. Оригінал збережено; потрібні візуальна перевірка та затвердження для випуску."
+  "studio.artwork.boardReady": "Пробне зображення додано. Оригінал збережено; потрібні візуальна перевірка та затвердження для випуску.",
+  "motionLab.inspectionTravel.label": "Реакція огляду на рух",
+  "motionLab.inspectionTravel.follow": "Як на арені",
+  "motionLab.inspectionTravel.idle": "Спокій",
+  "motionLab.inspectionTravel.cruise": "Звичайний рух",
+  "motionLab.inspectionTravel.boost": "Прискорення",
+  "motionLab.inspectionTravel.slow": "Уповільнення",
+  "motionLab.inspectionTravel.hint": "Лише візуальний огляд; рух на арені не змінюється. Пауза зупиняє анімацію. Повільний огляд може зрівняти видиму швидкість роторів. Пульсація та вогні не залежать від руху."
 }

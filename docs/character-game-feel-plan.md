@@ -297,3 +297,7 @@ Require actual rendered frame changes, stable pause/downed/reduced states, 30/60
 C2 needs two short rounds with at least three newcomers and three experienced players: unaided start, recognising safe ground/trail/threat, explaining losses, finding another approach, captures remaining readable, and voluntary Retry/Next. Record locally with consent; no completed human sessions or retention study is claimed.
 
 Use this bounded multi-phase PR as one compatible publisher input. Preserve separate feature evidence and reversible commits inside it; unfinished subfeatures stay explicitly unaccepted. Keep one publisher. That owner adopts exact provenance and preserved historical metadata, assigns the next version, qualifies the integrated source, freezes and publishes immutable bytes, admits the selector, verifies Pages and ordinary play, then marks the batch accepted. Long suites waived by the committed temporary policy remain explicitly waived; focused checks and failed gates stay visible. Unrelated workspace work, original artwork and published releases remain intact.
+
+## Latest delivery checkpoint
+
+Use the [29 September completed/remaining register](plan-status-2026-09-29.md) for current queue state and effort ranges. Batch 12 adds rule-derived optional-encounter teaching, Team recovery-pose correction, inspection-only travel response, and a separate native Poltava board candidate. These bounded C3–C6 slices do not close whole phases or change the C2-last priority.

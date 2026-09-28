@@ -180,3 +180,19 @@ opacity. Use the real pickup, expiry, paused/reduced samples and unchanged paral
 core runs. The source review's borrowed prepared Scout/drifter rig is a labelled
 compatibility specimen; current tank treads already follow displacement. Neither
 fixture establishes a new production binding. See batch11 and team-freeze study.
+
+### Recovery and inspection response
+
+A Team down/revive can occur inside one core step; never infer flight from the
+respawn displacement. Grace may clear on the next unsafe cut before a frame is
+painted. Use the existing observed reserve decrease or rescue count advance as a
+conservative one-sample presentation discontinuity when the recovered seat is
+unknown. Keep repeated paints stable, resume the unaffected partner next tick,
+and exclude reserve pickup increases. This is not detection across arbitrary
+unobserved histories or new gameplay state.
+
+Motion Lab's Inspection travel response affects only its enlarged image and
+attachment sampler. Follow arena is the default; Idle/Cruise/Boost/Slow use the
+existing validated response ratios. Editing must not reset clocks, start a
+paused study, alter arena steering or enter recipe exports. Slow inspection may
+cap all rotor responses alike; pulse and light recipes ignore speed by design.

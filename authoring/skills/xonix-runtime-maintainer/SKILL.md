@@ -1615,3 +1615,13 @@ write the first-cut teaching receipt: assert that exact write separately, then
 measure Settings/disposal writes from their actual boundary. A restored page needs
 its neutral sample before deliberate tab input, even when testing an edit before
 its deferred preference restore. See batch11 evidence; do not relax these guards.
+
+### Optional-encounter teaching
+
+The authoring design card is not part of a compiled playable scenario. Build
+ready-card and full-brief scout/sentry guidance from the enabled versioned actor
+roles. Preserve authored prose and byte-identical no-encounter output. Verify
+fixed aim, early-return cancellation and still-live shots during sentry recovery
+against real core/replay traces; do not describe bracketed optional robots as
+ordinary dangerous region-keeping enemies. New copy alone does not finish Field
+Guide, paused details, full-mission fairness or production review.
