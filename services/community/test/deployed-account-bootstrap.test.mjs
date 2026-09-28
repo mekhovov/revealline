@@ -281,6 +281,91 @@ test('account bootstrap sanitizes mail-capture transport failures', async () => 
   );
 });
 
+for (const deliveryDelayMs of [1, 50]) {
+  test(`account bootstrap captures verification mail delivered ${deliveryDelayMs < 20 ? 'during' : 'after'} sign-up`, async () => {
+    let wallTime = Date.parse('2026-09-28T02:00:00.000Z');
+    const deliveries = new Map();
+    const verified = new Set();
+    const fetchImpl = async (input, init = {}) => {
+      const url = new URL(input);
+      if (url.pathname === '/version')
+        return Response.json({ format: 'revealline-community-release.v1', ...expectedRelease });
+      if (url.pathname === '/health') return Response.json({ status: 'ok' });
+      if (url.pathname === '/ready') return Response.json({ status: 'ready' });
+      if (url.pathname === '/api/auth/sign-up/email') {
+        const account = JSON.parse(init.body);
+        deliveries.set(account.email, {
+          requestedAt: wallTime,
+          receivedAt: wallTime + deliveryDelayMs,
+        });
+        wallTime += 20;
+        return Response.json({
+          token: null,
+          user: { email: account.email, emailVerified: false },
+        });
+      }
+      if (url.origin === 'https://mail.example.test') {
+        const request = JSON.parse(init.body);
+        const delivery = deliveries.get(request.to);
+        assert.equal(
+          Date.parse(request.after),
+          delivery.requestedAt,
+          'each creator mail window must begin before its sign-up request',
+        );
+        if (delivery.receivedAt < Date.parse(request.after) || delivery.receivedAt > wallTime)
+          return new Response(null, { status: 404 });
+        const token = request.to.startsWith('creator-a') ? 'token-a' : 'token-b';
+        return Response.json({
+          message: {
+            id: (token === 'token-a' ? 'a' : 'b').repeat(64),
+            kind: 'verify-email',
+            to: request.to,
+            actionURL: `https://community.example.test/api/auth/verify-email?token=${token}`,
+            expiresAt: new Date(wallTime + 60_000).toISOString(),
+          },
+        });
+      }
+      if (url.pathname === '/api/auth/verify-email') {
+        verified.add(url.searchParams.get('token'));
+        return new Response(null, { status: 302, headers: { location: '/' } });
+      }
+      if (url.pathname === '/api/auth/sign-in/email') {
+        const account = JSON.parse(init.body);
+        assert.ok(verified.has(account.email.startsWith('creator-a') ? 'token-a' : 'token-b'));
+        return Response.json(
+          {},
+          {
+            headers: {
+              'set-cookie': `better-auth.session_token=${account.email}; Path=/; HttpOnly; Secure`,
+            },
+          },
+        );
+      }
+      if (url.pathname === '/api/auth/get-session')
+        return Response.json({
+          user: { email: init.headers.cookie.split('=')[1], emailVerified: true },
+        });
+      if (url.pathname === '/v1/admin/reports') return Response.json({ reports: [] });
+      assert.fail('Unexpected bootstrap request.');
+    };
+    const receipt = await runDeployedAccountBootstrap(config({ mailTimeoutMs: 100 }), {
+      fetchImpl,
+      now: () => wallTime,
+      sleep: async (milliseconds) => {
+        wallTime += milliseconds;
+      },
+      randomUUID: () => 'abcdef12-1234-4abc-8def-123456789abc',
+    });
+    assert.equal(receipt.status, 'passed');
+    assert.equal(receipt.accounts.creatorsVerified, 2);
+    assert.deepEqual(receipt.accounts.mailPolls, {
+      creatorA: deliveryDelayMs < 20 ? 1 : 2,
+      creatorB: deliveryDelayMs < 20 ? 1 : 2,
+    });
+    assert.doesNotMatch(JSON.stringify(receipt), /creator-a@example|creator-b@example|token-a/u);
+  });
+}
+
 test('account bootstrap CLI reserves one redacted receipt', async (t) => {
   const directory = await mkdtemp(path.join(os.tmpdir(), 'revealline-account-bootstrap-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
