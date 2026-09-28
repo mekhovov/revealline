@@ -2165,6 +2165,294 @@
       "path": "game/editions/assets/discovery/fpv-first-flight-06-v1.jpg",
       "publication": "public",
       "sha256": "3c2fdd8a8c038ad1c2e50d18e833cb7cf2e141b02ffc7b3402af77c3f679a8b2"
+    },
+    {
+      "approved": true,
+      "bytes": 138884,
+      "dependencies": [],
+      "id": "fpv-drone-families-01-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drone-families-01-v1.jpg",
+      "publication": "public",
+      "sha256": "43b5eb213c9e6aea5565587f3cb45bb592175982b7140de666b6ac049e5a2b7d"
+    },
+    {
+      "approved": true,
+      "bytes": 147129,
+      "dependencies": [],
+      "id": "fpv-drone-families-02-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drone-families-02-v1.jpg",
+      "publication": "public",
+      "sha256": "d6c316fe11726eecc47d18894e0a880da2b33f5b68d22bb1f39801e2661df385"
+    },
+    {
+      "approved": true,
+      "bytes": 140472,
+      "dependencies": [],
+      "id": "fpv-drone-families-03-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drone-families-03-v1.jpg",
+      "publication": "public",
+      "sha256": "802bbc7a54eeb0a538832d06bb411be02b8e7bc4cc9a5f8a5c98c8b76e2eb180"
+    },
+    {
+      "approved": true,
+      "bytes": 165281,
+      "dependencies": [],
+      "id": "fpv-drone-families-04-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drone-families-04-v1.jpg",
+      "publication": "public",
+      "sha256": "db4151cdb72326a815a779f1b8bf8684e9899d036088d981fcfb0828d35a7649"
+    },
+    {
+      "approved": true,
+      "bytes": 140216,
+      "dependencies": [],
+      "id": "fpv-drone-families-05-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drone-families-05-v1.jpg",
+      "publication": "public",
+      "sha256": "96fd3b75b810745a1c87ebed3d4055162d4789e0a436c9d0177ebcc05aa88676"
+    },
+    {
+      "approved": true,
+      "bytes": 152692,
+      "dependencies": [],
+      "id": "fpv-drone-families-06-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drone-families-06-v1.jpg",
+      "publication": "public",
+      "sha256": "879ae84c35afadd6a8f220656dd311ec279ccf6e162af8b6b642b5969dfdc358"
+    },
+    {
+      "approved": true,
+      "bytes": 174451,
+      "dependencies": [],
+      "id": "fpv-drones-ukraine-01-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drones-ukraine-01-v1.jpg",
+      "publication": "public",
+      "sha256": "59a72f4aa8ed8529b8b9babf4a94e873d404e3bdcf7084f6c57084316c88c50f"
+    },
+    {
+      "approved": true,
+      "bytes": 110577,
+      "dependencies": [],
+      "id": "fpv-drones-ukraine-02-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drones-ukraine-02-v1.jpg",
+      "publication": "public",
+      "sha256": "f8d0b39849e0e56431327a28f606bf8a1bf3d0ca6b43c7977b32c9dbbef4c2cf"
+    },
+    {
+      "approved": true,
+      "bytes": 98917,
+      "dependencies": [],
+      "id": "fpv-drones-ukraine-03-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drones-ukraine-03-v1.jpg",
+      "publication": "public",
+      "sha256": "8a6ec57c23eaaf34200510a0733bc24a3464a19fd711b273d62895aca6b4b8b9"
+    },
+    {
+      "approved": true,
+      "bytes": 135605,
+      "dependencies": [],
+      "id": "social-drone-community-connections-05-reveal-v1",
+      "path": "game/editions/assets/discovery/social-drone-community-connections-05-v1.jpg",
+      "publication": "public",
+      "sha256": "8a4068c39e990b909eee4fba4e340c4482e0067ff7f26fca629cce38811d199d"
+    },
+    {
+      "approved": true,
+      "bytes": 206693,
+      "dependencies": [],
+      "id": "social-drone-community-connections-06-reveal-v1",
+      "path": "game/editions/assets/discovery/social-drone-community-connections-06-v1.jpg",
+      "publication": "public",
+      "sha256": "00e3dafc52a05ea3012c7f143548fc32c0d0df35cbd920cec8420cb316123db7"
+    },
+    {
+      "approved": true,
+      "bytes": 170521,
+      "dependencies": [],
+      "id": "victory-drones-knowledge-connects-01-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-01-v1.jpg",
+      "publication": "public",
+      "sha256": "614c9a38f9c9233c01a649f4b59e9f638e5b9dd712cda0bb04b2bc2a25a184a7"
+    },
+    {
+      "approved": true,
+      "bytes": 196661,
+      "dependencies": [],
+      "id": "victory-drones-knowledge-connects-02-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-02-v1.jpg",
+      "publication": "public",
+      "sha256": "794cca9930fae791df22caef7e2caa3a5379557396974585c17986609a1140de"
+    },
+    {
+      "approved": true,
+      "bytes": 170273,
+      "dependencies": [],
+      "id": "victory-drones-knowledge-connects-03-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-03-v1.jpg",
+      "publication": "public",
+      "sha256": "3be987f6c3072b1de39b9cdfb7c38c95a3808e4657765fea1cfbd3bf4990287e"
+    },
+    {
+      "approved": true,
+      "bytes": 173623,
+      "dependencies": [],
+      "id": "victory-drones-knowledge-connects-04-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-04-v1.jpg",
+      "publication": "public",
+      "sha256": "fcf58c0d74e131fa7a9163285512cf77c66ffc2d7c793dc013f714bde27368b6"
+    },
+    {
+      "approved": true,
+      "bytes": 186265,
+      "dependencies": [],
+      "id": "fpv-drones-ukraine-04-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drones-ukraine-04-v1.jpg",
+      "publication": "public",
+      "sha256": "a85aa3515935cdae8f983c0376d3da03178f6310287ed9266cf364b2923e3d98"
+    },
+    {
+      "approved": true,
+      "bytes": 128946,
+      "dependencies": [],
+      "id": "fpv-drones-ukraine-05-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drones-ukraine-05-v1.jpg",
+      "publication": "public",
+      "sha256": "92ec7e8bcce3fe937565eaba83d4ed7a930d6e64d74f9335583f49e51bd866fb"
+    },
+    {
+      "approved": true,
+      "bytes": 180611,
+      "dependencies": [],
+      "id": "fpv-drones-ukraine-06-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-drones-ukraine-06-v1.jpg",
+      "publication": "public",
+      "sha256": "82feb4086bcf33a5a80d4a98fa7d50cace3bff9de95336562f53ca394b68341f"
+    },
+    {
+      "approved": true,
+      "bytes": 121480,
+      "dependencies": [],
+      "id": "fpv-care-repair-01-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-care-repair-01-v1.jpg",
+      "publication": "public",
+      "sha256": "7f570a43475e304a926228a28bbc98e1ec0a76ee1df54fbe77deb36a67f3d601"
+    },
+    {
+      "approved": true,
+      "bytes": 118110,
+      "dependencies": [],
+      "id": "fpv-care-repair-02-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-care-repair-02-v1.jpg",
+      "publication": "public",
+      "sha256": "5aeb3ea85a03e23f7999282b8648d66322ef0f18a0a1a580d8f7ec287259917e"
+    },
+    {
+      "approved": true,
+      "bytes": 93933,
+      "dependencies": [],
+      "id": "fpv-care-repair-03-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-care-repair-03-v1.jpg",
+      "publication": "public",
+      "sha256": "e95ecd746401b8ac04f9e440147b4b5f1fdcf3459f59498bd694a48422b9d87c"
+    },
+    {
+      "approved": true,
+      "bytes": 168765,
+      "dependencies": [],
+      "id": "victory-drones-knowledge-connects-05-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-05-v1.jpg",
+      "publication": "public",
+      "sha256": "04e343285fbad88d8c4e32ad365652c29c51aa1927b6be4ba7f751c126fbd4e6"
+    },
+    {
+      "approved": true,
+      "bytes": 227648,
+      "dependencies": [],
+      "id": "victory-drones-knowledge-connects-06-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-06-v1.jpg",
+      "publication": "public",
+      "sha256": "494447b8b5ba6af10d8eaa4dcc7497ac480cb754104f6f36ac1d7d76885aa350"
+    },
+    {
+      "approved": true,
+      "bytes": 148956,
+      "dependencies": [],
+      "id": "victory-drones-ideas-understanding-01-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-01-v1.jpg",
+      "publication": "public",
+      "sha256": "9352d919d1f6f0d5d989241982cd5bdd836544c76c3822196bdf203936489045"
+    },
+    {
+      "approved": true,
+      "bytes": 108518,
+      "dependencies": [],
+      "id": "fpv-care-repair-04-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-care-repair-04-v1.jpg",
+      "publication": "public",
+      "sha256": "1592f632fbce43aacc121cfac72476303bb3145fff3ebced154857a29a262aa5"
+    },
+    {
+      "approved": true,
+      "bytes": 109921,
+      "dependencies": [],
+      "id": "fpv-care-repair-05-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-care-repair-05-v1.jpg",
+      "publication": "public",
+      "sha256": "b1426ba3ebb1598179c6ab6b8ec34d052a024d321776aae61276b73bbc39c0bd"
+    },
+    {
+      "approved": true,
+      "bytes": 116476,
+      "dependencies": [],
+      "id": "fpv-care-repair-06-reveal-v1",
+      "path": "game/editions/assets/discovery/fpv-care-repair-06-v1.jpg",
+      "publication": "public",
+      "sha256": "d3c9b3b8d2acd2fa94a63aa66ef471094c2142badf9700ef6e4afe5d97e54bdb"
+    },
+    {
+      "approved": true,
+      "bytes": 139105,
+      "dependencies": [],
+      "id": "victory-drones-ideas-understanding-02-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-02-v1.jpg",
+      "publication": "public",
+      "sha256": "d2532d7bd90b41393a2b97c2dbc10780bbca85ed7d03bcfb8ac6b7d7378abdbd"
+    },
+    {
+      "approved": true,
+      "bytes": 164462,
+      "dependencies": [],
+      "id": "victory-drones-ideas-understanding-03-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-03-v1.jpg",
+      "publication": "public",
+      "sha256": "027c9cccb10195e5ca22fa62ddeac9f873eb599e3561c550cc53e58600564f3e"
+    },
+    {
+      "approved": true,
+      "bytes": 164122,
+      "dependencies": [],
+      "id": "victory-drones-ideas-understanding-04-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-04-v1.jpg",
+      "publication": "public",
+      "sha256": "7b42d7f7991f3334ea8dece380d0fd7c094c098e695e4e8b4a8a91840f7b95a7"
+    },
+    {
+      "approved": true,
+      "bytes": 149490,
+      "dependencies": [],
+      "id": "victory-drones-ideas-understanding-05-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-05-v1.jpg",
+      "publication": "public",
+      "sha256": "2567a823b10e581274fd58c6efd57444f0fd51c58358133230d63f9d5aef9b97"
+    },
+    {
+      "approved": true,
+      "bytes": 172086,
+      "dependencies": [],
+      "id": "victory-drones-ideas-understanding-06-reveal-v1",
+      "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-06-v1.jpg",
+      "publication": "public",
+      "sha256": "fad28290f3eb9e0bf2848b70fb9b6b4d77bc5c2fc968ee44da8faa7a901e0cbd"
     }
   ],
   "brands": [
@@ -2645,12 +2933,20 @@
       "sourcePath": "game/content/company-campaigns/social-drone-people-workshop.json"
     },
     {
-      "assetIds": ["victory-drones-knowledge-connects-key-v1"],
+      "assetIds": [
+        "victory-drones-knowledge-connects-01-reveal-v1",
+        "victory-drones-knowledge-connects-02-reveal-v1",
+        "victory-drones-knowledge-connects-03-reveal-v1",
+        "victory-drones-knowledge-connects-04-reveal-v1",
+        "victory-drones-knowledge-connects-05-reveal-v1",
+        "victory-drones-knowledge-connects-06-reveal-v1",
+        "victory-drones-knowledge-connects-key-v1"
+      ],
       "brandId": "victory-drones",
       "heroAssetId": "victory-drones-knowledge-connects-key-v1",
       "id": "victory-drones-knowledge-connects",
       "localizationPath": "game/content/company-campaigns/victory-drones-knowledge-connects.localization.json",
-      "localizationSha256": "c21ab0b460cba86115f26d42ae20e485d444334e34c10a2d6c6a7d708aceda17",
+      "localizationSha256": "f11b0a5326bddf4d2053f772fe4a085d7eee999534af035e7eafbee30df29f56",
       "modes": ["solo"],
       "name": "Knowledge Connects",
       "publication": "public",
@@ -2711,13 +3007,15 @@
         "social-drone-community-connections-02-reveal-v1",
         "social-drone-community-connections-03-reveal-v1",
         "social-drone-community-connections-04-reveal-v1",
+        "social-drone-community-connections-05-reveal-v1",
+        "social-drone-community-connections-06-reveal-v1",
         "social-drone-community-connections-key-v1"
       ],
       "brandId": "social-drone-ua",
       "heroAssetId": "social-drone-community-connections-key-v1",
       "id": "social-drone-community-connections",
       "localizationPath": "game/content/company-campaigns/social-drone-community-connections.localization.json",
-      "localizationSha256": "e7807f2c23ab8692337969edf54605645b8f2638080a0371fdefa5c53505929b",
+      "localizationSha256": "5874eadb4d6d832cda7e839ed3245b8f75b5deb7d1f35aca9ab327491602bae7",
       "modes": ["solo"],
       "name": "Community Connections",
       "publication": "public",
@@ -2726,12 +3024,20 @@
       "sourcePath": "game/content/company-campaigns/social-drone-community-connections.json"
     },
     {
-      "assetIds": ["victory-drones-ideas-understanding-key-v1"],
+      "assetIds": [
+        "victory-drones-ideas-understanding-01-reveal-v1",
+        "victory-drones-ideas-understanding-02-reveal-v1",
+        "victory-drones-ideas-understanding-03-reveal-v1",
+        "victory-drones-ideas-understanding-04-reveal-v1",
+        "victory-drones-ideas-understanding-05-reveal-v1",
+        "victory-drones-ideas-understanding-06-reveal-v1",
+        "victory-drones-ideas-understanding-key-v1"
+      ],
       "brandId": "victory-drones",
       "heroAssetId": "victory-drones-ideas-understanding-key-v1",
       "id": "victory-drones-ideas-understanding",
       "localizationPath": "game/content/company-campaigns/victory-drones-ideas-understanding.localization.json",
-      "localizationSha256": "4e9f595a831b72f9e08a85b1ccdae4a301be52099d57165d5de41c21979c41f3",
+      "localizationSha256": "d5470b095b57865228be162e0ecd6f4484e75aa1507dac0ed0a26b156e70fe95",
       "modes": ["solo"],
       "name": "Ideas into Understanding",
       "publication": "public",
@@ -2943,12 +3249,21 @@
       "sourcePath": "game/content/company-campaigns/fpv-first-flight.json"
     },
     {
-      "assetIds": ["fpv-drone-families-key-v1", "reference-fpv-ar-drone-prototype"],
+      "assetIds": [
+        "fpv-drone-families-01-reveal-v1",
+        "fpv-drone-families-02-reveal-v1",
+        "fpv-drone-families-03-reveal-v1",
+        "fpv-drone-families-04-reveal-v1",
+        "fpv-drone-families-05-reveal-v1",
+        "fpv-drone-families-06-reveal-v1",
+        "fpv-drone-families-key-v1",
+        "reference-fpv-ar-drone-prototype"
+      ],
       "brandId": "fpv-learning",
       "heroAssetId": "fpv-drone-families-key-v1",
       "id": "fpv-drone-families",
       "localizationPath": "game/content/company-campaigns/fpv-drone-families.localization.json",
-      "localizationSha256": "4b1187bb074eb367c9e61b78ee3f31698113347d7ac15e4d206b6f31a7217226",
+      "localizationSha256": "c14bd9a9de9d837989ad0d3bc46f842677c3355bbddba24c7c7d734658c9201c",
       "modes": ["solo"],
       "name": "Drone Families",
       "publication": "public",
@@ -2957,12 +3272,20 @@
       "sourcePath": "game/content/company-campaigns/fpv-drone-families.json"
     },
     {
-      "assetIds": ["fpv-drones-ukraine-key-v1"],
+      "assetIds": [
+        "fpv-drones-ukraine-01-reveal-v1",
+        "fpv-drones-ukraine-02-reveal-v1",
+        "fpv-drones-ukraine-03-reveal-v1",
+        "fpv-drones-ukraine-04-reveal-v1",
+        "fpv-drones-ukraine-05-reveal-v1",
+        "fpv-drones-ukraine-06-reveal-v1",
+        "fpv-drones-ukraine-key-v1"
+      ],
       "brandId": "fpv-learning",
       "heroAssetId": "fpv-drones-ukraine-key-v1",
       "id": "fpv-drones-ukraine",
       "localizationPath": "game/content/company-campaigns/fpv-drones-ukraine.localization.json",
-      "localizationSha256": "e8721c2dc0ae164b8a5bffe441da349f7b0794db21fa4842c17a780a70280ceb",
+      "localizationSha256": "0f38402f3736210180d2d3eb7c35c437a0ebaecd9123ad4fc2775688f674768a",
       "modes": ["solo"],
       "name": "Drones in Ukraine",
       "publication": "public",
@@ -2971,12 +3294,20 @@
       "sourcePath": "game/content/company-campaigns/fpv-drones-ukraine.json"
     },
     {
-      "assetIds": ["fpv-care-repair-key-v1"],
+      "assetIds": [
+        "fpv-care-repair-01-reveal-v1",
+        "fpv-care-repair-02-reveal-v1",
+        "fpv-care-repair-03-reveal-v1",
+        "fpv-care-repair-04-reveal-v1",
+        "fpv-care-repair-05-reveal-v1",
+        "fpv-care-repair-06-reveal-v1",
+        "fpv-care-repair-key-v1"
+      ],
       "brandId": "fpv-learning",
       "heroAssetId": "fpv-care-repair-key-v1",
       "id": "fpv-care-repair",
       "localizationPath": "game/content/company-campaigns/fpv-care-repair.localization.json",
-      "localizationSha256": "64c82205dc7dbed9101d00f8a485b23fddb8739fca073416abc05de783a0ad80",
+      "localizationSha256": "00447688e4e05aa07966593c4dd99f612e9db7f402fddb71d139920557a8f809",
       "modes": ["solo"],
       "name": "Care, Diagnosis and Repair Decisions",
       "publication": "public",
@@ -3006,6 +3337,12 @@
       "name": "Social Drone UA",
       "presentationHistory": [
         {
+          "bytes": 141818,
+          "id": "943441d44205dfced2e89cf47738d2fd6cc22e886cbd0fbea5bb24d77177e0de",
+          "path": "game/editions/retained/social-drone-ua-before-mission-art-4.json",
+          "sha256": "2feb17e46711d4cb402ff8b7f6f913b7ac137d20663da049bf22391311bfdf7c"
+        },
+        {
           "bytes": 115730,
           "id": "776e569d90c869e8cdf96beb046d21d9f5439fde57c9fbe991119e4029e0dcd6",
           "path": "game/editions/retained/social-drone-ua-before-profiles-art-3.json",
@@ -3019,7 +3356,7 @@
         }
       ],
       "publication": "public",
-      "revision": 3
+      "revision": 4
     },
     {
       "audience": "learners",
@@ -3040,6 +3377,12 @@
       "name": "Victory Drones",
       "presentationHistory": [
         {
+          "bytes": 132017,
+          "id": "afeb4333ec165a3ecbaa01bce74822744e2f56238f7608701284bcbd436638b3",
+          "path": "game/editions/retained/victory-drones-before-mission-art-4.json",
+          "sha256": "c011e7dab14bcc0eb5dd5fcb697c8affc6e5f72cd4dffe63b20c3971b3c7a12a"
+        },
+        {
           "bytes": 115252,
           "id": "6de52c0aa1ae09a7f9699adb5d73f69c779a5220e003434cb6dfe5c6333bff9f",
           "path": "game/editions/retained/victory-drones-before-profiles-art-3.json",
@@ -3053,7 +3396,7 @@
         }
       ],
       "publication": "public",
-      "revision": 3
+      "revision": 4
     },
     {
       "audience": "learners",
@@ -3130,6 +3473,12 @@
       "name": "FPV Learning",
       "presentationHistory": [
         {
+          "bytes": 574334,
+          "id": "5c23ab5e0b883f17e9de0df3a5b8b41010a86da1c495969c6e0efcc96658bdea",
+          "path": "game/editions/retained/fpv-learning-before-mission-art-4.json",
+          "sha256": "90939f3f49659cebf802393ff598e0b75a22107839303cd73ca69d91c0de7383"
+        },
+        {
           "bytes": 481396,
           "id": "108c4348f0a40c6e6b48387a9fa81d95161f006f842d1239e3048986c29696b2",
           "path": "game/editions/retained/fpv-learning-before-profiles-art-3.json",
@@ -3149,7 +3498,7 @@
         }
       ],
       "publication": "public",
-      "revision": 4
+      "revision": 5
     },
     {
       "audience": "everyone",

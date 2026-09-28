@@ -174,6 +174,12 @@ const choices = [
 const retainedPresentations = Object.freeze({
   'victory-drones': [
     {
+      id: 'afeb4333ec165a3ecbaa01bce74822744e2f56238f7608701284bcbd436638b3',
+      path: 'game/editions/retained/victory-drones-before-mission-art-4.json',
+      sha256: 'c011e7dab14bcc0eb5dd5fcb697c8affc6e5f72cd4dffe63b20c3971b3c7a12a',
+      bytes: 132017,
+    },
+    {
       id: '6de52c0aa1ae09a7f9699adb5d73f69c779a5220e003434cb6dfe5c6333bff9f',
       path: 'game/editions/retained/victory-drones-before-profiles-art-3.json',
       sha256: '60cc300a3d75072732afbb76dd258899d4a0134b7e5c1f9c7130773a852eb4be',
@@ -187,6 +193,12 @@ const retainedPresentations = Object.freeze({
     },
   ],
   'social-drone-ua': [
+    {
+      id: '943441d44205dfced2e89cf47738d2fd6cc22e886cbd0fbea5bb24d77177e0de',
+      path: 'game/editions/retained/social-drone-ua-before-mission-art-4.json',
+      sha256: '2feb17e46711d4cb402ff8b7f6f913b7ac137d20663da049bf22391311bfdf7c',
+      bytes: 141818,
+    },
     {
       id: '776e569d90c869e8cdf96beb046d21d9f5439fde57c9fbe991119e4029e0dcd6',
       path: 'game/editions/retained/social-drone-ua-before-profiles-art-3.json',
@@ -221,6 +233,12 @@ const retainedPresentations = Object.freeze({
     },
   ],
   'fpv-learning': [
+    {
+      id: '5c23ab5e0b883f17e9de0df3a5b8b41010a86da1c495969c6e0efcc96658bdea',
+      path: 'game/editions/retained/fpv-learning-before-mission-art-4.json',
+      sha256: '90939f3f49659cebf802393ff598e0b75a22107839303cd73ca69d91c0de7383',
+      bytes: 574334,
+    },
     {
       id: '108c4348f0a40c6e6b48387a9fa81d95161f006f842d1239e3048986c29696b2',
       path: 'game/editions/retained/fpv-learning-before-profiles-art-3.json',
@@ -482,15 +500,15 @@ export const COMPANY_EDITIONS = Object.freeze(
                 ? 5
                 : brandId === 'droneaid-nl'
                   ? 4
-                  : ['ukraine-culture', 'fpv-learning'].includes(id)
-                    ? 4
+                  : id === 'fpv-learning'
+                    ? 5
                     : [
                           'social-drone-ua',
                           'victory-drones',
                           'ukraine-culture',
                           'fpv-learning',
                         ].includes(id)
-                      ? 3
+                      ? 4
                       : 1,
     name,
     brandId,
