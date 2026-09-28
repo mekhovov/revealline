@@ -51,6 +51,7 @@ import { mountInterfacePreferences } from './interface-preferences.mjs';
 import { mountStudioGuide } from './guide.mjs';
 import { attachStudioAuditionLifecycle } from './audition-lifecycle.mjs';
 import { createStudioViewMemory, resolveStudioView } from './view-memory.mjs';
+import { mountStudioRotorControls } from './rotor-controls.mjs';
 const $ = (id) => document.getElementById(id);
 const node = (tag, value = '', className = '', hostRole = null) => {
   const el = document.createElement(tag);
@@ -205,6 +206,7 @@ function discardPreparation() {
   localizedText($('upload-summary'), () => t('tools:noReplacementSelected'));
   $('image-preparation').hidden = true;
   $('geometry-panel').hidden = true;
+  rotorControls.refresh();
   $('stage-asset').disabled = true;
   $('discard-asset').disabled = true;
 }
@@ -850,7 +852,10 @@ async function prepareCrop(task) {
 function populateGeometry() {
   const geometry = pending?.candidate?.geometry;
   $('geometry-panel').hidden = !geometry;
-  if (!geometry) return;
+  if (!geometry) {
+    rotorControls.refresh();
+    return;
+  }
   const controls = presentationGeometryControls(currentSlot());
   $('pivot-x').disabled = $('pivot-y').disabled = !controls.pivot;
   $('rotor-anchors').disabled = !controls.rotors;
@@ -864,7 +869,25 @@ function populateGeometry() {
   $('pivot-y').value = geometry.pivot.y;
   $('rotor-anchors').value = JSON.stringify(geometry.rotorAnchors, null, 2);
   $('nine-slice').value = JSON.stringify(geometry.nineSlice);
+  rotorControls.refresh();
 }
+const rotorControls = mountStudioRotorControls({
+  document,
+  getContext: () => ({
+    owner: pending,
+    asset: pending?.candidate,
+    slot: currentSlot(),
+    geometryText: JSON.stringify(
+      ['pivot-x', 'pivot-y', 'rotor-anchors', 'nine-slice'].map((id) => $(id).value),
+    ),
+  }),
+  onApply: (anchors, checkCurrent) =>
+    operation(t('tools:checkingPreviewGeometry'), (task) => {
+      checkCurrent();
+      return validatePending(true, task, anchors);
+    }),
+  onError: report,
+});
 function editedGeometry() {
   const current = pending.candidate.geometry;
   return {
@@ -874,7 +897,7 @@ function editedGeometry() {
     nineSlice: JSON.parse($('nine-slice').value),
   };
 }
-async function validatePending(geometryOnly = false, task) {
+async function validatePending(geometryOnly = false, task, rotorAnchors = null) {
   if (!pending?.candidate) throw new Error(t('tools:prepareAnImageCropOrChooseMediaFirst'));
   if (pending.bitmap) {
     const crop = getCrop();
@@ -883,6 +906,7 @@ async function validatePending(geometryOnly = false, task) {
   }
   const asset = structuredClone(pending.candidate);
   if (asset.geometry) asset.geometry = editedGeometry();
+  if (rotorAnchors !== null) asset.geometry.rotorAnchors = rotorAnchors;
   if (!geometryOnly) {
     for (const id of ['asset-creator', 'asset-source', 'asset-license'])
       if (!$(id).value.trim()) {
@@ -910,7 +934,9 @@ async function validatePending(geometryOnly = false, task) {
     bindings: { [selected]: ref(asset) },
   });
   if (geometryOnly) {
+    task.check();
     pending.candidate = asset;
+    populateGeometry();
     refreshPreviews();
     status(t('tools:geometryCheckedAndAppliedToTheDraftPreview'));
     return;
@@ -1368,6 +1394,7 @@ window.addEventListener('pagehide', (event) => {
   }
   for (const id of ['current-preview', 'draft-preview']) $(id).previewCleanup?.();
   if (!event.persisted) {
+    rotorControls.dispose();
     auditionLifecycle.dispose();
     studioGuide.dispose();
     interfacePreferences.dispose();

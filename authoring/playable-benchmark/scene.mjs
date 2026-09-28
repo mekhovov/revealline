@@ -4,6 +4,7 @@ import { acquireCandidatePicture } from '../../game/content-design/picture.mjs';
 import { prepareActorAppearanceLease } from '../../game/presentation/actor-appearance-lease.mjs';
 import { createBenchmarkSession } from './session.mjs';
 import { createAnimationState } from '../motion-lab/animation.mjs';
+import { createSceneComparison } from './comparison.mjs';
 
 function disposePainter(painter) {
   painter.loadToken++;
@@ -49,6 +50,8 @@ export async function prepareBenchmarkScene(
     presets,
     signal,
     onStep = () => {},
+    onComparisonStatus = () => {},
+    acquireComparison,
     loadTheme = loadPreviewTheme,
     acquirePicture = acquireCandidatePicture,
     acquireActors = prepareActorAppearanceLease,
@@ -59,12 +62,14 @@ export async function prepareBenchmarkScene(
   let picture = null;
   let actors = null;
   let session = null;
+  let comparison = null;
   const painters = [];
   let released = false;
   const dispose = () => {
     if (released) return;
     released = true;
     session?.dispose();
+    comparison?.dispose();
     picture?.release();
     actors?.release();
     painters.forEach(disposePainter);
@@ -94,6 +99,12 @@ export async function prepareBenchmarkScene(
         onStep(events, run);
       },
     });
+    comparison = createSceneComparison({
+      actors,
+      session,
+      acquire: acquireComparison,
+      onStatus: onComparisonStatus,
+    });
     const resetPresentation = () => {
       for (const painter of painters) {
         painter.setLevel(session.run.level, { seed: 1 });
@@ -101,7 +112,7 @@ export async function prepareBenchmarkScene(
       }
     };
     resetPresentation();
-    return { entry, session, picture, actors, painters, resetPresentation, dispose };
+    return { entry, session, picture, actors, comparison, painters, resetPresentation, dispose };
   } catch (error) {
     dispose();
     throw error;

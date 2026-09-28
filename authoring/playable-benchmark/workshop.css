@@ -203,6 +203,11 @@ canvas {
 details {
   margin: 12px 0;
 }
+fieldset {
+  min-width: 0;
+  margin: 12px 0;
+  border: 1px solid #516e7b;
+}
 summary {
   min-height: 44px;
   padding: 10px 0;
