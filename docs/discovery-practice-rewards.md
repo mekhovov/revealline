@@ -39,11 +39,22 @@ Flight course Studio preserves its imported knowledge reward through export.
 Changing a course binding requires an explicit new reward revision; its authored
 payload and bilingual copy remain intact. The lightweight course packet rejects
 media and cosmetic dependencies because it does not admit an asset catalogue.
-Language changes preserve the draft and unapplied control values.
+Language changes preserve the draft and unapplied control values. The
+**Discovery explanation** field edits the course's explanation; it does not
+silently replace a retained reward payload. To change that reward's authored
+copy, export the bundle, edit its existing `rewards[0]` data with a new revision,
+then **Import studio bundle** and validate again. Keep its ID, owner, scope and
+explicit course requirements consistent with the validated course.
 
 The generic model supports these records; the practice package supplies its
 course admission and verified evidence adapter. Existing arcade edition export
 must not admit an unsupported practice dependency. The general Company/Level Studio
 arcade reward controls do not yet author a simulator course or a practice proof.
-This format support alone does not establish that authoring workflow, successful
-physical-radio operation or real flight competence.
+The implemented [Course Studio workflow](civilian-fpv-authoring.md#author-a-course)
+is a separate, bounded authoring route. Importing a Studio bundle permits an
+ineligible preview; it does not install the course in the notebook's admitted
+catalogue. The notebook accepts only replay-verified normal practice proofs for
+its exact available courses. **Import a recorded flight** opens an ineligible
+review, whereas **Import and reverify proofs** transfers accepted notebook evidence.
+Neither accepts a claimed completion flag. Successful physical-radio operation
+and real flight competence remain outside these format checks.
