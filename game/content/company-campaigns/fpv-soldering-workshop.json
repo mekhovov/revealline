@@ -2,16 +2,81 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "A fictional cold solder-training studio with an unplugged iron in its stand, a clamped blank practice board and a magnifying lamp.",
-      "bytes": 236903,
+      "alt": "A cold unplugged iron rests in a sturdy holder beside an extraction hood, safety glasses and clear work space.",
+      "bytes": 122111,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "fpv-soldering-workshop-key-picture",
+      "height": 480,
+      "id": "fpv-soldering-workshop-01-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/fpv-soldering-workshop-key-v1.jpg",
+      "path": "editions/assets/discovery/fpv-soldering-workshop-01-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939",
+      "sha256": "2b18f1e9ad3c235f775d85e73b58e02354d05abe7d265ba5c6e239a94fce67dc",
+      "width": 960
+    },
+    {
+      "alt": "Two neutral spools keep separate blank material records, with a magnifier and an unidentified-material tray between them.",
+      "bytes": 119640,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-soldering-workshop-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-soldering-workshop-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "b5d3e5882a7432d542263e12ef1b561db0f1621bb35a38fe86ceee11d33b2b7d",
+      "width": 960
+    },
+    {
+      "alt": "An inert practice board and metal lead are held steady in a padded bench holder beneath a magnifying lamp.",
+      "bytes": 129530,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-soldering-workshop-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-soldering-workshop-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "bf9e828998b19cb67914fe884dd6f5304bfd4800595b16ce0f55089ed246a699",
+      "width": 960
+    },
+    {
+      "alt": "A fictional cutaway separates a practice pad and lead while an amber light ribbon highlights their contact surfaces.",
+      "bytes": 93510,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-soldering-workshop-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-soldering-workshop-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "439b3f8cc0918409669b764f0df5c4646df53df40b144ff716ecf9b53f7e577f",
+      "width": 960
+    },
+    {
+      "alt": "A magnifier compares separate fictional practice specimens showing a metal bridge, an uneven surface and a neutral comparison.",
+      "bytes": 128687,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-soldering-workshop-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-soldering-workshop-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "678d477a2c747a5bd92415c5002763a63454d041fb24df73537a2c6a61057831",
+      "width": 960
+    },
+    {
+      "alt": "A quiet review desk holds an inert practice-board exhibit, inspection cards, a pause symbol and a closed handoff notebook.",
+      "bytes": 119078,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-soldering-workshop-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-soldering-workshop-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "ef4cd4a71bfded876c5063a035d84dafbc59aabfe6da03c6e9701100a353dc67",
       "width": 960
     }
   ],
@@ -20,7 +85,7 @@
       "band": 4,
       "discovery": {
         "exhibitLayout": "mosaic",
-        "finaleRewardRef": { "id": "fpv-soldering-workshop-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "fpv-soldering-workshop-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "fpv-soldering-workshop",
@@ -207,7 +272,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "fpv-soldering-workshop-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-soldering-workshop-01-discovery", "revision": "2" },
         "routeDecision": "Join the stand-side island or capture the open preparation mat first. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -220,7 +285,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-soldering-workshop-key-picture",
+        "backgroundAssetId": "fpv-soldering-workshop-01-picture",
         "themeId": "fpv-soldering-workshop-theme"
       },
       "revision": "2",
@@ -282,7 +347,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "fpv-soldering-workshop-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-soldering-workshop-02-discovery", "revision": "2" },
         "routeDecision": "Choose the labelled supply bay or return through the question-card shelf. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -295,7 +360,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-soldering-workshop-key-picture",
+        "backgroundAssetId": "fpv-soldering-workshop-02-picture",
         "themeId": "fpv-soldering-workshop-theme"
       },
       "revision": "2",
@@ -357,7 +422,7 @@
           "reclaimed-roamer",
           "territory-eroder"
         ],
-        "rewardRef": { "id": "fpv-soldering-workshop-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-soldering-workshop-03-discovery", "revision": "2" },
         "routeDecision": "Link both holder islands before the middle capture or work from one stable side. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -370,7 +435,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-soldering-workshop-key-picture",
+        "backgroundAssetId": "fpv-soldering-workshop-03-picture",
         "themeId": "fpv-soldering-workshop-theme"
       },
       "revision": "2",
@@ -440,7 +505,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-soldering-workshop-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-soldering-workshop-04-discovery", "revision": "2" },
         "routeDecision": "Open the broad heat-transfer terrace or use the narrow cutaway return. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -453,7 +518,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-soldering-workshop-key-picture",
+        "backgroundAssetId": "fpv-soldering-workshop-04-picture",
         "themeId": "fpv-soldering-workshop-theme"
       },
       "revision": "2",
@@ -523,7 +588,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-soldering-workshop-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-soldering-workshop-05-discovery", "revision": "2" },
         "routeDecision": "Inspect the three small lenses separately or join the paired upper lenses first. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -536,7 +601,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-soldering-workshop-key-picture",
+        "backgroundAssetId": "fpv-soldering-workshop-05-picture",
         "themeId": "fpv-soldering-workshop-theme"
       },
       "revision": "2",
@@ -606,7 +671,7 @@
           "territory-eroder",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "fpv-soldering-workshop-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "fpv-soldering-workshop-06-discovery", "revision": "2" },
         "routeDecision": "Use the central review desk as a return or connect the outside evidence chain. Keep another return available when capture wakes a knot or rework erodes the edge."
       },
       "format": "MissionDesignV1",
@@ -619,7 +684,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "fpv-soldering-workshop-key-picture",
+        "backgroundAssetId": "fpv-soldering-workshop-06-picture",
         "themeId": "fpv-soldering-workshop-theme"
       },
       "revision": "2",
@@ -634,9 +699,9 @@
       "format": "PackDesignV1",
       "id": "fpv-soldering-workshop-pack",
       "name": "Soldering Workshop",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }

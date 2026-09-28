@@ -239,7 +239,10 @@ test('explicit public dependencies include only selected campaign art and seven 
     ),
     {
       'ukraine-threads': ['met-degas-ukrainian-dress-436157'],
-      'ukraine-cities-symbols-time': ['reference-ukraine-state-flag', 'reference-ukraine-state-emblem'],
+      'ukraine-cities-symbols-time': [
+        'reference-ukraine-state-flag',
+        'reference-ukraine-state-emblem',
+      ],
       'fpv-meet-aircraft': ['reference-fpv-pixhawk-controller', 'reference-fpv-brushless-motor'],
       'fpv-soldering-workshop': [
         'reference-fpv-solder-iron',
@@ -383,31 +386,64 @@ test('later curricula use canonical progression with registered distinct present
 });
 
 test('mission-art expansion retains every prior gameplay binding and revises each changed reward payload', async () => {
-  for (const editionId of ['ukraine-culture', 'fpv-learning']) {
+  for (const editionId of [
+    'social-drone-ua',
+    'victory-drones',
+    'ukraine-culture',
+    'fpv-learning',
+  ]) {
     const edition = catalog.editions.find((entry) => entry.id === editionId);
-    const retained = edition.presentationHistory.find((entry) =>
-      entry.path.endsWith('-before-mission-art-2.json'),
+    const histories = edition.presentationHistory.filter((entry) =>
+      entry.path.includes('-before-'),
     );
-    assert.ok(retained);
-    const { snapshot } = await validateRetainedPresentation(await json('../../' + retained.path), {
-      edition,
-    });
-    assert.equal(snapshot.catalog.editions[0].revision, 2);
-    for (const descriptor of snapshot.catalog.campaigns) {
-      const previous = snapshot.files.find((file) => file.path === descriptor.sourcePath).data;
-      const current = projects.find(({ definition }) => definition.id === descriptor.id);
-      assert.deepEqual(createRewardMissionBindings(previous), current.missionBindings);
-      const oldRewards = snapshot.files.find((file) => file.path === descriptor.rewardPath).data;
-      for (const before of oldRewards) {
-        const after = current.rewards.find((reward) => reward.id === before.id);
-        assert.deepEqual(after.requirements, before.requirements);
-        if (canonicalJSON(after.payloads) !== canonicalJSON(before.payloads))
-          assert.notEqual(
-            after.revision,
-            before.revision,
-            before.id + ' changed without a reward revision',
-          );
+    assert.ok(histories.length);
+    for (const retained of histories) {
+      const { snapshot } = await validateRetainedPresentation(
+        await json('../../' + retained.path),
+        {
+          edition,
+        },
+      );
+      assert.ok(snapshot.catalog.editions[0].revision < edition.revision);
+      for (const descriptor of snapshot.catalog.campaigns) {
+        const previous = snapshot.files.find((file) => file.path === descriptor.sourcePath).data;
+        const current = projects.find(({ definition }) => definition.id === descriptor.id);
+        assert.deepEqual(createRewardMissionBindings(previous), current.missionBindings);
+        const oldRewards = snapshot.files.find((file) => file.path === descriptor.rewardPath).data;
+        for (const before of oldRewards) {
+          const after = current.rewards.find((reward) => reward.id === before.id);
+          assert.deepEqual(after.requirements, before.requirements);
+          if (canonicalJSON(after.payloads) !== canonicalJSON(before.payloads))
+            assert.notEqual(
+              after.revision,
+              before.revision,
+              before.id + ' changed without a reward revision',
+            );
+        }
       }
     }
   }
+});
+
+test('every discovery offers three authored bilingual optional profiles without replacing its shared explanation', () => {
+  const ids = new Set();
+  for (const { source, rewards } of projects) {
+    for (const mission of source.missions) {
+      const reward = rewards.find(
+        (entry) => entry.scope.kind === 'mission' && entry.scope.id === mission.id,
+      );
+      const common = reward.payloads.find((payload) => payload.id === mission.id + '-knowledge');
+      assert.ok(common, mission.id);
+      assert.deepEqual(Object.keys(common.profiles).sort(), ['beginners', 'families', 'hobbyists']);
+      for (const locale of ['en', 'uk']) {
+        assert.ok(common.locales[locale].paragraphs.length > 0);
+        const versions = Object.values(common.profiles).map((profile) =>
+          JSON.stringify(profile[locale]),
+        );
+        assert.equal(new Set(versions).size, 3, mission.id + ':' + locale);
+      }
+      ids.add(mission.id);
+    }
+  }
+  assert.equal(ids.size, 108);
 });

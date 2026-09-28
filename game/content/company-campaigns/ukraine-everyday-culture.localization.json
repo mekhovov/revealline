@@ -11,7 +11,7 @@
         }
       },
       "id": "ukraine-everyday-culture",
-      "identity": "3e1759b6d4fa9211",
+      "identity": "a801d3a5ba9881ae",
       "kind": "campaign"
     },
     {
@@ -27,7 +27,7 @@
         "name": { "en": "A Door Opens with Words", "uk": "Двері відчиняються словами" }
       },
       "id": "ukraine-everyday-culture-01",
-      "identity": "38168d8e81360a85",
+      "identity": "8559545f752d0528",
       "kind": "mission"
     },
     {
@@ -43,7 +43,7 @@
         "name": { "en": "Look Closely at Ї", "uk": "Придивіться до Ї" }
       },
       "id": "ukraine-everyday-culture-02",
-      "identity": "3ddf28230b23450a",
+      "identity": "661cc0229efc527d",
       "kind": "mission"
     },
     {
@@ -59,7 +59,7 @@
         "name": { "en": "A Dish and Its People", "uk": "Страва та її люди" }
       },
       "id": "ukraine-everyday-culture-03",
-      "identity": "60a9eea75f14efc5",
+      "identity": "c9384e6fc12d2830",
       "kind": "mission"
     },
     {
@@ -75,7 +75,7 @@
         "name": { "en": "A Bowl with a Record", "uk": "Миска з описом" }
       },
       "id": "ukraine-everyday-culture-04",
-      "identity": "5f57f47a6b7615d2",
+      "identity": "7d72092b5bf25097",
       "kind": "mission"
     },
     {
@@ -91,7 +91,7 @@
         "name": { "en": "Two Recipe Cards", "uk": "Дві картки рецептів" }
       },
       "id": "ukraine-everyday-culture-05",
-      "identity": "0d11898a1ba5e331",
+      "identity": "3f47bfb37575c570",
       "kind": "mission"
     },
     {
@@ -107,7 +107,7 @@
         "name": { "en": "Make Room for Another Story", "uk": "Залиште місце для ще однієї історії" }
       },
       "id": "ukraine-everyday-culture-06",
-      "identity": "3548517b52077d12",
+      "identity": "447cdd6d86520e85",
       "kind": "mission"
     }
   ],
