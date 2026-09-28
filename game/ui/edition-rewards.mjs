@@ -1,3 +1,4 @@
+import { mountRewardKnowledge } from './reward-knowledge.mjs';
 import { getLocale, onLocaleChange, t } from '../i18n/index.mjs';
 import { required } from '../data-json.mjs';
 import { createRewardMissionBindings } from '../rewards/bindings.mjs';
@@ -11,6 +12,7 @@ import { mountRewardMedia } from './reward-media.mjs';
 import { mountRewardQr } from './reward-qr.mjs';
 import { projectRewardExhibits } from '../rewards/exhibit.mjs';
 import { contentText } from '../i18n/content.mjs';
+import { EMPTY_MASTERY_EVIDENCE } from './edition-mastery.mjs';
 
 const EMPTY_LEARNING = Object.freeze({
   revision: 0,
@@ -32,6 +34,7 @@ export async function mountEditionRewards({
   getJourneyRevision,
   getJourneyDurable,
   getLearningEvidence = () => EMPTY_LEARNING,
+  getMasteryEvidence = () => EMPTY_MASTERY_EVIDENCE,
   getReducedMotion = () => false,
   audioMaster,
   musicDucker,
@@ -64,6 +67,7 @@ export async function mountEditionRewards({
     dirty = true,
     revision,
     learningRevision,
+    masteryRevision,
     durable,
     lastRun,
     lastKind,
@@ -475,6 +479,7 @@ export async function mountEditionRewards({
       if (ownedURL && owner.urls.delete(ownedURL)) win.URL.revokeObjectURL(ownedURL);
     };
   }
+  let readingProfile = 'beginners';
   function renderViewer() {
     if (!viewing) return;
     releaseMedia();
@@ -560,12 +565,17 @@ export async function mountEditionRewards({
         section = node('section');
       section.append(node('h3', text.title));
       if (payload.type === 'knowledge') {
-        for (const paragraph of text.paragraphs) section.append(node('p', paragraph));
-        for (const source of text.sources ?? []) {
-          const p = node('p');
-          p.append(link(source.title, source.url));
-          section.append(p);
-        }
+        explorations.add(
+          mountRewardKnowledge({
+            container: section,
+            payload,
+            locale: getLocale(),
+            initialProfile: readingProfile,
+            onProfile: (profile) => {
+              readingProfile = profile;
+            },
+          }),
+        );
       } else if (payload.type === 'image') {
         const media = node('figure');
         media.append(node('p', tr('loadingMedia')));
@@ -659,7 +669,8 @@ export async function mountEditionRewards({
     if (disposed) return;
     const nextRevision = getJourneyRevision(),
       nextDurable = getJourneyDurable(),
-      learning = getLearningEvidence();
+      learning = getLearningEvidence(),
+      mastery = getMasteryEvidence();
     const run = getRun(),
       kind = doc.getElementById('game-overlay').dataset.kind;
     if (run?.status === 'running') played.add(run);
@@ -667,16 +678,18 @@ export async function mountEditionRewards({
     if (
       revision !== nextRevision ||
       learningRevision !== learning.revision ||
+      masteryRevision !== mastery.revision ||
       durable !== nextDurable ||
       !state
     ) {
       const profile = getJourneyProfile();
-      context = rewardContext(provider, bindings, profile, learning.learning);
+      context = rewardContext(provider, bindings, profile, learning.learning, mastery.mastery);
       const persistenceContext = rewardContext(
         provider,
         bindings,
         profile,
         learning.durableLearning,
+        mastery.durableMastery,
       );
       const update = store.reconcile(provider.rewards, context, {
         persist: nextDurable,
@@ -697,6 +710,7 @@ export async function mountEditionRewards({
       if (animate) celebrated.add(run);
       revision = nextRevision;
       learningRevision = learning.revision;
+      masteryRevision = mastery.revision;
       durable = nextDurable;
       dirty = true;
     }

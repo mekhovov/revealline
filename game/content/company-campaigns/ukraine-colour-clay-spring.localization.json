@@ -6,7 +6,7 @@
     {
       "fields": { "name": { "en": "Colour, Clay and Spring", "uk": "Колір, глина і весна" } },
       "id": "ukraine-colour-clay-spring",
-      "identity": "8ea119de2a2477ee",
+      "identity": "32d0802e787cbc25",
       "kind": "campaign"
     },
     {
@@ -22,7 +22,7 @@
         "name": { "en": "A Painted Home", "uk": "Розписана оселя" }
       },
       "id": "ukraine-colour-clay-spring-01",
-      "identity": "e6ef4a5dacae8ec3",
+      "identity": "642ffab725f31262",
       "kind": "mission"
     },
     {
@@ -38,7 +38,7 @@
         "name": { "en": "The Teacher in the Portrait", "uk": "Учителька на портреті" }
       },
       "id": "ukraine-colour-clay-spring-02",
-      "identity": "1648ffdb5ce0c138",
+      "identity": "cc7048275d992d21",
       "kind": "mission"
     },
     {
@@ -54,7 +54,7 @@
         "name": { "en": "Clay, Glaze and Place", "uk": "Глина, полива і місце" }
       },
       "id": "ukraine-colour-clay-spring-03",
-      "identity": "60855b8c68e70f14",
+      "identity": "6ff76520ce5f24ab",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "Two Objects, Two Makers", "uk": "Два предмети — два автори" }
       },
       "id": "ukraine-colour-clay-spring-04",
-      "identity": "f21c452356cbff78",
+      "identity": "ca5e2b33665afc25",
       "kind": "mission"
     },
     {
@@ -86,7 +86,7 @@
         "name": { "en": "What the Wax Keeps", "uk": "Що зберігає віск" }
       },
       "id": "ukraine-colour-clay-spring-05",
-      "identity": "bd78b3f3648c5282",
+      "identity": "32d6f80d45485441",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "A Gift with a Story", "uk": "Подарунок з історією" }
       },
       "id": "ukraine-colour-clay-spring-06",
-      "identity": "da4105175aaa4264",
+      "identity": "6ca20f5e22862ec1",
       "kind": "mission"
     }
   ],

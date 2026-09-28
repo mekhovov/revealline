@@ -11,7 +11,7 @@
         }
       },
       "id": "fpv-care-repair",
-      "identity": "ed11a9e9cd2eb72f",
+      "identity": "4b9fa6cc382e06f4",
       "kind": "campaign"
     },
     {
@@ -27,7 +27,7 @@
         "name": { "en": "Describe the Symptom", "uk": "Опишіть симптом" }
       },
       "id": "fpv-care-repair-01",
-      "identity": "e23705575443bcf2",
+      "identity": "44429907697dc285",
       "kind": "mission"
     },
     {
@@ -43,7 +43,7 @@
         "name": { "en": "An Unpowered Inspection", "uk": "Огляд без живлення" }
       },
       "id": "fpv-care-repair-02",
-      "identity": "153af41e537f71a8",
+      "identity": "4548c8c20db1c163",
       "kind": "mission"
     },
     {
@@ -59,7 +59,7 @@
         "name": { "en": "Change One Question", "uk": "Змініть одне питання" }
       },
       "id": "fpv-care-repair-03",
-      "identity": "8f1ff2943b93fd22",
+      "identity": "5b4971f1a463c633",
       "kind": "mission"
     },
     {
@@ -75,7 +75,7 @@
         "name": { "en": "A Battery Stop Card", "uk": "Картка зупинки через акумулятор" }
       },
       "id": "fpv-care-repair-04",
-      "identity": "88bd4c6a169f4a17",
+      "identity": "80a87e83fde16458",
       "kind": "mission"
     },
     {
@@ -91,7 +91,7 @@
         "name": { "en": "Repair, Replace, Ask", "uk": "Ремонтувати, замінити, запитати" }
       },
       "id": "fpv-care-repair-05",
-      "identity": "134da7fe10c2f22d",
+      "identity": "6c55451cbc998e36",
       "kind": "mission"
     },
     {
@@ -107,7 +107,7 @@
         "name": { "en": "A Responsible Last Step", "uk": "Відповідальний останній крок" }
       },
       "id": "fpv-care-repair-06",
-      "identity": "f3c72060b3da339e",
+      "identity": "3cc459f8cc8fe157",
       "kind": "mission"
     }
   ],
