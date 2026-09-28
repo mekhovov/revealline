@@ -83,7 +83,7 @@ export function attachStillMediaPanel({
   const history = control('select', 'history', t('interface:savedPictureRevision'));
   const file = control('input', 'file', t('interface:originalPngOrJpeg4MibMaximum'), {
     type: 'file',
-    accept: 'image/png,image/jpeg',
+    accept: 'image/png,image/jpeg,image/webp',
   });
   const kind = control('select', 'kind', t('interface:declaredSource'));
   for (const [id, label] of [

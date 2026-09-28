@@ -130,7 +130,7 @@ export function validatePublicSourceEligibility({ files, assets = [] } = {}) {
   }
   for (const name of files.keys())
     if (
-      /^(?:game\/(?:editions|company-campaigns)|authoring\/brands)\/.*\.(?:png|jpe?g|webp|svg|mp3|ogg|wav|mp4|ttf|otf|woff2?)$/i.test(
+      /^(?:game\/(?:editions|company-campaigns)|authoring\/brands)\/.*\.(?:png|jpe?g|webp|svg|mp3|ogg|wav|mp4|webm|vtt|txt|ttf|otf|woff2?)$/i.test(
         name,
       ) &&
       !seen.has(name)

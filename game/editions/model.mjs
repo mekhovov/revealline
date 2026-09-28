@@ -154,7 +154,7 @@ export function validateCampaignDescriptor(source) {
     value,
     ['id', 'revision', 'name', 'brandId', 'publication', 'sourcePath', 'assetIds', 'modes'],
     'Campaign descriptor',
-    ['lessonPath', 'rewardPath', 'localizationPath', 'localizationSha256'],
+    ['lessonPath', 'rewardPath', 'localizationPath', 'localizationSha256', 'heroAssetId'],
   );
   required(
     stableId(value.id) &&
@@ -186,6 +186,11 @@ export function validateCampaignDescriptor(source) {
       'Campaign localization requires a local JSON path and SHA-256 pin.',
     );
   list(value.assetIds, EDITION_LIMITS.assets, 'campaign assets');
+  if (value.heroAssetId !== undefined)
+    required(
+      stableId(value.heroAssetId) && value.assetIds.includes(value.heroAssetId),
+      'Campaign artwork must be one of its declared assets.',
+    );
   modeList(value.modes);
   return freezeEdition(value);
 }
@@ -388,8 +393,14 @@ export function createEditionRuntimeCatalog(source) {
     if (visibility === 'public')
       required(item.publication === 'public', 'Restricted content cannot enter a public catalog.');
   }
-  for (const campaign of result.campaigns)
+  for (const campaign of result.campaigns) {
     required(byBrand.has(campaign.brandId), 'Campaign brand is missing.');
+    if (campaign.heroAssetId)
+      required(
+        /\.(?:png|jpe?g|webp)$/i.test(byAsset.get(campaign.heroAssetId).path),
+        'Campaign artwork requires a supported static raster image.',
+      );
+  }
   for (const brand of result.brands) {
     if (brand.fontAssetId)
       required(

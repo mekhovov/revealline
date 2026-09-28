@@ -1,3 +1,4 @@
+import { rewardMediaReferences, validateRewardMediaAsset } from '../rewards/media-format.mjs';
 import { required } from '../data-json.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { validateCompanyLessons } from '../company-campaigns/learning.mjs';
@@ -136,8 +137,19 @@ export function validateEditionRewardBundle(
         COMPLETION_REWARD_PAYLOAD_TYPES.includes(payload.type),
         `Completion reward ${payload.type} needs a registered player viewer before export.`,
       );
-      if (payload.type === 'image') {
-        const asset = assets.find((item) => item.id === payload.asset.assetId);
+      for (const { role, reference } of rewardMediaReferences(payload))
+        validateRewardMediaAsset(
+          assets.find((item) => item.id === reference.assetId),
+          role,
+        );
+      const images =
+        payload.type === 'image'
+          ? [payload.asset]
+          : payload.type === 'exploration'
+            ? payload.recipe.cards.flatMap((card) => (card.asset ? [card.asset] : []))
+            : [];
+      for (const image of images) {
+        const asset = assets.find((item) => item.id === image.assetId);
         required(
           asset && /\.(?:png|jpe?g|webp)$/i.test(asset.path),
           'Completion reward images require a supported raster image.',

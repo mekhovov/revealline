@@ -1,0 +1,110 @@
+{
+  "campaignId": "fpv-drones-ukraine",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "Drones in Ukraine", "uk": "Дрони в Україні" } },
+      "id": "fpv-drones-ukraine",
+      "identity": "2cc2b53a4720cfaf",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the fictional archive rooms and distinguish a source image from a recovery decision. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "З’єднайте зали вигаданого архіву й відрізніть знімок від рішення про відбудову. Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.routeDecision": {
+          "en": "Capture the two archive wings separately or join the shared source desk first. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Захопіть два крила архіву окремо або спершу приєднайте спільний стіл джерел. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "A Map for Recovery", "uk": "Карта для відбудови" }
+      },
+      "id": "fpv-drones-ukraine-01",
+      "identity": "ffee0632370e00cf",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the humanitarian exhibit; never approach suspicious debris or attempt a real survey. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "З’єднайте гуманітарну експозицію; не наближайтеся до підозрілих уламків і не проводьте реальне обстеження. Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.routeDecision": {
+          "en": "Use the expert-review island or the longer document-gallery return. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Скористайтеся островом експертного розгляду або довшим поверненням галереї документів. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "Survey Is Not Clearance", "uk": "Обстеження — не очищення" }
+      },
+      "id": "fpv-drones-ukraine-02",
+      "identity": "02da6ebf42cf58d5",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect the research panels and keep a reported experiment separate from a guaranteed result. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "З’єднайте дослідницькі панелі й відділіть повідомлений експеримент від гарантованого результату. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.routeDecision": {
+          "en": "Compare the two evidence shelves through the centre or clear the separate question alcove. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Порівняйте дві полиці доказів через центр або відкрийте окрему нішу запитань. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "A Pilot Study Has Limits", "uk": "Пілотне дослідження має межі" }
+      },
+      "id": "fpv-drones-ukraine-03",
+      "identity": "7a6701c0922fc3e9",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Open the quiet community-library exhibit and connect complementary learning roles. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Відкрийте спокійну бібліотечну експозицію й з’єднайте взаємодоповнювальні навчальні ролі. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.routeDecision": {
+          "en": "Explore the broad reading terrace or link the two smaller contribution desks. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Дослідіть широку терасу читання або з’єднайте два менші столи внесків. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "Learning Has Many Roles", "uk": "Навчання має багато ролей" }
+      },
+      "id": "fpv-drones-ukraine-04",
+      "identity": "8d7a26917e74adc7",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Connect dated public records without adding tactical details or turning them into instructions. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "З’єднайте датовані публічні записи без тактичних подробиць чи перетворення їх на інструкції. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.routeDecision": {
+          "en": "Join the date and issuer islands before the wide context capture. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Поєднайте острови дати й автора перед широким захопленням контексту. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "Read the Historical Caption", "uk": "Прочитайте історичний підпис" }
+      },
+      "id": "fpv-drones-ukraine-05",
+      "identity": "d6d5ff6c8f6997c3",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.lesson": {
+          "en": "Complete the exhibit. Do not approach or touch suspicious debris; in Ukraine contact SESU on 101 from safety. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Завершіть виставку. Не наближайтеся й не торкайтеся підозрілих уламків; в Україні повідомляйте ДСНС за 101 із безпечного місця. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.routeDecision": {
+          "en": "Connect the six exhibit plinths by safe interior returns or close the archive’s outer court. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "З’єднайте шість стендів через внутрішні повернення або замкніть зовнішній двір архіву. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "An Exhibit with Boundaries", "uk": "Виставка з чіткими межами" }
+      },
+      "id": "fpv-drones-ukraine-06",
+      "identity": "0473de4c31695ce8",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

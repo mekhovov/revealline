@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'game/**'
+      - 'optional-practice/**'
       - 'authoring/motion-lab/**'
       - 'authoring/company-studio/**'
       - 'scripts/**'
@@ -15,6 +16,7 @@ on:
     branches: [main]
     paths:
       - 'game/**'
+      - 'optional-practice/**'
       - 'authoring/motion-lab/**'
       - 'authoring/company-studio/**'
       - 'scripts/**'
@@ -38,6 +40,36 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  optional-practice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          package-manager-cache: false
+          node-version: '22.13.1'
+          cache: npm
+      - run: npm ci
+      - name: Verify optional routes, replay, input and installation isolation
+        run: npm run practice:test
+      - name: Build explicitly admitted optional candidate
+        env:
+          ENGINE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node scripts/build-optional-practice.mjs .cache/optional-flight-candidate "$ENGINE_COMMIT" "$(git rev-parse HEAD^{tree})"
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: optional-flight-candidate-${{ github.event.pull_request.head.sha || github.sha }}
+          path: .cache/optional-flight-candidate/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Report optional-package boundary
+        run: |
+          echo 'The civilian practice candidate is independent of the core and edition offline caches.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Its twelve fictional model routes and archive integrity are checked; this is not publication, device evidence or real flight proficiency.' >> "$GITHUB_STEP_SUMMARY"
   candidate:
     runs-on: ubuntu-latest
     timeout-minutes: 20
