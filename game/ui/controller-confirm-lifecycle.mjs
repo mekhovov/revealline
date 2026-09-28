@@ -1,3 +1,5 @@
+import { t } from '../i18n/index.mjs';
+
 const withoutPressEdge = (ui = {}) => ({
   ...ui,
   confirm: false,
@@ -15,9 +17,9 @@ export function createControllerConfirmLifecycle({
   onTrace = null,
 } = {}) {
   if (!Number.isFinite(aliasEchoWindowMs) || aliasEchoWindowMs < 0 || aliasEchoWindowMs > 5000)
-    throw new RangeError('Controller Confirm alias echo timing is out of bounds.');
+    throw new RangeError(t('errors:controller.confirmTrace.aliasEchoTiming'));
   if (onTrace !== null && typeof onTrace !== 'function')
-    throw new TypeError('Controller Confirm trace must be a function.');
+    throw new TypeError(t('errors:controller.confirmTrace.function'));
 
   let transaction = null,
     ignoredAlias = false,

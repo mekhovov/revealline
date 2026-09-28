@@ -800,5 +800,8 @@
   "library.recoveryFiles": "Too many recovery files.",
   "library.backupLock": "A backup import acquired the library lock. Local progress is kept in this tab.",
   "library.changedWhileSaving": "The library changed again while saving. Your local progress is kept in this tab; retry saving or export it before reloading.",
-  "library.saveFailure": "Library remains available in this session; export a backup. {{message}}"
+  "library.saveFailure": "Library remains available in this session; export a backup. {{message}}",
+  "controller.confirmTrace.function": "Controller Confirm trace must be a function.",
+  "controller.confirmTrace.aliasEchoTiming": "Controller Confirm alias echo timing is out of bounds.",
+  "controller.confirmTrace.limit": "Controller trace limit is out of bounds."
 }
