@@ -1,6 +1,6 @@
 # Authoring discoveries and campaign finales
 
-This guide describes the current reward pilot, not the full future catalogue.
+This guide describes the implemented shared reward and authoring capabilities.
 See the [implementation ledger](discovery-rewards-phase-status.md) for completed
 work, validation and remaining phases.
 
@@ -61,12 +61,10 @@ already complete. Skipping a mission and viewing a replay do not supply a win.
 Advanced authors can restrict a mission to a subset of the already valid
 difficulty bindings. The compiler rejects invented identities and missions
 outside the selected content. Keep the difficulty promise explicit in the
-teaser. `requirements.learning` and `requirements.mastery` must currently be empty:
-their player evidence adapters are not implemented for publication yet.
+teaser. `requirements.learning` can require exact selected lessons, fixtures and content identities; use the explicit assignment checklist or the same JSON references. A required lesson’s mission must also be explicitly selected. `requirements.mastery` remains empty until its verified shared adapter is admitted. See [verified learning rewards](discovery-learning-rewards.md).
 
 The catalogue and compiler understand broader versioned reward structures; that
-does not make every planned predicate or viewer available. The basic authoring
-controls intentionally cover single-mission wins and all-mission finales.
+does not make every planned predicate or viewer available. The authoring controls cover single-mission wins, selected mission sets, all-mission finales and optional exact learning requirements.
 
 Give every reward a stable ID and string revision. Keep the requirement set
 promised to an existing player intact. The player retains the first accepted
@@ -89,7 +87,7 @@ The JSON editor preserves the full structure through source export/import.
 | ------------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | `knowledge`   | Localized `title`, `paragraphs`; optional `sources` containing `title` and HTTPS `url`                          | Untimed text with explicit source links                    |
 | `image`       | `asset: { assetId, sha256 }`; localized `title` and `alt`                                                       | Exact verified raster image and **Save this picture**      |
-| `url`         | HTTPS `url`; localized `title`                                                                                  | Readable destination and explicit **Open resource** link   |
+| `url`         | HTTPS `url`; localized `title`; optional `qr: true`                                                             | Readable destination and explicit **Open resource** link   |
 | `public-code` | `code`, `issuer`; localized `title` and `terms`; optional HTTPS `termsUrl` and `expiresOn` in `YYYY-MM-DD` form | Code, issuer, terms and supplied expiry displayed together |
 
 Only an issuer's real public offer should be presented as a coupon. Codes are
@@ -122,10 +120,10 @@ see [exploration authoring](discovery-exploration.md). Earned discoveries can be
 saved as static printable HTML with exact available pictures, transcripts and sources.
 Author previews are clearly marked and cannot serve as player completion evidence.
 
-**Still pending:** generated QR codes, cosmetic reward application, dedicated
+**Still pending:** cosmetic reward application, dedicated
 reward controls throughout Asset Studio/Picture Workshop/Soundtrack Studio,
 verified retrieval-practice predicates and simulator rewards. The player/compiler
-gate rejects unsupported payloads and learning/mastery requirements. Existing
+gate rejects unsupported payloads and mastery requirements. Existing
 game media, characters and soundtracks retain their independent authoring paths.
 
 ## 3. Preview, export and whole-game checks
@@ -135,7 +133,7 @@ In **05 / Learning & rewards**, choose a reward, language and preview state:
 - **Locked** uses no completed missions.
 - **One required mission missing** omits the last declared requirement. For a
   one-mission reward, this is still 0/1.
-- **All mission requirements complete** supplies synthetic matching wins.
+- **All requirements complete** supplies synthetic matching wins and selected exact learning completions.
 
 Choose **Preview current JSON**. This validates the draft and projects counts;
 the eligible state shows knowledge, source/resource links, code terms, available
@@ -229,3 +227,11 @@ Keep the **64 MiB / 2,000-file** core offline budget, the **32 MiB** edition-ass
 ceiling and any stricter importer limits. A compiled preview is not automatic
 permission to publish or a waiver of outstanding qualification. Human and
 physical-device evidence remains deferred and must be reported as such.
+
+## Resource and QR rewards
+
+Level/Campaign Studio and Company Studio share a resource editor. Select an existing reward with explicit win requirements, choose or add its resource, provide English/Ukrainian titles and an HTTPS address, and optionally enable QR. Preview does not earn progress. Apply creates a new payload revision and rebinds exact author references without changing promised wins or gameplay. Existing sidecar import/export carries the same fields.
+
+QR addresses are limited to 256 serialized UTF-8 bytes so the result stays readable. Collection and author previews generate the code locally only after Show QR; the same code is included in the printable offline document. The visible full address and resource link remain available. QR presentation never opens a URL, shortens an address or contacts a QR service. Existing URL rewards without the optional `qr` flag behave as before.
+
+Project Nayuki QR Code generator 1.8.0 is pinned with its upstream checksum, MIT notice and one documented ES-module export. Generated SVG geometry is built exclusively from numeric QR cells; this does not add support for importing SVG artwork. A reference symbol was independently decoded with macOS CoreImage. Six focused checks cover exact vendor bytes, bounded addresses, quiet zones, authoring and 20 disposal cycles. A local Node run measured 10.55 ms cold generation and 2.32 ms p95 over 20 warm generations at a 250-byte address; these measurements are not frame-time or phone-camera evidence.

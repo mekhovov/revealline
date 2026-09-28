@@ -27,7 +27,7 @@
         "name": { "en": "Describe the Symptom", "uk": "Опишіть симптом" }
       },
       "id": "fpv-care-repair-01",
-      "identity": "b50fc0a38ba43bcf",
+      "identity": "e23705575443bcf2",
       "kind": "mission"
     },
     {
@@ -43,7 +43,7 @@
         "name": { "en": "An Unpowered Inspection", "uk": "Огляд без живлення" }
       },
       "id": "fpv-care-repair-02",
-      "identity": "5f63b942df9daf85",
+      "identity": "153af41e537f71a8",
       "kind": "mission"
     },
     {
@@ -59,7 +59,7 @@
         "name": { "en": "Change One Question", "uk": "Змініть одне питання" }
       },
       "id": "fpv-care-repair-03",
-      "identity": "58fb364027df58ff",
+      "identity": "8f1ff2943b93fd22",
       "kind": "mission"
     },
     {
@@ -75,7 +75,7 @@
         "name": { "en": "A Battery Stop Card", "uk": "Картка зупинки через акумулятор" }
       },
       "id": "fpv-care-repair-04",
-      "identity": "35dd174efc93b76a",
+      "identity": "88bd4c6a169f4a17",
       "kind": "mission"
     },
     {
@@ -91,7 +91,7 @@
         "name": { "en": "Repair, Replace, Ask", "uk": "Ремонтувати, замінити, запитати" }
       },
       "id": "fpv-care-repair-05",
-      "identity": "99f14ea8673f4000",
+      "identity": "134da7fe10c2f22d",
       "kind": "mission"
     },
     {
@@ -107,7 +107,7 @@
         "name": { "en": "A Responsible Last Step", "uk": "Відповідальний останній крок" }
       },
       "id": "fpv-care-repair-06",
-      "identity": "a6b0ae025b71ce17",
+      "identity": "f3c72060b3da339e",
       "kind": "mission"
     }
   ],

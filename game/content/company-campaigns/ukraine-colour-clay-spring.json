@@ -2,16 +2,81 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original fictional textile gallery with suspended linen, separate embroidered samples and warm natural light.",
-      "bytes": 1106859,
+      "alt": "Original illustrated spring courtyard with different invented floral paintings on a whitewashed wall, a wooden household box and paper studies.",
+      "bytes": 233452,
       "format": "AssetRevisionV1",
-      "height": 640,
-      "id": "ukraine-culture-home-picture",
+      "height": 480,
+      "id": "ukraine-colour-clay-spring-01-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/ukraine-culture-home-v1.png",
+      "path": "editions/assets/discovery/ukraine-colour-clay-spring-01-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144",
+      "sha256": "76afafc6aee7efbbb84b8b97ac96768465023c8cd3acdd7093f7de08b9c3f655",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated art-school gallery with an empty portrait frame, two distinct worktables, blank record cards and invented colour studies.",
+      "bytes": 169956,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-colour-clay-spring-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-colour-clay-spring-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "eac1252d6cf2e6b6084f3c00cbc0d07d0278aa1a2f27badf2418b95856caaab1",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated ceramic courtyard with three different display bays, cream vessels with invented green, yellow and brown glaze marks, and separate blank cards.",
+      "bytes": 224938,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-colour-clay-spring-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-colour-clay-spring-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "7df81716961ae08ed04adf4d4359edbad08e9010190563fbd8ef3da3e01a2547",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated spacious gallery with a fictional tall vase and a separate circular plate display, each with its own blank record card.",
+      "bytes": 140500,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-colour-clay-spring-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-colour-clay-spring-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "c3ea48e72d2cc67dee8a8bb611580286aa1c1b0afccf1e2ee0bfb97a16e68d2d",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated paper display with three egg-shaped studies, cobalt backgrounds and an ivory diamond showing an area that keeps its earlier colour.",
+      "bytes": 156667,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-colour-clay-spring-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-colour-clay-spring-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "3ce2f25907dc3a3aac911729deb7be72180ee39b4510c6d69a8c821c27796b3b",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated spring exhibition with separate painting, ceramic and paper-egg displays, plus a gift box and blank personal card in the foreground.",
+      "bytes": 227413,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-colour-clay-spring-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-colour-clay-spring-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "3906cda63a720416d840efb79ceb5acd2cda31f9d8f9b8fcbacdca776651ea27",
       "width": 960
     }
   ],
@@ -216,7 +281,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-colour-clay-spring-01-picture",
         "themeId": "ukraine-colour-clay-spring-theme"
       },
       "revision": "2",
@@ -288,7 +353,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-colour-clay-spring-02-picture",
         "themeId": "ukraine-colour-clay-spring-theme"
       },
       "revision": "2",
@@ -360,7 +425,7 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-colour-clay-spring-03-picture",
         "themeId": "ukraine-colour-clay-spring-theme"
       },
       "revision": "2",
@@ -442,7 +507,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-colour-clay-spring-04-picture",
         "themeId": "ukraine-colour-clay-spring-theme"
       },
       "revision": "2",
@@ -524,7 +589,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-colour-clay-spring-05-picture",
         "themeId": "ukraine-colour-clay-spring-theme"
       },
       "revision": "2",
@@ -606,7 +671,7 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
       "presentation": {
-        "backgroundAssetId": "ukraine-culture-home-picture",
+        "backgroundAssetId": "ukraine-colour-clay-spring-06-picture",
         "themeId": "ukraine-colour-clay-spring-theme"
       },
       "revision": "2",

@@ -4520,6 +4520,666 @@
         }
       ],
       "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-threads-01-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-threads-01-v1.jpg",
+      "sha256": "948ae2b5db094f54aec6e7d9fe57408bb121dd535b471943425378a7af9de2af",
+      "bytes": 161965,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Read the Cloth — original exhibition square",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset type: full-bleed landscape reveal artwork for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create one original imaginative textile exhibition square, not a photograph or a real museum. A beautiful ivory linen shirt with a few invented restrained crimson-and-charcoal geometric thread details rests on a sculptural dark-wood central plinth; it is a fictional contemporary design, not a reconstruction of any historical collection object. Around the plinth, three small blank cream object-record cards, a folded cloth and a brass magnifier invite close looking. The eye travels through a broad warm-limestone square into two offset arched gallery passages, with textured linen curtains, soft floor shadows and fine craftsmanship details. One memorable focal object, generous readable shapes, layered foreground/middle/background depth. Premium stylized 3D storybook environment with visibly hand-painted materials and confident simplified architecture: rich linen fibres and wood grain, but clearly an illustration. Warm ivory, muted burgundy, charcoal and amber light; elegant, welcoming, quietly magical rather than cluttered. Keep the shirt, plinth and all important detail within the central 80 percent so a proportional landscape crop remains safe. No written text, numbers, logos, maps, UI, borders, watermarks or documentary labels. No real people or claimed authentic regional garment, no imitation of a named artist or specific museum photograph, no invented universal symbolic meaning. The surrounding gallery must be original; the game provides the documented historical record separately as localized text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-62476fdf-9226-41e9-8f81-617901c61cdf.png",
+        "sha256": "880abd7a6b40d6b87b78f8c740085101c6416856e8f8e00cf432947e9805d3f0",
+        "bytes": 2571733,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from2:1 generated master to960x480 and JPEG quality78 using macOS sips316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated linen exhibition square with a fictional shirt on a dark wooden plinth, blank record cards and warm arched galleries.",
+          "context": "Original generated fictional textile exhibition. These designs do not reproduce the cited museum objects or photographs and do not establish regional authenticity or universal symbolism. The documentary records appear separately as source-linked text."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована виставкова площа з вигаданою сорочкою на темному дерев’яному п’єдесталі, порожніми картками й теплими арковими галереями.",
+          "context": "Оригінальна згенерована вигадана виставка текстилю. Ці дизайни не відтворюють цитовані музейні предмети чи фото й не встановлюють регіональну автентичність або універсальну символіку. Документовані записи подано окремо як текст із джерелами."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://honchar.org.ua/collections/detail/4181",
+          "role": "Context for the mission’s source-record lesson only; the generated garment and gallery are original and do not reproduce the museum object or photograph."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-threads-02-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-threads-02-v1.jpg",
+      "sha256": "3b0ba003bc7e170dbb16dc46ba35f6bbdbaf81bf6dc9e8b34b7fce78dc3cec72",
+      "bytes": 170394,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Stitch Paths — original thread-study gallery",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset type: distinct full-bleed landscape reveal artwork for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an original imaginative textile sample gallery seen from an intimate elevated three-quarter angle. Two offset linen ribbons wind between low wooden sample trays like inviting gallery paths; one has visible tiny crimson crossed threads, another has a restrained open-weave edge. A large brass magnifying lens on the near table makes individual cream warp and weft threads the memorable focal reveal. Include only a few rich original thread studies, wound crimson and charcoal spools and a folded ivory sample, with clear gaps and carefully composed rhythmic diagonals. These are original illustrative study samples, not reproductions of historical objects or a certified stitch tutorial. Deep background is a softly lit warm-limestone gallery with one broad arch and a hanging plain linen curtain. Premium stylized 3D storybook art with visibly hand-painted surfaces, warm ivory and muted burgundy palette, amber side light, tactile fabric fibres, dark wood and small brass highlights. Make it inspiring and visually rich while preserving large readable shapes; it must visibly be an illustration, not documentary photography. Distinct from a shirt display and from a wall of white embroidery: this image is a close exploration of the relationship between cloth and thread. Keep important detail in the central 80 percent for a safe proportional landscape crop. No text, numbers, letters, labels, logos, UI, borders, watermarks or people. No copied museum photograph, named artist’s work, claim of regional authenticity or invented cultural symbolism. Localized lesson text in the game supplies the material/technique distinction.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-3d358a7e-9958-4a19-aee6-a899978bbf72.png",
+        "sha256": "a0931ee7f5db26a7e9f70cb75e9e50bd7174d672698888eb10e9c38a4ef30cb7",
+        "bytes": 2573548,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from2:1 generated master to960x480 and JPEG quality78 using macOS sips316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated thread-study gallery with offset linen ribbons, crimson and charcoal thread, wooden trays and a magnifier revealing woven texture.",
+          "context": "Original generated fictional textile exhibition. These designs do not reproduce the cited museum objects or photographs and do not establish regional authenticity or universal symbolism. The documentary records appear separately as source-linked text."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована галерея зразків: зміщені лляні стрічки, багряні й темні нитки, дерев’яні лотки та лупа над фактурою тканини.",
+          "context": "Оригінальна згенерована вигадана виставка текстилю. Ці дизайни не відтворюють цитовані музейні предмети чи фото й не встановлюють регіональну автентичність або універсальну символіку. Документовані записи подано окремо як текст із джерелами."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://honchar.org.ua/collections/detail/4181",
+          "role": "The source record distinguishes materials from techniques; this scene is an original illustrative study, not a facsimile or technical reconstruction."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-threads-04-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-threads-04-v1.jpg",
+      "sha256": "22ae3b4e43d3e02260437d980e4a421d73bbacc0a35dfd0e809a0300150dec16",
+      "bytes": 158455,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Many Local Voices — original paired exhibition",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset type: distinct full-bleed landscape reveal artwork for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an original spacious branching textile exhibition where two calm display alcoves meet at a broad shared reading terrace. The left alcove presents a folded ivory linen garment with a small invented crimson geometric thread accent; the right presents a different fictional contemporary linen garment with restrained indigo-and-charcoal stitching. Give each display its own small blank cream record card and differently shaped wood support. The memorable visual idea is two individual objects that keep their own character while a shared warm-light reading table connects them; neither garment is a reproduction of a historical museum object or an assigned regional costume. Broad elegant limestone arches, a soft linen curtain, a few thread spools and a gentle vista beyond the branching gallery create depth and curiosity without clutter. Premium stylized 3D storybook illustration with visible painterly surface texture, tactile cloth and wood, warm ivory and amber light, selective burgundy and indigo accents. The scene must visibly be an original illustration, not a documentary museum photograph. Use generous negative space and large silhouettes; keep important detail within the central 80 percent for safe proportional landscape cropping. No writing, numbers, maps, logos, UI, borders, watermarks, real people or named artist imitation. Do not claim that one palette represents all of Poltava or Volyn; do not invent universal symbolic meanings. The game separately presents the two documented museum records, their dates and known or unknown makers as localized text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-f6f99680-467f-468b-87cd-c79b1ea45693.png",
+        "sha256": "386386bb5fc98aa795d704796d7ec3509a573e313fc318fafe12e61160794ebc",
+        "bytes": 2431570,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from2:1 generated master to960x480 and JPEG quality78 using macOS sips316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated exhibition with two distinct fictional linen garment displays, separate blank record cards and a broad shared reading terrace.",
+          "context": "Original generated fictional textile exhibition. These designs do not reproduce the cited museum objects or photographs and do not establish regional authenticity or universal symbolism. The documentary records appear separately as source-linked text."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована виставка з двома різними вигаданими лляними виробами, окремими порожніми картками та спільною широкою терасою читання.",
+          "context": "Оригінальна згенерована вигадана виставка текстилю. Ці дизайни не відтворюють цитовані музейні предмети чи фото й не встановлюють регіональну автентичність або універсальну символіку. Документовані записи подано окремо як текст із джерелами."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://honchar.org.ua/collections/detail/4181",
+          "role": "One documented garment record supports the separate learning card; no source photograph or exact garment is reproduced."
+        },
+        {
+          "url": "https://honchar.org.ua/collections/detail/4182",
+          "role": "The second documented garment supports the lesson about individual makers and variation, not a regional visual template."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-threads-05-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-threads-05-v1.jpg",
+      "sha256": "d3c81a60d651ba8c9e2801a4de4608e5580fa4d2df5a4df44210e41c5de405c4",
+      "bytes": 173578,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Rushnyk’s Story — original provenance hall",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset type: full-bleed landscape reveal artwork for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an original imaginative long textile exhibition hall with small side alcoves. A long ivory ceremonial-cloth-inspired textile, invented for this scene and not a reproduction of a museum rushnyk, descends from a plain dark-wood rail and drapes elegantly across a low bench toward the foreground. Its restrained original crimson geometric stitching and handmade fringe provide a rich focal reveal. Two separate blank cream record cards rest on different small wooden supports beside the cloth, inviting the idea that creation and later collection history are different events, without showing any dates or written claims. Repeating warm-limestone arches and illuminated side alcoves lead the eye far into the hall; a brass magnifier and a closed cloth-covered archive box appear quietly in one alcove. Give the composition a strong long perspective and calm breathing space, distinct from a close sample table or a shirt display. Premium stylized 3D storybook illustration with visibly hand-painted surfaces, warm ivory, muted burgundy, aged dark wood and soft amber side light; beautiful textile fibres and readable large shapes. Clearly an original fictional exhibition, not a documentary photograph. Keep the full focal drape and cards within the central 80 percent for safe proportional landscape cropping. No text, numbers, museum logos, maps, UI, borders, watermarks or people. No copied historic ornament or named artist’s work, no invented symbolic meaning or claim of a specific ceremony. The game separately provides the source-linked historical rushnyk record and its donation information as localized text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-31b684a3-0935-43fa-8d74-b048d76db62c.png",
+        "sha256": "e309a192df61dfdc128f3364e8a02ac2fb3dc9efab0267c94cb23fe1beb47753",
+        "bytes": 2607555,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated long gallery with a fictional fringed ivory textile draped across a wooden bench and two separate blank record cards.",
+          "context": "Original generated fictional textile exhibition. These designs do not reproduce the cited museum objects or photographs and do not establish regional authenticity or universal symbolism. The documentary records appear separately as source-linked text."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована довга галерея з вигаданим світлим полотном із торочками на дерев’яній лаві та двома окремими порожніми картками.",
+          "context": "Оригінальна згенерована вигадана виставка текстилю. Ці дизайни не відтворюють цитовані музейні предмети чи фото й не встановлюють регіональну автентичність або універсальну символіку. Документовані записи подано окремо як текст із джерелами."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://honchar.org.ua/collections/detail/1591",
+          "role": "Context for distinguishing an object’s making date from its later donation; no museum photograph, exact ornament or documented textile is reproduced."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-threads-06-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-threads-06-v1.jpg",
+      "sha256": "f85f89cd0a3513736e1b88867982878176affe8ee8e7c72171c6887ded041614",
+      "bytes": 207158,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Wear It Today — original contemporary textile plaza",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset type: full-bleed landscape finale reveal artwork for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create a vivid original contemporary textile festival plaza at warm golden hour, clearly a fictional illustrated place. Flowing ivory linen banners hang at different heights across a welcoming open courtyard, their invented crimson-and-charcoal geometric rhythms arranged as bold contemporary graphic designs rather than copied historical motifs. A low amber-lit exhibition stage anchors the middle distance, with a broad open central floor and two side display tables presenting folded original contemporary garments, blank cream cards and thread samples. One sculptural ribbon-like linen canopy curves above the stage, bringing the earlier cloth, thread and individual-object discoveries into a celebratory whole. Use a few small simplified faceless illustrated visitors only in the distant background to suggest a shared festival; no portrait, real person or real event. Strong sweeping composition, festive but elegant, many tactile details balanced with generous readable shapes. Premium stylized 3D storybook art with hand-painted material textures, warm ivory, muted burgundy and charcoal, amber lanterns and softly glowing evening sky. This must read as an invented game-world illustration, not a real festival photograph. Keep important objects within the central 80 percent for safe proportional landscape cropping. No writing, numbers, real flags, commercial logos, signs, UI, borders or watermarks. Do not assign universal meanings or regional authenticity to the invented patterns, and do not imitate a named artist or museum object. Contemporary creative work and documented historical sources remain separately labelled in the game.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-0face766-2fcd-400e-b88d-45657359e3d6.png",
+        "sha256": "eebb6a44614055edb1deaac12091bf561161e10980131cdb3c4a1bf68d0398dd",
+        "bytes": 2704832,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated contemporary textile festival plaza with flowing ivory banners, invented crimson-and-charcoal designs and an amber-lit display stage.",
+          "context": "Original generated fictional textile exhibition. These designs do not reproduce the cited museum objects or photographs and do not establish regional authenticity or universal symbolism. The documentary records appear separately as source-linked text."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована площа сучасного текстильного фестивалю зі світлими полотняними банерами, вигаданими багряно-темними візерунками та тепло освітленою сценою.",
+          "context": "Оригінальна згенерована вигадана виставка текстилю. Ці дизайни не відтворюють цитовані музейні предмети чи фото й не встановлюють регіональну автентичність або універсальну символіку. Документовані записи подано окремо як текст із джерелами."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://honchar.org.ua/collections/view/odag?type=list",
+          "role": "Context for contrasting documented collection objects with original contemporary illustration; no collection photograph or garment is copied."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-colour-clay-spring-01-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-01-v1.jpg",
+      "sha256": "76afafc6aee7efbbb84b8b97ac96768465023c8cd3acdd7093f7de08b9c3f655",
+      "bytes": 233452,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Painted Home — original floral courtyard",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset type: distinct full-bleed landscape reveal artwork for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an original imaginative spring courtyard exhibition inspired by the idea of decorative painting appearing on different supports. Three clearly different planes tell the story: a broad whitewashed wall bearing an invented lively floral painting; a small dark wooden household box with its own original painted flower-like gestures on a low foreground table; and two paper colour studies resting on a separate easel. Use elegant curling leaves, berry-like dots and imaginative flowers in coral-red, deep green, cobalt and golden ochre, observed from a few living spring plants nearby. The painted forms are new illustrative designs, not a facsimile of Petrykivka artwork by any named artist or a claimed historic home. A low clay pot, warm wood bench, soft garden shadows and a glimpse of a bright spring path enrich the setting. Make the three surfaces easy to distinguish through perspective, shape and light; the white wall painting is the focal reveal, the box and papers invite a second look. Premium stylized 3D storybook illustration with visible hand-painted surfaces, rich brush textures, warm white plaster and golden afternoon light, polished game concept-art clarity rather than documentary photography. Spacious composition with important objects inside the central 80 percent for safe proportional landscape cropping. No text, letters, numbers, dates, signatures, logos, real flags, UI, borders, watermarks or real people. No copied museum photograph, named artist imitation or invented universal meaning for a flower. The game separately supplies UNESCO’s record and the lesson about different painted surfaces.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-21cf8f1d-a0c2-406b-b3b2-999d7ad533e3.png",
+        "sha256": "220cab4010417fa32f42540b5c190e4bbfcc6263a2dfdd221d975ee3c796ef85",
+        "bytes": 2884585,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated spring courtyard with different invented floral paintings on a whitewashed wall, a wooden household box and paper studies.",
+          "context": "Original generated fictional courtyard with original decorative floral painting. This is not a documented Petrykivka work, historic building, named artist imitation or museum photograph. The UNESCO record is linked separately for context."
+        },
+        "uk": {
+          "alt": "Оригінальний ілюстрований весняний двір із різними вигаданими квітковими розписами на білій стіні, дерев’яній скриньці та паперових етюдах.",
+          "context": "Оригінальний згенерований вигаданий двір з авторським декоративним квітковим розписом. Це не документований твір петриківського розпису, історична будівля, наслідування конкретного митця чи музейне фото. Запис ЮНЕСКО наведено окремо для контексту."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ich.unesco.org/en/Decisions/8.COM/8.29",
+          "role": "Petrykivka record supports the lesson about painting on different surfaces and imaginative floral forms; this generated scene and all patterns are original, not a copied work or historic building."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-colour-clay-spring-02-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-02-v1.jpg",
+      "sha256": "eac1252d6cf2e6b6084f3c00cbc0d07d0278aa1a2f27badf2418b95856caaab1",
+      "bytes": 169956,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "The Teacher in the Portrait — original art-school alcove",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset type: original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create a warmly inviting fictional art-school gallery about the relationship between a teacher and student. The memorable focal point is a large empty dark-wood portrait frame in a coral-coloured wall alcove, its opening revealing soft ivory linen rather than a painted person. Two worktables from different eras face this alcove: a worn dark wooden table with broad brushes and a small paint palette on the left, a lighter contemporary table with neatly arranged colour-study papers on the right. Two separate blank cream record cards connect the empty frame and the tools, making room for a maker and a depicted person without fabricating either. Original leaf-like and flower-like brush studies are small, invented and secondary. A gently curving open gallery path joins the tables, with tall windows, muted green curtains, ochre pots and visible wooden floor grain. Use a beautiful calm composition with the empty frame and two contrasting tables, not an actual portrait of Tetyana Pata, Fedir Panko or any real person. The image is about learning across generations; it must not recreate a real museum room. Premium stylized 3D storybook concept art with hand-painted material texture, confident readable forms and cinematic spring daylight; visibly an original imaginative game environment, not a documentary photograph. Important objects must sit inside the central 80 percent, with generous layered depth and an uncropped complete focal display. No writing, letters, numbers, dates, logos, signatures, flags, UI, borders, watermarks or real people. Do not copy museum objects, photographs or named artists, or invent universal cultural meanings. The game presents the exact documented records separately as source-linked localized text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-b88d164c-e1c9-49ec-bf6d-0303b09e5731.png",
+        "sha256": "4d0e688aad7fae728114118c8d1fbb026db7fa80ad219ef9d06dbc9edb1c8190",
+        "bytes": 2659385,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated art-school gallery with an empty portrait frame, two distinct worktables, blank record cards and invented colour studies.",
+          "context": "Original generated fictional exhibition with invented designs. It does not reproduce a cited museum object, photograph, historical portrait or named artist’s work, and does not establish regional authenticity or universal symbolism. The exact documentary records remain separately linked in the learning text."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована художня галерея з порожньою портретною рамою, двома різними робочими столами, порожніми картками й вигаданими кольоровими етюдами.",
+          "context": "Оригінальна згенерована вигадана виставка з новими дизайнами. Вона не відтворює цитований музейний предмет, фото, історичний портрет чи твір конкретного митця й не встановлює регіональну автентичність або універсальну символіку. Точні документальні записи наведено окремими посиланнями в навчальному тексті."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.museum.dp.ua/uk/object_8-8/",
+          "role": "The museum record supports the separate teacher/student attribution lesson. This original scene contains no portrait of Pata or Panko and does not reproduce the museum image."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-colour-clay-spring-03-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-03-v1.jpg",
+      "sha256": "7df81716961ae08ed04adf4d4359edbad08e9010190563fbd8ef3da3e01a2547",
+      "bytes": 224938,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Clay, Glaze and Place — original three-bay ceramic court",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset type: original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an original ceramics exhibition courtyard with three distinct generous display bays arranged around a sunlit stone path. Each bay has a different architectural silhouette: low arch at left, tall timber doorway near centre, open stone niche at right. Beautiful cream ceramic vessels sit on simple wooden plinths, with restrained newly invented green, yellow and earthy-brown glazed marks; show a small bowl, a wide jug and a tall vessel as three different silhouettes. One foreground ceramic fragment and three small colour swatches invite close observation of material, while a separate blank cream card stays with each object. A curved brick structure sits quietly in the far background as a closed exhibition landmark, never a working kiln or tutorial. Plants, warm plaster, ochre clay texture, reflective glaze, gentle spring air and soft tree shadows make the place vivid. The focal reveal is the luminous relationship between cream clay and the three glaze colours, not an exact historical pattern. Fictional shapes and designs must not imitate a named potter or claim archaeological origin. Keep the court spacious with strong curved paths and depth, distinct from an indoor portrait alcove. Premium stylized 3D storybook concept art with hand-painted material texture, confident readable forms and cinematic spring daylight; visibly an original imaginative game environment, not a documentary photograph. Important objects must sit inside the central 80 percent, with generous layered depth and an uncropped complete focal display. No writing, letters, numbers, dates, logos, signatures, flags, UI, borders, watermarks or real people. Do not copy museum objects, photographs or named artists, or invent universal cultural meanings. The game presents the exact documented records separately as source-linked localized text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-fd1915c8-2f1e-40ac-a374-4b9874a261e9.png",
+        "sha256": "894b985d79787b29ff08e9e5540f55442497b7d5fa5b3089b16f66b6744ef512",
+        "bytes": 2906393,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated ceramic courtyard with three different display bays, cream vessels with invented green, yellow and brown glaze marks, and separate blank cards.",
+          "context": "Original generated fictional exhibition with invented designs. It does not reproduce a cited museum object, photograph, historical portrait or named artist’s work, and does not establish regional authenticity or universal symbolism. The exact documentary records remain separately linked in the learning text."
+        },
+        "uk": {
+          "alt": "Оригінальний ілюстрований керамічний двір із трьома різними виставковими нішами, світлими посудинами з вигаданими зеленими, жовтими й коричневими розписами та окремими порожніми картками.",
+          "context": "Оригінальна згенерована вигадана виставка з новими дизайнами. Вона не відтворює цитований музейний предмет, фото, історичний портрет чи твір конкретного митця й не встановлює регіональну автентичність або універсальну символіку. Точні документальні записи наведено окремими посиланнями в навчальному тексті."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.umcontario.com/kosiv-bazaar",
+          "role": "Context for the separate Kosiv material-and-palette lesson; no exhibition photograph or specific potter’s object is reproduced."
+        },
+        {
+          "url": "https://ich.unesco.org/en/RL/tradition-of-kosiv-painted-ceramics-01456",
+          "role": "Source for the named living tradition; this original environment does not document or certify a specific ceramic work."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-colour-clay-spring-04-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-04-v1.jpg",
+      "sha256": "c3ea48e72d2cc67dee8a8bb611580286aa1c1b0afccf1e2ee0bfb97a16e68d2d",
+      "bytes": 140500,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Two Objects, Two Makers — original paired ceramic gallery",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset type: original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an original serene, spacious ceramic exhibition seen at a low eye-level three-quarter angle. Two separate large display islands are the unmistakable focal idea. The left holds one elegant tall narrow-necked cream vase with minimal invented green and ochre abstract painted gestures; the right holds one broad circular cream plate standing securely on a wooden easel, with a different restrained invented brown and yellow rhythm. Give each island its own blank cream record card and a distinct wood base. These are fictional objects, not reproductions of the documented 1997 Oleksandra Shvets vase or 2004 Oksana Verbivska-Kabyn plate. Preserve the easily understood contrast of tall vessel and flat circular plate. Bright spring window light crosses a wide clean gallery floor between them; olive-green plants, warm ivory walls and distant softly coloured niches provide generous breathing space. A quiet central bench and two paper silhouettes on a low reading table suggest comparison while leaving each object independent. The image should reward looking slowly, with glossy glaze, tactility, beautiful shadows and only a few precise details, not dense decoration. Premium stylized 3D storybook concept art with hand-painted material texture, confident readable forms and cinematic spring daylight; visibly an original imaginative game environment, not a documentary photograph. Important objects must sit inside the central 80 percent, with generous layered depth and an uncropped complete focal display. No writing, letters, numbers, dates, logos, signatures, flags, UI, borders, watermarks or real people. Do not copy museum objects, photographs or named artists, or invent universal cultural meanings. The game presents the exact documented records separately as source-linked localized text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-5b827bdb-e1ab-40d8-ba37-5d937d680ff0.png",
+        "sha256": "8ba039406e30846d9a4446f635a30fb83682794e42a2936751c1415186d64799",
+        "bytes": 2164596,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated spacious gallery with a fictional tall vase and a separate circular plate display, each with its own blank record card.",
+          "context": "Original generated fictional exhibition with invented designs. It does not reproduce a cited museum object, photograph, historical portrait or named artist’s work, and does not establish regional authenticity or universal symbolism. The exact documentary records remain separately linked in the learning text."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована простора галерея з вигаданою високою вазою та окремою круглою таріллю, кожна зі своєю порожньою карткою.",
+          "context": "Оригінальна згенерована вигадана виставка з новими дизайнами. Вона не відтворює цитований музейний предмет, фото, історичний портрет чи твір конкретного митця й не встановлює регіональну автентичність або універсальну символіку. Точні документальні записи наведено окремими посиланнями в навчальному тексті."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.umcontario.com/kosiv-bazaar",
+          "role": "Specific museum records provide the separate learning text. Generated vessel and plate are new designs, not facsimiles or imitations of Shvets or Verbivska-Kabyn."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "social-drone-people-workshop-key-v1",
+      "path": "game/editions/assets/discovery/social-drone-people-workshop-key-v1.jpg",
+      "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782",
+      "bytes": 282921,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "People Behind the Workshop",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: original premium campaign key illustration for an educational arcade game, 1536x1024 wide 3:2 landscape. Warm stylized painterly game concept art with tactile materials, cinematic lighting, expressive coherent composition and readable landmarks. This is a fictional civilian learning environment, not a photograph, a documentary depiction of an organization, an endorsement or a historical event. No text, letters, numbers, logos, watermarks, real organization badges, weapons, uniforms, tactical displays, functional electronics instructions or readable screens. Show original fictional characters and props only. No copied source imagery. Strong focal silhouettes inside the central 80%; whole-canvas scene, not a website, diagram or boxed collage.\nScene: An inviting two-storey community workshop atrium with deep navy walls, blue work bays and warm yellow task lights. At centre a long curved wooden welcome counter gently connects six learning stations through the space. A small diverse group of adult volunteers in ordinary casual clothing share a blank notebook, sort coloured cardboard teaching tokens and point toward an open empty seat for a newcomer. On a side shelf a single clearly inert cardboard four-arm model without propellers establishes a science-workshop theme, but no one assembles live hardware. The foreground focuses on a careful handoff: two participants exchanging a closed blue folder beside neatly sorted trays and an unlabelled source-card rack. Behind them, an airy mezzanine, plants, paper mobiles and sunlit windows convey shared purpose and room to learn. Friendly natural body language rather than posed team publicity. Strong welcoming architectural composition and warm human focal point, visibly original illustrated characters, no badges, screens or actual organization facilities.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-210968d5-cf8b-4ed0-b3c9-13cfc6c80ae7.png",
+        "sha256": "a2d977ac50ac1437b41677b96adc21600bc40fe21f7b58506aacd0c4e4d0e3bf",
+        "bytes": 2487311,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant.",
+          "context": "Original fictional civilian community-learning scene, not a Social Drone UA event, member portrait or operating procedure. The organization's public context is explained separately in source-linked discoveries; no endorsement is implied."
+        },
+        "uk": {
+          "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника.",
+          "context": "Оригінальна уявна сцена цивільного навчання спільноти, а не подія Social Drone UA, портрет учасника чи робоча процедура. Публічний контекст організації пояснено окремо у відкриттях із джерелами; схвалення не мається на увазі."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.socialdrone.com.ua/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "social-drone-community-connections-key-v1",
+      "path": "game/editions/assets/discovery/social-drone-community-connections-key-v1.jpg",
+      "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb",
+      "bytes": 318557,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Community Connections",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: original premium campaign key illustration for an educational arcade game, 1536x1024 wide 3:2 landscape. Warm stylized painterly game concept art with tactile materials, cinematic lighting, expressive coherent composition and readable landmarks. This is a fictional civilian learning environment, not a photograph, a documentary depiction of an organization, an endorsement or a historical event. No text, letters, numbers, logos, watermarks, real organization badges, weapons, uniforms, tactical displays, functional electronics instructions or readable screens. Show original fictional characters and props only. No copied source imagery. Strong focal silhouettes inside the central 80%; whole-canvas scene, not a website, diagram or boxed collage.\nScene: A vibrant public-library science-day entrance at golden afternoon. The clear focal landmark is a huge freestanding curved teal noticeboard made from hundreds of layered paper pieces, with six large blank illustrated story cards forming a coherent mosaic of a welcoming little community. The cards contain simple original pictures, never writing: books, a doorway, a helping hand, a path, a small model and a shared table. Thin warm-gold threads visibly link separate contributions without creating a technical network diagram. Wide unobstructed floor space, a low accessible table with spare paper shapes and tactile craft materials, varied chair heights and an open doorway communicate that more people can contribute. Two ordinary adult visitors look at the board from different viewpoints, one seated in a wheelchair with an unobstructed approach; keep anatomy natural and dignity central. Navy-blue shelving, soft teal accents, pale timber, warm yellow lights. A joyful paper-and-place composition, distinct from an electronics workshop or a generic corporate team picture.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-ac174ec5-3593-4865-a18d-be1131d163e5.png",
+        "sha256": "8c6d18359806bd644392db035187223ce06349c1a6366469360f920b0dd559fe",
+        "bytes": 2684809,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional library science-day noticeboard grows into a colourful paper mosaic beside accessible tables and a welcoming doorway.",
+          "context": "Original fictional library science-day noticeboard about clear communication and access. It does not depict Social Drone UA's activities, internal process, facilities or participants."
+        },
+        "uk": {
+          "alt": "Уявна дошка бібліотечного дня науки перетворюється на барвисту паперову мозаїку поруч із доступними столами й привітними дверима.",
+          "context": "Оригінальна уявна дошка бібліотечного дня науки про зрозуміле спілкування й доступність. Вона не зображує діяльності, внутрішніх процесів, приміщень чи учасників Social Drone UA."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://www.socialdrone.com.ua/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://www.w3.org/WAI/tips/writing/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://www.w3.org/WAI/tutorials/images/informative/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "victory-drones-knowledge-connects-key-v1",
+      "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-key-v1.jpg",
+      "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f",
+      "bytes": 304837,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Knowledge Connects",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: original premium campaign key illustration for an educational arcade game, 1536x1024 wide 3:2 landscape. Warm stylized painterly game concept art with tactile materials, cinematic lighting, expressive coherent composition and readable landmarks. This is a fictional civilian learning environment, not a photograph, a documentary depiction of an organization, an endorsement or a historical event. No text, letters, numbers, logos, watermarks, real organization badges, weapons, uniforms, tactical displays, functional electronics instructions or readable screens. Show original fictional characters and props only. No copied source imagery. Strong focal silhouettes inside the central 80%; whole-canvas scene, not a website, diagram or boxed collage.\nScene: A magnificent deep-blue and warm-gold learning observatory at dusk, viewed from a sweeping library balcony. In the centre stands a large abstract brass compass-like sculpture with no letters, numbers or geographical markings; its softly lit arms point toward six inviting reading alcoves. Each alcove contains a different way to explore an idea: an open book, paired picture cards, a simple unpowered wooden model, a magnifier, a generous blank question board and a small round discussion table. A subtle golden light ribbon connects the alcoves along the floor as a visual journey from curiosity to clearer explanation. A few fictional adults in everyday clothes read or talk quietly in the middle distance. The focal point is the striking compass sculpture and its spacious architectural setting, not technical equipment. Deep cobalt shadows, amber pools of light and a starry window create wonder. The compass is only an original metaphor for learning; no map, real institution, combat content or certification emblem.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-39344ea1-855b-4781-8aea-cb633eda14cf.png",
+        "sha256": "4340ac05e24ddb9655eebc64f1702e35ed1af1161881965506df7a49aa69171a",
+        "bytes": 2641353,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
+          "context": "Original fictional civilian learning observatory, not a Victory Drones class, facility or official curriculum. Its compass is a metaphor for questions, evidence and next steps, with no navigational or flight instruction."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас.",
+          "context": "Оригінальна уявна цивільна обсерваторія навчання, а не заняття, приміщення чи офіційна програма Victory Drones. Компас є метафорою запитань, доказів і наступних кроків, а не навігаційною чи льотною інструкцією."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://victory-drones.com/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-colour-clay-spring-05-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-05-v1.jpg",
+      "sha256": "3ce2f25907dc3a3aac911729deb7be72180ee39b4510c6d69a8c821c27796b3b",
+      "bytes": 156667,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "What the Wax Keeps — original paper colour study",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset type: distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an inspiring conceptual paper exhibition about a protected area retaining its earlier colour. On a warm dark wooden study table, exactly three large flat egg-shaped paper silhouettes are displayed left to right on separate small stands. First: plain ivory paper with a small removable ivory diamond-shaped paper mask lying visibly above its centre. Second: the same paper silhouette with a bold cobalt-blue background around an unchanged ivory diamond, and a clearly raised removable paper mask at the centre. Third: the completed cobalt-blue silhouette with the preserved ivory diamond exposed, while the separate ivory mask rests beside it. Keep all three silhouettes and the relationship between them visually simple and legible, like a beautiful tactile museum teaching display. This is a paper-only analogy, not a photograph of authentic regional pysanky or instructions using real hot wax, dye or heat. No burners, flames, candles, chemicals or workshop tools. A few spare cream paper sheets, softly folded blue tissue, spring branches and warm sunlit shelves enrich the background without clutter. Use ivory, cobalt, muted coral and honey-gold wood. Focal reveal: the same white diamond stays unchanged while surrounding colour changes. No arrows or words; physical arrangement and clearly separated stands tell the idea. Premium stylized 3D storybook game art with hand-painted texture, readable large silhouettes, tactile materials and rich layered depth; an original fictional environment, not a documentary photograph. Preserve complete focal objects within the central 80 percent. No writing, letters, numbers, dates, logos, signatures, flags, UI, borders, watermarks or real people. No copied museum photograph, named artist imitation or claim of universal symbolic meaning. Source-linked learning text is provided separately in the game.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-00080d9b-2b95-46cd-ba26-f775868cdbf3.png",
+        "sha256": "2d8f4c289e27b19c927e8ad185e91e77c105c72a640142c537140372c3881de2",
+        "bytes": 2423412,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated paper display with three egg-shaped studies, cobalt backgrounds and an ivory diamond showing an area that keeps its earlier colour.",
+          "context": "Original generated conceptual paper illustration. It explains a protected colour area through an analogy, not an authentic regional pysanka or instructions for hot wax, dye or heat. The tradition’s source record remains separately linked."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована паперова виставка з трьома яйцеподібними етюдами, кобальтовим тлом і світлим ромбом, що показує збереження попереднього кольору.",
+          "context": "Оригінальна згенерована концептуальна паперова ілюстрація. Вона пояснює захищену ділянку кольору через аналогію, а не зображує автентичну регіональну писанку чи інструкцію роботи з гарячим воском, барвником або нагріванням. Джерело про традицію наведено окремо."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ich.unesco.org/en/RL/pysanka-ukrainian-tradition-and-art-of-decorating-eggs-02134",
+          "role": "Context for a paper-only analogy of colour reservation; no regional pysanka pattern, real heated process or source image is reproduced."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-colour-clay-spring-06-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-06-v1.jpg",
+      "sha256": "3906cda63a720416d840efb79ceb5acd2cda31f9d8f9b8fcbacdca776651ea27",
+      "bytes": 227413,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "A Gift with a Story — original spring exhibit finale",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset type: distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create a joyful original spring exhibition gathering that joins three distinct craft-learning spaces without blending their identities. A central open wooden gift box containing one invented colourful paper egg-shaped artwork and an untied crimson ribbon is the memorable near-foreground focal point; beside it rests one completely blank cream personal gift card. Beyond it, three separate clearly framed display zones curve around a welcoming courtyard: a wall of invented floral colour studies at left, a cream ceramic vessel and plate display at centre, and bright paper egg-shaped colour studies at right. Give each zone its own separate blank card and ample breathing room. A glowing spring garden, a tall flowering tree, warm wood tables and soft hanging ivory fabric create a celebratory finale with rich coral, cobalt, leaf-green and honey-gold accents. All designs and layout are newly invented for the game. Do not reproduce Sofika Zielyk’s installation, another actual artwork or a real community event. No authentic regional motif claims or invented traditional meanings; the gift represents contemporary personal authorship. Premium stylized 3D storybook game art with hand-painted texture, readable large silhouettes, tactile materials and rich layered depth; an original fictional environment, not a documentary photograph. Preserve complete focal objects within the central 80 percent. No writing, letters, numbers, dates, logos, signatures, flags, UI, borders, watermarks or real people. No copied museum photograph, named artist imitation or claim of universal symbolic meaning. Source-linked learning text is provided separately in the game.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-afa98dc9-7959-46d8-a254-f38f766767ea.png",
+        "sha256": "596de4d1a85a41c54ca8ca75b8b6a09b8b0d9c3854e739d10e15981aef261178",
+        "bytes": 2791139,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated spring exhibition with separate painting, ceramic and paper-egg displays, plus a gift box and blank personal card in the foreground.",
+          "context": "Original generated fictional exhibition with invented designs. It does not reproduce a cited museum object, photograph, historical portrait or named artist’s work, and does not establish regional authenticity or universal symbolism. The exact documentary records remain separately linked in the learning text."
+        },
+        "uk": {
+          "alt": "Оригінальна ілюстрована весняна виставка з окремими розписами, керамікою та паперовими яйцеподібними етюдами, подарунковою коробкою й порожньою особистою карткою попереду.",
+          "context": "Оригінальна згенерована вигадана виставка з новими дизайнами. Вона не відтворює цитований музейний предмет, фото, історичний портрет чи твір конкретного митця й не встановлює регіональну автентичність або універсальну символіку. Точні документальні записи наведено окремими посиланнями в навчальному тексті."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://pysanka.ukrainianinstitute.org/",
+          "role": "Source for the separate lesson about a community installation and named curator; this fictional exhibition does not reproduce that installation or any participant’s pysanka."
+        },
+        {
+          "url": "https://ich.unesco.org/en/RL/pysanka-ukrainian-tradition-and-art-of-decorating-eggs-02134",
+          "role": "Context for the living tradition; original game-world display is not an ethnographic reconstruction."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "ukraine-crimea-ornek-01-reveal-v1",
+      "path": "game/editions/assets/discovery/ukraine-crimea-ornek-01-v1.jpg",
+      "sha256": "dc7fad1a463982a631b34151834fe71cd934972f65ffebe86e894b98edc02ae3",
+      "bytes": 178150,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Name the Tradition — original heritage exhibition entrance",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset type: distinct original full-bleed landscape mission reveal for a premium Ukrainian cultural discovery game, wide 2:1 composition. Create an original welcoming heritage exhibition entrance with a contemporary architectural language, introducing a learning chapter about Crimean Tatar knowledge without pretending to show an authentic Ornek composition. A broad open turquoise-and-warm-limestone court has a tall empty gold-edged information panel at its centre and two separate smaller blank cream source panels on low wooden stands. The central panel remains entirely blank for separately localized game text. Three generous alcoves beyond the court hold a folded plain ivory cloth, an unpatterned cream ceramic bowl and a spool of plain golden thread, distinct materials hinting at different crafts. A flowing shallow water channel, soft turquoise tile blocks, warm amber evening light and a quiet distant garden make the entrance inviting and beautiful. Architecture is completely fictional and contemporary, not a claimed historic Crimean building or a reconstruction of a religious site. Large uncluttered silhouettes, an elegant arched passage, nuanced gold reflections and deep teal shadows. Use no decorative pseudo-Ornek patterns, ethnic costumes, invented symbols or fabricated historic inscriptions. The visual idea is room for the community’s own named knowledge and sources, not a generic ornament display. Premium stylized 3D storybook game art with hand-painted texture, readable large silhouettes, tactile materials and rich layered depth; an original fictional environment, not a documentary photograph. Preserve complete focal objects within the central 80 percent. No writing, letters, numbers, dates, logos, signatures, flags, UI, borders, watermarks or real people. No copied museum photograph, named artist imitation or claim of universal symbolic meaning. Source-linked learning text is provided separately in the game.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-c620-7283-bcb3-4b1a2411308f/exec-587aea29-3045-44fa-a2db-7a30cf9ad29c.png",
+        "sha256": "dd0561017e03cf468ad5ae359875391c4e5585bf002094974f056e196d79334e",
+        "bytes": 2557847,
+        "width": 1774,
+        "height": 887
+      },
+      "derivation": "Proportional resize from 2:1 generated master to 960x480 and JPEG quality 78 using macOS sips 316; no crop, recolour or generative alteration.",
+      "locales": {
+        "en": {
+          "alt": "Original illustrated heritage entrance with turquoise accents, blank source panels and separate plain textile, ceramic and thread displays.",
+          "context": "Original generated fictional heritage exhibition. It introduces source-linked Crimean Tatar knowledge but does not reproduce or authenticate Ornek ornament, historic architecture, costumes or community events."
+        },
+        "uk": {
+          "alt": "Оригінальний ілюстрований вхід до виставки спадщини з бірюзовими акцентами, порожніми панелями джерел та окремими простими зразками тканини, кераміки й ниток.",
+          "context": "Оригінальна згенерована вигадана виставка спадщини. Вона знайомить із кримськотатарськими знаннями через окремі джерела, але не відтворює й не засвідчує автентичність Орьнеку, історичної архітектури, вбрання чи подій спільноти."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://ich.unesco.org/en/decisions/16.COM/8.B.45",
+          "role": "The separate lesson names Crimean Tatar Ornek and its associated knowledge. This invented contemporary exhibition contains no copied or authenticated Ornek composition."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
+    },
+    {
+      "id": "victory-drones-ideas-understanding-key-v1",
+      "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-key-v1.jpg",
+      "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb",
+      "bytes": 292281,
+      "publication": "public",
+      "approved": true,
+      "dependencies": [],
+      "revision": 1,
+      "title": "Ideas into Understanding",
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Asset: original premium campaign key illustration for an educational arcade game, 1536x1024 wide 3:2 landscape. Warm stylized painterly game concept art with tactile materials, cinematic lighting, expressive coherent composition and readable landmarks. This is a fictional civilian learning environment, not a photograph, a documentary depiction of an organization, an endorsement or a historical event. No text, letters, numbers, logos, watermarks, real organization badges, weapons, uniforms, tactical displays, functional electronics instructions or readable screens. Show original fictional characters and props only. No copied source imagery. Strong focal silhouettes inside the central 80%; whole-canvas scene, not a website, diagram or boxed collage.\nScene: An extraordinary hands-on mechanics gallery in a bright blue-and-gold science museum. A small beautifully made wooden classroom cart rests on a broad central table where two visibly different textured test lanes sit side by side, separated cleanly and without numeric scales. Above them a graceful balanced brass mobile with matched geometric weights creates a memorable sculptural landmark. Nearby, separate oversized blue-and-gold arrow sculptures lie flat on individual plinths as abstract objects for comparing direction; do not attach them to the cart as a force diagram. In the foreground an open explanation notebook with blank pages, a magnifying lens and two small comparison samples invite the next discovery. A wide curved walkway reaches a calm discussion alcove beyond, bathed in warm window light. Coherent premium game-world composition with tactile wood, brass, felt and stone. This is playful civilian scientific inquiry, not aircraft operation or technical certification. No equations, labels, numbers, computer screens or dramatic sparks.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0e637-8b00-7a13-b6e6-0e74f187a920/exec-77639172-1e08-45d4-aa53-34e1f12a6757.png",
+        "sha256": "3422b385b914af04eb16ee2db394ad1c1e2f10ed8dc4495e5e64ec060ed4f853",
+        "bytes": 2610613,
+        "width": 1536,
+        "height": 1024
+      },
+      "derivation": "Mechanical sips JPEG quality 84 resize from 1536x1024 to 960x640, no crop or content edits.",
+      "locales": {
+        "en": {
+          "alt": "A fictional hands-on science gallery presents classroom carts, balanced sculptures and comparison surfaces around an open explanation table.",
+          "context": "Original fictional civilian science exhibit. Sculptures and carts invite questions about observation, comparison and forces; the artwork is not a quantitative mechanics diagram or an official Victory Drones lesson."
+        },
+        "uk": {
+          "alt": "Уявна інтерактивна наукова галерея показує навчальні візки, врівноважені скульптури й поверхні для порівняння довкола відкритого столу пояснень.",
+          "context": "Оригінальна уявна цивільна наукова виставка. Скульптури й візки заохочують запитання про спостереження, порівняння та сили; ілюстрація не є кількісною механічною схемою чи офіційним уроком Victory Drones."
+        }
+      },
+      "sourceInspiration": [
+        {
+          "url": "https://victory-drones.com/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/equilibrium/",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        },
+        {
+          "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html",
+          "role": "Conceptual subject research only; no source image supplied, reproduced or composited."
+        }
+      ],
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; human artwork review deferred"
     }
   ]
 }

@@ -6,11 +6,18 @@ import { required } from '../data-json.mjs';
 import { CURRICULUM_MISSIONS, CURRICULUM_SOURCES } from './curriculum.mjs';
 import { curriculumPresentationRevision } from './curriculum-presentation-revisions.mjs';
 import { createCurriculumAtlasPayloads } from './curriculum-atlases.mjs';
+import { selectExactCompanyArtworkDescriptions } from './artwork.mjs';
 const localized = (locales, select) =>
   Object.fromEntries(['en', 'uk'].map((locale) => [locale, select(locales[locale], locale)]));
 
 /** Same reward and receipt authority as the rest of the game. */
-export function createCurriculumRewards({ definition, source, assets, missionBindings }) {
+export function createCurriculumRewards({
+  definition,
+  source,
+  assets,
+  assetSources = [],
+  missionBindings,
+}) {
   const presentationRevision = curriculumPresentationRevision(definition.id);
   const rows = definition.missionIds.map((id) =>
     CURRICULUM_MISSIONS.find((entry) => entry.id === id),
@@ -40,6 +47,7 @@ export function createCurriculumRewards({ definition, source, assets, missionBin
           entry.bytes === picture.bytes,
       );
     required(descriptor, 'Discovery picture has no exact public inventory entry: ' + row.id);
+    const descriptions = selectExactCompanyArtworkDescriptions(descriptor, assetSources);
     return {
       id: row.id + '-image',
       type: 'image',
@@ -47,11 +55,12 @@ export function createCurriculumRewards({ definition, source, assets, missionBin
       locales: localized(row.locales, ({ title, alt }, locale) => ({
         title,
         alt:
-          picture.id === `${row.id}-picture`
+          descriptions?.[locale] ??
+          (picture.id === `${row.id}-picture`
             ? alt
             : locale === 'uk'
               ? `Оригінальна уявна сцена кампанії «${definition.locales.uk.title}», а не документальне зображення.`
-              : `An original imaginary scene for ${definition.locales.en.title}, not a documentary image.`,
+              : `An original imaginary scene for ${definition.locales.en.title}, not a documentary image.`),
       })),
     };
   };
@@ -99,6 +108,7 @@ export function createCurriculumRewards({ definition, source, assets, missionBin
       id: definition.id + '-official-source',
       type: 'url',
       url: CURRICULUM_SOURCES[definition.link].url,
+      qr: true,
       locales: {
         en: { title: 'Explore the official source' },
         uk: { title: 'Відкрити офіційне джерело' },

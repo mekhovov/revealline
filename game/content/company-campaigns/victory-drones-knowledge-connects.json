@@ -2,16 +2,16 @@
   "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An original imaginary learning observatory with library islands, glass walkways and an educational aircraft exhibit.",
-      "bytes": 1150183,
+      "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture.",
+      "bytes": 304837,
       "format": "AssetRevisionV1",
       "height": 640,
-      "id": "victory-drones-home-picture",
+      "id": "victory-drones-knowledge-connects-key-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/discovery/victory-drones-home-v1.png",
+      "path": "editions/assets/discovery/victory-drones-knowledge-connects-key-v1.jpg",
       "review": "candidate",
       "revision": "1",
-      "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3",
+      "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f",
       "width": 960
     }
   ],
@@ -20,7 +20,7 @@
       "band": 1,
       "discovery": {
         "exhibitLayout": "route",
-        "finaleRewardRef": { "id": "victory-drones-knowledge-connects-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "victory-drones-knowledge-connects-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "victory-drones-knowledge-connects",
@@ -177,7 +177,7 @@
         "memorableMoment": "An original steel-blue learning observatory with a yellow compass floor and open question stations.",
         "pacingBeat": "discover",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "victory-drones-knowledge-connects-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "victory-drones-knowledge-connects-01-discovery", "revision": "2" },
         "routeDecision": "Use the crescent-shaped pair of returns or capture the open court in a wider loop."
       },
       "format": "MissionDesignV1",
@@ -187,7 +187,7 @@
       "name": "A Learning Compass",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 14.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "victory-drones-home-picture",
+        "backgroundAssetId": "victory-drones-knowledge-connects-key-picture",
         "themeId": "victory-drones-knowledge-connects-theme"
       },
       "revision": "1",
@@ -227,7 +227,7 @@
         "memorableMoment": "Twin steel-blue pavilions connected by a yellow bridge, with diagram and original story displays.",
         "pacingBeat": "choose",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "victory-drones-knowledge-connects-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "victory-drones-knowledge-connects-02-discovery", "revision": "2" },
         "routeDecision": "Choose the diagram bay or story bay first; the narrow middle return links both routes."
       },
       "format": "MissionDesignV1",
@@ -237,7 +237,7 @@
       "name": "Two Ways to Explain",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 15.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "victory-drones-home-picture",
+        "backgroundAssetId": "victory-drones-knowledge-connects-key-picture",
         "themeId": "victory-drones-knowledge-connects-theme"
       },
       "revision": "1",
@@ -285,7 +285,7 @@
         "memorableMoment": "Three luminous source pedestals in an asymmetric blue research hall with yellow index ribbons.",
         "pacingBeat": "combine",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "victory-drones-knowledge-connects-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "victory-drones-knowledge-connects-03-discovery", "revision": "2" },
         "routeDecision": "Capture the near evidence island, then split or encircle the two distant stations."
       },
       "format": "MissionDesignV1",
@@ -295,7 +295,7 @@
       "name": "Ask and Verify",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 16.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "victory-drones-home-picture",
+        "backgroundAssetId": "victory-drones-knowledge-connects-key-picture",
         "themeId": "victory-drones-knowledge-connects-theme"
       },
       "revision": "1",
@@ -343,7 +343,7 @@
         "memorableMoment": "A quiet blue open-air learning court with yellow seating islands and an illuminated question wall.",
         "pacingBeat": "breathe",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "victory-drones-knowledge-connects-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "victory-drones-knowledge-connects-04-discovery", "revision": "2" },
         "routeDecision": "Use the large quiet court to break a long crossing into two shorter decisions."
       },
       "format": "MissionDesignV1",
@@ -353,7 +353,7 @@
       "name": "Room for Questions",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 17.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "victory-drones-home-picture",
+        "backgroundAssetId": "victory-drones-knowledge-connects-key-picture",
         "themeId": "victory-drones-knowledge-connects-theme"
       },
       "revision": "1",
@@ -401,7 +401,7 @@
         "memorableMoment": "A stepped blue comparison library with paired display frames and a yellow reading terrace.",
         "pacingBeat": "mastery",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "victory-drones-knowledge-connects-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "victory-drones-knowledge-connects-05-discovery", "revision": "2" },
         "routeDecision": "Connect the upper reference shelves before the longer lower route, or reverse the order."
       },
       "format": "MissionDesignV1",
@@ -411,7 +411,7 @@
       "name": "Compare Before Concluding",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 18.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "victory-drones-home-picture",
+        "backgroundAssetId": "victory-drones-knowledge-connects-key-picture",
         "themeId": "victory-drones-knowledge-connects-theme"
       },
       "revision": "1",
@@ -467,7 +467,7 @@
         "memorableMoment": "A completed original learning network joining a compass, source hall and shared forum with yellow bridges.",
         "pacingBeat": "resolve",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "victory-drones-knowledge-connects-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "victory-drones-knowledge-connects-06-discovery", "revision": "2" },
         "routeDecision": "Choose the shorter reference chain or broad outer gallery, returning through the central forum."
       },
       "format": "MissionDesignV1",
@@ -477,7 +477,7 @@
       "name": "Teach It Forward",
       "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 19.5, "y": 8.5 }],
       "presentation": {
-        "backgroundAssetId": "victory-drones-home-picture",
+        "backgroundAssetId": "victory-drones-knowledge-connects-key-picture",
         "themeId": "victory-drones-knowledge-connects-theme"
       },
       "revision": "1",
@@ -492,9 +492,9 @@
       "format": "PackDesignV1",
       "id": "victory-drones-knowledge-connects-pack",
       "name": "Knowledge Connects",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }
