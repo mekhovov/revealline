@@ -14,6 +14,21 @@ import {
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(await readFile(path.join(directory, 'focused-test-map.json'), 'utf8'));
 
+test('ownership inventory changes select route coverage and artwork screening regressions', () => {
+  const plan = focusedTestPlan(
+    ['scripts/content-inventory.mjs', 'game/content-design/content-lifecycle.mjs'],
+    manifest,
+  );
+  assert.deepEqual(plan.categories, ['content-inventory']);
+  assert.deepEqual(plan.unknownRuntime, []);
+  assert.deepEqual(
+    plan.commands.map(({ id }) => id),
+    ['content-inventory'],
+  );
+  assert.ok(plan.commands[0].args.includes('game/test/content-lifecycle.test.mjs'));
+  assert.ok(plan.commands[0].args.includes('game/test/artwork-screening.test.mjs'));
+});
+
 test('localization and offline paths select only their bounded gates', () => {
   const plan = focusedTestPlan(['game/localization/en.json', 'game/offline/install.mjs'], manifest);
   assert.deepEqual(plan.categories, ['localization', 'offline']);
