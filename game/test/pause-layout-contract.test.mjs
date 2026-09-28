@@ -83,11 +83,15 @@ test('ready actions use a bounded grid instead of shrinking translated labels in
   );
   assert.match(
     surfaceCss,
+    /data-kind='ready'[^}]*\.overlay-actions\s*>\s*\*\s*\{[\s\S]*?min-width:\s*0/,
+  );
+  assert.match(
+    surfaceCss,
     /data-kind='ready'[\s\S]*?>\s*#start-button[\s\S]*?grid-column:\s*1\s*\/\s*-1/,
   );
   assert.match(
     surfaceCss,
-    /data-kind='ready'[\s\S]*?\.overlay-actions \.button\s*\{[\s\S]*?word-break:\s*normal[\s\S]*?overflow-wrap:\s*break-word/,
+    /data-kind='ready'[\s\S]*?\.overlay-actions \.button\s*\{[\s\S]*?width:\s*100%[\s\S]*?flex:\s*none[\s\S]*?word-break:\s*normal[\s\S]*?overflow-wrap:\s*break-word/,
   );
   assert.match(
     headerCss,
