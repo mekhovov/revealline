@@ -1,11 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import vm from 'node:vm';
 import { Document, Events } from '../game/test/helpers/couch-dom.mjs';
-import { observeDiscovery } from '../docs/verification/discovery-observer.mjs';
+import {
+  observeDiscovery,
+  discoveryCycleSurface,
+} from '../docs/verification/discovery-observer.mjs';
 import {
   validateDiscoveryObservation,
   compareDiscoveryObservations,
   summarizeDiscoverySession,
+  summarizeDiscoveryLifecycle,
 } from '../docs/verification/discovery-comparison.mjs';
 import { runDiscoveryCycles } from './observe-discovery-cycles.mjs';
 
@@ -198,8 +203,8 @@ test('the CLI result wait is bounded and records the failed step without countin
         },
       }),
     (error) => {
-      assert.match(error.message, /Timed out observing open reward viewer/);
-      assert.equal(error.observation.step, 'result 1: open discovery');
+      assert.match(error.message, /Timed out observing visible result Explore control/);
+      assert.equal(error.observation.step, 'result 1: show result');
       assert.equal(error.observation.diagnostic.report.cycles.rewardViewer, 0);
       return true;
     },
@@ -315,4 +320,214 @@ test('same-build effects comparison is distinct from artifact regression and rej
   candidate.cycles.result = 0;
   candidate.records.find((r) => r.kind === 'sample').frameIntervals.p95Ms = NaN;
   assert.throws(() => validateDiscoveryObservation(candidate), /measurements/);
+});
+
+test('passive cycle diagnostics distinguish pending, decoded and broken visible images', () => {
+  const h = harness(),
+    image = h.document.createElement('img');
+  h.$('completion-reward-dialog').append(image);
+  h.$('completion-reward-dialog').open = true;
+  image.complete = false;
+  image.naturalWidth = image.naturalHeight = 0;
+  assert.equal(discoveryCycleSurface(h.document).decodedVisibleImages, 0);
+  image.complete = true;
+  assert.equal(discoveryCycleSurface(h.document).brokenVisibleImages, 1);
+  image.naturalWidth = 640;
+  image.naturalHeight = 480;
+  assert.equal(discoveryCycleSurface(h.document).decodedVisibleImages, 1);
+  image.hidden = true;
+  assert.equal(discoveryCycleSurface(h.document).decodedVisibleImages, 0);
+  h.observer.dispose();
+});
+
+test('diagnostics retain lost pointer-target evidence without changing controls or recording arbitrary text', async () => {
+  const h = harness(),
+    control = h.document.createElement('button');
+  control.id = 'view-picture';
+  control.textContent = 'Unrecorded label';
+  h.document.body.append(control);
+  h.document.emit('pointerdown', { target: control, isTrusted: true });
+  control.remove();
+  h.document.emit('pointerup', { target: h.document.body, isTrusted: true });
+  const records = h.observer
+    .exportReport()
+    .records.filter((record) => record.kind === 'public-control');
+  assert.equal(records.length, 2);
+  assert.equal(records[0].control, 'view-picture');
+  assert.equal(records[1].targetStillMatches, false);
+  assert(!JSON.stringify(records).includes('Unrecorded label'));
+  h.run();
+  h.document.hasFocus = () => false;
+  const pending = h.observer.sample();
+  h.frame();
+  assert.match((await pending).outcome, /not focused/);
+  h.observer.dispose();
+  for (const values of h.window.listeners.values()) assert.equal(values.size, 0);
+  for (const values of h.document.captureListeners.values()) assert.equal(values.size, 0);
+});
+
+async function simulatedPublicCycles({ broken = false } = {}) {
+  const h = harness(),
+    document = h.document;
+  for (const id of ['view-picture', 'show-result']) {
+    const button = document.createElement('button');
+    button.id = id;
+    document.body.append(button);
+  }
+  const explore = document.createElement('button');
+  explore.setAttribute('data-reward-surface', 'result');
+  h.$('completion-reward-result').append(explore);
+  const close = document.createElement('button');
+  h.$('completion-reward-dialog').append(close);
+  h.result();
+  const invoke = async ([command, source]) => {
+    if (command === 'click') {
+      if (source === '#view-picture') {
+        h.$('game-overlay').hidden = h.$('completion-reward-result').hidden = true;
+      } else if (source === '#show-result') h.result();
+      else if (source.includes('data-reward-surface')) {
+        h.$('completion-reward-dialog').open = true;
+        const image = document.createElement('img');
+        image.complete = true;
+        image.naturalWidth = image.naturalHeight = broken ? 0 : 640;
+        h.$('completion-reward-dialog').append(image);
+      } else if (source.includes('dialog > button')) {
+        h.$('completion-reward-dialog').open = false;
+        h.$('completion-reward-dialog').querySelector('img').remove();
+      } else throw Error('Unexpected public fixture command');
+      return true;
+    }
+    if (source.includes("await import('/docs/verification/discovery-observer.mjs')")) {
+      h.observer.dispose();
+      h.observer = observeDiscovery({ document, window: h.window, binding: binding() });
+      return true;
+    }
+    if (source.includes('Visible-frame observation timed out')) {
+      h.frame();
+      h.frame();
+      return true;
+    }
+    return vm.runInNewContext(source, { document, discoveryObservation: h.observer });
+  };
+  try {
+    return await runDiscoveryCycles({
+      session: 'synthetic-test',
+      binding: binding(),
+      cycles: 20,
+      invoke,
+      waitMs: 1000,
+    });
+  } finally {
+    h.observer.dispose();
+  }
+}
+
+test('runner unit fixture counts observed viewer/result exits and summaries only connected closed-view resources', async () => {
+  const result = await simulatedPublicCycles();
+  assert.equal(result.observation.cycles.result, 20);
+  assert.equal(result.observation.cycles.rewardViewer, 20);
+  assert.equal(result.lifecycle.twentyResultViewerPairsObserved, true);
+  assert.equal(result.lifecycle.closedCheckpoints, 20);
+  assert.equal(result.lifecycle.connectedMetrics.connectedImages.delta, 0);
+  assert.equal(result.lifecycle.retainedResourceStabilityVerified, false);
+  assert.equal(result.lifecycle.rewardRenderingTaskLimitVerified, false);
+  assert.deepEqual(summarizeDiscoveryLifecycle(result.observation), result.lifecycle);
+  await assert.rejects(simulatedPublicCycles({ broken: true }), (error) => {
+    assert.match(error.message, /without decoded pixels/);
+    assert.equal(error.observation.step, 'result 1: load exact image');
+    assert.equal(error.observation.diagnostic.surface.brokenVisibleImages, 1);
+    assert.equal(error.observation.diagnostic.report.cycles.rewardViewer, 0);
+    return true;
+  });
+});
+
+test('unknown historical arming state remains readable but cannot establish a comparable transition', async () => {
+  const baseline = await report(),
+    candidate = structuredClone(baseline);
+  candidate.binding.sourceIdentity = 'b'.repeat(64);
+  delete baseline.records.find((record) => record.kind === 'sample').surfaceVisibleWhenArmed;
+  delete candidate.records.find((record) => record.kind === 'sample').surfaceVisibleWhenArmed;
+  assert(validateDiscoveryObservation(baseline));
+  const result = compareDiscoveryObservations(baseline, candidate);
+  assert.equal(result.comparable, false);
+  assert(result.reasons.some((reason) => /already visible surface/.test(reason)));
+});
+
+test('unknown historical mission or effects remain readable but cannot establish a comparable sample', async () => {
+  const original = await report();
+  const cases = [
+    [
+      (sample) => {
+        delete sample.mission;
+      },
+      /bounded observed mission/,
+    ],
+    [
+      (sample) => {
+        sample.mission = ' ';
+      },
+      /bounded observed mission/,
+    ],
+    [
+      (sample) => {
+        sample.mission = 'x'.repeat(257);
+      },
+      /bounded observed mission/,
+    ],
+    [
+      (sample) => {
+        delete sample.effects;
+      },
+      /explicit observed full.reduced effects/,
+    ],
+    [
+      (sample) => {
+        sample.effects = 'unknown';
+      },
+      /explicit observed full.reduced effects/,
+    ],
+  ];
+  for (const [mutate, reason] of cases) {
+    const baseline = structuredClone(original),
+      candidate = structuredClone(original);
+    candidate.binding.sourceIdentity = 'b'.repeat(64);
+    for (const value of [baseline, candidate])
+      mutate(value.records.find((record) => record.kind === 'sample'));
+    assert(validateDiscoveryObservation(baseline));
+    assert(validateDiscoveryObservation(candidate));
+    const result = compareDiscoveryObservations(baseline, candidate);
+    assert.equal(result.comparable, false);
+    assert.deepEqual(result.comparisons, []);
+    assert(result.reasons.some((item) => reason.test(item)));
+  }
+});
+
+test('viewport and pixel ratio changes before or during sampling discard the stale environment', async () => {
+  for (const [key, value] of [
+    ['innerWidth', 640],
+    ['innerHeight', 480],
+    ['devicePixelRatio', 2],
+  ]) {
+    for (const before of [true, false]) {
+      const h = harness();
+      h.run();
+      if (before) h.window[key] = value;
+      const pending = h.observer.sample();
+      if (!before) {
+        for (let i = 0; i < 650; i++) h.frame();
+        h.window[key] = value;
+      }
+      h.frame();
+      const sample = await pending;
+      assert.equal(sample.outcome, 'discarded: viewport or pixel ratio changed');
+      assert.equal(sample.frameIntervals, null);
+      h.observer.dispose();
+      const candidate = h.observer.exportReport(),
+        baseline = await report();
+      candidate.binding.sourceIdentity = 'b'.repeat(64);
+      const result = compareDiscoveryObservations(baseline, candidate);
+      assert.equal(result.comparable, false);
+      assert.deepEqual(result.comparisons, []);
+    }
+  }
 });
