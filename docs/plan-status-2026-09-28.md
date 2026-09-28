@@ -7,7 +7,7 @@ file as historical evidence.
 
 ## Current boundary
 
-- Current `main`: `6fe52474b5b395a5c416bd388555d488db33f287`.
+- Current `main`: `4cb5e3199eb0a4c1cee61360ab1dff6a0e866caa`.
 - Published release: `v0.141.7`, frozen game source
   `efbb3882b4edd447c8e9f60ed60c536a956d78f3`.
 - GitHub release and Pages publication completed; the complete current public audit
@@ -42,7 +42,7 @@ file as historical evidence.
 | ----: | --------------------------------------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------: |
 |     1 | v0.141.7 public acceptance                                | Published and byte-audited                                                      | Finish bounded Solo package-choice/download, launch, clear/Next and offline-return checks on the frozen public build | 2–6 hours after the pending interaction is available |
 |     2 | Canonical/external soundtrack successor, PR #716          | Separate owner is rebasing and correcting catalogue/player capacity             | Exact-head review, focused qualification, immutable release and public streaming/offline/fallback checks             |   1–2 engineering days plus listening/network checks |
-|     3 | Ukrainian cultural pressure triptych, `whole-spatial-v34` | Implemented on exact v0.141.7 `main`; focused route/compatibility cohort passes | Format/lint/validation, review, PR, merge, release and public mission launch; then human balance                     |          0.5–1.5 engineering days plus release queue |
+|     3 | Ukrainian cultural pressure triptych, `whole-spatial-v34` | PR #728 is implemented and rebased onto current `main`; 126 focused tests, format, lint and validation pass locally; candidate CI passes | Allocate an immutable release slot, exact-head release gates, merge, release and public mission launch; then human balance |          0.5–1.5 engineering days plus release queue |
 
 ## Remaining product phases
 
