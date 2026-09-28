@@ -94,7 +94,7 @@
           "revision": "feedback-dd88546f89c900ab",
           "victoryMotif": "shared-spark-v1"
         },
-        "finaleRewardRef": { "id": "social-drone-community-connections-finale", "revision": "5" }
+        "finaleRewardRef": { "id": "social-drone-community-connections-finale", "revision": "6" }
       },
       "format": "CampaignDesignV1",
       "id": "social-drone-community-connections",
@@ -696,9 +696,9 @@
       "format": "PackDesignV1",
       "id": "social-drone-community-connections-pack",
       "name": "Community Connections",
-      "revision": "5"
+      "revision": "6"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "5"
+  "revision": "6"
 }
