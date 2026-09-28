@@ -61,6 +61,10 @@ function setup({ stored = null, active = () => true, conflicts = () => false } =
       calls.push('pause');
       state = { ...state, desired: false, playing: false, status: 'paused' };
     },
+    previous: () => {
+      calls.push('previous');
+      state = { ...state, track: { id: 'one', title: 'One', artist: 'Artist' } };
+    },
     next: () => {
       calls.push('next');
       state = { ...state, track: { id: 'two', title: 'Two' } };
@@ -162,6 +166,17 @@ test('Next while paused selects a song without introducing Play or changing focu
   assert.equal(f.state().track.id, 'two');
   assert.equal(f.state().desired, false);
   assert.equal(f.doc.activeElement, f.resume);
+  f.host.dispose();
+});
+
+test('Audio settings expose Previous, Play or Pause, and Next above advanced controls', () => {
+  const f = setup();
+  assert.ok(f.$('test-quick-music-settings'));
+  f.$('test-quick-music-settings-previous').click();
+  f.$('test-quick-music-settings-next').click();
+  assert.deepEqual(f.calls, ['previous', 'next']);
+  f.$('test-quick-music-settings-toggle').click();
+  assert.deepEqual(f.calls, ['previous', 'next', 'play']);
   f.host.dispose();
 });
 

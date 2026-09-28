@@ -537,9 +537,8 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
   const continuationHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
-  const currentReviewPath =
-    'docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json';
-  const currentReviewSHA256 = 'afcfcca1612109e117595c424e03ac002271165ccb1a4082697011e16c4c5a75';
+  const currentReviewPath = 'docs/verification/audio-style-menu-2026-09-28/review.json';
+  const currentReviewSHA256 = '560586ad918091ed211cc755a30a8d492466792c6acb799770f9a52ba99bf6a4';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'audio',
   ]);
@@ -547,9 +546,12 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
     'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json';
   const mainUIReviewSHA256 = '15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867';
   const mainUI = await authenticatedCurrentReview(mainUIReviewPath, mainUIReviewSHA256, ['ui']);
+  const priorAudioReview = JSON.parse(
+    await fs.readFile(new URL('../../' + current.review.priorReviews.audio.path, import.meta.url)),
+  );
   const canonicalReview = JSON.parse(
     await fs.readFile(
-      new URL('../../' + current.review.priorReviews.canonical.path, import.meta.url),
+      new URL('../../' + priorAudioReview.priorReviews.canonical.path, import.meta.url),
     ),
   );
   assert.equal(
@@ -628,6 +630,8 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
       assert.match(asset.provenance.source, /game\/soundtrack-portable\.mjs/);
       assert.match(asset.provenance.source, /game\/content\/soundtrack-catalogue\.mjs/);
       assert.match(asset.provenance.source, /game\/online-soundtrack-catalogue\.mjs/);
+      assert.match(asset.provenance.source, /game\/ui\/quick-music-controls\.mjs/);
+      assert.match(asset.provenance.source, /game\/soundtrack-style-taxonomy\.mjs/);
     }
   }
 });
@@ -981,8 +985,20 @@ test('bulk continuation preserves every exact merged main320 record and original
   assert.equal(prior.document.revision, 94);
   assert.equal(prior.document.assets.length, 2548);
   assert.equal(prior.assets.size, 132);
-  assert.equal(current.document.revision, 95);
-  validateThemeBundle(current.document, { previous: prior.document, expectedRevision: 94 });
+  assert.equal(current.document.revision, 96);
+  const priorMainContinuation = structuredClone(current.document);
+  priorMainContinuation.revision = 95;
+  priorMainContinuation.assets = priorMainContinuation.assets.slice(0, -8);
+  priorMainContinuation.themes = priorMainContinuation.themes.slice(0, -1);
+  priorMainContinuation.selection.theme = { id: 'fpv', revision: 95 };
+  validateThemeBundle(priorMainContinuation, {
+    previous: prior.document,
+    expectedRevision: 94,
+  });
+  validateThemeBundle(current.document, {
+    previous: priorMainContinuation,
+    expectedRevision: 95,
+  });
   for (const group of Object.keys(oracle.groups))
     assert.deepEqual(
       current.document[group].slice(0, oracle.groups[group].count),
@@ -1003,13 +1019,14 @@ test('bulk continuation preserves every exact merged main320 record and original
   assert.equal(ui.length, 24);
   for (const slot of ui) assert.deepEqual(after.assets[slot.id], before.assets[slot.id], slot.id);
   const added = current.document.assets.slice(2548);
-  assert.equal(added.length, 18);
-  assert.equal(added.filter((a) => a.id.startsWith('audio.')).length, 8);
+  assert.equal(added.length, 26);
+  assert.equal(added.filter((a) => a.id.startsWith('audio.')).length, 16);
   for (const asset of added) {
     assert.equal(asset.quality.stage, 'reviewed');
-    const old = prior.document.assets
-      .filter((a) => a.id === asset.id)
-      .sort((a, b) => b.revision - a.revision)[0];
+    const old = current.document.assets.find(
+      (candidate) => candidate.id === asset.id && candidate.revision === asset.revision - 1,
+    );
+    assert.ok(old, `predecessor for ${asset.id} revision ${asset.revision}`);
     assert.equal(asset.revision, old.revision + 1);
     assert.deepEqual(asset.provenance.parent, { id: old.id, revision: old.revision });
     assert.deepEqual(asset.recipe, old.recipe);
