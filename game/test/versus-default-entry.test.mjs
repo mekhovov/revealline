@@ -99,11 +99,11 @@ test(
     assert.equal(p.$('journey-mode').value, 'versus');
     assert.equal(p.$('journey-collection').value, '');
     assert.equal(p.$('journey-lifecycle').value, 'current');
-    assert.equal(p.$('journey-cards').children.length, 252);
+    assert.equal(p.$('journey-cards').children.length, 186);
     p.$('journey-lifecycle').value = 'archive';
     p.$('journey-lifecycle').emit('change');
     const archived = [...p.$('journey-cards').children].map((card) => card.dataset.missionId);
-    assert.equal(archived.length, 75);
+    assert.equal(archived.length, 141);
     assert.equal(archived.filter((id) => JSON.parse(id)[1] === 'whole-spatial-v10').length, 3);
     assert.equal(archived.filter((id) => JSON.parse(id)[1] === 'whole-spatial-v9').length, 3);
     p.$('journey-lifecycle').value = '';
@@ -177,6 +177,8 @@ test(
     p.frame(0);
     const checkpoint = p.checkpoint();
     await openMissions(p, () => p.$('race-library-switch').click());
+    p.$('journey-lifecycle').value = 'current';
+    p.$('journey-lifecycle').emit('change');
     const target = [...p.$('journey-cards').children].find((card) =>
       JSON.parse(card.dataset.missionId)[3].endsWith('/choose-your-share'),
     );

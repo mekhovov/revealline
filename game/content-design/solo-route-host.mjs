@@ -35,9 +35,9 @@ export async function createSoloRouteHost(route, options = {}) {
     check(signal);
     const descriptor = descriptors.get(packId);
     if (!descriptor) return null;
-    if (prepare) {
-      if (typeof ensurePackage !== 'function')
-        throw new Error('Download this chapter before playing.');
+    // Offline retention is an optional host integration. The chapter loader
+    // verifies ordinary network responses without requiring a prepared package.
+    if (prepare && typeof ensurePackage === 'function') {
       await ensurePackage(descriptor.groups.solo, { signal, retain: true });
       check(signal);
     }

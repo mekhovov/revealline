@@ -841,5 +841,7 @@
   "neutralPilot.outcomeDiffers": "Pilot outcome differs from replay.",
   "controller.confirmTrace.function": "Controller Confirm trace must be a function.",
   "controller.confirmTrace.aliasEchoTiming": "Controller Confirm alias echo timing is out of bounds.",
-  "controller.confirmTrace.limit": "Controller trace limit is out of bounds."
+  "controller.confirmTrace.limit": "Controller trace limit is out of bounds.",
+  "studio.source.unknownEdition": "This Journey edition is not registered. Choose a listed edition; your draft is unchanged.",
+  "studio.image.bundledFailed": "The bundled reference could not be verified. Your existing picture and map are unchanged. Try again or upload a local image."
 }

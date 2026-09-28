@@ -188,7 +188,7 @@ test('published Solo boots the starter and starts an unprepared chapter online w
   ]);
   const card = await selectedCard(h.page);
   assert(card, 'Unloaded current missions remain visible.');
-  assert.equal(h.$('journey-cards').children.length, 252);
+  assert.equal(h.$('journey-cards').children.length, 186);
   assert.equal(h.runtimeReads.length, 2, 'Browsing does not load every chapter.');
   await activateMissionCard(card);
   await waitFor(() => {
