@@ -92,3 +92,39 @@ These exercises do not certify real assembly or flight competence or score cultu
 identity and belonging. The characters are fictional cosmetics, not official marks
 or attributed historical objects. Human content and physical-device review remain
 deferred.
+
+## Four six-mission learning journeys
+
+The existing maps in **Community Connections**, **Ideas into Understanding**,
+**Threads Across Ukraine** and **Meet the Aircraft** now have a bilingual teaching
+sequence across all six discoveries: examine an example, try a bounded decision,
+connect the ideas, apply them to a different fixture, explain the evidence and
+resolve the final example. These additions are knowledge payloads in the existing
+rewards; they do not replace the original pictures or change arcade requirements.
+
+Each campaign offers three optional workbenches at missions 2, 4 and 6. Their
+fictional fixtures make the consequence visible: correct a delivery count and a
+handoff, separate a force pair from the net force on one cart, distinguish a
+museum record from a visible observation, or separate motor, propeller, controller
+and ESC roles. A wrong commit explains the evidence; a saved partial transcript
+can resume before correction. The existing verifier remains the authority.
+
+Community Connections and Ideas into Understanding each add a separate application
+discovery requiring all six wins and the exact final lesson. They award explanatory
+notebook annotations, not a character or qualification. The aircraft and textile
+final lessons and their earlier application-reward promises remain unchanged.
+The six-win campaign finales also remain unchanged.
+
+The textile comparison includes the Met's public-domain
+[Fragment of a shirt, object 157571](https://www.metmuseum.org/art/collection/search/157571),
+accession 2009.300.2713, alongside its separately identified object 157573. Its
+unaltered source image, SHA-256 and credit are retained. The two records describe
+individual objects; the exercise does not infer a universal regional style,
+symbolic meaning or undocumented maker from their appearance. Reproduction rights
+follow the museum's [Open Access policy](https://www.metmuseum.org/hubs/open-access).
+
+The four editions retain their exact pre-showcase presentations. Their changed
+mission discoveries receive new revisions; earlier earned and promised payloads
+stay pinned. Automated checks cover wrong answers, partial resumption, tampering,
+replay-bound bonus eligibility and unchanged gameplay bindings. Human comprehension
+and device evidence remain deferred.

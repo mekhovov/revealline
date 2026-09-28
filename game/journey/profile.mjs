@@ -11,7 +11,8 @@ import {
 } from './pictures.mjs';
 
 export const JOURNEY_PROFILE_VERSION = 'revealline-journey-profile.v1';
-export const JOURNEY_PROFILE_DATABASE = 'revealline-journey-v1';
+import { JOURNEY_PROFILE_DATABASE } from '../profile-database.mjs';
+export { JOURNEY_PROFILE_DATABASE } from '../profile-database.mjs';
 export const JOURNEY_BACKUP_VERSION = 'revealline-journey-backup.v1';
 export const JOURNEY_SCOPED_BACKUP_VERSION = 'revealline-journey-backup.v2';
 export const JOURNEY_PICTURE_BACKUP_VERSION = 'revealline-journey-backup.v3';

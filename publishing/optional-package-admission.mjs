@@ -171,6 +171,7 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       ...manifest.files,
       editionDescriptor('optional-package.json', loaded.manifest),
     ]);
+    for (const pin of policy.vendorPins ?? []) matches(pin, runtime.get(pin.path));
     const installation = manifest.installation;
     keys(
       installation,
@@ -254,6 +255,11 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       ...inventory.files,
       editionDescriptor('source-inventory.json', loaded.sourceInventory),
     ]);
+    if (
+      source.size > policy.limits.files ||
+      [...source.values()].reduce((sum, bytes) => sum + bytes.length, 0) > policy.limits.bytes
+    )
+      fail('Complete optional source output exceeds package limits.');
     validatePublicSourceEligibility({ files: source });
     for (const row of manifest.files)
       if (row.path !== policy.root + 'app.webmanifest') matches(row, source.get(row.path));

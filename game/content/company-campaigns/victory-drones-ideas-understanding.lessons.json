@@ -1,0 +1,355 @@
+[
+  {
+    "brief": "Inspect the worked cart example, then label a new foot-and-floor interaction. Keep interaction pairs separate from a force balance on one object.",
+    "campaignId": "victory-drones-ideas-understanding",
+    "fields": [
+      {
+        "expected": "foot",
+        "explanation": "Name the object receiving this force. The other member of the interaction acts on the floor.",
+        "id": "target",
+        "label": "The floor’s upward force acts on…",
+        "options": [
+          { "label": "The floor", "value": "floor" },
+          { "label": "The foot", "value": "foot" }
+        ]
+      },
+      {
+        "expected": "different",
+        "explanation": "The foot-on-floor and floor-on-foot forces act on different objects. Weight and support both act on the book, so they are not that interaction pair.",
+        "id": "pair",
+        "label": "Interaction pair",
+        "options": [
+          { "label": "Earth and table both acting on the book", "value": "same" },
+          { "label": "Foot on floor; floor on foot", "value": "different" }
+        ]
+      }
+    ],
+    "fixtureRevision": "1",
+    "format": "revealline-learning-lesson.v1",
+    "id": "victory-drones-ideas-understanding-02-lesson",
+    "kind": "practice",
+    "locales": {
+      "uk": {
+        "brief": "Розгляньте приклад із візком, а потім підпишіть нову взаємодію стопи й підлоги. Не плутайте пару взаємодії з балансом сил на одному тілі.",
+        "fields": [
+          {
+            "explanation": "Назвіть тіло, на яке діє ця сила. Інший член пари діє на підлогу.",
+            "id": "target",
+            "label": "Сила підлоги вгору діє на…",
+            "options": [
+              { "label": "Підлогу", "value": "floor" },
+              { "label": "Стопу", "value": "foot" }
+            ]
+          },
+          {
+            "explanation": "Сили стопи на підлогу й підлоги на стопу діють на різні тіла. Вага й опора діють на книжку, тому це не така пара взаємодії.",
+            "id": "pair",
+            "label": "Пара взаємодії",
+            "options": [
+              { "label": "Земля й стіл, що діють на книжку", "value": "same" },
+              { "label": "Стопа на підлогу; підлога на стопу", "value": "different" }
+            ]
+          }
+        ],
+        "notice": "Оригінальна навчальна вправа без таймера. Джерела пояснюють поняття; це не звіт про справжній захід спільноти й не підтвердження практичної кваліфікації.",
+        "records": [
+          {
+            "id": "example",
+            "lines": [
+              "Рука штовхає візок; візок штовхає руку в протилежний бік. Пара діє на два різні тіла."
+            ],
+            "title": "Розібрана взаємодія"
+          },
+          {
+            "id": "fixture",
+            "lines": [
+              "Стопа тисне на підлогу вниз; підлога штовхає стопу вгору. Окремо Земля притягує книжку вниз, а стіл підтримує її вгору."
+            ],
+            "title": "Нова навчальна сцена"
+          }
+        ],
+        "role": "Учасник виставки",
+        "success": "Стрілки тепер указують і джерело, і одержувача сили. Пари взаємодії та сили на одному тілі відповідають на різні запитання.",
+        "title": "Віднесіть кожну силу до її тіла"
+      }
+    },
+    "missionId": "victory-drones-ideas-understanding-02",
+    "notice": "An original untimed learning fixture. Sources explain the concepts; this is not an account of a real community event or a practical qualification.",
+    "records": [
+      {
+        "id": "example",
+        "lines": [
+          "A hand pushes a cart; the cart pushes the hand in the opposite direction. The pair acts on two different objects."
+        ],
+        "title": "Worked interaction"
+      },
+      {
+        "id": "fixture",
+        "lines": [
+          "A foot presses down on the floor; the floor pushes up on the foot. Separately, Earth pulls a book down while the table supports the book upward."
+        ],
+        "title": "New classroom scene"
+      }
+    ],
+    "revision": "1",
+    "role": "Exhibit participant",
+    "sourceReviewedAt": "2026-09-28",
+    "sources": [
+      {
+        "title": "NASA Glenn — Newton’s Laws of Motion",
+        "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+      }
+    ],
+    "success": "The arrows now name both actor and recipient. Interaction pairs and forces acting on one object answer different questions.",
+    "title": "Put each force on its object"
+  },
+  {
+    "brief": "Apply the earlier force distinction to a new one-dimensional cart record. The diagram gives forces, not the cart’s current velocity.",
+    "campaignId": "victory-drones-ideas-understanding",
+    "fields": [
+      {
+        "expected": "east-three",
+        "explanation": "Opposing arrows subtract: 5 − 2 = 3 N toward the larger eastward force.",
+        "id": "net",
+        "label": "Net horizontal force",
+        "options": [
+          { "label": "7 N east", "value": "east-seven" },
+          { "label": "3 N east", "value": "east-three" }
+        ]
+      },
+      {
+        "expected": "acceleration",
+        "explanation": "The force determines acceleration in this model. Without initial velocity, it does not establish the current direction of travel.",
+        "id": "claim",
+        "label": "What follows?",
+        "options": [
+          { "label": "It must already be travelling east", "value": "velocity" },
+          {
+            "label": "Its acceleration is eastward; its current travel direction is unspecified",
+            "value": "acceleration"
+          }
+        ]
+      }
+    ],
+    "fixtureRevision": "1",
+    "format": "revealline-learning-lesson.v1",
+    "id": "victory-drones-ideas-understanding-04-lesson",
+    "kind": "practice",
+    "locales": {
+      "uk": {
+        "brief": "Застосуйте попереднє розрізнення сил до нового одновимірного запису про візок. Схема задає сили, а не поточну швидкість.",
+        "fields": [
+          {
+            "explanation": "Протилежні стрілки віднімаються: 5 − 2 = 3 Н у бік більшої сили на схід.",
+            "id": "net",
+            "label": "Горизонтальна рівнодійна",
+            "options": [
+              { "label": "7 Н на схід", "value": "east-seven" },
+              { "label": "3 Н на схід", "value": "east-three" }
+            ]
+          },
+          {
+            "explanation": "Сила визначає прискорення в цій моделі. Без початкової швидкості вона не встановлює поточного напрямку руху.",
+            "id": "claim",
+            "label": "Який висновок?",
+            "options": [
+              { "label": "Він обов’язково вже рухається на схід", "value": "velocity" },
+              {
+                "label": "Прискорення спрямоване на схід; поточний напрямок руху не задано",
+                "value": "acceleration"
+              }
+            ]
+          }
+        ],
+        "notice": "Оригінальна навчальна вправа без таймера. Джерела пояснюють поняття; це не звіт про справжній захід спільноти й не підтвердження практичної кваліфікації.",
+        "records": [
+          {
+            "id": "example",
+            "lines": [
+              "Дві протилежні сили по 2 Н на одному візку дають нульову рівнодійну. Це саме по собі не показує, чи він стоїть, чи рухається рівномірно."
+            ],
+            "title": "Розібраний баланс"
+          },
+          {
+            "id": "new-cart",
+            "lines": [
+              "В ідеалізованій горизонтальній моделі на той самий візок сталої маси діють 5 Н на схід і 2 Н на захід. Інших горизонтальних сил не враховано; початкову швидкість не задано."
+            ],
+            "title": "Ваш візок"
+          }
+        ],
+        "role": "Учасник виставки",
+        "success": "Екран розрізняє силу 3 Н на схід і невідому поточну швидкість. Він показує результат моделі без непідтвердженого твердження про рух.",
+        "title": "Читайте напрямок, а не лише число"
+      }
+    },
+    "missionId": "victory-drones-ideas-understanding-04",
+    "notice": "An original untimed learning fixture. Sources explain the concepts; this is not an account of a real community event or a practical qualification.",
+    "records": [
+      {
+        "id": "example",
+        "lines": [
+          "Two opposing forces of 2 N on one cart give a zero net force. That alone does not tell us whether the cart is stationary or moving steadily."
+        ],
+        "title": "Worked balance"
+      },
+      {
+        "id": "new-cart",
+        "lines": [
+          "In this idealised horizontal model, 5 N acts east and 2 N acts west on the same constant-mass cart. No other horizontal force is included; initial velocity is not given."
+        ],
+        "title": "Your cart"
+      }
+    ],
+    "revision": "1",
+    "role": "Exhibit participant",
+    "sourceReviewedAt": "2026-09-28",
+    "sources": [
+      {
+        "title": "NASA Glenn — Newton’s Laws of Motion",
+        "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+      }
+    ],
+    "success": "The display separates a 3 N eastward force from an unknown current velocity. It reports the model’s result without adding an unsupported motion claim.",
+    "title": "Read the direction, not just the number"
+  },
+  {
+    "brief": "A new classroom team asks whether its two mats change a cart’s travel. Configure a comparison and a conclusion that respect the supplied evidence.",
+    "campaignId": "victory-drones-ideas-understanding",
+    "fields": [
+      {
+        "expected": "b",
+        "explanation": "Changing one intended factor makes the comparison interpretable; changing three prevents attributing the difference to the mat alone.",
+        "id": "trial",
+        "label": "Choose the plan",
+        "options": [
+          { "label": "Plan A: change cart, height and mat", "value": "a" },
+          { "label": "Plan B: keep the setup; change the mat", "value": "b" }
+        ]
+      },
+      {
+        "expected": "bounded",
+        "explanation": "Keep the conclusion tied to these repeated observations and conditions. They do not establish a rule for every vehicle and surface.",
+        "id": "conclusion",
+        "label": "Supported conclusion",
+        "options": [
+          {
+            "label": "All vehicles always travel farther on every mat like A",
+            "value": "universal"
+          },
+          {
+            "label": "This cart travelled farther on A in these matched trials",
+            "value": "bounded"
+          }
+        ]
+      },
+      {
+        "expected": "repeat",
+        "explanation": "Repeating the same protocol checks consistency. Altering several conditions at once answers a different, confounded question.",
+        "id": "next",
+        "label": "A useful next check",
+        "options": [
+          { "label": "Change every condition and call it confirmation", "value": "change-all" },
+          { "label": "Repeat matched releases and record the spread", "value": "repeat" }
+        ]
+      }
+    ],
+    "fixtureRevision": "1",
+    "format": "revealline-learning-lesson.v1",
+    "id": "victory-drones-ideas-understanding-06-lesson",
+    "kind": "practice",
+    "locales": {
+      "uk": {
+        "brief": "Нова навчальна команда питає, чи два килимки змінюють рух візка. Налаштуйте порівняння й висновок відповідно до наданих доказів.",
+        "fields": [
+          {
+            "explanation": "Зміна одного потрібного чинника дає змогу тлумачити порівняння; зміна трьох не дозволяє пов’язати різницю лише з килимком.",
+            "id": "trial",
+            "label": "Оберіть план",
+            "options": [
+              { "label": "План A: змінити візок, висоту й килимок", "value": "a" },
+              { "label": "План B: зберегти установку; змінити килимок", "value": "b" }
+            ]
+          },
+          {
+            "explanation": "Пов’яжіть висновок із цими повторними спостереженнями й умовами. Вони не встановлюють правила для кожного транспортного засобу й поверхні.",
+            "id": "conclusion",
+            "label": "Підтверджений висновок",
+            "options": [
+              {
+                "label": "Усі транспортні засоби завжди їдуть далі на будь-якому килимку типу A",
+                "value": "universal"
+              },
+              {
+                "label": "Цей візок проїхав далі на A в цих однакових дослідах",
+                "value": "bounded"
+              }
+            ]
+          },
+          {
+            "explanation": "Повторення того самого протоколу перевіряє сталість. Одночасна зміна кількох умов створює інше, неоднозначне запитання.",
+            "id": "next",
+            "label": "Корисна наступна перевірка",
+            "options": [
+              { "label": "Змінити всі умови й назвати це підтвердженням", "value": "change-all" },
+              { "label": "Повторити однакові запуски й записати розкид", "value": "repeat" }
+            ]
+          }
+        ],
+        "notice": "Оригінальна навчальна вправа без таймера. Джерела пояснюють поняття; це не звіт про справжній захід спільноти й не підтвердження практичної кваліфікації.",
+        "records": [
+          {
+            "id": "plan",
+            "lines": [
+              "План A одночасно змінює візок, висоту запуску й килимок. План B зберігає візок, масу, похилу площину, місце відпускання й метод вимірювання та змінює лише килимок."
+            ],
+            "title": "Два запропоновані досліди"
+          },
+          {
+            "id": "results",
+            "lines": [
+              "У цьому прикладі три однакові запуски дали 80, 82 і 81 см на килимку A та 49, 51 і 50 см на B. Інших візків, поверхонь чи умов запуску не досліджували."
+            ],
+            "title": "Вигадані спостереження"
+          }
+        ],
+        "role": "Учасник виставки",
+        "success": "Виставка показує контрольоване порівняння, спостережений діапазон і обмежений висновок. Пояснення відокремлено від доказів і визначено корисну наступну перевірку.",
+        "title": "Оберіть змістовне порівняння"
+      }
+    },
+    "missionId": "victory-drones-ideas-understanding-06",
+    "notice": "An original untimed learning fixture. Sources explain the concepts; this is not an account of a real community event or a practical qualification.",
+    "records": [
+      {
+        "id": "plan",
+        "lines": [
+          "Plan A changes the cart, release height and mat together. Plan B keeps the same cart, mass, ramp, release point and measurement method, changing only the mat."
+        ],
+        "title": "Two proposed trials"
+      },
+      {
+        "id": "results",
+        "lines": [
+          "For this fixture, three matched releases travel 80, 82 and 81 cm on mat A, and 49, 51 and 50 cm on mat B. No other cart, surface or release condition was tested."
+        ],
+        "title": "Invented observations"
+      }
+    ],
+    "revision": "1",
+    "role": "Exhibit participant",
+    "sourceReviewedAt": "2026-09-28",
+    "sources": [
+      {
+        "title": "NASA Space Place — Scientific method",
+        "url": "https://spaceplace.nasa.gov/review/science-fair/scientific-method.html"
+      },
+      {
+        "title": "NASA Glenn — Newton’s Laws of Motion",
+        "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/"
+      }
+    ],
+    "success": "The exhibit now shows a controlled comparison, its observed range and a limited conclusion. It keeps explanation separate from evidence and leaves a useful next test.",
+    "title": "Choose an informative comparison"
+  }
+]

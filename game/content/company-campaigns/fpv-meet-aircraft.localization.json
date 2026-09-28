@@ -38,7 +38,7 @@
         "name": { "en": "The Frame", "uk": "Рама" }
       },
       "id": "fpv-meet-aircraft-01",
-      "identity": "1ed8ab5cc4995317",
+      "identity": "72e8ca91b4b4f888",
       "kind": "mission"
     },
     {
@@ -70,7 +70,7 @@
         "name": { "en": "Motion Makers", "uk": "Джерела руху" }
       },
       "id": "fpv-meet-aircraft-02",
-      "identity": "813002b735c0ac91",
+      "identity": "4fafc8b19fcf4ef0",
       "kind": "mission"
     },
     {
@@ -102,7 +102,7 @@
         "name": { "en": "The ESC", "uk": "Регулятор ESC" }
       },
       "id": "fpv-meet-aircraft-03",
-      "identity": "6521f1776d1779bc",
+      "identity": "0dfe195aaffa2ea7",
       "kind": "mission"
     },
     {
@@ -134,7 +134,7 @@
         "name": { "en": "The Flight Controller", "uk": "Польотний контролер" }
       },
       "id": "fpv-meet-aircraft-04",
-      "identity": "0ad1839833b8f7ce",
+      "identity": "b98b55a38aab9709",
       "kind": "mission"
     },
     {
@@ -166,7 +166,7 @@
         "name": { "en": "Two Different Links", "uk": "Два різні канали" }
       },
       "id": "fpv-meet-aircraft-05",
-      "identity": "91ce18a29e372625",
+      "identity": "47f95ad32ea22f32",
       "kind": "mission"
     },
     {
@@ -198,7 +198,7 @@
         "name": { "en": "The Whole Aircraft", "uk": "Цілий дрон" }
       },
       "id": "fpv-meet-aircraft-06",
-      "identity": "657751a2c4afd30f",
+      "identity": "762cc7dd4c144106",
       "kind": "mission"
     }
   ],

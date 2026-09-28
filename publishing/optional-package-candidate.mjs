@@ -71,6 +71,14 @@ export function createOptionalPackageCandidate({ built, version, sourceRevision,
       ...editionDescriptor(license.path, runtime.get(license.path)),
     })),
   });
+  if (
+    selectedSource.size + 1 > policy.limits.files ||
+    [...selectedSource.values()].reduce(
+      (sum, bytes) => sum + bytes.length,
+      sourceInventory.length,
+    ) > policy.limits.bytes
+  )
+    throw new Error('Complete optional source output exceeds package limits.');
   const files = new Map([
     [`manifest-optional-${id}.json`, manifestBytes],
     [`distribution-optional-${id}.zip`, built.zip],

@@ -6,6 +6,7 @@ import { editDiscoveryExploration } from '../content-design/discovery.mjs';
 import { mountLocalExplorationPreview } from './exploration-image-preview.mjs';
 import { createExplorationDiagramEditor } from './exploration-diagram-editor.mjs';
 import { createExplorationExample } from './exploration-example.mjs';
+import { createExplorationGuidedEditor } from './exploration-guided-editor.mjs';
 
 /** Reusable authoring panel for Level/Campaign Studio and Company Studio.
  * Edits are explicit drafts; shared viewer previews never receive a store. */
@@ -85,16 +86,31 @@ export function createExplorationEditor({
     setDraft(value) {
       stopPreview();
       editor.value = JSON.stringify(value, null, 2);
+      guided.sync();
     },
     getLocale,
   });
-  editor.onchange = () => diagram.sync();
+  const guided = createExplorationGuidedEditor({
+    container: root,
+    getDraft: read,
+    setDraft(value) {
+      stopPreview();
+      editor.value = JSON.stringify(value, null, 2);
+      diagram.sync();
+    },
+    getLocale,
+  });
+  editor.onchange = () => {
+    diagram.sync();
+    guided.sync();
+  };
   function load() {
     stopPreview();
     const reward = getRewards().find((item) => item.id === select.value),
       payload = reward?.payloads.find((item) => item.type === 'exploration');
     editor.value = payload ? JSON.stringify(payload, null, 2) : '';
     diagram.sync();
+    guided.sync();
     status.textContent = tr(payload ? 'loaded' : 'start');
   }
   button('load', load);
@@ -102,6 +118,7 @@ export function createExplorationEditor({
     stopPreview();
     editor.value = JSON.stringify(createExplorationExample(), null, 2);
     diagram.sync();
+    guided.sync();
     status.textContent = tr('exampleReady');
   });
   button('preview', () => {
@@ -160,6 +177,7 @@ export function createExplorationEditor({
       disposed = true;
       stopPreview();
       diagram.dispose();
+      guided.dispose();
       select.onchange = null;
       editor.onchange = null;
       controls.forEach((node) => {
