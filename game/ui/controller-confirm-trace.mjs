@@ -44,20 +44,27 @@ export function attachControllerConfirmTrace({
   const entries = [],
     listeners = [];
   let panel = null,
+    contextOutput = null,
     output = null,
     active = false,
     destroyed = false,
-    lastFrameSignature = null;
+    lastFrameSignature = null,
+    context = {};
 
   const renderOutput = () => {
     if (!output) return;
+    const devices = [...(context.raw || [])].sort(
+      (left, right) =>
+        Number(right.index === context.selected) - Number(left.index === context.selected),
+    );
+    contextOutput.textContent = `selected:${context.selected ?? '-'} identity:${context.identity || '-'} generation:${context.generation ?? '-'} · focus:${context.focus || '-'} hasFocus:${context.hasFocus ?? '-'} visibility:${context.visibility || '-'} fullscreen:${context.fullscreen ?? '-'} · devices:${devices.length ? devices.map((value) => `${value.index} ${value.id || '-'} mapping:${value.mapping || '-'} buttons:${value.buttonCount ?? '-'}`).join('; ') : '-'}`;
     localizedText(output, () =>
       entries.length
         ? entries
             .slice(-24)
             .map(
               (item) =>
-                `${item.t ?? '-'} gp:${item.gp ?? '-'} [${item.buttons.join(',') || '-'}] ${item.phase || '-'} ${item.event || '-'}${item.source ? ` from:${item.source}` : ''}${item.native ? ` native:${item.native}` : ''}${item.pointer ? ` pointer:${item.pointer}` : ''}${item.target ? ` target:${item.target}` : ''}${item.winner ? ` winner:${item.winner}` : ''}${item.reason ? ` reason:${item.reason}` : ''}${item.selected !== null ? ` selected:${item.selected}/${item.generation ?? '-'}` : ''}${item.raw.length ? ` pads:${item.raw.map((value) => `${value.index}:${value.buttons.join(',') || '-'}`).join(';')}` : ''}${item.interval !== null ? ` dt:${item.interval}` : ''}${item.focus ? ` focus:${item.focus}` : ''}${item.samples > 1 ? ` ×${item.samples}` : ''}`,
+                `${item.t ?? '-'} gp:${item.gp ?? '-'} [${item.buttons.join(',') || '-'}] ${item.phase || '-'} ${item.event || '-'}${item.source ? ` from:${item.source}` : ''}${item.native ? ` native:${item.native}` : ''}${item.trusted !== undefined ? ` trusted:${item.trusted}` : ''}${item.prevented !== undefined ? ` prevented:${item.prevented}` : ''}${item.pointer ? ` pointer:${item.pointer}` : ''}${item.target ? ` target:${item.target}` : ''}${item.winner ? ` winner:${item.winner}` : ''}${item.reason ? ` reason:${item.reason}` : ''}${item.selected !== null ? ` selected:${item.selected}/${item.generation ?? '-'}` : ''}${item.raw.length ? ` pads:${item.raw.map((value) => `${value.index}:${value.buttons.join(',') || '-'}`).join(';')}` : ''}${item.interval !== null ? ` dt:${item.interval}` : ''}${item.focus ? ` focus:${item.focus}` : ''}${item.samples > 1 ? ` ×${item.samples}` : ''}`,
             )
             .join('\n')
         : t('interface:controller.confirmTrace.waiting'),
@@ -104,6 +111,17 @@ export function attachControllerConfirmTrace({
       samples: 1,
     };
     const sampled = entry.event === 'frame' || entry.event === 'confirm-sample';
+    for (const [input, field] of [
+      ['selectedGamepadIndex', 'selected'],
+      ['selectedGamepadIdentity', 'identity'],
+      ['selectedGamepadGeneration', 'generation'],
+      ['rawGamepads', 'raw'],
+      ['focusTargetId', 'focus'],
+      ['visibilityState', 'visibility'],
+      ['hasFocus', 'hasFocus'],
+      ['fullscreen', 'fullscreen'],
+    ])
+      if (Object.hasOwn(value, input) && value[input] !== undefined) context[field] = entry[field];
     const signature = sampled ? frameSignature(entry) : null;
     const previous = entries.at(-1);
     if (signature && signature === lastFrameSignature && previous?.event === entry.event) {
@@ -149,8 +167,9 @@ export function attachControllerConfirmTrace({
       for (const remove of listeners.splice(0)) remove();
       entries.length = 0;
       lastFrameSignature = null;
+      context = {};
       panel?.remove();
-      panel = output = null;
+      panel = contextOutput = output = null;
       return;
     }
     if (doc?.body) {
@@ -161,8 +180,10 @@ export function attachControllerConfirmTrace({
       panel.setAttribute('aria-live', 'off');
       const title = doc.createElement('div');
       localizedText(title, () => t('interface:controller.confirmTrace.title', { version }));
+      contextOutput = doc.createElement('div');
+      contextOutput.id = 'controller-confirm-trace-context';
       output = doc.createElement('pre');
-      panel.append(title, output);
+      panel.append(title, contextOutput, output);
       syncHost();
       renderOutput();
     }
