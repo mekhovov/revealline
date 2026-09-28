@@ -2452,5 +2452,23 @@
     "publication": "public",
     "approved": true,
     "dependencies": []
+  },
+  {
+    "id": "reward-fpv-discovery-courier-v1",
+    "path": "game/editions/assets/discovery/reward-fpv-discovery-courier-v1.png",
+    "sha256": "06c674cbf50463df5e75c5f657f9b0279023b96edec244f56de0ae06ce641efe",
+    "bytes": 65737,
+    "approved": true,
+    "publication": "public",
+    "dependencies": []
+  },
+  {
+    "id": "reward-textile-discovery-shuttle-v1",
+    "path": "game/editions/assets/discovery/reward-textile-discovery-shuttle-v1.png",
+    "sha256": "d7075034d3b53761fa0ee5e696af619eb950af29c9af028fe0f73a5ada06b604",
+    "bytes": 65737,
+    "approved": true,
+    "publication": "public",
+    "dependencies": []
   }
 ]

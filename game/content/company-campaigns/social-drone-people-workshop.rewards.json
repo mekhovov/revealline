@@ -124,8 +124,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "social-drone-people-workshop-01", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "social-drone-people-workshop-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "social-drone-people-workshop-key-v1",
+        "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant."
+        },
+        "uk": {
+          "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника."
+        }
+      }
+    }
   },
   {
     "brandId": "social-drone-ua",
@@ -252,8 +266,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "social-drone-people-workshop-02", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "social-drone-people-workshop-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "social-drone-people-workshop-key-v1",
+        "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant."
+        },
+        "uk": {
+          "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника."
+        }
+      }
+    }
   },
   {
     "brandId": "social-drone-ua",
@@ -377,8 +405,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "social-drone-people-workshop-03", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "social-drone-people-workshop-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "social-drone-people-workshop-key-v1",
+        "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant."
+        },
+        "uk": {
+          "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника."
+        }
+      }
+    }
   },
   {
     "brandId": "social-drone-ua",
@@ -505,8 +547,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "social-drone-people-workshop-04", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "social-drone-people-workshop-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "social-drone-people-workshop-key-v1",
+        "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant."
+        },
+        "uk": {
+          "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника."
+        }
+      }
+    }
   },
   {
     "brandId": "social-drone-ua",
@@ -633,8 +689,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "social-drone-people-workshop-05", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "social-drone-people-workshop-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "social-drone-people-workshop-key-v1",
+        "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant."
+        },
+        "uk": {
+          "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника."
+        }
+      }
+    }
   },
   {
     "brandId": "social-drone-ua",
@@ -761,8 +831,22 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "social-drone-people-workshop-06", "kind": "mission" }
+    "revision": "4",
+    "scope": { "id": "social-drone-people-workshop-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "social-drone-people-workshop-key-v1",
+        "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant."
+        },
+        "uk": {
+          "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника."
+        }
+      }
+    }
   },
   {
     "brandId": "social-drone-ua",
@@ -983,7 +1067,21 @@
         }
       ]
     },
-    "revision": "3",
-    "scope": { "id": "social-drone-people-workshop", "kind": "campaign" }
+    "revision": "4",
+    "scope": { "id": "social-drone-people-workshop", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "social-drone-people-workshop-key-v1",
+        "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional civilian workshop atrium where volunteers share notebooks, sort learning materials and welcome a new participant."
+        },
+        "uk": {
+          "alt": "Уявний атріум цивільної майстерні, де волонтери діляться нотатками, впорядковують навчальні матеріали й вітають нового учасника."
+        }
+      }
+    }
   }
 ]
