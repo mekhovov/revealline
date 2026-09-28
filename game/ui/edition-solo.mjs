@@ -26,6 +26,8 @@ export async function mountEditionSoloUI({
   getJourneyRevision,
   getJourneyDurable,
   getReducedMotion,
+  audioMaster,
+  musicDucker,
   report,
   onMissions,
   onEditionChange,
@@ -260,6 +262,8 @@ export async function mountEditionSoloUI({
     getJourneyRevision,
     getJourneyDurable,
     getReducedMotion,
+    audioMaster,
+    musicDucker,
     previewSession,
   });
   const expedition = mountEditionExpedition({
