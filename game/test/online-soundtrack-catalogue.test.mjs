@@ -63,6 +63,14 @@ test('online catalogue creates a bounded immutable remote playback entry', () =>
   assert.equal(resolved.tracks[0].recordingModeEligible, false);
 });
 
+test('online catalogue preserves an exact original filename with leading whitespace', () => {
+  const value = resolveOnlineSoundtrackCatalogue({
+    ...catalogue,
+    tracks: [{ ...track, fileName: ' Song.mp3' }],
+  }).tracks[0];
+  assert.equal(value.fileName, ' Song.mp3');
+});
+
 test('online catalogue validates but excludes unlisted review recordings from game queues', () => {
   const publicTrack = {
     ...track,
@@ -233,6 +241,41 @@ test('online catalogue preserves uploader-confirmed unknown rights without forgi
   assert.deepEqual(resolved.collections, ['Creator album', 'Metal action']);
 });
 
+test('online catalogue normalizes accidental edge whitespace in source and credit metadata', () => {
+  const credit = 'Song by Creator. Rights confirmed by uploader.';
+  const source = 'https://creator.example/song';
+  const resolved = resolveOnlineSoundtrackCatalogue({
+    ...catalogue,
+    tracks: [
+      {
+        ...track,
+        source: `${source}\n`,
+        credit: `${credit}\n`,
+        license: 'Unknown — uploader-confirmed rights',
+        licenseURL: null,
+        rights: {
+          licenseId: 'UNKNOWN',
+          licenseVersion: null,
+          licenseURL: null,
+          rightsEvidenceURL: `${source}\n`,
+          attribution: `${credit}\n`,
+          derivativeChangeNotice: 'Exact submitted bytes retained.',
+          permissionBasis: 'uploader-confirmed-public-redistribution-and-web-playback',
+          shareAlike: {
+            required: null,
+            deliveryLicenseId: null,
+            deliveryLicenseVersion: null,
+            deliveryLicenseURL: null,
+          },
+        },
+      },
+    ],
+  }).tracks[0];
+  assert.equal(resolved.rights.source, source);
+  assert.equal(resolved.rights.credit, credit);
+  assert.equal(resolved.rights.evidence.evidence, source);
+});
+
 test('online catalogue requires compatible delivery terms for share-alike recordings', () => {
   const licenseURL = 'https://creativecommons.org/licenses/by-sa/4.0/',
     license = 'CC BY-SA 4.0 International',
@@ -368,8 +411,46 @@ test('online catalogue fetch is direct, credential-free and bounded', async () =
   );
 });
 
+test('online catalogue accepts a valid current-scale payload above the legacy byte limit', async () => {
+  const tracks = Array.from({ length: 260 }, (_, index) => {
+    const hash = index.toString(16).padStart(64, '0');
+    return {
+      ...track,
+      id: `creator.song-${index}`,
+      credit: `Song ${index} by Creator. ${'Attribution details. '.repeat(72)}`.trim(),
+      audio: {
+        ...track.audio,
+        path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${hash}.mp3`,
+        sha256: hash,
+      },
+    };
+  });
+  const value = {
+    ...catalogue,
+    counts: {
+      declaredTracks: tracks.length,
+      uniqueRecordings: tracks.length,
+      duplicateAliases: 0,
+      audioBytes: tracks.reduce((sum, item) => sum + item.audio.bytes, 0),
+    },
+    tracks,
+  };
+  const bytes = new TextEncoder().encode(JSON.stringify(value));
+  assert.ok(bytes.byteLength > 512 * 1024, 'fixture crosses the retired 512 KiB limit');
+  const resolved = await fetchOnlineSoundtrackCatalogue({
+    fetch: async (url) => ({
+      status: 200,
+      redirected: false,
+      url,
+      headers: new Headers({ 'content-length': String(bytes.byteLength) }),
+      body: new Response(bytes).body,
+    }),
+  });
+  assert.equal(resolved.tracks.length, 260);
+});
+
 test('online catalogue stops reading a streamed response at its byte limit', async () => {
-  const chunk = new Uint8Array(256 * 1024),
+  const chunk = new Uint8Array(1024 * 1024),
     source = [chunk, chunk, new Uint8Array(1), chunk];
   let reads = 0,
     cancelled = false;

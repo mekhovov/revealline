@@ -6,7 +6,10 @@ export const ONLINE_SOUNDTRACK_CATALOGUE_URL =
 const BASE_URL = 'https://mekhovov.github.io/revealline-soundtracks/';
 const BASE = new URL(BASE_URL);
 const FORMAT = 'revealline-public-soundtrack-catalogue.v1';
-const MAX_BYTES = 512 * 1024;
+// The canonical catalogue currently averages a little over 2 KiB per entry.
+// Keep the 512-recording schema ceiling usable while retaining a hard response
+// budget that is small enough to parse before any media request is attempted.
+const MAX_BYTES = 2 * 1024 * 1024;
 const HASH = /^[a-f0-9]{64}$/;
 const LICENSES = new Set([
   'https://creativecommons.org/publicdomain/zero/1.0/',
@@ -185,6 +188,23 @@ function text(value, label, maximum = 2048) {
   return value;
 }
 
+function normalizedText(value, label, maximum = 2048) {
+  return text(typeof value === 'string' ? value.trim() : value, label, maximum);
+}
+
+function originalFileName(value) {
+  catalogueRequired(
+    typeof value === 'string' &&
+      value.trim().length >= 1 &&
+      value.length <= 300 &&
+      !/[\u0000-\u001f\u007f]/.test(value),
+    'invalidField',
+    'Online soundtrack filename is invalid.',
+    { field: 'filename' },
+  );
+  return value;
+}
+
 function structuredRights(value, legacy, id) {
   const identity = LICENSE_IDENTITIES.get(legacy.licenseURL);
   if (legacy.licenseURL === null) {
@@ -207,16 +227,18 @@ function structuredRights(value, legacy, id) {
       ['required', 'deliveryLicenseId', 'deliveryLicenseVersion', 'deliveryLicenseURL'],
       'online soundtrack uploader-confirmed share-alike rights',
     );
+    const evidence = normalizedText(value?.rightsEvidenceURL, 'rights evidence URL');
+    const attribution = normalizedText(value?.attribution, 'rights attribution');
     catalogueRequired(
       value &&
         value.licenseId === 'UNKNOWN' &&
         value.licenseVersion === null &&
         value.licenseURL === null &&
-        value.rightsEvidenceURL === legacy.source &&
-        value.attribution === legacy.credit &&
+        evidence === legacy.source &&
+        attribution === legacy.credit &&
         value.permissionBasis === 'uploader-confirmed-public-redistribution-and-web-playback' &&
         value.shareAlike?.required === null &&
-        secureURL(value.rightsEvidenceURL),
+        secureURL(evidence),
       'rightsMismatch',
       `Online soundtrack uploader-confirmed rights differ from trusted metadata: ${id}.`,
       { id },
@@ -225,7 +247,7 @@ function structuredRights(value, legacy, id) {
       licenseId: 'UNKNOWN',
       licenseVersion: null,
       licenseURL: null,
-      evidence: value.rightsEvidenceURL,
+      evidence,
       attribution: legacy.credit,
       derivativeChangeNotice: text(value.derivativeChangeNotice, 'derivative change notice', 2048),
       permissionBasis: value.permissionBasis,
@@ -261,13 +283,15 @@ function structuredRights(value, legacy, id) {
     ],
     'online soundtrack rights',
   );
+  const evidence = normalizedText(value.rightsEvidenceURL, 'rights evidence URL');
+  const attribution = normalizedText(value.attribution, 'rights attribution');
   catalogueRequired(
     value.licenseId === identity.id &&
       value.licenseVersion === identity.version &&
       value.licenseURL === legacy.licenseURL &&
-      value.rightsEvidenceURL === legacy.source &&
-      value.attribution === legacy.credit &&
-      secureURL(value.rightsEvidenceURL),
+      evidence === legacy.source &&
+      attribution === legacy.credit &&
+      secureURL(evidence),
     'rightsMismatch',
     `Online soundtrack rights differ from the trusted recording metadata: ${id}.`,
     { id },
@@ -300,7 +324,7 @@ function structuredRights(value, legacy, id) {
     licenseId: identity.id,
     licenseVersion: identity.version,
     licenseURL: legacy.licenseURL,
-    evidence: value.rightsEvidenceURL,
+    evidence,
     attribution: legacy.credit,
     derivativeChangeNotice,
     shareAlike: Object.freeze({ ...shareAlike }),
@@ -361,8 +385,9 @@ function track(value, ids, hashes) {
     `Online soundtrack tags are invalid: ${id}.`,
     { id },
   );
+  const source = normalizedText(value.source, 'source');
   catalogueRequired(
-    secureURL(value.source),
+    secureURL(source),
     'sourceInvalid',
     `Online soundtrack source is invalid: ${id}.`,
     { id },
@@ -435,7 +460,7 @@ function track(value, ids, hashes) {
     `Online aliases are invalid: ${id}.`,
     { id },
   );
-  const credit = text(value.credit, 'credit');
+  const credit = normalizedText(value.credit, 'credit');
   const collection = text(value.collection, 'collection', 200);
   const collections = value.collections ?? [collection];
   catalogueRequired(
@@ -462,7 +487,7 @@ function track(value, ids, hashes) {
   );
   const rightsEvidence = structuredRights(
     value.rights,
-    { licenseURL: value.licenseURL, source: value.source, credit },
+    { licenseURL: value.licenseURL, source, credit },
     id,
   );
   const resolved = Object.freeze({
@@ -475,7 +500,7 @@ function track(value, ids, hashes) {
     tags: Object.freeze([...value.tags]),
     collection,
     collections: Object.freeze([...collections]),
-    fileName: text(value.fileName, 'filename', 300),
+    fileName: originalFileName(value.fileName),
     url: new URL(value.audio.path, BASE_URL).href,
     bytes: value.audio.bytes,
     sha256: value.audio.sha256,
@@ -483,7 +508,7 @@ function track(value, ids, hashes) {
     contentId: value.contentId,
     recordingModeEligible: value.recordingModeEligible,
     websites: Object.freeze([
-      Object.freeze({ label: 'Creator source', url: value.source }),
+      Object.freeze({ label: 'Creator source', url: source }),
       ...(value.licenseURL
         ? [Object.freeze({ label: value.license ?? 'Recording licence', url: value.licenseURL })]
         : []),
@@ -492,7 +517,7 @@ function track(value, ids, hashes) {
       kind: 'licensed',
       credit,
       license: value.license,
-      source: value.source,
+      source,
       evidence: rightsEvidence,
     }),
   });
