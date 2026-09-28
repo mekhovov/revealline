@@ -40,6 +40,10 @@ node --test game/test/touch-steering.test.mjs game/test/couch-shared-touch.test.
 The red run used the first three modules before changing runtime code. Original
 TAP output and its byte/hash inventory are retained in `red.tap`, `green.tap` and
 `evidence.json`. The added teardown test is only in the final green run.
+Node's original failure diagnostics contain whitespace-only lines in `red.tap`;
+the unrestricted diff whitespace check reports those ten preserved evidence
+lines. Source and documentation pass the check with the original TAP files
+excluded. The evidence was not normalized or rewritten to silence that check.
 
 Full suite, ordinary build, frozen-source qualification and actual public checks
 were **not run here**. The coordinator owns final version allocation and release
