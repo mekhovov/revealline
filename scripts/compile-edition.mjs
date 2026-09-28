@@ -1,3 +1,4 @@
+import { createRewardCosmeticRegistry, resolveRewardCosmetic } from '../game/rewards/cosmetics.mjs';
 import { inspectImageDataUrl } from '../game/content.mjs';
 import { rewardMediaReferences, inspectRewardMediaBytes } from '../game/rewards/media-format.mjs';
 import fs from 'node:fs/promises';
@@ -428,10 +429,16 @@ export async function compileEdition({
       verifiedArtwork.add(identity);
     }
   };
-  const verifyRewardMedia = (definitions, assets) => {
+  const verifyRewardMedia = (definitions, assets, presets, themes) => {
+    const registry = createRewardCosmeticRegistry({ presets, themes, assets });
     for (const reward of definitions)
       for (const payload of reward.payloads)
-        for (const { role, reference } of rewardMediaReferences(payload)) {
+        for (const { role, reference } of [
+          ...rewardMediaReferences(payload),
+          ...(payload.type === 'cosmetic' && resolveRewardCosmetic(registry, payload).image
+            ? [{ role: 'poster', reference: resolveRewardCosmetic(registry, payload).image }]
+            : []),
+        ]) {
           const asset = assets.find(
             (item) => item.id === reference.assetId && item.sha256 === reference.sha256,
           );
@@ -490,6 +497,8 @@ export async function compileEdition({
       verifyRewardMedia(
         Object.values(retained.bootstrap.rewards ?? {}).flat(),
         resolveEditionAssets(retained.bootstrap.catalog, { editionId: edition.id }),
+        retained.bootstrap.boot.presets,
+        retained.bootstrap.boot.themes.themes,
       );
       required(
         retained.snapshot.authoredPresentationSha256 === descriptor.id,
@@ -748,6 +757,8 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
           {
             descriptor,
             editionId: edition.id,
+            presets: readJSON(files.get(edition.boot.presets)),
+            themes: readJSON(files.get(edition.boot.themes)).themes,
             editionProject,
             lessons: selectedCampaigns.flatMap((campaign) =>
               campaign.lessonPath ? readJSON(files.get(campaign.lessonPath)) : [],
@@ -757,7 +768,12 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
         ),
       );
     validateCompletionRewards(rewards);
-    verifyRewardMedia(rewards, resolveEditionAssets(runtimeCatalog, { editionId: edition.id }));
+    verifyRewardMedia(
+      rewards,
+      resolveEditionAssets(runtimeCatalog, { editionId: edition.id }),
+      readJSON(files.get(edition.boot.presets)),
+      readJSON(files.get(edition.boot.themes)).themes,
+    );
     Object.values(edition.boot).forEach((file) => readJSON(files.get(file)));
     validateEditionPresentation({
       catalog: runtimeCatalog,

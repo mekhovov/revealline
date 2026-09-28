@@ -1,3 +1,9 @@
+import { mountRewardCosmetic } from './reward-cosmetic.mjs';
+import {
+  createRewardCosmeticRegistry,
+  projectEarnedRewardCosmetics,
+} from '../rewards/cosmetics.mjs';
+import { resolveEditionAssets } from '../editions/model.mjs';
 import { mountRewardKnowledge } from './reward-knowledge.mjs';
 import { getLocale, onLocaleChange, t } from '../i18n/index.mjs';
 import { required } from '../data-json.mjs';
@@ -38,9 +44,18 @@ export async function mountEditionRewards({
   getReducedMotion = () => false,
   audioMaster,
   musicDucker,
+  motionPreferences,
+  onCosmeticBodiesChange = () => {},
+  onChooseCosmetic = null,
+  onRecoverCosmetic = null,
 }) {
   if (!provider.rewards?.length)
-    return { refresh() {}, snapshot: () => ({ state: null, progress: [] }), dispose() {} };
+    return {
+      refresh() {},
+      snapshot: () => ({ state: null, progress: [] }),
+      cosmeticBodies: () => [],
+      dispose() {},
+    };
   const tr = (key, values) => t(`interface:completionRewards.${key}`, values);
   const localized = (value) => value.locales[getLocale()] ?? value.locales.en;
   const node = (tag, text, className) => {
@@ -63,6 +78,34 @@ export async function mountEditionRewards({
     return value;
   };
   const bindings = createRewardMissionBindings(provider.route.source);
+  const cosmeticRegistry = createRewardCosmeticRegistry({
+    presets: provider.bootstrap?.boot?.presets,
+    themes: provider.bootstrap?.boot?.themes?.themes ?? [],
+    assets: provider.bootstrap
+      ? resolveEditionAssets(provider.bootstrap.catalog, { editionId: provider.editionId })
+      : [],
+    publication: provider.selection.edition.publication,
+  });
+  let cosmeticState = null,
+    cosmeticProjection = { available: [], unavailable: [] },
+    cosmeticKey = '';
+  const updateCosmetics = () => {
+    if (cosmeticState === state) return;
+    cosmeticState = state;
+    cosmeticProjection = projectEarnedRewardCosmetics(state, {
+      registry: cosmeticRegistry,
+      editionId: provider.editionId,
+      brandId: provider.selection.brand.id,
+      campaignIds: provider.selection.edition.campaignIds,
+    });
+    const key = cosmeticProjection.available
+      .map((item) => item.recipeId + '@' + item.recipeRevision)
+      .join('/');
+    if (key !== cosmeticKey) {
+      cosmeticKey = key;
+      onCosmeticBodiesChange();
+    }
+  };
   let disposed = false,
     dirty = true,
     revision,
@@ -591,6 +634,31 @@ export async function mountEditionRewards({
               loadImage(imagePayload, figure, signal, visit),
           }),
         );
+      } else if (payload.type === 'cosmetic') {
+        explorations.add(
+          mountRewardCosmetic({
+            container: section,
+            payload,
+            registry: cosmeticRegistry,
+            provider,
+            locale: getLocale(),
+            window: win,
+            signal: mediaRequest.signal,
+            motionPreferences,
+            onChoose: onChooseCosmetic
+              ? () => {
+                  dialog.close();
+                  onChooseCosmetic(payload);
+                }
+              : null,
+            onRecover: onRecoverCosmetic
+              ? () => {
+                  dialog.close();
+                  onRecoverCosmetic(payload);
+                }
+              : null,
+          }),
+        );
       } else if (payload.type === 'audio' || payload.type === 'video') {
         explorations.add(
           mountRewardMedia({
@@ -724,6 +792,7 @@ export async function mountEditionRewards({
     }
     if (dirty) {
       state = store.snapshot();
+      updateCosmetics();
       dataTitle.textContent = tr('backupTitle');
       dataNote.textContent = tr('backupNote');
       exportButton.textContent = tr('export');
@@ -749,6 +818,7 @@ export async function mountEditionRewards({
     // Read-only projection for the expedition selector. Retained promises, rather
     // than newly published conditions, remain the player's finish line.
     snapshot: () => ({ state, progress }),
+    cosmeticBodies: () => cosmeticProjection.available.map((item) => item.recipeId),
     dispose() {
       disposed = true;
       importVisit++;

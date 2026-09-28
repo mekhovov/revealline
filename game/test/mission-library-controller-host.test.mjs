@@ -38,7 +38,7 @@ class JourneyPicture {
   }
 }
 
-async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
+async function host(t, mode, { fetchResponse, defaultEntry = false, goalStorage } = {}) {
   // Native SUMMARY activation is the only missing browser default modeled here.
   // Real host routing, gamepad polling, navigation and callbacks stay installed.
   const click = Element.prototype.click;
@@ -79,6 +79,7 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
       titleScreen: true,
       search: defaultEntry ? '' : '?journey=legacy',
       previewStorage: session,
+      ...(goalStorage ? { storage: goalStorage } : {}),
       readPads: () => pads,
       assetIndexedDB: indexedDB,
       ...(defaultEntry
@@ -98,7 +99,7 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
       ...(defaultEntry ? { href: 'http://localhost/game/couch/' } : {}),
       initialLevel: null,
       previewStorage: session,
-      storage: memoryStorage(),
+      storage: goalStorage ?? memoryStorage(),
       lockManager: { request: async (_key, _options, work) => work({}) },
       assetDatabase: indexedDB,
       fetchResponse: async (path) => {
@@ -124,10 +125,14 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
       returnStorage: session,
       nativeFocus: true,
       nativeVisibility: true,
+      ...(goalStorage
+        ? { beforeImport: ({ install }) => install('localStorage', { value: goalStorage }) }
+        : {}),
       ...(defaultEntry
         ? {
             href: 'http://localhost/game/couch/relay-rescue.html',
             beforeImport({ install }) {
+              if (goalStorage) install('localStorage', { value: goalStorage });
               const BaseImage = globalThis.Image,
                 actorFetch = globalThis.fetch;
               install('Image', {
@@ -457,4 +462,32 @@ for (const mode of ['solo', 'versus', 'team'])
       assert.equal(p.$('coop-menu').hidden, false, 'The Team lobby remains open, not a live run.');
       assert.deepEqual(p.visits, []);
     } else assert.notEqual(snapshot().state, 'running');
+  });
+
+for (const mode of ['solo', 'versus', 'team'])
+  test(`${mode} actual controller pins, finds and clears a goal without launching or changing its paused attempt`, async (t) => {
+    const goalStorage = memoryStorage();
+    const { p, pulse, reach, snapshot } = await host(t, mode, { goalStorage });
+    reach(p.$('journey-search-clear'));
+    pulse(0);
+    const before = snapshot();
+    assert.equal(p.$('journey-goal-pin').disabled, false);
+    reach(p.$('journey-goal-pin'));
+    pulse(0);
+    const key = `revealline.mission-goal.v1.default.${mode}`;
+    const stored = JSON.parse(goalStorage.getItem(key));
+    assert.ok(stored.missionId);
+    assert.equal(p.$('journey-chooser').open, true);
+    p.$('journey-search').value = 'no visible mission';
+    p.$('journey-search').emit('input');
+    reach(p.$('journey-goal-find'));
+    pulse(0);
+    assert.equal(p.doc.activeElement.dataset.missionId, stored.missionId);
+    assert.equal(p.$('journey-search').value, '');
+    assert.deepEqual(snapshot(), before);
+    reach(p.$('journey-goal-clear'));
+    pulse(0);
+    assert.equal(JSON.parse(goalStorage.getItem(key)).missionId, null);
+    assert.equal(p.$('journey-goal-find').disabled, true);
+    assert.deepEqual(snapshot(), before);
   });
