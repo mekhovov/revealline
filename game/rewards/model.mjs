@@ -7,10 +7,28 @@ export const COMPLETION_REWARD_FORMAT = 'revealline-completion-reward.v1';
 export const EARNED_REWARD_FORMAT = 'revealline-earned-reward.v1';
 export const REWARD_STATE_FORMAT = 'revealline-reward-state.v1';
 
+// Only outputs created here may skip a boundary validation. A frozen caller
+// object (including a structured clone of an output) is not trusted.
+const ownedDefinitions = new WeakSet(),
+  ownedDefinitionLists = new WeakSet(),
+  ownedEvidence = new WeakSet(),
+  ownedReceipts = new WeakSet(),
+  ownedStates = new WeakSet(),
+  frozenOutputs = new WeakSet(),
+  definitionIdentities = new WeakMap();
+const definitionListLimits = { maxBytes: 8 * 1024 * 1024, maxNodes: 500000, maxArray: 512 };
+const stateLimits = { maxBytes: 16 * 1024 * 1024, maxNodes: 1000000, maxArray: 512 };
+const receiptLimits = { maxBytes: 256 * 1024, maxNodes: 20000, maxArray: 512 };
+const remember = (set, value) => {
+  freeze(value);
+  set.add(value);
+  return value;
+};
 const freeze = (value) => {
-  if (value && typeof value === 'object') {
+  if (value && typeof value === 'object' && !frozenOutputs.has(value)) {
     Object.values(value).forEach(freeze);
     Object.freeze(value);
+    frozenOutputs.add(value);
   }
   return value;
 };
@@ -198,6 +216,7 @@ function masteryRequirement(value) {
 
 /** Data-only authoring sidecar. Compilation separately verifies selected campaign/media ownership. */
 export function validateCompletionReward(input) {
+  if (ownedDefinitions.has(input)) return input;
   const value = boundedJSON(input, { maxBytes: 65536, maxNodes: 8192, maxArray: 256 });
   exactKeys(
     value,
@@ -286,19 +305,23 @@ export function validateCompletionReward(input) {
       'Reward teaser artwork must be separate from earned payload media.',
     );
   }
-  return freeze(value);
+  return remember(ownedDefinitions, value);
 }
 
 export function validateCompletionRewards(input) {
-  const value = boundedJSON(input, { maxBytes: 8 * 1024 * 1024, maxNodes: 500000, maxArray: 512 });
+  if (ownedDefinitionLists.has(input)) return input;
+  const value = boundedJSON(input, definitionListLimits);
   array(value, 512, 'completion rewards');
   const definitions = value.map(validateCompletionReward);
   required(unique(definitions.map((item) => item.id)), 'Duplicate completion reward ID.');
-  return freeze(definitions);
+  return remember(ownedDefinitionLists, definitions);
 }
 
 export function completionRewardIdentity(input) {
-  return dataIdentity(validateCompletionReward(input));
+  const definition = validateCompletionReward(input);
+  if (!definitionIdentities.has(definition))
+    definitionIdentities.set(definition, dataIdentity(definition));
+  return definitionIdentities.get(definition);
 }
 
 export function completionRewardAssetReferences(input) {
@@ -330,6 +353,7 @@ function acceptedClear(clear) {
 const clearIdentity = (clear) => JSON.stringify([clear.runId, clear.gameplayId, clear.difficulty]);
 
 function evidence(input) {
+  if (ownedEvidence.has(input)) return input;
   const value = boundedJSON(input, { maxBytes: 2 * 1024 * 1024, maxNodes: 100000, maxArray: 4096 });
   exactKeys(
     value,
@@ -381,7 +405,7 @@ function evidence(input) {
     masteryRequirement(reference);
     required(text(runId, 256), 'Invalid accepted mastery run ID.');
   }
-  return value;
+  return remember(ownedEvidence, value);
 }
 
 const sameFields = (wanted, actual) =>
@@ -444,7 +468,7 @@ export function projectRewardProgress(input, context) {
   const all = [...missions, ...learning, ...mastery];
   return freeze({
     rewardId: definition.id,
-    definitionIdentity: dataIdentity(definition),
+    definitionIdentity: completionRewardIdentity(definition),
     available,
     eligible: available && all.every((item) => item.complete),
     completed: all.filter((item) => item.complete).length,
@@ -478,7 +502,14 @@ function retainedEvidence(definition, context) {
 }
 
 export function validateEarnedRewardReceipt(input, { editionId } = {}) {
-  const value = boundedJSON(input, { maxBytes: 256 * 1024, maxNodes: 20000, maxArray: 512 });
+  if (ownedReceipts.has(input)) {
+    required(
+      editionId === undefined || input.editionId === editionId,
+      'Reward receipt belongs to another edition.',
+    );
+    return input;
+  }
+  const value = boundedJSON(input, receiptLimits);
   exactKeys(
     value,
     ['format', 'editionId', 'definition', 'definitionIdentity', 'evidence'],
@@ -494,7 +525,7 @@ export function validateEarnedRewardReceipt(input, { editionId } = {}) {
   );
   value.definition = validateCompletionReward(value.definition);
   required(
-    value.definitionIdentity === dataIdentity(value.definition),
+    value.definitionIdentity === completionRewardIdentity(value.definition),
     'Earned reward definition identity does not match.',
   );
   value.evidence = evidence(value.evidence);
@@ -507,12 +538,12 @@ export function validateEarnedRewardReceipt(input, { editionId } = {}) {
       projectRewardProgress(value.definition, value.evidence).eligible,
     'Earned reward evidence does not satisfy its requirements.',
   );
-  return freeze(value);
+  return remember(ownedReceipts, value);
 }
 
 export function createRewardState(editionId) {
   required(stableId(editionId), 'Invalid reward state edition.');
-  return freeze({
+  return remember(ownedStates, {
     format: REWARD_STATE_FORMAT,
     editionId,
     promises: [],
@@ -522,11 +553,14 @@ export function createRewardState(editionId) {
 }
 
 export function validateRewardState(input, { editionId } = {}) {
-  const value = boundedJSON(input, {
-    maxBytes: 16 * 1024 * 1024,
-    maxNodes: 1000000,
-    maxArray: 512,
-  });
+  if (ownedStates.has(input)) {
+    required(
+      editionId === undefined || input.editionId === editionId,
+      'Reward state belongs to another edition.',
+    );
+    return input;
+  }
+  const value = boundedJSON(input, stateLimits);
   exactKeys(value, ['format', 'editionId', 'promises', 'receipts', 'acknowledged'], 'reward state');
   required(
     value.format === REWARD_STATE_FORMAT && stableId(value.editionId),
@@ -554,7 +588,8 @@ export function validateRewardState(input, { editionId } = {}) {
   for (const receipt of value.receipts)
     required(
       promises.has(receipt.definition.id) &&
-        dataIdentity(promises.get(receipt.definition.id)) === receipt.definitionIdentity,
+        completionRewardIdentity(promises.get(receipt.definition.id)) ===
+          receipt.definitionIdentity,
       'Earned reward must match its retained promise.',
     );
   ids(value.acknowledged, 512, 'acknowledged rewards');
@@ -564,7 +599,40 @@ export function validateRewardState(input, { editionId } = {}) {
     ),
     'Cannot acknowledge an unearned reward.',
   );
-  return freeze(value);
+  return remember(ownedStates, value);
+}
+
+// These private compositions preserve validated subtree ownership. Aggregate
+// parser limits still apply, including the separate promise-list budget.
+function composeState(editionId, promises, receipts, acknowledged) {
+  required(
+    promises.every((item) => ownedDefinitions.has(item)),
+    'Unvalidated reward promise.',
+  );
+  required(
+    receipts.every((item) => ownedReceipts.has(item)),
+    'Unvalidated reward receipt.',
+  );
+  if (!ownedDefinitionLists.has(promises)) boundedJSON(promises, definitionListLimits);
+  const candidate = { format: REWARD_STATE_FORMAT, editionId, promises, receipts, acknowledged };
+  boundedJSON(candidate, stateLimits);
+  // All callers preserve validated edition, unique IDs, receipt/promise identity
+  // and acknowledgement membership; no external graph reaches this constructor.
+  remember(ownedDefinitionLists, promises);
+  return remember(ownedStates, candidate);
+}
+
+function composeReceipt(definition, accepted) {
+  const candidate = {
+    format: EARNED_REWARD_FORMAT,
+    editionId: accepted.editionId,
+    definition,
+    definitionIdentity: completionRewardIdentity(definition),
+    evidence: evidence(retainedEvidence(definition, accepted)),
+  };
+  boundedJSON(candidate, receiptLimits);
+  // Called only after projectRewardProgress accepted this exact evidence.
+  return remember(ownedReceipts, candidate);
 }
 
 /** Call with a campaign's definitions when its promise is first shown/started; older promises win. */
@@ -588,24 +656,20 @@ export function reconcileEarnedRewards(
     const current = projectRewardProgress(definition, accepted);
     progress.push(current);
     if (!current.eligible || receipts.has(definition.id)) continue;
-    const receipt = validateEarnedRewardReceipt({
-      format: EARNED_REWARD_FORMAT,
-      editionId: accepted.editionId,
-      definition,
-      definitionIdentity: dataIdentity(definition),
-      evidence: retainedEvidence(definition, accepted),
-    });
+    const receipt = composeReceipt(definition, accepted);
     receipts.set(definition.id, receipt);
     granted.push(receipt);
   }
   return freeze({
-    state: validateRewardState({
-      format: REWARD_STATE_FORMAT,
-      editionId: accepted.editionId,
-      promises: [...promises.values()],
-      receipts: [...receipts.values()],
-      acknowledged: previous.acknowledged,
-    }),
+    state:
+      promises.size === previous.promises.length && !granted.length
+        ? previous
+        : composeState(
+            accepted.editionId,
+            promises.size === previous.promises.length ? previous.promises : [...promises.values()],
+            [...receipts.values()],
+            previous.acknowledged,
+          ),
     granted,
     progress,
   });
@@ -617,10 +681,11 @@ export function acknowledgeReward(input, rewardId) {
     state.receipts.some((receipt) => receipt.definition.id === rewardId),
     'Cannot acknowledge an unearned reward.',
   );
-  return validateRewardState({
-    ...state,
-    acknowledged: [...new Set([...state.acknowledged, rewardId])],
-  });
+  if (state.acknowledged.includes(rewardId)) return state;
+  return composeState(state.editionId, state.promises, state.receipts, [
+    ...state.acknowledged,
+    rewardId,
+  ]);
 }
 
 /** An explicit backup import must not silently discard a different promise or
@@ -643,7 +708,9 @@ export function mergeImportedRewardStates(currentInput, incomingInput, { edition
   const conflicts = incoming.promises
     .filter((definition) => {
       const existing = promises.get(definition.id);
-      return existing && dataIdentity(existing) !== dataIdentity(definition);
+      return (
+        existing && completionRewardIdentity(existing) !== completionRewardIdentity(definition)
+      );
     })
     .map((definition) => definition.id);
   if (conflicts.length) throw new RewardImportConflictError(conflicts);
@@ -661,17 +728,23 @@ export function mergeRewardStates(currentInput, incomingInput, { editionId } = {
   for (const receipt of incoming.receipts) {
     if (
       !receipts.has(receipt.definition.id) &&
-      dataIdentity(promises.get(receipt.definition.id)) === receipt.definitionIdentity
+      completionRewardIdentity(promises.get(receipt.definition.id)) === receipt.definitionIdentity
     )
       receipts.set(receipt.definition.id, receipt);
   }
-  return validateRewardState({
-    format: REWARD_STATE_FORMAT,
-    editionId: current.editionId,
-    promises: [...promises.values()],
-    receipts: [...receipts.values()],
-    acknowledged: [...new Set([...current.acknowledged, ...incoming.acknowledged])].filter((id) =>
-      receipts.has(id),
-    ),
-  });
+  const acknowledged = [...new Set([...current.acknowledged, ...incoming.acknowledged])].filter(
+    (id) => receipts.has(id),
+  );
+  if (
+    promises.size === current.promises.length &&
+    receipts.size === current.receipts.length &&
+    acknowledged.length === current.acknowledged.length
+  )
+    return current;
+  return composeState(
+    current.editionId,
+    promises.size === current.promises.length ? current.promises : [...promises.values()],
+    [...receipts.values()],
+    acknowledged,
+  );
 }
