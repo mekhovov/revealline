@@ -26,6 +26,8 @@ import {
   previewStudioReward,
   rebindStudioRewardLocalization,
 } from './reward-editor.mjs';
+import { discoveryCosmeticContext } from '../../game/content-design/discovery-cosmetics.mjs';
+import { mountLocalRewardCosmeticPreview } from '../../game/studio/reward-cosmetic-preview.mjs';
 import { createDiscoveryEditor } from '../../game/studio/discovery-editor.mjs';
 import { createRewardPrintPreview } from '../../game/studio/reward-print-preview.mjs';
 import { mountDiscoveryExploration } from '../../game/ui/discovery-exploration.mjs';
@@ -95,6 +97,7 @@ const selected = () => studioSelection(catalog, editionId);
 const selectedCampaign = () => catalog.campaigns.find((campaign) => campaign.id === campaignId);
 const discoveryEditor = createDiscoveryEditor({
   document,
+  getCosmeticSource: () => ({ catalog, editionId, files }),
   getSource: () => files.get(selectedCampaign().sourcePath),
   getMission: () =>
     files
@@ -663,6 +666,15 @@ function previewRewardDraft() {
           image.loading = 'lazy';
           panel.append(image);
         }
+      } else if (payload.type === 'cosmetic') {
+        rewardPreviewExplorations.push(
+          mountLocalRewardCosmeticPreview({
+            container: panel,
+            payload,
+            locale,
+            context: discoveryCosmeticContext({ catalog, editionId, files }),
+          }),
+        );
       } else if (['audio', 'video'].includes(payload.type)) {
         const section = node('section');
         panel.append(section);

@@ -15,6 +15,7 @@ import { showEditorFailure } from './editor-copy.mjs';
 import { createRewardPrintPreview } from './reward-print-preview.mjs';
 import { createExplorationEditor } from './exploration-editor.mjs';
 import { createResourceRewardEditor } from './resource-reward-editor.mjs';
+import { createCosmeticRewardEditor } from './cosmetic-reward-editor.mjs';
 import { createMasteryRewardEditor } from './mastery-reward-editor.mjs';
 
 /** Shared Level/Campaign and Company Studio controls. Import/preview never touch
@@ -26,6 +27,7 @@ export function createDiscoveryEditor({
   getMission,
   getRewards,
   applyRewards,
+  getCosmeticSource,
   apply,
 }) {
   const $ = (id) => document.getElementById(`discovery-${id}`);
@@ -44,7 +46,15 @@ export function createDiscoveryEditor({
         mediaPreviews.push(
           mountRewardKnowledge({ container, payload, locale: $('locale').value || 'en' }),
         );
-      else if (['audio', 'video'].includes(payload.type))
+      else if (payload.type === 'cosmetic') {
+        try {
+          mediaPreviews.push(cosmetics.preview(payload, container));
+        } catch (error) {
+          const note = document.createElement('p');
+          note.textContent = error.message;
+          container.append(note);
+        }
+      } else if (['audio', 'video'].includes(payload.type))
         mediaPreviews.push(
           mountLocalRewardMediaPreview({
             container,
@@ -97,6 +107,11 @@ export function createDiscoveryEditor({
   const resources = createResourceRewardEditor(sharedEditorOptions);
   const mastery = createMasteryRewardEditor(sharedEditorOptions);
   const profiles = createLearningProfileEditor(sharedEditorOptions);
+  const cosmetics = createCosmeticRewardEditor({
+    ...sharedEditorOptions,
+    getCosmeticSource,
+    window,
+  });
   const context = () =>
     dataIdentity({ source: getSource(), missionId: getMission()?.id, rewards: rewards() });
   const refValue = (ref) => (ref ? JSON.stringify({ id: ref.id, revision: ref.revision }) : '');
@@ -183,6 +198,7 @@ export function createDiscoveryEditor({
     resources.sync();
     mastery.sync();
     profiles.sync();
+    cosmetics.sync();
   }
   function command() {
     const finaleRewardRef = readRef($('finale'));
@@ -300,6 +316,7 @@ export function createDiscoveryEditor({
       resources.dispose();
       mastery.dispose();
       profiles.dispose();
+      cosmetics.dispose();
     },
   };
 }
