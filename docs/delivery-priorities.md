@@ -1,18 +1,23 @@
 # RevealLine delivery plan
 
 > **Current status:** use the
-> [completed and remaining delivery plan](plan-status-2026-09-23.md) for released
+> [completed and remaining delivery plan](plan-status-2026-09-28.md) for released
 > features, active promotion, prioritized remaining work and evidence limits.
 > Dated “current” versions and “next” queues below are historical. Default
 > Journey and unified-library delivery are complete; whole-game qualification
 > is not. Update the linked status register after each public acceptance.
+
 ## Character and game-feel priority — 28 September 2026
 
-The approved [character/game-feel plan](character-game-feel-plan.md) now prioritizes
-C0 live coverage, C1 attached rotor correction and C2 playable benchmarks while the
-single publisher finishes the input-release queue. The source candidates and
-remaining gates are recorded there; this does not mark them publicly accepted or
-replace existing release-history evidence.
+The latest user instruction puts **C3 core roster, C4 optional encounter variants,
+C5 edition/community cohorts and C6 authoring** first, in parallel, with their
+necessary C0/C1 checks. **C2 moves to the very end.** The
+[updated character plan](character-game-feel-plan.md#priority-revision-c3c6-first-c2-last)
+defines dependencies and the current [delivery checkpoint](plan-status-2026-09-28.md)
+separates implemented, queued and public work. Do not wait for C2’s human pilot
+or a publisher queue slot to develop independent C3–C6 slices. Required source,
+provenance, compatibility and visual checks still apply to each changed cohort;
+publication remains serialized with one owner.
 
 ## Historical integration checkpoint — 23 September 2026 (v0.85 delivery state)
 
@@ -35,7 +40,6 @@ and the7–11-hour B estimate.
 Earlier checkpoints below retain their original evidence and dates. Their “next”
 versions/order are historical, not the current publication queue. Full programme,
 human-balance, physical-device and comprehensive offline gates remain open.
-
 
 **Current public baseline, 20 September 2026: [v0.65.0 — imported-Team continuation](https://mekhovov.github.io/revealline/releases/v0.65.0/site/game/).** Its [scoped acceptance](../publishing/pages-controller/delivery/evidence/cross-mode-p07/v0650-public/README.md) covers imported pictures, earned-picture viewing, Next and Retry. Whole navigation, rewards, presentation and browser qualification remain incomplete.
 

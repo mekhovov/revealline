@@ -52,6 +52,8 @@ import { mountStudioGuide } from './guide.mjs';
 import { attachStudioAuditionLifecycle } from './audition-lifecycle.mjs';
 import { createStudioViewMemory, resolveStudioView } from './view-memory.mjs';
 import { mountStudioRotorControls } from './rotor-controls.mjs';
+import { mountArtworkCollectionPanel } from './artwork-panel.mjs';
+mountArtworkCollectionPanel({ document, window });
 const $ = (id) => document.getElementById(id);
 const node = (tag, value = '', className = '', hostRole = null) => {
   const el = document.createElement(tag);

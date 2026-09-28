@@ -294,6 +294,65 @@
         </div>
       </details>
     </header>
+    <details class="artwork-collection-panel">
+      <summary data-i18n="tools:studio.artwork.title">
+        Artwork collections · source candidates
+      </summary>
+      <p data-i18n="tools:studio.artwork.description">
+        Review a versioned artwork packet with its original files. Pixel art is the default;
+        photographic reveals need an explicit collection choice. This separate authoring draft does
+        not change the saved .rltheme workspace or approve runtime artwork.
+      </p>
+      <div class="artwork-collection-controls">
+        <label
+          ><span data-i18n="tools:studio.artwork.import"
+            >Import .rlart, or JSON and its original images together</span
+          >
+          <input
+            id="artwork-files"
+            type="file"
+            multiple
+            accept=".rlart,.json,image/png,image/jpeg,image/webp"
+          />
+        </label>
+        <label
+          ><span data-i18n="tools:studio.artwork.treatment">Collection treatment</span>
+          <select id="artwork-treatment" disabled>
+            <option value="pixel-art" data-i18n="tools:studio.artwork.pixelArt">Pixel art</option>
+            <option
+              value="photographic-reveals"
+              data-i18n="tools:studio.artwork.photographicReveals"
+            >
+              Photographic reveals
+            </option>
+          </select>
+        </label>
+        <label
+          ><span data-i18n="tools:studio.artwork.artwork">Artwork</span>
+          <select id="artwork-item" disabled></select
+        ></label>
+        <button
+          type="button"
+          id="artwork-preview-source"
+          disabled
+          data-i18n="tools:studio.artwork.showSource"
+        >
+          Show source
+        </button>
+        <button type="button" id="artwork-export" disabled data-i18n="tools:studio.artwork.export">
+          Export .rlart
+        </button>
+        <button type="button" id="artwork-cancel" disabled data-i18n="common:actions.cancel">
+          Cancel
+        </button>
+      </div>
+      <p id="artwork-status" role="status" data-i18n="tools:studio.artwork.choosePacket">
+        Choose a packet. Reference links are never fetched automatically.
+      </p>
+      <div id="artwork-preview" class="artwork-source-preview"></div>
+      <div id="artwork-provenance" class="artwork-source-provenance"></div>
+      <div id="artwork-download" hidden></div>
+    </details>
     <div
       class="studio-audio"
       role="group"
