@@ -34,6 +34,18 @@ export const SCOUT_COMPARISON_COHORTS = freezePresentation({
       'game/presentation/pixel-art.mjs',
     ],
   },
+  'reference-v5': {
+    directory: 'authoring/library/fpv-body-optical-candidates',
+    format: 'revealline.rotor-body-detail-candidates.v1',
+    assetRevision: 1,
+    roles: ['scout'],
+    sources: [
+      'game/presentation/rotor-body-optical-art.mjs',
+      'game/presentation/rotor-body-detail-art.mjs',
+      'game/presentation/rotor-candidate-art.mjs',
+      'game/presentation/pixel-art.mjs',
+    ],
+  },
 });
 const hash = async (bytes) =>
   Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), (byte) =>
