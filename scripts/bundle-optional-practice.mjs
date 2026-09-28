@@ -15,6 +15,7 @@ import {
 } from '../publishing/optional-package-admission.mjs';
 import { editionJSON, editionDescriptor } from '../publishing/edition-candidate.mjs';
 import { editionHash } from '../publishing/edition-zip.mjs';
+import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
 
 const runnerRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -25,7 +26,17 @@ export async function bundleOptionalPractice({
   root = runnerRoot,
   out,
   basePath = '/revealline/',
+  packageIds = ['civilian-flight'],
 } = {}) {
+  if (
+    !Array.isArray(packageIds) ||
+    !packageIds.length ||
+    packageIds.length > 8 ||
+    new Set(packageIds).size !== packageIds.length ||
+    packageIds.some((id) => typeof id !== 'string' || !Object.hasOwn(OPTIONAL_PACKAGE_POLICIES, id))
+  )
+    throw new Error('Optional selection must contain unique registered package IDs.');
+  packageIds = [...packageIds].sort();
   root = await fs.realpath(root);
   if (root !== (await fs.realpath(runnerRoot)))
     throw new Error(
@@ -56,28 +67,36 @@ export async function bundleOptionalPractice({
   const version = `v${JSON.parse(packageBytes).version}`;
   if (!/^v\d+\.\d+\.\d+$/.test(version))
     throw new Error('Optional candidates require a numeric release version.');
-  const build = async () => {
+  const build = async (packageId) => {
     const built = await buildOptionalPractice(root, {
       engineCommit: binding.sourceRevision,
       engineTree: binding.sourceTree,
       basePath,
+      packageId,
     });
     verifyCommittedInputs(built.inputs, tree);
     return createOptionalPackageCandidate({ built, version, ...binding });
   };
-  const first = await build(),
-    second = await build();
-  if (first.files.size !== second.files.size)
-    throw new Error('Optional build file count is not reproducible.');
-  for (const [name, bytes] of first.files)
-    if (!second.files.has(name) || !bytes.equals(second.files.get(name)))
-      throw new Error(`Optional artifact is not byte-reproducible: ${name}`);
-  const files = first.files;
+  const files = new Map(),
+    packages = [];
+  for (const packageId of packageIds) {
+    const first = await build(packageId),
+      second = await build(packageId);
+    if (first.files.size !== second.files.size)
+      throw new Error('Optional build file count is not reproducible.');
+    for (const [name, bytes] of first.files) {
+      if (!second.files.has(name) || !bytes.equals(second.files.get(name)))
+        throw new Error(`Optional artifact is not byte-reproducible: ${name}`);
+      if (files.has(name)) throw new Error('Optional artifacts must have unique paths.');
+      files.set(name, bytes);
+    }
+    packages.push(first.package);
+  }
   const envelope = {
     format: 'revealline-optional-packages.v1',
     version,
     ...binding,
-    packages: [first.package],
+    packages,
   };
   const admission = await validateOptionalPackageAdmission(envelope, {
     read: async (row) => files.get(row.path),
@@ -129,7 +148,7 @@ export async function bundleOptionalPractice({
     output,
     version,
     ...binding,
-    packageIds: [first.package.id],
+    packageIds,
     reproducibleBuilds: 2,
     committedInputsVerified: true,
     zipMembersVerified: true,
@@ -137,17 +156,24 @@ export async function bundleOptionalPractice({
   };
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
-  const [flag, out, baseFlag, basePath, ...extra] = process.argv.slice(2);
-  if (
-    flag !== '--out' ||
-    !out ||
-    extra.length ||
-    (baseFlag !== undefined && (baseFlag !== '--base-path' || !basePath))
-  )
+  const args = process.argv.slice(2),
+    options = {},
+    seen = new Set();
+  for (let index = 0; index < args.length; index += 2) {
+    const flag = args[index],
+      value = args[index + 1];
+    if (!['--out', '--base-path', '--packages'].includes(flag) || !value || seen.has(flag))
+      throw new Error('Invalid optional bundle arguments.');
+    seen.add(flag);
+    if (flag === '--out') options.out = value;
+    if (flag === '--base-path') options.basePath = value;
+    if (flag === '--packages') options.packageIds = value.split(',');
+  }
+  if (!options.out)
     throw new Error(
-      'Usage: node scripts/bundle-optional-practice.mjs --out NEW_DIRECTORY [--base-path /revealline/]',
+      'Usage: node scripts/bundle-optional-practice.mjs --out NEW_DIRECTORY [--base-path /revealline/] [--packages civilian-flight,civilian-fpv]',
     );
-  bundleOptionalPractice({ out, ...(basePath ? { basePath } : {}) })
+  bundleOptionalPractice(options)
     .then((result) => process.stdout.write(JSON.stringify(result, null, 2) + '\n'))
     .catch((error) => {
       process.stderr.write(`${error.message}\n`);

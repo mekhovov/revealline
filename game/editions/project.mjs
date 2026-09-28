@@ -93,6 +93,10 @@ export function validateEditionRewardBundle(
   } = {},
 ) {
   const rewards = validateCompletionRewards(source);
+  required(
+    rewards.every((reward) => !reward.requirements.practice?.length),
+    'Arcade editions do not admit optional practice requirements without a selected practice adapter.',
+  );
   const compiled = compileContentProject(project);
   required(
     descriptor && compiled.campaigns.some((campaign) => campaign.id === descriptor.id),
