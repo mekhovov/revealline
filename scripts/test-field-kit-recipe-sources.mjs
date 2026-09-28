@@ -5,6 +5,7 @@ import {
   fieldKitRecipeSources,
   verifyFieldKitAudioContinuationReview,
   verifyFieldKitCompanyAudioContinuationReview,
+  verifyFieldKitSteamDeckPresentationContinuationReview,
 } from './produce-field-kit-theme.mjs';
 
 test('every declared helper invalidates all sharing groups and leaves nonconsumers unchanged', async () => {
@@ -257,5 +258,25 @@ test('company startup audio review and both immutable predecessor byte strings f
     const changed = [current, prior, managed];
     changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
     assert.equal(verifyFieldKitCompanyAudioContinuationReview(...changed), false);
+  }
+});
+
+test('Steam Deck Confirm presentation continuation and all immutable predecessors fail closed', async () => {
+  const paths = [
+    'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json',
+    'docs/verification/actor-only-ui-continuation-2026-09-24/review.json',
+    'docs/verification/v0.131.0-localization-presentation-continuation/review.json',
+    'docs/verification/v0.141.7-company-startup-audio-continuation/review.json',
+    'docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json',
+    'docs/verification/v0.141.0-managed-media-audio-continuation/review.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitSteamDeckPresentationContinuationReview(...bytes), true);
+  for (let index = 0; index < bytes.length; index++) {
+    const changed = [...bytes];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitSteamDeckPresentationContinuationReview(...changed), false);
   }
 });
