@@ -12,8 +12,8 @@ const firstDiscoveryCampaigns = [
   'ukraine-threads',
   'fpv-meet-aircraft',
 ];
-export const CURRICULUM_PRESENTATION_REVISIONS = freezeDesign(
-  Object.fromEntries(
+export const CURRICULUM_PRESENTATION_REVISIONS = freezeDesign({
+  ...Object.fromEntries(
     firstDiscoveryCampaigns.map((id) => [
       id,
       {
@@ -28,7 +28,58 @@ export const CURRICULUM_PRESENTATION_REVISIONS = freezeDesign(
       },
     ]),
   ),
-);
+  'fpv-meet-aircraft': {
+    pack: '3',
+    finale: '3',
+    missionRewards: Object.fromEntries(
+      [1, 2, 3, 4, 5, 6].map((n) => [
+        `fpv-meet-aircraft-${String(n).padStart(2, '0')}`,
+        n === 1 ? '2' : '3',
+      ]),
+    ),
+  },
+  'ukraine-crimea-ornek': {
+    pack: '2',
+    finale: '2',
+    missionRewards: Object.fromEntries(
+      [2, 3, 4, 5, 6].map((n) => [`ukraine-crimea-ornek-${String(n).padStart(2, '0')}`, '2']),
+    ),
+  },
+  'ukraine-cities-symbols-time': {
+    pack: '2',
+    finale: '2',
+    missionRewards: Object.fromEntries(
+      [1, 2, 3, 4, 5, 6].map((n) => [
+        `ukraine-cities-symbols-time-${String(n).padStart(2, '0')}`,
+        '2',
+      ]),
+    ),
+  },
+  'fpv-parts-bench': {
+    pack: '2',
+    finale: '2',
+    missionRewards: Object.fromEntries(
+      [1, 2, 3, 4, 5, 6].map((n) => [`fpv-parts-bench-${String(n).padStart(2, '0')}`, '2']),
+    ),
+  },
+  'ukraine-everyday-culture': {
+    pack: '2',
+    finale: '2',
+    missionRewards: Object.fromEntries(
+      [1, 2, 3, 4, 5, 6].map((n) => [
+        `ukraine-everyday-culture-${String(n).padStart(2, '0')}`,
+        '2',
+      ]),
+    ),
+  },
+  'ukraine-voices-travel': {
+    pack: '2',
+    finale: '2',
+    missionRewards: Object.fromEntries(
+      [1, 2, 3, 4, 5, 6].map((n) => [`ukraine-voices-travel-${String(n).padStart(2, '0')}`, '2']),
+    ),
+  },
+});
 
 export function curriculumPresentationRevision(
   campaignId,

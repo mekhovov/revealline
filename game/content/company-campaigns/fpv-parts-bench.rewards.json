@@ -17,17 +17,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-parts-bench-key-v1",
-          "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265"
+          "assetId": "fpv-parts-bench-01-reveal-v1",
+          "sha256": "2c0956d41e954d3b4fb76004e035ae7aad18dfb197b9459195b51fb8e4085f25"
         },
         "id": "fpv-parts-bench-01-image",
         "locales": {
           "en": {
-            "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
+            "alt": "An oversized divided tray holds separate cardboard component shapes, blank record cards and a magnifying lens in a warm workshop.",
             "title": "A Tray of Questions"
           },
           "uk": {
-            "alt": "Виставкова картонна модель дрона без живлення стоїть серед лотків деталей, чистих карток запитань і трьох кольорових стрічок ролей.",
+            "alt": "Великий поділений лоток містить окремі картонні форми компонентів, чисті картки записів і лупу в теплій майстерні.",
             "title": "Лоток запитань"
           }
         },
@@ -80,7 +80,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-parts-bench-01", "kind": "mission" }
   },
   {
@@ -98,17 +98,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-parts-bench-key-v1",
-          "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265"
+          "assetId": "fpv-parts-bench-02-reveal-v1",
+          "sha256": "1e9510e6330ef432ee9078e25bffc9fe31d125daf0140f582b34f1faf16acb40"
         },
         "id": "fpv-parts-bench-02-image",
         "locales": {
           "en": {
-            "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
+            "alt": "A cardboard four-arm model with a blue nose rests on a round display stand beside a separate fixed amber direction arrow.",
             "title": "Which Way Is Forward?"
           },
           "uk": {
-            "alt": "Виставкова картонна модель дрона без живлення стоїть серед лотків деталей, чистих карток запитань і трьох кольорових стрічок ролей.",
+            "alt": "Картонна чотирипроменева модель із синім носом стоїть на круглому стенді поруч з окремою нерухомою бурштиновою стрілкою напрямку.",
             "title": "Де передня частина?"
           }
         },
@@ -161,7 +161,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-parts-bench-02", "kind": "mission" }
   },
   {
@@ -182,17 +182,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-parts-bench-key-v1",
-          "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265"
+          "assetId": "fpv-parts-bench-03-reveal-v1",
+          "sha256": "2154c75f9cfcd0acc3b6942c161a1af3dded9c8527e85829bd688a4db15a1fdc"
         },
         "id": "fpv-parts-bench-03-image",
         "locales": {
           "en": {
-            "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
+            "alt": "Grey, amber and blue fabric ribbons weave around three separate inert role stations on a broad workshop table.",
             "title": "Three Coloured Paths"
           },
           "uk": {
-            "alt": "Виставкова картонна модель дрона без живлення стоїть серед лотків деталей, чистих карток запитань і трьох кольорових стрічок ролей.",
+            "alt": "Сіра, бурштинова й синя тканинні стрічки огинають три окремі неактивні станції ролей на широкому столі майстерні.",
             "title": "Три кольорові шляхи"
           }
         },
@@ -245,7 +245,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-parts-bench-03", "kind": "mission" }
   },
   {
@@ -266,17 +266,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-parts-bench-key-v1",
-          "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265"
+          "assetId": "fpv-parts-bench-04-reveal-v1",
+          "sha256": "343176573a12f4697df0c3172d2e7cdeda49e04f5e9968dc7e568589934c50f8"
         },
         "id": "fpv-parts-bench-04-image",
         "locales": {
           "en": {
-            "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
+            "alt": "Two matching abstract cardboard connector silhouettes sit on separate cards beside an open blank manual and distinct record tabs.",
             "title": "Same Shape, Different Label"
           },
           "uk": {
-            "alt": "Виставкова картонна модель дрона без живлення стоїть серед лотків деталей, чистих карток запитань і трьох кольорових стрічок ролей.",
+            "alt": "Два однакові абстрактні картонні силуети роз’ємів лежать на окремих картках біля відкритої чистої інструкції та різних вкладок записів.",
             "title": "Схожа форма, інший напис"
           }
         },
@@ -329,7 +329,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-parts-bench-04", "kind": "mission" }
   },
   {
@@ -350,17 +350,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-parts-bench-key-v1",
-          "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265"
+          "assetId": "fpv-parts-bench-05-reveal-v1",
+          "sha256": "34da85b3bd3d4afea5290acff9538ebb95fae9a667f47eae3a7dc32e790eb4fc"
         },
         "id": "fpv-parts-bench-05-image",
         "locales": {
           "en": {
-            "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
+            "alt": "A large magnifier reveals a torn cardboard arm beside a loose blank tag, a worn record card and an inert model on the shelf.",
             "title": "Look Before the Next Step"
           },
           "uk": {
-            "alt": "Виставкова картонна модель дрона без живлення стоїть серед лотків деталей, чистих карток запитань і трьох кольорових стрічок ролей.",
+            "alt": "Велика лупа показує надрив картонного променя поруч із вільною чистою биркою, потертою карткою записів і неактивною моделлю на полиці.",
             "title": "Огляд перед наступним кроком"
           }
         },
@@ -413,7 +413,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-parts-bench-05", "kind": "mission" }
   },
   {
@@ -434,17 +434,17 @@
     "payloads": [
       {
         "asset": {
-          "assetId": "fpv-parts-bench-key-v1",
-          "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265"
+          "assetId": "fpv-parts-bench-06-reveal-v1",
+          "sha256": "de0f3074e9c6378ef75052407351e94ea100928f9c4fc7f9ab67541f8723de24"
         },
         "id": "fpv-parts-bench-06-image",
         "locales": {
           "en": {
-            "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
+            "alt": "A finished inert cardboard model and separate evidence cards form a welcoming handoff display with one unresolved question card.",
             "title": "The Model Handoff"
           },
           "uk": {
-            "alt": "Виставкова картонна модель дрона без живлення стоїть серед лотків деталей, чистих карток запитань і трьох кольорових стрічок ролей.",
+            "alt": "Завершений неактивний картонний макет і окремі картки доказів утворюють привітну експозицію передачі справ з одним невирішеним запитанням.",
             "title": "Передача моделі"
           }
         },
@@ -497,7 +497,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-parts-bench-06", "kind": "mission" }
   },
   {
@@ -548,17 +548,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-parts-bench-key-v1",
-          "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265"
+          "assetId": "fpv-parts-bench-01-reveal-v1",
+          "sha256": "2c0956d41e954d3b4fb76004e035ae7aad18dfb197b9459195b51fb8e4085f25"
         },
         "id": "fpv-parts-bench-01-image",
         "locales": {
           "en": {
-            "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
+            "alt": "An oversized divided tray holds separate cardboard component shapes, blank record cards and a magnifying lens in a warm workshop.",
             "title": "A Tray of Questions"
           },
           "uk": {
-            "alt": "Виставкова картонна модель дрона без живлення стоїть серед лотків деталей, чистих карток запитань і трьох кольорових стрічок ролей.",
+            "alt": "Великий поділений лоток містить окремі картонні форми компонентів, чисті картки записів і лупу в теплій майстерні.",
             "title": "Лоток запитань"
           }
         },
@@ -566,17 +566,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-parts-bench-key-v1",
-          "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265"
+          "assetId": "fpv-parts-bench-02-reveal-v1",
+          "sha256": "1e9510e6330ef432ee9078e25bffc9fe31d125daf0140f582b34f1faf16acb40"
         },
         "id": "fpv-parts-bench-02-image",
         "locales": {
           "en": {
-            "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
+            "alt": "A cardboard four-arm model with a blue nose rests on a round display stand beside a separate fixed amber direction arrow.",
             "title": "Which Way Is Forward?"
           },
           "uk": {
-            "alt": "Виставкова картонна модель дрона без живлення стоїть серед лотків деталей, чистих карток запитань і трьох кольорових стрічок ролей.",
+            "alt": "Картонна чотирипроменева модель із синім носом стоїть на круглому стенді поруч з окремою нерухомою бурштиновою стрілкою напрямку.",
             "title": "Де передня частина?"
           }
         },
@@ -584,17 +584,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-parts-bench-key-v1",
-          "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265"
+          "assetId": "fpv-parts-bench-03-reveal-v1",
+          "sha256": "2154c75f9cfcd0acc3b6942c161a1af3dded9c8527e85829bd688a4db15a1fdc"
         },
         "id": "fpv-parts-bench-03-image",
         "locales": {
           "en": {
-            "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
+            "alt": "Grey, amber and blue fabric ribbons weave around three separate inert role stations on a broad workshop table.",
             "title": "Three Coloured Paths"
           },
           "uk": {
-            "alt": "Виставкова картонна модель дрона без живлення стоїть серед лотків деталей, чистих карток запитань і трьох кольорових стрічок ролей.",
+            "alt": "Сіра, бурштинова й синя тканинні стрічки огинають три окремі неактивні станції ролей на широкому столі майстерні.",
             "title": "Три кольорові шляхи"
           }
         },
@@ -602,17 +602,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-parts-bench-key-v1",
-          "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265"
+          "assetId": "fpv-parts-bench-04-reveal-v1",
+          "sha256": "343176573a12f4697df0c3172d2e7cdeda49e04f5e9968dc7e568589934c50f8"
         },
         "id": "fpv-parts-bench-04-image",
         "locales": {
           "en": {
-            "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
+            "alt": "Two matching abstract cardboard connector silhouettes sit on separate cards beside an open blank manual and distinct record tabs.",
             "title": "Same Shape, Different Label"
           },
           "uk": {
-            "alt": "Виставкова картонна модель дрона без живлення стоїть серед лотків деталей, чистих карток запитань і трьох кольорових стрічок ролей.",
+            "alt": "Два однакові абстрактні картонні силуети роз’ємів лежать на окремих картках біля відкритої чистої інструкції та різних вкладок записів.",
             "title": "Схожа форма, інший напис"
           }
         },
@@ -620,17 +620,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-parts-bench-key-v1",
-          "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265"
+          "assetId": "fpv-parts-bench-05-reveal-v1",
+          "sha256": "34da85b3bd3d4afea5290acff9538ebb95fae9a667f47eae3a7dc32e790eb4fc"
         },
         "id": "fpv-parts-bench-05-image",
         "locales": {
           "en": {
-            "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
+            "alt": "A large magnifier reveals a torn cardboard arm beside a loose blank tag, a worn record card and an inert model on the shelf.",
             "title": "Look Before the Next Step"
           },
           "uk": {
-            "alt": "Виставкова картонна модель дрона без живлення стоїть серед лотків деталей, чистих карток запитань і трьох кольорових стрічок ролей.",
+            "alt": "Велика лупа показує надрив картонного променя поруч із вільною чистою биркою, потертою карткою записів і неактивною моделлю на полиці.",
             "title": "Огляд перед наступним кроком"
           }
         },
@@ -638,17 +638,17 @@
       },
       {
         "asset": {
-          "assetId": "fpv-parts-bench-key-v1",
-          "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265"
+          "assetId": "fpv-parts-bench-06-reveal-v1",
+          "sha256": "de0f3074e9c6378ef75052407351e94ea100928f9c4fc7f9ab67541f8723de24"
         },
         "id": "fpv-parts-bench-06-image",
         "locales": {
           "en": {
-            "alt": "An unpowered cardboard drone display model sits among component trays, blank question cards and three coloured role ribbons.",
+            "alt": "A finished inert cardboard model and separate evidence cards form a welcoming handoff display with one unresolved question card.",
             "title": "The Model Handoff"
           },
           "uk": {
-            "alt": "Виставкова картонна модель дрона без живлення стоїть серед лотків деталей, чистих карток запитань і трьох кольорових стрічок ролей.",
+            "alt": "Завершений неактивний картонний макет і окремі картки доказів утворюють привітну експозицію передачі справ з одним невирішеним запитанням.",
             "title": "Передача моделі"
           }
         },
@@ -719,7 +719,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "fpv-parts-bench", "kind": "campaign" }
   }
 ]
