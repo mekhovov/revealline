@@ -623,6 +623,33 @@ export function acknowledgeReward(input, rewardId) {
   });
 }
 
+/** An explicit backup import must not silently discard a different promise or
+ * earned payload. Keep this distinct from current-first background merging. */
+export class RewardImportConflictError extends Error {
+  constructor(rewardIds) {
+    super('The backup contains different discovery revisions. No discoveries were imported.');
+    this.name = 'RewardImportConflictError';
+    this.code = 'REWARD_IMPORT_CONFLICT';
+    this.rewardIds = Object.freeze([...rewardIds]);
+  }
+}
+
+export function mergeImportedRewardStates(currentInput, incomingInput, { editionId } = {}) {
+  const current = validateRewardState(currentInput, { editionId });
+  const incoming = validateRewardState(incomingInput, {
+    editionId: current.editionId,
+  });
+  const promises = new Map(current.promises.map((definition) => [definition.id, definition]));
+  const conflicts = incoming.promises
+    .filter((definition) => {
+      const existing = promises.get(definition.id);
+      return existing && dataIdentity(existing) !== dataIdentity(definition);
+    })
+    .map((definition) => definition.id);
+  if (conflicts.length) throw new RewardImportConflictError(conflicts);
+  return mergeRewardStates(current, incoming, { editionId: current.editionId });
+}
+
 /** Atomic store transactions supply their current value first; existing promises and pins win. */
 export function mergeRewardStates(currentInput, incomingInput, { editionId } = {}) {
   const current = validateRewardState(currentInput, { editionId });
