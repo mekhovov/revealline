@@ -538,8 +538,8 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
   const currentReviewPath =
-    'docs/verification/localization14-audio-continuation-2026-09-28/review.json';
-  const currentReviewSHA256 = '104e5cb33140537f9234fc26966d4a32f70927c89f1e4bfd1e3955432e1910da';
+    'docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json';
+  const currentReviewSHA256 = '0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'audio',
   ]);
@@ -1025,7 +1025,7 @@ test('localization continuation preserves exact main813 theme95 and appends only
   const oracle = JSON.parse(
     await fs.readFile(new URL('./fixtures/production-main813-fpv95.json', import.meta.url), 'utf8'),
   );
-  const current = await importThemeBundle(
+  const candidate = await importThemeBundle(
     new Blob([
       await fs.readFile(
         new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
@@ -1033,6 +1033,13 @@ test('localization continuation preserves exact main813 theme95 and appends only
     ]),
     { decodeImage: null },
   );
+  const prior96Oracle = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-localization14-fpv96.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const current = await reconstructPinnedProduction(prior96Oracle, candidate);
   const prior = await reconstructPinnedProduction(oracle, current);
   assert.equal(prior.document.revision, 95);
   assert.equal(prior.document.assets.length, 2566);
@@ -1068,6 +1075,61 @@ test('localization continuation preserves exact main813 theme95 and appends only
       .sort((a, b) => b.revision - a.revision)[0];
     assert.equal(old.revision, 47);
     assert.deepEqual(a.provenance.parent, { id: old.id, revision: 47 });
+    assert.deepEqual(a.recipe, old.recipe);
+    assert.deepEqual(a.file, old.file);
+  }
+});
+
+test('player readiness continuation preserves exact localization14 theme96 and appends only eight audio49 successors', async () => {
+  const oracle = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-localization14-fpv96.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const current = await importThemeBundle(
+    new Blob([
+      await fs.readFile(
+        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+      ),
+    ]),
+    { decodeImage: null },
+  );
+  const prior = await reconstructPinnedProduction(oracle, current);
+  assert.equal(prior.document.revision, 96);
+  assert.equal(prior.document.assets.length, 2574);
+  assert.equal(current.document.revision, 97);
+  assert.equal(current.document.assets.length, 2582);
+  validateThemeBundle(current.document, { previous: prior.document, expectedRevision: 96 });
+  for (const group of Object.keys(oracle.groups))
+    assert.deepEqual(
+      current.document[group].slice(0, oracle.groups[group].count),
+      prior.document[group],
+      group,
+    );
+  let payloadBytes = 0;
+  for (const [id, body] of prior.assets) {
+    const before = Buffer.from(await body.arrayBuffer());
+    payloadBytes += before.length;
+    assert.deepEqual(Buffer.from(await current.assets.get(id).arrayBuffer()), before, id);
+  }
+  assert.equal(payloadBytes, 4009342);
+  assert.equal(current.assets.size, 132);
+  const before = resolvePresentation(prior.document),
+    after = resolvePresentation(current.document);
+  for (const [slot, asset] of Object.entries(before.assets))
+    if (!slot.startsWith('audio.')) assert.deepEqual(after.assets[slot], asset, slot);
+  const added = current.document.assets.slice(2574);
+  assert.equal(added.length, 8);
+  for (const a of added) {
+    assert(a.id.startsWith('audio.'));
+    assert.equal(a.revision, 49);
+    assert.equal(a.quality.stage, 'reviewed');
+    const old = prior.document.assets
+      .filter((x) => x.id === a.id)
+      .sort((a, b) => b.revision - a.revision)[0];
+    assert.equal(old.revision, 48);
+    assert.deepEqual(a.provenance.parent, { id: old.id, revision: 48 });
     assert.deepEqual(a.recipe, old.recipe);
     assert.deepEqual(a.file, old.file);
   }

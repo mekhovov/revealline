@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   fieldKitRecipeSources,
+  verifyFieldKitPlayerReadinessAudioReview,
   verifyFieldKitLocalizationAudioReview,
   verifyFieldKitSteamDeckPresentationContinuationReview,
   verifyFieldKitMainBulkAudioReview,
@@ -385,4 +386,21 @@ test('localization audio continuation rejects either altered immutable review', 
     assert.equal(verifyFieldKitLocalizationAudioReview(...changed), false);
   }
   assert.equal(verifyFieldKitLocalizationAudioReview(bytes[1], bytes[0]), false);
+});
+
+test('player readiness audio continuation rejects either altered immutable review', async () => {
+  const paths = [
+    'docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json',
+    'docs/verification/localization14-audio-continuation-2026-09-28/review.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitPlayerReadinessAudioReview(...bytes), true);
+  for (let i = 0; i < bytes.length; i++) {
+    const changed = [...bytes];
+    changed[i] = Buffer.concat([changed[i], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitPlayerReadinessAudioReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitPlayerReadinessAudioReview(bytes[1], bytes[0]), false);
 });
