@@ -16,6 +16,7 @@ export async function verifyFlightPortability({ playwright, baseURL, output }) {
     'optional-practice/civilian-fpv/radio-profile.mjs',
     'optional-practice/civilian-fpv/catalogue.mjs',
     'optional-practice/civilian-fpv/demonstrations.mjs',
+    'game/data-json.mjs',
     'game/test/helpers/fpv-portability.mjs',
   ];
   const sources = await Promise.all(
