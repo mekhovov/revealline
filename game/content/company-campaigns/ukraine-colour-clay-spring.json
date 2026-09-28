@@ -85,7 +85,7 @@
       "band": 3,
       "discovery": {
         "exhibitLayout": "gallery",
-        "finaleRewardRef": { "id": "ukraine-colour-clay-spring-finale", "revision": "1" }
+        "finaleRewardRef": { "id": "ukraine-colour-clay-spring-finale", "revision": "2" }
       },
       "format": "CampaignDesignV1",
       "id": "ukraine-colour-clay-spring",
@@ -269,7 +269,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "ukraine-colour-clay-spring-01-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-colour-clay-spring-01-discovery", "revision": "2" },
         "routeDecision": "Close the shallow courtyard first or use the paired garden islands to cross into the long painted wing. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -341,7 +341,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "ukraine-colour-clay-spring-02-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-colour-clay-spring-02-discovery", "revision": "2" },
         "routeDecision": "Take the portrait alcove through its short return or secure the wide study hall before entering the narrow side gallery. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -413,7 +413,7 @@
           "travelling-trail-impact",
           "frontier-patrol"
         ],
-        "rewardRef": { "id": "ukraine-colour-clay-spring-03-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-colour-clay-spring-03-discovery", "revision": "2" },
         "routeDecision": "Secure the low kiln-yard bay for a short retreat or link the offset display islands to capture the upper gallery. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -494,7 +494,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "ukraine-colour-clay-spring-04-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-colour-clay-spring-04-discovery", "revision": "2" },
         "routeDecision": "Cross the open centre for a broad reveal or follow the outer alcoves to inspect each display separately. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -576,7 +576,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "ukraine-colour-clay-spring-05-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-colour-clay-spring-05-discovery", "revision": "2" },
         "routeDecision": "Build two short colour-band captures or use the central foundation to close a larger layered reveal. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -658,7 +658,7 @@
           "frontier-patrol",
           "reclaimed-roamer"
         ],
-        "rewardRef": { "id": "ukraine-colour-clay-spring-06-discovery", "revision": "1" },
+        "rewardRef": { "id": "ukraine-colour-clay-spring-06-discovery", "revision": "2" },
         "routeDecision": "Secure the three exhibition wings separately or connect the central islands before opening the finale court. Read the moving boundary before committing to the next connection."
       },
       "format": "MissionDesignV1",
@@ -686,9 +686,9 @@
       "format": "PackDesignV1",
       "id": "ukraine-colour-clay-spring-pack",
       "name": "Colour, Clay and Spring",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }

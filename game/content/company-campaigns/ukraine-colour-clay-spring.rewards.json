@@ -63,6 +63,50 @@
             "title": "Розписана оселя"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Name the painted support before discussing the ornament. Keep the source’s description of Petrykivka separate from this invented courtyard."
+              ],
+              "title": "Make a distinction: A Painted Home"
+            },
+            "uk": {
+              "paragraphs": [
+                "Назвіть розписану основу перед обговоренням орнаменту. Відокремте опис Петриківки в джерелі від цього вигаданого двору."
+              ],
+              "title": "Розрізнімо: Розписана оселя"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Imagine the same new flower on a wall, a cup and paper. Tell each other how the surface changes what you notice."
+              ],
+              "title": "Look together: A Painted Home"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уявіть ту саму нову квітку на стіні, чашці й папері. Розкажіть одне одному, як поверхня змінює сприйняття."
+              ],
+              "title": "Погляньмо разом: Розписана оселя"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare two source-supported uses of the painting practice. Which observation concerns the surface, and which interpretation would need a maker’s account?"
+              ],
+              "title": "Explore the evidence: A Painted Home"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте два підтверджені джерелом застосування розпису. Що стосується поверхні, а яке тлумачення потребує розповіді майстра?"
+              ],
+              "title": "Дослідімо докази: Розписана оселя"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -80,7 +124,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-colour-clay-spring-01", "kind": "mission" }
   },
   {
@@ -147,6 +191,50 @@
             "title": "Учителька на портреті"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Try the label “Tetyana Pata, portrayed by Fedir Panko.” Keep the portrait’s 1980 date with the work, not with an invented biography."
+              ],
+              "title": "Make a distinction: The Teacher in the Portrait"
+            },
+            "uk": {
+              "paragraphs": [
+                "Спробуйте підпис «Тетяна Пата, зображена Федором Панком». Збережіть 1980 рік біля твору, не додаючи вигаданої біографії."
+              ],
+              "title": "Розрізнімо: Учителька на портреті"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Take turns pointing out the person pictured and the person who painted the portrait in the record. They are different roles."
+              ],
+              "title": "Look together: The Teacher in the Portrait"
+            },
+            "uk": {
+              "paragraphs": [
+                "По черзі назвіть за записом зображену людину й автора портрета. Це різні ролі."
+              ],
+              "title": "Погляньмо разом: Учителька на портреті"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare a subject-only label with one that also names the artist and teacher–student relationship. Which additional statements are supported by the museum record?"
+              ],
+              "title": "Explore the evidence: The Teacher in the Portrait"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте підпис лише з ім’ям зображеної людини та підпис з автором і зв’язком учительки й учня. Які доповнення підтримує музейний запис?"
+              ],
+              "title": "Дослідімо докази: Учителька на портреті"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -164,7 +252,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-colour-clay-spring-02", "kind": "mission" }
   },
   {
@@ -239,6 +327,50 @@
             "title": "Глина, полива і місце"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Use colour as a clue, then check material, place and maker in the record. Similar colours alone do not establish Kosiv provenance."
+              ],
+              "title": "Make a distinction: Clay, Glaze and Place"
+            },
+            "uk": {
+              "paragraphs": [
+                "Використайте колір як підказку, а потім перевірте матеріал, місце й автора в записі. Самі схожі кольори не встановлюють косівського походження."
+              ],
+              "title": "Розрізнімо: Глина, полива і місце"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find similar colours in the two imaginary objects. What else would you ask before deciding where either object came from?"
+              ],
+              "title": "Look together: Clay, Glaze and Place"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть схожі кольори у двох уявних предметах. Про що ще запитаєте, перш ніж визначати їхнє походження?"
+              ],
+              "title": "Погляньмо разом: Глина, полива і місце"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare an exhibition’s general description with an individual ceramic-object label. Keep tradition-level statements separate from the evidence for a particular piece."
+              ],
+              "title": "Explore the evidence: Clay, Glaze and Place"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зіставте загальний опис виставки з підписом окремого керамічного предмета. Відокремте твердження про традицію від доказів щодо конкретного твору."
+              ],
+              "title": "Дослідімо докази: Глина, полива і місце"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -256,7 +388,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-colour-clay-spring-03", "kind": "mission" }
   },
   {
@@ -323,6 +455,50 @@
             "title": "Два предмети — два автори"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep Oleksandra Shvets’s 1997 vase separate from Oksana Verbivska-Kabyn’s 2004 plate. Choose one clear identifying sentence for each."
+              ],
+              "title": "Make a distinction: Two Objects, Two Makers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізняйте вазу Олександри Швець 1997 року й таріль Оксани Вербівської-Кабин 2004 року. Оберіть по одному чіткому реченню для кожного."
+              ],
+              "title": "Розрізнімо: Два предмети — два автори"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Match vase and plate to their separate maker-and-date cards. Explain why a shared palette does not make them the same object."
+              ],
+              "title": "Look together: Two Objects, Two Makers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Поєднайте вазу й таріль з окремими картками авторства й дати. Поясніть, чому спільна палітра не робить їх одним предметом."
+              ],
+              "title": "Погляньмо разом: Два предмети — два автори"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Design a compact comparison card with shape, maker, date and source. Which detail must remain visible when the card is reduced to a narrow screen?"
+              ],
+              "title": "Explore the evidence: Two Objects, Two Makers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Створіть стислу картку порівняння з формою, авторством, датою й джерелом. Що має залишитися видимим на вузькому екрані?"
+              ],
+              "title": "Дослідімо докази: Два предмети — два автори"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -340,7 +516,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-colour-clay-spring-04", "kind": "mission" }
   },
   {
@@ -407,6 +583,50 @@
             "title": "Що зберігає віск"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Distinguish the protected area from the area receiving colour in the paper-only example. Explain the principle without treating it as a heated-wax activity."
+              ],
+              "title": "Make a distinction: What the Wax Keeps"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть захищену ділянку й ту, що отримує колір, у паперовому прикладі. Поясніть принцип, не перетворюючи його на вправу з гарячим воском."
+              ],
+              "title": "Розрізнімо: Що зберігає віск"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Imagine covering a white paper shape while the area around it becomes blue. Predict together which area stays white. No real wax or heat is needed."
+              ],
+              "title": "Look together: What the Wax Keeps"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уявіть закриту білу фігуру на папері, довкола якої з’являється синій колір. Разом передбачте, що залишиться білим. Справжній віск і нагрівання не потрібні."
+              ],
+              "title": "Погляньмо разом: Що зберігає віск"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Transfer the reserve principle to a new imaginary paper pattern. State your prediction, then explain how the comparison is limited compared with an actual maker’s practice."
+              ],
+              "title": "Explore the evidence: What the Wax Keeps"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перенесіть принцип резервування на новий уявний паперовий візерунок. Назвіть прогноз і поясніть межі такого порівняння зі справжньою практикою майстра."
+              ],
+              "title": "Дослідімо докази: Що зберігає віск"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -424,7 +644,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-colour-clay-spring-05", "kind": "mission" }
   },
   {
@@ -499,6 +719,50 @@
             "title": "Подарунок з історією"
           }
         },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Separate the shared UNESCO inscription, the named curated installation and your new design. Each needs its own attribution and context."
+              ],
+              "title": "Make a distinction: A Gift with a Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть спільний запис ЮНЕСКО, названу кураторську інсталяцію та свій новий дизайн. Кожен потребує власного авторства й контексту."
+              ],
+              "title": "Розрізнімо: Подарунок з історією"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Invent a gift design together and tell its recipient why you chose it. Describe your own intention without calling it a traditional meaning."
+              ],
+              "title": "Look together: A Gift with a Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Придумайте разом дизайн подарунка й поясніть адресату свій вибір. Опишіть власний задум, не називаючи його традиційним значенням."
+              ],
+              "title": "Погляньмо разом: Подарунок з історією"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Curate the six discoveries with makers, practices and sources visible. How would you describe a contemporary gift without claiming a universal symbolism or copying an installation?"
+              ],
+              "title": "Explore the evidence: A Gift with a Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Упорядкуйте шість відкриттів, зберігши видимими майстрів, практики й джерела. Як описати сучасний подарунок без універсальної символіки чи копіювання інсталяції?"
+              ],
+              "title": "Дослідімо докази: Подарунок з історією"
+            }
+          }
+        },
         "type": "knowledge"
       }
     ],
@@ -516,7 +780,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-colour-clay-spring-06", "kind": "mission" }
   },
   {
@@ -738,7 +1002,7 @@
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "ukraine-colour-clay-spring", "kind": "campaign" }
   }
 ]

@@ -1,86 +1,226 @@
 import { freezeDesign } from '../content-design/catalogs.mjs';
 import { required } from '../data-json.mjs';
 
-// Capture the selected edition presentation before changing these entries.
-// Presentation updates advance the authoring pack and affected reward promises;
-// they must not advance campaign, mission or map gameplay revisions.
-const firstDiscoveryCampaigns = [
-  'social-drone-people-workshop',
-  'social-drone-community-connections',
-  'victory-drones-knowledge-connects',
-  'victory-drones-ideas-understanding',
-  'ukraine-threads',
-  'fpv-meet-aircraft',
-];
+// Exact pre-update presentations are retained before advancing this ledger.
+// These reading/art revisions never change gameplay or promised requirements.
 export const CURRICULUM_PRESENTATION_REVISIONS = freezeDesign({
-  ...Object.fromEntries(
-    firstDiscoveryCampaigns.map((id) => [
-      id,
-      {
-        pack: '2',
-        finale: '2',
-        missionRewards: Object.fromEntries(
-          Array.from({ length: 6 }, (_, index) => [
-            `${id}-${String(index + 1).padStart(2, '0')}`,
-            '2',
-          ]),
-        ),
-      },
-    ]),
-  ),
-  'fpv-meet-aircraft': {
+  'social-drone-people-workshop': {
     pack: '3',
     finale: '3',
-    missionRewards: Object.fromEntries(
-      [1, 2, 3, 4, 5, 6].map((n) => [
-        `fpv-meet-aircraft-${String(n).padStart(2, '0')}`,
-        n === 1 ? '2' : '3',
-      ]),
-    ),
+    missionRewards: {
+      'social-drone-people-workshop-01': '3',
+      'social-drone-people-workshop-02': '3',
+      'social-drone-people-workshop-03': '3',
+      'social-drone-people-workshop-04': '3',
+      'social-drone-people-workshop-05': '3',
+      'social-drone-people-workshop-06': '3',
+    },
+  },
+  'victory-drones-knowledge-connects': {
+    pack: '3',
+    finale: '3',
+    missionRewards: {
+      'victory-drones-knowledge-connects-01': '3',
+      'victory-drones-knowledge-connects-02': '3',
+      'victory-drones-knowledge-connects-03': '3',
+      'victory-drones-knowledge-connects-04': '3',
+      'victory-drones-knowledge-connects-05': '3',
+      'victory-drones-knowledge-connects-06': '3',
+    },
+  },
+  'ukraine-threads': {
+    pack: '3',
+    finale: '3',
+    missionRewards: {
+      'ukraine-threads-01': '3',
+      'ukraine-threads-02': '3',
+      'ukraine-threads-03': '3',
+      'ukraine-threads-04': '3',
+      'ukraine-threads-05': '3',
+      'ukraine-threads-06': '3',
+    },
+  },
+  'fpv-meet-aircraft': {
+    pack: '4',
+    finale: '4',
+    missionRewards: {
+      'fpv-meet-aircraft-01': '3',
+      'fpv-meet-aircraft-02': '4',
+      'fpv-meet-aircraft-03': '4',
+      'fpv-meet-aircraft-04': '4',
+      'fpv-meet-aircraft-05': '4',
+      'fpv-meet-aircraft-06': '4',
+    },
+  },
+  'social-drone-community-connections': {
+    pack: '3',
+    finale: '3',
+    missionRewards: {
+      'social-drone-community-connections-01': '3',
+      'social-drone-community-connections-02': '3',
+      'social-drone-community-connections-03': '3',
+      'social-drone-community-connections-04': '3',
+      'social-drone-community-connections-05': '3',
+      'social-drone-community-connections-06': '3',
+    },
+  },
+  'victory-drones-ideas-understanding': {
+    pack: '3',
+    finale: '3',
+    missionRewards: {
+      'victory-drones-ideas-understanding-01': '3',
+      'victory-drones-ideas-understanding-02': '3',
+      'victory-drones-ideas-understanding-03': '3',
+      'victory-drones-ideas-understanding-04': '3',
+      'victory-drones-ideas-understanding-05': '3',
+      'victory-drones-ideas-understanding-06': '3',
+    },
+  },
+  'ukraine-colour-clay-spring': {
+    pack: '2',
+    finale: '2',
+    missionRewards: {
+      'ukraine-colour-clay-spring-01': '2',
+      'ukraine-colour-clay-spring-02': '2',
+      'ukraine-colour-clay-spring-03': '2',
+      'ukraine-colour-clay-spring-04': '2',
+      'ukraine-colour-clay-spring-05': '2',
+      'ukraine-colour-clay-spring-06': '2',
+    },
   },
   'ukraine-crimea-ornek': {
-    pack: '2',
-    finale: '2',
-    missionRewards: Object.fromEntries(
-      [2, 3, 4, 5, 6].map((n) => [`ukraine-crimea-ornek-${String(n).padStart(2, '0')}`, '2']),
-    ),
-  },
-  'ukraine-cities-symbols-time': {
-    pack: '2',
-    finale: '2',
-    missionRewards: Object.fromEntries(
-      [1, 2, 3, 4, 5, 6].map((n) => [
-        `ukraine-cities-symbols-time-${String(n).padStart(2, '0')}`,
-        '2',
-      ]),
-    ),
-  },
-  'fpv-parts-bench': {
-    pack: '2',
-    finale: '2',
-    missionRewards: Object.fromEntries(
-      [1, 2, 3, 4, 5, 6].map((n) => [`fpv-parts-bench-${String(n).padStart(2, '0')}`, '2']),
-    ),
-  },
-  'ukraine-everyday-culture': {
-    pack: '2',
-    finale: '2',
-    missionRewards: Object.fromEntries(
-      [1, 2, 3, 4, 5, 6].map((n) => [
-        `ukraine-everyday-culture-${String(n).padStart(2, '0')}`,
-        '2',
-      ]),
-    ),
+    pack: '3',
+    finale: '3',
+    missionRewards: {
+      'ukraine-crimea-ornek-01': '2',
+      'ukraine-crimea-ornek-02': '3',
+      'ukraine-crimea-ornek-03': '3',
+      'ukraine-crimea-ornek-04': '3',
+      'ukraine-crimea-ornek-05': '3',
+      'ukraine-crimea-ornek-06': '3',
+    },
   },
   'ukraine-voices-travel': {
+    pack: '3',
+    finale: '3',
+    missionRewards: {
+      'ukraine-voices-travel-01': '3',
+      'ukraine-voices-travel-02': '3',
+      'ukraine-voices-travel-03': '3',
+      'ukraine-voices-travel-04': '3',
+      'ukraine-voices-travel-05': '3',
+      'ukraine-voices-travel-06': '3',
+    },
+  },
+  'ukraine-cities-symbols-time': {
+    pack: '3',
+    finale: '3',
+    missionRewards: {
+      'ukraine-cities-symbols-time-01': '3',
+      'ukraine-cities-symbols-time-02': '3',
+      'ukraine-cities-symbols-time-03': '3',
+      'ukraine-cities-symbols-time-04': '3',
+      'ukraine-cities-symbols-time-05': '3',
+      'ukraine-cities-symbols-time-06': '3',
+    },
+  },
+  'ukraine-everyday-culture': {
+    pack: '3',
+    finale: '3',
+    missionRewards: {
+      'ukraine-everyday-culture-01': '3',
+      'ukraine-everyday-culture-02': '3',
+      'ukraine-everyday-culture-03': '3',
+      'ukraine-everyday-culture-04': '3',
+      'ukraine-everyday-culture-05': '3',
+      'ukraine-everyday-culture-06': '3',
+    },
+  },
+  'fpv-parts-bench': {
+    pack: '3',
+    finale: '3',
+    missionRewards: {
+      'fpv-parts-bench-01': '3',
+      'fpv-parts-bench-02': '3',
+      'fpv-parts-bench-03': '3',
+      'fpv-parts-bench-04': '3',
+      'fpv-parts-bench-05': '3',
+      'fpv-parts-bench-06': '3',
+    },
+  },
+  'fpv-soldering-workshop': {
     pack: '2',
     finale: '2',
-    missionRewards: Object.fromEntries(
-      [1, 2, 3, 4, 5, 6].map((n) => [`ukraine-voices-travel-${String(n).padStart(2, '0')}`, '2']),
-    ),
+    missionRewards: {
+      'fpv-soldering-workshop-01': '2',
+      'fpv-soldering-workshop-02': '2',
+      'fpv-soldering-workshop-03': '2',
+      'fpv-soldering-workshop-04': '2',
+      'fpv-soldering-workshop-05': '2',
+      'fpv-soldering-workshop-06': '2',
+    },
+  },
+  'fpv-four-controls': {
+    pack: '2',
+    finale: '2',
+    missionRewards: {
+      'fpv-four-controls-01': '2',
+      'fpv-four-controls-02': '2',
+      'fpv-four-controls-03': '2',
+      'fpv-four-controls-04': '2',
+      'fpv-four-controls-05': '2',
+      'fpv-four-controls-06': '2',
+    },
+  },
+  'fpv-first-flight': {
+    pack: '2',
+    finale: '2',
+    missionRewards: {
+      'fpv-first-flight-01': '2',
+      'fpv-first-flight-02': '2',
+      'fpv-first-flight-03': '2',
+      'fpv-first-flight-04': '2',
+      'fpv-first-flight-05': '2',
+      'fpv-first-flight-06': '2',
+    },
+  },
+  'fpv-drone-families': {
+    pack: '2',
+    finale: '2',
+    missionRewards: {
+      'fpv-drone-families-01': '2',
+      'fpv-drone-families-02': '2',
+      'fpv-drone-families-03': '2',
+      'fpv-drone-families-04': '2',
+      'fpv-drone-families-05': '2',
+      'fpv-drone-families-06': '2',
+    },
+  },
+  'fpv-drones-ukraine': {
+    pack: '2',
+    finale: '2',
+    missionRewards: {
+      'fpv-drones-ukraine-01': '2',
+      'fpv-drones-ukraine-02': '2',
+      'fpv-drones-ukraine-03': '2',
+      'fpv-drones-ukraine-04': '2',
+      'fpv-drones-ukraine-05': '2',
+      'fpv-drones-ukraine-06': '2',
+    },
+  },
+  'fpv-care-repair': {
+    pack: '2',
+    finale: '2',
+    missionRewards: {
+      'fpv-care-repair-01': '2',
+      'fpv-care-repair-02': '2',
+      'fpv-care-repair-03': '2',
+      'fpv-care-repair-04': '2',
+      'fpv-care-repair-05': '2',
+      'fpv-care-repair-06': '2',
+    },
   },
 });
-
 export function curriculumPresentationRevision(
   campaignId,
   ledger = CURRICULUM_PRESENTATION_REVISIONS,

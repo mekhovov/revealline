@@ -7,6 +7,7 @@ import { createRewardMissionBindings } from '../rewards/bindings.mjs';
 import { completionLearningReference } from '../rewards/learning.mjs';
 import { COMPLETION_REWARD_PAYLOAD_TYPES } from '../rewards/capabilities.mjs';
 import { validateDiscoveryRewardBindings } from '../content-design/discovery-schema.mjs';
+import { resolveJourneyMasteryRequirement } from '../mastery-journey.mjs';
 
 /** Exact player campaign projection: invisible missions, archived maps and
  * unreferenced media are source material, not runtime dependencies. */
@@ -146,8 +147,18 @@ export function validateEditionRewardBundle(
     }
     required(
       reward.requirements.mastery.length === 0,
-      'Completion reward mastery requires a registered player evidence adapter before export.',
+      'Completion reward mastery export awaits historical accepted-proof retention.',
     );
+    for (const requirement of reward.requirements.mastery) {
+      resolveJourneyMasteryRequirement(requirement);
+      const mission = (reward.scope.kind === 'edition' ? editionBindings : bindings).get(
+        requirement.missionId,
+      );
+      required(
+        mission && (reward.scope.kind === 'edition' || mission.campaignId === descriptor.id),
+        'Reward mastery requires an exact selected Solo Journey mission.',
+      );
+    }
     for (const payload of reward.payloads) {
       required(
         COMPLETION_REWARD_PAYLOAD_TYPES.includes(payload.type),

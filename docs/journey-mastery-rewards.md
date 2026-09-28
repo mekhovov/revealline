@@ -6,10 +6,14 @@ counter, including a life lost and later replaced by a pickup. This optional loc
 achievement is not a skill assessment or certification. Simulation, medals,
 scoring, input timing and mission progression are unchanged.
 
-The first framework checkpoint adds the verifier and replay evidence lifecycle.
-The compiler's mastery capability gate remains closed until the shared player,
-Studio selection and exact dependency admission are wired and tested. These
-modules alone do not enable or author a player reward.
+The shared player, Company Studio and Level/Campaign Studio support this exact
+registered optional predicate. Authors explicitly select required mission wins
+and then choose which of those missions also need a no-life-lost attempt. Adding
+or removing a requirement creates a new immutable reward revision and rebinds
+only the affected presentation references; it leaves gameplay identities intact.
+Preview uses synthetic evidence in memory and cannot earn progress. There is no
+automatic requirement on existing campaigns, and no public reward is silently
+changed by enabling this adapter.
 
 `verifyJourneyMasteryRun` snapshots the original replay, requires its exact
 selected mission/gameplay/difficulty identity and an accepted run ID, then uses
@@ -33,3 +37,18 @@ remain separate after writer loss, denied reads or exhausted storage. Unsupporte
 historical gameplay stays in recovery and can be checked again when its exact
 retained presentation is selected. Existing replay, collection and storage byte
 limits remain in force.
+
+The ordinary Solo host supplies its current run ID and accepted Journey profile.
+After an accepted win, the optional check runs asynchronously and does not gate
+Next or Retry. A losing-life win is still a normal arcade success; the extra
+discovery remains available for a later attempt. A practice run cannot borrow
+an earlier accepted run. The reward projection updates only when proof evidence
+changes, and persists optional rewards only after both Journey and proof storage
+succeed. Failed proof saves cannot become durable through an unrelated later win.
+
+Settings offers exact proof export, verified import and save retry. Imports are
+bounded, cancellable and checked against selected current or retained gameplay.
+Closing a host aborts outstanding verification and releases its owned UI. These
+checks establish local replay consistency, not a secure entitlement or remote
+identity. Human comprehension, installed-device and performance qualification
+remain separate release evidence.
