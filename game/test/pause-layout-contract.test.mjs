@@ -12,6 +12,7 @@ const headerCss = [
   .join('\n');
 const surfaceCss = readFileSync(new URL('../ui/field-kit-surfaces.css', import.meta.url), 'utf8');
 const appSource = readFileSync(new URL('../app.mjs', import.meta.url), 'utf8');
+const markup = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const declarations = (selector) => {
   const start = css.indexOf(`${selector} {`);
   assert.notEqual(start, -1, `Missing pause-specific rule: ${selector}`);
@@ -124,4 +125,32 @@ test('pause hierarchy uses compact side labels and a quiet full-width exit', () 
     surfaceCss,
     /data-kind='pause'[^}]*#overlay-menu\s*\{[\s\S]*?background:\s*transparent/,
   );
+});
+
+test('briefing and pause share one command-deck surface', () => {
+  assert.match(
+    surfaceCss,
+    /game-overlay:is\(\[data-kind='ready'\], \[data-kind='pause'\]\)[\s\S]*?\.overlay-card\s*\{[\s\S]*?width:\s*min\(680px,\s*100%\)[\s\S]*?background:\s*#050a14fa[\s\S]*?border-color:\s*#30496d/,
+  );
+  assert.match(
+    surfaceCss,
+    /data-kind='ready'[^}]*#start-button\s*\{[\s\S]*?min-height:\s*48px[\s\S]*?font-size:\s*17px/,
+  );
+});
+
+test('mission preparation uses a fixed progress rail and no visible cancel action', () => {
+  assert.match(surfaceCss, /\.preparation-cancel-hook\s*\{[\s\S]*?display:\s*none\s*!important/);
+  assert.match(
+    surfaceCss,
+    /\.menu-progress-status:not\(\[hidden\]\)\s*\{[\s\S]*?position:\s*fixed[\s\S]*?pointer-events:\s*none/,
+  );
+  assert.match(
+    markup,
+    /id="flight-preparation-cancel"[\s\S]*?preparation-cancel-hook[\s\S]*?tabindex="-1"[\s\S]*?aria-hidden="true"/,
+  );
+  assert.match(
+    markup,
+    /id="shell-flight-cancel"[\s\S]*?preparation-cancel-hook[\s\S]*?tabindex="-1"[\s\S]*?aria-hidden="true"/,
+  );
+  assert.match(appSource, /function preparationButtonBusy\([\s\S]*?aria-disabled[\s\S]*?aria-busy/);
 });
