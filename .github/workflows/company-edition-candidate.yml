@@ -57,7 +57,7 @@ jobs:
       - name: Verify optional routes, replay, input and installation isolation
         run: npm run practice:test
       - name: Freeze twice and verify optional package artifacts
-        run: node scripts/bundle-optional-practice.mjs --out .cache/optional-flight-candidate --base-path /revealline/
+        run: node scripts/bundle-optional-practice.mjs --out .cache/optional-flight-candidate --base-path /revealline/ --packages civilian-flight,civilian-fpv
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: optional-flight-candidate-${{ github.event.pull_request.head.sha || github.sha }}
@@ -66,8 +66,8 @@ jobs:
           retention-days: 14
       - name: Report optional-package boundary
         run: |
-          echo 'The civilian practice candidate is independent of the core and edition offline caches.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Its twelve fictional model routes and archive integrity are checked; this is not publication, device evidence or real flight proficiency.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'The assisted orientation gym and FPV simulator are separately admitted optional candidates, independent of core and edition offline caches.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Their fictional routes, replay fixtures and archive integrity are checked; this is not publication, physical radio evidence or real flight proficiency.' >> "$GITHUB_STEP_SUMMARY"
   candidate:
     runs-on: ubuntu-latest
     # All 18 editions compile twice. A slower runner completed checks and upload

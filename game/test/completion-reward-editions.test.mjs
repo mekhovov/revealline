@@ -307,6 +307,21 @@ test('selected reward admission rejects altered gameplay, foreign scopes, wrong 
   for (const [mutate, expected] of [
     [
       (r) => {
+        r.format = 'revealline-completion-reward.v2';
+        r.requirements.practice = [
+          {
+            model: 'civilian-quad-fixed.v1',
+            course: 'flight-01',
+            courseIdentity: '0123456789abcdef',
+            modes: ['self-level', 'acro'],
+            responseIdentities: null,
+          },
+        ];
+      },
+      /selected practice adapter/,
+    ],
+    [
+      (r) => {
         r.brandId = 'foreign';
       },
       /another campaign or brand/,

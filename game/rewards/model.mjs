@@ -4,8 +4,11 @@ import { explorationAssetReferences, validateExplorationPayload } from './explor
 import { validateRewardAudioGroups } from './audio-groups.mjs';
 
 export const COMPLETION_REWARD_FORMAT = 'revealline-completion-reward.v1';
+export const COMPLETION_REWARD_V2_FORMAT = 'revealline-completion-reward.v2';
 export const EARNED_REWARD_FORMAT = 'revealline-earned-reward.v1';
+export const EARNED_REWARD_V2_FORMAT = 'revealline-earned-reward.v2';
 export const REWARD_STATE_FORMAT = 'revealline-reward-state.v1';
+export const REWARD_STATE_V2_FORMAT = 'revealline-reward-state.v2';
 
 // Only outputs created here may skip a boundary validation. A frozen caller
 // object (including a structured clone of an output) is not trusted.
@@ -214,6 +217,67 @@ function masteryRequirement(value) {
   );
 }
 
+function practiceRequirement(value) {
+  exactKeys(
+    value,
+    ['model', 'course', 'courseIdentity', 'modes', 'responseIdentities'],
+    'reward practice requirement',
+  );
+  required(
+    text(value.model, 128) && stableId(value.course) && identity(value.courseIdentity),
+    'Invalid exact practice requirement.',
+  );
+  ids(value.modes, 16, 'practice modes');
+  required(value.modes.length > 0, 'Practice requires at least one explicit mode.');
+  if (value.responseIdentities !== null) {
+    array(value.responseIdentities, 32, 'practice response identities', 1);
+    required(
+      value.responseIdentities.every(identity) && unique(value.responseIdentities),
+      'Invalid exact practice response identities.',
+    );
+  }
+}
+
+function acceptedPractice(value) {
+  exactKeys(
+    value,
+    ['model', 'course', 'courseIdentity', 'mode', 'responseIdentity', 'attemptId'],
+    'accepted practice evidence',
+  );
+  required(
+    text(value.model, 128) &&
+      stableId(value.course) &&
+      identity(value.courseIdentity) &&
+      stableId(value.mode) &&
+      identity(value.responseIdentity) &&
+      stableId(value.attemptId),
+    'Invalid accepted practice evidence.',
+  );
+}
+
+/** Validates a verifier's typed projection, not an attempt or a claimed completion.
+ * The supplying simulator must replay a normal practice attempt and validate its
+ * response profile. A null authored response policy explicitly accepts any such
+ * verifier-valid response; it never bypasses the simulator's response validator. */
+export function validateAcceptedPracticeEvidence(input) {
+  const value = boundedJSON(input, { maxBytes: 2048, maxNodes: 16, maxArray: 8 });
+  acceptedPractice(value);
+  return freeze(value);
+}
+
+const practiceMatches = (wanted, actual) =>
+  wanted.model === actual.model &&
+  wanted.course === actual.course &&
+  wanted.courseIdentity === actual.courseIdentity &&
+  wanted.modes.includes(actual.mode) &&
+  (wanted.responseIdentities === null ||
+    wanted.responseIdentities.includes(actual.responseIdentity));
+const isV2 = (definition) => definition.format === COMPLETION_REWARD_V2_FORMAT;
+// Select a container version for an internal fragment. This does not validate
+// its definitions; every import or merge still crosses validateRewardState.
+export const rewardStateFormatFor = (promises) =>
+  promises.some(isV2) ? REWARD_STATE_V2_FORMAT : REWARD_STATE_FORMAT;
+
 /** Data-only authoring sidecar. Compilation separately verifies selected campaign/media ownership. */
 export function validateCompletionReward(input) {
   if (ownedDefinitions.has(input)) return input;
@@ -235,20 +299,44 @@ export function validateCompletionReward(input) {
     ],
     'completion reward',
   );
-  required(value.format === COMPLETION_REWARD_FORMAT, 'Unsupported completion reward format.');
+  required(
+    [COMPLETION_REWARD_FORMAT, COMPLETION_REWARD_V2_FORMAT].includes(value.format),
+    'Unsupported completion reward format.',
+  );
   for (const field of ['id', 'brandId', 'campaignId'])
     required(stableId(value[field]), `Invalid reward ${field}.`);
   required(text(value.revision, 128), 'Missing reward revision.');
   exactKeys(value.scope, ['kind', 'id'], 'reward scope');
   required(
-    ['mission', 'campaign', 'edition'].includes(value.scope.kind) && stableId(value.scope.id),
+    [...['mission', 'campaign', 'edition'], ...(isV2(value) ? ['practice'] : [])].includes(
+      value.scope.kind,
+    ) && stableId(value.scope.id),
     'Invalid reward scope.',
   );
   if (value.scope.kind === 'campaign')
     required(value.scope.id === value.campaignId, 'Reward campaign scope must match its owner.');
   locales(value.locales, ['title', 'teaser']);
-  exactKeys(value.requirements, ['missions', 'learning', 'mastery'], 'reward requirements');
-  array(value.requirements.missions, 128, 'mission requirements', 1);
+  exactKeys(
+    value.requirements,
+    ['missions', 'learning', 'mastery', ...(isV2(value) ? ['practice'] : [])],
+    'reward requirements',
+  );
+  array(value.requirements.missions, 128, 'mission requirements', isV2(value) ? 0 : 1);
+  if (isV2(value)) {
+    array(value.requirements.practice, 128, 'practice requirements', 1);
+    value.requirements.practice.forEach(practiceRequirement);
+    required(
+      unique(value.requirements.practice.map((item) => item.course)),
+      'Duplicate required practice course.',
+    );
+    if (value.scope.kind === 'practice')
+      required(
+        value.requirements.missions.length === 0 &&
+          value.requirements.practice.length === 1 &&
+          value.requirements.practice[0].course === value.scope.id,
+        'A practice reward requires its own course only.',
+      );
+  }
   for (const mission of value.requirements.missions) {
     exactKeys(mission, ['missionId', 'bindings'], 'reward mission requirement');
     required(stableId(mission.missionId), 'Invalid required mission ID.');
@@ -357,7 +445,16 @@ function evidence(input) {
   const value = boundedJSON(input, { maxBytes: 2 * 1024 * 1024, maxNodes: 100000, maxArray: 4096 });
   exactKeys(
     value,
-    ['editionId', 'brandId', 'campaignIds', 'clears', 'clearAlternatives', 'learning', 'mastery'],
+    [
+      'editionId',
+      'brandId',
+      'campaignIds',
+      'clears',
+      'clearAlternatives',
+      'learning',
+      'mastery',
+      'practice',
+    ],
     'reward evidence',
   );
   required(
@@ -404,6 +501,14 @@ function evidence(input) {
     const { runId, ...reference } = item;
     masteryRequirement(reference);
     required(text(runId, 256), 'Invalid accepted mastery run ID.');
+  }
+  if (value.practice !== undefined) {
+    array(value.practice, 4096, 'accepted practice evidence');
+    value.practice.forEach(acceptedPractice);
+    required(
+      unique(value.practice.map((item) => item.attemptId)),
+      'Duplicate accepted practice attempt.',
+    );
   }
   return remember(ownedEvidence, value);
 }
@@ -465,7 +570,12 @@ export function projectRewardProgress(input, context) {
         (record) => sameFields(item, record) && selected[item.missionId]?.runId === record.runId,
       ),
   }));
-  const all = [...missions, ...learning, ...mastery];
+  const practice = (definition.requirements.practice ?? []).map((item) => ({
+    course: item.course,
+    complete:
+      available && (accepted.practice ?? []).some((record) => practiceMatches(item, record)),
+  }));
+  const all = [...missions, ...learning, ...mastery, ...practice];
   return freeze({
     rewardId: definition.id,
     definitionIdentity: completionRewardIdentity(definition),
@@ -477,6 +587,12 @@ export function projectRewardProgress(input, context) {
     learning,
     mastery,
     missingMissionIds: missions.filter((item) => !item.complete).map((item) => item.missionId),
+    ...(isV2(definition)
+      ? {
+          practice,
+          missingCourseIds: practice.filter((item) => !item.complete).map((item) => item.course),
+        }
+      : {}),
   });
 }
 
@@ -498,6 +614,13 @@ function retainedEvidence(definition, context) {
         (record) => sameFields(item, record) && selected[item.missionId]?.runId === record.runId,
       ),
     ),
+    ...(isV2(definition)
+      ? {
+          practice: definition.requirements.practice.map((item) =>
+            accepted.practice.find((record) => practiceMatches(item, record)),
+          ),
+        }
+      : {}),
   };
 }
 
@@ -516,7 +639,8 @@ export function validateEarnedRewardReceipt(input, { editionId } = {}) {
     'earned reward receipt',
   );
   required(
-    value.format === EARNED_REWARD_FORMAT && stableId(value.editionId),
+    [EARNED_REWARD_FORMAT, EARNED_REWARD_V2_FORMAT].includes(value.format) &&
+      stableId(value.editionId),
     'Invalid earned reward format/edition.',
   );
   required(
@@ -525,10 +649,30 @@ export function validateEarnedRewardReceipt(input, { editionId } = {}) {
   );
   value.definition = validateCompletionReward(value.definition);
   required(
+    value.format === (isV2(value.definition) ? EARNED_REWARD_V2_FORMAT : EARNED_REWARD_FORMAT),
+    'Earned reward format must match its definition version.',
+  );
+  required(
     value.definitionIdentity === completionRewardIdentity(value.definition),
     'Earned reward definition identity does not match.',
   );
   value.evidence = evidence(value.evidence);
+  required(
+    isV2(value.definition)
+      ? Array.isArray(value.evidence.practice)
+      : value.evidence.practice === undefined,
+    'Earned reward practice evidence must match its definition version.',
+  );
+  if (isV2(value.definition)) {
+    required(
+      value.evidence.practice.length === value.definition.requirements.practice.length &&
+        value.definition.requirements.practice.every(
+          (item) =>
+            value.evidence.practice.filter((record) => practiceMatches(item, record)).length === 1,
+        ),
+      'Earned practice receipts require one normalized accepted attempt per course.',
+    );
+  }
   required(
     value.evidence.clearAlternatives === undefined,
     'Earned reward receipts require one normalized clear per mission.',
@@ -563,7 +707,8 @@ export function validateRewardState(input, { editionId } = {}) {
   const value = boundedJSON(input, stateLimits);
   exactKeys(value, ['format', 'editionId', 'promises', 'receipts', 'acknowledged'], 'reward state');
   required(
-    value.format === REWARD_STATE_FORMAT && stableId(value.editionId),
+    [REWARD_STATE_FORMAT, REWARD_STATE_V2_FORMAT].includes(value.format) &&
+      stableId(value.editionId),
     'Invalid reward state format/edition.',
   );
   required(
@@ -571,6 +716,10 @@ export function validateRewardState(input, { editionId } = {}) {
     'Reward state belongs to another edition.',
   );
   value.promises = validateCompletionRewards(value.promises);
+  required(
+    value.format === rewardStateFormatFor(value.promises),
+    'Reward state format must match its retained definition versions.',
+  );
   for (const promise of value.promises)
     required(
       promise.scope.kind !== 'edition' || promise.scope.id === value.editionId,
@@ -614,7 +763,13 @@ function composeState(editionId, promises, receipts, acknowledged) {
     'Unvalidated reward receipt.',
   );
   if (!ownedDefinitionLists.has(promises)) boundedJSON(promises, definitionListLimits);
-  const candidate = { format: REWARD_STATE_FORMAT, editionId, promises, receipts, acknowledged };
+  const candidate = {
+    format: rewardStateFormatFor(promises),
+    editionId,
+    promises,
+    receipts,
+    acknowledged,
+  };
   boundedJSON(candidate, stateLimits);
   // All callers preserve validated edition, unique IDs, receipt/promise identity
   // and acknowledgement membership; no external graph reaches this constructor.
@@ -624,7 +779,7 @@ function composeState(editionId, promises, receipts, acknowledged) {
 
 function composeReceipt(definition, accepted) {
   const candidate = {
-    format: EARNED_REWARD_FORMAT,
+    format: isV2(definition) ? EARNED_REWARD_V2_FORMAT : EARNED_REWARD_FORMAT,
     editionId: accepted.editionId,
     definition,
     definitionIdentity: completionRewardIdentity(definition),

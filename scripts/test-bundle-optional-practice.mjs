@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import { execFileSync } from 'node:child_process';
 import { parse } from 'acorn';
 import { buildOptionalPractice } from './build-optional-practice.mjs';
+import { optionalFPVSourceFixture } from '../publishing/optional-package-source-fixture.mjs';
 const root = new URL('../', import.meta.url).pathname;
 
 async function toolClosure(entry) {
@@ -48,9 +49,11 @@ test('frozen optional CLI builds twice from actual committed inputs and refuses 
   const fixture = await mkdtemp(path.join(tmpdir(), 'optional-bundle-'));
   t.after(() => rm(fixture, { recursive: true, force: true }));
   const built = await buildOptionalPractice(root);
+  const fpv = await optionalFPVSourceFixture(t);
   const selected = new Map([
     ...(await toolClosure('scripts/bundle-optional-practice.mjs')),
     ...built.inputs,
+    ...fpv.files,
   ]);
   selected.set(
     'game/vendor/lz-string-1.5.0.min.js',
@@ -73,13 +76,17 @@ test('frozen optional CLI builds twice from actual committed inputs and refuses 
   git('config', 'user.name', 'Fixture');
   git('add', '.');
   git('commit', '-qm', 'Optional fixture');
-  const run = (out) =>
+  const run = (out, extra = []) =>
     JSON.parse(
-      execFileSync(process.execPath, ['scripts/bundle-optional-practice.mjs', '--out', out], {
-        cwd: fixture,
-        encoding: 'utf8',
-        stdio: ['ignore', 'pipe', 'pipe'],
-      }),
+      execFileSync(
+        process.execPath,
+        ['scripts/bundle-optional-practice.mjs', '--out', out, ...extra],
+        {
+          cwd: fixture,
+          encoding: 'utf8',
+          stdio: ['ignore', 'pipe', 'pipe'],
+        },
+      ),
     );
   const first = run('.cache/first'),
     second = run('.cache/second');
@@ -97,6 +104,25 @@ test('frozen optional CLI builds twice from actual committed inputs and refuses 
     await readFile(path.join(first.output, 'optional-package-review.json')),
   );
   assert.ok(review.packages[0].gates.every((gate) => gate.status === 'pending'));
+  const both = run('.cache/both', ['--packages', 'civilian-fpv,civilian-flight']);
+  assert.deepEqual(both.packageIds, ['civilian-flight', 'civilian-fpv']);
+  assert.equal(both.publicEligible, false);
+  assert.deepEqual(
+    await readFile(path.join(first.output, 'distribution-optional-civilian-flight.zip')),
+    await readFile(path.join(both.output, 'distribution-optional-civilian-flight.zip')),
+    'Selecting a second package does not change historical package bytes',
+  );
+  const bothReview = JSON.parse(
+    await readFile(path.join(both.output, 'optional-package-review.json')),
+  );
+  assert.equal(bothReview.packages.length, 2);
+  assert.ok(
+    bothReview.packages.every((item) => item.gates.every((gate) => gate.status === 'pending')),
+  );
+  assert.throws(
+    () => run('.cache/duplicate', ['--packages', 'civilian-fpv,civilian-fpv']),
+    /unique registered package IDs/,
+  );
   assert.throws(() => run('.cache/first'), /immutable outputs are never overwritten/);
   await writeFile(path.join(fixture, 'optional-practice/civilian-flight/app.mjs'), '// changed\n');
   assert.throws(() => run('.cache/dirty'), /clean committed source/);
