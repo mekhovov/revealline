@@ -332,6 +332,12 @@ It reports buffered resource entries, animation callback
 intervals and approximate shared heap, not complete network traffic, renderer timings or a
 memory-leak verdict. Every observation remains unqualified until reviewed.
 
+The [qualification recorder](verification/company-qualification.html) captures the separate
+human and device evidence against one immutable candidate. It validates exact envelope, source
+and downloaded-artifact identity, all nine promotion gates per edition, actual-device constraints
+and bounded scenario coverage. It starts with no passes and never edits the game, release metadata
+or public selector.
+
 ## Sources and asset boundaries
 
 The official flower comes from the [Coupa brand library](https://drive.google.com/drive/folders/1Bhq6KoBjES--iHt3gWZA2rhjo456Q9j6).
