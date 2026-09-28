@@ -18,6 +18,8 @@ const types = Object.freeze({
   captions: { vtt: 'text/vtt' },
 });
 export function rewardMediaReferences(payload) {
+  if (payload.type === 'exploration' && payload.recipe?.diagram)
+    return [{ role: 'poster', reference: payload.recipe.diagram.asset }];
   if (!['audio', 'video'].includes(payload.type)) return [];
   return [
     { role: payload.type, reference: payload.asset },

@@ -254,7 +254,7 @@
         "memorableMoment": "An original warm linen exhibition square with red-and-black textile studies and an open object plinth.",
         "pacingBeat": "discover",
         "practices": ["closure", "enemy-seeded-closure"],
-        "rewardRef": { "id": "ukraine-threads-01-discovery", "revision": "4" },
+        "rewardRef": { "id": "ukraine-threads-01-discovery", "revision": "5" },
         "routeDecision": "Return through the exhibition plinth or open the wide label gallery first."
       },
       "format": "MissionDesignV1",
@@ -569,9 +569,9 @@
       "format": "PackDesignV1",
       "id": "ukraine-threads-pack",
       "name": "Threads Across Ukraine",
-      "revision": "4"
+      "revision": "5"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "4"
+  "revision": "5"
 }
