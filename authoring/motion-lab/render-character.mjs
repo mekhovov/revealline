@@ -107,6 +107,7 @@ function drawRotors(
     paintRotor(ctx, {
       radius,
       phase: phase * component.direction * anchor.direction + offset,
+      direction: component.direction * anchor.direction,
       bladeCount: anchor.bladeCount ?? component.bladeCount,
       bladeWidth: component.bladeWidth,
       bladeShape: component.bladeShape,

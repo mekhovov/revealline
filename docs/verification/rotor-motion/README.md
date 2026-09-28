@@ -2,7 +2,24 @@
 
 Base: `bb9b3640270dc26633d37cfdf4a306aecda277b6`. Candidate scope: restore the already-declared prepared player rigs across Solo/Versus and Team, use one connected-blade primitive, and make the shared actor sampler alias-aware. No asset bytes, anchors, campaign identities, simulation rules or saved artwork are replaced. Prepared patrol geometry still has no rig; that requires a separate reviewed successor.
 
-## Browser raster review
+## Subsequent proportion and handedness revision — 28 September
+
+The user rejected the first moving rig's small propellers and selected the richer generated roster as the visual target. The earlier C1-A evidence below is a baseline, not current art approval. The [new comparison](proportions.html) uses sixteen separately exported native candidates and the actual `imagePresentation` adapter. [Reference review](../../drone-reference-review.md) records all 22 supplied images and 24 additional official sources, including which photographs were actually inspected.
+
+- Quads: radius 0.205 of the frame versus 0.12, smaller motor bells, and explicit props-in directions. The carrier has six two-blade hubs with independent sweep clearance and alternating directions around its perimeter.
+- The shared primitive mirrors opposite-handed blades and tip markings. Both production renderer paths and procedural fallback paths pass explicit handedness; already-signed phase and authored offsets are unchanged.
+- Optional `direction`/`phaseDegrees` fields survive the real asset validator/adapter. Missing values preserve historical timing. Old strict readers cannot consume new extended revisions; no old record is rewritten. The CCW painted profile intentionally changes, so unchanged source PNGs do not mean pixel-identical animated frames.
+- Fresh browser raster result: **1,536 changed frame comparisons, 3,072 held paused/reduced poses, zero failures** across all sixteen candidates, two shared painter paths, 20/24/32 occupied CSS pixel targets, four headings and 4/30/60/120 sample rates. Controlled sampling is not measured device FPS.
+- Current focused runtime/geometry cohort: **148/148**. Renderer/loader cohort: **25/25**, after correcting one stale loader mock. The old mock ignored the image-acquisition predicate and treated metadata requests as image loads; it reproduced without handedness changes. The correction retains every prior assertion and additionally requires the metadata request.
+- Independent review found no blocking geometry/reader/provenance issue and reproduced the native files. Both richer generated body studies remain unregistered source artwork with facing, margin, alpha and native-detail preparation work recorded in their metadata.
+
+Keyboard interactions exercised Slow inspection, renderer selection, reduced effects and explicit Pause/Play. Actual screenshot viewport: 1280×720 CSS pixels, DPR 2; each review canvas remains native 384×302 at 384×302 CSS pixels. An exact-label automation lookup failed to locate the renderer select; the observed combobox role succeeded. This is browser interaction, not touch/controller/device certification.
+
+![Candidate proportions and direction labels](directions-solo.png)
+
+The native candidate body detail is still more restrained than the approved concept. Team's centre/nose overlays visibly obscure equipment detail, as in the baseline. Resolve body richness and this overlay hierarchy before production adoption. Full-board edges/crowding, responsive play, memory/frame-time baseline, retained original journeys and public/device checks remain open. See [the exact source/evidence inventory](proportions-evidence.json). No asset collection, immutable production history, public version or release is changed by this candidate.
+
+## Earlier C1-A browser raster review
 
 Serve the repository and open [review.html](review.html). This fixture decodes the exact fourteen compiled FPV player PNGs, uses the shipped character and Team actor drawing paths, and exposes Pause, reduced effects and controlled sampling. It does not instantiate a full game, measure real device FPS or alter player storage.
 

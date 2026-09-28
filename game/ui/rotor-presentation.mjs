@@ -8,12 +8,14 @@ export const PREPARED_ROTOR_COLORS = Object.freeze({
 });
 
 /** Hub-centred blades. Every polygon begins at the motor, never at an outside
- * corner. The complete sweep stays inside radius; alpha belongs to the caller. */
+ * corner. The complete sweep stays inside radius; alpha belongs to the caller.
+ * Direction mirrors blade handedness; phase is already signed by the caller. */
 export function paintRotor(
   ctx,
   {
     radius,
     phase = 0,
+    direction = 1,
     bladeCount = 3,
     bladeWidth = 0.38,
     bladeShape = 'swept',
@@ -38,6 +40,7 @@ export function paintRotor(
   for (const angle of bladeAngles(bladeCount, phase)) {
     ctx.save();
     ctx.rotate(angle);
+    if (direction < 0) ctx.scale(1, -1);
     const points =
       bladeShape === 'paddle'
         ? [

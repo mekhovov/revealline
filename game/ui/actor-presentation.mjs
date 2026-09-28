@@ -301,12 +301,13 @@ const rect = (c, color, x, y, w, h) => {
   c.fillStyle = color;
   c.fillRect(Math.round(x), Math.round(y), w, h);
 };
-function rotor(c, x, y, phase, colors, compact, blades = 3) {
+function rotor(c, x, y, phase, colors, compact, blades = 3, direction = 1) {
   c.save();
   c.translate(x, y);
   paintRotor(c, {
     radius: 5,
     phase,
+    direction,
     bladeCount: blades,
     bladeWidth: compact ? 0.4 : 0.34,
     blurOpacity: 0,
@@ -329,7 +330,8 @@ function fpv(c, f, colors) {
     for (const x of [-7, 7])
       for (const y of [-7, 7]) {
         rect(c, colors.body, Math.min(0, x), Math.min(0, y), Math.abs(x) + 1, 2);
-        rotor(c, x, y, (f.rotorPhase ?? 0) * (x * y > 0 ? 1 : -1), colors, compact);
+        const direction = x * y > 0 ? 1 : -1;
+        rotor(c, x, y, (f.rotorPhase ?? 0) * direction, colors, compact, 3, direction);
       }
     rect(c, colors.dark, -4, -7, 8, 14);
     rect(c, colors.body, -3, -6, 6, 12);
@@ -534,8 +536,8 @@ function distinctBody(c, f, k) {
       rect(c, k.dark, -4, -13, 8, 25);
       rect(c, k.body, -3, -12, 6, 23);
       rect(c, k.trim, -10, -2, 20, 3);
-      rotor(c, -8, 0, f.rotorPhase ?? 0, k, f.style === 'microtile');
-      rotor(c, 8, 0, -(f.rotorPhase ?? 0), k, f.style === 'microtile');
+      rotor(c, -8, 0, f.rotorPhase ?? 0, k, f.style === 'microtile', 3, 1);
+      rotor(c, 8, 0, -(f.rotorPhase ?? 0), k, f.style === 'microtile', 3, -1);
       rect(c, k.light, -2, -11, 4, 3);
       rect(c, k.body, -6, 9, 12, 3);
     } else if (f.themeId === 'ukraine') {
@@ -749,6 +751,7 @@ export function drawPresentedActor(
         phase:
           (frame.reduced ? 0 : (frame.rotorPhase ?? 0)) * anchor.direction +
           (anchor.phaseDegrees * Math.PI) / 180,
+        direction: anchor.direction,
         bladeCount: anchor.bladeCount,
         pixel: Math.max(width / 64, 0.1),
         blurOpacity: frame.reduced || !frame.rotorPhase ? 0 : 0.08,

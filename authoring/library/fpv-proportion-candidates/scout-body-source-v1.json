@@ -1,0 +1,42 @@
+{
+  "format": "revealline.concept-art-evidence.v1",
+  "file": "scout-body-source-v1.png",
+  "sha256": "367e1b8e0d631c006e2bd3adc61a09946936578f9f6617278b6b083299a0e5df",
+  "bytes": 567365,
+  "inspection": {
+    "width": 1254,
+    "height": 1254,
+    "pixelBytes": 6290064,
+    "pixelsSha256": "9f68c10c13a3cc0e1993897cf2deba5d7e406c8924df11a3f4e24d4e188c5b98",
+    "alpha": {
+      "zero": 1297895,
+      "partial": 273982,
+      "opaque": 639
+    },
+    "nearOpaque": 228752,
+    "visibleBounds": {
+      "left": 97,
+      "top": 21,
+      "right": 1191,
+      "bottom": 1229
+    },
+    "substantialBounds": {
+      "left": 166,
+      "top": 142,
+      "right": 1088,
+      "bottom": 1047
+    }
+  },
+  "observedFacing": "south",
+  "tool": "built-in image_gen",
+  "sourceArtwork": "roster-concept-v1.png",
+  "originalPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0be-e184-7c03-ba2b-59dc179a9800/exec-b3b1c893-d5a1-4793-8c3f-776bfca780d2.png",
+  "status": "unregistered detailed source candidate; not prepared runtime art",
+  "promptSummary": "Edit approved roster sheet into one isolated transparent orthographic body. Retain slate/carbon, amber straps and cyan optics. Remove blades and discs, retain attached small motor hubs. Request nose up and transparent sweep margin. Scout uses row 1 column 1; carrier uses six arms from row 1 column 4. No text, insignia, background or weapons.",
+  "limitations": [
+    "Camera still points south despite the north-facing request",
+    "Native 32/64px preparation and palette cleanup pending",
+    "Motor centres and envelope need calibration before binding",
+    "Partial alpha and faint non-body pixels require cleanup; no binary-alpha runtime claim"
+  ]
+}
