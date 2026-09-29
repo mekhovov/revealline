@@ -70,15 +70,15 @@ and human cooperation. Static source art is not runtime animation acceptance.
 
 ## Release queue and parallel batches
 
-| Order         | Batch                                 | Current state and next gate                                                                                                   |
-| ------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| 1             | v0.142.3 publication                  | GitHub release published and public marker switched; publisher owns final audit and scoped public acceptance                  |
-| 2             | v0.142.4 selector/content             | #776 plus refreshed #738/#747; final-candidate ownership inventory and artwork screening still need refresh                   |
-| 3             | v0.143.0 audio resilience             | #779 rebased/pushed at `c8a70888e9c4a226470df39cb6163a912c1ee28c`; exact integrated release/public transport checks remain    |
-| 4             | Existing reserved v0.144–v0.149 train | Preserve the coordinator's allocations and dependencies; do not manufacture competing versions                                |
-| 5             | v0.150.0 unified experience           | Existing menu, Pause, actor, discovery, Team, Demo and community inputs; reconcile into one reviewed playable batch           |
-| Source intake | #786                                  | 158 unchanged actor/Moving Edges source files preserved, milestone 57/v0.150.0; draft/hold remains, runtime adoption separate |
-| Maintenance   | #787                                  | CI timing/shard tools preserved under Branch reconciliation, milestone 13; no workflow activation or speedup claim            |
+| Order         | Batch                                 | Current state and next gate                                                                                                          |
+| ------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| 1             | v0.142.3 publication                  | GitHub release published and public marker switched; publisher owns final audit and scoped public acceptance                         |
+| 2             | v0.142.4 selector/content             | First #789 audit preservation, then #776 and refreshed #738/#747; final-candidate inventory and artwork screening still need refresh |
+| 3             | v0.143.0 audio resilience             | #779 rebased/pushed at `c8a70888e9c4a226470df39cb6163a912c1ee28c`; exact integrated release/public transport checks remain           |
+| 4             | Existing reserved v0.144–v0.149 train | Preserve the coordinator's allocations and dependencies; do not manufacture competing versions                                       |
+| 5             | v0.150.0 unified experience           | Existing menu, Pause, actor, discovery, Team, Demo and community inputs; reconcile into one reviewed playable batch                  |
+| Source intake | #786                                  | 158 unchanged actor/Moving Edges source files preserved, milestone 57/v0.150.0; draft/hold remains, runtime adoption separate        |
+| Maintenance   | #787                                  | CI timing/shard tools preserved under Branch reconciliation, milestone 13; no workflow activation or speedup claim                   |
 
 The newer community #784 head is
 `6fff90eeb8e2da40371e008afd4bc0d3277c2fae`: grouped DroneAid entries and the
@@ -86,6 +86,20 @@ scoped Workshop-context correction are pushed. Its owner reports 50 focused
 checks, locale/lint/format checks and bounded EN/UK browser layouts. These are
 not a new public release or full integrated-source proof. #783 is a preservation
 and reconciliation source, not permission to merge overlapping snapshots.
+
+Final queue reconciliation adds **#789** at
+`7d7d25a276e0edf32a6c60fdda8c87a03d8a0c6a`: preserve the exact historical audio
+audit in future evidence packages before any v0.142.4 assembly. Do not rewrite
+the already frozen v0.142.3. #783 is now pushed at
+`0cc7337a8e490d73ad9d7718fb5b208aaf7da924`; it remains preservation-only, with
+#781 requiring restacking. #771/#782/#784/#786/#780 remain inputs to the reserved
+v0.150.0 batch, alongside the separately owned Team/Pause/discovery work. #787
+stays maintenance-held rather than being advertised as a product release.
+
+The reconciliation owner reports 264 registered worktrees and 113 dirty entries
+in a newer inventory. These counts include historical/active owner checkouts and
+dependency-only residue; they are not 113 missing game features and do not
+justify bulk PRs or deletion. Inspect semantic changes and preserve ownership.
 
 The detailed local-source inventory, superseded donors, remaining owner pushes
 and release holds remain in [PR #780](https://github.com/mekhovov/revealline/pull/780).
