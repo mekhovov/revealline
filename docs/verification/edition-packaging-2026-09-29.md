@@ -3,22 +3,32 @@
 All **14 editions passed** the final in-memory package check on 2026-09-29. The
 [compact receipt](edition-packaging-2026-09-29.json) records each output count,
 byte total and inventory hash. These results qualify captured working-tree
-inputs; they do not qualify an immutable HEAD, a published release, an installed
-offline journey, native packaging or physical-device behavior.
+inputs whose runtime and compiler files match committed `7341e3cdf`. They do not
+qualify a published release, an installed offline journey, native packaging or
+physical-device behavior.
 
 ## Source capture and scope
 
-The checker ran from **2026-09-29T02:31:50.913Z** to **2026-09-29T02:32:27.799Z**.
-HEAD was `651d57190a189d5acfab161b2470a9d5e5dcaf9e` at both ends. The
-working tree also contained the packaging correction and other reviewed source
-changes, so that commit hash alone is not the tested input identity.
+The checker ran from **2026-09-29T02:34:11.485Z** to **2026-09-29T02:34:47.644Z**.
+HEAD was `7341e3cdfd7c2fda474b5069a691b7033eb4f782` at both ends. The earlier receipt
+used pre-correction HEAD `651d57190a189d5acfab161b2470a9d5e5dcaf9e`; this
+rerun follows the commit containing the compiler correction. All 827 captured
+input hashes and the six compiler/checker implementation files were independently
+compared with the Git blobs at `7341e3cdf` and matched.
+
+The `game/`, `scripts/` and `authoring/` trees were clean in independent
+observations at 2026-09-29T02:34:32.040Z (during the run) and
+2026-09-29T02:35:22.855Z (after completion). Only documentation was dirty.
+The report also verifies the initial captured runtime bytes and final rereads
+are identical. This remains a working-tree capture with committed runtime and
+compiler inputs, rather than a published release receipt.
 
 The checker captured **827 input paths**, including **566 engine files**,
 selected edition inputs and the offline launcher's direct-read module/locale
 closure. Every captured path was reread at completion; no changed repeated read,
 missing input or final hash difference was observed. The aggregate input hash is
 `892dc56f87beef9a736289af9a5f2a290dd0d4f93278da16b8fdf7854ff304af`. The complete path/hash list remains in
-`/private/tmp/edition-package-matrix-corrected-20260929.json`; the committed receipt retains its digest and summary.
+`/private/tmp/edition-package-matrix-committed-20260929.json`; the committed receipt retains its digest and summary.
 
 The existing build version **0.142.3** is metadata only. No version file
 was changed and no output directory, installation or publication was created.

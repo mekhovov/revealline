@@ -2,7 +2,7 @@
   "format": "fpv-line-edition-packaging-receipt.v1",
   "date": "2026-09-29",
   "passed": true,
-  "scope": "In-memory compilation of captured working-tree inputs with normal public admission and offline manifests. HEAD is context, not the identity of all input bytes. No publication, installed offline, native or device qualification.",
+  "scope": "In-memory working-tree capture; all runtime inputs and compiler/checker implementation match committed 7341e3cdf. Normal admission and offline manifests. Not an installed offline, native, device or published-release qualification.",
   "versionMetadata": "0.142.3",
   "limits": {
     "files": 2000,
@@ -10,19 +10,70 @@
   },
   "sourceCapture": {
     "kind": "working-tree",
-    "startedAt": "2026-09-29T02:31:50.913Z",
-    "finishedAt": "2026-09-29T02:32:27.799Z",
-    "sourceRevisionAtStart": "651d57190a189d5acfab161b2470a9d5e5dcaf9e",
-    "sourceRevisionAtFinish": "651d57190a189d5acfab161b2470a9d5e5dcaf9e",
+    "startedAt": "2026-09-29T02:34:11.485Z",
+    "finishedAt": "2026-09-29T02:34:47.644Z",
+    "sourceRevisionAtStart": "7341e3cdfd7c2fda474b5069a691b7033eb4f782",
+    "sourceRevisionAtFinish": "7341e3cdfd7c2fda474b5069a691b7033eb4f782",
     "headUnchanged": true,
     "unchanged": true,
     "inputFiles": 827,
     "inputInventorySha256": "892dc56f87beef9a736289af9a5f2a290dd0d4f93278da16b8fdf7854ff304af",
-    "changes": []
+    "changes": [],
+    "allCapturedInputsMatchCommit": true,
+    "compilerInputsMatchCommit": true,
+    "compilerInputs": [
+      {
+        "path": "game/test/manual/edition-package-check.mjs",
+        "bytes": 8566,
+        "sha256": "f3f4cce183c2cf0090033d5f3998c0178dcd176ce5008ee99de6c74d954c7a7c"
+      },
+      {
+        "path": "scripts/compile-edition.mjs",
+        "bytes": 37302,
+        "sha256": "e13de3541258ef393a17d76c200f4ac8b1bf7246f9ca974a8cece4cabf16a084"
+      },
+      {
+        "path": "scripts/edition-runtime.mjs",
+        "bytes": 9859,
+        "sha256": "23955a7e926ee44cf7919d906b01d4f6ff53d88cfc8c6c17146834af60f93cdb"
+      },
+      {
+        "path": "scripts/edition-offline.mjs",
+        "bytes": 14296,
+        "sha256": "e8dfae3e5f5d63f9fa3bbcea3043bb4f9b9dbb9e8fbe2cc6173e426c7814e911"
+      },
+      {
+        "path": "scripts/edition-localization.mjs",
+        "bytes": 3734,
+        "sha256": "3ae43b285ecdfba0fa1b9f21dc8030d5dd83a638d5e810113b8fca0fb7625e49"
+      },
+      {
+        "path": "scripts/offline-launcher.mjs",
+        "bytes": 6886,
+        "sha256": "8593a113fe0b823d67053eb2d4a7cf5725bbdbc8800e91f0d82af8033d1a9972"
+      }
+    ],
+    "cleanlinessScope": ["game", "scripts", "authoring"],
+    "cleanlinessObservations": [
+      {
+        "observedAt": "2026-09-29T02:34:32.040Z",
+        "phase": "Run active; independent cleanliness observation after parent dispatch, not retroactive launch-time evidence",
+        "head": "7341e3cdfd7c2fda474b5069a691b7033eb4f782",
+        "relevantStatus": "",
+        "allStatus": "M docs/native-menu-inventory.json\n M docs/verification/edition-menu-matrix-2026-09-29.md"
+      },
+      {
+        "observedAt": "2026-09-29T02:35:22.855Z",
+        "phase": "Independent completion cleanliness observation",
+        "head": "7341e3cdfd7c2fda474b5069a691b7033eb4f782",
+        "relevantStatus": "",
+        "allStatus": "M docs/native-menu-inventory.json\n M docs/native-menu-plan-status.md\n M docs/verification/edition-menu-matrix-2026-09-29.md"
+      }
+    ]
   },
   "fullInputInventory": {
-    "temporaryReport": "/private/tmp/edition-package-matrix-corrected-20260929.json",
-    "reportSha256": "bb581c57e7afdf6f5411d0b05e3cc8228dc4257c08db0fffcfc0132f880dbb1a",
+    "temporaryReport": "/private/tmp/edition-package-matrix-committed-20260929.json",
+    "reportSha256": "cfedb8191f455cea7682b42cfc0389ca5b9cc071a2cfb1a5c4d36116c1479b38",
     "retainedInReceipt": false
   },
   "summary": {
@@ -66,7 +117,7 @@
       "outputBytes": 61640562,
       "byteHeadroom": 5468302,
       "inputInventorySha256": "0ff7086cb33d8eab372c9ad6d9366cafd6102b2670d12680d4745829b15f244a",
-      "outputInventorySha256": "6af2572e835e561f24a16486a9790e4701825dd0548e8a9759e2c0174cc68754"
+      "outputInventorySha256": "2285ef67af3492ea5f5816b03654b0e91772d3a3d8aede4997174d2a7e7f61a7"
     },
     {
       "edition": "coupa-adventure",
@@ -75,7 +126,7 @@
       "outputBytes": 27736366,
       "byteHeadroom": 39372498,
       "inputInventorySha256": "49b0080f120c1c2df67d751541bc90d53fd7f42ad4bb4bd7fa2d5c2e140bacef",
-      "outputInventorySha256": "ec10e8e1f2ee0cfd15028a79bd08660cd3e6d8f83f2c9d7c2af54b4ad0c731e9"
+      "outputInventorySha256": "fd30ef46d8e568c0825d4f0aefc0a68595ff376dcaa672519b03f5c0d495692a"
     },
     {
       "edition": "coupa-culture",
@@ -84,7 +135,7 @@
       "outputBytes": 26187008,
       "byteHeadroom": 40921856,
       "inputInventorySha256": "abb9b000f39ba05aa51ef770711b4ef1817950e2532bc75e5c06f1dab8246494",
-      "outputInventorySha256": "c825f8d030a30fe5b8046e341311eb335d9ccfaf2ff3580877c0b0fba1f7595f"
+      "outputInventorySha256": "ccee43c47d6aafd413c6f630411a19eaeb4ed1288c89c0474889b831931f1031"
     },
     {
       "edition": "coupa-foundations",
@@ -93,7 +144,7 @@
       "outputBytes": 28615153,
       "byteHeadroom": 38493711,
       "inputInventorySha256": "7f24012134c2a5ec60ff53ae48f1564831dff05267fe0e33518db3f76dbfc9fc",
-      "outputInventorySha256": "4fdec62f33dbca9f2dde7201dd291df7a3573c7969f9f24949ac2716a6430045"
+      "outputInventorySha256": "14cc9eeb81978ed9c78b385bb615159c11f3790d34eef6dcc54e2ea0df57d377"
     },
     {
       "edition": "coupa-operations",
@@ -102,7 +153,7 @@
       "outputBytes": 27760983,
       "byteHeadroom": 39347881,
       "inputInventorySha256": "91413464c7304186348edc2f3f5e8f272b6accb9c76fbdadecf17a367c8797b5",
-      "outputInventorySha256": "1e4ba047a7ffb9b381a12f75dfea1933962f019ef1865bf818298b7fc993ebce"
+      "outputInventorySha256": "76991e73398425f75254c5e2b797f839257b7074ce8085429e9a21411510017c"
     },
     {
       "edition": "coupa-developers",
@@ -111,7 +162,7 @@
       "outputBytes": 29586311,
       "byteHeadroom": 37522553,
       "inputInventorySha256": "98df3353d1336b767c157c9361c53315a56b8ce22271a95370d74544814f5b2e",
-      "outputInventorySha256": "45b38b3e0346599ec3cc2d8a4a58a438110b12569ccdffae5e449c4a0b602cb7"
+      "outputInventorySha256": "7347eff1bec9884a6fb08182947dfa3bb2f67370187f368eded26150e6781f88"
     },
     {
       "edition": "droneaid-community",
@@ -120,7 +171,7 @@
       "outputBytes": 26962513,
       "byteHeadroom": 40146351,
       "inputInventorySha256": "c722882bdef200550373f37c71ad7e7f937d2c3bc4aa6753d3f8d8ad41168f32",
-      "outputInventorySha256": "2d96cefd3631724988eff73beb5b70ff01dd5110c4899267815c971598236388"
+      "outputInventorySha256": "b1c52ae466c1331c3656b084768d035c0369603cb629bad2466a0dcc2ea03b43"
     },
     {
       "edition": "droneaid-nl-community",
@@ -129,7 +180,7 @@
       "outputBytes": 66775005,
       "byteHeadroom": 333859,
       "inputInventorySha256": "e26154e36d54baa0d4d76194fb6098a794f32b0c39f670f0818f9d724632119d",
-      "outputInventorySha256": "4d5d23bfc85e1c0d1bf408994c429f838ca3e5d338399766eb87c4fd57ed6811"
+      "outputInventorySha256": "1210776edae27986e8fdf7defd5874fcef15c5b64fb2b0d0cdbf4f9a73ff5750"
     },
     {
       "edition": "droneaid-nl-workshop-lights",
@@ -138,7 +189,7 @@
       "outputBytes": 27800951,
       "byteHeadroom": 39307913,
       "inputInventorySha256": "882debbb421feadb20a54e33d7e2650d0b5bf2670a64a00fc4918cac847e443c",
-      "outputInventorySha256": "d9a4e9df1b660f0f03835edf5fdf81213ddb972d190eaecbcdf784e043d8dc05"
+      "outputInventorySha256": "087b119211f06e020b3cf6bb060f21d28bd709725e973f7a342d47abb73c2f43"
     },
     {
       "edition": "droneaid-nl-parts-in-motion",
@@ -147,7 +198,7 @@
       "outputBytes": 29579795,
       "byteHeadroom": 37529069,
       "inputInventorySha256": "bfcd686fa7cc76b5d0cd9c4d2b718f270976ed6cd339de5396e3d570de394785",
-      "outputInventorySha256": "855065592b8f9fd9fe7671e522f853359878e4db65932dfbc7011954d5bdbbc5"
+      "outputInventorySha256": "df7fc72aec81c21ffeb71f20d32070ac592f449fa90839151925f8de1fd14d1f"
     },
     {
       "edition": "droneaid-nl-makers-together",
@@ -156,7 +207,7 @@
       "outputBytes": 29061633,
       "byteHeadroom": 38047231,
       "inputInventorySha256": "892d2ac882215d4ffb8d498ed62aeed3eaba0967bc953e092eba271c599127db",
-      "outputInventorySha256": "98744f7917926d40719a1d91a8ba0e5f0b0a0ed4dba613d16c32ce32f850033f"
+      "outputInventorySha256": "1cd37a7d496da015d6ac7709762d70ed6691ab171a365806d4b0780751df8703"
     },
     {
       "edition": "droneaid-nl-careful-handoff",
@@ -165,7 +216,7 @@
       "outputBytes": 29186201,
       "byteHeadroom": 37922663,
       "inputInventorySha256": "504ce8110f08af44d49e8905c32666d32c9c6c45816b6a0e20c63eb67cf84e2d",
-      "outputInventorySha256": "ac4c3e92a1ce1d71a43a2ee896ea867a3f48da6923ac983e69362098f39c237f"
+      "outputInventorySha256": "7e3aeefc0a9423d3d773d717fd7150907e456c7b34007d587a4faba3f7d8029a"
     },
     {
       "edition": "droneaid-nl-signals-of-support",
@@ -174,7 +225,7 @@
       "outputBytes": 29173011,
       "byteHeadroom": 37935853,
       "inputInventorySha256": "cde2c0996642f5eb6d49e45e6fa3d84d53d810f572575658e37e1d8541187fa4",
-      "outputInventorySha256": "d7e77ed92d299a48347bc45e45135ae7a9638082ab5e5a5c496eb61eb908977b"
+      "outputInventorySha256": "d862b3a52a4b42e7472f54b5c25d3ff29d7d6a5b3ed4bf14e2f37b6bee310dd1"
     },
     {
       "edition": "droneaid-nl-shared-horizon",
@@ -183,7 +234,7 @@
       "outputBytes": 29372620,
       "byteHeadroom": 37736244,
       "inputInventorySha256": "680b8e45521746be3679f8e9d8e1b4b4e4e7576e3a840230a75f2f7a54735ddc",
-      "outputInventorySha256": "37deef131cdd3b6968aa26bfef77bf9f65b6134df92bbde982037ed52da3fe7d"
+      "outputInventorySha256": "4c8ad8d76b96a59f9ec2285fec60425e25fbdb88f300e49d43f6054d4494b224"
     }
   ]
 }
