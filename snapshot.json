@@ -1,0 +1,27 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:09:57.047316+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p03-close-focus-tests",
+  "branch": "refs/heads/codex/p03-close-focus-tests",
+  "head": "ef1430174dfd35a9df441233988b8737d0401851",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "game/test/still-media-host.test.mjs",
+      "object": "ee381480476bc93b742fa064362a63a906fbeb9f",
+      "sha256": "e0cf60be041ffba3e3c22e8ba11a571e96af6143e36e1e59559c24dbbbf2cce1",
+      "bytes": 18649,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "game/test/still-media-host.test.mjs",
+      "mode": "100644",
+      "object": "9a18a3fb04a3b8908845205e61f26c5b62ddfc8a",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
