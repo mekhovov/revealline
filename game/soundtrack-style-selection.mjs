@@ -1,5 +1,11 @@
 import { boundedJSON, canonicalJSON, exactKeys, required } from './data-json.mjs';
-import { PUBLIC_SOUNDTRACK_STYLE_IDS } from './soundtrack-style-taxonomy.mjs';
+import {
+  PUBLIC_SOUNDTRACK_STYLE_IDS,
+  matchesPublicSoundtrackStyle,
+  localGenresForPublicStyles,
+} from './soundtrack-style-taxonomy.mjs';
+import { SOUNDTRACK_LIMITS } from './soundtrack.mjs';
+import { onlineSoundtrackRecordingAllowed } from './online-soundtrack-catalogue.mjs';
 
 export const SOUNDTRACK_STYLE_SELECTION_KEY = 'public-styles.v1';
 export const SOUNDTRACK_STYLE_SELECTION_FORMAT = 'revealline-public-soundtrack-styles.v1';
@@ -48,4 +54,19 @@ export function selectedPublicSoundtrackStyles(selection, current) {
   return selection?.generation === current.generation
     ? Object.freeze([...selection.styles])
     : undefined;
+}
+
+/** Share the public chooser's exact taxonomy, recording policy and queue bound. */
+export function publicSoundtrackSelection(catalogue, styles, { recordingMode = false } = {}) {
+  const selected = soundtrackStyleSelection(styles, 0).styles;
+  const matches = catalogue.tracks.filter(
+    (track) =>
+      (!recordingMode || onlineSoundtrackRecordingAllowed(track)) &&
+      selected.some((style) => matchesPublicSoundtrackStyle(track, style)),
+  );
+  return {
+    tracks: matches.slice(0, SOUNDTRACK_LIMITS.onlineTracks),
+    count: matches.length,
+    mixWithLibrary: localGenresForPublicStyles(selected).length > 0,
+  };
 }

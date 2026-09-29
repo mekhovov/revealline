@@ -268,7 +268,7 @@ async function setup(
   const player = {
     snapshot: () => ({ ...state }),
     intentRevision: () => intentGeneration,
-    setLibrary: (library) => calls.push(['library', library]),
+    setLibrary: (library, options) => calls.push(['library', library, options]),
     setIntent: (desired) => {
       calls.push(['intent', desired]);
       intentGeneration++;
@@ -2337,6 +2337,7 @@ test('Audio settings expose streamed styles and play a selected style without op
     order: 'shuffle',
     repeat: 'all',
     mixWithLibrary: true,
+    allowLibraryFallback: false,
   });
   assert.deepEqual((await app.store.read()).library.listening.genres, ['synth90s']);
   assert.match(app.node('settings-style-status').textContent, /Playing 1 matching/);
@@ -2474,6 +2475,30 @@ for (const styles of [
       PUBLIC_SOUNDTRACK_STYLE_IDS.filter((id) => reopened.node(`settings-style-${id}`).checked),
       styles,
     );
+    await reopened.click('settings-play-styles');
+    assert.deepEqual(reopened.calls.findLast(([kind]) => kind === 'library')[2], {
+      publicStyles: styles,
+    });
+    const played = reopened.calls.findLast(([kind]) => kind === 'remote');
+    assert(played, 'the remounted explicit button plays the restored public selection');
+    const byStyle = {
+      synth: ['Night Circuit'],
+      metal: ['Iron Pulse', 'Dnipro Bells'],
+      chiptune: ['Pixel Sprint'],
+      rock: ['Road Voltage', 'FPV Run'],
+      electronic: ['Night Circuit'],
+      ambient: ['Quiet Orbit'],
+      fusion: ['Night Circuit'],
+      other: [],
+      ukrainian: ['Dnipro Bells', 'FPV Run'],
+      fpv: ['FPV Run'],
+    };
+    assert.deepEqual(
+      played[1].map((track) => track.title).sort(),
+      [...new Set(styles.flatMap((style) => byStyle[style]))].sort(),
+    );
+    assert.equal(played[2].allowLibraryFallback, false);
+    if (styles.length === 1) assert.equal(played[2].mixWithLibrary, false);
   });
 }
 
