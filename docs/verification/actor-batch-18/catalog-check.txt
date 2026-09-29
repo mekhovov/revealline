@@ -1,5 +1,0 @@
-en:guideCatalogPracticeUnavailable: exact shipped text matches source
-en:guidePreviewUnavailable: exact shipped text matches source
-uk:guideCatalogPracticeUnavailable: exact shipped text matches source
-uk:guidePreviewUnavailable: exact shipped text matches source
-Deterministic complete catalog serialization matches shipped bundle.

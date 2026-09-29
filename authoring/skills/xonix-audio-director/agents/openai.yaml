@@ -1,4 +1,0 @@
-interface:
-  display_name: "Xonix Audio Director"
-  short_description: "Design adaptive music, sound cues, and audio packs"
-  default_prompt: "Use $xonix-audio-director to design the audio palette for 1994 Forever."

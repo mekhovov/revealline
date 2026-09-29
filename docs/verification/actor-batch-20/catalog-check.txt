@@ -1,2 +1,0 @@
-PASS: all EN/UK message/placeholder validation; catalog matches generator; exactly three new interface keys per locale; existing entries and content registry unchanged.
-PASS: node --check on two Guide sources, two changed tests, generated catalog.
