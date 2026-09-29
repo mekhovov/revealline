@@ -397,7 +397,8 @@ test('a fresh configured keyboard direction takes over once, survives async clea
 for (const hasPointerId of [true, false]) {
   test(`Back exits watching on pointerdown and consumes its trailing ${hasPointerId ? 'PointerEvent' : 'MouseEvent'} click after Home restores`, (t) => {
     const f = fixture(t, { phase: 'watching' }),
-      button = new Target(f.root, { demoExit: '' }),
+      header = new Target(f.root, { demoUi: '' }),
+      button = new Target(header, { demoExit: '' }, 'BUTTON'),
       label = new Target(button),
       home = new Target(f.win);
     let activations = 0;
@@ -421,29 +422,33 @@ for (const hasPointerId of [true, false]) {
 
 for (const [code, key] of [
   ['Enter', 'Enter'],
+  ['NumpadEnter', 'Enter'],
   ['Space', ' '],
 ]) {
-  test(`Back exits watching on ${code} and consumes repeats, release and click after focus moves Home`, async (t) => {
-    const f = fixture(t, { phase: 'watching' }),
-      button = new Target(f.root, { demoExit: '' }),
-      home = new Target(f.win);
-    let activations = 0;
-    home.addEventListener('click', () => activations++);
-    assert.equal(button.key('keydown', code, { key }).defaultPrevented, true);
-    assert.equal(f.state.backs, 1);
-    assert.equal(f.state.interruptions, 0);
-    assert.equal(home.key('keydown', code, { key, repeat: true }).defaultPrevented, true);
-    assert.equal(home.key('keyup', code, { key }).defaultPrevented, true);
-    assert.equal(home.emit('click', { detail: 0 }).defaultPrevented, true);
-    assert.equal(activations, 0);
-    assert.equal(f.state.backs, 1);
-    await Promise.resolve();
-    home.key('keydown', code, { key });
-    home.key('keyup', code, { key });
-    home.emit('click', { detail: 0 });
-    assert.equal(activations, 1, 'A separate keyboard activation still reaches Home.');
-    assert.deepEqual(f.state.directions, []);
-  });
+  for (const phase of ['watching', 'loading'])
+    test(`Back inside Demo UI exits ${phase} on ${code} and consumes repeats, release and click after focus moves Home`, async (t) => {
+      const f = fixture(t, { phase }),
+        header = new Target(f.root, { demoUi: '' }),
+        button = new Target(header, { demoExit: '' }, 'BUTTON'),
+        label = new Target(button),
+        home = new Target(f.win);
+      let activations = 0;
+      home.addEventListener('click', () => activations++);
+      assert.equal(label.key('keydown', code, { key }).defaultPrevented, true);
+      assert.equal(f.state.backs, 1);
+      assert.equal(f.state.interruptions, 0);
+      assert.equal(home.key('keydown', code, { key, repeat: true }).defaultPrevented, true);
+      assert.equal(home.key('keyup', code, { key }).defaultPrevented, true);
+      assert.equal(home.emit('click', { detail: 0 }).defaultPrevented, true);
+      assert.equal(activations, 0);
+      assert.equal(f.state.backs, 1);
+      await Promise.resolve();
+      home.key('keydown', code, { key });
+      home.key('keyup', code, { key });
+      home.emit('click', { detail: 0 });
+      assert.equal(activations, 1, 'A separate keyboard activation still reaches Home.');
+      assert.deepEqual(f.state.directions, []);
+    });
 }
 
 test('teardown removes keyboard, pointer and lifecycle observers', (t) => {
@@ -557,9 +562,10 @@ for (const activation of ['pointer', 'assistive']) {
 }
 
 test('fullscreen, next and menu buttons activate normally through pointer, keyboard and assistive clicks', (t) => {
-  const f = fixture(t, { phase: 'watching' });
+  const f = fixture(t, { phase: 'watching' }),
+    controls = new Target(f.root, { demoUi: '' });
   for (const name of ['fullscreen', 'next', 'menu']) {
-    const button = new Target(f.root, { demoUi: name }, 'BUTTON');
+    const button = new Target(controls, { name }, 'BUTTON');
     let activations = 0;
     button.addEventListener('click', () => activations++);
     assert.equal(button.pointer('pointerdown', 11).defaultPrevented, false);

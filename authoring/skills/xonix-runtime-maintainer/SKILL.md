@@ -1649,3 +1649,15 @@ enabled tabs and one-action ownership with the shared controller navigator. Nati
 text/select editing and modified shortcuts must remain excluded. A Settings visit
 must preserve a paused flight and require explicit Resume. Follow the regression
 prompt in [Settings native keys](../../../docs/settings-native-key-navigation.md).
+
+## Nested Demo exit activation
+
+A Demo Back control can be inside the same `[data-demo-ui]` wrapper as Fullscreen
+and Next. Claim exit Enter/NumpadEnter/Space before yielding ordinary UI input.
+Keep repeated keydown, keyup and the resulting keyboard click owned until the
+exit gesture ends; a fresh later activation must work. Model the actual wrapper
+and label nesting in tests, including loading cancellation and restored Home
+focus. Do not infer physical-device or browser qualification from this fixture.
+Prompt: "Test Demo Back inside its real UI wrapper, hold Enter across exit,
+release it, then activate Watch with a fresh press; verify no accidental replay
+restart and preserve ordinary Fullscreen/Next activation."
