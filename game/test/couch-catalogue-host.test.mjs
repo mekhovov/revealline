@@ -8,6 +8,11 @@ import { waitFor } from './helpers/wait-for.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
 import { createCouchChapterInstaller } from '../couch/couch-chapter-install.mjs';
 import { libraryMissionId } from '../mission-library/library.mjs';
+import {
+  CLASSIC_RULES_CURRENT,
+  classicRulesCampaignIdentity,
+  supportsClassicCurrentRules,
+} from '../mission-library/classic-current-rules.mjs';
 
 const catalogue = JSON.parse(
   await readFile(new URL('../content/optional-worlds.json', import.meta.url), 'utf8'),
@@ -33,10 +38,21 @@ const indexedMission = index.missions.find(
   (row) => row.packId === chapter.id && row.levelId === firstLevel,
 );
 assert(indexedMission, 'Use the exact current indexed optional mission.');
+const indexedRulesEdition = supportsClassicCurrentRules(indexedMission)
+  ? CLASSIC_RULES_CURRENT
+  : null;
 const missionId = libraryMissionId({
-  owner: JSON.stringify(['classic', indexedMission.source, chapter.id]),
-  edition: indexedMission.sourceFile.sha256,
-  campaign: indexedMission.campaignKey,
+  owner: JSON.stringify([
+    'classic',
+    indexedMission.source,
+    chapter.id,
+    ...(indexedRulesEdition ? [indexedRulesEdition] : []),
+  ]),
+  edition: `${indexedMission.sourceFile.sha256}${indexedRulesEdition ? `:${indexedRulesEdition}` : ''}`,
+  campaign: classicRulesCampaignIdentity({
+    ...indexedMission,
+    rulesEdition: indexedRulesEdition,
+  }),
   mission: indexedMission.levelId,
   revision: indexedMission.levelRevision,
 });
@@ -44,6 +60,14 @@ const missionCard = (page) =>
   [...(page.$('journey-cards')?.children ?? [])].find(
     (button) => button.dataset.missionId === missionId,
   );
+function assertMissionReady(page) {
+  const card = missionCard(page),
+    action = card.querySelector('.journey-card-action');
+  assert.equal(card.disabled, false);
+  assert.equal(card.dataset.availabilityState, 'ready');
+  assert.equal(action.hidden, true);
+  assert.equal(action.textContent, '');
+}
 function assertCurrentBaseCardFocused(page) {
   const row = index.missions.find(
     (item) => item.source === 'base' && item.levelId === page.renders[0].levelId,
@@ -523,7 +547,7 @@ hostTest(
     const before = snapshot(p),
       writes = f.writes().length;
     await openCatalogue(p);
-    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+    assertMissionReady(p);
     activate(p, missionCard(p));
     await settled(
       p,
@@ -579,7 +603,7 @@ for (const interruption of ['Back then setup', 'foreground loss'])
       t.after(() => gate.resolve());
       const before = snapshot(p);
       await openCatalogue(p);
-      assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+      assertMissionReady(p);
       let heldImage;
       f.media.onDecode = async (image) => {
         // Embedded originals decode from data URLs. Hold the first actual
@@ -608,7 +632,8 @@ for (const interruption of ['Back then setup', 'foreground loss'])
           'A newer browse intent must expose Back while the retired decoder is unresolved.',
         );
         await closeCatalogue(p);
-        tap(p, 'race-optional-setup-toggle');
+        tap(p, 'race-options');
+        tap(p, 'race-settings-tab-gameplay');
         assert.equal(p.$('race-optional-setup').open, true);
         activate(p, 'race-focus');
         assert.equal(p.$('race-setup').hidden, false);
@@ -671,7 +696,7 @@ hostTest(
       decoded = false;
     t.after(() => gate.resolve());
     await openCatalogue(p);
-    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+    assertMissionReady(p);
     f.media.onDecode = async (image) => {
       if (heldImage || !f.writes().length || sha(image.bytes) !== sha(firstPicture)) return;
       heldImage = image;
@@ -722,7 +747,7 @@ hostTest(
     await prepareState(p, 'finished');
     const before = snapshot(p);
     await openCatalogue(p);
-    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+    assertMissionReady(p);
     let heldImage;
     f.media.onDecode = async (image) => {
       if (heldImage || !f.writes().length || sha(image.bytes) !== sha(firstPicture)) return;
@@ -761,7 +786,7 @@ hostTest(
     await prepareState(p, 'paused');
     const before = snapshot(p);
     await openCatalogue(p);
-    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+    assertMissionReady(p);
     p.$('journey-back').focus();
     assert.ok(p.doc.activeElement === p.$('journey-back'), 'Back owns initial touch focus.');
     tap(p, missionCard(p));
@@ -811,7 +836,7 @@ hostTest(
     await prepareState(p, 'paused');
     const before = snapshot(p);
     await openCatalogue(p);
-    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+    assertMissionReady(p);
     p.$('journey-back').focus();
     assert.ok(p.doc.activeElement === p.$('journey-back'), 'Back owns initial touch focus.');
     tap(p, missionCard(p));
