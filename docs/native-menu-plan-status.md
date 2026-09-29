@@ -1,6 +1,6 @@
 # Native menus: plan status and release batches
 
-Reviewed 2026-09-29 against PR [#782](https://github.com/mekhovov/revealline/pull/782), after merging accepted main `b5ab06e12542f72e33c45b973ba693a5e1509c1c` into `10f9bf21e`. This ledger supersedes the earlier blanket “phases 1–6 implemented” completion statement. “Implemented” describes source; it does not imply every acceptance criterion passed on hardware or a published build.
+Reviewed 2026-09-29 against PR [#782](https://github.com/mekhovov/revealline/pull/782), after reconciling accepted main `b5ab06e12542f72e33c45b973ba693a5e1509c1c` and its later Pages-only successor `6a67d6dbfe01d5e1f3842b5a79dd5d5ddeefcfd8` (merge `78542943e`). This ledger supersedes the earlier blanket “phases 1–6 implemented” completion statement. “Implemented” describes source; it does not imply every acceptance criterion passed on hardware or a published build.
 
 ## Phase-by-phase status
 
@@ -22,6 +22,8 @@ Reviewed 2026-09-29 against PR [#782](https://github.com/mekhovov/revealline/pul
 - FPV Versus/Team landscape and portrait compositions: `d89af8ea4`; 59 focused tests, 114 crop combinations and four browser motion checks passed.
 - Installed Custom Solo native landing/Settings: `6e8d3a0cb`; 83 focused tests and full localization passed; fresh EN/UK keyboard/resume/responsive checks recorded.
 - Checked Controller Practice Return: `4b8856053`; five host and fourteen boundary tests plus a real keyboard browser handoff passed.
+- Versus Settings library admission: `0832938b0`; correct captured scope and cancellation preserve both boards.
+- Custom mode-selection intent: `2612dc7d4`; exact mission selection is separate from Play. Final 34-case cohort and real browser selection/Back/Play/pause journey passed; old Play routes remain compatible.
 
 See the [custom-player report](verification/custom-menu-2026-09-29.md) and [FPV mode-art report](verification/fpv-mode-scenes-2026-09-29.md). These commits are release inputs, not published releases.
 
