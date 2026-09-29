@@ -1,19 +1,39 @@
-# UX2/UX6 — Team More navigation
+# UX2/UX3 — Team readability and reliable recovery
 
-## Player result
+This bounded source batch updates existing PR757 on main
+`6a67d6dbfe01d5e1f3842b5a79dd5d5ddeefcfd8`. It is a draft input to the
+serialized v0.150.0 batch, not a separately versioned or published release.
 
-Team's compact **More** disclosure contains Home, Legacy arenas, About & credits, and
-Releases. Back closes the disclosure and restores focus to its opener. Starting play
-retires an open lobby disclosure, and Pause/results always open with More collapsed so
-secondary destinations do not overwhelm Resume, Retry, mission browsing, Help,
-Settings, and Sound.
+## Player changes
 
-## Input evidence
+- More still exposes Home, the alternative journey, About & credits and Releases.
+  Starting play retires an expanded lobby disclosure. Pause and terminal panels
+  begin with More collapsed. Back restores its opener. Help's existing behavior
+  stays separate.
+- Team now forwards the global Standard/Large preference into its canvas painter.
+  Large scales CSS-sized type and measured backings by 4/3 after the existing
+  clamp. Player identity shapes and downed plus signs accommodate that text.
+  Actual craft artwork, collision/contact circles, board geometry and timing do
+  not change. Standard retains the recorded baseline draw commands.
+- Resume restores the current downed player's cause and rescue instructions,
+  including live language changes; ordinary Resume retains its normal message.
+  Revival and Retry cannot resurrect old rescue guidance.
+- An empty Support pulse no longer dismisses the teaching hint as learned.
+  Learning requires an actual slowed enemy or intercepted impact. Existing v1
+  records remain readable and are not migrated or reset.
 
-The focused host case exercises native touch opening, keyboard Back and opener return,
-modeled controller D-pad navigation, Confirm and Back, all four global destinations,
-and the lobby → play → Pause transition. These are modeled browser inputs; physical
-touch, controller, and Steam Deck checks remain separate release acceptance.
+## Evidence and delivery boundary
 
-The complete Team host file and standard non-long source gates qualify the exact PR
-head. The committed temporary policy waives the long suite, which is not claimed.
+The complete integrated Team cohort passes 112/112. Display host tests pass 9/9
+and the two source-dependency checks pass. Scoped lint/format, diff checks and
+compiled-presentation metadata pass. The controller display fixture now opens
+Options with a fresh modeled South press: its previous synthetic click was
+correctly rejected as a compatibility echo after controller join. Original
+assertions remain, and red/green evidence is retained.
+
+See [the evidence and outstanding limitations](verification/team-readability-20260929/README.md).
+Browser observations are separate from modeled input and physical-device checks.
+The rendered source changes reopen Team/equipment production provenance. No old
+approval, compiled asset, source image, version or release is rewritten. Exact
+integrated production review/build and publisher admission/public checks remain
+required before release acceptance. Long-suite waiver is not a passing result.

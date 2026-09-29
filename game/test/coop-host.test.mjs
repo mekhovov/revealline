@@ -1465,7 +1465,11 @@ for (const [id, path] of modePanelLinks)
     assert.equal(f.$('coop-overlay').hidden, false);
     assert.equal(f.$('coop-resume').hidden, true);
     assert.equal(f.$('coop-overlay-kicker').textContent, 'ONE MORE SHARED PLAN');
-    assert.equal(f.$('coop-more').open, false, 'Terminal results keep secondary destinations collapsed.');
+    assert.equal(
+      f.$('coop-more').open,
+      false,
+      'Terminal results keep secondary destinations collapsed.',
+    );
     tabToTeamAction(f, id);
     const before = heldTeam(f);
     f.$(id).setAttribute('href', 'https://other.invalid/not-a-mode');
