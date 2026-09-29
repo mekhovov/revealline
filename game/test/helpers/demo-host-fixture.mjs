@@ -72,6 +72,8 @@ export async function demoPage(t, { clipId = 'first-signal-left', ...options } =
     // legitimately retain the earlier module's constructor across page reloads.
     if (typeof path?.pathname !== 'string' || !path.pathname.includes('/demo-data/'))
       return ordinaryFetch(path, fetchOptions);
+    const custom = await options.fetchResponse?.(path, fetchOptions);
+    if (custom !== undefined) return custom;
     let contents = await readFile(path, 'utf8');
     if (path.pathname.endsWith('/catalog.json')) {
       const catalog = JSON.parse(contents);
