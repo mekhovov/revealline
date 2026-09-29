@@ -57,6 +57,13 @@ Its initial preflight passed, but `release-ready` explicitly failed for
 That is not a source-test failure or a passed hosted build. Do not bypass the gate
 or allocate a competing release. Source development continues independently.
 
+Related native-experience inputs also advanced without production testing:
+**PR #757** adds the readable dense-Team Field details fallback, while **PR #761**
+adds actual-mission encounter practice and exact-parent artwork comparison.
+Both are pushed/open drafts, not merged or released. The exact source receipts,
+remaining caveats and non-overlapping test counts are recorded below; no Levels
+runtime files were modified to adopt or duplicate those owners' work.
+
 ## Delivery boundary
 
 - GitHub lists **v0.142.3** as published, from the main continuation based on
@@ -251,15 +258,77 @@ all-state packing or physical devices. Levels verified the head and read the
 evidence; it did not repeat those runs. Retained raw-log whitespace remains an
 explicit evidence exception, not a clean all-file whitespace claim.
 
-**Do not close all A2.** Remaining work includes a readable external cue rail or
-equivalent overflow policy for saturated custom maps, moving-frame cost and full
-native-state/locale coverage, 200% zoom, physical controllers/touch, and reviewed
-Team/equipment production closure followed by frozen public verification.
-Unplaced diagnostics alone are not a player-facing overflow solution; prior
-overlap/null fallback can remain in impossible cases. The earlier 0.5–2-day
-estimate covered the now-implemented bounded correction, not these broader
-gates. Re-estimate the overflow slice after its presentation policy is selected.
-Keep A3 outer HUD acceptance distinct and preserve historical approvals.
+At this earlier head, a readable external cue rail or equivalent overflow policy
+for saturated custom maps remained open. The follow-up below now implements a
+paused Field details recovery; do not continue listing that bounded source slice
+as unimplemented. **Do not close all A2:** moving-frame cost, full native-state/
+locale coverage, 200% zoom, physical controllers/touch and production/public
+qualification remain deferred, not passed. Keep A3 outer HUD acceptance distinct
+and preserve historical approvals.
+
+### A2 follow-up: dense-Team Field details implemented
+
+PR #757 is now verified at
+`fa442656da2d9d5827a2f12209d5f19eb49b94b1`, still an open draft. When the bounded
+compact-canvas planner reports unplaced cues, a **Field details** action appears
+outside the complete board and stays available for the attempt. One activation
+pauses and opens the existing Help reader with every player, active enemy and
+core. It retains identities, phase, lock, slowdown and anchor state. Back returns
+to the action while paused; Resume is deliberate. Resizing inside the reader
+preserves its exact rows and focus. Critical loss/rescue messages are not replaced.
+
+The pushed [overflow evidence](https://github.com/mekhovov/revealline/blob/fa442656da2d9d5827a2f12209d5f19eb49b94b1/docs/verification/team-cue-overflow-20260929/README.md)
+and terminal TAP summary record **163/163** complete adjacent renderer/host tests,
+zero skips or failures. The 55-case focused cohort overlaps that total and must
+not be added again. Scoped lint/format/syntax and independent review are reported
+passing. Local ordinary-import browser evidence uses a dense test arena, not a
+new campaign: 26 reader entries remain intact through **568×320 → 390×844**
+rotation; Back retains paused focus. Levels verified the current head and read
+the receipts, but did not rerun the tests or browser session. The read-only audit
+also matched all 20 overflow-manifest entries to their current-head byte counts
+and hashes; screenshot bytes were checked, not a new visual review.
+
+Dense canvas labels can still overlap in impossible packing cases. The complete
+paused reader is the implemented fallback, **not** proof that every live caption
+fits on a 212-pixel board. No core rules, contacts, clocks, pictures or production
+approvals change. Full-mission, physical-device, zoom/performance/offline and
+production/public acceptance remain deferred.
+
+### B / C6 follow-up: mission practice and exact artwork-parent inspection
+
+PR #761 is now verified at
+`e8fcaa365380d1b64a4aab17f83862c3c69793fd`, still an open draft. Field Guide adds
+Optional scout, Optional sentry, Trail pursuit and Heading interception lessons.
+Validated effective mission rules control Practice availability. Practice starts
+an isolated run from the mission's exact effective rules, spawn, recipes, seed
+and steering policy; it does not continue a paused cut, enable extra encounters,
+award progress or replace a parent on a failed/cancelled/stale handoff. Existing
+Controller Practice retains seed 1. Live language changes preserve the actual
+selector instead of replacing it with translated label text.
+
+The separate `.rlart` workflow now resolves the declared immediate parent in a
+verified packet and displays exact identities, dimensions and hashes at **Fit
+whole image** or **Native pixels**. Native mode uses one image pixel per CSS
+pixel in a bounded scroll area, without resampling saved bytes. Only the selected
+asset and optional parent are decoded. Stale work and image URLs are retired;
+exports, original bytes and gameplay bindings remain unchanged.
+
+The pushed [actor-batch-16 evidence](https://github.com/mekhovov/revealline/blob/e8fcaa365380d1b64a4aab17f83862c3c69793fd/docs/verification/actor-batch-16/README.md)
+records **69/69 encounter/host checks** and a separate **28/28 artwork checks**,
+zero skips. Earlier fixture failures and their unchanged-HEAD reproductions are
+retained, not erased; they are not a new production-gameplay failure claim.
+Local Studio import of the retained Ukrainian artwork packet verifies selected
+and immediate-parent identities, measured Native sizes, Fit and EN/UK controls.
+Levels verified the head and read these receipts, not an independent new run.
+The inspected README, result logs and retained fixture-failure/correction logs
+also match their manifest byte counts and hashes.
+
+This implements inspection/practice workflows, **not** artwork adoption, cultural
+or pixel-art quality approval, a 59-slot production admission, version allocation,
+merge or release. Remaining source work includes full cross-mode encounter
+guidance and cohort/runtime binding preparation; Team teaching acknowledgement/
+stored-schema design remains a separate item. Priorities remain **A → B → C**,
+with formal C2 human game-feel study last and production qualification deferred.
 
 Prefer these reviewed small slices in the existing v0.150.0 batch, with logical
 commits and focused regressions, rather than one new release per fix. Once a
@@ -273,13 +342,20 @@ hardware availability and human review; they are not promised delivery dates.
 | Priority       | Work                                                                                     | Why it matters                                                                                                                    | Focused effort                                                               |
 | -------------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | 1              | Finish the already-prepared selector/audio/native/community batches                      | Turns completed source work into player-visible improvements and resolves navigation/recovery defects                             | Per owning queue; do not restart completed qualification                     |
-| 2              | Integrate the Team Resume/Support/More/Large batch                                       | Players need accurate rescue instructions and readable two-player state                                                           | Source complete; publisher integration, production testing deferred          |
+| 2              | Integrate Team Resume/Support/More/Large and dense-field reader                          | Players need accurate rescue instructions and readable two-player state, including impossible compact canvas packing              | Bounded source complete; publisher integration, production testing deferred  |
 | 3              | Complete strategic-route evidence for the existing v37 trio and Cooling loop v38         | Four complete routes now exist; alternate Pressure/Relay strategies and broader full-route coverage remain open                   | 1–3 engineering days remaining for the bounded evidence/repair slice         |
 | 4              | Review a new default spatial edition                                                     | New geometry cannot improve normal play while remaining opt-in; require useful complete routes, not just a larger version number  | Re-estimate after the v37 route review and human feedback                    |
 | 5              | Team teaching acknowledgement and remaining Studio/HUD donor ports                       | Avoid consumed-before-seen teaching, false Support completion and stale historical-host imports                                   | 0.5–2 days per bounded successor, after schema/ownership review              |
 | 6              | Whole-Journey pacing, actor/state readability and final reference dispositions           | Distinct fair challenges matter more than repeating easy geometry or increasing speed globally                                    | 3–7 days per polished 3–5-mission slice; broader review remains multi-week   |
 | Deferred       | Production, accessibility/performance and two-player/device/human qualification          | Finds failures that mocks, byte audits and single-player routes cannot establish; does not block source work under latest request | 2–5 days per bounded qualification stream plus hardware/players when resumed |
 | Separate gates | Creator/community external services, soundtrack listening/rights and original production | These require real environments, rights and human quality review                                                                  | Owner estimates; not closed by source preservation or automated passes       |
+
+Within the unchanged **A → B → C** ordering, do not recreate the implemented
+four-role Guide practice or retained-parent comparison. The next B/C source
+slices are broader cross-mode encounter guidance and accepted cohort/runtime
+binding preparation, estimated **0.5–2 engineering days per bounded slice**
+after owner reconciliation. This is not an estimate for production-art admission
+or the formal C2 human study, which remains last and deferred.
 
 ## Remaining local-source dispositions
 
