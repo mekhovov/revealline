@@ -40,7 +40,7 @@ test('unknown event causes use the fixed fallback without raw codes or coercion'
   const { reason, tip } = failureExplanation(undefined);
   assert.ok(unknown.includes(`${reason} ${tip}`));
   for (const cause of [
-    'combat-projectile',
+    'future-unregistered-cause',
     '<img src=x onerror=x>',
     'constructor',
     {
@@ -50,6 +50,20 @@ test('unknown event causes use the fixed fallback without raw codes or coercion'
     },
   ])
     assert.equal(outcomeMessage([failure(cause)], run), unknown);
+});
+
+test('registered sentry contact uses its loss advice while preserving ordinary recovery', () => {
+  const message = outcomeMessage([failure('combat-projectile')], {
+    status: 'respawning',
+    lives: 2,
+  });
+  const { reason, tip } = failureExplanation('combat-projectile');
+  assert.match(reason, /sentry shot/i);
+  assert.equal(
+    message,
+    `Life lost. ${reason} ${tip} 2 lives remain. Recovery continues in this attempt.`,
+  );
+  assert.doesNotMatch(message, /combat-projectile|future-unregistered-cause/);
 });
 
 test('terminal completion outranks every other event in either order and a won run ignores stale cause', () => {

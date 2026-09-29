@@ -47,6 +47,23 @@ export const SCOUT_COMPARISON_COHORTS = freezePresentation({
     ],
   },
 });
+export const ACTOR_COMPARISON_COHORTS = freezePresentation({
+  ...SCOUT_COMPARISON_COHORTS,
+  'reference-v6': {
+    directory: 'authoring/library/fpv-body-roster-candidates',
+    format: 'revealline.rotor-body-detail-candidates.v1',
+    manifestSHA256: '49c0ff40b5107eafe39b65a827339608b11b2a534d8a96767617c90b68651535',
+    assetRevision: 1,
+    roles: ['scout', 'bomber', 'carrier', 'interceptor', 'fiber', 'impact', 'trapper'],
+    sources: [
+      'game/presentation/rotor-body-roster-art.mjs',
+      'game/presentation/rotor-body-optical-art.mjs',
+      'game/presentation/rotor-body-detail-art.mjs',
+      'game/presentation/rotor-candidate-art.mjs',
+      'game/presentation/pixel-art.mjs',
+    ],
+  },
+});
 const hash = async (bytes) =>
   Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), (byte) =>
     byte.toString(16).padStart(2, '0'),
@@ -91,7 +108,7 @@ async function readBytes(path, limit, request, signal) {
   return bytes;
 }
 
-function scoutAssets(manifest, construction, cohort) {
+function actorAssets(manifest, construction, cohort, classId) {
   required(
     manifest.format === cohort.format &&
       manifest.status === 'source-candidate-not-runtime-default' &&
@@ -154,16 +171,17 @@ function scoutAssets(manifest, construction, cohort) {
       );
       return { record, asset };
     })
-    .filter(({ record }) => record.slot.startsWith('player.scout.'));
+    .filter(({ record }) => record.slot.startsWith(`player.${classId}.`));
 }
 
 /** A source-study image override, deliberately without resolved release or pin
- * authority. Every non-Scout slot delegates to the caller's approved lease. */
-export async function acquireScoutComparison(
+ * authority. Only the selected class pair replaces the caller's approved images. */
+export async function acquireActorComparison(
   approvedSnapshot,
   {
     signal,
-    construction = 'reference-v3',
+    classId = 'scout',
+    construction = 'reference-v6',
     treatment = 'auto',
     fetch: request = globalThis.fetch,
     decodeImage,
@@ -176,10 +194,18 @@ export async function acquireScoutComparison(
   );
   required(['auto', 'compact', 'detailed'].includes(treatment), 'Unknown candidate treatment.');
   required(
-    typeof construction === 'string' && Object.hasOwn(SCOUT_COMPARISON_COHORTS, construction),
+    typeof construction === 'string' && Object.hasOwn(ACTOR_COMPARISON_COHORTS, construction),
     'Unknown candidate construction.',
   );
-  const cohort = SCOUT_COMPARISON_COHORTS[construction];
+  const cohort = ACTOR_COMPARISON_COHORTS[construction];
+  required(
+    typeof classId === 'string' && cohort.roles.includes(classId),
+    'Unknown candidate class.',
+  );
+  required(
+    construction === 'reference-v6' || classId === 'scout',
+    'Earlier comparisons support Scout only.',
+  );
   const manifestPath = `${cohort.directory}/manifest.json`;
   required(timeoutMs > 0 && timeoutMs <= 15000, 'Invalid candidate timeout.');
   const controller = new AbortController();
@@ -209,10 +235,15 @@ export async function acquireScoutComparison(
       stopped,
       (async () => {
         const bytes = await readBytes(manifestPath, 98304, request, controller.signal);
+        const manifestHash = await hash(bytes);
+        required(
+          !cohort.manifestSHA256 || manifestHash === cohort.manifestSHA256,
+          'Candidate manifest differs from the exact v6 cohort.',
+        );
         const manifest = boundedJSON(JSON.parse(new TextDecoder().decode(bytes)), {
           maxBytes: 98304,
         });
-        const assets = scoutAssets(manifest, construction, cohort);
+        const assets = actorAssets(manifest, construction, cohort, classId);
         for (const path of cohort.sources) {
           const source = await readBytes(path, 262144, request, controller.signal);
           required(
@@ -258,8 +289,9 @@ export async function acquireScoutComparison(
           kind: 'source-only-actor-comparison',
           status: manifest.status,
           construction: manifest.construction,
-          manifest: { path: manifestPath, bytes: bytes.byteLength, sha256: await hash(bytes) },
+          manifest: { path: manifestPath, bytes: bytes.byteLength, sha256: manifestHash },
           sources: manifest.sources,
+          classId,
           treatment,
           referenceConcept: manifest.referenceConcept,
           referenceUse: manifest.referenceUse,
@@ -275,7 +307,7 @@ export async function acquireScoutComparison(
           image(slot) {
             required(!released, 'Candidate comparison is released.');
             if (frames.has(slot))
-              return frames.get(treatment === 'auto' ? slot : `player.scout.${treatment}`);
+              return frames.get(treatment === 'auto' ? slot : `player.${classId}.${treatment}`);
             return approvedSnapshot.image(slot);
           },
         });
@@ -290,4 +322,14 @@ export async function acquireScoutComparison(
     signal?.removeEventListener('abort', cancel);
     controller.abort();
   }
+}
+
+/** Preserve the original Scout-only v3-v5 comparison API and default. */
+export async function acquireScoutComparison(approvedSnapshot, options = {}) {
+  const { construction = 'reference-v3' } = options;
+  required(
+    typeof construction === 'string' && Object.hasOwn(SCOUT_COMPARISON_COHORTS, construction),
+    'Unknown candidate construction.',
+  );
+  return acquireActorComparison(approvedSnapshot, { ...options, construction, classId: 'scout' });
 }

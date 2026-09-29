@@ -61,7 +61,7 @@
               ><button type="button" data-move="down" aria-label="Steer down">↓</button
               ><button type="button" data-move="right" aria-label="Steer right">→</button>
             </div>
-            <button type="button" id="boost-button" aria-pressed="false">Boost</button>
+            <button type="button" id="boost-button" aria-pressed="false" hidden>Boost</button>
           </div>
         </div>
       </div>
@@ -72,9 +72,22 @@
             >Mission
             <select id="mission" disabled></select
           ></label>
+          <label for="craft"
+            >Craft
+            <select id="craft" disabled>
+              <option value="scout">Scout</option>
+              <option value="bomber">Light carrier (Bomber)</option>
+              <option value="carrier">Heavy carrier</option>
+              <option value="interceptor">Interceptor</option>
+              <option value="fiber">Fiber relay</option>
+              <option value="impact">Impact craft</option>
+              <option value="trapper">Trapper</option>
+            </select>
+          </label>
           <button id="load" type="button" disabled>Load selected</button>
         </div>
-        <p id="instructions">Arrows/WASD · Shift boost · Esc pause</p>
+        <p id="instructions">Arrows/WASD · Esc pause</p>
+        <p id="craft-rules"></p>
         <p id="purpose"></p>
         <label
           >Touch steering
@@ -85,9 +98,9 @@
         >
         <p>
           One real run is drawn twice. The second view defaults to reduced effects. Arrow keys,
-          WASD, the direction pad or the selected swipe mode steer continuously. Shift boosts;
-          Escape pauses. The existing basic gamepad reader supports steering and flight actions;
-          controller menu navigation is outside this tool.
+          WASD, the direction pad or the selected swipe mode steer continuously. Escape pauses. The
+          existing basic gamepad reader supports steering and flight actions; controller menu
+          navigation is outside this tool.
         </p>
         <label
           ><input id="reference-reduced" type="checkbox" /> Reduced effects in reference too</label
@@ -98,6 +111,9 @@
             >Actors
             <select id="comparison-body" disabled>
               <option value="approved">Approved FPV</option>
+              <option value="v6-auto">V6 roster candidate · automatic native size</option>
+              <option value="v6-compact">V6 roster candidate · native 32 px</option>
+              <option value="v6-detailed">V6 roster candidate · native 64 px</option>
               <option value="v3-auto">V3 Scout candidate · automatic native size</option>
               <option value="v3-compact">V3 Scout candidate · native 32 px</option>
               <option value="v3-detailed">V3 Scout candidate · native 64 px</option>
@@ -119,9 +135,10 @@
             flashes</label
           >
           <p class="note">
-            The reference always uses approved FPV actors. V3, V4 and V5 compare native Scout bodies
-            using the same retained rotor anchors. Other actors, mission artwork, contact cues and
-            simulation stay shared. No candidate is registered or approved by this preview.
+            The reference always uses approved FPV actors. V6 compares the selected craft's native
+            body and larger propellers. Earlier V3–V5 studies support Scout only. Both boards share
+            the selected craft's actual rules, other actors, original artwork and contact cues. No
+            candidate is registered or approved by this preview.
           </p>
           <label>
             Contact outline
@@ -142,8 +159,9 @@
           deliberate Retry; ordinary life loss remains part of the current attempt.
         </p>
         <p class="note">
-          Standard gameplay tuning · Scout · immediate turns · seed 1. Fresh-play tuning is applied
-          once and retained for Retry; this comparison does not read personal admin overrides. No
+          Standard gameplay tuning · selected craft · immediate turns · seed 1. Changing craft
+          prepares a fresh run; Retry retains the accepted craft. Fresh-play tuning is applied once
+          and retained for Retry; this comparison does not read personal admin overrides. No
           attempt, progress, award or replay is saved. Existing original artwork and the approved
           FPV actor release remain separate identities. This tool does not change either binding.
         </p>

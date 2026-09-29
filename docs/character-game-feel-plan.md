@@ -309,3 +309,9 @@ Use this bounded multi-phase PR as one compatible publisher input. Preserve sepa
 ## Latest delivery checkpoint
 
 Use the [29 September completed/remaining register](plan-status-2026-09-29.md) for current queue state and effort ranges. Batch 12 adds rule-derived optional-encounter teaching, Team recovery-pose correction, inspection-only travel response, and a separate native Poltava board candidate. These bounded slices do not close whole phases. The approved order above is now A → B → C → remaining work, with C2 last.
+
+Batch15 extends that existing comparison to all seven native V6 craft with real
+retained class setup and exact authenticated images. Authored Arcade restrictions
+remain authoritative; the tool hides its inactive Boost control. This is a bounded
+A2 adoption prerequisite, not a new comparison project or C2 human qualification.
+See [the evidence and open acceptance](verification/actor-batch-15/README.md).

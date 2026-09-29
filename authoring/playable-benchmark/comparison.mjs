@@ -1,4 +1,4 @@
-import { acquireScoutComparison } from './candidate-appearance.mjs';
+import { acquireActorComparison } from './candidate-appearance.mjs';
 import { createBenchmarkSelection } from './session.mjs';
 
 const choices = Object.freeze(
@@ -7,6 +7,7 @@ const choices = Object.freeze(
       ['v3', 'reference-v3'],
       ['v4', 'reference-v4'],
       ['v5', 'reference-v5'],
+      ['v6', 'reference-v6'],
     ].flatMap(([prefix, construction]) =>
       ['auto', 'compact', 'detailed'].map((treatment) => [
         `${prefix}-${treatment}`,
@@ -22,7 +23,7 @@ export const COMPARISON_BODIES = Object.freeze(['approved', ...Object.keys(choic
 export function createSceneComparison({
   actors,
   session,
-  acquire = acquireScoutComparison,
+  acquire = acquireActorComparison,
   onStatus = () => {},
 }) {
   let reduced = true;
@@ -37,7 +38,12 @@ export function createSceneComparison({
       if (!COMPARISON_BODIES.includes(body)) throw new Error('Unknown comparison appearance.');
       if (body === 'approved')
         return { body, snapshot: actors.snapshot, provenance: null, dispose() {} };
-      const candidate = await acquire(actors.snapshot, { signal, ...choices[body] });
+      const classId = session.setup?.classId ?? 'scout';
+      if (classId !== 'scout' && choices[body].construction !== 'reference-v6')
+        throw new Error(
+          'Earlier body studies support Scout only. Choose the V6 roster for this craft.',
+        );
+      const candidate = await acquire(actors.snapshot, { signal, classId, ...choices[body] });
       return {
         body,
         snapshot: candidate.snapshot,

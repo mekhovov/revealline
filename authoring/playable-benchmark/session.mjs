@@ -1,4 +1,4 @@
-import { createRun, stepRun, FIXED_DT, getSummary } from '../../game/core/index.mjs';
+import { createRun, stepRun, FIXED_DT, getSummary, CLASSES } from '../../game/core/index.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../../game/gameplay-tuning.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 
@@ -6,10 +6,12 @@ const terminal = (run) => ['won', 'lost'].includes(run.status);
 
 /** One real core run, never a replay recorder or profile owner. UI presentation
  * reads this state; comparison options cannot become simulation input. */
-export function createBenchmarkSession(manifest, { onStep = () => {} } = {}) {
+export function createBenchmarkSession(manifest, { onStep = () => {}, classId = 'scout' } = {}) {
   if (manifest?.mode !== 'solo' || manifest.difficulty !== 'standard')
     throw new Error('Choose a resolved standard Solo mission.');
-  const options = Object.freeze({ seed: 1, classId: 'scout', turnPolicy: 'immediate' });
+  if (!CLASSES.some((recipe) => recipe.id === classId))
+    throw new TypeError('Choose a supported FPV classId.');
+  const options = Object.freeze({ seed: 1, classId, turnPolicy: 'immediate' });
   // Match ordinary fresh Standard play. The source identity and artwork remain
   // authored; tuning owns a separate effective level and never reads preferences.
   // Retain this once-prepared level for Retry, not the mutable caller's manifest.

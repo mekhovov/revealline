@@ -22,7 +22,9 @@ import { installActorAppearanceTransport } from './helpers/actor-appearance-tran
 import { ACTOR_APPEARANCE_RELEASES } from '../presentation/actor-appearance-lease.mjs';
 import {
   acquireScoutComparison,
+  acquireActorComparison,
   SCOUT_COMPARISON_COHORTS,
+  ACTOR_COMPARISON_COHORTS,
 } from '../../authoring/playable-benchmark/candidate-appearance.mjs';
 import {
   createSceneComparison,
@@ -595,7 +597,7 @@ test('scene owns the exact approved actor lease, resets visual phase on Retry, a
     catalog,
     actorBaseURL,
     acquireComparison: (snapshot, options) =>
-      acquireScoutComparison(snapshot, { ...options, ...candidateFiles.options }),
+      acquireActorComparison(snapshot, { ...options, ...candidateFiles.options }),
     signal: new AbortController().signal,
     loadTheme: async () => ({ player: 'test-body' }),
     acquirePicture: async () => ({
@@ -643,7 +645,7 @@ test('scene owns the exact approved actor lease, resets visual phase on Retry, a
   assert.equal(picturesReleased, 0, 'Retry retains the exact loaded artwork');
   assert.equal(
     scene.comparison.body,
-    'v5-detailed',
+    'v6-detailed',
     'Retry retains the accepted comparison revision',
   );
   assert.ok(candidateFiles.decoded.slice(-2).every((image) => image.closes === 0));
@@ -1112,21 +1114,26 @@ test('comparison replacement pauses without changing the real run and releases f
   session.dispose();
 });
 
-test('the shipped Scout option has exact dependencies and adds no mode core files', async () => {
+test('the shipped actor studies have exact dependencies and add no mode core files', async () => {
   const root = new URL('../../', import.meta.url);
   const files = await collectBuildFiles(fileURLToPath(root));
   const candidatePaths = [];
-  for (const [construction, cohort] of Object.entries(SCOUT_COMPARISON_COHORTS)) {
-    const paths = ['manifest.json', 'scout.compact.png', 'scout.detailed.png'].map(
-      (name) => `${cohort.directory}/${name}`,
-    );
+  for (const [construction, cohort] of Object.entries(ACTOR_COMPARISON_COHORTS)) {
+    const roles = construction === 'reference-v6' ? cohort.roles : ['scout'];
+    const paths = [
+      'manifest.json',
+      ...roles.flatMap((role) => ['compact', 'detailed'].map((size) => `${role}.${size}.png`)),
+    ].map((name) => `${cohort.directory}/${name}`);
     candidatePaths.push(...paths);
     assert.deepEqual(
       files.filter((path) => path.startsWith(`${cohort.directory}/`)),
-      paths,
-      `${construction}: only the manifest and two selected Scout rasters are added`,
+      [...paths].sort(),
+      `${construction}: only the exact manifest and named class rasters are added`,
     );
-    const candidateManifest = JSON.parse(await readFile(new URL(paths[0], root)));
+    const manifestBytes = await readFile(new URL(paths[0], root));
+    if (cohort.manifestSHA256)
+      assert.equal(createHash('sha256').update(manifestBytes).digest('hex'), cohort.manifestSHA256);
+    const candidateManifest = JSON.parse(manifestBytes);
     assert.equal(candidateManifest.construction, construction);
     assert.deepEqual(Object.keys(candidateManifest.sources).sort(), [...cohort.sources].sort());
     for (const [path, sha256] of Object.entries(candidateManifest.sources)) {
@@ -1154,6 +1161,7 @@ test('the shipped Scout option has exact dependencies and adds no mode core file
     ...candidatePaths,
     'game/presentation/rotor-body-contrast-art.mjs',
     'game/presentation/rotor-body-optical-art.mjs',
+    'game/presentation/rotor-body-roster-art.mjs',
   ]);
   const previous = entries.filter((entry) => !added.has(entry.name));
   for (const mode of ['solo', 'versus', 'team']) {
@@ -1166,6 +1174,7 @@ test('the shipped Scout option has exact dependencies and adds no mode core file
     );
     for (const path of [
       ...candidatePaths,
+      'game/presentation/rotor-body-roster-art.mjs',
       'game/presentation/rotor-body-optical-art.mjs',
       'game/presentation/rotor-body-contrast-art.mjs',
       'game/presentation/rotor-body-detail-art.mjs',

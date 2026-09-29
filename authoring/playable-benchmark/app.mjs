@@ -1,3 +1,4 @@
+import { arcadeActionCapabilities } from '../../game/core/arcade-actions.mjs';
 import { loadBenchmarkCatalog } from './catalog.mjs';
 import { createBenchmarkSelection } from './session.mjs';
 import { prepareBenchmarkScene } from './scene.mjs';
@@ -48,6 +49,7 @@ function measurementOutput() {
       scope: 'Local two-painter benchmark; frame intervals include both views, not GPU time.',
       mission: current?.entry.id ?? null,
       comparison: current?.comparison.body ?? null,
+      classId: current?.session.setup.classId ?? null,
       comparisonVisible: $('show-comparison').checked,
       referenceReduced: $('reference-reduced').checked,
       comparisonReduced: current?.comparison.reduced ?? null,
@@ -95,8 +97,12 @@ function controls() {
   $('retry').disabled = !current || pending || readyCue.active;
   $('cancel').hidden = !pending;
   $('mission').disabled = !catalog;
+  $('craft').disabled = !catalog;
   $('load').disabled = !catalog || pending;
   $('comparison-body').disabled = !current || selection.pending;
+  for (const option of $('comparison-body').querySelectorAll('option'))
+    option.disabled =
+      (current?.session.setup.classId ?? 'scout') !== 'scout' && /^v[345]-/.test(option.value);
   for (const id of ['comparison-reduced', 'capture-pulse', 'event-flashes', 'contact-style'])
     $(id).disabled = !current || pending;
 }
@@ -120,6 +126,9 @@ function comparisonDetails() {
     'v5-auto': 'V5 Scout optical body · automatic native size',
     'v5-compact': 'V5 Scout optical body · native 32 px',
     'v5-detailed': 'V5 Scout optical body · native 64 px',
+    'v6-auto': `V6 ${current.session.setup.classId ?? 'scout'} · automatic native size`,
+    'v6-compact': `V6 ${current.session.setup.classId ?? 'scout'} · native 32 px`,
+    'v6-detailed': `V6 ${current.session.setup.classId ?? 'scout'} · native 64 px`,
   }[comparison.body];
   $('comparison-label').textContent =
     `${body} · ${comparison.reduced ? 'reduced' : 'standard'} effects${comparison.feedback.contactStyle === 'fine-outline' ? ' · fine contact study' : ''}`;
@@ -201,8 +210,9 @@ function hold(message) {
   }
 }
 const selection = createBenchmarkSelection({
-  prepare: (entry, { signal }) =>
+  prepare: ({ entry, classId }, { signal }) =>
     prepareBenchmarkScene(entry, {
+      classId,
       catalog,
       presets,
       signal,
@@ -232,6 +242,16 @@ const selection = createBenchmarkSelection({
       canvas.height = height;
     }
     $('mission').value = current.entry.id;
+    $('craft').value = current.session.setup.classId ?? 'scout';
+    const capabilities = arcadeActionCapabilities(current.session.run.level);
+    $('boost-button').hidden = !capabilities.manualBoost;
+    $('instructions').textContent = capabilities.manualBoost
+      ? 'Arrows/WASD · Shift boost · Esc pause'
+      : 'Arrows/WASD · Esc pause';
+    $('craft-rules').textContent =
+      !capabilities.manualAbility && !capabilities.manualPickup
+        ? 'These Arcade missions use steering only. Boost and craft equipment are disabled by their rules.'
+        : (current.session.run.classRecipe?.description ?? '');
     $('purpose').textContent = `${current.entry.purpose}. ${current.entry.cue}`;
     $('identity').textContent = JSON.stringify(
       {
@@ -312,15 +332,19 @@ async function select(id, opener = null) {
   selection.current?.comparison.cancel();
   const owner = { opener };
   loadingFocus = owner;
-  const accepted = await selection.select(entry);
+  const accepted = await selection.select({ entry, classId: $('craft').value || 'scout' });
   if (loadingFocus === owner) loadingFocus = null;
   if (disposed) return;
   if (!accepted && !selection.pending) {
-    if (selection.current) $('mission').value = selection.current.entry.id;
+    if (selection.current) {
+      $('mission').value = selection.current.entry.id;
+      $('craft').value = selection.current.session.setup.classId ?? 'scout';
+    }
     controls();
   }
 }
 $('mission').onchange = () => void select($('mission').value, $('mission'));
+$('craft').onchange = () => void select($('mission').value, $('craft'));
 $('start').onclick = () => {
   if (
     selection.pending ||
@@ -388,6 +412,7 @@ $('cancel').onclick = () => {
   selection.cancel();
   selection.current?.comparison.cancel();
   $('mission').value = selection.current?.entry.id ?? catalog.entries[0].id;
+  $('craft').value = selection.current?.session.setup.classId ?? 'scout';
   status(
     'ready',
     selection.current

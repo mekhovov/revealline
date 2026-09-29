@@ -1613,6 +1613,19 @@ rollback, session export/retry, conflict rejection and strict older backup reade
 Backup v3 contains references, not image bytes. Solo admission does not establish
 Versus/Team completion; those hosts remain UX1-A2 qualification work.
 
+For the A2 [playable roster review](../../playable-benchmark/README.md), select a
+real registered class when preparing the existing scene; never imitate it with
+only a label or sprite. Retry retains the captured class/effective level. V6 uses
+the code-owned exact manifest digest and original construction hashes, validates
+all fourteen records and fetches only the selected pair. Keep Scout v3–v5 and the
+approved actor pin separate. Respect authored Arcade action capabilities: these
+three missions disable Boost/E/R regardless of chosen class. Test native setup
+ownership, stale/cancelled/failed replacement, ordinary-core parity and exact
+optional package membership. Review prompt: “Select each of seven classes, compare
+approved/V6 at real board sizes, record class and exact provenance, exercise Retry
+and failed/cancelled switching; do not add equipment actions to Arcade missions or
+promote loaded candidates to approved art.” See batch15 evidence.
+
 ## Global optional-enemy remains and exact practice override
 
 Use the separate `EncounterDisplayPreferencesV1` controller and shared Settings
