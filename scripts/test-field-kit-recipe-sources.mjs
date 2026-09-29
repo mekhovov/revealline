@@ -5,6 +5,7 @@ import {
   fieldKitRecipeSources,
   verifyFieldKitSteamDeckAudioContinuationReview,
   verifyFieldKitDiscoveryAudioContinuationReview,
+  verifyFieldKitDiscoveryWebPUIContinuationReview,
   verifyFieldKitAudioStyleMenuCorrectionReview,
   verifyFieldKitAudioStyleMenuReview,
   verifyFieldKitPlayerReadinessAudioReview,
@@ -508,4 +509,28 @@ test('discovery audio continuation pins the new review, unchanged predecessors a
       );
     }
   }
+});
+
+test('discovery WebP UI continuation pins its review and immutable source-stage production101', async () => {
+  const paths = [
+    'docs/verification/discovery-webp-ui-continuation-2026-09-29/review.json',
+    'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json',
+    'game/test/fixtures/production-discovery-source-ui-fpv101.json',
+  ];
+  const originals = await Promise.all(
+    paths.map((name) => readFile(new URL('../' + name, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitDiscoveryWebPUIContinuationReview(...originals), true);
+  for (const index of originals.keys()) {
+    for (const changed of [Buffer.alloc(0), Buffer.concat([originals[index], Buffer.from(' ')])]) {
+      const candidate = [...originals];
+      candidate[index] = changed;
+      assert.equal(
+        verifyFieldKitDiscoveryWebPUIContinuationReview(...candidate),
+        false,
+        paths[index],
+      );
+    }
+  }
+  assert.equal(verifyFieldKitDiscoveryWebPUIContinuationReview(...originals.toReversed()), false);
 });
