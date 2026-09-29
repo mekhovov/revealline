@@ -1,9 +1,0 @@
-# Team sound notice · v0.58.1 correction
-
-The static explanation of Team's current visual-only feedback is now independent of the storage-warning live region. Changing mute or volume preserves it, while real storage errors remain visible and clear after recovery. No audio transport, arena, scoring or save format changes.
-
-The new regression first reproduced the bug against the original markup: 7 pass / 1 intended failure. The corrected complete file passed 8/8 on Node 22 and Node 20. A final formatting check required two line wraps; the complete file was rerun afterward and passed 8/8 on Node 20.19.5 and 22.22.2. These are the same eight distinct reported cases on two runtimes. All original failed, initial successful and final successful receipts remain in `evidence.zip` with per-file hashes in `manifest.json`.
-
-The test mounts the actual Team HTML and preference handlers through the existing finite DOM boundary. It exercises successful mute, failed volume persistence, and a recovered save; it checks the permanent explanation, correct transient warnings, unchanged lobby/clock/coverage/player state, no audio producer and untouched earned player data. The baseline input manifests record admitted files; they do not claim every file was executed. The runtime-maintenance skill and prompt example document the same contract; the skill metadata validator passes.
-
-Native verification was attempted but could not run: the in-app browser failed twice before attaching a tab; native app control reported unavailable permissions. That limitation is retained separately in the archive and is not a passed browser test. The correction remains pending its own full source/frozen release, deployed-byte and affected browser gates. The [v0.58.0 public review](../public-v0580/README.md) remains historical and requires correction.

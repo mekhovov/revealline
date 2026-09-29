@@ -1,5 +1,0 @@
-{
-  "failure": "HTTPS OAuth credential cannot push workflow files. Two failed pushes and absent remote ref retained; no successful upload repeated.",
-  "correction": "Use the existing SSH Git identity already configured for RevealLine and archives. No new credentials, scopes, permissions or settings outside this isolated checkout.",
-  "remote": "git@github.com:mekhovov/revealline-archive-37.git"
-}
