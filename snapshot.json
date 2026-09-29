@@ -1,0 +1,55 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:09:57.740989+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p03-enemy-action-wrap-next",
+  "branch": "refs/heads/codex/p03-enemy-action-wrap-next",
+  "head": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/enemy-catalog/index.html",
+      "object": "2cb629e504a51e3f432aa96e3715a2efc01710fd",
+      "sha256": "965a844092a3828dbb75d2d9763d4bff28db6d88cef1e282952324ce375c1738",
+      "bytes": 2757,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "358af6bcf5ff50a72ea84225d6aa6aeaee5caa4d",
+      "sha256": "2a00bf98a18065a0f72ceed7618a0c7348c90093d73ff6fb8cb71492de6415f1",
+      "bytes": 225673,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/enemy-catalog.md",
+      "object": "6b7e5c4b6dddebea1daf1926a6c04ded2d45d803",
+      "sha256": "4a14ec2f93986f0aaa40b5c90494d1b61e159f0287e1b5b51056683e44573002",
+      "bytes": 15173,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/enemy-catalog/index.html",
+      "mode": "100644",
+      "object": "d5751e85e9b6dd13b1a4b973aad3ec5ae367c252",
+      "stage": 0
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "8f12347634abd992ec2116f1919880f5c4c1d332",
+      "stage": 0
+    },
+    {
+      "path": "docs/enemy-catalog.md",
+      "mode": "100644",
+      "object": "a4de23ab452d4bed19e3384249cdaa55cf67c8e1",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
