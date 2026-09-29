@@ -42,17 +42,22 @@ test('Versus Settings uses native categories, consumes tab keys once and returns
   f.$('race-settings-tab-display').click();
   f.$('race-options-back').focus();
   assert.equal(f.$('race-journey-reactions-retry').hidden, false);
+  assert.equal(f.$('race-enemy-remains-retry').hidden, false);
   // Storage recovery and the visible reaction preference belong to the same
   // native Tab cycle as the other Display controls, in both directions.
   for (const id of [
     'race-journey-reactions-retry',
     'race-journey-reactions-enabled',
+    'race-enemy-remains-retry',
+    'race-enemy-remains',
     'race-menu-ornaments',
   ]) {
     press(f, 'Tab', { shiftKey: true });
     assert.equal(f.doc.activeElement.id, id);
   }
   for (const id of [
+    'race-enemy-remains',
+    'race-enemy-remains-retry',
     'race-journey-reactions-enabled',
     'race-journey-reactions-retry',
     'race-options-back',
