@@ -96,6 +96,30 @@ are A2 full-roster/state quality, B broader encounter combinations and fair play
 C the first approved cohort, then necessary C6 and cross-content qualification.
 Production review and C2 remain deferred; required technical release checks remain.
 
+## Parallel implementation update — batch22
+
+- **A2 source correction:** all six procedural company quad recipes now use the
+  shared rotor clock, diagonal direction pairs and matching blade handedness.
+  **50/50** complete adjacent tests pass. Native DroneAid keyboard play reaches
+  57.7% with 3 lives and explicit Pause/Resume at 1280×720; it is a bounded source
+  play check, not native all-roster/device or production approval.
+- **B technical qualification:** the existing Lens intercept combination now
+  completes through actual Solo practice, with warning Pause, exact recorded
+  replay, held-Enter protection, retained Retry and zero persistence writes.
+  **1/1** complete host journey passes over 5,130 ticks. Its authored Standard/
+  Immediate/seed1 scope and null decoded-art leases are explicit.
+- **Necessary C6 correction:** rejecting a new image file now retires an older
+  pending background load while preserving the accepted image. Empty-picker
+  cancellation preserves intent. **101/101** complete adjacent checks pass.
+- [Exact evidence and limits](verification/actor-batch-22/README.md). These bounded
+  follow-ups stay together in PR761; no new tool, art set, mission or version.
+
+Fresh publisher inspection finds prior Guide recovery at `a4a1a29aa`, Team cue
+localization at `88aa86471` and reading correction at `183ee6ae4` in its cumulative
+integration lineage. PR757 is closed and PR761 remains open. This closes those
+source-handoff items; integrated release gates/public acceptance are still not
+claimed. The publisher's newer menu/authoring changes must survive narrow ports.
+
 ## Public and queued
 
 - Latest observed main is `321408a3cfd75ae230d760f39fb692503652601a`
@@ -258,8 +282,8 @@ implementation slices above.
 | ------------------------------------ | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **A1 — prepared; review deferred**   | Deliver already implemented character/control corrections so players actually receive the improvements   | Reconcile the smallest renderer slice; review 59 renderer/equipment successors while keeping approved imagery and app/audio unchanged; final build, immutable publication and public play | Exact port prepared; admission/release timing deferred; it does not block B/C source work         |
 | **A2 — current characters**          | Convincing player/common-enemy bodies, propellers, scale, facing and reactions across Solo/Versus/Team   | Current roster/state review and reviewed native-body adoption; retained originals and core behavior unchanged                                                                             | 3–5 days for remaining C3 scope; existing fixes do not need to wait for the whole roster          |
-| **A3 — reliable play**               | Deliver the prepared Team fixes and reflow the demonstrated narrow Ukrainian HUD/ability labels          | Fresh input, retained recovery, exact return, readable status and full board/control bounds; reuse PR757 and existing inputs                                                              | This correction is source-tested and browser-reviewed; integrated production/release gates remain |
-| **B — encounter variety**            | Optional pursuit/interception/patrol/sentry encounters teach distinct decisions and readable counterplay | Finish Field Guide/cross-mode guidance, full missions/combinations, difficulty/fairness/replay qualification; preserve original editions                                                  | 3–5 days                                                                                          |
+| **A3 — reliable play**               | Deliver implemented Team readability/input fixes and qualify remaining device/journey cases              | Fresh input, retained recovery, exact return, readable status and full board/control bounds; reuse PR757 and existing inputs                                                              | This correction is source-tested and browser-reviewed; integrated production/release gates remain |
+| **B — encounter variety**            | Optional pursuit/interception/patrol/sentry encounters teach distinct decisions and readable counterplay | Qualify broader complete missions/combinations and difficulty/fairness/replays; existing Guide and cross-mode lessons are implemented; preserve original editions                         | 3–5 days                                                                                          |
 | **C — one finished cohort**          | Complete a coherent Ukrainian/FPV artwork set that players can actually select and play                  | Native pixel/cultural/contrast review, exact approved mission bindings, retained ownership and complete preview/runtime presentation                                                      | 2–4 days for the first accepted cohort                                                            |
 | **Supporting C0/C1/C6**              | Only the rig, source coverage and Studio changes required to deliver A/B/C                               | Bounded geometry, state, history, resource and real import/edit/export checks alongside the consuming feature                                                                             | Included per slice; broader C6 2–3 days later                                                     |
 | **Rest — further cohorts and tools** | DroneAid and other communities, broader authoring workflow, offline/history and guide closure            | Separate reviewed cohort and workflow acceptance; no bulk production added before the priority work                                                                                       | 2–4 days per cohort; refine wider scope from accepted inventory                                   |
@@ -312,7 +336,7 @@ is A2 preparation, not completion of A or the deferred C2 human study.
 3. **Artwork quality:** generated cultural scenes remain candidates. Native
    export and valid hashes establish preparation, not consistent pixel clusters,
    museum accuracy, composition over gameplay, permission or production approval.
-4. **Local capacity:** the latest observation is approximately **3.4GiB free**, above
+4. **Local capacity:** the latest observation is approximately **4.5GiB free**, above
    the publisher's 1,275,068,416-byte reserve but volatile. Earlier 603MB, 7.1GiB
    and ~110MB observations are historical. Small source/evidence handoffs continue; no local build,
    large download or release materialization is started here. Recheck before

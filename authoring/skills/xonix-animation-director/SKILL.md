@@ -5,12 +5,13 @@ description: 'Plan, vary and inspect modular Xonix animation for avatars, enemie
 
 # Xonix Animation Director
 
-The current user-approved order is **C3/C4/C5/C6 in parallel**, with necessary
-C0/C1 checks included per cohort; **C2 is last**, not an expansion prerequisite.
-Follow the [revised dependency plan](../../../docs/character-game-feel-plan.md#priority-revision-c3c6-first-c2-last).
-Prioritize complete role cohorts and real authoring workflows over additional
-Scout-only comparisons. A publishing queue does not block independent source
-work. Keep existing test/provenance, actual-size and retained-identity gates.
+The current user-approved order is **A current characters/reliable play → B
+encounter variety → C one finished Ukrainian/FPV cohort**, with independent work
+in parallel and necessary C0/C1/C6 support alongside each feature. **C2 is last**.
+Follow the [current register](../../../docs/plan-status-2026-09-29.md). Production
+review is deferred, not passed; continue bounded implementation without silently
+adopting candidate artwork. A publishing queue does not block source work. Keep
+focused correctness, provenance, actual-size and retained-identity evidence.
 
 For the current FPV proportion correction, use [the reference review](../../../docs/drone-reference-review.md) and [side-by-side actual renderer comparison](../../../docs/verification/rotor-motion/proportions.html). A changed-pixel PASS is not visual approval: the first moving rig was rejected for tiny blades relative to motors/body. Use the explicit source-only candidate geometry, keep quad and six-rotor carrier envelopes separate, and adopt new bodies with matching rigs only after review. Do not multiply all historical radii globally or overlay blades on baked originals. Keep native exports, generated concept sheets, reviewed revisions and published defaults distinct.
 
@@ -196,3 +197,21 @@ attachment sampler. Follow arena is the default; Idle/Cruise/Boost/Slow use the
 existing validated response ratios. Editing must not reset clocks, start a
 paused study, alter arena steering or enter recipe exports. Slow inspection may
 cap all rotor responses alike; pulse and light recipes ignore speed by design.
+
+## Procedural community FPV rotor parity
+
+The six registered company quad recipes consume the shared `rotorPhase`, not
+body `phase` multiplied into another clock. Keep the existing props-in diagonal
+pairs from motor quadrants, preserve authored offsets, and reflect the local
+blade profile for negative direction without signing phase twice. All static
+body geometry, guards, hubs and host contact/role cues stay unchanged. Missing
+legacy rotor phase has a finite stopped pose. Inspect transformed blade vertices
+at degraded/30/60/120 FPS and held Pause/freeze/reduced states; advancing a clock
+alone cannot prove visible direction. See [batch22](../../../docs/verification/actor-batch-22/README.md).
+
+For local preview replacement, a nonempty new file choice supersedes earlier
+pending work even when its MIME type or size is rejected. Retain the accepted
+image, stop/release old pending reads and handlers through the existing owner,
+and prevent late callbacks from changing its status. An empty picker cancellation
+is not a replacement. Test actual draw selection, Clear, focus and playback;
+modeled URL revocation does not prove native decoder memory release.

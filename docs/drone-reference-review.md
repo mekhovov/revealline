@@ -121,3 +121,14 @@ The source-only [reference-v3 Scout/Carrier study](../authoring/library/fpv-body
 V4's two PNGs total 838 bytes. The [playable comparison](../authoring/playable-benchmark/) verifies each explicitly selected cohort's manifest, source fingerprints and exact image bytes before replacing only the second view's Scout images. V3 has three construction-source dependencies; v4 adds the contrast module as a fourth. Both retain separate source-candidate identities and produced status, without production registration or artwork approval.
 
 The current full-board comparison shows a brighter amber face, but the central Scout silhouette remains weak at small play sizes. Further actual-size, heading, light/dark artwork and motion review is required before adoption. Measured pixel luminance and local two-painter CPU timings do not establish visual quality, whole-game performance or player preference.
+
+## Procedural company quad follow-through
+
+The six existing company FPV bodies now follow the shared alias-safe rotor clock
+and the same generic props-in diagonal convention. The previous body-phase
+multiplier could visually reverse three-blade props at degraded frame rates;
+row-major direction parity also mismatched rear motors. The source correction
+preserves body/motor dimensions, phase offsets and caller contact cues while
+mirroring the existing blade profile. [Batch22](verification/actor-batch-22/README.md)
+records painted-geometry checks and bounded native DroneAid play. This is a
+renderer correction, not approval of new art or a named real drone configuration.

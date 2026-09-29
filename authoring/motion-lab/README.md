@@ -161,6 +161,13 @@ Microtiles repeat at one-cell pitch; props use larger spaced diagrams; hybrid co
 
 **Local background** accepts PNG, JPEG, WebP or GIF up to 25 MiB, using a browser object URL. Contain displays the whole image; Cover crops only its display. Opacity and Clear affect the preview. No original bytes are altered, no file is uploaded or saved by the lab, and no AI call is made. This ephemeral preview is separate from the persistent [media authoring CLI](../media/README.md). Animated source formats are not promoted as controlled animation assets; prefer a still PNG/JPEG for repeatable comparisons.
 
+A nonempty replacement file choice retires any earlier pending read/decode before
+validation. Rejected type/size keeps the last accepted background and its Clear
+action; late work cannot replace that image or the rejection message. Cancelling
+the file picker without choosing a file preserves the pending choice. This uses
+the existing request owner and changes no original bytes, playback or focus.
+See [the regression evidence](../../docs/verification/actor-batch-22/README.md).
+
 The local background is a **still preview**. Canvas 2D specifies the default image of an animated source, or its first frame when there is no default; repeating `drawImage` does not request GIF/APNG/WebP playback. [WHATWG image-source rules](https://html.spec.whatwg.org/multipage/canvas.html#image-sources-for-2d-rendering-contexts). Keep this expected contract separate from actual browser qualification: inspect animated fixtures while playing, paused, reduced and explicitly redrawn, including an APNG whose default differs from its first animation frame. The modeled host Image cannot prove decoding, displayed pixels or native resource release.
 
 ## Presentation manifest and attachment recipes

@@ -1,0 +1,619 @@
+TAP version 13
+# Subtest: Inspection responses change real wing paint without changing paired arena traces or recipe exports
+    # Subtest: follow
+    ok 1 - follow
+      ---
+      duration_ms: 125.099625
+      type: 'test'
+      ...
+    # Subtest: idle
+    ok 2 - idle
+      ---
+      duration_ms: 48.153958
+      type: 'test'
+      ...
+    # Subtest: cruise
+    ok 3 - cruise
+      ---
+      duration_ms: 45.762625
+      type: 'test'
+      ...
+    # Subtest: boost
+    ok 4 - boost
+      ---
+      duration_ms: 44.818125
+      type: 'test'
+      ...
+    # Subtest: slow
+    ok 5 - slow
+      ---
+      duration_ms: 48.660125
+      type: 'test'
+      ...
+    1..5
+ok 1 - Inspection responses change real wing paint without changing paired arena traces or recipe exports
+  ---
+  duration_ms: 313.542833
+  type: 'test'
+  ...
+# Subtest: Inspection response retains paused phase, drafts and lifetime ownership with reduced=false
+ok 2 - Inspection response retains paused phase, drafts and lifetime ownership with reduced=false
+  ---
+  duration_ms: 59.847042
+  type: 'test'
+  ...
+# Subtest: Inspection response retains paused phase, drafts and lifetime ownership with reduced=true
+ok 3 - Inspection response retains paused phase, drafts and lifetime ownership with reduced=true
+  ---
+  duration_ms: 56.012958
+  type: 'test'
+  ...
+# Subtest: Inspection exhaust responds to selected speed at a frozen time with reduced=false
+ok 4 - Inspection exhaust responds to selected speed at a frozen time with reduced=false
+  ---
+  duration_ms: 42.535167
+  type: 'test'
+  ...
+# Subtest: Inspection exhaust responds to selected speed at a frozen time with reduced=true
+ok 5 - Inspection exhaust responds to selected speed at a frozen time with reduced=true
+  ---
+  duration_ms: 44.359958
+  type: 'test'
+  ...
+# Subtest: Inspection response native select retains EN/UK labels, focus and paused intent
+ok 6 - Inspection response native select retains EN/UK labels, focus and paused intent
+  ---
+  duration_ms: 82.0975
+  type: 'test'
+  ...
+# Subtest: Motion attachments edit actual wing paint while retaining paused clocks and reduced=false
+ok 7 - Motion attachments edit actual wing paint while retaining paused clocks and reduced=false
+  ---
+  duration_ms: 58.505791
+  type: 'test'
+  ...
+# Subtest: Motion attachments edit actual wing paint while retaining paused clocks and reduced=true
+ok 8 - Motion attachments edit actual wing paint while retaining paused clocks and reduced=true
+  ---
+  duration_ms: 59.338458
+  type: 'test'
+  ...
+# Subtest: Motion attachment controls offer fractional keyboard steps and commit completed edits without advancing paused playback
+ok 9 - Motion attachment controls offer fractional keyboard steps and commit completed edits without advancing paused playback
+  ---
+  duration_ms: 45.148084
+  type: 'test'
+  ...
+# Subtest: Motion attachment drafts are per character and live edits keep the existing single frame owner
+ok 10 - Motion attachment drafts are per character and live edits keep the existing single frame owner
+  ---
+  duration_ms: 48.539458
+  type: 'test'
+  ...
+# Subtest: Motion HTML adopts reading policy before held app startup with one explicit size writer
+ok 11 - Motion HTML adopts reading policy before held app startup with one explicit size writer
+  ---
+  duration_ms: 23.936917
+  type: 'test'
+  ...
+# Subtest: Motion failed app startup retains independent size controls and failed-save intent
+ok 12 - Motion failed app startup retains independent size controls and failed-save intent
+  ---
+  duration_ms: 7.383625
+  type: 'test'
+  ...
+# Subtest: Motion saved and system reduction cap local choice without changing live run or authored values
+ok 13 - Motion saved and system reduction cap local choice without changing live run or authored values
+  ---
+  duration_ms: 57.797084
+  type: 'test'
+  ...
+# Subtest: Motion local reduced choice survives shared caps and paused preference edits do not resume
+ok 14 - Motion local reduced choice survives shared caps and paused preference edits do not resume
+  ---
+  duration_ms: 34.688042
+  type: 'test'
+  ...
+# Subtest: Motion loaded body and local background survive reading changes and cached return
+ok 15 - Motion loaded body and local background survive reading changes and cached return
+  ---
+  duration_ms: 46.800375
+  type: 'test'
+  ...
+# Subtest: Motion interruption before pending startup prevents automatic start and stale frames cannot return
+ok 16 - Motion interruption before pending startup prevents automatic start and stale frames cannot return
+  ---
+  duration_ms: 49.935666
+  type: 'test'
+  ...
+# Subtest: Motion terminal departure fences held initialization and leaves no authority or app listeners
+ok 17 - Motion terminal departure fences held initialization and leaves no authority or app listeners
+  ---
+  duration_ms: 6.66625
+  type: 'test'
+  ...
+# Subtest: Motion hidden and terminal loaded lifecycle cancels images, releases input and disconnects observer
+ok 18 - Motion hidden and terminal loaded lifecycle cancels images, releases input and disconnects observer
+  ---
+  duration_ms: 33.827042
+  type: 'test'
+  ...
+# Subtest: Motion unavailable inspection image is described in ordinary DOM and storage denial remains session-only
+ok 19 - Motion unavailable inspection image is described in ordinary DOM and storage denial remains session-only
+  ---
+  duration_ms: 28.194667
+  type: 'test'
+  ...
+# Subtest: Motion application graph completing after terminal departure cannot remount or fetch
+ok 20 - Motion application graph completing after terminal departure cannot remount or fetch
+  ---
+  duration_ms: 5.586167
+  type: 'test'
+  ...
+# Subtest: Motion graph first arriving in an unfocused document starts paused until explicit Play
+ok 21 - Motion graph first arriving in an unfocused document starts paused until explicit Play
+  ---
+  duration_ms: 24.21125
+  type: 'test'
+  ...
+# Subtest: Motion cached interruption before first application delivery cannot autoplay before or after return
+ok 22 - Motion cached interruption before first application delivery cannot autoplay before or after return
+  ---
+  duration_ms: 26.40825
+  type: 'test'
+  ...
+# (node:44788) ExperimentalWarning: vm.USE_MAIN_CONTEXT_DEFAULT_LOADER is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Motion real launcher retires Reload into independent reading controls while presets stay locked (anchor focus model)
+ok 23 - Motion real launcher retires Reload into independent reading controls while presets stay locked (anchor focus model)
+  ---
+  duration_ms: 42.569208
+  type: 'test'
+  ...
+# Subtest: Motion real launcher retires Reload into independent reading controls while presets stay locked (body focus model)
+ok 24 - Motion real launcher retires Reload into independent reading controls while presets stay locked (body focus model)
+  ---
+  duration_ms: 38.733458
+  type: 'test'
+  ...
+# Subtest: Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer
+ok 25 - Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer
+  ---
+  duration_ms: 19.533208
+  type: 'test'
+  ...
+# Subtest: Motion network failure after actual delivery provides retry without taking current focus
+ok 26 - Motion network failure after actual delivery provides retry without taking current focus
+  ---
+  duration_ms: 18.336292
+  type: 'test'
+  ...
+# Subtest: Motion validation failure after actual delivery provides retry without taking current focus
+ok 27 - Motion validation failure after actual delivery provides retry without taking current focus
+  ---
+  duration_ms: 15.905666
+  type: 'test'
+  ...
+# Subtest: Motion terminal departure ignores a late failed preset read without exposing retry
+ok 28 - Motion terminal departure ignores a late failed preset read without exposing retry
+  ---
+  duration_ms: 17.366334
+  type: 'test'
+  ...
+# Subtest: Motion real launcher does not take Reload focus in an hidden document or defer it until return
+ok 29 - Motion real launcher does not take Reload focus in an hidden document or defer it until return
+  ---
+  duration_ms: 33.602959
+  type: 'test'
+  ...
+# Subtest: Motion real launcher does not take Reload focus in an unfocused document or defer it until return
+ok 30 - Motion real launcher does not take Reload focus in an unfocused document or defer it until return
+  ---
+  duration_ms: 34.082167
+  type: 'test'
+  ...
+# Subtest: Motion actual Reload retirement preserves navigation focus acquired before attachment
+ok 31 - Motion actual Reload retirement preserves navigation focus acquired before attachment
+  ---
+  duration_ms: 32.560834
+  type: 'test'
+  ...
+# Subtest: Motion actual Reload retirement preserves navigation focus acquired during attachment
+ok 32 - Motion actual Reload retirement preserves navigation focus acquired during attachment
+  ---
+  duration_ms: 33.057167
+  type: 'test'
+  ...
+# Subtest: Motion successful startup gate preserves Clear, locked Equip and disabled ability ownership
+ok 33 - Motion successful startup gate preserves Clear, locked Equip and disabled ability ownership
+  ---
+  duration_ms: 43.797583
+  type: 'test'
+  ...
+# Subtest: Motion real launcher late application delivery after terminal departure cannot unlock or focus the departed study
+ok 34 - Motion real launcher late application delivery after terminal departure cannot unlock or focus the departed study
+  ---
+  duration_ms: 19.531375
+  type: 'test'
+  ...
+# Subtest: Motion full stage labels survive shortened canvas captions and reading changes without moving focus or replacing rows
+ok 35 - Motion full stage labels survive shortened canvas captions and reading changes without moving focus or replacing rows
+  ---
+  duration_ms: 32.768834
+  type: 'test'
+  ...
+# Subtest: Motion real scan reveals and expires DOM note text on the rendering frame before the general readout refresh
+ok 36 - Motion real scan reveals and expires DOM note text on the rendering frame before the general readout refresh
+  ---
+  duration_ms: 36.565459
+  type: 'test'
+  ...
+# Subtest: Motion APNG upload derives exact static PNG bytes while retaining the original File
+ok 37 - Motion APNG upload derives exact static PNG bytes while retaining the original File
+  ---
+  duration_ms: 32.1765
+  type: 'test'
+  ...
+# Subtest: Motion GIF and WebP keep the original File source and native-image path
+ok 38 - Motion GIF and WebP keep the original File source and native-image path
+  ---
+  duration_ms: 27.57525
+  type: 'test'
+  ...
+# Subtest: Motion superseded PNG byte read cannot allocate a URL or replace the newer preview
+ok 39 - Motion superseded PNG byte read cannot allocate a URL or replace the newer preview
+  ---
+  duration_ms: 26.755833
+  type: 'test'
+  ...
+# Subtest: Motion rejected replacement retires pending byte read: unsupported type
+ok 40 - Motion rejected replacement retires pending byte read: unsupported type
+  ---
+  duration_ms: 37.278583
+  type: 'test'
+  ...
+# Subtest: Motion rejected replacement retires pending byte read: oversized file
+ok 41 - Motion rejected replacement retires pending byte read: oversized file
+  ---
+  duration_ms: 38.129166
+  type: 'test'
+  ...
+# Subtest: Motion rejected replacement retires pending native decode: unsupported type
+ok 42 - Motion rejected replacement retires pending native decode: unsupported type
+  ---
+  duration_ms: 35.447458
+  type: 'test'
+  ...
+# Subtest: Motion rejected replacement retires pending native decode: oversized file
+ok 43 - Motion rejected replacement retires pending native decode: oversized file
+  ---
+  duration_ms: 33.648083
+  type: 'test'
+  ...
+# Subtest: Motion cancelled file picker preserves the pending background intent
+ok 44 - Motion cancelled file picker preserves the pending background intent
+  ---
+  duration_ms: 33.853458
+  type: 'test'
+  ...
+# Subtest: Motion Clear while reading PNG bytes prevents late URL, image and status resurrection
+ok 45 - Motion Clear while reading PNG bytes prevents late URL, image and status resurrection
+  ---
+  duration_ms: 27.83175
+  type: 'test'
+  ...
+# Subtest: Motion cached departure invalidates the pending PNG byte read
+ok 46 - Motion cached departure invalidates the pending PNG byte read
+  ---
+  duration_ms: 34.701792
+  type: 'test'
+  ...
+# Subtest: Motion terminal departure invalidates the pending PNG byte read
+ok 47 - Motion terminal departure invalidates the pending PNG byte read
+  ---
+  duration_ms: 31.86725
+  type: 'test'
+  ...
+# Subtest: Motion rejected or malformed PNG preparation retains accepted art, current focus and Clear
+ok 48 - Motion rejected or malformed PNG preparation retains accepted art, current focus and Clear
+  ---
+  duration_ms: 32.804584
+  type: 'test'
+  ...
+# Subtest: Motion prepared replacement native decode failure preserves prior image and retires derivative URL
+ok 49 - Motion prepared replacement native decode failure preserves prior image and retires derivative URL
+  ---
+  duration_ms: 39.604041
+  type: 'test'
+  ...
+# Subtest: Motion late PNG preparation rejection after a new image cannot overwrite current success
+ok 50 - Motion late PNG preparation rejection after a new image cannot overwrite current success
+  ---
+  duration_ms: 31.753958
+  type: 'test'
+  ...
+# Subtest: Motion sliders keep stable visible labels while the actual study startup is held
+ok 51 - Motion sliders keep stable visible labels while the actual study startup is held
+  ---
+  duration_ms: 25.800625
+  type: 'test'
+  ...
+# Subtest: Motion slider input updates current units without changing its name, focus or paused intent
+ok 52 - Motion slider input updates current units without changing its name, focus or paused intent
+  ---
+  duration_ms: 39.415459
+  type: 'test'
+  ...
+# Subtest: Motion recipe replacement refreshes the rotor value text after a manual radius override
+ok 53 - Motion recipe replacement refreshes the rotor value text after a manual radius override
+  ---
+  duration_ms: 31.318417
+  type: 'test'
+  ...
+# Subtest: Motion hub edits and JSON round trip preserve paused clocks and reduced=false
+ok 54 - Motion hub edits and JSON round trip preserve paused clocks and reduced=false
+  ---
+  duration_ms: 56.276334
+  type: 'test'
+  ...
+# Subtest: Motion hub edits and JSON round trip preserve paused clocks and reduced=true
+ok 55 - Motion hub edits and JSON round trip preserve paused clocks and reduced=true
+  ---
+  duration_ms: 61.554834
+  type: 'test'
+  ...
+# Subtest: Motion hub envelope edits preserve actual paint, guides, paused state and reduced=false
+ok 56 - Motion hub envelope edits preserve actual paint, guides, paused state and reduced=false
+  ---
+  duration_ms: 63.641458
+  type: 'test'
+  ...
+# Subtest: Motion hub envelope edits preserve actual paint, guides, paused state and reduced=true
+ok 57 - Motion hub envelope edits preserve actual paint, guides, paused state and reduced=true
+  ---
+  duration_ms: 69.491125
+  type: 'test'
+  ...
+# Subtest: Motion envelope validation and guide use the decoded non-square source aspect, not its body fit box
+ok 58 - Motion envelope validation and guide use the decoded non-square source aspect, not its body fit box
+  ---
+  duration_ms: 42.745917
+  type: 'test'
+  ...
+# Subtest: Motion rotor editor preserves a running frame and per-character drafts while non-rotor recipes stay gated
+ok 59 - Motion rotor editor preserves a running frame and per-character drafts while non-rotor recipes stay gated
+  ---
+  duration_ms: 101.029458
+  type: 'test'
+  ...
+# Subtest: Motion rotor labels resolve in EN and UK through the HTML-selected catalog/bootstrap and actual host
+ok 60 - Motion rotor labels resolve in EN and UK through the HTML-selected catalog/bootstrap and actual host
+  ---
+  duration_ms: 262.302375
+  type: 'test'
+  ...
+# Subtest: Motion rotation reveals the currently focused rotor field without changing its paused study
+ok 61 - Motion rotation reveals the currently focused rotor field without changing its paused study
+  ---
+  duration_ms: 33.538958
+  type: 'test'
+  ...
+# Subtest: Motion rotation accounts for the settings clip even while a focused slider is inside the viewport
+ok 62 - Motion rotation accounts for the settings clip even while a focused slider is inside the viewport
+  ---
+  duration_ms: 25.536083
+  type: 'test'
+  ...
+# Subtest: Motion rotation reveals the rotor when its entire settings panel moves above the viewport
+ok 63 - Motion rotation reveals the rotor when its entire settings panel moves above the viewport
+  ---
+  duration_ms: 31.501125
+  type: 'test'
+  ...
+# Subtest: Motion rotation cannot reveal an hidden current control
+ok 64 - Motion rotation cannot reveal an hidden current control
+  ---
+  duration_ms: 23.62925
+  type: 'test'
+  ...
+# Subtest: Motion rotation cannot reveal an inert current control
+ok 65 - Motion rotation cannot reveal an inert current control
+  ---
+  duration_ms: 23.40675
+  type: 'test'
+  ...
+# Subtest: Motion rotation cannot reveal an disabled current control
+ok 66 - Motion rotation cannot reveal an disabled current control
+  ---
+  duration_ms: 23.267333
+  type: 'test'
+  ...
+# Subtest: Motion rotation cannot reveal an fieldset current control
+ok 67 - Motion rotation cannot reveal an fieldset current control
+  ---
+  duration_ms: 23.703333
+  type: 'test'
+  ...
+# Subtest: Motion rotation cannot reveal an background current control
+ok 68 - Motion rotation cannot reveal an background current control
+  ---
+  duration_ms: 22.619875
+  type: 'test'
+  ...
+# Subtest: Motion rotation cannot reveal an away current control
+ok 69 - Motion rotation cannot reveal an away current control
+  ---
+  duration_ms: 26.507334
+  type: 'test'
+  ...
+# Subtest: Motion rotation cannot reveal an disposed current control
+ok 70 - Motion rotation cannot reveal an disposed current control
+  ---
+  duration_ms: 23.160333
+  type: 'test'
+  ...
+# Subtest: Motion resize cannot scroll after measurement changes the focused owner or loses foreground
+ok 71 - Motion resize cannot scroll after measurement changes the focused owner or loses foreground
+  ---
+  duration_ms: 23.70075
+  type: 'test'
+  ...
+# Subtest: Motion resize reveals the control when its labeled field is taller than the visible settings area
+ok 72 - Motion resize reveals the control when its labeled field is taller than the visible settings area
+  ---
+  duration_ms: 24.228125
+  type: 'test'
+  ...
+# Subtest: Motion locale changes preserve paused movement, live controls and image ownership
+ok 73 - Motion locale changes preserve paused movement, live controls and image ownership
+  ---
+  duration_ms: 237.583833
+  type: 'test'
+  ...
+# Subtest: Motion locked collection groups preserve authored alternatives and focused selection across locales
+ok 74 - Motion locked collection groups preserve authored alternatives and focused selection across locales
+  ---
+  duration_ms: 212.631875
+  type: 'test'
+  ...
+# Subtest: Motion accepted collection notices translate without repeating mutations or saving game progress
+ok 75 - Motion accepted collection notices translate without repeating mutations or saving game progress
+  ---
+  duration_ms: 997.773083
+  type: 'test'
+  ...
+# Subtest: Motion history-restored selector follows current owner after pageshow (persisted=false)
+ok 76 - Motion history-restored selector follows current owner after pageshow (persisted=false)
+  ---
+  duration_ms: 2.69925
+  type: 'test'
+  ...
+# Subtest: Motion history-restored selector follows current owner after pageshow (persisted=true)
+ok 77 - Motion history-restored selector follows current owner after pageshow (persisted=true)
+  ---
+  duration_ms: 0.448041
+  type: 'test'
+  ...
+# Subtest: Motion persisted return first refreshes shared authority, then corrects late stale form state
+ok 78 - Motion persisted return first refreshes shared authority, then corrects late stale form state
+  ---
+  duration_ms: 2.478625
+  type: 'test'
+  ...
+# Subtest: Motion history repair retains unsaved local intent and its persistence warning
+ok 79 - Motion history repair retains unsaved local intent and its persistence warning
+  ---
+  duration_ms: 0.68175
+  type: 'test'
+  ...
+# Subtest: Motion deferred repair reads newer explicit intent instead of replaying the earlier snapshot
+ok 80 - Motion deferred repair reads newer explicit intent instead of replaying the earlier snapshot
+  ---
+  duration_ms: 0.518084
+  type: 'test'
+  ...
+# Subtest: Motion a second pageshow replaces its pending task and a frozen departure cancels it
+ok 81 - Motion a second pageshow replaces its pending task and a frozen departure cancels it
+  ---
+  duration_ms: 0.289166
+  type: 'test'
+  ...
+# Subtest: Motion terminal disposal cancels deferred repair and stale callbacks cannot rewrite controls
+ok 82 - Motion terminal disposal cancels deferred repair and stale callbacks cannot rewrite controls
+  ---
+  duration_ms: 0.569625
+  type: 'test'
+  ...
+# Subtest: Separate-default APNG produces the exact static control and does not mutate original bytes
+ok 83 - Separate-default APNG produces the exact static control and does not mutate original bytes
+  ---
+  duration_ms: 1.184167
+  type: 'test'
+  ...
+# Subtest: Ordinary PNG is validated then returned byte-identically without an allocation
+ok 84 - Ordinary PNG is validated then returned byte-identically without an allocation
+  ---
+  duration_ms: 0.243084
+  type: 'test'
+  ...
+# Subtest: Default-as-first APNG retains IDAT and ordinary metadata
+ok 85 - Default-as-first APNG retains IDAT and ordinary metadata
+  ---
+  duration_ms: 0.284583
+  type: 'test'
+  ...
+# Subtest: Split contiguous IDAT chunks are retained exactly including a zero-length chunk
+ok 86 - Split contiguous IDAT chunks are retained exactly including a zero-length chunk
+  ---
+  duration_ms: 0.088959
+  type: 'test'
+  ...
+# Subtest: PNG signature, truncation, chunk length and CRC failures reject
+ok 87 - PNG signature, truncation, chunk length and CRC failures reject
+  ---
+  duration_ms: 0.281375
+  type: 'test'
+  ...
+# Subtest: Missing, duplicate and misplaced required chunks reject
+ok 88 - Missing, duplicate and misplaced required chunks reject
+  ---
+  duration_ms: 0.4725
+  type: 'test'
+  ...
+# Subtest: Interrupted IDAT, unknown critical chunk and invalid chunk name reject
+ok 89 - Interrupted IDAT, unknown critical chunk and invalid chunk name reject
+  ---
+  duration_ms: 0.697167
+  type: 'test'
+  ...
+# Subtest: Invalid PNG dimensions, color-depth, filter, compression and interlace reject
+ok 90 - Invalid PNG dimensions, color-depth, filter, compression and interlace reject
+  ---
+  duration_ms: 0.393208
+  type: 'test'
+  ...
+# Subtest: Indexed palette and transparency structure is validated without decoding pixel data
+ok 91 - Indexed palette and transparency structure is validated without decoding pixel data
+  ---
+  duration_ms: 0.868625
+  type: 'test'
+  ...
+# Subtest: APNG ordering, frame counts, sequence and absent frame data reject
+ok 92 - APNG ordering, frame counts, sequence and absent frame data reject
+  ---
+  duration_ms: 0.9345
+  type: 'test'
+  ...
+# Subtest: APNG out-of-bounds dimensions and unsupported frame operations reject
+ok 93 - APNG out-of-bounds dimensions and unsupported frame operations reject
+  ---
+  duration_ms: 0.439792
+  type: 'test'
+  ...
+# Subtest: Encoded byte and chunk count limits reject before producing a derivative
+ok 94 - Encoded byte and chunk count limits reject before producing a derivative
+  ---
+  duration_ms: 22.050416
+  type: 'test'
+  ...
+# Subtest: Motion loop owns one request, clamps/reset clocks and fences a cancelled callback after a new run
+ok 95 - Motion loop owns one request, clamps/reset clocks and fences a cancelled callback after a new run
+  ---
+  duration_ms: 0.921334
+  type: 'test'
+  ...
+# Subtest: Motion loop respects reentrant interruption and cached restore requires an explicit running action
+ok 96 - Motion loop respects reentrant interruption and cached restore requires an explicit running action
+  ---
+  duration_ms: 0.192958
+  type: 'test'
+  ...
+1..96
+# tests 101
+# suites 0
+# pass 101
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4723.890292
