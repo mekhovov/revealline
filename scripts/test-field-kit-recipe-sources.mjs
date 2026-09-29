@@ -166,12 +166,16 @@ test('scoped current Team and equipment approval retains every semantic guard', 
   const { createFieldKitProduction, fieldKitEquipmentQuality, fieldKitEquipmentSource } =
     await import('./produce-field-kit-theme.mjs');
   const { fieldKitTeamRecipeQuality } = await import('./team-recipe-review.mjs');
+  const { readCumulativeNativeContinuation } = await import(
+    './cumulative-native-source-continuation.mjs'
+  );
   const { createDefaultThemeBundle } = await import('../game/presentation/catalog.mjs');
   const { readBulkPresentationContinuation, bulkPresentationContinuation } = await import(
     './bulk-presentation-continuation.mjs'
   );
   const read = (name) => readFile(new URL('../' + name, import.meta.url));
   const bulkContinuationReviewBytes = await readBulkPresentationContinuation(read);
+  const cumulativeReviewBytes = await readCumulativeNativeContinuation(read);
   const review = bulkPresentationContinuation(bulkContinuationReviewBytes);
   const [reviewBytes, successorReviewBytes, continuationReviewBytes] = await Promise.all([
     read(review.priorReviews.team.path),
@@ -198,6 +202,7 @@ test('scoped current Team and equipment approval retains every semantic guard', 
       successorReviewBytes,
       continuationReviewBytes,
       bulkContinuationReviewBytes,
+      cumulativeReviewBytes,
     };
     assert.equal(fieldKitTeamRecipeQuality(args).stage, 'reviewed', slotId);
     for (const override of [
@@ -212,6 +217,8 @@ test('scoped current Team and equipment approval retains every semantic guard', 
         bulkContinuationReviewBytes: Buffer.concat([bulkContinuationReviewBytes, Buffer.from(' ')]),
       },
       { bulkContinuationReviewBytes: undefined },
+      { cumulativeReviewBytes: undefined },
+      { cumulativeReviewBytes: Buffer.concat([cumulativeReviewBytes, Buffer.from(' ')]) },
     ])
       assert.equal(fieldKitTeamRecipeQuality({ ...args, ...override }).stage, 'source', slotId);
     for (const expected of original.inheritedImages) {
@@ -238,6 +245,7 @@ test('scoped current Team and equipment approval retains every semantic guard', 
         successorReviewBytes,
         continuationReviewBytes,
         current,
+        cumulativeReviewBytes,
       ).stage;
     assert.equal(quality(slotId, source, asset.file.sha256), 'reviewed');
     assert.equal(quality(slotId, source + ' altered', asset.file.sha256), 'produced');
