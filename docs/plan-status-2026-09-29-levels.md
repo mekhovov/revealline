@@ -42,14 +42,25 @@ and 50.89-second lossless routes with active signature threats. All four complet
 routes have deterministic replay and actual equal Versus winning-board evidence.
 The wider preset/control/seed matrix still proves first returns, not full clears.
 
-Next source work is **alternate complete strategies for Pressure ladder and
-Switchback exchange**, then broader presets/controls/seeds and targeted remaining
-campaign defects. Pressure's lower-foundation mastery is still incomplete;
-Switchback uses actual opened return ground but does not establish end-to-end
-shortcut necessity or impact-on-relay mastery. Production testing is not a
-prerequisite for this work. Exact evidence and limitations:
+The alternate strategies are now also source-complete in pushed follow-on
+**`b3b3b06dee2d69489635cc243c9a41bbe9ec4e17`** on
+`codex/pressure-route-alternates`, based on the unchanged PR #793 head. The final
+five-file focused cohort passes **41/41**, zero skips, in 4.68 seconds, including
+the prior 36 cases and five new route/negative controls. Six complete strategies
+now exist across the three missions, still bounded to Standard/immediate/seed 1.
+This test/documentation-only follow-on is offered for the publisher's existing
+cumulative intake; it does not allocate another version or change PR #793.
+
+Next source work is broader complete-route presets/controls/seeds and targeted
+remaining campaign defects. Current-edition optional gap goals, cleanup and
+useful repair decisions remain unqualified. Historical helper results must not
+be presented as current v37 mastery awards: the authored prose changed, and the
+legacy helpers do not implement those newer goals. Production testing is not a
+prerequisite for source progress. Exact earlier evidence and limitations:
 [Cooling loop v38](https://github.com/mekhovov/revealline/blob/de5aeaac2f601ed3703b40071c9c4e09a7ec7724/docs/cooling-loop-erosion-v38.md),
 [complete triptych routes](https://github.com/mekhovov/revealline/blob/de5aeaac2f601ed3703b40071c9c4e09a7ec7724/docs/verification/pressure-corridor-complete-routes-2026-09-29.md).
+The [alternate-route follow-on](https://github.com/mekhovov/revealline/blob/b3b3b06dee2d69489635cc243c9a41bbe9ec4e17/docs/verification/pressure-corridor-alternate-routes-2026-09-29.md)
+records both new approaches and corrects the historical-helper qualification.
 
 PR #793 is a consolidated source input, draft/held pending publisher allocation.
 Its initial preflight passed, but `release-ready` explicitly failed for
@@ -145,6 +156,7 @@ and human cooperation. Static source art is not runtime animation acceptance.
 | 5             | v0.150.0 unified experience           | Existing menu, Pause, actor, discovery, Team, Demo and community inputs; reconcile into one reviewed playable batch                  |
 | Source intake | #786                                  | 158 unchanged actor/Moving Edges source files preserved, milestone 57/v0.150.0; draft/hold remains, runtime adoption separate        |
 | Source intake | #793 Cooling loop v38                 | Reviewed/pushed opt-in encounter successor; aggregate-input/hold for publisher integration, no separate version allocated            |
+| Follow-on     | Alternate Pressure/Relay routes       | `b3b3b06de` pushed as a five-path test/documentation-only successor to #793; offered to existing cumulative intake, adoption pending |
 | Maintenance   | #787                                  | CI timing/shard tools preserved under Branch reconciliation, milestone 13; no workflow activation or speedup claim                   |
 
 The newer community #784 head is
@@ -410,6 +422,38 @@ work is accepted-main reconciliation, composed-source correctness, build/provena
 immutable freeze/archive and basic availability. Extended production, artwork,
 device, performance and human qualification remain deferred, not passed.
 
+### Subsequent A/B source continuation: slowdown cues and Guide completion
+
+Fresh source heads are now **PR #757 `f09146837cfcc5191c89e54d7f9afea56b2ef8e9`**
+and **PR #761 `fb26b059798d7e15169d3ff9c7e4653d13384970`**. Both remain open,
+conflicted drafts. Their title checks pass, but stage jobs are skipped; this is
+not integration or release acceptance.
+
+- Team timed enemy-slow pickups now use the existing ordinary/compact-Hunter
+  Slowed cue consistently with Support, tick-based expiry and freeze exclusions.
+  Recorded **70/70** checks pass. Pre-fix missing-cue failures remain preserved;
+  the sparse checkout's static edition collector and integrated build are not
+  newly verified by this receipt.
+- Guide batch 18 prevents custom-edition missing-palette crashes and unsupported
+  catalogue-practice launches while preserving admitted exact-mission practice
+  and hidden-page image readiness: recorded **73/73**. Original failures and the
+  intermediate readiness regression are retained.
+- Batch 19 adds two complete modeled Solo Sentry practice routes through warning
+  Pause, clear, verified replay and retained Retry, with no awards/profile writes:
+  recorded **2/2**. It changes tests/evidence, not content or gameplay. The held-key
+  fixture correction is distinguished from a product failure.
+- Batch 20 completes Ukrainian Sentinel, row-prefix and practice guidance while
+  preserving live language/focus/lesson/child/paused-state continuity: recorded
+  **45/45**. Scenario identities are unchanged; mixed-language failures and a
+  corrected test-ID mistake remain documented.
+
+Levels checked fresh heads, receipt scope and stored TAP summaries without
+rerunning those suites or production/native sessions. Counts overlap and are
+not summed. These bounded items are **implemented**, not still-unstarted work;
+accepted-main integration and required delivery-integrity checks remain pending.
+Production/art/device/human qualification remains deferred, with C2 human study
+last. Do not relabel these source receipts as approval or public delivery.
+
 ## Remaining priority and effort
 
 These are focused engineering estimates excluding serialized release time,
@@ -419,7 +463,7 @@ hardware availability and human review; they are not promised delivery dates.
 | -------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | 1              | Finish the already-prepared selector/audio/native/community batches                      | Turns completed source work into player-visible improvements and resolves navigation/recovery defects                                 | Per owning queue; do not restart completed qualification                                 |
 | 2              | Integrate Team Resume/Support/More/Large, dense-field reader and imported-Hunter Start   | Players need working accepted imports, accurate rescue instructions and readable state even when compact canvas packing is impossible | Bounded source complete; composed checks/reconciliation and publisher integration remain |
-| 3              | Complete strategic-route evidence for the existing v37 trio and Cooling loop v38         | Four complete routes now exist; alternate Pressure/Relay strategies and broader full-route coverage remain open                       | 1–3 engineering days remaining for the bounded evidence/repair slice                     |
+| 3              | Broaden complete-route coverage for the existing v37 trio and Cooling loop v38           | Six complete strategies now exist; additional presets/steering/seeds, current optional goals and cleanup/repair quality remain open   | 1–3 engineering days for the next bounded evidence/repair slice                          |
 | 4              | Review a new default spatial edition                                                     | New geometry cannot improve normal play while remaining opt-in; require useful complete routes, not just a larger version number      | Re-estimate after the v37 route review and human feedback                                |
 | 5              | Team teaching acknowledgement and remaining Studio/HUD donor ports                       | Avoid consumed-before-seen teaching, false Support completion and stale historical-host imports                                       | 0.5–2 days per bounded successor, after schema/ownership review                          |
 | 6              | Whole-Journey pacing, actor/state readability and final reference dispositions           | Distinct fair challenges matter more than repeating easy geometry or increasing speed globally                                        | 3–7 days per polished 3–5-mission slice; broader review remains multi-week               |
@@ -435,6 +479,33 @@ after owner reconciliation. This is not an estimate for production-art admission
 or the formal C2 human study, which remains last and deferred.
 
 ## Remaining local-source dispositions
+
+### Pressure corridor alternate strategies: complete and pushed
+
+The lower-first Pressure ladder route uses the slow-field approach, actually
+launches from its lower landing, later links all foundations and clears at tick
+3,263 (~27.19 seconds), with six cuts and zero losses/pickups. It experiences
+warned fixed-target interceptions and active trail impacts. Its legal final
+enclosure secures both field keepers' occupied trail cells and fills the remainder,
+reaching 100%; no actor or fill rule was edited. Checkpoint `c28892f0a872a209`.
+The fast skilled clear is pacing-review evidence, not proof of a dominant easy
+solution, human fairness or justification for raising quota.
+
+The east-first Switchback route opens its east relay at 183, crosses the entire
+connector to the outer landing, launches there before opening west at 1,353,
+and traverses both connectors again after the roamer activates. It clears at
+5,417 (~45.1 seconds), 1,705/2,002 cells, eleven cuts and zero losses/pickups;
+checkpoint `b1e9dccc51cfe04f`. Both objectives are complete at 15.58% coverage,
+leaving seven cuts and 4,064 ticks: cleanup quality remains a review question.
+The successful route avoids impacts; three retained legal negative variants show
+emitter/keeper timing consequences without claiming a unique solution.
+
+Both routes verify recorded replay and actual equal Versus winning boards. The
+combined **41/41** cohort, changed-file lint/format and independent review pass.
+All new code is test-only, source pushed at `b3b3b06de`; aggregate adoption and
+release remain pending. Original expectations/checkpoints remain exact. Corrected
+test/doc labels distinguish old Phaseworks/Relay helper predicates from current
+v37 gap-specific prose; no runtime medal is awarded by either fixture.
 
 ### Cooling loop: investigation complete, scoped successor pushed
 
