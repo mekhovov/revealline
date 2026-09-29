@@ -97,7 +97,8 @@ export function attachControllerNavigation({
     if (
       !element ||
       !element.isConnected ||
-      (!allowDisabled && element.disabled) ||
+      // :disabled includes inherited fieldset disabling (and its legend exception).
+      (!allowDisabled && (element.disabled || element.matches(':disabled'))) ||
       !root?.contains(element)
     )
       return false;
