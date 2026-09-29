@@ -147,3 +147,140 @@ test('captions use emitted core events and maintain a six-second reading interva
   for (let i = 0; i < 22; i++) assert.equal(captions.advance(0.25), 'demo:tipImpact');
   assert.equal(captions.advance(0.25), 'demo:tipPowerup');
 });
+
+function readCaption(captions, events = []) {
+  let key = captions.advance(0.25, events);
+  for (let index = 1; index < 24; index++) key = captions.advance(0.25);
+  return key;
+}
+
+test('captions distinguish a real scan from other equipment without claiming a revealed objective', () => {
+  for (const [classId, primitive, expected] of [
+    ['scout', 'scan', 'demo:tipScan'],
+    ['interceptor', 'shield', 'demo:tipAbility'],
+  ]) {
+    const run = createRun(level, { classId });
+    stepRun(run, { action: true }, FIXED_DT);
+    const used = run.events.find((event) => event.type === 'ability.used');
+    assert.equal(used.primitive, primitive);
+    assert.equal(run.objectives.length, 0, 'Using a scan need not find a hidden objective.');
+    const captions = createDemoCaptions();
+    captions.reset();
+    assert.equal(readCaption(captions, run.events), expected);
+    assert.equal(
+      readCaption(captions, run.events),
+      expected,
+      'Repeated events do not duplicate it.',
+    );
+  }
+});
+
+test('same-tick real cut and relay capture keep distinct captions in order until scene reset', () => {
+  const run = createRun({
+    ...level,
+    objectives: [{ id: 'hidden-relay', x: 20.5, y: 4.5, required: true, hidden: true }],
+  });
+  let captured;
+  for (const direction of ['down', 'left', 'up'])
+    for (let tick = 0; tick < 120; tick++) {
+      stepRun(run, { direction }, FIXED_DT);
+      if (run.events.some((event) => event.type === 'objective.captured'))
+        captured = structuredClone(run.events);
+    }
+  assert.ok(captured, 'An ordinary closed cut captures the actual hidden relay.');
+  assert.deepEqual(
+    captured
+      .filter((event) => ['cut.closed', 'objective.captured'].includes(event.type))
+      .map((event) => event.type),
+    ['cut.closed', 'objective.captured'],
+  );
+  assert.equal(run.objectives[0].captured, true);
+  const captions = createDemoCaptions();
+  captions.reset();
+  assert.equal(readCaption(captions, [...captured, ...captured]), 'demo:tipClose');
+  for (let index = 0; index < 23; index++)
+    assert.equal(captions.advance(0.25, captured), 'demo:tipClose');
+  assert.equal(captions.advance(0.25), 'demo:tipObjective');
+  assert.equal(readCaption(captions, captured), 'demo:tipObjective');
+  assert.equal(
+    readCaption(captions, [{ type: 'ability.used', primitive: 'shield' }]),
+    'demo:tipAbility',
+  );
+  captions.reset();
+  captions.advance(0.25, captured);
+  captions.reset();
+  assert.equal(readCaption(captions), 'demo:tipStart', 'A new scene drops pending old lessons.');
+  assert.equal(readCaption(captions, captured), 'demo:tipClose', 'A new scene may teach it again.');
+});
+
+function signalRun({ classId = 'scout', ...zone } = {}) {
+  return createRun(
+    {
+      ...level,
+      supplies: [{ id: 'home', ...level.spawn, radius: 2 }],
+      signalZones: [
+        {
+          id: 'emitter',
+          x: 23,
+          y: 1,
+          w: 3,
+          h: 3,
+          speedFactor: 0.5,
+          disableBoost: true,
+          lockAbility: false,
+          ...zone,
+        },
+      ],
+    },
+    { classId },
+  );
+}
+
+function enterSignal(run) {
+  for (let tick = 0; tick < 120; tick++) {
+    stepRun(run, { direction: 'down' }, FIXED_DT);
+    const event = run.events.find((event) => event.type === 'signal.changed');
+    if (event) return structuredClone(event);
+  }
+  assert.fail('The craft must enter the authored signal zone through normal movement.');
+}
+
+test('signal captions require an actual slowing or blocked-equipment event', () => {
+  for (const zone of [
+    { speedFactor: 0.5, disableBoost: false },
+    { speedFactor: 1, disableBoost: true },
+    { speedFactor: 1, disableBoost: false, lockAbility: true },
+  ]) {
+    const entered = enterSignal(signalRun(zone));
+    assert.equal(entered.resistant, false);
+    assert.deepEqual(entered.zoneIds, ['emitter']);
+    const captions = createDemoCaptions();
+    captions.reset();
+    assert.equal(readCaption(captions, [entered]), 'demo:tipSignal');
+  }
+});
+
+test('signal clearing, suppression, resistance and harmless zones never manufacture a jam caption', () => {
+  const clearedRun = signalRun();
+  enterSignal(clearedRun);
+  let cleared;
+  for (let tick = 0; tick < 240 && !cleared; tick++) {
+    stepRun(clearedRun, { direction: 'down' }, FIXED_DT);
+    cleared = clearedRun.events.find((event) => event.type === 'signal.changed');
+  }
+  assert.deepEqual(cleared.zoneIds, []);
+  const suppressedRun = signalRun({ classId: 'bomber' });
+  enterSignal(suppressedRun);
+  stepRun(suppressedRun, { pickup: true, action: true }, FIXED_DT);
+  const suppressed = suppressedRun.events.find((event) => event.type === 'signal.changed');
+  assert.deepEqual(suppressed.zoneIds, []);
+  assert.ok(suppressedRun.signalZones[0].suppressedUntil > suppressedRun.time);
+  const resistant = enterSignal(signalRun({ classId: 'fiber' }));
+  assert.equal(resistant.resistant, true);
+  const harmless = enterSignal(signalRun({ speedFactor: 1, disableBoost: false }));
+  for (const event of [cleared, suppressed, resistant, harmless, { type: 'signal.changed' }]) {
+    const captions = createDemoCaptions();
+    captions.reset();
+    assert.equal(readCaption(captions, [event]), 'demo:tipStart');
+  }
+});

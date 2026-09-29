@@ -14,6 +14,8 @@ import {
 } from '../../scripts/compile-edition.mjs';
 import {
   EDITION_RUNTIME_ADAPTERS,
+  EDITION_RUNTIME_RESOURCES,
+  editionDemoResources,
   projectEditionRuntimeImports,
   validateEditionHostRequests,
   editionMenuSceneResources,
@@ -97,6 +99,35 @@ test('support page closure retains navigation without authoring sample media or 
   validateEditionCodeClosure(
     new Map([...files].map(([name, source]) => [name, projectEditionRuntimeImports(name, source)])),
   );
+});
+test('edition recording inventory follows validated catalogue additions and runtime variants', async () => {
+  const catalog = JSON.parse(
+    await fs.readFile(new URL('../demo-data/catalog.json', import.meta.url)),
+  );
+  assert.deepEqual(
+    EDITION_RUNTIME_RESOURCES['game/demo-catalog.mjs'],
+    editionDemoResources(catalog),
+  );
+  const additional = structuredClone(catalog.clips[0]);
+  additional.id = 'additional-reviewed-scene';
+  additional.replayURL = './demo-data/additional-reviewed-scene.replay.json';
+  additional.replayVariants = [
+    './demo-data/additional-reviewed-scene.chromium-macos.replay.json',
+    './demo-data/additional-reviewed-scene.second-runtime.replay.json',
+  ];
+  catalog.clips.push(additional);
+  const paths = editionDemoResources(catalog);
+  for (const relative of [additional.replayURL, ...additional.replayVariants])
+    assert.ok(paths.includes(`game/${relative.slice(2)}`));
+  assert.equal(new Set(paths).size, paths.length);
+  for (const invalid of [
+    'https://example.com/scene.replay.json',
+    './demo-data/../private.replay.json',
+    './demo-data/scene.replay.json?unreviewed=1',
+  ]) {
+    additional.replayVariants[0] = invalid;
+    assert.throws(() => editionDemoResources(catalog), /bundled relative URLs/);
+  }
 });
 test('standalone and public offline menus retain every dynamically attached panel stylesheet', async () => {
   const modules = [

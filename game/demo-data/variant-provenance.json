@@ -50,6 +50,70 @@
       "inputTraceIdentity": "b6b1b38a63b715ba",
       "sourceCheckpoint": "016a46a4b5673580",
       "checkpoint": "0bdda36c648dd003"
+    },
+    {
+      "id": "stone-lanes-detour",
+      "replayURL": "./demo-data/stone-lanes-detour.chromium-macos.replay.json",
+      "inputTraceIdentity": "02aee710343a0599",
+      "sourceCheckpoint": "de015f36e30129e9",
+      "checkpoint": "38b712380cf097f6",
+      "recordedIn": {
+        "createdAt": "2026-09-29T15:01:27.852Z",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+        "platform": "MacIntel",
+        "mathWitness": {
+          "sin": 0.6833454390418383,
+          "hypot": 0.7615773105863908
+        }
+      }
+    },
+    {
+      "id": "hidden-frequency-search",
+      "replayURL": "./demo-data/hidden-frequency-search.chromium-macos.replay.json",
+      "inputTraceIdentity": "806c350fdb164271",
+      "sourceCheckpoint": "1bd018399cd068be",
+      "checkpoint": "d6b796a794110396",
+      "recordedIn": {
+        "createdAt": "2026-09-29T15:01:27.852Z",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+        "platform": "MacIntel",
+        "mathWitness": {
+          "sin": 0.6833454390418383,
+          "hypot": 0.7615773105863908
+        }
+      }
+    },
+    {
+      "id": "the-crossing-windows",
+      "replayURL": "./demo-data/the-crossing-windows.chromium-macos.replay.json",
+      "inputTraceIdentity": "59808a071ea860a3",
+      "sourceCheckpoint": "5b0f6b3b1daf7949",
+      "checkpoint": "8772d64a82047ccc",
+      "recordedIn": {
+        "createdAt": "2026-09-29T15:01:27.852Z",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+        "platform": "MacIntel",
+        "mathWitness": {
+          "sin": 0.6833454390418383,
+          "hypot": 0.7615773105863908
+        }
+      }
+    },
+    {
+      "id": "signal-garden-route",
+      "replayURL": "./demo-data/signal-garden-route.chromium-macos.replay.json",
+      "inputTraceIdentity": "6102f337b970c3f7",
+      "sourceCheckpoint": "b627fd8c6256b2f2",
+      "checkpoint": "304eedb5df9b549e",
+      "recordedIn": {
+        "createdAt": "2026-09-29T15:01:27.852Z",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+        "platform": "MacIntel",
+        "mathWitness": {
+          "sin": 0.6833454390418383,
+          "hypot": 0.7615773105863908
+        }
+      }
     }
   ]
 }
