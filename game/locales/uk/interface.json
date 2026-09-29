@@ -1032,6 +1032,7 @@
   "practiceEndedYourCampaignRemainsPausedNoProgressWasAwarded": "Тренування завершено. Кампанія залишається на паузі; прогрес не нараховано.",
   "preparingAnIsolatedLesson": "Підготовка окремого уроку…",
   "practiceOnlyCampaignProgressAndSavedFlightsAreUnchanged": "Лише тренування · прогрес кампанії та збережені польоти не змінено.",
+  "enemyGuide.practiceBootFailed": "Тренування не запустилося. Поверніться до довідника й спробуйте знову. Кампанія залишається на паузі.",
   "recognizeAThreatThenTryItPracticeNeverAwardsCampaign": "Розпізнай загрозу, потім випробуй її. Тренування не дає прогресу кампанії.",
   "unknownPracticeReturnDestination": "Невідоме місце повернення з тренування.",
   "practiceMustRemainOnTheSameOrigin": "Тренування має залишатися на тому самому джерелі.",

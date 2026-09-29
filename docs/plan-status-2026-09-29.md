@@ -71,6 +71,31 @@ lesson, focus, child identity, handoff and exact paused checkpoint. Independent
 review confirms generated-catalog byte identity. This fixes existing player copy,
 without expanding the deferred full-translation or production scope.
 
+## Current source handoff — practice recovery and Team cues
+
+- **A3:** PR757 now reaches `541d7fcde298ccddffe3f683698bf890212db766`.
+  Target-lock and rescue canvas captions follow EN/UK language, including real
+  Hunter warnings and contact-rescue progress. Separate complete cohorts pass
+  **67/67** role/bonus cases and **29/29** layout cases. Five old Ukrainian layout
+  expectations were corrected to the intended translated label without relaxing
+  geometry or cache checks. See [the exact receipt](https://github.com/mekhovov/revealline/blob/541d7fcde298ccddffe3f683698bf890212db766/docs/verification/team-cue-localization-20260929/README.md).
+- **B:** [batch21](verification/actor-batch-21/README.md) restores the controller
+  Return route when Guide practice fails before readiness. Background focus
+  transfer, stale children and held Confirm remain guarded. **117/117** complete
+  affected checks pass after independent review and correction.
+- **A3 fixture follow-up:** the separate Couch reading file passes **16/16** after
+  honoring the existing controller-join echo window and checking actual Help
+  visibility. No runtime guard was weakened. The publisher's newer Help hierarchy
+  must remain intact during integration.
+- These are **implemented and pushed source inputs**, not newly public features.
+  The publisher has begun cumulative integration of earlier bounded donors; this
+  receipt does not qualify its current composite source or promise a release ETA.
+
+No new artwork, mission, approval or version is introduced. Remaining priorities
+are A2 full-roster/state quality, B broader encounter combinations and fair play,
+C the first approved cohort, then necessary C6 and cross-content qualification.
+Production review and C2 remain deferred; required technical release checks remain.
+
 ## Public and queued
 
 - Latest observed main is `321408a3cfd75ae230d760f39fb692503652601a`
@@ -287,7 +312,7 @@ is A2 preparation, not completion of A or the deferred C2 human study.
 3. **Artwork quality:** generated cultural scenes remain candidates. Native
    export and valid hashes establish preparation, not consistent pixel clusters,
    museum accuracy, composition over gameplay, permission or production approval.
-4. **Local capacity:** the latest observation is approximately **2.5GiB free**, above
+4. **Local capacity:** the latest observation is approximately **3.4GiB free**, above
    the publisher's 1,275,068,416-byte reserve but volatile. Earlier 603MB, 7.1GiB
    and ~110MB observations are historical. Small source/evidence handoffs continue; no local build,
    large download or release materialization is started here. Recheck before

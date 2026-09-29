@@ -83,3 +83,14 @@ the same text nodes, selection, focus, child URL/window, handoff and complete pa
 checkpoint; translation must not recreate or resume a lesson. Regenerate only the
 required catalog and verify its exact bytes and placeholders. Keep existing
 messages and authored scenario identities unchanged, and retain original failures.
+
+## Preserve a controller escape from failed practice
+
+Launch the real admitted practice child and fail its boot before readiness.
+Observe only that owned generation, URL and Window with the existing readiness
+helper. Keep slow loading and ready-child recovery independent. Offer the existing
+Return action with localized status; move focus only while foreground and still
+owned by the same failed Document. Test hidden and visible-blurred returns, newer
+focus, stale navigation, close/dispose and held Confirm. Preserve exact paused
+state, handoff bytes and the return-token protocol. Keep valid failure evidence,
+fixture corrections and physical-device limitations separate.
