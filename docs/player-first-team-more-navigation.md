@@ -75,10 +75,28 @@ then qualify optional encounters and one complete Ukrainian/FPV artwork cohort.
 Required Studio and coverage work travels with those features. Broader editions,
 tools and whole-content qualification follow; the formal C2 human study is last.
 
-Current release metadata places this source in the v0.150.0 aggregate after the
-v0.142.4 mission selector and v0.143.0 soundtrack work. Former v0.144–v0.149 inputs
+The draft remains labelled as a v0.150.0 input. The canonical publisher is now
+combining reviewed source batches before one final publication: selector PR791 is
+merged, with soundtrack and these scoped Team/actor inputs following. The label
+does not allocate a separate release or require an intermediate publication. Former v0.144–v0.149 inputs
 are already included in v0.142.3 and are not six additional pending releases.
 The canonical publisher still owns reconciliation, reviewed presentation
 successors, exact-source checks and public acceptance. No separate version or
 publication is created here. Main's later `1af848b1` change is soundtrack
 documentation only; this feature's checked source remains based on `64c8b9d8`.
+
+## Compact canvas cue follow-up
+
+The previously recorded 568×320 Ukrainian Large overlap now has a bounded renderer
+correction: clear positions remain stable; compact boards pack full measured cues
+without covering player/enemy contacts or locked destinations. Slowing information
+is consolidated with active danger captions and explained in Help. Optional
+celebrations cannot displace required cues. Cache/diagnostics stay renderer-owned.
+The complete 13-file cohort passes 157/157, including actual-painter state/expiry
+and atomic-placement regressions. Native local Start → reserve loss → downed →
+Pause/Help → rotation → explicit Resume passed at 568×320 and 390×844.
+
+See [exact evidence and limitations](verification/team-cue-layout-20260929/README.md).
+Still open: maximum-density custom-map cue overflow, motion-performance and broader
+native state/locale qualification, current presentation successor admission and
+final public release. This does not complete A2 or the whole A/C3 roster phase.

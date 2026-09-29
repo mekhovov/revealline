@@ -4,6 +4,8 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { createCoop } from '../coop/core.mjs';
 import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
+import { RELAY_YARD } from '../coop/relay-yard.mjs';
+import { setLocale } from '../i18n/index.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
 import { imagePresentation } from '../presentation/runtime.mjs';
 import { validateCompiledPresentation } from '../presentation/host.mjs';
@@ -36,6 +38,8 @@ const snapshot = {
     };
   },
 };
+const recordedTextWidth = (text, font) =>
+  String(text).length * Number(font.match(/([\d.]+)px/)[1]) * 0.64;
 function surface(width = 362) {
   const calls = [],
     stack = [];
@@ -74,7 +78,7 @@ function surface(width = 362) {
           }
           if (name === 'measureText')
             return {
-              width: String(args[0]).length * Number(state.font.match(/([\d.]+)px/)[1]) * 0.64,
+              width: recordedTextWidth(args[0], state.font),
             };
         };
       },
@@ -484,4 +488,511 @@ test('invalid canvas text size fails before drawing or mutating the Team run', (
   assert.throws(() => painter.paint(run, { textSize: 'tiny' }), /Unsupported text size/);
   assert.deepEqual(v.calls, []);
   assert.deepEqual(run, before);
+});
+
+// These are renderer-state fixtures, not a claim that keyboard play reached
+// each state. The recorder supplies deterministic 0.64em text widths; it does
+// not substitute for native Plain/Theme-font glyph or raster qualification.
+function relayCrowdingStudy(
+  phase,
+  {
+    textFace,
+    reduced,
+    status,
+    outcome = null,
+    width = 212,
+    slowed = phase === 'both-slowed' ? 2 : phase === 'slowed' ? 1 : 0,
+  },
+) {
+  const run = createCoop(RELAY_YARD),
+    view = surface(width),
+    painter = createCoopPainter(view.canvas),
+    hunters = run.enemies.filter((enemy) => enemy.type === 'hunter');
+  assert.equal(hunters.length, 2);
+  run.status = status;
+  run.time = 2;
+  run.tick = 240;
+  run.team.reserves = 0;
+  run.players[0].status = 'downed';
+  for (const enemy of hunters) {
+    enemy.phase = phase.endsWith('slowed') ? 'patrol' : phase;
+    if (phase === 'warning') {
+      enemy.target = 1;
+      enemy.targetPoint = { x: 51.5, y: 18.5 };
+    }
+  }
+  for (const enemy of hunters.slice(0, slowed)) {
+    enemy.speedScale = 0.5;
+    enemy.slowUntil = 3;
+  }
+  if (outcome) run.events = [{ type: outcome, players: [0, 1], tick: run.tick, time: run.time }];
+  const before = structuredClone(run);
+  const paintOptions = { textFace, textSize: 'large', reduced };
+  painter.setPresentation(snapshot);
+  painter.paint(run, paintOptions);
+  assert.deepEqual(run, before, 'Crowding presentation must not change the authoritative state.');
+  return { run, painter, paintOptions, ...view };
+}
+
+function paintedCueBounds(view) {
+  const cssScale = view.canvas.clientWidth / view.canvas.width,
+    cssBounds = (call, rect) =>
+      Object.fromEntries(
+        Object.entries(bounds(call, rect)).map(([key, value]) => [key, value * cssScale]),
+      );
+  return view.calls.flatMap((call, index) => {
+    if (call.name !== 'fillText') return [];
+    assert.equal(call.args.length, 3, 'Required text cannot use maxWidth to squeeze its glyphs.');
+    assert.equal(call.state.textAlign, 'center');
+    assert.equal(call.state.textBaseline, 'middle');
+    const [text, x, y] = call.args,
+      height = Number(call.state.font.match(/([\d.]+)px/)[1]),
+      width = recordedTextWidth(text, call.state.font),
+      previous = view.calls[index - 1],
+      backing =
+        previous?.name === 'fillRect' && previous.state.fillStyle === '#07111c'
+          ? cssBounds(previous, previous.args)
+          : null;
+    let badge = null;
+    if (['1', '2'].includes(text)) {
+      const pathStart = view.calls
+          .slice(0, index)
+          .findLastIndex((entry) => entry.name === 'beginPath'),
+        path = view.calls.slice(pathStart + 1, index),
+        circle = path.find((entry) => entry.name === 'arc'),
+        points = path.filter((entry) => ['moveTo', 'lineTo'].includes(entry.name));
+      assert.equal(path.find((entry) => entry.name === 'fill')?.state.fillStyle, '#07111c');
+      if (circle) {
+        const [cx, cy, radius] = circle.args;
+        badge = cssBounds(circle, [cx - radius, cy - radius, radius * 2, radius * 2]);
+      } else {
+        assert.equal(points.length, 4, 'The second pilot keeps its complete diamond badge.');
+        const xs = points.map((entry) => entry.args[0]),
+          ys = points.map((entry) => entry.args[1]);
+        badge = cssBounds(points[0], [
+          Math.min(...xs),
+          Math.min(...ys),
+          Math.max(...xs) - Math.min(...xs),
+          Math.max(...ys) - Math.min(...ys),
+        ]);
+      }
+    }
+    return [
+      {
+        text,
+        cssFontSize: height * Math.hypot(call.state.matrix[2], call.state.matrix[3]) * cssScale,
+        textBounds: cssBounds(call, [x - width / 2, y - height / 2, width, height]),
+        backing,
+        badge,
+      },
+    ];
+  });
+}
+
+const overlap = (a, b) =>
+  a.left < b.right - 1e-9 &&
+  a.right > b.left + 1e-9 &&
+  a.top < b.bottom - 1e-9 &&
+  a.bottom > b.top + 1e-9;
+
+function assertSlowRings(view, expectedHunters) {
+  const cssScale = view.canvas.clientWidth / view.canvas.width,
+    rings = view.calls.flatMap((call, index) => {
+      if (call.name !== 'arc' || call.args[0] !== 0 || call.args[1] !== 0 || call.args[2] !== 0.88)
+        return [];
+      assert.equal(view.calls[index - 1].name, 'beginPath');
+      assert.equal(view.calls[index - 2].name, 'setLineDash');
+      assert.deepEqual(view.calls[index - 2].args, [[0.16, 0.12]]);
+      const stroke = view.calls[index + 1];
+      assert.equal(
+        stroke.name,
+        'stroke',
+        'The actual slow ring must be stroked, not just described.',
+      );
+      assert.equal(stroke.state.lineWidth, 0.11);
+      assert.equal(stroke.state.globalAlpha, 1);
+      // This existing layout snapshot has no registered Support decoration;
+      // the functional ring must therefore retain its original fallback ink.
+      assert.equal(stroke.state.strokeStyle, '#e6f8ff');
+      return [{ x: call.state.matrix[4] * cssScale, y: call.state.matrix[5] * cssScale }];
+    }),
+    cell = view.canvas.clientWidth / view.run.width;
+  assert.equal(rings.length, expectedHunters.length);
+  for (const [index, enemy] of expectedHunters.entries()) {
+    assert.ok(Math.abs(rings[index].x - enemy.x * cell) < 1e-9);
+    assert.ok(Math.abs(rings[index].y - enemy.y * cell) < 1e-9);
+  }
+}
+
+function assertCrowdingCues(view, roleLabels, context) {
+  const labels = paintedCueBounds(view),
+    required = ['1', '2', '+', 'A', 'B', 'ЩИТ', ...roleLabels];
+  assert.deepEqual(
+    labels.map((label) => label.text).sort(),
+    [...required].sort(),
+    'Every full role/state, anchor, shield and pilot cue must survive; duplicate roles count separately.',
+  );
+  assert.equal(
+    view.painter.cueLayout?.requested,
+    required.length - 1,
+    'Required placement requests include one shared downed numeral/+ badge; optional outcome banners cannot poison their packing.',
+  );
+  assert.equal(view.painter.cueLayout.painted, required.length - 1);
+  assert.equal(view.painter.cueLayout.compact, true);
+  assert.equal(
+    labels.filter((label) => label.backing).length,
+    required.length - 2,
+    'Every caption has its own rectangular backing; the two pilot numerals use circle/diamond badges.',
+  );
+  assert.equal(labels.filter((label) => label.badge).length, 2);
+  const cell = 212 / view.run.width,
+    circleEnvelope = (x, y, radius, extra = 0) => ({
+      left: (x - radius) * cell - extra,
+      right: (x + radius) * cell + extra,
+      top: (y - radius) * cell - extra,
+      bottom: (y + radius) * cell + extra,
+    }),
+    exclusions = [
+      ...view.run.players.map((player) => ({
+        kind: `pilot ${player.id}`,
+        ...circleEnvelope(player.x, player.y, player.radius, 2),
+      })),
+      ...view.run.enemies
+        .filter((enemy) => enemy.active)
+        .map((enemy) => ({
+          kind: `enemy contact ${enemy.id}`,
+          ...circleEnvelope(enemy.x, enemy.y, enemy.radius + 3 / 32),
+        })),
+      ...view.run.enemies
+        .filter((enemy) => enemy.active && enemy.phase === 'warning' && enemy.targetPoint)
+        .map((enemy) => ({
+          kind: `locked target ${enemy.id}`,
+          ...circleEnvelope(enemy.targetPoint.x, enemy.targetPoint.y, 0.75 + 0.05),
+        })),
+    ];
+  assert.equal(
+    exclusions.filter((rect) => rect.kind.startsWith('enemy contact')).length,
+    4,
+    'Both authored Hunters and both drifters contribute their actual contact exclusion.',
+  );
+  if (view.run.enemies.some((enemy) => enemy.phase === 'warning'))
+    assert.equal(exclusions.filter((rect) => rect.kind.startsWith('locked target')).length, 2);
+  for (const label of labels) {
+    const minimum = ['1', '2'].includes(label.text) ? (14 * 4) / 3 : 16;
+    assert.ok(label.cssFontSize >= minimum - 1e-9, JSON.stringify(label));
+    for (const rect of [label.textBounds, label.backing, label.badge].filter(Boolean)) {
+      assert.ok(
+        rect.left >= -1e-9 &&
+          rect.top >= -1e-9 &&
+          rect.right <= 212 + 1e-9 &&
+          rect.bottom <= 106 + 1e-9,
+        JSON.stringify({ context, label }),
+      );
+      const covered = exclusions.filter((exclusion) => overlap(rect, exclusion));
+      assert.deepEqual(covered, [], JSON.stringify({ context, label, covered }));
+    }
+    if (label.backing)
+      assert.ok(
+        label.backing.left <= label.textBounds.left + 1e-9 &&
+          label.backing.top <= label.textBounds.top + 1e-9 &&
+          label.backing.right >= label.textBounds.right - 1e-9 &&
+          label.backing.bottom >= label.textBounds.bottom - 1e-9,
+        `Backing must retain its complete text envelope: ${JSON.stringify(label)}`,
+      );
+  }
+  const conflicts = [];
+  for (let first = 0; first < labels.length; first++)
+    for (let second = first + 1; second < labels.length; second++) {
+      const a = labels[first],
+        b = labels[second];
+      if (
+        overlap(a.textBounds, b.textBounds) ||
+        overlap(a.backing ?? a.badge ?? a.textBounds, b.backing ?? b.badge ?? b.textBounds)
+      )
+        conflicts.push({ first: a, second: b });
+    }
+  assert.deepEqual(conflicts, [], JSON.stringify({ context, conflicts }));
+  assert.deepEqual(
+    view.painter.cueLayout.unplaced,
+    [],
+    JSON.stringify({ context, ...view.painter.cueLayout }),
+  );
+  assert.equal(view.painter.cueLayout.strategy, 'packed');
+  return labels;
+}
+
+for (const [phase, roleLabels] of [
+  ['patrol', ['МИСЛИВЕЦЬ', 'МИСЛИВЕЦЬ']],
+  ['warning', ['LOCK 2', 'LOCK 2']],
+  ['commit', ['РИВОК', 'РИВОК']],
+  ['recovery', ['ВІДНОВЛЕННЯ', 'ВІДНОВЛЕННЯ']],
+  // At compact widths the full functional status replaces only its own
+  // generic idle Hunter title. It cannot replace a warning/charge/recovery.
+  ['slowed', ['МИСЛИВЕЦЬ', 'УПОВІЛЬНЕНО']],
+  ['both-slowed', ['УПОВІЛЬНЕНО', 'УПОВІЛЬНЕНО']],
+])
+  test(`212 CSS px Ukrainian Large Relay ${phase} retains complete distinct cue plates`, (t) => {
+    setLocale('uk', { persist: false });
+    t.after(() => setLocale('en', { persist: false }));
+    for (const textFace of ['plain', 'pixel'])
+      for (const reduced of [false, true])
+        for (const status of ['running', 'paused']) {
+          const view = relayCrowdingStudy(phase, { textFace, reduced, status });
+          assertCrowdingCues(view, roleLabels, { phase, textFace, reduced, status });
+        }
+  });
+
+test('362 CSS px Ukrainian Large Relay keeps legacy full role/danger and Slowed captions', (t) => {
+  setLocale('uk', { persist: false });
+  t.after(() => setLocale('en', { persist: false }));
+  for (const [phase, caption] of [
+    ['patrol', 'МИСЛИВЕЦЬ'],
+    ['warning', 'LOCK 2'],
+    ['commit', 'РИВОК'],
+    ['recovery', 'ВІДНОВЛЕННЯ'],
+  ])
+    for (const textFace of ['plain', 'pixel'])
+      for (const reduced of [false, true])
+        for (const status of ['running', 'paused']) {
+          const view = relayCrowdingStudy(phase, {
+              textFace,
+              reduced,
+              status,
+              width: 362,
+              slowed: 2,
+            }),
+            labels = paintedCueBounds(view);
+          assert.deepEqual(
+            labels.map((label) => label.text).sort(),
+            ['1', '2', '+', 'A', 'B', 'ЩИТ', caption, caption, 'УПОВІЛЬНЕНО', 'УПОВІЛЬНЕНО'].sort(),
+            JSON.stringify({ phase, textFace, reduced, status }),
+          );
+          assert.equal(
+            view.painter.cueLayout,
+            null,
+            'Wider boards keep their existing layout path.',
+          );
+          for (const label of labels.filter((item) =>
+            [caption, 'УПОВІЛЬНЕНО'].includes(item.text),
+          )) {
+            assert.ok(label.cssFontSize >= 16 - 1e-9);
+            assert.ok(
+              label.backing,
+              'Both legacy role and status captions keep their full backings.',
+            );
+          }
+          assertSlowRings(
+            view,
+            view.run.enemies.filter((enemy) => enemy.type === 'hunter'),
+          );
+        }
+});
+
+for (const [phase, danger] of [
+  ['warning', 'LOCK 2'],
+  ['commit', 'РИВОК'],
+  ['recovery', 'ВІДНОВЛЕННЯ'],
+])
+  test(`212 CSS px slowed ${phase} Hunters retain full danger captions, arrows and dashed rings`, (t) => {
+    setLocale('uk', { persist: false });
+    t.after(() => setLocale('en', { persist: false }));
+    for (const textFace of ['plain', 'pixel'])
+      for (const reduced of [false, true])
+        for (const status of ['running', 'paused']) {
+          const view = relayCrowdingStudy(phase, { textFace, reduced, status, slowed: 2 });
+          // Compact active states consolidate the full danger caption and ↓
+          // slow marker; the translated Help legend and two unchanged dashed
+          // rings retain its meaning without a second long caption per Hunter.
+          assertCrowdingCues(view, [`${danger} ↓`, `${danger} ↓`], {
+            phase,
+            slowed: 2,
+            textFace,
+            reduced,
+            status,
+          });
+          assertSlowRings(
+            view,
+            view.run.enemies.filter((enemy) => enemy.type === 'hunter'),
+          );
+
+          view.run.time = 3;
+          view.run.tick += 1;
+          const expired = structuredClone(view.run);
+          view.calls.length = 0;
+          view.painter.paint(view.run, view.paintOptions);
+          assertCrowdingCues(view, [danger, danger], {
+            phase,
+            textFace,
+            reduced,
+            status,
+            expiredAt: view.run.time,
+          });
+          assertSlowRings(view, []);
+          assert.deepEqual(
+            view.run,
+            expired,
+            'Expiry presentation must not change the actual phase.',
+          );
+        }
+  });
+
+for (const [outcome, banner] of [
+  ['cut.joint', '1 + 2 · JOINT CUT'],
+  ['team.recovery', '1 + 2 · TEAM RECOVERY'],
+])
+  test(`212 CSS px required cues remain complete with an active ${outcome} outcome`, (t) => {
+    setLocale('uk', { persist: false });
+    t.after(() => setLocale('en', { persist: false }));
+    for (const textFace of ['plain', 'pixel'])
+      for (const reduced of [false, true])
+        for (const status of ['running', 'paused']) {
+          const options = { textFace, reduced, status },
+            baseline = relayCrowdingStudy('patrol', options),
+            view = relayCrowdingStudy('patrol', { ...options, outcome });
+          assert.ok(
+            view.calls.some((call) => call.name === 'measureText' && call.args[0] === banner),
+            'The current event must reach outcome presentation; this is not an inactive-feedback test.',
+          );
+          assert.ok(
+            !view.calls.some((call) => call.name === 'fillText' && call.args[0] === banner),
+            'The optional full banner is wider than this arena and must not squeeze its text.',
+          );
+          const labels = assertCrowdingCues(view, ['МИСЛИВЕЦЬ', 'МИСЛИВЕЦЬ'], {
+            ...options,
+            outcome,
+          });
+          assert.equal(view.painter.cueLayout.optionalOmitted, 1);
+          assert.deepEqual(
+            labels,
+            paintedCueBounds(baseline),
+            'An omitted optional outcome must not disturb any required cue placement.',
+          );
+        }
+  });
+
+test('compact cue packing reuses identical geometry and invalidates changed arena or warnings', (t) => {
+  setLocale('uk', { persist: false });
+  t.after(() => setLocale('en', { persist: false }));
+  const view = relayCrowdingStudy('patrol', {
+      textFace: 'plain',
+      reduced: true,
+      status: 'running',
+    }),
+    original = paintedCueBounds(view),
+    before = structuredClone(view.run);
+  assert.equal(view.painter.cueLayout.cached, false);
+  view.calls.length = 0;
+  view.painter.paint(view.run, view.paintOptions);
+  assert.equal(view.painter.cueLayout.cached, true);
+  assert.deepEqual(paintedCueBounds(view), original);
+  assert.deepEqual(view.run, before);
+
+  view.canvas.clientWidth = 213;
+  view.calls.length = 0;
+  view.painter.paint(view.run, view.paintOptions);
+  assert.equal(view.painter.cueLayout.cached, false);
+  const resized = paintedCueBounds(view);
+  assert.notDeepEqual(resized, original);
+  view.calls.length = 0;
+  view.painter.paint(view.run, view.paintOptions);
+  assert.equal(view.painter.cueLayout.cached, true);
+  assert.deepEqual(paintedCueBounds(view), resized);
+  assert.deepEqual(view.run, before);
+
+  for (const enemy of view.run.enemies.filter((actor) => actor.type === 'hunter')) {
+    enemy.phase = 'warning';
+    enemy.target = 1;
+    enemy.targetPoint = { x: view.run.players[1].x, y: view.run.players[1].y };
+  }
+  const warning = structuredClone(view.run);
+  view.calls.length = 0;
+  view.painter.paint(view.run, view.paintOptions);
+  assert.equal(view.painter.cueLayout.cached, false);
+  assert.equal(
+    view.calls.filter((call) => call.name === 'fillText' && call.args[0] === 'LOCK 2').length,
+    2,
+  );
+  assert.ok(!view.calls.some((call) => call.name === 'fillText' && call.args[0] === 'МИСЛИВЕЦЬ'));
+  assert.deepEqual(view.run, warning);
+});
+
+test('a moved locked target invalidates warm packing without changing warning text', (t) => {
+  setLocale('uk', { persist: false });
+  t.after(() => setLocale('en', { persist: false }));
+  const view = relayCrowdingStudy('warning', {
+      textFace: 'plain',
+      reduced: true,
+      status: 'running',
+    }),
+    previousShield = paintedCueBounds(view).find((label) => label.text === 'ЩИТ').backing,
+    hunter = view.run.enemies.find((enemy) => enemy.type === 'hunter'),
+    cell = 212 / view.run.width;
+  view.calls.length = 0;
+  view.painter.paint(view.run, view.paintOptions);
+  assert.equal(view.painter.cueLayout.cached, true);
+  hunter.targetPoint = {
+    x: (previousShield.left + previousShield.right) / 2 / cell,
+    y: (previousShield.top + previousShield.bottom) / 2 / cell,
+  };
+  const before = structuredClone(view.run);
+  view.calls.length = 0;
+  view.painter.paint(view.run, view.paintOptions);
+  assert.equal(view.painter.cueLayout.cached, false);
+  assertCrowdingCues(view, ['LOCK 2', 'LOCK 2'], { movedTarget: hunter.targetPoint });
+  assert.deepEqual(view.run, before);
+});
+
+test('an accepted won picture clears the last compact cue layout', () => {
+  const view = relayCrowdingStudy('patrol', {
+    textFace: 'plain',
+    reduced: true,
+    status: 'running',
+  });
+  assert.ok(view.painter.cueLayout?.requested > 0);
+  view.run.status = 'won';
+  const before = structuredClone(view.run),
+    image = { width: 1152, height: 576 },
+    picture = Object.freeze({
+      snapshot,
+      image,
+      choice: Object.freeze({
+        kind: 'image',
+        levelId: view.run.level.id,
+        levelRevision: view.run.level.revision,
+      }),
+      fit: 'contain',
+      sampling: 'nearest',
+    });
+  view.calls.length = 0;
+  view.painter.paint(view.run, { ...view.paintOptions, picture });
+  assert.ok(view.calls.some((call) => call.name === 'drawImage' && call.args[0] === image));
+  assert.equal(view.calls.filter((call) => call.name === 'fillText').length, 0);
+  assert.equal(
+    view.painter.cueLayout,
+    null,
+    'The completed picture cannot expose stale cue counts.',
+  );
+  assert.deepEqual(view.run, before);
+});
+
+test('replacing or removing presentation clears its previous compact cue layout', () => {
+  for (const replacement of [snapshot, null]) {
+    const view = relayCrowdingStudy('patrol', {
+      textFace: 'plain',
+      reduced: true,
+      status: 'running',
+    });
+    assert.ok(view.painter.cueLayout?.requested > 0);
+    const before = structuredClone(view.run);
+    view.painter.setPresentation(replacement);
+    assert.equal(view.painter.cueLayout, null);
+    view.calls.length = 0;
+    view.painter.paint(view.run, view.paintOptions);
+    assert.equal(
+      view.painter.cueLayout.cached,
+      false,
+      'Presentation replacement retires old packing.',
+    );
+    assert.deepEqual(view.run, before);
+  }
 });
