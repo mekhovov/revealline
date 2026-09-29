@@ -1,0 +1,216 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:14.039395+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p07-retry-contract-tests",
+  "branch": "refs/heads/codex/p07-retry-contract-tests",
+  "head": "c4851d140b8c7c8ebaebfede998b4d9e60f18807",
+  "excluded": [
+    {
+      "status": "??",
+      "path": "node_modules"
+    }
+  ],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "d1443df330a9a8b21e5e0c07b047554ebd8cddd5",
+      "sha256": "9b0a0a061caa7f1516fc6c3e67de28f6c2920e0426b4c266f5b832b0e2737c57",
+      "bytes": 202984,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/solo-result-continuation.md",
+      "object": "470025ab576294945a73d406041b9678f59b6bb8",
+      "sha256": "cb2686fea4d11f384e777654f0e235c2974649e17b5f7240138c7034323f468a",
+      "bytes": 4029,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/defeat-presentation-host.test.mjs",
+      "object": "ae7c241dadc3e3c7cbdc03a52b3980a7e8e30df4",
+      "sha256": "b8823453eec0f3cd0ec044ec475d011b334cf35399a75633516bdb0922f7a26c",
+      "bytes": 9841,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/picture-ready-status.test.mjs",
+      "object": "38683b0d592912f6ade0f24a17baed4d882c6fbc",
+      "sha256": "e5ef44dff89bf9feada55e15f9dfd892b05e2867b974fad9af4210b60367d38d",
+      "bytes": 10224,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/terminal-navigation.test.mjs",
+      "object": "5de1eccbb27c83dd73b1843e45c616c70564419c",
+      "sha256": "b6522c4eb856490c06d6723a90820ff33f32e87bb64a14fdfecbce69f8d2e212",
+      "bytes": 18373,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/README.md",
+      "object": "e2523797f66de17e0583b4eb51c00f0963d24785",
+      "sha256": "55aee56baff444e36c87868070dfca821b4fdbf6755564b706be3ee457705662",
+      "bytes": 3890,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/candidate-patch.zip",
+      "object": "ecf4ea4dfea3738d0ffae0d4b60a7c93360a9450",
+      "sha256": "19f171d2bfdaa11780628d26a263da2ec6710e8917d4baa0009abf3e8cc4aa52",
+      "bytes": 7040,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/candidate-pins.json",
+      "object": "abbbcea820648c2235ccdebf4da0177bff9e40cf",
+      "sha256": "0ee9e0b7dc6d2d569769c09bdfddd390b4f5f0543c0ae9d4aab98a956a3b0420",
+      "bytes": 1927,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/ci-failures.zip",
+      "object": "94173402ae353d88f5537025ea49686006416037",
+      "sha256": "1260983e5d10b0c4e1cab7e94fbc7281ca6a09ebdd2d387f55c0e76345cd6b3b",
+      "bytes": 600344,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/isolated-input.zip",
+      "object": "09c8ad12707c2f702e0faec8dd8ed91477663d7d",
+      "sha256": "3fee677f4bb7c0b22555de02608970fb7b38aa4e2354ef5ead9ab39c4effcac7",
+      "bytes": 23508,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/manifest.json",
+      "object": "cb55cf31c516080cf3b212eec767fe55c26dcd60",
+      "sha256": "727d0044832be1d0d2321e605f64148db5e13d99e7d14863683e47198026902f",
+      "bytes": 76017,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/ordinary-browser.zip",
+      "object": "d575c109bd58b0974d76a18fc6ce5b8c258466aa",
+      "sha256": "b3f0d956acd8d114c6ceb8cf5985612abc44fa415e3c065657214df56bcf48b7",
+      "bytes": 287255,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/reports/browser-frozen-observation.json",
+      "object": "f9ccb2c957682c5cacc22ded880af2aa7ce0f098",
+      "sha256": "4ca0f94d8a05ecd103212cc26b90a571ef35754fc461abb8e43844638e082484",
+      "bytes": 29156,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/reports/browser-peer-review.json",
+      "object": "993d096816efacda4baf90e1689f6d328b565290",
+      "sha256": "a6ee44e64fadef9eb36b50589b89691085612d6db6de24eae6bcd36e28898df6",
+      "bytes": 10721,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/reports/browser-timing-correction.json",
+      "object": "cb602a07751f6bba3e78bf5766ea343be279c009",
+      "sha256": "d3f32ae8a89ad145610c8f5928fb42faaec46631f611404d25da167fa974bd59",
+      "bytes": 515,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/reports/final-verification.json",
+      "object": "25901e9e97db9c121c37c1608710df77228ddef4",
+      "sha256": "ce04920c4794a27ce1349e05242b9672903491bfc2e784ce00badbea024cc60a",
+      "bytes": 5992,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/reports/handoff.json",
+      "object": "a55bc78d49d9cade1092cc8c19fca8396648cfe6",
+      "sha256": "5546dff0c23af9d8ef85471ec04617a1a80e1b43ceea2b89153a56c1db0da8a4",
+      "bytes": 2000,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/reports/isolated-input-observation.json",
+      "object": "6cb4b563eafd1caf739ebd0541b50b5185e871cc",
+      "sha256": "f4cc4c6f060ef00c1cc827edd950f22624328752c4d9924911d323b658518020",
+      "bytes": 11610,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/reports/native-documentation-update.json",
+      "object": "4b276ec78a86593055a9c8c4a56dd77d0612483f",
+      "sha256": "e46e3b9336b90efd84c2fa35d637142b09f8b579251170d22f16d68764e662e4",
+      "bytes": 696,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/source-and-scope.json",
+      "object": "dcd6bbe1b58e656e40e28f379a59a21baca0f6aa",
+      "sha256": "49e070615cdc68b11124e7f39554e952e8e4f9b32fa20af63dba70d0438a362f",
+      "bytes": 3033,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/cross-mode/p07-next-results/retry-contract/test-evidence.zip",
+      "object": "401795ea500f81ce6dc375e129407b44c731e46b",
+      "sha256": "cf8e6f82ae07590dcc008f993456c6c956b5dc825d6f421fd802a0ce9d7b76fb",
+      "bytes": 488781,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "086571ec8ed0c68ef24f20f197adcc4f35eb65ae",
+      "stage": 0
+    },
+    {
+      "path": "docs/solo-result-continuation.md",
+      "mode": "100644",
+      "object": "7432361813b4a6149d0071e1fd3d2a6ddf940fd4",
+      "stage": 0
+    },
+    {
+      "path": "game/test/defeat-presentation-host.test.mjs",
+      "mode": "100644",
+      "object": "85a30e4d1a00cca9aeccfdfd464f4274228d0493",
+      "stage": 0
+    },
+    {
+      "path": "game/test/picture-ready-status.test.mjs",
+      "mode": "100644",
+      "object": "ba4a7b9669de293dc48d5cf4f5cb5c06fc792a7e",
+      "stage": 0
+    },
+    {
+      "path": "game/test/terminal-navigation.test.mjs",
+      "mode": "100644",
+      "object": "55663c254d61bb05b8a5ed2c78521b42252a9c11",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}

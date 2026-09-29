@@ -1,0 +1,15 @@
+{
+  "kind": "DOCUMENTATION_ONLY_AFTER_PASSING_RUNTIME_COHORTS",
+  "at": "2026-09-17T22:48:46.627323+00:00",
+  "paths": [
+    "docs/solo-result-continuation.md",
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md"
+  ],
+  "rootObservedNativeRecord": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-standard-input-journey/frozen-observation.json",
+    "bytes": 29156,
+    "sha256": "4ca0f94d8a05ecd103212cc26b90a571ef35754fc461abb8e43844638e082484"
+  },
+  "runtimeAndTestsUnchanged": true,
+  "noRepeatRuntimeCohort": "Root authorized updating only current acceptance prose after the two complete passing cohorts; their original input manifests remain immutable."
+}
