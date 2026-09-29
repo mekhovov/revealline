@@ -255,6 +255,7 @@ def assemble(config, output):
             source['commit'] in (pr['commit'], pull['merge_commit_sha']), 'Merged source PR identity differs')
     evidence = {'preparation/inputs.json': encoded(config), 'runs/pull-request.json': pull_body,
                 common.POLICY: policy_body}
+    common.retain_historical_audio_evidence(evidence, repo, source['commit'])
     authorities = parse(common.read(config['workflowAuthority'], 4 * 1024**2))
     require(set(authorities) == {'pr', 'manual'} and authorities['pr']['sha'] == b['prWorkflowCommit'] and
             authorities['manual']['sha'] == source['commit'], 'Workflow commit authorities differ')
