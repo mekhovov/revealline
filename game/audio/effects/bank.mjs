@@ -315,14 +315,14 @@ export const EFFECT_BANK = {
   'esc-start': {
     file: 'esc-start.wav',
     loop: false,
-    bytes: 41004,
-    sha256: '3300ed2a39421baea308ab5d8ae99d6dbd33a186e32fc16b27ef9241f3481ace',
+    bytes: 50284,
+    sha256: '8d79ce5cd995c9b7f729ef319c23558f8db6a717bbfc6121d2b8d62d8b031968',
   },
   'esc-retry': {
     file: 'esc-retry.wav',
     loop: false,
-    bytes: 18604,
-    sha256: '6ca23d33c226afc5fa005ef6aaa9894f92a041d0874963f13cf8f25610e44a8c',
+    bytes: 18284,
+    sha256: '00df88821febac55e76207eea9a1276a5b8d49eae28e26ac5cd40c990abc5286',
   },
   'radio-armed-en': {
     file: 'radio-armed-en.wav',
