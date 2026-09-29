@@ -389,7 +389,11 @@ try {
         Array.isArray(value.slots) &&
         value.slots.length === 2 &&
         value.slots.every(
-          (slot) => slot === null || (Number.isInteger(slot) && slot >= 0 && slot <= 255),
+          (slot) =>
+            slot === null ||
+            (Number.isInteger(slot) &&
+              slot >= 0 &&
+              (slot <= 255 || (slot >= 1024 && slot <= 3071))),
         ) &&
         (value.slots[0] === null || value.slots[0] !== value.slots[1])
       )

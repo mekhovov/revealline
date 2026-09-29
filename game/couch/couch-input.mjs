@@ -63,7 +63,9 @@ export function attachCouchInput({
     !Array.isArray(initialSlots) ||
     initialSlots.length !== 2 ||
     initialSlots.some(
-      (slot) => slot !== null && (!Number.isInteger(slot) || slot < 0 || slot > 255),
+      (slot) =>
+        slot !== null &&
+        (!Number.isInteger(slot) || slot < 0 || (slot > 255 && slot < 1024) || slot > 3071),
     ) ||
     new Set(initialSlots.filter((slot) => slot !== null)).size !==
       initialSlots.filter((slot) => slot !== null).length

@@ -1,3 +1,4 @@
+import { isTestedTX15, tx15StickProfile } from './tx15-presets.mjs';
 import { t, onLocaleChange } from '../i18n/index.mjs';
 import {
   ACTIONS,
@@ -76,6 +77,19 @@ export function mountControllerSetup({
   button('release2', () => session.release(1), assignment);
   button('menu1', () => session.menu(0), assignment);
   button('menu2', () => session.menu(1), assignment);
+  const tx15Solo = button('tx15Right', () => {
+    const index = Number(devices.value),
+      pad = session.raw(index);
+    session.apply(index, tx15StickProfile(pad));
+    message = tr('tx15Applied');
+  });
+  const tx15Shared = button('tx15Shared', () => {
+    const index = Number(devices.value),
+      pad = session.raw(index);
+    if (session.split(index, [tx15StickProfile(pad), tx15StickProfile(pad, 'left')]))
+      message = tr('tx15SplitApplied');
+  });
+  tx15Shared.hidden = solo;
   const profileActions = node('div');
   profileActions.className = 'race-fields';
   function begin(profile) {
@@ -360,7 +374,8 @@ export function mountControllerSetup({
       for (const d of list) {
         const o = node('option', devices);
         o.value = String(d.index);
-        o.textContent = `${d.index + 1}: ${d.device.id || tr('device')}`;
+        o.textContent =
+          d.index >= 1024 ? d.profile.name : `${d.index + 1}: ${d.device.id || tr('device')}`;
       }
       if (list.some((d) => String(d.index) === selected)) devices.value = selected;
       else if (list.length) devices.value = String(list[0].index);
@@ -394,6 +409,9 @@ export function mountControllerSetup({
     });
     join1.disabled = join2.disabled =
       !!draft || !state.editable || !list.find((d) => d.index === Number(devices.value))?.profile;
+    const selectedPad = session.raw(Number(devices.value));
+    tx15Solo.disabled = tx15Shared.disabled =
+      !!draft || !state.editable || !isTestedTX15(selectedPad) || Number(devices.value) >= 1024;
     devices.disabled = !list.length || !!draft;
     profiles.disabled = !storedProfiles.length || !!draft;
     const text =
@@ -406,7 +424,7 @@ export function mountControllerSetup({
           : state.seats
               .map(
                 (index, i) =>
-                  `${tr('player', { number: i + 1 })}: ${index === null ? tr('notJoined') : list.find((d) => d.index === index)?.device.id || tr('device')}`,
+                  `${tr('player', { number: i + 1 })}: ${index === null ? tr('notJoined') : list.find((d) => d.index === index)?.profile?.name || list.find((d) => d.index === index)?.device.id || tr('device')}`,
               )
               .join(' · ');
     const content = `${text}${message ? ` · ${message}` : ''}`;

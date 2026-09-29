@@ -78,3 +78,15 @@ test('profile export/import does not silently join a device and malformed input 
   assert.equal(f.values.get(PROFILE_KEY), before);
   assert.deepEqual(f.session.state().seats, [null, null]);
 });
+
+test('TX15 setup offers explicit Solo-style and shared-stick assignments', (t) => {
+  const f = setup(t);
+  f.pad.id = 'TX15 Joystick (Vendor: 1209 Product: 4f54)';
+  f.session.sample([f.pad]);
+  f.ui.refresh();
+  f.click('tx15Right');
+  assert.equal(f.session.state().devices[0].profile.flight.up[0].index, 1);
+  f.click('tx15Shared');
+  assert.deepEqual(f.session.state().seats, [1024, 1025]);
+  assert.equal(f.session.completeFlight(1), false, 'partial profiles preserve touch actions');
+});

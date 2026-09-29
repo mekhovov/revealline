@@ -1,3 +1,5 @@
+import { createControllerRouter } from '../ui/controller-router.mjs';
+import { tx15StickProfile } from '../couch/tx15-presets.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createControllerSession } from '../couch/controller-session.mjs';
@@ -332,4 +334,75 @@ test('two identical radios keep independent mappings, actions and menu pause own
   press(b, 21);
   s.sample([a, b], { active: true });
   assert.equal(s.state().menuSeat, 1);
+});
+
+function tx15(index = 0) {
+  const p = pad(index, '');
+  p.id = 'TX15 Joystick (Vendor: 1209 Product: 4f54)';
+  return p;
+}
+test('shared TX15 isolates both sticks, neutral gates, loss and reconfiguration', () => {
+  const p = tx15(),
+    loss = [],
+    s = session({ onLoss: (seat) => loss.push(seat) });
+  p.axes[2] = -1;
+  s.sample([p]);
+  assert.equal(s.split(0, [tx15StickProfile(p), tx15StickProfile(p, 'left')]), true);
+  let f = s.sample([p], { active: true });
+  const [a, b] = f.slots;
+  p.axes[0] = 1;
+  f = s.sample([p], { active: true });
+  assert.equal(gamepadCommand(f.pads[a]).direction, 'right');
+  assert.equal(gamepadCommand(f.pads[b]).direction, null, 'left stick must first reach centre');
+  p.axes[2] = 0;
+  s.sample([p], { active: true });
+  p.axes[2] = 1;
+  f = s.sample([p], { active: true });
+  assert.equal(gamepadCommand(f.pads[a]).direction, 'right');
+  assert.equal(gamepadCommand(f.pads[b]).direction, 'up');
+  s.sample([p]);
+  assert.throws(() => s.apply(b, tx15StickProfile(p)), /separate channels/);
+  s.swap();
+  assert.deepEqual(s.sample([p]).slots, [b, a]);
+  s.sample([]);
+  assert.deepEqual(loss.sort(), [0, 1]);
+  assert.deepEqual(s.sample([p]).slots, [null, null]);
+  assert.equal(s.state().devices.length, 1, 'reconnect does not silently reclaim either player');
+});
+test('two TX15 radios and a TX15 plus gamepad retain independent controls', () => {
+  for (const mixed of [false, true]) {
+    const a = tx15(2),
+      b = mixed ? pad(5) : tx15(5),
+      s = session();
+    s.sample([a, b]);
+    s.apply(a.index, tx15StickProfile(a));
+    if (!mixed) s.apply(b.index, tx15StickProfile(b));
+    s.assign(a.index, 0);
+    s.assign(b.index, 1);
+    s.sample([a, b], { active: true });
+    a.axes[0] = 1;
+    if (mixed) press(b, 14);
+    else b.axes[1] = -1;
+    const f = s.sample([a, b], { active: true });
+    assert.equal(gamepadCommand(f.pads[a.index]).direction, 'right');
+    assert.equal(gamepadCommand(f.pads[b.index]).direction, mixed ? 'left' : 'down');
+  }
+});
+
+test('shared radio menu owner reaches the existing menu router through compact snapshots', () => {
+  const p = tx15(),
+    s = session();
+  s.sample([p]);
+  s.split(0, [tx15StickProfile(p), tx15StickProfile(p, 'left')]);
+  const router = createControllerRouter({
+    readPads: () => s.frame().menuPads,
+    eventTarget: null,
+    autoJoin: true,
+  });
+  s.sample([p]);
+  router.sample({ scope: 'menu' });
+  p.axes[1] = 1;
+  s.sample([p]);
+  assert.equal(router.sample({ scope: 'menu' }).ui.direction, 'up');
+  router.destroy();
 });

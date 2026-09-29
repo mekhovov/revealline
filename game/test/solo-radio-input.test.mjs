@@ -1,3 +1,4 @@
+import { tx15StickProfile } from '../couch/tx15-presets.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createSoloRadioInput, SOLO_RADIO_PROFILE_KEY } from '../ui/solo-radio-input.mjs';
@@ -148,4 +149,22 @@ test('Standard gamepads pass through unchanged and profile stores remain isolate
   assert.equal(store.put(f.profile), true);
   assert.equal(data.get(PROFILE_KEY), 'original multiplayer bytes');
   assert.equal(data.get('RadioProfile.v1'), 'original radio bytes');
+});
+
+test('tested TX15 Solo right-stick preset ignores left stick and arm/reset switches', () => {
+  const f = fixture();
+  f.scope('settings');
+  f.pad.id = 'TX15 Joystick (Vendor: 1209 Product: 4f54)';
+  f.input.readPads();
+  f.input.session.apply(0, tx15StickProfile(f.pad));
+  f.scope('flight');
+  f.sample();
+  f.pad.axes[1] = 1;
+  assert.equal(f.sample().flight.direction, 'up');
+  f.pad.axes[1] = 0;
+  f.pad.axes[2] = 1;
+  f.pad.axes[4] = 1;
+  f.pad.buttons[1].value = 1;
+  assert.equal(f.sample().flight.direction, null);
+  assert.equal(f.sample().flight.action, false);
 });

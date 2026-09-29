@@ -342,7 +342,9 @@ export function createControllerRouter({
       };
     }
     const index = pad.index ?? fallbackIndex;
-    if (!Number.isInteger(index) || index < 0 || index > 1023) return null;
+    // Shared-radio seats use internal virtual indexes beyond physical Gamepad slots.
+    const sharedSeat = index <= 3071 && typeof pad.id === 'string' && pad.id.startsWith('couch:');
+    if (!Number.isInteger(index) || index < 0 || (index > 1023 && !sharedSeat)) return null;
     const usedButtons =
       navigationAliases && defaultLayout ? [...Array(16).keys()] : compiled.usedButtons;
     const buttons = new Set(usedButtons.filter((i) => pressed(pad.buttons?.[i])));

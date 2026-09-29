@@ -87,3 +87,33 @@ USB/Bluetooth/dongle support means the host exposes the device as a Gamepad. Uns
 - Raw-radio adapter and mapping UI added for regular Solo. The controller regression cohort passed **712 tests**; **22** existing Solo shared-settings/touch/controller host tests passed. A new real Solo host test passed through raw-axis capture, separate persistence, actual craft movement and pause on disconnect. Four focused adapter tests cover hysteresis, remapped standard bindings, Confirm probes, release/reconnect and storage isolation.
 - Scoped lint, formatting, localization (10,928 messages / 8,573 references) and the optional FPV compatibility script passed. The full distribution recorded above predates this Solo extension; the extension is being tested from source.
 - Physical TX15 USB detection confirmed in both regular Solo setup and the optional FPV setup: eight axes and 24 buttons. FPV raw readings visibly update. The user reported a mapping/movement problem; exact failure details and completed calibration remain pending. Neither Solo nor FPV flight is hardware-qualified yet.
+
+### Shared TX15 and mixed inputs
+
+The tested TX15 USB layout now has explicit movement presets in Controls.
+**TX15: movement — right stick up/down/left/right** applies to regular Solo or
+one couch player. **Share TX15: P1 right stick, P2 left stick** deliberately
+assigns two independent logical seats from one physical radio in either couch
+host (Versus or Team). Centre both sticks before play, including the
+non-centring left vertical stick. This left-stick movement recipe is separate
+from FPV throttle calibration.
+
+The split uses right horizontal/vertical axes 0/1 and left horizontal/vertical
+axes 3/2. A physical channel cannot be assigned to both players. Each player
+has independent neutral gating and mapping; disconnect removes both seats.
+Reconnect requires explicit setup again. Shared assignments are session-only.
+Configure each logical stick entry to add separate action switches; keyboard
+and touch actions remain available with movement-only presets. Applying the
+single-player preset to the physical radio ends its shared assignment.
+
+Two separate radios can each be configured and explicitly assigned to one
+player. One radio and one standard controller use the same independent-seat
+path. No radio preset is applied to an unrelated device. Existing standard
+controller bindings, keyboard/touch arbitration and FPV controls remain
+separate.
+
+Automated verification covers Solo right-stick isolation, shared stick
+movement through the couch gameplay adapter, menu routing, channel overlap
+rejection, shared disconnect, two radios and a radio/gamepad mixture.
+Physical Solo/shared Team/mixed-device verification is pending user testing;
+the confirmed FPV TX15 test does not qualify these modes.
