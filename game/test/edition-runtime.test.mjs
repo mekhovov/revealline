@@ -29,6 +29,34 @@ const droneAidLandingFiles = [
   'game/ui/art/menu-scenes/droneaid-main-background.png',
   'game/ui/art/menu-scenes/droneaid-wordmark-light.svg',
 ];
+test('support page closure retains navigation without authoring sample media or manual fixtures', async () => {
+  const files = await collectEditionEngineFiles({
+    root: fileURLToPath(new URL('../../', import.meta.url)),
+    entries: ['game/controller-lab/index.html'],
+  });
+  for (const name of [
+    'game/ui/support-input-entry.mjs',
+    'game/ui/page-input-host.mjs',
+    'game/ui/controller-confirm-guard.mjs',
+    'game/ui/controller-confirm-lifecycle.mjs',
+    'game/ui/authoring-input.css',
+    'game/ui/controller-field-editor.css',
+  ])
+    assert.ok(files.has(name), `Missing support dependency: ${name}`);
+  assert.ok(!files.has('game/ui/authoring-sources.mjs'));
+  assert.deepEqual(
+    [...files.keys()].filter(
+      (name) =>
+        name.startsWith('authoring/shared/samples/') ||
+        name.startsWith('authoring/still-media/examples/') ||
+        name.startsWith('game/test/'),
+    ),
+    [],
+  );
+  validateEditionCodeClosure(
+    new Map([...files].map(([name, source]) => [name, projectEditionRuntimeImports(name, source)])),
+  );
+});
 test('standalone and public offline menus retain every dynamically attached panel stylesheet', async () => {
   const modules = [
     'game/ui/controller-field-editor.mjs',

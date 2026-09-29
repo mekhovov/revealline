@@ -13,6 +13,7 @@ import {
   deliverAuthoringFile,
 } from '../ui/authoring-sources.mjs';
 import { attachAuthoringPreview, mountAuthoringInputHost } from '../ui/authoring-input-host.mjs';
+import { mountPageInputHost } from '../ui/page-input-host.mjs';
 
 function fixture() {
   const doc = new Document();
@@ -196,6 +197,8 @@ test('one authoring host owns one poller, suspends for preview focus, and releas
   };
   const host = mountAuthoringInputHost(options);
   assert.equal(mountAuthoringInputHost(options), host);
+  assert.equal(mountPageInputHost(options), host);
+  assert.ok(host.sources, 'The authoring wrapper retains its source-picker capability.');
   assert.equal(frames.size, 1);
   tick();
   assert.equal(samples, 1);
