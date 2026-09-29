@@ -1032,6 +1032,7 @@
   "practiceEndedYourCampaignRemainsPausedNoProgressWasAwarded": "Practice ended. Your campaign remains paused; no progress was awarded.",
   "preparingAnIsolatedLesson": "Preparing an isolated lesson…",
   "practiceOnlyCampaignProgressAndSavedFlightsAreUnchanged": "Practice only · campaign progress and saved flights are unchanged.",
+  "enemyGuide.practiceBootFailed": "Practice could not start. Return to the field guide to try again. Your campaign remains paused.",
   "recognizeAThreatThenTryItPracticeNeverAwardsCampaign": "Recognize a threat, then try it. Practice never awards campaign progress.",
   "unknownPracticeReturnDestination": "Unknown practice return destination.",
   "practiceMustRemainOnTheSameOrigin": "Practice must remain on the same origin.",

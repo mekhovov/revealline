@@ -411,3 +411,20 @@ child identity, focus and the exact paused attempt. All 45 complete focused Guid
 checks pass with independent source and generated-catalog review. The patch changes
 no gameplay, authored lesson identity, artwork or release approval; full Ukrainian
 translation and production review remain deferred.
+
+## Twenty-first batch: practice recovery and intentional input
+
+[Batch21](verification/actor-batch-21/README.md) restores a controller-accessible
+Return when an admitted Guide practice fails before initialization. It preserves
+slow loading, ready-child input, exact paused state and held-Confirm protection.
+Independent review caught and corrected focus transfer from a visible but inactive
+window; recovery now waits for foreground return and exact current ownership.
+The complete affected cohort passes 117/117. A separate existing Couch reading
+fixture now models deliberate input after the join echo guard and verifies actual
+Help visibility; its complete file passes 16/16. Publisher integration preserves
+its newer Settings → Extras Help route.
+
+Parallel Team PR757 at `541d7fcde298ccddffe3f683698bf890212db766` now localizes
+functional target-lock and rescue canvas cues, with separate 67/67 role/bonus and
+29/29 layout cohorts. A → B → C remains the implementation order; source work
+continues while production review and the C2 human study remain deferred.

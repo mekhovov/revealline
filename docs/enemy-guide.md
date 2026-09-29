@@ -76,6 +76,22 @@ Encounter launches snapshot validated level, class recipes and setup before the 
 
 The shared workshop return bridge accepts an additive finite destination, `workshop` or `enemy-guide`, and a same-origin game URL. Defaults preserve the workshop route. The guide resolves the current game directory, retaining nested release prefixes. Each launch has a fresh 32-hex token; return still requires exact origin, expected child window, current token and the existing two-field message format. Arbitrary return actions, duplicate destination parameters and remote game URLs are rejected. The child receives a native **Return to field guide** action through the existing return adapter; there is no command to modify state or rewards.
 
+## Failed practice startup
+
+The Guide observes only its exact current child through the existing
+`observePreviewReadiness` helper. A confirmed failure before readiness announces
+recovery in EN/UK and focuses the existing Return action if the iframe still owns
+focus. Slow loading alone does not cancel or change focus. A ready lesson keeps
+its own recovery controls; the Guide does not monitor or take over running play.
+
+A visible but inactive window defers the focus handoff until foreground return.
+The same launch generation, URL, Window and failed Document must still match.
+A newer focus choice, navigation, Return, close or disposal retires pending
+recovery. Held controller Confirm cannot activate Return after the handoff;
+neutral input and a fresh press are still required. The child's detailed error,
+exact temporary handoff, return-token checks and paused parent remain intact.
+See [batch21 evidence](verification/actor-batch-21/README.md).
+
 ## Verification
 
 ```sh

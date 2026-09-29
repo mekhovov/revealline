@@ -12,6 +12,7 @@ import { prepareScenario } from '../imports.mjs';
 import { createActorPresentation, drawPresentedActor } from './actor-presentation.mjs';
 import { createEnemyBodyAssets } from './enemy-body-assets.mjs';
 import { attachEnemyWorkshopReturnHost } from './enemy-workshop-return.mjs';
+import { observePreviewReadiness } from '../studio/preview-readiness.mjs';
 
 const HANDOFF = 'revealline.playground.current';
 // Illustration size only; the sampled pose and its contact radius remain unchanged.
@@ -56,6 +57,8 @@ export function attachEnemyGuide({
     parentSuspended = false,
     suspendedTicket = null,
     launchController = null,
+    practiceReadiness = null,
+    stopPracticeReadiness = null,
     time = 0,
     pageVisible = true,
     previewPose = null,
@@ -287,7 +290,73 @@ export function attachEnemyGuide({
     previousHandoff = null;
     return failure;
   }
+  function pausePracticeReadiness() {
+    stopPracticeReadiness?.();
+    stopPracticeReadiness = null;
+  }
+  function practiceReadinessCurrent(owner) {
+    return (
+      practiceReadiness === owner &&
+      active &&
+      owner.current() &&
+      frame.src === owner.url &&
+      frame.contentWindow === owner.window
+    );
+  }
+  function recoverPracticeFocus() {
+    const owner = practiceReadiness;
+    if (!owner?.returnFocusPending) return;
+    if (!practiceReadinessCurrent(owner) || doc.activeElement !== frame) {
+      owner.returnFocusPending = false;
+      return;
+    }
+    if (!pageVisible || doc.hidden || doc.hasFocus?.() === false) return;
+    // A visible but inactive window may observe failure. Defer only the focus
+    // handoff; a later navigation, reload or focus choice retires that request.
+    owner.returnFocusPending = false;
+    try {
+      const child = frame.contentDocument;
+      if (
+        child !== owner.failedDocument ||
+        child?.URL !== owner.url ||
+        child.documentElement?.dataset.bootState !== 'failed'
+      )
+        return;
+    } catch {
+      return;
+    }
+    returnButton.focus({ preventScroll: true });
+  }
+  function resumePracticeReadiness() {
+    pausePracticeReadiness();
+    recoverPracticeFocus();
+    const owner = practiceReadiness;
+    if (!owner || owner.settled || !pageVisible || doc.hidden) return;
+    const current = () => practiceReadinessCurrent(owner);
+    if (!current()) return;
+    let observedDocument;
+    stopPracticeReadiness = observePreviewReadiness({
+      expectedURL: owner.url,
+      readDocument: () => (observedDocument = frame.contentDocument),
+      isCurrent: () => current() && pageVisible && !doc.hidden,
+      notify: (state) => {
+        if (!current() || !pageVisible || doc.hidden || state === 'slow') return;
+        // Settle at readiness: the running lesson owns its recovery controls.
+        // A failed boot keeps its own detail and the exact temporary handoff.
+        owner.settled = true;
+        stopPracticeReadiness = null;
+        if (state === 'failed') {
+          localizedText(status, () => t('interface:enemyGuide.practiceBootFailed'));
+          owner.failedDocument = observedDocument;
+          owner.returnFocusPending = doc.activeElement === frame;
+          recoverPracticeFocus();
+        }
+      },
+    });
+  }
   function stopPractice() {
+    pausePracticeReadiness();
+    practiceReadiness = null;
     active = false;
     frame.hidden = true;
     frame.src = 'about:blank';
@@ -397,12 +466,19 @@ export function attachEnemyGuide({
           value1: enemyGuidePracticeInstructions(selected, exercise.el.value),
         }),
       );
-      frame.src = url;
+      frame.src = checkedURL.href;
       frame.hidden = false;
       frame.focus();
       localizedText(status, () =>
         t('interface:practiceOnlyCampaignProgressAndSavedFlightsAreUnchanged'),
       );
+      practiceReadiness = {
+        current,
+        url: checkedURL.href,
+        window: frame.contentWindow,
+        settled: false,
+      };
+      resumePracticeReadiness();
       return true;
     } catch (error) {
       if (current()) {
@@ -602,21 +678,33 @@ export function attachEnemyGuide({
     // not paint. Reconcile the selected role before the first visible repaint.
     if (previewVisible()) refresh();
     else releasePreview();
+    resumePracticeReadiness();
   };
   const pageHide = () => {
     pageVisible = false;
     releasePreview();
+    pausePracticeReadiness();
   };
   const pageShow = () => {
     pageVisible = true;
     visibility();
   };
   const closed = () => {
-    if (!dialog.open) releasePreview();
+    if (!dialog.open) {
+      releasePreview();
+      pausePracticeReadiness();
+      practiceReadiness = null;
+    }
+  };
+  const focusChanged = () => {
+    if (practiceReadiness?.returnFocusPending && doc.activeElement !== frame)
+      practiceReadiness.returnFocusPending = false;
   };
   dialog.addEventListener('cancel', cancel);
   dialog.addEventListener('close', closed);
   doc.addEventListener('visibilitychange', visibility);
+  doc.addEventListener('focusin', focusChanged);
+  host.addEventListener('focus', recoverPracticeFocus);
   host.addEventListener('pagehide', pageHide);
   host.addEventListener('pageshow', pageShow);
   refresh();
@@ -644,6 +732,8 @@ export function attachEnemyGuide({
       dialog.removeEventListener('cancel', cancel);
       dialog.removeEventListener('close', closed);
       doc.removeEventListener('visibilitychange', visibility);
+      doc.removeEventListener('focusin', focusChanged);
+      host.removeEventListener('focus', recoverPracticeFocus);
       host.removeEventListener('pagehide', pageHide);
       host.removeEventListener('pageshow', pageShow);
       dialog.remove();
