@@ -275,6 +275,9 @@
 .creator-player[data-text-face='plain'] #creator-home :is(button, a) {
   font-family: system-ui, sans-serif;
 }
+.creator-player[data-text-face='plain'] {
+  font-family: system-ui, sans-serif;
+}
 .creator-player[data-text-size='large'] {
   font-size: 20px;
   --creator-action-size: 33px;
@@ -302,4 +305,27 @@
   position: relative !important;
   inset: auto;
   margin-top: 24px;
+}
+
+@media (forced-colors: active) {
+  /* The mask inherits the control's system text color; only its paint opts out. */
+  .creator-player [data-menu-icon]::before {
+    forced-color-adjust: none;
+    background: currentColor;
+  }
+  .creator-player
+    :is(#creator-modes, #creator-mission-list, .field-kit-settings-tabs)
+    :is([aria-selected='true'], [aria-current]:not([aria-current='false'])) {
+    border: 3px double Highlight;
+    box-shadow: none;
+  }
+  .creator-player :is(:focus-visible, .controller-focus) {
+    outline-color: Highlight !important;
+  }
+  .creator-player :is(button, a, input, select, textarea):is(:disabled, [aria-disabled='true']) {
+    color: GrayText !important;
+    background: Canvas !important;
+    border: 1px dashed GrayText !important;
+    opacity: 1;
+  }
 }

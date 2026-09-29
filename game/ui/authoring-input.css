@@ -127,3 +127,27 @@
   background: currentColor;
   mask: var(--native-menu-icon) center / contain no-repeat;
 }
+
+@media (forced-colors: active) {
+  /* Keep native system colors on the controls, but retain their monochrome icons. */
+  :is(
+      .authoring-input-rail,
+      .authoring-source-dialog,
+      .authoring-sections-dialog,
+      .authoring-reference-media
+    )
+    [data-menu-icon]::before,
+  .authoring-preview-enter[data-menu-icon]::before,
+  .authoring-source-open[data-menu-icon]::before {
+    forced-color-adjust: none;
+    background: currentColor;
+  }
+  .authoring-input-page :is(:focus-visible, .controller-focus),
+  :is(.authoring-source-dialog, .authoring-sections-dialog) :focus-visible {
+    outline-color: Highlight;
+  }
+  .authoring-reference-read[aria-pressed='true'] {
+    border: 3px double Highlight;
+    outline-color: Highlight;
+  }
+}
