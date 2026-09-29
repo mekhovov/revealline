@@ -120,6 +120,7 @@ export function mountAuthoringInputHost({
   createNavigation = attachControllerNavigation,
   readPads,
   onPageBack,
+  managePreviews = true,
 } = {}) {
   if (hosts.has(doc)) return hosts.get(doc);
   const alreadyStyled = doc.body.classList.contains('authoring-input-page');
@@ -246,7 +247,7 @@ export function mountAuthoringInputHost({
       : sections.open
         ? 'authoring-sections'
         : 'authoring');
-  const getRoot = () => topDialog() || doc;
+  const getRoot = () => topDialog() || doc.body;
   navigation = createNavigation({
     document: doc,
     keyboard: true,
@@ -316,7 +317,7 @@ export function mountAuthoringInputHost({
         if (button.hidden !== hidden) button.hidden = hidden;
       }
     }
-    for (const frame of doc.querySelectorAll('iframe'))
+    for (const frame of managePreviews ? doc.querySelectorAll('iframe') : [])
       if (!previews.has(frame))
         previews.set(frame, attachAuthoringPreview(frame, { document: doc, window: win }));
     for (const [frame, preview] of previews) {

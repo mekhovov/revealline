@@ -88,20 +88,24 @@ function parentPanel(t, readPads) {
     },
   });
   const router = createControllerRouter({ readPads, eventTarget: doc });
-  const navigation = attachControllerNavigation({
+  let input, navigation;
+  input = createEnemyCatalogInput({
+    document: doc,
+    frame,
+    router,
+    navigation: () => navigation,
+    getScope: () => (panel.dialog.open ? 'catalog' : 'catalog-page'),
+  });
+  navigation = attachControllerNavigation({
     document: doc,
     getScope: () => (panel.dialog.open ? 'catalog' : 'catalog-page'),
     getRoot: () => (panel.dialog.open ? panel.dialog : doc),
     getDefaultFocus: () => doc.getElementById('enemy-catalog-role'),
     onBack: () => panel.close(),
+    activateControl: (element) => input.activate(element),
+    onNativeInput: (event) => input?.nativeInput(event),
   });
-  const input = createEnemyCatalogInput({
-    document: doc,
-    frame,
-    router,
-    navigation,
-    getScope: () => (panel.dialog.open ? 'catalog' : 'catalog-page'),
-  });
+
   const bridge = attachEnemyWorkshopReturnHost({
     window: host,
     frame,
@@ -117,6 +121,7 @@ function parentPanel(t, readPads) {
     bridge.dispose();
     navigation.destroy();
     router.destroy();
+    input.destroy();
     panel.dispose();
   });
   return {
@@ -204,6 +209,8 @@ test('actual practice controller pause and Return reopens the unsaved parent dra
   }
   assert.equal(page.doc.activeElement.id, 'enemy-workshop-return');
   press(0, true);
+  assert.equal(sent, 0, 'Return waits for controller release');
+  press(0, false);
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(sent, 1);
   assert.equal(h.frame.hidden, true);
@@ -211,9 +218,14 @@ test('actual practice controller pause and Return reopens the unsaved parent dra
   assert.equal(h.panel.dialog.open, true);
   assert.deepEqual(h.panel.snapshot(), draft);
   assert.equal(h.doc.activeElement, h.$('role'));
+  pad.buttons[0] = { pressed: true, value: 1 };
   h.input.poll(now + 1);
   h.input.poll(now + 500);
-  assert.equal(h.doc.activeElement, h.$('role'), 'held child Confirm cannot edit the parent');
+  assert.equal(
+    h.doc.activeElement,
+    h.$('role'),
+    'a non-neutral child handoff cannot edit the parent',
+  );
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.equal(page.storage.writes.length, 0, 'practice never writes the player library');
   assert.deepEqual(page.errors, []);
@@ -240,4 +252,32 @@ test('ordinary and unrelated embedded game pages never receive a workshop return
   host.location.href = `http://localhost/game/?practice=0&enemy-workshop-session=${'a'.repeat(32)}`;
   attachEnemyWorkshopReturn({ enabled: true, window: host, document: page.doc, onReturn() {} });
   assert.equal(page.$('enemy-workshop-return'), null);
+});
+
+test('Enemy Workshop captures native Confirm before navigation clears the sampled device', (t) => {
+  const pad = {
+    id: 'Enemy native test',
+    index: 0,
+    mapping: 'standard',
+    connected: true,
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  };
+  const h = parentPanel(t, () => [pad]);
+  h.input.poll(0);
+  pad.buttons[0] = { pressed: true, value: 1 };
+  h.input.poll(1);
+  pad.buttons[0] = { pressed: false, value: 0 };
+  h.input.poll(2);
+  const back = h.$('back');
+  back.focus();
+  pad.buttons[0] = { pressed: true, value: 1 };
+  assert.equal(back.emit('keydown', { key: 'Enter', isTrusted: true }).defaultPrevented, true);
+  assert.equal(h.panel.dialog.open, true);
+  pad.buttons[0] = { pressed: false, value: 0 };
+  back.emit('keyup', { key: 'Enter', isTrusted: true });
+  assert.equal(h.panel.dialog.open, false);
+  assert.equal(h.opener.emit('click', { isTrusted: true }).defaultPrevented, true);
+  h.input.poll(3);
+  assert.equal(h.panel.dialog.open, false);
 });
