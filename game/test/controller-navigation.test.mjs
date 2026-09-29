@@ -411,6 +411,89 @@ test('semantic menu rows keep horizontal edges and move vertically into adjacent
   assert.equal(h.document.activeElement, solo, 'explicit links cannot reach disabled controls');
 });
 
+for (const input of ['controller', 'keyboard'])
+  for (const transposed of [false, true])
+    test(`semantic ${input} group crossing reaches overlapping wide actions ${transposed ? 'horizontally' : 'vertically'} before distant narrow utilities`, (t) => {
+      const h = setup(t, { keyboard: true }),
+        modes = h.control('nav'),
+        actions = h.control('nav'),
+        utilities = h.control('nav');
+      h.setScope('landing', h.document.body);
+      modes.setAttribute('data-menu-layout', transposed ? 'vertical' : 'horizontal');
+      actions.setAttribute('data-menu-layout', transposed ? 'horizontal' : 'vertical');
+      actions.setAttribute('data-menu-edge-exit', 'true');
+      utilities.setAttribute('data-menu-layout', transposed ? 'vertical' : 'horizontal');
+      utilities.setAttribute('data-menu-edge-exit', 'true');
+      const rect = (x, y, width, height) =>
+        transposed ? { x: y, y: x, width: height, height: width } : { x, y, width, height };
+      // Actual Solo geometry observed in the 1280x800 embedded Viewport lab:
+      // center-distance scoring skipped all three 510px-wide actions.
+      const mode = h.control('button', { id: 'mode', _rect: rect(64, 234, 164, 54) }, modes);
+      const start = h.control('button', { id: 'start', _rect: rect(64, 312, 510, 56) }, actions);
+      const mission = h.control(
+        'button',
+        { id: 'mission', _rect: rect(64, 376, 510, 56) },
+        actions,
+      );
+      const settings = h.control(
+        'button',
+        { id: 'settings', _rect: rect(64, 440, 510, 56) },
+        actions,
+      );
+      const fullscreen = h.control(
+        'button',
+        { id: 'fullscreen', _rect: rect(64, 572, 188, 44) },
+        utilities,
+      );
+      let activations = 0;
+      for (const item of [mode, start, mission, settings, fullscreen])
+        item.addEventListener('click', () => activations++);
+      const forward = transposed ? 'right' : 'down',
+        backward = transposed ? 'left' : 'up';
+      const move = (direction) => {
+        if (input === 'controller') h.api.handle({ direction });
+        else {
+          const event = h.document.activeElement.emit('keydown', {
+            key: { right: 'ArrowRight', down: 'ArrowDown', left: 'ArrowLeft', up: 'ArrowUp' }[
+              direction
+            ],
+          });
+          assert.equal(event.defaultPrevented, true);
+        }
+        return h.document.activeElement;
+      };
+      mode.focus();
+      for (const expected of [start, mission, settings, fullscreen])
+        assert.equal(move(forward), expected);
+      for (const expected of [settings, mission, start, mode])
+        assert.equal(move(backward), expected);
+      start.disabled = true;
+      mission.hidden = true;
+      assert.equal(
+        move(forward),
+        settings,
+        'The geometry fix uses only currently eligible controls.',
+      );
+      assert.equal(activations, 0, 'Directions never activate a mode or game action.');
+    });
+
+test('semantic grid keeps center scoring and document-order ties within its own members', (t) => {
+  const h = setup(t),
+    grid = h.control('nav');
+  grid.setAttribute('data-menu-layout', 'grid');
+  const first = h.control('button', { _rect: { x: 0, y: 0, width: 100, height: 44 } }, grid);
+  const diagonal = h.control('button', { _rect: { x: 100, y: 100, width: 100, height: 44 } }, grid);
+  h.control('button', { _rect: { x: 0, y: 400, width: 100, height: 44 } }, grid);
+  h.control('button', { _rect: { x: 0, y: 50, width: 100, height: 44 } });
+  first.focus();
+  h.api.handle({ direction: 'down' });
+  assert.equal(
+    h.document.activeElement,
+    diagonal,
+    'Equal grid scores retain DOM order and ignore outside actions.',
+  );
+});
+
 function editorAction(h, key) {
   const button = h.document
     .querySelectorAll('button')
