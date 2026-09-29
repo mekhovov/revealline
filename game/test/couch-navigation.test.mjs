@@ -406,6 +406,9 @@ for (const adapter of ['keyboard', 'controller']) {
     visibleControl(f, 'race-menu-ornaments');
     f.focus('race-menu-ornaments');
     next();
+    assert.equal(f.doc.activeElement.id, 'race-enemy-remains');
+    assert.equal(f.$('race-enemy-remains-retry').hidden, true);
+    next();
     assert.equal(f.doc.activeElement.id, 'race-journey-reactions-enabled');
     assert.equal(f.doc.activeElement.checked, true);
     activate();
@@ -421,11 +424,14 @@ for (const adapter of ['keyboard', 'controller']) {
     assert.equal(f.$('race-journey-reactions-retry').hidden, true);
     f.focus('race-menu-ornaments');
     next();
+    assert.equal(f.doc.activeElement.id, 'race-enemy-remains');
     next();
-    assert.notEqual(
+    assert.equal(f.doc.activeElement.id, 'race-journey-reactions-enabled');
+    next();
+    assert.equal(
       f.doc.activeElement.id,
-      'race-journey-reactions-retry',
-      'Hidden recovery cannot be selected',
+      adapter === 'controller' ? 'race-journey-reactions-enabled' : 'race-options-back',
+      'Hidden recovery is skipped: Tab exits, while D-pad Down stays at the vertical group edge',
     );
     assert.equal(f.state(), 'ready');
     assert.deepEqual(f.checkpoint(), before);

@@ -720,7 +720,44 @@ test('opening Settings during a flight keeps its paused-flight return instead of
   assert.deepEqual(h.errors, []);
 });
 
-test('title Workshop Field Guide returns through its visible openers after Back, Escape and isolated practice', async (t) => {
+function activateVisible(h, id) {
+  const control = h.$(id);
+  assert.ok(control?.isConnected && !control.disabled, `${id} must be available`);
+  assert.ok(control.getClientRects().length, `${id} must be visible before activation`);
+  assert.equal(control.closest('[hidden],[inert]'), null, `${id} must not be hidden or inert`);
+  const dialog = control.closest('dialog');
+  if (dialog) assert.equal(dialog.open, true, `${id} must belong to an open dialog`);
+  control.focus();
+  control.click();
+}
+
+function openSettingsTool(h, category, id) {
+  assert.equal(h.$('shell-home').open, true);
+  assert.equal(h.$('settings-dialog').open, false);
+  activateVisible(h, 'shell-options');
+  activateVisible(h, `settings-tab-${category}`);
+  const panel = h.$(`settings-panel-${category}`);
+  assert.equal(panel.hidden, false);
+  assert.equal(panel.inert, false);
+  assert.equal(panel.contains(h.$(id)), true, `${id} uses its actual Settings category`);
+  activateVisible(h, id);
+  assert.equal(h.$('settings-dialog').open, true);
+  assert.equal(h.$('shell-workshop-dialog').open, false);
+}
+
+async function settingsBackToHome(h, pad) {
+  // The host fixture has the desktop category rail. Compact drill-in Back is
+  // qualified separately by shared-settings tests, not skipped here by force-closing.
+  pad.frame();
+  pad.pulse(1);
+  await Promise.resolve();
+  assert.equal(h.$('settings-dialog').open, false);
+  assert.equal(h.$('shell-home').open, true);
+  assert.equal(h.doc.activeElement.id, 'shell-options');
+  pad.frame();
+}
+
+test('title Settings Field Guide returns through its visible openers after Back, Escape and isolated practice', async (t) => {
   nativeDialogs(t);
   // Paint is exercised in the guide panel file; this host uses its supported null Canvas boundary.
   t.mock.method(SoloElement.prototype, 'getContext', () => null);
@@ -728,12 +765,7 @@ test('title Workshop Field Guide returns through its visible openers after Back,
     pad = controllerPad(h, t);
   h.win.crypto = globalThis.crypto;
   for (const exit of ['controller', 'escape', 'practice']) {
-    h.$('shell-workshop').focus();
-    h.$('shell-workshop').click();
-    assert.equal(h.$('shell-workshop-dialog').open, true);
-    assert.ok(h.$('shell-guide').getClientRects().length);
-    h.$('shell-guide').focus();
-    h.$('shell-guide').click();
+    openSettingsTool(h, 'extras', 'shell-guide');
     pad.frame();
     pad.frame();
     assert.equal(h.$('shell-home').open, true, 'The title remains underneath its guide');
@@ -753,24 +785,16 @@ test('title Workshop Field Guide returns through its visible openers after Back,
     await Promise.resolve();
     assert.equal(h.$('enemy-guide-dialog').open, false);
     assert.equal(h.$('shell-home').open, true);
-    assert.equal(h.$('shell-workshop-dialog').open, true);
+    assert.equal(h.$('settings-dialog').open, true);
     assert.equal(h.doc.activeElement.id, 'shell-guide');
     assert.equal(h.rendered.run.tick, 0, 'Closing a lesson never starts the campaign');
-    // Escape/practice close outside the controller sample. Adopt the returned
-    // Workshop scope with neutral controls before a separate Back press.
-    pad.frame();
-    pad.pulse(1);
-    await Promise.resolve();
-    assert.equal(h.$('shell-workshop-dialog').open, false);
-    assert.equal(h.$('shell-home').open, true);
-    assert.equal(h.doc.activeElement.id, 'shell-workshop');
-    assert.equal(h.rendered.run.tick, 0, 'Leaving Workshop never starts the campaign');
-    pad.frame();
+    await settingsBackToHome(h, pad);
+    assert.equal(h.rendered.run.tick, 0, 'Leaving Settings never starts the campaign');
   }
   assert.deepEqual(h.errors, []);
 });
 
-test('Main menu Workshop Field Guide returns through both menus over an unchanged paused-flight checkpoint', async (t) => {
+test('Main menu Settings Field Guide returns through both menus over an unchanged paused-flight checkpoint', async (t) => {
   nativeDialogs(t);
   t.mock.method(SoloElement.prototype, 'getContext', () => null);
   const h = await soloPage(t, { titleScreen: false }),
@@ -781,12 +805,7 @@ test('Main menu Workshop Field Guide returns through both menus over an unchange
   pad.frame();
   h.$('overlay-menu').click();
   assert.equal(h.$('shell-home').open, true);
-  h.$('shell-workshop').focus();
-  h.$('shell-workshop').click();
-  assert.equal(h.$('shell-workshop-dialog').open, true);
-  assert.ok(h.$('shell-guide').getClientRects().length);
-  h.$('shell-guide').focus();
-  h.$('shell-guide').click();
+  openSettingsTool(h, 'extras', 'shell-guide');
   pad.frame();
   pad.frame();
   const checkpoint = structuredClone(h.rendered.run);
@@ -798,13 +817,9 @@ test('Main menu Workshop Field Guide returns through both menus over an unchange
   pad.frame();
   assert.equal(h.$('enemy-guide-dialog').open, false);
   assert.equal(h.$('shell-home').open, true);
-  assert.equal(h.$('shell-workshop-dialog').open, true);
+  assert.equal(h.$('settings-dialog').open, true);
   assert.equal(h.doc.activeElement.id, 'shell-guide');
-  pad.pulse(1);
-  await Promise.resolve();
-  assert.equal(h.$('shell-workshop-dialog').open, false);
-  assert.equal(h.$('shell-home').open, true);
-  assert.equal(h.doc.activeElement.id, 'shell-workshop');
+  await settingsBackToHome(h, pad);
   assert.deepEqual(structuredClone(h.rendered.run), checkpoint);
   pad.pulse(1);
   await Promise.resolve();
@@ -867,8 +882,7 @@ function collectionBack(h) {
   return h.$('collection-back');
 }
 function openTitleCollection(h) {
-  h.$('shell-gallery').focus();
-  h.$('shell-gallery').click();
+  openSettingsTool(h, 'data', 'shell-gallery');
   assert.equal(h.$('shell-home').open, true);
   assert.equal(h.$('collection-dialog').open, true);
   assert.equal(collectionBack(h).textContent, 'Back to menu →');
@@ -952,7 +966,7 @@ async function startPreparedFlight(h) {
   );
 }
 for (const exit of ['controller', 'escape', 'close button'])
-  test(`title picture ${exit} returns through Collection to its exact title opener`, async (t) => {
+  test(`title picture ${exit} returns through Collection and Settings to its exact title opener`, async (t) => {
     const { page: h } = await earnedTitleCollection(t),
       pad = controllerPad(h, t);
     const checkpoint = authoritativeCheckpoint(h.rendered.run),
@@ -989,8 +1003,9 @@ for (const exit of ['controller', 'escape', 'close button'])
     assert.equal(
       h.doc.activeElement === h.$('shell-gallery'),
       true,
-      'The title Collection opener owns focus.',
+      'The visible Settings Collection opener owns focus.',
     );
+    await settingsBackToHome(h, pad);
     assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
     assert.deepEqual([...h.storage.map], before);
     assert.equal(h.storage.writes.length, writes);
@@ -1005,7 +1020,13 @@ test('picture Replay deliberately leaves title and Collection for the selected r
   await settle(() => h.doc.body.dataset.pictureState === 'ready');
   await Promise.resolve();
   h.frame(0);
-  for (const id of ['gallery-view-dialog', 'collection-dialog', 'shell-home', 'shell-missions'])
+  for (const id of [
+    'gallery-view-dialog',
+    'collection-dialog',
+    'settings-dialog',
+    'shell-home',
+    'shell-missions',
+  ])
     assert.equal(h.$(id).open, false, `${id} must not cover the chosen briefing`);
   assert.equal(h.doc.activeElement, h.$('start-button'));
   assert.equal(h.rendered.run.level.id, 'return-picture');
@@ -1029,6 +1050,7 @@ test('Collection Choose appearance opens Missions setup over its retained title'
   await settle(() => h.$('journey-chooser')?.open && h.doc.activeElement === h.$('body-select'));
   h.frame(0);
   assert.equal(h.$('collection-dialog').open, false);
+  assert.equal(h.$('settings-dialog').open, true, 'Appearance setup retains its Settings parent.');
   assert.equal(h.$('shell-home').open, true, 'The mission library retains its Home parent.');
   assert.equal(h.$('journey-chooser').open, true);
   assert.equal(h.doc.activeElement, h.$('body-select'));
@@ -1043,6 +1065,9 @@ test('Collection resets its return label from title to a direct paused-flight vi
   collectionBack(h).click();
   await Promise.resolve();
   assert.equal(h.$('shell-home').open, true);
+  h.doc.querySelector('button[data-close="settings-dialog"]').click();
+  await Promise.resolve();
+  assert.equal(h.doc.activeElement.id, 'shell-options');
   await activateOwnedPromise(
     h.$('shell-featured'),
     'The title Start control owns its actual flight preparation.',
@@ -1121,7 +1146,7 @@ test('programmatic Collection after a real win does not refocus a hidden opener'
 });
 
 for (const origin of ['title', 'paused flight'])
-  test(`${origin} Workshop Library returns through actual openers for button, Escape and controller Back`, async (t) => {
+  test(`${origin} Settings Library returns through actual openers for button, Escape and controller Back`, async (t) => {
     nativeDialogs(t);
     const h = await soloPage(t, { titleScreen: origin === 'title' }),
       pad = controllerPad(h, t);
@@ -1135,16 +1160,13 @@ for (const origin of ['title', 'paused flight'])
       assert.equal(h.rendered.run.player.cutting, true);
     }
     for (const exit of ['button', 'escape', 'controller']) {
-      h.$('shell-workshop').focus();
-      h.$('shell-workshop').click();
-      h.$('shell-library').focus();
-      h.$('shell-library').click();
+      openSettingsTool(h, 'data', 'shell-library');
       pad.frame();
       pad.frame();
       const checkpoint = authoritativeCheckpoint(h.rendered.run),
         stored = [...h.storage.map];
       assert.equal(h.$('shell-home').open, true);
-      assert.equal(h.$('shell-workshop-dialog').open, true);
+      assert.equal(h.$('settings-dialog').open, true);
       assert.equal(h.$('library-dialog').open, true);
       if (exit === 'controller') pad.pulse(1);
       else if (exit === 'escape') nativeEscape(h.$('library-dialog'));
@@ -1152,15 +1174,11 @@ for (const origin of ['title', 'paused flight'])
       await Promise.resolve();
       pad.frame();
       assert.equal(h.$('library-dialog').open, false);
-      assert.equal(h.$('shell-workshop-dialog').open, true);
+      assert.equal(h.$('settings-dialog').open, true);
       assert.equal(h.doc.activeElement.id, 'shell-library');
       assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
       assert.deepEqual([...h.storage.map], stored);
-      pad.pulse(1);
-      await Promise.resolve();
-      assert.equal(h.$('shell-workshop-dialog').open, false);
-      assert.equal(h.$('shell-home').open, true);
-      assert.equal(h.doc.activeElement.id, 'shell-workshop');
+      await settingsBackToHome(h, pad);
       assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
       assert.deepEqual([...h.storage.map], stored);
       pad.frame();
@@ -1178,7 +1196,7 @@ for (const origin of ['title', 'paused flight'])
   });
 
 for (const origin of ['title', 'paused flight'])
-  test(`${origin} top-level How to play returns to its exact main-menu opener`, async (t) => {
+  test(`${origin} Settings How to play returns through its exact Settings and main-menu openers`, async (t) => {
     nativeDialogs(t);
     const h = await soloPage(t, { titleScreen: origin === 'title' }),
       pad = controllerPad(h, t);
@@ -1192,14 +1210,14 @@ for (const origin of ['title', 'paused flight'])
       assert.equal(h.rendered.run.player.cutting, true);
     }
     for (const exit of ['button', 'escape', 'controller']) {
-      h.$('shell-help').focus();
-      h.$('shell-help').click();
+      openSettingsTool(h, 'extras', 'shell-help');
       pad.frame();
       pad.frame();
       const checkpoint = authoritativeCheckpoint(h.rendered.run),
         stored = [...h.storage.map];
       assert.equal(h.$('shell-home').open, true);
       assert.equal(h.$('shell-workshop-dialog').open, false);
+      assert.equal(h.$('settings-dialog').open, true);
       assert.equal(h.$('help-dialog').open, true);
       if (exit === 'controller') pad.pulse(1);
       else if (exit === 'escape') nativeEscape(h.$('help-dialog'));
@@ -1209,6 +1227,7 @@ for (const origin of ['title', 'paused flight'])
       assert.equal(h.$('help-dialog').open, false);
       assert.equal(h.$('shell-home').open, true);
       assert.equal(h.doc.activeElement.id, 'shell-help');
+      await settingsBackToHome(h, pad);
       assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
       assert.deepEqual([...h.storage.map], stored);
       pad.frame();
@@ -1226,7 +1245,7 @@ for (const origin of ['title', 'paused flight'])
   });
 
 for (const origin of ['title', 'paused flight'])
-  test(`Workshop Library explicit challenge selection leaves retained parents from ${origin}`, async (t) => {
+  test(`Settings Library explicit challenge selection leaves retained parents from ${origin}`, async (t) => {
     nativeDialogs(t);
     const h = await soloPage(t, { titleScreen: origin === 'title' });
     if (origin === 'paused flight') {
@@ -1238,14 +1257,11 @@ for (const origin of ['title', 'paused flight'])
       h.$('overlay-menu').click();
       assert.equal(h.rendered.run.player.cutting, true);
     }
-    h.$('shell-workshop').focus();
-    h.$('shell-workshop').click();
-    h.$('shell-library').focus();
-    h.$('shell-library').click();
+    openSettingsTool(h, 'data', 'shell-library');
     h.doc.querySelector('[data-library-panel="challenges"]').click();
     h.$('challenge-date').value = '2026-09-15';
     h.$('challenge-kind').value = 'daily';
-    assert.equal(h.$('shell-workshop-dialog').open, true);
+    assert.equal(h.$('settings-dialog').open, true);
     h.$('launch-challenge').focus();
     h.$('launch-challenge').click();
     if (origin === 'paused flight') {
@@ -1257,7 +1273,7 @@ for (const origin of ['title', 'paused flight'])
     }
     await settle(() => !h.$('library-dialog').open);
     h.frame(0);
-    for (const id of ['library-dialog', 'shell-workshop-dialog', 'shell-home'])
+    for (const id of ['library-dialog', 'settings-dialog', 'shell-workshop-dialog', 'shell-home'])
       assert.equal(h.$(id).open, false, `${id} must not cover the chosen challenge`);
     assert.equal(h.doc.activeElement.id, 'start-button');
     assert.equal(h.rendered.run.level.id, 'route-2026-09-15-daily');
@@ -1270,7 +1286,7 @@ for (const origin of ['title', 'paused flight'])
   });
 
 for (const action of ['resume-save', 'import-save'])
-  test(`Workshop Library ${action} returns a verified saved cut to its paused field`, async (t) => {
+  test(`Settings Library ${action} returns a verified saved cut to its paused field`, async (t) => {
     nativeDialogs(t);
     const h = await soloPage(t, { titleScreen: false });
     h.$('start-button').click();
@@ -1281,10 +1297,7 @@ for (const action of ['resume-save', 'import-save'])
     h.$('overlay-menu').click();
     assert.equal(h.rendered.run.player.cutting, true);
     const checkpoint = authoritativeCheckpoint(h.rendered.run);
-    h.$('shell-workshop').focus();
-    h.$('shell-workshop').click();
-    h.$('shell-library').focus();
-    h.$('shell-library').click();
+    openSettingsTool(h, 'data', 'shell-library');
     h.doc.querySelector('[data-library-panel="saves"]').click();
     const saved = h.storage.getItem('revealline.suspended.dev.v1');
     assert.ok(saved);
@@ -1296,7 +1309,7 @@ for (const action of ['resume-save', 'import-save'])
     await h.$(action).onclick();
     await Promise.resolve();
     h.frame(0);
-    for (const id of ['library-dialog', 'shell-workshop-dialog', 'shell-home'])
+    for (const id of ['library-dialog', 'settings-dialog', 'shell-workshop-dialog', 'shell-home'])
       assert.equal(h.$(id).open, false, `${id} must not cover the restored paused flight`);
     assert.equal(h.doc.activeElement.id, 'start-button');
     assert.equal(h.$('start-button').textContent, 'Resume →');
@@ -1401,8 +1414,8 @@ for (const context of ['Home', 'field']) {
     const h = await soloPage(t, { titleScreen: context === 'Home' });
     const checkpoint = authoritativeCheckpoint(h.rendered.run);
     const opener = h.$(context === 'Home' ? 'shell-gallery' : 'shell-collection');
-    opener.focus();
-    opener.click();
+    if (context === 'Home') openSettingsTool(h, 'data', 'shell-gallery');
+    else activateVisible(h, opener.id);
     h.$('collection-progress').querySelector('summary').click();
     h.$('collection-choose-appearance').click();
     await settle(() => h.$('journey-chooser')?.open && h.doc.activeElement === h.$('body-select'));
@@ -1412,6 +1425,7 @@ for (const context of ['Home', 'field']) {
     await Promise.resolve();
     h.frame(0);
     assert.equal(h.$('shell-home').open, context === 'Home');
+    assert.equal(h.$('settings-dialog').open, context === 'Home');
     assert.equal(h.doc.activeElement, opener);
     assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
     assert.deepEqual(h.errors, []);
