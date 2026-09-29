@@ -1,3 +1,4 @@
+import { COUCH_RESTORE_KEY } from './controller-restore.mjs';
 import { createControllerSession } from './controller-session.mjs';
 import { mountControllerSetup } from './controller-setup.mjs';
 import {
@@ -2313,6 +2314,7 @@ try {
     clear: () => input?.clearPhysical(),
   });
   const controllerSession = createControllerSession({
+    restoreKey: COUCH_RESTORE_KEY,
     onLoss: () => {
       pendingPadLoss = true;
       pause();

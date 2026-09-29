@@ -1,3 +1,4 @@
+import { createRadioRestoreStore, radioIdentity } from './controller-restore.mjs';
 import {
   descriptorKey,
   deviceDescriptor,
@@ -35,7 +36,19 @@ const positions = {
 export function createControllerSession({
   eventTarget = globalThis.window,
   onLoss = () => {},
+  restoreKey = null,
+  restoreInFlight = false,
+  storage,
 } = {}) {
+  if (storage === undefined && restoreKey) {
+    try {
+      storage = eventTarget?.localStorage ?? globalThis.localStorage;
+    } catch {
+      storage = null;
+    }
+  }
+  const saved = restoreKey ? createRadioRestoreStore(storage, restoreKey) : null;
+  let restoring = false;
   const splits = new Map();
   const devices = new Map(),
     seats = [null, null],
@@ -76,6 +89,81 @@ export function createControllerSession({
     lose(index);
   };
   eventTarget?.addEventListener?.('gamepaddisconnected', disconnect);
+  function remember() {
+    if (!saved || restoring) return;
+    const entries = [];
+    for (const d of devices.values()) {
+      if (d.index >= 1024) continue;
+      const split = splits.get(d.index);
+      const profiles = split
+        ? split.indexes.map((i) => devices.get(i)?.profile)
+        : d.profile && !d.standard
+          ? [d.profile]
+          : [];
+      if (!profiles.length || profiles.some((p) => !p)) continue;
+      entries.push({
+        profiles,
+        seats: (split?.indexes ?? [d.index]).map((index) => {
+          const seat = seats.indexOf(index);
+          return seat < 0 ? null : seat;
+        }),
+      });
+    }
+    const connected = new Set(
+      [...devices.values()]
+        .filter((d) => d.index < 1024)
+        .map((d) => radioIdentity(deviceDescriptor(d.pad))),
+    );
+    const occupied = new Set(entries.flatMap((e) => e.seats).filter((seat) => seat !== null));
+    for (const prior of saved.entries()) {
+      if (connected.has(radioIdentity(prior.profiles[0].device))) continue;
+      entries.push({
+        profiles: prior.profiles,
+        seats: prior.seats.map((seat) => (occupied.has(seat) ? null : seat)),
+      });
+    }
+    saved.save(entries);
+  }
+  function restore() {
+    if (!saved || capturing || (!editable && !restoreInFlight)) return;
+    const entries = saved.entries();
+    const physical = [...devices.values()].filter((d) => d.index < 1024);
+    const wasEditable = editable;
+    restoring = true;
+    editable = true;
+    try {
+      for (const entry of entries) {
+        const key = radioIdentity(entry.profiles[0].device);
+        const matches = physical.filter((d) => radioIdentity(deviceDescriptor(d.pad)) === key);
+        if (
+          matches.length !== 1 ||
+          entries.filter((e) => radioIdentity(e.profiles[0].device) === key).length !== 1
+        )
+          continue;
+        const d = matches[0];
+        if (d.restoreDone) continue;
+        if (entry.profiles.length === 2) {
+          if (seats.some((seat) => seat !== null)) continue;
+          if (!api.split(d.index, entry.profiles)) continue;
+          const indexes = splits.get(d.index).indexes;
+          seats.fill(null);
+          entry.seats.forEach((seat, i) => {
+            if (seat !== null) seats[seat] = indexes[i];
+          });
+          menuSeat = seats.findIndex((seat) => seat !== null);
+          if (menuSeat < 0) menuSeat = null;
+        } else {
+          api.apply(d.index, entry.profiles[0]);
+          const seat = entry.seats[0];
+          if (seat !== null && seats[seat] === null) select(d.index, seat);
+        }
+        d.restoreDone = true;
+      }
+    } finally {
+      restoring = false;
+      editable = wasEditable;
+    }
+  }
   function select(index, seat) {
     if (!editable || !Number.isInteger(seat) || seat < 0 || seat > 1) return false;
     const d = devices.get(index);
@@ -84,6 +172,7 @@ export function createControllerSession({
     seats[seat] = index;
     releaseState(d);
     if (menuSeat === null) menuSeat = seat;
+    remember();
     return true;
   }
   function virtual(d, command, blocked = false) {
@@ -164,6 +253,7 @@ export function createControllerSession({
         });
       devices.get(index).pad = pad;
     }
+    restore();
     let confirmHeld = false;
     const pads = [],
       menuPads = [],
@@ -208,7 +298,7 @@ export function createControllerSession({
     frame = { pads, menuPads, slots: [...seats], confirmHeld };
     return frame;
   }
-  return {
+  const api = {
     sample,
     clear,
     capture(value) {
@@ -219,6 +309,7 @@ export function createControllerSession({
     state: () => ({
       available,
       editable,
+      restoreError: saved?.error() ?? null,
       menuSeat,
       seats: [...seats],
       devices: [...devices.values()].map((d) => ({
@@ -260,6 +351,7 @@ export function createControllerSession({
         throw new Error('Shared radio players need separate channels.');
       const indexes = [1024 + index * 2, 1025 + index * 2];
       splits.set(index, { key: source.key, indexes });
+      source.restoreDone = true;
       for (let seat = 0; seat < 2; seat++) {
         const child = indexes[seat];
         devices.set(child, {
@@ -279,6 +371,7 @@ export function createControllerSession({
       }
       menuSeat = 0;
       clear();
+      remember();
       return true;
     },
     apply(index, profile) {
@@ -308,10 +401,12 @@ export function createControllerSession({
         splits.delete(index);
         for (const child of split.indexes) lose(child);
       }
+      d.restoreDone = true;
       d.profile = p;
       d.standard = false;
       d.revision++;
       releaseState(d);
+      remember();
       return true;
     },
     release(seat) {
@@ -320,17 +415,24 @@ export function createControllerSession({
       if (d) releaseState(d);
       seats[seat] = null;
       if (menuSeat === seat) menuSeat = null;
+      remember();
     },
     swap() {
       if (!editable) return;
       seats.reverse();
       if (menuSeat !== null) menuSeat = 1 - menuSeat;
       clear();
+      remember();
     },
     menu(seat) {
       if (!editable || (seat !== null && seats[seat] === null)) return;
       menuSeat = seat;
       clear();
+    },
+    forgetSaved() {
+      const result = saved?.forget() ?? false;
+      for (const d of devices.values()) d.restoreDone = true;
+      return result;
     },
     dispose() {
       disposed = true;
@@ -341,4 +443,5 @@ export function createControllerSession({
       frame = { pads: [], menuPads: [], slots: [null, null] };
     },
   };
+  return api;
 }

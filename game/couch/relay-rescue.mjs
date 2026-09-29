@@ -1,3 +1,4 @@
+import { COUCH_RESTORE_KEY } from './controller-restore.mjs';
 import { createControllerSession } from './controller-session.mjs';
 import { mountControllerSetup } from './controller-setup.mjs';
 import { gameplayTuningDescription } from '../ui/gameplay-copy.mjs';
@@ -960,6 +961,7 @@ export function bootCoop({
     clear: () => input?.clearPhysical(),
   });
   const controllerSession = createControllerSession({
+    restoreKey: COUCH_RESTORE_KEY,
     onLoss: () => {
       pause();
       clear();
