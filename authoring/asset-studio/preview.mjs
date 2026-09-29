@@ -790,7 +790,13 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     if (isCurrent()) {
       surface.setAttribute('aria-busy', 'false');
       if (!failed) {
-        lease?.finish({ message: `${label}: ${asset ? 'ready.' : t('tools:noAssetBound')}` });
+        lease?.finish({
+          message: () =>
+            t('tools:studio.preview.status', {
+              label: valueOf(label),
+              message: asset ? t('common:status.ready') : t('tools:noAssetBound'),
+            }),
+        });
         if (cancelButton) cancelButton.hidden = true;
       }
     }
