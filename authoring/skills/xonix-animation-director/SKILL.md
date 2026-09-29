@@ -215,3 +215,14 @@ image, stop/release old pending reads and handlers through the existing owner,
 and prevent late callbacks from changing its status. An empty picker cancellation
 is not a replacement. Test actual draw selection, Clear, focus and playback;
 modeled URL revocation does not prove native decoder memory release.
+
+## Prepared enemy surface sampling
+
+Wheel/tread glints and phase sweeps use `surfaceTravelPhase` and `surfacePhase`
+from the shared sampler. Keep these independent of body/gait/travel/rotor clocks.
+The schema admits rates through 8; each accepted surface part advances at most
+0.22 cycles per observed paint. Preserve the finite legacy direct-frame fallback,
+held Pause/freeze/stun and reduced-effects omission. Verify painted mark positions
+at degraded/30/60/120 FPS and the real prepared BoardPainter, not clock changes
+alone. Keep the exact accepted images, rectangles, rates, badges/contact commands
+and authoritative core unchanged. Follow [batch23](../../../docs/verification/actor-batch-23/README.md).

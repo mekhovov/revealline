@@ -444,3 +444,19 @@ These are A2/B/necessary-C6 source slices. Artwork adoption, broader difficulty 
 human fairness, production review and C2 remain deferred or unfinished. Existing
 PR761 carries the follow-up; the single publisher's earlier integrated Guide and
 Team corrections are no longer described as implementation still to write.
+
+### Batch23 — current motion and complementary encounter proof
+
+The bounded A2 correction separates prepared surface-accent clocks from ordinary
+body/travel/rotor clocks. It prevents per-part rates from reversing apparent
+motion at low frame rates while preserving imagery, role/contact cues and core
+behavior. The four-file cohort passes 85/85; this is rendered-command and real
+painter/core evidence, not native or production acceptance.
+
+B adds the existing Band pursuit buffered-steering route to the actual Solo
+practice/replay/Retry harness without changing its authored identity. C’s nine-file
+revision 7 packet still preserves every original/parent and reproduces its native
+export. No additional artwork or authoring tool was needed; older READMEs now
+correctly separate completed derivative preparation from deferred visual review.
+See [batch23](verification/actor-batch-23/README.md) for exact evidence and limits.
+A → B → C remains the order; production review is deferred and C2 stays last.

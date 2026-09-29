@@ -14,7 +14,8 @@ compatibility, artwork and release requirements.
 
 The latest explicit user instruction defers production review. It does not grant
 production approval or waive basic correctness and artifact integrity. Continue
-A/B/C source slices in parallel inside existing PR757/761; do not wait for visual
+A/B/C source slices in parallel inside existing PR761; PR757’s source has
+joined the publisher’s cumulative integration. Do not wait for visual
 admission, device/human sessions or release availability. Keep those checks on the
 remaining list as **deferred, not passed**. The canonical publisher owns one
 cumulative release after protected integration; no version is allocated here.
@@ -119,6 +120,35 @@ localization at `88aa86471` and reading correction at `183ee6ae4` in its cumulat
 integration lineage. PR757 is closed and PR761 remains open. This closes those
 source-handoff items; integrated release gates/public acceptance are still not
 claimed. The publisher's newer menu/authoring changes must survive narrow ports.
+
+## Next parallel source batch — batch23
+
+- **A2:** sampled wheel/tread surface accents no longer appear to reverse when
+  per-part motion advances too far between frames. Separate surface clocks keep
+  the original body/gait/rotor commands, art and core rules unchanged. The complete
+  four-file cohort passes **85/85**; actual prepared BoardPainter and modeled
+  10/30/60/120 FPS/held-state checks are included. Native visual review is separate.
+- **B:** the existing Band pursuit route adds buffered grid-center steering,
+  trail-pursuit/perimeter interaction and a full commitment expiry to the actual
+  Solo practice/replay/Retry coverage. Lens invariants remain; **2/2** exact-source
+  complete journeys pass. Evidence is recorded in [batch23](verification/actor-batch-23/README.md).
+- **C preparation:** all nine revision 7 artwork files and six parent relations
+  remain exact. Strict export still reproduces the retained native packet and
+  invalid inputs reject. No new code defect was found. Cohort READMEs now point
+  to prepared board derivatives; art/cultural review and adoption remain deferred.
+
+These follow-ups remain in the existing source PR; no new release or production
+approval is introduced. Current main is still `321408a3cfd75ae230d760f39fb692503652601a`
+and the publisher’s inspected integration is `81df80dda259ba8e1cef5378af1cec91260eb51e`.
+This branch does not own that integration or its running release gates.
+
+Read-only triage identified two bounded next checks, not confirmed defects:
+restored Solo during a real enemy-freeze interval through the prepared painter,
+then expiry/resumption; and an unchanged Sentry mission's projectile hit through
+actual host life-loss/recovery, feedback, replay and no-write practice boundaries.
+Existing winning host routes deliberately avoid impacts. Prefer these distinct
+boundaries over another duplicate clear route or new authoring tool. Team’s
+corresponding freeze/recovery work already exists and must not be duplicated.
 
 ## Public and queued
 
@@ -336,8 +366,9 @@ is A2 preparation, not completion of A or the deferred C2 human study.
 3. **Artwork quality:** generated cultural scenes remain candidates. Native
    export and valid hashes establish preparation, not consistent pixel clusters,
    museum accuracy, composition over gameplay, permission or production approval.
-4. **Local capacity:** the latest observation is approximately **4.5GiB free**, above
-   the publisher's 1,275,068,416-byte reserve but volatile. Earlier 603MB, 7.1GiB
+4. **Local capacity:** the latest observation is approximately **596MiB free**, below
+   the publisher's 1,275,068,416-byte reserve. The earlier 3.2GiB observation
+   changed during this bounded source batch. Earlier 603MB, 7.1GiB
    and ~110MB observations are historical. Small source/evidence handoffs continue; no local build,
    large download or release materialization is started here. Recheck before
    heavy work and preserve all existing evidence and user files. No cleanup or

@@ -1,9 +1,10 @@
 # Ukrainian community and cultural scenes: first C5 source cohort
 
-Three original reveal-art candidates, prepared in parallel with C3, C4 and C6:
-a community workshop, a Poltava courtyard and a Synevyr-inspired lake. C2’s human/game-feel assessment is scheduled last and does not block this
-source work. This is not a published theme, approved DroneAid branding or a new
-mission. Existing pictures and historical ownership remain unchanged.
+Three retained original reveal-art candidates: a community workshop, a Poltava
+courtyard and a Synevyr-inspired lake. The current priority is A current
+characters/reliable play, then B encounter variety and C one finished cohort,
+with necessary authoring work in parallel. C2’s human study remains last. This
+is not a published theme, approved DroneAid branding or a new mission. Existing pictures and historical ownership remain unchanged.
 
 ## Use the real Studio workflow
 
@@ -34,10 +35,14 @@ Workshop details:
 - Decoded RGBA lower bound: **6,294,152 bytes**; excludes decoder/GPU copies.
 - Built-in image generation; the full effective prompt is preserved in
   `workshop-prompt.txt` and the collection packet. No CLI fallback or image edits.
-- Requested workshop1536×768 and courtyard/lake1152×576 differ from actual output. Preserve the original; a
-  separately identified **1152×576** or **768×576** production derivative still
-  needs preparation, board-fit review and approval. Never relabel this file as
-  having those dimensions.
+- Requested workshop 1536×768 and courtyard/lake 1152×576 differ from actual
+  output. Preserve the original. Separately identified board candidates have
+  now been prepared through Studio: see
+  [the retained revision 5 packet](board-candidates-v1/README.md). The revised
+  Poltava source and its [revision 7 wide derivative](../community-art-cohort-v2/board-candidates-v1/README.md)
+  preserve the earlier originals. These are candidates; gameplay contrast,
+  cultural/art review and production adoption remain open. Never relabel an
+  original as having its derivative’s dimensions.
 
 The generated scene has two equipped workbenches, open-frame craft without
 mounted propellers, shared electronics work, transport cases, practical lighting
@@ -54,10 +59,13 @@ exact community premises or endorsement.
 
 ## Remaining C5 work
 
-Prepare board derivatives and full/partial reveal review; adopt through versioned
-presentation bindings only after checks. Complete community actor/state/branding
-cohorts, regionally coherent cultural scenes, Retro and Coupa treatments. The
+Board preparation and native packet round trips are recorded in the linked
+revision 5 and revision 7 evidence. Full/partial reveal readability and production
+review remain open; adopt through versioned presentation bindings only after
+those checks. Complete community actor/state/branding cohorts, regionally coherent cultural scenes, Retro and Coupa treatments. The
 Poltava courtyard and Synevyr-inspired source scenes are now included; their
-production derivatives, cultural/readability review and adoption remain open. The
-separate optional CC0 photograph is preserved in `../real-world-references/`.
+cultural/readability review and adoption remain open. The original Poltava image
+here remains unchanged; later architecture corrections belong to its separately
+identified revision 6 source and revision 7 derivative. The separate optional
+CC0 photograph is preserved in `../real-world-references/`.
 No C5 cohort is declared production-complete by this first source image.
