@@ -414,8 +414,8 @@ document.getElementById('run').onclick = async () => {
   const loaded = new Promise((resolve) => frame.addEventListener('load', resolve, { once: true }));
   frame.src = path;
   await loaded;
-  const win = frame.contentWindow,
-    doc = frame.contentDocument;
+  const win = frame.contentWindow;
+  let doc = frame.contentDocument;
   if (new URL(location.href).searchParams.has('keyboard') && selector.value !== 'referenceMedia') {
     stopFocusTrace = traceKeyboardFocus(win);
     status.textContent =
@@ -459,14 +459,33 @@ document.getElementById('run').onclick = async () => {
     }
   };
   installPad(win);
-  // Observe actual export bytes without replacing the download or editor path.
+  // Observe exports in each real document reached through a tool's own links.
+  // A WindowProxy survives navigation; its document/URL object do not.
   const downloads = [],
-    createObjectURL = win.URL.createObjectURL;
-  win.URL.createObjectURL = function (blob) {
-    const url = createObjectURL.call(this, blob);
-    downloads.push({ blob, url });
-    return url;
+    observedDocuments = new WeakSet(),
+    restoreDownloadObservers = [];
+  const observeDownloads = () => {
+    if (observedDocuments.has(doc)) return;
+    observedDocuments.add(doc);
+    const api = win.URL,
+      createObjectURL = api.createObjectURL;
+    const observe = function (blob) {
+      const url = createObjectURL.call(this, blob);
+      downloads.push({ blob, url, path: win.location.pathname });
+      return url;
+    };
+    api.createObjectURL = observe;
+    restoreDownloadObservers.push(() => {
+      if (api.createObjectURL === observe) api.createObjectURL = createObjectURL;
+    });
   };
+  const followHostDocument = () => {
+    doc = frame.contentDocument;
+    installPad(win);
+    observeDownloads();
+  };
+  observeDownloads();
+  frame.addEventListener('load', followHostDocument);
   frame.focus();
   win.focus();
   const visible = (e) =>
@@ -559,12 +578,19 @@ document.getElementById('run').onclick = async () => {
       await pulse('confirm'); // Existing workshop hosts consume their join edge.
     await wait(100);
     const p = {
-      doc,
+      get doc() {
+        return doc;
+      },
       visible,
       pulse,
       choose,
       downloads,
       wait: until,
+      async follow(css, pathname) {
+        const previous = doc;
+        await choose(css);
+        await until(() => doc !== previous && win.location.pathname === pathname, 30000);
+      },
       async returnPreview(frameSelector, returnSelector) {
         const preview = doc.querySelector(frameSelector);
         await until(() => preview.contentDocument?.querySelector(returnSelector), 30000);
@@ -651,7 +677,8 @@ document.getElementById('run').onclick = async () => {
       2,
     );
   } finally {
-    win.URL.createObjectURL = createObjectURL;
+    frame.removeEventListener('load', followHostDocument);
+    restoreDownloadObservers.forEach((restore) => restore());
     for (let i = 0; i < buttons.length; i++)
       buttons[i] = { pressed: false, touched: false, value: 0 };
   }

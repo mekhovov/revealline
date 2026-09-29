@@ -414,8 +414,9 @@
     {
       "name": "Picture Campaign Creator",
       "route": "/game/creator/",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "Current bundled single-picture virtual-pad workflow passed on 7f1a89377, including actual export validation and installed player return. Native keyboard editing/install/return/reopen and separate traced export passed; standalone IAB export repeat, batch/video and physical controller acceptance remain pending.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
+      "evidence": "docs/verification/picture-creator-input-2026-09-29.md"
     },
     {
       "name": "Team Campaign Creator",
