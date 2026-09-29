@@ -1,0 +1,281 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:09:06.036591+00:00",
+  "worktree": "<home>/.codex/worktrees/ukrainian-ornament-study",
+  "branch": "refs/heads/codex/ukrainian-ornament-study",
+  "head": "440140872c10571aeca58271e06fd60cbc5f4cfe",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "docs/research/xposed-journey-ledger.json",
+      "object": "fac78f85124c98d79dc68f7c494d579f4c74e1c5",
+      "sha256": "9a6e5fc3131c5844b1bb29d17babbf3df31b074b4d089f0af75d39a73ec185f9",
+      "bytes": 273350,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/spatial-challenge-plan.md",
+      "object": "c2eb778c69d3f9af4a4399d56c461afd48594ed3",
+      "sha256": "f9215c74bc8ecd9dac919b5bfce38a43a26e73276cb5402686d77e07114e3cfa",
+      "bytes": 23533,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/ukrainian-ornament-study.md",
+      "object": "a1cadf258bd8b1d28d116f92531dc6e2c07d2c2f",
+      "sha256": "c5c40e1b8fe916f11d34d82bcb70b43ea2c9128fa9e5128f31ab674487e09ab5",
+      "bytes": 10296,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/content-design/mode-href.mjs",
+      "object": "942108bc387bb4b8553be7fa4212a7121050095f",
+      "sha256": "779737578f49c71fc43457b0fa3213125227e26176eb5010d6d1507da69bd5c7",
+      "bytes": 1336,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/content-design/route-definition.mjs",
+      "object": "4cc3a7c24d90eb690b04cf5b7c3025d10222f854",
+      "sha256": "b2f069443b50d5cd9dc57aaa0badbb0384e7f140bb56bc031289ba7d74df95a7",
+      "bytes": 6646,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/content-design/route-loader.mjs",
+      "object": "c30c91946d26887a933d07e6f566df659e4ee32b",
+      "sha256": "ae14a6937a27858a0518dee6a94d8fe03b7f17fb7cc27c4a3a92db5760c495cf",
+      "bytes": 1368,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/content-design/route.mjs",
+      "object": "e08c154e91d84af129c6edb6bc9637b4677ed73d",
+      "sha256": "1e8f1f9599ce50a0f44cc27e2e2ef1b7f561ad142a4067efd0c81f030871e02d",
+      "bytes": 1436,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/mode-entry.js",
+      "object": "98297d81a9e8ccf9cc371e2d0ce00561f0fd384b",
+      "sha256": "4d65feab108e9a42f635963f6b548c00b81cf7e86b6a270fe2e480a64386d910",
+      "bytes": 2828,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/mission-library/journey-presentation.mjs",
+      "object": "0ac1d7d2e61230d4a4d35cdd94089c35600ba321",
+      "sha256": "198822610a0e5abb83b02f281632fcd1910328066727df456a2279152f3f079e",
+      "bytes": 1766,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/mission-library/spatial-editions.mjs",
+      "object": "2d4c1092ba10d4f93d7bd5f71ee8e8a3c0583e9c",
+      "sha256": "3bb31b610a109a97dff4c40fcc93e8d01efbc7c5011caae1003d32420b80417f",
+      "bytes": 7060,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/studio/index.html",
+      "object": "f3fde6fdf7e1977954495b6644557377ca41ca38",
+      "sha256": "d3732636d840b60f04cbaea0e0c4af9ec75bfb71a83f69c0adfcee33ae3dd7ea",
+      "bytes": 75969,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/studio/studio.mjs",
+      "object": "e7a3cc706a0777bd937249365248e4865269cb51",
+      "sha256": "00aac332c00278062c628c4c4bf2a00d927ef8e4582b5ac7715f396a8b6a1427",
+      "bytes": 49657,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/content-route-loader.test.mjs",
+      "object": "486f4d87d7e50cd95bbc36b073cd0f13cf23f62e",
+      "sha256": "79c36acab12133cf731f4b870959bcbe1ed32f4d3da4e4ba4f5c32289219a5c8",
+      "bytes": 8552,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/studio-candidate-library.test.mjs",
+      "object": "46cb0fe96c677e03c0c6b739fdb309fe496d1649",
+      "sha256": "54133129355d5394ca243af0eacbc8ab833a2f615d3d2e53b8597fce25a45997",
+      "bytes": 15458,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/ukrainian-ornament-atlas.md",
+      "object": "b494f5acf4ce76bd33e0d2726c88ab299e2b317f",
+      "sha256": "e4092124b9fdb46a4c6b4bf0b396f02f5fb9fb00da85fac5d204dac714dd291e",
+      "bytes": 21716,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/content-design/ukrainian-ornament-atlas-registry.mjs",
+      "object": "984c737c056093be857d4310089225c713e4f81d",
+      "sha256": "6724407c8e78da801f325e75ff8230bfb3b7b4fe2ca5faaab5829d55be4f3ebd",
+      "bytes": 498,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/content-design/ukrainian-ornament-atlas.mjs",
+      "object": "9f39925b3df384af309d6df862e1801610adc9a7",
+      "sha256": "416639e110e999e0cf67827a935af42ae7f21b082eca398e545f8031520a11f6",
+      "bytes": 2641,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/content-design/ukrainian-ornament-core.mjs",
+      "object": "43b3bc40524a5d19a751b72763927f03462ac2f5",
+      "sha256": "e8b32468884b039207364bacf0e40655a9234a72df049f3fd97d4945250219d5",
+      "bytes": 7133,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/content-design/ukrainian-ornament-optional.mjs",
+      "object": "60fa0539156bea68b48f7a7fd80edc99e67a07c9",
+      "sha256": "e489bac6beed972015067caf5cbdefd26fa51bd417ed1c0cc0688feee3045b4d",
+      "bytes": 9291,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/fixtures/ukrainian-ornament-atlas-routes.json",
+      "object": "8b24fda4c46dfb0222f1d6faf0ffab17bb9cc945",
+      "sha256": "795428b852e549071891667fe00435dfdccd8e78528a0cb844d97223c7cf88ef",
+      "bytes": 140824,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/ukrainian-ornament-atlas-library.test.mjs",
+      "object": "a6ab917b95c93b7a7ef464eeffeba9aa8c2666f3",
+      "sha256": "cc46954afa949b224936cbcaa50cc05eb8ea784e9356eb1455d94644520bb167",
+      "bytes": 6891,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/ukrainian-ornament-atlas-routes.test.mjs",
+      "object": "7db6cab5d449bc548cbe5704a745aa7ece0f245c",
+      "sha256": "52a5727d8cb237bdc174e1f8f750112a241994efe16ef7b3e600537e3c7b943d",
+      "bytes": 8641,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/ukrainian-ornament-atlas.test.mjs",
+      "object": "84b9a713a4cd0cdb865b85bf9ef45a6686bfde6a",
+      "sha256": "755fce6af97dcec642afb64a4a28ccf2a45ae29fad2fc024c5dae2ded4599932",
+      "bytes": 8693,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "docs/research/xposed-journey-ledger.json",
+      "mode": "100644",
+      "object": "9eada0f8b90c1d39d0ef4c721051afccb4a5c8c3",
+      "stage": 0
+    },
+    {
+      "path": "docs/spatial-challenge-plan.md",
+      "mode": "100644",
+      "object": "93f99d3fe7f5785306bc853483296b324443521f",
+      "stage": 0
+    },
+    {
+      "path": "docs/ukrainian-ornament-study.md",
+      "mode": "100644",
+      "object": "2da02abd953f7703fb8d60b7f1f5dae505dd6297",
+      "stage": 0
+    },
+    {
+      "path": "game/content-design/mode-href.mjs",
+      "mode": "100644",
+      "object": "38b9c407fd286ea7931849de4e0c25035d29affe",
+      "stage": 0
+    },
+    {
+      "path": "game/content-design/route-definition.mjs",
+      "mode": "100644",
+      "object": "d7fcf07441cb43d4a9b923850648eb83fce2da72",
+      "stage": 0
+    },
+    {
+      "path": "game/content-design/route-loader.mjs",
+      "mode": "100644",
+      "object": "65f9dca7ad98e6dd3094deb6ff9a787f36501108",
+      "stage": 0
+    },
+    {
+      "path": "game/content-design/route.mjs",
+      "mode": "100644",
+      "object": "89d8d7d0f01d2c8a69d2b15f76b39cfec363c4ef",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/mode-entry.js",
+      "mode": "100644",
+      "object": "9f14e62b4becac5391c0abd3163f8c4207e38a18",
+      "stage": 0
+    },
+    {
+      "path": "game/mission-library/journey-presentation.mjs",
+      "mode": "100644",
+      "object": "c607972ed64b9fedde65e08b28fff3b0a3ace64c",
+      "stage": 0
+    },
+    {
+      "path": "game/mission-library/spatial-editions.mjs",
+      "mode": "100644",
+      "object": "3a76ae4326aa5a443699ed7e0253986a0d1f1366",
+      "stage": 0
+    },
+    {
+      "path": "game/studio/index.html",
+      "mode": "100644",
+      "object": "81b15fb3a3938b468d298aa9e4fdc1568ab769b3",
+      "stage": 0
+    },
+    {
+      "path": "game/studio/studio.mjs",
+      "mode": "100644",
+      "object": "31d5e03c4e0f99281fa0fe610691658242001fcc",
+      "stage": 0
+    },
+    {
+      "path": "game/test/content-route-loader.test.mjs",
+      "mode": "100644",
+      "object": "130c3437a131342f2e3a5c43cd0956529a48e7b8",
+      "stage": 0
+    },
+    {
+      "path": "game/test/studio-candidate-library.test.mjs",
+      "mode": "100644",
+      "object": "dd5df5ada1886c0f5ddd995b7ad2f1e84a6daa32",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
