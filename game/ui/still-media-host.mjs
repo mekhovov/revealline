@@ -1,4 +1,4 @@
-import { t } from '../i18n/index.mjs';
+import { t, localizedText } from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
@@ -106,6 +106,13 @@ export function attachStillMediaHost({
     openSerial = 0,
     openController = null;
 
+  const audioCancel = doc.createElement('button');
+  audioCancel.id = 'still-host-cancel-audio';
+  audioCancel.type = 'button';
+  audioCancel.hidden = true;
+  localizedText(audioCancel, () => t('common:actions.cancelPreparation'));
+  $('still-host-export-audio').after(audioCancel);
+
   const feedback = createOperationStatus(status);
   let activity = null,
     failedOpening = null;
@@ -148,7 +155,11 @@ export function attachStillMediaHost({
     getScope: menuScope,
     getRoot: menuRoot,
     getDefaultFocus: () => (panel?.dialog.open ? $('still-media-reload') : $('still-host-open')),
-    onBack: () => (sourcePicker?.dialog.open ? sourcePicker.close() : panel?.back()),
+    onBack: () => {
+      if (sourcePicker?.dialog.open) sourcePicker.close();
+      else if (panel?.dialog.open) panel.back();
+      else if (audioTask) cancelAudio();
+    },
     activateFileInput: (input) => sourcePicker?.open(input),
     activateControl: (element) => guard.activate(element),
     onNativeInput: (event) => {
@@ -205,6 +216,7 @@ export function attachStillMediaHost({
     }
     audioTask?.abort();
     audioTask = null;
+    audioCancel.hidden = true;
     if (audioURL) URLImpl.revokeObjectURL(audioURL);
     audioURL = null;
     audioNotice = '';
@@ -236,6 +248,7 @@ export function attachStillMediaHost({
   }
   function captureAudioFocus(opener, signal) {
     const empty = (target) => !target || target === doc.body || target === doc.documentElement,
+      owned = new Set([opener, audioCancel]),
       removers = [];
     let current = foreground() && scope() === 'still-media-page' && doc.activeElement === opener;
     const cancel = () => {
@@ -248,11 +261,11 @@ export function attachStillMediaHost({
     };
     if (current) {
       listen(doc, 'focusin', (event) => {
-        if (!empty(event.target) && event.target !== opener) cancel();
+        if (!empty(event.target) && !owned.has(event.target)) cancel();
       });
       for (const type of ['pointerdown', 'keydown'])
         listen(doc, type, (event) => {
-          if (!opener.contains(event.target)) cancel();
+          if (![...owned].some((element) => element.contains(event.target))) cancel();
         });
       listen(doc, 'beforetoggle', (event) => {
         if (event.target?.tagName === 'DIALOG' && event.newState === 'open') cancel();
@@ -266,24 +279,39 @@ export function attachStillMediaHost({
       listen(win, 'pagehide', cancel);
       listen(signal, 'abort', cancel);
     }
+    const move = (target, final) => {
+      const allowed =
+        current &&
+        !signal.aborted &&
+        foreground() &&
+        scope() === 'still-media-page' &&
+        !doc.querySelector('dialog[open]') &&
+        (empty(doc.activeElement) || owned.has(doc.activeElement)) &&
+        target?.isConnected &&
+        !target.disabled &&
+        !target.closest('[hidden],[inert]') &&
+        target.getClientRects().length;
+      if (final) cancel();
+      if (allowed) target.focus();
+    };
     return {
       cancel,
-      restore(target) {
-        const allowed =
-          current &&
-          !signal.aborted &&
-          foreground() &&
-          scope() === 'still-media-page' &&
-          !doc.querySelector('dialog[open]') &&
-          (empty(doc.activeElement) || doc.activeElement === opener) &&
-          target?.isConnected &&
-          !target.disabled &&
-          !target.closest('[hidden],[inert]') &&
-          target.getClientRects().length;
-        cancel();
-        if (allowed) target.focus();
-      },
+      hold: () => move(audioCancel, false),
+      restore: (target) => move(target, true),
     };
+  }
+  function cancelAudio() {
+    if (!audioTask) return false;
+    const opener = $('still-host-export-audio'),
+      focus = captureAudioFocus(
+        doc.activeElement === audioCancel ? audioCancel : opener,
+        new AbortController().signal,
+      );
+    discardAudio();
+    opener.disabled = !audio;
+    setStatus(t('interface:operationCancelledTheSavedLibraryWasNotChangedByThis'), 'cancelled');
+    focus.restore(opener);
+    return true;
   }
   async function open() {
     if (disposed || opening) return false;
@@ -385,6 +413,12 @@ export function attachStillMediaHost({
     let completed = false;
     audioTask = own;
     opener.disabled = true;
+    audioCancel.hidden = false;
+    focus.hold();
+    if (disposed || own.signal.aborted || audioTask !== own) {
+      focus.cancel();
+      return false;
+    }
     const lease = feedback.begin({
       message: t('interface:readingSavedMusicAndCheckingBackupPermissions'),
       stage: 'reading',
@@ -449,6 +483,7 @@ export function attachStillMediaHost({
         if (audioTask === own) {
           audioTask = null;
           opener.disabled = !audio;
+          audioCancel.hidden = true;
           // Re-enabling can itself start a newer operation or close this owner.
           if (!disposed && audio === ownerAudio && openSerial === ticket && audioTask === null)
             focus.restore(completed ? $('still-host-download-audio') : opener);
@@ -460,6 +495,7 @@ export function attachStillMediaHost({
   }
   $('still-host-open').onclick = open;
   $('still-host-export-audio').onclick = prepareAudio;
+  audioCancel.onclick = cancelAudio;
   $('still-host-export-audio').disabled = true;
   $('still-host-download-audio').onclick = () => {
     setStatus(
@@ -514,6 +550,8 @@ export function attachStillMediaHost({
     disposed = true;
     closeStorage();
     feedback.dispose();
+    audioCancel.onclick = null;
+    audioCancel.remove();
     win.cancelAnimationFrame(frame);
     lifecycle.destroy();
     navigation.destroy();

@@ -326,11 +326,11 @@ for (const fail of [false, true])
     const pending = h.opener.onclick();
     await h.entered.promise;
     assert.equal(h.opener.disabled, true);
-    assert.equal(h.doc.activeElement, h.doc.body);
+    assert.equal(h.doc.activeElement.id, 'still-host-cancel-audio');
     h.gate.resolve();
     assert.equal(await pending, !fail);
     assert.equal(h.opener.disabled, false);
-    assert.equal(h.doc.activeElement, fail ? h.opener : h.link);
+    assert.equal(h.doc.activeElement.id, (fail ? h.opener : h.link).id);
     assert.equal(h.link.hidden, fail);
     assert.equal(h.memory.allPuts.length, before, 'Backup preparation must not save media');
     if (!fail) {
@@ -413,6 +413,95 @@ test('persisted page return allows a fresh soundtrack preparation while the canc
   assert.equal(h.link.hidden, false);
   assert.equal(h.doc.activeElement, h.link);
   assert.equal(h.urls.size, 1, 'Only the current preparation may publish a URL');
+});
+
+async function soundtrackControllerHost(t, options = {}) {
+  const pad = {
+    id: 'Soundtrack busy owner pad',
+    index: 0,
+    mapping: 'standard',
+    connected: true,
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  };
+  const h = await deferredAudioHost(t, { ...options, readPads: () => [pad] });
+  const frame = (time) => {
+    const [id, callback] = h.frames.entries().next().value;
+    h.frames.delete(id);
+    callback(time);
+  };
+  const pulse = (button, time) => {
+    pad.buttons[button] = { pressed: true, value: 1 };
+    frame(time);
+    pad.buttons[button] = { pressed: false, value: 0 };
+    frame(time + 1);
+  };
+  frame(0);
+  pulse(0, 1);
+  h.opener.focus();
+  pulse(0, 10);
+  await h.entered.promise;
+  return { ...h, frame, pulse };
+}
+
+for (const fail of [false, true])
+  test(`neutral controller polling retains soundtrack ${fail ? 'retry' : 'Download'} ownership during preparation`, async (t) => {
+    const h = await soundtrackControllerHost(t, { fail });
+    h.frame(50);
+    h.frame(100);
+    assert.equal(h.doc.activeElement.id, 'still-host-cancel-audio');
+    h.gate.resolve();
+    for (let attempt = 0; attempt < 100 && h.opener.disabled; attempt++)
+      await new Promise(setImmediate);
+    assert.equal(h.opener.disabled, false);
+    assert.equal(h.link.hidden, fail);
+    assert.equal(h.$('still-host-cancel-audio').hidden, true);
+    assert.equal(h.doc.activeElement.id, (fail ? h.opener : h.link).id);
+  });
+
+for (const command of ['Confirm Cancel', 'Back'])
+  test(`actual controller ${command} cancels only the soundtrack preparation and restores retry`, async (t) => {
+    const h = await soundtrackControllerHost(t),
+      before = h.memory.allPuts.length;
+    h.frame(50);
+    assert.equal(h.doc.activeElement.id, 'still-host-cancel-audio');
+    h.pulse(command === 'Back' ? 1 : 0, 100);
+    assert.equal(h.doc.activeElement.id, h.opener.id);
+    assert.equal(h.opener.disabled, false);
+    assert.equal(h.$('still-host-cancel-audio').hidden, true);
+    const status = h.$('still-host-status').textContent;
+    h.$('still-host-close').focus();
+    h.gate.resolve();
+    await new Promise(setImmediate);
+    await new Promise(setImmediate);
+    assert.equal(h.link.hidden, true);
+    assert.equal(h.urls.size, 0);
+    assert.equal(h.$('still-host-status').textContent, status);
+    assert.equal(
+      h.doc.activeElement.id,
+      'still-host-close',
+      'A later page choice survives retired work',
+    );
+    assert.equal(h.memory.allPuts.length, before);
+    assert.equal(h.managers.length, 1, 'Cancellation retains the existing local connection');
+    h.opener.focus();
+    assert.equal(await h.opener.onclick(), true, 'The retained connection supports a fresh retry');
+  });
+
+test('native Escape cancels a pending soundtrack preparation without closing local storage', async (t) => {
+  const h = await deferredAudioHost(t);
+  h.opener.focus();
+  const pending = h.opener.onclick();
+  await h.entered.promise;
+  const event = h.$('still-host-cancel-audio').emit('keydown', { key: 'Escape' });
+  assert.equal(event.defaultPrevented, true);
+  assert.equal(h.doc.activeElement.id, h.opener.id);
+  assert.equal(h.opener.disabled, false);
+  h.gate.resolve();
+  assert.equal(await pending, false);
+  assert.equal(h.link.hidden, true);
+  assert.equal(h.urls.size, 0);
+  assert.equal(await h.opener.onclick(), true);
 });
 
 test('soundtrack backup preserves a newer controller destination after actual Confirm release starts preparation', async (t) => {
