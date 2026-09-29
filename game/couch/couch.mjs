@@ -64,6 +64,7 @@ import {
   createMissionLibrarySessionState,
   missionLibraryHref,
   readMissionLibraryHandoff,
+  readMissionLibraryIntent,
   readMissionLibraryReturn,
 } from '../mission-library/handoff.mjs';
 import { createCouchChapterInstaller } from './couch-chapter-install.mjs';
@@ -360,7 +361,8 @@ try {
     { fullSource: true },
   );
   const authoredJourney = !!authoredRoute;
-  const libraryHandoff = readMissionLibraryHandoff(new URL(location.href).searchParams);
+  const libraryHandoff = readMissionLibraryHandoff(new URL(location.href).searchParams),
+    libraryIntent = readMissionLibraryIntent(new URL(location.href).searchParams);
   let incomingContinuation = null;
   if (libraryHandoff) {
     const values = new URL(location.href).searchParams.getAll('versus-next');
@@ -4502,6 +4504,7 @@ try {
           throw new Error(t('interface:thisMissionBelongsToADifferentGameplayHostChooseIt'));
         const paired = libraryExternalSelections.get(row.id);
         if (
+          libraryIntent !== 'select' &&
           paired &&
           libraryInventory.state().ready &&
           libraryInventory.getInventory().packs.some((pack) => pack.id === paired.packId)
@@ -4518,8 +4521,13 @@ try {
         // The metadata request relinquishes input before the exact launch or
         // chooser adopts focus. Later staged work owns its own cancellation.
         opening.dispose();
-        if (owner.library.availability(row, 'versus').state !== 'ready') {
-          journeyChooser.open($('race-library-switch'));
+        if (
+          libraryIntent === 'select' ||
+          owner.library.availability(row, 'versus').state !== 'ready'
+        ) {
+          // A mode choice reveals this exact row. Only its explicit Play action
+          // may prepare/adopt a replacement or start either simulation.
+          journeyChooser.open($('race-chapters'));
           journeyChooser.reveal(row.id);
         } else {
           const started = await owner.library.launch(row, {
@@ -4527,7 +4535,7 @@ try {
             ...context,
           });
           if (started === false && epoch === libraryOpenEpoch && context.isCurrent()) {
-            journeyChooser.open($('race-library-switch'));
+            journeyChooser.open($('race-chapters'));
             journeyChooser.reveal(row.id);
           }
         }

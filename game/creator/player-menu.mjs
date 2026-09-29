@@ -18,6 +18,7 @@ export function creatorVersusHref(pack, missionId, baseURL) {
     baseURL: new URL('../', baseURL).href,
     currentMode: 'solo',
     mode: 'versus',
+    intent: 'select',
     journey: 'legacy',
     sourceJourney: 'legacy',
     missionId: libraryMissionId({
