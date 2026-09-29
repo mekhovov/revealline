@@ -1,0 +1,39 @@
+{
+  "reviewedAt": "2026-09-29T15:11:48.358159+00:00",
+  "manifest": "/tmp/revealline-recovery-20260929/worktree-snapshots.json",
+  "manifestSha256": "f0c1bdfd0620fdb8d258b9ccda3e82a4210c521dfc781b149237b1fc3361f6a0",
+  "manifestSummary": {
+    "registered": 267,
+    "snapshotCount": 53,
+    "dependencyOnly": 58,
+    "dirtyPaths": 3148
+  },
+  "snapshotCommitsVerified": 53,
+  "treeEntriesVerified": 2509,
+  "workingEntriesVerified": 1306,
+  "uniqueWorkingBlobsRehashed": 1147,
+  "workingBytesVerified": 116173579,
+  "indexStageEntriesVerified": 1150,
+  "specialHistoricalVariants": [
+    {
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "commit": "9159c961325728e66b1694c81c5aabe2fb1ca910",
+      "working": "9d7978c76bcd7f6ec748f50e0ed51ab66d1e4aca",
+      "index": "c3ba1f0bb49715c30dcd0178bcdcced22537ee7d"
+    },
+    {
+      "path": "game/test/coop-picture-bindings.test.mjs",
+      "commit": "9159c961325728e66b1694c81c5aabe2fb1ca910",
+      "working": "f6388c014500b9d00c8b5462887da8d593ec0036",
+      "index": "40df381c2279712b6a6a73440aba2ec08244c65f"
+    }
+  ],
+  "errors": [],
+  "limits": [
+    "Read-only local object verification; does not prove GitHub upload or product correctness.",
+    "Files may change after interval capture; this verifies captured bytes against captured manifest.",
+    "No capture script rerun, source changes, owner index/ref mutation, or cleanup performed."
+  ],
+  "uniqueIndexBlobsRehashed": 1036,
+  "uniqueIndexBytesRehashed": 222019719
+}
