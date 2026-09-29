@@ -1,9 +1,0 @@
-# Retained-edition release explorer check
-
-Before admitting a newly retained modern edition, activate its real title Release explorer action using keyboard navigation. It must reach the current main catalog at https://mekhovov.github.io/revealline/releases/; verify browser Back reaches the retained edition. A historical archive page labelled Current with no route to the main catalog fails this check, even when its HTTP hash matches the old inventory.
-
-The shared archive explorer is publication infrastructure. Preserve its old bytes under legacy, reuse the accepted accessible redirect with a visible fallback link, and change only the intended shared-route inventory row. Keep canonical game bodies, release manifests, tags, workers, saves and original JSON routes exact. Update source-lock, expected inventory, input provenance, finite bridge tests and the scoped native record. Record the first failed journey honestly; a correction requires its own reviewed commit, hosted deployment, complete byte audit and native check before admission. A merged PR or successful hash audit alone does not establish navigation acceptance.
-
-AI-maintainer prompt example: “Retain edition VERSION from original release bytes. Inspect the actual title Release explorer route. If the shared archive index strands the player on an obsolete catalog, preserve that index under legacy and reuse the accepted main-catalog redirect/fallback. Show the exact sole public-row change and preserved cohorts. Do not rebuild or retag games. Keep initial failures and bind acceptance only to actual reviewed successor deployment and browser evidence.”
-
-This delivery guidance can be incorporated into the release-maintainer skill during the next qualified source change. It does not modify the currently frozen game source or claim a current deployment is accepted.
