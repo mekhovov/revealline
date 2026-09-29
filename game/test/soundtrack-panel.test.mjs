@@ -2383,6 +2383,58 @@ test('Audio settings restore a saved streamed-style selection after remount', as
   assert.match(restored.node('settings-style-status').textContent, /2 styles selected/);
 });
 
+test('Audio settings retain an attempted streamed-style selection after a failed save', async (t) => {
+  const catalogue = onlineCatalogueFixture();
+  const db = memoryIndexedDB();
+  const backing = createSoundtrackStore({
+    indexedDB: db.indexedDB,
+    soundtrackCatalogue: true,
+  });
+  let failNextCommit = true;
+  const store = {
+    read: (...args) => backing.read(...args),
+    commit: (...args) => {
+      if (failNextCommit) {
+        failNextCommit = false;
+        throw new Error('Temporary soundtrack save failure');
+      }
+      return backing.commit(...args);
+    },
+  };
+  const app = await setup(t, {
+    open: false,
+    settings: true,
+    store,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async () => onlineCatalogueResponse(catalogue),
+      },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => !app.node('settings-play-styles').disabled,
+    'the settings catalogue preload',
+  );
+  await app.click('settings-styles-none');
+  app.node('settings-style-synth').checked = true;
+  app.node('settings-style-synth').onchange();
+
+  await app.click('settings-play-styles');
+
+  assert.match(app.node('status').textContent, /Temporary soundtrack save failure/);
+  for (const style of PUBLIC_SOUNDTRACK_STYLE_IDS)
+    assert.equal(
+      app.node(`settings-style-${style}`).checked,
+      style === 'synth',
+      `${style} keeps the attempted selection after failure`,
+    );
+  assert.equal((await app.store.read()).generation, 0, 'the failed attempt is not persisted');
+
+  await app.click('settings-play-styles');
+  assert.deepEqual((await app.store.read()).library.listening.genres, ['synth90s']);
+});
+
 test('Audio style playback saves only listening preferences and retains a staged track removal', async (t) => {
   const initial = await fixture(),
     catalogue = onlineCatalogueFixture(),
