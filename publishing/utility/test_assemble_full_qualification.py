@@ -181,6 +181,9 @@ class FullTests(unittest.TestCase):
         self.assertEqual(len(q['gates']), 6)
         self.assertNotIn('waiverEvidence', q)
         self.assertFalse((self.root / 'out/source.tar').exists())
+        with zipfile.ZipFile(self.root / 'out/source-qualification-evidence.zip') as archive:
+            retained = archive.read(common.HISTORICAL_AUDIO_EVIDENCE_ARCHIVE)
+        self.assertEqual(common.sha(retained), common.HISTORICAL_AUDIO_EVIDENCE_SHA256)
         with self.assertRaisesRegex(ValueError, 'Fresh ordinary'):
             self.assemble()
 
