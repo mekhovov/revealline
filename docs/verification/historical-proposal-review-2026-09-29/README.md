@@ -2,7 +2,7 @@
 
 This source-only intake makes five historical proposal families reviewable without replacing current game files. It preserves 55 exact source/test/documentation files, their readable changes, and an optional eight-line inspection-job regression. Current game behavior, assets, formats, versions and workflows are unchanged.
 
-The broader `codex/local-recovery-20260929` branch is a separate recovery archive; never merge it or use it as a release source. This bounded packet curates the proposals requiring decisions from that broader history. Archive preservation is not product acceptance.
+The broader historical recovery effort is separate and remains under screening. Its initial remote ref was withdrawn after a private-soundtrack provenance concern; do not treat that history as published. Local copies remain intact. This bounded, screened packet curates five proposal families only. Never merge a recovery-history branch or use it as a release source. Archive preservation is not product acceptance.
 
 ## Disposition and release order
 
