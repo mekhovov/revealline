@@ -20,7 +20,41 @@ admission, device/human sessions or release availability. Keep those checks on t
 remaining list as **deferred, not passed**. The canonical publisher owns one
 cumulative release after protected integration; no version is allocated here.
 
-The current implementation batch is deliberately narrow:
+## Latest completed source batch — 24
+
+- **A2:** a real installed Classic Lab flight now has automated coverage for
+  freeze pickup → saved flight → fresh-page Continue → prepared actor hold →
+  exact freeze expiry and continued slow movement. **3/3 Node results** pass
+  (one parent journey plus two sequential phases). No runtime defect was found;
+  this closes a previously separate save/render boundary.
+- **A3:** fixed long floating-point Solo HUD labels after a real fractional
+  capture. The display follows selected EN/UK, with integer padding retained;
+  raw scores, saved bytes and replays stay exact. Parent evidence reproduces the
+  defect; **2/2** final actual-host cases pass. Older narrow-HUD CSS is not copied.
+- **B:** unchanged three-life Sentry Detour now has a legal projectile-hit,
+  paused-recovery, held-input/fresh-input and partial-replay journey. **1/1**
+  passes over 1,350 ticks. This is authored Standard/grid-center/seed1 practice,
+  not a full mission clear, human fairness or production-art claim.
+- [Exact source, evidence and limitations](verification/actor-batch-24/README.md).
+  These independent files passed focused checks and source review. They remain
+  source input in PR761's existing v0.150.0 batch; integrated release/build/public
+  acceptance remains with the single publisher.
+
+**Next:** preserve this narrow port alongside the publisher's newer hosts; finish
+the remaining current-character/state and encounter-combination qualification.
+The first artwork cohort's preparation is complete, but cultural/pixel/contrast
+review and approved binding adoption remain deferred. Broad tools/editions and
+C2 remain later. Historical donor differences require semantic review, not bulk
+replay: story focus and Solo continuation already have successors, while this
+batch carries the genuinely missing fractional score correction. Further local
+variants remain under their separate reconciliation audit.
+
+The following sections retain earlier batch evidence and observed release/queue
+snapshots; they do not establish a new public version or a release ETA.
+
+## Earlier implementation batches
+
+The earlier batch was deliberately narrow:
 
 - **A2/A3:** readable Team field details when dense canvas cue placement cannot
   fit, using the existing Pause/Help reader and a secondary outside-board action.
@@ -138,11 +172,11 @@ claimed. The publisher's newer menu/authoring changes must survive narrow ports.
   to prepared board derivatives; art/cultural review and adoption remain deferred.
 
 These follow-ups remain in the existing source PR; no new release or production
-approval is introduced. Current main is still `321408a3cfd75ae230d760f39fb692503652601a`
-and the publisher’s inspected integration is `81df80dda259ba8e1cef5378af1cec91260eb51e`.
+approval is introduced. Batch23 observed main at `321408a3cfd75ae230d760f39fb692503652601a`
+and the publisher's integration at `81df80dda259ba8e1cef5378af1cec91260eb51e`.
 This branch does not own that integration or its running release gates.
 
-Read-only triage identified two bounded next checks, not confirmed defects:
+Read-only triage identified two bounded checks, now covered by batch24:
 restored Solo during a real enemy-freeze interval through the prepared painter,
 then expiry/resumption; and an unchanged Sentry mission's projectile hit through
 actual host life-loss/recovery, feedback, replay and no-write practice boundaries.
