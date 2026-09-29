@@ -79,12 +79,13 @@ export function createControllerRouter({
   deadZone = 0.35,
   repeatDelayMs = 350,
   repeatIntervalMs = 120,
-  confirmReleaseMs = 120,
+  confirmReleaseMs,
   autoJoin = false,
   navigationAliases = false,
 } = {}) {
   if (typeof readPads !== 'function' || typeof now !== 'function')
     throw new TypeError(t('interface:controllerReadersMustBeFunctions'));
+  const configuredConfirmReleaseMs = confirmReleaseMs === undefined ? 120 : confirmReleaseMs;
   if (
     !Number.isFinite(deadZone) ||
     deadZone < 0.1 ||
@@ -95,9 +96,9 @@ export function createControllerRouter({
     !Number.isFinite(repeatIntervalMs) ||
     repeatIntervalMs < 50 ||
     repeatIntervalMs > 1000 ||
-    !Number.isFinite(confirmReleaseMs) ||
-    confirmReleaseMs < 0 ||
-    confirmReleaseMs > 1000
+    !Number.isFinite(configuredConfirmReleaseMs) ||
+    configuredConfirmReleaseMs < 0 ||
+    configuredConfirmReleaseMs > 1000
   )
     throw new RangeError(t('interface:controllerThresholdsOrRepeatTimingAreOutOfBounds'));
   const initial = resolveControllerBindings(bindings);
@@ -130,7 +131,13 @@ export function createControllerRouter({
   // sample, then a release-side pulse. Keep that burst in one Confirm gesture.
   // A later physical press is accepted once the whole Confirm family has been
   // continuously neutral for confirmReleaseMs.
-  function updateMenuConfirm(rawPressed, scope, time) {
+  function confirmReleaseWindow(pad) {
+    if (confirmReleaseMs !== undefined) return configuredConfirmReleaseMs;
+    return navigationAliases && defaultLayout && /steam\s*deck/i.test(pad.id)
+      ? configuredConfirmReleaseMs
+      : 0;
+  }
+  function updateMenuConfirm(rawPressed, scope, time, releaseMs) {
     if (!menuConfirmActive) {
       if (!rawPressed || scope === 'flight') return false;
       menuConfirmActive = true;
@@ -138,11 +145,11 @@ export function createControllerRouter({
       return true;
     }
     if (!rawPressed) {
-      if (confirmReleaseMs === 0) {
+      if (releaseMs === 0) {
         menuConfirmActive = false;
         menuConfirmNeutralAt = null;
       } else if (menuConfirmNeutralAt === null) menuConfirmNeutralAt = time;
-      else if (time - menuConfirmNeutralAt >= confirmReleaseMs) {
+      else if (time - menuConfirmNeutralAt >= releaseMs) {
         menuConfirmActive = false;
         menuConfirmNeutralAt = null;
       }
@@ -151,7 +158,7 @@ export function createControllerRouter({
     if (menuConfirmNeutralAt === null) return false;
     const neutralFor = time - menuConfirmNeutralAt;
     menuConfirmNeutralAt = null;
-    return scope !== 'flight' && neutralFor >= confirmReleaseMs;
+    return scope !== 'flight' && neutralFor >= releaseMs;
   }
   function menuConfirmPressed() {
     if (destroyed || !assigned || (lastScope === 'flight' && !menuConfirmActive)) return false;
@@ -423,7 +430,21 @@ export function createControllerRouter({
       invalidate();
       return sampleLoss();
     }
-    const menuConfirmEdge = updateMenuConfirm(confirms(pad.buttons), scope, time);
+    const menuConfirmReleaseMs = confirmReleaseWindow(pad);
+    let menuConfirmEdge = false;
+    // The release-settling state machine is only needed for aliased or
+    // explicitly configured Confirm families. Retain the exact legacy edge and
+    // host-guard semantics for ordinary single-button menu controllers.
+    if (menuConfirmReleaseMs === 0) {
+      menuConfirmActive = confirms(pad.buttons) && (scope !== 'flight' || menuConfirmActive);
+    } else {
+      menuConfirmEdge = updateMenuConfirm(
+        confirms(pad.buttons),
+        scope,
+        time,
+        menuConfirmReleaseMs,
+      );
+    }
     // The same physical-neutral sample may lift both gates. A latched command
     // is not physical input and must not prevent a later ordinary release.
     if (mode === 'toggle' && scope === 'flight' && toggleBoostEligible && pad.neutral)
@@ -471,7 +492,14 @@ export function createControllerRouter({
             : null);
       if (edge(buttons.menu)) ui.menu = true;
       else if (edge(buttons.back) || (aliases && (edge(3) || edge(8)))) ui.back = true;
-      else if (menuConfirmEdge) ui.confirm = true;
+      else if (
+        menuConfirmReleaseMs === 0
+          ? confirms(pad.buttons) &&
+            !confirms(previousButtons) &&
+            (pad.buttons.has(buttons.confirm) || (aliases && pad.buttons.has(2)))
+          : menuConfirmEdge
+      )
+        ui.confirm = true;
       if (!ui.menu && !ui.back && !ui.confirm && direction) {
         if (direction !== repeatDirection || time >= repeatAt) {
           ui.direction = direction;

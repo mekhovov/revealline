@@ -21,7 +21,6 @@ function fixture(t, options = {}) {
     reads = 0;
   const router = createControllerRouter({
     eventTarget: null,
-    confirmReleaseMs: 0,
     ...options,
     readPads: () => {
       reads++;
