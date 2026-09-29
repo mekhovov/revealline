@@ -54,7 +54,7 @@ test('Team teaching introduces a cut, then relevant Support and rescue without r
   assert.equal(first.observe([{ type: 'player.downed', player: 1 }], guidance), null);
   first.observe(
     [
-      { type: 'support.pulse', player: 0 },
+      { type: 'support.pulse', player: 0, slowedEnemies: ['drifter'], interceptedImpacts: [] },
       { type: 'rescue.completed', player: 0 },
     ],
     guidance,
@@ -74,7 +74,13 @@ test('completion in the same step suppresses an obsolete teaching prompt', () =>
   const teacher = createTeamContextualTeaching({ getStorage: () => new Storage() });
   teacher.opening(guidance);
   assert.equal(
-    teacher.observe([{ type: 'cut.closed' }, { type: 'support.pulse', player: 0 }], guidance),
+    teacher.observe(
+      [
+        { type: 'cut.closed' },
+        { type: 'support.pulse', player: 0, slowedEnemies: [], interceptedImpacts: ['spark'] },
+      ],
+      guidance,
+    ),
     null,
   );
   assert.equal(
@@ -88,6 +94,54 @@ test('completion in the same step suppresses an obsolete teaching prompt', () =>
     null,
   );
 });
+
+for (const [name, result] of [
+  ['absent result arrays', {}],
+  ['empty result arrays', { slowedEnemies: [], interceptedImpacts: [] }],
+])
+  test(`Support with ${name} neither completes learning nor suppresses its cut cue`, () => {
+    const storage = new Storage();
+    const teacher = createTeamContextualTeaching({ getStorage: () => storage });
+    teacher.opening(guidance);
+    assert.equal(
+      teacher.observe([{ type: 'support.pulse', player: 0, ...result }], guidance),
+      null,
+    );
+    assert.deepEqual(teacher.snapshot().completed, []);
+    assert.equal(
+      teacher.observe(
+        [{ type: 'cut.closed' }, { type: 'support.pulse', player: 0, ...result }],
+        guidance,
+      )?.kind,
+      'support',
+    );
+    assert.deepEqual(teacher.snapshot().completed, ['cut']);
+    const nextVisit = createTeamContextualTeaching({ getStorage: () => storage });
+    assert.deepEqual(nextVisit.snapshot().completed, ['cut']);
+  });
+
+for (const [name, result] of [
+  ['slowed enemy', { slowedEnemies: ['drifter'], interceptedImpacts: [] }],
+  ['intercepted impact', { slowedEnemies: [], interceptedImpacts: ['spark'] }],
+])
+  test(`Support with an actual ${name} completes learning and persists the existing format`, () => {
+    const storage = new Storage();
+    const teacher = createTeamContextualTeaching({ getStorage: () => storage });
+    assert.equal(
+      teacher.observe(
+        [{ type: 'cut.closed' }, { type: 'support.pulse', player: 0, ...result }],
+        guidance,
+      ),
+      null,
+    );
+    assert.deepEqual(teacher.snapshot().completed, ['cut', 'support']);
+    const nextVisit = createTeamContextualTeaching({ getStorage: () => storage });
+    assert.deepEqual(nextVisit.snapshot().completed, ['cut', 'support']);
+    assert.equal(nextVisit.observe([{ type: 'cut.closed' }], guidance), null);
+    const stored = JSON.parse([...storage.entries.values()][0]);
+    assert.equal(stored.format, TEAM_CONTEXTUAL_TEACHING_FORMAT);
+    assert.deepEqual(Object.keys(stored).sort(), ['completed', 'format', 'introduced']);
+  });
 
 test('Team teaching skips an irrelevant Support prompt but still teaches rescue', () => {
   const teacher = createTeamContextualTeaching({
