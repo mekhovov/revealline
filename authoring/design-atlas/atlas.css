@@ -1573,6 +1573,12 @@ select {
   color: var(--atlas-muted);
   margin: 18px 0;
 }
+#download-prompt {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-inline-start: 12px;
+}
 .prompt-example button {
   font-size: 14px;
 }
@@ -2181,4 +2187,41 @@ select {
 }
 .screen-stage[data-viewport='landscape'] .mock-flight > .mock-command > span {
   display: none;
+}
+
+/* Explicit read-only input surfaces retain the Atlas's own content and layout. */
+.atlas-read-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  margin-block: 12px;
+  padding: 8px 12px;
+  font: inherit;
+  color: var(--atlas-cyan);
+  background: var(--atlas-panel);
+  border: 1px solid currentColor;
+}
+.atlas-read-control[aria-pressed='true'] {
+  outline: 3px double currentColor;
+  outline-offset: 3px;
+}
+.atlas-read-help {
+  display: none;
+  color: var(--atlas-muted);
+  font-size: 14px;
+  margin-block: 0 12px;
+}
+.atlas-read-control[aria-pressed='true'] + .atlas-read-help {
+  display: block;
+}
+.atlas-read-scroll {
+  max-height: 60svh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+[data-atlas-reading='true'] {
+  outline: 2px solid var(--atlas-cyan);
+  outline-offset: 3px;
 }

@@ -939,6 +939,7 @@
   "reviewAnIllustrativeAiAssetBrief": "Review an illustrative AI asset brief",
   "proposedExampleProductionPromptsMustDeriveTheirExactGeometryAnd": "Proposed example; production prompts must derive their exact geometry and filenames from the selected registry slot.",
   "copyExampleBrief": "Copy example brief",
+  "downloadExampleBrief": "Download example brief",
   "committedBaselineFe9961eV0430": "COMMITTED BASELINE / FE9961E · V0.43.0",
   "theStartingPointPreserved": "The starting point, preserved.",
   "actualScreenshotsFromTheReviewedSourceIsolatedFromRedesignEdits": "Actual screenshots from the reviewed source, isolated from redesign edits. The redesign studies above are proposals. Desktop browser resizing provides layout evidence, not physical-device certification.",

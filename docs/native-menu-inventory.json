@@ -403,7 +403,9 @@
       "name": "Design Atlas",
       "route": "/authoring/design-atlas/",
       "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
+      "sourceFollowup": "Design Atlas reader/download and bounded Copy source follow-up from PR #782 at 0caffd4d189779edf44a1ce717c6bdf1ea84838b composed into the cumulative batch. Current aggregate automated, browser, offline and physical acceptance remain pending.",
+      "ownerEvidence": "docs/verification/design-atlas-input-2026-09-29.md"
     },
     {
       "name": "Content Studio",
