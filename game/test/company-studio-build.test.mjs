@@ -21,7 +21,8 @@ const localTarget = (from, value) => {
 test('the default distribution includes Company Studio, transfer practice and their live local links', async () => {
   const files = await collectBuildFiles(root, await readBuildConfig(root));
   const available = new Set(files);
-  const admitted = (name) => available.has(name) || available.has(path.posix.join(name, 'index.html'));
+  const admitted = (name) =>
+    available.has(name) || available.has(path.posix.join(name, 'index.html'));
   for (const name of [
     ...entries,
     'authoring/company-studio/studio.mjs',
