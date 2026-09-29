@@ -12,6 +12,13 @@ import {
 } from './bulk-presentation-continuation.mjs';
 
 export const ACTOR_CONTINUATION_FORMAT = 'revealline-actor-presentation-continuation.v1';
+// Existing production100 effects20 authority, not a new actor approval. This
+// exact root advances only effects; the other renderer groups retain its bulk
+// presentation ancestor. Audio references are authenticated, never admitted.
+export const ACTOR_EFFECTS20_REVIEW_PATH =
+  'docs/verification/bulk-queue-audio-effects-2026-09-28/review.json';
+export const ACTOR_EFFECTS20_REVIEW_SHA256 =
+  '5ec246c93cf5dfe6d5a3f6538788d618575037a11d2c1890d88d0257f2e7d0b3';
 const GROUPS = ['motion', 'effects', 'team', 'equipment'];
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const digest = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value);
@@ -108,12 +115,19 @@ export async function readActorPresentationContinuation({ read, reviewedRecord }
     'record is not reviewed',
   );
   keys(review.priorReview, ['path', 'sha256']);
+  const currentEffects =
+    review.priorReview.path === ACTOR_EFFECTS20_REVIEW_PATH &&
+    review.priorReview.sha256 === ACTOR_EFFECTS20_REVIEW_SHA256;
   check(
-    review.priorReview.path === BULK_PRESENTATION_REVIEW_PATH &&
-      review.priorReview.sha256 === BULK_PRESENTATION_REVIEW_SHA256,
+    currentEffects ||
+      (review.priorReview.path === BULK_PRESENTATION_REVIEW_PATH &&
+        review.priorReview.sha256 === BULK_PRESENTATION_REVIEW_SHA256),
     'wrong immutable predecessor',
   );
 
+  // The current pinned graph contains exactly17 unique records. Preserve the
+  // historical16 ceiling for the old root; no caller can select another graph.
+  const ancestorLimit = currentEffects ? 17 : 16;
   const ancestors = new Map();
   async function ancestor(ref) {
     check(plain(ref) && pathValid(ref.path) && digest(ref.sha256), 'invalid ancestor reference');
@@ -122,7 +136,7 @@ export async function readActorPresentationContinuation({ read, reviewedRecord }
       check(known.sha256 === ref.sha256 && known.record, 'conflicting or cyclic ancestor');
       return known.record;
     }
-    check(ancestors.size < 16, 'ancestor limit exceeded');
+    check(ancestors.size < ancestorLimit, 'ancestor limit exceeded');
     const entry = { sha256: ref.sha256, record: null };
     ancestors.set(ref.path, entry);
     const body = await readBytes(ref.path);
@@ -138,6 +152,7 @@ export async function readActorPresentationContinuation({ read, reviewedRecord }
     return record;
   }
   const prior = await ancestor(review.priorReview),
+    bulk = currentEffects ? ancestors.get(BULK_PRESENTATION_REVIEW_PATH).record : prior,
     sources = new Map(),
     payloads = new Map();
   check(plain(review.fingerprints), 'expected renderer groups');
@@ -149,7 +164,7 @@ export async function readActorPresentationContinuation({ read, reviewedRecord }
   keys(review.fingerprints, groups);
   for (const group of groups) {
     const value = review.fingerprints[group],
-      before = prior.fingerprints[group];
+      before = (currentEffects && group === 'effects' ? prior : bulk).fingerprints[group];
     keys(value, ['group', 'priorSHA256', 'currentSHA256', 'paths', 'inputs', 'slots', 'payloads']);
     check(
       value.group === group && value.priorSHA256 === before.currentSHA256,
