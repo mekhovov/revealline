@@ -1,1 +1,0 @@
-"{\"slot\":\"player.carrier.rotors\",\"context\":\"FLIGHT / STUDIOIII  00:00  0%BoardPainter · Orchard Crossing · 72 × 36 cells · isolated fixture\",\"motion\":\"playing\",\"width\":1440,\"height\":900,\"dpr\":1,\"changed\":true}"
