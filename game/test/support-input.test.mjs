@@ -75,11 +75,18 @@ function fixture() {
 }
 
 test('support pages mount the shared owner and preserve their own home/preview links', async () => {
-  for (const route of ['community', 'controller-lab']) {
-    const html = await readFile(new URL(`../${route}/index.html`, import.meta.url), 'utf8');
+  for (const route of [
+    'community/store.html',
+    'communities/index.html',
+    'controller-lab/index.html',
+  ]) {
+    const html = await readFile(new URL(`../${route}`, import.meta.url), 'utf8');
     assert.match(html, /src="\.\.\/ui\/support-input-entry\.mjs"/);
     assert.match(html, /data-support-return/);
   }
+  const legacy = await readFile(new URL('../community/index.html', import.meta.url), 'utf8');
+  assert.match(legacy, /src="\.\/redirect\.mjs"/);
+  assert.doesNotMatch(legacy, /support-input-entry/);
   const f = fixture();
   assert.equal(f.doc.querySelector('.authoring-preview-enter'), null);
   assert.equal(f.doc.querySelector('.authoring-source-dialog'), null);

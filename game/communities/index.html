@@ -9,6 +9,7 @@
     <script src="../i18n/catalogs.mjs"></script>
     <script src="../i18n/bootstrap.mjs"></script>
     <link rel="stylesheet" href="./directory.css" />
+    <script type="module" src="../ui/support-input-entry.mjs"></script>
   </head>
   <body>
     <header class="directory-header">
@@ -33,7 +34,7 @@
           <p data-i18n="interface:communityDirectory.mainDescription">
             The main game: explore its worlds, reveal pictures, and play Solo, Versus or Team.
           </p>
-          <a class="community-entry" href="../">
+          <a class="community-entry" href="../" data-support-return>
             <span data-i18n="interface:communityDirectory.openMain">Play the main game</span
             ><span aria-hidden="true">↗</span>
           </a>
