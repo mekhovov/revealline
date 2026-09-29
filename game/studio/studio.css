@@ -460,3 +460,21 @@ footer {
 #timed-bonus-form textarea {
   scroll-margin: 8px;
 }
+
+.studio-source-discard {
+  max-width: min(36rem, calc(100vw - 32px));
+  color: var(--ink);
+  background: var(--paper);
+  border: 2px solid currentColor;
+  padding: 24px;
+}
+.studio-source-discard::backdrop {
+  background: #000b;
+}
+.studio-source-discard h2 {
+  margin: 0 0 20px;
+  font-size: 1.1rem;
+}
+.studio-source-discard button + button {
+  margin-inline-start: 12px;
+}

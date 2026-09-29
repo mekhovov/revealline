@@ -86,7 +86,7 @@ export function createEncounterEditor({ document, getSource, getMission, apply }
           .filter(Boolean);
       }
       const next = editContentEncounter(getSource(), getMission()?.id, command);
-      if (apply(next) === false) return;
+      if (apply(next, () => commit(action)) === false) return;
       key = null;
       sync();
       localizedText(
