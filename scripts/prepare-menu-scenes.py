@@ -3,9 +3,13 @@
 
 Run with: uv run --with pillow==12.1.1 python scripts/prepare-menu-scenes.py
 Images below 700 KiB use lossless WebP; larger originals use WebP quality 94.
-The supplied DroneAid main background remains a byte-for-byte original PNG.
+The supplied DroneAid PNG is retained; its runtime derivative is always lossless.
+Use --scene droneaid-nl-community to prepare only that derivative and provenance.
+Add --check to verify reproducibility and decoded RGBA without writing files.
 """
 from pathlib import Path
+from io import BytesIO
+import argparse
 from PIL import Image
 import hashlib
 import json
@@ -30,37 +34,67 @@ SOURCES = {
 for slug in ['workshop-lights', 'parts-in-motion', 'makers-together', 'careful-handoff', 'signals-of-support', 'shared-horizon']:
     SOURCES[f'droneaid-nl-{slug}-theme'] = f'game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-{slug}-01.png'
 
-OUT.mkdir(parents=True, exist_ok=True)
-rows = []
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--scene', choices=SOURCES, help='Prepare only this scene; retain all other provenance rows.')
+parser.add_argument('--check', action='store_true', help='Verify encoded bytes and provenance without writing.')
+args = parser.parse_args()
+ledger_path = OUT / 'provenance.json'
+ledger = json.loads(ledger_path.read_text()) if args.scene or args.check else {
+    'format': 'revealline-menu-scenes.v1', 'created': '2026-09-28',
+    'encoding': 'Pillow 12.1.1, libwebp', 'assets': [],
+}
+rows = list(ledger['assets']) if args.scene or args.check else []
+if not args.check:
+    OUT.mkdir(parents=True, exist_ok=True)
 for name, source in SOURCES.items():
-    preserve_original = name == 'droneaid-nl-community'
-    output = OUT / ('droneaid-main-background.png' if preserve_original else name + '.webp')
-    with Image.open(ROOT / source) as original:
-        if preserve_original:
+    if args.scene and name != args.scene:
+        continue
+    supplied = name == 'droneaid-nl-community'
+    output = OUT / ('droneaid-main-background.webp' if supplied else name + '.webp')
+    source_bytes = (ROOT / source).read_bytes()
+    with Image.open(BytesIO(source_bytes)) as original:
+        buffer = BytesIO()
+        if supplied:
             assert original.format == 'PNG', name
-            output.write_bytes((ROOT / source).read_bytes())
-            process = 'Original supplied PNG; byte-for-byte copy, no raster changes'
+            # Never overwrite either supplied original, including its old runtime copy.
+            assert (OUT / 'droneaid-main-background.png').read_bytes() == source_bytes
+            original.save(buffer, format='WEBP', lossless=True, method=6, exact=True)
+            lossless = True
         else:
-            original.save(output, format='WEBP', lossless=True, method=6)
-            lossless = output.stat().st_size <= 700 * 1024
+            original.save(buffer, format='WEBP', lossless=True, method=6)
+            lossless = buffer.tell() <= 700 * 1024
             if not lossless:
-                original.save(output, format='WEBP', quality=94, method=6)
-            else:
-                with Image.open(output) as encoded:
-                    assert encoded.convert('RGBA').tobytes() == original.convert('RGBA').tobytes()
-            process = 'WebP lossless; decoded RGBA verified identical' if lossless else 'WebP quality 94; no cropping, resizing or retouching'
+                buffer = BytesIO()
+                original.save(buffer, format='WEBP', quality=94, method=6)
+        data = buffer.getvalue()
+        if lossless:
+            with Image.open(BytesIO(data)) as encoded:
+                assert encoded.size == original.size
+                assert encoded.convert('RGBA').tobytes() == original.convert('RGBA').tobytes()
+        process = 'WebP lossless; decoded RGBA verified identical' if lossless else 'WebP quality 94; no cropping, resizing or retouching'
         size = original.size
-    data = output.read_bytes()
+        pixel_hash = hashlib.sha256(original.convert('RGBA').tobytes()).hexdigest()
     assert len(data) < 2 * 1024 * 1024, name
-    rows.append({
+    row = {
         'id': name, 'file': output.name, 'bytes': len(data),
         'sha256': hashlib.sha256(data).hexdigest(), 'source': source,
-        'sourceSha256': hashlib.sha256((ROOT / source).read_bytes()).hexdigest(),
+        'sourceSha256': hashlib.sha256(source_bytes).hexdigest(),
         'width': size[0], 'height': size[1],
         'process': process,
-    })
-    print(name, len(data))
-(OUT / 'provenance.json').write_text(json.dumps({
-    'format': 'revealline-menu-scenes.v1', 'created': '2026-09-28',
-    'encoding': 'Pillow 12.1.1, libwebp; supplied DroneAid main PNG copied unchanged', 'assets': rows,
-}, indent=2) + '\n')
+    }
+    if supplied:
+        row['decodedRgbaSha256'] = pixel_hash
+    previous = next((i for i, item in enumerate(rows) if item['id'] == name), None)
+    if args.check:
+        assert output.read_bytes() == data, f'{name}: encoded bytes differ'
+        assert previous is not None and rows[previous] == row, f'{name}: provenance differs'
+    else:
+        output.write_bytes(data)
+        if previous is None:
+            rows.append(row)
+        else:
+            rows[previous] = row
+    print(name, len(data), 'verified' if args.check else 'prepared')
+if not args.check:
+    ledger['assets'] = rows
+    ledger_path.write_text(json.dumps(ledger, indent=2) + '\n')

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" data-demo-watch-observer>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demo playback observation · local qualification</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font: 16px system-ui;
+        background: #101620;
+        color: #edf2fa;
+      }
+      body {
+        margin: 0;
+      }
+      main {
+        padding: 20px;
+        max-width: 1500px;
+        margin: auto;
+      }
+      h1 {
+        font-size: 25px;
+      }
+      p,
+      li {
+        line-height: 1.5;
+      }
+      nav {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin: 18px 0;
+      }
+      button,
+      select {
+        min-height: 44px;
+        padding: 8px 14px;
+        font: inherit;
+      }
+      button:focus-visible,
+      select:focus-visible {
+        outline: 3px solid #ffe073;
+      }
+      iframe {
+        display: block;
+        width: 100%;
+        height: min(85vh, 900px);
+        min-height: 540px;
+        border: 1px solid #637080;
+      }
+      pre,
+      textarea {
+        box-sizing: border-box;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        background: #071019;
+        padding: 12px;
+      }
+      textarea {
+        width: 100%;
+        height: 250px;
+        color: inherit;
+      }
+      summary {
+        cursor: pointer;
+        padding: 10px 0;
+      }
+      #observer-status {
+        min-height: 3em;
+      }
+      .note {
+        color: #bbc8d8;
+      }
+      @media (max-width: 600px) {
+        main {
+          padding: 12px;
+        }
+        iframe {
+          min-height: 640px;
+        }
+      }
+    </style>
+    <script type="module" src="./demo-watch.mjs"></script>
+  </head>
+  <body>
+    <main>
+      <h1>Observe the real demo</h1>
+      <p>
+        This local test page embeds the ordinary Legacy game. Use a disposable browser profile if
+        you want its normal settings and saved-flight activity isolated from your own profile. The
+        observer reads the game; it never starts, pauses or steers it.
+      </p>
+      <ol>
+        <li>
+          Wait for the game below. Open
+          <strong>Settings → Help &amp; Extras → Watch demo</strong> (or
+          <strong>Watch demo</strong> on the classic home).
+        </li>
+        <li>
+          Choose the observation duration, then press <strong>Start observation</strong>. Source
+          hashing takes a moment before the clock starts.
+        </li>
+        <li>
+          Use the actual game buttons below: test demo and music Pause independently, Next
+          level/song, practice and Return. Enable sound and play music yourself; entering this page
+          never unmutes it.
+        </li>
+        <li>
+          Move to another tab or application and return during the run. Record physical audio/device
+          findings separately. Do not reload or edit served sources while observing.
+        </li>
+        <li>
+          After automatic completion or <strong>Stop observation</strong>, download the JSON.
+          Leaving this page discards the in-memory report.
+        </li>
+      </ol>
+      <p class="note">
+        Five-second samples are bounded to 1,500. Long callback gaps are recorded as unobserved
+        time, never invented activity. A completed duration is observation evidence, not automatic
+        release acceptance, proof of audible output, or proof of execution while an OS freezes
+        JavaScript.
+      </p>
+      <nav aria-label="Observation controls">
+        <label
+          >Duration
+          <select id="observation-duration">
+            <option value="7200">Two wall-clock hours</option>
+            <option value="30">30-second smoke — not qualification</option>
+          </select></label
+        >
+        <button id="observation-start" type="button">Start observation</button>
+        <button id="observation-stop" type="button" disabled>Stop observation</button>
+        <button id="observation-download" type="button" disabled>Download JSON</button>
+      </nav>
+      <pre id="observer-status" role="status">
+Waiting for the game. No observation has started.</pre
+      >
+      <details>
+        <summary>Current labels on the actual game controls</summary>
+        <pre id="observer-controls">Waiting for game controls.</pre>
+      </details>
+      <iframe
+        id="observed-game"
+        src="../../index.html?journey=legacy"
+        title="Actual RevealLine game — operate these controls normally"
+        allow="autoplay; fullscreen"
+        allowfullscreen
+      ></iframe>
+      <details>
+        <summary>Completed report</summary>
+        <textarea id="observation-report" readonly aria-label="Observation JSON"></textarea>
+      </details>
+    </main>
+  </body>
+</html>

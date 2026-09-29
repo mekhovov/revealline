@@ -141,8 +141,8 @@
   {
     "id": "runtime-menu-scene-provenance",
     "path": "game/ui/art/menu-scenes/provenance.json",
-    "sha256": "598853d6053f01942157c71c81d4ac03d716715fb2df3e7c2bc22c0f0280e145",
-    "bytes": 9374,
+    "sha256": "51d83c7828b8e8e70789ab07984f71e574f1f86e5706365cfce1f6d0ccb99b58",
+    "bytes": 9456,
     "publication": "public",
     "approved": true,
     "dependencies": []
@@ -413,6 +413,15 @@
     "path": "game/ui/art/menu-scenes/droneaid-wordmark-light.svg",
     "sha256": "cecf8a67c455d4a7f931594e2ffc4481c473c3475a3316b8cdd876c39abb1e5b",
     "bytes": 119252,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-main-background-lossless",
+    "path": "game/ui/art/menu-scenes/droneaid-main-background.webp",
+    "sha256": "378741b03c221c08ead77ee4af8f0a65a7d2b15088363898bfb8b79dfebc6000",
+    "bytes": 493598,
     "publication": "public",
     "approved": true,
     "dependencies": ["runtime-menu-scene-provenance"]

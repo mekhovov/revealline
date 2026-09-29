@@ -26,7 +26,7 @@ import { fileURLToPath } from 'node:url';
 
 const bytes = (text) => Buffer.from(text);
 const droneAidLandingFiles = [
-  'game/ui/art/menu-scenes/droneaid-main-background.png',
+  'game/ui/art/menu-scenes/droneaid-main-background.webp',
   'game/ui/art/menu-scenes/droneaid-wordmark-light.svg',
 ];
 test('standalone and public offline menus retain every dynamically attached panel stylesheet', async () => {
@@ -142,7 +142,7 @@ test('standalone menu projection preserves selected profile data and fallback wi
     /explicit profile lookup/,
   );
 });
-test('DroneAid aggregate originals are selected alone while campaigns keep their existing artwork', async () => {
+test('DroneAid aggregate uses only its lossless derivative while retaining original source files', async () => {
   const catalog = JSON.parse(
     await fs.readFile(new URL('../editions/catalog.json', import.meta.url)),
   );
@@ -151,6 +151,7 @@ test('DroneAid aggregate originals are selected alone while campaigns keep their
     'game/ui/art/menu-scenes/provenance.json',
     'game/ui/art/menu-scenes/analog-noise-atlas.png',
     'game/ui/art/menu-scenes/droneaid-nl-community.webp',
+    'game/ui/art/menu-scenes/droneaid-main-background.png',
     ...Object.values(MENU_SCENES).flatMap((scene) =>
       [scene.landscape, scene.portrait, scene.wordmark]
         .filter(Boolean)
@@ -163,6 +164,7 @@ test('DroneAid aggregate originals are selected alone while campaigns keep their
     for (const file of droneAidLandingFiles)
       assert.equal(selected.has(file), aggregate, `${id}: ${file}`);
     assert.equal(selected.has('game/ui/art/menu-scenes/droneaid-nl-community.webp'), false);
+    assert.equal(selected.has('game/ui/art/menu-scenes/droneaid-main-background.png'), false);
     assert.ok(selected.has('game/ui/art/menu-scenes/analog-noise-atlas.png'));
     assert.ok(selected.has('game/ui/art/menu-scenes/provenance.json'));
     assert.ok(selected.has('game/ui/menu-scenes.mjs'));
@@ -176,7 +178,11 @@ test('DroneAid aggregate originals are selected alone while campaigns keep their
     'authoring/library/droneaid-brand-kit-2026-09-29/background-original.png',
     'authoring/library/droneaid-brand-kit-2026-09-29/wordmark-dark.svg',
   ];
-  for (const [index, file] of droneAidLandingFiles.entries()) {
+  const retainedOriginals = [
+    'game/ui/art/menu-scenes/droneaid-main-background.png',
+    droneAidLandingFiles[1],
+  ];
+  for (const [index, file] of retainedOriginals.entries()) {
     const runtime = await fs.readFile(new URL(`../../${file}`, import.meta.url));
     assert.deepEqual(
       runtime,
