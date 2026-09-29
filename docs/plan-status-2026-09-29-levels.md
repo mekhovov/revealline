@@ -48,6 +48,10 @@ the older queue snapshots below; their source and test receipts remain history.
   leave it intact rather than upload, rename or delete it. The latest owner
   continuations are not blanket-adopted by #796. Keep the existing PR and
   v0.150.0 target for integration; this push does not certify a release.
+  A concurrent preservation-only commit subsequently advanced #761 to
+  `752df72d66c1a1bbbebb95e9db72fe8de0e1f332` by adding that screenshot. The
+  batch23 runtime/test bytes are unchanged; do not attribute this separate
+  preservation action to the actor owner or call it new gameplay qualification.
 - **Native menu/Company continuation #782:** `82f9e6ff20941e0b2837438e73eecdd79fad61d6`
   remains pushed and targeted, with current qualification/harness additions not
   present in the sampled aggregate. Reconcile these in the existing owner lane.
@@ -64,6 +68,8 @@ the older queue snapshots below; their source and test receipts remain history.
   at the exact `6d19567c` head, targeted to the existing v0.150.0 milestone.
   Source integration and qualification remain separate from this completed
   push/PR assignment; do not create three duplicate PRs.
+  The current owner continuation is now pushed at
+  `4ce585fb666f5338f0d69aebe5df3d64d66a9546` in the same #797 target.
 - **Steam Deck Confirm continuation:** source is now pushed in held draft
   [PR #800](https://github.com/mekhovov/revealline/pull/800), exact head
   `bf3b6b1b76870ad9a6ba1d6629365f3c011912f8`, also a v0.150.0 aggregate input.
@@ -105,6 +111,35 @@ the older queue snapshots below; their source and test receipts remain history.
   `production63.md` are obsolete intermediates with older assertions/evidence,
   already classified in #780's worktree review. Do not overwrite their corrected
   successors or create another product/preservation PR.
+
+### Final intake reconciliation and remaining audit limits
+
+- [PR #802](https://github.com/mekhovov/revealline/pull/802),
+  `07c2fd35cee208b0b6398c2f4542fc0a19637714`, now preserves 55 historical
+  Studio/Team/progression/storage source files and their manifests/patches.
+  It is a held documentation/evidence input to v0.150.0, not live runtime
+  adoption. The owning coordinator retains the proposals' explicit current-base
+  port, superseded-design or optional-test dispositions.
+- A concurrent audit created [PR #801](https://github.com/mekhovov/revealline/pull/801)
+  from this lane's already-pushed branch. Fresh tree inspection proves its only
+  new commit, `f7bbfd47c5de7b5a9497e643a4b2deadacc0e092`, adds an intermediate
+  copy of this plan atop `b3b3b06de`. The route source is already adopted, and
+  the corrected plan is already in #780. **#801 is closed as a duplicate** with
+  an exact preservation/adoption receipt; its branch and snapshot were not
+  deleted. This avoids applying the same gameplay source twice.
+- The broader recovery archive is **not yet cleared**: its owner withdrew the
+  newly created remote recovery ref while checking historical private-media
+  provenance, and stopped the remaining stash upload. Local history remains
+  intact. Do not use or mirror the withdrawn archive ancestry, call restricted
+  local material a missing release feature, or equate this with the separate
+  curated #802 source-only packet. The central coordinator must finish the
+  filtered-history/stash audit before a repository-wide zero-unpublished claim.
+- All current Levels source and the newest plan text have remote receipts.
+  Retained local dirt includes old preimages, damaged checkouts, local evidence
+  and newer owner activity. A clean root or an assigned milestone cannot prove
+  every historical blob safe for publication. The user-requested global closure
+  remains bounded by the explicit recovery/provenance audit above, rather than
+  silently sweeping those bytes into a game release.
 
 ### Release blockers and honest delivery boundary
 
