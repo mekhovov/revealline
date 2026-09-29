@@ -2073,3 +2073,63 @@ test('Motion four direction buttons accept real guarded controller activation an
     assert.equal(h.frames.size, 1, 'Releasing a held modifier does not change Play intent');
   }
 });
+
+for (const input of ['native', 'controller'])
+  test(`Motion ${input} Clear returns its foreground focus before disabling itself`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    const controls = motionNavigation(t, h);
+    const image = await uploadBackground(h, 'static-default.png');
+    image.onload();
+    const clear = h.$('clear-background'),
+      source = h.$('background-file');
+    assert.equal(clear.disabled, false);
+    clear.focus();
+    const focus = [];
+    h.doc.addEventListener('focusin', (event) =>
+      focus.push({ target: event.target, clearDisabled: clear.disabled }),
+    );
+    if (input === 'controller') controls.confirm(clear);
+    else {
+      const enter = clear.emit('keydown', { code: 'Enter', key: 'Enter' });
+      assert.equal(enter.defaultPrevented, false, 'The native button retains activation');
+      clear.click(); // Modeled native button default; browser receipt is separate.
+    }
+    assert.equal(h.doc.activeElement, source);
+    assert.equal(clear.disabled, true);
+    assert.equal(
+      focus.some((event) => event.target === source && !event.clearDisabled),
+      true,
+      'Focus must leave before disabled-control fallback can select body or Sections',
+    );
+    controls.navigation.handle({});
+    assert.equal(h.doc.activeElement, source);
+    assert.ok(h.revoked.includes(image.src));
+  });
+
+for (const owner of ['another control', 'hidden document', 'unfocused document'])
+  test(`Motion Clear does not replace focus owned by ${owner}`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    const image = await uploadBackground(h, 'static-default.png');
+    image.onload();
+    const clear = h.$('clear-background'),
+      source = h.$('background-file'),
+      other = h.$('cruise-speed');
+    clear.focus();
+    if (owner === 'another control') other.focus();
+    if (owner === 'hidden document') h.doc.hidden = true;
+    if (owner === 'unfocused document') h.doc.focused = false;
+    clear.click();
+    assert.equal(clear.disabled, true);
+    assert.notEqual(h.doc.activeElement, source);
+    if (owner === 'another control') assert.equal(h.doc.activeElement, other);
+    h.doc.hidden = false;
+    h.doc.focused = true;
+    h.host.emit('focus');
+    assert.notEqual(
+      h.doc.activeElement,
+      source,
+      'Returning foreground must not replay a stale handoff',
+    );
+  });
