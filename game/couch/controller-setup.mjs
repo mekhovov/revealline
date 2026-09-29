@@ -12,6 +12,8 @@ const tr = (key, values = {}) => t(`interface:multiplayerControllers.${key}`, va
 export function mountControllerSetup({
   root,
   session,
+  solo = false,
+  storageKey,
   document: doc = globalThis.document,
   window: win = globalThis.window,
 }) {
@@ -22,7 +24,7 @@ export function mountControllerSetup({
   } catch {
     /* Session-only profiles remain usable. */
   }
-  const store = createProfileStore(storage);
+  const store = createProfileStore(storage, storageKey);
   let storedRevision = -1,
     storedProfiles = [];
   let draft = null,
@@ -66,6 +68,7 @@ export function mountControllerSetup({
   }
   const assignment = node('div');
   assignment.className = 'race-fields';
+  assignment.hidden = solo;
   const join1 = button('join1', () => session.assign(Number(devices.value), 0), assignment);
   const join2 = button('join2', () => session.assign(Number(devices.value), 1), assignment);
   button('swap', () => session.swap(), assignment);
@@ -306,13 +309,13 @@ export function mountControllerSetup({
   const persistence = node('p', transfers);
   function labels() {
     deviceText.textContent = tr('device');
-    profileText.textContent = tr('saved');
+    profileText.textContent = tr(solo ? 'soloSaved' : 'saved');
     thresholdText.textContent = tr('pressThreshold');
     releaseText.textContent = tr('releaseThreshold');
-    heading.textContent = tr('title');
-    intro.textContent = tr('intro');
+    heading.textContent = tr(solo ? 'soloTitle' : 'title');
+    intro.textContent = tr(solo ? 'soloIntro' : 'intro');
     devices.setAttribute('aria-label', tr('device'));
-    profiles.setAttribute('aria-label', tr('saved'));
+    profiles.setAttribute('aria-label', tr(solo ? 'soloSaved' : 'saved'));
     legend.textContent = tr('setup');
     name.setAttribute('aria-label', tr('profileName'));
     pressThreshold.setAttribute('aria-label', tr('pressThreshold'));
@@ -333,7 +336,7 @@ export function mountControllerSetup({
     for (const o of type.options || []) o.textContent = tr(o.value);
   }
   function refresh() {
-    if (root.closest('[hidden], [inert]')) {
+    if (root.closest('[hidden], [inert], dialog:not([open])')) {
       if (draft) {
         cancel();
         message = tr('interrupted');
@@ -374,7 +377,7 @@ export function mountControllerSetup({
     if (
       draft &&
       (!state.editable ||
-        root.closest('[hidden], [inert]') ||
+        root.closest('[hidden], [inert], dialog:not([open])') ||
         list.find((d) => d.index === Number(devices.value))?.generation !== selectedGeneration)
     ) {
       cancel();
@@ -396,17 +399,21 @@ export function mountControllerSetup({
     const text =
       state.available === 'unavailable'
         ? tr('unavailable')
-        : state.seats
-            .map(
-              (index, i) =>
-                `${tr('player', { number: i + 1 })}: ${index === null ? tr('notJoined') : list.find((d) => d.index === index)?.device.id || tr('device')}`,
-            )
-            .join(' · ');
+        : solo
+          ? list
+              .map((d) => `${d.device.id}: ${tr(d.profile ? 'soloApplied' : 'soloUnmapped')}`)
+              .join(' · ')
+          : state.seats
+              .map(
+                (index, i) =>
+                  `${tr('player', { number: i + 1 })}: ${index === null ? tr('notJoined') : list.find((d) => d.index === index)?.device.id || tr('device')}`,
+              )
+              .join(' · ');
     const content = `${text}${message ? ` · ${message}` : ''}`;
     if (status.textContent !== content) status.textContent = content;
     const persistenceText = store.error()
       ? `${tr('sessionOnly')} ${store.error()}`
-      : tr('separateProfiles');
+      : tr(solo ? 'soloSeparateProfiles' : 'separateProfiles');
     if (persistence.textContent !== persistenceText) persistence.textContent = persistenceText;
     if (draft) {
       const pad = session.raw(Number(devices.value));

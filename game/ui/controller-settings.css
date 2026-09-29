@@ -114,3 +114,32 @@
     grid-template-columns: 1fr;
   }
 }
+
+.multiplayer-controllers {
+  border-top: 1px solid currentColor;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+.multiplayer-controllers select,
+.multiplayer-controllers input:not([type='checkbox']),
+.multiplayer-controllers textarea {
+  max-width: 100%;
+  min-height: 44px;
+}
+.multiplayer-controllers select,
+.multiplayer-controllers textarea,
+.multiplayer-controllers output {
+  display: block;
+  width: 100%;
+  overflow-wrap: anywhere;
+}
+.multiplayer-controllers button {
+  min-height: 44px;
+  margin: 0.25rem;
+}
+.multiplayer-controllers fieldset {
+  min-width: 0;
+}
+.multiplayer-controllers [hidden] {
+  display: none;
+}

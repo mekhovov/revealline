@@ -26,6 +26,14 @@ EdgeTX Classic exposes eight axes and 24 buttons. Choose USB Joystick on the rad
 
 Multiplayer direction mapping is separate from simulator calibration. It does not change `RadioProfile.v1`, `FlightResponseProfile.v1`, full-travel throttle, stick Mode 1–4, arming, disarming or airborne pickup. Multiplayer can use a radio alongside a standard pad, or two independently configured radios. This does not add multiplayer to the optional FPV simulator.
 
+## Regular Solo radio support
+
+Regular Solo now exposes **Settings → Controls → Radios and custom joysticks — Solo** for raw devices such as the RadioMaster TX15. Standard gamepads retain their existing bindings, aliases and Solo Boost Hold/Toggle behavior. Capture and verify the radio channels, save/apply the profile, then release mapped controls before flying. Unmapped throttle and switches do not prevent neutral detection. Unmapped gameplay actions retain keyboard support and partially mapped radios retain Auto touch controls on touch-capable devices. Hangar and Stop remain available through the existing keyboard/touch controls; the radio recipe covers movement, Ability, Supply, Boost and Pause.
+
+Solo uses `revealline.solo-radio-profiles.v1`, a separate store of the same bounded channel-recipe schema. Profiles do not automatically apply after reload/reconnection: select the saved recipe, verify, and apply it again. Entering capture suppresses radio navigation; focus loss, closing settings or changing context cancels unfinished capture. The router retains its normal release, disconnect and Boost reset behavior.
+
+This is separate from the optional civilian FPV simulator's four-axis calibration, full-range throttle and arming flow. Test that source from its own checkout; it is not included in this branch's distribution.
+
 ## Profiles and recovery
 
 `CouchControllerProfiles.v1` uses its own `revealline.couch-controller-profiles.v1` storage key. Export/import is bounded JSON text (16 profiles, 256 KiB collection limit); imports do not silently apply mappings or claim seats. Undo restores the previous saved-profile collection, not a live mapping already applied to a device. Re-edit/apply that mapping explicitly.
@@ -68,8 +76,14 @@ USB/Bluetooth/dongle support means the host exposes the device as a Gamepad. Uns
 - Existing optional FPV radio suite at the pinned PR #758 source: **10 passed**; combined compatibility script passed.
 - All iOS and desktop platform tests: **40 passed**. The iOS JavaScript bridge also builds successfully with Node 22.22.2. These are source/build checks, not native device runs. Full Xcode and its simulator are unavailable on this laptop.
 - Scoped ESLint, formatting and `git diff --check` passed. Localization check passed for English/Ukrainian (10,922 messages, 8,556 references).
-- Local browser: inspected Settings → Controls, reachable scrolling, labels, disabled empty-device actions and English/Ukrainian switching. Two identical Sony DualSense controllers connected over USB were detected and deliberately joined separate seats. Both player HUDs reported Controller. Independent movement/actions, pause and reconnect still require the ongoing user-assisted retry; detection and joining alone do not qualify them.
+- Local browser: inspected Settings → Controls, reachable scrolling, labels, disabled empty-device actions and English/Ukrainian switching. Two identical Sony DualSense controllers connected over USB were detected and deliberately joined separate seats. Both player HUDs reported Controller. The user subsequently confirmed that both PS5 controllers work. Disconnect/rejoin, other transports and device types remain separate qualification checks.
 - Full release build **passed** after restoring omitted sparse-checkout inputs: version `0.142.4`, 1,775 files, source revision `f1dc76c3119a608a9c8dbdcdd3bb688cc0dc8fb6`. Archive SHA-256: `f13feff05be22d38912fd2b6d34cb851f1a8abe2eb0dce2f22394e0c190bd7b0`. Archive digest and all three packaged controller modules were verified. The generated ZIP was removed afterward to recover disk space; the loose playable distribution remains.
 - Desktop native staging **passed**, including complete inventory/hash verification: 1,775 files, 741,852,156 bytes; source/staged manifest SHA-256 `54e731be96ea4f54fa84e3052ea2c2139e7fe8c48f67a1a7d6ade987c9214b45`. The temporary stage was removed afterward for space. This does not qualify an Electron installer or native runtime.
 - iOS native staging is **blocked** by existing `game/assets/field-kit/sprites/review.html`: the native HTML policy requires one explicit head. The bridge builds, but no complete iOS bundle/device qualification is claimed.
 - `scripts/two-controller-browser-fixture.mjs` serves a local distribution unchanged unless a couch URL explicitly includes `fixture=two-pads`. HTTP checks verified that opt-in isolation; its simulated controls are a manual acceptance aid, not physical-device evidence.
+
+### Solo / TX15 follow-up
+
+- Raw-radio adapter and mapping UI added for regular Solo. The controller regression cohort passed **712 tests**; **22** existing Solo shared-settings/touch/controller host tests passed. A new real Solo host test passed through raw-axis capture, separate persistence, actual craft movement and pause on disconnect. Four focused adapter tests cover hysteresis, remapped standard bindings, Confirm probes, release/reconnect and storage isolation.
+- Scoped lint, formatting, localization (10,928 messages / 8,573 references) and the optional FPV compatibility script passed. The full distribution recorded above predates this Solo extension; the extension is being tested from source.
+- Physical TX15 USB detection confirmed in both regular Solo setup and the optional FPV setup: eight axes and 24 buttons. FPV raw readings visibly update. The user reported a mapping/movement problem; exact failure details and completed calibration remain pending. Neither Solo nor FPV flight is hardware-qualified yet.

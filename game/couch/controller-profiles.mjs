@@ -244,7 +244,7 @@ export function validateCollection(value) {
   required(new Set(profiles.map((p) => p.id)).size === profiles.length, 'Duplicate profile IDs');
   return { format: PROFILE_FORMAT, profiles };
 }
-export function createProfileStore(storage) {
+export function createProfileStore(storage, key = PROFILE_KEY) {
   let raw = null,
     data = { format: PROFILE_FORMAT, profiles: [] },
     problem = '',
@@ -252,7 +252,7 @@ export function createProfileStore(storage) {
     revision = 0,
     unreadable = false;
   try {
-    raw = storage?.getItem(PROFILE_KEY) ?? null;
+    raw = storage?.getItem(key) ?? null;
     if (raw !== null) data = validateCollection(JSON.parse(raw));
   } catch (e) {
     problem = e.message;
@@ -267,11 +267,10 @@ export function createProfileStore(storage) {
         throw new Error(
           'Stored profiles are invalid or from a newer version. Original data is preserved; use this profile for this session or export it.',
         );
-      if ((storage.getItem(PROFILE_KEY) ?? null) !== raw)
+      if ((storage.getItem(key) ?? null) !== raw)
         throw new Error('Profiles changed in another tab. Export this draft and reload.');
-      storage.setItem(PROFILE_KEY, bytes);
-      if (storage.getItem(PROFILE_KEY) !== bytes)
-        throw new Error('Profile save could not be verified');
+      storage.setItem(key, bytes);
+      if (storage.getItem(key) !== bytes) throw new Error('Profile save could not be verified');
       raw = bytes;
       problem = '';
     } catch (e) {
