@@ -1,9 +1,10 @@
-import { radioControlLabel, captureRadioSwitch } from './radio-controls.mjs';
+import { radioControlLabel, captureRadioControlSwitch } from './radio-controls.mjs';
 import { canonicalJSON } from '../../game/data-json.mjs';
 import {
   DEFAULT_RESPONSE,
   FLIGHT_CONTROLS,
   RADIO_FORMAT,
+  AXIS_RADIO_FORMAT,
   STICK_LAYOUTS,
   createFlightProfileStore,
   normalizeRadioInput,
@@ -59,14 +60,19 @@ const COPY = {
       'Mapping/calibration incomplete. Record travel and centres, then verify all controls.',
     ambiguous: 'Move only one control through at least one quarter of its travel, then try again.',
     switches: 'Radio switches and buttons (optional)',
+    switchType: 'Switch input type',
+    buttonChannel: 'Button channel',
+    axisChannel: 'Axis channel',
+    offPosition: 'OFF position',
+    onPosition: 'ON position',
     captureSwitch: 'Identify switch / button',
     useSwitch: 'Use active switch / button',
     switchStart:
       'First leave the chosen switch OFF (or release the button). Click Identify, then move only that switch ON and leave it there (or hold the button). Click Use active switch / button. For arming, use a maintained switch; for reset, use a momentary button if available.',
     switchMove:
-      'Move only the chosen switch to its active position and leave it there, then click Use active switch / button. No button change? Assign the switch to an EdgeTX USB joystick button channel.',
+      'Move only the chosen switch to its active position and leave it there, then click Use active switch / button. Both button channels and separate switch axes are supported.',
     switchAmbiguous:
-      'No single button channel changed. Reset the switch, click Identify again, then operate only that switch. It must be exposed as a USB joystick button channel.',
+      'No single switch channel changed. Return it to OFF, click Identify again, then operate only that switch. Flight stick axes cannot also be used as switches.',
     switchCaptured:
       'Switch captured. Return it to OFF/released. Verify and save the profile to apply.',
     threshold: 'Activation threshold',
@@ -129,12 +135,17 @@ const COPY = {
       'Призначення або калібрування не завершено. Запишіть повний хід і центри, потім перевірте керування.',
     ambiguous: 'Рухайте лише один орган керування щонайменше на чверть ходу та спробуйте ще раз.',
     switches: 'Перемикачі та кнопки пульта (необов’язково)',
+    switchType: 'Тип каналу перемикача',
+    buttonChannel: 'Канал кнопки',
+    axisChannel: 'Канал осі',
+    offPosition: 'Вимкнене положення',
+    onPosition: 'Увімкнене положення',
     captureSwitch: 'Визначити перемикач / кнопку',
     useSwitch: 'Використати активний перемикач / кнопку',
     switchStart:
       'Залиште перемикач вимкненим або відпустіть кнопку. Натисніть Визначити, увімкніть лише цей перемикач або утримуйте кнопку та підтвердьте активне положення. Для моторів використовуйте перемикач із фіксацією, для скидання — кнопку без фіксації.',
     switchMove:
-      'Увімкніть лише вибраний перемикач або утримуйте кнопку й підтвердьте активне положення. Якщо канал не змінюється, призначте перемикач каналу кнопки USB-джойстика EdgeTX.',
+      'Увімкніть лише вибраний перемикач або утримуйте кнопку й підтвердьте активне положення. Підтримуються канали кнопок та окремі осі перемикачів.',
     switchAmbiguous:
       'Не вдалося визначити один канал кнопки. Поверніть перемикач у вимкнене положення, почніть визначення знову та рухайте лише його.',
     switchCaptured:
@@ -336,7 +347,25 @@ export function mountRadioSetup({
     const field = el('fieldset');
     field.setAttribute('data-radio-switch', action);
     el('legend', copy[action === 'reset' ? 'resetAction' : action], field);
-    const node = label(copy.buttons, 'number', '', field);
+    const typeLabel = el('label', copy.switchType, field);
+    const source = el('select', undefined, typeLabel);
+    for (const [value, text] of [
+      ['button', copy.buttonChannel],
+      ['axis', copy.axisChannel],
+    ]) {
+      const option = el('option', text, source);
+      option.value = value;
+    }
+    source.value = 'button';
+    const node = label(copy.axis + ' / ' + copy.buttons, 'number', '', field);
+    const off = label(copy.offPosition, 'number', '-1', field);
+    const on = label(copy.onPosition, 'number', '1', field);
+    for (const input of [off, on]) {
+      input.min = '-1';
+      input.max = '1';
+      input.step = '0.001';
+    }
+
     node.min = '0';
     node.max = '255';
     node.step = '1';
@@ -354,11 +383,15 @@ export function mountRadioSetup({
           return;
         }
         const identity = canonicalJSON(radioDeviceIdentity(pad));
-        const values = pad.buttons.map((b) => b.value ?? b);
+        const values = { buttons: pad.buttons.map((b) => b.value ?? b), axes: [...pad.axes] };
         if (switchCapture?.action === action) {
           const binding =
             switchCapture.identity === identity
-              ? captureRadioSwitch(switchCapture.values, values)
+              ? captureRadioControlSwitch(
+                  switchCapture.values,
+                  values,
+                  Object.values(rows).map((row) => Number(row.axis.value)),
+                )
               : null;
           switchCapture = null;
           identify.textContent = copy.captureSwitch;
@@ -366,9 +399,16 @@ export function mountRadioSetup({
             status.textContent = copy.switchAmbiguous;
             return;
           }
-          node.value = String(binding.button);
-          threshold.value = String(binding.threshold);
-          invert.checked = binding.invert;
+          source.value = Object.hasOwn(binding, 'axis') ? 'axis' : 'button';
+          node.value = String(binding.axis ?? binding.button);
+          if (source.value === 'axis') {
+            off.value = String(binding.off);
+            on.value = String(binding.on);
+          } else {
+            threshold.value = String(binding.threshold);
+            invert.checked = binding.invert;
+          }
+          updateSwitchFields();
           invalidate();
           status.textContent = copy.switchCaptured;
         } else {
@@ -382,7 +422,27 @@ export function mountRadioSetup({
       },
       field,
     );
-    switchRows[action] = { button: node, threshold, invert, identify };
+    function updateSwitchFields() {
+      const axis = source.value === 'axis';
+      off.parentNode.hidden = on.parentNode.hidden = !axis;
+      threshold.parentNode.hidden = invert.parentNode.hidden = axis;
+      node.max = axis ? '63' : '255';
+    }
+    listen(source, 'change', () => {
+      updateSwitchFields();
+      invalidate();
+    });
+    updateSwitchFields();
+    switchRows[action] = {
+      button: node,
+      threshold,
+      invert,
+      identify,
+      source,
+      off,
+      on,
+      updateSwitchFields,
+    };
   }
   const sticks = el('div');
   sticks.className = 'radio-sticks';
@@ -397,7 +457,11 @@ export function mountRadioSetup({
     if (!pad) throw new Error(copy.pick);
     const numeric = (node) => (node.value.trim() === '' ? NaN : Number(node.value));
     return validateRadioProfile({
-      format: RADIO_FORMAT,
+      format: Object.values(switchRows).some(
+        (row) => row.button.value !== '' && row.source.value === 'axis',
+      )
+        ? AXIS_RADIO_FORMAT
+        : RADIO_FORMAT,
       id: 'usb-radio-v1',
       name: pad.id.slice(0, 120) || 'USB radio',
       device: radioDeviceIdentity(pad),
@@ -426,11 +490,13 @@ export function mountRadioSetup({
           key,
           row.button.value === ''
             ? null
-            : {
-                button: Number(row.button.value),
-                threshold: numeric(row.threshold),
-                invert: row.invert.checked,
-              },
+            : row.source.value === 'axis'
+              ? { axis: Number(row.button.value), off: numeric(row.off), on: numeric(row.on) }
+              : {
+                  button: Number(row.button.value),
+                  threshold: numeric(row.threshold),
+                  invert: row.invert.checked,
+                },
         ]),
       ),
     });
@@ -449,7 +515,14 @@ export function mountRadioSetup({
       row.invert.checked = channel.invert;
     }
     for (const [key, row] of Object.entries(switchRows)) {
-      row.button.value = p.switches[key] ? String(p.switches[key].button) : '';
+      row.source.value =
+        p.switches[key] && Object.hasOwn(p.switches[key], 'axis') ? 'axis' : 'button';
+      row.button.value = p.switches[key]
+        ? String(p.switches[key].axis ?? p.switches[key].button)
+        : '';
+      row.off.value = String(p.switches[key]?.off ?? -1);
+      row.on.value = String(p.switches[key]?.on ?? 1);
+      row.updateSwitchFields();
       row.threshold.value = String(p.switches[key]?.threshold ?? 0.5);
       row.invert.checked = p.switches[key]?.invert ?? false;
     }

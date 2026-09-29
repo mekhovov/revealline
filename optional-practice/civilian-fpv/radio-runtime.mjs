@@ -160,7 +160,10 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
       let next;
       try {
         next = Object.fromEntries(
-          ['arm', 'pause', 'reset'].map((key) => [key, radioSwitch(profile, pad, key)]),
+          ['arm', 'pause', 'reset'].map((key) => [
+            key,
+            radioSwitch(profile, pad, key, previous[key]),
+          ]),
         );
       } catch {
         freeze('invalid-sample');

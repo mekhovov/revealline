@@ -32,3 +32,27 @@ export function captureRadioSwitch(before, after) {
   }
   return changed.length === 1 ? changed[0] : null;
 }
+
+export function captureRadioControlSwitch(before, after, flightAxes = []) {
+  const button = captureRadioSwitch(before.buttons, after.buttons);
+  if (
+    !Array.isArray(before.axes) ||
+    !Array.isArray(after.axes) ||
+    before.axes.length !== after.axes.length ||
+    after.axes.length > 64
+  )
+    return null;
+  const changed = [];
+  for (let axis = 0; axis < after.axes.length; axis++) {
+    const off = before.axes[axis],
+      on = after.axes[axis];
+    if (![off, on].every((v) => Number.isFinite(v) && v >= -1 && v <= 1)) return null;
+    if (Math.abs(on - off) >= 0.5) changed.push({ axis, off, on });
+  }
+  // Never silently choose a button over an axis when multiple controls moved.
+  const buttonChanges = before.buttons.filter(
+    (value, i) => Math.abs(after.buttons[i] - value) >= 0.4,
+  ).length;
+  if (buttonChanges) return buttonChanges === 1 && !changed.length ? button : null;
+  return changed.length === 1 && !flightAxes.includes(changed[0].axis) ? changed[0] : null;
+}
