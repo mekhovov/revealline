@@ -735,7 +735,6 @@ test('unavailable object URL support leaves Copy usable and exposes no invalid d
   assert.equal(h.writes[0], h.$('prompt-example-text').textContent);
   assert.equal(h.$('copy-status').dataset.state, 'ready');
 });
-
 function copyClock(t) {
   const originalTimeout = globalThis.setTimeout,
     originalClear = globalThis.clearTimeout,
