@@ -1,9 +1,0 @@
-{
-  "head": "e7ca914908456d9ecdf78549fd8a3c6701edaa2e",
-  "tree": "ac385591eac03b1cd1ab6648de35843c266fb900",
-  "parents": [
-    "2c5a3033604d0c89cd69f643eeaed7a214ff0d08",
-    "efa5fe91efd28f9a28955c8a03fbb2de560b65b5"
-  ],
-  "scope": "28 already-reviewed controller files; no runtime/version changes; public693 gate still pending"
-}

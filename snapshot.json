@@ -1,0 +1,195 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:08:25.023151+00:00",
+  "worktree": "<home>/.codex/worktrees/actor-loader-regression/go_test",
+  "branch": "refs/heads/codex/actor-rotor-motion",
+  "head": "049bd1f7da058209119230aa4f60e5be0ce6884c",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/library/community-art-cohort-v1/README.md",
+      "object": "a164a654af206162724aa956dface971110a339a",
+      "sha256": "6fc2296da617557571d85bcab48427d493aabce517e3e54c3c9acd39826e25a2",
+      "bytes": 5174,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/community-art-cohort-v2/README.md",
+      "object": "6175cc11e7a98b12b22c2c886bd3fc124358a8f0",
+      "sha256": "eaafa5bb1d02a92fb256f6ccef6d654730a1e99fef19878281db42c7417fa0e4",
+      "bytes": 3607,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/prompts/field-kit-production.md",
+      "object": "5e7c0cdc4077a8cfcd8f265dfc824f2c735d64f9",
+      "sha256": "bf557c236510c41cb101279fa146c46aa3c41edc376e5896bb023370da8c6b57",
+      "bytes": 11557,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-animation-director/SKILL.md",
+      "object": "3e003cecc824ab48ce3406bc97bdbe46df3ce6ae",
+      "sha256": "05cf35d86d6f6d54e8eb52b39fb031a4f05bd7259e0fb97bcc0dbb03a2904dba",
+      "bytes": 31601,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/character-game-feel-plan.md",
+      "object": "5285cddb641ed6e1aa94a06409fff237b9b7f45d",
+      "sha256": "c522928e1f30606ce039029df1f8a2a62260ea9d962fabfaccf2949afc32d72a",
+      "bytes": 41520,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/plan-status-2026-09-29.md",
+      "object": "04f854fa83c3d49c4ae07be3ab1f46873f56cedd",
+      "sha256": "f7e412e9376990a1c5966accf1f89664c7bb62a8517047f201bf35319705a55d",
+      "bytes": 30343,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/pressure-combination-practice.test.mjs",
+      "object": "49006142a2010c6ab2b7e31e4164c11b24b2943a",
+      "sha256": "fff89f1d13c035ae868bfac3f989115cc6287433daf21378e8f5fb0cad4c0a8f",
+      "bytes": 16921,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/actor-presentation.mjs",
+      "object": "8d360d47b231c1dd1f1815a0c5f48350a1911e02",
+      "sha256": "229129b543cc4d3f25069feab820a32d41e4f522025076e43004387c9273c223",
+      "bytes": 35851,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/enemy-body-motion.mjs",
+      "object": "856d07012d7fba185abc5aba33ce2c7956a88b1c",
+      "sha256": "7d297c2e357468fbd372dba9645381b7bbd4a0b25cf11a00f4151059d6445bed",
+      "bytes": 2169,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/actor-batch-23/README.md",
+      "object": "67c114ad29e470d29697c10a3eed35630279e4b4",
+      "sha256": "ecc622d2c3c8396d9eacc6fea655b7df61e9f077966887ccdb3ef4f8c08a2dc6",
+      "bytes": 5751,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/actor-batch-23/cohort-r7-audit-source.txt",
+      "object": "64521092762f1fbf1ff16718c69a6dd23c35e29f",
+      "sha256": "218bfcff844a24611e45ed66b38ee65a4b54520c54481b0e59a00cd568ee7a15",
+      "bytes": 5877,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/actor-batch-23/cohort-r7-audit.json",
+      "object": "39ae843d4e0b679e7a3f0de6133de62353488873",
+      "sha256": "aff59c34e275fad331bffbd6b20ac42003a1cbd88a9d18f33ff5a13e86def7c9",
+      "bytes": 6269,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/actor-batch-23/surface-focused.tap",
+      "object": "39a7126f2e14a1f160dc73673bbab74b01e987b7",
+      "sha256": "75b8896dd2c9abb7c26c9f155ab2ab533302665444501db663c297c6ff3fce30",
+      "bytes": 20309,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/actor-batch-23/surface-parent-red.tap.gz",
+      "object": "19b728125063d1820c78f2de68b8902eeb76094e",
+      "sha256": "2ae183144f3b7d05a7aef7004ed1d48c57fb216e8d4fd3154f5788eb9647483a",
+      "bytes": 2790,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/rotor-motion/proportions-solo.png",
+      "object": "e5685ac811df0de107e622687597003a631232e9",
+      "sha256": "549958a7daaab220648cf5f8760a505f015634bcc039ad012f0e36d9a5a50512",
+      "bytes": 169715,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/enemy-surface-sampling.test.mjs",
+      "object": "a0742a9028af72b1fd109e8e75e8f20db4754046",
+      "sha256": "4e32e38a4524251d8909be78e4c6f5d736bd50a7884591595a1e24cf1a55d40b",
+      "bytes": 11904,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/library/community-art-cohort-v1/README.md",
+      "mode": "100644",
+      "object": "dbace8c109fc8984dc55beb28ee680bb66039461",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/community-art-cohort-v2/README.md",
+      "mode": "100644",
+      "object": "20d057de3b6217ba5746bc03d9ef13b19eb353a3",
+      "stage": 0
+    },
+    {
+      "path": "authoring/prompts/field-kit-production.md",
+      "mode": "100644",
+      "object": "00790f92391f57dacf0ddbc38dcb26d265f0bc96",
+      "stage": 0
+    },
+    {
+      "path": "authoring/skills/xonix-animation-director/SKILL.md",
+      "mode": "100644",
+      "object": "c4adc7107e6e888c6cbb1ef35149a1c4e4cc5da6",
+      "stage": 0
+    },
+    {
+      "path": "docs/character-game-feel-plan.md",
+      "mode": "100644",
+      "object": "538a271a862dc9ca9b3d037e01e21dc5a43a6cee",
+      "stage": 0
+    },
+    {
+      "path": "docs/plan-status-2026-09-29.md",
+      "mode": "100644",
+      "object": "733a86b95257e340caff3f7d9b2d070c6277a712",
+      "stage": 0
+    },
+    {
+      "path": "game/test/pressure-combination-practice.test.mjs",
+      "mode": "100644",
+      "object": "fdd2279b38c982ac33fb69caf4e68c2cc6439d46",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/actor-presentation.mjs",
+      "mode": "100644",
+      "object": "2413363bb1e51c7ca65a59dc531563aa5ad4d77a",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/enemy-body-motion.mjs",
+      "mode": "100644",
+      "object": "c413ae08a186fd447ca903c81547f871205fd227",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}

@@ -1,4 +1,0 @@
-{
-  "command": "node --test game/test/team-production-review.test.mjs scripts/test-field-kit-recipe-sources.mjs",
-  "exitCode": 1
-}

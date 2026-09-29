@@ -1,6 +1,0 @@
-
-> revealline@0.141.7 build
-> node scripts/game-cli.mjs build --out /private/tmp/revealline-actor-batch-10-build
-
-Game CLI error: Missing distribution references:
-authoring/motion-lab/app.js → ./parts-editor.mjs

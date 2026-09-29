@@ -1,1 +1,0 @@
-Catalog generator identity, all messages/placeholders, and exactly one new EN/UK key with all historical entries unchanged: PASS
