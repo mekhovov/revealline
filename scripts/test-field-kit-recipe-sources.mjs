@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   fieldKitRecipeSources,
+  verifyFieldKitAudioStyleSaveRetryReview,
   verifyFieldKitAudioStylePersistenceReview,
   verifyFieldKitAudioStyleMenuCorrectionReview,
   verifyFieldKitAudioStyleMenuReview,
@@ -458,4 +459,21 @@ test('Audio saved-style persistence review and its predecessor fail closed', asy
     assert.equal(verifyFieldKitAudioStylePersistenceReview(...changed), false);
   }
   assert.equal(verifyFieldKitAudioStylePersistenceReview(bytes[1], bytes[0]), false);
+});
+
+test('Audio style save-retry review and its predecessor fail closed', async () => {
+  const paths = [
+    'docs/verification/audio-style-save-retry-2026-09-29/review.json',
+    'docs/verification/audio-style-persistence-2026-09-29/review.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitAudioStyleSaveRetryReview(...bytes), true);
+  for (let index = 0; index < bytes.length; index++) {
+    const changed = [...bytes];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitAudioStyleSaveRetryReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitAudioStyleSaveRetryReview(bytes[1], bytes[0]), false);
 });
