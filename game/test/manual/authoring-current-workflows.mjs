@@ -6,6 +6,7 @@ import { validateEnemyCatalogDraft } from '../../enemy-catalog.mjs';
 import { creatorCurrent } from './creator-current-workflow.mjs';
 import { teamCreatorCurrent } from './team-creator-current-workflow.mjs';
 import { atlasCurrent } from './design-atlas-current-workflow.mjs';
+import { productionCurrent } from './production-current-workflow.mjs';
 
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
@@ -22,6 +23,7 @@ async function fingerprint(blob) {
 const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
+  productionCurrent,
   atlasCurrent,
   enemyCurrent: [
     'Current Enemy Workshop: edit, cancel, validate, save, preview return, export',
