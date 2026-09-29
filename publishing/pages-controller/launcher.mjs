@@ -3,6 +3,50 @@ import path from 'node:path';
 
 const FILE_LIMIT = 128 * 1024;
 const OPTIONAL_CLOSURE = [
+  ['ui/launcher-navigation.mjs', 'app.mjs', './ui/launcher-navigation.mjs'],
+  ['navigation.css', 'index.html', 'navigation.css'],
+  [
+    'ui/controller-confirm-guard.mjs',
+    'ui/launcher-navigation.mjs',
+    './controller-confirm-guard.mjs',
+  ],
+  [
+    'ui/controller-confirm-lifecycle.mjs',
+    'ui/launcher-navigation.mjs',
+    './controller-confirm-lifecycle.mjs',
+  ],
+  [
+    'ui/controller-navigation.mjs',
+    'ui/launcher-navigation.mjs',
+    './controller-navigation.mjs',
+  ],
+  ['ui/controller-router.mjs', 'ui/launcher-navigation.mjs', './controller-router.mjs'],
+  ['i18n/content.mjs', 'ui/controller-navigation.mjs', '../i18n/content.mjs'],
+  [
+    'ui/menu-navigation-groups.mjs',
+    'ui/controller-navigation.mjs',
+    './menu-navigation-groups.mjs',
+  ],
+  [
+    'ui/controller-field-editor.mjs',
+    'ui/controller-navigation.mjs',
+    './controller-field-editor.mjs',
+  ],
+  ['ui/settings-panels.mjs', 'ui/controller-navigation.mjs', './settings-panels.mjs'],
+  [
+    'ui/controller-field-editor.css',
+    'ui/controller-field-editor.mjs',
+    './controller-field-editor.css',
+  ],
+  [
+    'ui/controller-text-draft.mjs',
+    'ui/controller-field-editor.mjs',
+    './controller-text-draft.mjs',
+  ],
+  ['controller-bindings.mjs', 'ui/controller-router.mjs', '../controller-bindings.mjs'],
+  ['controller-boost.mjs', 'ui/controller-router.mjs', '../controller-boost.mjs'],
+  ['data-json.mjs', 'controller-bindings.mjs', './data-json.mjs'],
+  ['i18n/content-registry.mjs', 'i18n/content.mjs', './content-registry.mjs'],
   ['edition-context.mjs', 'installed-app.mjs', './edition-context.mjs'],
   ['profile-writer.mjs', 'installed-app.mjs', './profile-writer.mjs'],
   ['i18n/index.mjs', 'app.mjs', './i18n/index.mjs'],
