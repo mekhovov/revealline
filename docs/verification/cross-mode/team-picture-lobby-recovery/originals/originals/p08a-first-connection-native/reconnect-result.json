@@ -1,7 +1,0 @@
-{
-  "method": "Documented fresh-browser acquisition after explicit unavailable error and empty inventory",
-  "call": "cua.getBrowser({url:local First Connection URL})",
-  "result": "No browser is available",
-  "action": "No new tab/input/state mutation; preserved incomplete attempt receipt unchanged",
-  "acceptance": "Native win remains unverified"
-}
