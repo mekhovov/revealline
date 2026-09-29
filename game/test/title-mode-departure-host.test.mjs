@@ -141,10 +141,15 @@ for (const kind of ['versus', 'team']) {
         row.children.map((e) => e.dataset.gameMode),
         ['solo', 'versus', 'team'],
       );
-      assert.equal(row.children[0].tagName, 'SPAN');
+      assert.equal(row.children[0].tagName, 'BUTTON');
       assert.equal(row.children[0].getAttribute('aria-current'), 'page');
-      assert.equal(row.children[0].getAttribute('tabindex'), null);
-      row.children[0].click();
+      assert.equal(row.children[0].tabIndex, 0);
+      assert.equal(row.children[0].getAttribute('href'), null);
+      row.children[0].focus();
+      assert.equal(h.doc.activeElement, row.children[0]);
+      await press(h, 'Enter');
+      assert.equal(h.$('shell-home').open, true);
+      assert.equal(h.$('mode-leave-dialog').open, false);
       assert.deepEqual(checkpoint(h), before);
       const calls = hintGuard(previewStorage);
       assert.equal(h.$(`shell-title-${kind}`).getAttribute('href'), destinations[kind]);

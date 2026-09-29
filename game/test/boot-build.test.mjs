@@ -7,6 +7,7 @@ import { createHash } from 'node:crypto';
 import { buildProject, PUBLIC_SECURITY_HEADERS } from '../../scripts/game-cli.mjs';
 import { iosHTMLPolicy, IOS_CSP, stageNative, verifySite } from '../../scripts/native-cli.mjs';
 import { loadNativeSite } from '../../platforms/desktop/resources.mjs';
+import { LAUNCHER_NAVIGATION_FILES } from '../../scripts/offline-launcher.mjs';
 
 const sourceRoot = new URL('../', import.meta.url);
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -133,6 +134,8 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'game/offline.mjs',
     'game/offline/app.html',
     'game/offline/app-worker.template.js',
+    'game/offline/navigation.css',
+    ...LAUNCHER_NAVIGATION_FILES.map((name) => `game/${name}`),
     'game/downloads.css',
     'game/installed-app.mjs',
     'game/edition-context.mjs',
@@ -143,8 +146,14 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'game/vendor/i18next-26.4.2.min.js',
     'game/locales/en/common.json',
     'game/locales/en/interface.json',
+    'game/locales/en/controllerEditor.json',
+    'game/locales/en/gameplay.json',
+    'game/locales/en/errors.json',
     'game/locales/uk/common.json',
     'game/locales/uk/interface.json',
+    'game/locales/uk/controllerEditor.json',
+    'game/locales/uk/gameplay.json',
+    'game/locales/uk/errors.json',
     'game/platform.mjs',
     'game/offline/service-worker.template.js',
     'site/index.html',
