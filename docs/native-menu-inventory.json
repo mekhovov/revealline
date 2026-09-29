@@ -326,7 +326,9 @@
     "scenes": "docs/menu-scenes.md",
     "companySource": "docs/verification/company-menu-source-2026-09-29.md",
     "authoring": "docs/verification/authoring-navigation-2026-09-28.md",
-    "mainMenus": "docs/verification/native-menus-2026-09-28.md"
+    "mainMenus": "docs/verification/native-menus-2026-09-28.md",
+    "followup": "docs/native-menu-plan-status.md",
+    "fpvModes": "docs/verification/fpv-mode-scenes-2026-09-29.md"
   },
   "hosts": [
     {
@@ -625,5 +627,14 @@
       "route": "/editions/droneaid-nl-community/app/",
       "generator": "publishing/edition-promotion.mjs"
     }
-  ]
+  ],
+  "customPlayer": {
+    "route": "/game/creator/player.html?edition=<stable-id>",
+    "mode": "solo",
+    "supportedHandoffs": ["qualified installed Versus missions"],
+    "settings": ["Gameplay", "Display & Language", "Progress & Collection", "Help & Extras"],
+    "scene": "approved FPV Solo fallback",
+    "audio": "No audio owner in this runtime; no placeholder Sound or track actions",
+    "verification": "docs/verification/custom-menu-2026-09-29.md"
+  }
 }
