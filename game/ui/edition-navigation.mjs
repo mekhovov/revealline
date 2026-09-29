@@ -1,5 +1,6 @@
 import { localizedText } from '../i18n/index.mjs';
 import { gameDocumentURL } from '../community-routes.mjs';
+import { editionPublicSlug } from '../edition-context.mjs';
 
 const onlineRoot = 'https://mekhovov.github.io/revealline/';
 
@@ -54,7 +55,7 @@ export function mountEditionNavigation({ provider, document: doc, href }) {
       destination.hash = target.hash;
       link.href = destination.href;
     } else if (/^game\/(?:controller-lab|replay-theater)(?:\/|$)/.test(relative)) {
-      target.searchParams.set('edition', provider.editionId);
+      target.searchParams.set('edition', editionPublicSlug(provider.editionId));
       if (provider.retainedPresentationId)
         target.searchParams.set('presentation', provider.retainedPresentationId);
       else target.searchParams.delete('presentation');

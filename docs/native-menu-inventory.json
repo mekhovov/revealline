@@ -1,0 +1,647 @@
+{
+  "format": "revealline-native-menu-inventory.v1",
+  "palettes": ["Neon Arcade", "FPV Field Kit"],
+  "languages": ["en", "uk"],
+  "worlds": ["fpv", "ukraine", "retro", "coupa"],
+  "editions": [
+    {
+      "id": "coupa-all",
+      "title": "Coupa Village / LINE",
+      "brand": "coupa",
+      "modes": ["solo"],
+      "scene": "coupa-village",
+      "routes": ["/game/?edition=coupa-all", "/editions/coupa-all/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "catalogue, supported modes, scene and two launch routes checked",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
+      },
+      "publicSlug": "coupa-all"
+    },
+    {
+      "id": "coupa-adventure",
+      "title": "Spend in Motion / LINE",
+      "brand": "coupa",
+      "modes": ["solo"],
+      "scene": "coupa-spend-in-motion-theme",
+      "routes": ["/game/?edition=coupa-adventure", "/editions/coupa-adventure/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "catalogue, supported modes, scene and two launch routes checked",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
+      },
+      "publicSlug": "coupa-adventure"
+    },
+    {
+      "id": "coupa-culture",
+      "title": "Inside the Village / LINE",
+      "brand": "coupa",
+      "modes": ["solo"],
+      "scene": "coupa-inside-village-theme",
+      "routes": ["/game/?edition=coupa-culture", "/editions/coupa-culture/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "catalogue, supported modes, scene and two launch routes checked",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
+      },
+      "publicSlug": "coupa-culture"
+    },
+    {
+      "id": "coupa-foundations",
+      "title": "From Need to Value / LINE",
+      "brand": "coupa",
+      "modes": ["solo"],
+      "scene": "coupa-source-to-pay-theme",
+      "routes": ["/game/?edition=coupa-foundations", "/editions/coupa-foundations/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "catalogue, supported modes, scene and two launch routes checked",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
+      },
+      "publicSlug": "coupa-foundations"
+    },
+    {
+      "id": "coupa-operations",
+      "title": "A Day in Coupa / LINE",
+      "brand": "coupa",
+      "modes": ["solo"],
+      "scene": "coupa-product-operations-theme",
+      "routes": ["/game/?edition=coupa-operations", "/editions/coupa-operations/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "catalogue, supported modes, scene and two launch routes checked",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
+      },
+      "publicSlug": "coupa-operations"
+    },
+    {
+      "id": "coupa-developers",
+      "title": "Connect the Network / LINE",
+      "brand": "coupa",
+      "modes": ["solo"],
+      "scene": "coupa-developer-integration-theme",
+      "routes": ["/game/?edition=coupa-developers", "/editions/coupa-developers/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "catalogue, supported modes, scene and two launch routes checked",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
+      },
+      "publicSlug": "coupa-developers"
+    },
+    {
+      "id": "droneaid-community",
+      "title": "Community Relay / LINE",
+      "brand": "droneaid",
+      "modes": ["solo"],
+      "scene": "droneaid-community",
+      "routes": ["/game/?edition=droneaid-community", "/editions/droneaid-community/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "catalogue, supported modes, scene and two launch routes checked",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
+      },
+      "publicSlug": "droneaid-community"
+    },
+    {
+      "id": "droneaid-nl-community",
+      "title": "DroneAid / LINE",
+      "brand": "droneaid-nl",
+      "modes": ["solo"],
+      "scene": "droneaid-nl-community",
+      "routes": ["/game/?edition=droneaid", "/editions/droneaid/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "catalogue, supported modes, scene and two launch routes checked",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
+      },
+      "publicSlug": "droneaid",
+      "legacyRoutes": [
+        "/game/?edition=droneaid-nl-community",
+        "/editions/droneaid-nl-community/app/"
+      ]
+    },
+    {
+      "id": "droneaid-nl-workshop-lights",
+      "title": "Workshop Lights / LINE",
+      "brand": "droneaid-nl",
+      "modes": ["solo"],
+      "scene": "droneaid-nl-workshop-lights-theme",
+      "routes": [
+        "/game/?edition=droneaid-nl-workshop-lights",
+        "/editions/droneaid-nl-workshop-lights/app/"
+      ],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "catalogue, supported modes, scene and two launch routes checked",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
+      },
+      "publicSlug": "droneaid-nl-workshop-lights"
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion",
+      "title": "Parts in Motion / LINE",
+      "brand": "droneaid-nl",
+      "modes": ["solo"],
+      "scene": "droneaid-nl-parts-in-motion-theme",
+      "routes": [
+        "/game/?edition=droneaid-nl-parts-in-motion",
+        "/editions/droneaid-nl-parts-in-motion/app/"
+      ],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "catalogue, supported modes, scene and two launch routes checked",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
+      },
+      "publicSlug": "droneaid-nl-parts-in-motion"
+    },
+    {
+      "id": "droneaid-nl-makers-together",
+      "title": "Makers Together / LINE",
+      "brand": "droneaid-nl",
+      "modes": ["solo"],
+      "scene": "droneaid-nl-makers-together-theme",
+      "routes": [
+        "/game/?edition=droneaid-nl-makers-together",
+        "/editions/droneaid-nl-makers-together/app/"
+      ],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "catalogue, supported modes, scene and two launch routes checked",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
+      },
+      "publicSlug": "droneaid-nl-makers-together"
+    },
+    {
+      "id": "droneaid-nl-careful-handoff",
+      "title": "The Careful Handoff / LINE",
+      "brand": "droneaid-nl",
+      "modes": ["solo"],
+      "scene": "droneaid-nl-careful-handoff-theme",
+      "routes": [
+        "/game/?edition=droneaid-nl-careful-handoff",
+        "/editions/droneaid-nl-careful-handoff/app/"
+      ],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "catalogue, supported modes, scene and two launch routes checked",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
+      },
+      "publicSlug": "droneaid-nl-careful-handoff"
+    },
+    {
+      "id": "droneaid-nl-signals-of-support",
+      "title": "Signals of Support / LINE",
+      "brand": "droneaid-nl",
+      "modes": ["solo"],
+      "scene": "droneaid-nl-signals-of-support-theme",
+      "routes": [
+        "/game/?edition=droneaid-nl-signals-of-support",
+        "/editions/droneaid-nl-signals-of-support/app/"
+      ],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "catalogue, supported modes, scene and two launch routes checked",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
+      },
+      "publicSlug": "droneaid-nl-signals-of-support"
+    },
+    {
+      "id": "droneaid-nl-shared-horizon",
+      "title": "Shared Horizon / LINE",
+      "brand": "droneaid-nl",
+      "modes": ["solo"],
+      "scene": "droneaid-nl-shared-horizon-theme",
+      "routes": [
+        "/game/?edition=droneaid-nl-shared-horizon",
+        "/editions/droneaid-nl-shared-horizon/app/"
+      ],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "catalogue, supported modes, scene and two launch routes checked",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
+      },
+      "publicSlug": "droneaid-nl-shared-horizon"
+    }
+  ],
+  "evidence": {
+    "implementation": "docs/native-menus.md",
+    "scenes": "docs/menu-scenes.md",
+    "companySource": "docs/verification/company-menu-source-2026-09-29.md",
+    "authoring": "docs/verification/authoring-navigation-2026-09-28.md",
+    "mainMenus": "docs/verification/native-menus-2026-09-28.md",
+    "followup": "docs/native-menu-plan-status.md",
+    "fpvModes": "docs/verification/fpv-mode-scenes-2026-09-29.md",
+    "ukraineModes": "docs/verification/ukraine-mode-scenes-2026-09-29.md",
+    "editionLayouts": "docs/verification/edition-menu-matrix-2026-09-29.md",
+    "accessibility": "docs/verification/menu-accessibility-2026-09-29.md",
+    "currentAuthoring": "docs/verification/authoring-workflows-2026-09-29.md",
+    "editionPackages": "docs/verification/edition-packaging-2026-09-29.md"
+  },
+  "hosts": [
+    {
+      "mode": "solo",
+      "route": "/game/",
+      "entries": ["current Journey", "legacy catalogue", "supported custom-content handoffs"]
+    },
+    {
+      "mode": "versus",
+      "route": "/game/couch/",
+      "entries": ["current Journey", "legacy catalogue", "supported custom-content handoffs"]
+    },
+    {
+      "mode": "team",
+      "route": "/game/couch/relay-rescue.html",
+      "entries": ["current Journey", "legacy catalogue", "supported custom-content handoffs"]
+    }
+  ],
+  "supportRoutes": [
+    "/game/community/",
+    "/game/community/moderation.html",
+    "/game/replay-theater/",
+    "/game/controller-lab/",
+    "/game/downloads.html",
+    "/game/profile-recovery.html",
+    "/game/creator/player.html",
+    "/app/"
+  ],
+  "authoringRoutes": [
+    {
+      "name": "Asset Studio",
+      "route": "/authoring/asset-studio/",
+      "verification": "Current virtual-pad journey passed; native keyboard raster edit/cancel/invalid provenance/save/reload/export passed without pointer reset. Actual native133-asset revision101 download and130distinct decoded images validated; localized saved/draft preview labels passed EN/UK. Physical-pad/native-package checks remain pending. See asset-native-keyboard receipt.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+    },
+    {
+      "name": "Mission Playground",
+      "route": "/game/playground/",
+      "verification": "2026-09-29 current virtual-pad and native-keyboard edit/invalid JSON/reopen/preview/export passed; downloaded scenario validated. Final late-preview guard separately passed first-key prevention and explicit handoff with one browser AX pointer reset. Full final-guard keyboard-only and physical-pad journeys remain pending.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+    },
+    {
+      "name": "Enemy Workshop",
+      "route": "/authoring/enemy-catalog/",
+      "verification": "Current full virtual-pad edit/cancel/invalid JSON/save/reload/secure preview return/export passed; actual814B artifact production-validated. Native editing/save/export passed with813B validated artifact; preview required one IAB accessibility-focus pointer reset. Full fresh keyboard-only preview and physical-pad checks remain pending. See enemy-workshop-input receipt.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+    },
+    {
+      "name": "Motion Lab",
+      "route": "/authoring/motion-lab/",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+    },
+    {
+      "name": "Pictures & Stories",
+      "route": "/authoring/still-media/",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+    },
+    {
+      "name": "Video Poster",
+      "route": "/authoring/video-poster/",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+    },
+    {
+      "name": "Design Atlas",
+      "route": "/authoring/design-atlas/",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+    },
+    {
+      "name": "Content Studio",
+      "route": "/game/studio/",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+    },
+    {
+      "name": "Picture Campaign Creator",
+      "route": "/game/creator/",
+      "verification": "Current bundled single-picture virtual-pad workflow passed on 7f1a89377, including actual export validation and installed player return. Native keyboard editing/install/return/reopen and separate traced export passed; standalone IAB export repeat, batch/video and physical controller acceptance remain pending.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
+      "evidence": "docs/verification/picture-creator-input-2026-09-29.md"
+    },
+    {
+      "name": "Team Campaign Creator",
+      "route": "/game/creator/team.html",
+      "verification": "Current picture-only virtual-pad and native-keyboard workflows passed on dda49b3be, including cancellation, invalid input, separate review/approval, installation, exact installed reopening, byte-identical OS exports and mission search/Back without starting play. Native input required no pointer reset. Video, physical-device and published acceptance remain pending.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
+      "evidence": "docs/verification/team-creator-input-2026-09-29.md"
+    },
+    {
+      "name": "Company Studio",
+      "route": "/authoring/company-studio/",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+    },
+    {
+      "name": "Company transfer practice",
+      "route": "/authoring/company-studio/playtest.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+    },
+    {
+      "name": "Content Production",
+      "route": "/authoring/production/",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+    },
+    {
+      "name": "Viewport Lab",
+      "route": "/authoring/viewport-lab/",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+    },
+    {
+      "name": "Community moderation",
+      "route": "/game/community/moderation.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "shared navigation and fields mounted; no authenticated remote moderation action performed; physical controller not tested"
+    }
+  ],
+  "referenceRoutes": [
+    {
+      "name": "Creator Guide",
+      "route": "/authoring/community/index.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "FPV reveal source audit",
+      "route": "/authoring/design-atlas/reveal-audit.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "Countercurrent art",
+      "route": "/authoring/library/countercurrent-art/index.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "FPV enemy presentation",
+      "route": "/authoring/library/fpv-enemy-presentations/index.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "FPV role presentation",
+      "route": "/authoring/library/fpv-role-presentations/index.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "Reserve illustration catalog",
+      "route": "/authoring/library/reserve-illustrations-catalog/index.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "Ukraine role presentation",
+      "route": "/authoring/library/ukraine-role-presentations/index.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "Ukraine wide role variants",
+      "route": "/authoring/library/ukraine-role-wide-variants/index.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "Prepared reveal review",
+      "route": "/authoring/library/fpv-field-kit/prepared/reveals/review.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "Prepared title review",
+      "route": "/authoring/library/fpv-field-kit/prepared/titles/review.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "Runtime sprite comparison",
+      "route": "/authoring/library/runtime-sprite-candidates-v1/inspection/index.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "Original soundtrack audition",
+      "route": "/authoring/library/revealline-original-soundtrack/local-production/audition.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "Journey actor review",
+      "route": "/game/presentation/journey-actor-review.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "Combat review",
+      "route": "/game/presentation/combat-review.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "Field Kit sprite review",
+      "route": "/game/assets/field-kit/sprites/review.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    },
+    {
+      "name": "Field Kit icon review",
+      "route": "/game/assets/field-kit/icons/review.html",
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+    }
+  ],
+  "brandingRevision": "2026-09-29-fpv-line",
+  "verificationNote": "Existing browser/native package observations below predate the FPV / LINE rename. Rebranding evidence is recorded separately in docs/verification/fpv-line-brand-2026-09-29.md.",
+  "evidenceScope": {
+    "historical": "Browser and standalone-package observations below belong to the shared development snapshots recorded on 2026-09-28 and 2026-09-29, before main reconciliation. They do not qualify the current candidate.",
+    "currentCandidate": "Current source receipts separately record edition layouts, Asset/Playground/Enemy browser workflows, all four worlds mode-scene checks and all14 in-memory package compiles. Scope and exact revisions live in docs/native-menu-plan-status.md and linked verification reports. Final aggregate, installed-offline, physical-controller/native and published-build acceptance remain pending."
+  },
+  "deferredRoutes": [
+    {
+      "name": "Demo recording variants",
+      "route": "/authoring/demo-recording-variants.html",
+      "status": "pending dependency",
+      "reason": "The separate Demo recording tool is not included in this candidate. Integrate its owning input before adding the shared navigation adapter and qualifying this route."
+    }
+  ],
+  "generatedRoutes": [
+    {
+      "route": "/app/",
+      "source": "game/offline/app.html",
+      "generator": "scripts/offline-launcher.mjs"
+    },
+    {
+      "route": "/editions/coupa-all/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/coupa-adventure/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/coupa-culture/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/coupa-foundations/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/coupa-operations/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/coupa-developers/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-community/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-nl-workshop-lights/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-nl-parts-in-motion/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-nl-makers-together/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-nl-careful-handoff/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-nl-signals-of-support/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-nl-shared-horizon/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-nl-community/app/",
+      "generator": "publishing/edition-promotion.mjs"
+    }
+  ],
+  "customPlayer": {
+    "route": "/game/creator/player.html?edition=<stable-id>",
+    "mode": "solo",
+    "supportedHandoffs": ["qualified installed Versus missions"],
+    "settings": ["Gameplay", "Display & Language", "Progress & Collection", "Help & Extras"],
+    "scene": "approved FPV Solo fallback",
+    "audio": "No audio owner in this runtime; no placeholder Sound or track actions",
+    "verification": "docs/verification/custom-menu-2026-09-29.md"
+  }
+}

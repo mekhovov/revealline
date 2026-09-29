@@ -13,7 +13,7 @@ const repository = 'owner/game',
   canonical = scope + 'releases/v0.29.1/site/',
   hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
-async function fixture(t, { localized = false, communities = false } = {}) {
+async function fixture(t, { localized = false, communities = false, branded = false } = {}) {
   const source = await fs.mkdtemp(path.join(os.tmpdir(), 'pages-current-'));
   t.after(() => fs.rm(source, { recursive: true, force: true }));
   const assets = {
@@ -35,6 +35,7 @@ async function fixture(t, { localized = false, communities = false } = {}) {
       assets[`game/communities/${slug}/index.html`] =
         `<html data-community="${slug}"><script type="module" src="../entry.mjs"></script></html>`;
   }
+  if (branded) assets['icons/icon-192.png'] = 'frozen icon fixture';
   if (localized)
     for (const name of [
       'i18n/style.css',
@@ -154,7 +155,7 @@ test('all current HTML aliases preserve queries/fragments with auditable source 
     );
     assert.ok(page.includes(`<a href="${entry.relativeTarget}" data-i18n="common:actions.play">`));
     assert.ok(page.includes('>Play</a>'));
-    assert.ok(page.includes('Opening Reveal / Line…'));
+    assert.ok(page.includes('Opening FPV / LINE…'));
     assert.doesNotMatch(page, /<(?:script|link)\b[^>]*(?:src=|rel="stylesheet")/);
   }
   const destination = path.join(source, 'output');
@@ -375,4 +376,14 @@ test('actual launcher and runtime links stay versioned; About history uses the g
     assert.ok(checked > 0, relative);
   }
   assert.equal(generatedCatalogLinks, 1);
+});
+
+test('current entry favicon follows the immutable icon graph at every alias depth', async (t) => {
+  const { plan } = await fixture(t, { branded: true });
+  for (const entry of plan.metadata.htmlEntries) {
+    const page = plan.files.get(entry.path).toString();
+    const icon = page.match(/<link rel="icon" type="image\/png" href="([^"]+)">/);
+    assert.ok(icon, entry.path);
+    assert.equal(new URL(icon[1], scope + entry.path).href, canonical + 'icons/icon-192.png');
+  }
 });

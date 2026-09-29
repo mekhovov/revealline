@@ -138,6 +138,81 @@ function fixture() {
   };
 }
 
+test('compiler retains the selected logo and projects shared fallback resources without default artwork', async () => {
+  const f = fixture();
+  const catalog = structuredClone(f.catalog);
+  catalog.brands[0].logoAssetId = catalog.brands[0].heroAssetId;
+  const brandPath = 'game/ui/brand-identity.mjs';
+  const defaultWordmark = 'game/ui/art/identity/fpv-line/wordmark.png';
+  f.files.set(brandPath, await fs.readFile(new URL('../ui/brand-identity.mjs', import.meta.url)));
+  f.files.set('game/i18n/index.mjs', Buffer.from('export const localizedText = () => {};'));
+  f.files.set(defaultWordmark, Buffer.from('unselected default wordmark'));
+  f.files.set('game/company.html', Buffer.from('<html><head></head><body></body></html>'));
+  const result = await compileEdition({
+    ...f,
+    catalog,
+    editionIds: ['coupa-public'],
+    enginePaths: ['game/company.html', brandPath, 'game/i18n/index.mjs', defaultWordmark],
+    version: '1.0.0',
+    offline: { basePath: '/verification/' },
+  });
+  const logo = catalog.assets.find((asset) => asset.id === catalog.brands[0].logoAssetId);
+  assert.deepEqual(result.files.get(logo.path), f.files.get(logo.path));
+  assert.ok(!result.files.has(defaultWordmark));
+  assert.match(result.files.get(brandPath).toString(), /\.\.\/editions\/assets\/coupa\.png/);
+  const cache = JSON.parse(result.files.get('offline-cache.json'));
+  assert.ok(cache.files.some((file) => file.path === logo.path));
+  assert.ok(!cache.files.some((file) => file.path === defaultWordmark));
+  assert.ok(f.files.has(defaultWordmark), 'Source/default package bytes are untouched');
+});
+
+test('final offline edition budget counts every generated worker and manifest', async () => {
+  const f = fixture();
+  f.files.set('game/company.html', Buffer.from('<html><head></head><body></body></html>'));
+  const options = {
+    ...f,
+    editionIds: ['coupa-public'],
+    enginePaths: ['game/company.html'],
+    version: '1.0.0',
+    offline: { basePath: '/verification/' },
+  };
+  const baseline = await compileEdition(options);
+  const files = new Map(f.files);
+  const extra = [];
+  for (let i = baseline.files.size; i < 2000; i++) {
+    const name = `game/budget-${i}.txt`;
+    files.set(name, Buffer.from('x'));
+    extra.push(name);
+  }
+  const atLimit = await compileEdition({
+    ...options,
+    files,
+    enginePaths: [...options.enginePaths, ...extra],
+  });
+  assert.equal(atLimit.files.size, 2000);
+  files.set('game/one-more.txt', Buffer.from('x'));
+  await assert.rejects(
+    compileEdition({
+      ...options,
+      files,
+      enginePaths: [...options.enginePaths, ...extra, 'game/one-more.txt'],
+    }),
+    /Final edition output exceeds 2000 files or 64 MiB \(2001 files/,
+  );
+  const baselineBytes = [...baseline.files.values()].reduce((sum, bytes) => sum + bytes.length, 0);
+  const large = new Map(f.files);
+  large.set('game/padding.txt', Buffer.alloc(64 * 1024 * 1024 - baselineBytes + 1024));
+  await assert.rejects(
+    compileEdition({
+      ...options,
+      files: large,
+      enginePaths: [...options.enginePaths, 'game/padding.txt'],
+    }),
+    /Final edition output exceeds 2000 files or 64 MiB/,
+    'Payload fits the earlier cache inventory cap but final generated output does not',
+  );
+});
+
 async function retainedFixture() {
   const f = fixture(),
     catalog = structuredClone(f.catalog);
@@ -414,6 +489,35 @@ test('dependency closure rejects cycles, undeclared assets and cross-brand campa
   assert.throws(() => validateEditionRuntimeCatalog(bad), /different/);
 });
 
+test('standalone HTML binds its real version in both attributes and text and rejects unsafe versions', async () => {
+  const f = fixture();
+  f.files.set(
+    'game/company.html',
+    Buffer.from(
+      '<html data-build-version="__REVEALLINE_VERSION__"><head></head><body><span>__REVEALLINE_VERSION__</span></body></html>',
+    ),
+  );
+  const result = await compileEdition({
+    ...f,
+    editionIds: ['coupa-public'],
+    enginePaths: ['game/company.html'],
+    version: '0.142.1',
+  });
+  const html = result.files.get('game/company.html').toString();
+  assert.ok(!html.includes('__REVEALLINE_VERSION__'));
+  assert.match(html, /data-build-version="0\.142\.1"/);
+  assert.match(html, /<span>0\.142\.1<\/span>/);
+  await assert.rejects(
+    compileEdition({
+      ...f,
+      editionIds: ['coupa-public'],
+      enginePaths: ['game/company.html'],
+      version: '0.142.1"<&',
+    }),
+    /stable release version/,
+  );
+});
+
 test('compilation excludes every omitted brand file and hashes exact selected media', async () => {
   const f = fixture();
   f.files.set('authoring/studio.json', bytes({ secret: 'do not publish' }));
@@ -649,7 +753,7 @@ test('compiled first-paint and error shell uses only the selected brand and esca
     }),
   );
   const sourceHTML =
-    '<!doctype html><html lang="en"><head><title>Reveal / Line</title><meta name="theme-color" content="#000000"></head><body><span id="brand-name">Reveal / Line</span><h1 id="home-title">Choose a company</h1><p id="brand-description">Neutral</p><span id="footer-brand">Default footer</span><img id="brand-logo" hidden alt="Default"><img id="home-art" hidden alt="Default"><a id="all-worlds" href="../index.html">All worlds</a></body></html>';
+    '<!doctype html><html lang="en"><head><title>Reveal / Line</title><link rel="icon" href="DEFAULT-FPV-ICON.png"><link rel="apple-touch-icon" href="DEFAULT-FPV-TOUCH.png"><meta name="theme-color" content="#000000"></head><body><span id="brand-name">Reveal / Line</span><h1 id="home-title">Choose a company</h1><p id="brand-description">Neutral</p><span id="footer-brand">Default footer</span><img id="brand-logo" hidden alt="Default"><img id="home-art" hidden alt="Default"><a id="all-worlds" href="../index.html">All worlds</a></body></html>';
   f.files.set('game/company.html', Buffer.from(sourceHTML));
   const result = await compileEdition({
     ...f,
@@ -670,6 +774,12 @@ test('compiled first-paint and error shell uses only the selected brand and esca
   assert.match(html, /Connect &lt;\/p&gt;&lt;img src=x onerror=alert\(1\)&gt; &amp; grow/);
   assert.equal((html.match(/src="\.\.\/game\/editions\/assets\/coupa\.png"/g) ?? []).length, 2);
   assert.match(html, /<meta name="theme-color" content="#123456">/);
+  assert.equal(html.includes('DEFAULT-FPV-'), false);
+  assert.match(html, /<link rel="icon" href="\.\.\/game\/editions\/assets\/coupa\.png">/);
+  assert.match(
+    html,
+    /<link rel="apple-touch-icon" href="\.\.\/game\/editions\/assets\/coupa\.png">/,
+  );
   for (const token of ['--ink:#123456', '--grid:#234567', '--accent:#abcdef', '--panel:#234567'])
     assert.ok(html.includes(token));
   assert.ok(!html.includes('<script>') && !html.includes('x}body{') && !html.includes('--unsafe:'));
@@ -726,7 +836,7 @@ test('actual canonical and tool HTML brand first paint without replacing loader 
   });
   for (const entry of entries) {
     const html = result.files.get(entry).toString();
-    assert.match(html, /<title>Selected &lt;Audience&gt; · Selected &amp; Brand<\/title>/);
+    assert.match(html, /<title>Selected &lt;Audience&gt;<\/title>/);
     assert.match(html, /<html data-edition-id="coupa-public"/);
     for (const script of originals
       .get(entry)
@@ -744,7 +854,7 @@ test('actual canonical and tool HTML brand first paint without replacing loader 
   assert.ok(!boot.includes('interface:findYourLine') && !boot.includes('REVEAL / LINE'));
   assert.match(
     boot,
-    /class="launch-kicker"><img class="edition-boot-logo" src="\.\.\/game\/editions\/assets\/coupa\.png" alt="" \/> Selected &amp; Brand<\/p>/,
+    /class="launch-kicker[^"]*"><img class="edition-boot-logo" src="\.\.\/game\/editions\/assets\/coupa\.png" alt="" \/> Selected &amp; Brand<\/p>/,
   );
   for (const hook of ['boot-status', 'boot-retry', 'boot-online', 'boot-local', 'boot-detail'])
     assert.ok(boot.includes(`id="${hook}"`));
@@ -971,4 +1081,42 @@ test('approved original-derived install icons ship both square sizes and the sel
   const wrongFont = structuredClone(catalog);
   wrongFont.brands[0].fontAssetId = wrongFont.brands[0].logoAssetId;
   assert.throws(() => validateEditionRuntimeCatalog(wrongFont), /declared font/);
+});
+
+test('canonical public edition selector compiles one stable identity and canonical standalone launcher', async () => {
+  const f = fixture();
+  const catalog = structuredClone(f.catalog);
+  const edition = catalog.editions[1];
+  edition.id = 'droneaid-nl-community';
+  edition.name = 'DroneAid / LINE';
+  f.files.set(
+    'game/company.html',
+    Buffer.from('<!doctype html><html><head><title>Game</title></head><body></body></html>'),
+  );
+  const result = await compileEdition({
+    ...f,
+    catalog,
+    editionIds: ['droneaid'],
+    enginePaths: ['game/company.html'],
+    version: 'v0.142.1',
+    offline: { basePath: '/revealline/' },
+  });
+  assert.deepEqual(result.manifest.editionIds, ['droneaid-nl-community']);
+  assert.deepEqual(
+    result.runtimeCatalog.editions.map((item) => item.id),
+    ['droneaid-nl-community'],
+  );
+  assert.equal(
+    JSON.parse(result.files.get('game/build-info.json')).editionId,
+    'droneaid-nl-community',
+  );
+  const app = JSON.parse(result.files.get('app/manifest.webmanifest'));
+  assert.equal(app.id, '/revealline/editions/droneaid-nl-community/');
+  assert.equal(app.scope, '/revealline/editions/droneaid/');
+  assert.equal(app.start_url, '/revealline/editions/droneaid/app/');
+  assert.equal(app.name, 'DroneAid / LINE');
+  assert.match(
+    result.files.get('game/company.html').toString(),
+    /data-edition-id="droneaid-nl-community"/,
+  );
 });

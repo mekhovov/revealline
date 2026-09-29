@@ -7,7 +7,12 @@ import {
   MUSIC_SHORTCUTS_KEY,
 } from '../ui/quick-music-controls.mjs';
 
-function setup({ stored = null, active = () => true, conflicts = () => false } = {}) {
+function setup({
+  stored = null,
+  active = () => true,
+  conflicts = () => false,
+  couch = false,
+} = {}) {
   const doc = new Document(),
     win = new Events(),
     values = new Map(),
@@ -20,6 +25,10 @@ function setup({ stored = null, active = () => true, conflicts = () => false } =
   const menu = doc.createElement('button'),
     resume = doc.createElement('button'),
     settings = doc.createElement('section');
+  if (couch) {
+    menu.id = 'race-start';
+    settings.setAttribute('data-couch-music', 'race');
+  }
   doc.body.append(menu, resume, settings);
   let state = {
     desired: false,
@@ -140,6 +149,30 @@ test('main/pause buttons share transport, preserve focus and do not change maste
   assert.equal(f.doc.activeElement, f.resume);
   assert.deepEqual(f.master, before);
   assert.match(f.$('test-quick-music-0').textContent, /One · Artist · Paused/);
+  f.host.dispose();
+});
+
+test('couch Audio keeps its full transport without an extra landing transport', () => {
+  const f = setup({ couch: true });
+  assert.equal(f.doc.querySelectorAll('.quick-music-controls').length, 1);
+  assert.equal(f.doc.querySelector('[data-couch-music] .quick-music-controls'), null);
+  f.$('test-quick-music-0-toggle').click();
+  assert.deepEqual(f.calls, ['play']);
+  f.key('KeyN');
+  assert.deepEqual(f.calls, ['play', 'next']);
+  f.host.dispose();
+});
+
+test('passive landing metadata clears a stale song when no recording is selected', () => {
+  const f = setup(),
+    label = f.doc.createElement('span');
+  label.setAttribute('data-landing-song', 'solo');
+  f.doc.body.append(label);
+  f.host.render();
+  assert.equal(label.textContent, 'One · Artist');
+  f.setState({ track: null, queue: [] });
+  assert.equal(label.textContent, 'No track selected');
+  assert.deepEqual(f.calls, [], 'Metadata never starts or selects audio.');
   f.host.dispose();
 });
 

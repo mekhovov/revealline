@@ -1,0 +1,81 @@
+{
+  "format": "revealline-menu-scene-prompts.v1",
+  "created": "2026-09-29",
+  "generator": "OpenAI built-in image_gen",
+  "rights": "Original project artwork generated for the user; no third-party stock assets. Approved Retro scene and original retro-craft used as world/actor references.",
+  "images": [
+    {
+      "id": "retro-versus",
+      "file": "retro-versus-v1.png",
+      "prompt": "Use case: stylized-concept.\nAsset type: original 1994 Forever game landing background, landscape 3:2.\nReference image 1: approved Retro Solo scene defines the same rainy midnight arcade street, dark sheltered brick/awning at left, warm open arcade at right, cyan/magenta neon, wet pavement and distant city. Preserve that recognizable place, palette and crisp pixel-cluster rendering.\nReference image 2: approved retro-craft actor defines the ivory wedge-shaped body, orange/red edge stripes, dark blue/cyan cockpit, swept side wings and twin dark engine shapes. Use this original actor identity, not a commercial spacecraft.\nStyle: deliberate 16-bit pixel clusters and stepped edges, clean limited palette, no fine photographic grain or blur. Landscape with leftmost45% quiet near-black navy brick and awning for menu text. Place complete actor silhouettes in the right half with good separation from the background. Keep warm storefront windows, visible neon tubes, a small canopy lamp and a reflective pavement patch for later subtle scene animation.\nNo lettering, words, numbers, logos, labels, embedded UI, borders or watermark. No people, guns, missiles or explosions. Welcoming nostalgic arcade atmosphere. Opaque full artwork.\nMode composition: VERSUS. Two small full-size-in-scene retro arcade craft rest on TWO SEPARATE low launch/display platforms on the sheltered arcade forecourt, their pointed noses facing inward toward one another in friendly rivalry. One has cyan cockpit glow, the other warm magenta cockpit glow; both preserve the reference's ivory and orange silhouette. Position one around x60%,y72% and the other x82%,y67%. Show both complete wing spans and the gap between separate platforms; they must read as two opposing actors, not identical scenery. Keep the rainy arcade entrance and city depth visible behind them.\n\nFollow-up correction:\nUse case: precise-object-edit.\nEdit target: this generated Retro Versus scene.\nChange only the TWO arcade craft and their immediate plinth perspective so their pointed noses face INWARD toward one another in three-quarter side view: left craft nose points diagonally right, right craft nose points diagonally left. Their long axes must clearly oppose one another. Retain separate cyan and magenta platforms, ivory/orange wings and blue/magenta cockpit identity. Do not simply recolor or leave both craft facing forward/up.\nPreserve the entire rainy arcade street, dark left45% menu area, neon tubes, warm storefront, wet reflections, crisp pixel style and image framing exactly. Both complete silhouettes stay in the right half, with ample open gap between their noses, no touching/overlap.\nNo text, words, logos, embedded controls or added objects. Opaque full-frame landscape.",
+      "references": [
+        "game/ui/art/menu-scenes/retro.webp",
+        "authoring/motion-lab/assets/retro-craft.png"
+      ],
+      "referenceRole": "Approved Solo scene and retro-craft actor were references for the initial composition. The selected original incorporates one built-in edit to face the craft inward; the discarded intermediate is identified by SHA-256 in generationSteps.",
+      "sourceSha256": "6bad2c9189f52ebe816eda5d693ef504bee0d5be85a9f82d1d17ff948957710a",
+      "referenceSha256": {
+        "game/ui/art/menu-scenes/retro.webp": "2d18104ba075c38e5e018b632ff8a7009697804dd1827725daa196057c680608",
+        "authoring/motion-lab/assets/retro-craft.png": "1d0340673c2cf19ab9b88fed271219da5003f82bcd1bd45da4477c774708551b"
+      },
+      "generationSteps": [
+        {
+          "operation": "initial generation using approved world and actor references",
+          "outputSha256": "197580591a5c842c29e8512800aeba2dbe80c440defc51f0da8a1b582e646cdc",
+          "retainedInProject": false,
+          "reason": "Draft actor noses faced forward; superseded by selected inward-facing edit."
+        },
+        {
+          "operation": "built-in edit using the preceding draft; full correction prompt above",
+          "outputSha256": "6bad2c9189f52ebe816eda5d693ef504bee0d5be85a9f82d1d17ff948957710a",
+          "retainedInProject": true
+        }
+      ]
+    },
+    {
+      "id": "retro-versus-portrait",
+      "file": "retro-versus-portrait-v1.png",
+      "prompt": "Use case: stylized-concept.\nAsset type: independently composed tall9:16 portrait landing background for 1994 Forever VERSUS.\nReference image1 is the approved Versus landscape: retain two ivory/orange retro craft on SEPARATE low platforms, their noses facing inward toward one another, one cyan and one magenta canopy/light. Reference image2 is the Retro Solo world: rainy midnight arcade street, warm golden interior, blue/magenta neon, dark navy brick.\nRecompose for a phone; do not crop the landscape. Upper40% and leftmost20% remain quiet low-contrast shadowed brick/awning for a menu. Warm arcade doorway is visible in middle-right background. TWO COMPLETE craft on TWO SEPARATE platforms occupy lower half, gently staggered: cyan craft aroundx32%,y65% points diagonally RIGHT; magenta craft aroundx68%,y73% points diagonally LEFT. Leave a clearly visible gap between their opposing noses and their separate plinths. Keep every wing tip and engine inside central80% of the full canvas; no cropped craft. No linking cable or shared dock.\nPreserve the original wedge bodies, swept ivory/orange wings and dark cockpit shape, crisp pixel clusters and stepped silhouettes. Include warm hanging storefront lamps, real neon tubes, sheltered foliage and reflective pavement patches suitable for subtle local motion. Limited navy/cyan/magenta/amber palette, no fine photographic noise or blur.\nNo letters, text, numbers, logos, UI controls, borders, watermark, people or weapons. Opaque full composition.",
+      "references": [
+        "authoring/library/menu-scenes/retro-versus-v1.png",
+        "game/ui/art/menu-scenes/retro.webp"
+      ],
+      "referenceRole": "Selected Versus landscape defines opposing actors; approved Solo scene defines the world. Tall composition generated separately.",
+      "sourceSha256": "b2f7d44ff725d2ec69c282ab7643f1e2e118375a006cca90d9b5fadc0ed57c2b",
+      "referenceSha256": {
+        "authoring/library/menu-scenes/retro-versus-v1.png": "6bad2c9189f52ebe816eda5d693ef504bee0d5be85a9f82d1d17ff948957710a",
+        "game/ui/art/menu-scenes/retro.webp": "2d18104ba075c38e5e018b632ff8a7009697804dd1827725daa196057c680608"
+      }
+    },
+    {
+      "id": "retro-team",
+      "file": "retro-team-v1.png",
+      "prompt": "Use case: stylized-concept.\nAsset type: original 1994 Forever game landing background, landscape 3:2.\nReference image 1: approved Retro Solo scene defines the same rainy midnight arcade street, dark sheltered brick/awning at left, warm open arcade at right, cyan/magenta neon, wet pavement and distant city. Preserve that recognizable place, palette and crisp pixel-cluster rendering.\nReference image 2: approved retro-craft actor defines the ivory wedge-shaped body, orange/red edge stripes, dark blue/cyan cockpit, swept side wings and twin dark engine shapes. Use this original actor identity, not a commercial spacecraft.\nStyle: deliberate 16-bit pixel clusters and stepped edges, clean limited palette, no fine photographic grain or blur. Landscape with leftmost45% quiet near-black navy brick and awning for menu text. Place complete actor silhouettes in the right half with good separation from the background. Keep warm storefront windows, visible neon tubes, a small canopy lamp and a reflective pavement patch for later subtle scene animation.\nNo lettering, words, numbers, logos, labels, embedded UI, borders or watermark. No people, guns, missiles or explosions. Welcoming nostalgic arcade atmosphere. Opaque full artwork.\nMode composition: TEAM. Two retro arcade craft sit SIDE BY SIDE in a coordinated formation on ONE SHARED low preparation dock in the sheltered forecourt, both pointed toward the open street at right. Their distinct ivory/orange bodies and cyan cockpits remain fully visible. A single gently lit blue connection cable joins both dock sockets, making their shared preparation and cooperation readable. Main pair centered around x72%,y72%; do not overlap their wings or merge them into one vehicle. Preserve the warm arcade entrance and city depth behind the pair. The shared continuous dock and matching direction distinguish Team from rivals on separate opposing platforms.",
+      "references": [
+        "game/ui/art/menu-scenes/retro.webp",
+        "authoring/motion-lab/assets/retro-craft.png"
+      ],
+      "referenceRole": "Approved Solo world and original retro-craft actor reference; independently authored shared-dock composition.",
+      "sourceSha256": "d6ab9650fd2e369e9f74b1c03591671bc1f5fc25f059c7040fecb5aeff9c6b52",
+      "referenceSha256": {
+        "game/ui/art/menu-scenes/retro.webp": "2d18104ba075c38e5e018b632ff8a7009697804dd1827725daa196057c680608",
+        "authoring/motion-lab/assets/retro-craft.png": "1d0340673c2cf19ab9b88fed271219da5003f82bcd1bd45da4477c774708551b"
+      }
+    },
+    {
+      "id": "retro-team-portrait",
+      "file": "retro-team-portrait-v1.png",
+      "prompt": "Use case: stylized-concept.\nAsset type: independently composed tall9:16 portrait landing background for 1994 Forever TEAM.\nReference image1 is the approved Team landscape: retain the two ivory/orange retro craft with cyan canopies on one continuous preparation dock, connected by one blue cable. Reference image2 is original Retro Solo: retain rainy midnight arcade, warm amber cabinets, blue/magenta neon, dark navy brick.\nRecompose for a phone, do not crop the landscape. Upper40% and leftmost20% are quiet low-contrast shadowed brick/awning for the menu. The warm arcade opening remains in the middle-right background. TWO COMPLETE craft share ONE dock in the lower half, gently staggered front/back but pointed the same direction and visibly linked by the cable. Keep wings/noses/bodies comfortably within central76% horizontal width; no clipped tips. Craft bodies near x40%,y66% and x66%,y73%, with the blue connection clearly crossing the shared platform. Preserve both complete silhouettes.\nInclude a small warm lamp near the arcade opening, real neon tubing near middle-height, dark reflective pavement below the dock for later local light/ripple animation. Very crisp deliberate pixel clusters, limited palette with smooth large dark color areas, not photographic noise. No letters, words, numbers, logos, UI, borders, watermark, people or weapons. Opaque complete artwork.",
+      "references": [
+        "authoring/library/menu-scenes/retro-team-v1.png",
+        "game/ui/art/menu-scenes/retro.webp"
+      ],
+      "referenceRole": "Selected Team landscape defines linked actors; approved Solo scene defines the world. Tall composition generated separately.",
+      "sourceSha256": "c18069ace1a54e512f134c045870c750331866bc3dd8e44768ca06720e958dcc",
+      "referenceSha256": {
+        "authoring/library/menu-scenes/retro-team-v1.png": "d6ab9650fd2e369e9f74b1c03591671bc1f5fc25f059c7040fecb5aeff9c6b52",
+        "game/ui/art/menu-scenes/retro.webp": "2d18104ba075c38e5e018b632ff8a7009697804dd1827725daa196057c680608"
+      }
+    }
+  ]
+}

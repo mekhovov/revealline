@@ -228,7 +228,7 @@ body.game-shell[data-edition-layout='active'] .play-controls .ability-buttons {
     --touch-size: 132px;
   }
 }
-body.game-shell[data-edition-id] .shell-home {
+body.game-shell[data-edition-id] .shell-home:not(.native-landing) {
   width: 100vw;
   height: 100dvh;
   max-width: none;
@@ -241,7 +241,7 @@ body.game-shell[data-edition-id] .shell-home {
   overflow: auto;
   background-image: none !important;
 }
-body.game-shell[data-edition-id] .shell-home .home-art {
+body.game-shell[data-edition-id] .shell-home:not(.native-landing) .home-art {
   inset: 0;
   width: 100%;
   height: 100%;
@@ -252,12 +252,12 @@ body.game-shell[data-edition-id] .shell-home .home-art {
   mask-image: none;
   display: none;
 }
-body.game-shell[data-edition-id] .shell-home::before,
-body.game-shell[data-edition-id] .shell-home::after,
-body.game-shell[data-edition-id] .shell-home .home-art-caption {
+body.game-shell[data-edition-id] .shell-home:not(.native-landing)::before,
+body.game-shell[data-edition-id] .shell-home:not(.native-landing)::after,
+body.game-shell[data-edition-id] .shell-home:not(.native-landing) .home-art-caption {
   display: none !important;
 }
-body.game-shell[data-edition-id] .shell-home > .edition-home-art {
+body.game-shell[data-edition-id] .shell-home:not(.native-landing) > .edition-home-art {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -269,7 +269,7 @@ body.game-shell[data-edition-id] .shell-home > .edition-home-art {
   border-radius: 0;
   z-index: 0;
 }
-body.game-shell[data-edition-id] .shell-home .home-content {
+body.game-shell[data-edition-id] .shell-home:not(.native-landing) .home-content {
   position: relative;
   z-index: 1;
   width: min(660px, 100%);
@@ -338,7 +338,7 @@ body.game-shell[data-edition-id]
   font-size: var(--fk-text-control, 16px);
 }
 @media (max-width: 719px) {
-  body.game-shell[data-edition-id] .shell-home .home-content {
+  body.game-shell[data-edition-id] .shell-home:not(.native-landing) .home-content {
     padding: max(24px, var(--safe-top)) 20px max(24px, var(--safe-bottom));
     background: linear-gradient(90deg, #061735ef, #061735b8);
   }
@@ -348,10 +348,10 @@ body.game-shell[data-edition-id]
   }
 }
 
-body.game-shell[data-edition-id] .shell-home[open] {
+body.game-shell[data-edition-id] .shell-home:not(.native-landing)[open] {
   display: block !important;
 }
-body.game-shell[data-edition-id] .shell-home:not([open]) {
+body.game-shell[data-edition-id] .shell-home:not(.native-landing):not([open]) {
   display: none !important;
 }
 

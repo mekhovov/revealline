@@ -1,6 +1,8 @@
 import { localizedText, t } from '../i18n/index.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
+import { createControllerConfirmLifecycle } from '../ui/controller-confirm-lifecycle.mjs';
 
 /** Standalone, silent playback navigation. Commands operate native controls;
  * they never enter the recording or read the player's profile. */
@@ -16,13 +18,25 @@ export function attachReplayNavigation({
   onInactive = () => {},
   onDispose = () => {},
 } = {}) {
+  const now = () => win.performance?.now?.() ?? Date.now();
   const $ = (id) => doc.getElementById(id),
-    router = createControllerRouter({ readPads, eventTarget: win });
+    router = createControllerRouter({ readPads, eventTarget: win, now });
   let destroyed = false,
     active = !doc.hidden,
     status = '',
     jumpTimer = null,
-    jumpGeneration = 0;
+    jumpGeneration = 0,
+    lifecycle;
+  const foreground = () => !destroyed && active && !doc.hidden && doc.hasFocus?.() !== false;
+  const scope = () => (pending() ? 'theater-loading' : 'theater');
+  const guard = attachControllerConfirmGuard({
+    document: doc,
+    now,
+    confirmPressed: () => foreground() && router.menuConfirmPressed(),
+    beforeNativeActivation: (event) => {
+      if (foreground()) lifecycle?.beforeNativeActivation(event);
+    },
+  });
   const defer = win.setTimeout?.bind(win) ?? globalThis.setTimeout,
     clearDeferred = win.clearTimeout?.bind(win) ?? globalThis.clearTimeout;
   const listeners = [];
@@ -140,7 +154,7 @@ export function attachReplayNavigation({
   const navigation = attachControllerNavigation({
     document: doc,
     getRoot: () => doc.body,
-    getScope: () => (pending() ? 'theater-loading' : 'theater'),
+    getScope: scope,
     getDefaultFocus: preferred,
     keyboard: true,
     onBack: back,
@@ -153,13 +167,31 @@ export function attachReplayNavigation({
         hint(() => t('interface:playbackPausedChoosePlayWhenReady'));
       }
     },
-    onNativeInput: () => router.clear(),
+    activateControl: (element) => guard.activate(element),
+    onNativeInput: (event) => {
+      lifecycle?.nativeInput(event);
+      router.clear();
+    },
     onHint: hint,
+  });
+  lifecycle = createControllerConfirmLifecycle({
+    document: doc,
+    readConfirm: (options) => router.readMenuConfirm(options),
+    getContext: () => ({
+      scope: scope(),
+      root: doc.body,
+      focused: doc.activeElement,
+      active: foreground(),
+    }),
+    navigation,
+    guard,
+    now,
   });
   function suspend() {
     if (destroyed) return;
     cancelJump();
     active = false;
+    lifecycle.cancel('theater-inactive', { hard: true });
     router.clear();
     navigation.clear();
     if (pending()) cancelLoad();
@@ -169,6 +201,7 @@ export function attachReplayNavigation({
   function wake() {
     if (destroyed) return;
     active = true;
+    lifecycle.cancel('theater-wake', { hard: true });
     router.clear();
     navigation.clear();
   }
@@ -176,8 +209,10 @@ export function attachReplayNavigation({
     if (destroyed) return;
     suspend();
     destroyed = true;
+    lifecycle.destroy();
     router.destroy();
     navigation.destroy();
+    guard.destroy();
     listeners.forEach((remove) => remove());
     onDispose();
   }
@@ -191,8 +226,9 @@ export function attachReplayNavigation({
     destroy,
     sample(now) {
       if (destroyed || !active || doc.hidden || doc.hasFocus?.() === false) return;
+      const sampledScope = scope();
       const frame = router.sample({
-        scope: pending() ? 'theater-loading' : 'theater',
+        scope: sampledScope,
         timeMs: now,
       });
       navigation.sync();
@@ -207,7 +243,9 @@ export function attachReplayNavigation({
         hint(key ? () => t(key) : frame.status.message);
       }
       if (status === 'joined') navigation.engage();
-      else navigation.handle(frame.ui);
+      lifecycle.sample(frame.confirmSnapshot);
+      if (foreground() && sampledScope === scope())
+        navigation.handle({ ...frame.ui, confirm: false });
     },
   };
 }

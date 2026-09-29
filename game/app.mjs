@@ -144,6 +144,7 @@ import { revealFirstFlightBoard } from './ui/first-flight-launch.mjs';
 import { attachInput } from './ui/input.mjs';
 import { resolveTouchControls } from './touch-controls.mjs';
 import { attachFullscreen } from './ui/fullscreen.mjs';
+import { editionThemeLabel } from './ui/edition-theme-label.mjs';
 import { attachGameShell } from './ui/game-shell.mjs';
 import { authoredModeDestinations } from './ui/authored-mode-routes.mjs';
 import {
@@ -173,7 +174,10 @@ import { attachControllerNavigation } from './ui/controller-navigation.mjs';
 import { attachControllerReading } from './ui/controller-reading.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
-import { requestControllerPracticeExit } from './ui/controller-practice-exit.mjs';
+import {
+  attachControllerPracticeReturn,
+  requestControllerPracticeExit,
+} from './ui/controller-practice-exit.mjs';
 import { playgroundTabBoundary } from './ui/playground-tab-boundary.mjs';
 import { attachEnemyWorkshopReturn } from './ui/enemy-workshop-return.mjs';
 import { attachEnemyGuide } from './ui/enemy-guide.mjs';
@@ -369,6 +373,7 @@ try {
   let attemptFiles = null,
     profileRecovery = null;
   const runtimeContent = await loadCompanyStartup();
+  const themeLabel = (item) => editionThemeLabel(item, contentText(item, 'name'), runtimeContent);
   const [baseCampaign, themesFile, presets, baseClasses, packCatalogSource, archiveCatalogSource] =
     runtimeContent?.boot ??
     (await Promise.all([
@@ -2095,6 +2100,7 @@ try {
   try {
     if (!runtimeContent)
       presentationHost = createPresentationHost({
+        skipTitleArtwork: true,
         baseURL: new URL('presentation/compiled/', gameDocumentURL(location.href)),
       });
     if (presentationHost)
@@ -2909,6 +2915,11 @@ try {
     enabled: practiceSession && !courseSession && !controllerPreviewRequested,
     onReturn: () => pause(true),
   });
+  const controllerPracticeReturn = attachControllerPracticeReturn({
+    enabled: !!controllerPreview,
+    session: params.get('controller-session'),
+    beforeExit: suspendInteraction,
+  });
   enemyGuide = attachEnemyGuide({
     themes: guideThemes,
     getPresentation: () => presentationSnapshot,
@@ -3032,6 +3043,7 @@ try {
       input.destroy();
       controller.destroy();
       controllerPreview?.destroy();
+      controllerPracticeReturn.dispose();
       practiceNavigation.destroy();
       enemyWorkshopReturn.dispose();
       courseView?.destroy();
@@ -6054,7 +6066,7 @@ try {
     theme = entry.themes.find((t) => t.id === (themeId || campaign.themeId)) || entry.themes[0];
     bodyId = theme.player;
     $('theme-select').replaceChildren(
-      ...entry.themes.map((t) => localizedOption(() => contentText(t, 'name'), t.id)),
+      ...entry.themes.map((t) => localizedOption(() => themeLabel(t), t.id)),
     );
     $('theme-select').value = theme.id;
     $('class-select').replaceChildren(
@@ -7133,6 +7145,7 @@ try {
     }),
   );
   const libraryPanel = attachLibraryPanel({
+    examplePacks: !runtimeContent,
     prepareCollectionProgress,
     focusMission,
     pictureMedia: async (options) =>
@@ -7578,6 +7591,7 @@ try {
     controllerSettings.refresh();
     controllerBoostSettings.refresh();
     $('settings-dialog').showModal();
+    $('settings-dialog').querySelector('[role="tab"][aria-selected="true"]')?.focus();
     profileRecovery.refresh();
     void storageRetention.refresh();
   };
@@ -8030,7 +8044,7 @@ try {
       ...classRegistry.map((c) => localizedOption(() => contentText(c, 'label'), c.id)),
     );
     $('theme-select').replaceChildren(
-      ...themesFile.themes.map((t) => localizedOption(() => contentText(t, 'name'), t.id)),
+      ...themesFile.themes.map((t) => localizedOption(() => themeLabel(t), t.id)),
     );
     $('theme-select').value = theme.id;
     setTheme();
@@ -9279,7 +9293,9 @@ try {
       classRegistry = activeEntry.classRecipes;
       classId = preparedAttempt.classId;
       themesFile.themes = activeEntry.themes;
-      $('theme-select').replaceChildren(...activeEntry.themes.map((t) => new Option(t.name, t.id)));
+      $('theme-select').replaceChildren(
+        ...activeEntry.themes.map((t) => localizedOption(() => themeLabel(t), t.id)),
+      );
       $('class-select').replaceChildren(...classRegistry.map((c) => new Option(c.label, c.id)));
       progress = progressFor(library, campaign);
       levelIndex = preparedAttempt.levelIndex;
@@ -9287,7 +9303,7 @@ try {
       theme = preparedAttempt.theme;
       if (preparedAttempt.kind === 'world-play') {
         $('theme-select').replaceChildren(
-          ...activeEntry.themes.map((item) => new Option(item.name, item.id)),
+          ...activeEntry.themes.map((item) => localizedOption(() => themeLabel(item), item.id)),
         );
         $('theme-select').value = theme.id;
         $('class-select').replaceChildren(
@@ -10578,9 +10594,9 @@ try {
     refreshHUD();
   }
   for (const t of themesFile.themes)
-    $('theme-select').append(localizedOption(() => contentText(t, 'name'), t.id));
+    $('theme-select').append(localizedOption(() => themeLabel(t), t.id));
   if (scenario && !themesFile.themes.some((t) => t.id === theme.id))
-    $('theme-select').append(localizedOption(() => contentText(theme, 'name'), theme.id));
+    $('theme-select').append(localizedOption(() => themeLabel(theme), theme.id));
   $('theme-select').value = theme.id;
   $('theme-preparation-cancel').onclick = () => {
     const restoreFocus = document.activeElement === $('theme-preparation-cancel');
@@ -12331,7 +12347,7 @@ try {
   gameShell = attachGameShell({
     keyboardNavigation: false, // The shared controller adapter also owns menu keys.
     training: courseSession,
-    practiceReturn: $('enemy-workshop-return'),
+    practiceReturn: $('controller-practice-return') || $('enemy-workshop-return'),
     focusBriefing: () => {
       clearInput();
       controllerReading.refresh();
@@ -12391,10 +12407,6 @@ try {
           })
       : undefined,
   });
-  if (authoredRoute?.id === DEFAULT_JOURNEY_ROUTES.solo)
-    localizedText($('shell-title-team').querySelector('.game-mode-description'), () =>
-      t('common:counts.teamMissions', { count: 12 }),
-    );
   for (const id of ['shell-catalogue', 'missions-catalogue']) {
     const link = $(id);
     link.hidden = practiceSession;
@@ -12449,14 +12461,14 @@ try {
           requestModeDeparture('catalogue', { preventDefault() {} }, opener, {
             origin: 'solo-title',
             editionId,
-            isCurrent: () => $('shell-home').open && $('shell-home').contains(opener),
+            isCurrent: () => opener?.closest('dialog')?.open && document.contains(opener),
           }),
         getSavedPresentation: () => savedAttempt()?.actorAppearancePin?.authoredPresentationSha256,
         onPresentationChange: (presentationId, opener) =>
           requestModeDeparture('catalogue', { preventDefault() {} }, opener, {
             origin: 'solo-title',
             presentationId,
-            isCurrent: () => $('shell-home').open && $('shell-home').contains(opener),
+            isCurrent: () => opener?.closest('dialog')?.open && document.contains(opener),
           }),
       })
     : null;

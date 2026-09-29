@@ -2,7 +2,7 @@ import { editionOfflinePackageId } from './editions/offline-package-id.mjs';
 import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
 import { resolveEditionAssets } from './editions/model.mjs';
-import { resolveEditionContext } from './edition-context.mjs';
+import { editionIdentityId, editionPublicSlug, resolveEditionContext } from './edition-context.mjs';
 import {
   communityEntryURL,
   communityHref,
@@ -91,7 +91,8 @@ export async function loadRuntimeContentProvider({
     : community
       ? communityEntryURL(sourceURL)
       : gameDocumentURL(sourceURL);
-  const requested = url.searchParams.get('edition') ?? compiled;
+  const selector = url.searchParams.get('edition') ?? compiled;
+  const requested = selector ? editionIdentityId(selector) : selector;
   if (!requested && url.searchParams.get('company') !== '1') return null;
   if (compiled)
     required(requested === compiled, 'This installed edition cannot load another audience.');
@@ -211,7 +212,8 @@ export async function loadRuntimeContentProvider({
     },
     assetURL,
     href(parameters = {}) {
-      const destinationId = parameters.edition == null ? selection.edition.id : parameters.edition;
+      const destinationId =
+        parameters.edition == null ? selection.edition.id : editionIdentityId(parameters.edition);
       const destination = currentBootstrap.catalog.editions.find(
         (edition) => edition.id === destinationId && edition.brandId === selection.brand.id,
       );
@@ -221,11 +223,11 @@ export async function loadRuntimeContentProvider({
       const target = friendly || new URL('index.html', url);
       if (!friendly) {
         target.search = '';
-        target.searchParams.set('edition', destinationId);
+        target.searchParams.set('edition', editionPublicSlug(destinationId));
       }
       if (
         retainedPresentationId &&
-        (!parameters.edition || parameters.edition === selection.edition.id)
+        (!parameters.edition || editionIdentityId(parameters.edition) === selection.edition.id)
       )
         target.searchParams.set('presentation', retainedPresentationId);
       for (const [key, value] of Object.entries(parameters))

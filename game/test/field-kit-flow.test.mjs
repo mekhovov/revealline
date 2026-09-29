@@ -123,9 +123,7 @@ test('title keeps its game destinations and quick sound; Workshop and unified Mi
   assert.deepEqual(visibleActions(page), [
     'shell-featured',
     'shell-play',
-    'shell-gallery',
     'shell-options',
-    'shell-workshop',
     'shell-sound',
   ]);
   assert.equal(
@@ -133,24 +131,29 @@ test('title keeps its game destinations and quick sound; Workshop and unified Mi
     null,
   );
   assert.equal(page.$('shell-release-explorer').getAttribute('href'), 'http://localhost/releases/');
-  assert.equal(page.$('shell-play-options').open, false, 'Advanced play options stay collapsed.');
+  assert.equal(
+    page.$('shell-play-options').open,
+    true,
+    'Advanced play options are expanded inside Gameplay.',
+  );
+  assert.equal(
+    page.$('shell-play-options').closest('[role="tabpanel"]').id,
+    'settings-panel-gameplay',
+  );
   assert.match(page.$('shell-destination').textContent, /Start · First Signal/);
+  page.$('shell-options').click();
+  page.$('settings-tab-extras').click();
+  assert.equal(page.$('shell-workshop').closest('[role="tabpanel"]').id, 'settings-panel-extras');
   page.$('shell-workshop').click();
   assert.equal(page.$('shell-workshop-dialog').open, true);
   assert.equal(page.doc.activeElement.closest('dialog'), page.$('shell-workshop-dialog'));
-  const buildInformation = [...page.$('shell-workshop-dialog').querySelectorAll('a')].filter(
+  const extras = page.$('settings-panel-extras');
+  const buildInformation = [...extras.querySelectorAll('a')].filter(
     (link) => link.getAttribute('href') === '../site/about.html#versions',
   );
-  assert.equal(buildInformation.length, 1, 'More has one About route.');
-  assert.equal(
-    buildInformation[0].textContent.replaceAll('&amp;', '&'),
-    'AboutCredits and current build',
-  );
-  assert.equal(
-    page.$('shell-workshop-dialog').querySelector('[data-release-explorer]'),
-    page.$('shell-release-explorer'),
-  );
-  assert.ok(page.$('shell-workshop-dialog').contains(page.$('shell-catalogue')));
+  assert.equal(buildInformation.length, 1, 'Extras has one About route.');
+  assert.equal(extras.querySelector('[data-release-explorer]'), page.$('shell-release-explorer'));
+  assert.ok(page.$('settings-panel-content').contains(page.$('shell-catalogue')));
   assert.ok(
     [...page.$('shell-workshop-dialog').querySelectorAll('a')].some(
       (link) => link.getAttribute('href') === '../authoring/asset-studio/',
@@ -158,6 +161,8 @@ test('title keeps its game destinations and quick sound; Workshop and unified Mi
   );
   page.$('shell-workshop-dialog').querySelector('button').click();
   assert.equal(page.$('shell-workshop-dialog').open, false);
+  assert.equal(page.$('settings-dialog').open, true);
+  page.$('settings-dialog').close();
   assert.equal(page.$('shell-home').open, true);
   await openMissions(page);
   const setup = page.$('mission-picker-setup');
@@ -233,9 +238,7 @@ test('visible title Start launches directly and Continue explicitly resumes the 
   assert.deepEqual(visibleActions(page), [
     'shell-continue',
     'shell-play',
-    'shell-gallery',
     'shell-options',
-    'shell-workshop',
     'shell-sound',
   ]);
   assert.match(page.$('shell-destination').textContent, /Continue/);

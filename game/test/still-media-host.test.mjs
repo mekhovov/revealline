@@ -281,7 +281,7 @@ test('v1 MP3 bytes remain exact through shared v5 upgrade and explicit native ba
   const blob = h.urls.get(h.$('still-host-download-audio').href);
   assert.deepEqual(Buffer.from(await blob.arrayBuffer()), Buffer.from(await before.arrayBuffer()));
   assert.equal(h.doc.activeElement, h.$('still-host-download-audio'));
-  assert.equal(h.$('still-host-download-audio').download, 'RevealLine-soundtrack.rlsound');
+  assert.equal(h.$('still-host-download-audio').download, 'fpv-line-soundtrack.rlsound');
   h.$('still-host-download-audio').click();
   assert.match(h.$('still-host-status').textContent, /Download requested/);
   h.$('still-host-close').onclick();
@@ -627,11 +627,12 @@ test('actual shared router prevents held Confirm across modal close and native p
   h.$('still-media-close').focus();
   press(0, true);
   frame(3);
-  assert.equal(h.host.panel.dialog.open, false);
+  assert.equal(h.host.panel.dialog.open, true, 'Close waits for Confirm release');
   frame(500);
-  assert.equal(h.host.panel.dialog.open, false, 'Held Close/Confirm cannot reopen local media.');
+  assert.equal(h.host.panel.dialog.open, true, 'Held Close cannot activate early');
   press(0, false);
   frame(501);
+  assert.equal(h.host.panel.dialog.open, false);
   await h.host.open();
   frame(502);
   press(13, true);
@@ -849,3 +850,37 @@ for (const initialFailure of [false, true])
     assert.equal(h.doc.activeElement, opener);
     assert.equal(h.memory.allPuts.length, 0, 'Verification does not write media');
   });
+
+test('Picture Workshop native Confirm closes once on release and cannot reopen the parent', async (t) => {
+  const pad = {
+    id: 'Picture native test',
+    index: 0,
+    mapping: 'standard',
+    connected: true,
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  };
+  const h = await setup(t, { host: { readPads: () => [pad] } });
+  await h.host.open();
+  const frame = (time) => {
+    const [id, callback] = h.frames.entries().next().value;
+    h.frames.delete(id);
+    callback(time);
+  };
+  frame(0);
+  pad.buttons[0] = { pressed: true, value: 1 };
+  frame(1);
+  pad.buttons[0] = { pressed: false, value: 0 };
+  frame(2);
+  const close = h.$('still-media-close');
+  close.focus();
+  pad.buttons[0] = { pressed: true, value: 1 };
+  assert.equal(close.emit('keydown', { key: 'Enter', isTrusted: true }).defaultPrevented, true);
+  assert.equal(h.host.panel.dialog.open, true);
+  pad.buttons[0] = { pressed: false, value: 0 };
+  close.emit('keyup', { key: 'Enter', isTrusted: true });
+  assert.equal(h.host.panel.dialog.open, false);
+  h.$('still-host-open').emit('click', { isTrusted: true });
+  frame(3);
+  assert.equal(h.host.panel.dialog.open, false, 'the old gesture cannot reopen the storage panel');
+});

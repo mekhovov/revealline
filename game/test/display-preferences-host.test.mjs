@@ -1,4 +1,5 @@
 import { modelTeamDialogs } from './helpers/coop-host.mjs';
+import { installActorAppearanceTransport } from './helpers/actor-appearance-transport.mjs';
 import {
   installCoopPresentation,
   waitFor as waitForTeamPicture,
@@ -13,7 +14,6 @@ import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { couchPage, mountCouch } from './helpers/couch-host.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { FIXED_DT } from '../coop/core.mjs';
-import { installActorAppearanceTransport } from './helpers/actor-appearance-transport.mjs';
 
 const campaign = JSON.parse(await readFile(new URL('../content/campaign.json', import.meta.url)));
 const teamHTML = await readFile(new URL('../couch/relay-rescue.html', import.meta.url), 'utf8');
@@ -169,7 +169,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     for (let n = 0; n < 13; n++) page.frame();
     assert.equal(page.rendered.run.player.cutting, true);
     page.$('settings-button').click();
-    page.$('settings-tab-display').click();
+    page.$('settings-tab-accessibility').click();
     page.frame(0);
     const run = page.rendered.run,
       checkpoint = authoritativeCheckpoint(run),
@@ -212,7 +212,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
   await t.test('Solo explicitly opts into the shared record', async (t) => {
     const page = await soloPage(t, { campaign, storage: store, titleScreen: true });
     page.$('shell-options').click();
-    page.$('settings-tab-display').click();
+    page.$('settings-tab-accessibility').click();
     change(page, 'settings-reduced-effects', true);
     reflects(page, 'plain', 'large', true);
   });
@@ -231,7 +231,8 @@ test('Solo to Team to Versus and back restores one display record without Couch 
       labels = page.labels(),
       clock = page.$('coop-clock').textContent;
     page.$('coop-settings-open').click();
-    page.$('coop-settings-tab-display').focus();
+    page.$('coop-settings-tab-accessibility').click();
+    page.$('coop-settings-tab-accessibility').focus();
     for (const id of ['coop-text-face', 'coop-text-size', 'coop-reduced']) reaches(page, id);
     change(page, 'coop-text-face', 'pixel');
     page.tick(120);
@@ -281,6 +282,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
       assert.equal(store.writes.length, writes, 'Opening Options does not save a preference');
       assert.equal(page.state(), 'paused');
       assert.deepEqual(page.checkpoint(), checkpoint);
+      page.$('race-settings-tab-accessibility').click();
       page.$('race-options-back').focus();
       reaches(page, 'race-text-face');
       reaches(page, 'race-text-size');
@@ -322,6 +324,8 @@ test('Team system reduction preserves a raw false choice and a denied shared sav
   assert.equal(page.$('coop-reduced').checked, false);
   assert.match(page.$('coop-system-reduction').textContent, /System reduced motion/);
   assert.deepEqual(store.map, before);
+  page.$('coop-settings-open').click();
+  page.$('coop-settings-tab-accessibility').click();
   store.setItem = () => {
     throw new DOMException('Full storage', 'QuotaExceededError');
   };
@@ -353,6 +357,9 @@ test('Versus controller selects the real display control without replacing or st
   assert.equal(page.doc.activeElement.id, 'race-settings-tab-display');
   assert.equal(store.getItem(DISPLAY_PREFERENCES_KEY), displayBefore);
   const before = page.checkpoint();
+  page.pulse(0, 13);
+  assert.equal(page.doc.activeElement.id, 'race-settings-tab-accessibility');
+  page.pulse(0, 0);
   page.focus('race-text-size');
   page.pulse(0, 0);
   assert.equal(page.editors().length, 1);
