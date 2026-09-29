@@ -1,0 +1,288 @@
+{
+  "format": "revealline.scoped-evidence-map.v1",
+  "scope": "P05-B gutter CSS correction and subsequent test-label clarification; local candidate only",
+  "sourceHold": "source-held-03.json",
+  "productionHold": "source-held-02.json",
+  "changes": {
+    "production": [
+      "game/ui/menu-appearance.css"
+    ],
+    "tests": [
+      "game/test/menu-appearance.test.mjs",
+      "game/test/menu-style-host.test.mjs"
+    ],
+    "labelOnlyFinal": "game/test/menu-appearance.test.mjs"
+  },
+  "tests": {
+    "held01": "Eight complete files 205/205 per runtime, retained separately.",
+    "held02": "Two complete affected files 22/22 per runtime; verification.json.",
+    "held03": "Final renamed complete appearance file 12/12 per runtime; label-verification.json.",
+    "notAdditive": true
+  },
+  "limits": [
+    "CSS source-budget assertions are not measured geometry or narrow viewport proof.",
+    "The 291-file successor comparison is post-run only; 288 inputs still match the initial before/after set, three source/test inputs changed.",
+    "No new full release qualification, build, public/offline or physical-device acceptance."
+  ],
+  "files": [
+    {
+      "source": ".cache/p05b/source-held-02.json",
+      "retained": "source-held-02.json",
+      "transformation": "byte-exact",
+      "originalBytes": 3558,
+      "originalSha256": "65da87662c33691a9c4c0f4d839c6d283bb888fbbd50e67b4de5509339b26d6e",
+      "retainedBytes": 3558,
+      "retainedSha256": "65da87662c33691a9c4c0f4d839c6d283bb888fbbd50e67b4de5509339b26d6e"
+    },
+    {
+      "source": ".cache/p05b/source-held-03.json",
+      "retained": "source-held-03.json",
+      "transformation": "byte-exact",
+      "originalBytes": 3366,
+      "originalSha256": "3b49bb093cf36d45c3f507bf3c6d87f07fa03422981d1e44f423b2f24e035be8",
+      "retainedBytes": 3366,
+      "retainedSha256": "3b49bb093cf36d45c3f507bf3c6d87f07fa03422981d1e44f423b2f24e035be8"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/appearance-label-format.log",
+      "retained": "appearance-label-format.log.gz",
+      "transformation": "lossless gzip, mtime 0",
+      "originalBytes": 66,
+      "originalSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "retainedBytes": 82,
+      "retainedSha256": "6cd316ae8e81df0ff79776205007450fac3d62e1ba8e884e169e326d7955ebe5"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/appearance-label-lint.log",
+      "retained": "appearance-label-lint.log.gz",
+      "transformation": "lossless gzip, mtime 0",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedBytes": 20,
+      "retainedSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/appearance-label-node20.log",
+      "retained": "appearance-label-node20.log.gz",
+      "transformation": "lossless gzip, mtime 0",
+      "originalBytes": 3023,
+      "originalSha256": "94c97e30f4193f94ae4462e290ee7e2afabdf9bf6e867fea70044a3ca446929a",
+      "retainedBytes": 904,
+      "retainedSha256": "1d300ac0e03cf4843e5de0998a1edb63d5bda351bb6346c0e481adab309f7f8b"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/appearance-label-node22.log",
+      "retained": "appearance-label-node22.log.gz",
+      "transformation": "lossless gzip, mtime 0",
+      "originalBytes": 3203,
+      "originalSha256": "91cedd795889ccc3bece06096944c6ab87c0289a110002db0357777e381d7fd4",
+      "retainedBytes": 921,
+      "retainedSha256": "538c315e853882ef92dd98ef63e69d26f5aa8128e85308d04a2299a5dbebd5ac"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/before-fix-node22.log",
+      "retained": "before-fix-node22.log.gz",
+      "transformation": "lossless gzip, mtime 0",
+      "originalBytes": 1064,
+      "originalSha256": "2605e731765d6dd0bf3c4ac3b5e941293ac38768e5198f133ff067fc434a213e",
+      "retainedBytes": 544,
+      "retainedSha256": "04039a45e7bdecfba6d5eca2d49540ab1ea87961f797982c18ed0cb44587518a"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/format.log",
+      "retained": "format.log.gz",
+      "transformation": "lossless gzip, mtime 0",
+      "originalBytes": 66,
+      "originalSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "retainedBytes": 82,
+      "retainedSha256": "6cd316ae8e81df0ff79776205007450fac3d62e1ba8e884e169e326d7955ebe5"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/inputs-after.json",
+      "retained": "inputs-after.json.gz",
+      "transformation": "lossless gzip, mtime 0",
+      "originalBytes": 44590,
+      "originalSha256": "455bfd2ae7a94800ff45fb72c2d88c2f1bbd25f750585cbde8cd9f53a9e6db6e",
+      "retainedBytes": 15552,
+      "retainedSha256": "090f28e5c52878d83b25156efec0800d02d70dea8e9b636471603a21dbc7ac8c"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/label-change.json",
+      "retained": "label-change.json",
+      "transformation": "byte-exact",
+      "originalBytes": 552,
+      "originalSha256": "6279d154cf6095b6fc41e4c36cb4e8ccd17f3295334ec1e06509260dc6afb230",
+      "retainedBytes": 552,
+      "retainedSha256": "6279d154cf6095b6fc41e4c36cb4e8ccd17f3295334ec1e06509260dc6afb230"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/label-verification.json",
+      "retained": "label-verification.json",
+      "transformation": "byte-exact",
+      "originalBytes": 1582,
+      "originalSha256": "b5b8b4b94c71090f4d2c9b409f02c3b3473554c6f1974418599f48903fae7ecf",
+      "retainedBytes": 1582,
+      "retainedSha256": "b5b8b4b94c71090f4d2c9b409f02c3b3473554c6f1974418599f48903fae7ecf"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/lint.log",
+      "retained": "lint.log.gz",
+      "transformation": "lossless gzip, mtime 0",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedBytes": 20,
+      "retainedSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/pre-label-menu-appearance.test.mjs",
+      "retained": "pre-label-menu-appearance.test.mjs",
+      "transformation": "byte-exact",
+      "originalBytes": 13972,
+      "originalSha256": "2fcf1560a0e743b5ddda2cb5b1809ca469230e22aac28740c87f3bac4d09cce7",
+      "retainedBytes": 13972,
+      "retainedSha256": "2fcf1560a0e743b5ddda2cb5b1809ca469230e22aac28740c87f3bac4d09cce7"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/predecessor-menu-appearance.css",
+      "retained": "predecessor-menu-appearance.css",
+      "transformation": "byte-exact",
+      "originalBytes": 3442,
+      "originalSha256": "b1b7f1124af7f63e0a09b8e3745a07f65f85eea57a0b9ae275455b7cd6abe207",
+      "retainedBytes": 3442,
+      "retainedSha256": "b1b7f1124af7f63e0a09b8e3745a07f65f85eea57a0b9ae275455b7cd6abe207"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/predecessor-menu-appearance.md",
+      "retained": "predecessor-menu-appearance.md",
+      "transformation": "byte-exact",
+      "originalBytes": 6312,
+      "originalSha256": "aa67a28cbeabc2cb52da66fa3cc79f51377e3a2b7f69419cf9e4b3c41ee1c1c4",
+      "retainedBytes": 6312,
+      "retainedSha256": "aa67a28cbeabc2cb52da66fa3cc79f51377e3a2b7f69419cf9e4b3c41ee1c1c4"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/predecessor-menu-appearance.test.mjs",
+      "retained": "predecessor-menu-appearance.test.mjs",
+      "transformation": "byte-exact",
+      "originalBytes": 11659,
+      "originalSha256": "228425d948464a228cabfe7e36af3e6e1da409987bd50e21b18322b3e9490a99",
+      "retainedBytes": 11659,
+      "retainedSha256": "228425d948464a228cabfe7e36af3e6e1da409987bd50e21b18322b3e9490a99"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/predecessor-menu-style-host.test.mjs",
+      "retained": "predecessor-menu-style-host.test.mjs",
+      "transformation": "byte-exact",
+      "originalBytes": 14786,
+      "originalSha256": "60fbf465bc6ea2e01910185262301b8a540592bc2f848ffd6dd50aadccefe16c",
+      "retainedBytes": 14786,
+      "retainedSha256": "60fbf465bc6ea2e01910185262301b8a540592bc2f848ffd6dd50aadccefe16c"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/predecessor.json",
+      "retained": "predecessor.json",
+      "transformation": "byte-exact",
+      "originalBytes": 1564,
+      "originalSha256": "318f7eeb5505d3b85bfd5e0d38d88489eb652d1bba08485458bc7d5e52f2552b",
+      "retainedBytes": 1564,
+      "retainedSha256": "318f7eeb5505d3b85bfd5e0d38d88489eb652d1bba08485458bc7d5e52f2552b"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/setup-unmatched-filter-node22.log",
+      "retained": "setup-unmatched-filter-node22.log.gz",
+      "transformation": "lossless gzip, mtime 0",
+      "originalBytes": 263,
+      "originalSha256": "6af1e2cd9a8328cebd8a305d074f46c43c3400d40e7e555c3006a30db1dec698",
+      "retainedBytes": 186,
+      "retainedSha256": "b7e44f45ca4745e42621e9c37bb09dd100cf638980917a908b35c1c407c2a9bf"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/source.diff",
+      "retained": "source.diff.gz",
+      "transformation": "lossless gzip, mtime 0; raw diff context whitespace retained",
+      "originalBytes": 5527,
+      "originalSha256": "23e1e48b2a4349a1c698c25c3ef1c124f45363e266a20db8ddaeab1a5048f1f9",
+      "retainedBytes": 1867,
+      "retainedSha256": "1939374588f32c1b8fc32641c0d0d80227da26852bc73010968471cc6de09a78"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/verification.json",
+      "retained": "verification.json",
+      "transformation": "byte-exact",
+      "originalBytes": 4631,
+      "originalSha256": "e9e5d144b0320e3e8d7add4e7a16fdd300a6ef65768fcfe6fd2bd9a46e2975c5",
+      "retainedBytes": 4631,
+      "retainedSha256": "e9e5d144b0320e3e8d7add4e7a16fdd300a6ef65768fcfe6fd2bd9a46e2975c5"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/whole-node20.log",
+      "retained": "whole-node20.log.gz",
+      "transformation": "lossless gzip, mtime 0",
+      "originalBytes": 5423,
+      "originalSha256": "024ef2dcd89cd811170115474086a2a4e02b209533d9f0c26b464d16037efbf8",
+      "retainedBytes": 1492,
+      "retainedSha256": "35280a3817fbc7506317f0990d860b2203eda63ba3f23bf690cb257a2a8da635"
+    },
+    {
+      "source": ".cache/p05b/gutter-fix/whole-node22.log",
+      "retained": "whole-node22.log.gz",
+      "transformation": "lossless gzip, mtime 0",
+      "originalBytes": 5767,
+      "originalSha256": "74113b2af0c06025c08cde9f346dad5d40bd710ed4df7b9192f3fe8b12df1eac",
+      "retainedBytes": 1516,
+      "retainedSha256": "714290cdc81d4febb39d425206d48b8c3ea05b8c6f525e83e7bb080edf53a990"
+    },
+    {
+      "source": ".cache/p05b/preview-gutters/binding.json",
+      "retained": "preview/binding.json",
+      "transformation": "byte-exact",
+      "originalBytes": 2804,
+      "originalSha256": "296ef3547754814f7d3b523e260aae7045c57347b0eb6bba86f0fe9f6bdd406a",
+      "retainedBytes": 2804,
+      "retainedSha256": "296ef3547754814f7d3b523e260aae7045c57347b0eb6bba86f0fe9f6bdd406a"
+    },
+    {
+      "source": ".cache/p05b/preview-gutters/http-source-check.json",
+      "retained": "preview/http-source-check.json",
+      "transformation": "byte-exact",
+      "originalBytes": 2256,
+      "originalSha256": "a9dd774292aa844b818328b62e1c101794c7defd61afa27008dcaa446983a75a",
+      "retainedBytes": 2256,
+      "retainedSha256": "a9dd774292aa844b818328b62e1c101794c7defd61afa27008dcaa446983a75a"
+    },
+    {
+      "source": ".cache/p05b/preview-gutters/preparation.json",
+      "retained": "preview/preparation.json",
+      "transformation": "byte-exact",
+      "originalBytes": 822,
+      "originalSha256": "217351c45caf622b854ca71fcd307f9f51ea9b33464a603e7bdedbe24dc9e134",
+      "retainedBytes": 822,
+      "retainedSha256": "217351c45caf622b854ca71fcd307f9f51ea9b33464a603e7bdedbe24dc9e134"
+    },
+    {
+      "source": ".cache/p05b/preview-gutters/serve.py",
+      "retained": "preview/serve.py",
+      "transformation": "byte-exact",
+      "originalBytes": 6958,
+      "originalSha256": "1f6c07c2deba5c71c532fe3ea6136f44ea3b5f92e33dc746defed074c0ab7b20",
+      "retainedBytes": 6958,
+      "retainedSha256": "1f6c07c2deba5c71c532fe3ea6136f44ea3b5f92e33dc746defed074c0ab7b20"
+    },
+    {
+      "source": "docs/verification/cross-mode/p05-b/README.md",
+      "retained": "predecessor-evidence-README.md",
+      "transformation": "byte-exact",
+      "originalBytes": 4345,
+      "originalSha256": "bb61b9c0f086ba75e5febbeade7aaa486a42d92f64591e19e7d9f253ebe766e8",
+      "retainedBytes": 4345,
+      "retainedSha256": "bb61b9c0f086ba75e5febbeade7aaa486a42d92f64591e19e7d9f253ebe766e8",
+      "sourceState": "Historical README at capture; current README deliberately advances with native and gutter results. Exact bb61 predecessor bytes retained and independently reviewed before the gutter successor."
+    }
+  ],
+  "totals": {
+    "files": 28,
+    "retainedBytes": 105795,
+    "originalBytes": 151601
+  },
+  "carrierUpdate": "Two raw diff artifacts use lossless gzip after Git whitespace checking flagged literal blank diff-context lines. Original decompressed SHA-256 and every source/native byte remain unchanged."
+}

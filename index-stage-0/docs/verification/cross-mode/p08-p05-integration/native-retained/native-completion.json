@@ -1,0 +1,68 @@
+{
+  "base": "3f934b7508645d2cad03466276d20e8d038f9d76",
+  "baseTree": "5be2690d05921fbe99fdc4e306de79fa6dd5be5c",
+  "sourceHoldSha256": "e92141bfea272954915778b99386ce9f4567f4eb937c201519afdefe45579687",
+  "productionFiles": [
+    {
+      "path": "game/couch/couch-static-pictures.mjs",
+      "bytes": 16109,
+      "sha256": "7fa81955a6a47b7178daec4be88a334fbe40d837673b7f9e792143913fd501df"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 47408,
+      "sha256": "8f933d40c6b9234f02326c446dab8bd60cecfc357f8f20816eca3df84ce32056"
+    },
+    {
+      "path": "game/couch/index.html",
+      "bytes": 15809,
+      "sha256": "ff17990b3e9fedf7a34aebdeb4ec6b17806ae781e45d67f6c45cfbaf385128ac"
+    },
+    {
+      "path": "game/presentation/page.mjs",
+      "bytes": 6550,
+      "sha256": "a51c2ae4b06cb61b00f7c498b0419ed5b54367169e6dae326b31a0b45c37bf60"
+    }
+  ],
+  "tests": {
+    "verificationSha256": "84908338d3394d6b93af1405218d8e2d86d1bed624541617aef665ff04410dce",
+    "node22": "Eleven complete files198pass, then installed whole12pass after exact fixture restoration; initial module refusal retained.",
+    "node20": "Twelve complete files210pass together.",
+    "rerunForPackaging": false
+  },
+  "native": {
+    "performedBy": "Root desktop browser/keyboard and screenshot inspection",
+    "normal": {
+      "port": 64092,
+      "events": 12,
+      "pngs": 7,
+      "scope": "First Signal Solo50%7820 win and full original; matching Versus52.2%8160 win, both boards/unfinished P2 line and complete4:3 arenas; Plain/Large/Reduced retains result; Solo Collection retains original7820 Gold16.14s."
+    },
+    "delayed": {
+      "port": 65050,
+      "events": 9,
+      "pngs": 5,
+      "fixture": "Only exactc1aedf89 PNG GET waits6seconds; original bytes and game clocks unchanged.",
+      "scope": "Setup Back cancels, Retry focuses Cancel, explicit Cancel restores Retry, later Retry preserves deliberately focused Team through Ready; fresh Start/Pause and explicit Resume/direction/real-clock play/Pause. Root visually inspected actual short gold cuts and original borders in live-resumed-cuts.png, both0%/3lives."
+    },
+    "corrections": [
+      "Normal event2 and event7 premature pause labels are corrected by events3/8: those rounds had already won; filenames solo-cut-paused/versus-cuts-paused are retained, not fresh paused-cut evidence.",
+      "Normal event5 used header Game menu, not Results Main menu.",
+      "Normal event10 temporarily toggled Boost then restored Off before Reduced Effects.",
+      "Normal event12 records DPR1.7999999523162842 versus earlier2, all viewport1309x1348; no zoom command was made by root, cause unverified and no200%scaling claim.",
+      "Delayed event9 DOM is paused after the separately captured live screenshot; reads are sequential, not an atomic runtime checkpoint."
+    ]
+  },
+  "postNativeHttp": {
+    "path": ".cache/p08-integration/native-post-http.json",
+    "bytes": 10602,
+    "sha256": "bbddc8051f82c53976d727071d95f28c0153f1d945cc1b8f3c4354b6b1f12788"
+  },
+  "phaseAccepted": false,
+  "publicRelease": false,
+  "limitations": [
+    "Root observed one shipped map/theme identity; all-map/assignment-change/failed-image/native-blur/physical-controller/touch/phone/Safari/offline/public gates remain separate.",
+    "P05-B and later P03 operation-focus not composed. Team picture modules/host remain separate.",
+    "Existing finished-to-Next prepares a new ready match before picture await; failed transition can replace prior results. P07 owns that preservation requirement."
+  ]
+}

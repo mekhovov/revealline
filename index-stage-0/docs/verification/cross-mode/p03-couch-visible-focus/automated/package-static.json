@@ -1,0 +1,48 @@
+{
+  "scope": "Final source/docs static checks only; no test rerun after documentation packaging.",
+  "checks": [
+    {
+      "name": "final-lint",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "node_modules/eslint/bin/eslint.js",
+        "game/couch/couch-shell.mjs",
+        "game/test/couch-shell.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 0.607,
+      "logBytes": 0,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "final-format",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "game/couch/couch-shell.mjs",
+        "game/test/couch-shell.test.mjs",
+        "docs/couch-visible-focus.md",
+        "docs/cross-mode-execution.md",
+        "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        "docs/verification/cross-mode/p03-couch-visible-focus/README.md"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 0.612,
+      "logBytes": 66,
+      "logSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "name": "final-diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 0.048,
+      "logBytes": 0,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "format": "revealline.scoped-native-evidence.v1",
+  "sourceHold": "a81322667bde06e741ed4ba0c468e538c3109c2d3b705f2f4a3e418ef18634dc",
+  "origin": "http://127.0.0.1:63406",
+  "bindingSha256": "70ea611c3c9ca52406b6417c08e25aaee48f66544f404f1a2bc7e0cf1aa2c37e",
+  "scope": "Root desktop keyboard/browser observations on immutable held01. Persistent gutter overlap blocks this predecessor.",
+  "events": 12,
+  "pngFiles": 8,
+  "outcome": "FAIL: inset Rich stripes overlap Versus and Team content because those shells lack inline gutters.",
+  "otherObservations": [
+    "Root observed menu preference persistence, reachable controls and late Music Library one-ornament ownership/opener return.",
+    "Event2 provisional hovered/contrast interpretation is corrected by events3/4; do not treat the transient100ms colour transition as a persistent blocker.",
+    "settings-tab-contrast-failure.png and settings-settled.png are byte-identical; preserve both filenames but do not claim independent visual states.",
+    "Music Library retained an existing teal primary button; no comprehensive palette-parity or whole-UI contrast claim."
+  ],
+  "reviewAttribution": "Root inspected all selected original screenshots. Lagrange separately inspected Versus-rich and Team-rich to diagnose the CSS gutter defect; no additional browser actions.",
+  "limits": [
+    "No actual zoom, narrow/short viewport, physical controller/touch/device, full phase or public/offline acceptance.",
+    "Node source-rule assertions cannot replace rendered geometry inspection."
+  ],
+  "files": [
+    {
+      "source": ".cache/p05b/native/events.json",
+      "retained": "events.json.gz",
+      "transformation": "lossless gzip,mtime0",
+      "originalBytes": 96768,
+      "originalSha256": "65906abc30e8d06ece19f147e7e595c05c143cd0872a39f460af168798d50725",
+      "retainedBytes": 8595,
+      "retainedSha256": "a82c3bd99feeedc420a9bf803e586000d029ea76c8dbc937781948e6a7b7d66f"
+    },
+    {
+      "source": ".cache/p05b/native/music-dialog-rich.png",
+      "retained": "music-dialog-rich.png",
+      "transformation": "byte-exact",
+      "originalBytes": 179368,
+      "originalSha256": "fa7c5179b5ccb9fdc4a9331c5b79bfeb38a77b335d188bc8624d652df93565d8",
+      "retainedBytes": 179368,
+      "retainedSha256": "fa7c5179b5ccb9fdc4a9331c5b79bfeb38a77b335d188bc8624d652df93565d8"
+    },
+    {
+      "source": ".cache/p05b/native/settings-rich.png",
+      "retained": "settings-rich.png",
+      "transformation": "byte-exact",
+      "originalBytes": 120706,
+      "originalSha256": "ae5ce4bf7c2eb43bfbd4cf3332061941f60a07ed3a04b9e32beb6a6df6fc1c9f",
+      "retainedBytes": 120706,
+      "retainedSha256": "ae5ce4bf7c2eb43bfbd4cf3332061941f60a07ed3a04b9e32beb6a6df6fc1c9f"
+    },
+    {
+      "source": ".cache/p05b/native/settings-settled.png",
+      "retained": "settings-settled.png",
+      "transformation": "byte-exact",
+      "originalBytes": 100079,
+      "originalSha256": "166b80350cfa90a39f25b49c5cb11906b9c49c3a7e1467dc5881a237abd10b13",
+      "retainedBytes": 100079,
+      "retainedSha256": "166b80350cfa90a39f25b49c5cb11906b9c49c3a7e1467dc5881a237abd10b13"
+    },
+    {
+      "source": ".cache/p05b/native/settings-tab-contrast-failure.png",
+      "retained": "settings-tab-contrast-failure.png",
+      "transformation": "byte-exact",
+      "originalBytes": 100079,
+      "originalSha256": "166b80350cfa90a39f25b49c5cb11906b9c49c3a7e1467dc5881a237abd10b13",
+      "retainedBytes": 100079,
+      "retainedSha256": "166b80350cfa90a39f25b49c5cb11906b9c49c3a7e1467dc5881a237abd10b13"
+    },
+    {
+      "source": ".cache/p05b/native/team-rich.png",
+      "retained": "team-rich.png",
+      "transformation": "byte-exact",
+      "originalBytes": 168858,
+      "originalSha256": "7f7f9e7b6fd7a1b380800f87761e9adae62a1e8eb8fba5ed95bd4240d8930aba",
+      "retainedBytes": 168858,
+      "retainedSha256": "7f7f9e7b6fd7a1b380800f87761e9adae62a1e8eb8fba5ed95bd4240d8930aba"
+    },
+    {
+      "source": ".cache/p05b/native/title-default.png",
+      "retained": "title-default.png",
+      "transformation": "byte-exact",
+      "originalBytes": 202925,
+      "originalSha256": "9662df17d282ed70b9fbd7bf01c445a2527693eec20fa74b4526e175f9431bc7",
+      "retainedBytes": 202925,
+      "retainedSha256": "9662df17d282ed70b9fbd7bf01c445a2527693eec20fa74b4526e175f9431bc7"
+    },
+    {
+      "source": ".cache/p05b/native/versus-off.png",
+      "retained": "versus-off.png",
+      "transformation": "byte-exact",
+      "originalBytes": 79601,
+      "originalSha256": "6172c97108bc02ec91478128ac8964771a41876e79a7cbffa93186abdcf2d3bb",
+      "retainedBytes": 79601,
+      "retainedSha256": "6172c97108bc02ec91478128ac8964771a41876e79a7cbffa93186abdcf2d3bb"
+    },
+    {
+      "source": ".cache/p05b/native/versus-rich.png",
+      "retained": "versus-rich.png",
+      "transformation": "byte-exact",
+      "originalBytes": 99410,
+      "originalSha256": "24fd9e95a36214d0cddee5355f58ca72a1545f7d22c79ca907a2302eb104df69",
+      "retainedBytes": 99410,
+      "retainedSha256": "24fd9e95a36214d0cddee5355f58ca72a1545f7d22c79ca907a2302eb104df69"
+    }
+  ],
+  "copiedAt": "2026-09-15T21:01:40.665207+00:00"
+}

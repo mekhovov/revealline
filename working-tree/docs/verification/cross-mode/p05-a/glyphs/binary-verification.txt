@@ -1,0 +1,6 @@
+PASS handjet-display-600.woff2: 38,120 bytes; 178 required characters; 1339 mapped codepoints
+PASS exo2-ui-400-600.woff2: 76,652 bytes; 178 required characters; 911 mapped codepoints
+PASS ibm-plex-mono-500.woff2: 40,080 bytes; 178 required characters; 930 mapped codepoints
+PASS Ukrainian Ґґ Єє Іі Її, English, punctuation, pinned hashes, licenses, axes, and equal-width telemetry digits
+PASS local Exo 2 → IBM Plex Mono fallback covers ₴ ↑ ↓ ← →
+Total font payload: 154,852 bytes

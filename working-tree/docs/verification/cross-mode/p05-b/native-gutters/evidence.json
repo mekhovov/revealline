@@ -1,0 +1,125 @@
+{
+  "format": "revealline.scoped-native-evidence.v1",
+  "scope": "Root final desktop keyboard review of corrected P05-B gutters, not whole phase acceptance",
+  "origin": "http://127.0.0.1:64717",
+  "productionHoldSha256": "65da87662c33691a9c4c0f4d839c6d283bb888fbbd50e67b4de5509339b26d6e",
+  "sourceHoldSha256": "3b49bb093cf36d45c3f507bf3c6d87f07fa03422981d1e44f423b2f24e035be8",
+  "bindingSha256": "296ef3547754814f7d3b523e260aae7045c57347b0eb6bba86f0fe9f6bdd406a",
+  "events": 6,
+  "pngFiles": 5,
+  "outcome": "PASS for observed gutter placement, Rich/Off/Subtle focus retention and paused Team Options close.",
+  "attribution": "Root sealed the six-event/five-PNG run and inspected all five images. Lagrange packages metadata and verifies source HTTP only; no new native or image inspection claimed.",
+  "geometry": [
+    {
+      "source": "versus-geometry.json",
+      "surface": "race-options-panel",
+      "minimumSampledGapPx": 6.444424741211151,
+      "horizontalOverflow": false
+    },
+    {
+      "source": "team-geometry.json",
+      "surface": "coop-menu",
+      "minimumSampledGapPx": 5.3333319073486365,
+      "horizontalOverflow": false
+    }
+  ],
+  "observedViewport": {
+    "width": 1309,
+    "height": 1348,
+    "devicePixelRatio": 1.7999999523162842,
+    "qualification": "Recorded actual metrics only; DPR difference from predecessor is not a browser-zoom test or controlled scale comparison."
+  },
+  "remaining": [
+    "Team pause action row and mode row touch vertically; focus outlines overlap although text remains legible. Separate spacing polish remains open.",
+    "No narrow/short viewport, actual browser zoom, physical controller/touch/device, real system-motion/storage-event or denied-save certification.",
+    "No P03 operation-focus/P08 composition, public/offline, full release or P05 phase completion."
+  ],
+  "files": [
+    {
+      "source": ".cache/p05b/native-gutters/events.json",
+      "retained": "events.json.gz",
+      "transformation": "lossless gzip, mtime 0",
+      "originalBytes": 102601,
+      "originalSha256": "1df5655d2c0d7dbeff1ad021cbeb7af04f99445ef67b6225d2233f1efd8b6129",
+      "retainedBytes": 8752,
+      "retainedSha256": "913c30c69cea463be2184a7ec79854e1d524ac79957dc21ef9919b4fcb36e9c2"
+    },
+    {
+      "source": ".cache/p05b/native-gutters/team-geometry.json",
+      "retained": "team-geometry.json",
+      "transformation": "byte-exact",
+      "originalBytes": 3832,
+      "originalSha256": "8c04bc4abafe2f88c625476f44614aa755ef248116a2f4add2e5b7f6c42f0925",
+      "retainedBytes": 3832,
+      "retainedSha256": "8c04bc4abafe2f88c625476f44614aa755ef248116a2f4add2e5b7f6c42f0925"
+    },
+    {
+      "source": ".cache/p05b/native-gutters/team-pause-fixed.png",
+      "retained": "team-pause-fixed.png",
+      "transformation": "byte-exact",
+      "originalBytes": 107328,
+      "originalSha256": "34a90b389f3c35944e9268a01568d810cae1bd7e8228bb72d5879f01a0f9ae54",
+      "retainedBytes": 107328,
+      "retainedSha256": "34a90b389f3c35944e9268a01568d810cae1bd7e8228bb72d5879f01a0f9ae54"
+    },
+    {
+      "source": ".cache/p05b/native-gutters/team-paused-off.png",
+      "retained": "team-paused-off.png",
+      "transformation": "byte-exact",
+      "originalBytes": 121453,
+      "originalSha256": "520f073e73fe55538e174bfd08422b3b60fbc8b4d0a9369e2276232df59a5a0f",
+      "retainedBytes": 121453,
+      "retainedSha256": "520f073e73fe55538e174bfd08422b3b60fbc8b4d0a9369e2276232df59a5a0f"
+    },
+    {
+      "source": ".cache/p05b/native-gutters/team-paused-subtle.png",
+      "retained": "team-paused-subtle.png",
+      "transformation": "byte-exact",
+      "originalBytes": 134206,
+      "originalSha256": "7f9f0056ab94ab2a843a485593a49f5dfad5fd9ee4e5fbd13da0a158a761c1e9",
+      "retainedBytes": 134206,
+      "retainedSha256": "7f9f0056ab94ab2a843a485593a49f5dfad5fd9ee4e5fbd13da0a158a761c1e9"
+    },
+    {
+      "source": ".cache/p05b/native-gutters/team-rich-fixed.png",
+      "retained": "team-rich-fixed.png",
+      "transformation": "byte-exact",
+      "originalBytes": 174953,
+      "originalSha256": "918224a9d84df339530e18310f4b1ec83220ed52ebb7f9031025b8f80d4ee147",
+      "retainedBytes": 174953,
+      "retainedSha256": "918224a9d84df339530e18310f4b1ec83220ed52ebb7f9031025b8f80d4ee147"
+    },
+    {
+      "source": ".cache/p05b/native-gutters/versus-geometry.json",
+      "retained": "versus-geometry.json",
+      "transformation": "byte-exact",
+      "originalBytes": 2554,
+      "originalSha256": "f241ca14a0490016341e3b5a685230ae22ee35167b2b0469bde62f07eedd61b8",
+      "retainedBytes": 2554,
+      "retainedSha256": "f241ca14a0490016341e3b5a685230ae22ee35167b2b0469bde62f07eedd61b8"
+    },
+    {
+      "source": ".cache/p05b/native-gutters/versus-rich-fixed.png",
+      "retained": "versus-rich-fixed.png",
+      "transformation": "byte-exact",
+      "originalBytes": 110261,
+      "originalSha256": "9aa1c169915fee3d26681e1739f35fb3480dba6e4a734bfa9e0ce89419529fc0",
+      "retainedBytes": 110261,
+      "retainedSha256": "9aa1c169915fee3d26681e1739f35fb3480dba6e4a734bfa9e0ce89419529fc0"
+    },
+    {
+      "source": ".cache/p05b/preview-gutters/http-source-check-after.json",
+      "retained": "http-source-check-after.json",
+      "transformation": "byte-exact",
+      "originalBytes": 3210,
+      "originalSha256": "1937632bbdca6784e2b57ef87c696f908b8577bb63847fdec1fd1a94d57090e6",
+      "retainedBytes": 3210,
+      "retainedSha256": "1937632bbdca6784e2b57ef87c696f908b8577bb63847fdec1fd1a94d57090e6"
+    }
+  ],
+  "totals": {
+    "files": 9,
+    "retainedBytes": 666549,
+    "originalBytes": 760398
+  }
+}

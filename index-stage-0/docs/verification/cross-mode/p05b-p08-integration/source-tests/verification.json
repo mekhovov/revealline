@@ -1,0 +1,133 @@
+{
+  "scope": "Bounded P05-B/P08 static composition qualification, no full release/native/public phase claim",
+  "sourceHoldSha256": "b1e8d58a209f1baf4942573bda4e45d45a624371703348937e59eaf9fec43194",
+  "sourceTree": "455ba9a573273d26811e41b9b1e910ec0619f310",
+  "productionPinsUnchanged": 14,
+  "heldFilesUnchanged": 33,
+  "runs": [
+    {
+      "node": "22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/controller-navigation.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/couch-audio-master.test.mjs",
+        "game/test/couch-chapter.test.mjs",
+        "game/test/couch-initial-focus.test.mjs",
+        "game/test/couch-input.test.mjs",
+        "game/test/couch-installed-chapters.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-static-picture-host.test.mjs",
+        "game/test/couch-static-pictures.test.mjs",
+        "game/test/display-preferences-host.test.mjs",
+        "game/test/menu-appearance.test.mjs",
+        "game/test/menu-style-host.test.mjs",
+        "game/test/menu-style-preferences.test.mjs",
+        "game/test/presentation-page.test.mjs",
+        "game/test/title-entry-host.test.mjs"
+      ],
+      "startedAt": "2026-09-15T21:17:16.590433+00:00",
+      "wallSeconds": 93.228962,
+      "exitCode": 1,
+      "log": ".cache/p05b-p08/union-node22.log",
+      "logBytes": 86728,
+      "logSha256": "5182a61b422e07c97b2080edd332adab4359f48ab4608f8e92fd7954f0444d4f",
+      "summary": {
+        "tests": 359,
+        "pass": 358,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "node": "22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/couch-installed-chapters.test.mjs"
+      ],
+      "startedAt": "2026-09-15T21:20:47.049863+00:00",
+      "wallSeconds": 166.142911,
+      "exitCode": 0,
+      "log": ".cache/p05b-p08/installed-node22.log",
+      "logBytes": 3424,
+      "logSha256": "dbf34325ba347546eacd9d1d5e6f10e90c8d52f8cbf4de80156bfb33996a6cbe",
+      "summary": {
+        "tests": 12,
+        "pass": 12,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "node": "20.19.5",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/controller-navigation.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/couch-audio-master.test.mjs",
+        "game/test/couch-chapter.test.mjs",
+        "game/test/couch-initial-focus.test.mjs",
+        "game/test/couch-input.test.mjs",
+        "game/test/couch-installed-chapters.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-static-picture-host.test.mjs",
+        "game/test/couch-static-pictures.test.mjs",
+        "game/test/display-preferences-host.test.mjs",
+        "game/test/menu-appearance.test.mjs",
+        "game/test/menu-style-host.test.mjs",
+        "game/test/menu-style-preferences.test.mjs",
+        "game/test/presentation-page.test.mjs",
+        "game/test/title-entry-host.test.mjs"
+      ],
+      "startedAt": "2026-09-15T21:23:33.468424+00:00",
+      "wallSeconds": 197.311751,
+      "exitCode": 0,
+      "log": ".cache/p05b-p08/union-node20.log",
+      "logBytes": 82811,
+      "logSha256": "56936aa95e8919d48e256ba8813a8103019beb6e639a09c7479276e3f5067542",
+      "summary": {
+        "tests": 370,
+        "pass": 370,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "coverage": {
+    "Node22": "Sixteen complete files retain358 passing cases in the initial17-file command, whose installed-file import failed. After exact four-script restoration, the entire installed file passes12. All17 selected files have370 passing cases across separate commands; no whole17-file Node22 passing rerun claimed.",
+    "Node20": "All17 complete files pass370/370 in one command.",
+    "initialFailure": "Missing scripts/game-cli.mjs through authoring verify-images. Four exact static script dependencies76,256B restored; source/tests unchanged. Original failure remains retained."
+  },
+  "inputs": {
+    "initialCount": 532,
+    "initialBytes": 78577051,
+    "initialBeforeAfterExact": true,
+    "finalCount": 536,
+    "finalBytes": 78653307,
+    "finalBeforeAfterExact": true,
+    "allOriginalInputsStillExact": true,
+    "added": [
+      "scripts/external-distribution.mjs",
+      "scripts/game-cli.mjs",
+      "scripts/optional-distribution.mjs",
+      "scripts/pack-indexes.mjs"
+    ],
+    "limit": "Finite materialized tracked files, including unused preserved evidence; not complete dynamic import/read tracing or a node_modules graph."
+  },
+  "sourcePeers": "Root and Parfit closed held01 source-only review; source-review.json.",
+  "limits": [
+    "No broad build/full release CI, new artwork/registry/producer, version or publication.",
+    "Native normal/delayed results are separate root-owned records; physical/zoom/offline/audio acceptance is not supplied by these tests."
+  ]
+}

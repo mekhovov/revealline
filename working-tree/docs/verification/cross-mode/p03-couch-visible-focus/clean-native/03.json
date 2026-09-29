@@ -1,0 +1,17 @@
+{
+  "active": {
+    "id": "race-pause",
+    "rect": {
+      "height": 50,
+      "width": 126.0234375,
+      "x": 12,
+      "y": 6
+    },
+    "text": "Results"
+  },
+  "dpr": 1,
+  "height": 390,
+  "scrollY": 0,
+  "text": "Results\nSUNFLOWER\n1 : 0\nSKYLINE\n1:27\nSunflower\nfinished\n\n52.2% · 3 lives · 8160 points\n\nSkyline\nfinished\n\n0.0% · 3 lives · 0 points",
+  "width": 844
+}

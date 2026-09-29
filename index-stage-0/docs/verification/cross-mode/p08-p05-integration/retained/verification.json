@@ -1,0 +1,209 @@
+{
+  "baseline": "3f934b7508645d2cad03466276d20e8d038f9d76",
+  "incomingDelta": "f047a46a9a1bb9982600bd7e2682d765a75cb9cc..1da77ee586d0fdd3ac73883235a822b959e85b37",
+  "productionUnchangedSinceHold": true,
+  "sourceFiles": [
+    {
+      "path": "game/couch/couch-static-pictures.mjs",
+      "bytes": 16109,
+      "sha256": "7fa81955a6a47b7178daec4be88a334fbe40d837673b7f9e792143913fd501df"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 47408,
+      "sha256": "8f933d40c6b9234f02326c446dab8bd60cecfc357f8f20816eca3df84ce32056"
+    },
+    {
+      "path": "game/couch/index.html",
+      "bytes": 15809,
+      "sha256": "ff17990b3e9fedf7a34aebdeb4ec6b17806ae781e45d67f6c45cfbaf385128ac"
+    },
+    {
+      "path": "game/presentation/page.mjs",
+      "bytes": 6550,
+      "sha256": "a51c2ae4b06cb61b00f7c498b0419ed5b54367169e6dae326b31a0b45c37bf60"
+    },
+    {
+      "path": "game/test/couch-chapter.test.mjs",
+      "bytes": 10295,
+      "sha256": "24a6129df0003f75cbf7e6e34e79304d83924853c4ae9ad18cb0fab8e6abbd00"
+    },
+    {
+      "path": "game/test/couch-initial-focus.test.mjs",
+      "bytes": 7286,
+      "sha256": "72b8f256bdd8225c12840d65a6ae015a97f800eab9539bbd444271f4f5127da0"
+    },
+    {
+      "path": "game/test/couch-installed-chapters.test.mjs",
+      "bytes": 33742,
+      "sha256": "d7c1e93fbec71297cd2c2a0283ead988f76cc15c5f74908e122bf4187dcee7dc"
+    },
+    {
+      "path": "game/test/couch-navigation.test.mjs",
+      "bytes": 23470,
+      "sha256": "73da8a311b0ac652863bdc7c0394e1467cc6c47b0bacd0f4d299b641c4c2431e"
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 17316,
+      "sha256": "0d3bfc20a4ea0b1291f0296bb8288686a08319a96ac1c97192d89a956bd800c3"
+    },
+    {
+      "path": "game/test/couch-static-picture-host.test.mjs",
+      "bytes": 16872,
+      "sha256": "c711d9da2fe1b0fd488a7b6b687c225b5de0cea0e678f30cc29b49622cd9e6c2"
+    },
+    {
+      "path": "game/test/couch-static-pictures.test.mjs",
+      "bytes": 21792,
+      "sha256": "525b622996a48ecd0fb0b4ea683ac21462f874e90d3509353d50f6880c95ab5c"
+    },
+    {
+      "path": "game/test/helpers/couch-host.mjs",
+      "bytes": 8520,
+      "sha256": "e08e9814ba61d09977481d475f392b93ae057f51af31e4d2234dbdf274f4c094"
+    },
+    {
+      "path": "game/test/presentation-page.test.mjs",
+      "bytes": 9509,
+      "sha256": "25c21fb9ea740842a19cdf532b84c7f7585b9e956713b81aa0fbf73a444d2fab"
+    },
+    {
+      "path": "docs/shared-static-pictures.md",
+      "bytes": 7066,
+      "sha256": "dfabb6c96629aff1943ca563da2d940a50d42cf6e470423e52121b91847c5e91"
+    },
+    {
+      "path": "docs/p08-static-p05-composition.md",
+      "bytes": 2577,
+      "sha256": "55f4ed3819f39cbd1b92521c01abe45dedfa2d59fbd60228a510442b48afd221"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 124451,
+      "sha256": "2eab2236173c10b3e2d55f88ea2302cc3f1102910dd5642ce46e94c4a04da743"
+    }
+  ],
+  "preservedBaselineFiles": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 260548,
+      "sha256": "e9d6b2f30ce4c7ddb19f0490e80c3d337b2283b493ef985dbae6636865aa8fa3"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 71029,
+      "sha256": "abb8283e270d78edca271840ec94978587a8a4c273114ff83a750692730dce7f"
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "bytes": 18766,
+      "sha256": "fe07efe98487bbee60cdb1fe163f4b1374038cfcbaf31de71ebf696d2f713649"
+    },
+    {
+      "path": "game/ui/modal-navigation.mjs",
+      "bytes": 4082,
+      "sha256": "fd37db206138f733e7a184f1b4b3e26cf8fc594e336542fb16277eddcc01ad3e"
+    },
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 14226,
+      "sha256": "2f6b32d98ac04b1afa313f00d5d68149e42110914db3f316c135a8dbafc97f76"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 35080,
+      "sha256": "b6aa26c8324549a110ff9ee196d86503f0986ab65f82bf9b6a198a680d0adb4f"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 15922,
+      "sha256": "305fd62619a621a0bbbfeb92a2725a37c92436106e94be801e9b15ca56a69cba"
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "bytes": 16322,
+      "sha256": "6e76413f2435970c8c69b75ee05aeeb898297ed851d488b6de241d8edce6056b"
+    },
+    {
+      "path": "game/ui/mode-choice.mjs",
+      "bytes": 1339,
+      "sha256": "7b7f7369966c7d56d1c74c512bff7da006d5e6b29ec9d2bc08bc0d184107b858"
+    },
+    {
+      "path": "game/ui/mode-choice.css",
+      "bytes": 1506,
+      "sha256": "e731f8bac965adcec2e8fe5fe855eeb53c28a2f77529d619fedc2898ea49e7d6"
+    },
+    {
+      "path": "game/display-preferences.mjs",
+      "bytes": 7319,
+      "sha256": "923bff19b744069eddee0735de2716674278d28ca3e00441ad5bf984a081a576"
+    },
+    {
+      "path": "game/ui/field-kit-surfaces.css",
+      "bytes": 18373,
+      "sha256": "ea7a826b528a565d1a0113f57cd46fa477b962839d8de26f9919d89f7ad6c2af"
+    },
+    {
+      "path": "game/ui/pixel-theme.css",
+      "bytes": 21573,
+      "sha256": "de78f169100bd13c83bc16a4b95eca19e754b83ff95c2b73a1c59cbda20b8d98"
+    }
+  ],
+  "testFiles": [
+    "game/test/couch-static-pictures.test.mjs",
+    "game/test/couch-static-picture-host.test.mjs",
+    "game/test/presentation-page.test.mjs",
+    "game/test/couch-chapter.test.mjs",
+    "game/test/couch-installed-chapters.test.mjs",
+    "game/test/couch-navigation.test.mjs",
+    "game/test/couch-shell.test.mjs",
+    "game/test/couch-initial-focus.test.mjs",
+    "game/test/couch-input.test.mjs",
+    "game/test/controller-navigation.test.mjs",
+    "game/test/display-preferences-host.test.mjs",
+    "game/test/couch-audio-master.test.mjs"
+  ],
+  "node22": {
+    "passingCasesAcrossCompleteFiles": 210,
+    "completeFiles": 12,
+    "coverage": "11 complete files /198 passing cases in whole-01, plus installed-chapters whole12/12 after exact missing fixtures were restored. No twelve-file final rerun on Node22.",
+    "records": [
+      {
+        "path": ".cache/p08-integration/whole-01-node22.json",
+        "bytes": 1710,
+        "sha256": "dde0bd5497a3a1076935fd67ccbc53d161297191371c42c9307c66ce2942ac34"
+      },
+      {
+        "path": ".cache/p08-integration/installed-02-node22.json",
+        "bytes": 723,
+        "sha256": "1adc404b1ba1ed4a552b1349d6c260dfb8527d6584d0991e999e230a8e10ab94"
+      }
+    ]
+  },
+  "node20": {
+    "passingCases": 210,
+    "completeFiles": 12,
+    "record": {
+      "path": ".cache/p08-integration/whole-02-node20.json",
+      "bytes": 1710,
+      "sha256": "9c4c4a2bbffe8e0fba1b79e405e7b1a0f3e87532e4aa55ea3230cb5bbe0c3f80"
+    }
+  },
+  "failure": "The first Node22 launcher reported one installed-chapters module import refusal for an absent sparse fixture. No runtime or assertion changed; restored exact baseline Git leaves are separately pinned.",
+  "checks": {
+    "path": ".cache/p08-integration/static-checks.json",
+    "bytes": 1195,
+    "sha256": "7e0168ea8c40d5524654f3e80da86e94f173276337aa3f91dd74aaba2ec9f5be"
+  },
+  "nativeAccepted": false,
+  "phaseAccepted": false,
+  "publicAccepted": false,
+  "limits": [
+    "Finite DOM, Image and storage/controller models are source evidence only.",
+    "Existing finished-to-Next constructs a new ready match before required picture completion; preserving prior results on failed transition is separate P07 work.",
+    "Team picture host, P05-B menu style and later P03 operation-focus correction are not included."
+  ],
+  "freeBytes": 3583074304
+}

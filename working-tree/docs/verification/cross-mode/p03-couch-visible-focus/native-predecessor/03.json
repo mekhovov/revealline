@@ -1,0 +1,36 @@
+{
+  "active": {
+    "id": "race-pause",
+    "tag": "BUTTON",
+    "text": "Results"
+  },
+  "canvases": [
+    {
+      "height": 576,
+      "id": "race-canvas-0",
+      "rect": {
+        "height": 234.8125,
+        "width": 400,
+        "x": 13,
+        "y": 103.1875
+      },
+      "width": 768
+    },
+    {
+      "height": 576,
+      "id": "race-canvas-1",
+      "rect": {
+        "height": 234.8125,
+        "width": 400,
+        "x": 431,
+        "y": 103.1875
+      },
+      "width": 768
+    }
+  ],
+  "dpr": 1,
+  "height": 390,
+  "scrollHeight": 390,
+  "scrollWidth": 844,
+  "width": 844
+}
