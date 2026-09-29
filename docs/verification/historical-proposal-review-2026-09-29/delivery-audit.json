@@ -1,0 +1,139 @@
+{
+  "format": "revealline-source-delivery-cutoff.v1",
+  "verifiedAtUTC": "2026-09-29T15:30:56.214080+00:00",
+  "recovery": {
+    "ref": "codex/local-recovery-20260929",
+    "advertisedCommit": "117d892e8bb140a1c30b574f1b23bba280d0adfe",
+    "cutoff": {
+      "capturedThrough": "2026-09-29T15:27:54.400408+00:00",
+      "initialSnapshotCount": 53,
+      "additionalSnapshotCount": 2,
+      "stashCount": 7,
+      "historicalFrontierTips": 240,
+      "scope": "Git source, nondependency working files and index stages observed during the audit. Owners may create later edits. No further active-owner capture after this cutoff.",
+      "notReleaseSource": true
+    },
+    "allSevenStashesReachable": true,
+    "historicalWorkingBlobVariantsVerified": 195,
+    "historicalWorkingBytesVerified": 50475740,
+    "originalLocalBranchTipsCovered": 1188,
+    "originalCoverageAlreadyRemote": 879,
+    "originalCoverageViaRecovery": 309,
+    "releaseSource": false
+  },
+  "primary": {
+    "head": "0cc7337a8e490d73ad9d7718fb5b208aaf7da924",
+    "clean": true
+  },
+  "openPRs": [
+    {
+      "number": 803,
+      "head": "8f06ab31ee5754ec38c759609c45881b63784801",
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "draft": false
+    },
+    {
+      "number": 802,
+      "head": "61eeeadb2e66c8ff80c82784f0801e9eabc69037",
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "draft": true
+    },
+    {
+      "number": 797,
+      "head": "4ce585fb666f5338f0d69aebe5df3d64d66a9546",
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "draft": true
+    },
+    {
+      "number": 796,
+      "head": "c99fbbac348691bb91bd16a7e1e281f5a9e2b69b",
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "draft": true
+    },
+    {
+      "number": 795,
+      "head": "6a949973b740edacc953c120d38008b346b7724a",
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "draft": false
+    },
+    {
+      "number": 787,
+      "head": "6138b28ba068455128c3d4f55de6aa2ae283649f",
+      "milestone": "Branch reconciliation",
+      "draft": true
+    },
+    {
+      "number": 783,
+      "head": "0cc7337a8e490d73ad9d7718fb5b208aaf7da924",
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "draft": true
+    },
+    {
+      "number": 782,
+      "head": "82f9e6ff20941e0b2837438e73eecdd79fad61d6",
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "draft": true
+    },
+    {
+      "number": 781,
+      "head": "a5880c478fda3662f6943af15fba7dcf8e2d0a3e",
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "draft": true
+    },
+    {
+      "number": 780,
+      "head": "5d942540e5720d739568d8580ae35d5551253481",
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "draft": true
+    },
+    {
+      "number": 779,
+      "head": "2c160ed7e8f291fcc80e35c8fa6192d72ce2dfa6",
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "draft": true
+    },
+    {
+      "number": 761,
+      "head": "478a2b23dc7998afa35464c10b59eb0d10ce54e5",
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "draft": true
+    },
+    {
+      "number": 747,
+      "head": "8f9b7aa6d1494aedfb310dad429b815d43331f31",
+      "milestone": "v0.142.4 \u2014 Mission selector and level cards",
+      "draft": false
+    },
+    {
+      "number": 745,
+      "head": "e390ac9dd1066af78f4e2ce7b3772f66d8de59ad",
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "draft": false
+    },
+    {
+      "number": 738,
+      "head": "ec5825e283c1250e423f881677617bdd017d4559",
+      "milestone": "v0.142.4 \u2014 Mission selector and level cards",
+      "draft": false
+    },
+    {
+      "number": 736,
+      "head": "7af3dde47daaf4bc8cd92574a6d62dc803ee00b2",
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "draft": false
+    }
+  ],
+  "residueNotForPublication": [
+    "dependency links/directories and ignored generated caches",
+    "OS .DS_Store metadata",
+    "private ignored media and paused soundtrack candidates outside Git remain excluded",
+    "obsolete, damaged and conflicted variants are recovery evidence only; no product adoption",
+    "owner edits after the recorded cutoff require a later owner checkpoint"
+  ],
+  "checksNotClaimed": [
+    "runtime or physical-device acceptance",
+    "public deployment of v0.150.0",
+    "blanket semantic adoption of historical code"
+  ],
+  "scope": "Preserve reviewed source without altering owner worktrees or staging areas. Current feature PRs govern release integration; archive retention alone does not schedule historical behavior."
+}
