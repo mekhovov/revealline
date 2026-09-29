@@ -31,7 +31,7 @@
         "automated": "catalogue, supported modes, scene and two launch routes checked",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "browser": "pending exact-candidate qualification",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, icons, 44px targets, decoded artwork and no essential clipping or horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
         "standalonePackage": "pending exact-candidate qualification",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
@@ -57,7 +57,7 @@
         "automated": "catalogue, supported modes, scene and two launch routes checked",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "browser": "pending exact-candidate qualification",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, icons, 44px targets, decoded artwork and no essential clipping or horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
         "standalonePackage": "pending exact-candidate qualification",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
@@ -87,7 +87,7 @@
         "automated": "catalogue, supported modes, scene and two launch routes checked",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "browser": "pending exact-candidate qualification",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, icons, 44px targets, decoded artwork and no essential clipping or horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
         "standalonePackage": "pending exact-candidate qualification",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
@@ -113,7 +113,7 @@
         "automated": "catalogue, supported modes, scene and two launch routes checked",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "browser": "pending exact-candidate qualification",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, icons, 44px targets, decoded artwork and no essential clipping or horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
         "standalonePackage": "pending exact-candidate qualification",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
@@ -139,7 +139,7 @@
         "automated": "catalogue, supported modes, scene and two launch routes checked",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "browser": "pending exact-candidate qualification",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, icons, 44px targets, decoded artwork and no essential clipping or horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
         "standalonePackage": "pending exact-candidate qualification",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
@@ -165,7 +165,7 @@
         "automated": "catalogue, supported modes, scene and two launch routes checked",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "browser": "pending exact-candidate qualification",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, icons, 44px targets, decoded artwork and no essential clipping or horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
         "standalonePackage": "pending exact-candidate qualification",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
@@ -191,7 +191,7 @@
         "automated": "catalogue, supported modes, scene and two launch routes checked",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "browser": "pending exact-candidate qualification",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, icons, 44px targets, decoded artwork and no essential clipping or horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
         "standalonePackage": "pending exact-candidate qualification",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
@@ -217,7 +217,7 @@
         "automated": "catalogue, supported modes, scene and two launch routes checked",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "browser": "pending exact-candidate qualification",
+        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, icons, 44px targets, decoded artwork and no essential clipping or horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
         "standalonePackage": "pending exact-candidate qualification",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
