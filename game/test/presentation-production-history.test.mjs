@@ -6,15 +6,15 @@ import { reviseStudioTheme, adoptStudioBundle } from '../presentation/studio-ses
 import { retainProductionHistory } from '../../scripts/presentation-production-history.mjs';
 import { retainFieldKitProductionHistory } from '../../scripts/team-production-history.mjs';
 import fs from 'node:fs/promises';
-import os from 'node:os';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { importThemeBundle, exportThemeBundle } from '../presentation/bundle.mjs';
 import {
   createFieldKitProduction,
   fieldKitEquipmentQuality,
   fieldKitEquipmentSource,
+  fieldKitRecipeSources,
+  fieldKitRecipeQuality,
 } from '../../scripts/produce-field-kit-theme.mjs';
+import { readCumulativeNativeContinuation } from '../../scripts/cumulative-native-source-continuation.mjs';
 import { createHash } from 'node:crypto';
 import { canonicalJSON } from '../data-json.mjs';
 import { compilePresentation } from '../../scripts/compile-presentation.mjs';
@@ -415,6 +415,17 @@ test('production refuses silent slot contract mutation and can explicitly return
   );
 });
 
+async function currentProduction() {
+  return importThemeBundle(
+    new Blob([
+      await fs.readFile(
+        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+      ),
+    ]),
+    { decodeImage: null },
+  );
+}
+
 async function authenticatedCurrentReview(relative, expectedSHA256, groups) {
   const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
   const read = (relative) => fs.readFile(new URL('../../' + relative, import.meta.url));
@@ -432,32 +443,25 @@ async function authenticatedCurrentReview(relative, expectedSHA256, groups) {
         'immutable predecessor ' + prior.path,
       );
   const sources = {};
+  // Preserve each exact predecessor review, but validate the current successor's
+  // full ordered source closure instead of pretending old input bytes are current.
+  const cumulative = JSON.parse(await readCumulativeNativeContinuation(read));
   for (const group of groups) {
     const fingerprint = review.fingerprints?.[group] ?? review.fingerprint;
     assert.equal(fingerprint.group, group);
     const inputs = fingerprint.inputs ?? fingerprint.paths;
-    const bodies = [];
-    for (const input of inputs) {
-      const body = await read(input.path);
-      assert.equal(body.length, input.bytes, 'reviewed input length ' + input.path);
-      const blob = createHash('sha1')
-        .update('blob ' + body.length + '\0')
-        .update(body)
-        .digest('hex');
-      assert.equal(blob, input.gitBlob ?? input.blob, 'reviewed Git blob ' + input.path);
-      if (input.sha256) assert.equal(digest(body), input.sha256, input.path);
-      bodies.push(body);
-    }
     const paths = inputs.map((input) => input.path).join('; ');
     if (typeof fingerprint.paths === 'string') assert.equal(paths, fingerprint.paths);
-    assert.equal(digest(Buffer.concat(bodies)), fingerprint.currentSHA256, group);
-    sources[group] = paths + ' sha256:' + fingerprint.currentSHA256;
+    const current = cumulative.fingerprints[group];
+    assert.equal(current.priorSHA256, fingerprint.currentSHA256, group);
+    assert.equal(current.priorPaths.join('; '), paths, group);
+    sources[group] = current.paths.join('; ') + ' sha256:' + current.currentSHA256;
   }
   return { review, sources };
 }
 
 test('Journey feedback dependencies bind only the reviewed player-craft effects inputs', async () => {
-  const production = await createFieldKitProduction();
+  const production = await currentProduction();
   const resolved = resolvePresentation(production.document);
   const reviewPath = 'docs/verification/couch-craft-v01120/review.json';
   const reviewBytes = await fs.readFile(new URL(`../../${reviewPath}`, import.meta.url));
@@ -527,7 +531,7 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
 });
 
 test('shared-host UI and managed-media audio bind only reviewed current inputs', async () => {
-  const production = await createFieldKitProduction();
+  const production = await currentProduction();
   const resolved = resolvePresentation(production.document);
   const uiReviewPath = 'docs/verification/actor-only-ui-continuation-2026-09-24/review.json';
   const uiReviewHash = createHash('sha256')
@@ -655,7 +659,7 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
 });
 
 test('soundtrack screen and Journey motion reviews bind only the inspected current inputs', async () => {
-  const production = await createFieldKitProduction();
+  const production = await currentProduction();
   const resolved = resolvePresentation(production.document);
   const screenReviewPath = 'docs/verification/ux2-v0115-screen-continuation/review.json';
   const screenReviewHash = createHash('sha256')
@@ -713,107 +717,44 @@ test('soundtrack screen and Journey motion reviews bind only the inspected curre
   }
 });
 
-test('changed recipe inputs reopen only their own reviewed group', async (t) => {
-  const production = await createFieldKitProduction();
-  const prior = structuredClone(production.document);
-  const reviewed = prior.slots.filter((slot) =>
-    ['ui', 'audio', 'screens', 'motion'].includes(slot.group),
-  );
-  const selected = resolvePresentation(prior);
-  // Review-state fixture only. Actual current approvals are asserted separately above.
-  for (const slot of reviewed) {
-    const ref = selected.assets[slot.id];
-    const asset = prior.assets.find(
-      (asset) => asset.id === ref.id && asset.revision === ref.revision,
+test('changed recipe inputs invalidate their consumers and block unreviewed production', async () => {
+  const read = (name) => fs.readFile(new URL('../../' + name, import.meta.url));
+  const reviewBytes = await readCumulativeNativeContinuation(read);
+  const review = JSON.parse(reviewBytes);
+  const original = new Map();
+  const before = await fieldKitRecipeSources(async (name) => {
+    const body = await read(name);
+    original.set(name, body);
+    return body;
+  });
+  const groups = ['ui', 'audio', 'screens', 'motion'];
+  for (const name of new Set(groups.flatMap((group) => review.fingerprints[group].paths))) {
+    const changedRead = async (file) =>
+      file === name
+        ? Buffer.concat([original.get(file), Buffer.from('\n/* unreviewed */')])
+        : read(file);
+    await assert.rejects(
+      readCumulativeNativeContinuation(changedRead),
+      (error) => error.message === 'Cumulative source input changed: ' + name,
     );
-    if (asset.quality.stage !== 'reviewed')
-      asset.quality = {
-        stage: 'reviewed',
-        evidence: ['Synthetic source-invalidation fixture; not production approval.'],
-      };
-  }
-  const resolved = resolvePresentation(prior);
-  const root = fileURLToPath(new URL('../../', import.meta.url));
-  const fixture = await fs.mkdtemp(path.join(os.tmpdir(), 'recipe-source-invalidation-'));
-  t.after(() => fs.rm(fixture, { recursive: true, force: true }));
-  const recoveryInputs = [
-    'soundtrack.mjs',
-    'soundtrack-rights.mjs',
-    'soundtrack-bundle.mjs',
-    'soundtrack-share.mjs',
-    'soundtrack-source.mjs',
-    'soundtrack-albums.mjs',
-    'soundtrack-portable.mjs',
-    'content/soundtrack-catalogue.mjs',
-    'online-soundtrack-catalogue.mjs',
-    'ui/soundtrack-panel.mjs',
-    'managed-media-store.mjs',
-    'media-storage-record.mjs',
-  ];
-  const inputs = new Map([
-    ['ui/operation-status.css', 'ui'],
-    ['ui/operation-status.mjs', 'ui'],
-    ['ui/soundtrack-player.mjs', 'audio'],
-    ['ui/audio-master.mjs', 'audio'],
-    ...recoveryInputs.map((input) => [input, 'audio']),
-    ['ui/field-kit-surfaces.css', 'screens'],
-    ['ui/actor-presentation.mjs', 'motion'],
-  ]);
-  // Game-relative keys cover both model and UI helpers. Only copied ordinary
-  // fixture files may be changed; links to the real project are read-only inputs.
-  await fs.mkdir(path.join(fixture, 'game', 'ui'), { recursive: true });
-  await fs.mkdir(path.join(fixture, 'game', 'content'), { recursive: true });
-  for (const entry of ['authoring', 'site', 'scripts', 'docs'])
-    await fs.symlink(path.join(root, entry), path.join(fixture, entry));
-  for (const directory of ['', 'ui', 'content'])
-    for (const entry of await fs.readdir(path.join(root, 'game', directory))) {
-      if (!directory && ['ui', 'content'].includes(entry)) continue;
-      const input = directory ? `${directory}/${entry}` : entry;
-      const source = path.join(root, 'game', input);
-      const target = path.join(fixture, 'game', input);
-      if (inputs.has(input)) await fs.copyFile(source, target);
-      else await fs.symlink(source, target);
+    const changed = await fieldKitRecipeSources(changedRead);
+    for (const group of groups) {
+      const affected = review.fingerprints[group].paths.includes(name);
+      assert.equal(before[group] !== changed[group], affected, name + '/' + group);
+      assert.equal(
+        fieldKitRecipeQuality(group, changed[group], reviewBytes).stage,
+        affected ? 'source' : 'reviewed',
+        name + '/' + group,
+      );
     }
-  for (const [input, group] of inputs) {
-    const target = path.join(fixture, 'game', input);
-    const stat = await fs.lstat(target);
-    assert(stat.isFile() && !stat.isSymbolicLink(), `Writable copy required: ${input}`);
-    const original = await fs.readFile(target);
-    try {
-      await fs.appendFile(target, '\n/* Unreviewed fixture change. */\n');
-      const changed = await createFieldKitProduction({ projectRoot: fixture });
-      const next = retainFieldKitProductionHistory(changed.document, prior);
-      validateThemeBundle(next, { previous: prior });
-      const assets = resolvePresentation(next).assets;
-      for (const slot of reviewed) {
-        const affected = slot.group === group && assets[slot.id].kind === 'recipe';
-        assert.equal(assets[slot.id].quality.stage, affected ? 'source' : 'reviewed', slot.id);
-        if (affected) {
-          assert.notEqual(
-            assets[slot.id].provenance.source,
-            resolved.assets[slot.id].provenance.source,
-          );
-          assert.equal(assets[slot.id].revision, resolved.assets[slot.id].revision + 1);
-        } else assert.deepEqual(assets[slot.id], resolved.assets[slot.id]);
-      }
-      assert.deepEqual(next.assets.slice(0, prior.assets.length), prior.assets);
-    } finally {
-      await fs.writeFile(target, original);
-      assert.deepEqual(await fs.readFile(path.join(root, 'game', input)), original);
-    }
-    if (recoveryInputs.includes(input)) {
-      const retained = `${target}.missing-fixture`;
-      await fs.rename(target, retained);
-      try {
-        await assert.rejects(
-          createFieldKitProduction({ projectRoot: fixture }),
-          (error) => error.code === 'ENOENT' && error.path === target,
-          `Missing audio dependency must refuse production: ${input}`,
-        );
-      } finally {
-        await fs.rename(retained, target);
-      }
-    }
+    await assert.rejects(
+      readCumulativeNativeContinuation(async (file) => {
+        if (file === name) throw new Error('missing ' + name);
+        return read(file);
+      }),
+      (error) => error.message === 'missing ' + name,
+    );
+    assert.deepEqual(await read(name), original.get(name), 'original never modified: ' + name);
   }
 });
 
@@ -832,7 +773,7 @@ test('an unknown equipment consumer selects produced successors and preserves re
     exactInputs.set(name, bytes);
     return bytes;
   });
-  assert.equal(exactInputs.size, 34, 'complete equipment construction and consumer closure');
+  assert.equal(exactInputs.size, 35, 'complete equipment construction and consumer closure');
   const unknownSource = await fieldKitEquipmentSource(async (name) =>
     name === 'game/ui/actor-recipes.mjs'
       ? Buffer.concat([exactInputs.get(name), Buffer.from(' changed')])
@@ -847,7 +788,7 @@ test('an unknown equipment consumer selects produced successors and preserves re
     /Missing required consumer/,
   );
 
-  const production = await createFieldKitProduction();
+  const production = await currentProduction();
   const before = resolvePresentation(prior.document),
     proposed = resolvePresentation(production.document);
   const equipment = [
