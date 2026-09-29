@@ -192,7 +192,7 @@ records a final complete 157/157 renderer/host cohort, including actual-painter
 text multiplicity, envelope separation, contacts/locked targets, minimum sizes,
 state combinations and cache behavior. Recorder widths are deterministic, not
 native font measurements. Native local Start/loss/downed/Pause/Help/rotation/Resume
-at 568×320 and 390×844 verifies observed EN/UK presentation frames, not continuous
+at 568×320 and 390×844 verifies observed Ukrainian presentation frames, not continuous
 all-state packing or physical devices. Levels verified the head and read the
 evidence; it did not repeat those runs. Retained raw-log whitespace remains an
 explicit evidence exception, not a clean all-file whitespace claim.
