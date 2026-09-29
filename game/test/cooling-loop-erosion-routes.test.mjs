@@ -246,90 +246,142 @@ for (const route of routes)
     for (const board of duel.runs) assert.deepEqual(authoritativeCheckpoint(board), checkpoint);
   });
 
-test('Cooling loop Standard immediate seed1 completes the northern route after real erosion, with replay and tied Versus', () => {
-  const level = effectiveLevel(current, 'standard');
-  const versus = effectiveLevel(current, 'standard', 'versus');
-  assert.deepEqual(versus, level);
-  const options = { seed: 1, classId: 'scout', turnPolicy: 'immediate' };
-  const run = createRun(level, options);
-  const recorder = createRecorder(level, options);
-  const duel = createDuel(versus, options, {
-    protocol: UNTIMED_DUEL_PROTOCOL,
-    seconds: 0,
-  });
-  resumeDuel(duel);
-  assert.notEqual(duel.runs[0].cells, duel.runs[1].cells);
-  const permanent = permanentCells(run);
-  const warnings = [];
-  let closures = 0;
-  let erosions = 0;
-  // A separate complete continuation: unlike the bounded observation tests
-  // above, this route keeps playing instead of waiting on the fifth landing.
-  const segments = [
-    ...routes[0].segments,
-    ['up', 270],
-    ['right', 565],
-    ['down', 258],
-    [null, 1],
-    ['left', 1000],
-    ['down', 230],
-    ['right', 432],
-    [null, 1],
-    ['up', 230],
-    ['right', 360],
-    [null, 1],
-    ['down', 230],
-    ['up', 108],
-    [null, 1],
-    ['right', 166],
-  ];
-  play: for (const [direction, ticks] of segments)
-    for (let tick = 0; tick < ticks; tick++) {
-      if (run.status !== 'running') break play;
-      recordInput(recorder, { direction });
-      stepRun(run, { direction }, FIXED_DT);
-      stepDuel(duel, [{ direction }, { direction }]);
-      for (const board of [run, ...duel.runs]) {
-        assert.equal(board.classic.livesLost, 0);
-        assertProtected(board, permanent);
-      }
-      for (const event of run.events) {
-        if (event.type === 'cut.closed') closures++;
-        if (event.type === 'erosion.warning')
-          warnings.push({ tick: run.tick, index: event.index, due: event.erosionAt });
-        if (event.type === 'cells.eroded') {
-          erosions++;
-          for (const index of event.indices) {
-            const warning = warnings.findLast((item) => item.index === index);
-            assert(warning);
-            assert.equal(run.tick - warning.tick, 60);
-            assert.equal(run.classic.actorTick, warning.due);
-            assert.equal(run.foundation.permanent[index], 0);
+const completeRoutes = [
+  {
+    name: 'northern landings and both banks',
+    ticks: 5503,
+    claimed: 1708,
+    closures: 13,
+    erosionEvents: 6,
+    fieldBankCells: [0, 0],
+    checkpoint: '21a461387f53c722',
+    segments: [
+      ...routes[0].segments,
+      ['up', 270],
+      ['right', 565],
+      ['down', 258],
+      [null, 1],
+      ['left', 1000],
+      ['down', 230],
+      ['right', 432],
+      [null, 1],
+      ['up', 230],
+      ['right', 360],
+      [null, 1],
+      ['down', 230],
+      ['up', 108],
+      [null, 1],
+      ['right', 166],
+    ],
+  },
+  {
+    name: 'western bank first with the eastern bank still hazardous',
+    ticks: 8189,
+    claimed: 1713,
+    closures: 15,
+    erosionEvents: 8,
+    // A real coverage clear, not the optional both-banks mastery condition.
+    fieldBankCells: [0, 40],
+    checkpoint: 'b8aab03a29e67318',
+    segments: [
+      ...routes[1].segments,
+      [null, 60],
+      ['up', 270],
+      ['right', 565],
+      ['down', 258],
+      [null, 1],
+      ['left', 1000],
+      ['down', 230],
+      ['right', 432],
+      [null, 1],
+      ['up', 230],
+      ['right', 360],
+      [null, 1],
+      ['down', 230],
+      ['up', 108],
+      [null, 1],
+      ['right', 166],
+      ['up', 100],
+      [null, 391],
+      ['left', 951],
+      ['right', 715],
+      [null, 31],
+      ['up', 268],
+      ['left', 247],
+      [null, 1],
+      ['down', 48],
+      [null, 1],
+      ['left', 61],
+    ],
+  },
+];
+
+for (const route of completeRoutes)
+  test(`Cooling loop Standard immediate seed1 clears ${route.name}, with replay and tied Versus`, () => {
+    const level = effectiveLevel(current, 'standard');
+    const versus = effectiveLevel(current, 'standard', 'versus');
+    assert.deepEqual(versus, level);
+    const options = { seed: 1, classId: 'scout', turnPolicy: 'immediate' };
+    const run = createRun(level, options);
+    const recorder = createRecorder(level, options);
+    const duel = createDuel(versus, options, {
+      protocol: UNTIMED_DUEL_PROTOCOL,
+      seconds: 0,
+    });
+    resumeDuel(duel);
+    assert.notEqual(duel.runs[0].cells, duel.runs[1].cells);
+    const permanent = permanentCells(run);
+    const warnings = [];
+    let closures = 0;
+    let erosions = 0;
+    // Unlike the bounded observations, these continuations keep playing to win.
+    play: for (const [direction, ticks] of route.segments)
+      for (let tick = 0; tick < ticks; tick++) {
+        if (run.status !== 'running') break play;
+        recordInput(recorder, { direction });
+        stepRun(run, { direction }, FIXED_DT);
+        stepDuel(duel, [{ direction }, { direction }]);
+        for (const board of [run, ...duel.runs]) {
+          assert.equal(board.classic.livesLost, 0);
+          assertProtected(board, permanent);
+        }
+        for (const event of run.events) {
+          if (event.type === 'cut.closed') closures++;
+          if (event.type === 'erosion.warning')
+            warnings.push({ tick: run.tick, index: event.index, due: event.erosionAt });
+          if (event.type === 'cells.eroded') {
+            erosions++;
+            for (const index of event.indices) {
+              const warning = warnings.findLast((item) => item.index === index);
+              assert(warning);
+              assert.equal(run.tick - warning.tick, 60);
+              assert.equal(run.classic.actorTick, warning.due);
+              assert.equal(run.foundation.permanent[index], 0);
+            }
           }
         }
       }
-    }
 
-  assert.equal(run.status, 'won');
-  assert.equal(run.tick, 5503);
-  assert.equal(run.claimedCount, 1708);
-  assert.equal(run.coverage, 1708 / 2098);
-  assert.equal(closures, 13);
-  assert.equal(warnings.length, 6);
-  assert.equal(erosions, 6);
-  assert.deepEqual(fieldBankCells(run), [0, 0]);
-  assert.equal(roverLinks(run, level.foundations), true);
-  assert.deepEqual(
-    run.classic.powerups.filter((powerup) => powerup.collectedTick !== null),
-    [],
-  );
-  assert.equal(verifyReplay(exportReplay(recorder, run)).match, true);
-  const checkpoint = authoritativeCheckpoint(run);
-  assert.equal(checkpoint.hash, '21a461387f53c722');
-  assert.equal(duel.status, 'finished');
-  assert.equal(duel.winner, null);
-  for (const board of duel.runs) {
-    assert.equal(board.status, 'won');
-    assert.deepEqual(authoritativeCheckpoint(board), checkpoint);
-  }
-});
+    assert.equal(run.status, 'won');
+    assert.equal(run.tick, route.ticks);
+    assert.equal(run.claimedCount, route.claimed);
+    assert.equal(run.coverage, route.claimed / 2098);
+    assert.equal(closures, route.closures);
+    assert.equal(warnings.length, route.erosionEvents);
+    assert.equal(erosions, route.erosionEvents);
+    assert.deepEqual(fieldBankCells(run), route.fieldBankCells);
+    assert.equal(roverLinks(run, level.foundations), true);
+    assert.deepEqual(
+      run.classic.powerups.filter((powerup) => powerup.collectedTick !== null),
+      [],
+    );
+    assert.equal(verifyReplay(exportReplay(recorder, run)).match, true);
+    const checkpoint = authoritativeCheckpoint(run);
+    assert.equal(checkpoint.hash, route.checkpoint);
+    assert.equal(duel.status, 'finished');
+    assert.equal(duel.winner, null);
+    for (const board of duel.runs) {
+      assert.equal(board.status, 'won');
+      assert.deepEqual(authoritativeCheckpoint(board), checkpoint);
+    }
+  });
