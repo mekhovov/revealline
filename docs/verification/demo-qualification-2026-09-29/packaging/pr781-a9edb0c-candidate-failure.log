@@ -1,0 +1,18 @@
+candidate	Compile twice and inspect original candidate ZIP members	﻿2026-09-29T02:16:06.5992363Z ##[group]Run node scripts/bundle-editions.mjs --editions "$EDITION_IDS" --out .cache/company-candidate --base-path /revealline/
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:16:06.5993044Z ^[[36;1mnode scripts/bundle-editions.mjs --editions "$EDITION_IDS" --out .cache/company-candidate --base-path /revealline/^[[0m
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:16:06.6027041Z shell: /usr/bin/bash -e {0}
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:16:06.6027289Z env:
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:16:06.6028710Z   EDITION_IDS: coupa-all,coupa-adventure,coupa-culture,coupa-foundations,coupa-operations,coupa-developers,droneaid-community,droneaid-nl-community,droneaid-nl-workshop-lights,droneaid-nl-parts-in-motion,droneaid-nl-signals-of-support,droneaid-nl-careful-handoff,droneaid-nl-makers-together,droneaid-nl-shared-horizon
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:16:06.6030245Z ##[endgroup]
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:17:24.6144973Z file:///home/runner/work/revealline/revealline/scripts/edition-offline.mjs:252
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:17:24.6145796Z     throw new Error('Edition offline core exceeds 2000 files or 64 MiB.');
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:17:24.6146194Z           ^
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:17:24.6146427Z 
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:17:24.6146675Z Error: Edition offline core exceeds 2000 files or 64 MiB.
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:17:24.6147384Z     at buildEditionOfflineFiles (file:///home/runner/work/revealline/revealline/scripts/edition-offline.mjs:252:11)
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:17:24.6148278Z     at async compileEdition (file:///home/runner/work/revealline/revealline/scripts/compile-edition.mjs:747:13)
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:17:24.6149330Z     at async bundleEditions (file:///home/runner/work/revealline/revealline/scripts/bundle-editions.mjs:140:22)
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:17:24.6150241Z     at async file:///home/runner/work/revealline/revealline/scripts/bundle-editions.mjs:238:7
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:17:24.6150661Z 
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:17:24.6150779Z Node.js v22.13.1
+candidate	Compile twice and inspect original candidate ZIP members	2026-09-29T02:17:24.6413835Z ##[error]Process completed with exit code 1.
