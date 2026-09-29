@@ -31,11 +31,23 @@ export function menuGroupNeighbor(items, current, direction) {
       const rect = item.getBoundingClientRect(),
         dx = rect.x + rect.width / 2 - from.x - from.width / 2,
         dy = rect.y + rect.height / 2 - from.y - from.height / 2,
-        forward = (horizontal ? dx : dy) * movement;
-      return { item, forward, score: forward + Math.abs(horizontal ? dy : dx) * 3 };
+        forward = (horizontal ? dx : dy) * movement,
+        centerOffset = Math.abs(horizontal ? dy : dx),
+        // A wide action directly below a narrow mode still overlaps its path.
+        // Penalizing its center can skip the entire action stack for a much
+        // farther, narrow utility. Keep grids' existing center-based geometry.
+        crossGap = horizontal
+          ? Math.max(0, rect.y - from.y - from.height, from.y - rect.y - rect.height)
+          : Math.max(0, rect.x - from.x - from.width, from.x - rect.x - rect.width);
+      return {
+        item,
+        forward,
+        centerOffset,
+        score: forward + (layout === 'grid' ? centerOffset : crossGap) * 3,
+      };
     })
     .filter(({ forward }) => forward > 1)
-    .sort((a, b) => a.score - b.score);
+    .sort((a, b) => a.score - b.score || (layout === 'grid' ? 0 : a.centerOffset - b.centerOffset));
   if (candidates.length) return candidates[0].item;
   if (layout === 'grid') return current;
   // A stacked responsive layout may have no neighbor in the requested axis.
