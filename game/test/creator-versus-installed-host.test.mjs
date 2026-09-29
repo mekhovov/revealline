@@ -15,7 +15,8 @@ import {
   installPreparedCreatorBundle,
   reviewCreatorInstallation,
 } from '../creator/installed.mjs';
-import { creatorProfileKey } from '../creator/runtime.mjs';
+import { creatorAttemptKey, creatorProfileKey } from '../creator/runtime.mjs';
+import { creatorVersusHref } from '../creator/player-menu.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 
 const themes = JSON.parse(
@@ -433,3 +434,132 @@ test('installed Creator mission identity collision cannot resolve a Journey succ
   assert.notEqual(page.renders[0].level.id, 'choose-your-share');
   assert.equal(page.renders[1].level.id, 'picture-2');
 });
+
+test('Custom Versus mode switch selects the exact installed mission without starting; Back keeps lobby and explicit Play starts', async (t) => {
+  const { pack, indexedDB, storage } = await fixture(),
+    sourceSaveKey = creatorAttemptKey(pack.editionId),
+    href = creatorVersusHref(pack, 'picture-2', 'http://localhost/game/creator/player.html');
+  storage.setItem(sourceSaveKey, 'Source Custom Solo checkpoint remains owned by Solo');
+  const page = await openCreatorHost(t, indexedDB, storage, { href });
+  assert.notEqual(page.state(), 'running', 'choosing a mode never means Play');
+  assert.equal(page.$('race-start-cue').hidden, true);
+  assert.equal(page.$('journey-chooser').open, true);
+  const targetId = new URL(href).searchParams.get('library-mission'),
+    card = [...page.$('journey-cards').children].find((row) => row.dataset.missionId === targetId),
+    initialRuns = [...page.renders],
+    initialCheckpoint = page.checkpoint(),
+    initialStartDisabled = page.$('race-start').disabled;
+  assert(card, 'qualified edition/campaign/mission/revision resolves its exact installed row');
+  assert.equal(page.doc.activeElement, card);
+  assert.notEqual(initialRuns[0].level.id, 'picture-2', 'selection does not replace either board');
+  page.frames(5);
+  assert.deepEqual(page.checkpoint(), initialCheckpoint);
+  page.$('journey-back').click();
+  assert.equal(page.$('journey-chooser').open, false);
+  assert.equal(page.$('race-main').hidden, false);
+  assert.equal(page.doc.activeElement, page.$('race-chapters'), 'Back has a visible lobby origin');
+  assert.equal(
+    page.$('race-start').disabled,
+    initialStartDisabled,
+    'unused failed opener remains unchanged',
+  );
+  assert.deepEqual(page.renders, initialRuns);
+  assert.deepEqual(page.checkpoint(), initialCheckpoint);
+  await page.$('race-chapters').onclick();
+  const exact = [...page.$('journey-cards').children].find(
+    (row) => row.dataset.missionId === targetId,
+  );
+  await activateMissionCard(exact);
+  reachMissionGo(page);
+  assert.equal(page.renders[0].level.id, 'picture-2');
+  assert.equal(page.renders[1].level.id, 'picture-2');
+  assert.equal(
+    storage.getItem(sourceSaveKey),
+    'Source Custom Solo checkpoint remains owned by Solo',
+  );
+});
+
+test('existing incoming installed Play links without an intent still launch their exact mission', async (t) => {
+  const { pack, indexedDB, storage } = await fixture(),
+    href = new URL(
+      creatorVersusHref(pack, 'picture-2', 'http://localhost/game/creator/player.html'),
+    );
+  href.searchParams.delete('library-intent');
+  const page = await openCreatorHost(t, indexedDB, storage, { href: href.href });
+  assert.equal(page.state(), 'running');
+  assert.equal(page.$('journey-chooser').open, false);
+  assert.equal(page.renders[0].level.id, 'picture-2');
+  assert.equal(page.renders[1].level.id, 'picture-2');
+});
+
+for (const intent of ['unknown', 'select&library-intent=play'])
+  test(`malformed incoming selection intent ${intent} cannot fall back to Play`, async (t) => {
+    const { pack, indexedDB, storage } = await fixture(),
+      href = new URL(
+        creatorVersusHref(pack, 'picture-2', 'http://localhost/game/creator/player.html'),
+      );
+    href.searchParams.set('library-intent', intent === 'unknown' ? intent : 'select');
+    if (intent !== 'unknown') href.searchParams.append('library-intent', 'play');
+    const page = await openCreatorHost(t, indexedDB, storage, {
+      href: href.href,
+      expectBootFailure: true,
+    });
+    assert.equal(page.doc.documentElement.dataset.toolState, 'error');
+    assert.equal(page.$('race-start').disabled, true);
+    assert.equal(page.$('race-start-cue').hidden, true);
+    assert.match(page.$('race-message').textContent, /intent/);
+    assert.equal(
+      page.renders.length,
+      0,
+      'invalid intent does not create or start substitute boards',
+    );
+  });
+
+for (const interruption of ['newer focus', 'blur and return'])
+  test(`select-only incoming Custom mode yields to ${interruption} during metadata loading`, async (t) => {
+    const { pack, indexedDB, storage } = await fixture(),
+      gate = deferred(),
+      href = creatorVersusHref(pack, 'picture-2', 'http://localhost/game/creator/player.html');
+    let entered = false;
+    t.after(() => gate.resolve());
+    const pending = openCreatorHost(t, indexedDB, storage, {
+      href,
+      fetchResponse: async (path) => {
+        if (path === '../content/mission-library-index.json') {
+          entered = true;
+          await gate.promise;
+          return new Response(
+            await readFile(new URL('../content/mission-library-index.json', import.meta.url)),
+          );
+        }
+        if (String(path).includes('/content-design/assets/'))
+          return new Response(await readFile(path));
+        if (path === '../content/packs/fpv-arcade-r5.json')
+          return new Response('Unused default pack is unavailable', { status: 503 });
+      },
+    });
+    await waitFor(() => entered, {
+      message: 'Incoming mode selection did not request library metadata.',
+    });
+    const doc = globalThis.document,
+      win = globalThis.window,
+      focus = doc.getElementById('race-options');
+    if (interruption === 'blur and return') {
+      doc.focused = false;
+      win.emit('blur');
+      doc.focused = true;
+    }
+    focus.focus();
+    gate.resolve();
+    const page = await pending;
+    assert.notEqual(page.state(), 'running');
+    assert.equal(page.$('race-start-cue').hidden, true);
+    assert.equal(
+      page.$('journey-chooser').open,
+      false,
+      'late metadata does not reclaim an abandoned mode selection',
+    );
+    assert.equal(doc.activeElement, focus);
+    assert.notEqual(page.renders[0].level.id, 'picture-2');
+    assert.notEqual(page.renders[1].level.id, 'picture-2');
+  });

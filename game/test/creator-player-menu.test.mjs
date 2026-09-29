@@ -197,6 +197,7 @@ test('qualified Versus URLs preserve exact edition and mission; unsupported bund
     '2',
   ]);
   assert.equal(href.searchParams.get('journey'), 'legacy');
+  assert.equal(href.searchParams.get('library-intent'), 'select', 'changing mode is not Play');
   assert.equal(
     creatorVersusHref(
       { manifest: { content: { compatibility: { modes: ['solo'] } } } },
