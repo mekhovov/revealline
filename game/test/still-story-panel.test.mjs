@@ -143,6 +143,7 @@ test('Prepare writes neither descriptor nor binding, Save commits both once and 
   await h.poster();
   const still = await h.store.read();
   await h.inspect();
+  h.s('prepare').focus();
   assert.equal(await h.s('prepare').onclick(), true);
   assert.equal(h.commits, 0);
   assert.equal((await h.storyStore.readMetadata()).generation, 0);
@@ -303,6 +304,115 @@ test('native prepared download transfers exact v2 bytes; keep-current preserves 
 
 // Model the native disabled-button blur that exposed this regression; the shared
 // minimal DOM intentionally does not pretend to implement browser focus rules.
+function nativeDisabled(element) {
+  let disabled = element.disabled;
+  Object.defineProperty(element, 'disabled', {
+    configurable: true,
+    get: () => disabled,
+    set(value) {
+      disabled = value;
+      if (value && element.ownerDocument.activeElement === element) element.blur();
+    },
+  });
+}
+for (const [action, successor] of [
+  ['inspect', 'inspect'],
+  ['prepare', 'save'],
+  ['save', 'history'],
+  ['clear', 'clear'],
+  ['prepare-download', 'download'],
+]) {
+  test(`story ${action} keeps a meaningful focus successor after native disabled blur`, async (t) => {
+    const h = await setup(t);
+    h.doc.defaultView = Object.assign(new Events(), h.doc.defaultView);
+    await h.poster();
+    await h.inspect();
+    if (action === 'save') await h.s('prepare').onclick();
+    if (['clear', 'prepare-download'].includes(action)) await h.story();
+    const before = await h.storyStore.exportInventory();
+    const opener = h.s(action);
+    nativeDisabled(opener);
+    opener.focus();
+    const pending = opener.onclick();
+    assert.equal(h.doc.activeElement, h.doc.body);
+    assert.equal(await pending, true);
+    assert.equal(h.doc.activeElement, h.s(successor));
+    assert.equal(h.s(successor).disabled, false);
+    const after = await h.storyStore.exportInventory();
+    if (action === 'save' || action === 'clear')
+      assert.equal(after.generation, before.generation + 1);
+    else
+      assert.deepEqual(after, before, 'Preparing, inspecting and exporting never save a binding');
+    if (action === 'prepare')
+      assert.equal(h.commits, 0, 'Success focuses Save without activating it');
+  });
+}
+for (const invalid of ['segment', 'description']) {
+  test(`invalid story ${invalid} restores Prepare without staging a saved binding`, async (t) => {
+    const h = await setup(t);
+    await h.poster();
+    await h.inspect();
+    h.s(invalid === 'segment' ? 'end' : 'description').value = invalid === 'segment' ? '0' : '';
+    const before = await h.storyStore.exportInventory();
+    nativeDisabled(h.s('prepare'));
+    h.s('prepare').focus();
+    assert.equal(await h.s('prepare').onclick(), false);
+    assert.equal(h.doc.activeElement, h.s('prepare'));
+    assert.equal(h.s('save').disabled, true);
+    assert.deepEqual(await h.storyStore.exportInventory(), before);
+  });
+}
+test('rejected story Save returns to its original Prepare action and supports a fresh reviewed retry', async (t) => {
+  const h = await setup(t);
+  await h.poster();
+  await h.inspect();
+  await h.s('prepare').onclick();
+  const before = await h.storyStore.exportInventory();
+  h.memory.failAnyPutAt = 1;
+  nativeDisabled(h.s('save'));
+  h.s('save').focus();
+  assert.equal(await h.s('save').onclick(), false);
+  assert.equal(h.doc.activeElement, h.s('prepare'));
+  assert.equal(h.s('save').disabled, true, 'Failed consumed reservation cannot be reused');
+  assert.deepEqual(await h.storyStore.exportInventory(), before);
+  h.memory.failAnyPutAt = null;
+  assert.equal(await h.s('prepare').onclick(), true);
+  assert.equal(h.doc.activeElement, h.s('save'));
+  assert.equal(await h.s('save').onclick(), true);
+  assert.equal(h.doc.activeElement, h.s('history'));
+});
+for (const decision of ['close-focus', 'hidden', 'window-blur', 'unowned']) {
+  test(`story Save completion cannot reclaim focus after ${decision}`, async (t) => {
+    const entered = deferred(),
+      gate = deferred();
+    const h = await setup(t, {
+      afterNotification: async () => {
+        entered.resolve();
+        await gate.promise;
+      },
+    });
+    h.doc.defaultView = Object.assign(new Events(), h.doc.defaultView);
+    await h.poster();
+    await h.inspect();
+    await h.s('prepare').onclick();
+    nativeDisabled(h.s('save'));
+    (decision === 'unowned' ? h.$('close') : h.s('save')).focus();
+    const pending = h.s('save').onclick();
+    await entered.promise;
+    if (decision === 'close-focus') h.$('close').focus();
+    else if (decision === 'hidden') {
+      h.doc.hidden = true;
+      h.doc.emit('visibilitychange');
+      h.doc.hidden = false;
+    } else if (decision === 'window-blur') h.doc.defaultView.emit('blur');
+    const accepted = h.doc.activeElement;
+    gate.resolve();
+    assert.equal(await pending, true);
+    assert.equal(h.doc.activeElement, accepted);
+    assert.notEqual(accepted, h.s('history'));
+    assert.equal((await h.storyStore.readMetadata()).generation, 1);
+  });
+}
 for (const outcome of ['success', 'observer-failure', 'moved-focus', 'cancelled']) {
   test(`story restore ${outcome} retains only the initiating operation's focus ownership`, async (t) => {
     const gate = deferred();
@@ -399,12 +509,18 @@ test('Back cancels a late returned reservation without publishing Save; current 
   delegate = h.storyStore.stageRestore;
   await h.poster();
   await h.inspect();
+  nativeDisabled(h.s('prepare'));
+  nativeDisabled(h.$('cancel'));
+  h.s('prepare').focus();
   const pending = h.s('prepare').onclick();
   await waitFor(() => returned);
+  h.$('cancel').focus();
   h.panel.back();
   assert.equal(h.panel.dialog.open, true);
+  assert.equal(h.doc.activeElement, h.$('reload'));
   gate.resolve();
   assert.equal(await pending, false);
+  assert.equal(h.doc.activeElement, h.$('reload'), 'Late reservation cannot restore stale Prepare');
   assert.equal(h.s('save').disabled, true);
   assert.equal(h.commits, 0);
   assert.equal((await h.storyStore.readMetadata()).generation, 0);
@@ -416,6 +532,8 @@ test('the existing router requires released Confirm between Prepare and Save and
   const h = await setup(t);
   await h.poster();
   await h.inspect();
+  nativeDisabled(h.s('prepare'));
+  nativeDisabled(h.s('save'));
   const pad = {
     index: 0,
     id: 'Modeled story controller',
@@ -464,6 +582,7 @@ test('the existing router requires released Confirm between Prepare and Save and
   sample(1002);
   await waitFor(() => !h.panel.snapshot().busy);
   assert.equal(h.commits, 1);
+  assert.equal(h.doc.activeElement, h.s('history'));
   await h.s('prepare-download').onclick();
   const event = h.doc.emit('keydown', { key: 'Enter', target: h.s('download') });
   assert.equal(
