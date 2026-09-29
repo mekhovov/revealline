@@ -1,0 +1,130 @@
+{
+  "format": "revealline-curated-source-evidence.v1",
+  "artifacts": [
+    {
+      "path": "README.md",
+      "bytes": 3403,
+      "sha256": "1acacd09e12bd9f53a66df1768e85deb19c63f2b8d2f69f92bab553a74e04f05"
+    },
+    {
+      "path": "branch-proposals/README.md",
+      "bytes": 3584,
+      "sha256": "45d392d3396439987e8005131f7210e428409d34359a7c9681a10703afb5e547"
+    },
+    {
+      "path": "branch-proposals/historical-branch-donors-2026-09-29.tar.gz",
+      "bytes": 47288,
+      "sha256": "c90106797fa9061cfeaaf630594fbb696c7ff5909600da0ed0f508594fee65a4"
+    },
+    {
+      "path": "branch-proposals/historical-branch-donors-2026-09-29.tar.gz.sha256",
+      "bytes": 109,
+      "sha256": "cff7da27ca94701915bc7fd822d5c96a64759f4b5bb8083d84f760f61508d509"
+    },
+    {
+      "path": "branch-proposals/manifest.json",
+      "bytes": 11093,
+      "sha256": "4b4a301283cd28da788dcb6bcb5152e5a6f34b13ad94345a56284f6a96646b32"
+    },
+    {
+      "path": "branch-proposals/patches/chapter-residency-selected-files.patch",
+      "bytes": 13442,
+      "sha256": "c8601feb23fdc410a6532dd1d74bf7f1545b95617a7915a8dddc6e9f31766d37"
+    },
+    {
+      "path": "branch-proposals/patches/classic-race-tour-game-integration.patch",
+      "bytes": 78569,
+      "sha256": "9725dc506a34d0d2f9db69c8b54e37f1b3611fce03ca0452021e9313b71f526b"
+    },
+    {
+      "path": "branch-proposals/patches/classic-race-tour-selected-files.patch",
+      "bytes": 37432,
+      "sha256": "b1799d3bd3fdf1e07102634987db05b62d4ac065f35427f60ada800dd3e490a9"
+    },
+    {
+      "path": "branch-proposals/patches/optional-inspection-job-regression.patch",
+      "bytes": 1313,
+      "sha256": "848dc732a1243ba7efa3a6a45ce25016150470d018dcbf623c755ccc8a353717"
+    },
+    {
+      "path": "branch-proposals/validation.json",
+      "bytes": 1332,
+      "sha256": "8686975beefbb43b0e2aa4e1b27499bf0ee9b233589bd4262ad09b6c7409a8e7"
+    },
+    {
+      "path": "studio-team/README.md",
+      "bytes": 4583,
+      "sha256": "6cf192195c9b700b3de2896cf28932ec13535e6bb44c2750def45b76469d2885"
+    },
+    {
+      "path": "studio-team/manifest.json",
+      "bytes": 5175,
+      "sha256": "db8aee85744f8702a89c37cf580310a3bd8e129a25aeace93bfc01e4c66a8800"
+    },
+    {
+      "path": "studio-team/p04-reference-prototype-r1/candidate-files.tar.gz",
+      "bytes": 86582,
+      "sha256": "305b4027cae1fb8b04ecb1814b03438e574b02170c469341315257c002f3ac9b"
+    },
+    {
+      "path": "studio-team/p04-reference-prototype-r1/manifest.json",
+      "bytes": 11631,
+      "sha256": "f76d9dd56d9eb5bbd79375ee186a1de667d694fa7d00c871a4918df255fab8f5"
+    },
+    {
+      "path": "studio-team/p04-reference-prototype-r1/new-source.patch",
+      "bytes": 67953,
+      "sha256": "d1835634b7c421c8ef283e26aa57f282d14cc320d9182c0b7550849b3bb2c4a9"
+    },
+    {
+      "path": "studio-team/p04-reference-prototype-r1/tracked.diff",
+      "bytes": 57310,
+      "sha256": "bb019ca858b9d5fc3099648d36b2c1321c0925ff8b73e80a0faee207a2f4088c"
+    },
+    {
+      "path": "studio-team/p05-team-large-cues-next/candidate-files.tar.gz",
+      "bytes": 120696,
+      "sha256": "635be0fbce42827745c1db1e933b9e413e3481390c703112385d9206940e02a9"
+    },
+    {
+      "path": "studio-team/p05-team-large-cues-next/manifest.json",
+      "bytes": 6409,
+      "sha256": "f52a673d9a2ea6a29eabe06799fb387fa7ac5db727d2a559e4df12d3242b2c9f"
+    },
+    {
+      "path": "studio-team/p05-team-large-cues-next/new-source.patch",
+      "bytes": 8304,
+      "sha256": "0145b1162f00fbdc77e78730c00b08e2772d375bd1ca4d7ea35a1b5020fd2672"
+    },
+    {
+      "path": "studio-team/p05-team-large-cues-next/tracked.diff",
+      "bytes": 39839,
+      "sha256": "1bee87671b9eb0d1ba2dd19cae3cbd7b64f10fb262e3e06e2d485251b1345cbb"
+    },
+    {
+      "path": "studio-team/p05-team-large-v621/candidate-files.tar.gz",
+      "bytes": 166135,
+      "sha256": "2d342dea369f9022ebd2037b6f214799e1ac66423eff2b1b4cb3c5b7665c5a4f"
+    },
+    {
+      "path": "studio-team/p05-team-large-v621/manifest.json",
+      "bytes": 11358,
+      "sha256": "d3610c56a4bc640fedaefc1ee8b2b9615d3ce28db894a574b85e5492ef45ba1c"
+    },
+    {
+      "path": "studio-team/p05-team-large-v621/new-source.patch",
+      "bytes": 123209,
+      "sha256": "a5f5aa8c0255e93a490b38b34a9a15e13691b3e2ee78bb7584083bdfe08fd9a2"
+    },
+    {
+      "path": "studio-team/p05-team-large-v621/tracked.diff",
+      "bytes": 92080,
+      "sha256": "d1484e27479e04d144508832f9df10a00ee111f58535d1c3cf32cbf0d3e2455e"
+    },
+    {
+      "path": "studio-team/review.json",
+      "bytes": 3108,
+      "sha256": "eea4f9cc4ed9ca53f5fbf6527bfe5063df359b195ff4ac8d4b037ed0d2a8d533"
+    }
+  ]
+}
