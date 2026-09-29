@@ -99,22 +99,27 @@ export function attachDemoInput({
         if (fresh) back();
         return;
       }
+      const activation = ['Enter', 'NumpadEnter', 'Space'].includes(code);
+      // Back lives inside the same UI wrapper as ordinary controls. Own its
+      // exit gesture before yielding so a held key cannot reactivate Home.
+      if (
+        activation &&
+        event.target?.closest?.('[data-demo-exit]') &&
+        (takeoverAvailable() || busy())
+      ) {
+        consume(event);
+        if (fresh) {
+          suppressedExitKeys.add(code);
+          suppressExitKeyClick = true;
+          back();
+        }
+        return;
+      }
       if (event.target?.closest?.('[data-demo-ui]')) {
         releaseForUI();
         return;
       }
       if (takeoverAvailable() || busy()) {
-        const activation = ['Enter', 'NumpadEnter', 'Space'].includes(code);
-        const exit = event.target?.closest?.('[data-demo-exit]');
-        if (exit && activation) {
-          consume(event);
-          if (fresh) {
-            suppressedExitKeys.add(code);
-            suppressExitKeyClick = true;
-            back();
-          }
-          return;
-        }
         // Native UI owns activation and editing. A fresh gameplay key still
         // means play when the spectator menu happens to have button focus.
         if (
