@@ -1,0 +1,189 @@
+{
+  "format": "revealline-production102-checkpoint-evidence.v1",
+  "publicEligible": false,
+  "source": {
+    "head": "db8e45e0e4dcfb9c57a4d942c424ae04ee147b16",
+    "tree": "f8ed1672eaa332d2086eae859324cff70a34a7d0",
+    "workingTreeModified": true,
+    "workingInputPins": [
+      {
+        "path": "scripts/produce-field-kit-theme.mjs",
+        "bytes": 59264,
+        "sha256": "84d171dea49262a48aaed3b0a2fc340904619d937faff6353241172657633db9"
+      },
+      {
+        "path": "scripts/test-field-kit-recipe-sources.mjs",
+        "bytes": 23881,
+        "sha256": "2859d939e90d95583c49e6a52b77c6f6b141e10e8bbdd2a11979cccd2cf997fd"
+      },
+      {
+        "path": "game/test/presentation-production-history.test.mjs",
+        "bytes": 76048,
+        "sha256": "63376ca9f4b87978a6765273b616a5324e274ba4bf1d689ab48db75a153d8f54"
+      },
+      {
+        "path": "game/test/fixtures/production-v01423-6a67-fpv100.json",
+        "bytes": 1659,
+        "sha256": "cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7"
+      },
+      {
+        "path": "game/test/fixtures/production-discovery-source-ui-fpv101.json",
+        "bytes": 1728,
+        "sha256": "bb8ef5f69c674d36737dcfd8a23267eb5207fd0bc2757965ae841da552b2551c"
+      },
+      {
+        "path": "docs/verification/discovery-audio-continuation-2026-09-29/review.json",
+        "bytes": 28249,
+        "sha256": "edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea"
+      },
+      {
+        "path": "docs/verification/discovery-webp-ui-continuation-2026-09-29/review.json",
+        "bytes": 8032,
+        "sha256": "2496cbfe4e885a931f22cbf5287efac45344074bb14dc4cf96f09a2d5a0a366f"
+      }
+    ]
+  },
+  "outputs": [
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "bytes": 8405354,
+      "sha256": "171c41569a07bb187f1954a0e986fae4b4b57af3340958fe3a0375b33c109495"
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "bytes": 29119,
+      "sha256": "82f1fb008cf58706c4667d18389ced47e5859d979123515bf1a1bd52eadda5f2"
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 1247371,
+      "sha256": "2706697f90141845bad18c9d47bac82ef0648ceb0bf12834e7ee7c07e1e42262"
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "bytes": 4396001,
+      "sha256": "9118a5075693d2cd0b43417d6012d9bc28c2cb7e22e469146e0da3bce5636381"
+    }
+  ],
+  "actualCheckpoint": {
+    "revision": 102,
+    "assets": 2662,
+    "themes": 103,
+    "immutablePreviousRevision": 101,
+    "immutablePreviousAssets": 2638,
+    "addedReviewedUI": 24,
+    "uiRevision": 24,
+    "uiParentRevision": 23,
+    "audioUnchanged": true,
+    "allOtherBindingsUnchanged": true,
+    "originalPayloadCount": 132,
+    "originalPayloadBytes": 4009342,
+    "scope": "Existing24 UI recipe identities only; source-stage101 and exact100 retained. No cap or runtime code change."
+  },
+  "tests": {
+    "fullTwoSuites": {
+      "tests": 38,
+      "pass": 38,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 193873.387208,
+      "suites": [
+        "game/test/presentation-production-history.test.mjs",
+        "scripts/test-field-kit-recipe-sources.mjs"
+      ]
+    },
+    "preWriterRecipeSourceSuite": {
+      "tests": 17,
+      "pass": 17,
+      "fail": 0,
+      "durationMs": 1026.690458
+    },
+    "reproductionCheck": {
+      "passed": true,
+      "revision": 102,
+      "files": 140,
+      "assetBytes": 4009342,
+      "coverage": {
+        "missing": 0,
+        "source": 99,
+        "produced": 0,
+        "reviewed": 236
+      }
+    },
+    "lintFormatDiffCheck": "passed"
+  },
+  "preservedPriorFailureReceipt": {
+    "path": ".cache/phase7-2baaad3e1/production101-validation.json",
+    "bytes": 4524,
+    "sha256": "83b955729d3be1b1799e7e0b267026863a81228ff4e0cf011235f398bdb52b6b"
+  },
+  "logs": [
+    {
+      "bytes": 8629,
+      "sha256": "35c0347ceb0a9bf7d135ad3a63a09e94bd8e8b2037e661f5808f605be659a4b1",
+      "name": "discovery-production102-focused-tests.log",
+      "rawKeptLocal": true
+    },
+    {
+      "bytes": 246,
+      "sha256": "a9cc44922b9cd22758e63e946b3a6cc487841c699e9eac54dc202af624d1d2d2",
+      "name": "discovery-production102-reproduction-check.log",
+      "rawKeptLocal": true
+    },
+    {
+      "bytes": 3769,
+      "sha256": "be151d1ef6d8ecfb60b5300f2ad42eea5a9f60a7452b61b4af4cb811a92cbad8",
+      "name": "discovery-ui102-recipe-source-tests.log",
+      "rawKeptLocal": true
+    }
+  ],
+  "scope": "Local scoped software continuation and append-only history/reproduction checks. Does not establish listening, human artwork, full navigation, physical-device, screen-reader, frozen/public bytes, performance or release-promotion qualification.",
+  "committedReadiness": {
+    "format": "revealline-production-readiness.v1",
+    "source": {
+      "id": "field-kit",
+      "revision": 102
+    },
+    "selection": {
+      "base": {
+        "id": "base",
+        "revision": 1
+      },
+      "collection": null,
+      "theme": {
+        "id": "fpv",
+        "revision": 102
+      }
+    },
+    "requiredReviewed": 194,
+    "optionalSlots": 141,
+    "coverage": {
+      "missing": 0,
+      "source": 99,
+      "produced": 0,
+      "reviewed": 236
+    },
+    "declarationOnly": true,
+    "limitation": "Reviewed state and evidence declarations; no visual acceptance inferred.",
+    "sourceRevision": "db8e45e0e4dcfb9c57a4d942c424ae04ee147b16",
+    "sourceTree": "f8ed1672eaa332d2086eae859324cff70a34a7d0",
+    "ledgerPath": "authoring/library/fpv-field-kit/production.rltheme",
+    "ledgerSha256": "171c41569a07bb187f1954a0e986fae4b4b57af3340958fe3a0375b33c109495"
+  },
+  "independentReview": "Exact101oracle, sevenUI inputpins,50audio inputpins and append-only102 implementation independently inspected; no actionable finding.",
+  "postCheckCompatibility": {
+    "companyTests": 971,
+    "pass": 969,
+    "fail": 2,
+    "cancelled": 0,
+    "cause": "Both existing Team-result tests reject a current102 picture because the finite Team association table still names100. Production history is correct; the adjacent runtime mapping requires a separate explicit software continuation. This is a real compatibility gap, not a sparse fixture failure.",
+    "log": {
+      "name": "discovery-company-current-tests.log",
+      "bytes": 235347,
+      "sha256": "ff781082791c3e68f1273d1a153d8b2783753136d44401466504eddd6d93e9a2",
+      "rawKeptLocal": true
+    },
+    "runtimeFixPending": true
+  }
+}
