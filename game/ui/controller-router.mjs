@@ -1,3 +1,4 @@
+import { mapProfile, descriptorKey, deviceDescriptor } from '../couch/controller-profiles.mjs';
 import { t } from '../i18n/index.mjs';
 import {
   resolveControllerBindings,
@@ -72,6 +73,7 @@ function compileBindings(config) {
  */
 export function createControllerRouter({
   readPads = defaultRead,
+  rawProfile = () => null,
   now = () => globalThis.performance?.now?.() ?? Date.now(),
   eventTarget = globalThis.window,
   bindings = null,
@@ -247,6 +249,7 @@ export function createControllerRouter({
       candidate.armed = false;
       candidate.previousJoin.clear();
       candidate.stickActive = { flight: false, menu: false };
+      candidate.rawState = new Map();
     }
   }
   function setBindings(value) {
@@ -297,9 +300,51 @@ export function createControllerRouter({
   eventTarget?.addEventListener?.('gamepaddisconnected', disconnectedEvent);
 
   function snapshot(pad, fallbackIndex) {
-    if (!pad?.connected || pad.mapping !== 'standard') return null;
+    if (!pad?.connected) return null;
+    if (pad.mapping !== 'standard') {
+      if (pad.mapping !== '') return null;
+      const profile = rawProfile(pad.index);
+      if (
+        !profile ||
+        Object.entries(deviceDescriptor(pad)).some(([key, value]) => profile.device[key] !== value)
+      )
+        return null;
+      const signature = JSON.stringify([descriptorKey(pad), profile]);
+      const old = seen.get(pad.index);
+      const mapped = mapProfile(
+        profile,
+        pad,
+        old?.signature === signature ? old.rawState : undefined,
+      );
+      if (!mapped.valid) return null;
+      const context = lastScope === 'flight' ? 'flight' : 'menu';
+      const buttons = new Set();
+      for (const [action, value] of Object.entries(mapped[context])) {
+        const key = action === 'action' ? 'ability' : action;
+        if (
+          value &&
+          !['direction', 'up', 'down', 'left', 'right'].includes(key) &&
+          compiled[context].buttons[key] !== undefined
+        )
+          buttons.add(compiled[context].buttons[key]);
+      }
+      return {
+        index: pad.index,
+        id: pad.id,
+        mapping: '',
+        signature,
+        buttons,
+        direction: { flight: mapped.flight.direction, menu: mapped.menu.direction },
+        stickActive: {},
+        rawState: mapped.state,
+        neutral: mapped.neutral,
+        timestamp: Number.isFinite(pad.timestamp) ? pad.timestamp : 0,
+      };
+    }
     const index = pad.index ?? fallbackIndex;
-    if (!Number.isInteger(index) || index < 0 || index > 1023) return null;
+    // Shared-radio seats use internal virtual indexes beyond physical Gamepad slots.
+    const sharedSeat = index <= 3071 && typeof pad.id === 'string' && pad.id.startsWith('couch:');
+    if (!Number.isInteger(index) || index < 0 || (index > 1023 && !sharedSeat)) return null;
     const usedButtons =
       navigationAliases && defaultLayout ? [...Array(16).keys()] : compiled.usedButtons;
     const buttons = new Set(usedButtons.filter((i) => pressed(pad.buttons?.[i])));
@@ -440,6 +485,7 @@ export function createControllerRouter({
         seen.set(pad.index, candidate);
       }
       candidate.stickActive = pad.stickActive;
+      candidate.rawState = pad.rawState;
       if (pad.neutral) candidate.armed = true;
     }
     if (pendingDisconnect) {
