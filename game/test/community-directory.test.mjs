@@ -27,11 +27,18 @@ test('public company directory can display and navigate without a community back
   const scripts = nodes.filter((node) => node.tagName === 'script');
   assert.deepEqual(
     scripts.map((node) => attribute(node, 'src')).sort(),
-    ['../i18n/bootstrap.mjs', '../i18n/catalogs.mjs', '../vendor/i18next-26.4.2.min.js'],
-    'Only the local localization runtime runs; no catalog/auth/client bootstrap is loaded.',
+    [
+      '../i18n/bootstrap.mjs',
+      '../i18n/catalogs.mjs',
+      '../ui/support-input-entry.mjs',
+      '../vendor/i18next-26.4.2.min.js',
+    ],
+    'Only local localization and controller support run; no catalog/auth/client bootstrap is loaded.',
   );
   for (const node of scripts) {
-    assert.notEqual(attribute(node, 'type'), 'module');
+    if (attribute(node, 'src') === '../ui/support-input-entry.mjs')
+      assert.equal(attribute(node, 'type'), 'module');
+    else assert.notEqual(attribute(node, 'type'), 'module');
     assert.equal(
       (node.childNodes ?? [])
         .map((child) => child.value ?? '')
