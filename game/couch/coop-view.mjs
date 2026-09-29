@@ -36,6 +36,7 @@ import {
 import { paintMaterialMarker } from '../content-design/material-markers.mjs';
 import { candidateTeamPictureFrame } from './candidate-team-pictures.mjs';
 import { coopBonusView, drawCoopBonuses } from './coop-bonus-view.mjs';
+import { coopBonusActive } from '../coop/timed-bonuses.mjs';
 import {
   TEAM_PILOT_SLOTS,
   TEAM_ENEMY_SLOTS,
@@ -268,7 +269,11 @@ export function createCoopPainter(canvas) {
     const recentOutcomes = feedback ?? outcomes.observe(run),
       recentCaptures = captures.observe(run);
     const fonts = canvasTextFonts(textFace, look?.fonts ?? THEME_FONTS);
-    const bonuses = coopBonusView(run);
+    const bonuses = coopBonusView(run),
+      // Pickups scale motion separately from Support's stored velocity. Both
+      // own the same visible state; neither the painter nor pause extends it.
+      bonusSlowed = coopBonusActive(run, 'enemy-slow'),
+      enemySlowed = (enemy) => bonusSlowed || (enemy.speedScale < 1 && enemy.slowUntil > run.time);
     const palette = look?.palette;
     const colors = palette ? [palette.accent, palette.safe] : COLORS;
     const motionScale = reduced ? 0 : (look?.motionScale ?? 1);
@@ -654,7 +659,7 @@ export function createCoopPainter(canvas) {
         ctx.font = `600 0.65px ${fonts.ui}`;
         ctx.textAlign = 'center';
         cue(
-          `LOCK ${enemy.target + 1}${compactCues && enemy.speedScale < 1 && enemy.slowUntil > run.time ? ' ↓' : ''}`,
+          `LOCK ${enemy.target + 1}${compactCues && enemySlowed(enemy) ? ' ↓' : ''}`,
           enemy.x,
           Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.1)),
           0.65,
@@ -801,7 +806,7 @@ export function createCoopPainter(canvas) {
           ctx.fillStyle = '#521f2a';
           ctx.fillRect(-0.1, -0.1, 0.2, 0.2);
         }
-        const slowed = enemy.speedScale < 1 && enemy.slowUntil > run.time;
+        const slowed = enemySlowed(enemy);
         // On compact boards, an active state replaces the redundant idle role
         // caption. Charge/lock/recovery keep their full caption with the Help-
         // labelled slowdown glyph; the existing dashed slow ring also remains.
