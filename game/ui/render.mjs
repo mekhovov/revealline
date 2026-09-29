@@ -1,3 +1,5 @@
+import { preparedRotorRecipe } from './rotor-presentation.mjs';
+import { contactCueUnderstroke } from './contact-cue.mjs';
 import { t } from '../i18n/index.mjs';
 import { canvasTextFonts } from '../text-face.mjs';
 import { presentationEvent, drawEventFeedback, drawRecoveryCue } from './event-feedback.mjs';
@@ -360,6 +362,7 @@ export class BoardPainter {
       actorSkins = {},
       actorAppearance = null,
       backdrop = null,
+      feedbackComparison = null,
       pictureVisibility = 'clear',
       demoTransition = 0,
       signalReception = 'off',
@@ -367,6 +370,10 @@ export class BoardPainter {
     } = {},
   ) {
     if (!this.theme || !state) return;
+    // Developer comparison only: omit these flags for the accepted presentation.
+    // Hide only additive decoration; functional cues and all effect clocks stay.
+    const captureAccent = feedbackComparison?.captureAccent !== false,
+      eventAccents = feedbackComparison?.eventAccents !== false;
     const presentation =
       this.theme.id === 'fpv' || this.theme.family === 'fpv' ? this.presentation : null;
     if (
@@ -484,7 +491,10 @@ export class BoardPainter {
           rotors: sprite.geometry.rotors,
           presentationPivot: sprite.geometry.pivot,
         };
-        playerRecipe = this.presets.animationRecipes[body.animationRecipe];
+        playerRecipe = preparedRotorRecipe(
+          this.presets.animationRecipes[body.animationRecipe],
+          sprite.geometry,
+        );
       }
     }
     const actorFrames = this.actorPresentation.sample(fullReveal ? [] : state.enemies, {
@@ -593,7 +603,7 @@ export class BoardPainter {
     drawClassicTerrain(ctx, classic, p, images);
     // Reveal decoration belongs below current hazards, actors and live cuts.
     // An old capture pulse must never wash over a newly opened live line.
-    if (!fullReveal)
+    if (!fullReveal && captureAccent)
       for (const effect of this.effects)
         if (effect.type === 'cells.claimed')
           drawCapturePulse(ctx, effect, columns, state.cells, p, reduced);
@@ -991,10 +1001,9 @@ export class BoardPainter {
         colors: { body: p.safe, accent: p.accent },
         x: state.player.x + bodyOffset.x,
         y: state.player.y + bodyOffset.y,
-        // Approved player sprites already contain their motor hubs. The old
-        // procedural blades read as four detached white corner brackets at
-        // gameplay scale, so keep the authored silhouette unobstructed.
-        showRotors: false,
+        // Only prepared bodies declare separate rotor geometry. Uploaded and
+        // historical originals may contain baked blades and keep their path.
+        showRotors: Boolean(playerGeometry),
       });
       ctx.restore();
       // This ring stays at the simulation contact radius, independent of body
@@ -1010,7 +1019,7 @@ export class BoardPainter {
         TAU,
       );
       ctx.strokeStyle = PRESENTATION_PLATE;
-      ctx.lineWidth = 3;
+      ctx.lineWidth = playerGeometry ? contactCueUnderstroke(feedbackComparison?.contactStyle) : 3;
       ctx.stroke();
       ctx.strokeStyle = debug ? '#ffffff' : PRESENTATION_INK;
       ctx.lineWidth = 1;
@@ -1050,7 +1059,7 @@ export class BoardPainter {
           height: H,
           fonts,
         });
-      if (!fullReveal && !reduced && f.type === 'craft.redeployed' && f.age < 0.6) {
+      if (!fullReveal && !reduced && eventAccents && f.type === 'craft.redeployed' && f.age < 0.6) {
         ctx.save();
         ctx.strokeStyle = p.accent;
         ctx.globalAlpha = (1 - f.age / 0.6) * 0.6;
@@ -1066,7 +1075,7 @@ export class BoardPainter {
         ctx.stroke();
         ctx.restore();
       }
-      if (!fullReveal && !reduced && f.type === 'player.failed' && f.age < 0.6) {
+      if (!fullReveal && !reduced && eventAccents && f.type === 'player.failed' && f.age < 0.6) {
         ctx.strokeStyle = f.type === 'player.failed' ? p.danger : p.accent;
         ctx.globalAlpha = (1 - f.age / 0.6) * 0.55;
         ctx.lineWidth = 4;

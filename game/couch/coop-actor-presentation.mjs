@@ -42,10 +42,10 @@ const turnDelta = (target, heading) =>
 /** Two cosmetic observations only: downed rotors stay frozen while real crawl
  * displacement can turn the body. State transitions may teleport to an anchor;
  * those displacements must never masquerade as crawling. */
-function pilotPose(run, player, frame, old, dt, reduced) {
+function pilotPose(run, player, frame, old, dt, reduced, recovered) {
   const running = run.status === 'running',
     changed = old && old.tick !== run.tick,
-    sameStatus = old?.status === player.status;
+    sameStatus = old?.status === player.status && !recovered;
   let heading = old?.heading ?? frame.heading,
     target = sameStatus ? old.target : heading,
     moving = running && sameStatus && !changed ? old.moving : false;
@@ -83,12 +83,38 @@ function pilotPose(run, player, frame, old, dt, reduced) {
       y: player.y,
       tick: run.tick,
       status: player.status,
+      graceUntil: player.graceUntil,
+      reserves: run.team.reserves,
+      rescues: run.team.rescues,
+      recoveryTick: recovered ? run.tick : null,
       heading,
       target,
       moving,
     },
     pose: { heading, pilotState, rescueTarget },
   };
+}
+
+/** Hunters lock an exposed point before moving. Their prepared body's nose
+ * must agree with that lock, not the previous patrol or a live player position.
+ * Commitment uses the core's actual velocity; recovery retains its last pose.
+ * No interpolation delays the visible aim or advances a paused checkpoint. */
+function hunterPose(run, enemy, frame, old) {
+  if (run.status !== 'running' && old)
+    return { heading: old.heading, bank: frame.reduced ? 0 : old.bank };
+  let dx, dy;
+  if (enemy.phase === 'warning') {
+    dx = enemy.targetPoint?.x - enemy.x;
+    dy = enemy.targetPoint?.y - enemy.y;
+  } else if (enemy.phase === 'commit') {
+    dx = enemy.vx;
+    dy = enemy.vy;
+  } else if (enemy.phase !== 'recovery') return null;
+  const heading =
+    Number.isFinite(dx) && Number.isFinite(dy) && Math.hypot(dx, dy) > 0.00001
+      ? Math.atan2(dy, dx) + Math.PI / 2
+      : (old?.heading ?? frame.heading);
+  return { heading, bank: 0 };
 }
 
 /** Borrow prepared sprites and keep cosmetic samples only; never acquire assets or mutate a run. */
@@ -193,9 +219,28 @@ export function createCoopActorPresentation({
     const actors = [],
       descriptions = new Map(),
       frozen = [];
+    // The Team core preserves authored velocity during a timed freeze. Read
+    // its exact active interval rather than inferring motion from that velocity;
+    // this holds cosmetic parts without dimming bodies or changing role cues.
+    const freeze = run.bonuses?.effects?.['enemy-freeze'],
+      enemiesFrozen = Boolean(freeze && run.tick >= freeze.from && run.tick < freeze.until);
     for (const player of run.players) {
       const id = key('pilot', player.id),
-        vector = DIRECTION[player.direction] ?? [0, 0];
+        vector = DIRECTION[player.direction] ?? [0, 0],
+        prior = pilots.get(id),
+        // Both pilots can be downed and revived inside one core step. Grace
+        // can also clear before the next observed frame when a new cut starts.
+        // Durable reserve/rescue changes therefore discard one displacement
+        // sample for both pilots when the recovered seat is no longer known.
+        // The unaffected partner resumes normal motion on the next core tick.
+        recovered = Boolean(
+          prior &&
+            player.status === 'active' &&
+            (player.graceUntil > prior.graceUntil ||
+              run.team.reserves < prior.reserves ||
+              run.team.rescues > prior.rescues ||
+              prior.recoveryTick === run.tick),
+        );
       actors.push({
         id,
         type: 'team-pilot',
@@ -208,10 +253,12 @@ export function createCoopActorPresentation({
       descriptions.set(id, {
         ...COOP_ACTOR_ROLES.pilot,
         player,
+        recovered,
         radius: player.radius,
         slot: `${COOP_ACTOR_ROLES.pilot.slot}.${treatment}`,
       });
       if (player.status === 'downed') frozen.push({ id, frozen: true, stunned: true });
+      else if (recovered) frozen.push({ id, frozen: true });
     }
     for (const enemy of run.enemies) {
       if (enemy.active === false || !['drifter', 'hunter', 'claimed-rover'].includes(enemy.type))
@@ -220,8 +267,12 @@ export function createCoopActorPresentation({
       if (enemy.type === 'claimed-rover') {
         const slot = COOP_ACTOR_ROLES[enemy.type].slot;
         if (!sprites.has(slot)) sprites.set(slot, snapshot?.image?.(slot) ?? null);
-        frozen.push({ id, mode: enemy.rover?.mode, frozen: enemy.rover?.mode !== 'active' });
-      }
+        frozen.push({
+          id,
+          mode: enemy.rover?.mode,
+          frozen: enemiesFrozen || enemy.rover?.mode !== 'active',
+        });
+      } else if (enemiesFrozen) frozen.push({ id, frozen: true });
       actors.push({
         id,
         type: enemy.type,
@@ -271,10 +322,14 @@ export function createCoopActorPresentation({
           pilots.get(id),
           elapsed * scale,
           reduced,
+          description.recovered,
         );
         nextPilots.set(id, result.sample);
         // Geometry must use the final heading, including pivot and rotor bounds.
         frame = { ...sampled, ...result.pose };
+      } else if (description.enemy?.type === 'hunter') {
+        const pose = hunterPose(run, description.enemy, sampled, entries.get(id)?.frame);
+        if (pose) frame = { ...sampled, ...pose };
       }
       const stateSlot = description.player
         ? teamPilotSlot(description.player.id, frame.pilotState, treatment)
@@ -357,10 +412,11 @@ export function createCoopActorPresentation({
       } else
         drawPresentedActor(ctx, frame, palette, sprite.image, sprite.geometry, entry.bodyRecord, {
           bodyOffset: frame.bodyOffset,
-          // Player sprites own their complete readable silhouette. Extra
-          // procedural blades resemble detached corner brackets on compact
-          // Team boards; enemy actors retain their authored rotor treatment.
-          showRotors: kind !== 'pilot',
+          // Prepared geometry owns the motor hubs in every Team state.
+          showRotors: true,
+          // The Team host paints one contact ring and an external numbered,
+          // shaped badge. Do not paint a second face/crosshair over the craft.
+          showBodyCues: kind !== 'pilot',
         });
     } finally {
       ctx.restore();

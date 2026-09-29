@@ -226,7 +226,23 @@ function geometry(value, dimensions = null) {
   );
   const centers = new Set();
   for (const anchor of value.rotorAnchors) {
-    fields(anchor, 'x y radius blades', 'rotor anchor');
+    // Additive reader support only: absent motion fields retain historical
+    // index-based animation. Extended anchors belong to new asset revisions;
+    // older strict readers reject them and must not receive those revisions.
+    exactKeys(anchor, ['x', 'y', 'radius', 'blades', 'direction', 'phaseDegrees'], 'rotor anchor');
+    required(
+      ['x', 'y', 'radius', 'blades'].every((name) => Object.hasOwn(anchor, name)),
+      'rotor anchor is missing fields.',
+    );
+    if (Object.hasOwn(anchor, 'direction'))
+      required([-1, 1].includes(anchor.direction), 'Invalid rotor direction.');
+    if (Object.hasOwn(anchor, 'phaseDegrees'))
+      required(
+        Number.isFinite(anchor.phaseDegrees) &&
+          anchor.phaseDegrees >= 0 &&
+          anchor.phaseDegrees < 360,
+        'Invalid rotor phase.',
+      );
     required(
       [anchor.x, anchor.y, anchor.radius].every(Number.isFinite) &&
         anchor.radius > 0 &&

@@ -1,4 +1,5 @@
-import { bladeAngles, componentPose, rotorAnchors } from './animation.mjs';
+import { componentPose, rotorAnchors } from './animation.mjs';
+import { paintRotor } from '../../game/ui/rotor-presentation.mjs';
 import { paintBodyBacking } from '../../game/ui/body-backing.mjs';
 
 const TAU = Math.PI * 2;
@@ -103,65 +104,22 @@ function drawRotors(
     const offset = ((anchor.phaseDegrees + component.phaseDegrees) * Math.PI) / 180;
     ctx.save();
     ctx.translate(anchor.x * width, anchor.y * height);
-    if (!reduced && !slowInspection && rate?.rawRps > 5) {
-      ctx.globalAlpha = component.blurOpacity * Math.min(rate.rawRps / 17, 1);
-      ctx.fillStyle = component.fillColor;
-      ctx.beginPath();
-      ctx.arc(0, 0, radius, 0, TAU);
-      ctx.fill();
-      ctx.globalAlpha = 1;
-    }
-    ctx.strokeStyle = component.fillColor;
-    ctx.globalAlpha = 0.24;
-    ctx.lineWidth = Math.max(pixel * 0.7, width * 0.006);
-    ctx.beginPath();
-    ctx.arc(0, 0, radius, 0, TAU);
-    ctx.stroke();
-    ctx.globalAlpha = 1;
-    const thickness = radius * component.bladeWidth;
-    for (const angle of bladeAngles(
-      anchor.bladeCount ?? component.bladeCount,
-      phase * component.direction * anchor.direction + offset,
-    )) {
-      ctx.save();
-      ctx.rotate(angle);
-      ctx.fillStyle = component.fillColor;
-      const points =
-        component.bladeShape === 'paddle'
-          ? [
-              [0, -thickness * 0.25],
-              [radius * 0.38, -thickness * 0.25],
-              [radius * 0.42, -thickness * 0.7],
-              [radius, -thickness * 0.7],
-              [radius, thickness * 0.55],
-              [radius * 0.42, thickness * 0.55],
-              [radius * 0.35, thickness * 0.2],
-              [0, thickness * 0.2],
-            ]
-          : component.bladeShape === 'tapered'
-            ? [
-                [0, -thickness * 0.3],
-                [radius * 0.75, -thickness * 0.6],
-                [radius, 0],
-                [radius * 0.6, thickness * 0.45],
-                [0, thickness * 0.3],
-              ]
-            : [
-                [0, -thickness * 0.2],
-                [radius * 0.55, -thickness * 0.38],
-                [radius, -thickness * 0.12],
-                [radius * 0.9, thickness * 0.56],
-                [radius * 0.5, thickness * 0.7],
-                [0, thickness * 0.23],
-              ];
-      polygon(ctx, points);
-      ctx.fillStyle = component.tipColor;
-      ctx.fillRect(radius * 0.78, -thickness * 0.08, radius * 0.16, thickness * 0.35);
-      ctx.restore();
-    }
-    ctx.fillStyle = component.hubColor;
-    const hub = Math.max(width * 0.027, pixel * 0.7);
-    ctx.fillRect(-hub / 2, -hub / 2, hub, hub);
+    paintRotor(ctx, {
+      radius,
+      phase: phase * component.direction * anchor.direction + offset,
+      direction: component.direction * anchor.direction,
+      bladeCount: anchor.bladeCount ?? component.bladeCount,
+      bladeWidth: component.bladeWidth,
+      bladeShape: component.bladeShape,
+      fillColor: component.fillColor,
+      tipColor: component.tipColor,
+      hubColor: component.hubColor,
+      blurOpacity:
+        !reduced && !slowInspection && rate?.rawRps > 5
+          ? component.blurOpacity * Math.min(rate.rawRps / 17, 1)
+          : 0,
+      pixel,
+    });
     ctx.restore();
   }
 }
