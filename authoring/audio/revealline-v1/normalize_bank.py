@@ -12,6 +12,7 @@ TARGETS = {
     'warning': -29, 'start': -32, 'retry': -32, 'loss': -31,
     'respawn': -32, 'win': -31, 'neutralized': -33, 'reactivated': -32,
     'esc': -32, 'radio': -31,
+    'ceramic': -30, 'wood': -29, 'ratchet': -29, 'bell': -34,
     # Quieter playback buses/near gains already place movement below one-shots.
     'rotor': -26, 'motor': -26, 'wheels': -27, 'wings': -25, 'grain': -26, 'flow': -29,
 }

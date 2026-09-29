@@ -1,0 +1,13 @@
+{
+  "source": "esc-recording",
+  "esc-start": {
+    "start": 0,
+    "duration": 0.64
+  },
+  "esc-retry": {
+    "start": 0.34,
+    "duration": 0.29
+  },
+  "filters": "highpass 1100 Hz, lowpass 4800 Hz, 8 ms attack and 40 ms release, 32 kHz mono PCM16; whole-bank calibration follows",
+  "identity": "Recorded Orqa FPV launch, firmware unspecified; not a Betaflight power-on melody"
+}

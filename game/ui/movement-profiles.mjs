@@ -22,12 +22,12 @@ export const PLAYER_MOVEMENT = Object.freeze({'fpv-body': 'rotor',
 'fpv-impact-v1': 'rotor',
 'fpv-trapper-v1': 'rotor',
 'atlas-swallow-v3': 'wings',
-'atlas-pottery-courier-v1': 'grain',
-'atlas-carved-chest-v1': 'grain',
+'atlas-pottery-courier-v1': 'ceramic',
+'atlas-carved-chest-v1': 'wood',
 'atlas-falcon-crest-v3': 'wings',
 'atlas-weaver-shuttle-v3': 'grain',
-'atlas-bell-warden-v1': 'grain',
-'atlas-woven-basket-v1': 'grain'});
+'atlas-bell-warden-v1': 'bell',
+'atlas-woven-basket-v1': 'wood'});
 export const ENEMY_MOVEMENT = Object.freeze(
   Object.fromEntries(
     Object.entries({fpv: {
@@ -35,7 +35,7 @@ export const ENEMY_MOVEMENT = Object.freeze(
         'border-patrol': 'rotor',
         'contour-patrol': 'rotor',
         'claimed-rover': 'wheels',
-        eroder: 'motor',
+        eroder: 'ratchet',
         'lane-boss': 'motor',
         'relay-sentinel': 'motor',
       },
@@ -53,7 +53,7 @@ retro: {
         'border-patrol': 'motor',
         'contour-patrol': 'wheels',
         'claimed-rover': 'wheels',
-        eroder: 'motor',
+        eroder: 'ratchet',
         'lane-boss': 'motor',
         'relay-sentinel': 'motor',
       }}).map(([family, roles]) => [family, Object.freeze(roles)]),
@@ -95,11 +95,14 @@ export function recordedMovement(body = '', theme = {}, type = '', skinId = '') 
     return 'grain';
   const material = !skin && journeyActorThemeMaterial(theme.id);
   if (material) {
+    if (['glaze', 'circuit'].includes(material.motif)) return 'ceramic';
+    if (material.motif === 'rivets') return 'ratchet';
     if (material.motif === 'weave') return 'wings';
     if (['seed', 'links'].includes(material.motif)) return 'grain';
     return ['claimed-rover', 'contour-patrol'].includes(role) ? 'wheels' : 'motor';
   }
   const family = skin ?? familyFor(theme);
+  if (role === 'eroder' && ['fpv', 'retro'].includes(family)) return 'ratchet';
   if (role && ENEMY_MOVEMENT[family]?.[role]) return ENEMY_MOVEMENT[family][role];
   if (role === 'claimed-rover' || role === 'eroder') return 'wheels';
   return {fpv: 'rotor',

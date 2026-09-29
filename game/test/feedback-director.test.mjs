@@ -599,3 +599,20 @@ test('retired movement rejoins its playback-rate-adjusted phase without restarti
   const voice = director.play('rotor', { loop: true, rate: 0.72, movement: true });
   assert.equal(voice.source.offset, (14 * 0.72) % 6);
 });
+
+test('hardware launch follows equipped FPV class and appearance, not just a name substring', () => {
+  for (const body of ['heavy-lift', 'fixedwing-body', 'delta-interceptor']) {
+    const { sound, director } = harness();
+    const state = run();
+    state.activeClassId = 'equipped';
+    director.update(
+      true,
+      { family: 'fpv', player: 'neutral-marker', classBodies: { equipped: body } },
+      state,
+    );
+    assert.ok(
+      [...sound.voices].some((v) => v.name === 'esc-start'),
+      body,
+    );
+  }
+});
