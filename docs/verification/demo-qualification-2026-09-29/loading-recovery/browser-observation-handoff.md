@@ -1,30 +1,49 @@
-# Fresh finite browser observation — running
+# Finite browser observation and Worker follow-up — completed
 
-This is a new run, separate from the [earlier interrupted observation](../browser-observation-handoff.md). It started at **2026-09-29T03:30:56.950Z** and requests 7,200 wall-clock seconds; approximate completion is 05:30:57 UTC if execution continues. Requested duration is not achieved duration. Source/hash, complete sample and cleanup checks remain pending until the run ends.
+This finite workflow has ended. Do not reopen or restart the observer from this handoff. The earlier [interrupted run](../browser-observation-handoff.md), all preliminary reports and the real-Worker watchdog failure remain preserved.
 
 - Checkout: `/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test`.
-- Frozen production and harness source: `55c5ec57cc1ed478b44e065951073c0bdd3c3ead`. Later changes are tests/evidence/documentation only.
-- Held draft: [PR #781](https://github.com/mekhovov/revealline/pull/781), branch `codex/local-experience-review-20260929`; inspect its live remote head before any continuation push.
-- Existing in-app-browser tab **34**, browser **1**, marked for handoff. Reuse that tab and its session; do not reload or navigate it while running.
-- URL: `http://127.0.0.1:8820/game/test/browser/demo-watch.html`.
-- Task-owned Python server: exec session `67109`, serving this checkout on port 8820. Keep it running until the evidence is saved.
-- Actual game: Legacy with **FPV Front · Pressure Lines · 5.0.0** confirmed in Installed chapters before the baseline. The observer does not start or steer gameplay.
-- Separate `8820` origin; the user's port `8779` game/shared checkout are untouched.
+- Frozen production and harness source: `55c5ec57cc1ed478b44e065951073c0bdd3c3ead`.
+- Runtime/test candidate head before this evidence update: `279d6b67f66a7add88df66ab09e4995e7bdc775a`.
+- Existing held draft: [PR #781](https://github.com/mekhovov/revealline/pull/781), branch `codex/local-experience-review-20260929`. Inspect its current remote head before any future continuation; preserve newer owner work and fast-forward only.
+- No version allocation, merge, release, Pages publication or hold removal occurred.
 
-The five-run diagnostic and all CPU-heavy task checks ended before this browser observation began. External host activity is uncontrolled. The preceding long Worker regression had a one-second deadline failure; it remains preserved and unexplained despite five successful isolated repetitions and the passing fault-to-replay regression. A completed browser duration cannot erase that finding or establish release qualification.
+## Completed browser capture
 
-## Early manual control checks
+The actual Legacy game with **FPV Front · Pressure Lines · 5.0.0** was observed from **2026-09-29T03:30:56.950Z** through automatic finalization at **05:31:01.342Z**. The [exact final JSON](browser-observation-final.json) contains 7,204.141 monotonic wall seconds, 1,430 samples and 345 events. Its 204 served-source records and three hashed game-localStorage entries are unchanged. Read the [final review](browser-final-review.md) and [derived summary](browser-final-summary.json) for scene rotation, measured hidden intervals, music intent, memory and all limitations.
 
-Music was already playing on entry. During this run, explicit **Pause music** remained paused across **Next level**, from First Signal to Night Patrol. After explicit **Play music**, **Pause demo** held Night Patrol at 13% / three lives / 17 seconds while its music status remained playing. The demo was explicitly resumed; a later status showed Night Patrol advancing to 32% / 24 seconds while music remained playing. These are UI/DOM observations, not proof of audible output or physical devices. All observed visibility samples so far are visible, so no hidden-page result is claimed.
+Final JSON: **3,193,397 bytes**, SHA-256 `2c943ad9352dcb1022f0c9cc93bf9c1d07fcdad5d8119214a719201452a4cc1e`. It was collected through supported CUA DOM APIs in chunks smaller than 80,000 characters, with matching before/after report markers. No download-event wait was used. Parallel read-only chunk requests made stable collection possible as the report grew. The changing-report read at the 04:55 heartbeat was discarded after three attempts; this was not a game failure.
 
-## Continuation
+The report is **not a clean playback acceptance pass**. After one visible return, 33 unpaused visible/unfocused samples retained the same Orchard Crossing board and timer for **158.0978 seconds**. Observer callbacks continued and gameplay progression became observable after re-hiding. Visible RAF starvation is a source-informed hypothesis only. No code was changed to hide the finding.
 
-Use only supported `cua_repl` browser APIs. Read `#observer-status` and `#observation-checkpoint-status` without steering the game. If healthy and still running, save the current `#observation-report` value in chunks smaller than 80,000 characters, parse it, retain it as `browser-observation-running.json` in this folder, mark tab 34 for handoff again and stay quiet. The harness's separate observer-only IndexedDB also persists bounded incomplete checkpoints about every 15 seconds, with an explicit saved timestamp. Do not claim unsaved intervals from a later status line.
+Observer-only IndexedDB persistence failed at elapsed **6,720.5555 seconds / 05:22:57.506 UTC** with `DataError: Failed to write blobs (IOError)`. Local report and tiny probe writes then failed with `ENOSPC`; no partial report replaced the prior successful local snapshot. The complete DOM report was retained in memory until disk space became available. Its exact bytes and the [6,932.6251-second failure checkpoint](browser-observation-checkpoint-io-failure.json) were then saved and verified. The [retention/cleanup receipt](browser-final-retention-cleanup.json) preserves hashes and operational limits. No unrelated files/processes were changed to obtain space. The final IndexedDB slot was not retested or claimed durable.
 
-When automatic completion is visible, collect the entire finalized DOM report in bounded chunks, preserve exact bytes as `browser-observation-final.json`, and inspect terminal source/storage hashes, complete timing and sample/event/diagnostic arrays. Do not use a download-event wait. Report wall time separately from simulated progress, actual recorded/live scene rotation, explicit pauses/music intent, gaps, rendering samples and resource-cleanup limits. Visibility must demonstrate hidden execution before making that claim. Physical audio/device behavior, unfamiliar-viewer comprehension and release acceptance remain separate.
+Earlier visible Pause checks, 56.4496 minutes of measured hidden execution, source/storage stability and the final completion flags remain useful evidence. They do not establish audible output, hidden explicit-Pause preservation, physical inputs, OS freeze/native behavior, resource leak freedom, unfamiliar-viewer comprehension or release qualification.
 
-If the tab disappears, confirm using the browser inventory. It is permissible to open the **same observer page solely to retrieve its previously saved report** through the recovered-report UI; do not press Start or resume a new observation. Save the exact recovered checkpoint or finalized report, including its incomplete status and lost tail. A crash or missing tab is a limitation; do not invent completion or append new samples. If no report can be recovered, preserve the last on-disk checkpoint and report the missing interval.
+## Owned resources released
 
-Only observation evidence and qualification docs may change during this run. Do not edit served source, allocate a version, merge, publish Pages or remove the draft/release hold. Inspect the remote head and fast-forward only if safe; preserve all newer owner work. Send the already-authorized release coordination chat exact head and meaningful outcome when needed.
+Only after final JSON had been saved and hash-verified:
 
-After the finite observation is reported, or cannot continue without new user action, pause `finish-demo-browser-observation` and stop its recurring work. Keep the server/tab until evidence is saved, then release only this observer's resources. Do not modify the user's port 8779 game or another checkout.
+- The task-owned in-app-browser **tab 34 / browser 1**, at `http://127.0.0.1:8820/game/test/browser/demo-watch.html`, was closed.
+- Python server **PID 57077 / exec session 67109** was verified as `python3 -m http.server 8820 --bind 127.0.0.1` with this checkout as cwd, stopped through its session, and confirmed to leave no port 8820 listener.
+- The user's port 8779 game and shared checkout were untouched.
+
+No per-browser Worker/listener counters or post-close heap sample were obtained. Closing owned resources is not general leak proof. The old tab handle and server session must not be reused as running resources.
+
+## One final Worker regression
+
+The existing command ran **once** after observer cleanup, from **05:32:57.847 to 05:36:08.291 UTC**, without other task-owned heavy checks:
+
+```sh
+node --expose-gc scripts/soak-demo.mjs --simulation-seconds 7200 --report docs/verification/demo-qualification-2026-09-29/loading-recovery/worker-final-qualification.json
+```
+
+[Raw report](worker-final-qualification.json), [log](worker-final-qualification.log), [review/source comparison](worker-final-review.json): exit zero, 179 scenes (92 recorded / 87 live), 179 exact recording verifications and pause checks, 7,251.975 simulated seconds in 190.435 wall seconds. Both steering policies visit twelve eligible sources. There are zero deaths, unexpected errors, preparation failures or remaining player/Worker/listener counters; 29 safe-plan-exhaustion handoffs are expected. All 64 source hashes are unchanged. The 205 unique browser/Worker inventory paths match frozen Git source and the current tree.
+
+The one-second watchdog, limits and assertions were unchanged. No retry was made. This accelerated pass neither erases the earlier watchdog failure nor resolves the browser visible-return anomaly.
+
+## Follow-up boundary
+
+Retain the draft and release hold. The next implementation investigation is the visible/unfocused scheduling boundary; any correction needs evidence tied to its new source. Continue physical-device/audio/native and three-viewer acceptance separately using the [worksheet](../viewer-device-checklist.md).
+
+Report the finite outcomes and final evidence head to the already-authorized release coordination chat. Pause `finish-demo-browser-observation` after reporting and stop its recurring work; do not start another observation from this automation. No further observer/server cleanup remains.
