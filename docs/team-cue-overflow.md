@@ -38,3 +38,12 @@ preserve exact source state and exercise warning targets, slowdown expiry and
 locale changes. These modeled checks do not establish native glyph/layout,
 physical-controller, touch hardware, performance, production or public-release
 acceptance. Existing artwork approvals and publication state are unchanged.
+
+## Functional cue language
+
+Hunter target-lock and contact-rescue captions use compact EN/UK templates from
+the same locale authority as Field details. Both retain their target number;
+contact rescue adds only the validated floored percentage, while legacy role-only
+presentation omits progress. The compact slowdown marker remains attached to the
+same warning. Language repaint preserves the complete attempt and uses the existing
+cue packer and readable minimum sizes. See [the scoped source and layout checks](verification/team-cue-localization-20260929/README.md).

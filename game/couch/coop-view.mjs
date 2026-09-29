@@ -576,8 +576,11 @@ export function createCoopPainter(canvas) {
         if (rescue || (frame?.pilotState === 'rescuing' && Number.isInteger(frame.rescueTarget)))
           cue(
             rescue
-              ? `RESCUE ${rescue.target + 1} · ${Math.floor(rescue.progress * 100)}%`
-              : `RESCUE ${frame.rescueTarget + 1}`,
+              ? t('interface:team.cueRescueProgressCompact', {
+                  player: rescue.target + 1,
+                  percent: Math.floor(rescue.progress * 100),
+                })
+              : t('interface:team.cueRescueCompact', { player: frame.rescueTarget + 1 }),
             x,
             ((position.rect?.bottom ?? y * cssCell) + cueScale.px(12)) / cssCell,
             0.66,
@@ -657,7 +660,7 @@ export function createCoopPainter(canvas) {
         ctx.font = `600 0.65px ${fonts.ui}`;
         ctx.textAlign = 'center';
         cue(
-          `LOCK ${enemy.target + 1}${compactCues && enemySlowed(enemy) ? ' ↓' : ''}`,
+          `${t('interface:team.cueLockCompact', { player: enemy.target + 1 })}${compactCues && enemySlowed(enemy) ? ' ↓' : ''}`,
           enemy.x,
           Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.1)),
           0.65,
