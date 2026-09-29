@@ -1,0 +1,137 @@
+{
+  "format": "revealline-team-feedback-art.v1",
+  "revision": 1,
+  "sourceSha256": "4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f",
+  "assets": [
+    {
+      "slot": "team.effect.support",
+      "file": "support.png",
+      "bytes": 271,
+      "sha256": "a2d58468a2d56988b6542bf44e74728ab53aa9d5f312d874b60a3de05f9a9def",
+      "width": 32,
+      "height": 32,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "opaquePixels": 426,
+      "transparentPixels": 598,
+      "colors": ["#070b12", "#101923", "#78dce8", "#f3f0db"],
+      "occupiedBounds": {
+        "x": 0.09375,
+        "y": 0.1875,
+        "width": 0.84375,
+        "height": 0.71875
+      },
+      "quality": "produced",
+      "description": "Short field-radio pulse: upright transmitter and disconnected stepped side signals, with no scanning circle or attack shape.",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Original project artwork",
+        "source": "authoring/library/team-feedback-field-kit-v1/source.mjs",
+        "sourceSha256": "4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f",
+        "method": "Original integer-pixel drawing; no AI image, reference pixels or sampled artwork.",
+        "prompt": "Create an original team feedback: support badge for Reveal Line's resolved theme. Support pulse at its actual origin, lasting 0.3 seconds; not damage, Scan or proof that an enemy was slowed. Export exactly 32 by 32 transparent PNG with crisp pixel clusters, centered pivot, binary transparency and the resolved palette. No text, number, progress, blur, baked glow, background, Scan sweep or damage claim. This cosmetic badge supplements runtime warnings, labels and progress. Distinguish all four feedback roles by shape. Inspect at 24 CSS pixels in both starter arenas over dark/light artwork with reduced effects. Preserve source, derivative and provenance; validate dimensions, alpha, frame and pivot. Never alter the simulation, duration or effect radius.\nMATCHED FAMILY: Field Kit Team feedback v1. Preserve four different silhouettes: radio pulse, hourglass, round/diamond rescue links, tapered craft-grace badge. Selected design: Short field-radio pulse: upright transmitter and disconnected stepped side signals, with no scanning circle or attack shape. Use a one-pixel dark outline for separation on light artwork. Palette: #070b12, #101923, #f3f0db, #78dce8, #f4bf62, #9dbb7a. No letters, player number, embedded countdown/progress, damage, range, Scan sweep or reward. Runtime retains exact active-state timing and can suppress decoration when crowded. Review at native 32 and runtime 24 CSS pixels, including grayscale, actual earned scenes and reduced effects. Return source and derivative with provenance."
+      }
+    },
+    {
+      "slot": "team.effect.slowed",
+      "file": "slowed.png",
+      "bytes": 220,
+      "sha256": "4cabfd9cbdb4b7d4a3389f466896f0ed134a73f8964a4e5c65578b10b9027fdf",
+      "width": 32,
+      "height": 32,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "opaquePixels": 398,
+      "transparentPixels": 626,
+      "colors": ["#070b12", "#f3f0db", "#f4bf62"],
+      "occupiedBounds": {
+        "x": 0.1875,
+        "y": 0.125,
+        "width": 0.625,
+        "height": 0.78125
+      },
+      "quality": "produced",
+      "description": "Braced hourglass with a narrow waist and descending sand: temporary slowdown, never a pause or stun command.",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Original project artwork",
+        "source": "authoring/library/team-feedback-field-kit-v1/source.mjs",
+        "sourceSha256": "4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f",
+        "method": "Original integer-pixel drawing; no AI image, reference pixels or sampled artwork.",
+        "prompt": "Create an original team feedback: slowed badge for Reveal Line's resolved theme. Temporary enemy slowdown, following the affected active enemy; distinct from the shorter Support pulse. Export exactly 32 by 32 transparent PNG with crisp pixel clusters, centered pivot, binary transparency and the resolved palette. No text, number, progress, blur, baked glow, background, Scan sweep or damage claim. This cosmetic badge supplements runtime warnings, labels and progress. Distinguish all four feedback roles by shape. Inspect at 24 CSS pixels in both starter arenas over dark/light artwork with reduced effects. Preserve source, derivative and provenance; validate dimensions, alpha, frame and pivot. Never alter the simulation, duration or effect radius.\nMATCHED FAMILY: Field Kit Team feedback v1. Preserve four different silhouettes: radio pulse, hourglass, round/diamond rescue links, tapered craft-grace badge. Selected design: Braced hourglass with a narrow waist and descending sand: temporary slowdown, never a pause or stun command. Use a one-pixel dark outline for separation on light artwork. Palette: #070b12, #101923, #f3f0db, #78dce8, #f4bf62, #9dbb7a. No letters, player number, embedded countdown/progress, damage, range, Scan sweep or reward. Runtime retains exact active-state timing and can suppress decoration when crowded. Review at native 32 and runtime 24 CSS pixels, including grayscale, actual earned scenes and reduced effects. Return source and derivative with provenance."
+      }
+    },
+    {
+      "slot": "team.effect.rescue",
+      "file": "rescue.png",
+      "bytes": 266,
+      "sha256": "0e1e3a81fb1517f8d9fbea61a139e38118e3dc89f0ce3f2148e17376fcf66b6c",
+      "width": 32,
+      "height": 32,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "opaquePixels": 331,
+      "transparentPixels": 693,
+      "colors": ["#070b12", "#78dce8", "#f3f0db", "#f4bf62"],
+      "occupiedBounds": {
+        "x": 0.09375,
+        "y": 0.09375,
+        "width": 0.84375,
+        "height": 0.78125
+      },
+      "quality": "produced",
+      "description": "Round and diamond partner links joined by a pale diagonal coupling: held contact rescue, not a reward or extra reserve.",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Original project artwork",
+        "source": "authoring/library/team-feedback-field-kit-v1/source.mjs",
+        "sourceSha256": "4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f",
+        "method": "Original integer-pixel drawing; no AI image, reference pixels or sampled artwork.",
+        "prompt": "Create an original team feedback: rescue badge for Reveal Line's resolved theme. Held rescue by the active helper of a downed teammate; target number and progress remain runtime-owned. Export exactly 32 by 32 transparent PNG with crisp pixel clusters, centered pivot, binary transparency and the resolved palette. No text, number, progress, blur, baked glow, background, Scan sweep or damage claim. This cosmetic badge supplements runtime warnings, labels and progress. Distinguish all four feedback roles by shape. Inspect at 24 CSS pixels in both starter arenas over dark/light artwork with reduced effects. Preserve source, derivative and provenance; validate dimensions, alpha, frame and pivot. Never alter the simulation, duration or effect radius.\nMATCHED FAMILY: Field Kit Team feedback v1. Preserve four different silhouettes: radio pulse, hourglass, round/diamond rescue links, tapered craft-grace badge. Selected design: Round and diamond partner links joined by a pale diagonal coupling: held contact rescue, not a reward or extra reserve. Use a one-pixel dark outline for separation on light artwork. Palette: #070b12, #101923, #f3f0db, #78dce8, #f4bf62, #9dbb7a. No letters, player number, embedded countdown/progress, damage, range, Scan sweep or reward. Runtime retains exact active-state timing and can suppress decoration when crowded. Review at native 32 and runtime 24 CSS pixels, including grayscale, actual earned scenes and reduced effects. Return source and derivative with provenance."
+      }
+    },
+    {
+      "slot": "team.effect.recovery",
+      "file": "recovery.png",
+      "bytes": 289,
+      "sha256": "53dc09b7187b54af081994da3e27dfbb31ab229097fae735de1b2b52388c7408",
+      "width": 32,
+      "height": 32,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "opaquePixels": 429,
+      "transparentPixels": 595,
+      "colors": ["#070b12", "#78dce8", "#9dbb7a", "#f3f0db", "#f4bf62"],
+      "occupiedBounds": {
+        "x": 0.125,
+        "y": 0.125,
+        "width": 0.75,
+        "height": 0.75
+      },
+      "quality": "produced",
+      "description": "Small four-arm craft inside a tapered protective badge: revived-player grace, distinct from the hexagonal relay shield.",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Original project artwork",
+        "source": "authoring/library/team-feedback-field-kit-v1/source.mjs",
+        "sourceSha256": "4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f",
+        "method": "Original integer-pixel drawing; no AI image, reference pixels or sampled artwork.",
+        "prompt": "Create an original team feedback: recovery badge for Reveal Line's resolved theme. Revived player grace, following that player; never the hunter recovery phase. Export exactly 32 by 32 transparent PNG with crisp pixel clusters, centered pivot, binary transparency and the resolved palette. No text, number, progress, blur, baked glow, background, Scan sweep or damage claim. This cosmetic badge supplements runtime warnings, labels and progress. Distinguish all four feedback roles by shape. Inspect at 24 CSS pixels in both starter arenas over dark/light artwork with reduced effects. Preserve source, derivative and provenance; validate dimensions, alpha, frame and pivot. Never alter the simulation, duration or effect radius.\nMATCHED FAMILY: Field Kit Team feedback v1. Preserve four different silhouettes: radio pulse, hourglass, round/diamond rescue links, tapered craft-grace badge. Selected design: Small four-arm craft inside a tapered protective badge: revived-player grace, distinct from the hexagonal relay shield. Use a one-pixel dark outline for separation on light artwork. Palette: #070b12, #101923, #f3f0db, #78dce8, #f4bf62, #9dbb7a. No letters, player number, embedded countdown/progress, damage, range, Scan sweep or reward. Runtime retains exact active-state timing and can suppress decoration when crowded. Review at native 32 and runtime 24 CSS pixels, including grayscale, actual earned scenes and reduced effects. Return source and derivative with provenance."
+      }
+    }
+  ],
+  "requirements": [
+    "Production candidates only: full Studio and live-map visual review remains explicit.",
+    "Install all four roles as one collection; preserve source and upload derivatives.",
+    "Runtime owns effect origins, warnings, ranges, target numbers, progress and timing.",
+    "Inactive states must stay inactive; use the appropriate earned Studio scene."
+  ]
+}

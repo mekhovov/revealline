@@ -1,0 +1,2099 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:33.373189+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/team-after-music",
+  "branch": "refs/heads/codex/team-after-music",
+  "head": "595fdadddf3cf5c4240c430b78d27772915df83d",
+  "excluded": [],
+  "changes": [
+    {
+      "status": "M ",
+      "path": "authoring/asset-studio/cross-mode-preview.mjs",
+      "object": "1245a21527865fdf3cd61db4835646329722699c",
+      "sha256": "707dc42bbadbd35867c6265c0802bad1bfef5ef530d3f3aa7d0e1c98eb4ca3bf",
+      "bytes": 20950,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "authoring/asset-studio/helpers.mjs",
+      "object": "e70acf9798aa8db298eb165f002cd639f405388e",
+      "sha256": "162b1a5cf018d0597b3a240604ab27766e16e042264467040b5722203d591c5f",
+      "bytes": 3396,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "authoring/asset-studio/index.html",
+      "object": "1a40b9ae11c72b947f9553656e8c481aea4f2b45",
+      "sha256": "7d61c471e77d9c0637730cb5aef0034b48b12b88b50b223b194bc939be03c362",
+      "bytes": 39800,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/asset-studio/inventory-history.mjs",
+      "object": "0275029228d0e9b06db22d31c34b0f68e5bca2fa",
+      "sha256": "303ed4584fb7bf5a50a15884f8453d0d31c450db5fd4c33a20052226fbd9d15c",
+      "bytes": 2273,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/asset-studio/operation-focus.mjs",
+      "object": "84c5a32bd9f1dd07527de2f770579053f845ffd1",
+      "sha256": "3615fe3f86230889c407a0eedb941cc95e0aec9fb3bd039a98e3c07fa95ae280",
+      "bytes": 3134,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "authoring/asset-studio/operation.mjs",
+      "object": "aae377d351974b88a03f1faded61f92b2aa6a166",
+      "sha256": "498e16c4b1e059887ad9b315f4a5195bcce9e17c119b01d06205a427f4c345b5",
+      "bytes": 3548,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "authoring/asset-studio/preview.mjs",
+      "object": "71f8838b1670c41e8b3715657ba17c7659a09bdf",
+      "sha256": "a7e9a232af9c44b8e315a0e9443dbb58879b1d52762d61d2800ebe48255f5f5c",
+      "bytes": 24024,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "authoring/asset-studio/studio.css",
+      "object": "69713ac97e1394f88b390874b22022420362d167",
+      "sha256": "cd8c9715cc2a1a6eb6dd334e7274c18c9bc288adb05f75f1355726a4c3ef4c5e",
+      "bytes": 21688,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "authoring/asset-studio/studio.mjs",
+      "object": "e33014598a663d802ab0f6addc772a21a4b5c196",
+      "sha256": "d566368cad4c85436f528b050661dbc33653240cabd2e745c93a9a1fb099ce11",
+      "bytes": 55326,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "authoring/asset-studio/team-preview-fixture.mjs",
+      "object": "6939a2b680f5cdedb5083c7f6a47c2fbae5ec1a1",
+      "sha256": "8441d6135669c3e3d5a5809b1c511f0c379de0fc7e88bfcf83cc29b2b84d685f",
+      "bytes": 10202,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "object": "fcc092f657403344a234c5acd61f81ef62598ae3",
+      "sha256": "173866ecb6f0b88175e86bea45f5b86e47ef0ac23a4bb8875939263fdc467e0b",
+      "bytes": 7671587,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/library/team-anchor-field-kit-v1/README.md",
+      "object": "fadafe4f1979252a748ef1ea5e7d4af519a58b84",
+      "sha256": "062ea97dad7e1707fb5996e318760aa0f9e777730bcf24825fe18e804ba02216",
+      "bytes": 3806,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/library/team-anchor-field-kit-v1/prepared/available.png",
+      "object": "72a0e52568dbcc9f17e1b50f6cae5eac605b3348",
+      "sha256": "e4b2ae934b66821bf1ba9db755a23f11df2470d48ad47f549eb2a2aeebbd0353",
+      "bytes": 194,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/library/team-anchor-field-kit-v1/prepared/captured.png",
+      "object": "6dd5e846bdf4e0086288596a72a360ba4cd4aac4",
+      "sha256": "fad4a744dfdfb9bd328494e9ffff0440c6ed520695d89aa8ca9a5aee3c3ee9d6",
+      "bytes": 192,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/library/team-anchor-field-kit-v1/prepared/manifest.json",
+      "object": "b6c6da094d56267b5e2cbceafb631656df382ea9",
+      "sha256": "c915eb29bc70307318c72757af604d1625a8eef38f73fbd2590e5e2a629a4778",
+      "bytes": 4829,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/library/team-anchor-field-kit-v1/review.html",
+      "object": "f7387d8574f96197572ba6a245d88c09b965934b",
+      "sha256": "4d3341a9b539b68af6393d17dc3acbd5a7770fb3cb23e6a6d25d7636b1c6679f",
+      "bytes": 4511,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/library/team-anchor-field-kit-v1/source.mjs",
+      "object": "ee64684d0f22b7d832b862243f8997dc43a8c3a0",
+      "sha256": "ee4568b5b44e4efaca1de6f0f5cb700412a22a0da7b40ae2a83fc8b7d8b4f65e",
+      "bytes": 2321,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/library/team-feedback-field-kit-v1/README.md",
+      "object": "1ee3debb47cd0139da6288df50012b3cf231b89e",
+      "sha256": "a3f9895cccb67ac44bc3c7778e9cee6a189c5170d78d9bee4da91c3a9d5e76b8",
+      "bytes": 3501,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/manifest.json",
+      "object": "5300b1aa9aa4db876c43fef56d07609a899634e3",
+      "sha256": "3b05352f5a59474edeb2dc4da330f183885585512d204b2376f760c65fe994af",
+      "bytes": 10987,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/recovery.png",
+      "object": "7acfff4de72ac7d3d5997e751951863fbe6c2dbd",
+      "sha256": "53dc09b7187b54af081994da3e27dfbb31ab229097fae735de1b2b52388c7408",
+      "bytes": 289,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/rescue.png",
+      "object": "5dfca66561ecd71c7e96ecbb967f46e53e605695",
+      "sha256": "0e1e3a81fb1517f8d9fbea61a139e38118e3dc89f0ce3f2148e17376fcf66b6c",
+      "bytes": 266,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/slowed.png",
+      "object": "80190accfe00a8a493d4172132aec26d4d21abf5",
+      "sha256": "4cabfd9cbdb4b7d4a3389f466896f0ed134a73f8964a4e5c65578b10b9027fdf",
+      "bytes": 220,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/support.png",
+      "object": "7e0aa49e79caf54ef93768ace0dbf3ad1528aa04",
+      "sha256": "a2d58468a2d56988b6542bf44e74728ab53aa9d5f312d874b60a3de05f9a9def",
+      "bytes": 271,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/library/team-feedback-field-kit-v1/review.html",
+      "object": "ff3e18a728c324661ba1bc16240539f77d6ace09",
+      "sha256": "b10f2c0e91bb076e74ebe8cff15f1f23b8b0fd241447795dbf77ca5b3aee754f",
+      "bytes": 5676,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "authoring/library/team-feedback-field-kit-v1/source.mjs",
+      "object": "5ba5ee9687e4d2e91096787eaad6ad76e63ce69b",
+      "sha256": "4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f",
+      "bytes": 4809,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "docs/verification/team-public-retention/README.md",
+      "object": "ff037eeec3eed880a10d5cff90a7c8b6b87feb81",
+      "sha256": "2a2400982c32c8fde9fb0e0b4c910d59ba981fa18785e8652049b3fdc7eee8d1",
+      "bytes": 1155,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "docs/verification/team-public-retention/public-retention-final-node20.tap.json",
+      "object": "05729fb5756dc731a33b28d1675aa3443e741638",
+      "sha256": "0bcddc3df89e817cd200650c76774ea6fd55fcf8f7256786af4f849353ce9ebb",
+      "bytes": 10963,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "docs/verification/team-public-retention/public-retention-final-node22.tap.json",
+      "object": "ac7ac04fb475c20d205be1e5438032ce54c63e69",
+      "sha256": "5133c1e56ac5b400ac56f18ecdded9bf2fc6e8753805466450296b8b2c202d75",
+      "bytes": 11656,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "docs/verification/team-public-retention/public50-baseline-red.tap.json",
+      "object": "2fe394eb4b3660142710d09046210e9a52fc9a21",
+      "sha256": "6ad412b6b7c3e0c2cbe4378132f8580ed8c32f3e9fa640b6b1c9fc5e7437bf5b",
+      "bytes": 8295,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "docs/verification/team-public-retention/report.json",
+      "object": "a6bbcc7a234b36521a19117b07583125c4eb4d34",
+      "sha256": "c252bbd696394265599b8bd507cc96f50047867e863ec06f9668fdf8628436e2",
+      "bytes": 2197,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/app.mjs",
+      "object": "72a9a84bbb002ae612c0fc5caf71546b53f92ac1",
+      "sha256": "971b11de58ae43d5d64eb8080084e580f65e77ab8da831bfaee56de526aa32fc",
+      "bytes": 346652,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/couch/coop-actor-presentation.mjs",
+      "object": "36c554380407b43ef47385ea0b0cd734eb3d1f0a",
+      "sha256": "c137c928d9bdab181bde2613193d4c6af016c7457a5504333c8792d88c2b5bd0",
+      "bytes": 9932,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/couch/coop-anchor-presentation.mjs",
+      "object": "568cbfea82c083268909fa17190597ccce8edfd8",
+      "sha256": "a7c2a44dc9d8698ee6925bbbbedb80840105228da19c0625ed1c7e4e1c04f8e5",
+      "bytes": 2457,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/couch/coop-cue-palette.mjs",
+      "object": "1c4400871ba3742bda03da116fa091fbdfbadb52",
+      "sha256": "f90a0f08b018509efee68999bba75b780384c5045f890b8eaa984fcf07b8cf9f",
+      "bytes": 2498,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/couch/coop-effect-presentation.mjs",
+      "object": "73d73671fff3be5da44229b058d7f02e57c4eb1c",
+      "sha256": "90ac847ce3f874c20b717d87d47eb2d8929bb2510d0cefeb2b21d4ebbaf09f81",
+      "bytes": 2569,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/couch/coop-event-feedback.mjs",
+      "object": "d6d30523bcf2d1ab1b7876d6d33dee05d77c0967",
+      "sha256": "17408680cb8dca375f013ada4023e5ac871984ba36641c0f993db8f2a8caabe6",
+      "bytes": 3839,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/couch/coop-event-presentation.mjs",
+      "object": "616b45de5ef43cac15c0871842f8dbe994207d37",
+      "sha256": "aa62b291f91d1ace3ea0d542d43e4beeea98f5b9ab4066687a13c95082265619",
+      "bytes": 2572,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/couch/coop-owned-presentation.mjs",
+      "object": "ebc9e8d8a534efc805dad314c092724668ac22b7",
+      "sha256": "0789e1c5dd070ec77873e393b7f19f6001a56a9e1fc1ee1b26306bd0ffc0cc16",
+      "bytes": 13607,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "object": "9d7978c76bcd7f6ec748f50e0ed51ab66d1e4aca",
+      "sha256": "e969ff76957390ff294f7f7a4d7cdd9cfbaf04a6524a9a0b49671dfb07a0c932",
+      "bytes": 2724,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/couch/coop-presentation-display.mjs",
+      "object": "a9b337fc8fc7eb531afc8de98afcd1124327233e",
+      "sha256": "b5d62cf116f083502abea06582f14cd59073a5a5cb1b702cae26a2e67dddaee1",
+      "bytes": 6213,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/couch/coop-retained-presentation.mjs",
+      "object": "324b4bb4e1d05c0b4ef89b27312a442dd119bee8",
+      "sha256": "3bef52a204d8e1f480ace16bc1caf0b3d92492100b093d4de1558db93023c694",
+      "bytes": 3880,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/couch/coop-threat-presentation.mjs",
+      "object": "583a799d92283c21f6dcf3d29d7ea410945dc1db",
+      "sha256": "c382ff77bea08db0e56a9e160b5aa2f427358e6a12f5f3d8529f8f2785220c57",
+      "bytes": 4720,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/couch/coop-view.mjs",
+      "object": "7aad1e7782810cdf11de277a25923002917b4000",
+      "sha256": "9ff9e6cdbdcd6da90d26dc9c8342156b85c564288a8ce64c27917cc371df804c",
+      "bytes": 28343,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/couch/index.html",
+      "object": "736ec5218a7aac838e45e70b1d022d971ef618b9",
+      "sha256": "e4248644ce496a7677cb5cc09cae0cbe738b4594a3d8c79886c7e3dd6c1a1fdf",
+      "bytes": 23882,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/couch/relay-rescue.css",
+      "object": "481d7ca50c855970de69b1db5c296303c362afc9",
+      "sha256": "b59909f6bab94e55a00b76f2705d220519e2ef2fd2993e420c446822d86e534d",
+      "bytes": 34961,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/couch/relay-rescue.html",
+      "object": "eaeeb1b520c3bf63ed3a3b062144d50f3c677fd0",
+      "sha256": "a9092b93df71296be03ba96225aa2233f4c2e4bc4a8dfd49944c766da4504774",
+      "bytes": 26564,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/couch/relay-rescue.mjs",
+      "object": "d41a2bf0a6139b5f8abe14c4c9bb7c333e715859",
+      "sha256": "d11cda1069464f6ab9c0c3e93fa04521fbbbc893150213365b69650db2d5259f",
+      "bytes": 128517,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/index.html",
+      "object": "b6fb564b90a8fc72281dc52fce0b23ab580b19e7",
+      "sha256": "8f2982ae4f5394ad11bdcb31d3102d7b49e71650457c1791dac87553c267a14c",
+      "bytes": 77295,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/presentation/compiled/assets/0e1e3a81fb1517f8d9fbea61a139e38118e3dc89f0ce3f2148e17376fcf66b6c.png",
+      "object": "5dfca66561ecd71c7e96ecbb967f46e53e605695",
+      "sha256": "0e1e3a81fb1517f8d9fbea61a139e38118e3dc89f0ce3f2148e17376fcf66b6c",
+      "bytes": 266,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/presentation/compiled/assets/4cabfd9cbdb4b7d4a3389f466896f0ed134a73f8964a4e5c65578b10b9027fdf.png",
+      "object": "80190accfe00a8a493d4172132aec26d4d21abf5",
+      "sha256": "4cabfd9cbdb4b7d4a3389f466896f0ed134a73f8964a4e5c65578b10b9027fdf",
+      "bytes": 220,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/presentation/compiled/assets/53dc09b7187b54af081994da3e27dfbb31ab229097fae735de1b2b52388c7408.png",
+      "object": "7acfff4de72ac7d3d5997e751951863fbe6c2dbd",
+      "sha256": "53dc09b7187b54af081994da3e27dfbb31ab229097fae735de1b2b52388c7408",
+      "bytes": 289,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/presentation/compiled/assets/a2d58468a2d56988b6542bf44e74728ab53aa9d5f312d874b60a3de05f9a9def.png",
+      "object": "7e0aa49e79caf54ef93768ace0dbf3ad1528aa04",
+      "sha256": "a2d58468a2d56988b6542bf44e74728ab53aa9d5f312d874b60a3de05f9a9def",
+      "bytes": 271,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/presentation/compiled/assets/e4b2ae934b66821bf1ba9db755a23f11df2470d48ad47f549eb2a2aeebbd0353.png",
+      "object": "72a0e52568dbcc9f17e1b50f6cae5eac605b3348",
+      "sha256": "e4b2ae934b66821bf1ba9db755a23f11df2470d48ad47f549eb2a2aeebbd0353",
+      "bytes": 194,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/presentation/compiled/assets/fad4a744dfdfb9bd328494e9ffff0440c6ed520695d89aa8ca9a5aee3c3ee9d6.png",
+      "object": "6dd5e846bdf4e0086288596a72a360ba4cd4aac4",
+      "sha256": "fad4a744dfdfb9bd328494e9ffff0440c6ed520695d89aa8ca9a5aee3c3ee9d6",
+      "bytes": 192,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/presentation/compiled/manifest.json",
+      "object": "c316aa8cc5af7d1f8610381250e2b57ce9fca4a8",
+      "sha256": "a447f9d20efe5aa5355a34b6af01bc1cfba4c3706d39366abab6f44f90367b10",
+      "bytes": 28896,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/presentation/compiled/runtime.29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed.json",
+      "object": "64db313e9b2f82bc51acdd5aa3dd804e3be295af",
+      "sha256": "29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed",
+      "bytes": 977958,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/presentation/compiled/runtime.a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584.json",
+      "object": "1d8092e37b9cfeeb5c9a36670c516c9917e8f54b",
+      "sha256": "a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584",
+      "bytes": 968465,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/presentation/compiled/runtime.json",
+      "object": "5b81d7056db12a74d9f0dc87b41432cedc4439c3",
+      "sha256": "a248a54a54918973692ca57738b028674f3ee9c25537802884ffdd14bbaae47f",
+      "bytes": 975746,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/presentation/compiled/studio.json",
+      "object": "f65a9134b9ec82a9f6f3d691f3bc5a460595837b",
+      "sha256": "b79cd372baaa40893496b8827442206c30b2156769ede5f8f8717e0e2e1fc207",
+      "bytes": 4169297,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/presentation/dependencies.mjs",
+      "object": "3a61c54fb645eab9b9d336a49232a2be23cb6d6d",
+      "sha256": "cf38269e5d2c2e6154b014d0e5469f09315232f7f6434e626c96fad7907ffd14",
+      "bytes": 4787,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/presentation/host.mjs",
+      "object": "89f3c47f06ae65d5e729144a665a353ceab2eabb",
+      "sha256": "df15e6dd2635e5eb46ca886f59e075f42a820e330d81f4304c5eb9628ca7709a",
+      "bytes": 28780,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/presentation/manifest-path.mjs",
+      "object": "51b63efab1bfefadaa2f202b3126ae9ac903754c",
+      "sha256": "759bac83965a5ad8decfda59e4b10d68b240ef20234df06e21fb2dfcc4ae0a14",
+      "bytes": 609,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/presentation/model.mjs",
+      "object": "326d72a47d56ed23ec4c78240d9d9d64fec74c94",
+      "sha256": "5404c14aa3e9ed3c306164e9784ea2da4ce746f5055bf70db03d01b2f5ef9120",
+      "bytes": 27188,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/presentation/studio-session.mjs",
+      "object": "c96f9d969ffe1db8966453129461f18d9f1d220f",
+      "sha256": "ffb87f41b51414d3e4314ca2251a106ea4b4c4428f930d7c3439af310ef41a10",
+      "bytes": 16642,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/presentation/team-actor-slots.mjs",
+      "object": "75d9828417abb7b1aab7d2efed071f5bcc1f99eb",
+      "sha256": "97b9a12bbf2127f0fe8a2e6a6803b2fc0dd76006ddd40024bc0377ee9425c97a",
+      "bytes": 10820,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/presentation/team-anchor-slots.mjs",
+      "object": "48761fa14c60c9a940c63c8762a5ac6a17964a59",
+      "sha256": "2dee100af12eec8e5d60eff5bd2e0c2d431d55c6db7c800427bde937e391eb8f",
+      "bytes": 5532,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/presentation/team-effect-slots.mjs",
+      "object": "5d1931493185d022511515e91565c851782043b0",
+      "sha256": "82328525ddb631d33ae70ff24e28dc509356015a2c6d5df69545a60e866ec936",
+      "bytes": 6136,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/presentation/team-event-slots.mjs",
+      "object": "5f4ca9999caa145cba6348871b4a15d218c5b621",
+      "sha256": "2e92c99e3775041a147e05ed5c304e951fa4ed9de57eb5afbf46e4cf01b3f886",
+      "bytes": 6536,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/presentation/team-threat-slots.mjs",
+      "object": "d9d78005616fb61214a3744689ca628d68ab3df9",
+      "sha256": "4c5ec435733c998d62d2aebe54955f2f07fd085c094e3d2fe5fcc8a7a4a7c869",
+      "bytes": 6604,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/presentation/visual-theme-catalogue.mjs",
+      "object": "764928edd695c1ca6f661a5bd0af86a4a5b1619d",
+      "sha256": "0304c27f06390d50cd39e034d393f4a5484fd8e642b5a8d2372899b3fac8c971",
+      "bytes": 9414,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/replay-theater/app.mjs",
+      "object": "0b31d2aec9b550d9e56996f6a8ecb46af1559fdb",
+      "sha256": "ddc3fb56aff29fa88025aa9599c588d494a2e0157d8b98ff721bf7aa0e61ce2b",
+      "bytes": 20143,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/about-navigation-host.test.mjs",
+      "object": "4aac1aba32ff27344fedb31e2e6cf43703742a1a",
+      "sha256": "11cfe52ce536b87a5a6baff5191a2253f3d166de77f54a393acc58d1c4eca39b",
+      "bytes": 27746,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/asset-studio-cold-return-host.test.mjs",
+      "object": "ceb5c8dd1d799194b2607c398a93dca98d3e4fe8",
+      "sha256": "293697e36ae37b058995e9865843e6390d56e7a146a638548f6c146c8fd4d050",
+      "bytes": 17349,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/asset-studio-cross-mode.test.mjs",
+      "object": "81f3c49f9895691326d9f1991f021a467d5d0f6b",
+      "sha256": "d068d6935712a32cffd7aaed1af623c6f8495efc0d88061bf07f267d33725a28",
+      "bytes": 31166,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/asset-studio-help-links.test.mjs",
+      "object": "8a4aaf8079ac0fbf07b01b30fe80d5691690672e",
+      "sha256": "1a8f919c6e6e65f9bf73cbd871faa6b270069b6985acb5e173edb4b8fc90e7fa",
+      "bytes": 2217,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/asset-studio-host-loading.test.mjs",
+      "object": "aeacdf63fa918a3550879c96f8016736e5ec1ac9",
+      "sha256": "3356b1da1b6638019f49e49c63bde0408074561f1064346f16e38732f203ca5f",
+      "bytes": 51245,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/asset-studio-operation-focus.test.mjs",
+      "object": "f3cc99eea9d0fa18d176e5bf6cdcf5e6dab83e09",
+      "sha256": "222c358ae4612b8c6dbe671d2570a681728f3705667df6db238ac1bd9a7e6978",
+      "bytes": 7429,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/asset-studio-team-authoring-host.test.mjs",
+      "object": "66b2d71cd80dac7bf983f3c96b782240716bb3fb",
+      "sha256": "3993cbb3ec481229b0efcb2a006dea1e2a323c8e492b164731d9df5391558bab",
+      "bytes": 13981,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/asset-studio-team-fixture.test.mjs",
+      "object": "45648cdedb2155ec00f436e755f334d5c265a19a",
+      "sha256": "ccd8e552c1f869f713c4fdf483ee8f082d2f2929e3f873cbe0a10a371534ba5b",
+      "bytes": 20107,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/coop-actor-layout.test.mjs",
+      "object": "4ab20d3d083b8d4e567d97ea2c9cea5ca4c64b92",
+      "sha256": "a59a4963b1781fd5286017a320b1ccc08299a757eaac4e1bd4ee60262f89623e",
+      "bytes": 12465,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/coop-actor-presentation.test.mjs",
+      "object": "e1be7ad817765b4141a18df316023aa6e4f543c3",
+      "sha256": "1320059bf6a072fa33b0006b7cda5044f6668d2f05dd63fa351253250cd940f4",
+      "bytes": 25408,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/coop-crawling-prime.test.mjs",
+      "object": "54a721a458d860f7f02bf44f77f3cce70e3ee132",
+      "sha256": "e1aebdf937005d1143401f12cb288229b6b19853ed6a3d7d44b6565d409d64d6",
+      "bytes": 9435,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/coop-cue-palette.test.mjs",
+      "object": "d7ba0d371bb6b0455b0b93064ad66949d47049db",
+      "sha256": "839840bae9c5c75f668cd6b5a95d15bf375b67289e8e77e17a742b7f248ddb3d",
+      "bytes": 11703,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/coop-custom-artwork-host.test.mjs",
+      "object": "c6af3ceccf95a29415b89beaa19ac3bb05509593",
+      "sha256": "d6139547a187c5d3401de658ec44bb377627da022def92894e1e7679ac4c4367",
+      "bytes": 27145,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/coop-event-feedback.test.mjs",
+      "object": "c48d28af72947f9ec81f02c70249e2a559215301",
+      "sha256": "4a57c27b4bbcd0afd2954cdb6a5b2dd65ae695271aafa1a1379af6c30daa55bd",
+      "bytes": 10757,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/coop-event-host.test.mjs",
+      "object": "18a8501ade52529c233d7ec8bd36a8d7972c1145",
+      "sha256": "2cbe03c451143edf777b87179552b927c196d60b60a33073e2f1c99f9aefee36",
+      "bytes": 6954,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/coop-host.test.mjs",
+      "object": "db9e28a8472c6bfdba3d3d2e18f1f7dcb6e556a3",
+      "sha256": "6ddcf02c174d0b4265d11d2d7e63f0d763005eac2e1a12e5cf14fbe8dc5631f8",
+      "bytes": 60272,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/coop-import-artwork-host.test.mjs",
+      "object": "8cb40db6e2f8c2b89977d2a8e1cfc0bb184a85b8",
+      "sha256": "b328992a1fe890c39f8a268c347db82f754304fbe40a0edd174e5d6e37aaa8b4",
+      "bytes": 11426,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/coop-import-next.test.mjs",
+      "object": "538369ee7064a6ec48bd321ef9d7dd7bec6455a3",
+      "sha256": "f1c29c55b2b638d586f86012d7edf85f892a2a93ebeb02ce5fc40d51341e778d",
+      "bytes": 13251,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/coop-owned-presentation.test.mjs",
+      "object": "5319e0f3dcec5c9bbfa81571498bfc367d38e0d9",
+      "sha256": "ca8d706861f87367fa0189fd3d34ade320c9ef7ba2a1c1c927a4d585c1f1e412",
+      "bytes": 23289,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/coop-picture-bindings.test.mjs",
+      "object": "f6388c014500b9d00c8b5462887da8d593ec0036",
+      "sha256": "71eec303543f65a2ab287afc53d861faee8179bc429cc555c024a991706aa011",
+      "bytes": 8897,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/coop-picture-host.test.mjs",
+      "object": "b42d0882d03385283d1c7b18362cebb06546e482",
+      "sha256": "6e8b0678b1db0761a0d5e3fe04f96be53757e3bd6792a94e902784cd28ffee8e",
+      "bytes": 17022,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/coop-presentation-display.test.mjs",
+      "object": "0f605a67ba9a2cf2fe686e950a22a52a7bb7e5cd",
+      "sha256": "622cba21e22d764ff3f6898ad322d245c61d50349465a0d2ce7e9ed746ae5c42",
+      "bytes": 19505,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/coop-results-resize.test.mjs",
+      "object": "b5b2b23ba70110b9ae3e43e983cd8799177ad020",
+      "sha256": "ad8e6191393188737320243faff97bd76a45e86b7c322c9aa979dd2eff1f30f4",
+      "bytes": 5237,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/coop-terminal-guidance.test.mjs",
+      "object": "f82d1ca3e8a980d5518874933b822abda9432f01",
+      "sha256": "2064babe6a5a9bb567c2ecb30f22cab3217867bd90970469ad85627173a52a82",
+      "bytes": 4949,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/coop-view-presentation.test.mjs",
+      "object": "63d431ac7fbd362b7e660572b164bdc5a7ea78bc",
+      "sha256": "72958435b4a3443c7c8228461c3633212f466887581dfd813426e64a84c27fd6",
+      "bytes": 15649,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/cross-mode-art-inventory.test.mjs",
+      "object": "bc38dea72a25edd4cf35e4ad8d0ac82031369f12",
+      "sha256": "19ee17f2fc113e782badcd959bd4c752a8824e8b4d33f92b6ba1c95c597822cb",
+      "bytes": 16821,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/field-kit-team-production.test.mjs",
+      "object": "8aa705b86047559d4b90365a49570394602376a6",
+      "sha256": "6a0c133c4d010421d78046ff3cfc5d3a2e14d21c2d420c0753b1fbb025488993",
+      "bytes": 8641,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/fixtures/production-team-followup-source-fpv40.json",
+      "object": "7c3abbcb4a80ee0cafa6b9e6646cf24c1e581a92",
+      "sha256": "c01e121030322fc6bf80a4683782672c1eeb8b7d74abc7241023c2a78fe33042",
+      "bytes": 1241,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/helpers/coop-host.mjs",
+      "object": "97bb36fd02c078b350ca92043a39d7621615a3eb",
+      "sha256": "e22137e3a0a358261bb1c4c891f731a0a805a24b13dfa30480c7fb486d42ff62",
+      "bytes": 13074,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/helpers/coop-import-win.mjs",
+      "object": "281e4edba11cd4705c69efbe403dfcd8dd38d2eb",
+      "sha256": "91e01a081adc379e0374135b0925e4b25a2ec10eea437c02a26d49c8c5b09932",
+      "bytes": 2857,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/helpers/coop-presentation-fixture.mjs",
+      "object": "990a43ab4ce05c4ebe6df1ce74f881427ed9c64d",
+      "sha256": "e756d574a5ff8a60c8949110c95d0d11759fbeb8c2492db4b2cc6fcacfae767e",
+      "bytes": 5171,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/helpers/coop-win.mjs",
+      "object": "5030bc4be40847a53160166c2c2105f93137ef03",
+      "sha256": "800d7dafd95fdf1b0dff3a1bf28f4c3f722af522fa267e6e2fc0f400bcf2b7ab",
+      "bytes": 4041,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/helpers/solo-dom.mjs",
+      "object": "27f95a9fbe2c844a72f7d44c2cc3d198b7334382",
+      "sha256": "a8aedd9f60e44de6d790af2a166c28f55ac7050f973ebb48c22dc1d32c665c8d",
+      "bytes": 15446,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/hud-status-cues.test.mjs",
+      "object": "235a76ac36813ca6b1c1b33de730d851186d9d8b",
+      "sha256": "22268f3966b075eb1b5ce9f7cb2036b510956d1d5d6330261638932226cea79c",
+      "bytes": 14303,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/look-preparation.test.mjs",
+      "object": "d34fe05ca615060bd165dcfcf12310b81723fdb5",
+      "sha256": "4b2ec8f9786af63ea0d9a923a0a8fedcf23ccbed38424c2abd2cd8ffd41f8996",
+      "bytes": 8772,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/loss-difficulty-host.test.mjs",
+      "object": "1be92583e83da4999ed5d27f6097e22df3dec895",
+      "sha256": "2a62d1bcb94df7719826d925af9247d2f3f1b6a2d8122d4dce8d8b5713417a13",
+      "bytes": 17612,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/mission-selection-status-host.test.mjs",
+      "object": "7a719c626daf9145e78293a01b5b37632ae58177",
+      "sha256": "9b5b75046c6551536d08edce3032ec6ab9a569fcceb526560fba8600920dbaa0",
+      "bytes": 8182,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/presentation-archive-formatting.test.mjs",
+      "object": "754682c4b2427679a7a13f00cdc2f9a716738931",
+      "sha256": "96fa9d4e0ce8f4c24f569f0d50522a4169c51751d2481e96e15fe7c7886c8c1a",
+      "bytes": 2776,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/presentation-dependencies.test.mjs",
+      "object": "f64ae2b846b9e6a40d6627c24f5127d102136ea4",
+      "sha256": "c78b4c496901c59b57abfbd1e27c01b9030fc5c2ddbc308505be8473aecf7a99",
+      "bytes": 13115,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/presentation-host.test.mjs",
+      "object": "6ef689b27f2b33c8c094771dba793a2f9a4a0ebc",
+      "sha256": "bdb96529cfafafb5961e8763b3f9c8f954dea130e07a963f9c76d1429afa3984",
+      "bytes": 23727,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/presentation-output-preparation.test.mjs",
+      "object": "71123d072eec74d777e5cdf5c1d2dfc9c0300ee1",
+      "sha256": "345165229a3e77870a6b1a5baf8660e6c8e473e057461a7c1fd67957ba179dff",
+      "bytes": 6274,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/presentation-production-history.test.mjs",
+      "object": "150dbb90c172d1a7cd7406d709cc3694ada1176f",
+      "sha256": "4cf2cce17a16d2f6e705f0e95360dcd81f30d1f3cfaefe9bcae7883f943e4f95",
+      "bytes": 32442,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/presentation-production-slots.test.mjs",
+      "object": "58f345bdf4bdb735a13185408f8f2d469744e706",
+      "sha256": "41866ff4b891081831919f63905953586f60bff7a28417899a8e27a9282f0270",
+      "bytes": 7224,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/presentation-retained-publishing.test.mjs",
+      "object": "73cf6391b2bd4fd4271eccce2932149d06417018",
+      "sha256": "8c419d8a7a47f276f18b4bd8d6960bbf9090573007d8a8576b2c10c1c4b0a379",
+      "bytes": 10802,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/replay-theater-navigation.test.mjs",
+      "object": "3221480792595c2c4fdf8aa23906dd2c480ea788",
+      "sha256": "059e4c577415fa269233b8cb04603d5ecffd496292cebe0a057a007233ee9c30",
+      "bytes": 34102,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/required-look-host.test.mjs",
+      "object": "0f8709188306e33cc9b8b91b6beb93dba2d715b6",
+      "sha256": "b76bca5ed713ad26803802866c7bd06b2428affce3330680870b3c9f5ef97268",
+      "bytes": 17458,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/shared-settings-solo.test.mjs",
+      "object": "3a95bea99fc846b4865db8e3b5e50005fed85553",
+      "sha256": "d30685016b27482df5ac6d55e3af901727ed87ad5bd4657d2d3de7500397fcd7",
+      "bytes": 14049,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/solo-result-continuation-host.test.mjs",
+      "object": "3e6c497d51393340742e882cefe7cf1d9663b24f",
+      "sha256": "fc71702f249119f98018e3b5a92bfd920d864e3084e2e7cc3646a83a3afbb668",
+      "bytes": 22377,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/studio-inventory-history.test.mjs",
+      "object": "e64c8a0ad629143b223733ae1762f78e4a63257b",
+      "sha256": "cb9c0640d941a7167d3e17f774fee953131a8035291275f8fbbbf22129d59dd1",
+      "bytes": 4388,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/studio-transfer-history.test.mjs",
+      "object": "6fd3e91f5881f7154c84712b14b08af01f46613e",
+      "sha256": "b9119f339cfd748c6757498f74cf4eaf6283a09c9b42bd354d33eab03211aecd",
+      "bytes": 19269,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/team-actor-slots.test.mjs",
+      "object": "ce67672b16ccab322ff12ee890066121cbd947e3",
+      "sha256": "cb9e344e5e7516062193b944696b3f6b419cb62f783abca37d3443aa207c33a3",
+      "bytes": 13995,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/team-anchor-slots.test.mjs",
+      "object": "e70387d6174edb7c4e159242b6be9c92816ea400",
+      "sha256": "9d8067cb1e2a69778ec5944522d2781e79dce4160ce1b28d5cf4b1d9c1571c4d",
+      "bytes": 13279,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/team-effect-slots.test.mjs",
+      "object": "e3c91bd1bf7d3aee7bd24979a0aa191ab96550fe",
+      "sha256": "a8cd2433a6fc62c7e88f79137d2cb4aaf30e1c570332e6de7d6c5e85bc88c87a",
+      "bytes": 12360,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/team-event-slots.test.mjs",
+      "object": "32817fc401b9f64088636be0727ba4d92d1a1b14",
+      "sha256": "46af2da4db818f02fcceb46ae6aa6b122f3ae38ff4077fc453e0e0e05d5723c8",
+      "bytes": 12967,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/team-threat-slots.test.mjs",
+      "object": "c4c8fdc50a51ac6a80ab09dc3ce26784b90a37f6",
+      "sha256": "4377a18f47c649e334004833017a6a126c5fa088813402e7132d9ccfb22c8ff6",
+      "bytes": 19604,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/test/team-visual-theme-identity-compatibility.test.mjs",
+      "object": "8da44d482bbc14a3a3fb598674bb298ee3d923bf",
+      "sha256": "5aad893aa25e5f0c5878ea6a4e796218a44175c604883ab23d709aa8f6c9e685",
+      "bytes": 8803,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/terminal-navigation.test.mjs",
+      "object": "6bb76ebd5c7042758f01542790e4a6a5e951ae99",
+      "sha256": "84cdae1207ba91b5ec6908a10e60f35d35c0c3377394235894a87b5bc70f6317",
+      "bytes": 20656,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/touchscreen-controller-host.test.mjs",
+      "object": "8cfe4e1d0f14294f899f768bdea071210e17403b",
+      "sha256": "4045d8c177beaa155cb72b62a6de6540f7c079dd864fce14b478f8c40473f0b3",
+      "bytes": 14290,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/visual-theme-lease.test.mjs",
+      "object": "7cb190fbbc6a255e0821944e6a52bb6ea1bf8125",
+      "sha256": "1d6004b08074a7fdca97ffe91e9752da225c084099c34646ee048c5286058e90",
+      "bytes": 14465,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/ui/field-kit-surfaces.css",
+      "object": "dc315f762dbbb83a0861d3b606141409e577e344",
+      "sha256": "a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d",
+      "bytes": 21326,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/ui/game-shell.mjs",
+      "object": "2fd3e2f4d3e30729289ce0a2389192a9c787af13",
+      "sha256": "4991238269225d3d243fcd98c083cc361568f18c21dc8a273b9ac04427ac3c22",
+      "bytes": 27919,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "game/ui/look-preparation.mjs",
+      "object": "c97243914047fa48877241be4a65aeb54250b977",
+      "sha256": "8c49ffae59931c2d58076fdb4f41810675969e445a4523e4505c450adb394d85",
+      "bytes": 3702,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/ui/render.mjs",
+      "object": "84e53ff76738c25174a29bb4878677d3b8c3f395",
+      "sha256": "25e3110fbd420832776a184288e22c9886003216b80d6d07b4468883a590321c",
+      "bytes": 38659,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "scripts/check-field-kit-readiness.mjs",
+      "object": "3b917ad5d0fb05778e3e7b353caebe9cc9b628b6",
+      "sha256": "ff669cabbd49c8d7d0677185eb2f6ae917531a1ac209a73abde6a6841c6b885f",
+      "bytes": 6173,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "scripts/field-kit-team-assets.mjs",
+      "object": "3ff52b7a1525cbb82c7cd1ba989c5e8864010740",
+      "sha256": "7032c18a13e9adfdd00677d76d324b9beb74505793848c5766b98c5692793e47",
+      "bytes": 3339,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "scripts/game-cli.mjs",
+      "object": "bc6f7ac1c3fa02ac12c70c6a585305b8362c862d",
+      "sha256": "0a2783fde9dc410af93a8c696169b239a12006a92685814ea941e16511dc20a5",
+      "bytes": 64122,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "scripts/prepare-presentation-output.mjs",
+      "object": "7d875a21817e527cb6b5186f74227a7bd71408f9",
+      "sha256": "56c93bba264e272ed72d2c0566468c7e9156fa6892d7269cbfdd6c1d8f791926",
+      "bytes": 2316,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "scripts/presentation-production-history.mjs",
+      "object": "012d9473a17eec3d6127558b28e48265a4306911",
+      "sha256": "775e70cb731f0656feceeb012e6a482c9677b2758655bd175587dad3eaf30045",
+      "bytes": 4348,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "object": "7ee112bfe364cada4e822dd6df77fae8f40b952f",
+      "sha256": "0496cf1c60d7ee073b9a74d5d0988fa7ef95e59d5ee0d4ade97deec04774677f",
+      "bytes": 22614,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "scripts/produce-team-anchor-art.mjs",
+      "object": "2144789263495bfc3c42a27a2b536d7d7d4ff8fa",
+      "sha256": "8e0e2fad42d7fae3974b2230b3c91d595357e291c1c24cc3c81988204f3fadb3",
+      "bytes": 5722,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "scripts/produce-team-feedback-art.mjs",
+      "object": "ed622958de8c47eba8199686106671a950ad06a3",
+      "sha256": "020ec01cd02fad02f24058abe5f9ab458bc9305a3a6578ea1ac12a87fccc884a",
+      "bytes": 5778,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "scripts/retained-team-presentation.mjs",
+      "object": "adb846f5dc9248f3ed4088bc199373d7d0dbd577",
+      "sha256": "df4191357a5ddad853a20170d0f8214f7b6402421eda48653c1337145977a384",
+      "bytes": 4073,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "scripts/reviewed-team-art.mjs",
+      "object": "508a7c45b3c38c4f0268a8d947775e9eb437d8a1",
+      "sha256": "60033757b8834a9e2dfc5b20475b6a0ea050805610276a6db8d0deef7921d358",
+      "bytes": 4986,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "scripts/test-field-kit-recipe-sources.mjs",
+      "object": "2a41e2f8e1d6c60d5575d6dd89a95dee9cc53a6b",
+      "sha256": "6b859f0e24971383c42f2f0d5fbda5b32e69f247bb3ef0ce6fc188ab63126c8f",
+      "bytes": 1606,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "scripts/test-retained-team-presentation.mjs",
+      "object": "06478f3e098a379875e58060f424f4fa53dbefda",
+      "sha256": "b43563db64ae22969c01e816f973da2117a733fe7277368ff088bb1afb1f4641",
+      "bytes": 12329,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "scripts/test-team-anchor-art.mjs",
+      "object": "3767af71ff0affb72a04a7b9dc20c47faadf486a",
+      "sha256": "f7569fbbb24e6c93a33327c1a9092a2925d9786b50a5c67d9ed57340e79460c9",
+      "bytes": 5471,
+      "mode": "100644"
+    },
+    {
+      "status": "A ",
+      "path": "scripts/test-team-feedback-art.mjs",
+      "object": "d23c0c083332303e84ed4c6922c1fde6c5e0ed86",
+      "sha256": "33245760dd8f89ecaaa297d5a3cdec36be9019ad0a6bd5fe314994ff980b84bf",
+      "bytes": 5509,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "scripts/write-presentation.mjs",
+      "object": "f729a5957ec59662cb38c0b86500df74e332516d",
+      "sha256": "2e0e7b4c0255c9daa5b8a0de9253d1f62e952a84debdc8f043220ef4b28f91aa",
+      "bytes": 7215,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/asset-studio/cross-mode-preview.mjs",
+      "mode": "100644",
+      "object": "1245a21527865fdf3cd61db4835646329722699c",
+      "stage": 0
+    },
+    {
+      "path": "authoring/asset-studio/helpers.mjs",
+      "mode": "100644",
+      "object": "e70acf9798aa8db298eb165f002cd639f405388e",
+      "stage": 0
+    },
+    {
+      "path": "authoring/asset-studio/index.html",
+      "mode": "100644",
+      "object": "1a40b9ae11c72b947f9553656e8c481aea4f2b45",
+      "stage": 0
+    },
+    {
+      "path": "authoring/asset-studio/inventory-history.mjs",
+      "mode": "100644",
+      "object": "0275029228d0e9b06db22d31c34b0f68e5bca2fa",
+      "stage": 0
+    },
+    {
+      "path": "authoring/asset-studio/operation-focus.mjs",
+      "mode": "100644",
+      "object": "84c5a32bd9f1dd07527de2f770579053f845ffd1",
+      "stage": 0
+    },
+    {
+      "path": "authoring/asset-studio/operation.mjs",
+      "mode": "100644",
+      "object": "aae377d351974b88a03f1faded61f92b2aa6a166",
+      "stage": 0
+    },
+    {
+      "path": "authoring/asset-studio/preview.mjs",
+      "mode": "100644",
+      "object": "71f8838b1670c41e8b3715657ba17c7659a09bdf",
+      "stage": 0
+    },
+    {
+      "path": "authoring/asset-studio/studio.css",
+      "mode": "100644",
+      "object": "69713ac97e1394f88b390874b22022420362d167",
+      "stage": 0
+    },
+    {
+      "path": "authoring/asset-studio/studio.mjs",
+      "mode": "100644",
+      "object": "e33014598a663d802ab0f6addc772a21a4b5c196",
+      "stage": 0
+    },
+    {
+      "path": "authoring/asset-studio/team-preview-fixture.mjs",
+      "mode": "100644",
+      "object": "6939a2b680f5cdedb5083c7f6a47c2fbae5ec1a1",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "mode": "100644",
+      "object": "fcc092f657403344a234c5acd61f81ef62598ae3",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/team-anchor-field-kit-v1/README.md",
+      "mode": "100644",
+      "object": "fadafe4f1979252a748ef1ea5e7d4af519a58b84",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/team-anchor-field-kit-v1/prepared/available.png",
+      "mode": "100644",
+      "object": "72a0e52568dbcc9f17e1b50f6cae5eac605b3348",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/team-anchor-field-kit-v1/prepared/captured.png",
+      "mode": "100644",
+      "object": "6dd5e846bdf4e0086288596a72a360ba4cd4aac4",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/team-anchor-field-kit-v1/prepared/manifest.json",
+      "mode": "100644",
+      "object": "b6c6da094d56267b5e2cbceafb631656df382ea9",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/team-anchor-field-kit-v1/review.html",
+      "mode": "100644",
+      "object": "f7387d8574f96197572ba6a245d88c09b965934b",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/team-anchor-field-kit-v1/source.mjs",
+      "mode": "100644",
+      "object": "ee64684d0f22b7d832b862243f8997dc43a8c3a0",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/README.md",
+      "mode": "100644",
+      "object": "1ee3debb47cd0139da6288df50012b3cf231b89e",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/manifest.json",
+      "mode": "100644",
+      "object": "5300b1aa9aa4db876c43fef56d07609a899634e3",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/recovery.png",
+      "mode": "100644",
+      "object": "7acfff4de72ac7d3d5997e751951863fbe6c2dbd",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/rescue.png",
+      "mode": "100644",
+      "object": "5dfca66561ecd71c7e96ecbb967f46e53e605695",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/slowed.png",
+      "mode": "100644",
+      "object": "80190accfe00a8a493d4172132aec26d4d21abf5",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/support.png",
+      "mode": "100644",
+      "object": "7e0aa49e79caf54ef93768ace0dbf3ad1528aa04",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/review.html",
+      "mode": "100644",
+      "object": "ff3e18a728c324661ba1bc16240539f77d6ace09",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/source.mjs",
+      "mode": "100644",
+      "object": "5ba5ee9687e4d2e91096787eaad6ad76e63ce69b",
+      "stage": 0
+    },
+    {
+      "path": "docs/verification/team-public-retention/README.md",
+      "mode": "100644",
+      "object": "ff037eeec3eed880a10d5cff90a7c8b6b87feb81",
+      "stage": 0
+    },
+    {
+      "path": "docs/verification/team-public-retention/public-retention-final-node20.tap.json",
+      "mode": "100644",
+      "object": "05729fb5756dc731a33b28d1675aa3443e741638",
+      "stage": 0
+    },
+    {
+      "path": "docs/verification/team-public-retention/public-retention-final-node22.tap.json",
+      "mode": "100644",
+      "object": "ac7ac04fb475c20d205be1e5438032ce54c63e69",
+      "stage": 0
+    },
+    {
+      "path": "docs/verification/team-public-retention/public50-baseline-red.tap.json",
+      "mode": "100644",
+      "object": "2fe394eb4b3660142710d09046210e9a52fc9a21",
+      "stage": 0
+    },
+    {
+      "path": "docs/verification/team-public-retention/report.json",
+      "mode": "100644",
+      "object": "a6bbcc7a234b36521a19117b07583125c4eb4d34",
+      "stage": 0
+    },
+    {
+      "path": "game/app.mjs",
+      "mode": "100644",
+      "object": "72a9a84bbb002ae612c0fc5caf71546b53f92ac1",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-actor-presentation.mjs",
+      "mode": "100644",
+      "object": "36c554380407b43ef47385ea0b0cd734eb3d1f0a",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-anchor-presentation.mjs",
+      "mode": "100644",
+      "object": "568cbfea82c083268909fa17190597ccce8edfd8",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-cue-palette.mjs",
+      "mode": "100644",
+      "object": "1c4400871ba3742bda03da116fa091fbdfbadb52",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-effect-presentation.mjs",
+      "mode": "100644",
+      "object": "73d73671fff3be5da44229b058d7f02e57c4eb1c",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-event-feedback.mjs",
+      "mode": "100644",
+      "object": "d6d30523bcf2d1ab1b7876d6d33dee05d77c0967",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-event-presentation.mjs",
+      "mode": "100644",
+      "object": "616b45de5ef43cac15c0871842f8dbe994207d37",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-owned-presentation.mjs",
+      "mode": "100644",
+      "object": "ebc9e8d8a534efc805dad314c092724668ac22b7",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "mode": "100644",
+      "object": "c3ba1f0bb49715c30dcd0178bcdcced22537ee7d",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-presentation-display.mjs",
+      "mode": "100644",
+      "object": "a9b337fc8fc7eb531afc8de98afcd1124327233e",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-retained-presentation.mjs",
+      "mode": "100644",
+      "object": "324b4bb4e1d05c0b4ef89b27312a442dd119bee8",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-threat-presentation.mjs",
+      "mode": "100644",
+      "object": "583a799d92283c21f6dcf3d29d7ea410945dc1db",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "mode": "100644",
+      "object": "7aad1e7782810cdf11de277a25923002917b4000",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/index.html",
+      "mode": "100644",
+      "object": "736ec5218a7aac838e45e70b1d022d971ef618b9",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "mode": "100644",
+      "object": "481d7ca50c855970de69b1db5c296303c362afc9",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "mode": "100644",
+      "object": "eaeeb1b520c3bf63ed3a3b062144d50f3c677fd0",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "mode": "100644",
+      "object": "d41a2bf0a6139b5f8abe14c4c9bb7c333e715859",
+      "stage": 0
+    },
+    {
+      "path": "game/index.html",
+      "mode": "100644",
+      "object": "b6fb564b90a8fc72281dc52fce0b23ab580b19e7",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/assets/0e1e3a81fb1517f8d9fbea61a139e38118e3dc89f0ce3f2148e17376fcf66b6c.png",
+      "mode": "100644",
+      "object": "5dfca66561ecd71c7e96ecbb967f46e53e605695",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/assets/4cabfd9cbdb4b7d4a3389f466896f0ed134a73f8964a4e5c65578b10b9027fdf.png",
+      "mode": "100644",
+      "object": "80190accfe00a8a493d4172132aec26d4d21abf5",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/assets/53dc09b7187b54af081994da3e27dfbb31ab229097fae735de1b2b52388c7408.png",
+      "mode": "100644",
+      "object": "7acfff4de72ac7d3d5997e751951863fbe6c2dbd",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/assets/a2d58468a2d56988b6542bf44e74728ab53aa9d5f312d874b60a3de05f9a9def.png",
+      "mode": "100644",
+      "object": "7e0aa49e79caf54ef93768ace0dbf3ad1528aa04",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/assets/e4b2ae934b66821bf1ba9db755a23f11df2470d48ad47f549eb2a2aeebbd0353.png",
+      "mode": "100644",
+      "object": "72a0e52568dbcc9f17e1b50f6cae5eac605b3348",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/assets/fad4a744dfdfb9bd328494e9ffff0440c6ed520695d89aa8ca9a5aee3c3ee9d6.png",
+      "mode": "100644",
+      "object": "6dd5e846bdf4e0086288596a72a360ba4cd4aac4",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "mode": "100644",
+      "object": "c316aa8cc5af7d1f8610381250e2b57ce9fca4a8",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/runtime.29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed.json",
+      "mode": "100644",
+      "object": "64db313e9b2f82bc51acdd5aa3dd804e3be295af",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/runtime.a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584.json",
+      "mode": "100644",
+      "object": "1d8092e37b9cfeeb5c9a36670c516c9917e8f54b",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "mode": "100644",
+      "object": "5b81d7056db12a74d9f0dc87b41432cedc4439c3",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "mode": "100644",
+      "object": "f65a9134b9ec82a9f6f3d691f3bc5a460595837b",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/dependencies.mjs",
+      "mode": "100644",
+      "object": "3a61c54fb645eab9b9d336a49232a2be23cb6d6d",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/host.mjs",
+      "mode": "100644",
+      "object": "89f3c47f06ae65d5e729144a665a353ceab2eabb",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/manifest-path.mjs",
+      "mode": "100644",
+      "object": "51b63efab1bfefadaa2f202b3126ae9ac903754c",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/model.mjs",
+      "mode": "100644",
+      "object": "326d72a47d56ed23ec4c78240d9d9d64fec74c94",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/studio-session.mjs",
+      "mode": "100644",
+      "object": "c96f9d969ffe1db8966453129461f18d9f1d220f",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/team-actor-slots.mjs",
+      "mode": "100644",
+      "object": "75d9828417abb7b1aab7d2efed071f5bcc1f99eb",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/team-anchor-slots.mjs",
+      "mode": "100644",
+      "object": "48761fa14c60c9a940c63c8762a5ac6a17964a59",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/team-effect-slots.mjs",
+      "mode": "100644",
+      "object": "5d1931493185d022511515e91565c851782043b0",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/team-event-slots.mjs",
+      "mode": "100644",
+      "object": "5f4ca9999caa145cba6348871b4a15d218c5b621",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/team-threat-slots.mjs",
+      "mode": "100644",
+      "object": "d9d78005616fb61214a3744689ca628d68ab3df9",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/visual-theme-catalogue.mjs",
+      "mode": "100644",
+      "object": "764928edd695c1ca6f661a5bd0af86a4a5b1619d",
+      "stage": 0
+    },
+    {
+      "path": "game/replay-theater/app.mjs",
+      "mode": "100644",
+      "object": "0b31d2aec9b550d9e56996f6a8ecb46af1559fdb",
+      "stage": 0
+    },
+    {
+      "path": "game/test/about-navigation-host.test.mjs",
+      "mode": "100644",
+      "object": "4aac1aba32ff27344fedb31e2e6cf43703742a1a",
+      "stage": 0
+    },
+    {
+      "path": "game/test/asset-studio-cold-return-host.test.mjs",
+      "mode": "100644",
+      "object": "ceb5c8dd1d799194b2607c398a93dca98d3e4fe8",
+      "stage": 0
+    },
+    {
+      "path": "game/test/asset-studio-cross-mode.test.mjs",
+      "mode": "100644",
+      "object": "81f3c49f9895691326d9f1991f021a467d5d0f6b",
+      "stage": 0
+    },
+    {
+      "path": "game/test/asset-studio-help-links.test.mjs",
+      "mode": "100644",
+      "object": "8a4aaf8079ac0fbf07b01b30fe80d5691690672e",
+      "stage": 0
+    },
+    {
+      "path": "game/test/asset-studio-host-loading.test.mjs",
+      "mode": "100644",
+      "object": "aeacdf63fa918a3550879c96f8016736e5ec1ac9",
+      "stage": 0
+    },
+    {
+      "path": "game/test/asset-studio-operation-focus.test.mjs",
+      "mode": "100644",
+      "object": "f3cc99eea9d0fa18d176e5bf6cdcf5e6dab83e09",
+      "stage": 0
+    },
+    {
+      "path": "game/test/asset-studio-team-authoring-host.test.mjs",
+      "mode": "100644",
+      "object": "66b2d71cd80dac7bf983f3c96b782240716bb3fb",
+      "stage": 0
+    },
+    {
+      "path": "game/test/asset-studio-team-fixture.test.mjs",
+      "mode": "100644",
+      "object": "45648cdedb2155ec00f436e755f334d5c265a19a",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-actor-layout.test.mjs",
+      "mode": "100644",
+      "object": "4ab20d3d083b8d4e567d97ea2c9cea5ca4c64b92",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-actor-presentation.test.mjs",
+      "mode": "100644",
+      "object": "e1be7ad817765b4141a18df316023aa6e4f543c3",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-crawling-prime.test.mjs",
+      "mode": "100644",
+      "object": "54a721a458d860f7f02bf44f77f3cce70e3ee132",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-cue-palette.test.mjs",
+      "mode": "100644",
+      "object": "d7ba0d371bb6b0455b0b93064ad66949d47049db",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-custom-artwork-host.test.mjs",
+      "mode": "100644",
+      "object": "c6af3ceccf95a29415b89beaa19ac3bb05509593",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-event-feedback.test.mjs",
+      "mode": "100644",
+      "object": "c48d28af72947f9ec81f02c70249e2a559215301",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-event-host.test.mjs",
+      "mode": "100644",
+      "object": "18a8501ade52529c233d7ec8bd36a8d7972c1145",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-host.test.mjs",
+      "mode": "100644",
+      "object": "db9e28a8472c6bfdba3d3d2e18f1f7dcb6e556a3",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-import-artwork-host.test.mjs",
+      "mode": "100644",
+      "object": "8cb40db6e2f8c2b89977d2a8e1cfc0bb184a85b8",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-import-next.test.mjs",
+      "mode": "100644",
+      "object": "538369ee7064a6ec48bd321ef9d7dd7bec6455a3",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-owned-presentation.test.mjs",
+      "mode": "100644",
+      "object": "5319e0f3dcec5c9bbfa81571498bfc367d38e0d9",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-picture-bindings.test.mjs",
+      "mode": "100644",
+      "object": "40df381c2279712b6a6a73440aba2ec08244c65f",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-picture-host.test.mjs",
+      "mode": "100644",
+      "object": "b42d0882d03385283d1c7b18362cebb06546e482",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-presentation-display.test.mjs",
+      "mode": "100644",
+      "object": "0f605a67ba9a2cf2fe686e950a22a52a7bb7e5cd",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-results-resize.test.mjs",
+      "mode": "100644",
+      "object": "b5b2b23ba70110b9ae3e43e983cd8799177ad020",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-terminal-guidance.test.mjs",
+      "mode": "100644",
+      "object": "f82d1ca3e8a980d5518874933b822abda9432f01",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-view-presentation.test.mjs",
+      "mode": "100644",
+      "object": "63d431ac7fbd362b7e660572b164bdc5a7ea78bc",
+      "stage": 0
+    },
+    {
+      "path": "game/test/cross-mode-art-inventory.test.mjs",
+      "mode": "100644",
+      "object": "bc38dea72a25edd4cf35e4ad8d0ac82031369f12",
+      "stage": 0
+    },
+    {
+      "path": "game/test/field-kit-team-production.test.mjs",
+      "mode": "100644",
+      "object": "8aa705b86047559d4b90365a49570394602376a6",
+      "stage": 0
+    },
+    {
+      "path": "game/test/fixtures/production-team-followup-source-fpv40.json",
+      "mode": "100644",
+      "object": "7c3abbcb4a80ee0cafa6b9e6646cf24c1e581a92",
+      "stage": 0
+    },
+    {
+      "path": "game/test/helpers/coop-host.mjs",
+      "mode": "100644",
+      "object": "97bb36fd02c078b350ca92043a39d7621615a3eb",
+      "stage": 0
+    },
+    {
+      "path": "game/test/helpers/coop-import-win.mjs",
+      "mode": "100644",
+      "object": "281e4edba11cd4705c69efbe403dfcd8dd38d2eb",
+      "stage": 0
+    },
+    {
+      "path": "game/test/helpers/coop-presentation-fixture.mjs",
+      "mode": "100644",
+      "object": "990a43ab4ce05c4ebe6df1ce74f881427ed9c64d",
+      "stage": 0
+    },
+    {
+      "path": "game/test/helpers/coop-win.mjs",
+      "mode": "100644",
+      "object": "5030bc4be40847a53160166c2c2105f93137ef03",
+      "stage": 0
+    },
+    {
+      "path": "game/test/helpers/solo-dom.mjs",
+      "mode": "100644",
+      "object": "27f95a9fbe2c844a72f7d44c2cc3d198b7334382",
+      "stage": 0
+    },
+    {
+      "path": "game/test/hud-status-cues.test.mjs",
+      "mode": "100644",
+      "object": "235a76ac36813ca6b1c1b33de730d851186d9d8b",
+      "stage": 0
+    },
+    {
+      "path": "game/test/look-preparation.test.mjs",
+      "mode": "100644",
+      "object": "d34fe05ca615060bd165dcfcf12310b81723fdb5",
+      "stage": 0
+    },
+    {
+      "path": "game/test/loss-difficulty-host.test.mjs",
+      "mode": "100644",
+      "object": "1be92583e83da4999ed5d27f6097e22df3dec895",
+      "stage": 0
+    },
+    {
+      "path": "game/test/mission-selection-status-host.test.mjs",
+      "mode": "100644",
+      "object": "7a719c626daf9145e78293a01b5b37632ae58177",
+      "stage": 0
+    },
+    {
+      "path": "game/test/presentation-archive-formatting.test.mjs",
+      "mode": "100644",
+      "object": "754682c4b2427679a7a13f00cdc2f9a716738931",
+      "stage": 0
+    },
+    {
+      "path": "game/test/presentation-dependencies.test.mjs",
+      "mode": "100644",
+      "object": "f64ae2b846b9e6a40d6627c24f5127d102136ea4",
+      "stage": 0
+    },
+    {
+      "path": "game/test/presentation-host.test.mjs",
+      "mode": "100644",
+      "object": "6ef689b27f2b33c8c094771dba793a2f9a4a0ebc",
+      "stage": 0
+    },
+    {
+      "path": "game/test/presentation-output-preparation.test.mjs",
+      "mode": "100644",
+      "object": "71123d072eec74d777e5cdf5c1d2dfc9c0300ee1",
+      "stage": 0
+    },
+    {
+      "path": "game/test/presentation-production-history.test.mjs",
+      "mode": "100644",
+      "object": "150dbb90c172d1a7cd7406d709cc3694ada1176f",
+      "stage": 0
+    },
+    {
+      "path": "game/test/presentation-production-slots.test.mjs",
+      "mode": "100644",
+      "object": "58f345bdf4bdb735a13185408f8f2d469744e706",
+      "stage": 0
+    },
+    {
+      "path": "game/test/presentation-retained-publishing.test.mjs",
+      "mode": "100644",
+      "object": "73cf6391b2bd4fd4271eccce2932149d06417018",
+      "stage": 0
+    },
+    {
+      "path": "game/test/replay-theater-navigation.test.mjs",
+      "mode": "100644",
+      "object": "3221480792595c2c4fdf8aa23906dd2c480ea788",
+      "stage": 0
+    },
+    {
+      "path": "game/test/required-look-host.test.mjs",
+      "mode": "100644",
+      "object": "0f8709188306e33cc9b8b91b6beb93dba2d715b6",
+      "stage": 0
+    },
+    {
+      "path": "game/test/shared-settings-solo.test.mjs",
+      "mode": "100644",
+      "object": "3a95bea99fc846b4865db8e3b5e50005fed85553",
+      "stage": 0
+    },
+    {
+      "path": "game/test/solo-result-continuation-host.test.mjs",
+      "mode": "100644",
+      "object": "3e6c497d51393340742e882cefe7cf1d9663b24f",
+      "stage": 0
+    },
+    {
+      "path": "game/test/studio-inventory-history.test.mjs",
+      "mode": "100644",
+      "object": "e64c8a0ad629143b223733ae1762f78e4a63257b",
+      "stage": 0
+    },
+    {
+      "path": "game/test/studio-transfer-history.test.mjs",
+      "mode": "100644",
+      "object": "6fd3e91f5881f7154c84712b14b08af01f46613e",
+      "stage": 0
+    },
+    {
+      "path": "game/test/team-actor-slots.test.mjs",
+      "mode": "100644",
+      "object": "ce67672b16ccab322ff12ee890066121cbd947e3",
+      "stage": 0
+    },
+    {
+      "path": "game/test/team-anchor-slots.test.mjs",
+      "mode": "100644",
+      "object": "e70387d6174edb7c4e159242b6be9c92816ea400",
+      "stage": 0
+    },
+    {
+      "path": "game/test/team-effect-slots.test.mjs",
+      "mode": "100644",
+      "object": "e3c91bd1bf7d3aee7bd24979a0aa191ab96550fe",
+      "stage": 0
+    },
+    {
+      "path": "game/test/team-event-slots.test.mjs",
+      "mode": "100644",
+      "object": "32817fc401b9f64088636be0727ba4d92d1a1b14",
+      "stage": 0
+    },
+    {
+      "path": "game/test/team-threat-slots.test.mjs",
+      "mode": "100644",
+      "object": "c4c8fdc50a51ac6a80ab09dc3ce26784b90a37f6",
+      "stage": 0
+    },
+    {
+      "path": "game/test/team-visual-theme-identity-compatibility.test.mjs",
+      "mode": "100644",
+      "object": "8da44d482bbc14a3a3fb598674bb298ee3d923bf",
+      "stage": 0
+    },
+    {
+      "path": "game/test/terminal-navigation.test.mjs",
+      "mode": "100644",
+      "object": "6bb76ebd5c7042758f01542790e4a6a5e951ae99",
+      "stage": 0
+    },
+    {
+      "path": "game/test/touchscreen-controller-host.test.mjs",
+      "mode": "100644",
+      "object": "8cfe4e1d0f14294f899f768bdea071210e17403b",
+      "stage": 0
+    },
+    {
+      "path": "game/test/visual-theme-lease.test.mjs",
+      "mode": "100644",
+      "object": "7cb190fbbc6a255e0821944e6a52bb6ea1bf8125",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/field-kit-surfaces.css",
+      "mode": "100644",
+      "object": "dc315f762dbbb83a0861d3b606141409e577e344",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "mode": "100644",
+      "object": "2fd3e2f4d3e30729289ce0a2389192a9c787af13",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/look-preparation.mjs",
+      "mode": "100644",
+      "object": "c97243914047fa48877241be4a65aeb54250b977",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "mode": "100644",
+      "object": "84e53ff76738c25174a29bb4878677d3b8c3f395",
+      "stage": 0
+    },
+    {
+      "path": "scripts/check-field-kit-readiness.mjs",
+      "mode": "100644",
+      "object": "3b917ad5d0fb05778e3e7b353caebe9cc9b628b6",
+      "stage": 0
+    },
+    {
+      "path": "scripts/field-kit-team-assets.mjs",
+      "mode": "100644",
+      "object": "3ff52b7a1525cbb82c7cd1ba989c5e8864010740",
+      "stage": 0
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "mode": "100644",
+      "object": "bc6f7ac1c3fa02ac12c70c6a585305b8362c862d",
+      "stage": 0
+    },
+    {
+      "path": "scripts/prepare-presentation-output.mjs",
+      "mode": "100644",
+      "object": "7d875a21817e527cb6b5186f74227a7bd71408f9",
+      "stage": 0
+    },
+    {
+      "path": "scripts/presentation-production-history.mjs",
+      "mode": "100644",
+      "object": "012d9473a17eec3d6127558b28e48265a4306911",
+      "stage": 0
+    },
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "mode": "100644",
+      "object": "7ee112bfe364cada4e822dd6df77fae8f40b952f",
+      "stage": 0
+    },
+    {
+      "path": "scripts/produce-team-anchor-art.mjs",
+      "mode": "100644",
+      "object": "2144789263495bfc3c42a27a2b536d7d7d4ff8fa",
+      "stage": 0
+    },
+    {
+      "path": "scripts/produce-team-feedback-art.mjs",
+      "mode": "100644",
+      "object": "ed622958de8c47eba8199686106671a950ad06a3",
+      "stage": 0
+    },
+    {
+      "path": "scripts/retained-team-presentation.mjs",
+      "mode": "100644",
+      "object": "adb846f5dc9248f3ed4088bc199373d7d0dbd577",
+      "stage": 0
+    },
+    {
+      "path": "scripts/reviewed-team-art.mjs",
+      "mode": "100644",
+      "object": "508a7c45b3c38c4f0268a8d947775e9eb437d8a1",
+      "stage": 0
+    },
+    {
+      "path": "scripts/test-field-kit-recipe-sources.mjs",
+      "mode": "100644",
+      "object": "2a41e2f8e1d6c60d5575d6dd89a95dee9cc53a6b",
+      "stage": 0
+    },
+    {
+      "path": "scripts/test-retained-team-presentation.mjs",
+      "mode": "100644",
+      "object": "06478f3e098a379875e58060f424f4fa53dbefda",
+      "stage": 0
+    },
+    {
+      "path": "scripts/test-team-anchor-art.mjs",
+      "mode": "100644",
+      "object": "3767af71ff0affb72a04a7b9dc20c47faadf486a",
+      "stage": 0
+    },
+    {
+      "path": "scripts/test-team-feedback-art.mjs",
+      "mode": "100644",
+      "object": "d23c0c083332303e84ed4c6922c1fde6c5e0ed86",
+      "stage": 0
+    },
+    {
+      "path": "scripts/write-presentation.mjs",
+      "mode": "100644",
+      "object": "f729a5957ec59662cb38c0b86500df74e332516d",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}

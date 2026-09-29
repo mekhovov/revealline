@@ -1,0 +1,71 @@
+{
+  "scope": "Local Team integration correction; production source-stage51 remains unreviewed/unpublished",
+  "base": "595fdadd",
+  "publishedAssociations": [
+    {
+      "tag": "v0.76.1",
+      "revision": 38,
+      "runtimeSHA256": "a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584"
+    },
+    {
+      "tag": "v0.78.0",
+      "revision": 50,
+      "runtimeSHA256": "29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed"
+    }
+  ],
+  "tests": {
+    "baseline": {
+      "fail": 1,
+      "skip": 23
+    },
+    "Node20.19.5": 43,
+    "Node22.22.2": 43
+  },
+  "source": [
+    {
+      "path": "game/couch/coop-retained-presentation.mjs",
+      "bytes": 3880,
+      "sha256": "3bef52a204d8e1f480ace16bc1caf0b3d92492100b093d4de1558db93023c694"
+    },
+    {
+      "path": "game/couch/coop-owned-presentation.mjs",
+      "bytes": 13607,
+      "sha256": "0789e1c5dd070ec77873e393b7f19f6001a56a9e1fc1ee1b26306bd0ffc0cc16"
+    },
+    {
+      "path": "game/test/coop-owned-presentation.test.mjs",
+      "bytes": 23289,
+      "sha256": "ca8d706861f87367fa0189fd3d34ade320c9ef7ba2a1c1c927a4d585c1f1e412"
+    },
+    {
+      "path": "scripts/retained-team-presentation.mjs",
+      "bytes": 4073,
+      "sha256": "df4191357a5ddad853a20170d0f8214f7b6402421eda48653c1337145977a384"
+    },
+    {
+      "path": "scripts/test-retained-team-presentation.mjs",
+      "bytes": 12329,
+      "sha256": "b43563db64ae22969c01e816f973da2117a733fe7277368ff088bb1afb1f4641"
+    }
+  ],
+  "originalLogs": {
+    "public50-baseline-red.tap": {
+      "bytes": 8028,
+      "sha256": "6e9714695eb20a2ed1ee2ee2b91290f9b7a7ccc9be50cec005a765dfa74dcfcf"
+    },
+    "public-retention-final-node20.tap": {
+      "bytes": 10601,
+      "sha256": "1e2f0e1a03b434c9a79f843c7e2fe52f06c9b3b670a8048825deb53bedce11fb"
+    },
+    "public-retention-final-node22.tap": {
+      "bytes": 11251,
+      "sha256": "2e3f865a40b85ee03a9d0519ba5311bdd40f4b13a150b3eadd3f75630319e911"
+    }
+  },
+  "remaining": [
+    "Reopened production recipe reviews and current picture bindings",
+    "Complete combined Team host/native and source qualification",
+    "Public and offline acceptance",
+    "Physical input and device gates"
+  ]
+}

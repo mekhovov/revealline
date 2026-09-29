@@ -1,0 +1,45 @@
+{
+  "metadata": {
+    "format": "revealline-theme-bundle.v1",
+    "id": "field-kit",
+    "revision": 40,
+    "selection": {
+      "base": {
+        "id": "base",
+        "revision": 1
+      },
+      "collection": null,
+      "theme": {
+        "id": "fpv",
+        "revision": 40
+      }
+    }
+  },
+  "groups": {
+    "assets": {
+      "count": 1334,
+      "sha256": "4e6eaa445ebea29d361a45d6b8f4f2ce38094efc63ddec009fdaf18e611c9720"
+    },
+    "themes": {
+      "count": 41,
+      "sha256": "b39a622634f3cddfb1dac906cc80fddd6ae2351e18e2752f2fe4758359526029"
+    },
+    "collections": {
+      "count": 1,
+      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+    },
+    "slots": {
+      "count": 299,
+      "sha256": "09b26ace98b31275219a2926b5485b23ed7a59cb0161e84f9a4aa8de7360b948"
+    }
+  },
+  "payloads": {
+    "count": 133,
+    "sha256": "c515340a644f44587f323eaa6887459b5d57315ae4b5669aa45de60d64e252d7"
+  },
+  "provenance": {
+    "bytes": 7359143,
+    "sha256": "e86eb350dcd9968e2a226e969d1b9b70d76de5305f68aeaf8b93bcbcccb93949",
+    "source": "Actual held integration source-stage fpv40 generated from aced2706 after required-look and short-landscape loss changes. This is not a published release."
+  }
+}
