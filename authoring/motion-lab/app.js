@@ -935,6 +935,15 @@ function mountMotionLab() {
       if (background) URL.revokeObjectURL(background.url);
       background = null;
       $('background-file').value = '';
+      // Clear removes its own availability. Hand back only its current,
+      // foreground focus before disabling it; a pointer's other owner stays put.
+      if (
+        !disposed &&
+        !document.hidden &&
+        document.hasFocus() &&
+        document.activeElement === $('clear-background')
+      )
+        $('background-file').focus();
       $('clear-background').disabled = true;
       backgroundMessage(localizedMessage('tools:motionLab.previewCleared'), 'cancelled');
       render();
