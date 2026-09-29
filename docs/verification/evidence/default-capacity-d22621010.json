@@ -1,0 +1,109 @@
+{
+  "format": "RevealLineCandidateCapacityObservation.v1",
+  "sourceRevision": "d226210105de1011f8dab18fcf0ac7ca196b974c",
+  "sourceTree": "cd080fc590dfea19cf96b2f93c52b1ae31c890f3",
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "inspection": {
+    "path": ".cache/phase7-default-d22621010-complete.json",
+    "bytes": 423243,
+    "sha256": "174fa6d308056e3ae7c20c77986c0fbfd843385d09190a74d49c5d0337107b84",
+    "payloadBytesIncludingManifest": 799088673,
+    "manifest": {
+      "path": "manifest.json",
+      "bytes": 399824,
+      "sha256": "5ad922ea553e7ddaadca19d063324a49344879fb30f3c81825ca5e3325f9f2c3"
+    },
+    "manifestFiles": 2165,
+    "manifestContentBytes": 798688849,
+    "includedInputs": {
+      "format": "revealline-default-build-inputs.v1",
+      "sourceRevision": "d226210105de1011f8dab18fcf0ac7ca196b974c",
+      "sourceTree": "cd080fc590dfea19cf96b2f93c52b1ae31c890f3",
+      "files": 2029,
+      "bytes": 587410504,
+      "note": "Included originals only; transitive producer inputs are checked by normal build preparation."
+    },
+    "availableCommittedSources": {
+      "files": 5104,
+      "bytes": 843645014,
+      "absentTrackedFiles": 15472,
+      "inventorySha256": "d1b9ffe60244e413e0d22105c9b86b4c965c1244168b1b934a0b947ca36daa2d"
+    },
+    "sourceEligibility": {
+      "status": "verified",
+      "format": "revealline-public-source-eligibility.v1",
+      "files": 5116,
+      "assets": 294
+    }
+  },
+  "restoration": {
+    "files": 198,
+    "bytes": 378408675,
+    "receipts": [
+      {
+        "path": ".cache/phase7-default-d22621010-hydration.json",
+        "bytes": 667,
+        "sha256": "c4b6119c741f4b0f376c9c211f981efddfe27754a261734d43c31b146af8006e"
+      },
+      {
+        "path": ".cache/phase7-default-d22621010-producer-hydration.json",
+        "bytes": 12266,
+        "sha256": "5750c6fff7fdad3e40eba5508e997927a13f5c1a8c4d8bf328f2d61007a90e12"
+      },
+      {
+        "path": ".cache/phase7-default-d22621010-hosted-provenance-hydration.json",
+        "bytes": 758,
+        "sha256": "a87da5c93e6d66edd2a4e7474083acaa4d62e3881eb292a332df7cf3a5ca3230"
+      }
+    ],
+    "sparseConfigurationChanged": false,
+    "trackedContentClean": true,
+    "note": "Exact committed blobs only. Git may clear skip-worktree for restored present files."
+  },
+  "optional": {
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "revision": "91c1756682a92628957d652fc14d0f75d8c30cdfa38b9b5eb285f52f712b9a16",
+        "immutableFiles": 29,
+        "immutableBytes": 178540,
+        "stableLauncherFileCount": 7,
+        "stableLauncherFileBytes": 19045,
+        "excludes": ["Generated current.json pointer", "Shared practice hub"]
+      },
+      {
+        "id": "civilian-fpv",
+        "revision": "8060ef4a754598a432f2e7ec70a8320a1ddda5aaf4b055c0420c16dee5a8b056",
+        "immutableFiles": 50,
+        "immutableBytes": 2747465,
+        "stableLauncherFileCount": 7,
+        "stableLauncherFileBytes": 19014,
+        "excludes": ["Generated current.json pointer", "Shared practice hub"]
+      }
+    ],
+    "knownImmutableAndStableLauncherFileBytes": 2964064
+  },
+  "knownDefaultAndOptionalLowerBoundBytes": 802052737,
+  "hostedBudgetBytes": 950000000,
+  "gapBeforeOmittedComponentsBytes": 147947263,
+  "missingComponents": [
+    "Same-source company editions; current CI metadata has not uploaded",
+    "Generated optional current pointers and shared practice hub",
+    "Pages root routes and publication metadata",
+    "Previously retained edition/optional versions and launcher ownership",
+    "Selected company hub including download-only links"
+  ],
+  "failedAttempts": [
+    {
+      "path": ".cache/phase7-default-d22621010.log",
+      "reason": "Required route-worlds source producer absent from sparse checkout; no report created"
+    },
+    {
+      "path": ".cache/phase7-default-d22621010-producer-diagnostic.log",
+      "reason": "Required pinned hosted soundtrack provenance directory absent; no full report created"
+    }
+  ],
+  "limits": "One ordinary default build preparation only, no ZIP or expanded site, no reproducible-build or publication claim. Optional pair separately built twice and admitted; all-edition whole-site verdict pending."
+}

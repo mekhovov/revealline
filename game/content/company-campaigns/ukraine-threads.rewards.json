@@ -1,0 +1,2095 @@
+[
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-01-discovery",
+    "locales": {
+      "en": { "teaser": "A museum record anchors a garment’s story.", "title": "Read the Cloth" },
+      "uk": {
+        "teaser": "Музейний запис допомагає розповісти історію одягу.",
+        "title": "Прочитайте тканину"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-threads-01-reveal-v1",
+          "sha256": "948ae2b5db094f54aec6e7d9fe57408bb121dd535b471943425378a7af9de2af"
+        },
+        "id": "ukraine-threads-01-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated linen exhibition square with a fictional shirt on a dark wooden plinth, blank record cards and warm arched galleries.",
+            "title": "Read the Cloth"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована виставкова площа з вигаданою сорочкою на темному дерев’яному п’єдесталі, порожніми картками й теплими арковими галереями.",
+            "title": "Прочитайте тканину"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Ivan Honchar Museum records men’s embroidered shirt НДФ-6482 as late nineteenth to early twentieth century, from Hadiach in the Poltava area. Its maker is unknown.",
+              "Begin a label with the documented object, date, place and maker when known. “Unknown” is useful information; a motif is not permission to invent a personal story. This scene is an illustration, not that museum object."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-6482",
+                "url": "https://honchar.org.ua/collections/detail/4181"
+              }
+            ],
+            "title": "Read the Cloth"
+          },
+          "uk": {
+            "paragraphs": [
+              "Музей Івана Гончара датує чоловічу вишиту сорочку НДФ-6482 кінцем XIX — початком XX століття та пов’язує її з Гадячем на Полтавщині. Автор невідомий.",
+              "Починайте підпис із документованих назви речі, дати, місця й автора, якщо він відомий. «Невідомо» — корисна інформація; мотив не дозволяє вигадувати особисту історію. Сцена є ілюстрацією, а не цим музейним предметом."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-6482",
+                "url": "https://honchar.org.ua/collections/detail/4181"
+              }
+            ],
+            "title": "Прочитайте тканину"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Make a short label using object, date, place and maker. Keep “unknown” where the record does; do not use the picture to invent a biography."
+              ],
+              "title": "Make a distinction: Read the Cloth"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть короткий підпис: предмет, дата, місце й автор. Залиште «невідомо», якщо так у записі; не вигадуйте біографію за зображенням."
+              ],
+              "title": "Розрізнімо: Прочитайте тканину"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find a place and a time in the shirt’s record together. Which detail does the record leave unknown?"
+              ],
+              "title": "Look together: Read the Cloth"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть разом місце й час у записі про сорочку. Яка подробиця залишається невідомою?"
+              ],
+              "title": "Погляньмо разом: Прочитайте тканину"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare your proposed label with the record for НДФ-6482. Mark each sourced fact and each visual observation separately. What further evidence would a personal story require?"
+              ],
+              "title": "Explore the evidence: Read the Cloth"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зіставте свій підпис із записом НДФ-6482. Окремо позначте факт із джерела та візуальне спостереження. Які додаткові докази потрібні для особистої історії?"
+              ],
+              "title": "Дослідімо докази: Прочитайте тканину"
+            }
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "reference-ukraine-met-shirt-fragment",
+          "sha256": "edb86aaaa16ec601d1816765940cdfa37d761e3e557b9e5c2ba37d642fbc216f"
+        },
+        "id": "reference-ukraine-met-shirt-fragment-image",
+        "locales": {
+          "en": {
+            "alt": "A long pale textile fragment on black, with coloured floral embroidery, a row of small motifs along the lower border, and a vertical fold near the right edge.",
+            "title": "A documented Ukrainian shirt fragment"
+          },
+          "uk": {
+            "alt": "Довгий світлий фрагмент тканини на чорному тлі: кольорова квіткова вишивка, ряд дрібних мотивів уздовж нижнього краю та вертикальна складка праворуч.",
+            "title": "Документований фрагмент української сорочки"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "reference-ukraine-met-shirt-fragment-credit",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Met identifies this fragment as Ukrainian, dates it to the final quarter of the eighteenth century, and records linen, silk and metal. That is a record of one object. The photograph alone does not name its maker, establish a precise region, or explain a universal meaning for its flowers. Compare the museum record with what you can actually observe.",
+              "The Metropolitan Museum of Art, Fragment of a shirt, 2009.300.2715. Brooklyn Museum Costume Collection; gift of the Brooklyn Museum, 2009; earlier Harkness gift, 1931. Public Domain / CC0. Exact source photograph, unchanged."
+            ],
+            "sources": [
+              {
+                "title": "A documented Ukrainian shirt fragment",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "License and sharing terms",
+                "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+              }
+            ],
+            "title": "A documented Ukrainian shirt fragment"
+          },
+          "uk": {
+            "paragraphs": [
+              "Музей Метрополітен визначає цей фрагмент як український, датує останньою чвертю XVIII століття й зазначає льон, шовк та метал. Це запис про один предмет. Сама фотографія не називає майстра, не визначає точного регіону й не пояснює універсального значення квітів. Порівняйте музейний запис із тим, що справді можна побачити.",
+              "The Metropolitan Museum of Art, Fragment of a shirt, 2009.300.2715. Brooklyn Museum Costume Collection; gift of the Brooklyn Museum, 2009; earlier Harkness gift, 1931. Public Domain / CC0. Exact source photograph, unchanged."
+            ],
+            "sources": [
+              {
+                "title": "Документований фрагмент української сорочки",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "Ліцензія та умови поширення",
+                "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+              }
+            ],
+            "title": "Документований фрагмент української сорочки"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "id": "ukraine-threads-01-object-exploration",
+        "locales": {
+          "en": {
+            "intro": "Choose a flower, a border or a fold in this museum photograph. Separate an observation you can make from the image from information supplied by the object record. These optional questions do not assess identity or change your arcade result.",
+            "title": "Look closely · one documented textile"
+          },
+          "uk": {
+            "intro": "Виберіть квітку, облямівку або складку на музейній фотографії. Відокремте спостереження за зображенням від відомостей у записі про предмет. Ці необов’язкові запитання не оцінюють ідентичність і не змінюють аркадний результат.",
+            "title": "Придивіться · один задокументований текстиль"
+          }
+        },
+        "recipe": {
+          "cards": [
+            {
+              "id": "flower",
+              "locales": {
+                "en": {
+                  "body": "Look at the rounded centre and the surrounding coloured lobes. Calling this a flower-like form describes what the photograph shows. The record identifies this particular object as Ukrainian; it does not give this shape one universal meaning or identify its maker.",
+                  "sourceNote": "The shape description is an observation of the museum photograph. Cultural attribution comes from The Met’s record for object 2009.300.2715. Neither source establishes a symbol shared by every Ukrainian region.",
+                  "title": "Flower · visible form, open meaning"
+                },
+                "uk": {
+                  "body": "Розгляньте округлу середину й кольорові пелюсткоподібні частини навколо. Назвати цю форму схожою на квітку — описати те, що видно на фотографії. Запис визначає саме цей предмет як український, але не надає формі єдиного універсального значення й не називає автора.",
+                  "sourceNote": "Опис форми — спостереження за музейною фотографією. Культурна атрибуція походить із запису The Met про предмет 2009.300.2715. Жодне з цих джерел не встановлює символу, спільного для всіх регіонів України.",
+                  "title": "Квітка · видима форма, відкрите значення"
+                }
+              },
+              "sourceIds": ["met-object"]
+            },
+            {
+              "id": "border",
+              "locales": {
+                "en": {
+                  "body": "Follow the smaller repeated forms beneath the long horizontal line, then compare them with the larger flowers above. Size, spacing and colour can be observed here. The listed materials—linen, silk and metal—come from the museum record, not from identifying fibres by colour on a screen.",
+                  "sourceNote": "The Met lists the object’s materials and dates it to the fourth quarter of the eighteenth century. These are catalogue statements for this object, not facts that the photograph alone can prove.",
+                  "title": "Lower border · compare scale and spacing"
+                },
+                "uk": {
+                  "body": "Простежте дрібніші повторювані форми під довгою горизонтальною лінією й порівняйте їх із більшими квітами вгорі. Тут можна спостерігати розмір, інтервали та колір. Перелік матеріалів — льон, шовк і метал — походить із музейного запису, а не з визначення волокон за кольором на екрані.",
+                  "sourceNote": "The Met наводить матеріали предмета й датує його останньою чвертю XVIII століття. Це твердження каталогу про цей предмет, а не факти, які сама фотографія здатна довести.",
+                  "title": "Нижня облямівка · порівняйте масштаб та інтервали"
+                }
+              },
+              "sourceIds": ["met-object"]
+            },
+            {
+              "id": "fold",
+              "locales": {
+                "en": {
+                  "body": "The cloth turns into folds on the right; some decoration disappears behind the overlap. A photograph shows this arrangement and viewpoint, not every surface or a complete garment. Keep the object title “Fragment of a shirt” when sharing it, and follow the record before making a more specific claim.",
+                  "sourceNote": "The public-domain photograph is provided through The Met’s Open Access programme. Credit the museum and object number even when reusing it freely; a reuse licence does not supply missing evidence about maker, region or meaning.",
+                  "title": "Right fold · notice what is hidden"
+                },
+                "uk": {
+                  "body": "Праворуч тканина утворює складки, і частина оздоблення зникає за перекриттям. Фотографія показує це розташування з певного ракурсу, а не всі поверхні чи цілу сорочку. Поширюючи зображення, зберігайте назву «Фрагмент сорочки» й перевіряйте запис перед конкретнішим твердженням.",
+                  "sourceNote": "Фотографія в суспільному надбанні доступна через програму Open Access музею The Met. Навіть за вільного використання зазначайте музей і номер предмета: дозвіл на повторне використання не додає відсутніх доказів про автора, регіон чи значення.",
+                  "title": "Складка праворуч · помітьте приховане"
+                }
+              },
+              "sourceIds": ["met-object", "met-open-access"]
+            }
+          ],
+          "diagram": {
+            "asset": {
+              "assetId": "reference-ukraine-met-shirt-fragment",
+              "sha256": "edb86aaaa16ec601d1816765940cdfa37d761e3e557b9e5c2ba37d642fbc216f"
+            },
+            "hotspots": [
+              { "cardId": "flower", "x": 0.196, "y": 0.328 },
+              { "cardId": "border", "x": 0.261, "y": 0.729 },
+              { "cardId": "fold", "x": 0.746, "y": 0.482 }
+            ],
+            "locales": {
+              "en": {
+                "alt": "A long embroidered shirt fragment on black. Curling green stems and multicoloured flowers cover the upper band; smaller repeated forms run along the lower border. The right end is folded. Points mark a left flower, the lower border and a right-hand fold.",
+                "caption": "Photograph of a real collection object, not a reconstruction: The Met, Fragment of a shirt, Ukrainian, fourth quarter 18th century, linen, silk and metal; object 2009.300.2715. Brooklyn Museum Costume Collection; gift of the Brooklyn Museum, 2009, following the 1931 gift from Mrs. Edward S. Harkness in memory of Elizabeth Greenman Stillman. Public-domain image."
+              },
+              "uk": {
+                "alt": "Довгий вишитий фрагмент сорочки на чорному тлі. У верхній смузі — вигнуті зелені стебла й різнокольорові квіти; внизу — дрібніші повторювані форми. Правий кінець складено. Точки позначають квітку ліворуч, нижню облямівку й складку праворуч.",
+                "caption": "Фотографія реального музейного предмета, не реконструкція: The Met, «Фрагмент сорочки», українська культура, остання чверть XVIII століття, льон, шовк і метал; номер 2009.300.2715. Колекція костюма Бруклінського музею; дар Бруклінського музею 2009 року, первісний дар пані Едвард С. Гаркнесс 1931 року на згадку про Елізабет Ґрінмен Стіллман. Зображення в суспільному надбанні."
+              }
+            }
+          },
+          "id": "inspect-image-atlas",
+          "predictions": [
+            {
+              "cardIds": ["border", "fold"],
+              "choices": [
+                {
+                  "id": "record",
+                  "locales": {
+                    "en": {
+                      "feedback": "Yes. This is documented catalogue information about the particular object.",
+                      "label": "The museum record"
+                    },
+                    "uk": {
+                      "feedback": "Так. Це задокументовані відомості каталогу про конкретний предмет.",
+                      "label": "Із музейного запису"
+                    }
+                  }
+                },
+                {
+                  "id": "image-only",
+                  "locales": {
+                    "en": {
+                      "feedback": "Colour is visible, but it does not establish this date. Compare the object record with what you can directly observe.",
+                      "label": "The colours in the photograph alone"
+                    },
+                    "uk": {
+                      "feedback": "Колір видно, але він не встановлює цієї дати. Порівняйте запис про предмет із тим, що спостерігаєте безпосередньо.",
+                      "label": "Лише з кольорів на фотографії"
+                    }
+                  }
+                }
+              ],
+              "expectedChoiceId": "record",
+              "id": "observation-or-record",
+              "locales": {
+                "en": {
+                  "explanation": "The date is supplied by the museum’s object record. Looking at colour, flowers or folds alone does not establish the date. Keep that source attached to the label.",
+                  "prompt": "A label dates this object to the fourth quarter of the eighteenth century. Where does that statement come from?"
+                },
+                "uk": {
+                  "explanation": "Дату наводить музейний запис про предмет. Самі колір, квіти чи складки не встановлюють дату. Зберігайте посилання на це джерело поруч із підписом.",
+                  "prompt": "Підпис датує цей предмет останньою чвертю XVIII століття. Звідки походить це твердження?"
+                }
+              }
+            }
+          ],
+          "revision": 1,
+          "sources": [
+            {
+              "id": "met-object",
+              "title": "The Met · Fragment of a shirt · object 2009.300.2715",
+              "url": "https://www.metmuseum.org/art/collection/search/157573"
+            },
+            {
+              "id": "met-open-access",
+              "title": "The Met · Open Access",
+              "url": "https://www.metmuseum.org/hubs/open-access"
+            }
+          ]
+        },
+        "type": "exploration"
+      },
+      {
+        "id": "ukraine-threads-01-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "For the museum fragment, “small repeated motifs” is an observation; its date and listed materials come from the record; a precise maker remains unestablished here. Keep those three kinds of statement separate as you inspect the image."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Example: three kinds of label"
+          },
+          "uk": {
+            "paragraphs": [
+              "Для музейного фрагмента «дрібні повторювані мотиви» — спостереження; дата й матеріали походять із запису; конкретного майстра тут не встановлено. Розрізняйте ці три типи тверджень під час огляду."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Приклад: три типи підписів"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a70347fb9c2215f6" },
+            { "difficulty": "standard", "gameplayId": "aae83c4cf5bee1df" },
+            { "difficulty": "expert", "gameplayId": "3c5d1f0ce3e9c745" }
+          ],
+          "missionId": "ukraine-threads-01"
+        }
+      ]
+    },
+    "revision": "6",
+    "scope": { "id": "ukraine-threads-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-threads-key-v1",
+        "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+      },
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A thread and a stitch answer different questions.",
+        "title": "Stitch Paths"
+      },
+      "uk": {
+        "teaser": "Нитка й стібок відповідають на різні запитання.",
+        "title": "Шляхи стібків"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-threads-02-reveal-v1",
+          "sha256": "3b0ba003bc7e170dbb16dc46ba35f6bbdbaf81bf6dc9e8b34b7fce78dc3cec72"
+        },
+        "id": "ukraine-threads-02-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated thread-study gallery with offset linen ribbons, crimson and charcoal thread, wooden trays and a magnifier revealing woven texture.",
+            "title": "Stitch Paths"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована галерея зразків: зміщені лляні стрічки, багряні й темні нитки, дерев’яні лотки та лупа над фактурою тканини.",
+            "title": "Шляхи стібків"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The record for shirt НДФ-6482 lists cloth materials separately from decorative techniques, including cross-stitch and hemstitch. A material is what a maker uses; a technique describes how the work is made.",
+              "Sort “linen” and “cross-stitch” into material and technique on a fictional label. Check the source rather than assuming all Ukrainian embroidery uses one stitch."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-6482",
+                "url": "https://honchar.org.ua/collections/detail/4181"
+              }
+            ],
+            "title": "Stitch Paths"
+          },
+          "uk": {
+            "paragraphs": [
+              "У записі сорочки НДФ-6482 матеріали тканини відокремлені від технік оздоблення, серед яких хрестик і мережка. Матеріал — те, що використовує майстер, а техніка описує спосіб роботи.",
+              "На вигаданому підписі розподіліть «льон» і «хрестик» між матеріалом та технікою. Перевіряйте джерело, а не припускайте, що вся українська вишивка виконана одним швом."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-6482",
+                "url": "https://honchar.org.ua/collections/detail/4181"
+              }
+            ],
+            "title": "Шляхи стібків"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep two columns on an imagined label: material and technique. Use the garment record to place the examples; colour alone will not answer the question."
+              ],
+              "title": "Make a distinction: Stitch Paths"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уявіть два стовпчики підпису: матеріал і техніка. Розмістіть приклади за записом про одяг; самого кольору недостатньо."
+              ],
+              "title": "Розрізнімо: Шляхи стібків"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Take turns sorting “linen” and “cross-stitch.” Which names a material, and which names a way of working?"
+              ],
+              "title": "Look together: Stitch Paths"
+            },
+            "uk": {
+              "paragraphs": [
+                "По черзі розподіліть «льон» і «вишивка хрестиком». Що називає матеріал, а що — спосіб роботи?"
+              ],
+              "title": "Погляньмо разом: Шляхи стібків"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Try the same distinction on a second documented object. Which terms come from its own record, and which would need a specialist’s closer examination?"
+              ],
+              "title": "Explore the evidence: Stitch Paths"
+            },
+            "uk": {
+              "paragraphs": [
+                "Застосуйте це розрізнення до другого документованого предмета. Які терміни є в його записі, а які потребують уважнішого огляду фахівцем?"
+              ],
+              "title": "Дослідімо докази: Шляхи стібків"
+            }
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "id": "ukraine-threads-02-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The optional workbench asks which facts require the object record and which are visible. A similar-looking stitch is not enough to name a technique. Use an explicit unknown instead of filling a gap with a confident guess."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Try: label only the evidence"
+          },
+          "uk": {
+            "paragraphs": [
+              "Додаткова вправа питає, які факти потребують запису предмета, а які видно. Схожого стібка недостатньо, щоб назвати техніку. Позначте невідоме, а не заповнюйте прогалину впевненим здогадом."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Спробуйте: підпишіть лише підтверджене"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "aa0d6a41ec5daf99" },
+            { "difficulty": "standard", "gameplayId": "625ecfa012ab59b9" },
+            { "difficulty": "expert", "gameplayId": "7250c61ead7111d6" }
+          ],
+          "missionId": "ukraine-threads-02"
+        }
+      ]
+    },
+    "revision": "5",
+    "scope": { "id": "ukraine-threads-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-threads-key-v1",
+        "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+      },
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-03-discovery",
+    "locales": {
+      "en": { "teaser": "Pale thread can make a rich surface.", "title": "White on White" },
+      "uk": {
+        "teaser": "Світла нитка може створювати багату поверхню.",
+        "title": "Білим по білому"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-threads-03-art-v1",
+          "sha256": "16b7fcca255f5915b14cadf0bddb3d543df5a214bb881144eff9f8024d6dce70"
+        },
+        "id": "ukraine-threads-03-image",
+        "locales": {
+          "en": {
+            "alt": "White on White — original mission illustration. Not a documentary photograph or technical plan.",
+            "title": "White on White"
+          },
+          "uk": {
+            "alt": "Білим по білому — оригінальна ілюстрація місії. Не документальне фото й не технічна схема.",
+            "title": "Білим по білому"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Poltava regional source describes Reshetylivka’s white-on-white embroidery tradition. A pale palette carries detail through stitch, relief and openwork rather than strong colour contrast.",
+              "Look for shadows around raised threads in our original illustration. Which detail would disappear in a flat white silhouette? This artistic study does not reproduce a particular historical garment."
+            ],
+            "sources": [
+              {
+                "title": "Kremenchuk district administration — Reshetylivka white-on-white embroidery",
+                "url": "https://kremenchukrda.gov.ua/news/holova-poltavskoyi-oda-prosuvayemo-vyshyvku-bilym-po-bilomu-do-nematerialnoyi-spadshchyny-yunesko"
+              }
+            ],
+            "title": "White on White"
+          },
+          "uk": {
+            "paragraphs": [
+              "Регіональне джерело Полтавщини описує решетилівську традицію вишивки білим по білому. Світла палітра передає деталі через стібки, рельєф і ажур, а не лише сильний кольоровий контраст.",
+              "В оригінальній ілюстрації знайдіть тіні біля піднятих ниток. Яка деталь зникла б у пласкому білому силуеті? Художнє дослідження не відтворює конкретний історичний одяг."
+            ],
+            "sources": [
+              {
+                "title": "Kremenchuk district administration — Reshetylivka white-on-white embroidery",
+                "url": "https://kremenchukrda.gov.ua/news/holova-poltavskoyi-oda-prosuvayemo-vyshyvku-bilym-po-bilomu-do-nematerialnoyi-spadshchyny-yunesko"
+              }
+            ],
+            "title": "Білим по білому"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Describe texture, raised thread or an opening before naming a technique. The original illustration is a visual study, not proof of a particular historical garment."
+              ],
+              "title": "Make a distinction: White on White"
+            },
+            "uk": {
+              "paragraphs": [
+                "Спершу опишіть фактуру, підняту нитку чи отвір, а тоді називайте техніку. Оригінальна ілюстрація — візуальне дослідження, а не доказ про конкретну давню сорочку."
+              ],
+              "title": "Розрізнімо: Білим по білому"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Look together for a light edge and a tiny shadow in the white threads. Explain one detail you would miss if the picture were flat white."
+              ],
+              "title": "Look together: White on White"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть разом світлий край і маленьку тінь на білих нитках. Поясніть, що зникло б на суцільно білому зображенні."
+              ],
+              "title": "Погляньмо разом: Білим по білому"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare what the illustration makes visible with what the regional source establishes. Draft a caption that distinguishes artistic lighting from documented tradition."
+              ],
+              "title": "Explore the evidence: White on White"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зіставте видиме в ілюстрації з тим, що встановлює регіональне джерело. Складіть підпис, який розрізняє художнє освітлення й документовану традицію."
+              ],
+              "title": "Дослідімо докази: Білим по білому"
+            }
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "id": "ukraine-threads-03-lighting-comparison",
+        "locales": {
+          "en": {
+            "intro": "Choose any two lighting studies. Compare the raised border, central diamond and small openings. These matching original illustrations vary slightly in their stitches; they explore an idea, not a controlled photographic experiment on one historical textile.",
+            "title": "Pale threads, changing emphasis"
+          },
+          "uk": {
+            "intro": "Виберіть будь-які два етюди освітлення. Порівняйте рельєфну облямівку, центральний ромб і дрібні отвори. Ці узгоджені оригінальні ілюстрації трохи відрізняються стібками: вони досліджують ідею, а не відтворюють контрольований фотоексперимент над одним історичним текстилем.",
+            "title": "Світлі нитки, різні акценти"
+          }
+        },
+        "recipe": {
+          "cards": [
+            {
+              "asset": {
+                "assetId": "textile-light-diffuse-v1",
+                "sha256": "eabcef992854e71c481a7e4fdb17fcaf86894375e2950644b940886a7ea1c7e1"
+              },
+              "id": "diffuse",
+              "locales": {
+                "en": {
+                  "alt": "Original fictional study in soft diffuse light: a pale square textile on charcoal, with a raised cord-like border, one filled central diamond and four smaller open diamonds.",
+                  "body": "Start with the pale border and the filled diamond in the centre. Both stand above the illustrated woven ground, even though their colours are similar. The regional white-on-white embroidery tradition provides context for noticing relief and open areas; this invented sample is not a documented maker’s pattern.",
+                  "sourceNote": "The regional administration describes Reshetylivka’s tradition. Regional Centre Sofia discusses its techniques and light-and-dark relief. Neither source supplies or authenticates this original illustration.",
+                  "title": "Soft light · find the structure"
+                },
+                "uk": {
+                  "alt": "Оригінальний вигаданий етюд у м’якому розсіяному світлі: світлий квадратний текстиль на темно-сірому тлі, рельєфна шнуроподібна облямівка, один заповнений центральний ромб і чотири менші відкриті ромби.",
+                  "body": "Почніть зі світлої облямівки та заповненого ромба в центрі. Обидва виступають над зображеним тканим тлом, хоча їхні кольори подібні. Регіональна традиція вишивки білим по білому дає контекст для спостереження за рельєфом і відкритими ділянками; цей вигаданий зразок не є задокументованим узором майстра.",
+                  "sourceNote": "Районна адміністрація описує традицію Решетилівки. Регіональний центр у Софії розглядає її техніки та світлотіньовий рельєф. Жодне джерело не є автором цієї оригінальної ілюстрації та не засвідчує її автентичність.",
+                  "title": "М’яке світло · знайдіть структуру"
+                }
+              },
+              "sourceIds": ["regional-white", "white-technique"]
+            },
+            {
+              "asset": {
+                "assetId": "textile-light-left-v1",
+                "sha256": "09ff0b2d7811b9ae6076db4ab2708688250ac66d4f683c0fba6e2de92dea4607"
+              },
+              "id": "left",
+              "locales": {
+                "en": {
+                  "alt": "Original fictional white-thread study lit from the left, with a raised diamond and border showing brighter left-facing ridges and darker adjacent edges on a pale woven ground.",
+                  "body": "Follow one edge of the central diamond and look for a bright ridge beside a darker patch. Side illumination can make surface relief easier to notice. A shadow beside a pale thread is different from a thread dyed dark; the colour of a single screen pixel does not establish the material.",
+                  "sourceNote": "The National Gallery explains oblique illumination and shadows for raised paint. Applying that general visual idea to this fictional textile is an illustration, not a conservation measurement. Regional Centre Sofia also describes a light-and-dark effect in white embroidery.",
+                  "title": "Light from the left · follow an edge"
+                },
+                "uk": {
+                  "alt": "Оригінальний вигаданий етюд білих ниток зі світлом зліва: рельєфний ромб і облямівка мають світліші виступи з лівого боку та темніші суміжні краї на світлому тканому тлі.",
+                  "body": "Простежте за одним краєм центрального ромба й знайдіть світлий виступ поруч із темнішою ділянкою. Бічне освітлення може допомогти помітити рельєф поверхні. Тінь біля світлої нитки відрізняється від нитки, пофарбованої в темне; колір одного пікселя на екрані не визначає матеріалу.",
+                  "sourceNote": "Національна галерея пояснює косе освітлення й тіні на рельєфній фарбі. Застосування цієї загальної візуальної ідеї до вигаданого текстилю є ілюстрацією, а не реставраційним вимірюванням. Регіональний центр у Софії також описує світлотіньовий ефект білої вишивки.",
+                  "title": "Світло зліва · простежте за краєм"
+                }
+              },
+              "sourceIds": ["raking-light", "white-technique"]
+            },
+            {
+              "asset": {
+                "assetId": "textile-light-right-v1",
+                "sha256": "53fe2601e7dfff5ea54f63fea9481c29c1cf7acdea3025f6967bacfdcc88259d"
+              },
+              "id": "right",
+              "locales": {
+                "en": {
+                  "alt": "Original fictional white-thread study lit from the right, with stronger illumination along right-facing raised threads around a filled diamond and square border. Some small stitch details differ from the other studies.",
+                  "body": "Compare the emphasis around the border and diamond with the left-lit study. Which edge catches your attention now? Small stitch details also differ between these separate illustrations. Use them to ask what lighting might reveal, not to measure thread depth or claim that only the light changed.",
+                  "sourceNote": "The National Gallery’s source explains why illumination direction matters to visible relief. These three game studies were generated separately; a controlled object comparison would need the same specimen and recorded conditions.",
+                  "title": "Light from the right · compare carefully"
+                },
+                "uk": {
+                  "alt": "Оригінальний вигаданий етюд білих ниток зі світлом справа: сильніше освітлено праві поверхні рельєфних ниток навколо заповненого ромба та квадратної облямівки. Деякі дрібні стібки відрізняються від інших етюдів.",
+                  "body": "Порівняйте акценти навколо облямівки й ромба з етюдом, освітленим зліва. Який край тепер привертає увагу? Дрібні деталі стібків у цих окремих ілюстраціях також різняться. Вони допомагають запитати, що може виявити світло, але не виміряти висоту нитки чи стверджувати, що змінилося лише освітлення.",
+                  "sourceNote": "Джерело Національної галереї пояснює вплив напрямку світла на видимий рельєф. Три ігрові етюди згенеровано окремо; контрольоване порівняння потребувало б того самого предмета й зафіксованих умов.",
+                  "title": "Світло справа · порівнюйте уважно"
+                }
+              },
+              "sourceIds": ["raking-light"]
+            }
+          ],
+          "id": "inspect-compare-atlas",
+          "predictions": [
+            {
+              "cardIds": ["left", "right"],
+              "choices": [
+                {
+                  "id": "compare-light",
+                  "locales": {
+                    "en": {
+                      "feedback": "Yes. Keep the specimen fixed and investigate whether the dark area follows the illumination.",
+                      "label": "Compare the same thread under another light"
+                    },
+                    "uk": {
+                      "feedback": "Так. Збережіть той самий зразок і перевірте, чи темна ділянка змінюється разом з освітленням.",
+                      "label": "Порівняти ту саму нитку за іншого світла"
+                    }
+                  }
+                },
+                {
+                  "id": "assume-dye",
+                  "locales": {
+                    "en": {
+                      "feedback": "A dark patch can be a shadow. Check another view before deciding what the material is.",
+                      "label": "Treat every dark patch as dyed thread"
+                    },
+                    "uk": {
+                      "feedback": "Темна ділянка може бути тінню. Перевірте інший вид, перш ніж робити висновок про матеріал.",
+                      "label": "Вважати кожну темну ділянку фарбованою ниткою"
+                    }
+                  }
+                }
+              ],
+              "expectedChoiceId": "compare-light",
+              "id": "shadow-or-dye",
+              "locales": {
+                "en": {
+                  "explanation": "Compare the same thread under another documented light direction. A shadow can move or change while the material remains the same. One photograph—or our separate illustrations—does not by itself establish dye or fibre.",
+                  "prompt": "On an unchanged real sample, a dark patch lies beside a raised pale thread. What would help you test whether it is a shadow before calling the thread dark-dyed?"
+                },
+                "uk": {
+                  "explanation": "Порівняйте ту саму нитку за іншого зафіксованого напрямку світла. Тінь може зміститися чи змінитися, хоча матеріал лишається тим самим. Одна фотографія або наші окремі ілюстрації самі по собі не визначають барвника чи волокна.",
+                  "prompt": "На незміненому реальному зразку поруч із рельєфною світлою ниткою є темна ділянка. Що допоможе перевірити, чи це тінь, перш ніж називати нитку темнофарбованою?"
+                }
+              }
+            }
+          ],
+          "revision": 1,
+          "sources": [
+            {
+              "id": "regional-white",
+              "title": "Kremenchuk district administration — Reshetylivka white-on-white embroidery",
+              "url": "https://kremenchukrda.gov.ua/news/holova-poltavskoyi-oda-prosuvayemo-vyshyvku-bilym-po-bilomu-do-nematerialnoyi-spadshchyny-yunesko"
+            },
+            {
+              "id": "white-technique",
+              "title": "Regional Centre Sofia — White on White Technique of Embroidery of Reshetylivka",
+              "url": "https://www.unesco-centerbg.org/en/2021/11/22/white-on-white-technique-of-embroidery-of-reshetylivka/"
+            },
+            {
+              "id": "raking-light",
+              "title": "National Gallery — Raking light",
+              "url": "https://www.nationalgallery.org.uk/paintings/glossary/raking-light"
+            }
+          ]
+        },
+        "type": "exploration"
+      },
+      {
+        "id": "ukraine-threads-03-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Compare the three original illustrated white-thread studies. Shadows can make surface relief easier to notice. These are matched illustrations with small differences, not measured relighting of one historic textile; they cannot establish its real stitch structure."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Compare: light changes what stands out"
+          },
+          "uk": {
+            "paragraphs": [
+              "Порівняйте три оригінальні ілюстровані етюди білої вишивки. Тіні можуть зробити рельєф помітнішим. Це узгоджені ілюстрації з невеликими відмінностями, а не виміряне переосвітлення історичного текстилю; вони не встановлюють його справжньої будови стібка."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Порівняйте: світло змінює помітність"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "b6f1d46cf8e74120" },
+            { "difficulty": "standard", "gameplayId": "c8ebcc05403cb890" },
+            { "difficulty": "expert", "gameplayId": "65c81b8114bab2d3" }
+          ],
+          "missionId": "ukraine-threads-03"
+        }
+      ]
+    },
+    "revision": "6",
+    "scope": { "id": "ukraine-threads-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-threads-key-v1",
+        "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+      },
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Two documented garments invite a careful comparison.",
+        "title": "Many Local Voices"
+      },
+      "uk": {
+        "teaser": "Дві документовані сорочки запрошують до уважного порівняння.",
+        "title": "Розмаїття місцевих голосів"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-threads-04-reveal-v1",
+          "sha256": "22ae3b4e43d3e02260437d980e4a421d73bbacc0a35dfd0e809a0300150dec16"
+        },
+        "id": "ukraine-threads-04-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated exhibition with two distinct fictional linen garment displays, separate blank record cards and a broad shared reading terrace.",
+            "title": "Many Local Voices"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована виставка з двома різними вигаданими лляними виробами, окремими порожніми картками та спільною широкою терасою читання.",
+            "title": "Розмаїття місцевих голосів"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The museum records Volyn shirt НДФ-7132 as made by Anastasiia Kravchuk in the first half of the twentieth century. Compare this named maker with the unknown maker in the earlier Poltava record.",
+              "Both records describe specific objects. Their differences invite questions about maker, time, material and place; they do not establish a rule for every garment in either region."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-7132",
+                "url": "https://honchar.org.ua/collections/detail/4182"
+              },
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-6482",
+                "url": "https://honchar.org.ua/collections/detail/4181"
+              }
+            ],
+            "title": "Many Local Voices"
+          },
+          "uk": {
+            "paragraphs": [
+              "Музей пов’язує волинську сорочку НДФ-7132 з Анастасією Кравчук і датує першою половиною XX століття. Порівняйте відоме ім’я майстрині з невідомим автором попереднього полтавського запису.",
+              "Обидва записи описують конкретні речі. Відмінності спонукають запитувати про автора, час, матеріал і місце, але не встановлюють правила для всього одягу регіону."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-7132",
+                "url": "https://honchar.org.ua/collections/detail/4182"
+              },
+              {
+                "title": "Ivan Honchar Museum — shirt НДФ-6482",
+                "url": "https://honchar.org.ua/collections/detail/4181"
+              }
+            ],
+            "title": "Розмаїття місцевих голосів"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Compare the Volyn and Poltava records using maker, time and place. Describe these two objects without turning their differences into rules for whole regions."
+              ],
+              "title": "Make a distinction: Many Local Voices"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте волинський і полтавський записи за авторством, часом і місцем. Опишіть два предмети, не перетворюючи відмінності на правила для цілих регіонів."
+              ],
+              "title": "Розрізнімо: Розмаїття місцевих голосів"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Read the two maker entries together. One gives a name and one does not. Can both objects still have a careful, useful label?"
+              ],
+              "title": "Look together: Many Local Voices"
+            },
+            "uk": {
+              "paragraphs": [
+                "Прочитайте разом два записи про авторство. Один називає ім’я, інший — ні. Чи можуть обидва предмети мати уважний і корисний підпис?"
+              ],
+              "title": "Погляньмо разом: Розмаїття місцевих голосів"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Curate a paired label that names Anastasiia Kravchuk for НДФ-7132 and preserves the unknown maker of НДФ-6482. Identify one comparison the evidence does not support."
+              ],
+              "title": "Explore the evidence: Many Local Voices"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть парний підпис: назвіть Анастасію Кравчук для НДФ-7132 і збережіть невідоме авторство НДФ-6482. Назвіть одне порівняння, якого докази не підтримують."
+              ],
+              "title": "Дослідімо докази: Розмаїття місцевих голосів"
+            }
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "reference-ukraine-met-shirt-fragment-157571",
+          "sha256": "4a5913f8a42a58165353e44bf492df473f9a90b12bf7b060cc49e3819e6de6bd"
+        },
+        "id": "reference-ukraine-met-shirt-fragment-157571-image",
+        "locales": {
+          "en": {
+            "alt": "A long cream-coloured textile on black, with red branching floral embroidery, gold and silver-coloured areas, repeated small motifs along both borders, and vertical folds left of centre.",
+            "title": "A second documented shirt fragment"
+          },
+          "uk": {
+            "alt": "Довгий кремовий текстиль на чорному тлі: червона розгалужена квіткова вишивка, золотисті й сріблясті ділянки, повторювані дрібні мотиви вздовж обох країв і вертикальні складки ліворуч від центру.",
+            "title": "Другий документований фрагмент сорочки"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "reference-ukraine-met-shirt-fragment-157571-credit",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "This is Met object 2009.300.2713, separately recorded from the earlier fragment 2009.300.2715. The museum identifies Ukrainian culture, the fourth quarter of the eighteenth century, and silk, linen and metal. Compare the two individual records; similar materials or motifs do not establish one maker, a precise shared locality or a universal symbolic meaning.",
+              "The Metropolitan Museum of Art, Fragment of a shirt, 2009.300.2713. Brooklyn Museum Costume Collection; Gift of the Brooklyn Museum, 2009; Gift of Mrs. Edward S. Harkness in memory of her mother, Elizabeth Greenman Stillman, 1931. Public Domain / CC0. Exact source photograph, unchanged."
+            ],
+            "sources": [
+              {
+                "title": "A second documented shirt fragment",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              },
+              {
+                "title": "License and sharing terms",
+                "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+              }
+            ],
+            "title": "A second documented shirt fragment"
+          },
+          "uk": {
+            "paragraphs": [
+              "Це предмет Метрополітен 2009.300.2713, облікований окремо від попереднього фрагмента 2009.300.2715. Музей зазначає українську культуру, останню чверть XVIII століття та шовк, льон і метал. Порівнюйте два окремі записи; подібні матеріали чи мотиви не встановлюють одного майстра, точної спільної місцевості або універсального символічного значення.",
+              "The Metropolitan Museum of Art, Fragment of a shirt, 2009.300.2713. Brooklyn Museum Costume Collection; Gift of the Brooklyn Museum, 2009; Gift of Mrs. Edward S. Harkness in memory of her mother, Elizabeth Greenman Stillman, 1931. Public Domain / CC0. Exact source photograph, unchanged."
+            ],
+            "sources": [
+              {
+                "title": "Другий документований фрагмент сорочки",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              },
+              {
+                "title": "Ліцензія та умови поширення",
+                "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+              }
+            ],
+            "title": "Другий документований фрагмент сорочки"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "id": "ukraine-threads-04-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Inspect the newly supplied Met object 2009.300.2713 and compare it with 2009.300.2715 in the optional workbench. Retain their separate identities even where the recorded date and materials agree. Two objects cannot stand for every regional tradition."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Apply elsewhere: a second fragment"
+          },
+          "uk": {
+            "paragraphs": [
+              "Розгляньте новий предмет Метрополітен 2009.300.2713 й порівняйте його з 2009.300.2715 у додатковій вправі. Збережіть окрему ідентичність, навіть коли записані дата й матеріали збігаються. Два предмети не представляють усі регіональні традиції."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Застосуйте інакше: другий фрагмент"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c7eee40173df478f" },
+            { "difficulty": "standard", "gameplayId": "33261d4abad6548c" },
+            { "difficulty": "expert", "gameplayId": "c8fb6afe0ded9a4c" }
+          ],
+          "missionId": "ukraine-threads-04"
+        }
+      ]
+    },
+    "revision": "5",
+    "scope": { "id": "ukraine-threads-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-threads-key-v1",
+        "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+      },
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A rushnyk’s record contains more than its ornament.",
+        "title": "A Rushnyk’s Story"
+      },
+      "uk": {
+        "teaser": "Запис рушника містить більше, ніж опис орнаменту.",
+        "title": "Історія рушника"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-threads-05-reveal-v1",
+          "sha256": "d3c81a60d651ba8c9e2801a4de4608e5580fa4d2df5a4df44210e41c5de405c4"
+        },
+        "id": "ukraine-threads-05-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated long gallery with a fictional fringed ivory textile draped across a wooden bench and two separate blank record cards.",
+            "title": "A Rushnyk’s Story"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована довга галерея з вигаданим світлим полотном із торочками на дерев’яній лаві та двома окремими порожніми картками.",
+            "title": "Історія рушника"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The museum dates rushnyk КН-3081 to the first half of the nineteenth century, with a homespun linen ground and an unknown maker. Its record notes a donation by Petro Honchar in 2001.",
+              "Separate an object’s creation from its later path into a collection. A donation date is not its making date. Ornament alone does not establish the exact ceremony in which it was used."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — rushnyk КН-3081",
+                "url": "https://honchar.org.ua/collections/detail/1591"
+              }
+            ],
+            "title": "A Rushnyk’s Story"
+          },
+          "uk": {
+            "paragraphs": [
+              "Музей датує рушник КН-3081 першою половиною XIX століття; основу описано як доморобне лляне полотно, автор невідомий. Запис зазначає дарунок Петра Гончара 2001 року.",
+              "Відокремлюйте створення предмета від його подальшого шляху до колекції. Дата дарування не є датою виготовлення. Сам орнамент не визначає конкретного обряду використання."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — rushnyk КН-3081",
+                "url": "https://honchar.org.ua/collections/detail/1591"
+              }
+            ],
+            "title": "Історія рушника"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Give creation and entry into a collection separate timeline places. The 2001 donation does not date the making of the rushnyk."
+              ],
+              "title": "Make a distinction: A Rushnyk’s Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Відведіть виготовленню та надходженню до колекції окремі місця на часовій лінії. Дарування 2001 року не датує виготовлення рушника."
+              ],
+              "title": "Розрізнімо: Історія рушника"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find the older making period and the later donation year together. Tell the object’s journey in two sentences without mixing those dates."
+              ],
+              "title": "Look together: A Rushnyk’s Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть разом давніший час виготовлення й пізніший рік дарування. Розкажіть шлях предмета двома реченнями, не змішуючи дати."
+              ],
+              "title": "Погляньмо разом: Історія рушника"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Draft an object-history note from КН-3081. Separate documented provenance from an imagined ceremonial use, and name what evidence would be needed for that added claim."
+              ],
+              "title": "Explore the evidence: A Rushnyk’s Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть історичну примітку за КН-3081. Відокремте документоване походження від уявного обрядового використання й назвіть докази, потрібні для такого твердження."
+              ],
+              "title": "Дослідімо докази: Історія рушника"
+            }
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "id": "ukraine-threads-05-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "When a label describes how a textile was used, ask whether that comes from the individual record, a bearer’s account or a general comparison. Keep the source attached to the claim; appearance alone cannot identify every occasion or meaning."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Explain: an object’s story needs a source"
+          },
+          "uk": {
+            "paragraphs": [
+              "Коли підпис описує використання тканини, запитайте, чи це дані окремого запису, розповідь носія традиції або загальне порівняння. Пов’язуйте твердження з джерелом; вигляд сам по собі не визначає всіх нагод чи значень."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Поясніть: історія предмета потребує джерела"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c9561924ef75dfe7" },
+            { "difficulty": "standard", "gameplayId": "38d39bf4da3f5dc1" },
+            { "difficulty": "expert", "gameplayId": "c33f73c7f58f8c96" }
+          ],
+          "missionId": "ukraine-threads-05"
+        }
+      ]
+    },
+    "revision": "5",
+    "scope": { "id": "ukraine-threads-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-threads-key-v1",
+        "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+      },
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Bring history, honest labels and new creativity into one gallery.",
+        "title": "Wear It Today"
+      },
+      "uk": {
+        "teaser": "Поєднайте історію, точні підписи й нову творчість в одній галереї.",
+        "title": "Носіть сьогодні"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-threads-06-reveal-v1",
+          "sha256": "f85f89cd0a3513736e1b88867982878176affe8ee8e7c72171c6887ded041614"
+        },
+        "id": "ukraine-threads-06-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated contemporary textile festival plaza with flowing ivory banners, invented crimson-and-charcoal designs and an amber-lit display stage.",
+            "title": "Wear It Today"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована площа сучасного текстильного фестивалю зі світлими полотняними банерами, вигаданими багряно-темними візерунками та тепло освітленою сценою.",
+            "title": "Носіть сьогодні"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "This scene’s designs were created for the game. They respond to colour, rhythm and texture without being presented as historical objects or universal Ukrainian symbols.",
+              "Curate two labels: one for a documented museum object, another for an original contemporary illustration. Keep the source, maker and uncertainty visible. Creativity and careful attribution can share an exhibition."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — clothing collection",
+                "url": "https://honchar.org.ua/collections/view/odag?type=list"
+              }
+            ],
+            "title": "Wear It Today"
+          },
+          "uk": {
+            "paragraphs": [
+              "Дизайни сцени створені для гри. Вони працюють із кольором, ритмом і фактурою, не видаючи себе за історичні предмети чи універсальні українські символи.",
+              "Підготуйте два підписи: для документованого музейного предмета й оригінальної сучасної ілюстрації. Залиште видимими джерело, автора та невизначеність. Творчість і точна атрибуція можуть бути на одній виставці."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — clothing collection",
+                "url": "https://honchar.org.ua/collections/view/odag?type=list"
+              }
+            ],
+            "title": "Носіть сьогодні"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Write two different labels: “original game illustration” and a source-based museum-object label. Keep credit and uncertainty attached to each."
+              ],
+              "title": "Make a distinction: Wear It Today"
+            },
+            "uk": {
+              "paragraphs": [
+                "Напишіть два різні підписи: «оригінальна ілюстрація гри» та підпис музейного предмета за джерелом. Збережіть авторство й невідоме біля кожного."
+              ],
+              "title": "Розрізнімо: Носіть сьогодні"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose one game design and one museum record. Explain together which is a new illustration and which describes a documented object."
+              ],
+              "title": "Look together: Wear It Today"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть один дизайн гри й один музейний запис. Разом поясніть, де нова ілюстрація, а де опис документованого предмета."
+              ],
+              "title": "Погляньмо разом: Носіть сьогодні"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Plan a small exhibition that places contemporary invention beside documented garments. How will visitors distinguish inspiration, reproduction and evidence without assigning universal meanings?"
+              ],
+              "title": "Explore the evidence: Wear It Today"
+            },
+            "uk": {
+              "paragraphs": [
+                "Сплануйте малу виставку сучасних вигадок поруч із документованим одягом. Як відвідувачі розрізнять натхнення, відтворення й докази без універсальних тлумачень?"
+              ],
+              "title": "Дослідімо докази: Носіть сьогодні"
+            }
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "id": "ukraine-threads-06-learning-journey",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The existing final workbench changes the evidence again: a dated artwork and an original game illustration. Classify them and choose a justified claim. Six wins still unlock the textile finale; the optional verified lesson retains its separate curator reward."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Resolve: curate two honest labels"
+          },
+          "uk": {
+            "paragraphs": [
+              "Наявна фінальна вправа знову змінює докази: датований твір мистецтва й оригінальна ігрова ілюстрація. Класифікуйте їх та оберіть обґрунтоване твердження. Шість перемог і далі відкривають текстильний фінал; додаткова перевірена вправа зберігає окрему нагороду куратора."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157573",
+                "url": "https://www.metmuseum.org/art/collection/search/157573"
+              },
+              {
+                "title": "The Met — Ukrainian shirt fragment, object 157571",
+                "url": "https://www.metmuseum.org/art/collection/search/157571"
+              }
+            ],
+            "title": "Завершіть: укладіть два чесні підписи"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "057f26871e359171" },
+            { "difficulty": "standard", "gameplayId": "1bf56034481c0f2a" },
+            { "difficulty": "expert", "gameplayId": "e0654522adaf24f9" }
+          ],
+          "missionId": "ukraine-threads-06"
+        }
+      ]
+    },
+    "revision": "5",
+    "scope": { "id": "ukraine-threads-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-threads-key-v1",
+        "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+      },
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "An Atlas of Cloth and Evidence"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Атлас тканини й свідчень"
+      }
+    },
+    "payloads": [
+      {
+        "id": "ukraine-threads-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Curate an exhibition using the six discoveries. Give each historical object its museum reference, date, place and maker when known. Label original illustrations separately. Two documented garments show variation; they cannot represent every person or tradition in a region."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — clothing collection",
+                "url": "https://honchar.org.ua/collections/view/odag?type=list"
+              }
+            ],
+            "title": "An Atlas of Cloth and Evidence"
+          },
+          "uk": {
+            "paragraphs": [
+              "Створіть виставку із шести відкриттів. Для історичної речі зазначте музейний запис, дату, місце й автора, якщо вони відомі. Окремо позначайте оригінальні ілюстрації. Дві документовані сорочки показують розмаїття, але не представляють усіх людей чи традицій регіону."
+            ],
+            "sources": [
+              {
+                "title": "Ivan Honchar Museum — clothing collection",
+                "url": "https://honchar.org.ua/collections/view/odag?type=list"
+              }
+            ],
+            "title": "Атлас тканини й свідчень"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "id": "ukraine-threads-source-atlas",
+        "locales": {
+          "en": {
+            "intro": "Compare the records and choose evidence-backed labels for a small exhibition. Try the optional, untimed questions about sources and uncertainty, and change an answer whenever a detail catches your attention.",
+            "title": "Curate three documented objects"
+          },
+          "uk": {
+            "intro": "Порівняйте записи та оберіть обґрунтовані підписи для малої виставки. Спробуйте необов’язкові запитання без таймера про джерела й невизначеність та змінюйте відповідь, коли помітите нову деталь.",
+            "title": "Упорядкуйте три документовані предмети"
+          }
+        },
+        "recipe": {
+          "cards": [
+            {
+              "id": "poltava-shirt",
+              "locales": {
+                "en": {
+                  "body": "Ivan Honchar Museum records men’s embroidered shirt НДФ-6482 as late nineteenth to early twentieth century, from Hadiach in the Poltava area. Its maker is unknown.\n\nBegin a label with the documented object, date, place and maker when known. “Unknown” is useful information; a motif is not permission to invent a personal story. This scene is an illustration, not that museum object.",
+                  "sourceNote": "This record describes one particular object. Follow the attached museum source for its full catalogue context and keep documented uncertainty visible.",
+                  "title": "Shirt НДФ-6482: an unknown maker"
+                },
+                "uk": {
+                  "body": "Музей Івана Гончара датує чоловічу вишиту сорочку НДФ-6482 кінцем XIX — початком XX століття та пов’язує її з Гадячем на Полтавщині. Автор невідомий.\n\nПочинайте підпис із документованих назви речі, дати, місця й автора, якщо він відомий. «Невідомо» — корисна інформація; мотив не дозволяє вигадувати особисту історію. Сцена є ілюстрацією, а не цим музейним предметом.",
+                  "sourceNote": "Цей запис описує конкретний предмет. Перейдіть до музейного джерела для повного контексту каталогу та збережіть документовану невизначеність.",
+                  "title": "Сорочка НДФ-6482: невідомий автор"
+                }
+              },
+              "sourceIds": ["shirt"]
+            },
+            {
+              "id": "volyn-shirt",
+              "locales": {
+                "en": {
+                  "body": "The museum records Volyn shirt НДФ-7132 as made by Anastasiia Kravchuk in the first half of the twentieth century. Compare this named maker with the unknown maker in the earlier Poltava record.\n\nBoth records describe specific objects. Their differences invite questions about maker, time, material and place; they do not establish a rule for every garment in either region.",
+                  "sourceNote": "This record describes one particular object. Follow the attached museum source for its full catalogue context and keep documented uncertainty visible.",
+                  "title": "Shirt НДФ-7132: a named maker"
+                },
+                "uk": {
+                  "body": "Музей пов’язує волинську сорочку НДФ-7132 з Анастасією Кравчук і датує першою половиною XX століття. Порівняйте відоме ім’я майстрині з невідомим автором попереднього полтавського запису.\n\nОбидва записи описують конкретні речі. Відмінності спонукають запитувати про автора, час, матеріал і місце, але не встановлюють правила для всього одягу регіону.",
+                  "sourceNote": "Цей запис описує конкретний предмет. Перейдіть до музейного джерела для повного контексту каталогу та збережіть документовану невизначеність.",
+                  "title": "Сорочка НДФ-7132: відома майстриня"
+                }
+              },
+              "sourceIds": ["volyn", "shirt"]
+            },
+            {
+              "id": "rushnyk-record",
+              "locales": {
+                "en": {
+                  "body": "The museum dates rushnyk КН-3081 to the first half of the nineteenth century, with a homespun linen ground and an unknown maker. Its record notes a donation by Petro Honchar in 2001.\n\nSeparate an object’s creation from its later path into a collection. A donation date is not its making date. Ornament alone does not establish the exact ceremony in which it was used.",
+                  "sourceNote": "This record describes one particular object. Follow the attached museum source for its full catalogue context and keep documented uncertainty visible.",
+                  "title": "Rushnyk КН-3081: two different dates"
+                },
+                "uk": {
+                  "body": "Музей датує рушник КН-3081 першою половиною XIX століття; основу описано як доморобне лляне полотно, автор невідомий. Запис зазначає дарунок Петра Гончара 2001 року.\n\nВідокремлюйте створення предмета від його подальшого шляху до колекції. Дата дарування не є датою виготовлення. Сам орнамент не визначає конкретного обряду використання.",
+                  "sourceNote": "Цей запис описує конкретний предмет. Перейдіть до музейного джерела для повного контексту каталогу та збережіть документовану невизначеність.",
+                  "title": "Рушник КН-3081: дві різні дати"
+                }
+              },
+              "sourceIds": ["rushnyk"]
+            }
+          ],
+          "id": "inspect-compare-atlas",
+          "predictions": [
+            {
+              "cardIds": ["poltava-shirt", "volyn-shirt"],
+              "choices": [
+                {
+                  "id": "specific-records",
+                  "locales": {
+                    "en": {
+                      "feedback": "That keeps each claim attached to its own record without inventing a maker.",
+                      "label": "Name the known maker; retain “unknown” for the other object"
+                    },
+                    "uk": {
+                      "feedback": "Так кожне твердження пов’язане зі своїм записом без вигадування автора.",
+                      "label": "Назвати відому майстриню; для іншої речі зберегти «невідомо»"
+                    }
+                  }
+                },
+                {
+                  "id": "regional-rule",
+                  "locales": {
+                    "en": {
+                      "feedback": "Two records cannot establish that general rule. Compare the specific dates, places and maker fields instead.",
+                      "label": "Use the two makers as a rule for all regional garments"
+                    },
+                    "uk": {
+                      "feedback": "Два записи не встановлюють такого правила. Натомість порівняйте конкретні дати, місця й відомості про авторів.",
+                      "label": "Вважати двох авторів правилом для всього одягу регіонів"
+                    }
+                  }
+                }
+              ],
+              "expectedChoiceId": "specific-records",
+              "id": "name-what-is-known",
+              "locales": {
+                "en": {
+                  "explanation": "The records concern two specific garments. One names Anastasiia Kravchuk; the other records an unknown maker. Neither record supports a universal regional rule.",
+                  "prompt": "Which label preserves what these two shirt records actually establish?"
+                },
+                "uk": {
+                  "explanation": "Записи стосуються двох конкретних речей. Один називає Анастасію Кравчук, а в іншому автор невідомий. Жоден не доводить універсального правила для регіону.",
+                  "prompt": "Який підпис зберігає те, що справді встановлюють записи двох сорочок?"
+                }
+              }
+            },
+            {
+              "cardIds": ["rushnyk-record"],
+              "choices": [
+                {
+                  "id": "donation",
+                  "locales": {
+                    "en": {
+                      "feedback": "Yes. Keep the donation date beside the donor and the earlier creation period beside the object.",
+                      "label": "The recorded donation"
+                    },
+                    "uk": {
+                      "feedback": "Так. Залиште дату дарування поряд з ім’ям дарувальника, а давніший період створення — поряд із предметом.",
+                      "label": "Зафіксоване дарування"
+                    }
+                  }
+                },
+                {
+                  "id": "creation",
+                  "locales": {
+                    "en": {
+                      "feedback": "That would replace the earlier object date with a later event. Inspect the record again and keep both events.",
+                      "label": "The creation of the rushnyk"
+                    },
+                    "uk": {
+                      "feedback": "Це замінило б давнішу дату предмета пізнішою подією. Перегляньте запис і збережіть обидві події.",
+                      "label": "Створення рушника"
+                    }
+                  }
+                }
+              ],
+              "expectedChoiceId": "donation",
+              "id": "separate-creation-and-donation",
+              "locales": {
+                "en": {
+                  "explanation": "2001 records Petro Honchar’s donation. The object is dated to the first half of the nineteenth century; its making date and later collection history are separate.",
+                  "prompt": "The rushnyk record includes 2001. Which event should your exhibition timeline attach to that date?"
+                },
+                "uk": {
+                  "explanation": "2001 рік стосується дарунка Петра Гончара. Сам предмет датовано першою половиною XIX століття; виготовлення й пізніша історія колекції — різні події.",
+                  "prompt": "Запис рушника містить 2001 рік. Яку подію слід пов’язати з цією датою на шкалі виставки?"
+                }
+              }
+            }
+          ],
+          "revision": 1,
+          "sources": [
+            {
+              "id": "shirt",
+              "title": "Ivan Honchar Museum — shirt НДФ-6482",
+              "url": "https://honchar.org.ua/collections/detail/4181"
+            },
+            {
+              "id": "volyn",
+              "title": "Ivan Honchar Museum — shirt НДФ-7132",
+              "url": "https://honchar.org.ua/collections/detail/4182"
+            },
+            {
+              "id": "rushnyk",
+              "title": "Ivan Honchar Museum — rushnyk КН-3081",
+              "url": "https://honchar.org.ua/collections/detail/1591"
+            }
+          ]
+        },
+        "type": "exploration"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-threads-01-reveal-v1",
+          "sha256": "948ae2b5db094f54aec6e7d9fe57408bb121dd535b471943425378a7af9de2af"
+        },
+        "id": "ukraine-threads-01-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated linen exhibition square with a fictional shirt on a dark wooden plinth, blank record cards and warm arched galleries.",
+            "title": "Read the Cloth"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована виставкова площа з вигаданою сорочкою на темному дерев’яному п’єдесталі, порожніми картками й теплими арковими галереями.",
+            "title": "Прочитайте тканину"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-threads-02-reveal-v1",
+          "sha256": "3b0ba003bc7e170dbb16dc46ba35f6bbdbaf81bf6dc9e8b34b7fce78dc3cec72"
+        },
+        "id": "ukraine-threads-02-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated thread-study gallery with offset linen ribbons, crimson and charcoal thread, wooden trays and a magnifier revealing woven texture.",
+            "title": "Stitch Paths"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована галерея зразків: зміщені лляні стрічки, багряні й темні нитки, дерев’яні лотки та лупа над фактурою тканини.",
+            "title": "Шляхи стібків"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-threads-03-art-v1",
+          "sha256": "16b7fcca255f5915b14cadf0bddb3d543df5a214bb881144eff9f8024d6dce70"
+        },
+        "id": "ukraine-threads-03-image",
+        "locales": {
+          "en": {
+            "alt": "White on White — original mission illustration. Not a documentary photograph or technical plan.",
+            "title": "White on White"
+          },
+          "uk": {
+            "alt": "Білим по білому — оригінальна ілюстрація місії. Не документальне фото й не технічна схема.",
+            "title": "Білим по білому"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-threads-04-reveal-v1",
+          "sha256": "22ae3b4e43d3e02260437d980e4a421d73bbacc0a35dfd0e809a0300150dec16"
+        },
+        "id": "ukraine-threads-04-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated exhibition with two distinct fictional linen garment displays, separate blank record cards and a broad shared reading terrace.",
+            "title": "Many Local Voices"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована виставка з двома різними вигаданими лляними виробами, окремими порожніми картками та спільною широкою терасою читання.",
+            "title": "Розмаїття місцевих голосів"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-threads-05-reveal-v1",
+          "sha256": "d3c81a60d651ba8c9e2801a4de4608e5580fa4d2df5a4df44210e41c5de405c4"
+        },
+        "id": "ukraine-threads-05-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated long gallery with a fictional fringed ivory textile draped across a wooden bench and two separate blank record cards.",
+            "title": "A Rushnyk’s Story"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована довга галерея з вигаданим світлим полотном із торочками на дерев’яній лаві та двома окремими порожніми картками.",
+            "title": "Історія рушника"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-threads-06-reveal-v1",
+          "sha256": "f85f89cd0a3513736e1b88867982878176affe8ee8e7c72171c6887ded041614"
+        },
+        "id": "ukraine-threads-06-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated contemporary textile festival plaza with flowing ivory banners, invented crimson-and-charcoal designs and an amber-lit display stage.",
+            "title": "Wear It Today"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована площа сучасного текстильного фестивалю зі світлими полотняними банерами, вигаданими багряно-темними візерунками та тепло освітленою сценою.",
+            "title": "Носіть сьогодні"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "qr": true,
+        "type": "url",
+        "url": "https://honchar.org.ua/collections/view/odag?type=list"
+      },
+      {
+        "asset": {
+          "assetId": "met-degas-ukrainian-dress-436157",
+          "sha256": "4416b3cd2225bef59671d5bd06a4c73633e27d73a06713dd1d8d336ea1257d11"
+        },
+        "id": "ukraine-threads-painting",
+        "locales": {
+          "en": {
+            "alt": "An 1899 pastel of a dancer in Ukrainian dress by Edgar Degas, from The Metropolitan Museum of Art. An artist’s interpretation, not a garment catalogue photograph.",
+            "title": "Dancer in Ukrainian Dress — Edgar Degas"
+          },
+          "uk": {
+            "alt": "Пастель Едгара Дега 1899 року з танцівницею в українському вбранні, з Метрополітен-музею. Авторська інтерпретація, а не фото одягу для каталогу.",
+            "title": "Танцівниця в українському вбранні — Едгар Дега"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-threads-compare-sources",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Met identifies this pastel as Edgar Degas’s Dancer in Ukrainian Dress, dated 1899, accession 29.100.556. Its Open Access image is public domain.",
+              "Compare the expressive movement with the specific garment records linked in your discoveries. A painting and a clothing record answer different questions. An artist’s interpretation is not a complete technical account of regional clothing."
+            ],
+            "sources": [
+              {
+                "title": "The Metropolitan Museum of Art — object 436157",
+                "url": "https://www.metmuseum.org/art/collection/search/436157"
+              },
+              {
+                "title": "The Met — Open Access",
+                "url": "https://www.metmuseum.org/hubs/open-access"
+              }
+            ],
+            "title": "An artwork and an object record"
+          },
+          "uk": {
+            "paragraphs": [
+              "Метрополітен-музей визначає пастель як «Танцівниця в українському вбранні» Едгара Дега, 1899 року, обліковий номер 29.100.556. Зображення Open Access є суспільним надбанням.",
+              "Порівняйте виразний рух із конкретними записами одягу у відкриттях. Картина й опис одягу відповідають на різні запитання. Авторська інтерпретація не є повним технічним описом регіонального вбрання."
+            ],
+            "sources": [
+              {
+                "title": "The Metropolitan Museum of Art — object 436157",
+                "url": "https://www.metmuseum.org/art/collection/search/436157"
+              },
+              {
+                "title": "The Met — Open Access",
+                "url": "https://www.metmuseum.org/hubs/open-access"
+              }
+            ],
+            "title": "Твір мистецтва й запис предмета"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a70347fb9c2215f6" },
+            { "difficulty": "standard", "gameplayId": "aae83c4cf5bee1df" },
+            { "difficulty": "expert", "gameplayId": "3c5d1f0ce3e9c745" }
+          ],
+          "missionId": "ukraine-threads-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "aa0d6a41ec5daf99" },
+            { "difficulty": "standard", "gameplayId": "625ecfa012ab59b9" },
+            { "difficulty": "expert", "gameplayId": "7250c61ead7111d6" }
+          ],
+          "missionId": "ukraine-threads-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "b6f1d46cf8e74120" },
+            { "difficulty": "standard", "gameplayId": "c8ebcc05403cb890" },
+            { "difficulty": "expert", "gameplayId": "65c81b8114bab2d3" }
+          ],
+          "missionId": "ukraine-threads-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c7eee40173df478f" },
+            { "difficulty": "standard", "gameplayId": "33261d4abad6548c" },
+            { "difficulty": "expert", "gameplayId": "c8fb6afe0ded9a4c" }
+          ],
+          "missionId": "ukraine-threads-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c9561924ef75dfe7" },
+            { "difficulty": "standard", "gameplayId": "38d39bf4da3f5dc1" },
+            { "difficulty": "expert", "gameplayId": "c33f73c7f58f8c96" }
+          ],
+          "missionId": "ukraine-threads-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "057f26871e359171" },
+            { "difficulty": "standard", "gameplayId": "1bf56034481c0f2a" },
+            { "difficulty": "expert", "gameplayId": "e0654522adaf24f9" }
+          ],
+          "missionId": "ukraine-threads-06"
+        }
+      ]
+    },
+    "revision": "5",
+    "scope": { "id": "ukraine-threads", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-threads-key-v1",
+        "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a"
+      },
+      "locales": {
+        "en": {
+          "alt": "An original textile study landscape with layered linen, red and black thread, and white embroidery in angled light."
+        },
+        "uk": {
+          "alt": "Оригінальний текстильний пейзаж із шарами льону, червоними й чорними нитками та білою вишивкою в косому світлі."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-threads",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-threads-application-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Optional: complete the six discoveries and curate the evidence labels to earn an annotated source card.",
+        "title": "Textile atlas: curator annotations"
+      },
+      "uk": {
+        "teaser": "Додатково: завершіть шість відкриттів і впорядкуйте підписи доказів, щоб отримати картку джерел із примітками.",
+        "title": "Текстильний атлас: примітки куратора"
+      }
+    },
+    "payloads": [
+      {
+        "id": "ukraine-threads-curator-character",
+        "locales": {
+          "en": { "title": "Gallery weaving shuttle" },
+          "uk": { "title": "Ткацький човник галереї" }
+        },
+        "recipeId": "reward-textile-discovery-shuttle-v1",
+        "recipeRevision": "character-v1-8e201e4f9cc4aa80",
+        "type": "cosmetic"
+      },
+      {
+        "id": "ukraine-threads-application-annotations",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "A museum record and an original illustration support different claims. A dated artwork can tell us about that particular work and its interpretation. A fictional festival scene can invite curiosity but cannot document a real historic garment.",
+              "For a new object label, separate what the record states from what you infer. Keep the maker, medium, date and place tied to the specific source; write “not established by this source” when a detail is missing.",
+              "These annotations recognise the verified evidence exercise. They do not score cultural identity or belonging. Return to the textile atlas in Collection to compare the individually attributed sources."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Dancer in Ukrainian Dress, object 436157",
+                "url": "https://www.metmuseum.org/art/collection/search/436157"
+              },
+              {
+                "title": "The Met — Open Access",
+                "url": "https://www.metmuseum.org/hubs/open-access"
+              }
+            ],
+            "title": "Textile atlas: curator annotations"
+          },
+          "uk": {
+            "paragraphs": [
+              "Музейний запис і оригінальна ілюстрація підтверджують різні твердження. Датований твір розповідає про конкретну роботу та її інтерпретацію. Вигадана фестивальна сцена може зацікавити, але не документує реальний історичний одяг.",
+              "Для нового підпису предмета відокремлюйте дані запису від власних висновків. Пов’язуйте автора, матеріал, дату й місце з конкретним джерелом; якщо відомостей бракує, зазначайте: «Це джерело не встановлює цієї деталі».",
+              "Ці примітки відзначають перевірену вправу з доказами. Вони не оцінюють культурну ідентичність чи належність. Поверніться до текстильного атласу в Колекції, щоб порівняти джерела з окремими атрибуціями."
+            ],
+            "sources": [
+              {
+                "title": "The Met — Dancer in Ukrainian Dress, object 436157",
+                "url": "https://www.metmuseum.org/art/collection/search/436157"
+              },
+              {
+                "title": "The Met — Open Access",
+                "url": "https://www.metmuseum.org/hubs/open-access"
+              }
+            ],
+            "title": "Текстильний атлас: примітки куратора"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [
+        {
+          "fixtureRevision": "1",
+          "lessonId": "ukraine-threads-06-lesson",
+          "lessonIdentity": "f0131eac25994042",
+          "lessonRevision": "1",
+          "missionId": "ukraine-threads-06"
+        }
+      ],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a70347fb9c2215f6" },
+            { "difficulty": "standard", "gameplayId": "aae83c4cf5bee1df" },
+            { "difficulty": "expert", "gameplayId": "3c5d1f0ce3e9c745" }
+          ],
+          "missionId": "ukraine-threads-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "aa0d6a41ec5daf99" },
+            { "difficulty": "standard", "gameplayId": "625ecfa012ab59b9" },
+            { "difficulty": "expert", "gameplayId": "7250c61ead7111d6" }
+          ],
+          "missionId": "ukraine-threads-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "b6f1d46cf8e74120" },
+            { "difficulty": "standard", "gameplayId": "c8ebcc05403cb890" },
+            { "difficulty": "expert", "gameplayId": "65c81b8114bab2d3" }
+          ],
+          "missionId": "ukraine-threads-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c7eee40173df478f" },
+            { "difficulty": "standard", "gameplayId": "33261d4abad6548c" },
+            { "difficulty": "expert", "gameplayId": "c8fb6afe0ded9a4c" }
+          ],
+          "missionId": "ukraine-threads-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c9561924ef75dfe7" },
+            { "difficulty": "standard", "gameplayId": "38d39bf4da3f5dc1" },
+            { "difficulty": "expert", "gameplayId": "c33f73c7f58f8c96" }
+          ],
+          "missionId": "ukraine-threads-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "057f26871e359171" },
+            { "difficulty": "standard", "gameplayId": "1bf56034481c0f2a" },
+            { "difficulty": "expert", "gameplayId": "e0654522adaf24f9" }
+          ],
+          "missionId": "ukraine-threads-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "ukraine-threads", "kind": "campaign" }
+  }
+]

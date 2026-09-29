@@ -1,0 +1,992 @@
+{
+  "format": "revealline-frozen-firefox-showcase-evidence.v1",
+  "recordedAt": "2026-09-29T03:51:00.532Z",
+  "qualified": false,
+  "publicEligible": false,
+  "sourceRevision": "28fbe1583222ddb94aa4137a2f89815a6dfce615",
+  "sourceTree": "ab035435ae2605f3d23eff4c1f0d60388ca838d4",
+  "version": "v0.142.3",
+  "editionId": "ukraine-culture",
+  "candidate": {
+    "reproducibleBuilds": 2,
+    "sourceEligibility": {
+      "assets": 294,
+      "files": 5051,
+      "format": "revealline-public-source-eligibility.v1",
+      "status": "verified"
+    },
+    "admission": {
+      "editions": [
+        {
+          "distributionSha256": "4f96e42b882eb15bfc1f73eeead8972bc48746956c93e157b9b347f1cb956254",
+          "files": 662,
+          "id": "ukraine-culture",
+          "sourceArchiveSha256": "dd3c5eb70c2883c1c25d8583699f82096a825aeec677695a711ed7f7adfcbc90",
+          "totalBytes": 41997527
+        }
+      ],
+      "format": "revealline-editions-admission.v1",
+      "publicEligible": false,
+      "sourceRevision": "28fbe1583222ddb94aa4137a2f89815a6dfce615",
+      "sourceTree": "ab035435ae2605f3d23eff4c1f0d60388ca838d4",
+      "status": "verified-candidate-members",
+      "version": "v0.142.3",
+      "zipMembersVerified": true
+    },
+    "presentationReceipts": [
+      {
+        "authoredPresentationSha256": "2dd69ecc1f96478c028aa621629aa6555c1175d540783b05a38320ed86074f29",
+        "editionId": "ukraine-culture",
+        "retained": [
+          {
+            "authoredPresentationSha256": "3e868c83c369a31d78e3a551e8b83b6179bba80543dca9df19cbb73566deb295"
+          },
+          {
+            "authoredPresentationSha256": "430cb1cb0c5231f9c42dc9fd9d2b0e55b35a49c676e09c0df8effa17f9a396b2"
+          },
+          {
+            "authoredPresentationSha256": "95915f9348a50bb93f6c5d234624f85fc1a758f59d1db2bb4f804876257a3c25"
+          },
+          {
+            "authoredPresentationSha256": "004d6874394bf5d37967eb841fa0004c4980d40169f7154b425ab3fcdea83e58"
+          },
+          {
+            "authoredPresentationSha256": "b056de12bcb25f16bc3ed5324b5a0e1a7e30f2614a37eb244675ef02a8c2a805"
+          },
+          {
+            "authoredPresentationSha256": "976af38b7451ae581864ff9baef4975cab0c3feb385fa73ea8d3680e43ed5742"
+          },
+          {
+            "authoredPresentationSha256": "c92804d620efc050f08aacc1428bf20a5517d5f89488daf07abc67c336815e7f"
+          }
+        ]
+      }
+    ],
+    "originals": [
+      {
+        "path": "candidate-verification.json",
+        "bytes": 2049,
+        "sha256": "61c4d6c63635cdd4ee411f9ab5185fcd32f17448984a782b5ae57db3d7c65db9"
+      },
+      {
+        "path": "capacity-inventory.json",
+        "bytes": 1730,
+        "sha256": "33ddadea08f6818d6900472432ecabc9af23a5a1c044bd7380bc3f3583c2efca"
+      },
+      {
+        "path": "checksums.json",
+        "bytes": 960,
+        "sha256": "05a769ee44b7d4d671e3bd472c665004f157b9d6842c321d2078d5310b9f03cb"
+      },
+      {
+        "path": "distribution-ukraine-culture.zip",
+        "bytes": 42182913,
+        "sha256": "4f96e42b882eb15bfc1f73eeead8972bc48746956c93e157b9b347f1cb956254"
+      },
+      {
+        "path": "editions.json",
+        "bytes": 1642,
+        "sha256": "f63001df73136f7f4990189a9c47c13cebd0a3f7d37e28dcc8133424e0e2dcb2"
+      },
+      {
+        "path": "manifest-ukraine-culture.json",
+        "bytes": 89964,
+        "sha256": "2af53e4d4539957a4f69c5549e9097ad3ced8a101b57a7f4e23c4e8b02269259"
+      },
+      {
+        "path": "source-inventory-ukraine-culture.json",
+        "bytes": 109826,
+        "sha256": "738dfe8dbf4d229f2b044211f142e061e8d31276792517f72c7eac2d99c68c4b"
+      },
+      {
+        "path": "source-ukraine-culture.zip",
+        "bytes": 41886289,
+        "sha256": "dd3c5eb70c2883c1c25d8583699f82096a825aeec677695a711ed7f7adfcbc90"
+      }
+    ],
+    "buildLog": {
+      "path": "discovery-ukraine-28fbe1583-build.log",
+      "bytes": 506,
+      "sha256": "21fb0e9ec82771a0842e9c5e6e9ce0058df5edf45797f7aaf974d030100dbd88"
+    }
+  },
+  "browser": {
+    "selection": {
+      "qualified": false,
+      "selection": "firefox",
+      "engine": "firefox",
+      "launchOptions": {
+        "headless": true
+      },
+      "module": {
+        "bytes": 704,
+        "sha256": "a0f5715ea22354f922791a9c53dc012d5d5c067ff9cc4cd35ffb7cd272071a9f"
+      },
+      "runtime": {
+        "playwrightCoreVersion": "1.58.2",
+        "package": {
+          "bytes": 1499,
+          "sha256": "16a25dbd7368a87af8b58a45c6216b9cec5a91a72cf704533344701997ebde22"
+        },
+        "browsers": {
+          "bytes": 1883,
+          "sha256": "6b6e0538d6e46eef71d3e1a0dcb65f8f5ea7914033c8150529d8e207afb6030c"
+        },
+        "revision": "1509",
+        "expectedBrowserVersion": "146.0.1",
+        "executable": {
+          "name": "firefox",
+          "bytes": 71968,
+          "sha256": "dff544b2ec1b78e03d95801b3e07af12d8874fa2ef351bd074b897ca5e1c2bdd"
+        },
+        "scope": "Primary executable and supplied Playwright metadata only; not a full browser bundle inventory."
+      },
+      "actualBrowserVersion": "146.0.1"
+    },
+    "exactArtifact": {
+      "sourceRevision": "28fbe1583222ddb94aa4137a2f89815a6dfce615",
+      "sourceTree": "ab035435ae2605f3d23eff4c1f0d60388ca838d4",
+      "editionId": "ukraine-culture",
+      "distribution": {
+        "sha256": "4f96e42b882eb15bfc1f73eeead8972bc48746956c93e157b9b347f1cb956254",
+        "bytes": 42182913
+      },
+      "manifest": {
+        "sha256": "2af53e4d4539957a4f69c5549e9097ad3ced8a101b57a7f4e23c4e8b02269259",
+        "bytes": 89964
+      },
+      "runtimeFiles": 663,
+      "runtimeBytes": 42087491,
+      "contentSha256": "4e2fde15b5d2dac63cd49c49a786ba7c3eda5bb818e4168ce8c144cecf2bf867",
+      "gameplayId": "aae83c4cf5bee1df",
+      "gameplayBindingAuthority": "Exact admitted authored reward requirement, not an independent engine recomputation."
+    },
+    "settingsIdentity": "en1280x633@1;uk390x844@1;standard;immediate;scout;ukraine-culture-marker;ukraine-threads-theme;headers-packaged-preview;functional-only;browser-firefox@146.0.1",
+    "runner": [
+      {
+        "path": "docs/verification/discovery-observer.mjs",
+        "bytes": 17910,
+        "sha256": "76a5738cf196a21e7e74e6309f4296c2b7db7765552374e9d7d98c882f52f72b"
+      },
+      {
+        "path": "docs/verification/discovery-comparison.mjs",
+        "bytes": 11187,
+        "sha256": "da05f47e91c5aaa296afdd59e3ddf99b83b121b8e1de09ff94931019e6b36e6c"
+      },
+      {
+        "path": "docs/verification/company-review-model.mjs",
+        "bytes": 7785,
+        "sha256": "da49ed47c99ef99ce94584f729f1410a0969322e3e42cd1793507537969acfbe"
+      },
+      {
+        "path": "scripts/observe-discovery-cycles.mjs",
+        "bytes": 11051,
+        "sha256": "b297771b78108204025765ca2e433911fbdaf9e15155f16ea187b628408f9bf3"
+      },
+      {
+        "path": "publishing/edition-zip.mjs",
+        "bytes": 6736,
+        "sha256": "437c01641e8cf8e6e4bf201f42eab19e035f9f5919ec70417331d51ef58f56c4"
+      },
+      {
+        "path": "scripts/observe-discovery-runtime.mjs",
+        "bytes": 63883,
+        "sha256": "06968a0ea974f212ed83a455ce32aeb90c8fbc516293ce35f8ed684ebd02a1b4"
+      },
+      {
+        "path": "scripts/game-cli.mjs",
+        "bytes": 79596,
+        "sha256": "f7530f224ccce1e49c81aa70b438fdebfe76da47b90a09065ed29505cf32541b"
+      }
+    ],
+    "boot": {
+      "qualified": false,
+      "state": "ready",
+      "locale": "en",
+      "title": "Ukraine: Living Culture",
+      "status": "Reading your saved flight and installed chapters…",
+      "detail": "",
+      "screenHidden": true,
+      "detailHidden": true
+    },
+    "completed": true,
+    "ordinaryWins": 2,
+    "distinctMissionsWon": 1,
+    "phases": [
+      {
+        "label": "english-desktop-first-win",
+        "state": {
+          "host": "solo",
+          "ready": false,
+          "failed": false,
+          "running": false,
+          "prepared": false,
+          "preparedOutcome": "Running flight observed after activation",
+          "mission": "01 · Read the Cloth",
+          "wonResult": true,
+          "rewardViewer": false,
+          "collection": false,
+          "effects": "full"
+        },
+        "pageHidden": false,
+        "pageFocused": true
+      },
+      {
+        "label": "english-desktop-discovery",
+        "state": {
+          "host": "solo",
+          "ready": false,
+          "failed": false,
+          "running": false,
+          "prepared": false,
+          "preparedOutcome": "Running flight observed after activation",
+          "mission": "01 · Read the Cloth",
+          "wonResult": true,
+          "rewardViewer": true,
+          "collection": false,
+          "effects": "full"
+        },
+        "pageHidden": false,
+        "pageFocused": true
+      },
+      {
+        "label": "english-desktop-discovery-closed",
+        "state": {
+          "host": "solo",
+          "ready": false,
+          "failed": false,
+          "running": false,
+          "prepared": false,
+          "preparedOutcome": "Running flight observed after activation",
+          "mission": "01 · Read the Cloth",
+          "wonResult": true,
+          "rewardViewer": false,
+          "collection": false,
+          "effects": "full"
+        },
+        "pageHidden": false,
+        "pageFocused": true
+      },
+      {
+        "label": "english-desktop-collection",
+        "state": {
+          "host": "solo",
+          "ready": false,
+          "failed": false,
+          "running": false,
+          "prepared": false,
+          "preparedOutcome": "Running flight observed after activation",
+          "mission": "01 · Read the Cloth",
+          "wonResult": true,
+          "rewardViewer": true,
+          "collection": true,
+          "effects": "full"
+        },
+        "pageHidden": false,
+        "pageFocused": true
+      },
+      {
+        "label": "english-desktop-collection-closed",
+        "state": {
+          "host": "solo",
+          "ready": false,
+          "failed": false,
+          "running": false,
+          "prepared": false,
+          "preparedOutcome": "Running flight observed after activation",
+          "mission": "01 · Read the Cloth",
+          "wonResult": true,
+          "rewardViewer": false,
+          "collection": true,
+          "effects": "full"
+        },
+        "pageHidden": false,
+        "pageFocused": true
+      },
+      {
+        "label": "ukrainian-portrait-discovery",
+        "state": {
+          "host": "solo",
+          "ready": false,
+          "failed": false,
+          "running": false,
+          "prepared": false,
+          "preparedOutcome": "Running flight observed after activation",
+          "mission": "01 · Прочитайте тканину",
+          "wonResult": true,
+          "rewardViewer": true,
+          "collection": false,
+          "effects": "full"
+        },
+        "pageHidden": false,
+        "pageFocused": true
+      },
+      {
+        "label": "ukrainian-portrait-discovery-closed",
+        "state": {
+          "host": "solo",
+          "ready": false,
+          "failed": false,
+          "running": false,
+          "prepared": false,
+          "preparedOutcome": "Running flight observed after activation",
+          "mission": "01 · Прочитайте тканину",
+          "wonResult": true,
+          "rewardViewer": false,
+          "collection": false,
+          "effects": "full"
+        },
+        "pageHidden": false,
+        "pageFocused": true
+      },
+      {
+        "label": "ukrainian-portrait-collection",
+        "state": {
+          "host": "solo",
+          "ready": true,
+          "failed": false,
+          "running": false,
+          "prepared": false,
+          "preparedOutcome": "Running flight observed after activation",
+          "mission": "01 · Прочитайте тканину",
+          "wonResult": true,
+          "rewardViewer": true,
+          "collection": true,
+          "effects": "full"
+        },
+        "pageHidden": false,
+        "pageFocused": true
+      },
+      {
+        "label": "ukrainian-portrait-collection-closed",
+        "state": {
+          "host": "solo",
+          "ready": true,
+          "failed": false,
+          "running": false,
+          "prepared": false,
+          "preparedOutcome": "Running flight observed after activation",
+          "mission": "01 · Прочитайте тканину",
+          "wonResult": true,
+          "rewardViewer": false,
+          "collection": true,
+          "effects": "full"
+        },
+        "pageHidden": false,
+        "pageFocused": true
+      },
+      {
+        "label": "ukrainian-portrait-repeat-win",
+        "state": {
+          "host": "solo",
+          "ready": false,
+          "failed": false,
+          "running": false,
+          "prepared": false,
+          "preparedOutcome": "Running flight observed after activation",
+          "mission": "01 · Прочитайте тканину",
+          "wonResult": true,
+          "rewardViewer": false,
+          "collection": false,
+          "effects": "full"
+        },
+        "pageHidden": false,
+        "pageFocused": true
+      },
+      {
+        "label": "ukrainian-portrait-next-paused",
+        "state": {
+          "host": "solo",
+          "ready": true,
+          "failed": false,
+          "running": false,
+          "prepared": false,
+          "preparedOutcome": "Running flight observed after activation",
+          "mission": "02 · Шляхи стібків",
+          "wonResult": false,
+          "rewardViewer": false,
+          "collection": false,
+          "effects": "full"
+        },
+        "pageHidden": false,
+        "pageFocused": true
+      }
+    ],
+    "errors": [],
+    "cleanup": {
+      "qualified": false,
+      "completed": true,
+      "primaryError": null,
+      "operations": [
+        {
+          "name": "observer",
+          "requested": true,
+          "closed": true,
+          "timedOut": false,
+          "error": null
+        },
+        {
+          "name": "cdp",
+          "requested": false,
+          "closed": false,
+          "timedOut": false,
+          "error": null
+        },
+        {
+          "name": "page",
+          "requested": true,
+          "closed": true,
+          "timedOut": false,
+          "error": null
+        },
+        {
+          "name": "context",
+          "requested": true,
+          "closed": true,
+          "timedOut": false,
+          "error": null
+        },
+        {
+          "name": "browser",
+          "requested": true,
+          "closed": true,
+          "timedOut": false,
+          "error": null
+        },
+        {
+          "name": "server",
+          "requested": true,
+          "closed": true,
+          "timedOut": false,
+          "error": null
+        }
+      ],
+      "journalFailures": [],
+      "diagnosticFailures": []
+    },
+    "captureInventory": [
+      {
+        "path": "boot.json",
+        "bytes": 232,
+        "sha256": "82e957475f9e0df2a55f3a9b105c31cb5c09bfab21b0c35ad46e2a0492aec371"
+      },
+      {
+        "path": "browser-selection.json",
+        "bytes": 887,
+        "sha256": "223d9b375e0639dbc6caba5b6254bbf0a411d70062875d4f793d3f0ceac8095f"
+      },
+      {
+        "path": "browser.json",
+        "bytes": 924,
+        "sha256": "914f49a05a552581c7cc840aca8bf0803afca0589b8902387a57059b5efe5b1a"
+      },
+      {
+        "path": "case.json",
+        "bytes": 6027,
+        "sha256": "668f84852f174ecba6f52513e38e8c0e37ce664e05a04e654114e8780ad7c922"
+      },
+      {
+        "path": "cleanup-browser-outcome.json",
+        "bytes": 145,
+        "sha256": "002122088317b62f0d19e5a73d797867deb23909fffb3590d89fa09d36a53b92"
+      },
+      {
+        "path": "cleanup-browser-start.json",
+        "bytes": 90,
+        "sha256": "67ea14953f0f21cdbb8f033912dcfb23db9a0a3e8902b38af4d2cacdf0171b30"
+      },
+      {
+        "path": "cleanup-context-outcome.json",
+        "bytes": 145,
+        "sha256": "41cec0e2aa5fcea99ea4d29628fc2a94c8c2afff39f494769ada0c0c752c1c11"
+      },
+      {
+        "path": "cleanup-context-start.json",
+        "bytes": 90,
+        "sha256": "38d29860f20a189876c61ce392f72e91082bde6bbe944aa47209b1cd755e1a17"
+      },
+      {
+        "path": "cleanup-observer-outcome.json",
+        "bytes": 146,
+        "sha256": "b6eb6050a7539fea14ff48677a8ba0cbdf24c7e69abd9628509d580b8f3938bb"
+      },
+      {
+        "path": "cleanup-observer-start.json",
+        "bytes": 91,
+        "sha256": "75a69d48bf66258e94b1adcbeba60e8c4202be2aecba687d46a7bacb33f52a94"
+      },
+      {
+        "path": "cleanup-page-outcome.json",
+        "bytes": 142,
+        "sha256": "502b0e35c927d87131794576ef1ef6af0f57b0cdea50a171ededb7d4bb2ab78f"
+      },
+      {
+        "path": "cleanup-page-start.json",
+        "bytes": 87,
+        "sha256": "9e2f61d40bfb274932c2ba3c68e023e61282f0e1d0e7fa1f06b9cb7d11125c88"
+      },
+      {
+        "path": "cleanup-server-outcome.json",
+        "bytes": 144,
+        "sha256": "9293ab6f7922208e42a7ae12527a5ba3d90cff64339b9700f948a283ef4b3e85"
+      },
+      {
+        "path": "cleanup-server-start.json",
+        "bytes": 89,
+        "sha256": "527d935989d087eb452dcc599bf9a2d2f77496b62cee32713ab540f5cf7acca6"
+      },
+      {
+        "path": "cleanup.json",
+        "bytes": 920,
+        "sha256": "08b059d7993a77d99229aee880691ef892f68e83a8513813f3b589184e44832a"
+      },
+      {
+        "path": "complete.json",
+        "bytes": 42861,
+        "sha256": "6e06a40f4ecd0be3bda2f1ac01497bbaea0eb0b806c0ab2e2e43895447822c7f"
+      },
+      {
+        "path": "english-desktop-collection-copy.json",
+        "bytes": 212,
+        "sha256": "6a4ec9e401cbb4f4e1d0ba48adc8b3524ded98d444ce40eab8e44cb3d2cbc340"
+      },
+      {
+        "path": "english-desktop-collection-navigation.json",
+        "bytes": 117,
+        "sha256": "e0d6d45808c66893c5fa772d46ff7c589113449bc6e5dee4fc394b1c70001fa3"
+      },
+      {
+        "path": "english-desktop-collection-progress.json",
+        "bytes": 207,
+        "sha256": "a8553cb1b94d572b115960bcd92697230c40a1db5c09bf033bb4e0b146d6cdb3"
+      },
+      {
+        "path": "english-desktop-collection.png",
+        "bytes": 715015,
+        "sha256": "d60fa61e5d227da7f50a92ca3a549115b69085f53c200edaf2b2050ed7245ba7"
+      },
+      {
+        "path": "english-desktop-discovery-copy.json",
+        "bytes": 212,
+        "sha256": "6a4ec9e401cbb4f4e1d0ba48adc8b3524ded98d444ce40eab8e44cb3d2cbc340"
+      },
+      {
+        "path": "english-desktop-discovery.png",
+        "bytes": 715549,
+        "sha256": "2c76431ce53e1da007d67359bfb9f9c95e094bec3faa9bcba4d364c0686ee613"
+      },
+      {
+        "path": "english-desktop-first-win.png",
+        "bytes": 279185,
+        "sha256": "6fa657e756ab9609139d3eba1a0e55ad4649bbedddaa4c3a557a98f4b725aadf"
+      },
+      {
+        "path": "instrumentation/docs/verification/company-review-model.mjs",
+        "bytes": 7785,
+        "sha256": "da49ed47c99ef99ce94584f729f1410a0969322e3e42cd1793507537969acfbe"
+      },
+      {
+        "path": "instrumentation/docs/verification/discovery-comparison.mjs",
+        "bytes": 11187,
+        "sha256": "da05f47e91c5aaa296afdd59e3ddf99b83b121b8e1de09ff94931019e6b36e6c"
+      },
+      {
+        "path": "instrumentation/docs/verification/discovery-observer.mjs",
+        "bytes": 17910,
+        "sha256": "76a5738cf196a21e7e74e6309f4296c2b7db7765552374e9d7d98c882f52f72b"
+      },
+      {
+        "path": "instrumentation/publishing/edition-zip.mjs",
+        "bytes": 6736,
+        "sha256": "437c01641e8cf8e6e4bf201f42eab19e035f9f5919ec70417331d51ef58f56c4"
+      },
+      {
+        "path": "instrumentation/scripts/game-cli.mjs",
+        "bytes": 79596,
+        "sha256": "f7530f224ccce1e49c81aa70b438fdebfe76da47b90a09065ed29505cf32541b"
+      },
+      {
+        "path": "instrumentation/scripts/observe-discovery-cycles.mjs",
+        "bytes": 11051,
+        "sha256": "b297771b78108204025765ca2e433911fbdaf9e15155f16ea187b628408f9bf3"
+      },
+      {
+        "path": "instrumentation/scripts/observe-discovery-runtime.mjs",
+        "bytes": 63883,
+        "sha256": "06968a0ea974f212ed83a455ce32aeb90c8fbc516293ce35f8ed684ebd02a1b4"
+      },
+      {
+        "path": "plan.json",
+        "bytes": 929,
+        "sha256": "b9a555274f751fba88664172e83891db6ce325fcf991dcaed55eb2f31e6df94e"
+      },
+      {
+        "path": "security-policy.json",
+        "bytes": 44,
+        "sha256": "154e3b5f83343fa4ef8d626590687298f04a5548becb64d1d83061ed63646d1f"
+      },
+      {
+        "path": "showcase-attempt-1.json",
+        "bytes": 6430,
+        "sha256": "7b7803b1c83c1daac4ff14ed3b629a76f7fb50e8f2f70fbb402f029c21a568a8"
+      },
+      {
+        "path": "showcase-attempt-2.json",
+        "bytes": 6577,
+        "sha256": "2493d4de36470bf3c15a99afe108184b5faa9d8511f1b47c81509aeab736bb92"
+      },
+      {
+        "path": "showcase-chooser.json",
+        "bytes": 1171,
+        "sha256": "cfe33255f56ac6200751c4a0055d93937b1154c6e8d2d8d4b87d8fd56f389ce9"
+      },
+      {
+        "path": "showcase-fresh-page.png",
+        "bytes": 1121353,
+        "sha256": "d4392773d9b1aaf1172b131b763bffbb63a899bef01c363a4a43a12bbd162c71"
+      },
+      {
+        "path": "showcase-surface-1.json",
+        "bytes": 1160,
+        "sha256": "d0fd8c64470ffa0fdd0811f498864092526929d02d32eba71003eec46b0a3f9f"
+      },
+      {
+        "path": "showcase-surface-10.json",
+        "bytes": 1184,
+        "sha256": "afccb20b0acbef18b95acc957063e1fe85a8a2a951d5dfb3462e712aaef95ecb"
+      },
+      {
+        "path": "showcase-surface-11.json",
+        "bytes": 1179,
+        "sha256": "128f9a898743d3e3d05a176769c4435c48b8e8138e943e3e01a0c8dbbeaf9d12"
+      },
+      {
+        "path": "showcase-surface-2.json",
+        "bytes": 1532,
+        "sha256": "b4ad915321e4ae153f21a1113906d84f8662a72a01cda0e94532125c6e880d88"
+      },
+      {
+        "path": "showcase-surface-3.json",
+        "bytes": 1229,
+        "sha256": "81b5d93085686dfa1344352ce70f17479a7fad467a552601b2a29c3bcef437e6"
+      },
+      {
+        "path": "showcase-surface-4.json",
+        "bytes": 1557,
+        "sha256": "08284c5dc7c03088b9ac0ba799ae6db163255a2db002983e8a57a6736e879ba8"
+      },
+      {
+        "path": "showcase-surface-5.json",
+        "bytes": 1263,
+        "sha256": "132425006d690f1b14e1aeeea420a994cf18374b88cf3d0dbfca72ed7748f3ce"
+      },
+      {
+        "path": "showcase-surface-6.json",
+        "bytes": 1555,
+        "sha256": "af30ce1a1c01b0937a24ecef3fae53b3085795e2ed553190e485e22ea0791994"
+      },
+      {
+        "path": "showcase-surface-7.json",
+        "bytes": 1252,
+        "sha256": "eda944d8446a85e8d6188a6f87bfc768a83c245d15f2d7e65ad713a9bc38061c"
+      },
+      {
+        "path": "showcase-surface-8.json",
+        "bytes": 1597,
+        "sha256": "42e601e42b3961629ce9f812c6b421213a45f00ce0d97dfdf513eead47e6fe85"
+      },
+      {
+        "path": "showcase-surface-9.json",
+        "bytes": 1303,
+        "sha256": "c009eb0e1ac5ee6fe8d6f05da00f3f35c15e5d89d98d8c7c23c81e10cf20e1a7"
+      },
+      {
+        "path": "showcase.json",
+        "bytes": 18743,
+        "sha256": "c39c3d28aeee0712a76e426d40c82e8f67b434eb20cf467343d187ca1d221d97"
+      },
+      {
+        "path": "state-1.json",
+        "bytes": 1966,
+        "sha256": "5123df1c5701b473fd2eae9a6b9c0fbd5b7ffd9fb0035a9a27b8605174bffde1"
+      },
+      {
+        "path": "state-10.json",
+        "bytes": 1957,
+        "sha256": "a96f215ba58cac80d60e85bfe601d400076b3babb0c5c39c83872559bedefd2c"
+      },
+      {
+        "path": "state-11.json",
+        "bytes": 1993,
+        "sha256": "eb32eb1cd5cc083a3c95be05085f66e2da6b00226165914670973016fbdc89ea"
+      },
+      {
+        "path": "state-12.json",
+        "bytes": 2005,
+        "sha256": "103e1095f18c2e24267651573382fda91cb1d9f8122941c22e754838b34699fb"
+      },
+      {
+        "path": "state-13.json",
+        "bytes": 1988,
+        "sha256": "ac15f7f46a0c32170ac0f620248be468985524468a355f6c8f6cc54722660213"
+      },
+      {
+        "path": "state-14.json",
+        "bytes": 1993,
+        "sha256": "21c0e2cd95f9072bce83301720b010aee7f33d0bcc66d72ddf762fe7c3b54e7b"
+      },
+      {
+        "path": "state-16.json",
+        "bytes": 1986,
+        "sha256": "ded9cb00138c265660744cbce45437b4f7e509f115e94be4dda4050891cf4522"
+      },
+      {
+        "path": "state-17.json",
+        "bytes": 1999,
+        "sha256": "c1b8f4f8c5caa1bc27a157ca377863261f967dce47bb3887e4fb9ee7d06d3c58"
+      },
+      {
+        "path": "state-19.json",
+        "bytes": 1984,
+        "sha256": "96903d84d202e26e645e85ae3fcdf17943417fa5255a85ad896d75dd1182b316"
+      },
+      {
+        "path": "state-2.json",
+        "bytes": 1944,
+        "sha256": "6b0623be4166b62ab39283356bc5eed9a72f088802e39e723af511c1eefa8c7c"
+      },
+      {
+        "path": "state-20.json",
+        "bytes": 1997,
+        "sha256": "9a0756a18a42c6337410d54c32b8a8ec6fe0c6aed43938eddd66f32e277787f4"
+      },
+      {
+        "path": "state-21.json",
+        "bytes": 1977,
+        "sha256": "83d1312f81a0e86a47dec479d9b831f8a10f40e397726be4c87f4cd9a0e17ff2"
+      },
+      {
+        "path": "state-3.json",
+        "bytes": 1944,
+        "sha256": "23a7bb230c2c71d48be8a3aee21f6ffdf56a9e8fadda6def88db508bb835cc50"
+      },
+      {
+        "path": "state-5.json",
+        "bytes": 1937,
+        "sha256": "daf7ed80a6730653e643ee86c19ef0e72de0654f8ba1e1d1a73a77d03268d604"
+      },
+      {
+        "path": "state-6.json",
+        "bytes": 1950,
+        "sha256": "c02c4323b48ac850c97e94e2f7f1c35e89411e7d0ad7a4040f7f2d4d71243022"
+      },
+      {
+        "path": "state-8.json",
+        "bytes": 1935,
+        "sha256": "0140b3349a0dd18e2113c2a83961f7a29de9e2205fc4ddd3b9741d39e5b8d53f"
+      },
+      {
+        "path": "state-9.json",
+        "bytes": 1948,
+        "sha256": "b896a900cd583002b770494bca5a6005ffab31ba6ca40f2f6dfbca4a5ef0ed15"
+      },
+      {
+        "path": "ukrainian-portrait-collection-copy.json",
+        "bytes": 254,
+        "sha256": "0d8f8bd5e4ad7f3a7f396d27ee3c099d55b7816b000f67b5dc8e5665f2004ed7"
+      },
+      {
+        "path": "ukrainian-portrait-collection-navigation.json",
+        "bytes": 115,
+        "sha256": "bb07a84ac2945576b009e7fe70982e7650ddc8f0c1ce384a5695db3f7f9d5078"
+      },
+      {
+        "path": "ukrainian-portrait-collection-progress.json",
+        "bytes": 207,
+        "sha256": "a8553cb1b94d572b115960bcd92697230c40a1db5c09bf033bb4e0b146d6cdb3"
+      },
+      {
+        "path": "ukrainian-portrait-collection.png",
+        "bytes": 234092,
+        "sha256": "6f633a1473d4d42fc4e3a8970c2b5df077d16f39f5768639d16a7ae861721dc2"
+      },
+      {
+        "path": "ukrainian-portrait-discovery-copy.json",
+        "bytes": 254,
+        "sha256": "0d8f8bd5e4ad7f3a7f396d27ee3c099d55b7816b000f67b5dc8e5665f2004ed7"
+      },
+      {
+        "path": "ukrainian-portrait-discovery.png",
+        "bytes": 234093,
+        "sha256": "a8aafa808bc8d009d4b7b18f81083424f343a7d6d87fdd4dc1a764eabce57983"
+      },
+      {
+        "path": "ukrainian-portrait-next-paused.png",
+        "bytes": 67420,
+        "sha256": "0e712bd677db8bc490c8a64987b4f32f8e2954eb974462d78a9729b33a0d761e"
+      },
+      {
+        "path": "ukrainian-portrait-result.png",
+        "bytes": 198275,
+        "sha256": "3bb0a2b38285c92387ad9a2b5745bc0f645329cbdae33b89f37d03089e20dc7e"
+      }
+    ],
+    "inventoryDescriptor": {
+      "path": "capture-inventory.json",
+      "bytes": 10952,
+      "sha256": "68283888c394e0ae7689f73dd67ee962195263c115ede1b6a6d5d12301e2b265"
+    },
+    "log": {
+      "path": "discovery-ukraine-28fbe1583-firefox-01.log",
+      "bytes": 104,
+      "sha256": "f1779b9f507c6f409ea4e4dbbb267cc8316efed1e1996982cba8d31f65c11973"
+    },
+    "limitations": [
+      "English desktop first win and Ukrainian portrait revisit/repeat win are one earned session, not independent fresh-profile qualifications.",
+      "Functional public controls only; no performance, human, touch, physical controller or device qualification.",
+      "Only the first showcase mission and its discovery are exercised; later application and six-win finale are not completed here.",
+      "Offline route witnesses remain experimental browser candidates; a successful observation does not guarantee future wall-clock routes."
+    ]
+  },
+  "originalFailure": {
+    "sourceRevision": "4689753f6af7dbc5bc6a7fe37161b08a511599b7",
+    "boot": {
+      "qualified": false,
+      "state": "failed",
+      "locale": "en",
+      "title": "Flight on hold.",
+      "status": "The game could not start. Reload to try again, or open the online game. Your saved progress has not been changed by this launch screen.",
+      "detail": "Reward gameplay binding differs from the selected mission.",
+      "screenHidden": false,
+      "detailHidden": false
+    },
+    "cleanup": {
+      "qualified": false,
+      "completed": true,
+      "primaryError": "Error: Game boot failed: Reward gameplay binding differs from the selected mission.",
+      "operations": [
+        {
+          "name": "observer",
+          "requested": true,
+          "closed": true,
+          "timedOut": false,
+          "error": null
+        },
+        {
+          "name": "cdp",
+          "requested": false,
+          "closed": false,
+          "timedOut": false,
+          "error": null
+        },
+        {
+          "name": "page",
+          "requested": true,
+          "closed": true,
+          "timedOut": false,
+          "error": null
+        },
+        {
+          "name": "context",
+          "requested": true,
+          "closed": true,
+          "timedOut": false,
+          "error": null
+        },
+        {
+          "name": "browser",
+          "requested": true,
+          "closed": true,
+          "timedOut": false,
+          "error": null
+        },
+        {
+          "name": "server",
+          "requested": true,
+          "closed": true,
+          "timedOut": false,
+          "error": null
+        }
+      ],
+      "journalFailures": [],
+      "diagnosticFailures": []
+    },
+    "descriptors": [
+      {
+        "path": "case.json",
+        "bytes": 6037,
+        "sha256": "fe8e66632baa4522bfaafa49fee867d5b61fbc7dd337e2e58f3ee47d718b7097"
+      },
+      {
+        "path": "boot.json",
+        "bytes": 369,
+        "sha256": "d25f68c828c7aba5f1d6b1ced1928cc3f1c5193dcdc09f038a365b68ddd8de03"
+      },
+      {
+        "path": "browser.json",
+        "bytes": 924,
+        "sha256": "914f49a05a552581c7cc840aca8bf0803afca0589b8902387a57059b5efe5b1a"
+      },
+      {
+        "path": "failure.json",
+        "bytes": 2905,
+        "sha256": "245f735b1d0dd2340a1aec49deb349192b0885005a67cd2c43502004280c05f0"
+      },
+      {
+        "path": "cleanup.json",
+        "bytes": 1612,
+        "sha256": "8d201b7ca996d6cc1e17d003a04f454a71768e356c696272653e310dc34de549"
+      },
+      {
+        "path": "failure.png",
+        "bytes": 69555,
+        "sha256": "911e1fc2b273e8ea3f26d7cb5b97006bcd024c2889e37722b260f065192d0163"
+      }
+    ],
+    "outcome": "failed; retained without retroactive acceptance"
+  },
+  "supportingFocusedChecks": [
+    {
+      "tests": 38,
+      "passed": 38,
+      "scope": "Real and synthetic Studio playthrough plus observer tests",
+      "log": {
+        "path": "discovery-gp4-studio-observer-cohort.log",
+        "bytes": 8829,
+        "sha256": "1817eabe611a900e0155b3a6a0f6ad2a80750112992b013dca8e46168a2d7302"
+      }
+    },
+    {
+      "tests": 158,
+      "passed": 158,
+      "scope": "Finite current/retained Team bindings and result continuation",
+      "log": {
+        "path": "discovery-production103-team-tests.log",
+        "bytes": 34664,
+        "sha256": "a013bcbd348664ab63cec8c363c35e2f2a68763fafd14c5470778a36a19b3149"
+      }
+    }
+  ],
+  "defaultInspection": {
+    "status": "blocked-by-missing-committed-inputs",
+    "sourceRevision": "28fbe1583222ddb94aa4137a2f89815a6dfce615",
+    "sourceTree": "ab035435ae2605f3d23eff4c1f0d60388ca838d4",
+    "missingFiles": 131,
+    "missingBytes": 250442007,
+    "hydrated": false,
+    "reportProduced": false,
+    "log": {
+      "path": "discovery-default-28fbe1583-inspection.log",
+      "bytes": 10369,
+      "sha256": "acb27a587ffcb7e49bf304ed7d4574a31be90b874fd0399597f33ac75e28d6ee"
+    },
+    "scope": "Sparse inventory failure; no current default size, reproduction or hosted-fit claim."
+  },
+  "limitations": [
+    "One first showcase mission in two languages/layouts; no six-win finale, later application, physical controls or human review claimed.",
+    "Firefox functional result does not qualify Chrome cleanup, matched performance, retained memory or full old cross-engine replay portability.",
+    "This exact private candidate uses existing package version and is not a published replacement.",
+    "Final merged-main/default archives, complete hosted output, release download/public-byte verification and published rollback remain separate coordinator gates.",
+    "Raw captures and traces remain ignored locally; only publication-safe descriptions and byte/hash descriptors are committed."
+  ]
+}

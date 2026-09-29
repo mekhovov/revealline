@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" data-civilian-fpv="true">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#112934" />
+    <title>FPV · Flight Studio</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="app.webmanifest" />
+    <script type="module" src="app.mjs"></script>
+  </head>
+  <body>
+    <main id="flight-app">
+      <header class="flight-header">
+        <div class="brand">
+          <strong data-copy="title">FPV · Flight Studio</strong
+          ><small data-copy="subtitle">Civilian practice</small>
+        </div>
+        <nav aria-label="Flight tools">
+          <a id="game-return" data-copy="backToGame" hidden></a>
+          <button id="courses" data-copy="courses"></button
+          ><button id="notebook-button" data-copy="notebook"></button
+          ><button id="setup" data-copy="setup"></button><button id="help" data-copy="help"></button
+          ><button id="fullscreen" data-copy="fullscreen"></button
+          ><select id="language" aria-label="Language / Мова">
+            <option value="en">English</option>
+            <option value="uk">Українська</option>
+          </select>
+        </nav>
+      </header>
+      <section class="flight-toolbar">
+        <label
+          ><span data-copy="mode"></span
+          ><select id="mode">
+            <option value="self-level" data-copy="self-level"></option>
+            <option value="acro" data-copy="acro"></option></select></label
+        ><label
+          ><span data-copy="source"></span
+          ><select id="input-source">
+            <option value="keyboard" data-copy="keyboard"></option>
+            <option value="touch" data-copy="touch"></option>
+            <option value="radio" data-copy="radio"></option></select
+        ></label>
+        <div class="transport">
+          <button id="arm" class="primary" data-copy="arm"></button
+          ><button id="pause" data-copy="pause"></button
+          ><button id="reset" data-copy="reset"></button>
+        </div>
+        <label
+          ><span data-copy="camera"></span
+          ><select id="camera">
+            <option value="fpv" data-copy="fpv"></option>
+            <option value="chase" data-copy="chase"></option>
+            <option value="overview" data-copy="overview"></option></select
+        ></label>
+      </section>
+      <section
+        id="viewport"
+        tabindex="0"
+        aria-label="Civilian flight scene"
+        aria-describedby="brief target keyboard-help"
+      >
+        <canvas id="flight-canvas" aria-hidden="true"></canvas>
+        <div class="scene-heading">
+          <p id="course-number"></p>
+          <h1 id="course-title"></h1>
+          <p id="brief"></p>
+        </div>
+        <p id="fallback" role="status" hidden></p>
+        <div class="telemetry" aria-label="Instrument display">
+          <span id="height"></span><span id="speed"></span><span id="power"></span
+          ><span id="contact-count"></span>
+        </div>
+        <div class="crosshair" aria-hidden="true">+</div>
+        <div id="sticks" aria-hidden="true">
+          <div><i id="left-dot"></i></div>
+          <div><i id="right-dot"></i></div>
+        </div>
+        <section class="coaching">
+          <p id="target"></p>
+          <progress id="step-progress" value="0" max="1"></progress>
+          <p id="status" role="status" aria-live="polite"></p>
+        </section>
+        <section id="complete" hidden>
+          <p class="eyebrow" data-copy="complete"></p>
+          <h2 id="complete-title"></h2>
+          <p id="lesson"></p>
+          <div id="notebook"></div>
+          <button id="review" data-copy="review"></button
+          ><button id="retry" data-copy="try"></button
+          ><button id="next" class="primary" data-copy="next"></button>
+        </section>
+        <div id="touch-controls" hidden>
+          <div>
+            <span data-copy="leftStick"></span>
+            <div
+              id="left-stick"
+              class="touch-stick"
+              role="group"
+              aria-label="Yaw and manual throttle"
+            >
+              <i></i>
+            </div>
+          </div>
+          <label class="throttle-slider"
+            ><span data-copy="throttle"></span
+            ><input id="touch-throttle" type="range" min="0" max="100" value="0" step="1"
+          /></label>
+          <div>
+            <span data-copy="rightStick"></span>
+            <div id="right-stick" class="touch-stick" role="group" aria-label="Roll and pitch">
+              <i></i>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer>
+        <p id="keyboard-help" data-copy="keys"></p>
+        <button id="watch" data-copy="watch"></button
+        ><button id="try" data-copy="try" hidden></button>
+      </footer>
+    </main>
+    <dialog id="course-dialog">
+      <header>
+        <h2 data-copy="courses"></h2>
+        <button data-close="course-dialog" data-copy="close"></button>
+      </header>
+      <div id="course-list" class="course-list"></div>
+    </dialog>
+    <dialog id="setup-dialog">
+      <header>
+        <h2 data-copy="setup"></h2>
+        <button data-close="setup-dialog" data-copy="close"></button>
+      </header>
+      <div id="radio-setup"></div>
+    </dialog>
+    <dialog id="help-dialog">
+      <header>
+        <h2 data-copy="help"></h2>
+        <button data-close="help-dialog" data-copy="close"></button>
+      </header>
+      <p data-copy="limitation"></p>
+      <p data-copy="keys"></p>
+      <p data-copy="touchHelp"></p>
+      <p data-copy="modeHelp"></p>
+      <p data-copy="savedReview"></p>
+      <label
+        ><span data-copy="camera"></span
+        ><select id="camera-help">
+          <option value="fpv" data-copy="fpv"></option>
+          <option value="chase" data-copy="chase"></option>
+          <option value="overview" data-copy="overview"></option></select
+      ></label>
+      <button id="studio-button" data-copy="studio"></button>
+      <button id="install-offline" data-copy="offline"></button>
+      <button id="remove-offline" data-copy="removeOffline"></button>
+      <label
+        ><span data-copy="fov"></span
+        ><input id="camera-fov" type="range" min="60" max="110" value="82" /></label
+      ><label
+        ><span data-copy="tilt"></span
+        ><input id="camera-tilt" type="range" min="0" max="35" value="10" /></label
+      ><button id="export-attempt" data-copy="export"></button
+      ><label class="file-label"
+        ><span data-copy="import"></span
+        ><input id="import-attempt" type="file" accept="application/json,.json"
+      /></label>
+      <p id="transfer-status" role="status"></p>
+      <p><a href="README.md">Model, controls and package notes · Опис моделі</a></p>
+    </dialog>
+    <dialog id="notebook-dialog">
+      <header>
+        <h2 data-copy="notebook"></h2>
+        <button data-close="notebook-dialog" data-copy="close"></button>
+      </header>
+      <div id="flight-notebook"></div>
+    </dialog>
+    <dialog id="studio-dialog">
+      <header>
+        <h2 data-copy="studio"></h2>
+        <button data-close="studio-dialog" data-copy="close"></button>
+      </header>
+      <div id="flight-studio"></div>
+    </dialog>
+  </body>
+</html>

@@ -1,5 +1,6 @@
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
 import { freezeDesign } from '../content-design/catalogs.mjs';
+import { assetRevisionMime } from '../content-design/assets.mjs';
 import { hydrateStoredStillMedia, prepareRetainedStillBytes } from '../media-storage-record.mjs';
 import { VIDEO_POSTER_LIMITS } from '../video-poster.mjs';
 import { creatorAbort, creatorSHA256, ownCreatorBlob } from './bytes.mjs';
@@ -191,7 +192,7 @@ function expectedMediaAssets(content, editing) {
     else facts.set(sha256, fact);
   };
   for (const asset of content.project.assets)
-    add(asset.sha256, { bytes: asset.bytes, mime: 'image/png', kind: 'poster' });
+    add(asset.sha256, { bytes: asset.bytes, mime: assetRevisionMime(asset), kind: 'poster' });
   for (const story of content.media.stories)
     add(story.video.sha256, {
       bytes: story.video.bytes,

@@ -1,4 +1,4 @@
-import { localizedText } from '../i18n/index.mjs';
+import { getLocale, localizedText } from '../i18n/index.mjs';
 import { journeyResultReaction } from '../journey/reactions.mjs';
 import { createReactionPreferences } from '../journey/reaction-preferences.mjs';
 
@@ -28,9 +28,16 @@ export function attachJourneyReactions({
     if (status.textContent !== choice.error) localizedText(status, () => choice.error);
     status.hidden = choice.durable;
     retry.hidden = choice.durable;
-    const text = choice.enabled && current ? `${current.name} — ${current.text}` : '';
-    caption.hidden = !text;
-    if (caption.textContent !== text) localizedText(caption, () => text);
+    caption.hidden = !choice.enabled || !journeyResultReaction(current);
+    const copy = () => {
+      const reaction = choice.enabled && journeyResultReaction(current, getLocale());
+      return reaction
+        ? reaction.name
+          ? `${reaction.name} — ${reaction.text}`
+          : reaction.text
+        : '';
+    };
+    if (caption.textContent !== copy()) localizedText(caption, copy);
   };
   const choose = () => preferences.choose(control.checked);
   const save = () => preferences.retry();
@@ -40,7 +47,7 @@ export function attachJourneyReactions({
   return Object.freeze({
     present(context) {
       if (!disposed) {
-        current = journeyResultReaction(context);
+        current = context;
         render();
       }
     },

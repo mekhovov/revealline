@@ -14,6 +14,38 @@ import {
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(await readFile(path.join(directory, 'focused-test-map.json'), 'utf8'));
 
+test('the real company package script exposes all tests to exact focused deduplication', async () => {
+  const { scripts } = JSON.parse(await readFile(path.join(directory, '../package.json'), 'utf8'));
+  const prefix = 'node --test ';
+  assert.ok(scripts['company:test'].startsWith(prefix));
+  const patterns = scripts['company:test'].slice(prefix.length).trim().split(/\s+/u);
+  assert.ok(patterns.every((pattern) => /^[a-z0-9_./*-]+\.mjs$/iu.test(pattern)));
+  const showcase = 'game/test/showcase-studio-playthrough.test.mjs';
+  assert.ok(patterns.includes(showcase));
+  assert.equal(scripts['company:showcase:test'], prefix + showcase);
+  const commands = [
+    { id: 'company', command: 'npm', args: ['run', 'company:test'] },
+    { id: 'showcase', command: 'node', args: ['--test', showcase] },
+    { id: 'unrelated', command: 'node', args: ['--test', 'game/test/unrelated.test.mjs'] },
+  ];
+  // Complete synthetic glob inventory: no file execution is claimed here.
+  const execution = focusedCommandExecutionPlan(commands, {
+    packageScripts: scripts,
+    repositoryFiles: patterns.map((pattern) => pattern.replaceAll('*', 'example')),
+    shellSemantics: 'posix',
+  });
+  assert.deepEqual(execution.diagnostics, []);
+  assert.deepEqual(
+    execution.commands.map(({ id }) => id),
+    ['company', 'unrelated'],
+  );
+  assert.deepEqual(
+    execution.deduplicated.map(({ testFile }) => testFile),
+    [showcase],
+  );
+  assert.equal(execution.packageCoverage[0].tests.length, new Set(patterns).size);
+});
+
 test('ownership inventory changes select route coverage and artwork screening regressions', () => {
   const plan = focusedTestPlan(
     ['scripts/content-inventory.mjs', 'game/content-design/content-lifecycle.mjs'],

@@ -11,7 +11,7 @@ import {
 } from './replay.mjs';
 import { boundedJSON, exactKeys, stableId, required } from './data-json.mjs';
 import { resolveMasteryDefinition } from './mastery.mjs';
-import { applyGameplayTuning, recoverGameplayTuning } from './gameplay-tuning.mjs';
+import { matchRecordedGameplayTuning, recoverGameplayTuning } from './gameplay-tuning.mjs';
 import { snapshotSessionVisualPin } from './session-visual-pin.mjs';
 import { snapshotSessionActorPin } from './session-actor-pin.mjs';
 import { ACTOR_APPEARANCE_PIN_BYTES } from './presentation/actor-appearance-pin.mjs';
@@ -210,7 +210,9 @@ export function suspendSession({
   const tuning = recoverGameplayTuning(run.level);
   let pictureRevision = run.level.revision;
   if (presentationLevel && tuning) {
-    const expected = createRun(applyGameplayTuning(presentationLevel, tuning), {
+    const matched = matchRecordedGameplayTuning(presentationLevel, run.level);
+    required(matched, 'Tuned picture source differs from this flight.');
+    const expected = createRun(matched, {
       classId: run.classId,
       classRecipes: run.classRecipes,
     });
