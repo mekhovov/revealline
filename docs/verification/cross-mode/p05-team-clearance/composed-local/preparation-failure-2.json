@@ -1,5 +1,0 @@
-{
-  "stage": "Pre-test setup correction",
-  "error": "Preservation rename found no fixture directory; initial snapshot failed on its first path. Original script rerun still failed before runtime.",
-  "runtimeStarted": false
-}
