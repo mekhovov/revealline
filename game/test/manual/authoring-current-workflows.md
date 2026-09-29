@@ -209,6 +209,60 @@ the child menu if needed, and activate Return to editor. Verify focus returns
 to Enter preview, then export again. Retain the JSON download and validate it
 with `validateScenario`; OS file-picker reimport is a separate platform check.
 
+## Motion Lab
+
+Use the isolated qualification origin:
+`http://127.0.0.1:8988/game/test/manual/authoring-controller.html?tool=motionCurrent`.
+Run controller workflow in English and keep the tool in the foreground. This
+case refuses other ports. It snapshots local/session storage before using the
+real **Reset test collection** action. Its explicit fixture cleanup restores the
+exact original lab save and recovery keys, then checks the full storage snapshot;
+cleanup is not application input or evidence of a menu command. Other player
+saves and installed content are not changed.
+
+The case uses Sections to reach Response, Palette, Collection, Progression,
+Ability and the actual arena. It cancels speed, turn-policy, palette, background
+fit and character drafts, then commits a speed step and grid-centered turn
+policy while preserving paused intent. It cancels a background chooser, assigns
+the real bundled Dawn Signal PNG, cancels replacement, commits Cover and uses
+Clear. The decoded source must be 640 × 360, and Clear must return focus to the
+usable background input; these edits remain a local preview.
+
+The isolated lab collection first rejects equipping a locked character. An
+explicit simulated result unlocks it, duplicate application must make no write,
+and Equip persists the chosen cosmetic. The actual saved JSON passes the
+production profile restorer and serializer with exact byte equality; its
+receipt includes SHA-256, event identity and equipment. This is validator
+reopening of actual persisted bytes, not a browser-reload claim. It never awards
+real player progress.
+
+The final row checks paused and empty-charge ability rejection, supply pickup,
+explicit arena entry, ability use, directional movement and Back restoring the
+paused arena entry. Each visible direction button must accept controller
+Confirm; paused direction activation must not resume. Boost and Slow must
+release through Back or Confirm. The saved cosmetic profile must remain
+unchanged during these motion edits.
+
+For native keyboard add `&keyboard=1`. Run the tool without a virtual pad, then
+use Tab/Shift+Tab, Enter, native range/select keys and Escape. Visit the Sections
+destinations; edit a range/select without moving the study from outside the
+arena. Use the input's adjacent Choose source action to cancel once, assign the
+bundled PNG and Clear it. Inspect the locked cosmetic, explicitly apply a test
+result and equip it. Reload using the browser's native keyboard command and
+verify the saved lab event/equipment reappear. Enter the arena, move, use the toy
+ability and leave with Escape; test the visible direction and hold controls.
+Record real saved-profile bytes and production validation separately from the
+virtual-pad receipt. A native save intentionally remains on this isolated origin.
+
+Motion Lab has no portable media/motion export and no child-game preview to
+qualify. Do not invent an export, iframe handoff or authored-level reopening
+claim. Invalid-file decoding, hidden/blur lifecycle, EN/UK layout, physical
+controllers, operating-system file dialogs and native platforms remain separate
+checks unless their own receipts are recorded. The current bounded receipts and
+the remaining live-language Sections accessible-name issue are recorded in
+`docs/verification/motion-lab-input-2026-09-29.md`; a translated option list alone
+does not qualify the entire Ukrainian editing workflow.
+
 ## Automated boundary coverage
 
 `asset-studio-sprite-input.test.mjs` runs the actual Sprite panel with its shared

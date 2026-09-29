@@ -384,8 +384,9 @@
     {
       "name": "Motion Lab",
       "route": "/authoring/motion-lab/",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "Current virtual-pad workflow4/4 passes on97433cc62: cancel/commit controls, source handling, isolated collection save validation, arena/ability/direction/hold ownership. Native keyboard edit/save and real Workshop return/reopen passed on e77284e78, with final Clear focus retry on97433cc62. Bounded Ukrainian Sections focus passed; shared dialog accessible-name locale follow-up and physical/published acceptance remain open. No design export exists.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
+      "evidence": "docs/verification/motion-lab-input-2026-09-29.md"
     },
     {
       "name": "Pictures & Stories",
