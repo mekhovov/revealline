@@ -1,5 +1,0 @@
-(() => {
- const ids=['library-dialog','library-saves','library-title','export-backup','export-session','save-status','cancel-attempt-export','library-operation-cancel'];
- const inspect=(id)=>{const e=document.getElementById(id);if(!e)return {id,missing:true};const r=e.getBoundingClientRect(),s=getComputedStyle(e);return{id,text:e.textContent.slice(0,1200),hidden:e.hidden,disabled:e.disabled,open:e.open,rect:r.toJSON(),position:s.position,display:s.display,visibility:s.visibility,ariaBusy:e.getAttribute('aria-busy'),operationState:e.dataset.operationState,fullyInViewport:r.width>0&&r.height>0&&r.left>=0&&r.top>=0&&r.right<=innerWidth&&r.bottom<=innerHeight,scrollTop:e.scrollTop,scrollHeight:e.scrollHeight,clientHeight:e.clientHeight}};
- return {at:new Date().toISOString(),performanceNow:performance.now(),url:location.href,viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},active:{id:document.activeElement?.id,tag:document.activeElement?.tagName,text:document.activeElement?.textContent?.slice(0,120)},windowScroll:{x:scrollX,y:scrollY},elements:ids.map(inspect)};
-})()
