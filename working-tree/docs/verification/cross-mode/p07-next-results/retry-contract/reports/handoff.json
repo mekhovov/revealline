@@ -1,0 +1,39 @@
+{
+  "status": "CANDIDATE_TEST_CONTRACT_CORRECTION_PASS",
+  "source": "c4851d140b8c7c8ebaebfede998b4d9e60f18807",
+  "branch": "codex/p07-retry-contract-tests",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-retry-contract-tests",
+  "paths": [
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "docs/solo-result-continuation.md",
+    "game/test/defeat-presentation-host.test.mjs",
+    "game/test/picture-ready-status.test.mjs",
+    "game/test/terminal-navigation.test.mjs"
+  ],
+  "patch": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/candidate.patch",
+    "bytes": 26360,
+    "sha256": "79490226d64aab39f496e0b505890aa5241beb79d5adf68ab5b8a4b924a37185"
+  },
+  "candidatePins": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/candidate-pins.json",
+    "bytes": 1927,
+    "sha256": "0ee9e0b7dc6d2d569769c09bdfddd390b4f5f0543c0ae9d4aab98a956a3b0420"
+  },
+  "verification": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/final-verification.json",
+    "bytes": 5992,
+    "sha256": "ce04920c4794a27ce1349e05242b9672903491bfc2e784ce00badbea024cc60a"
+  },
+  "readme": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/README.md",
+    "bytes": 2503,
+    "sha256": "02d901bbe99249736a9317b5e5a68d27d5a2c6eb50aecf21cbf66a5c87e56fc2"
+  },
+  "limits": [
+    "No runtime, media-loading, timeout, storage, version, branch ancestry, index or remote changes.",
+    "No whole repository gates, ordinary build, hosted qualification, public release or physical-device acceptance.",
+    "Root ordinary-browser observations are separately pinned; this reviewer did not run that browser journey.",
+    "Source c485 original CI failure logs remain at .cache/p07a-v0610-ci-failure-c4851d14; no failure histories were overwritten."
+  ]
+}
