@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "baseCampaignKey": "fracture-lines-fpv/1/8f79476cc9cf6221",
+    "levelId": "fracture-lines-split-ring",
+    "levelRevision": "1",
+    "themeId": "fpv"
+  },
+  "receiptIdentity": {
+    "baseCampaignKey": "fracture-lines-fpv/1/8f79476cc9cf6221",
+    "levelId": "fracture-lines-split-ring",
+    "levelRevision": "1",
+    "themeId": "fpv"
+  },
+  "archivedPictureResolves": true,
+  "error": null
+}

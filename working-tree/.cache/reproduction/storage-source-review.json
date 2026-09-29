@@ -1,0 +1,157 @@
+{
+  "format": "bounded-storage-source-review.v1",
+  "createdAt": "2026-09-14T06:58:55.639901+00:00",
+  "sourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf",
+  "conclusion": "Actual exported receipt and frozen owner match; later visible installed/media records are absent. Storage pressure is plausible but cause is unproven. No validator fix.",
+  "sources": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-23b886bbdbea/game/app.mjs",
+      "bytes": 182539,
+      "sha256": "7830989cd811675e405dea2fcd7a704f3a638fabd5f7c2db0b3086e0b2d7b81d",
+      "gitPath": "game/app.mjs",
+      "exactSourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-23b886bbdbea/game/storage.mjs",
+      "bytes": 1653,
+      "sha256": "c24d54887f80e41820efd471e50130a4c507fe071a16321e81f019135bef2fb7",
+      "gitPath": "game/storage.mjs",
+      "exactSourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-23b886bbdbea/game/managed-media-store.mjs",
+      "bytes": 37789,
+      "sha256": "7f9b1220b3c5fa7a27183d42df269faa212c6eea728140f89f5c5f9d4bbdf7c2",
+      "gitPath": "game/managed-media-store.mjs",
+      "exactSourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-23b886bbdbea/game/media-store.mjs",
+      "bytes": 4947,
+      "sha256": "a1d423742329ab37f41759fa03dbadbbc03c254580813c14f322533743c62607",
+      "gitPath": "game/media-store.mjs",
+      "exactSourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-23b886bbdbea/game/media-storage-record.mjs",
+      "bytes": 11906,
+      "sha256": "4088cff8ad53b36d31df616791f9343f935d0b832cde8f18a7766b9db6f6470e",
+      "gitPath": "game/media-storage-record.mjs",
+      "exactSourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-23b886bbdbea/game/external-chapter-host.mjs",
+      "bytes": 23747,
+      "sha256": "765c8ee26813a70d2d45f7cbe797c8bf8d8d101945c93457e493eeef5b8532b1",
+      "gitPath": "game/external-chapter-host.mjs",
+      "exactSourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-23b886bbdbea/game/external-chapter-install.mjs",
+      "bytes": 14880,
+      "sha256": "0e3d76ad653bedb57dd7c7903b28d2047a40f7102f351f4a671523034980d010",
+      "gitPath": "game/external-chapter-install.mjs",
+      "exactSourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-23b886bbdbea/game/external-chapter-pointer.mjs",
+      "bytes": 6486,
+      "sha256": "8b192d551397bbbf3f624c6cb8f6a50e2146997a41d06e5816f1f37c54949408",
+      "gitPath": "game/external-chapter-pointer.mjs",
+      "exactSourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-23b886bbdbea/game/external-chapter-backup.mjs",
+      "bytes": 13967,
+      "sha256": "c81cb1333487b554c15b138ed8f4869b6609e26fa72b883a5f75b4d1114cd1f3",
+      "gitPath": "game/external-chapter-backup.mjs",
+      "exactSourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-23b886bbdbea/game/picture-receipts.mjs",
+      "bytes": 3933,
+      "sha256": "3c6e7b40eb829249142d832be88fd86d7455bd3f7358e1566eb6a9793b402386",
+      "gitPath": "game/picture-receipts.mjs",
+      "exactSourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-23b886bbdbea/game/ui/earned-picture.mjs",
+      "bytes": 3709,
+      "sha256": "db21c1183afe5c5cdd181e11675a4143d63c6e8c4e8b13f2966538ebac0fe735",
+      "gitPath": "game/ui/earned-picture.mjs",
+      "exactSourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-23b886bbdbea/game/ui/picture-identity.mjs",
+      "bytes": 3164,
+      "sha256": "895883a76ddd62578a6c971b11160f4b977dc1b4cc83bc729120a2869820f04c",
+      "gitPath": "game/ui/picture-identity.mjs",
+      "exactSourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-23b886bbdbea/game/media-library.mjs",
+      "bytes": 12188,
+      "sha256": "ed1f1abe0b95b9889741ec8929522f0fcaba29a5438b09df18016d3ffffc6eb4",
+      "gitPath": "game/media-library.mjs",
+      "exactSourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/frozen-native-v039/12-exported-player-library.json",
+      "bytes": 2556,
+      "sha256": "0e01c2dc67bcba350ae7cb2d7559c0aaa362cdb06a763ccf4bd5282f56166892"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/frozen-native-v039/13-export-backup-refused.txt",
+      "bytes": 5400,
+      "sha256": "5dc3e64989971b614eaeb9c622b015f7c2c31a56522463a97cc14dd7ddfbdaa4"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/frozen-native-v039/13-unchanged-textarea-after-refused-backup.json",
+      "bytes": 2556,
+      "sha256": "0e01c2dc67bcba350ae7cb2d7559c0aaa362cdb06a763ccf4bd5282f56166892"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/frozen-native-v039/16-empty-installed-packs.txt",
+      "bytes": 2456,
+      "sha256": "4676d7e2121eff1152b03901c6c6d79c289f17aa68a10a0d78044a5d3557e0ba"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/frozen-native-v039/17-empty-media-library.txt",
+      "bytes": 8505,
+      "sha256": "2b75213359a2f149b93464b2dc8cca3c46963d2c3fac5e1c4f409a03c581fa5e"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/frozen-native-v039/peer-owner-source-lagrange.json",
+      "bytes": 5983,
+      "sha256": "4e4e8f99e82536226934936ea007044dc4588f94936114b416f849d30fb8d95f"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/earned-picture-resume/.cache/reproduction/native-player-library.json",
+      "bytes": 2556,
+      "sha256": "0e01c2dc67bcba350ae7cb2d7559c0aaa362cdb06a763ccf4bd5282f56166892"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/earned-picture-resume/.cache/reproduction/frozen-media-manifest.json",
+      "bytes": 12430,
+      "sha256": "b3650b99baad20c932d2dae8bdfc36c3e47c1708eae1bb8a3e9bf836c3e64143"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/earned-picture-resume/.cache/reproduction/frozen-owner-check.mjs",
+      "bytes": 1183,
+      "sha256": "189e277e80ab4a9576960c128f7d0f5055a8082babbf8bce7e54bf9f00c07e52"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/earned-picture-resume/.cache/reproduction/frozen-owner-result.json",
+      "bytes": 414,
+      "sha256": "2a2b99a9d43e0850678d91976eb6ca9c466da2d8ce88ee3a1979254041223224"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/earned-picture-resume/.cache/reproduction/STORAGE-FINDINGS.md",
+      "bytes": 5636,
+      "sha256": "f8a303c995dc0610fab596c8f76435246ce86ba2c89ef782814ce81059aeeb1b"
+    }
+  ],
+  "operations": "Read source and primary browser documentation; hash small source/evidence; retain previous single bounded owner-metadata resolution. No browser/database reads, image decode, heavy tests, source edits or artifact modifications in this closure."
+}
