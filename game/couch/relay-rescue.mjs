@@ -48,6 +48,7 @@ import { COOP_STARTER_PACK, coopPackDestination } from '../coop/library.mjs';
 import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createCoopPainter } from './coop-view.mjs';
+import { coopCueOverflowEntries, hasCoopCueOverflow } from './coop-cue-overflow.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCoopPresentation } from './coop-presentation.mjs';
 import {
@@ -674,6 +675,86 @@ export function bootCoop({
     if (operation) pictureUI();
   }
   let knockdowns = [null, null];
+  const cueOverflowAttempts = new WeakSet();
+  let cueOverflowRun = null,
+    cueOverflowKey = '';
+  function updateCueOverflow() {
+    const active = !loopStopped && !!run && ['running', 'paused'].includes(run.status),
+      overflow = active && hasCoopCueOverflow(painter.cueLayout),
+      admitted = active && (overflow || cueOverflowAttempts.has(run)),
+      rail = $('coop-cue-overflow'),
+      action = $('coop-field-details'),
+      section = $('coop-field-details-section');
+    if (cueOverflowRun !== run) {
+      cueOverflowRun = run;
+      cueOverflowKey = '';
+      localizedText($('coop-cue-announcement'), () => '');
+    }
+    if (!active && $('coop-cue-announcement').textContent)
+      localizedText($('coop-cue-announcement'), () => '');
+    if (overflow && !cueOverflowAttempts.has(run)) {
+      cueOverflowAttempts.add(run);
+      localizedText($('coop-cue-announcement'), () => t('interface:team.cueOverflowNotice'));
+    }
+    rail.hidden = !admitted || !running();
+    action.hidden = !admitted;
+    section.hidden = !admitted;
+    const destination = admitted && run.status === 'paused' ? $('coop-pause-core') : rail;
+    if (action.parentNode !== destination) destination.append(action);
+    const entries = admitted ? coopCueOverflowEntries(run) : [],
+      key = JSON.stringify(entries);
+    if (key !== cueOverflowKey) {
+      cueOverflowKey = key;
+      $('coop-field-details-list').replaceChildren(
+        ...entries.map((entry) => {
+          const item = document.createElement('li');
+          item.dataset.entity = entry.id;
+          item.textContent = `${entry.name}: ${entry.state}`;
+          return item;
+        }),
+      );
+      $('coop-cue-summary').textContent = entries
+        .slice(0, 2)
+        .map((entry) => `${entry.name}: ${entry.state.split(' · ')[0]}`)
+        .join(' · ');
+    }
+  }
+  function openCueDetails() {
+    if (
+      disposed ||
+      inactive ||
+      !foreground() ||
+      !run ||
+      !['flight', 'coop-paused'].includes(scope()) ||
+      !cueOverflowAttempts.has(run)
+    )
+      return;
+    const attempt = run,
+      epoch = generation;
+    if (running()) pause({ focus: false });
+    if (
+      disposed ||
+      run !== attempt ||
+      generation !== epoch ||
+      run.status !== 'paused' ||
+      loopStopped
+    )
+      return;
+    $('coop-help').open = true;
+    updateCueOverflow();
+    controllerConfirmGuard.requireNeutral();
+    const region = $('coop-help-reading');
+    region.scrollTop = 0;
+    navigation.beginReading({
+      region,
+      origin: $('coop-field-details'),
+      exit: $('coop-help-reading-done'),
+      label: t('interface:fieldDetails'),
+      getLabel: () => t('interface:fieldDetails'),
+    });
+    region.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+  }
+  $('coop-field-details').onclick = openCueDetails;
   const selectedLevel = () =>
     pack.levels.find((level) => level.id === $('coop-level').value) || pack.levels[0];
   const selectedConfiguration = () =>
@@ -1524,6 +1605,7 @@ export function bootCoop({
       actorAppearance: acceptedPicture?.actorAppearance ?? null,
       pictureLevel: attemptTuning.get(run)?.pictureLevel ?? run.level,
     });
+    updateCueOverflow();
     const coverage = run.coverage * 100;
     localizedText(
       $('coop-coverage'),
@@ -4326,6 +4408,7 @@ export function bootCoop({
     // Never repaint while handling a painter failure. Any destructive decision
     // is cancelled before showing the stopped attempt's recovery actions.
     loopStopped = true;
+    updateCueOverflow();
     music?.suspend();
     closeEarnedPicture({ restore: false });
     cancelPicture({ restore: false });
@@ -4470,6 +4553,7 @@ export function bootCoop({
       retirePicture();
       acceptedPicture = null;
       run = null;
+      updateCueOverflow();
       attemptLevel = null;
       attemptPack = null;
       generation++;
@@ -5763,6 +5847,7 @@ export function bootCoop({
     .catch((error) => console.error(t('interface:nativeLifecycleUnavailable'), error));
   const dispose = () => {
     if (disposed) return;
+    $('coop-field-details').onclick = null;
     installOfflinePanel?.dispose();
     stopActorView();
     actorPreferences.dispose();
