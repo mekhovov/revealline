@@ -172,7 +172,10 @@ import { attachControllerNavigation } from './ui/controller-navigation.mjs';
 import { attachControllerReading } from './ui/controller-reading.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
-import { requestControllerPracticeExit } from './ui/controller-practice-exit.mjs';
+import {
+  attachControllerPracticeReturn,
+  requestControllerPracticeExit,
+} from './ui/controller-practice-exit.mjs';
 import { playgroundTabBoundary } from './ui/playground-tab-boundary.mjs';
 import { attachEnemyWorkshopReturn } from './ui/enemy-workshop-return.mjs';
 import { attachEnemyGuide } from './ui/enemy-guide.mjs';
@@ -2805,6 +2808,11 @@ try {
     enabled: practiceSession && !courseSession && !controllerPreviewRequested,
     onReturn: () => pause(true),
   });
+  const controllerPracticeReturn = attachControllerPracticeReturn({
+    enabled: !!controllerPreview,
+    session: params.get('controller-session'),
+    beforeExit: suspendInteraction,
+  });
   enemyGuide = attachEnemyGuide({
     themes: guideThemes,
     getPresentation: () => presentationSnapshot,
@@ -2927,6 +2935,7 @@ try {
       input.destroy();
       controller.destroy();
       controllerPreview?.destroy();
+      controllerPracticeReturn.dispose();
       practiceNavigation.destroy();
       enemyWorkshopReturn.dispose();
       courseView?.destroy();
@@ -11412,7 +11421,7 @@ try {
   gameShell = attachGameShell({
     keyboardNavigation: false, // The shared controller adapter also owns menu keys.
     training: courseSession,
-    practiceReturn: $('enemy-workshop-return'),
+    practiceReturn: $('controller-practice-return') || $('enemy-workshop-return'),
     focusBriefing: () => {
       clearInput();
       controllerReading.refresh();
