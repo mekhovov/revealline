@@ -263,6 +263,78 @@ the remaining live-language Sections accessible-name issue are recorded in
 `docs/verification/motion-lab-input-2026-09-29.md`; a translated option list alone
 does not qualify the entire Ukrainian editing workflow.
 
+## Pictures & Stories
+
+Use the dedicated qualification origin:
+`http://127.0.0.1:8989/game/test/manual/authoring-controller.html?tool=stillCurrent`.
+Run controller workflow and keep the tool in the foreground. The runner sends
+the workshop's initial join edge. Do not run another writer on this origin
+concurrently: the fixture verifies exact media/story generations and preserves
+pre-existing assignments, originals, immutable history and browser keys. It
+selects a map/world with no picture history and excludes the initially displayed
+selection, so a separate native First Signal / FPV assignment is not replaced.
+The new qualification assignment and story remain available after the run;
+there is no IndexedDB clearing or backup restore.
+
+The case cancels the world selector, picture chooser and credit draft. It chooses
+the bundled Dawn Signal picture and rejects both missing provenance and a blank
+description without changing the source File or stored generation. A corrected
+description produces an unsaved preview. Separate **Save assignment** must
+commit exactly one media generation, retain the original bytes and focus
+`#still-media-show-saved`.
+
+For the optional story it cancels the source chooser, selects the bundled Dawn
+Signal video and explicitly inspects it silently. Canceled time and description
+drafts leave their fields unchanged. Committing end time zero through the number
+editor produces an invalid empty segment; Prepare must reject it without saving.
+The corrected segment with a blank description must also fail. After correction,
+**Prepare new story** enables the distinct Save action without changing storage.
+**Save prepared story** commits one story generation, binds the exact saved
+picture revision and focuses `#still-media-story-history`.
+
+Only after both saves does the case prepare and explicitly activate the
+`.rlmedia` and `.rlstory` download links. It closes and reopens the workshop,
+verifies exact picture history and previews the saved original. It prepares the
+saved story again, then uses Back to close and cancel that staged binding.
+Reopening must leave Save disabled and both persisted generations unchanged.
+The second pair of exports must match the first byte-for-byte and by SHA-256.
+Every old picture asset, presentation, assignment, retained generic-media row
+and story binding remains present and unchanged. Each historical campaign
+snapshot and its theme references are retained; only the newly selected world's
+theme reference may extend that campaign owner's validation context. Unrelated
+owners or themes are rejected. The complete audio metadata row and all
+pre-existing local/session keys are also checked.
+Read-only store handles and importers inspect results; no fixture code calls a
+domain write, restore, install or delete operation.
+
+Browser export validation uses the production `importMediaBundle` with actual
+image decoding and `importStoryBundle` with its default silent native video
+metadata/container/hash inspection. Each parsed artifact is canonically
+re-exported and compared with the observed Blob. Video inspection waits for
+native metadata; it does not prove complete video-frame decoding or playback.
+The passive Blob observer and explicit link activation do not alone prove that
+the operating system wrote a file. Retain the actual downloaded files and their
+separate receipts. In particular, the native OS-file validator's
+`inspectStoryBundle` is a byte/hash/metadata check, **not** the browser-native
+inspection performed by `importStoryBundle`.
+
+For a separate native keyboard journey add `&keyboard=1`. Open Pictures &
+Stories, use Tab/Shift+Tab and the native text/select/number controls, and choose
+bundled media through the adjacent Choose source actions. Cancel a source once,
+reject missing picture provenance, correct it, Preview and separately Save.
+Verify focus reaches Preview saved picture. Inspect the optional video, reject
+an empty segment, correct its end time and description, Prepare and separately
+Save; verify focus reaches the saved-story selector. Close/reopen, select the
+exact saved revisions, and prepare/activate both downloads. Use native keyboard
+throughout and record any pointer intervention separately. Retain actual
+`.rlmedia`/`.rlstory` files with sizes, hashes, production validation and exact
+re-export comparisons; do not substitute an in-page download message.
+
+This bounded workflow does not qualify soundtrack recovery, backup-review and
+restore-target UI, OS file-picker import, complete story playback, timed
+in-flight operation cancellation, physical controllers or native platforms.
+These remain separate checks, even when their underlying domain tests pass.
+
 ## Automated boundary coverage
 
 `asset-studio-sprite-input.test.mjs` runs the actual Sprite panel with its shared

@@ -574,7 +574,7 @@ document.getElementById('run').onclick = async () => {
   };
   try {
     await wait(150);
-    if (['enemy', 'enemyCurrent', 'video', 'still'].includes(selector.value))
+    if (['enemy', 'enemyCurrent', 'video', 'still', 'stillCurrent'].includes(selector.value))
       await pulse('confirm'); // Existing workshop hosts consume their join edge.
     await wait(100);
     const p = {
