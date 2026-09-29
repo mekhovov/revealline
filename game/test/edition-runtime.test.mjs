@@ -19,6 +19,8 @@ import {
   editionMenuSceneResources,
   projectEditionMenuResourcePaths,
   projectEditionMenuScenes,
+  projectEditionBrandIdentity,
+  DEFAULT_GAME_WORDMARK,
 } from '../../scripts/edition-runtime.mjs';
 import { MENU_SCENES, resolveMenuScene } from '../ui/menu-scene-catalog.mjs';
 import { selectOfflineCore } from '../../scripts/offline-core-closure.mjs';
@@ -29,6 +31,45 @@ const droneAidLandingFiles = [
   'game/ui/art/menu-scenes/droneaid-main-background.png',
   'game/ui/art/menu-scenes/droneaid-wordmark-light.svg',
 ];
+test('standalone branding projects only the image fallback to an approved selected logo', async () => {
+  const original = await fs.readFile(new URL('../ui/brand-identity.mjs', import.meta.url));
+  const catalog = JSON.parse(
+    await fs.readFile(new URL('../editions/catalog.json', import.meta.url)),
+  );
+  for (const edition of catalog.editions) {
+    const brand = catalog.brands.find((item) => item.id === edition.brandId);
+    const logo = catalog.assets.find((item) => item.id === brand.logoAssetId);
+    assert.ok(logo?.approved && logo.publication === 'public');
+    const projected = projectEditionBrandIdentity(original, logo.path);
+    const expected = path.posix.relative('game/ui', logo.path);
+    const replacement = expected.startsWith('.') ? expected : './' + expected;
+    assert.equal(
+      projected.toString(),
+      original
+        .toString()
+        .replace("'./art/identity/fpv-line/wordmark.png'", JSON.stringify(replacement)),
+      'Default/edition mounting branches, labels, image-error fallback and cleanup remain exact',
+    );
+    assert.equal(
+      new URL(replacement, 'https://test.invalid/game/ui/brand-identity.mjs').pathname,
+      '/' + logo.path,
+    );
+    assert.equal(
+      projected.includes(Buffer.from(DEFAULT_GAME_WORDMARK.slice('game/ui/'.length))),
+      false,
+    );
+    assert.deepEqual(projectEditionBrandIdentity(original, logo.path), projected);
+  }
+  assert.match(original.toString(), /art\/identity\/fpv-line\/wordmark\.png/);
+  assert.throws(
+    () => projectEditionBrandIdentity(original, 'https://other.invalid/logo.png'),
+    /local logo/,
+  );
+  assert.throws(
+    () => projectEditionBrandIdentity(Buffer.from('export const changed = 1;'), 'game/logo.png'),
+    /Unknown shared/,
+  );
+});
 test('support page closure retains navigation without authoring sample media or manual fixtures', async () => {
   const files = await collectEditionEngineFiles({
     root: fileURLToPath(new URL('../../', import.meta.url)),

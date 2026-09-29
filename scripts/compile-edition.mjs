@@ -36,6 +36,8 @@ import {
   projectEditionMenuResourcePaths,
   editionMenuSceneResources,
   projectEditionMenuScenes,
+  DEFAULT_GAME_WORDMARK,
+  projectEditionBrandIdentity,
   validateEditionHostRequests,
 } from './edition-runtime.mjs';
 import { validateEditionPresentation } from '../game/editions/presets.mjs';
@@ -405,6 +407,12 @@ export async function compileEdition({
   // consumes several MiB of the deliberately bounded offline package.
   const menuResources = editionMenuSceneResources(editionIds);
   enginePaths = projectEditionMenuResourcePaths(enginePaths, editionIds);
+  const selectedBrand =
+    editionIds.length === 1 &&
+    runtimeCatalog.brands.find((brand) => brand.id === runtimeCatalog.editions[0].brandId);
+  const selectedLogo =
+    selectedBrand && runtimeCatalog.assets.find((asset) => asset.id === selectedBrand.logoAssetId);
+  if (selectedLogo) enginePaths = enginePaths.filter((name) => name !== DEFAULT_GAME_WORDMARK);
   const sharedLedger = sourceFiles.get(EDITION_RUNTIME_ASSET_LEDGER);
   if (sharedLedger) {
     const assets = readJSON(sharedLedger)
@@ -487,9 +495,11 @@ export async function compileEdition({
       file,
       file === 'game/ui/menu-scene-catalog.mjs'
         ? projectEditionMenuScenes(bytes, editionIds)
-        : enginePaths.includes(file)
-          ? projectEditionRuntimeImports(file, bytes)
-          : Buffer.from(bytes),
+        : file === 'game/ui/brand-identity.mjs' && selectedLogo
+          ? projectEditionBrandIdentity(bytes, selectedLogo.path)
+          : enginePaths.includes(file)
+            ? projectEditionRuntimeImports(file, bytes)
+            : Buffer.from(bytes),
     );
   }
   ({ files, catalog: runtimeCatalog } = projectSelectedEditionThemes(runtimeCatalog, files));
@@ -653,7 +663,11 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
             ...Object.entries(EDITION_RUNTIME_RESOURCES)
               .filter(([name]) => files.has(name))
               .flatMap(([name, paths]) =>
-                name === 'game/ui/menu-scene-catalog.mjs' ? menuResources : paths,
+                name === 'game/ui/menu-scene-catalog.mjs'
+                  ? menuResources
+                  : name === 'game/ui/brand-identity.mjs' && selectedLogo
+                    ? [selectedLogo.path]
+                    : paths,
               ),
           ]),
         ),
@@ -775,6 +789,16 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
     files: inventory,
   });
   files.set('edition-build.json', jsonBytes(manifest));
+  if (offline !== null) {
+    const totalBytes = [...files.values()].reduce((sum, bytes) => sum + bytes.byteLength, 0);
+    if (files.size > 2000 || totalBytes > 64 * 1024 * 1024)
+      throw Object.assign(
+        new TypeError(
+          `Final edition output exceeds 2000 files or 64 MiB (${files.size} files / ${totalBytes} bytes).`,
+        ),
+        { outputFiles: files.size, outputBytes: totalBytes },
+      );
+  }
   return Object.freeze({ files, runtimeCatalog, manifest, eligibility });
 }
 

@@ -138,6 +138,81 @@ function fixture() {
   };
 }
 
+test('compiler retains the selected logo and projects shared fallback resources without default artwork', async () => {
+  const f = fixture();
+  const catalog = structuredClone(f.catalog);
+  catalog.brands[0].logoAssetId = catalog.brands[0].heroAssetId;
+  const brandPath = 'game/ui/brand-identity.mjs';
+  const defaultWordmark = 'game/ui/art/identity/fpv-line/wordmark.png';
+  f.files.set(brandPath, await fs.readFile(new URL('../ui/brand-identity.mjs', import.meta.url)));
+  f.files.set('game/i18n/index.mjs', Buffer.from('export const localizedText = () => {};'));
+  f.files.set(defaultWordmark, Buffer.from('unselected default wordmark'));
+  f.files.set('game/company.html', Buffer.from('<html><head></head><body></body></html>'));
+  const result = await compileEdition({
+    ...f,
+    catalog,
+    editionIds: ['coupa-public'],
+    enginePaths: ['game/company.html', brandPath, 'game/i18n/index.mjs', defaultWordmark],
+    version: '1.0.0',
+    offline: { basePath: '/verification/' },
+  });
+  const logo = catalog.assets.find((asset) => asset.id === catalog.brands[0].logoAssetId);
+  assert.deepEqual(result.files.get(logo.path), f.files.get(logo.path));
+  assert.ok(!result.files.has(defaultWordmark));
+  assert.match(result.files.get(brandPath).toString(), /\.\.\/editions\/assets\/coupa\.png/);
+  const cache = JSON.parse(result.files.get('offline-cache.json'));
+  assert.ok(cache.files.some((file) => file.path === logo.path));
+  assert.ok(!cache.files.some((file) => file.path === defaultWordmark));
+  assert.ok(f.files.has(defaultWordmark), 'Source/default package bytes are untouched');
+});
+
+test('final offline edition budget counts every generated worker and manifest', async () => {
+  const f = fixture();
+  f.files.set('game/company.html', Buffer.from('<html><head></head><body></body></html>'));
+  const options = {
+    ...f,
+    editionIds: ['coupa-public'],
+    enginePaths: ['game/company.html'],
+    version: '1.0.0',
+    offline: { basePath: '/verification/' },
+  };
+  const baseline = await compileEdition(options);
+  const files = new Map(f.files);
+  const extra = [];
+  for (let i = baseline.files.size; i < 2000; i++) {
+    const name = `game/budget-${i}.txt`;
+    files.set(name, Buffer.from('x'));
+    extra.push(name);
+  }
+  const atLimit = await compileEdition({
+    ...options,
+    files,
+    enginePaths: [...options.enginePaths, ...extra],
+  });
+  assert.equal(atLimit.files.size, 2000);
+  files.set('game/one-more.txt', Buffer.from('x'));
+  await assert.rejects(
+    compileEdition({
+      ...options,
+      files,
+      enginePaths: [...options.enginePaths, ...extra, 'game/one-more.txt'],
+    }),
+    /Final edition output exceeds 2000 files or 64 MiB \(2001 files/,
+  );
+  const baselineBytes = [...baseline.files.values()].reduce((sum, bytes) => sum + bytes.length, 0);
+  const large = new Map(f.files);
+  large.set('game/padding.txt', Buffer.alloc(64 * 1024 * 1024 - baselineBytes + 1024));
+  await assert.rejects(
+    compileEdition({
+      ...options,
+      files: large,
+      enginePaths: [...options.enginePaths, 'game/padding.txt'],
+    }),
+    /Final edition output exceeds 2000 files or 64 MiB/,
+    'Payload fits the earlier cache inventory cap but final generated output does not',
+  );
+});
+
 async function retainedFixture() {
   const f = fixture(),
     catalog = structuredClone(f.catalog);
