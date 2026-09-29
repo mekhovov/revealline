@@ -1,0 +1,107 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:15.908357+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint",
+  "branch": "refs/heads/codex/p08-versus-footprint",
+  "head": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "77523aeb0956253ee7c441a62f5d11d89b058c22",
+      "sha256": "2567d5cb71e51a59761bab58950a5f2f748b978edc33cd80d14b9e6a1aaef4df",
+      "bytes": 216224,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/field-kit-surfaces.md",
+      "object": "e501497bb1e1ed9c9d31739f059bc7cbde913e27",
+      "sha256": "8fff6961c1423ef08c05ea6fa5a6f0548be587c13c8afa0e9a6cc3c70555b77d",
+      "bytes": 11440,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/couch.css",
+      "object": "8f4618ecbe48b3d0e7f70424909ed5730cb035d0",
+      "sha256": "12fa3c08661acae7212654971dee8ae01ebcd86b6b2085fb6a0d9940fbdf85af",
+      "bytes": 9496,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/couch.mjs",
+      "object": "49efa0cce71f0caddc3110ee520efd18b9e30644",
+      "sha256": "54004fde57c8ca5f0d68af25ebefcb5f2c763524ffab1409f067335d246ede2c",
+      "bytes": 57410,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/helpers/couch-host.mjs",
+      "object": "5552ef7554c756e0403e489ee9d92ed8d58c874d",
+      "sha256": "ba541219e1034b28976c98567f7cfe1b5ba863772e096d1e7ee86bde6d5f1bab",
+      "bytes": 9329,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/couch/board-footprint.mjs",
+      "object": "bde78e9f05afcefdabe5441a37817fd2a0541e65",
+      "sha256": "33b1f325d7bbe97c59704dc525c6a0391bc330d83946b60fb765ccb0a1cb8a0f",
+      "bytes": 3544,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/board-footprint.test.mjs",
+      "object": "d95cf4a020e33d665ca7ac1c891bffaaccd20815",
+      "sha256": "fb7001f5b2b94f1a2eb0dc85e3b2fcded77895964e23b39d42288a5b7d4c4fe3",
+      "bytes": 5661,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/couch-board-footprint-host.test.mjs",
+      "object": "5b5cb14292dabbbc36fe2b85cdf09678268c9e86",
+      "sha256": "5899de39ae57849b006c677271a2447db9cde0809c294bbf19b7007ae72b6546",
+      "bytes": 16423,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "71b67be34b8ef94c3369d21746f58a845dd78895",
+      "stage": 0
+    },
+    {
+      "path": "docs/field-kit-surfaces.md",
+      "mode": "100644",
+      "object": "636c57dbf5992145ef3a88aecca51e4f92f46639",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/couch.css",
+      "mode": "100644",
+      "object": "1aa0487f2534792602309c8e1f0c02454a8f217e",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "mode": "100644",
+      "object": "b6dd4891404125382747f70bff7846457f1efdd8",
+      "stage": 0
+    },
+    {
+      "path": "game/test/helpers/couch-host.mjs",
+      "mode": "100644",
+      "object": "91e3e204cac69f9f9af39e2d3767a350d95df0ae",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
