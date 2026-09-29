@@ -16,6 +16,8 @@ import {
 } from '../video-editor.mjs';
 import { attachControllerNavigation } from './controller-navigation.mjs';
 import { createControllerRouter } from './controller-router.mjs';
+import { attachControllerConfirmGuard } from './controller-confirm-guard.mjs';
+import { createControllerConfirmLifecycle } from './controller-confirm-lifecycle.mjs';
 import { createAuthoringSourcePicker, attachAuthoringSourceButtons } from './authoring-sources.mjs';
 
 /** Standalone local authoring preview. No storage, assignment, game or award API. */
@@ -53,20 +55,39 @@ export function attachVideoPosterWorkshop({
     else feedback.begin({ message }).finish({ message, state });
   }
   setStatus(localizedMessage('interface:chooseALocalVideoToInspectNoGameOrMedia'));
+  const now = () => win.performance?.now?.() ?? Date.now();
+  const foreground = () => !disposed && !doc.hidden && doc.hasFocus();
+  let lifecycle;
   const router = createControllerRouter({
+    now,
     eventTarget: win,
     navigationAliases: true,
     ...(readPads ? { readPads } : {}),
   });
   let sourcePicker = null,
     stopSourceButtons = null;
+  const menuRoot = () => (sourcePicker?.dialog.open ? sourcePicker.dialog : $('main'));
+  const menuScope = () =>
+    sourcePicker?.dialog.open ? 'video-poster-sources' : 'video-poster-workshop';
+  const guard = attachControllerConfirmGuard({
+    document: doc,
+    now,
+    confirmPressed: () => foreground() && router.menuConfirmPressed(),
+    beforeNativeActivation: (event) => {
+      if (foreground()) lifecycle?.beforeNativeActivation(event);
+    },
+  });
   const navigation = attachControllerNavigation({
     document: doc,
     keyboard: true,
-    getScope: () => (sourcePicker?.dialog.open ? 'video-poster-sources' : 'video-poster-workshop'),
-    getRoot: () => (sourcePicker?.dialog.open ? sourcePicker.dialog : $('main')),
+    getScope: menuScope,
+    getRoot: menuRoot,
     getDefaultFocus: () => $('file'),
-    onNativeInput: () => router.clear(),
+    activateControl: (element) => guard.activate(element),
+    onNativeInput: (event) => {
+      lifecycle?.nativeInput(event);
+      router.clear();
+    },
     activateFileInput: (input) => sourcePicker?.open(input),
     onBack: () => {
       if (sourcePicker?.dialog.open) sourcePicker.close();
@@ -77,12 +98,30 @@ export function attachVideoPosterWorkshop({
       localizedText(hint, () => text);
     },
   });
+  lifecycle = createControllerConfirmLifecycle({
+    document: doc,
+    readConfirm: (options) => router.readMenuConfirm(options),
+    getContext: () => ({
+      scope: menuScope(),
+      root: menuRoot(),
+      focused: doc.activeElement,
+      active: foreground(),
+    }),
+    navigation,
+    guard,
+    now,
+  });
+  function clearMenuInput() {
+    router.clear();
+    lifecycle.cancel('workshop-input-clear');
+    navigation.clear();
+  }
   if (doc.head && typeof win.MutationObserver === 'function') {
     sourcePicker = createAuthoringSourcePicker({
       document: doc,
       window: win,
       onOpen: () => navigation.sync(),
-      onClose: () => router.clear(),
+      onClose: clearMenuInput,
     });
     stopSourceButtons = attachAuthoringSourceButtons({
       document: doc,
@@ -606,23 +645,23 @@ export function attachVideoPosterWorkshop({
   $('trim-download').onclick = () => {
     setStatus(localizedMessage('tools:videoPoster.trimDownloadRequested'));
   };
-  function poll(now) {
+  function poll(timeMs) {
     if (disposed) return;
-    if (doc.hidden || !doc.hasFocus()) router.clear();
-    else
-      navigation.handle(
-        router.sample({
-          scope: sourcePicker?.dialog.open ? 'video-poster-sources' : 'video-poster-workshop',
-          timeMs: now,
-        }).ui,
-      );
+    if (!foreground()) clearMenuInput();
+    else {
+      const scope = menuScope(),
+        state = router.sample({ scope, timeMs });
+      if (state.status.code === 'joined') navigation.engage();
+      lifecycle.sample(state.confirmSnapshot);
+      if (foreground() && scope === menuScope()) navigation.handle({ ...state.ui, confirm: false });
+    }
     frame = win.requestAnimationFrame(poll);
   }
-  const blur = () => router.clear();
+  const blur = clearMenuInput;
   const visibility = () => {
     if (doc.hidden) {
       cancel();
-      router.clear();
+      clearMenuInput();
     }
   };
   const hide = (event) => {
@@ -632,7 +671,7 @@ export function attachVideoPosterWorkshop({
   };
   const show = (event) => {
     if (event.persisted && !disposed) {
-      router.clear();
+      clearMenuInput();
       frame = win.requestAnimationFrame(poll);
     }
   };
@@ -642,7 +681,9 @@ export function attachVideoPosterWorkshop({
     clear({ focus: false });
     feedback.dispose();
     win.cancelAnimationFrame(frame);
+    lifecycle.destroy();
     navigation.destroy();
+    guard.destroy();
     stopSourceButtons?.();
     sourcePicker?.destroy();
     router.destroy();

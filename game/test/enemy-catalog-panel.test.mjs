@@ -250,7 +250,12 @@ test('shared keyboard/controller navigation reaches native catalog controls; Bac
 
 function inputFixture(t) {
   let input;
-  const h = setup(t, { navigationOptions: { onNativeInput: () => input?.clear() } }),
+  const h = setup(t, {
+      navigationOptions: {
+        onNativeInput: (event) => input?.nativeInput(event),
+        activateControl: (element) => input.activate(element),
+      },
+    }),
     frame = h.doc.createElement('iframe'),
     pad = {
       index: 0,
@@ -269,7 +274,10 @@ function inputFixture(t) {
     navigation: h.nav,
     getScope: () => (h.panel.dialog.open ? 'catalog' : 'closed'),
   });
-  t.after(() => router.destroy());
+  t.after(() => {
+    input.destroy();
+    router.destroy();
+  });
   const press = (index, value) => {
     pad.buttons[index] = { pressed: value, value: Number(value) };
   };

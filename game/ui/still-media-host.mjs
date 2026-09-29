@@ -13,6 +13,8 @@ import { createStillAuthoringCatalog, stillAuthoringKeys } from './still-media-c
 import { attachStillMediaPanel } from './still-media-panel.mjs';
 import { createStillMediaPreview } from './still-media-preview.mjs';
 import { createControllerRouter } from './controller-router.mjs';
+import { attachControllerConfirmGuard } from './controller-confirm-guard.mjs';
+import { createControllerConfirmLifecycle } from './controller-confirm-lifecycle.mjs';
 import { attachControllerNavigation } from './controller-navigation.mjs';
 import { createAuthoringSourcePicker, attachAuthoringSourceButtons } from './authoring-sources.mjs';
 
@@ -112,7 +114,11 @@ export function attachStillMediaHost({
     else feedback.begin({ message }).finish({ message, state });
   }
   setStatus(t('interface:chooseOpenLocalMediaToReadThisEditionSPictures'));
+  const now = () => win.performance?.now?.() ?? Date.now();
+  const foreground = () => !disposed && !doc.hidden && doc.hasFocus();
+  let lifecycle;
   const router = createControllerRouter({
+    now,
     eventTarget: win,
     navigationAliases: true,
     ...(readPads ? { readPads } : {}),
@@ -125,26 +131,58 @@ export function attachStillMediaHost({
       : panel?.dialog.open
         ? 'still-media'
         : 'still-media-page';
+  const menuRoot = () =>
+    sourcePicker?.dialog.open ? sourcePicker.dialog : panel?.dialog.open ? panel.dialog : doc.body;
+  const menuScope = () => scope();
+  const guard = attachControllerConfirmGuard({
+    document: doc,
+    now,
+    confirmPressed: () => foreground() && router.menuConfirmPressed(),
+    beforeNativeActivation: (event) => {
+      if (foreground()) lifecycle?.beforeNativeActivation(event);
+    },
+  });
   const navigation = attachControllerNavigation({
     document: doc,
     keyboard: true,
-    getScope: scope,
-    getRoot: () =>
-      sourcePicker?.dialog.open ? sourcePicker.dialog : panel?.dialog.open ? panel.dialog : doc,
+    getScope: menuScope,
+    getRoot: menuRoot,
     getDefaultFocus: () => (panel?.dialog.open ? $('still-media-reload') : $('still-host-open')),
     onBack: () => (sourcePicker?.dialog.open ? sourcePicker.close() : panel?.back()),
     activateFileInput: (input) => sourcePicker?.open(input),
-    onNativeInput: () => router.clear(),
+    activateControl: (element) => guard.activate(element),
+    onNativeInput: (event) => {
+      lifecycle?.nativeInput(event);
+      router.clear();
+    },
     onHint: (text) => {
       setStatus(text);
     },
   });
+  lifecycle = createControllerConfirmLifecycle({
+    document: doc,
+    readConfirm: (options) => router.readMenuConfirm(options),
+    getContext: () => ({
+      scope: menuScope(),
+      root: menuRoot(),
+      focused: doc.activeElement,
+      active: foreground(),
+    }),
+    navigation,
+    guard,
+    now,
+  });
+  function clearMenuInput() {
+    router.clear();
+    lifecycle.cancel('workshop-input-clear');
+    navigation.clear();
+  }
   if (doc.head && typeof win.MutationObserver === 'function') {
     sourcePicker = createAuthoringSourcePicker({
       document: doc,
       window: win,
       onOpen: () => navigation.sync(),
-      onClose: () => router.clear(),
+      onClose: clearMenuInput,
     });
     stopSourceButtons = attachAuthoringSourceButtons({
       document: doc,
@@ -372,31 +410,31 @@ export function attachStillMediaHost({
     setStatus(t('interface:localConnectionsClosedSavedOriginalsRemainTheDatabaseVersionWas'));
     $('still-host-open').focus();
   };
-  function poll(now) {
+  function poll(timeMs) {
     if (disposed) return;
-    if (doc.hidden || !doc.hasFocus()) router.clear();
-    else
-      navigation.handle(
-        router.sample({
-          scope: scope(),
-          timeMs: now,
-        }).ui,
-      );
+    if (!foreground()) clearMenuInput();
+    else {
+      const scope = menuScope(),
+        state = router.sample({ scope, timeMs });
+      if (state.status.code === 'joined') navigation.engage();
+      lifecycle.sample(state.confirmSnapshot);
+      if (foreground() && scope === menuScope()) navigation.handle({ ...state.ui, confirm: false });
+    }
     frame = win.requestAnimationFrame(poll);
   }
   // Native file dialogs may blur the page without changing its catalog. Do not
   // discard their selection; the locked save path rechecks the exact catalog.
-  const blur = () => router.clear();
+  const blur = clearMenuInput;
   const visibility = () => {
     if (doc.hidden) {
       cancelOpen();
-      router.clear();
+      clearMenuInput();
       panel?.invalidateContext();
     }
   };
   const hide = (event) => {
     cancelOpen();
-    router.clear();
+    clearMenuInput();
     panel?.close();
     discardAudio();
     win.cancelAnimationFrame(frame);
@@ -411,7 +449,9 @@ export function attachStillMediaHost({
     closeStorage();
     feedback.dispose();
     win.cancelAnimationFrame(frame);
+    lifecycle.destroy();
     navigation.destroy();
+    guard.destroy();
     stopSourceButtons?.();
     sourcePicker?.destroy();
     router.destroy();

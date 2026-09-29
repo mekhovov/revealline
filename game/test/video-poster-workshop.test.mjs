@@ -618,17 +618,29 @@ test('native file-picker blur keeps selection while hidden/pagehide cancels and 
 test('controller native range editing and confirmation reaches explicit PNG action without mouse', async (t) => {
   const h = await setup(t);
   await h.inspect();
+  let time = 0;
+  const press = (index, down) => {
+    h.pad.buttons[index] = { pressed: down, value: Number(down) };
+    h.frame(++time);
+  };
+  const tap = (index) => {
+    press(index, true);
+    press(index, false);
+  };
+  h.frame(++time);
+  tap(0); // Deliberate join; no edit is activated.
   h.$('range').focus();
-  h.host.navigation.handle({ confirm: true });
-  h.host.navigation.handle({ direction: 'right' });
-  h.host.navigation.handle({ confirm: true });
+  tap(0);
+  tap(15);
+  tap(0);
   assert.equal(h.$('time').value, '0.1');
   h.$('capture').focus();
-  h.host.navigation.handle({ confirm: true });
+  tap(0);
   await flush();
   assert.equal(h.captures, 1);
   assert.equal(h.doc.activeElement, h.$('download'));
-  h.host.navigation.handle({ confirm: true });
+  h.frame(++time); // The async capture completion re-arms the existing neutral gate.
+  tap(0);
   assert.match(h.$('status').textContent, /download requested/i);
 });
 
@@ -692,4 +704,33 @@ test('classic video workshop exposes loading immediately after its title', async
   assert.ok(html.indexOf('id="video-poster-back"') < html.indexOf('</h1>'));
   assert.ok(html.indexOf('</h1>') < html.indexOf('id="video-poster-status"'));
   assert.ok(html.indexOf('id="video-poster-status"') < html.indexOf('Inspect your own video'));
+});
+
+test('Video Poster native Confirm is captured before a frame and cannot clear the newly captured result', async (t) => {
+  const h = await setup(t);
+  await h.inspect();
+  h.frame(0);
+  h.pad.buttons[0] = { pressed: true, value: 1 };
+  h.frame(1);
+  h.pad.buttons[0] = { pressed: false, value: 0 };
+  h.frame(2);
+  h.$('capture').focus();
+  h.pad.buttons[0] = { pressed: true, value: 1 };
+  assert.equal(
+    h.$('capture').emit('keydown', { key: 'Enter', isTrusted: true }).defaultPrevented,
+    true,
+  );
+  assert.equal(h.captures, 0);
+  h.pad.buttons[0] = { pressed: false, value: 0 };
+  h.$('capture').emit('keyup', { key: 'Enter', isTrusted: true });
+  await flush();
+  assert.equal(h.captures, 1);
+  h.$('clear').emit('click', { isTrusted: true });
+  assert.equal(
+    h.sources[0].disposed,
+    false,
+    'the release echo cannot activate another result action',
+  );
+  h.frame(3);
+  assert.equal(h.captures, 1);
 });

@@ -166,6 +166,25 @@ async function start() {
   });
   router = createControllerRouter({ navigationAliases: true });
   let sourcePicker = null;
+  const menuRoot = () =>
+    sourcePicker?.dialog.open
+      ? sourcePicker.dialog
+      : panel.dialog.open
+        ? panel.dialog
+        : document.body;
+  menuInput = createEnemyCatalogInput({
+    document,
+    frame,
+    router,
+    navigation: () => navigation,
+    getRoot: menuRoot,
+    getScope: () =>
+      sourcePicker?.dialog.open
+        ? 'catalog-sources'
+        : panel.dialog.open
+          ? 'enemy-catalog'
+          : 'catalog-page',
+  });
   navigation = attachControllerNavigation({
     getScope: () =>
       sourcePicker?.dialog.open
@@ -173,14 +192,14 @@ async function start() {
         : panel.dialog.open
           ? 'enemy-catalog'
           : 'catalog-page',
-    getRoot: () =>
-      sourcePicker?.dialog.open ? sourcePicker.dialog : panel.dialog.open ? panel.dialog : document,
+    getRoot: menuRoot,
     getDefaultFocus: () =>
       document.getElementById(panel.dialog.open ? 'enemy-catalog-role' : 'open-catalog'),
     onBack: () => (sourcePicker?.dialog.open ? sourcePicker.close() : panel.close()),
     activateFileInput: (input) => sourcePicker?.open(input),
     keyboard: true,
-    onNativeInput: () => menuInput?.clear(),
+    activateControl: (element) => menuInput.activate(element),
+    onNativeInput: (event) => menuInput?.nativeInput(event),
     onHint: (text) => {
       if (!panel?.dialog.querySelector('.operation-status[data-state="busy"]')) report(text);
     },
@@ -201,24 +220,13 @@ async function start() {
     stopSourceButtons = attachAuthoringSourceButtons({ document, window, picker: sourcePicker });
     previewNavigation = attachAuthoringPreview(frame, { document, window });
   }
-  menuInput = createEnemyCatalogInput({
-    document,
-    frame,
-    router,
-    navigation,
-    getScope: () =>
-      sourcePicker?.dialog.open
-        ? 'catalog-sources'
-        : panel.dialog.open
-          ? 'enemy-catalog'
-          : 'catalog-page',
-  });
+
   document.getElementById('open-catalog').disabled = false;
   document.getElementById('open-catalog').onclick = () => {
     panel.open();
     navigation.sync();
   };
-  const blur = () => router.clear();
+  const blur = () => menuInput.clear();
   window.addEventListener('blur', blur);
   function loop(now) {
     const elapsed = last ? (now - last) / 1000 : 0;
@@ -233,10 +241,11 @@ async function start() {
   }
   window.addEventListener('pagehide', (event) => {
     cancelAnimationFrame(raf);
-    router.clear();
+    menuInput.clear();
     if (!event.persisted) {
       practiceReturn.dispose();
       panel.dispose();
+      menuInput.destroy();
       router.destroy();
       navigation.destroy();
       stopSourceButtons?.();

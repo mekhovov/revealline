@@ -304,3 +304,48 @@ test('authoring menus coordinate native Confirm before frames and retain the cap
     host.destroy();
   }
 });
+
+test('authoring page arrows and Escape use menu navigation while text keeps native caret keys', () => {
+  const { doc, win, node } = fixture(),
+    first = node('button', 'first'),
+    second = node('button', 'second'),
+    input = node('input', 'title');
+  input.type = 'text';
+  const host = mountAuthoringInputHost({ document: doc, window: win, readPads: () => [] });
+  try {
+    first.focus();
+    assert.equal(first.emit('keydown', { key: 'ArrowDown' }).defaultPrevented, true);
+    assert.equal(doc.activeElement, second);
+    assert.equal(second.emit('keydown', { key: 'ArrowUp' }).defaultPrevented, true);
+    assert.equal(doc.activeElement, first);
+    input.focus();
+    assert.equal(input.emit('keydown', { key: 'ArrowLeft' }).defaultPrevented, false);
+    assert.equal(doc.activeElement, input);
+    first.focus();
+    assert.equal(first.emit('keydown', { key: 'Escape' }).defaultPrevented, true);
+    const sections = doc.querySelector('.authoring-sections-dialog');
+    assert.equal(sections.open, true);
+    sections.emit('cancel');
+    assert.equal(sections.open, false);
+    assert.equal(doc.activeElement, first);
+  } finally {
+    host.destroy();
+  }
+});
+
+test('a host with its own preview protocol can opt out of generic iframe controls', () => {
+  const { doc, win, node, frames } = fixture();
+  node('iframe', 'owned-preview');
+  const host = mountAuthoringInputHost({
+    document: doc,
+    window: win,
+    readPads: () => [],
+    managePreviews: false,
+  });
+  try {
+    assert.equal(doc.querySelector('.authoring-preview-enter'), null);
+    assert.equal(frames.size, 1, 'the menu still owns only its existing poller');
+  } finally {
+    host.destroy();
+  }
+});

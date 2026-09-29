@@ -418,7 +418,13 @@ for (const close of ['Escape', 'Back'])
     assert.equal(h.$('enemy-catalog-dialog').open, false);
     assert.equal(h.doc.activeElement, h.$('open-catalog'));
     h.key('ArrowRight');
-    assert.equal(h.doc.activeElement, h.$('open-catalog'), 'The page keeps native arrow behavior.');
+    assert.equal(
+      h.doc.activeElement.getAttribute('href'),
+      '../../game/playground/',
+      'The page supports directional navigation after closing its dialog.',
+    );
+    h.key('ArrowLeft');
+    assert.equal(h.doc.activeElement, h.$('open-catalog'));
     h.key('Tab');
     assert.equal(h.doc.activeElement.getAttribute('href'), '../../game/playground/');
     h.key('Tab');
