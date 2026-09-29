@@ -1,9 +1,0 @@
-{
-  "sourceRevision": "c5e3419eecd564621470a654ce071f0f83d5984f",
-  "capturedInputs": 1985,
-  "capturedBytes": 546229078,
-  "changes": [],
-  "beforeSnapshotSha256": "dcd3d37277bff1c169b1f17b716edbd957a82b9bb41ded68b9565202027b09c5",
-  "afterSnapshotSha256": "97e291bc9784cf17890416dce296a633c564260cae9bde0297adedd7dae3ff05",
-  "scope": "Captured ordinary web, compiler, selected edition and native bridge inputs; test/evidence edits excluded from packaged inputs"
-}
