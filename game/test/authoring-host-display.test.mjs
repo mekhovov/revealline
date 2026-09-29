@@ -472,7 +472,7 @@ test('Viewport adopts saved host preferences without loading a game or altering 
 
 test('Viewport reading changes keep the loaded frame, pending replacement, dimensions and input focus intact', async (t) => {
   const h = await harness(t, 'viewport-lab');
-  h.$('target-form').emit('submit');
+  h.$('load-target').click();
   h.$('preset').value = '390x844';
   h.$('preset').emit('change');
   h.$('target').value = 'solo';
@@ -492,7 +492,7 @@ test('Viewport reading changes keep the loaded frame, pending replacement, dimen
   assert.deepEqual(viewportState(h), before);
   assert.ok(h.$('game-frame') === frame && h.doc.activeElement === h.$('preset'));
   h.$('load-target').focus();
-  h.$('target-form').emit('submit');
+  h.$('load-target').click();
   assert.equal(frame.src, '../../game/');
   assert.equal(h.frameSourceWrites(), 2, 'Only explicit Load replaces the target.');
   assert.ok(h.doc.activeElement === h.$('target'), 'Existing Load focus handoff still works.');
@@ -505,7 +505,7 @@ test('Viewport reading changes keep the loaded frame, pending replacement, dimen
 
 test('Viewport persisted return adopts missed shared/system changes without frame reload and terminal exit retires ownership', async (t) => {
   const h = await harness(t, 'viewport-lab');
-  h.$('target-form').emit('submit');
+  h.$('load-target').click();
   h.$('preset').value = '844x390';
   h.$('preset').emit('change');
   const before = viewportState(h),
@@ -548,7 +548,7 @@ for (const route of ['production', 'viewport-lab']) {
       } else {
         h.$('target').value = 'solo';
         h.$('target').emit('change');
-        h.$('target-form').emit('submit');
+        h.$('load-target').click();
         assert.equal(h.$('game-frame').src, '../../game/');
         assert.equal(h.frameSourceWrites(), 1);
       }
