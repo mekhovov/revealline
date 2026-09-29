@@ -476,9 +476,9 @@
     {
       "name": "FPV reveal source audit",
       "route": "/authoring/design-atlas/reveal-audit.html",
-      "verification": "Current 6ef5559fc passes 78 focused tests and its first complete 3/3 virtual-controller workflow. Native pointerless keyboard at 1280x720 qualifies section/owner reading, exact Back targets, Page actions, Retry, live UK/EN labels and real Atlas return/reentry. Virtual checks preserve all 56 owners, 21 paths, 17 canvas dimensions/seed labels and unchanged historical JSON/local-session snapshots; first original PNG actually decodes to 1774x887. All 21 original byte/hash/IHDR pins remain exact, but that is not full pixel decoding. Final 14/14 in-memory edition compiles pass with unchanged optional-art boundary. This is a read-only historical audit with no Save/import/export/approval. Raw-source browser handoffs, complete Ukrainian traversal, physical pads, native devices, installed-offline and publication remain separate.",
+      "verification": "Latest source viewer 7b4a9f2e passes 124 focused tests and its first complete 3/3 virtual-controller workflow for pinned PNG/Markdown/JSON. Native pointerless keyboard at 1280x720 confirms actual-size two-axis PNG pan/Fit, text Home/End and exact reader/modal Back targets. Displayed PNG Blob matches 3172117 bytes/SHA and fully decodes 1774x887; both inert text views exactly match source UTF-8. Document/URL/history/38 articles/disclosures and observed zero local/session keys remain unchanged. First close observed ready, so no controlled network-cancel claim. All 23 manifest entries and 21 original byte/hash/IHDR pins remain exact; fresh 14/14 in-memory editions pass with unchanged art admission. Earlier 6ef5559fc audit-page 3/3, section/owner readers, Retry/locale and Atlas return remain separately attributed in the linked earlier receipt. Read-only: no Save/import/export/approval. All 21 browser decodes, new viewer native Retry/locale, controlled browser faults, hardware, offline and publication remain separate.",
       "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
-      "evidence": "docs/verification/reveal-audit-input-2026-09-29.md"
+      "evidence": "docs/verification/reveal-source-viewer-input-2026-09-29.md"
     },
     {
       "name": "Countercurrent art",
