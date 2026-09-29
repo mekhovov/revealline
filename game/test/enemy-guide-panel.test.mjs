@@ -251,6 +251,10 @@ test('the FPV guide uses the release sprite geometry and retains other-theme and
     asset = structuredClone(source),
     image = { type: 'compiled-field-hunter' };
   asset.geometry.pivot = { x: 0.25, y: 0.75 };
+  // A known 3/4-frame occupied span fits the Guide's 56px visible body.
+  // This fixture's complete rotor sweep remains inside that span; transparent
+  // padding is not part of the requested visible diameter.
+  asset.geometry.occupiedBounds = { x: 0.125, y: 0.125, width: 0.75, height: 0.75 };
   asset.geometry.rotorAnchors = [{ x: 0.75, y: 0.25, radius: 0.08, blades: 4 }];
   const sprite = { image, geometry: imagePresentation(asset) };
   let available = true;
@@ -266,8 +270,23 @@ test('the FPV guide uses the release sprite geometry and retains other-theme and
   h.guide.update(0.1);
   const drawing = art.calls.find(([method]) => method === 'drawImage');
   assert.equal(drawing[1], image);
-  assert.deepEqual(drawing.slice(2), [-14, -42, 56, 56]);
-  assert.ok(art.calls.some(([method, x, y]) => method === 'translate' && x === 28 && y === -28));
+  const frameSize = 56 / 0.75;
+  for (const [index, expected] of [
+    -frameSize * 0.25,
+    -frameSize * 0.75,
+    frameSize,
+    frameSize,
+  ].entries())
+    assert.ok(Math.abs(drawing[index + 2] - expected) < 1e-9);
+  assert.ok(Math.abs(drawing[4] * asset.geometry.occupiedBounds.width - 56) < 1e-9);
+  assert.ok(
+    art.calls.some(
+      ([method, x, y]) =>
+        method === 'translate' &&
+        Math.abs(x - frameSize * 0.5) < 1e-9 &&
+        Math.abs(y + frameSize * 0.5) < 1e-9,
+    ),
+  );
   assert.ok(
     art.calls.some(([method, x, y, r]) => method === 'arc' && x === 0 && y === 0 && r === 4),
   );
