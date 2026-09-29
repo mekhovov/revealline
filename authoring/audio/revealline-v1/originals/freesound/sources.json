@@ -1,0 +1,62 @@
+{
+  "rotor": {
+    "author": "DCPoke",
+    "id": 387985,
+    "page": "https://freesound.org/people/DCPoke/sounds/387985/",
+    "download": "https://cdn.freesound.org/previews/387/387985_6221013-hq.mp3",
+    "file": "rotor-387985-hq.mp3",
+    "format": "Public high-quality MP3 preview; not lossless original",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "verified": "2026-09-29",
+    "sha256": "9d73c02356bb53e1a1f37f685094cdbf7a7167481860b7630c96d812d54488e8"
+  },
+  "wings": {
+    "author": "_stubb",
+    "id": 389633,
+    "page": "https://freesound.org/people/_stubb/sounds/389633/",
+    "download": "https://cdn.freesound.org/previews/389/389633_6068748-hq.mp3",
+    "file": "wings-389633-hq.mp3",
+    "format": "Public high-quality MP3 preview; not lossless original",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "verified": "2026-09-29",
+    "sha256": "bbd6ea224effe8c81020cac4da768e296cd8ee4fec69401b48ba237628d98daf"
+  },
+  "grain": {
+    "author": "keweldog",
+    "id": 181774,
+    "page": "https://freesound.org/people/keweldog/sounds/181774/",
+    "download": "https://cdn.freesound.org/previews/181/181774_3153523-hq.mp3",
+    "file": "grain-181774-hq.mp3",
+    "format": "Public high-quality MP3 preview; not lossless original",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "verified": "2026-09-29",
+    "sha256": "63887d92134333842e2c65fe6da4db4c9495b471d0e59019749e83a6dac904d6"
+  },
+  "wheels": {
+    "author": "domestophonics",
+    "id": 420401,
+    "page": "https://freesound.org/people/domestophonics/sounds/420401/",
+    "download": "https://cdn.freesound.org/previews/420/420401_4593620-hq.mp3",
+    "file": "wheels-420401-hq.mp3",
+    "format": "Public high-quality MP3 preview; not lossless original",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "verified": "2026-09-29",
+    "sha256": "769d47b1c499ca59a9a087a887383afd88dd8c306a2b3f51160c333b7dc3e6be"
+  },
+  "motor": {
+    "author": "JeroenWals",
+    "id": 592496,
+    "page": "https://freesound.org/people/JeroenWals/sounds/592496/",
+    "download": "https://cdn.freesound.org/previews/592/592496_3562744-hq.mp3",
+    "file": "motor-592496-hq.mp3",
+    "format": "Public high-quality MP3 preview; not lossless original",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "verified": "2026-09-29",
+    "sha256": "c880a4570363d9355b0201ab78275e9e17096a350231202e9b8fed61dd7d4b9a"
+  }
+}
