@@ -1,0 +1,41 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:01.362372+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p03-story-focus",
+  "branch": "refs/heads/codex/p03-story-focus",
+  "head": "1167291e27773ef076ed64b6e06ba7c0339423a0",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "game/test/victory-story-ui.test.mjs",
+      "object": "2279d5048ae5a9e740fb489a74575ef7708dd658",
+      "sha256": "ee9dc57023bb3548a0cdb508e14eaedbb1a755e4f4c3c114f494477380493abf",
+      "bytes": 28529,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/victory-story.mjs",
+      "object": "2c9870cb36beae8b18c7039dc36e3a6f62a89e39",
+      "sha256": "2dd3fd1fd1b5a4b2f4b8e9aa3f2330c6333fafe527877de1527220fbfccc9351",
+      "bytes": 20728,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "game/test/victory-story-ui.test.mjs",
+      "mode": "100644",
+      "object": "0b699bda0c4c7586aa16e49c88973c801f293237",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/victory-story.mjs",
+      "mode": "100644",
+      "object": "b5e1125c9a3993306e5165d78761188579319353",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
