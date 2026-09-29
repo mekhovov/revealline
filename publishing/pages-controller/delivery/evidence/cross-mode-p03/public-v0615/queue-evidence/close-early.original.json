@@ -1,8 +1,0 @@
-{
-  "at": "2026-09-18T11:26:53.144949+00:00",
-  "url": "https://mekhovov.github.io/revealline/releases/v0.61.4/site/authoring/still-media/",
-  "input": "actual keyboard through CUA",
-  "earlyClose": "Before Open local media, pressed Close local connections Enter during artwork/font loading; AX and DOM focus was enabled still-host-open, status Local connections closed.",
-  "lateClose": "investigation in progress",
-  "scope": "Fresh public pre-open path only; prior failure retained; no runtime fix inferred"
-}
