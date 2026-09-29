@@ -73,6 +73,10 @@ export function attachMenuScene({
   scene.dataset.renderer = 'css';
   root.prepend(scene);
   root.classList.add('menu-scene-host');
+  const sceneContext = () => {
+    const context = getContext() ?? {};
+    return { ...context, mode: context.mode ?? mode };
+  };
 
   function visible() {
     // A visible split pane can lack keyboard focus. Decoration follows visibility;
@@ -98,7 +102,7 @@ export function attachMenuScene({
     if (disposed || !art.naturalWidth || !art.naturalHeight) return;
     const bounds = scene.getBoundingClientRect();
     if (!bounds.width || !bounds.height) return;
-    const profile = resolveMenuScene(getContext() ?? {});
+    const profile = resolveMenuScene(sceneContext());
     const focal = (portrait?.matches ? profile.portraitPosition : profile.landscapePosition)
       .split(' ')
       .map((value) => parseFloat(value) / 100);
@@ -116,16 +120,17 @@ export function attachMenuScene({
 
   function update() {
     if (disposed) return;
-    const context = getContext() ?? {};
+    const context = sceneContext();
     const profile = resolveMenuScene(context);
     const selectedMode = menuSceneMode(context.mode ?? mode);
     const vertical = portrait?.matches ?? false;
-    const key = `${profile.id}:${selectedMode}:${vertical}`;
+    const key = `${profile.id}:${profile.composition ?? 'solo'}:${selectedMode}:${vertical}`;
     if (key !== currentKey) {
       currentKey = key;
       root.dataset.menuScene = profile.id;
       root.dataset.menuMode = selectedMode;
       scene.dataset.atmosphere = profile.atmosphere;
+      scene.dataset.composition = profile.composition ?? 'solo';
       scene.style.setProperty('--scene-ink', profile.ink);
       scene.style.setProperty('--scene-light', profile.light);
       scene.style.setProperty('--scene-accent', profile.accent);
@@ -163,7 +168,7 @@ export function attachMenuScene({
       artworkMotion = createMotion({
         canvas,
         image: art,
-        profile: resolveMenuScene(getContext() ?? {}),
+        profile: resolveMenuScene(sceneContext()),
         vertical: portrait?.matches ?? false,
         onReady(ready) {
           if (!disposed) scene.dataset.renderer = ready ? 'webgl' : 'css';
@@ -184,10 +189,7 @@ export function attachMenuScene({
             return false;
           // Read the original still, not a WebGL buffer which the browser may discard.
           // Match the renderer's fixed safety crop, then share its CSS cover/arrival transform.
-          const regional = artworkMotionMode(
-            resolveMenuScene(getContext() ?? {}),
-            portrait?.matches,
-          );
+          const regional = artworkMotionMode(resolveMenuScene(sceneContext()), portrait?.matches);
           const zoom = scene.dataset.renderer === 'webgl' && regional === 'regions' ? 1.025 : 1;
           const sw = art.naturalWidth / zoom;
           const sh = art.naturalHeight / zoom;

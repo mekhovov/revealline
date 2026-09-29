@@ -1,19 +1,29 @@
 /* global document, window, performance, URL, Uint8Array */
 import { attachMenuScene } from '../../ui/menu-scenes.mjs';
 import { attachArtworkMotion } from '../../ui/menu-scene-motion.mjs';
-import { MENU_SCENES } from '../../ui/menu-scene-catalog.mjs';
+import { resolveMenuScene } from '../../ui/menu-scene-catalog.mjs';
 
-const ids = [
-  'workshop-lights',
-  'parts-in-motion',
-  'makers-together',
-  'signals-of-support',
-  'shared-horizon',
-].map((id) => `droneaid-nl-${id}-theme`);
-const profileId = new URL(window.location.href).searchParams.get('profile');
+const parameters = new URL(window.location.href).searchParams;
+const modeSuite = parameters.get('suite') === 'fpv';
+const ids = modeSuite
+  ? ['fpv-versus-landscape', 'fpv-versus-portrait', 'fpv-team-landscape', 'fpv-team-portrait']
+  : [
+      'workshop-lights',
+      'parts-in-motion',
+      'makers-together',
+      'signals-of-support',
+      'shared-horizon',
+    ].map((id) => `droneaid-nl-${id}-theme`);
+const profileId = parameters.get('profile');
 const delay = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
 const status = document.getElementById('status');
 const output = document.getElementById('results');
+if (modeSuite) {
+  document.querySelector('h1').textContent = 'FPV Versus and Team artwork';
+  document.querySelector('#controls p').textContent =
+    'Measures four production compositions at 1280 × 800 and 390 × 844. No player preferences or saves are changed.';
+  document.getElementById('run').textContent = 'Run four compositions';
+}
 
 function compare(a, b, rect, width, height) {
   const x1 = Math.max(0, Math.ceil(rect[0] * width));
@@ -42,7 +52,12 @@ async function runPortrait(id) {
   const root = document.getElementById('landing');
   root.hidden = false;
   document.getElementById('controls').hidden = true;
-  const context = { themeId: id, active: true, reduced: false };
+  const context = {
+    themeId: modeSuite ? 'fpv' : id,
+    mode: modeSuite ? (id.includes('-versus-') ? 'versus' : 'team') : 'solo',
+    active: true,
+    reduced: false,
+  };
   let draws = 0,
     first = null,
     second = null,
@@ -106,7 +121,10 @@ async function runPortrait(id) {
     edge(window.innerWidth, left, pw),
     edge(window.innerHeight, top, ph),
   ];
-  const regions = MENU_SCENES[id].portraitEnvironment.map((region) => {
+  const profile = resolveMenuScene(context);
+  const regions = (
+    window.innerHeight > window.innerWidth ? profile.portraitEnvironment : profile.environment
+  ).map((region) => {
     const project = (value) => (value / 100 - 0.5) * 1.025 + 0.5;
     const core = [
       project(region.x + region.width * 0.2),
@@ -145,6 +163,7 @@ async function runPortrait(id) {
   owner.update();
   return {
     id,
+    mode: context.mode,
     pass:
       regions.some((region) => region.changed >= 20 && region.meanRGB > 0.05) && paused && reduced,
     viewport: [window.innerWidth, window.innerHeight],
@@ -171,6 +190,8 @@ if (ids.includes(profileId)) {
     document.body.append(frame);
     const results = [];
     for (const id of ids) {
+      frame.style.width = modeSuite && id.endsWith('-landscape') ? '1280px' : '390px';
+      frame.style.height = modeSuite && id.endsWith('-landscape') ? '800px' : '844px';
       status.textContent = `Checking ${id}…`;
       const result = await new Promise((resolve) => {
         const receive = (message) => {
@@ -184,12 +205,12 @@ if (ids.includes(profileId)) {
           resolve(message.data.portraitMotion);
         };
         window.addEventListener('message', receive);
-        frame.src = `./portrait-motion-check.html?profile=${encodeURIComponent(id)}`;
+        frame.src = `./portrait-motion-check.html?profile=${encodeURIComponent(id)}${modeSuite ? '&suite=fpv' : ''}`;
       });
       results.push(result);
       output.textContent = JSON.stringify(results, null, 2);
     }
-    status.textContent = `${results.filter((row) => row.pass).length}/5 portrait checks passed`;
+    status.textContent = `${results.filter((row) => row.pass).length}/${ids.length} scene checks passed`;
     status.dataset.complete = 'true';
   });
 }
