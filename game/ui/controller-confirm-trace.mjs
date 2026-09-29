@@ -192,6 +192,10 @@ export function attachControllerConfirmTrace({
       renderOutput();
     }
     if (doc?.addEventListener) {
+      // A settings toggle may enable this after the document Confirm guard.
+      // Window capture still observes the original event before that guard can
+      // stopImmediatePropagation, independent of listener registration order.
+      const observerTarget = doc.defaultView?.addEventListener ? doc.defaultView : doc;
       for (const type of [
         'pointerdown',
         'pointerup',
@@ -204,8 +208,8 @@ export function attachControllerConfirmTrace({
         'focusin',
         'visibilitychange',
       ]) {
-        doc.addEventListener(type, observe, true);
-        listeners.push(() => doc.removeEventListener(type, observe, true));
+        observerTarget.addEventListener(type, observe, true);
+        listeners.push(() => observerTarget.removeEventListener(type, observe, true));
       }
       doc.defaultView?.addEventListener?.('blur', observe, true);
       listeners.push(() => doc.defaultView?.removeEventListener?.('blur', observe, true));
