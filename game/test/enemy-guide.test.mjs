@@ -11,12 +11,45 @@ import { isEncounterGuideTopic } from '../encounter-guide.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay, verifyReplay } from '../replay.mjs';
 import { validateScenario } from '../content.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 const themes = JSON.parse(readFileSync(new URL('../content/themes.json', import.meta.url))).themes;
 const impactScenario = JSON.parse(
   readFileSync(new URL('../content/scenarios/line-impact-demo.json', import.meta.url)),
 );
 const lesson = (topic, themeId, turnPolicy) =>
   createEnemyGuideScenario({ topic, themeId, turnPolicy, themes, impactScenario });
+
+test('ordinary catalogue guidance translates Sentinel counterplay and every practice instruction', (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('uk', { persist: false });
+  const sentinel = enemyGuideEntry('relay-sentinel');
+  assert.equal(
+    sentinel.spot,
+    'Поетапна зустріч. Замок позначає ядро, захищене пов’язаними ретрансляторами щита.',
+  );
+  assert.equal(
+    sentinel.try,
+    'Захопіть усі ретранслятори щита. Коли ЯДРО ВІДКРИТО, замкніть достатній новий відріз; якщо ядро ізольоване — поверніться на відвойовану землю без незавершеної лінії.',
+  );
+  for (const { id } of ENEMY_GUIDE_TOPICS.filter(
+    ({ id }) => id !== 'line-impact' && !isEncounterGuideTopic(id),
+  ))
+    assert.equal(
+      enemyGuidePracticeInstructions(id),
+      `${enemyGuideEntry(id).try} Рухайтеся натисканнями напрямку; для огляду ввімкніть паузу. Замикання відрізу зупиняє апарат; натисніть напрямок знову, щоб рушити. Повтор починає той самий урок.`,
+      id,
+    );
+  setLocale('en', { persist: false });
+  assert.equal(
+    enemyGuideEntry('relay-sentinel').try,
+    'Capture every linked shield relay. During CORE OPEN, close a sufficient new cut—or, if the core is isolated, return to reclaimed ground with no unfinished line.',
+  );
+  assert.equal(
+    enemyGuidePracticeInstructions('bouncer'),
+    'Close a short cut while it is moving away. Move with direction taps; Pause when you want to inspect. Closing a cut stops your craft; tap a fresh direction to fly again. Retry starts the same lesson.',
+  );
+});
 
 test('twelve concise topics distinguish registered roles, optional encounters and line impacts', () => {
   assert.equal(ENEMY_GUIDE_TOPICS.length, 12);

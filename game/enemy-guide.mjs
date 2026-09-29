@@ -36,8 +36,8 @@ const advice = () => ({
     t('errors:crossDuringTheGapDoNotWaitInsideAWarned'),
   ],
   'relay-sentinel': [
-    'The lock marks a core protected by linked shield relays.',
-    'Capture every linked shield relay. During CORE OPEN, close a sufficient new cut—or, if the core is isolated, return to reclaimed ground with no unfinished line.',
+    t('interface:enemyGuide.sentinelSpot'),
+    t('interface:enemyGuide.sentinelTry', { coreOpen: t('interface:coreOpen') }),
   ],
 });
 export const ENEMY_GUIDE_TOPICS = Object.freeze([
@@ -82,7 +82,7 @@ export function enemyGuidePracticeInstructions(topic, exercise = 'observe') {
       ? t('errors:firstLeaveBoostOffAndTapDownWatchTheHit')
       : t('errors:enableBoostBeforeTappingDownHoldYourBoostButtonOr');
   }
-  return `${enemyGuideEntry(topic).try} Move with direction taps; Pause when you want to inspect. Closing a cut stops your craft; tap a fresh direction to fly again. Retry starts the same lesson.`;
+  return t('interface:enemyGuide.practiceInstructions', { advice: enemyGuideEntry(topic).try });
 }
 
 /** Materializes a fresh isolated practice recipe; it never changes a pack or live run. */
