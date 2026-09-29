@@ -1658,8 +1658,7 @@ scale actor bodies, contact circles, warning timing or board geometry with text.
 Keep Standard command-stream regression evidence, head exclusions and bounded
 cue placement. Include `game/text-size.mjs` in the Team recipe-source closure;
 changed renderer dependencies require a new reviewed production successor, not
-rewritten old fingerprints. Tiny Ukrainian DOM HUD/ability-label wrapping remains
-a separate layout concern from canvas scaling.
+rewritten old fingerprints. DOM HUD/ability-label wrapping is a separate layout concern from canvas scaling.
 
 On Resume, derive rescue guidance from currently downed players and retained
 knockdown facts, resolving labels through the live locale. Revival and Retry must
@@ -1668,3 +1667,18 @@ actual slowed enemy or intercepted impact; keep existing teaching records intact
 Use a fresh controller press when opening Settings after assignment rather than
 injecting a mouse click into the compatibility-echo shield. Preserve the guard.
 See the [Team batch evidence](../../../docs/verification/team-readability-20260929/README.md).
+
+For narrow Team play, measure intrinsic HUD/objective/message and complete control
+rows. Keep the direction surface separate from action-label width: all targets
+must retain at least 44px while long translations wrap. Qualify actual downed,
+zero-reserve and recovery states, not only safe ground. Compact labels may summarize
+state and action; preserve full accessible/desktop instructions and exact numeric
+facts. Verify both seats and live language switching. Compare decoded generated
+catalogues, not compressed-line diffs. Record incomplete sparse-content generation
+separately from successful catalogue reproduction. See [Team HUD wrapping](../../../docs/verification/team-hud-wrap-20260929/README.md).
+
+Store departure translation keys rather than translated captions at host boot.
+Resolve the selected key inside the live localized callback; keep the departure
+allowlist, currentness checks and warnings unchanged. Test cold Ukrainian → English
+and language changes while the confirmation is open, including native Escape
+return and a stale Confirm after cancellation.
