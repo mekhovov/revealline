@@ -148,6 +148,33 @@ test('ordinary Solo uses its current startup path without any edition fetch', as
   });
   assert.equal(provider, null);
 });
+test('artwork URLs stay inside the selected company receipt while retained originals remain available', async () => {
+  const f = await retainedEditionFixture({ originalArtwork: true });
+  const originalAsset = f.catalog.assets.find((asset) => asset.id === 'old-picture');
+  const foreign = {
+    ...originalAsset,
+    id: 'another-company-logo',
+    path: 'game/editions/assets/another-company-logo.png',
+  };
+  f.catalog.assets.push(foreign);
+  f.catalog.brands.push({
+    ...f.catalog.brands[0],
+    id: 'another-company',
+    name: 'Another company',
+    logoAssetId: foreign.id,
+    assetIds: [foreign.id],
+  });
+  const current = await f.load();
+  assert.ok(current.catalog.assets.some((asset) => asset.id === foreign.id));
+  assert.ok(current.assetURL(originalAsset.id).endsWith(originalAsset.path));
+  assert.throws(() => current.assetURL(foreign.id), /does not contain/);
+  assert.equal(current.authoredPresentationSha256, f.original.authoredPresentationSha256);
+  f.replacePicture();
+  const retained = await f.load(f.descriptor.id);
+  assert.ok(retained.assetURL(originalAsset.id).endsWith(originalAsset.path));
+  assert.throws(() => retained.assetURL(foreign.id), /does not contain/);
+  assert.equal(retained.authoredPresentationSha256, f.original.authoredPresentationSha256);
+});
 test('edition content injects owned boot data and preserves audience and old saves', async () => {
   const f = await editionProviderFixture();
   const provider = await loadRuntimeContentProvider({

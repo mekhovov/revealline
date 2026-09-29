@@ -1,6 +1,61 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
+import { freezeDesign } from '../content-design/catalogs.mjs';
+
+test('validated deeply immutable source reuses its exact compiled snapshot across modes', () => {
+  const source = freezeDesign(projectFixture()),
+    first = compileContentProject(source),
+    second = compileContentProject(source),
+    solo = resolveMission(first, 'nearby-shore'),
+    versus = resolveMission(second, 'nearby-shore', { mode: 'versus' });
+  assert.equal(first, second);
+  assert.equal(compileContentProject(first.source), first);
+  assert.notEqual(solo, versus);
+  const assertFrozen = (value) => {
+    if (!value || typeof value !== 'object') return;
+    assert(Object.isFrozen(value));
+    Object.values(value).forEach(assertFrozen);
+  };
+  assertFrozen(first);
+  assertFrozen(solo);
+  assertFrozen(versus);
+  assert.throws(() => {
+    first.source.missions[0].coverage = 0.99;
+  }, TypeError);
+  assert.throws(() => {
+    solo.level.rules.lives = 99;
+  }, TypeError);
+  assert.equal(versus.level.rules.lives, 3);
+  assert.equal(compileContentProject(source), first);
+  const copy = freezeDesign(structuredClone(source)),
+    copied = compileContentProject(copy);
+  assert.notEqual(copied, first, 'Equal imported bytes are independently validated and owned.');
+  assert.deepEqual(copied, first);
+});
+
+test('mutable and shallow-frozen sources never reuse stale nested values or validation', () => {
+  for (const source of [projectFixture(), Object.freeze(projectFixture())]) {
+    const first = compileContentProject(source);
+    assert.notEqual(compileContentProject(source), first);
+    source.missions[0].coverage = 0.7;
+    const changed = compileContentProject(source);
+    assert.equal(changed.missions[0].coverage, 0.7);
+    assert.equal(first.missions[0].coverage, 0.6);
+    source.missions[0].map.id = 'missing';
+    assert.throws(() => compileContentProject(source));
+    source.missions[0].map.id = 'shore';
+    assert.equal(compileContentProject(source).missions[0].coverage, 0.7);
+  }
+});
+
+test('a deeply frozen invalid source never becomes a compiled cache entry', () => {
+  const source = projectFixture();
+  source.missions[0].map.id = 'missing';
+  freezeDesign(source);
+  assert.throws(() => compileContentProject(source));
+  assert.throws(() => compileContentProject(source));
+});
 
 test('only fully owned frozen compiled registries may be reused without recompilation', () => {
   const source = projectFixture(),

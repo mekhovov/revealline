@@ -9,7 +9,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Reveal / Line</title>
+    <title>FPV / LINE</title>
     <style>
       html {
         background: #070914;
@@ -41,6 +41,13 @@
         padding: 24px;
         background: #101923;
         border: 2px solid #425563;
+      }
+      #boot-screen .fpv-line-wordmark {
+        display: block;
+        width: min(100%, 510px);
+        aspect-ratio: 5.7;
+        object-fit: cover;
+        object-position: center 42%;
       }
       #boot-screen .launch-signal {
         display: flex;
@@ -107,6 +114,7 @@
     <link rel="stylesheet" data-boot-href="style.css" />
     <link rel="stylesheet" data-boot-href="ui/controller-settings.css" />
     <link rel="stylesheet" data-boot-href="ui/game-shell.css" />
+    <link rel="stylesheet" data-boot-href="ui/demo.css" />
     <link rel="stylesheet" data-boot-href="ui/flight-information-details.css" />
     <link rel="stylesheet" data-boot-href="ui/mode-choice.css" />
     <link rel="stylesheet" data-boot-href="ui/pixel-theme.css" />
@@ -129,14 +137,23 @@
     <link rel="stylesheet" data-boot-href="ui/operation-status.css" />
     <link rel="stylesheet" data-boot-href="ui/menu-appearance.css" />
     <link rel="stylesheet" data-boot-href="ui/handheld-play.css" />
-    <link rel="stylesheet" href="ui/quick-music-controls.css" />
+    <link rel="stylesheet" data-boot-href="ui/quick-music-controls.css" />
     <link rel="stylesheet" data-boot-href="ui/edition-solo.css" />
     <link rel="stylesheet" data-boot-href="ui/edition-play.css" />
+    <link rel="stylesheet" data-boot-href="ui/menu-scenes.css" />
+    <link rel="stylesheet" data-boot-href="ui/native-menu.css" />
+    <link rel="icon" type="image/png" sizes="32x32" href="ui/art/identity/fpv-line/icon-32.png" />
   </head>
   <body class="field-kit">
     <section id="boot-screen" class="launch-screen" aria-labelledby="boot-title">
       <div class="launch-card">
-        <p class="launch-kicker">REVEAL / LINE</p>
+        <p class="launch-kicker fpv-line-brand">
+          <img
+            class="fpv-line-wordmark"
+            src="ui/art/identity/fpv-line/wordmark.png"
+            alt="FPV / LINE"
+          />
+        </p>
         <div class="launch-signal" aria-hidden="true"><i></i><i></i><i></i></div>
         <h1 class="field-kit-display" id="boot-title" data-i18n="interface:findYourLine">
           Find your line.
@@ -211,7 +228,12 @@
         aria-label="Game menu"
         data-i18n-aria-label="interface:gameMenu"
       >
-        ◩ <span>REVEAL / LINE</span>
+        <span class="fpv-line-brand fpv-line-brand--compact"
+          ><img
+            class="fpv-line-wordmark"
+            src="ui/art/identity/fpv-line/wordmark.png"
+            alt="FPV / LINE"
+        /></span>
         <span id="journey-save-badge" class="journey-save-badge" aria-hidden="true" hidden>!</span>
       </button>
       <span id="shell-edition" class="shell-edition"></span>
@@ -279,7 +301,7 @@
           >.
         </li>
         <li data-i18n="interface:launchRevealLineFromItsNewHomeScreenIcon">
-          Launch Reveal / Line from its new Home Screen icon.
+          Launch FPV / LINE from its new Home Screen icon.
         </li>
       </ol>
       <p
@@ -303,7 +325,7 @@
     </dialog>
     <header class="masthead" data-boot-inert inert>
       <a class="wordmark" href="./" data-i18n-rich="interface:revealLine2"
-        ><span class="brand-mark" aria-hidden="true" data-i18n-slot="slot0">◩</span> REVEAL
+        ><span class="brand-mark" aria-hidden="true" data-i18n-slot="slot0">◩</span> FPV
         <span class="slash" data-i18n-slot="slot1">/</span> LINE</a
       >
       <nav>
@@ -843,13 +865,8 @@
             ><label
               ><input id="reduced-effects" type="checkbox" />
               <span data-i18n="interface:reducedEffects">Reduced effects</span></label
-            ><button
-              id="demo-button"
-              class="text-button"
-              type="button"
-              data-i18n="interface:watchFirstCut"
-            >
-              Watch first cut</button
+            ><button id="demo-button" class="text-button" type="button" data-i18n="demo:watch">
+              Watch demo</button
             ><span id="input-status" data-i18n="interface:keyboardTouch">Keyboard / touch</span>
           </div>
           <p id="save-warning" class="warning" role="status" hidden></p>
@@ -1999,6 +2016,27 @@
         >
           Manage saved flights, game-data backups and installed chapters in your flight library.
         </p>
+        <section class="demo-settings" aria-labelledby="demo-settings-title">
+          <h3 id="demo-settings-title" data-i18n="demo:settings">Demo mode</h3>
+          <label
+            ><input id="demo-auto" type="checkbox" /><span data-i18n="demo:auto"
+              >Show a demo after 60 seconds on the idle home screen</span
+            ></label
+          >
+          <label
+            ><input id="demo-collect" type="checkbox" /><span data-i18n="demo:collect"
+              >Use my successful runs in demos</span
+            ></label
+          >
+          <p class="micro-note" data-i18n="demo:localOnly">
+            Recordings stay on this device. The disposable demo cache holds up to 12 recordings / 32
+            MiB and is separate from saved flights.
+          </p>
+          <button id="demo-clear" type="button" class="button secondary" data-i18n="demo:clear">
+            Clear my demo recordings
+          </button>
+          <p id="demo-settings-status" class="micro-note" role="status"></p>
+        </section>
         <section aria-label="Download retention" data-i18n-aria-label="interface:downloadRetention">
           <button
             id="storage-retention-button"
@@ -2680,6 +2718,181 @@ No offline check yet.</pre
         </button>
       </div>
     </dialog>
+    <dialog id="demo-dialog" class="demo-dialog" aria-labelledby="demo-level">
+      <header class="demo-header">
+        <div>
+          <p class="eyebrow">
+            <span data-i18n="demo:title">DEMO</span> · <span id="demo-source"></span>
+          </p>
+          <h2 id="demo-level"></h2>
+        </div>
+        <div class="demo-header-actions" data-demo-ui>
+          <button
+            id="demo-fullscreen"
+            type="button"
+            class="button secondary"
+            data-demo-ui
+            data-i18n="demo:enterFullscreen"
+            hidden
+          >
+            Enter fullscreen
+          </button>
+          <button
+            id="demo-back"
+            type="button"
+            class="button secondary"
+            data-demo-exit
+            data-i18n="demo:back"
+          >
+            Back
+          </button>
+        </div>
+      </header>
+      <div class="demo-board">
+        <canvas
+          id="demo-canvas"
+          width="768"
+          height="576"
+          tabindex="0"
+          data-i18n-aria-label="demo:canvas"
+          aria-label="Live game demonstration"
+        ></canvas>
+      </div>
+      <div class="demo-panel">
+        <div class="demo-transport" data-demo-ui>
+          <button
+            id="demo-watch-pause"
+            class="button secondary"
+            type="button"
+            data-i18n="demo:pauseDemo"
+          >
+            Pause demo
+          </button>
+          <button id="demo-next" class="button secondary" type="button" data-i18n="demo:next">
+            Next demonstration
+          </button>
+          <button
+            id="demo-interrupt"
+            data-demo-ui
+            class="button primary"
+            type="button"
+            data-i18n="demo:playChoices"
+          >
+            Want to play?
+          </button>
+        </div>
+        <div id="demo-audio" data-demo-ui></div>
+        <div class="demo-notes">
+          <p id="demo-caption"></p>
+          <p id="demo-status"></p>
+          <p id="demo-picture-note"></p>
+        </div>
+        <div id="demo-actions" class="demo-actions" data-demo-ui hidden>
+          <button id="demo-fresh" class="button primary" type="button" data-i18n="demo:fresh">
+            Play from beginning
+          </button>
+          <button
+            id="demo-takeover"
+            class="button secondary"
+            type="button"
+            data-i18n="demo:takeover"
+          >
+            Take over · practice
+          </button>
+          <button
+            id="demo-resume"
+            class="button secondary"
+            type="button"
+            data-i18n="demo:keepWatching"
+          >
+            Keep watching
+          </button>
+          <button
+            id="demo-return"
+            class="button secondary"
+            type="button"
+            hidden
+            data-i18n="demo:returnToDemo"
+          >
+            Return to demo
+          </button>
+          <button
+            id="demo-pause"
+            class="button secondary"
+            type="button"
+            hidden
+            data-i18n="common:actions.pause"
+          >
+            Pause
+          </button>
+        </div>
+        <div id="demo-practice-controls" class="demo-practice-controls" hidden>
+          <p data-i18n="demo:practiceControls">
+            Use your direction keys, controller, swipe the board, or tap these arrows.
+          </p>
+          <p id="demo-bound-controls"></p>
+          <p id="demo-pad-controls" hidden></p>
+          <div class="demo-directions">
+            <button
+              type="button"
+              data-demo-move="left"
+              aria-label="Left"
+              data-i18n-aria-label="demo:left"
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              data-demo-move="up"
+              aria-label="Up"
+              data-i18n-aria-label="demo:up"
+            >
+              ↑
+            </button>
+            <button
+              type="button"
+              data-demo-move="down"
+              aria-label="Down"
+              data-i18n-aria-label="demo:down"
+            >
+              ↓
+            </button>
+            <button
+              type="button"
+              data-demo-move="right"
+              aria-label="Right"
+              data-i18n-aria-label="demo:right"
+            >
+              →
+            </button>
+            <button id="demo-boost" type="button" data-demo-action="boost" data-i18n="demo:boost">
+              Boost
+            </button>
+            <button
+              id="demo-ability"
+              type="button"
+              data-demo-action="ability"
+              data-i18n="demo:ability"
+            >
+              Ability
+            </button>
+            <button
+              id="demo-pickup"
+              type="button"
+              data-demo-action="pickup"
+              data-i18n="demo:pickup"
+            >
+              Supply
+            </button>
+            <select
+              id="demo-craft"
+              aria-label="Practice craft"
+              data-i18n-aria-label="demo:craft"
+            ></select>
+          </div>
+        </div>
+      </div>
+    </dialog>
     <dialog id="shell-home" class="shell-home" aria-labelledby="shell-title">
       <div class="home-art" aria-hidden="true"></div>
       <div class="home-content">
@@ -2687,14 +2900,13 @@ No offline check yet.</pre
           FPV FIELD KIT / FLIGHT READY
         </p>
         <h1 id="shell-title" data-i18n-rich="interface:reveal">
-          REVEAL<span data-i18n="interface:line" data-i18n-slot="slot0">/ LINE</span>
+          FPV<span data-i18n="interface:line" data-i18n-slot="slot0">/ LINE</span>
         </h1>
         <nav
           id="shell-title-modes"
           aria-label="Choose play mode"
           data-i18n-aria-label="common:game.chooseMode"
         >
-          <a href="company.html" data-i18n="interface:companyJourneys">Company journeys</a>
           <a id="shell-title-versus" href="couch/?return=solo" data-i18n="common:game.couchVersus"
             >Couch Versus</a
           >
@@ -2751,6 +2963,10 @@ No offline check yet.</pre
           >
             Missions
           </button>
+          <button id="shell-demo" type="button" class="button secondary" data-i18n="demo:watch">
+            Watch demo
+          </button>
+          <p id="demo-availability" class="home-status" role="status"></p>
           <button
             id="shell-gallery"
             type="button"
@@ -2883,7 +3099,7 @@ No offline check yet.</pre
     >
       <div class="shell-dialog-heading">
         <div>
-          <p class="eyebrow" data-i18n="interface:revealLineMenu">REVEAL LINE / MENU</p>
+          <p class="eyebrow" data-i18n="interface:revealLineMenu">FPV / LINE / MENU</p>
           <h2 id="shell-workshop-title" data-i18n="common:navigation.more">More</h2>
         </div>
         <button
@@ -2938,16 +3154,6 @@ No offline check yet.</pre
           >Replay Theater
           <span data-i18n="interface:reviewARecordedFlight" data-i18n-slot="slot0"
             >Review a recorded flight</span
-          ></a
-        >
-        <a
-          id="shell-community"
-          href="community/"
-          class="button secondary"
-          data-i18n-rich="interface:creator.communityCard"
-          >Community campaigns
-          <span data-i18n="interface:creator.communityDescription" data-i18n-slot="slot0"
-            >Discover, install and play creator editions</span
           ></a
         >
         <button id="shell-library" type="button" class="button secondary">
@@ -3051,6 +3257,10 @@ No offline check yet.</pre
           >
             Export replay
           </button>
+          <button id="demo-keep" class="button secondary" type="button" data-i18n="demo:keep">
+            Keep for demo
+          </button>
+          <p id="demo-keep-status" role="status"></p>
         </nav>
       </details>
       <details class="shell-tools">

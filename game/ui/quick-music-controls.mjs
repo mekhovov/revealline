@@ -60,7 +60,18 @@ export function attachQuickMusicControls({
     }
   };
   enabled = readPreference();
-  const rows = after.filter(Boolean).map((anchor, index) => {
+  const rows = after
+    .filter(Boolean)
+    .filter(
+      (anchor) =>
+        // Couch Audio already owns a complete transport. Keep its existing commands.
+        !(
+          ['race-start', 'coop-start'].includes(anchor.id) &&
+          (settingsRoot?.matches?.('[data-couch-music]') ||
+            settingsRoot?.querySelector('[data-couch-music]'))
+        ),
+    )
+    .map((anchor, index) => {
     const root = doc.createElement('div'),
       title = doc.createElement('span'),
       toggle = doc.createElement('button'),
@@ -78,9 +89,12 @@ export function attachQuickMusicControls({
     toggle.onclick = () => run('toggle');
     skip.onclick = () => run('next');
     root.append(title, toggle, skip);
-    anchor.after(root);
+    // Landing metadata is passive. The same live transport belongs to Audio.
+    const landing = ['shell-continue', 'race-start', 'coop-start'].includes(anchor.id);
+    if (landing && settingsRoot) settingsRoot.append(root);
+    else anchor.after(root);
     return { root, title, toggle, skip };
-  });
+    });
   let settingsTransport = null;
   if (settingsRoot) {
     const root = doc.createElement('div'),
@@ -166,7 +180,11 @@ export function attachQuickMusicControls({
               : t('interface:quickMusic.paused'));
     const song = state?.track
       ? `${state.track.title}${state.track.artist ? ` · ${state.track.artist}` : ''}`
-      : t('interface:selectedSoundtrack');
+      : t('interface:noTrackSelected');
+    for (const label of doc.querySelectorAll('[data-landing-song]')) {
+      label.textContent = song;
+      label.title = song;
+    }
     for (const row of [...rows, ...(settingsTransport ? [settingsTransport] : [])]) {
       const title = `${song} · ${status}`;
       if (row.title.textContent !== title) row.title.textContent = title;

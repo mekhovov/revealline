@@ -16,9 +16,175 @@ import {
   EDITION_RUNTIME_ADAPTERS,
   projectEditionRuntimeImports,
   validateEditionHostRequests,
+  editionMenuSceneResources,
+  projectEditionMenuResourcePaths,
+  projectEditionMenuScenes,
 } from '../../scripts/edition-runtime.mjs';
+import { MENU_SCENES, resolveMenuScene } from '../ui/menu-scene-catalog.mjs';
+import { selectOfflineCore } from '../../scripts/offline-core-closure.mjs';
+import { fileURLToPath } from 'node:url';
 
 const bytes = (text) => Buffer.from(text);
+const droneAidLandingFiles = [
+  'game/ui/art/menu-scenes/droneaid-main-background.png',
+  'game/ui/art/menu-scenes/droneaid-wordmark-light.svg',
+];
+test('standalone and public offline menus retain every dynamically attached panel stylesheet', async () => {
+  const modules = [
+    'game/ui/controller-field-editor.mjs',
+    'game/ui/soundtrack-panel.mjs',
+    'game/ui/install-offline-panel.mjs',
+  ];
+  const files = await collectEditionEngineFiles({
+    root: fileURLToPath(new URL('../../', import.meta.url)),
+    entries: modules,
+  });
+  for (const name of modules.map((name) => name.replace(/\.mjs$/, '.css')))
+    assert.ok(files.has(name), `Missing dynamically attached edition stylesheet: ${name}`);
+  const publicFiles = new Map(files);
+  publicFiles.set(
+    'game/index.html',
+    bytes(modules.map((name) => `<script src="${name.slice(5)}"></script>`).join('')),
+  );
+  const selected = selectOfflineCore(
+    [...publicFiles].map(([name, bytes]) => ({ name, bytes })),
+    new Set(),
+  );
+  for (const name of modules.map((name) => name.replace(/\.mjs$/, '.css')))
+    assert.ok(
+      selected.retained.has(name),
+      `Missing dynamically attached offline stylesheet: ${name}`,
+    );
+});
+test('actual demo and landing closure retains clock, audio, Worker, frozen replays, artwork motion, receiver loss and signal atlas offline', async () => {
+  const files = await collectEditionEngineFiles({
+    root: fileURLToPath(new URL('../../', import.meta.url)),
+    entries: [
+      'game/ui/demo-host.mjs',
+      'game/demo-sources.mjs',
+      'game/ui/menu-scenes.mjs',
+      'game/ui/native-menus.mjs',
+    ],
+  });
+  const catalog = JSON.parse(files.get('game/demo-data/catalog.json'));
+  const recordings = catalog.clips.flatMap(({ replayURL, replayVariants = [] }) =>
+    [replayURL, ...replayVariants].map((relative) => `game/${relative.slice(2)}`),
+  );
+  assert.equal(catalog.clips.length, 6);
+  assert.equal(recordings.length, 12);
+  const required = [
+    'game/ui/demo-clock.mjs',
+    'game/ui/demo-audio.mjs',
+    'game/ui/signal-reception.mjs',
+    'game/ui/music-credit.mjs',
+    'game/soundtrack.mjs',
+    'game/demo-bot-worker.mjs',
+    'game/demo-data/catalog.json',
+    'game/demo-data/variant-provenance.json',
+    'game/ui/menu-scenes.css',
+    'game/ui/menu-scene-motion.mjs',
+    'game/ui/menu-signal-loss.mjs',
+    'game/ui/native-menu.css',
+    'game/ui/menu-retune.mjs',
+    'game/ui/menu-retune.css',
+    'game/ui/art/menu-scenes/analog-noise-atlas.png',
+    ...droneAidLandingFiles,
+    ...recordings,
+  ];
+  for (const name of required) assert.ok(files.has(name), `Missing edition dependency: ${name}`);
+  validateEditionCodeClosure(
+    new Map([...files].map(([name, source]) => [name, projectEditionRuntimeImports(name, source)])),
+  );
+  // Exercise the actual public offline selector separately: it discovers
+  // Worker URLs and JSON catalogue paths without the edition resource map.
+  const publicFiles = new Map(files);
+  publicFiles.set(
+    'game/index.html',
+    bytes(
+      '<link rel="stylesheet" data-boot-href="ui/menu-scenes.css"><link rel="stylesheet" data-boot-href="ui/native-menu.css"><script src="ui/demo-host.mjs"></script><script src="demo-sources.mjs"></script><script src="ui/native-menus.mjs"></script>',
+    ),
+  );
+  const selected = selectOfflineCore(
+    [...publicFiles].map(([name, bytes]) => ({ name, bytes })),
+    new Set(),
+  );
+  for (const name of required.filter((name) => !name.endsWith('variant-provenance.json')))
+    assert.ok(selected.retained.has(name), `Missing offline dependency: ${name}`);
+});
+test('standalone menu projection preserves selected profile data and fallback without unrelated images', async () => {
+  const original = await fs.readFile(new URL('../ui/menu-scene-catalog.mjs', import.meta.url));
+  const catalog = JSON.parse(
+    await fs.readFile(new URL('../editions/catalog.json', import.meta.url)),
+  );
+  for (const { id } of catalog.editions) {
+    const selected = resolveMenuScene({ editionId: id });
+    const projected = await import(
+      `data:text/javascript;base64,${projectEditionMenuScenes(original, [id]).toString('base64')}`
+    );
+    assert.deepEqual(Object.keys(projected.MENU_SCENES).sort(), ['fpv', selected.id].sort());
+    assert.deepEqual(projected.resolveMenuScene({ editionId: id }), selected);
+    assert.deepEqual(projected.resolveMenuScene({ themeId: 'retro', editionId: id }), selected);
+    assert.deepEqual(projected.resolveMenuScene({ editionId: 'unrecognized' }), MENU_SCENES.fpv);
+    assert.equal(projected.menuSceneMode('team'), 'team');
+    const resources = editionMenuSceneResources([id]);
+    assert.equal(
+      resources.filter((name) => /\.(webp|png)$/.test(name)).length,
+      3,
+      'Selected background plus landscape/portrait fallback are retained.',
+    );
+    assert.ok(resources.includes(`game/ui/${selected.landscape.slice(2)}`));
+    assert.ok(resources.includes('game/ui/art/menu-scenes/fpv-portrait.webp'));
+    assert.ok(!resources.includes('game/ui/art/menu-scenes/retro.webp'));
+    if (selected.wordmark) assert.ok(resources.includes(`game/ui/${selected.wordmark.slice(2)}`));
+  }
+  assert.throws(
+    () => projectEditionMenuScenes(bytes('export const noLookup = {};'), ['coupa-all']),
+    /explicit profile lookup/,
+  );
+});
+test('DroneAid aggregate originals are selected alone while campaigns keep their existing artwork', async () => {
+  const catalog = JSON.parse(
+    await fs.readFile(new URL('../editions/catalog.json', import.meta.url)),
+  );
+  const paths = [
+    'game/ui/menu-scenes.mjs',
+    'game/ui/art/menu-scenes/provenance.json',
+    'game/ui/art/menu-scenes/analog-noise-atlas.png',
+    'game/ui/art/menu-scenes/droneaid-nl-community.webp',
+    ...Object.values(MENU_SCENES).flatMap((scene) =>
+      [scene.landscape, scene.portrait, scene.wordmark]
+        .filter(Boolean)
+        .map((asset) => `game/ui/${asset.slice(2)}`),
+    ),
+  ];
+  for (const { id } of catalog.editions) {
+    const selected = new Set(projectEditionMenuResourcePaths(paths, [id]));
+    const aggregate = resolveMenuScene({ editionId: id }).id === 'droneaid-nl-community';
+    for (const file of droneAidLandingFiles)
+      assert.equal(selected.has(file), aggregate, `${id}: ${file}`);
+    assert.equal(selected.has('game/ui/art/menu-scenes/droneaid-nl-community.webp'), false);
+    assert.ok(selected.has('game/ui/art/menu-scenes/analog-noise-atlas.png'));
+    assert.ok(selected.has('game/ui/art/menu-scenes/provenance.json'));
+    assert.ok(selected.has('game/ui/menu-scenes.mjs'));
+    assert.ok(selected.has(`game/ui/${resolveMenuScene({ editionId: id }).landscape.slice(2)}`));
+  }
+  const aggregate = MENU_SCENES['droneaid-nl-community'];
+  assert.equal(`game/ui/${aggregate.landscape.slice(2)}`, droneAidLandingFiles[0]);
+  assert.equal(aggregate.portrait, aggregate.landscape);
+  assert.equal(`game/ui/${aggregate.wordmark.slice(2)}`, droneAidLandingFiles[1]);
+  const originals = [
+    'authoring/library/droneaid-brand-kit-2026-09-29/background-original.png',
+    'authoring/library/droneaid-brand-kit-2026-09-29/wordmark-dark.svg',
+  ];
+  for (const [index, file] of droneAidLandingFiles.entries()) {
+    const runtime = await fs.readFile(new URL(`../../${file}`, import.meta.url));
+    assert.deepEqual(
+      runtime,
+      await fs.readFile(new URL(`../../${originals[index]}`, import.meta.url)),
+      'The provided original is retained without re-encoding or SVG edits.',
+    );
+  }
+});
 test('shared guide scenario projects selected appearance without changing a mechanic or recipe parameter', async () => {
   const source = JSON.parse(
       await fs.readFile(new URL('../content/scenarios/line-impact-demo.json', import.meta.url)),

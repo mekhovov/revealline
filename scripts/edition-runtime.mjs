@@ -1,5 +1,52 @@
 import path from 'node:path';
 import { parse } from 'acorn';
+import { MENU_SCENES, resolveMenuScene } from '../game/ui/menu-scene-catalog.mjs';
+
+function sceneAssets(scene) {
+  return [scene.landscape, scene.portrait, scene.wordmark]
+    .filter(Boolean)
+    .map((asset) => `game/ui/${asset.slice(2)}`);
+}
+
+export function editionMenuSceneResources(editionIds) {
+  const scenes = [
+    MENU_SCENES.fpv,
+    ...editionIds.map((editionId) => resolveMenuScene({ editionId })),
+  ];
+  return [...new Set(scenes.flatMap(sceneAssets)), 'game/ui/art/menu-scenes/provenance.json'];
+}
+
+/** Keep selected scene originals in any admitted image format. The receiver
+ * atlas is shared presentation, not artwork belonging to one scene. */
+export function projectEditionMenuResourcePaths(paths, editionIds) {
+  const selected = new Set(editionMenuSceneResources(editionIds));
+  return paths.filter(
+    (name) =>
+      !/^game\/ui\/art\/menu-scenes\/[^/]+\.(?:webp|png|svg)$/.test(name) ||
+      name === 'game/ui/art/menu-scenes/analog-noise-atlas.png' ||
+      selected.has(name),
+  );
+}
+
+// Project only the public profile lookup. Preserve original scene data and
+// resolver code, including timing, fallback behavior and source provenance.
+export function projectEditionMenuScenes(bytes, editionIds) {
+  const source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+  const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const declaration = tree.body
+    .flatMap((node) => (node.declaration ?? node).declarations ?? [])
+    .find((node) => node.id?.name === 'MENU_SCENES');
+  if (!declaration?.init) throw new Error('Menu scene catalog lacks its explicit profile lookup.');
+  const ids = [
+    ...new Set(['fpv', ...editionIds.map((editionId) => resolveMenuScene({ editionId }).id)]),
+  ];
+  const { start, end } = declaration.init;
+  return Buffer.from(
+    source.slice(0, start) +
+      `Object.freeze(Object.fromEntries(Object.entries(${source.slice(start, end)}).filter(([id]) => ${JSON.stringify(ids)}.includes(id))))` +
+      source.slice(end),
+  );
+}
 
 // These are release-owned adapters, not content-supplied scripts. Original
 // historical registries never enter either the player or selected-source ZIP.
@@ -21,6 +68,43 @@ export const EDITION_RUNTIME_RESOURCES = Object.freeze({
   'game/company-entry.mjs': ['game/index.html'],
   'game/index.html': EDITION_RUNTIME_PAGES,
   'game/app.mjs': ['game/content/scenarios/line-impact-demo.json'],
+  'game/demo-bot-player.mjs': ['game/demo-bot-worker.mjs'],
+  'game/demo-catalog.mjs': [
+    'game/demo-data/catalog.json',
+    'game/demo-data/variant-provenance.json',
+    ...[
+      'first-signal-left',
+      'first-signal-right',
+      'relay-orchard-loop',
+      'relay-orchard-stairs',
+      'crosswind-openings',
+      'night-patrol-loop',
+    ].flatMap((id) => [
+      `game/demo-data/${id}.replay.json`,
+      `game/demo-data/${id}.chromium-macos.replay.json`,
+    ]),
+  ],
+  'game/ui/native-menus.mjs': ['game/ui/native-menu.css'],
+  'game/ui/controller-field-editor.mjs': ['game/ui/controller-field-editor.css'],
+  'game/ui/soundtrack-panel.mjs': ['game/ui/soundtrack-panel.css'],
+  'game/ui/install-offline-panel.mjs': ['game/ui/install-offline-panel.css'],
+  'game/ui/brand-identity.mjs': ['game/ui/art/identity/fpv-line/wordmark.png'],
+  'game/ui/menu-scenes.mjs': [
+    'game/ui/menu-scenes.css',
+    'game/ui/art/menu-scenes/analog-noise-atlas.png',
+  ],
+  'game/ui/authoring-input-host.mjs': ['game/ui/authoring-input.css'],
+  'game/ui/authoring-sources.mjs': [
+    'game/ui/authoring-input.css',
+    'authoring/shared/samples/dawn-signal.png',
+    'authoring/shared/samples/dawn-signal.mp4',
+    'authoring/still-media/examples/dawn-signal/Dawn-Signal-originals.rlmedia',
+    'authoring/still-media/examples/dawn-signal/Dawn-Signal-stories.rlstory',
+  ],
+  'game/ui/menu-scene-catalog.mjs': [
+    ...new Set(Object.values(MENU_SCENES).flatMap(sceneAssets)),
+    'game/ui/art/menu-scenes/provenance.json',
+  ],
   'game/content/soundtrack-catalogue.mjs': [
     'game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3',
   ],

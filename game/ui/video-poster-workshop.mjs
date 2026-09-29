@@ -16,6 +16,7 @@ import {
 } from '../video-editor.mjs';
 import { attachControllerNavigation } from './controller-navigation.mjs';
 import { createControllerRouter } from './controller-router.mjs';
+import { createAuthoringSourcePicker, attachAuthoringSourceButtons } from './authoring-sources.mjs';
 
 /** Standalone local authoring preview. No storage, assignment, game or award API. */
 export function attachVideoPosterWorkshop({
@@ -52,22 +53,43 @@ export function attachVideoPosterWorkshop({
     else feedback.begin({ message }).finish({ message, state });
   }
   setStatus(localizedMessage('interface:chooseALocalVideoToInspectNoGameOrMedia'));
-  const router = createControllerRouter({ eventTarget: win, ...(readPads ? { readPads } : {}) });
+  const router = createControllerRouter({
+    eventTarget: win,
+    navigationAliases: true,
+    ...(readPads ? { readPads } : {}),
+  });
+  let sourcePicker = null,
+    stopSourceButtons = null;
   const navigation = attachControllerNavigation({
     document: doc,
     keyboard: true,
-    getScope: () => 'video-poster-workshop',
-    getRoot: () => $('main'),
+    getScope: () => (sourcePicker?.dialog.open ? 'video-poster-sources' : 'video-poster-workshop'),
+    getRoot: () => (sourcePicker?.dialog.open ? sourcePicker.dialog : $('main')),
     getDefaultFocus: () => $('file'),
     onNativeInput: () => router.clear(),
+    activateFileInput: (input) => sourcePicker?.open(input),
     onBack: () => {
-      if (task) cancel();
+      if (sourcePicker?.dialog.open) sourcePicker.close();
+      else if (task) cancel();
       else $('back').click();
     },
     onHint: (text) => {
       localizedText(hint, () => text);
     },
   });
+  if (doc.head && typeof win.MutationObserver === 'function') {
+    sourcePicker = createAuthoringSourcePicker({
+      document: doc,
+      window: win,
+      onOpen: () => navigation.sync(),
+      onClose: () => router.clear(),
+    });
+    stopSourceButtons = attachAuthoringSourceButtons({
+      document: doc,
+      window: win,
+      picker: sourcePicker,
+    });
+  }
   const message = (error) => (error instanceof Error ? error.message : String(error));
   function controls() {
     $('capture').disabled = !source || Boolean(task);
@@ -307,7 +329,7 @@ export function attachVideoPosterWorkshop({
       ].join('\n'),
     );
     $('download').href = previewURL;
-    $('download').download = `RevealLine-poster-${String(requested).replace('.', '-')}.png`;
+    $('download').download = `fpv-line-poster-${String(requested).replace('.', '-')}.png`;
     $('download').hidden = false;
     $('preview').hidden = false;
   }
@@ -497,8 +519,8 @@ export function attachVideoPosterWorkshop({
       $('trim-download').href = trimURL;
       $('trim-download').download =
         transformed.info.mime === 'video/webm'
-          ? 'RevealLine-transformed.webm'
-          : 'RevealLine-transformed.mp4';
+          ? 'fpv-line-transformed.webm'
+          : 'fpv-line-transformed.mp4';
       $('trim-download').hidden = false;
       localizedText($('trim-evidence'), () =>
         [
@@ -587,7 +609,13 @@ export function attachVideoPosterWorkshop({
   function poll(now) {
     if (disposed) return;
     if (doc.hidden || !doc.hasFocus()) router.clear();
-    else navigation.handle(router.sample({ scope: 'video-poster-workshop', timeMs: now }).ui);
+    else
+      navigation.handle(
+        router.sample({
+          scope: sourcePicker?.dialog.open ? 'video-poster-sources' : 'video-poster-workshop',
+          timeMs: now,
+        }).ui,
+      );
     frame = win.requestAnimationFrame(poll);
   }
   const blur = () => router.clear();
@@ -615,6 +643,8 @@ export function attachVideoPosterWorkshop({
     feedback.dispose();
     win.cancelAnimationFrame(frame);
     navigation.destroy();
+    stopSourceButtons?.();
+    sourcePicker?.destroy();
     router.destroy();
     win.removeEventListener('blur', blur);
     win.removeEventListener('pagehide', hide);
