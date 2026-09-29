@@ -10093,7 +10093,11 @@ try {
     );
     $('lives').dataset.compactValue = `♥ ${run.lives}`;
     localizedText($('time'), () => timeLabel(run.time));
-    localizedText($('score'), () => String(run.score).padStart(5, '0'));
+    localizedText($('score'), () => {
+      // Keep raw score precision in the run/save/replay; only compact the HUD.
+      const label = formatNumber(run.score, { useGrouping: false, maximumFractionDigits: 3 });
+      return Number.isInteger(run.score) ? label.padStart(5, '0') : label;
+    });
     const required = run.objectives.filter((o) => o.required),
       done = required.filter((o) => o.captured);
     localizedText($('objective-state'), () =>
