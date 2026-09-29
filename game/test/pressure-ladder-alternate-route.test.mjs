@@ -249,4 +249,3 @@ test('Pressure ladder lower-first slow-field route clears with linked landings, 
     assert.deepEqual(authoritativeCheckpoint(board), checkpoint);
   }
 });
-

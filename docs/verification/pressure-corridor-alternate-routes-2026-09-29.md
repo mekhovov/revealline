@@ -131,4 +131,3 @@ Remaining work is broader complete-route qualification, current-edition optional
 gap observations, cleanup/repair quality and eventual human pacing review. No
 new artwork, mission geometry, runtime rule, default edition or award is shipped
 by this test/documentation-only increment. Production testing stays deferred.
-

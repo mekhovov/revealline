@@ -373,4 +373,3 @@ test('Switchback alternate final keeper approach without its timing window is no
   // lost one life. Both 90 and120 cleared, so this is not a claimed unique or
   // globally optimal timing. Only120 receives replay/Versus qualification here.
 });
-
