@@ -26,6 +26,7 @@ export function createControllerSession({
   eventTarget = globalThis.window,
   onLoss = () => {},
 } = {}) {
+  const splits = new Map();
   const devices = new Map(),
     seats = [null, null],
     lostEvents = new Set();
@@ -45,6 +46,11 @@ export function createControllerSession({
     for (const d of devices.values()) releaseState(d);
   }
   function lose(index) {
+    const split = splits.get(index);
+    if (split) {
+      splits.delete(index);
+      for (const child of split.indexes) lose(child);
+    }
     const seat = seats.indexOf(index);
     devices.delete(index);
     if (seat !== -1) {
@@ -63,7 +69,7 @@ export function createControllerSession({
   function select(index, seat) {
     if (!editable || !Number.isInteger(seat) || seat < 0 || seat > 1) return false;
     const d = devices.get(index);
-    if (!d?.profile || seats.includes(index)) return false;
+    if (!d?.profile || seats.includes(index) || splits.has(index)) return false;
     if (seats[seat] !== null) releaseState(devices.get(seats[seat]));
     seats[seat] = index;
     releaseState(d);
@@ -121,6 +127,15 @@ export function createControllerSession({
           continue;
         incoming.set(pad.index, pad);
       }
+    for (const [source, split] of [...splits]) {
+      const pad = incoming.get(source);
+      if (!pad || descriptorKey(pad) !== split.key) {
+        splits.delete(source);
+        for (const index of split.indexes) lose(index);
+      } else {
+        for (const index of split.indexes) incoming.set(index, { ...pad, index });
+      }
+    }
     for (const [index, d] of devices)
       if (!incoming.has(index) || descriptorKey(incoming.get(index)) !== d.key) lose(index);
     lostEvents.clear();
@@ -144,7 +159,7 @@ export function createControllerSession({
       menuPads = [],
       paused = [];
     for (const d of [...devices.values()].sort((a, b) => a.index - b.index)) {
-      if (!d.profile) continue;
+      if (!d.profile || splits.has(d.index)) continue;
       const mapped = mapProfile(d.profile, d.pad, d.previous);
       d.previous = mapped.state;
       if (!mapped.valid) {
@@ -174,7 +189,7 @@ export function createControllerSession({
       if (seat !== -1) {
         pads[d.index] = virtual(d, mapped.flight, d.blocked || capturing);
         if (menuSeat === seat && !capturing) {
-          menuPads[d.index] = virtual(d, mapped.menu, d.blocked);
+          menuPads.push(virtual(d, mapped.menu, d.blocked));
           confirmHeld = mapped.menu.confirm;
         }
       }
@@ -211,6 +226,51 @@ export function createControllerSession({
     },
     raw: (index) => devices.get(index)?.pad || null,
     assign: select,
+    split(index, profiles) {
+      if (!editable || capturing || splits.has(index) || index >= 1024) return false;
+      const source = devices.get(index);
+      if (!source || profiles.length !== 2) return false;
+      const checked = profiles.map(validateProfile);
+      if (
+        checked.some((p) =>
+          Object.keys(p.device).some((key) => p.device[key] !== deviceDescriptor(source.pad)[key]),
+        )
+      )
+        throw new Error('Profile does not match this device.');
+      // A physical channel belongs to exactly one player, including menu actions.
+      const used = checked.map(
+        (p) =>
+          new Set(
+            [...Object.values(p.flight), ...Object.values(p.menu)]
+              .flat()
+              .map((s) => `${s.kind === 'button' ? 'button' : 'axis'}:${s.index}`),
+          ),
+      );
+      if ([...used[0]].some((key) => used[1].has(key)))
+        throw new Error('Shared radio players need separate channels.');
+      const indexes = [1024 + index * 2, 1025 + index * 2];
+      splits.set(index, { key: source.key, indexes });
+      for (let seat = 0; seat < 2; seat++) {
+        const child = indexes[seat];
+        devices.set(child, {
+          ...source,
+          index: child,
+          generation: ++generation,
+          pad: { ...source.pad, index: child },
+          profile: checked[seat],
+          standard: false,
+          previous: new Map(),
+          blocked: true,
+          joinWas: false,
+          pauseWas: false,
+        });
+        if (seats[seat] !== null) releaseState(devices.get(seats[seat]));
+        seats[seat] = child;
+      }
+      menuSeat = 0;
+      clear();
+      return true;
+    },
     apply(index, profile) {
       if (!editable) return false;
       const d = devices.get(index);
@@ -219,6 +279,25 @@ export function createControllerSession({
       const descriptor = deviceDescriptor(d.pad);
       if (Object.keys(descriptor).some((key) => p.device[key] !== descriptor[key]))
         throw new Error('Profile does not match this device. Configure it again.');
+      for (const shared of splits.values()) {
+        if (!shared.indexes.includes(index)) continue;
+        const sibling = devices.get(shared.indexes.find((i) => i !== index));
+        const channels = (profile) =>
+          new Set(
+            [...Object.values(profile.flight), ...Object.values(profile.menu)]
+              .flat()
+              .map((s) => `${s.kind === 'button' ? 'button' : 'axis'}:${s.index}`),
+          );
+        if (!sibling?.profile) return false;
+        const other = channels(sibling.profile);
+        if ([...channels(p)].some((key) => other.has(key)))
+          throw new Error('Shared radio players need separate channels.');
+      }
+      const split = splits.get(index);
+      if (split) {
+        splits.delete(index);
+        for (const child of split.indexes) lose(child);
+      }
       d.profile = p;
       d.standard = false;
       d.revision++;
@@ -246,6 +325,7 @@ export function createControllerSession({
     dispose() {
       disposed = true;
       eventTarget?.removeEventListener?.('gamepaddisconnected', disconnect);
+      splits.clear();
       devices.clear();
       seats.fill(null);
       frame = { pads: [], menuPads: [], slots: [null, null] };
