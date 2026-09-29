@@ -45,10 +45,15 @@ are excluded from the public player, public game queues and default playlists.
 
 The active delivery order is:
 
-1. **P0 — physical and offline acceptance.** Confirm remote-to-bundled switching,
-   iPhone playback, touch/controller focus and a cold offline restart. Desktop and
-   source evidence exists; real-device results must be recorded separately.
-   **Estimate: 0.5 day once the devices are available.**
+1. **P0 — saved style persistence, then physical and offline acceptance.** Runtime
+   [PR #779](https://github.com/mekhovov/revealline/pull/779) restores the top Audio
+   selectors from the saved listening mode and genre selection after reload. Its
+   exact rebased source passes 136 focused tests, deterministic production revision
+   100/audio revision 52 checks and the three affected production-history cases;
+   hosted full gates and release qualification remain. After delivery, confirm
+   iPhone playback, remote-to-bundled switching, touch/controller focus and a cold
+   offline restart. **Estimate: 0.5–1 day for CI/release plus 0.5 day once devices
+   are available.**
 2. **P1 — accepted Synth batch.** Review a small full-track slate against the
    Xonix/XPOSED-inspired synthwave, outrun and rhythmic-electro brief. Publish and
    admit only the accepted subset. **Estimate: several hours of listening plus 1–2
@@ -76,12 +81,13 @@ required before approximately 450 recordings, leaving substantial capacity at 26
 Broader genres follow the three core families. The rejected AI-original workflow
 remains paused at **0/36 approved compositions**.
 
-Current constraints are concrete: the release queue is owned by open PR #775 for
-v0.142.3; physical iPhone/controller evidence needs real hardware; musical
-admission needs complete-track listening; Ukrainian admission needs cultural and
-rights review; and local free space is about **1.1 GiB**, barely above the mandatory
-1 GiB floor. Use hosted checks and small metadata-only work until disk reserve is
-restored.
+Current constraints are concrete: PR #775 is merged into accepted `main`, but
+v0.142.3 is not yet an immutable public release; runtime PR #779 must follow the
+release publisher’s queue and pass fresh full hosted gates. Physical iPhone/controller
+evidence needs real hardware; musical admission needs complete-track listening;
+Ukrainian admission needs cultural and rights review; and local free space is about
+**0.5 GiB**, below the mandatory 1 GiB floor. Use hosted checks and small metadata-only
+work until disk reserve is restored.
 
 ## Superseded execution checkpoint — 28 September 2026
 
@@ -1334,20 +1340,20 @@ Estimates are hands-on effort, not promised dates. CI queues, listening reviewer
 rights and actual failure diagnosis can extend elapsed time. No soundtrack game
 version is allocated without the release owner's confirmation.
 
-| ID  | Current state                                                                                                 | Remaining completion condition                                                                                                  | Priority / estimate                                         |
-| --- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| M0  | Durable plan maintenance is active; this checkpoint reconciles the 260-track archive and v0.142.2.            | Update after each meaningful archive, game, acceptance or release milestone.                                                    | P0 maintenance; less than 1 hour per milestone.             |
-| M1  | Admission, rights, canonical-catalogue and dynamic game-discovery infrastructure is public.                   | Preserve regression coverage and generated-ledger boundaries.                                                                   | Complete; maintenance only.                                 |
-| M2  | Exact Shchedryk opening theme is public, bundled and desktop-verified.                                        | Finish repeated listening, cultural, cold-offline and physical-device evidence without changing its identity.                   | P0 acceptance; 0.5 day plus reviewers/devices.              |
-| M3  | Keyboard and in-game quick controls are public; Audio settings now exposes transport and styles.              | Confirm touch and controller focus/activation on physical targets.                                                              | P0 acceptance; about 0.5 day with devices.                  |
-| M4  | Shchedryk and Ukrainian audition material are preserved; UA-FPV is excluded from active delivery.             | Approve a small rights-cleared, culturally specific Ukrainian set through full listening and cultural review.                   | P1; several hours review plus 1–2 days integration/release. |
-| M5  | Synthwave/electro candidates and user direction are preserved; rejected/review-only recordings stay excluded. | Approve a small Xonix/XPOSED-inspired full-track batch, then publish and admit only that subset.                                | P1; several hours review plus 1–2 days integration/release. |
-| M6  | Groove-first and heavier Metal candidates are preserved; user-hidden tracks stay excluded.                    | Approve a small rhythmic, energetic batch, then publish and admit only that subset.                                             | P1; several hours review plus 1–2 days integration/release. |
-| M7  | Historical UA-FPV evidence and private packs are preserved.                                                   | No action unless the user explicitly restores this item.                                                                        | Inactive / unscheduled.                                     |
-| M8  | Mixed-source recovery, dynamic canonical streaming and desktop acceptance are public through v0.142.2.        | Prove iPhone playback, remote/bundled/uploaded switching, controller/touch operation and cold offline restart.                  | P0; about 0.5 day with devices.                             |
-| M9  | Broad retagging is replaced by per-batch curation.                                                            | Correct style, scene, energy and collection metadata for each accepted M4–M6 batch without changing rights or saved identities. | P2; 1–3 hours per accepted batch.                           |
-| M10 | Broader genre expansion remains available after the core families.                                            | Release small reviewed albums only after Synth, Metal and Ukrainian batches.                                                    | P3; 1–2 days per batch plus review.                         |
-| M11 | Original production remains paused after synchronization and quality rejection.                               | Resume only with a demonstrably better method and accepted pilots; retain the 36-composition brief.                             | Deferred / unscheduled; 0/36 approved.                      |
+| ID  | Current state                                                                                                                | Remaining completion condition                                                                                                                                       | Priority / estimate                                         |
+| --- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| M0  | Durable plan maintenance is active; this checkpoint reconciles the 260-track archive and v0.142.2.                           | Update after each meaningful archive, game, acceptance or release milestone.                                                                                         | P0 maintenance; less than 1 hour per milestone.             |
+| M1  | Admission, rights, canonical-catalogue and dynamic game-discovery infrastructure is public.                                  | Preserve regression coverage and generated-ledger boundaries.                                                                                                        | Complete; maintenance only.                                 |
+| M2  | Exact Shchedryk opening theme is public, bundled and desktop-verified.                                                       | Finish repeated listening, cultural, cold-offline and physical-device evidence without changing its identity.                                                        | P0 acceptance; 0.5 day plus reviewers/devices.              |
+| M3  | Keyboard and in-game quick controls are public; Audio settings now exposes transport and styles.                             | Confirm touch and controller focus/activation on physical targets.                                                                                                   | P0 acceptance; about 0.5 day with devices.                  |
+| M4  | Shchedryk and Ukrainian audition material are preserved; UA-FPV is excluded from active delivery.                            | Approve a small rights-cleared, culturally specific Ukrainian set through full listening and cultural review.                                                        | P1; several hours review plus 1–2 days integration/release. |
+| M5  | Synthwave/electro candidates and user direction are preserved; rejected/review-only recordings stay excluded.                | Approve a small Xonix/XPOSED-inspired full-track batch, then publish and admit only that subset.                                                                     | P1; several hours review plus 1–2 days integration/release. |
+| M6  | Groove-first and heavier Metal candidates are preserved; user-hidden tracks stay excluded.                                   | Approve a small rhythmic, energetic batch, then publish and admit only that subset.                                                                                  | P1; several hours review plus 1–2 days integration/release. |
+| M7  | Historical UA-FPV evidence and private packs are preserved.                                                                  | No action unless the user explicitly restores this item.                                                                                                             | Inactive / unscheduled.                                     |
+| M8  | Mixed-source recovery and desktop acceptance are public through v0.142.2; PR #779 repairs saved style controls after reload. | Pass exact-source hosted gates, release PR #779, then prove iPhone playback, remote/bundled/uploaded switching, controller/touch operation and cold offline restart. | P0; 0.5–1 day CI/release plus 0.5 day with devices.         |
+| M9  | Broad retagging is replaced by per-batch curation.                                                                           | Correct style, scene, energy and collection metadata for each accepted M4–M6 batch without changing rights or saved identities.                                      | P2; 1–3 hours per accepted batch.                           |
+| M10 | Broader genre expansion remains available after the core families.                                                           | Release small reviewed albums only after Synth, Metal and Ukrainian batches.                                                                                         | P3; 1–2 days per batch plus review.                         |
+| M11 | Original production remains paused after synchronization and quality rejection.                                              | Resume only with a demonstrably better method and accepted pilots; retain the 36-composition brief.                                                                  | Deferred / unscheduled; 0/36 approved.                      |
 
 M4–M6 research proceeds in parallel. M3 does not wait for music rights. A cleared
 Ukrainian, synth or metal subset can ship without waiting for the other families.
