@@ -442,8 +442,9 @@
     {
       "name": "Content Production",
       "route": "/authoring/production/",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "Current source 06915d4ef and optional packaging 5399c9d7d retain one shared input owner, exact row/page/Back focus, bounded checklist/history/provenance readers, and stale reload/preview cancellation. Final 55/55 focused tests and 6/6 inventory/admission/core checks pass. Complete current virtual-pad workflow passes 3/3: canceled fields, empty results, all six pages, both snapshots, all five domains, bounded reading, two exact original PNG previews and unchanged storage/source. Native keyboard filter cancellation/search recovery, readers, both previews/Clear, page return, snapshot reopening, Reload and Sections return pass without pointer focus reset at 1280x720. Actual history/provenance bounds: virtual 229/1141px; native 134/1046px. Both transient preview blobs match recorded bytes/SHA and fully decode to 1774x887. The product is read-only and has no browser Save/import/approval/export; reopening is source navigation. Default package adds 86 optional Workshop paths (99,594,370 raw bytes); none enters player startup or standalone company engines. Fresh 14/14 in-memory edition compiles pass;941 captured paths match 5399c9d7d. Full Ukrainian, launcher return chain, installed optional/offline, physical/native/published acceptance remain open.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
+      "evidence": "docs/verification/content-production-input-2026-09-29.md"
     },
     {
       "name": "Viewport Lab",
