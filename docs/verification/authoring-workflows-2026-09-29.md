@@ -154,7 +154,11 @@ focus/window/queued-key guard. The review checked cancellation semantics,
 foreground/newer-owner boundaries, explicit Enter/pointer ownership, listener
 cleanup and restoration of the iframe's original tabindex.
 
-## Scope still open
+## Later follow-up
+
+The [Asset native-keyboard receipt](asset-native-keyboard-2026-09-29.md) completes the separate native raster journey and verifies actual exported bytes. The [Enemy Workshop receipt](enemy-workshop-input-2026-09-29.md) adds current virtual-pad and bounded native evidence. Those later receipts supersede the corresponding pending statements below; the original snapshot remains attributed here.
+
+## Scope still open at this snapshot
 
 The separate native-keyboard Asset journey, physical controller/device behavior,
 and operating-system file-dialog imports remain open. The explicit keyboard

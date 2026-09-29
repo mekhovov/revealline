@@ -17,7 +17,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "pending exact-candidate qualification",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
           "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
@@ -38,7 +38,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "pending exact-candidate qualification",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
           "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
@@ -59,7 +59,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "pending exact-candidate qualification",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
           "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
@@ -80,7 +80,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "pending exact-candidate qualification",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
           "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
@@ -101,7 +101,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "pending exact-candidate qualification",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
           "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
@@ -122,7 +122,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "pending exact-candidate qualification",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
           "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
@@ -143,7 +143,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "pending exact-candidate qualification",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
           "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
@@ -164,7 +164,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "pending exact-candidate qualification",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
           "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
@@ -192,7 +192,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "pending exact-candidate qualification",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
           "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
@@ -216,7 +216,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "pending exact-candidate qualification",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
           "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
@@ -240,7 +240,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "pending exact-candidate qualification",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
           "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
@@ -264,7 +264,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "pending exact-candidate qualification",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
           "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
@@ -288,7 +288,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "pending exact-candidate qualification",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
           "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
@@ -312,7 +312,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "pending exact-candidate qualification",
+        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
         "historical": {
           "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
           "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
@@ -366,7 +366,7 @@
     {
       "name": "Asset Studio",
       "route": "/authoring/asset-studio/",
-      "verification": "2026-09-29 current virtual-pad edit/cancel/invalid provenance/save/reopen/export passed; actual revision 102 download and 133 images validated. Native-keyboard and physical-pad complete journeys remain pending.",
+      "verification": "Current virtual-pad journey passed; native keyboard raster edit/cancel/invalid provenance/save/reload/export passed without pointer reset. Actual native133-asset revision101 download and130distinct decoded images validated; localized saved/draft preview labels passed EN/UK. Physical-pad/native-package checks remain pending. See asset-native-keyboard receipt.",
       "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
@@ -378,7 +378,7 @@
     {
       "name": "Enemy Workshop",
       "route": "/authoring/enemy-catalog/",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "verification": "Current full virtual-pad edit/cancel/invalid JSON/save/reload/secure preview return/export passed; actual814B artifact production-validated. Native editing/save/export passed with813B validated artifact; preview required one IAB accessibility-focus pointer reset. Full fresh keyboard-only preview and physical-pad checks remain pending. See enemy-workshop-input receipt.",
       "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
@@ -556,7 +556,7 @@
   "verificationNote": "Existing browser/native package observations below predate the FPV / LINE rename. Rebranding evidence is recorded separately in docs/verification/fpv-line-brand-2026-09-29.md.",
   "evidenceScope": {
     "historical": "Browser and standalone-package observations below belong to the shared development snapshots recorded on 2026-09-28 and 2026-09-29, before main reconciliation. They do not qualify the current candidate.",
-    "currentCandidate": "Exact-candidate browser, offline package, physical-controller and published-build acceptance remains pending. See docs/verification/native-menu-pr-integration-2026-09-29.md for current focused automated checks."
+    "currentCandidate": "Current source receipts separately record edition layouts, Asset/Playground/Enemy browser workflows, all four worlds mode-scene checks and all14 in-memory package compiles. Scope and exact revisions live in docs/native-menu-plan-status.md and linked verification reports. Final aggregate, installed-offline, physical-controller/native and published-build acceptance remain pending."
   },
   "deferredRoutes": [
     {
