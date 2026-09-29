@@ -11,6 +11,7 @@ import { motionCurrent } from './motion-lab-current-workflow.mjs';
 import { stillCurrent } from './still-media-current-workflow.mjs';
 import { videoPosterCurrent } from './video-poster-current-workflow.mjs';
 import { soundtrackRecoveryCurrent } from './soundtrack-recovery-current-workflow.mjs';
+import { atlasCurrent } from './design-atlas-current-workflow.mjs';
 
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
