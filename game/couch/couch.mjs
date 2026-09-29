@@ -1,3 +1,5 @@
+import { createControllerSession } from './controller-session.mjs';
+import { mountControllerSetup } from './controller-setup.mjs';
 import {
   gameplayTuningDescription,
   gameplayStatusLabel,
@@ -846,7 +848,6 @@ try {
     startIntentEpoch = 0,
     framePads = [],
     frameReadError = null,
-    padDescriptors = new Map(),
     slots = [null, null],
     assignmentsChanged = false,
     pendingPadLoss = false,
@@ -1086,6 +1087,7 @@ try {
     if (resetDirection) input.clear();
     else input.clearPhysical();
     accumulator = 0;
+    controllerSession.clear();
     menuRouter?.clear();
     navigation?.clear();
     if (match?.status === 'running') menuScope = 'flight';
@@ -2306,7 +2308,19 @@ try {
     controls: $('race-touch-0').closest('.race-fields'),
     clear: () => input?.clearPhysical(),
   });
+  const controllerSession = createControllerSession({
+    onLoss: () => {
+      pendingPadLoss = true;
+      pause();
+      clear();
+    },
+  });
+  const controllerSetup = mountControllerSetup({
+    root: $('race-settings-panel-controls'),
+    session: controllerSession,
+  });
   const input = attachCouchInput({
+    controllerSession,
     initialSlots: incomingContinuation?.slots ?? [null, null],
     getTouchSettings: () => couchTouch.snapshot(),
     continuousSteering: () => true,
@@ -2322,10 +2336,9 @@ try {
       assignmentsChanged = nextSlots.some((slot, i) => slot !== slots[i]);
       slots = [...nextSlots];
       const message = () =>
-        t('gameplay:standardControllerAssignedKeyboardAndTouchRemainAvailableEscapePauses', {
-          value1: count,
-          value2: count === 1 ? '' : 's',
-          value3: slots
+        t('interface:multiplayerControllers.assigned', {
+          count,
+          players: slots
             .map((slot, i) =>
               t('gameplay:player', {
                 value1: i + 1,
@@ -2348,6 +2361,7 @@ try {
     /* The fixed Solo title route remains available. */
   }
   shell = createCouchShell({
+    controllerNeedsTouch: (seat) => slots[seat] !== null && !controllerSession.completeFlight(seat),
     authoredRoute: authoredRoute?.id ?? 'legacy',
     coarse: matchMedia('(pointer: coarse)').matches,
     getDepartureState: () => ({ match, generation }),
@@ -3618,7 +3632,8 @@ try {
   }
   function readAssignedMenuPads() {
     // Keep sparse browser positions. The router also receives the physical index.
-    return readCachedPads().map((pad) => (slots.includes(pad?.index) ? pad : null));
+    if (frameReadError) throw frameReadError;
+    return controllerSession.frame().menuPads;
   }
   function capturePads() {
     framePads = [];
@@ -3632,35 +3647,14 @@ try {
     } catch (error) {
       frameReadError = error || new Error(t('interface:controllerReadFailed'));
     }
-    const next = new Map();
-    for (const pad of framePads) {
-      if (!pad?.connected || pad.mapping !== 'standard') continue;
-      next.set(
-        pad.index,
-        JSON.stringify([
-          typeof pad.id === 'string' ? pad.id.slice(0, 512) : '',
-          pad.mapping,
-          pad.buttons?.length ?? 0,
-          pad.axes?.length ?? 0,
-        ]),
-      );
-    }
-    for (const index of slots) {
-      if (
-        index === null ||
-        !padDescriptors.has(index) ||
-        next.get(index) === padDescriptors.get(index)
-      )
-        continue;
-      // Couch flight allocation is index-based. A changed descriptor is a new
-      // device even if a disconnect event was missed between animation frames.
-      menuRouter.disconnect(index);
-      pendingPadLoss = true;
-      pause();
-      clear();
-    }
-    padDescriptors = next;
+    const sample = controllerSession.sample(framePads, {
+      active: match?.status === 'running',
+      error: frameReadError,
+    });
+    framePads = sample.pads;
+    controllerSetup.refresh();
   }
+
   function focusPrimaryAction() {
     if (!match || match.status === 'running' || disposed) return;
     shell.focus();
@@ -3793,9 +3787,13 @@ try {
     if ($('race-menu-status').textContent !== text)
       localizedText($('race-menu-status'), () => text);
   }
-  menuRouter = createControllerRouter({ readPads: readAssignedMenuPads });
+  menuRouter = createControllerRouter({
+    readPads: readAssignedMenuPads,
+    autoJoin: true,
+    eventTarget: null,
+  });
   const controllerConfirmGuard = attachControllerConfirmGuard({
-    confirmPressed: () => menuRouter.menuConfirmPressed(),
+    confirmPressed: () => menuRouter.menuConfirmPressed() || controllerSession.frame().confirmHeld,
   });
   const menuIds = new Set([
     'race-offline',
@@ -3910,7 +3908,7 @@ try {
       element.hasAttribute('data-language-select') ||
       menuIds.has(element.id) ||
       !!element.closest(
-        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures]',
+        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures], .multiplayer-controllers',
       ),
     getControlLabels: () => ({
       directions: t('interface:dPadLeftStick'),
@@ -3983,6 +3981,7 @@ try {
   });
   $('race-menu-release').onclick = () => {
     if (match.status === 'running' || !menuOwner) return;
+    controllerSession.menu(null);
     menuRouter.invalidate();
     menuOwner = null;
     clear();
@@ -3998,7 +3997,7 @@ try {
     const result = menuRouter.sample({ scope, timeMs: now });
     // Joining consumes the controller edge as assignment, but Steam may still
     // mirror that same physical press as a delayed native Enter/click.
-    controllerConfirmGuard.observe(result.confirmHeld || result.status.code === 'joined');
+    controllerConfirmGuard.observe(result.confirmHeld || controllerSession.frame().confirmHeld);
     if (result.status.code === 'joined' || Object.values(result.ui).some(Boolean))
       setReadingModality('controller');
     const released = !menuOwner && result.disconnected;
@@ -4016,9 +4015,8 @@ try {
     }
     menuStatus = frameReadError
       ? t('interface:controllerAccessIsUnavailable')
-      : !framePads.some((pad) => pad?.connected && pad.mapping === 'standard') &&
-          framePads.some((pad) => pad?.connected)
-        ? t('interface:thisControllerHasNoStandardMapping')
+      : controllerSession.state().devices.some((device) => !device.profile)
+        ? t('interface:multiplayerControllers.needsSetup')
         : result.status.message;
     if (assignmentsChanged || pendingPadLoss) {
       shell.cancelDeparture();
@@ -4092,6 +4090,8 @@ try {
     preparationStatus.dispose();
     couchTouch.destroy();
     journeyReactions.dispose();
+    controllerSetup.dispose();
+    controllerSession.dispose();
     input.destroy();
     controllerConfirmGuard.destroy();
     menuRouter.destroy();
@@ -4133,7 +4133,10 @@ try {
       input.poll();
       if (!wasRunning) sampleMenu(now);
       if (wasRunning || match.status === 'running')
-        controllerConfirmGuard.observe(menuRouter.menuConfirmPressed(framePads));
+        controllerConfirmGuard.observe(
+          menuRouter.menuConfirmPressed(controllerSession.frame().menuPads) ||
+            controllerSession.frame().confirmHeld,
+        );
       pendingPadLoss = false;
     }
     if (available && wasRunning && match.status === 'running' && !cueState.blocksPlay) {
