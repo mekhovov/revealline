@@ -5202,5 +5202,12 @@
   "nativeMenu.solo": "Solo",
   "nativeMenu.versus": "Versus",
   "nativeMenu.team": "Team",
-  "nativeMenu.backgroundAnimation": "Animated backgrounds"
+  "nativeMenu.backgroundAnimation": "Animated backgrounds",
+  "creatorMenu.chooseMission": "Choose a mission to start in this installed campaign.",
+  "creatorMenu.replaceTitle": "Start another attempt?",
+  "creatorMenu.replaceBody": "This replaces your unfinished attempt when the selected mission is ready. Cancel keeps it paused. Export it from Settings to keep a separate copy.",
+  "creatorMenu.leaveTitle": "Leave this campaign?",
+  "creatorMenu.leaveBody": "Your last saved attempt stays in this campaign. Unsaved play may be lost. Cancel keeps it paused; export the attempt from Settings to keep a separate copy.",
+  "returnToControllerPractice": "Return to Controller practice",
+  "creatorMenu.mode": "Game mode"
 }

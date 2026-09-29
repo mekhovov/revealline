@@ -34,6 +34,7 @@ import {
 import { prepareReviewedCreatorBundle } from './batch-bundle.mjs';
 import { createCreatorMediaReviewController } from './media-review.mjs';
 import { prepareCreatorMediaCampaign } from './media-campaign.mjs';
+import { focusCreatorInstalledPlay } from './player-menu-focus.mjs';
 import {
   formatNumber,
   localizedAttribute,
@@ -1009,15 +1010,20 @@ $('approve').onclick = () =>
     }
     status(localizedMessage('interface:creator.approvedInstallOrDownload'));
   });
-$('install').onclick = () =>
-  operation(async (signal) => {
+$('install').onclick = () => {
+  const opener = $('install'),
+    wasFocused = document.activeElement === opener;
+  return operation(async (signal) => {
     await installPreparedCreatorBundle(store, prepared, approval, installReview, { signal });
     $('play').href = `./player.html?edition=${prepared.editionId}`;
     $('play').hidden = false;
     installReview = null;
     status(localizedMessage('interface:creator.campaignInstalled'));
     await listInstalled();
+    if (!signal.aborted)
+      focusCreatorInstalledPlay({ document, opener, play: $('play'), wasFocused });
   });
+};
 $('download').onclick = () => {
   try {
     downloadCreatorFile(exportCreatorBundle(prepared, approval), `${content.project.id}.rlpack`);

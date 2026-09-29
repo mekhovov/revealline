@@ -5312,5 +5312,12 @@
   "nativeMenu.solo": "Соло",
   "nativeMenu.versus": "Дуель",
   "nativeMenu.team": "Команда",
-  "nativeMenu.backgroundAnimation": "Анімоване тло"
+  "nativeMenu.backgroundAnimation": "Анімоване тло",
+  "creatorMenu.chooseMission": "Виберіть місію для запуску в цій встановленій кампанії.",
+  "creatorMenu.replaceTitle": "Почати іншу спробу?",
+  "creatorMenu.replaceBody": "Незавершену спробу буде замінено, коли вибрана місія буде готова. Скасування залишить її на паузі. Експортуйте спробу в налаштуваннях, щоб зберегти окрему копію.",
+  "creatorMenu.leaveTitle": "Вийти з цієї кампанії?",
+  "creatorMenu.leaveBody": "Остання збережена спроба залишиться в цій кампанії. Незбережений поступ може бути втрачено. Скасування залишить гру на паузі; експортуйте спробу в налаштуваннях, щоб зберегти окрему копію.",
+  "returnToControllerPractice": "Повернутися до тренування з контролером",
+  "creatorMenu.mode": "Режим гри"
 }
