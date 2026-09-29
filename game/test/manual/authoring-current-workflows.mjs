@@ -6,6 +6,7 @@ import { validateEnemyCatalogDraft } from '../../enemy-catalog.mjs';
 import { creatorCurrent } from './creator-current-workflow.mjs';
 import { teamCreatorCurrent } from './team-creator-current-workflow.mjs';
 import { motionCurrent } from './motion-lab-current-workflow.mjs';
+import { stillCurrent } from './still-media-current-workflow.mjs';
 
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
@@ -365,4 +366,5 @@ export const currentAuthoringCases = {
   creatorCurrent,
   teamCreatorCurrent,
   motionCurrent,
+  stillCurrent,
 };
