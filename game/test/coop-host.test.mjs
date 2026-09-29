@@ -69,6 +69,64 @@ test('the same Team mode choices belong to the lobby and active pause panel, nev
   assert.equal(f.$('coop-overlay').hidden, true);
 });
 
+test('Team More exposes every global destination and returns collapsed across input and play states', async (t) => {
+  const f = await page(t, { nativeFocus: true }),
+    more = f.$('coop-more'),
+    toggle = f.$('coop-more-toggle');
+  assert.equal(more.parentNode, f.$('coop-tools'));
+  assert.equal(f.$('coop-tools').parentNode, f.$('coop-lobby-tools'));
+  toggle.emit('pointerdown', { pointerType: 'touch', pointerId: 51, button: 0 });
+  toggle.emit('pointerup', { pointerType: 'touch', pointerId: 51, button: 0 });
+  toggle.click();
+  assert.equal(more.open, true);
+  const destinations = more.querySelector('.coop-more-destinations');
+  for (const id of [
+    'coop-more-home',
+    'coop-more-catalogue',
+    'coop-more-about',
+    'coop-release-explorer',
+  ])
+    assert.equal(f.$(id).parentNode, destinations);
+  assert.equal(f.$('coop-release-explorer').href, 'http://localhost/releases/');
+  f.$('coop-release-explorer').focus();
+  f.tap('Escape');
+  assert.equal(more.open, false);
+  assert.equal(f.doc.activeElement, toggle);
+
+  toggle.click();
+  assert.equal(more.open, true);
+  f.$('coop-start').click();
+  f.tick(2);
+  assert.equal(more.open, false, 'Starting play retires the lobby disclosure.');
+  f.$('coop-pause').click();
+  assert.equal(more.open, false, 'Pause always opens with a compact utility menu.');
+
+  const pad = {
+    index: 0,
+    id: 'More menu controller',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  };
+  f.pads.push(pad);
+  const button = (index) => {
+    pad.buttons[index] = { pressed: true, value: 1 };
+    f.tick();
+    pad.buttons[index] = { pressed: false, value: 0 };
+    f.tick();
+  };
+  f.tick(2);
+  button(0);
+  for (let i = 0; i < 40 && f.doc.activeElement !== toggle; i++) button(13);
+  assert.equal(f.doc.activeElement, toggle);
+  button(0);
+  assert.equal(more.open, true);
+  button(1);
+  assert.equal(more.open, false);
+  assert.equal(f.doc.activeElement, toggle);
+});
+
 test('a file selected before Start cannot replace setup after returning from an attempt', async (t) => {
   const f = await page(t),
     read = deferred(),
@@ -1442,6 +1500,11 @@ for (const [id, path] of modePanelLinks)
     assert.equal(f.$('coop-overlay').hidden, false);
     assert.equal(f.$('coop-resume').hidden, true);
     assert.equal(f.$('coop-overlay-kicker').textContent, 'ONE MORE SHARED PLAN');
+    assert.equal(
+      f.$('coop-more').open,
+      false,
+      'Terminal results keep secondary destinations collapsed.',
+    );
     tabToTeamAction(f, id);
     const before = heldTeam(f);
     f.$(id).setAttribute('href', 'https://other.invalid/not-a-mode');

@@ -758,6 +758,7 @@ export function bootCoop({
     if (tools.hidden) {
       $('coop-help').open = false;
     }
+    if (tools.hidden || paused) $('coop-more').open = false;
     showTouch();
   }
   function back() {
@@ -1520,6 +1521,7 @@ export function bootCoop({
     painter.paint(run, {
       reduced: displayPreferences.snapshot().effectiveReducedEffects,
       textFace: displayPreferences.snapshot().textFace,
+      textSize: displayPreferences.snapshot().textSize,
       picture: acceptedPicture?.binding ?? null,
       actorAppearance: acceptedPicture?.actorAppearance ?? null,
       pictureLevel: attemptTuning.get(run)?.pictureLevel ?? run.level,
@@ -4353,6 +4355,17 @@ export function bootCoop({
     message(t('interface:team.arenaStoppedAction', { error: error.message }));
     console.error(error);
   }
+  function downedCaption(playerId) {
+    const failure = knockdowns[playerId] ?? { player: playerId };
+    return () =>
+      t('interface:team.playerNeedsRescue', {
+        cause: coopFailureFeedback(run, failure).cause,
+        player: names()[playerId],
+        alternative: run.config.advancedCooperation
+          ? ' ' + t('interface:orCapture2NewTerritory')
+          : '',
+      });
+  }
   function resume() {
     if (
       disposed ||
@@ -4372,7 +4385,12 @@ export function bootCoop({
     last = null;
     overlay();
     input.focus();
-    message(localizedMessage('interface:chooseFreshDirectionsWhenYouAreReady'));
+    const downed = run.players.find((player) => player.status === 'downed');
+    message(
+      downed
+        ? downedCaption(downed.id)
+        : localizedMessage('interface:chooseFreshDirectionsWhenYouAreReady'),
+    );
   }
   // This synchronous handoff owns only the return from an attempt to its lobby.
   // Do not let focus/layout callbacks revive it after a newer action or lifecycle.
@@ -4492,13 +4510,13 @@ export function bootCoop({
     }
   }
   const unfinished = () => run && ['running', 'paused'].includes(run.status);
-  const departureLabels = {
-    setup: t('interface:discardAndChangeSetup'),
-    retry: t('interface:discardAndRetry'),
-    return: t('interface:discardAndLeave'),
-    home: t('interface:discardAndLeave'),
-    versus: t('interface:discardAndGoToVersus'),
-    catalogue: t('interface:discardAndSwitchJourney'),
+  const departureLabelKeys = {
+    setup: 'interface:discardAndChangeSetup',
+    retry: 'interface:discardAndRetry',
+    return: 'interface:discardAndLeave',
+    home: 'interface:discardAndLeave',
+    versus: 'interface:discardAndGoToVersus',
+    catalogue: 'interface:discardAndSwitchJourney',
   };
   function visibleAction(element) {
     return (
@@ -4543,7 +4561,7 @@ export function bootCoop({
       settingsDialog.open ||
       earnedDialog.open ||
       pictureOperation ||
-      !Object.hasOwn(departureLabels, kind)
+      !Object.hasOwn(departureLabelKeys, kind)
     )
       return;
     if (!unfinished()) {
@@ -4587,7 +4605,7 @@ export function bootCoop({
                 : t('interface:discardAndLeaveReturnsToTheLinkedModeAndLoses')
         }`,
     );
-    localizedText($('coop-discard-confirm'), () => departureLabels[kind]);
+    localizedText($('coop-discard-confirm'), () => t(departureLabelKeys[kind]));
     try {
       departureDialog.showModal();
       $('coop-discard-stay').focus({ preventScroll: true });
@@ -4825,15 +4843,7 @@ export function bootCoop({
         knockdowns[event.player] = event;
         input.clearPlayer(event.player);
         batch.release(event.player);
-        announce(() =>
-          t('interface:team.playerNeedsRescue', {
-            cause: coopFailureFeedback(run, event).cause,
-            player: names()[event.player],
-            alternative: run.config.advancedCooperation
-              ? ' ' + t('interface:orCapture2NewTerritory')
-              : '',
-          }),
-        );
+        announce(downedCaption(event.player));
       }
       if (event.type === 'player.revived') {
         const cause =

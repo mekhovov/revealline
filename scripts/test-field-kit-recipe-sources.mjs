@@ -66,6 +66,7 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
     ['game/couch/coop-view.mjs', ['team']],
     ['game/couch/couch-music-library.mjs', ['audio']],
     ['game/soundtrack-style-selection.mjs', ['audio']],
+    ['game/text-size.mjs', ['team']],
     ['game/soundtrack-bundled.mjs', ['audio']],
     ['game/soundtrack-portable.mjs', ['audio']],
     ['game/content/soundtrack-catalogue.mjs', ['audio']],
@@ -93,6 +94,7 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
 test('missing helper bytes cannot produce a supposedly valid fingerprint', async () => {
   for (const missing of [
     'game/ui/lane-presentation.mjs',
+    'game/text-size.mjs',
     'authoring/library/fpv-role-presentations/originals/impact.png',
   ])
     await assert.rejects(
