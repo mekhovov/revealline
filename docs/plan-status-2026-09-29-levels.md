@@ -30,19 +30,22 @@ the older queue snapshots below; their source and test receipts remain history.
   source from [PR #794](https://github.com/mekhovov/revealline/pull/794), whose
   exact `337ded7926168c465229253242c4c93c8be3955b` head is retained as an
   ancestor. #794 now has the same release-input milestone and retains its hold.
-- The primary checkout is clean at pushed #783 head
+- The primary checkout was observed clean in the 15:06 UTC scan at pushed #783 head
   `0cc7337a8e490d73ad9d7718fb5b208aaf7da924`. This is preservation/reference
   source, not permission to merge every overlapping historical snapshot.
-- The Levels source branch is clean and exactly matches its advertised remote
+- The Levels source branch was observed clean and exactly matching its advertised remote
   `b3b3b06de` head. Its sole untracked plan mirror was already stored byte-for-byte
   in [PR #780](https://github.com/mekhovov/revealline/pull/780); this checkpoint
   continues through that same evidence PR, not a gameplay or version change.
 
 ### Remaining source reconciliation
 
-- **Actor continuation #761:** its latest pushed batch22 and the owner's active
-  batch23 are not blanket-adopted by #796. Keep the existing owner PR and
-  v0.150.0 target; obtain the final push receipt before closing the local audit.
+- **Actor continuation #761:** batch23 is now pushed at
+  `ff42765772555fe91b6b8c24d002ee7283b2e448`, following batch22. The post-push
+  checkout has no modified source; only the previously retained untracked
+  `proportions-solo.png` remains for evidence classification. The latest owner
+  continuations are not blanket-adopted by #796. Keep the existing PR and
+  v0.150.0 target for integration; this push does not certify a release.
 - **Native menu/Company continuation #782:** `82f9e6ff20941e0b2837438e73eecdd79fad61d6`
   remains pushed and targeted, with current qualification/harness additions not
   present in the sampled aggregate. Reconcile these in the existing owner lane.
@@ -59,14 +62,30 @@ the older queue snapshots below; their source and test receipts remain history.
   Of the dirty checkouts, 58 contain only untracked dependencies and five only
   local helper/deploy reports. The remaining 48 include source, evidence,
   conflicts and staged deletion states; they are not 48 unreleased features.
-  The separate working-file inventory does not prove index/conflict-stage or
-  later concurrent-edit preservation. Do not claim everything pushed until
-  these inventories and active-owner receipts are reconciled.
+  A subsequent bounded index check of the three conflicted/staged integration
+  checkouts examined 759 distinct staged blobs: 728 are reachable in cached
+  remote history, and the remaining 31 exactly match their working files. All
+  six conflict base/ours/theirs blobs are reachable. No additional index-only
+  payload was found; the 31 working-file blobs still need the coordinator's
+  preservation-manifest cross-check. This is not a claim that those 31 are
+  pushed, nor proof covering later concurrent edits. Do not claim everything
+  pushed until these inventories and active-owner receipts are reconciled.
 - The localization owner confirms **no valid unpublished localization batch**.
   The old `english-ukrainian-localization` checkout contains zero-byte/truncated
   files and missing controls, not intended feature edits; the six artifacts in
   `v0131-localization-finish` are stale and their intended source work is already
   on main. Preserve these checkouts; do not publish their corruption/deletions.
+- **Ukrainian ornament study:** all 23 dirty/untracked files exactly match
+  [PR #332](https://github.com/mekhovov/revealline/pull/332) head
+  `48b42b610856e54e8df58c40943b5fd0e3c208fa`. The older local checkout was
+  intentionally retained during documented disk-full remote recovery. No
+  unpublished file or hunk remains in this study; do not create a duplicate
+  source/preservation PR or mistake its retained local dirt for a new edition.
+  PR #332's closing receipt identifies superseding integrations #524, #525,
+  #527, #528, #529 and #531. Sampled accepted main still registers/lazy-loads
+  `whole-ornament-v2` and retains its four atlas modules and documentation.
+  Classification is **historical pushed preimage / superseded integration**,
+  not a new public-play acceptance or permission to overwrite current hosts.
 
 ### Release blockers and honest delivery boundary
 
@@ -82,13 +101,17 @@ the 14-open-PR snapshot. They depend on a selected host and explicit
 administrator actions, and must not be folded into routine Pages publication.
 Earlier #738/#747/#779 labels and milestone reservations need coordinator-led
 scope reconciliation; historical targets do not justify duplicate releases.
+The soundtrack owner now records #779's move into the cumulative v0.150.0
+train. Its follow-up docs [PR #799](https://github.com/mekhovov/revealline/pull/799)
+was also assigned that existing milestone; no source or release selector was
+changed by the assignment. Earlier docs #798 is merged, not another game release.
 
 Latest observed GitHub release metadata remains **v0.142.3**. This source audit
 is not renewed public acceptance of that release or evidence that v0.150.0 has
 shipped. Production/device/human testing remains deferred, not passed. One
 publisher owns merge, immutable release, archive and Pages mutations.
 
-## Latest direction: production testing deferred
+## Earlier implementation checkpoint: production testing deferred
 
 The user's subsequent instruction is: **defer production testing and proceed
 with the remaining implementation**. Extended production/public play,
@@ -228,7 +251,7 @@ physical held-input validation, Original/current continuity, Team front and
 disconnect ownership, playing-size role readability, full-shell accessibility
 and human cooperation. Static source art is not runtime animation acceptance.
 
-## Release queue and parallel batches
+## Release queue and parallel batches — earlier snapshot
 
 | Order         | Batch                                 | Current state and next gate                                                                                                          |
 | ------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
