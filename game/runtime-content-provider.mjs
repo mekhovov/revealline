@@ -151,8 +151,14 @@ export async function loadRuntimeContentProvider({
   required(theme, 'This edition is missing its selected presentation.');
   const authoredPresentationSha256 = await editionPresentationSha256(bootstrap);
   signal?.throwIfAborted();
+  const selectedAssets = new Map(
+    resolveEditionAssets(catalog, { editionId: selection.edition.id }).map((asset) => [
+      asset.id,
+      asset,
+    ]),
+  );
   const assetURL = (id) => {
-    const asset = catalog.assets.find((item) => item.id === id);
+    const asset = selectedAssets.get(id);
     required(asset, 'This edition does not contain the requested artwork.');
     return new URL(asset.path, rootURL).href;
   };

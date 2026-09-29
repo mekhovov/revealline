@@ -3576,7 +3576,8 @@ try {
       editionId === null
         ? null
         : (runtimeContent?.currentCatalog ?? runtimeContent?.catalog).editions.find(
-            (edition) => edition.id === editionId,
+            (edition) =>
+              edition.id === editionId && edition.brandId === runtimeContent.selection.brand.id,
           );
     const presentationChange = presentationId !== undefined;
     if (

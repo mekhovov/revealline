@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: edition switch retains the paused attempt and offers Stay before verified departure
+ok 1 - edition switch retains the paused attempt and offers Stay before verified departure
+  ---
+  duration_ms: 1246.77675
+  type: 'test'
+  ...
+# Subtest: edition switch retains the paused attempt and offers Stay before quota departure
+ok 2 - edition switch retains the paused attempt and offers Stay before quota departure
+  ---
+  duration_ms: 993.497833
+  type: 'test'
+  ...
+# Subtest: edition switch retains the paused attempt and offers Stay before occupied departure
+ok 3 - edition switch retains the paused attempt and offers Stay before occupied departure
+  ---
+  duration_ms: 1144.429417
+  type: 'test'
+  ...
+# Subtest: edition switch cancellation retires pending retention and cannot navigate after a late completion
+ok 4 - edition switch cancellation retires pending retention and cannot navigate after a late completion
+  ---
+  duration_ms: 894.427083
+  type: 'test'
+  ...
+# Subtest: edition switch permits only its company destinations and does not prompt when no flight exists
+ok 5 - edition switch permits only its company destinations and does not prompt when no flight exists
+  ---
+  duration_ms: 416.504875
+  type: 'test'
+  ...
+# Subtest: a forged cross-company selection cannot save, replace or leave the current attempt
+ok 6 - a forged cross-company selection cannot save, replace or leave the current attempt
+  ---
+  duration_ms: 915.55075
+  type: 'test'
+  ...
+# Subtest: ordinary main game has no community or company discovery control while dedicated tools remain
+ok 7 - ordinary main game has no community or company discovery control while dedicated tools remain
+  ---
+  duration_ms: 1041.451625
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7169.0035

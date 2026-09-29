@@ -86,7 +86,9 @@ export async function mountEditionSoloUI({
   localizedText(pickerLabel, () => t('interface:editionSolo.switcherLabel'));
   picker.className = 'field edition-switcher';
   select.id = 'edition-select';
-  const availableEditions = (provider.currentCatalog ?? provider.catalog).editions;
+  const availableEditions = (provider.currentCatalog ?? provider.catalog).editions.filter(
+    (edition) => edition.brandId === selection.brand.id,
+  );
   for (const edition of availableEditions) {
     const option = node('option', edition.name);
     option.value = edition.id;
@@ -101,7 +103,11 @@ export async function mountEditionSoloUI({
     // This remains the active edition until the shared host has retained the
     // attempt and the player explicitly leaves. Stay/cancel needs no rollback.
     select.value = provider.editionId;
-    if (requested === provider.editionId) return false;
+    if (
+      requested === provider.editionId ||
+      !availableEditions.some((edition) => edition.id === requested)
+    )
+      return false;
     return onEditionChange(requested, select);
   };
   if (provider.presentationHistory?.length) {

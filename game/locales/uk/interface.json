@@ -5298,5 +5298,19 @@
   "team.picturePreviewTitle": "{{mission}} · Перегляд зображення",
   "downloads.ownershipUnreadable": "Не вдалося прочитати дані про належність завантажень. Нічого не видалено; наявні файли гри та збереження залишено.",
   "controller.confirmTrace.toggle": "Показати тимчасову діагностику контролера",
-  "controller.confirmTrace.sessionOnly": "Лише для цього сеансу. Дані введення не зберігаються й не надсилаються."
+  "controller.confirmTrace.sessionOnly": "Лише для цього сеансу. Дані введення не зберігаються й не надсилаються.",
+  "communityDirectory.pageTitle": "Спільноти · FPV / LINE",
+  "communityDirectory.eyebrow": "ВИДАННЯ СПІЛЬНОТ",
+  "communityDirectory.heading": "Знайдіть свою спільноту.",
+  "communityDirectory.intro": "Спільна гра, власний світ. Відкрийте видання своєї компанії та грайте в її кампанії.",
+  "communityDirectory.droneaidCategory": "БУДУЙТЕ / ЄДНАЙТЕСЯ / ПІДТРИМУЙТЕ",
+  "communityDirectory.droneaidDescription": "Пригоди у FPV-майстерні, натхненні DroneAid Netherlands та її підтримкою України.",
+  "communityDirectory.openDroneaid": "Грати в DroneAid",
+  "communityDirectory.coupaCategory": "ДОСЛІДЖУЙТЕ / ЄДНАЙТЕСЯ / ЗРОСТАЙТЕ",
+  "communityDirectory.coupaDescription": "Досліджуйте Coupa Village в ілюстрованих кампаніях про спільну працю, культуру та ідеї.",
+  "communityDirectory.openCoupa": "Грати в Coupa",
+  "communityDirectory.separateHeading": "Ваша компанія. Ваші кампанії.",
+  "communityDirectory.separateDescription": "Кожне видання має власні збережені польоти та прогрес. У грі можна обирати кампанії лише своєї компанії.",
+  "communityDirectory.footer": "Каталог спільнот · Для гри не потрібен обліковий запис",
+  "communityDirectory.guide": "Посібник у репозиторії ↗"
 }

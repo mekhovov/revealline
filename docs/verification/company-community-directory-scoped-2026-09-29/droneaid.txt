@@ -1,0 +1,43 @@
+Browser tab: 25, Title: "DroneAid Netherlands", URL: "http://127.0.0.1:8817/game/index.html?edition=droneaid-nl-community".
+1 AXWebArea DroneAid Netherlands, URL: 127.0.0.1:8817/game/index.html?edition=droneaid-nl-community
+	2 container DroneAid Netherlands, ID: shell-home
+		3 container
+			4 image DroneAid Netherlands
+			5 text DroneAid Netherlands
+			6 heading DroneAid Netherlands, Value: 1, ID: shell-title
+				7 text DroneAid Netherlands
+			8 text Language
+			9 pop up button (collapsed, settable) Language, Value: English, Secondary Actions: Expand
+				10 menu
+					11 (selected) English
+					12 Українська
+			13 container Main menu
+				14 button Start, ID: shell-featured
+				15 container Description: Music controls, ID: solo-quick-music-0
+					16 text Carol of the Bells (Metal Version) · Alexander Nakarada · Sound muted
+					17 button Play music, Help: Play / pause music (B), ID: solo-quick-music-0-toggle
+					18 button Next song, Help: Next song (N), ID: solo-quick-music-0-next
+				19 button Missions, ID: shell-play
+				20 button Collection, ID: shell-gallery
+				21 button Settings, ID: shell-options
+				22 button More, ID: shell-workshop
+				23 checkbox Sound: off, Value: 0, ID: shell-sound
+			24 text Start · Open the Doors
+			25 button (collapsed) Difficulty & appearance, Secondary Actions: Expand
+				26 text Difficulty & appearance
+			27 text Company & campaign edition
+			28 pop up button (collapsed, settable) Company & campaign edition, Value: DroneAid Netherlands, ID: edition-select, Secondary Actions: Expand
+				29 menu
+					30 (selected) DroneAid Netherlands
+					31 Workshop Lights
+					32 Parts in Motion
+					33 Makers Together
+					34 The Careful Handoff
+					35 Signals of Support
+					36 Shared Horizon
+			37 button (collapsed) Original artwork & saved-flight recovery, Secondary Actions: Expand
+				38 text Original artwork & saved-flight recovery
+			39 button (collapsed) About this edition & artwork, Secondary Actions: Expand
+				40 text About this edition & artwork
+
+The focused UI element is 14 button Start, ID: shell-featured

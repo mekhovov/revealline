@@ -5188,5 +5188,19 @@
   "team.picturePreviewTitle": "{{mission}} · Picture preview",
   "downloads.ownershipUnreadable": "Download ownership could not be read. Nothing was removed; existing game files and saves are kept.",
   "controller.confirmTrace.toggle": "Show temporary controller diagnostics",
-  "controller.confirmTrace.sessionOnly": "Shown only for this session. No input is saved or sent."
+  "controller.confirmTrace.sessionOnly": "Shown only for this session. No input is saved or sent.",
+  "communityDirectory.pageTitle": "Communities · FPV / LINE",
+  "communityDirectory.eyebrow": "COMMUNITY EDITIONS",
+  "communityDirectory.heading": "Find your community.",
+  "communityDirectory.intro": "A shared game, a world of your own. Open your company’s edition to play its campaigns.",
+  "communityDirectory.droneaidCategory": "BUILD / CONNECT / SUPPORT",
+  "communityDirectory.droneaidDescription": "FPV workshop adventures inspired by DroneAid Netherlands and its support for Ukraine.",
+  "communityDirectory.openDroneaid": "Play DroneAid",
+  "communityDirectory.coupaCategory": "DISCOVER / CONNECT / GROW",
+  "communityDirectory.coupaDescription": "Explore Coupa Village through illustrated campaigns about connected work, culture and ideas.",
+  "communityDirectory.openCoupa": "Play Coupa",
+  "communityDirectory.separateHeading": "Your company. Your campaigns.",
+  "communityDirectory.separateDescription": "Each edition keeps its own saved flights and progress. Inside the game, campaign choices stay within that company.",
+  "communityDirectory.footer": "Community directory · No account needed to play",
+  "communityDirectory.guide": "Repository guide ↗"
 }
