@@ -1,0 +1,313 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:08:48.406808+00:00",
+  "worktree": "<home>/.codex/worktrees/player-ux-input",
+  "branch": "refs/heads/codex/player-ux-input",
+  "head": "9a205c9526514b1a8ef6852d6a94789a04ec49f7",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "object": "484ccbf6872a15898e476bfe88412f29c2395b78",
+      "sha256": "ab58224b2628ebf70a9dac725839b54cd22856a2d690339eae292ebc95d76983",
+      "bytes": 8368781,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "object": "594a9e56c1eac1584c8c82292643ad12f4e72151",
+      "sha256": "9d23691f5320621fc3f2023d771aa335385bae4635b3d0f55f8ee7e3b8d31ff3",
+      "bytes": 4028,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/coop-presentation.mjs",
+      "object": "e35fde210c1c781620033161e9568414a2163b23",
+      "sha256": "2af7eaae3a6e8cb2e506ac359f9c895d69b1c10f8655686f93f1c0769f5fd0bb",
+      "bytes": 22672,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/compiled/manifest.json",
+      "object": "d88327ebad415f39863fc3a0810daefe46c16092",
+      "sha256": "5dd078942c60ab30fe1bf18595adeb76d47f14b409bff10b33429061a1904c61",
+      "bytes": 29118,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/compiled/runtime.json",
+      "object": "6c6f0d35e3af5bac2edbf0ea66617d9d224dd2c9",
+      "sha256": "f81a35e9afa443cd184f986585530ead7f9ffffbcb528d24d163e9cf4d2c80ab",
+      "bytes": 1105121,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/compiled/studio.json",
+      "object": "61c30b67b9dc5ce98c468681f58144cb61026565",
+      "sha256": "aaf73308084234ecf92399bac36136d081c7b22fd0e00872a8beac77ca7c6360",
+      "bytes": 4947606,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/coop-actor-presentation.test.mjs",
+      "object": "269815c36162d51ad721496fd39422ccc1e56476",
+      "sha256": "1694af4703ab3d704b18284f5a0c9d106774b0d375ef6e068a7e60591dd1bd79",
+      "bytes": 30801,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/coop-historical-import-picture.test.mjs",
+      "object": "c9d7cb7cede260105085470b1ab4f0764fd86b46",
+      "sha256": "f39d04ae003982b1432d67bb3a92067001c0fecf669eef138eaf6ae0833559c5",
+      "bytes": 16494,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/coop-picture-bindings.test.mjs",
+      "object": "8c45d0fc8076109819b8b780856f201663a78a2f",
+      "sha256": "22b917df0bc1e08f1976b62fcb9353c5c6d36606cdf6ad52ada8c367fba1055c",
+      "bytes": 8897,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/coop-reviewed-successor-picture.test.mjs",
+      "object": "cd124f379850079e68bb6a8ed66746e1c53b2de5",
+      "sha256": "19a63837e39bb434274b9a66a2f2cc9b819eb3a912bcc71a9447d8512c060acc",
+      "bytes": 9198,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/couch-static-picture-host.test.mjs",
+      "object": "c5ea10d4154f2dfa5f561b19f8caa26265b83408",
+      "sha256": "f326063ecbd6d72f61dd8b8b0631c9ccb53094ea1acfa7659c3afcdc368f1cc6",
+      "bytes": 45973,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/field-kit-retained-runtime.test.mjs",
+      "object": "13988b940ba87914450d65f53513674c4cda23a4",
+      "sha256": "235edbd64c99bc75abc4416865f4195418d55f6125183c2aa1f994c64c45a8b5",
+      "bytes": 16813,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/journey-owned-controls.test.mjs",
+      "object": "b1598a3b6e1d4af71b30887c9d40926459bf78f3",
+      "sha256": "2cd83e464a014d9619ec71c518756e75bb9ed4cf11f26d510490525e97fda940",
+      "bytes": 3601,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/team-discovery-input.test.mjs",
+      "object": "a2795dbcea16413bdb019dec6db80c6b739717aa",
+      "sha256": "e4b895fcaaf1fdd817f05c1a209c08d81dc281304de65e4ebde48b7a0a144065",
+      "bytes": 12287,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/team-picture-identity-extension.test.mjs",
+      "object": "5e1a4a392bc0a746c5f719fc62176ea70e485821",
+      "sha256": "173ff9302dc4ab37052c6d918a3a0c03c552c969d2f4df1fb5cc2d5afe863bed",
+      "bytes": 11809,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/whole-originals-host-scenarios.mjs",
+      "object": "cb1a1f3484546722928a2e2caef37d2059ab5969",
+      "sha256": "045114a39788d6896b8223fe6a5b9b962ceccd565efde84dfb04fbc9c1cf9ec8",
+      "bytes": 13424,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "scripts/field-kit-retained-runtime.mjs",
+      "object": "e158302b786e659688842ea7048656a5097228a1",
+      "sha256": "a5b7333481975ec2af3c89671d3b8e0f0d803182d71f1f9ee0653b8da6d78da3",
+      "bytes": 4637,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "scripts/team-picture-review-extension.mjs",
+      "object": "4c1dfcff563957e31db19c1384507b6fea94537e",
+      "sha256": "8c99e0f8417cec56af212d0772b4d43aafed62462fd1c0e8b45e6987b3225d79",
+      "bytes": 1143,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/fpv-field-kit/retained/runtime.b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f.json",
+      "object": "2af55cc8ef356c68e8f785a2a52ffe4cef5145ca",
+      "sha256": "b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f",
+      "bytes": 1094096,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/team-picture-identity-extension/identity-harness.before.txt",
+      "object": "8ab7db8ac9aee44ec5df4fb1f669afd66f788fa8",
+      "sha256": "0e21d81af4a53e2876c3f526ed5565acc4af1a7bfab13a7252f4de17eef82f37",
+      "bytes": 8794,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/team-picture-identity-extension/production63.md",
+      "object": "064d25cccc6235340641854b1bdd402bda19573c",
+      "sha256": "549da494f261d224440d2aa74b4caeffb995e878e49f28c5a6a095ec6f2fc108",
+      "bytes": 3197,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/team-picture-identity-extension/review-production63.json",
+      "object": "e8fc6423998483f5d10f9a2bf3fee4b53dc038e9",
+      "sha256": "97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082",
+      "bytes": 13651,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/presentation/compiled/runtime.b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f.json",
+      "object": "2af55cc8ef356c68e8f785a2a52ffe4cef5145ca",
+      "sha256": "b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f",
+      "bytes": 1094096,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/fixtures/whole-originals-tuned-host-routes.json",
+      "object": "a34c39477aa08449a922460e250e2acbab11c11c",
+      "sha256": "44dd39a4850f723d1fa5903720cfda4ebb3d8068f4205e9efe16854c899a8a35",
+      "bytes": 216671,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "mode": "100644",
+      "object": "5c3691d955c5f3826706073726a50c88745e0498",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "mode": "100644",
+      "object": "c16623fcaaa9416144e434c0acac8510901b78df",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-presentation.mjs",
+      "mode": "100644",
+      "object": "d36046b98347b20e9b569b368b8d118d819c2abb",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "mode": "100644",
+      "object": "3401fcd2b5209ed5b66beb33f36d71e7fed46a8e",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "mode": "100644",
+      "object": "2af55cc8ef356c68e8f785a2a52ffe4cef5145ca",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "mode": "100644",
+      "object": "61e1373decf9ca4029b2b4907bcbe06271b0e92c",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-actor-presentation.test.mjs",
+      "mode": "100644",
+      "object": "c6795188cba89bb7166675ca07ae160da16ae642",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-historical-import-picture.test.mjs",
+      "mode": "100644",
+      "object": "8a762b7c3c1b5deb4d96bd1c23509ff1c6879859",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-picture-bindings.test.mjs",
+      "mode": "100644",
+      "object": "2f730df4180ae8489a204ed94984a9a1ea379dd7",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-reviewed-successor-picture.test.mjs",
+      "mode": "100644",
+      "object": "9e951f36a49bd27a3a5cbfad5c47ab3e0f79a298",
+      "stage": 0
+    },
+    {
+      "path": "game/test/couch-static-picture-host.test.mjs",
+      "mode": "100644",
+      "object": "8ab0e6a80e3f35ee689996b3466177984a814a09",
+      "stage": 0
+    },
+    {
+      "path": "game/test/field-kit-retained-runtime.test.mjs",
+      "mode": "100644",
+      "object": "a00450772828cf101c1187c9d82e8d8cb7d4774c",
+      "stage": 0
+    },
+    {
+      "path": "game/test/journey-owned-controls.test.mjs",
+      "mode": "100644",
+      "object": "76893099809c8710a5043cb5e13a9d5d8d5a09e2",
+      "stage": 0
+    },
+    {
+      "path": "game/test/team-discovery-input.test.mjs",
+      "mode": "100644",
+      "object": "9aeecdbab04a908e2e00fc60591ecf925c6f0820",
+      "stage": 0
+    },
+    {
+      "path": "game/test/team-picture-identity-extension.test.mjs",
+      "mode": "100644",
+      "object": "8ab7db8ac9aee44ec5df4fb1f669afd66f788fa8",
+      "stage": 0
+    },
+    {
+      "path": "game/test/whole-originals-host-scenarios.mjs",
+      "mode": "100644",
+      "object": "684d0d0add46309683bdf989f4b8c3f8767453c8",
+      "stage": 0
+    },
+    {
+      "path": "scripts/field-kit-retained-runtime.mjs",
+      "mode": "100644",
+      "object": "795fa415a3bdb547c4896f53f979a709ca0a31cd",
+      "stage": 0
+    },
+    {
+      "path": "scripts/team-picture-review-extension.mjs",
+      "mode": "100644",
+      "object": "1bb14cd44dfa62c2947f718e8a9c4943b6c65f9e",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}

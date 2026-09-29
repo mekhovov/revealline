@@ -1,3 +1,0 @@
-# Frozen release size-bound repair
-
-Prompt: “Inspect the failed hosted artifact evidence before changing any limit. Reconcile the artifact inspector, reviewed release descriptors and streamed distribution uploader with the exact 950,000,000-byte Pages budget. Preserve the original artifact digest, source/tree/version binding, bounded direct-inspector default, manifest and ZIP validation, final assembled-Pages budget, no-retry upload semantics and previous release. Add lower/exact/above-bound tests, update the runtime-maintainer skill, merge the infrastructure-only PR, then re-inspect the same frozen artifact before creating or publishing a release.”
