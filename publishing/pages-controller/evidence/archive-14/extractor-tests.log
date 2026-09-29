@@ -1,9 +1,0 @@
-test_crc_or_body_corruption_rejected_even_with_new_outer_digest (test_extract_current.ExtractCurrentTests.test_crc_or_body_corruption_rejected_even_with_new_outer_digest) ... ok
-test_exact_original_members_and_worker (test_extract_current.ExtractCurrentTests.test_exact_original_members_and_worker) ... ok
-test_extra_traversal_missing_and_wrong_original_fail_atomically (test_extract_current.ExtractCurrentTests.test_extra_traversal_missing_and_wrong_original_fail_atomically) ... ok
-test_symlink_members_rejected_before_writing (test_extract_current.ExtractCurrentTests.test_symlink_members_rejected_before_writing) ... ok
-
-----------------------------------------------------------------------
-Ran 4 tests in 0.007s
-
-OK
