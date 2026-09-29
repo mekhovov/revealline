@@ -1,0 +1,25 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:20.376452+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/ready-attempt-export",
+  "branch": "refs/heads/codex/ready-attempt-export",
+  "head": "15f9a9c7c18cc5a8842a0e7bc9227e1e59c1920d",
+  "excluded": [
+    {
+      "status": "??",
+      "path": "node_modules"
+    }
+  ],
+  "changes": [
+    {
+      "status": "??",
+      "path": "docs/verification/round-28/attempt-export-browser.md",
+      "object": "7171d5afda6b8797d7b535948b939b9651da87e0",
+      "sha256": "110a1c7631897cf40a3b4602a3d810db90b156c7844b80b51ec49aa789f891a7",
+      "bytes": 16381,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
