@@ -273,5 +273,6 @@
   "musicArchive.thirdPartyNotice": "Third-party recordings, credited to their creators. No creator endorsement or Content ID clearance is implied. UA-FPV and rejected AI originals are not included in this public archive.",
   "musicArchive.immutableNotice": "Public files keep immutable SHA-256 paths. The archive does not change the current game release or automatically download music to your browser.",
   "companyJourneys": "Company journeys",
-  "page.menuFontNotice": "Menu pixel type: Departure Mono 1.500 by Helena Zhang, self-hosted with full English and Ukrainian glyph coverage. [[license]]; [[source]]."
+  "page.menuFontNotice": "Menu pixel type: Departure Mono 1.500 by Helena Zhang, self-hosted with full English and Ukrainian glyph coverage. [[license]]; [[source]].",
+  "page.qrNotice": "Offline QR rewards use Project Nayuki’s QR Code generator 1.8.0 under its [[license]]. Its [[source]] is included."
 }
