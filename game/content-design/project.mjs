@@ -15,7 +15,6 @@ import {
   journeyPreset,
   journeyPressureTiming,
   freezeDesign,
-  COMBAT_ACTOR_CATALOG,
 } from './catalogs.mjs';
 
 const compiledProjects = new WeakSet();
@@ -255,8 +254,9 @@ export function compileContentProject(source) {
         'Mission combat requires an explicit version and enabled boolean.',
       );
       required(
-        actors.id === COMBAT_ACTOR_CATALOG.id,
-        'Mission combat requires the v8 actor catalogue.',
+        actors.roles['optional-scout']?.combatRole === 'scout' &&
+          actors.roles['optional-sentry']?.combatRole === 'sentry',
+        'Mission combat requires a registered optional-combat actor catalogue.',
       );
       required(
         !mission.modes.includes('team'),
